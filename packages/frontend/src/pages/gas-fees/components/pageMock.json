@@ -1,0 +1,1829 @@
+{
+  "asOf": "Nov 2",
+  "period": "Nov 2025 to Nov 2026",
+  "costs": [
+    {
+      "id": "ethereum",
+      "transfer": 0.009795473443131758,
+      "erc20": 0.021507594523302965,
+      "swap": 0.05742899499261614,
+      "split": { "base": 56320, "priority": 213900, "l1": 0 }
+    },
+    {
+      "id": "mantle",
+      "transfer": 0.00014761578302812615,
+      "erc20": 0.00017665402775360404,
+      "swap": 0.00026571513039843475,
+      "split": { "base": 176.1, "priority": 123.9, "l1": 22.32 }
+    },
+    {
+      "id": "unichain",
+      "transfer": 0.00009523700231096458,
+      "erc20": 0.00020665351860441094,
+      "swap": 0.0005483710668842429,
+      "split": { "base": 41.73, "priority": 122.1, "l1": 1.276 }
+    },
+    {
+      "id": "abstract",
+      "transfer": 0.0021720681818181817,
+      "erc20": 0.004769137704545454,
+      "swap": 0.012734422022727272,
+      "split": { "base": 873.6, "priority": 0, "l1": 0 }
+    },
+    {
+      "id": "base",
+      "transfer": 0.0005513842015606105,
+      "erc20": 0.0012056558512871867,
+      "swap": 0.003212325162906273,
+      "split": { "base": 17400, "priority": 57690, "l1": 49.54 }
+    },
+    {
+      "id": "scroll",
+      "transfer": 0.0017111166960471862,
+      "erc20": 0.0017146258316815444,
+      "swap": 0.0017253884480821146,
+      "split": { "base": 0.8214, "priority": 35.81, "l1": 46.77 }
+    },
+    {
+      "id": "zksync2",
+      "transfer": 0.0030486915086279597,
+      "erc20": 0.006693013572444124,
+      "swap": 0.017870250504798374,
+      "split": { "base": 427.2, "priority": 0, "l1": 0 }
+    },
+    {
+      "id": "taiko",
+      "transfer": 0.0005024,
+      "erc20": 0.0011030757590909089,
+      "swap": 0.002945364986363636,
+      "split": { "base": 114.2, "priority": 5.843, "l1": 0 }
+    },
+    {
+      "id": "linea",
+      "transfer": 0.005422852646877783,
+      "erc20": 0.01190433111317647,
+      "swap": 0.0317832054884866,
+      "split": { "base": 0.00003621, "priority": 1243, "l1": 0 }
+    },
+    {
+      "id": "arbitrum",
+      "transfer": 0.0009051661808681744,
+      "erc20": 0.0019874432111262213,
+      "swap": 0.005306816905824227,
+      "split": { "base": 15470, "priority": 0, "l1": 0 }
+    },
+    {
+      "id": "optimism",
+      "transfer": 0.000004198049773132476,
+      "erc20": 0.000004364198254904847,
+      "swap": 0.0000048737802606115745,
+      "split": { "base": 0.2966, "priority": 1922, "l1": 7.822 }
+    },
+    {
+      "id": "ink",
+      "transfer": 0.00001166517750489726,
+      "erc20": 0.00001649588307491942,
+      "swap": 0.00003131179115359267,
+      "split": { "base": 0.09805, "priority": 623.3, "l1": 7.549 }
+    }
+  ],
+  "tips": {
+    "ordinaryUsd": 52296366,
+    "atFastUsd": 18630000,
+    "positionalUsd": 81245688
+  },
+  "tiers": [
+    {
+      "key": "slow",
+      "name": "Slow",
+      "promise": "95% within 1 minute",
+      "wait": "within 1 minute",
+      "tip": 0.0000029,
+      "usd": 3.1e-7
+    },
+    {
+      "key": "medium",
+      "name": "Medium",
+      "promise": "95% within 2 blocks",
+      "wait": "within 2 blocks",
+      "tip": 0.0064,
+      "usd": 0.00067
+    },
+    {
+      "key": "fast",
+      "name": "Fast",
+      "promise": "95% next block",
+      "wait": "in the next block",
+      "tip": 0.099,
+      "usd": 0.01
+    }
+  ],
+  "speedCurve": {
+    "dots": [
+      {
+        "tip": 0.01,
+        "usd": 0.001052,
+        "seconds": 42.5,
+        "from": 0.01,
+        "to": 0.0108,
+        "n": 3055670
+      },
+      {
+        "tip": 0.011,
+        "usd": 0.001185,
+        "seconds": 46,
+        "from": 0.0108,
+        "to": 0.01166,
+        "n": 329628
+      },
+      {
+        "tip": 0.012,
+        "usd": 0.001271,
+        "seconds": 48,
+        "from": 0.01166,
+        "to": 0.01259,
+        "n": 201009
+      },
+      {
+        "tip": 0.013,
+        "usd": 0.001371,
+        "seconds": 45,
+        "from": 0.01259,
+        "to": 0.01359,
+        "n": 182760
+      },
+      {
+        "tip": 0.014,
+        "usd": 0.00148,
+        "seconds": 45.5,
+        "from": 0.01359,
+        "to": 0.01468,
+        "n": 178479
+      },
+      {
+        "tip": 0.015,
+        "usd": 0.001596,
+        "seconds": 53,
+        "from": 0.01468,
+        "to": 0.01585,
+        "n": 208355
+      },
+      {
+        "tip": 0.017,
+        "usd": 0.001742,
+        "seconds": 50.5,
+        "from": 0.01585,
+        "to": 0.01711,
+        "n": 308241
+      },
+      {
+        "tip": 0.018,
+        "usd": 0.001865,
+        "seconds": 43.5,
+        "from": 0.01711,
+        "to": 0.01848,
+        "n": 180901
+      },
+      {
+        "tip": 0.019,
+        "usd": 0.002014,
+        "seconds": 45,
+        "from": 0.01848,
+        "to": 0.01995,
+        "n": 169474
+      },
+      {
+        "tip": 0.02,
+        "usd": 0.002114,
+        "seconds": 46.5,
+        "from": 0.01995,
+        "to": 0.02154,
+        "n": 853676
+      },
+      {
+        "tip": 0.022,
+        "usd": 0.002356,
+        "seconds": 42.5,
+        "from": 0.02154,
+        "to": 0.02326,
+        "n": 210671
+      },
+      {
+        "tip": 0.024,
+        "usd": 0.002552,
+        "seconds": 41,
+        "from": 0.02326,
+        "to": 0.02512,
+        "n": 262399
+      },
+      {
+        "tip": 0.026,
+        "usd": 0.00274,
+        "seconds": 43,
+        "from": 0.02512,
+        "to": 0.02712,
+        "n": 179744
+      },
+      {
+        "tip": 0.028,
+        "usd": 0.002957,
+        "seconds": 43.5,
+        "from": 0.02712,
+        "to": 0.02929,
+        "n": 182031
+      },
+      {
+        "tip": 0.03,
+        "usd": 0.003176,
+        "seconds": 39,
+        "from": 0.02929,
+        "to": 0.03162,
+        "n": 283550
+      },
+      {
+        "tip": 0.033,
+        "usd": 0.003447,
+        "seconds": 40,
+        "from": 0.03162,
+        "to": 0.03415,
+        "n": 179581
+      },
+      {
+        "tip": 0.035,
+        "usd": 0.003717,
+        "seconds": 40,
+        "from": 0.03415,
+        "to": 0.03687,
+        "n": 180875
+      },
+      {
+        "tip": 0.038,
+        "usd": 0.004019,
+        "seconds": 39,
+        "from": 0.03687,
+        "to": 0.03981,
+        "n": 168611
+      },
+      {
+        "tip": 0.041,
+        "usd": 0.004261,
+        "seconds": 43,
+        "from": 0.03981,
+        "to": 0.04299,
+        "n": 390764
+      },
+      {
+        "tip": 0.045,
+        "usd": 0.004692,
+        "seconds": 40.5,
+        "from": 0.04299,
+        "to": 0.04642,
+        "n": 187096
+      },
+      {
+        "tip": 0.05,
+        "usd": 0.005219,
+        "seconds": 35,
+        "from": 0.04642,
+        "to": 0.05012,
+        "n": 1360894
+      },
+      {
+        "tip": 0.052,
+        "usd": 0.005463,
+        "seconds": 36.5,
+        "from": 0.05012,
+        "to": 0.05412,
+        "n": 194538
+      },
+      {
+        "tip": 0.057,
+        "usd": 0.005937,
+        "seconds": 34,
+        "from": 0.05412,
+        "to": 0.05843,
+        "n": 272610
+      },
+      {
+        "tip": 0.061,
+        "usd": 0.006362,
+        "seconds": 33.5,
+        "from": 0.05843,
+        "to": 0.0631,
+        "n": 250149
+      },
+      {
+        "tip": 0.066,
+        "usd": 0.006875,
+        "seconds": 35.5,
+        "from": 0.0631,
+        "to": 0.06813,
+        "n": 194413
+      },
+      {
+        "tip": 0.07,
+        "usd": 0.007342,
+        "seconds": 34.5,
+        "from": 0.06813,
+        "to": 0.07356,
+        "n": 337599
+      },
+      {
+        "tip": 0.079,
+        "usd": 0.008273,
+        "seconds": 31.5,
+        "from": 0.07356,
+        "to": 0.07943,
+        "n": 4016290
+      },
+      {
+        "tip": 0.082,
+        "usd": 0.008586,
+        "seconds": 32.5,
+        "from": 0.07943,
+        "to": 0.08577,
+        "n": 257020
+      },
+      {
+        "tip": 0.089,
+        "usd": 0.009354,
+        "seconds": 30.5,
+        "from": 0.08577,
+        "to": 0.09261,
+        "n": 459864
+      },
+      {
+        "tip": 0.097,
+        "usd": 0.01013,
+        "seconds": 30,
+        "from": 0.09261,
+        "to": 0.1,
+        "n": 373258
+      },
+      {
+        "tip": 0.11,
+        "usd": 0.01109,
+        "seconds": 33,
+        "from": 0.1,
+        "to": 0.15,
+        "n": 4993342
+      },
+      {
+        "tip": 0.17,
+        "usd": 0.01746,
+        "seconds": 26.5,
+        "from": 0.15,
+        "to": 0.2,
+        "n": 1135974
+      },
+      {
+        "tip": 0.2,
+        "usd": 0.02126,
+        "seconds": 28.5,
+        "from": 0.2,
+        "to": 0.25,
+        "n": 5068778
+      },
+      {
+        "tip": 0.26,
+        "usd": 0.02775,
+        "seconds": 23.5,
+        "from": 0.25,
+        "to": 0.3,
+        "n": 777513
+      },
+      {
+        "tip": 0.32,
+        "usd": 0.0331,
+        "seconds": 24,
+        "from": 0.3,
+        "to": 0.35,
+        "n": 570786
+      },
+      {
+        "tip": 0.37,
+        "usd": 0.03913,
+        "seconds": 23,
+        "from": 0.35,
+        "to": 0.4,
+        "n": 276512
+      },
+      {
+        "tip": 0.42,
+        "usd": 0.04362,
+        "seconds": 22.5,
+        "from": 0.4,
+        "to": 0.45,
+        "n": 364954
+      },
+      {
+        "tip": 0.47,
+        "usd": 0.04962,
+        "seconds": 22.5,
+        "from": 0.45,
+        "to": 0.5,
+        "n": 231480
+      },
+      {
+        "tip": 0.5,
+        "usd": 0.05269,
+        "seconds": 21,
+        "from": 0.5,
+        "to": 0.55,
+        "n": 2815512
+      },
+      {
+        "tip": 0.57,
+        "usd": 0.06016,
+        "seconds": 22.5,
+        "from": 0.55,
+        "to": 0.6,
+        "n": 332973
+      },
+      {
+        "tip": 0.62,
+        "usd": 0.0648,
+        "seconds": 21,
+        "from": 0.6,
+        "to": 0.65,
+        "n": 577959
+      },
+      {
+        "tip": 0.67,
+        "usd": 0.07063,
+        "seconds": 21.5,
+        "from": 0.65,
+        "to": 0.7,
+        "n": 240116
+      },
+      {
+        "tip": 0.72,
+        "usd": 0.07593,
+        "seconds": 21.5,
+        "from": 0.7,
+        "to": 0.75,
+        "n": 191234
+      },
+      {
+        "tip": 0.77,
+        "usd": 0.08094,
+        "seconds": 21.5,
+        "from": 0.75,
+        "to": 0.8,
+        "n": 173268
+      },
+      {
+        "tip": 0.82,
+        "usd": 0.0861,
+        "seconds": 21.5,
+        "from": 0.8,
+        "to": 0.85,
+        "n": 170631
+      },
+      {
+        "tip": 0.87,
+        "usd": 0.09175,
+        "seconds": 21.5,
+        "from": 0.85,
+        "to": 0.9,
+        "n": 138591
+      },
+      {
+        "tip": 0.92,
+        "usd": 0.09665,
+        "seconds": 21,
+        "from": 0.9,
+        "to": 0.95,
+        "n": 149677
+      },
+      {
+        "tip": 0.97,
+        "usd": 0.1022,
+        "seconds": 21,
+        "from": 0.95,
+        "to": 1.0,
+        "n": 133322
+      },
+      {
+        "tip": 1,
+        "usd": 0.1049,
+        "seconds": 20.5,
+        "from": 1.0,
+        "to": 1.05,
+        "n": 14655953
+      },
+      {
+        "tip": 1.1,
+        "usd": 0.1126,
+        "seconds": 21,
+        "from": 1.05,
+        "to": 1.1,
+        "n": 128910
+      },
+      {
+        "tip": 1.1,
+        "usd": 0.1172,
+        "seconds": 21.5,
+        "from": 1.1,
+        "to": 1.15,
+        "n": 143554
+      },
+      {
+        "tip": 1.2,
+        "usd": 0.1223,
+        "seconds": 21,
+        "from": 1.15,
+        "to": 1.2,
+        "n": 139239
+      },
+      {
+        "tip": 1.2,
+        "usd": 0.1276,
+        "seconds": 20,
+        "from": 1.2,
+        "to": 1.25,
+        "n": 126815
+      },
+      {
+        "tip": 1.3,
+        "usd": 0.1337,
+        "seconds": 20,
+        "from": 1.25,
+        "to": 1.3,
+        "n": 90534
+      },
+      {
+        "tip": 1.3,
+        "usd": 0.1389,
+        "seconds": 19.5,
+        "from": 1.3,
+        "to": 1.35,
+        "n": 96798
+      },
+      {
+        "tip": 1.4,
+        "usd": 0.1443,
+        "seconds": 20.5,
+        "from": 1.35,
+        "to": 1.4,
+        "n": 101572
+      },
+      {
+        "tip": 1.4,
+        "usd": 0.1475,
+        "seconds": 20.5,
+        "from": 1.4,
+        "to": 1.45,
+        "n": 518744
+      },
+      {
+        "tip": 1.5,
+        "usd": 0.1549,
+        "seconds": 20,
+        "from": 1.45,
+        "to": 1.5,
+        "n": 203601
+      },
+      {
+        "tip": 1.5,
+        "usd": 0.1574,
+        "seconds": 19,
+        "from": 1.5,
+        "to": 1.55,
+        "n": 2031426
+      },
+      {
+        "tip": 1.6,
+        "usd": 0.1651,
+        "seconds": 20,
+        "from": 1.55,
+        "to": 1.6,
+        "n": 59694
+      },
+      {
+        "tip": 1.6,
+        "usd": 0.17,
+        "seconds": 21,
+        "from": 1.6,
+        "to": 1.65,
+        "n": 65907
+      },
+      {
+        "tip": 1.7,
+        "usd": 0.1749,
+        "seconds": 20,
+        "from": 1.65,
+        "to": 1.7,
+        "n": 69043
+      },
+      {
+        "tip": 1.7,
+        "usd": 0.1797,
+        "seconds": 19,
+        "from": 1.7,
+        "to": 1.75,
+        "n": 105862
+      },
+      {
+        "tip": 1.8,
+        "usd": 0.1861,
+        "seconds": 20.5,
+        "from": 1.75,
+        "to": 1.8,
+        "n": 54977
+      },
+      {
+        "tip": 1.8,
+        "usd": 0.191,
+        "seconds": 18.5,
+        "from": 1.8,
+        "to": 1.85,
+        "n": 70590
+      },
+      {
+        "tip": 1.9,
+        "usd": 0.1967,
+        "seconds": 18,
+        "from": 1.85,
+        "to": 1.9,
+        "n": 67931
+      },
+      {
+        "tip": 1.9,
+        "usd": 0.2021,
+        "seconds": 19,
+        "from": 1.9,
+        "to": 1.95,
+        "n": 86148
+      },
+      {
+        "tip": 2,
+        "usd": 0.2068,
+        "seconds": 20,
+        "from": 1.95,
+        "to": 2.0,
+        "n": 77676
+      },
+      {
+        "tip": 2,
+        "usd": 0.2098,
+        "seconds": 18,
+        "from": 2.0,
+        "to": 2.05,
+        "n": 17556289
+      }
+    ],
+    "line": [
+      { "usd": 0.001363, "seconds": 44.6 },
+      { "usd": 0.002356, "seconds": 42.5 },
+      { "usd": 0.002724, "seconds": 42.3 },
+      { "usd": 0.003768, "seconds": 40.6 },
+      { "usd": 0.004692, "seconds": 40.5 },
+      { "usd": 0.005249, "seconds": 35.2 },
+      { "usd": 0.00666, "seconds": 34.3 },
+      { "usd": 0.009793, "seconds": 32.2 },
+      { "usd": 0.02056, "seconds": 28.1 },
+      { "usd": 0.03001, "seconds": 23.7 },
+      { "usd": 0.03913, "seconds": 23 },
+      { "usd": 0.04362, "seconds": 22.5 },
+      { "usd": 0.04962, "seconds": 22.5 },
+      { "usd": 0.06007, "seconds": 21.2 },
+      { "usd": 0.09665, "seconds": 21 },
+      { "usd": 0.1022, "seconds": 21 },
+      { "usd": 0.1053, "seconds": 20.5 },
+      { "usd": 0.1422, "seconds": 20.3 },
+      { "usd": 0.1549, "seconds": 20 },
+      { "usd": 0.1601, "seconds": 19.1 },
+      { "usd": 0.1995, "seconds": 18.9 },
+      { "usd": 0.2098, "seconds": 18 }
+    ],
+    "marks": [
+      {
+        "name": "0.1 gwei",
+        "ours": false,
+        "usd": 0.0111,
+        "cost": 0.01,
+        "seconds": 32
+      },
+      {
+        "name": "Our estimated fast tip",
+        "ours": true,
+        "usd": 0.0371,
+        "cost": 0.037,
+        "seconds": 23
+      },
+      {
+        "name": "1 gwei",
+        "ours": false,
+        "usd": 0.105,
+        "cost": 0.1,
+        "seconds": 21
+      },
+      {
+        "name": "2 gwei",
+        "ours": false,
+        "usd": 0.21,
+        "cost": 0.21,
+        "seconds": 18
+      }
+    ]
+  },
+  "speedHeadline": { "extra": 0.17, "fromSure": 23, "toSure": 18 },
+  "record": {
+    "slow": [
+      { "timestamp": 1691366400, "landed": 99.6, "target": 95, "over": 0.0021 },
+      { "timestamp": 1691971200, "landed": 99.9, "target": 95, "over": 0.0017 },
+      { "timestamp": 1692576000, "landed": 99.7, "target": 95, "over": 0.0023 },
+      { "timestamp": 1693180800, "landed": 99.7, "target": 95, "over": 0.003 },
+      { "timestamp": 1693785600, "landed": 99.7, "target": 95, "over": 0.0032 },
+      { "timestamp": 1694390400, "landed": 99.9, "target": 95, "over": 0.0028 },
+      {
+        "timestamp": 1694995200,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0033
+      },
+      { "timestamp": 1695600000, "landed": 100, "target": 95, "over": 0.0023 },
+      { "timestamp": 1696204800, "landed": 100.0, "target": 95, "over": 0.003 },
+      { "timestamp": 1696809600, "landed": 99.9, "target": 95, "over": 0.0018 },
+      {
+        "timestamp": 1697414400,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0023
+      },
+      {
+        "timestamp": 1698019200,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0015
+      },
+      {
+        "timestamp": 1698624000,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0013
+      },
+      {
+        "timestamp": 1699228800,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.00066
+      },
+      { "timestamp": 1699833600, "landed": 100, "target": 95, "over": 0.0025 },
+      {
+        "timestamp": 1700438400,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0025
+      },
+      {
+        "timestamp": 1701043200,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0034
+      },
+      { "timestamp": 1701648000, "landed": 100.0, "target": 95, "over": 0.002 },
+      {
+        "timestamp": 1702252800,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0021
+      },
+      {
+        "timestamp": 1702857600,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0014
+      },
+      {
+        "timestamp": 1703462400,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.00048
+      },
+      { "timestamp": 1704067200, "landed": 100, "target": 95, "over": 0.00023 },
+      {
+        "timestamp": 1704672000,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00028
+      },
+      {
+        "timestamp": 1705276800,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0012
+      },
+      {
+        "timestamp": 1705881600,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00071
+      },
+      {
+        "timestamp": 1706486400,
+        "landed": 99.3,
+        "target": 95,
+        "over": 0.00046
+      },
+      {
+        "timestamp": 1707091200,
+        "landed": 98.6,
+        "target": 95,
+        "over": 0.00055
+      },
+      {
+        "timestamp": 1707696000,
+        "landed": 98.7,
+        "target": 95,
+        "over": 0.00011
+      },
+      {
+        "timestamp": 1708300800,
+        "landed": 99.4,
+        "target": 95,
+        "over": 0.00042
+      },
+      { "timestamp": 1708905600, "landed": 98.6, "target": 95, "over": 7.1e-5 },
+      { "timestamp": 1709510400, "landed": 99.4, "target": 95, "over": 0.0001 },
+      { "timestamp": 1710115200, "landed": 99.7, "target": 95, "over": 0.0004 },
+      {
+        "timestamp": 1710720000,
+        "landed": 99.4,
+        "target": 95,
+        "over": 0.00025
+      },
+      {
+        "timestamp": 1711324800,
+        "landed": 99.0,
+        "target": 95,
+        "over": 0.00025
+      },
+      {
+        "timestamp": 1711929600,
+        "landed": 99.2,
+        "target": 95,
+        "over": 0.00029
+      },
+      {
+        "timestamp": 1712534400,
+        "landed": 98.2,
+        "target": 95,
+        "over": 0.00017
+      },
+      { "timestamp": 1713139200, "landed": 98.2, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1713744000, "landed": 98.5, "target": 95, "over": 2.5e-5 },
+      {
+        "timestamp": 1714348800,
+        "landed": 99.5,
+        "target": 95,
+        "over": 0.00027
+      },
+      {
+        "timestamp": 1714953600,
+        "landed": 99.0,
+        "target": 95,
+        "over": 0.00021
+      },
+      {
+        "timestamp": 1715558400,
+        "landed": 98.8,
+        "target": 95,
+        "over": 0.00014
+      },
+      { "timestamp": 1716163200, "landed": 97.4, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1716768000, "landed": 99.1, "target": 95, "over": 5e-5 },
+      {
+        "timestamp": 1717372800,
+        "landed": 99.6,
+        "target": 95,
+        "over": 0.00086
+      },
+      { "timestamp": 1717977600, "landed": 99.3, "target": 95, "over": 2e-5 },
+      {
+        "timestamp": 1718582400,
+        "landed": 99.1,
+        "target": 95,
+        "over": 0.00023
+      },
+      { "timestamp": 1719187200, "landed": 99.7, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1719792000, "landed": 99.8, "target": 95, "over": 1.4e-5 },
+      { "timestamp": 1720396800, "landed": 99.8, "target": 95, "over": 1.4e-5 },
+      {
+        "timestamp": 1721001600,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00022
+      },
+      { "timestamp": 1721606400, "landed": 99.8, "target": 95, "over": 2e-5 },
+      {
+        "timestamp": 1722211200,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00012
+      },
+      { "timestamp": 1722816000, "landed": 99.7, "target": 95, "over": 1.4e-5 },
+      {
+        "timestamp": 1723420800,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00012
+      },
+      { "timestamp": 1724025600, "landed": 99.8, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1724630400, "landed": 99.7, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1725235200, "landed": 99.6, "target": 95, "over": 5.8e-5 },
+      { "timestamp": 1725840000, "landed": 99.8, "target": 95, "over": 3.9e-5 },
+      { "timestamp": 1726444800, "landed": 99.9, "target": 95, "over": 0.0011 },
+      { "timestamp": 1727049600, "landed": 99.7, "target": 95, "over": 0.002 },
+      {
+        "timestamp": 1727654400,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00021
+      },
+      { "timestamp": 1728259200, "landed": 99.7, "target": 95, "over": 0.0015 },
+      { "timestamp": 1728864000, "landed": 99.3, "target": 95, "over": 0.0062 },
+      { "timestamp": 1729468800, "landed": 99.4, "target": 95, "over": 0.0049 },
+      { "timestamp": 1730073600, "landed": 99.0, "target": 95, "over": 0.0047 },
+      { "timestamp": 1730678400, "landed": 99.8, "target": 95, "over": 0.0052 },
+      { "timestamp": 1731283200, "landed": 99.7, "target": 95, "over": 0.0054 },
+      { "timestamp": 1731888000, "landed": 99.8, "target": 95, "over": 0.003 },
+      { "timestamp": 1732492800, "landed": 99.8, "target": 95, "over": 0.0029 },
+      { "timestamp": 1733097600, "landed": 99.9, "target": 95, "over": 0.0037 },
+      { "timestamp": 1733702400, "landed": 99.7, "target": 95, "over": 0.0032 },
+      { "timestamp": 1734307200, "landed": 99.8, "target": 95, "over": 0.0012 },
+      {
+        "timestamp": 1734912000,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0011
+      },
+      {
+        "timestamp": 1735516800,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.0005
+      },
+      {
+        "timestamp": 1736121600,
+        "landed": 100.0,
+        "target": 95,
+        "over": 0.00046
+      },
+      {
+        "timestamp": 1736726400,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00036
+      },
+      { "timestamp": 1737331200, "landed": 99.9, "target": 95, "over": 0.0005 },
+      {
+        "timestamp": 1737936000,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00021
+      },
+      {
+        "timestamp": 1738540800,
+        "landed": 99.6,
+        "target": 95,
+        "over": 0.00017
+      },
+      {
+        "timestamp": 1739145600,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00021
+      },
+      {
+        "timestamp": 1739750400,
+        "landed": 99.6,
+        "target": 95,
+        "over": 0.00018
+      },
+      {
+        "timestamp": 1740355200,
+        "landed": 99.4,
+        "target": 95,
+        "over": 0.00023
+      },
+      {
+        "timestamp": 1740960000,
+        "landed": 97.7,
+        "target": 95,
+        "over": 0.00014
+      },
+      { "timestamp": 1741564800, "landed": 99.5, "target": 95, "over": 0.0002 },
+      { "timestamp": 1742169600, "landed": 99.7, "target": 95, "over": 0.0001 },
+      {
+        "timestamp": 1742774400,
+        "landed": 99.4,
+        "target": 95,
+        "over": 0.00016
+      },
+      {
+        "timestamp": 1743379200,
+        "landed": 99.0,
+        "target": 95,
+        "over": 0.00018
+      },
+      { "timestamp": 1743984000, "landed": 99.2, "target": 95, "over": 0.0001 },
+      { "timestamp": 1744588800, "landed": 99.1, "target": 95, "over": 8.4e-5 },
+      {
+        "timestamp": 1745193600,
+        "landed": 99.3,
+        "target": 95,
+        "over": 0.00018
+      },
+      { "timestamp": 1745798400, "landed": 99.6, "target": 95, "over": 0.0001 },
+      {
+        "timestamp": 1746403200,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00078
+      },
+      {
+        "timestamp": 1747008000,
+        "landed": 99.8,
+        "target": 95,
+        "over": 0.00028
+      },
+      {
+        "timestamp": 1747612800,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00017
+      },
+      {
+        "timestamp": 1748217600,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00073
+      },
+      {
+        "timestamp": 1748822400,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00098
+      },
+      {
+        "timestamp": 1749427200,
+        "landed": 99.9,
+        "target": 95,
+        "over": 0.00022
+      },
+      { "timestamp": 1750032000, "landed": 99.8, "target": 95, "over": 6e-5 },
+      { "timestamp": 1750636800, "landed": 99.9, "target": 95, "over": 6e-6 },
+      { "timestamp": 1751241600, "landed": 99.8, "target": 95, "over": 8e-6 },
+      { "timestamp": 1751846400, "landed": 99.9, "target": 95, "over": 7.7e-5 },
+      { "timestamp": 1752451200, "landed": 99.8, "target": 95, "over": 7.2e-5 },
+      { "timestamp": 1753056000, "landed": 99.7, "target": 95, "over": 2e-6 },
+      { "timestamp": 1753660800, "landed": 99.8, "target": 95, "over": 9e-6 },
+      { "timestamp": 1754265600, "landed": 99.7, "target": 95, "over": 2e-6 },
+      { "timestamp": 1754870400, "landed": 99.7, "target": 95, "over": 5e-6 },
+      { "timestamp": 1755475200, "landed": 99.3, "target": 95, "over": 2e-6 },
+      { "timestamp": 1756080000, "landed": 99.3, "target": 95, "over": 5e-6 },
+      { "timestamp": 1756684800, "landed": 99.3, "target": 95, "over": 5e-6 },
+      { "timestamp": 1757289600, "landed": 99.6, "target": 95, "over": 5e-6 },
+      { "timestamp": 1757894400, "landed": 99.7, "target": 95, "over": 2e-6 },
+      { "timestamp": 1758499200, "landed": 99.3, "target": 95, "over": 1e-6 },
+      { "timestamp": 1759104000, "landed": 99.4, "target": 95, "over": 2e-6 },
+      { "timestamp": 1759708800, "landed": 98.9, "target": 95, "over": 1e-6 },
+      { "timestamp": 1760313600, "landed": 98.9, "target": 95, "over": 1e-6 },
+      { "timestamp": 1760918400, "landed": 99.2, "target": 95, "over": 0.0 },
+      { "timestamp": 1761523200, "landed": 99.6, "target": 95, "over": 0.0 },
+      { "timestamp": 1762128000, "landed": 99.9, "target": 95, "over": 1e-6 },
+      { "timestamp": 1762732800, "landed": 99.7, "target": 95, "over": 0.0 },
+      { "timestamp": 1763337600, "landed": 99.8, "target": 95, "over": 0.0 },
+      { "timestamp": 1764547200, "landed": 96.6, "target": 95, "over": 0.0 },
+      { "timestamp": 1765152000, "landed": 99.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1765756800, "landed": 99.7, "target": 95, "over": 0.0 },
+      { "timestamp": 1767571200, "landed": 99.2, "target": 95, "over": 0.0 },
+      { "timestamp": 1768176000, "landed": 99.5, "target": 95, "over": 0.0 },
+      { "timestamp": 1768780800, "landed": 99.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1769385600, "landed": 98.7, "target": 95, "over": 0.0 },
+      { "timestamp": 1769990400, "landed": 93.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1770595200, "landed": 93.5, "target": 95, "over": 0.0 },
+      { "timestamp": 1771200000, "landed": 93.6, "target": 95, "over": 0.0 },
+      { "timestamp": 1771804800, "landed": 93.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1772409600, "landed": 92.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1773014400, "landed": 94.4, "target": 95, "over": 0.0 },
+      { "timestamp": 1773619200, "landed": 95.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1774224000, "landed": 95.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1774828800, "landed": 96.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1775433600, "landed": 94.7, "target": 95, "over": 1e-6 },
+      { "timestamp": 1776038400, "landed": 95.4, "target": 95, "over": 1e-6 },
+      { "timestamp": 1776643200, "landed": 98.8, "target": 95, "over": 2.3e-5 },
+      { "timestamp": 1777248000, "landed": 97.8, "target": 95, "over": 5e-6 },
+      { "timestamp": 1777852800, "landed": 97.6, "target": 95, "over": 0.0 },
+      { "timestamp": 1778457600, "landed": 98.3, "target": 95, "over": 8e-6 },
+      { "timestamp": 1779062400, "landed": 97.2, "target": 95, "over": 4e-6 },
+      { "timestamp": 1779667200, "landed": 96.7, "target": 95, "over": 1e-6 },
+      { "timestamp": 1780272000, "landed": 96.4, "target": 95, "over": 4e-6 },
+      { "timestamp": 1780876800, "landed": 97.7, "target": 95, "over": 2e-5 },
+      { "timestamp": 1781481600, "landed": 96.9, "target": 95, "over": 8e-6 },
+      { "timestamp": 1782086400, "landed": 96.2, "target": 95, "over": 9e-6 },
+      { "timestamp": 1782691200, "landed": 96.6, "target": 95, "over": 5e-6 },
+      { "timestamp": 1783296000, "landed": 96.8, "target": 95, "over": 1.3e-5 },
+      { "timestamp": 1783900800, "landed": 97.3, "target": 95, "over": 8e-6 },
+      { "timestamp": 1784505600, "landed": 97.5, "target": 95, "over": 1.1e-5 },
+      { "timestamp": 1785110400, "landed": 96.4, "target": 95, "over": 6e-6 },
+      { "timestamp": 1785715200, "landed": 96.9, "target": 95, "over": 1.3e-5 },
+      { "timestamp": 1786320000, "landed": 97.1, "target": 95, "over": 1.1e-5 },
+      { "timestamp": 1786924800, "landed": 93.2, "target": 95, "over": 0.0 },
+      { "timestamp": 1787529600, "landed": 92.7, "target": 95, "over": 0.0 },
+      { "timestamp": 1788134400, "landed": 93.6, "target": 95, "over": 0.0 },
+      { "timestamp": 1788739200, "landed": 94.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1789344000, "landed": 94.5, "target": 95, "over": 0.0 },
+      { "timestamp": 1789948800, "landed": 94.3, "target": 95, "over": 0.0 },
+      { "timestamp": 1790553600, "landed": 96.6, "target": 95, "over": 2e-6 },
+      { "timestamp": 1791158400, "landed": 96.5, "target": 95, "over": 3e-6 },
+      { "timestamp": 1791763200, "landed": 95.4, "target": 95, "over": 1e-6 },
+      { "timestamp": 1792368000, "landed": 95.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1792972800, "landed": 94.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1793577600, "landed": 96.3, "target": 95, "over": 0.0 }
+    ],
+    "medium": [
+      { "timestamp": 1691366400, "landed": 99.8, "target": 95, "over": 0.01 },
+      { "timestamp": 1691971200, "landed": 99.7, "target": 95, "over": 0.011 },
+      { "timestamp": 1692576000, "landed": 99.9, "target": 95, "over": 0.0095 },
+      { "timestamp": 1693180800, "landed": 99.8, "target": 95, "over": 0.01 },
+      { "timestamp": 1693785600, "landed": 99.5, "target": 95, "over": 0.011 },
+      { "timestamp": 1694390400, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1694995200, "landed": 99.8, "target": 95, "over": 0.012 },
+      { "timestamp": 1695600000, "landed": 99.8, "target": 95, "over": 0.012 },
+      { "timestamp": 1696204800, "landed": 99.7, "target": 95, "over": 0.012 },
+      { "timestamp": 1696809600, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1697414400, "landed": 99.7, "target": 95, "over": 0.012 },
+      { "timestamp": 1698019200, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1698624000, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1699228800, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1699833600, "landed": 99.9, "target": 95, "over": 0.012 },
+      { "timestamp": 1700438400, "landed": 99.8, "target": 95, "over": 0.011 },
+      { "timestamp": 1701043200, "landed": 99.9, "target": 95, "over": 0.011 },
+      { "timestamp": 1701648000, "landed": 99.7, "target": 95, "over": 0.011 },
+      { "timestamp": 1702252800, "landed": 99.8, "target": 95, "over": 0.0085 },
+      { "timestamp": 1702857600, "landed": 99.8, "target": 95, "over": 0.012 },
+      { "timestamp": 1703462400, "landed": 99.7, "target": 95, "over": 0.012 },
+      { "timestamp": 1704067200, "landed": 99.8, "target": 95, "over": 0.012 },
+      { "timestamp": 1704672000, "landed": 99.8, "target": 95, "over": 0.012 },
+      { "timestamp": 1705276800, "landed": 99.6, "target": 95, "over": 0.011 },
+      { "timestamp": 1705881600, "landed": 99.8, "target": 95, "over": 0.013 },
+      { "timestamp": 1706486400, "landed": 99.8, "target": 95, "over": 0.0094 },
+      { "timestamp": 1707091200, "landed": 99.8, "target": 95, "over": 0.0076 },
+      { "timestamp": 1707696000, "landed": 99.8, "target": 95, "over": 0.0093 },
+      { "timestamp": 1708300800, "landed": 99.6, "target": 95, "over": 0.0092 },
+      { "timestamp": 1708905600, "landed": 99.5, "target": 95, "over": 0.0096 },
+      { "timestamp": 1709510400, "landed": 98.8, "target": 95, "over": 0.0099 },
+      { "timestamp": 1710115200, "landed": 98.9, "target": 95, "over": 0.011 },
+      { "timestamp": 1710720000, "landed": 98.5, "target": 95, "over": 0.012 },
+      { "timestamp": 1711324800, "landed": 98.4, "target": 95, "over": 0.012 },
+      { "timestamp": 1711929600, "landed": 97.3, "target": 95, "over": 0.0091 },
+      { "timestamp": 1712534400, "landed": 96.9, "target": 95, "over": 0.0096 },
+      { "timestamp": 1713139200, "landed": 97.3, "target": 95, "over": 0.0094 },
+      { "timestamp": 1713744000, "landed": 97.4, "target": 95, "over": 0.0094 },
+      { "timestamp": 1714348800, "landed": 97.3, "target": 95, "over": 0.0077 },
+      { "timestamp": 1714953600, "landed": 97.4, "target": 95, "over": 0.0078 },
+      { "timestamp": 1715558400, "landed": 97.2, "target": 95, "over": 0.009 },
+      { "timestamp": 1716163200, "landed": 96.2, "target": 95, "over": 0.0094 },
+      { "timestamp": 1716768000, "landed": 97.1, "target": 95, "over": 0.01 },
+      { "timestamp": 1717372800, "landed": 98.6, "target": 95, "over": 0.012 },
+      { "timestamp": 1717977600, "landed": 99.0, "target": 95, "over": 0.012 },
+      { "timestamp": 1718582400, "landed": 99.0, "target": 95, "over": 0.013 },
+      { "timestamp": 1719187200, "landed": 99.6, "target": 95, "over": 0.088 },
+      { "timestamp": 1719792000, "landed": 99.4, "target": 95, "over": 0.085 },
+      { "timestamp": 1720396800, "landed": 99.4, "target": 95, "over": 0.078 },
+      { "timestamp": 1721001600, "landed": 99.5, "target": 95, "over": 0.1 },
+      { "timestamp": 1721606400, "landed": 99.5, "target": 95, "over": 0.086 },
+      { "timestamp": 1722211200, "landed": 99.5, "target": 95, "over": 0.1 },
+      { "timestamp": 1722816000, "landed": 99.4, "target": 95, "over": 0.1 },
+      { "timestamp": 1723420800, "landed": 99.8, "target": 95, "over": 0.076 },
+      { "timestamp": 1724025600, "landed": 99.4, "target": 95, "over": 0.022 },
+      { "timestamp": 1724630400, "landed": 99.0, "target": 95, "over": 0.02 },
+      { "timestamp": 1725235200, "landed": 99.4, "target": 95, "over": 0.071 },
+      { "timestamp": 1725840000, "landed": 99.6, "target": 95, "over": 0.075 },
+      { "timestamp": 1726444800, "landed": 99.6, "target": 95, "over": 0.15 },
+      { "timestamp": 1727049600, "landed": 99.6, "target": 95, "over": 0.17 },
+      { "timestamp": 1727654400, "landed": 99.7, "target": 95, "over": 0.12 },
+      { "timestamp": 1728259200, "landed": 99.7, "target": 95, "over": 0.15 },
+      { "timestamp": 1728864000, "landed": 99.6, "target": 95, "over": 0.13 },
+      { "timestamp": 1729468800, "landed": 99.5, "target": 95, "over": 0.1 },
+      { "timestamp": 1730073600, "landed": 99.5, "target": 95, "over": 0.1 },
+      { "timestamp": 1730678400, "landed": 99.6, "target": 95, "over": 0.13 },
+      { "timestamp": 1731283200, "landed": 99.6, "target": 95, "over": 0.13 },
+      { "timestamp": 1731888000, "landed": 99.5, "target": 95, "over": 0.11 },
+      { "timestamp": 1732492800, "landed": 99.4, "target": 95, "over": 0.1 },
+      { "timestamp": 1733097600, "landed": 99.6, "target": 95, "over": 0.13 },
+      { "timestamp": 1733702400, "landed": 99.7, "target": 95, "over": 0.13 },
+      { "timestamp": 1734307200, "landed": 99.6, "target": 95, "over": 0.1 },
+      { "timestamp": 1734912000, "landed": 99.7, "target": 95, "over": 0.053 },
+      { "timestamp": 1735516800, "landed": 99.8, "target": 95, "over": 0.11 },
+      { "timestamp": 1736121600, "landed": 99.7, "target": 95, "over": 0.062 },
+      { "timestamp": 1736726400, "landed": 99.8, "target": 95, "over": 0.093 },
+      { "timestamp": 1737331200, "landed": 99.7, "target": 95, "over": 0.072 },
+      { "timestamp": 1737936000, "landed": 99.6, "target": 95, "over": 0.031 },
+      { "timestamp": 1738540800, "landed": 99.1, "target": 95, "over": 0.013 },
+      { "timestamp": 1739145600, "landed": 99.4, "target": 95, "over": 0.013 },
+      { "timestamp": 1739750400, "landed": 99.2, "target": 95, "over": 0.013 },
+      { "timestamp": 1740355200, "landed": 97.5, "target": 95, "over": 0.011 },
+      { "timestamp": 1740960000, "landed": 97.7, "target": 95, "over": 0.01 },
+      { "timestamp": 1741564800, "landed": 97.7, "target": 95, "over": 0.01 },
+      { "timestamp": 1742169600, "landed": 99.0, "target": 95, "over": 0.0091 },
+      { "timestamp": 1742774400, "landed": 98.0, "target": 95, "over": 0.0097 },
+      { "timestamp": 1743379200, "landed": 98.7, "target": 95, "over": 0.01 },
+      { "timestamp": 1743984000, "landed": 98.0, "target": 95, "over": 0.011 },
+      { "timestamp": 1744588800, "landed": 98.3, "target": 95, "over": 0.0086 },
+      { "timestamp": 1745193600, "landed": 97.4, "target": 95, "over": 0.0099 },
+      { "timestamp": 1745798400, "landed": 98.3, "target": 95, "over": 0.009 },
+      { "timestamp": 1746403200, "landed": 99.0, "target": 95, "over": 0.02 },
+      { "timestamp": 1747008000, "landed": 99.3, "target": 95, "over": 0.019 },
+      { "timestamp": 1747612800, "landed": 99.1, "target": 95, "over": 0.013 },
+      { "timestamp": 1748217600, "landed": 99.5, "target": 95, "over": 0.016 },
+      { "timestamp": 1748822400, "landed": 99.4, "target": 95, "over": 0.018 },
+      { "timestamp": 1749427200, "landed": 99.2, "target": 95, "over": 0.014 },
+      { "timestamp": 1750032000, "landed": 99.1, "target": 95, "over": 0.013 },
+      { "timestamp": 1750636800, "landed": 99.4, "target": 95, "over": 0.012 },
+      { "timestamp": 1751241600, "landed": 99.5, "target": 95, "over": 0.0089 },
+      { "timestamp": 1751846400, "landed": 99.5, "target": 95, "over": 0.013 },
+      { "timestamp": 1752451200, "landed": 99.1, "target": 95, "over": 0.013 },
+      { "timestamp": 1753056000, "landed": 99.2, "target": 95, "over": 0.0083 },
+      { "timestamp": 1753660800, "landed": 99.5, "target": 95, "over": 0.008 },
+      { "timestamp": 1754265600, "landed": 99.4, "target": 95, "over": 0.0063 },
+      { "timestamp": 1754870400, "landed": 99.1, "target": 95, "over": 0.0083 },
+      { "timestamp": 1755475200, "landed": 98.5, "target": 95, "over": 0.0052 },
+      { "timestamp": 1756080000, "landed": 98.3, "target": 95, "over": 0.0052 },
+      { "timestamp": 1756684800, "landed": 98.5, "target": 95, "over": 0.0043 },
+      { "timestamp": 1757289600, "landed": 98.6, "target": 95, "over": 0.0027 },
+      { "timestamp": 1757894400, "landed": 98.3, "target": 95, "over": 0.0045 },
+      { "timestamp": 1758499200, "landed": 98.3, "target": 95, "over": 0.0045 },
+      { "timestamp": 1759104000, "landed": 99.0, "target": 95, "over": 0.0051 },
+      { "timestamp": 1759708800, "landed": 97.7, "target": 95, "over": 0.004 },
+      { "timestamp": 1760313600, "landed": 96.0, "target": 95, "over": 0.0016 },
+      { "timestamp": 1760918400, "landed": 97.5, "target": 95, "over": 0.0012 },
+      { "timestamp": 1761523200, "landed": 99.2, "target": 95, "over": 0.0014 },
+      { "timestamp": 1762128000, "landed": 99.2, "target": 95, "over": 0.0053 },
+      { "timestamp": 1762732800, "landed": 98.8, "target": 95, "over": 0.0016 },
+      { "timestamp": 1763337600, "landed": 99.0, "target": 95, "over": 0.0024 },
+      {
+        "timestamp": 1763942400,
+        "landed": 98.5,
+        "target": 95,
+        "over": 0.00041
+      },
+      {
+        "timestamp": 1764547200,
+        "landed": 95.0,
+        "target": 95,
+        "over": 0.00013
+      },
+      {
+        "timestamp": 1765152000,
+        "landed": 97.0,
+        "target": 95,
+        "over": 0.00027
+      },
+      {
+        "timestamp": 1765756800,
+        "landed": 98.0,
+        "target": 95,
+        "over": 0.00019
+      },
+      {
+        "timestamp": 1766361600,
+        "landed": 98.6,
+        "target": 95,
+        "over": 0.00013
+      },
+      {
+        "timestamp": 1766966400,
+        "landed": 99.0,
+        "target": 95,
+        "over": 0.00017
+      },
+      {
+        "timestamp": 1767571200,
+        "landed": 97.4,
+        "target": 95,
+        "over": 0.00013
+      },
+      {
+        "timestamp": 1768176000,
+        "landed": 98.7,
+        "target": 95,
+        "over": 0.00013
+      },
+      {
+        "timestamp": 1768780800,
+        "landed": 97.6,
+        "target": 95,
+        "over": 0.00017
+      },
+      {
+        "timestamp": 1769385600,
+        "landed": 96.1,
+        "target": 95,
+        "over": 0.00019
+      },
+      { "timestamp": 1769990400, "landed": 90.7, "target": 95, "over": 0.0 },
+      { "timestamp": 1770595200, "landed": 92.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1771200000, "landed": 90.8, "target": 95, "over": 0.0 },
+      { "timestamp": 1771804800, "landed": 92.9, "target": 95, "over": 0.0 },
+      { "timestamp": 1772409600, "landed": 93.8, "target": 95, "over": 0.0 },
+      {
+        "timestamp": 1773014400,
+        "landed": 94.6,
+        "target": 95,
+        "over": 0.00017
+      },
+      { "timestamp": 1773619200, "landed": 94.8, "target": 95, "over": 8.1e-5 },
+      { "timestamp": 1774224000, "landed": 94.6, "target": 95, "over": 9.1e-5 },
+      { "timestamp": 1774828800, "landed": 97.0, "target": 95, "over": 0.0003 },
+      {
+        "timestamp": 1775433600,
+        "landed": 95.7,
+        "target": 95,
+        "over": 0.00019
+      },
+      {
+        "timestamp": 1776038400,
+        "landed": 97.3,
+        "target": 95,
+        "over": 0.00038
+      },
+      { "timestamp": 1776643200, "landed": 99.3, "target": 95, "over": 0.013 },
+      { "timestamp": 1777248000, "landed": 99.7, "target": 95, "over": 0.0068 },
+      { "timestamp": 1777852800, "landed": 99.3, "target": 95, "over": 0.0064 },
+      { "timestamp": 1778457600, "landed": 99.4, "target": 95, "over": 0.0022 },
+      {
+        "timestamp": 1779062400,
+        "landed": 98.6,
+        "target": 95,
+        "over": 0.00053
+      },
+      {
+        "timestamp": 1779667200,
+        "landed": 99.1,
+        "target": 95,
+        "over": 0.00048
+      },
+      { "timestamp": 1780272000, "landed": 97.4, "target": 95, "over": 0.0018 },
+      {
+        "timestamp": 1780876800,
+        "landed": 96.4,
+        "target": 95,
+        "over": 0.00031
+      },
+      {
+        "timestamp": 1781481600,
+        "landed": 97.0,
+        "target": 95,
+        "over": 0.00041
+      },
+      {
+        "timestamp": 1782086400,
+        "landed": 97.8,
+        "target": 95,
+        "over": 0.00051
+      },
+      {
+        "timestamp": 1782691200,
+        "landed": 98.4,
+        "target": 95,
+        "over": 0.00053
+      },
+      {
+        "timestamp": 1783296000,
+        "landed": 97.5,
+        "target": 95,
+        "over": 0.00049
+      },
+      { "timestamp": 1783900800, "landed": 98.2, "target": 95, "over": 0.0005 },
+      {
+        "timestamp": 1784505600,
+        "landed": 98.8,
+        "target": 95,
+        "over": 0.00059
+      },
+      { "timestamp": 1785110400, "landed": 99.1, "target": 95, "over": 0.001 },
+      {
+        "timestamp": 1785715200,
+        "landed": 99.2,
+        "target": 95,
+        "over": 0.00052
+      },
+      {
+        "timestamp": 1786320000,
+        "landed": 98.4,
+        "target": 95,
+        "over": 0.00051
+      },
+      {
+        "timestamp": 1786924800,
+        "landed": 97.1,
+        "target": 95,
+        "over": 0.00051
+      },
+      {
+        "timestamp": 1787529600,
+        "landed": 96.5,
+        "target": 95,
+        "over": 0.00055
+      },
+      {
+        "timestamp": 1788134400,
+        "landed": 97.2,
+        "target": 95,
+        "over": 0.00078
+      },
+      {
+        "timestamp": 1788739200,
+        "landed": 98.4,
+        "target": 95,
+        "over": 0.00083
+      },
+      { "timestamp": 1789344000, "landed": 98.2, "target": 95, "over": 0.0012 },
+      { "timestamp": 1789948800, "landed": 99.6, "target": 95, "over": 0.005 },
+      { "timestamp": 1790553600, "landed": 99.8, "target": 95, "over": 0.0052 },
+      { "timestamp": 1791158400, "landed": 99.8, "target": 95, "over": 0.0046 },
+      { "timestamp": 1791763200, "landed": 99.2, "target": 95, "over": 0.0011 },
+      {
+        "timestamp": 1792368000,
+        "landed": 99.3,
+        "target": 95,
+        "over": 0.00052
+      },
+      {
+        "timestamp": 1792972800,
+        "landed": 98.9,
+        "target": 95,
+        "over": 0.00052
+      },
+      { "timestamp": 1793577600, "landed": 99.3, "target": 95, "over": 0.00041 }
+    ],
+    "fast": [
+      { "timestamp": 1691366400, "landed": 98.3, "target": 95, "over": 0.098 },
+      { "timestamp": 1691971200, "landed": 98.3, "target": 95, "over": 0.096 },
+      { "timestamp": 1692576000, "landed": 98.6, "target": 95, "over": 0.086 },
+      { "timestamp": 1693180800, "landed": 97.9, "target": 95, "over": 0.066 },
+      { "timestamp": 1693785600, "landed": 97.9, "target": 95, "over": 0.088 },
+      { "timestamp": 1694390400, "landed": 98.2, "target": 95, "over": 0.12 },
+      { "timestamp": 1694995200, "landed": 98.3, "target": 95, "over": 0.12 },
+      { "timestamp": 1695600000, "landed": 98.5, "target": 95, "over": 0.11 },
+      { "timestamp": 1696204800, "landed": 98.4, "target": 95, "over": 0.085 },
+      { "timestamp": 1696809600, "landed": 98.3, "target": 95, "over": 0.087 },
+      { "timestamp": 1697414400, "landed": 98.5, "target": 95, "over": 0.089 },
+      { "timestamp": 1698019200, "landed": 98.2, "target": 95, "over": 0.11 },
+      { "timestamp": 1698624000, "landed": 98.5, "target": 95, "over": 0.059 },
+      { "timestamp": 1699228800, "landed": 98.4, "target": 95, "over": 0.11 },
+      { "timestamp": 1699833600, "landed": 98.4, "target": 95, "over": 0.092 },
+      { "timestamp": 1700438400, "landed": 98.3, "target": 95, "over": 0.11 },
+      { "timestamp": 1701043200, "landed": 98.3, "target": 95, "over": 0.095 },
+      { "timestamp": 1701648000, "landed": 97.8, "target": 95, "over": 0.088 },
+      { "timestamp": 1702252800, "landed": 98.0, "target": 95, "over": 0.088 },
+      { "timestamp": 1702857600, "landed": 98.3, "target": 95, "over": 0.081 },
+      { "timestamp": 1703462400, "landed": 98.2, "target": 95, "over": 0.041 },
+      { "timestamp": 1704067200, "landed": 98.0, "target": 95, "over": 0.044 },
+      { "timestamp": 1704672000, "landed": 97.9, "target": 95, "over": 0.072 },
+      { "timestamp": 1705276800, "landed": 98.0, "target": 95, "over": 0.044 },
+      { "timestamp": 1705881600, "landed": 96.8, "target": 95, "over": 0.022 },
+      { "timestamp": 1706486400, "landed": 97.5, "target": 95, "over": 0.072 },
+      { "timestamp": 1707091200, "landed": 97.5, "target": 95, "over": 0.16 },
+      { "timestamp": 1707696000, "landed": 97.3, "target": 95, "over": 0.13 },
+      { "timestamp": 1708300800, "landed": 97.3, "target": 95, "over": 0.16 },
+      { "timestamp": 1708905600, "landed": 97.0, "target": 95, "over": 0.21 },
+      { "timestamp": 1709510400, "landed": 97.7, "target": 95, "over": 0.17 },
+      { "timestamp": 1710115200, "landed": 97.1, "target": 95, "over": 0.15 },
+      { "timestamp": 1710720000, "landed": 97.1, "target": 95, "over": 0.15 },
+      { "timestamp": 1711324800, "landed": 97.0, "target": 95, "over": 0.14 },
+      { "timestamp": 1711929600, "landed": 97.2, "target": 95, "over": 0.15 },
+      { "timestamp": 1712534400, "landed": 97.5, "target": 95, "over": 0.16 },
+      { "timestamp": 1713139200, "landed": 97.4, "target": 95, "over": 0.15 },
+      { "timestamp": 1713744000, "landed": 97.5, "target": 95, "over": 0.16 },
+      { "timestamp": 1714348800, "landed": 97.6, "target": 95, "over": 0.16 },
+      { "timestamp": 1714953600, "landed": 97.7, "target": 95, "over": 0.15 },
+      { "timestamp": 1715558400, "landed": 97.8, "target": 95, "over": 0.14 },
+      { "timestamp": 1716163200, "landed": 97.1, "target": 95, "over": 0.13 },
+      { "timestamp": 1716768000, "landed": 97.5, "target": 95, "over": 0.13 },
+      { "timestamp": 1717372800, "landed": 97.1, "target": 95, "over": 0.076 },
+      { "timestamp": 1717977600, "landed": 96.4, "target": 95, "over": 0.09 },
+      { "timestamp": 1718582400, "landed": 95.1, "target": 95, "over": 0.092 },
+      { "timestamp": 1719187200, "landed": 95.7, "target": 95, "over": 0.12 },
+      { "timestamp": 1719792000, "landed": 95.9, "target": 95, "over": 0.11 },
+      { "timestamp": 1720396800, "landed": 96.9, "target": 95, "over": 0.092 },
+      { "timestamp": 1721001600, "landed": 96.2, "target": 95, "over": 0.13 },
+      { "timestamp": 1721606400, "landed": 96.1, "target": 95, "over": 0.1 },
+      { "timestamp": 1722211200, "landed": 96.8, "target": 95, "over": 0.12 },
+      { "timestamp": 1722816000, "landed": 96.2, "target": 95, "over": 0.11 },
+      { "timestamp": 1723420800, "landed": 96.5, "target": 95, "over": 0.12 },
+      { "timestamp": 1724025600, "landed": 96.5, "target": 95, "over": 0.11 },
+      { "timestamp": 1724630400, "landed": 96.3, "target": 95, "over": 0.12 },
+      { "timestamp": 1725235200, "landed": 96.3, "target": 95, "over": 0.16 },
+      { "timestamp": 1725840000, "landed": 96.8, "target": 95, "over": 0.15 },
+      { "timestamp": 1726444800, "landed": 96.7, "target": 95, "over": 0.22 },
+      { "timestamp": 1727049600, "landed": 97.0, "target": 95, "over": 0.23 },
+      { "timestamp": 1727654400, "landed": 96.8, "target": 95, "over": 0.17 },
+      { "timestamp": 1728259200, "landed": 96.8, "target": 95, "over": 0.19 },
+      { "timestamp": 1728864000, "landed": 96.6, "target": 95, "over": 0.13 },
+      { "timestamp": 1729468800, "landed": 96.8, "target": 95, "over": 0.099 },
+      { "timestamp": 1730073600, "landed": 97.2, "target": 95, "over": 0.11 },
+      { "timestamp": 1730678400, "landed": 96.9, "target": 95, "over": 0.17 },
+      { "timestamp": 1731283200, "landed": 97.0, "target": 95, "over": 0.21 },
+      { "timestamp": 1731888000, "landed": 97.0, "target": 95, "over": 0.16 },
+      { "timestamp": 1732492800, "landed": 97.1, "target": 95, "over": 0.14 },
+      { "timestamp": 1733097600, "landed": 96.6, "target": 95, "over": 0.16 },
+      { "timestamp": 1733702400, "landed": 97.2, "target": 95, "over": 0.15 },
+      { "timestamp": 1734307200, "landed": 97.0, "target": 95, "over": 0.16 },
+      { "timestamp": 1734912000, "landed": 97.8, "target": 95, "over": 0.12 },
+      { "timestamp": 1735516800, "landed": 97.6, "target": 95, "over": 0.15 },
+      { "timestamp": 1736121600, "landed": 97.7, "target": 95, "over": 0.13 },
+      { "timestamp": 1736726400, "landed": 97.6, "target": 95, "over": 0.16 },
+      { "timestamp": 1737331200, "landed": 97.4, "target": 95, "over": 0.12 },
+      { "timestamp": 1737936000, "landed": 97.2, "target": 95, "over": 0.1 },
+      { "timestamp": 1738540800, "landed": 95.7, "target": 95, "over": 0.063 },
+      { "timestamp": 1739145600, "landed": 96.4, "target": 95, "over": 0.051 },
+      { "timestamp": 1739750400, "landed": 95.5, "target": 95, "over": 0.051 },
+      { "timestamp": 1740355200, "landed": 92.6, "target": 95, "over": 0.039 },
+      { "timestamp": 1740960000, "landed": 94.1, "target": 95, "over": 0.044 },
+      { "timestamp": 1741564800, "landed": 94.6, "target": 95, "over": 0.041 },
+      { "timestamp": 1742169600, "landed": 95.3, "target": 95, "over": 0.028 },
+      { "timestamp": 1742774400, "landed": 96.4, "target": 95, "over": 0.041 },
+      { "timestamp": 1743379200, "landed": 95.2, "target": 95, "over": 0.065 },
+      { "timestamp": 1743984000, "landed": 92.3, "target": 95, "over": 0.092 },
+      { "timestamp": 1744588800, "landed": 95.2, "target": 95, "over": 0.041 },
+      { "timestamp": 1745193600, "landed": 94.8, "target": 95, "over": 0.038 },
+      { "timestamp": 1745798400, "landed": 95.2, "target": 95, "over": 0.03 },
+      { "timestamp": 1746403200, "landed": 95.4, "target": 95, "over": 0.077 },
+      { "timestamp": 1747008000, "landed": 96.8, "target": 95, "over": 0.083 },
+      { "timestamp": 1747612800, "landed": 96.6, "target": 95, "over": 0.06 },
+      { "timestamp": 1748217600, "landed": 97.1, "target": 95, "over": 0.083 },
+      { "timestamp": 1748822400, "landed": 97.4, "target": 95, "over": 0.067 },
+      { "timestamp": 1749427200, "landed": 96.6, "target": 95, "over": 0.061 },
+      { "timestamp": 1750032000, "landed": 96.2, "target": 95, "over": 0.053 },
+      { "timestamp": 1750636800, "landed": 97.3, "target": 95, "over": 0.1 },
+      { "timestamp": 1751241600, "landed": 97.6, "target": 95, "over": 0.059 },
+      { "timestamp": 1751846400, "landed": 97.2, "target": 95, "over": 0.078 },
+      { "timestamp": 1752451200, "landed": 97.6, "target": 95, "over": 0.11 },
+      { "timestamp": 1753056000, "landed": 97.3, "target": 95, "over": 0.047 },
+      { "timestamp": 1753660800, "landed": 96.7, "target": 95, "over": 0.046 },
+      { "timestamp": 1754265600, "landed": 97.9, "target": 95, "over": 0.021 },
+      { "timestamp": 1754870400, "landed": 97.0, "target": 95, "over": 0.03 },
+      { "timestamp": 1755475200, "landed": 96.8, "target": 95, "over": 0.04 },
+      { "timestamp": 1756080000, "landed": 97.0, "target": 95, "over": 0.033 },
+      { "timestamp": 1756684800, "landed": 97.5, "target": 95, "over": 0.045 },
+      { "timestamp": 1757289600, "landed": 97.6, "target": 95, "over": 0.024 },
+      { "timestamp": 1757894400, "landed": 97.3, "target": 95, "over": 0.025 },
+      { "timestamp": 1758499200, "landed": 96.9, "target": 95, "over": 0.032 },
+      { "timestamp": 1759104000, "landed": 97.0, "target": 95, "over": 0.025 },
+      { "timestamp": 1759708800, "landed": 95.8, "target": 95, "over": 0.026 },
+      { "timestamp": 1760313600, "landed": 95.3, "target": 95, "over": 0.027 },
+      { "timestamp": 1760918400, "landed": 96.9, "target": 95, "over": 0.0098 },
+      { "timestamp": 1761523200, "landed": 97.7, "target": 95, "over": 0.01 },
+      { "timestamp": 1762128000, "landed": 96.7, "target": 95, "over": 0.018 },
+      { "timestamp": 1762732800, "landed": 97.4, "target": 95, "over": 0.011 },
+      { "timestamp": 1763337600, "landed": 97.2, "target": 95, "over": 0.012 },
+      { "timestamp": 1763942400, "landed": 97.7, "target": 95, "over": 0.0069 },
+      { "timestamp": 1764547200, "landed": 95.6, "target": 95, "over": 0.0062 },
+      { "timestamp": 1765152000, "landed": 94.8, "target": 95, "over": 0.0029 },
+      {
+        "timestamp": 1765756800,
+        "landed": 94.2,
+        "target": 95,
+        "over": 0.00089
+      },
+      {
+        "timestamp": 1766361600,
+        "landed": 96.3,
+        "target": 95,
+        "over": 0.00088
+      },
+      { "timestamp": 1766966400, "landed": 96.7, "target": 95, "over": 0.0019 },
+      { "timestamp": 1767571200, "landed": 94.8, "target": 95, "over": 0.0011 },
+      {
+        "timestamp": 1768176000,
+        "landed": 94.2,
+        "target": 95,
+        "over": 0.00092
+      },
+      { "timestamp": 1768780800, "landed": 94.8, "target": 95, "over": 0.0014 },
+      { "timestamp": 1769385600, "landed": 92.4, "target": 95, "over": 0.0011 },
+      { "timestamp": 1769990400, "landed": 92.8, "target": 95, "over": 0.009 },
+      { "timestamp": 1770595200, "landed": 94.5, "target": 95, "over": 0.0 },
+      { "timestamp": 1771200000, "landed": 93.5, "target": 95, "over": 0.0 },
+      { "timestamp": 1771804800, "landed": 93.1, "target": 95, "over": 0.0 },
+      { "timestamp": 1772409600, "landed": 94.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1773014400, "landed": 94.0, "target": 95, "over": 0.0 },
+      { "timestamp": 1773619200, "landed": 92.9, "target": 95, "over": 0.0 },
+      { "timestamp": 1774224000, "landed": 96.3, "target": 95, "over": 0.024 },
+      { "timestamp": 1774828800, "landed": 95.0, "target": 95, "over": 0.0085 },
+      { "timestamp": 1775433600, "landed": 95.6, "target": 95, "over": 0.0037 },
+      { "timestamp": 1776038400, "landed": 95.5, "target": 95, "over": 0.0054 },
+      { "timestamp": 1776643200, "landed": 97.8, "target": 95, "over": 0.096 },
+      { "timestamp": 1777248000, "landed": 98.3, "target": 95, "over": 0.037 },
+      { "timestamp": 1777852800, "landed": 97.3, "target": 95, "over": 0.025 },
+      { "timestamp": 1778457600, "landed": 97.9, "target": 95, "over": 0.016 },
+      { "timestamp": 1779062400, "landed": 96.0, "target": 95, "over": 0.0089 },
+      { "timestamp": 1779667200, "landed": 96.7, "target": 95, "over": 0.0052 },
+      { "timestamp": 1780272000, "landed": 95.6, "target": 95, "over": 0.011 },
+      { "timestamp": 1780876800, "landed": 97.3, "target": 95, "over": 0.0087 },
+      { "timestamp": 1781481600, "landed": 97.3, "target": 95, "over": 0.0097 },
+      { "timestamp": 1782086400, "landed": 97.0, "target": 95, "over": 0.0064 },
+      { "timestamp": 1782691200, "landed": 97.6, "target": 95, "over": 0.011 },
+      { "timestamp": 1783296000, "landed": 94.2, "target": 95, "over": 0.0022 },
+      { "timestamp": 1783900800, "landed": 95.6, "target": 95, "over": 0.0039 },
+      { "timestamp": 1784505600, "landed": 96.1, "target": 95, "over": 0.009 },
+      { "timestamp": 1785110400, "landed": 97.6, "target": 95, "over": 0.012 },
+      { "timestamp": 1785715200, "landed": 96.8, "target": 95, "over": 0.0048 },
+      { "timestamp": 1786320000, "landed": 97.2, "target": 95, "over": 0.0048 },
+      { "timestamp": 1786924800, "landed": 96.3, "target": 95, "over": 0.011 },
+      { "timestamp": 1787529600, "landed": 97.6, "target": 95, "over": 0.011 },
+      { "timestamp": 1788134400, "landed": 96.6, "target": 95, "over": 0.017 },
+      { "timestamp": 1788739200, "landed": 96.9, "target": 95, "over": 0.017 },
+      { "timestamp": 1789344000, "landed": 97.2, "target": 95, "over": 0.013 },
+      { "timestamp": 1789948800, "landed": 98.3, "target": 95, "over": 0.018 },
+      { "timestamp": 1790553600, "landed": 99.0, "target": 95, "over": 0.047 },
+      { "timestamp": 1791158400, "landed": 98.6, "target": 95, "over": 0.016 },
+      { "timestamp": 1791763200, "landed": 97.5, "target": 95, "over": 0.0066 },
+      { "timestamp": 1792368000, "landed": 97.7, "target": 95, "over": 0.0051 },
+      { "timestamp": 1792972800, "landed": 96.1, "target": 95, "over": 0.0052 },
+      { "timestamp": 1793577600, "landed": 97.7, "target": 95, "over": 0.0096 }
+    ]
+  },
+  "fastHistory": [
+    { "timestamp": 1691366400, "tip": 1.2, "needed": 0.051, "two": 2 },
+    { "timestamp": 1691971200, "tip": 1.0, "needed": 0.045, "two": 2 },
+    { "timestamp": 1692576000, "tip": 0.96, "needed": 0.045, "two": 2 },
+    { "timestamp": 1693180800, "tip": 0.77, "needed": 0.065, "two": 2 },
+    { "timestamp": 1693785600, "tip": 1.1, "needed": 0.12, "two": 2 },
+    { "timestamp": 1694390400, "tip": 1.3, "needed": 0.094, "two": 2 },
+    { "timestamp": 1694995200, "tip": 1.3, "needed": 0.11, "two": 2 },
+    { "timestamp": 1695600000, "tip": 1.3, "needed": 0.045, "two": 2 },
+    { "timestamp": 1696204800, "tip": 0.92, "needed": 0.056, "two": 2 },
+    { "timestamp": 1696809600, "tip": 0.91, "needed": 0.1, "two": 2 },
+    { "timestamp": 1697414400, "tip": 0.97, "needed": 0.016, "two": 2 },
+    { "timestamp": 1698019200, "tip": 1.2, "needed": 0.016, "two": 2 },
+    { "timestamp": 1698624000, "tip": 0.62, "needed": 0.013, "two": 2 },
+    { "timestamp": 1699228800, "tip": 1.1, "needed": 0.014, "two": 2 },
+    { "timestamp": 1699833600, "tip": 0.95, "needed": 0.017, "two": 2 },
+    { "timestamp": 1700438400, "tip": 1.2, "needed": 0.045, "two": 2 },
+    { "timestamp": 1701043200, "tip": 1.0, "needed": 0.045, "two": 2 },
+    { "timestamp": 1701648000, "tip": 1.0, "needed": 0.069, "two": 2 },
+    { "timestamp": 1702252800, "tip": 1.1, "needed": 0.088, "two": 2 },
+    { "timestamp": 1702857600, "tip": 0.83, "needed": 0.057, "two": 2 },
+    { "timestamp": 1703462400, "tip": 0.49, "needed": 0.014, "two": 2 },
+    { "timestamp": 1704067200, "tip": 0.5, "needed": 0.046, "two": 2 },
+    { "timestamp": 1704672000, "tip": 0.88, "needed": 0.045, "two": 2 },
+    { "timestamp": 1705276800, "tip": 0.5, "needed": 0.087, "two": 2 },
+    { "timestamp": 1705881600, "tip": 0.32, "needed": 0.11, "two": 2 },
+    { "timestamp": 1706486400, "tip": 0.77, "needed": 0.014, "two": 2 },
+    { "timestamp": 1707091200, "tip": 1.6, "needed": 0.015, "two": 2 },
+    { "timestamp": 1707696000, "tip": 1.3, "needed": 0.026, "two": 2 },
+    { "timestamp": 1708300800, "tip": 1.9, "needed": 0.068, "two": 2 },
+    { "timestamp": 1708905600, "tip": 2.5, "needed": 0.48, "two": 2 },
+    { "timestamp": 1709510400, "tip": 2.5, "needed": 0.81, "two": 2 },
+    { "timestamp": 1710115200, "tip": 2.5, "needed": 1.0, "two": 2 },
+    { "timestamp": 1710720000, "tip": 2.5, "needed": 1.0, "two": 2 },
+    { "timestamp": 1711324800, "tip": 2.5, "needed": 1.1, "two": 2 },
+    { "timestamp": 1711929600, "tip": 2.5, "needed": 1.0, "two": 2 },
+    { "timestamp": 1712534400, "tip": 2.5, "needed": 0.89, "two": 2 },
+    { "timestamp": 1713139200, "tip": 2.5, "needed": 0.92, "two": 2 },
+    { "timestamp": 1713744000, "tip": 2.5, "needed": 0.75, "two": 2 },
+    { "timestamp": 1714348800, "tip": 2.4, "needed": 0.76, "two": 2 },
+    { "timestamp": 1714953600, "tip": 2.3, "needed": 0.83, "two": 2 },
+    { "timestamp": 1715558400, "tip": 2.2, "needed": 0.92, "two": 2 },
+    { "timestamp": 1716163200, "tip": 2.5, "needed": 1.1, "two": 2 },
+    { "timestamp": 1716768000, "tip": 2.5, "needed": 1.2, "two": 2 },
+    { "timestamp": 1717372800, "tip": 1.6, "needed": 1.0, "two": 2 },
+    { "timestamp": 1717977600, "tip": 1.6, "needed": 0.83, "two": 2 },
+    { "timestamp": 1718582400, "tip": 1.6, "needed": 0.93, "two": 2 },
+    { "timestamp": 1719187200, "tip": 1.9, "needed": 0.71, "two": 2 },
+    { "timestamp": 1719792000, "tip": 1.6, "needed": 0.66, "two": 2 },
+    { "timestamp": 1720396800, "tip": 1.4, "needed": 0.55, "two": 2 },
+    { "timestamp": 1721001600, "tip": 2.0, "needed": 0.58, "two": 2 },
+    { "timestamp": 1721606400, "tip": 1.6, "needed": 0.65, "two": 2 },
+    { "timestamp": 1722211200, "tip": 1.6, "needed": 0.41, "two": 2 },
+    { "timestamp": 1722816000, "tip": 1.6, "needed": 0.45, "two": 2 },
+    { "timestamp": 1723420800, "tip": 1.6, "needed": 0.44, "two": 2 },
+    { "timestamp": 1724025600, "tip": 1.6, "needed": 0.6, "two": 2 },
+    { "timestamp": 1724630400, "tip": 1.6, "needed": 0.54, "two": 2 },
+    { "timestamp": 1725235200, "tip": 2.0, "needed": 0.36, "two": 2 },
+    { "timestamp": 1725840000, "tip": 1.8, "needed": 0.28, "two": 2 },
+    { "timestamp": 1726444800, "tip": 2.5, "needed": 0.047, "two": 2 },
+    { "timestamp": 1727049600, "tip": 2.5, "needed": 0.18, "two": 2 },
+    { "timestamp": 1727654400, "tip": 2.0, "needed": 0.26, "two": 2 },
+    { "timestamp": 1728259200, "tip": 2.5, "needed": 0.39, "two": 2 },
+    { "timestamp": 1728864000, "tip": 2.0, "needed": 0.42, "two": 2 },
+    { "timestamp": 1729468800, "tip": 1.3, "needed": 0.43, "two": 2 },
+    { "timestamp": 1730073600, "tip": 1.3, "needed": 0.32, "two": 2 },
+    { "timestamp": 1730678400, "tip": 2.0, "needed": 0.044, "two": 2 },
+    { "timestamp": 1731283200, "tip": 2.5, "needed": 0.011, "two": 2 },
+    { "timestamp": 1731888000, "tip": 1.6, "needed": 0.011, "two": 2 },
+    { "timestamp": 1732492800, "tip": 1.6, "needed": 0.012, "two": 2 },
+    { "timestamp": 1733097600, "tip": 2.0, "needed": 0.023, "two": 2 },
+    { "timestamp": 1733702400, "tip": 1.6, "needed": 0.036, "two": 2 },
+    { "timestamp": 1734307200, "tip": 1.6, "needed": 0.066, "two": 2 },
+    { "timestamp": 1734912000, "tip": 1.3, "needed": 0.018, "two": 2 },
+    { "timestamp": 1735516800, "tip": 1.6, "needed": 0.045, "two": 2 },
+    { "timestamp": 1736121600, "tip": 1.3, "needed": 0.023, "two": 2 },
+    { "timestamp": 1736726400, "tip": 1.6, "needed": 0.024, "two": 2 },
+    { "timestamp": 1737331200, "tip": 1.3, "needed": 0.031, "two": 2 },
+    { "timestamp": 1737936000, "tip": 1.3, "needed": 0.031, "two": 2 },
+    { "timestamp": 1738540800, "tip": 0.97, "needed": 0.16, "two": 2 },
+    { "timestamp": 1739145600, "tip": 0.69, "needed": 0.11, "two": 2 },
+    { "timestamp": 1739750400, "tip": 0.72, "needed": 0.16, "two": 2 },
+    { "timestamp": 1740355200, "tip": 0.67, "needed": 0.31, "two": 2 },
+    { "timestamp": 1740960000, "tip": 0.97, "needed": 0.33, "two": 2 },
+    { "timestamp": 1741564800, "tip": 0.61, "needed": 0.27, "two": 2 },
+    { "timestamp": 1742169600, "tip": 0.5, "needed": 0.26, "two": 2 },
+    { "timestamp": 1742774400, "tip": 0.63, "needed": 0.23, "two": 2 },
+    { "timestamp": 1743379200, "tip": 1.0, "needed": 0.13, "two": 2 },
+    { "timestamp": 1743984000, "tip": 1.3, "needed": 0.46, "two": 2 },
+    { "timestamp": 1744588800, "tip": 1.0, "needed": 0.46, "two": 2 },
+    { "timestamp": 1745193600, "tip": 1.0, "needed": 0.51, "two": 2 },
+    { "timestamp": 1745798400, "tip": 0.56, "needed": 0.34, "two": 2 },
+    { "timestamp": 1746403200, "tip": 1.3, "needed": 0.28, "two": 2 },
+    { "timestamp": 1747008000, "tip": 1.0, "needed": 0.05, "two": 2 },
+    { "timestamp": 1747612800, "tip": 0.79, "needed": 0.054, "two": 2 },
+    { "timestamp": 1748217600, "tip": 0.94, "needed": 0.021, "two": 2 },
+    { "timestamp": 1748822400, "tip": 1.0, "needed": 0.027, "two": 2 },
+    { "timestamp": 1749427200, "tip": 1.0, "needed": 0.064, "two": 2 },
+    { "timestamp": 1750032000, "tip": 0.64, "needed": 0.055, "two": 2 },
+    { "timestamp": 1750636800, "tip": 1.2, "needed": 0.031, "two": 2 },
+    { "timestamp": 1751241600, "tip": 0.69, "needed": 0.019, "two": 2 },
+    { "timestamp": 1751846400, "tip": 1.0, "needed": 0.03, "two": 2 },
+    { "timestamp": 1752451200, "tip": 1.3, "needed": 0.021, "two": 2 },
+    { "timestamp": 1753056000, "tip": 0.63, "needed": 0.031, "two": 2 },
+    { "timestamp": 1753660800, "tip": 0.49, "needed": 0.013, "two": 2 },
+    { "timestamp": 1754265600, "tip": 0.25, "needed": 0.0033, "two": 2 },
+    { "timestamp": 1754870400, "tip": 0.36, "needed": 0.0072, "two": 2 },
+    { "timestamp": 1755475200, "tip": 0.88, "needed": 0.034, "two": 2 },
+    { "timestamp": 1756080000, "tip": 0.51, "needed": 0.039, "two": 2 },
+    { "timestamp": 1756684800, "tip": 0.5, "needed": 0.037, "two": 2 },
+    { "timestamp": 1757289600, "tip": 0.28, "needed": 0.026, "two": 2 },
+    { "timestamp": 1757894400, "tip": 0.25, "needed": 0.0056, "two": 2 },
+    { "timestamp": 1758499200, "tip": 0.45, "needed": 0.033, "two": 2 },
+    { "timestamp": 1759104000, "tip": 0.33, "needed": 0.037, "two": 2 },
+    { "timestamp": 1759708800, "tip": 0.4, "needed": 0.08, "two": 2 },
+    { "timestamp": 1760313600, "tip": 0.5, "needed": 0.11, "two": 2 },
+    { "timestamp": 1760918400, "tip": 0.13, "needed": 0.025, "two": 2 },
+    { "timestamp": 1761523200, "tip": 0.13, "needed": 0.014, "two": 2 },
+    { "timestamp": 1762128000, "tip": 0.22, "needed": 0.0091, "two": 2 },
+    { "timestamp": 1762732800, "tip": 0.14, "needed": 0.015, "two": 2 },
+    { "timestamp": 1763337600, "tip": 0.16, "needed": 0.0086, "two": 2 },
+    { "timestamp": 1763942400, "tip": 0.079, "needed": 0.013, "two": 2 },
+    { "timestamp": 1764547200, "tip": 0.13, "needed": 0.041, "two": 2 },
+    { "timestamp": 1765152000, "tip": 0.079, "needed": 0.044, "two": 2 },
+    { "timestamp": 1765756800, "tip": 0.037, "needed": 0.027, "two": 2 },
+    { "timestamp": 1766361600, "tip": 0.02, "needed": 0.014, "two": 2 },
+    { "timestamp": 1766966400, "tip": 0.027, "needed": 0.0046, "two": 2 },
+    { "timestamp": 1767571200, "tip": 0.072, "needed": 0.027, "two": 2 },
+    { "timestamp": 1768176000, "tip": 0.025, "needed": 0.023, "two": 2 },
+    { "timestamp": 1768780800, "tip": 0.051, "needed": 0.027, "two": 2 },
+    { "timestamp": 1769385600, "tip": 0.079, "needed": 0.05, "two": 2 },
+    { "timestamp": 1769990400, "tip": 0.87, "needed": 0.37, "two": 2 },
+    { "timestamp": 1770595200, "tip": 0.13, "needed": 0.2, "two": 2 },
+    { "timestamp": 1771200000, "tip": 0.066, "needed": 0.18, "two": 2 },
+    { "timestamp": 1771804800, "tip": 0.13, "needed": 0.33, "two": 2 },
+    { "timestamp": 1772409600, "tip": 0.13, "needed": 0.32, "two": 2 },
+    { "timestamp": 1773014400, "tip": 0.09, "needed": 0.18, "two": 2 },
+    { "timestamp": 1773619200, "tip": 0.13, "needed": 0.25, "two": 2 },
+    { "timestamp": 1774224000, "tip": 0.5, "needed": 0.25, "two": 2 },
+    { "timestamp": 1774828800, "tip": 0.25, "needed": 0.19, "two": 2 },
+    { "timestamp": 1775433600, "tip": 0.2, "needed": 0.2, "two": 2 },
+    { "timestamp": 1776038400, "tip": 0.24, "needed": 0.2, "two": 2 },
+    { "timestamp": 1776643200, "tip": 1.0, "needed": 0.055, "two": 2 },
+    { "timestamp": 1777248000, "tip": 0.49, "needed": 0.044, "two": 2 },
+    { "timestamp": 1777852800, "tip": 0.42, "needed": 0.12, "two": 2 },
+    { "timestamp": 1778457600, "tip": 0.24, "needed": 0.043, "two": 2 },
+    { "timestamp": 1779062400, "tip": 0.13, "needed": 0.029, "two": 2 },
+    { "timestamp": 1779667200, "tip": 0.12, "needed": 0.031, "two": 2 },
+    { "timestamp": 1780272000, "tip": 0.34, "needed": 0.25, "two": 2 },
+    { "timestamp": 1780876800, "tip": 0.13, "needed": 0.048, "two": 2 },
+    { "timestamp": 1781481600, "tip": 0.13, "needed": 0.042, "two": 2 },
+    { "timestamp": 1782086400, "tip": 0.13, "needed": 0.12, "two": 2 },
+    { "timestamp": 1782691200, "tip": 0.18, "needed": 0.12, "two": 2 },
+    { "timestamp": 1783296000, "tip": 0.11, "needed": 0.12, "two": 2 },
+    { "timestamp": 1783900800, "tip": 0.083, "needed": 0.016, "two": 2 },
+    { "timestamp": 1784505600, "tip": 0.13, "needed": 0.026, "two": 2 },
+    { "timestamp": 1785110400, "tip": 0.16, "needed": 0.05, "two": 2 },
+    { "timestamp": 1785715200, "tip": 0.083, "needed": 0.011, "two": 2 },
+    { "timestamp": 1786320000, "tip": 0.074, "needed": 0.0065, "two": 2 },
+    { "timestamp": 1786924800, "tip": 0.36, "needed": 0.19, "two": 2 },
+    { "timestamp": 1787529600, "tip": 0.32, "needed": 0.16, "two": 2 },
+    { "timestamp": 1788134400, "tip": 0.4, "needed": 0.2, "two": 2 },
+    { "timestamp": 1788739200, "tip": 0.39, "needed": 0.19, "two": 2 },
+    { "timestamp": 1789344000, "tip": 0.25, "needed": 0.11, "two": 2 },
+    { "timestamp": 1789948800, "tip": 0.25, "needed": 0.064, "two": 2 },
+    { "timestamp": 1790553600, "tip": 0.47, "needed": 0.001, "two": 2 },
+    { "timestamp": 1791158400, "tip": 0.16, "needed": 0.0011, "two": 2 },
+    { "timestamp": 1791763200, "tip": 0.08, "needed": 0.0052, "two": 2 },
+    { "timestamp": 1792368000, "tip": 0.061, "needed": 0.0014, "two": 2 },
+    { "timestamp": 1792972800, "tip": 0.066, "needed": 0.0063, "two": 2 },
+    { "timestamp": 1793577600, "tip": 0.12, "needed": 0.0039, "two": 2 }
+  ],
+  "payers": {
+    "txs": { "high": 19, "middle": 18, "low": 63 },
+    "tips": { "high": 76, "middle": 21, "low": 3 },
+    "onRound": 13
+  }
+}
