@@ -111,14 +111,14 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
       '@type': 'Dataset',
       '@id': 'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
       url: 'https://ethbeat.org/layer2s/projects/arbitrum/tvs-breakdown',
-      name: 'Arbitrum One TVS Breakdown',
+      name: 'Arbitrum One TVS breakdown',
       description: "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
       isAccessibleForFree: true,
       creator: l2beat,
       distribution: [
         {
           '@type': 'DataDownload',
-          name: 'Arbitrum One TVS Breakdown',
+          name: 'Arbitrum One TVS breakdown',
           encodingFormat: 'application/json',
           contentUrl: 'https://ethbeat.org/api/scaling/tvs/arbitrum/breakdown',
         },

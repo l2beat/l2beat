@@ -85,7 +85,7 @@ const columns = [
   }),
   columnHelper.display({
     id: 'timeline',
-    header: 'TVS &\nchanges (1Y)',
+    header: 'TVS &\nchanges (1y)',
     cell: (ctx) => (
       <OssificationTimelineChart
         timeline={ctx.row.original.timeline}

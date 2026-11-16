@@ -2,6 +2,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -15,7 +16,6 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { L2SummaryChartHeader } from '~/pages/layer2s/summary/components/L2SummaryChartHeader'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
@@ -75,7 +75,7 @@ export function L2SummaryTvsChart({
 
   return (
     <div className="flex flex-col gap-4">
-      <L2SummaryChartHeader
+      <ChartCardHeader
         title="Value secured"
         link={{ href: '/layer2s/tvs', label: 'By project' }}
         value={
@@ -85,6 +85,7 @@ export function L2SummaryTvsChart({
         }
         change={stats?.change}
         rangeLabel={rangeLabel}
+        isLoading={stats?.total === undefined}
       />
       <ChartContainer
         isPlaceholderData={false}

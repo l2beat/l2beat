@@ -1,8 +1,8 @@
 import { formatActivityCount } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ActivityMetricContextProvider } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import { L2SummaryChartHeader } from '~/pages/layer2s/summary/components/L2SummaryChartHeader'
 import { computeWeeklyAverageChange } from '~/server/features/home/homeSeries'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
@@ -39,7 +39,7 @@ export function L2SummaryActivityChart({ range, rangeLabel }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <L2SummaryChartHeader
+      <ChartCardHeader
         title="Activity"
         link={{ href: '/layer2s/activity', label: 'By project' }}
         value={
@@ -50,6 +50,7 @@ export function L2SummaryActivityChart({ range, rangeLabel }: Props) {
         unit="UOPS"
         change={stats?.change}
         rangeLabel={rangeLabel}
+        isLoading={stats === undefined}
       />
       <ActivityMetricContextProvider>
         <L2RecategorizedActivityChart

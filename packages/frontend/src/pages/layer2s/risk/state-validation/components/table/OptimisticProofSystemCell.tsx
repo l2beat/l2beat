@@ -122,7 +122,7 @@ export function OptimisticProofSystemCell({
         </div>
       </div>
       {permissioned !== undefined && (
-        <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+        <div className="text-label-value-13 text-secondary leading-4">
           {permissioned ? 'Permissioned' : 'Permissionless'}
         </div>
       )}

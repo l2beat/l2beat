@@ -30,7 +30,7 @@ export function L2ComparePage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader>Compare Projects</MainPageHeader>
+          <MainPageHeader>Compare projects</MainPageHeader>
           <L2CompareCharts
             allProjects={allProjects}
             initialState={initialState}

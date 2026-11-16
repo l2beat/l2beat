@@ -36,7 +36,7 @@ export function L2TvsPage({
       <BadgeLookupProvider lookup={badgeLookup}>
         <HydrationBoundary state={queryState}>
           <SideNavLayout>
-            <MainPageHeader>Value Secured</MainPageHeader>
+            <MainPageHeader>Value secured</MainPageHeader>
             <TableFilterContextProvider>
               <TvsDisplayControlsContextProvider
                 initialValues={{

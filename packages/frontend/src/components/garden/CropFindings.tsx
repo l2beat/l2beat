@@ -80,7 +80,7 @@ function CropSection({
   }
   return (
     <>
-      <p className="mt-3 font-medium text-[12px] text-secondary">{title}</p>
+      <p className="mt-3 font-medium text-[12px] text-primary">{title}</p>
       <ul className="mt-1 flex flex-col gap-1">
         {license && (
           <CropBullet>
