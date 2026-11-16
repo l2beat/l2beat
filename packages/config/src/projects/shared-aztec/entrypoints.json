@@ -1,0 +1,59 @@
+{
+  "entrypoints": {
+    "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
+      "name": "CoinIssuer",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": {
+      "name": "GovernanceProposer",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": {
+      "name": "Governance",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": {
+      "name": "Registry",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3": {
+      "name": "RewardDistributor",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": {
+      "name": "ProtocolTreasury",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d": {
+      "name": "BaseStaker",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": {
+      "name": "AZTEC Token",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": {
+      "name": "GSE",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": {
+      "name": "SlashVeto Council",
+      "type": "Contract",
+      "project": "shared-aztec"
+    },
+    "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": {
+      "name": "AztecTokenPositionRegistry_ProtocolTreasury",
+      "type": "Contract",
+      "project": "shared-aztec"
+    }
+  }
+}
