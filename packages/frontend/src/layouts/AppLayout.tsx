@@ -9,11 +9,9 @@ import {
   WhatsNewItemProvider,
 } from '~/components/whats-new/WhatsNewItemContext'
 import { env } from '~/env'
-import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { TRPCReactProvider } from '~/trpc/React'
 
 export interface AppLayoutProps {
-  recentlyAddedProjects: SearchBarProject[]
   /** The announcement at the end of the nav. */
   whatsNewItem: WhatsNewItem | undefined
   countdowns: typeof PROJECT_COUNTDOWNS
@@ -21,7 +19,6 @@ export interface AppLayoutProps {
 
 export function AppLayout({
   children,
-  recentlyAddedProjects,
   whatsNewItem,
   countdowns,
 }: AppLayoutProps & {
@@ -38,9 +35,7 @@ export function AppLayout({
           env.NODE_ENV === 'development' && <L2BeatDevTools />}
         <CountdownsContextProvider countdowns={countdowns}>
           <WhatsNewItemProvider item={whatsNewItem}>
-            <SearchBarContextProvider
-              recentlyAddedProjects={recentlyAddedProjects}
-            >
+            <SearchBarContextProvider>
               <ChartLegendOnboardingProvider>
                 {children}
               </ChartLegendOnboardingProvider>

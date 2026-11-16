@@ -70,6 +70,7 @@ export async function getDefiProjectEntry(
       'contracts',
       'permissions',
       'tvsConfig',
+      'tvsInfo',
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
@@ -193,6 +194,7 @@ export async function getDefiProjectEntry(
         },
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
         ethStakedToggle: !!project.liquidStaking,
+        warnings: project.tvsInfo?.warnings ?? [],
       },
     })
   }

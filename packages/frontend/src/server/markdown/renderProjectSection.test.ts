@@ -244,7 +244,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       '![A diagram](https://ethbeat.org/images/diagram.png)',
-      '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
+      '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
       '### Program Hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )

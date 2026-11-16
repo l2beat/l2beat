@@ -171,7 +171,7 @@ export const NEW_NAME = {
     },
     questions: {
       text: 'Questions? Ask on the',
-      link: { label: 'forum', href: 'https://forum.l2beat.com' },
+      link: { label: 'forum', href: 'https://forum.ethbeat.org' },
     },
   },
 } as const

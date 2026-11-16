@@ -48,7 +48,7 @@ A fraud proof system requires at least one honest actor to verify the correctnes
 
 Upgrades initiated by entities outside of the Security Council are allowed if they provide at least a 7 days exit window.
 
-Please refer to [this forum post](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
+Please refer to [this forum post](https://forum.ethbeat.org/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
 
 ### 🟩 Stage 2
 

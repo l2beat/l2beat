@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Staking vault with open deposits. Validators it registers withdraw to the vault, its shares can back osToken, and each harvest applies the vault's reward or loss from the keeper's root and pays the exit queue from spare assets, claimable after a delay fixed at deployment.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "getExitQueueIndex",
+    "calculateExitedAssets",
+    "DOMAIN_SEPARATOR",
+    "eip712Domain",
+    "UPGRADE_INTERFACE_VERSION",
+    "proxiableUUID",
+    "implementation",
+    "nonces",
+    "osTokenPositions",
+    "getShares",
+    "getExitQueueData",
+    "withdrawableAssets",
+    "validatorsManagerNonce",
+    "isStateUpdateRequired",
+    "vaultId"
+  ],
+  "ignoreInWatchMode": [
+    "totalAssets",
+    "totalShares",
+    "totalSupply",
+    "totalExitingAssets",
+    "queuedShares"
+  ],
+  "ignoreRelatives": ["feeRecipient"],
+  "fields": {
+    "admin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "appoint the key manager, deposit data manager, fee recipient and access managers, raise the fee by at most a fifth every three days, and upgrade the vault to the next registry-approved implementation, with no delay."
+        }
+      ]
+    },
+    "validatorsManager": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "choose which staking keys the vault's ETH funds, subject to oracle approval, and exit or consolidate the vault's stakes."
+        }
+      ]
+    },
+    "feePercent": {
+      "severity": "HIGH",
+      "description": "Share of rewards minted to the fee recipient, in basis points."
+    },
+    "feeRecipient": {
+      "description": "Receiver of the vault's fee shares."
+    },
+    "capacity": {
+      "description": "Maximum total assets, in wei."
+    }
+  }
+}

@@ -60,6 +60,7 @@ export const TVL_TOKENS: Record<
   rocketpool: { symbol: 'rETH', rebasing: false },
   cbeth: { symbol: 'cbETH', rebasing: false },
   wbeth: { symbol: 'wBETH', rebasing: false },
+  stakewise: { symbol: 'osETH', rebasing: false },
 }
 
 export interface TvlToken {

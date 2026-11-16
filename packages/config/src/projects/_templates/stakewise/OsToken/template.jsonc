@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "osToken",
+  "category": "core",
+  "description": "ERC20 liquid staking token ({{symbol}}). Minted and burned by the vault controller and by the registered controllers. Ownership is renounced, so that set is frozen, and there is no pause, blacklist or upgrade.",
+  "ignoreMethods": ["eip712Domain", "DOMAIN_SEPARATOR", "nonces"],
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "owner": {
+      "description": "Renounced."
+    },
+    "controllers": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "controller",
+        "add": {
+          "event": "ControllerUpdated",
+          "where": ["=", "#registered", true]
+        },
+        "remove": {
+          "event": "ControllerUpdated",
+          "where": ["=", "#registered", false]
+        }
+      },
+      "description": "Addresses besides the vault controller that may mint and burn the token.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint and burn the token for any address."
+        }
+      ]
+    }
+  }
+}

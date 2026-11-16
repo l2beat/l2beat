@@ -46,6 +46,7 @@ import {
   renderActivitySection,
   renderCostsSection,
   renderDataPostedSection,
+  renderDefiTvlSection,
   renderL2TvsSection,
   renderLivenessSection,
   renderPrivacyAnonymitySetSection,
@@ -291,7 +292,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   ActivitySection: renderActivitySection,
   CostsSection: renderCostsSection,
   DataPostedSection: renderDataPostedSection,
-  DefiTvlSection: pointToHtmlPage('The interactive TVL chart is shown'),
+  DefiTvlSection: renderDefiTvlSection,
   DefiTokensSection: ({ tokens }) =>
     bulletList(
       tokens.map(

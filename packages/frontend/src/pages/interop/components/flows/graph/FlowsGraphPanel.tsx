@@ -18,6 +18,8 @@ interface FlowsGraphPanelProps {
   isLoading: boolean
   baseDollarsPerParticle?: number
   topChainId?: string
+  /** Chain bubbles link to their chain page instead of highlighting flows. */
+  linkChains?: boolean
   className?: string
   maxSizeClassName?: string
 }
@@ -30,6 +32,7 @@ export function FlowsGraphPanel({
   isLoading,
   baseDollarsPerParticle,
   topChainId,
+  linkChains,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
 }: FlowsGraphPanelProps) {
@@ -77,6 +80,7 @@ export function FlowsGraphPanel({
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
               topChainId={topChainId}
+              linkChains={linkChains}
             />
           )}
         </div>

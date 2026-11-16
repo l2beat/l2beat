@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Vault holding shares of other vaults: deposits and exits are spread across the sub-vaults by a curator from the curators registry, the admin manages sub-vaults and curator through the vault's sub-vaults registry, and rewards, losses, exits and osToken minting pass through. Upgrades need the admin and a registry-approved implementation of the next version.",
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "getExitQueueIndex",
+    "calculateExitedAssets",
+    "DOMAIN_SEPARATOR",
+    "eip712Domain",
+    "UPGRADE_INTERFACE_VERSION",
+    "proxiableUUID",
+    "implementation",
+    "nonces",
+    "osTokenPositions",
+    "getShares",
+    "getExitQueueData",
+    "withdrawableAssets",
+    "validatorsManagerNonce",
+    "isStateUpdateRequired",
+    "vaultId",
+    "subVaults",
+    "calculateSubVaultsRedemptions"
+  ],
+  "ignoreInWatchMode": [
+    "totalAssets",
+    "totalShares",
+    "totalSupply",
+    "totalExitingAssets",
+    "queuedShares"
+  ],
+  "ignoreRelatives": ["feeRecipient"],
+  "fields": {
+    "admin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and eject sub-vaults, appoint the curator that allocates deposits among them, set the fee recipient, raise the fee by at most a fifth every three days, and upgrade the vault to the next approved implementation, with no delay."
+        }
+      ]
+    },
+    "feePercent": {
+      "severity": "HIGH",
+      "description": "Share of rewards minted to the fee recipient, in basis points."
+    },
+    "feeRecipient": {
+      "description": "Receiver of the vault's fee shares."
+    },
+    "subVaultsRegistry": {
+      "description": "Registry holding this vault's sub-vaults and curator."
+    }
+  }
+}

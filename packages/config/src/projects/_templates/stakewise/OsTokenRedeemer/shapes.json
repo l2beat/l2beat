@@ -1,0 +1,14 @@
+{
+  "EthOsTokenRedeemer.sol": {
+    "hash": "0x4856e1b74e2012827b5d8a5c978f20262eb707c1b6b90c0bdb3e92dd58430844",
+    "address": "eth:0xc43A7b16A7a167c0318390Cba16787C11e9e1FD0",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  },
+  "EthOsTokenRedeemerWithFee.sol": {
+    "hash": "0xae5afabaeeb6c8132cf54d016257550d536b9d4aedb3defd56874bd98ae47b0b",
+    "address": "eth:0x9Fc8C7F3C1ff6d0DF39EcB5870884d59777Ea2Bb",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  }
+}
