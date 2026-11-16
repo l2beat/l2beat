@@ -19,6 +19,7 @@ export function ActivityMetricControls<T extends string>({
       name="activityMetric"
       value={value}
       onValueChange={onValueChange}
+      variant="highlighted"
       className={className}
     >
       <MetricSwitchElement metric="uops" projectChart={projectChart} />
