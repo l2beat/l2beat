@@ -5,15 +5,11 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
-import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
-import {
-  getL2SummaryDefaultVisibility,
-  getL2SummaryOthersColumns,
-} from './columns'
+import { getL2SummaryOthersColumns } from './columns'
 
 interface Props {
   entries: L2SummaryEntry[]
@@ -41,15 +37,9 @@ export function L2SummaryOthersTable({ entries }: Props) {
     [entries, data],
   )
 
-  // Undefined until mounted: the server can't know the viewport.
-  const breakpoint = useBreakpoint()
   const columns = useMemo(
-    () =>
-      getL2SummaryOthersColumns({
-        isTvsLoading: isLoading,
-        hideDescriptiveOnPhones: breakpoint === undefined,
-      }),
-    [isLoading, breakpoint],
+    () => getL2SummaryOthersColumns({ isTvsLoading: isLoading }),
+    [isLoading],
   )
 
   const table = useTable('L2SummaryOthersTable', {
@@ -63,7 +53,6 @@ export function L2SummaryOthersTable({ entries }: Props) {
     },
     onSortingChange: setSorting,
     initialState: {
-      columnVisibility: getL2SummaryDefaultVisibility(breakpoint),
       columnPinning: {
         left: ['#', 'logo'],
       },
