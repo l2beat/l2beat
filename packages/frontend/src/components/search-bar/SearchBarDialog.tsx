@@ -102,8 +102,11 @@ export function SearchBarDialog() {
     setValue('')
     setTipsOpen(true)
     // Typing is what replaces the tips, so the input keeps focus. The no
-    // results link that opened them is gone, and would drop it.
-    inputRef.current?.focus()
+    // results link that opened them is gone, and would drop it. Not on touch,
+    // where focus raises the on-screen keyboard over the tips.
+    if (window.matchMedia('(pointer: fine)').matches) {
+      inputRef.current?.focus()
+    }
   }
 
   function searchExample(query: string) {
@@ -129,7 +132,8 @@ export function SearchBarDialog() {
           ref={inputRef}
           value={value}
           onValueChange={setValue}
-          onAction={() => onEscapeKeyDown()}
+          // Closes even with the tips open, as its label says; Esc goes Back.
+          onAction={() => (value !== '' ? setValue('') : setOpen(false))}
         />
         <CommandList
           ref={trackScrollFades}
@@ -419,8 +423,9 @@ function SearchBarFooter({
         aria-expanded={tipsOpen}
         onClick={onToggleTips}
         onKeyDown={keepEnterOnButton}
-        // Underlined on touch, where nothing else says it can be tapped.
-        className="rounded-sm font-medium not-can-hover:underline decoration-dotted underline-offset-2 transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+        // Underlined, as nothing else in grey says it can be clicked. On touch
+        // it takes the footer's height, being the only thing in it.
+        className="pointer-coarse:-my-2 pointer-coarse:-ml-2 rounded-sm pointer-coarse:py-2 pointer-coarse:pr-4 pointer-coarse:pl-2 font-medium underline decoration-dotted underline-offset-2 transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
       >
         {tipsOpen ? 'Hide search tips' : 'Search tips'}
       </button>

@@ -30,12 +30,17 @@ const SEARCH_TIPS: SearchTip[] = [
   },
   {
     kind: 'Addresses',
-    how: 'Any contract, token or multisig, to see who uses it',
-    // USDC on Ethereum
+    how: 'Any contract or multisig: finds its project or token',
     examples: [
+      // USDC on Ethereum
       {
         label: '0xA0b8…eB48',
         query: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      },
+      // Arbitrum One's bridge
+      {
+        label: '0x8315…ed3a',
+        query: '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
       },
     ],
   },
@@ -47,7 +52,7 @@ export function SearchBarTips({
   onExample: (query: string) => void
 }) {
   return (
-    <section className="px-4 py-3 text-sm">
+    <section className="px-4 pt-2.5 pb-3 text-sm">
       <h2 className="mb-2 font-medium text-secondary text-xs">
         What you can search
       </h2>
@@ -65,7 +70,7 @@ export function SearchBarTips({
                     onClick={() => onExample(query)}
                     onKeyDown={keepEnterOnButton}
                     // Taller for a finger, where the panel has room to spare.
-                    className="rounded border border-divider bg-surface-secondary pointer-coarse:px-2 px-1.5 font-mono text-xs leading-5 pointer-coarse:leading-7 transition-colors hover:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="rounded border border-divider bg-surface-secondary pointer-coarse:px-2 px-1.5 font-mono text-xs leading-5 pointer-coarse:leading-7 transition-colors hover:border-brand hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
                     {label}
                   </button>
