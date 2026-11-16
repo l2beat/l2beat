@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DAVerifierECDSA",
+  "description": "DA verifier that accepts an assertion only if the proof is a signature of the assertion ID by DA_PROVER. The assertion's code does not need to appear onchain.",
+  "fields": {
+    "DA_PROVER": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign the assertion IDs that State Oracles using this verifier accept."
+        }
+      ]
+    }
+  }
+}

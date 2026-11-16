@@ -37,7 +37,7 @@
       ]
     },
     "guardianAdmins": {
-      "severity": "MEDIUM",
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "GUARDIAN_ADMIN_ROLE"
@@ -127,7 +127,7 @@
     },
     "adopterManagers": {
       "description": "The current manager of each registered adopter. A zero address means the manager was revoked.",
-      "severity": "MEDIUM",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "contractAddress",
@@ -152,6 +152,17 @@
           "description": "add and remove the assertions of the adopters it manages and hand the manager role to another account."
         }
       ]
+    },
+    "assertions": {
+      "description": "The assertion IDs of each adopter that were added and not removed. An addition or removal takes effect ASSERTION_TIMELOCK_BLOCKS blocks after it is recorded.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "groupBy": "assertionAdopter",
+        "select": "assertionId",
+        "add": { "event": "AssertionAdded" },
+        "remove": { "event": "AssertionRemoved" }
+      }
     }
   }
 }

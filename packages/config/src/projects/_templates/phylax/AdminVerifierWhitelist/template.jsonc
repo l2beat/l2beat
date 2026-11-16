@@ -5,7 +5,7 @@
   "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "WHITELIST_ADMIN_ROLE"],
   "fields": {
     "defaultAdmin": {
-      "severity": "MEDIUM",
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"

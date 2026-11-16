@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AdminVerifierWhitelist",
+  "description": "Admin verifier that lets an account register as the manager of an adopter only if the owner assigned that account to the adopter. It is consulted only at registration. The owner can also exclude an adopter, which deletes its assignment and blocks new ones until the releaser named in the exclusion lifts it.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "assign the account that may register as the manager of each adopter, exclude adopters from registration and transfer ownership."
+        }
+      ]
+    },
+    "assignedManagers": {
+      "description": "The account each adopter's manager registration is assigned to.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["assertionAdopter", "admin"],
+        "dedupBy": "assertionAdopter",
+        "add": { "event": "WhitelistAdded" },
+        "remove": { "event": "WhitelistRemoved" },
+        "ignoreRelative": true
+      }
+    },
+    "exclusions": {
+      "description": "Adopters excluded from registration and the account that can lift each exclusion.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["assertionAdopter", "releaser"],
+        "dedupBy": "assertionAdopter",
+        "add": { "event": "ExclusionAdded" },
+        "remove": { "event": "ExclusionReleased" },
+        "ignoreRelative": true
+      }
+    }
+  }
+}
