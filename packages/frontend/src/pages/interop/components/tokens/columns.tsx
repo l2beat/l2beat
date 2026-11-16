@@ -12,7 +12,7 @@ import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
-import { formatNetFlow } from '~/pages/interop/components/flows/graph/utils/chainLabel'
+import { formatNetFlow } from '~/pages/interop/utils/formatNetFlow'
 import type {
   AverageDuration,
   ProtocolDisplayable,

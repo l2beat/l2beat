@@ -13,7 +13,7 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
-import { formatNetFlow } from '~/pages/interop/components/flows/graph/utils/chainLabel'
+import { formatNetFlow } from '~/pages/interop/utils/formatNetFlow'
 import type {
   CompactProtocolEntry,
   ProtocolEntry,
