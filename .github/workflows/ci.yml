@@ -31,7 +31,14 @@ jobs:
               buildkitd-config-inline: |
                 [registry."docker.io"]
                   mirrors = ["mirror.gcr.io"]
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/backend'
+
       - name: Build container
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -56,10 +63,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/frontend'
+
       - name: Set up pnpm and install dependencies
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: ./.github/actions/setup-pnpm
 
       - name: Build mocked frontend
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         run: pnpm build:frontend-ci
         env:
           MOCK: true
@@ -68,6 +83,7 @@ jobs:
       # so we can more easily inspect occasional
       # longer frontend build times
       - name: Preserve frontend build summary
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: actions/upload-artifact@v7
         with:
           name: frontend-build-summary
@@ -86,10 +102,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/discoui'
+
       - name: Set up pnpm and install dependencies
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: ./.github/actions/setup-pnpm
 
       - name: Build discoui
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         run: pnpm build:discoui
 
   build-tools:
@@ -104,11 +128,19 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v6
-        
+
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/tools'
+
       - name: Set up pnpm and install dependencies
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: ./.github/actions/setup-pnpm
 
       - name: Build tools
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         run: pnpm build:tools
 
   build-token-backend:
@@ -126,7 +158,14 @@ jobs:
               buildkitd-config-inline: |
                 [registry."docker.io"]
                   mirrors = ["mirror.gcr.io"]
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/token-backend'
+
       - name: Build container
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -230,11 +269,17 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/frontend'
+
       # WebKit's system libraries take ~20 s for dpkg to unpack, even from
       # cache. They need nothing from pnpm, so they install alongside
       # setup and the build instead of after them
       - name: Read runner image and Playwright version
-        if: matrix.webkit
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit
         id: image
         run: |
           echo "os=$ImageOS" >> "$GITHUB_OUTPUT"
@@ -242,7 +287,7 @@ jobs:
           echo "playwright=$(grep -oP '^  playwright@\K[0-9.]+(?=:)' pnpm-lock.yaml | head -1)" >> "$GITHUB_OUTPUT"
 
       - name: Restore WebKit's system packages
-        if: matrix.webkit
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit
         id: webkit-packages
         uses: actions/cache/restore@v6
         with:
@@ -251,7 +296,7 @@ jobs:
           restore-keys: webkit-packages-${{ steps.image.outputs.os }}-
 
       - name: Install WebKit's system libraries
-        if: matrix.webkit
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit
         id: webkit-libs
         background: true
         timeout-minutes: 3
@@ -260,16 +305,19 @@ jobs:
         run: .github/scripts/install-webkit-libs.sh
 
       - name: Set up pnpm and install dependencies
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: ./.github/actions/setup-pnpm
 
       - parallel:
           - name: Set up Playwright
+            if: ${{ steps.affected.outputs.affected == 'true' }}
             uses: ./.github/actions/setup-playwright
             with:
               package-dir: packages/frontend
               webkit: ${{ matrix.webkit || false }}
 
           - name: Build frontend
+            if: ${{ steps.affected.outputs.affected == 'true' }}
             run: |
               pnpm build:dependencies:frontend
               pnpm --dir packages/frontend build
@@ -280,6 +328,7 @@ jobs:
         wait: webkit-libs
 
       - name: Run e2e tests
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         working-directory: packages/frontend
         run: pnpm exec playwright test ${{ matrix.args }}
 
@@ -287,7 +336,7 @@ jobs:
       # versions the mirror no longer serves, so a partial restore does not
       # pile them up
       - name: Collect WebKit's system packages
-        if: matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
         run: |
           sudo apt-get autoclean
           rm -rf ~/.cache/webkit-packages
@@ -295,7 +344,7 @@ jobs:
           cp /var/cache/apt/archives/*.deb ~/.cache/webkit-packages
 
       - name: Save WebKit's system packages
-        if: matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-packages.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
         with:
           path: ~/.cache/webkit-packages
@@ -331,24 +380,34 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
 
+      - name: Check whether the change reaches this job
+        id: affected
+        uses: ./.github/actions/affected
+        with:
+          packages: '@l2beat/discoui @l2beat/l2b'
+
       - name: Set up pnpm and install dependencies
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         uses: ./.github/actions/setup-pnpm
 
       - parallel:
           - name: Set up Playwright
+            if: ${{ steps.affected.outputs.affected == 'true' }}
             uses: ./.github/actions/setup-playwright
             with:
               package-dir: packages/discoui
 
           - name: Build dependencies
+            if: ${{ steps.affected.outputs.affected == 'true' }}
             run: pnpm build:dependencies:l2b
 
       - name: Run page e2e tests
+        if: ${{ steps.affected.outputs.affected == 'true' }}
         working-directory: packages/discoui
         run: pnpm test:e2e --shard ${{ matrix.shard }}/2
 
       - name: Run backend e2e tests
-        if: matrix.shard == 2
+        if: steps.affected.outputs.affected == 'true' && matrix.shard == 2
         working-directory: packages/l2b
         run: pnpm test:e2e
 
