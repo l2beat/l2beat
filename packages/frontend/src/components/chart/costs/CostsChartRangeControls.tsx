@@ -17,33 +17,33 @@ export function CostsChartRangeControls({ range, setRange, metric }: Props) {
       options={[
         {
           value: '1d',
-          label: '1d',
+          label: '1D',
           disabled: metric === 'per-l2-uop',
         },
         {
           value: '7d',
-          label: '7d',
+          label: '7D',
           disabled: metric === 'per-l2-uop',
         },
         {
           value: '30d',
-          label: '30d',
+          label: '30D',
         },
         {
           value: '90d',
-          label: '90d',
+          label: '90D',
         },
         {
           value: '180d',
-          label: '180d',
+          label: '180D',
         },
         {
           value: '1y',
-          label: '1y',
+          label: '1Y',
         },
         {
           value: 'max',
-          label: 'Max',
+          label: 'MAX',
         },
       ]}
     />
