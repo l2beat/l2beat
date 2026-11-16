@@ -70,10 +70,9 @@ export function RiskBanner({
         >
           <div
             className={cn(
-              'text-left',
-              size === 'regular' && 'font-medium text-label-value-12',
-              size === 'large' &&
-                'font-semibold text-label-value-12 md:text-label-value-13',
+              'text-left uppercase',
+              size === 'regular' && 'text-subtitle-10',
+              size === 'large' && 'font-semibold text-3xs md:text-2xs',
             )}
           >
             {name}
