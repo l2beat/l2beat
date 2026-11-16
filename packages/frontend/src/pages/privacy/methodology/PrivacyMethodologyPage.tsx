@@ -22,7 +22,8 @@ export function PrivacyMethodologyPage({
   ...props
 }: Props) {
   return (
-    <PublicationLayout publication={publication} {...props}>
+    // Text keeps the article column (Section); figures span the card.
+    <PublicationLayout publication={publication} wide {...props}>
       <Section>{sections.intro}</Section>
       <PoolLensFigure data={figures} />
       <Section>{sections.ratings}</Section>
@@ -42,7 +43,7 @@ export function PrivacyMethodologyPage({
 /** One stretch of text between figures; the figures keep their own spacing. */
 function Section({ children }: { children: string }) {
   return (
-    <Article className="[&>*:last-child]:mb-6 [&>h2:first-child]:mt-10">
+    <Article className="mx-auto max-w-[720px] [&>*:last-child]:mb-6 [&>h2:first-child]:mt-10">
       {children}
     </Article>
   )
