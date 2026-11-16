@@ -172,7 +172,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
     ),
     columnHelper.accessor('totalValueDeposited30dUsd', {
       id: OPTIONAL_COLUMNS.volume30d,
-      header: '30d vol.',
+      header: '30D vol.',
       cell: (ctx) => {
         const value = ctx.getValue()
         return (
