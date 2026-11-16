@@ -84,19 +84,19 @@ function LivenessTooltip(props: { data: LivenessDataPoint }) {
       <IntervalsHeader />
       <ul className="mt-1 list-inside list-disc">
         <li className="flex justify-between gap-4">
-          Minimum:
+          Minimum
           <LivenessDurationCell
             durationInSeconds={props.data.minimumInSeconds}
           />
         </li>
         <li className="flex justify-between gap-4">
-          Average:
+          Average
           <LivenessDurationCell
             durationInSeconds={props.data.averageInSeconds}
           />
         </li>
         <li className="flex justify-between gap-4">
-          Maximum:
+          Maximum
           <LivenessDurationCell
             durationInSeconds={props.data.maximumInSeconds}
           />

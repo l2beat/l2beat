@@ -174,7 +174,7 @@ export const columns = [
               </button>
             </TooltipTrigger>
             <TooltipContent>
-              Click to preview historical chart for this token
+              Click to preview historical chart for this token.
             </TooltipContent>
           </Tooltip>
           <button

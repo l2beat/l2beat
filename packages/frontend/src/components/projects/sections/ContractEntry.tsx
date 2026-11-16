@@ -154,7 +154,7 @@ export function ContractEntry({
                         <UnverifiedIcon className="fill-red-300" aria-hidden />
                       </TooltipTrigger>
                       <TooltipContent>
-                        This contract is not verified
+                        This contract is not verified.
                       </TooltipContent>
                     </Tooltip>
                   ) : null}
