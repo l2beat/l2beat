@@ -1,16 +1,17 @@
 import type {
-  AmountFormula,
   BalanceOfEscrowAmountFormula,
   BalanceOfEscrowsAmountFormula,
-  CalculationFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
   StarknetBalanceOfAmountFormula,
   StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
   TvsToken,
-  ValueFormula,
 } from '@l2beat/config'
+import {
+  getAmountFormulas,
+  getValueFormulas,
+} from '@l2beat/config/build/utils/tvsFormulas'
 import { assert } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type { AmountConfig, PriceConfig } from '../types'
@@ -26,54 +27,23 @@ export function extractPricesAndAmounts(
   const prices = new Map<string, PriceConfig>()
 
   for (const token of tokens) {
-    if (token.amount.type === 'calculation') {
-      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
-        token.amount,
-        chainRanges,
+    assertNoPrices(token.amount)
+    const tokenAmounts = getAmountFormulas(token.amount).map(createAmountConfig)
+    tokenAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
+    setPrice(prices, createPriceConfig(token.priceId, tokenAmounts))
+
+    for (const formula of [token.valueForProject, token.valueForSummary]) {
+      if (!formula) continue
+      getAmountFormulas(formula).forEach((a) =>
+        setAmount(amounts, createAmountConfig(a), chainRanges),
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
-
-      assert(
-        formulaPrices.length === 0,
-        'Amount formula should not have any prices',
-      )
-
-      const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
-
-      setPrice(prices, {
-        id: createPriceConfigId(token.priceId),
-        sinceTimestamp,
-        untilTimestamp,
-        priceId: token.priceId,
-      })
-    } else {
-      const amount = createAmountConfig(token.amount)
-      setAmount(amounts, amount, chainRanges)
-
-      setPrice(prices, {
-        id: createPriceConfigId(token.priceId),
-        sinceTimestamp: amount.sinceTimestamp,
-        untilTimestamp: amount.untilTimestamp,
-        priceId: token.priceId,
-      })
-    }
-
-    if (token.valueForProject) {
-      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
-        token.valueForProject,
-        chainRanges,
-      )
-      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
-      formulaPrices.forEach((p) => setPrice(prices, p))
-    }
-
-    if (token.valueForSummary) {
-      const { formulaAmounts, formulaPrices } = processFormulaRecursive(
-        token.valueForSummary,
-        chainRanges,
-      )
-      formulaAmounts.forEach((a) => setAmount(amounts, a, chainRanges))
-      formulaPrices.forEach((p) => setPrice(prices, p))
+      for (const value of getValueFormulas(formula)) {
+        assertNoPrices(value.amount)
+        const valueAmounts = getAmountFormulas(value.amount).map(
+          createAmountConfig,
+        )
+        setPrice(prices, createPriceConfig(value.priceId, valueAmounts))
+      }
     }
   }
 
@@ -83,60 +53,22 @@ export function extractPricesAndAmounts(
   }
 }
 
-function processFormulaRecursive(
-  formula: CalculationFormula | ValueFormula | AmountFormula,
-  chainRanges:
-    | Map<
-        string,
-        {
-          sinceTimestamp: number | undefined
-          untilTimestamp: number | undefined
-        }
-      >
-    | undefined,
-): {
-  formulaAmounts: AmountConfig[]
-  formulaPrices: PriceConfig[]
-} {
-  const formulaAmounts: AmountConfig[] = []
-  const formulaPrices: PriceConfig[] = []
+function assertNoPrices(formula: TvsToken['amount']) {
+  assert(
+    getValueFormulas(formula).length === 0,
+    'Amount formula should not have any prices',
+  )
+}
 
-  if (formula.type === 'calculation') {
-    for (const arg of formula.arguments) {
-      const {
-        formulaAmounts: innerFormulaAmounts,
-        formulaPrices: innerFormulaPrices,
-      } = processFormulaRecursive(arg, chainRanges)
-      formulaAmounts.push(...innerFormulaAmounts)
-      formulaPrices.push(...innerFormulaPrices)
-    }
-  } else if (formula.type === 'value') {
-    const {
-      formulaAmounts: innerFormulaAmounts,
-      formulaPrices: innerFormulaPrices,
-    } = processFormulaRecursive(formula.amount, chainRanges)
-    formulaAmounts.push(...innerFormulaAmounts)
-    formulaPrices.push(...innerFormulaPrices)
-
-    assert(
-      formulaPrices.length === 0,
-      'Amount formula should not have any prices',
-    )
-
-    const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
-
-    formulaPrices.push({
-      id: createPriceConfigId(formula.priceId),
-      sinceTimestamp,
-      untilTimestamp,
-      priceId: formula.priceId,
-    })
-  } else {
-    const amount = createAmountConfig(formula)
-    formulaAmounts.push(amount)
+function createPriceConfig(
+  priceId: string,
+  amounts: AmountConfig[],
+): PriceConfig {
+  return {
+    id: createPriceConfigId(priceId),
+    ...getPriceRange(amounts),
+    priceId,
   }
-
-  return { formulaAmounts, formulaPrices }
 }
 
 function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {

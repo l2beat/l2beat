@@ -67,6 +67,7 @@ export const zcashNearIntents: BaseProject = {
       name: 'Zodl',
       url: 'https://zodl.com',
       since: '2026-09-16',
+      delivery: { type: 'latestOnly', store: 'App Store' },
       version: '3.15.0',
       source: {
         repository: 'https://github.com/zodl-inc/zodl-ios',

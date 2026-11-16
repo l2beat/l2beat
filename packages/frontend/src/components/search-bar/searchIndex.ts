@@ -25,6 +25,9 @@ import type { SearchBarCategory } from './searchBarCategories'
  */
 export const SEARCH_INDEX_PATH = '/api/search-index/v1'
 
+/** Pages listed under Recently added, so as many projects always suffice. */
+export const MAX_RECENTLY_ADDED = 15
+
 export const SearchIndexProjectKind = v.enum([
   'ethereum',
   'layer2',
@@ -77,12 +80,15 @@ export const SearchIndex = v.object({
   // Project ids of each version group, latest first. Optional, because a
   // browser may still hold an index cached before the key existed.
   versionGroups: v.array(v.array(v.string())).optional(),
+  // Project ids, newest first. Optional for the same reason.
+  recentlyAdded: v.array(v.string()).optional(),
 })
 export type SearchIndex = v.infer<typeof SearchIndex>
 
 export interface DecodedSearchIndex {
   projects: SearchBarProjectEntry[]
   tokens: SearchBarTokenEntry[]
+  recentlyAdded: SearchBarProjectEntry[]
 }
 
 export function decodeSearchIndex(index: SearchIndex): DecodedSearchIndex {
@@ -97,7 +103,13 @@ export function decodeSearchIndex(index: SearchIndex): DecodedSearchIndex {
     const version = versions.get(project.id)
     if (version) project.version = version
   }
-  return { projects, tokens: index.tokens.map(decodeSearchIndexToken) }
+  return {
+    projects,
+    tokens: index.tokens.map(decodeSearchIndexToken),
+    recentlyAdded: (index.recentlyAdded ?? [])
+      .flatMap((id) => projects.filter((p) => p.id === id))
+      .slice(0, MAX_RECENTLY_ADDED),
+  }
 }
 
 const PROJECT_PAGES: Record<

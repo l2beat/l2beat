@@ -36,9 +36,10 @@ describe(computeYieldChart.name, () => {
     const network = Array.from({ length: 32 }, (_, i) =>
       day(START + i * DAY, 1_000_000n + 10n * BigInt(i), 0n),
     )
-    const charts = compute([], [], network)
+    const charts = compute([], [], network, new Map([[DAY_31, 3_000]]))
     const point = charts.yield[0]
     expect(present(point?.ethStaked)).toBeCloseTo(999_310, 1e-6)
+    expect(present(point?.ethStakedUsd)).toBeCloseTo(999_310 * 3_000, 1e-3)
     // 65 ETH a day over the average active stake of days 1 to 30, 999,155 ETH.
     expect(present(point?.network)).toBeCloseTo(
       ((65 * 30) / 999_155) * (365 / 30),
@@ -58,6 +59,15 @@ describe(computeYieldChart.name, () => {
       ((65 * 30) / (999_155 - (1_000 * 21) / 30)) * (365 / 30),
       1e-12,
     )
+  })
+
+  it('leaves the USD value of the stake empty on days without an ETH price', () => {
+    const network = Array.from({ length: 32 }, (_, i) =>
+      day(START + i * DAY, 1_000_000n, 0n),
+    )
+    const point = compute([], [], network).yield[0]
+    expect(point?.ethStaked).not.toEqual(null)
+    expect(point?.ethStakedUsd).toEqual(null)
   })
 })
 
@@ -285,6 +295,7 @@ function compute(
   projectIds: string[],
   snapshots: LiquidStakingSnapshotRecord[],
   network: EthereumStakingDailyRecord[] = [],
+  ethPrices = new Map<number, number>(),
 ) {
   const days = [UnixTime(DAY_31)]
   return {
@@ -293,6 +304,7 @@ function compute(
       projectIds,
       snapshots,
       network,
+      ethPrices,
     }),
     costOfExit: computeCostOfExitChart({ days, projectIds, snapshots }),
   }

@@ -101,6 +101,7 @@ export const adi: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 23874833,
+        untilBlock: 26396861, // last batch from the old validator set
         inbox: '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
         sequencers: [
           '0xF8fF3e62E94807a5C687f418Fe36942dD3a24524',
@@ -108,6 +109,13 @@ export const adi: ScalingProject = {
           '0x0b6f2116323C12EE731de6818e41861561bcd44C',
           '0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51',
         ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 26396861, // validator rotation, first new commit @ 26397277
+        inbox: '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
+        sequencers: ['0x76e8D4618fc6a05368CcDAAf7357E1F20e493053'],
       },
     ],
     trackedTxs: [

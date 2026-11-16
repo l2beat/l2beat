@@ -21,6 +21,7 @@ const INSTRUCTIONS = [
   'Contracts are names (Bridge), chain:Name (arb1:L2Timelock) when a name repeats across chains, or chain:0x addresses.',
   'For who can upgrade, pause or otherwise control a contract, call `permissions` and point at the route it prints with `show`.',
   'For a list or a comparison the researcher keeps open, like every contract and who can upgrade it, gather it with your tools and put it on a `board`.',
+  'When the researcher asks to clean up or rearrange the node view, or wants a view of one flow, read it with `graph`, then arrange it with `layout`, one lane per flow.',
   'A code snippet is literal text copied from the source, not a pattern. A wrong name or snippet fails with what to fix: fix it and call again.',
 ].join('\n')
 
