@@ -2,6 +2,7 @@ import type { Node, State, Tool } from '../State'
 import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
 import type { AlignDirection, DistributeAxis } from './align'
 import type { ApplyLayoutMode } from './applyStoredLayout'
+import type { ArrangeRequest } from './arrange'
 import type { AutoGroup } from './loadNodes'
 
 export interface Actions {
@@ -30,6 +31,7 @@ export interface Actions {
   ungroupSelected: () => void
   renameGroup: (id: string, name: string) => void
   layout: (locations: NodeLocations) => void
+  arrange: (request: ArrangeRequest) => void
   undo: () => void
   redo: () => void
   applyStoredLayout: (saved: StoredNodeLayout, mode: ApplyLayoutMode) => void
