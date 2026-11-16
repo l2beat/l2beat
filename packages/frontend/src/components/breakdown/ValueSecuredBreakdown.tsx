@@ -82,7 +82,10 @@ export function ValueSecuredBreakdownTooltipContent({
       <div>
         <div className="flex items-center justify-between gap-4">
           <span className="text-heading-16">TVS</span>
-          <ValueWithPercentageChange change={change}>
+          <ValueWithPercentageChange
+            change={change}
+            changeContainerClassName="min-w-0"
+          >
             {formatCurrency(total, 'usd')}
           </ValueWithPercentageChange>
         </div>
