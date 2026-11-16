@@ -26,7 +26,7 @@ import {
 } from '../pinned-projects/pinnedProjectsStore'
 import { trackScrollFades } from '../ScrollWithGradient'
 import { useSearchBarContext } from './SearchBarContext'
-import { isApple, Kbd, SearchBarTips } from './SearchBarTips'
+import { isApple, Kbd, keepEnterOnButton, SearchBarTips } from './SearchBarTips'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
@@ -101,6 +101,9 @@ export function SearchBarDialog() {
   function showTips() {
     setValue('')
     setTipsOpen(true)
+    // Typing is what replaces the tips, so the input keeps focus. The no
+    // results link that opened them is gone, and would drop it.
+    inputRef.current?.focus()
   }
 
   function searchExample(query: string) {
@@ -159,6 +162,7 @@ export function SearchBarDialog() {
                   type="button"
                   className={linkVariants()}
                   onClick={retry}
+                  onKeyDown={keepEnterOnButton}
                 >
                   Try again
                 </button>
@@ -172,6 +176,7 @@ export function SearchBarDialog() {
                 type="button"
                 className={linkVariants()}
                 onClick={showTips}
+                onKeyDown={keepEnterOnButton}
               >
                 See what you can search
               </button>
@@ -289,6 +294,15 @@ export function SearchBarDialog() {
             ))}
         </CommandList>
         <SearchBarFooter
+          hasResults={
+            showsEmptyState
+              ? emptyState.pinned.length +
+                  emptyState.recentlyViewed.length +
+                  emptyState.recentlyAdded.length >
+                0
+              : !showsTips && showsResults && grouped.length > 0
+          }
+          escapeAction={value !== '' ? 'Clear' : showsTips ? 'Back' : 'Close'}
           tipsOpen={showsTips}
           onToggleTips={() => (showsTips ? setTipsOpen(false) : showTips())}
         />
@@ -386,9 +400,15 @@ function SearchBarNotice({ children }: { children: React.ReactNode }) {
  * as few visitors guess that search finds tokens, pages and addresses too.
  */
 function SearchBarFooter({
+  hasResults,
+  escapeAction,
   tipsOpen,
   onToggleTips,
 }: {
+  /** Whether Enter has anything to open. */
+  hasResults: boolean
+  /** What Esc does now; see `onEscapeKeyDown`. */
+  escapeAction: 'Clear' | 'Back' | 'Close'
   tipsOpen: boolean
   onToggleTips: () => void
 }) {
@@ -398,26 +418,32 @@ function SearchBarFooter({
         type="button"
         aria-expanded={tipsOpen}
         onClick={onToggleTips}
-        className="font-medium transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+        onKeyDown={keepEnterOnButton}
+        // Underlined on touch, where nothing else says it can be tapped.
+        className="rounded-sm font-medium not-can-hover:underline decoration-dotted underline-offset-2 transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
       >
         {tipsOpen ? 'Hide search tips' : 'Search tips'}
       </button>
       {/* Touch usually comes without a keyboard. */}
       <div className="flex not-can-hover:hidden items-center gap-3">
-        <span className="flex items-center gap-1.5">
-          <Kbd>↵</Kbd>
-          Open
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="flex gap-0.5">
-            <Kbd>{isApple() ? '⌘' : 'Ctrl'}</Kbd>
-            <Kbd>↵</Kbd>
-          </span>
-          New tab
-        </span>
+        {hasResults && (
+          <>
+            <span className="flex items-center gap-1.5">
+              <Kbd>↵</Kbd>
+              Open
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="flex gap-0.5">
+                <Kbd>{isApple() ? '⌘' : 'Ctrl'}</Kbd>
+                <Kbd>↵</Kbd>
+              </span>
+              New tab
+            </span>
+          </>
+        )}
         <span className="flex items-center gap-1.5">
           <Kbd>Esc</Kbd>
-          Close
+          {escapeAction}
         </span>
       </div>
     </div>

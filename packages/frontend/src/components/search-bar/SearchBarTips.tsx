@@ -4,7 +4,7 @@ interface SearchTip {
   kind: string
   how: string
   /** Queries that each find something, filled in on click. */
-  examples: string[]
+  examples: { label: string; query: string }[]
 }
 
 /**
@@ -15,23 +15,29 @@ interface SearchTip {
 const SEARCH_TIPS: SearchTip[] = [
   {
     kind: 'Projects',
-    how: 'L2s, bridges, zkVMs, privacy, DeFi: by name or team',
-    examples: ['arb', 'Uniswap', 'Circle'],
+    how: 'By name or team: L2s, bridges, zkVMs, privacy and DeFi',
+    examples: examples('arb', 'Uniswap', 'Circle'),
   },
   {
     kind: 'Tokens',
     how: 'By symbol',
-    examples: ['USDC', 'wstETH'],
+    examples: examples('USDC', 'wstETH'),
   },
   {
     kind: 'Pages',
     how: 'By topic',
-    examples: ['tvs', 'blobs', 'liveness'],
+    examples: examples('tvs', 'blobs', 'liveness'),
   },
   {
     kind: 'Addresses',
-    how: 'Any 0x… contract, token or multisig, to see who uses it',
-    examples: [],
+    how: 'Any contract, token or multisig, to see who uses it',
+    // USDC on Ethereum
+    examples: [
+      {
+        label: '0xA0b8…eB48',
+        query: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      },
+    ],
   },
 ]
 
@@ -49,28 +55,40 @@ export function SearchBarTips({
         {SEARCH_TIPS.map((tip) => (
           <div key={tip.kind} className="col-span-2 grid grid-cols-subgrid">
             <dt className="font-medium">{tip.kind}</dt>
-            <dd className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <dd className="flex flex-col items-start gap-1">
               <span className="text-secondary">{tip.how}</span>
-              {tip.examples.length > 0 && (
-                <span className="flex flex-wrap gap-1">
-                  {tip.examples.map((example) => (
-                    <button
-                      key={example}
-                      type="button"
-                      onClick={() => onExample(example)}
-                      className="rounded border border-divider bg-surface-secondary px-1.5 font-mono text-xs leading-5 transition-colors hover:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-                    >
-                      {example}
-                    </button>
-                  ))}
-                </span>
-              )}
+              <span className="flex flex-wrap gap-1 pointer-coarse:gap-1.5">
+                {tip.examples.map(({ label, query }) => (
+                  <button
+                    key={query}
+                    type="button"
+                    onClick={() => onExample(query)}
+                    onKeyDown={keepEnterOnButton}
+                    // Taller for a finger, where the panel has room to spare.
+                    className="rounded border border-divider bg-surface-secondary pointer-coarse:px-2 px-1.5 font-mono text-xs leading-5 pointer-coarse:leading-7 transition-colors hover:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </span>
             </dd>
           </div>
         ))}
       </dl>
     </section>
   )
+}
+
+function examples(...queries: string[]) {
+  return queries.map((query) => ({ label: query, query }))
+}
+
+/**
+ * Enter on a focused button inside the dialog would otherwise reach cmdk,
+ * which cancels it to open the highlighted result instead.
+ */
+export function keepEnterOnButton(e: React.KeyboardEvent) {
+  if (e.key === 'Enter') e.stopPropagation()
 }
 
 export function Kbd({
