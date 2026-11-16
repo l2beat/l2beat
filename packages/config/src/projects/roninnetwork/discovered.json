@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1793982680,
-  "configHash": "0x178b46c4492122f0d03ddcb817b9014c4daa874105611bf05d342898c69f29a6",
+  "timestamp": 1794320625,
+  "configHash": "0x5ca30f7c32fe17abea52694ecb88d4affea76714cba8124d90fd0e41befb344a",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -219,6 +219,13 @@
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
             "value": 0,
             "data": "0xd0a6af308b38038c000000000000000000000000000000000000000000000000000000000000000000000000000000009660bd6dcdf455dcfb30c07c642ab22e7cb89f50"
+          },
+          {
+            "id": "0xf40a937e65e41f9adb997f8f4b5a1b39d83bb01cdb8b9e4f7e63c6bdb80d2d12",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30e71e6620000000000000000000000000000000000000000000000000000000000000000000000000000000005144a37e65fd032f628663cb21e16490378a8630"
           }
         ],
         "callsScheduled": [
@@ -527,13 +534,13 @@
           ]
         ],
         "$upgradeCount": 3,
-        "anchorGame": "eth:0xcED1FEC23c247E997C0734131e2b6bdEAfb8a536",
+        "anchorGame": "eth:0x5ad23F576941c6C5cA1549aAf8ee8F801044aFa8",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x8c610d713feef0581238104c6ebfdb20e8b832fc4d650f631dfe2447ae001198",
-          62943986
+          "0x0094714c0a6ece31ca67219c9a8c803eb6748a5a067740e134b40243fce07888",
+          63116828
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -1199,7 +1206,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 357,
+        "gameCount": 365,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1210,7 +1217,7 @@
         "initVersion": 1,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "permissionedGameArgs": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54cacc005dcd857b401e4732e6f7837135a22825cfa0b95ff1d1b113bac3e29ac0bbf2089126c9ae81a2562ae2fb030274e3ceb63fcd32c232ab0fcec6d00000000000000000000000000000000000000000000000000000000000007e4d379de941e78ab394d4d4917fcce1cc45b6cd6204a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 154,
+        "permissionedGamesTotal": 162,
         "proposerFromDGF": "eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620",
         "proxyAdmin": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
@@ -2026,6 +2033,7 @@
         "verifier_8b38038c": "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50",
         "verifier_9f39696c": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
         "verifier_bb001d44": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+        "verifier_e71e6620": "eth:0x5144A37e65fd032F628663Cb21E16490378a8630",
         "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
       },
       "fieldMeta": {
@@ -2036,7 +2044,8 @@
         "verifier_bb001d44": { "severity": "MEDIUM" },
         "verifier_73c457ba": { "severity": "MEDIUM" },
         "verifier_242f9d5b": { "severity": "MEDIUM" },
-        "verifier_8b38038c": { "severity": "MEDIUM" }
+        "verifier_8b38038c": { "severity": "MEDIUM" },
+        "verifier_e71e6620": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
@@ -2218,7 +2227,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2109452816926298131163729"
+        "totalSupply": "2104736500517818356008742"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -4654,11 +4663,11 @@
     "risc0/KailuaTreasury": "0xd9dd804b2c26d406824c61c22dca9d370ef24361dcb89aef9e249f305fd19d4d",
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
-    "risc0/RiscZeroVerifierRouter": "0x91a73c1ea423f86bdb76d4376a36c05ba7d3967177b07e20444d52bb472abb81",
+    "risc0/RiscZeroVerifierRouter": "0xa11b86378f3fef09bf67f9307006c3858772d15e0c7661160a2425428ac75c3b",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26357020 },
+  "usedBlockNumbers": { "ethereum": 26385084 },
   "permissionsConfigHash": "0x067de3ce240b823c6ed5e777e441880e29837f70678149a84dbd42a08a1cf774",
   "permissions": {
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {

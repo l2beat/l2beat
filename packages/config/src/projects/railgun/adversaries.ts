@@ -1,6 +1,8 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -9,7 +11,7 @@ const ENGINE =
 // Railgun names no reference wallet. The cells are rated with RailOxide, the
 // most private released open-source client we found.
 const RAILOXIDE =
-  'https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/'
+  'https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -32,12 +34,11 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureShort:
           'Everything inside the pool is hidden, including which shield funds which unshield.',
         exposureContinued: `${S.entryExitPublic('Shields and unshields')} DeFi bundles unshield to an adapter in cleartext.`,
-        advice: S.exitViaRelayer('broadcaster'),
         interior: INTERIOR,
         sources: [
           { contract: 'RailgunSmartWallet', title: 'Shield and unshield' },
           { contract: 'RelayAdapt', title: 'DeFi bundles' },
-          { contract: 'RelayAdapt7702_05ae', title: 'Swap accounts' },
+          { contract: 'RelayAdapt7702_1F74', title: 'Swap accounts' },
         ],
       },
       chainAnalyst: {
@@ -46,7 +47,6 @@ export function railgunAdversaries(upgradeDelay: string) {
           'The candidates for an unshield are the shields of the same token.',
         exposureContinued:
           'In-pool transfers break a one-to-one match, while timing and exact amounts narrow it.',
-        advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
         interior: INTERIOR,
         sources: [
           {
@@ -65,8 +65,6 @@ export function railgunAdversaries(upgradeDelay: string) {
           'With a local node as direct endpoint for reads, RailOxide keeps Ethereum reads local and sends the rest over built-in Tor.',
         exposureContinued:
           'By default public RPCs get the reads that name the user, each over its own Tor circuit, so only timing ties them.',
-        advice:
-          'Before unlocking, set a local Ethereum node as the direct endpoint for reads, and keep one public endpoint for submissions.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -85,7 +83,7 @@ export function railgunAdversaries(upgradeDelay: string) {
           },
           {
             title: 'Sensitive reads go over their own isolated route',
-            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L152-L160`,
+            url: `${RAILOXIDE}crates/wallet-ops/src/public_wallet/balances.rs#L158-L166`,
           },
           {
             title: 'An isolated route never shares a Tor circuit',
@@ -102,8 +100,6 @@ export function railgunAdversaries(upgradeDelay: string) {
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
         exposureContinued:
           "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
-        advice:
-          'Watch governance proposals and unshield before an upgrade the user rejects executes.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -125,8 +121,6 @@ export function railgunAdversaries(upgradeDelay: string) {
           'Whoever breaks elliptic-curve cryptography decrypts every note sent to a 0zk address they know.',
         exposureContinued:
           'A user who gives theirs to payers depends on each of them keeping it private.',
-        advice:
-          "Share the user's 0zk address privately, with a fresh one per counterparty where possible.",
         interior: {
           sender: 'atRisk',
           recipient: 'atRisk',
@@ -149,5 +143,39 @@ export function railgunAdversaries(upgradeDelay: string) {
         ],
       },
     },
+    advice: [
+      {
+        name: 'Set up',
+        text: `Before unlocking RailOxide, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the direct endpoint for reads, and keep one public endpoint for submissions.`,
+        against: ['networkObserver'],
+        outside: true,
+      },
+      {
+        name: 'Shield',
+        text: 'Shield a token many others shield, since an unshield hides only among shields of the same token.',
+        against: ['chainAnalyst'],
+      },
+      {
+        name: 'Receive',
+        text: 'Share your 0zk address privately, and only with payers you trust to keep it.',
+        against: ['futureAdversary'],
+      },
+      {
+        name: 'Wait',
+        text: A.wait,
+        against: ['chainAnalyst'],
+        randomWait: true,
+      },
+      {
+        name: 'Unshield',
+        text: `${A.relayer('broadcaster')} ${A.commonAmounts} ${A.freshAddress}`,
+        against: ['publicObserver', 'chainAnalyst'],
+      },
+      {
+        name: 'Watch',
+        text: 'Watch governance proposals, and unshield before an upgrade you reject executes.',
+        against: ['privilegedInsider'],
+      },
+    ],
   })
 }

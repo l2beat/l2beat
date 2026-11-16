@@ -1,6 +1,6 @@
 {
   "name": "tacit-pay",
-  "timestamp": 1794215772,
+  "timestamp": 1794391460,
   "configHash": "0xb1330e21d635cb6b114f97c7f58d5557d85916b2241271076a1a65087490e2a4",
   "entries": [
     {
@@ -26,7 +26,7 @@
         "NAME": "anon.wei",
         "PAGE_HASH": "0xc38edd73acfcad5a4d5049669f6d7853c32b4687904d6b3d56ce9ccac0feea12",
         "PAGE_LENGTH": 415902,
-        "pendingSteward": "eth:0x0000000000000000000000000000000000000000",
+        "pendingSteward": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "POOL": "eth:0x000000c2A20657CE25f2Ba99737933D031AFBEE9",
         "PREVIOUS": "eth:0x000000BC9db0D5091853bFBf6D062C1410Bc3745",
         "PROVING_KEY_SHA256": "0x40758061a0786fb0bdc5e5dec4c354bbf85fc106f7412716e25e781af4e79c4b",
@@ -91,12 +91,11 @@
           ]
         },
         "logNodesEthereum": [
-          "https://mainnet.gateway.tenderly.co",
-          "https://gateway.tenderly.co/public/mainnet",
-          "https://rpc.mevblocker.io"
+          "https://rpc.mevblocker.io",
+          "https://ethereum-rpc.publicnode.com"
         ],
         "owner": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "provingKeyMirrors": [
           "https://tacit.finance/evm-pool/",
           "https://ipfs.filebase.io/ipfs/bafybeia4yvn2zoggvgpjwg5vpwpt6aivjbcm6tgzxoxsukao2nm5yyypfy/",
@@ -215,17 +214,44 @@
         "ASSET": "eth:0x0000000000000000000000000000000000000000",
         "ASSET_FIELD": "20910559077472597517501221369919085463831420959451892768500948119232265856393",
         "head": [
-          "0x042b7feb60c42745257c00bb8a11e6547f09cb1505b541e0bc6650e7f1716886",
-          812
+          "0x2659e2bf9cad86de0eca282d87bbcf6999f023ce0061dde2c4837b021ece9033",
+          864
         ],
-        "nextIndex": 812,
-        "root": "0x042b7feb60c42745257c00bb8a11e6547f09cb1505b541e0bc6650e7f1716886",
+        "nextIndex": 864,
+        "root": "0x2659e2bf9cad86de0eca282d87bbcf6999f023ce0061dde2c4837b021ece9033",
         "VERIFIER": "eth:0x000000b1c0e84CEc8AdF8278B90c4d6400DfB153"
       },
       "implementationNames": {
         "eth:0x000000c2A20657CE25f2Ba99737933D031AFBEE9": "TacitEvmPool"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Shares",
+      "address": "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12",
+      "type": "Contract",
+      "template": "majeur/Shares",
+      "sourceHashes": [
+        "0x22ec21631cfacecadfdbd8bcbc545c015f1c274e688f9ccaf04a7d92a9e81985"
+      ],
+      "proxyType": "immutable",
+      "description": "Voting token of a Majeur DAO with delegation and vote snapshots.",
+      "deployerAddress": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
+      "sinceTimestamp": 1763481203,
+      "sinceBlock": 23827015,
+      "values": {
+        "$immutable": true,
+        "DAO": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+        "decimals": 18,
+        "name": "Z Shares",
+        "symbol": "Z",
+        "totalSupply": "8698458508655071304428665",
+        "transfersLocked": false
+      },
+      "implementationNames": {
+        "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12": "Shares"
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
@@ -296,6 +322,57 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "name": "Moloch",
+      "address": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
+      "type": "Contract",
+      "template": "majeur/Moloch",
+      "sourceHashes": [
+        "0x6971e4a8740a6aaee8bfef4e96b5384c5b920f13a9c29f678b908065fb184cdb"
+      ],
+      "proxyType": "immutable",
+      "description": "DAO of the Majeur framework. Holders of its shares vote on arbitrary calls, which the contract executes after the timelock. A proposal passes as soon as the quorum has voted with more votes for than against. Members can burn shares or loot for a pro-rata part of the treasury while ragequit is on.",
+      "deployerAddress": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
+      "sinceTimestamp": 1763481203,
+      "sinceBlock": 23827015,
+      "values": {
+        "$immutable": true,
+        "autoFutarchyCap": "5000000000000000000",
+        "autoFutarchyParam": 10,
+        "badges": "eth:0x2809A7EB62D5a50e40153080F548c306Db01c221",
+        "config": 0,
+        "getProposalCount": 26,
+        "loot": "eth:0x62eC86753D9dCb6a6dEe18E2B3A0EBb823359016",
+        "minYesVotesAbsolute": 0,
+        "proposalThreshold": "1000000000000000000",
+        "proposalTTL": 86400,
+        "quorumAbsolute": 0,
+        "quorumBps": 1000,
+        "ragequittable": true,
+        "renderer": "eth:0x000000000011C799980827F52d3137b4abD6E654",
+        "rewardToken": "eth:0x0000000000000000000000000000000000000000",
+        "shares": "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12",
+        "timelockDelay": 86400
+      },
+      "fieldMeta": {
+        "timelockDelay": {
+          "description": "Seconds between queueing a passed proposal and its execution."
+        },
+        "proposalTTL": {
+          "description": "Seconds after which an opened proposal that has not been queued expires."
+        },
+        "quorumBps": {
+          "description": "Share of the snapshot supply, in basis points, that must vote for a proposal to pass."
+        },
+        "proposalThreshold": {
+          "description": "Votes an account needs to open a proposal."
+        }
+      },
+      "implementationNames": {
+        "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E": "Moloch"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "name": "zRpcList",
       "address": "eth:0x8C7348D039f58C4e9cfA936EF410eec759213b12",
       "type": "Contract",
@@ -312,7 +389,7 @@
         "$immutable": true,
         "count": 6,
         "owner": "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E",
         "rpcs": [
           "https://rpc.mevblocker.io",
           "https://ethereum.public.blockpi.network/v1/rpc/public",
@@ -492,6 +569,44 @@
       "function rootSize(bytes32 r) view returns (uint256)",
       "function transact(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[11] publicInputs, address recipient, int256 extAmount, address relayer, uint256 fee, bytes memo0, bytes memo1) payable"
     ],
+    "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12": [
+      "constructor() payable",
+      "error BadBlock()",
+      "error Locked()",
+      "error SplitDupe()",
+      "error SplitLen()",
+      "error SplitSum()",
+      "error SplitZero()",
+      "error Unauthorized()",
+      "event Approval(address indexed from, address indexed to, uint256 amount)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "event WeightedDelegationSet(address indexed delegator, address[] delegates, uint32[] bps)",
+      "function DAO() view returns (address)",
+      "function allowance(address, address) view returns (uint256)",
+      "function approve(address to, uint256 amount) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function burnFromMoloch(address from, uint256 amount) payable",
+      "function clearSplitDelegation()",
+      "function decimals() view returns (uint8)",
+      "function delegate(address delegatee)",
+      "function delegates(address account) view returns (address)",
+      "function getPastTotalSupply(uint48 blockNumber) view returns (uint256)",
+      "function getPastVotes(address account, uint48 blockNumber) view returns (uint256)",
+      "function getVotes(address account) view returns (uint256)",
+      "function init(address[] initHolders, uint256[] initShares) payable",
+      "function mintFromMoloch(address to, uint256 amount) payable",
+      "function name() view returns (string)",
+      "function setSplitDelegation(address[] delegates_, uint32[] bps_)",
+      "function setTransfersLocked(bool locked) payable",
+      "function splitDelegationOf(address account) view returns (address[] delegates_, uint32[] bps_)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transfersLocked() view returns (bool)"
+    ],
     "eth:0x4618B85d52F0d5b4a5540961F98b180b4313a0ea": [
       "constructor()",
       "error BadTarget()",
@@ -503,6 +618,117 @@
     ],
     "eth:0x555333f3f677Ca3930Bf7c56ffc75144c51D9767": [
       "function hash(uint256[4]) pure returns (uint256)"
+    ],
+    "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E": [
+      "constructor() payable",
+      "error AlreadyExecuted()",
+      "error AlreadyVoted()",
+      "error Expired()",
+      "error LengthMismatch()",
+      "error NotOk()",
+      "error Reentrancy()",
+      "error SBT()",
+      "error Timelocked(uint64 untilWhen)",
+      "error TooEarly()",
+      "error Unauthorized()",
+      "event Executed(uint256 indexed id, address indexed by, uint8 op, address to, uint256 value)",
+      "event FutarchyClaimed(uint256 indexed id, address indexed claimer, uint256 burned, uint256 payout)",
+      "event FutarchyFunded(uint256 indexed id, address indexed from, uint256 amount)",
+      "event FutarchyOpened(uint256 indexed id, address indexed rewardToken)",
+      "event FutarchyResolved(uint256 indexed id, uint8 winner, uint256 pool, uint256 finalSupply, uint256 payoutPerUnit)",
+      "event Message(address indexed from, uint256 indexed index, string text)",
+      "event Opened(uint256 indexed id, uint48 snapshotBlock, uint256 supplyAtSnapshot)",
+      "event OperatorSet(address indexed owner, address indexed operator, bool approved)",
+      "event PermitSet(address spender, uint256 indexed id, uint256 newCount)",
+      "event PermitSpent(uint256 indexed id, address indexed by, uint8 op, address to, uint256 value)",
+      "event ProposalCancelled(uint256 indexed id, address indexed by)",
+      "event Queued(uint256 indexed id, uint64 when)",
+      "event SaleUpdated(address indexed payToken, uint256 price, uint256 cap, bool minting, bool active, bool isLoot)",
+      "event SharesPurchased(address indexed buyer, address indexed payToken, uint256 shares, uint256 paid)",
+      "event Transfer(address caller, address indexed from, address indexed to, uint256 indexed id, uint256 amount)",
+      "event VoteCancelled(uint256 indexed id, address indexed voter, uint8 support, uint256 weight)",
+      "event Voted(uint256 indexed id, address indexed voter, uint8 support, uint256 weight)",
+      "function allowance(address token, address spender) view returns (uint256 amount)",
+      "function autoFutarchyCap() view returns (uint256)",
+      "function autoFutarchyParam() view returns (uint256)",
+      "function badges() view returns (address)",
+      "function balanceOf(address owner, uint256 id) view returns (uint256)",
+      "function batchCalls(tuple(address target, uint256 value, bytes data)[] calls) payable",
+      "function bumpConfig() payable",
+      "function buyShares(address payToken, uint256 shareAmount, uint256 maxPay) payable",
+      "function cancelProposal(uint256 id)",
+      "function cancelVote(uint256 id)",
+      "function cashOutFutarchy(uint256 id, uint256 amount) returns (uint256 payout)",
+      "function castVote(uint256 id, uint8 support)",
+      "function chat(string message) payable",
+      "function config() view returns (uint64)",
+      "function contractURI() view returns (string)",
+      "function createdAt(uint256 id) view returns (uint64)",
+      "function executeByVotes(uint8 op, address to, uint256 value, bytes data, bytes32 nonce) payable returns (bool ok, bytes retData)",
+      "function executed(uint256 id) view returns (bool)",
+      "function fundFutarchy(uint256 id, address token, uint256 amount) payable",
+      "function futarchy(uint256 id) view returns (bool enabled, address rewardToken, uint256 pool, bool resolved, uint8 winner, uint256 finalWinningSupply, uint256 payoutPerUnit)",
+      "function getMessageCount() view returns (uint256)",
+      "function getProposalCount() view returns (uint256)",
+      "function hasVoted(uint256 id, address voter) view returns (uint8)",
+      "function init(string orgName, string orgSymbol, string orgURI, uint16 _quorumBps, bool _ragequittable, address _renderer, address[] initHolders, uint256[] initShares, tuple(address target, uint256 value, bytes data)[] initCalls) payable",
+      "function isOperator(address owner, address operator) view returns (bool)",
+      "function loot() view returns (address)",
+      "function messages(uint256) view returns (string)",
+      "function minYesVotesAbsolute() view returns (uint96)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function name(uint256) view returns (string)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function onSharesChanged(address a) payable",
+      "function openProposal(uint256 id)",
+      "function proposalId(uint8 op, address to, uint256 value, bytes data, bytes32 nonce) view returns (uint256)",
+      "function proposalIds(uint256) view returns (uint256)",
+      "function proposalTTL() view returns (uint64)",
+      "function proposalThreshold() view returns (uint96)",
+      "function proposerOf(uint256 id) view returns (address)",
+      "function queue(uint256 id)",
+      "function queuedAt(uint256 id) view returns (uint64)",
+      "function quorumAbsolute() view returns (uint96)",
+      "function quorumBps() view returns (uint16)",
+      "function ragequit(address[] tokens, uint256 sharesToBurn, uint256 lootToBurn)",
+      "function ragequittable() view returns (bool)",
+      "function receiptProposal(uint256 id) view returns (uint256)",
+      "function receiptSupport(uint256 id) view returns (uint8)",
+      "function renderer() view returns (address)",
+      "function resolveFutarchyNo(uint256 id)",
+      "function rewardToken() view returns (address)",
+      "function sales(address payToken) view returns (uint256 pricePerShare, uint256 cap, bool minting, bool active, bool isLoot)",
+      "function setAllowance(address spender, address token, uint256 amount) payable",
+      "function setAutoFutarchy(uint256 param, uint256 cap) payable",
+      "function setFutarchyRewardToken(address _rewardToken) payable",
+      "function setMetadata(string n, string s, string uri) payable",
+      "function setMinYesVotesAbsolute(uint96 v) payable",
+      "function setOperator(address operator, bool approved) returns (bool)",
+      "function setPermit(uint8 op, address to, uint256 value, bytes data, bytes32 nonce, address spender, uint256 count) payable",
+      "function setProposalTTL(uint64 s) payable",
+      "function setProposalThreshold(uint96 v) payable",
+      "function setQuorumAbsolute(uint96 v) payable",
+      "function setQuorumBps(uint16 bps) payable",
+      "function setRagequittable(bool on) payable",
+      "function setRenderer(address r) payable",
+      "function setSale(address payToken, uint256 pricePerShare, uint256 cap, bool minting, bool active, bool isLoot) payable",
+      "function setTimelockDelay(uint64 s) payable",
+      "function setTransfersLocked(bool sharesLocked, bool lootLocked) payable",
+      "function shares() view returns (address)",
+      "function snapshotBlock(uint256 id) view returns (uint48)",
+      "function spendAllowance(address token, uint256 amount)",
+      "function spendPermit(uint8 op, address to, uint256 value, bytes data, bytes32 nonce) payable returns (bool ok, bytes retData)",
+      "function state(uint256 id) view returns (uint8)",
+      "function supplySnapshot(uint256 id) view returns (uint256)",
+      "function symbol(uint256) view returns (string)",
+      "function tallies(uint256 id) view returns (uint96 forVotes, uint96 againstVotes, uint96 abstainVotes)",
+      "function timelockDelay() view returns (uint64)",
+      "function tokenURI(uint256 id) view returns (string)",
+      "function totalSupply(uint256 id) view returns (uint256)",
+      "function transfer(address receiver, uint256 id, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address receiver, uint256 id, uint256 amount) returns (bool)",
+      "function voteWeight(uint256, address) view returns (uint96)"
     ],
     "eth:0x612373D7003d694220f7800EeaF8E3924c0951D3": [
       "error AllowanceExceeded()",
@@ -597,6 +823,8 @@
     ]
   },
   "usedTemplates": {
+    "majeur/Moloch": "0x6339b40b1a1009df2e30bf80ad61e58bc24c88302653e373c117d63444555f6f",
+    "majeur/Shares": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tacit-pay/PoseidonT5": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tacit-pay/TacitBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tacit-pay/TacitEvmPool": "0x6bc3442ec7923a45edae742fc09763e222dace1b930c24f65a1b323a43675123",
@@ -607,8 +835,8 @@
     "tacit-pay/zEndpoints": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tacit-pay/zRpcList": "0x21693ae1146189d0fe95030e477a775703255872295323ec1ef11bc44d5fa779"
   },
-  "usedBlockNumbers": { "ethereum": 26376376 },
-  "permissionsConfigHash": "0x0bdc826c08c824c4fc2eaafb1595674da047da0bf0bfbfb52912de8fb96d5a7a",
+  "usedBlockNumbers": { "ethereum": 26390963 },
+  "permissionsConfigHash": "0x4120daa3ce4832b9a95fb783c3a537d620e6d61c14f432b3d88a93303255032a",
   "permissions": {
     "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20": {
       "receivedPermissions": [

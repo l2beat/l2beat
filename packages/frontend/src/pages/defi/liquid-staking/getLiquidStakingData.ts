@@ -1,9 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { LIQUID_STAKING_DESCRIPTION } from '~/consts/summaryPageDescriptions'
-import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiTotalValueLocked'
-import { getLiquidStakingEntries } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import { getLiquidStakingProjects } from '~/server/features/defi/liquid-staking/getLiquidStakingProjects'
+import { loadLiquidStakingEntries } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getItemListStructuredData } from '~/ssr/head/structured-data/getItemListStructuredData'
 import type { RenderData } from '~/ssr/types'
@@ -64,29 +62,26 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
 
-  const projectsQuery = getLiquidStakingProjects()
-  const [appLayoutProps, projects, tvlByProject, yieldChart, costOfExit] =
-    await Promise.all([
-      getAppLayoutProps(),
-      projectsQuery,
-      projectsQuery.then(getTotalValueLockedByProject),
-      // The chart queries also fill the query cache, so the charts hydrate
-      // without a request.
-      helpers.queryClient.fetchQuery(
-        helpers.trpc.defi.liquidStakingYieldChart.queryOptions({
-          range: defaultChartRange,
-        }),
-      ),
-      helpers.queryClient.fetchQuery(
-        helpers.trpc.defi.liquidStakingCostOfExitChart.queryOptions({
-          range: defaultChartRange,
-        }),
-      ),
-    ])
-  const entries = getLiquidStakingEntries(projects, tvlByProject, {
-    yield: yieldChart,
-    costOfExit,
-  })
+  const [appLayoutProps, { entries }] = await Promise.all([
+    getAppLayoutProps(),
+    // The chart queries also fill the query cache, so the charts hydrate
+    // without a request.
+    loadLiquidStakingEntries(async () => {
+      const [yieldChart, costOfExit] = await Promise.all([
+        helpers.queryClient.fetchQuery(
+          helpers.trpc.defi.liquidStakingYieldChart.queryOptions({
+            range: defaultChartRange,
+          }),
+        ),
+        helpers.queryClient.fetchQuery(
+          helpers.trpc.defi.liquidStakingCostOfExitChart.queryOptions({
+            range: defaultChartRange,
+          }),
+        ),
+      ])
+      return { yield: yieldChart, costOfExit }
+    }),
+  ])
 
   return {
     appLayoutProps,

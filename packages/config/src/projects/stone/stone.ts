@@ -98,16 +98,16 @@ export const stone: BaseProject = {
       {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
         // in hex format '0x...'
-        hash: '0x243611f51b76871574612cc0f140acb660c684a66b74e37b7547474c6683659a',
-        name: 'GPS statement verifier 2026_13_4',
+        hash: '0x356596561d32ae7213471ceb91210afa2e61f6120a7644a4d48830d15517bc12',
+        name: 'GPS statement verifier 2026_14',
         sourceLink:
-          'https://etherscan.io/address/0x4956bda1d23F75B988644329c5B06BD1494a72b6#code',
+          'https://etherscan.io/address/0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3#code',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x4956bda1d23F75B988644329c5B06BD1494a72b6',
+              '0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3',
             ),
             overrideUsedIn: [
               ProjectId('edgex'),
@@ -122,6 +122,33 @@ export const stone: BaseProject = {
           'Onchain stone verifier smart contracts contain code that directly checks proofs of correct Cairo program execution. Unlike SNARK final wraps, it does not contain any additional cryptographic components that need to be independently regenerated because it introduces no new zk circuits. The sources are verified on etherscan and can be examined directly to check the correct implementation of STARK verification protocol.',
         description:
           "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
+      },
+      {
+        hash: '0x243611f51b76871574612cc0f140acb660c684a66b74e37b7547474c6683659a',
+        name: 'GPS statement verifier 2026_13_4',
+        sourceLink:
+          'https://etherscan.io/address/0x4956bda1d23F75B988644329c5B06BD1494a72b6#code',
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x4956bda1d23F75B988644329c5B06BD1494a72b6',
+            ),
+            // TODO: Remove after the referral of the 2026_14 verifier expires on 2026-11-28.
+            overrideUsedIn: [
+              ProjectId('edgex'),
+              ProjectId('myria'),
+              ProjectId('sorare'),
+              ProjectId('brine'),
+            ],
+          },
+        ],
+        verificationStatus: 'successful',
+        verificationSteps:
+          'Onchain stone verifier smart contracts contain code that directly checks proofs of correct Cairo program execution. Unlike SNARK final wraps, it does not contain any additional cryptographic components that need to be independently regenerated because it introduces no new zk circuits. The sources are verified on etherscan and can be examined directly to check the correct implementation of STARK verification protocol.',
+        description:
+          "Previous default verifier. Its facts are accepted through the referral of the 2026_14 verifier until 2026-11-28. Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex string format '0x...'.",
       },
     ],
   },

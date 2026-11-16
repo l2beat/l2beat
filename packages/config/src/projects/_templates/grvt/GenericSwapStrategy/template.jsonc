@@ -73,6 +73,22 @@
         }
       }
     },
+    "receiptConfigs": {
+      "description": "Latest configuration set per receipt token: its price source, maximum price age and the exposure and per-swap caps in the vault token.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": [
+          "priceSource",
+          "maxPriceAge",
+          "exposureCapVaultToken",
+          "maxSwapVaultToken"
+        ],
+        "groupBy": "token",
+        "ignoreRelative": true,
+        "set": { "event": "ReceiptConfigSet" }
+      }
+    },
     "swapsPaused": {
       "severity": "MEDIUM"
     }

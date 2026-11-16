@@ -1,6 +1,6 @@
 {
   "name": "butternetwork",
-  "timestamp": 1793874658,
+  "timestamp": 1794320084,
   "configHash": "0x36272a9cae498e5f00393fc315441effd3bb862d403819f7f7d7272a18893897",
   "entries": [
     {
@@ -10,7 +10,7 @@
       "template": "butternetwork/Bridge",
       "sourceHashes": [
         "0x353ca5e876d7f4a0b0e5305b3f7163b06c65eae2ec374192d82fa9a023b2f316",
-        "0x4fbfa6dffeb7b0631c9754128ce823ee45e589dc9d6a230e444db8381a124cd6"
+        "0xcdcece1862e16da26424ca2364fc88c7dc2ac699b0bb37e0540a885a07c6b585"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.",
@@ -19,7 +19,7 @@
       "sinceBlock": 21872169,
       "values": {
         "$admin": "base:0x0000000000000000000000000000000000000000",
-        "$implementation": "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d",
+        "$implementation": "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25",
         "$pastUpgrades": [
           [
             "2024-11-02T07:48:05.000Z",
@@ -45,12 +45,17 @@
             "2026-05-21T05:48:01.000Z",
             "0x2d56c8102ef3cff82ebce01f64b4f33d299712db723c2992e5421b5bd12f72fa",
             ["base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d"]
+          ],
+          [
+            "2026-11-10T07:53:20.000Z",
+            "0xb5a59a8d60bdfefe215aa6b7baeb1b676f9342aec11ef978b05d1a75049a039e",
+            ["base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "authority": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
         "feeService": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
-        "getImplementation": "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d",
+        "getImplementation": "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25",
         "getRelay": [22776, "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56"],
         "getTransferOutFailedReceiver": "base:0x0000000000000000000000000000000000000000",
         "isConsumingScheduledOp": "0x00000000",
@@ -67,7 +72,7 @@
         },
         "authority": {
           "severity": "HIGH",
-          "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation.",
+          "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, upgrade the Bridge implementation and, in implementations that have `emergencyWithdraw()`, withdraw any asset held by the Bridge.",
           "type": "PERMISSION"
         },
         "getRelay": {
@@ -94,7 +99,7 @@
       },
       "implementationNames": {
         "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": "OmniServiceProxy",
-        "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d": "Bridge"
+        "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25": "Bridge"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -280,7 +285,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -484,7 +489,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "base:0x862761D6D52E9e812A8c22E6e6A39E186e59a33d": [
+    "base:0x9987463102993e177b107e0cE97a0420428D1999": [
+      "constructor(address _singleton)"
+    ],
+    "base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25": [
       "error AccessManagedInvalidAuthority(address authority)",
       "error AccessManagedRequiredDelay(address caller, uint32 delay)",
       "error AccessManagedUnauthorized(address caller)",
@@ -526,6 +534,7 @@
       "error zero_address()",
       "error zero_amount()",
       "event AuthorityUpdated(address authority)",
+      "event EmergencyWithdraw(address indexed token, address indexed to, uint256 amount)",
       "event GasInfo(bytes32 indexed orderId, uint256 indexed executingGas, uint256 indexed executedGas)",
       "event Initialized(uint64 version)",
       "event MessageIn(bytes32 indexed orderId, uint256 indexed chainAndGasLimit, address token, uint256 amount, address to, bytes from, bytes payload, bool result, bytes reason)",
@@ -545,6 +554,7 @@
       "function UPGRADE_INTERFACE_VERSION() view returns (string)",
       "function authority() view returns (address)",
       "function depositToken(address _token, address _to, uint256 _amount) payable returns (bytes32 orderId)",
+      "function emergencyWithdraw(address _token, address _to, uint256 _amount)",
       "function feeList(address, address) view returns (uint256)",
       "function getImplementation() view returns (address)",
       "function getMessageFee(uint256 _toChain, address _feeToken, uint256 _gasLimit) view returns (uint256 fee, address receiver)",
@@ -577,9 +587,6 @@
       "function updateTokens(address[] _tokens, uint256 _feature)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawFee(address receiver, address token) payable"
-    ],
-    "base:0x9987463102993e177b107e0cE97a0420428D1999": [
-      "constructor(address _singleton)"
     ],
     "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA": [
       "constructor(address _singleton)"
@@ -739,8 +746,8 @@
     "butternetwork/VerifyTool": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "base": 53542655 },
-  "permissionsConfigHash": "0x43acd5eacc350a4d4008435b855380b96b5124d2eb534892f712d14c72b8b2f2",
+  "usedBlockNumbers": { "base": 55648546 },
+  "permissionsConfigHash": "0x128559440cca5e5ac039fe6de5a6b6e2933d9198bd26632e369cefe4d9a8f7c9",
   "permissions": {
     "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545": {
       "receivedPermissions": [
@@ -763,7 +770,7 @@
         {
           "permission": "interact",
           "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge.",
           "role": ".adminRole"
         }
       ]
@@ -773,7 +780,7 @@
         {
           "permission": "interact",
           "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge.",
           "role": ".adminRole"
         }
       ]

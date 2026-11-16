@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x86dbe4cd883e465205e20ded466fd280cfdf9e27
+
+# Diff at Tue, 10 Nov 2026 14:30:49 GMT:
+
+- id: 58e0290d
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793195533
+- current timestamp: 1793195533
+
+## Description
+
+Config-only: the shared RiscZeroVerifierRouter template now reads selector 0xe71e6620. MegaETH's own router has no verifier at it.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793195533 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
++++ severity: MEDIUM
+      values.verifier_e71e6620:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.verifier_e71e6620:
++        {"severity":"MEDIUM"}
+    }
+```
+
 Generated with discovered.json: 0xc94d783485fffedafa91a78dae99b41bb9ee3150
 
 # Diff at Wed, 28 Oct 2026 13:54:45 GMT:

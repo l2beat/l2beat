@@ -61,7 +61,8 @@ for (const name of ['OxidePortal', 'OxidePortal_sUSDS']) {
     { portal: name },
   )
 }
-// keccak256 of PCR0 4d28e5b1…, an image absent from the public downloads.
+// keccak256 of PCR0 4d28e5b1…, which scripts/build-enclave.sh rebuilds at
+// zkmoney-public f90b3f2.
 assert(
   discovery.getContractValue<string>('TeeRegistry', 'PCR0_HASH') ===
     '0xf8c74ed4c30d08100cf653c802123b07a6880f3e2601e23d6bfd498d9db0423a',
@@ -349,12 +350,22 @@ export const zkmoneyv6: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'zk.money Desktop',
-      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.8.0',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.10.0',
       since: '2026-10-28',
-      version: '0.8.0',
+      delivery: {
+        type: 'pinned',
+        pin: {
+          type: 'sha256',
+          file: 'zkmoney-desktop-linux-x86_64.AppImage',
+          hash: '8c2260aaf7d7a16f4003d6c2a57c80ee2a7b8725e48adbbe9104d8b1666346eb',
+        },
+        rebuild:
+          'https://github.com/aztec-labs-eng/zkmoney-public/blob/f90b3f24ad4dbe936070c6abc38bffea047006ba/.github/workflows/release-desktop.yml',
+      },
+      version: '0.10.0',
       source: {
         repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
-        commit: '8fd198412a956f214639b5782d3a86e3d47ca60e',
+        commit: 'f90b3f24ad4dbe936070c6abc38bffea047006ba',
       },
       checkedApps: [
         {
@@ -364,7 +375,7 @@ export const zkmoneyv6: BaseProject = {
             "Runs whatever code Aztec Labs' server sends on each visit, so a changed build could read the user's viewing keys.",
           fix: 'Serve each build under an onchain pin, such as an ENS contenthash, so every code change shows onchain.',
           source: 'https://wallet.zk.money',
-          checked: '2026-10-30',
+          checked: '2026-11-11',
         },
       ],
     },
@@ -406,14 +417,14 @@ export const zkmoneyv6: BaseProject = {
       walkawayTest: {
         passed: false,
         reason:
-          'Withdrawals and refunds need a live AWS Nitro enclave running the approved image, which is absent from the public downloads.',
+          'Withdrawals and refunds need a live AWS Nitro enclave running the approved image. With Aztec Labs gone, a user has to host and register one themselves.',
       },
     },
     reproducibility: {
       value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The Ethereum contracts, the wallet, the enclave software and the circuit sources are public. The refund and resolver verifiers, the L2 contracts and the Desktop app reproduce from them. The approved enclave image and its build files are unpublished. The hosted wallet runs a build absent from the public source.',
+        'The Ethereum contracts, the wallet, the enclave and the circuit sources are public. The refund and resolver verifiers, the L2 contracts, the approved enclave image and the Desktop app reproduce from them. The resolver and account services are unpublished. The hosted wallet runs a build absent from the public source.',
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

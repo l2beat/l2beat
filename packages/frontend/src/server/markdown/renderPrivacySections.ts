@@ -8,6 +8,7 @@ import type {
 import compact from 'lodash/compact'
 import isEqual from 'lodash/isEqual'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
+import type { PrivacyAdviceSectionProps } from '~/components/projects/sections/privacy/PrivacyAdviceSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
 import {
   getExposure,
@@ -18,12 +19,20 @@ import {
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
+  ADVICE,
+  getStepAdversaries,
+  getStepsAgainst,
+  getUncoveredAdversaries,
+  getWaitInstruction,
+} from '~/pages/privacy/adviceUi'
+import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
   PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS,
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
 import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
@@ -37,6 +46,7 @@ import {
   heading,
   joinBlocks,
   link,
+  numberedList,
   table,
   withSentiment,
 } from './markdown'
@@ -54,11 +64,15 @@ export function renderPrivacyAdversaries(
     `**What the protocol promises:** ${adversaries.promise.text}`,
     referenceApp ? renderReferenceApps(referenceApp) : '',
     `${PRIVACY_ADVERSARIES_TOOLTIP} Fields marked at risk stay private only under the condition in their note.`,
+    adversaries.advice
+      ? `**${ADVICE.label}:** ${ADVICE.title}, the next section.`
+      : '',
     ...adversaries.adversaries.map((adversary) => {
       const cell = adversaries.cells[adversary.id]
       return renderAdversary(adversary, cell, level, {
         baseline: adversary.id === 'publicObserver' ? undefined : baseline,
         fields: adversaries.fields,
+        steps: getStepsAgainst(adversaries.advice, adversary.id),
       })
     }),
   ])
@@ -74,10 +88,22 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       ? `${source.label} ${link(source.commit.label, source.commit.href)}`
       : source.label,
   ]
+  const delivery = getReferenceAppDelivery(app)
+  const check =
+    delivery.check &&
+    (delivery.check.value
+      ? `${delivery.check.label}: ${delivery.check.value}`
+      : delivery.check.label)
+  const deliveryMeta = [
+    `${delivery.kind.label}: ${delivery.kind.description}`,
+    `${delivery.source.label}: ${delivery.source.description}`,
+    delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
+    check,
+  ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta(meta)}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta([...meta, ...deliveryMeta])}`,
       ...app.checkedApps.map((checkedApp) => {
         const meta = [
           checkedApp.fix && `${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`,
@@ -102,10 +128,13 @@ function renderAdversary(
   {
     baseline,
     fields,
+    steps,
   }: {
     /** The public observer cell; undefined when rendering the baseline itself. */
     baseline: PrivacyAdversaryCell | undefined
     fields: PrivacyFieldInfo[]
+    /** The advice steps that defend this cell. */
+    steps: ReturnType<typeof getStepsAgainst>
   },
 ) {
   return joinBlocks([
@@ -113,13 +142,48 @@ function renderAdversary(
     withSentiment(cell.value, cell.sentiment),
     `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
     getPrivacyAdversaryDescription(cell),
-    cell.advice ? `**Advice:** ${cell.advice}` : '',
     cell.interior
       ? baseline?.interior
         ? renderInteriorDiff(cell.interior, baseline.interior, fields)
         : renderInterior(`**${PRIVACY_INTERIOR_LABEL}**`, cell.interior, fields)
       : '',
+    steps.length > 0
+      ? `**${ADVICE.label}:** ${steps.map(({ step, index }) => `step ${index + 1} (${step.name})`).join(', ')}.`
+      : '',
     renderSources(cell.sources ?? []),
+  ])
+}
+
+/** The steps in order, each with the adversaries it defends, like the HTML. */
+export function renderPrivacyAdvice({
+  steps,
+  adversaries,
+  sentiments,
+  waitWindowDays,
+}: Pick<
+  PrivacyAdviceSectionProps,
+  'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
+>) {
+  const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
+  return joinBlocks([
+    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
+    numberedList(
+      steps.map((step) => {
+        const against = getStepAdversaries(step, adversaries).map((adversary) =>
+          adversary.label.toLowerCase(),
+        )
+        const name = step.outside
+          ? `${step.name}, ${ADVICE.outsideLabel}`
+          : step.name
+        const text = step.randomWait
+          ? `${step.text} ${getWaitInstruction(waitWindowDays)}`
+          : step.text
+        return `**${name}.** ${text} ${ADVICE.againstLabel}: ${against.join(', ')}.`
+      }),
+    ),
+    uncovered.length > 0
+      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label.toLowerCase()).join(', ')}.`
+      : '',
   ])
 }
 

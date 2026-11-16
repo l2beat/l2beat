@@ -18,5 +18,11 @@
     "hash": "0x702c3ac8228cb7a90fdc21a1ff9a274add0e7c4d692fafa13cde53c3cab10c45",
     "address": "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe",
     "blockNumber": 24368772
+  },
+  "SHARPVerifier_2026_14": {
+    "hash": "0x896cf2bef6c84315f0b0c2095a55eb4b805842895c56faab2f2c3ca77a491428",
+    "address": "eth:0x91C57B64738b80f4494d83b485AD3f9C0f95E2A3",
+    "chain": "ethereum",
+    "blockNumber": 26385000
   }
 }

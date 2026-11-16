@@ -86,6 +86,14 @@ export function BlobsThroughputChart({
           syncedUntil={byProject.data?.syncedUntil}
           isLoading={byProject.isLoading}
           customColors={customColors}
+          capacity={{
+            projectId: project.id,
+            data: getDataWithConfiguredThroughputs(
+              byProject.data?.totalChart.data,
+              configuredThroughputs,
+              resolution,
+            ),
+          }}
           milestones={milestones}
           resolution={resolution}
           disableLegendOnboarding

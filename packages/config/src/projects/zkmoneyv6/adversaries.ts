@@ -1,14 +1,15 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
-// zk.money Desktop v0.8.0, the reference client. vendor/oxide holds Oxide
-// 3b5e1f7c8, between the portals' deployment commit bd000cc and the manifest's
-// 9178280. The core contracts and the enclave app are identical in all three.
+// zk.money Desktop v0.10.0, the reference client. vendor/oxide holds Oxide
+// 3b5e1f7c8, the commit the approved enclave image builds from. The manifest
+// names Oxide 3d8e29dc, with the portals, registry and PCR0 unchanged.
 const ZKMONEY_REPO =
-  'https://github.com/aztec-labs-eng/zkmoney-public/blob/8fd198412a956f214639b5782d3a86e3d47ca60e/'
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/f90b3f24ad4dbe936070c6abc38bffea047006ba/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
 const HANDSHAKE_REGISTRY =
   'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
@@ -38,8 +39,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort: 'Private payments publish encrypted notes.',
       exposureContinued:
         'Claiming a name ties it, its Aztec address and its registration deposit address to the wallet that funds the claim. The first payment to a new contact reveals the recipient through a handshake. L2 logs mark every transaction of the shared token contract.',
-      advice:
-        'Claim the name from a wallet without a public link to the user. Fund each deposit address once and let it be swept.',
       interior: INTERIOR,
       sources: [
         {
@@ -67,7 +66,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         "A DAI withdrawal hides among the DAI portal's depositors, an sUSDS one among the sUSDS portal's.",
       exposureContinued:
         "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is still small.",
-      advice: `${S.commonAmounts} ${S.freshExit}`,
       interior: {
         ...INTERIOR,
         amount: {
@@ -83,7 +81,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         {
           contract: 'OxidePortal',
           title:
-            '219 depositors to 2026-10-30: 42 traced funders and 177 v5 migrations',
+            '371 depositors to 2026-11-10: 110 traced funders and 261 v5 migrations',
         },
         { contract: 'RegistrationSIPA' },
         {
@@ -101,9 +99,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
-        'Desktop has no Tor setting, and Chrome sends WalletConnect traffic over UDP. Tor carries no UDP, so a Tor route must block UDP or that traffic bypasses it.',
-      advice:
-        "Set the user's own Ethereum node as the L1 endpoint. Send all of the computer's traffic through an IP-hiding route that carries UDP, or through Tor with UDP blocked, as Whonix does.",
+        "PublicNode receives each withdrawal recipient as it is entered, through an Optimism endpoint the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -116,7 +112,6 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title:
             'Endpoint settings: Aztec node, old-network node, L1 RPC and enclave',
@@ -124,7 +119,11 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
         {
           title: 'Every L1 client reads the configured L1 RPC',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L405-L445`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L666-L672`,
+        },
+        {
+          title: 'Withdrawal recipients are checked on a fixed Optimism RPC',
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/withdraw/etherfiCheck.ts#L91-L116`,
         },
         {
           title: 'XMTP identity is the account bootstrap address',
@@ -133,16 +132,25 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       ],
     },
     privilegedInsider: {
-      sentiment: 'bad',
+      sentiment: 'warning',
       exposureShort:
-        'An AWS Nitro enclave reads payments, withdrawals and deposit claims, and the image it runs is unpublished.',
+        'An AWS Nitro enclave reads payments, withdrawals and deposit claims, and wallets accept only one registered with an attestation of the approved image.',
       exposureContinued:
-        "Wallets accept only an enclave registered for the approved image, but nobody outside Aztec Labs can obtain or rebuild that image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+        "Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
       interior: {
         ...INTERIOR,
-        sender: 'exposed',
-        amount: 'exposed',
-        linkage: 'exposed',
+        sender: {
+          verdict: 'atRisk',
+          note: 'Private only while the attested enclave keeps what it reads.',
+        },
+        amount: {
+          verdict: 'atRisk',
+          note: 'Private only while the attested enclave keeps what it reads.',
+        },
+        linkage: {
+          verdict: 'atRisk',
+          note: "Private only with the user's own Aztec node, and while the attested enclave keeps what it reads.",
+        },
       },
       sources: [
         {
@@ -154,12 +162,12 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
           title: 'One approved image for both portals',
         },
         {
-          title: 'The documented image list omits the approved image',
-          url: 'https://docs.zk.money/docs/run-an-enclave',
+          title: "Deposit claims ask the Aztec node for the deposit's message",
+          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/sipaClaim.ts#L133`,
         },
         {
           title: 'The resolver derives addresses paid through a name',
-          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/resolverPayments.ts#L171`,
+          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/resolverPayments.ts#L164`,
         },
       ],
     },
@@ -196,4 +204,39 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: `Set your own ${toolLink('ethereumNode')} as the L1 endpoint. Send all traffic through ${toolLink('nymVpn')} with the Random profile, an IP-hiding route that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like ${toolLink('torSystems', 'Whonix')}, keeps them but must reach your node.`,
+      against: ['networkObserver', 'privilegedInsider'],
+      outside: true,
+    },
+    {
+      name: 'Run a node',
+      text: `Set your own ${toolLink('aztecNode')} in the endpoint settings.`,
+      against: ['privilegedInsider'],
+      outside: true,
+    },
+    {
+      name: 'Register',
+      text: 'Claim your name from a wallet without a public link to you.',
+      against: ['publicObserver'],
+    },
+    {
+      name: 'Deposit',
+      text: 'Fund each deposit address once and let it be swept. Give outside payers a deposit address your wallet created.',
+      against: ['publicObserver', 'privilegedInsider'],
+    },
+    {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+    {
+      name: 'Withdraw',
+      text: `${A.commonAmounts} ${A.freshAddress}`,
+      against: ['chainAnalyst'],
+    },
+  ],
 })

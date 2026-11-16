@@ -1,0 +1,14 @@
+{
+  "EthPrivVault.sol": {
+    "hash": "0xbaba151d72eba765e9bc1cbbb7d340ac9e39006df19a04c99fb8ae2ad29a6a09",
+    "address": "eth:0xd2037CA73ed58B3f97f471Ade4384ac52ee7BEcc",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  },
+  "EthPrivVaultV3.sol": {
+    "hash": "0x331b9b0d766fc4f50ca4776a9a9c1f73634f5a1cd5ebc61fca29ce6666a993bb",
+    "address": "eth:0xfe076029B7D46fbe2ad4B9CBf377aA10B309e560",
+    "chain": "ethereum",
+    "blockNumber": 26342340
+  }
+}

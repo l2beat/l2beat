@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf34803478d22042f65439c6c02fbced3ac5381d4
+
+# Diff at Tue, 10 Nov 2026 14:26:40 GMT:
+
+- id: 040e6135
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793006682
+- current timestamp: 1794319775
+
+## Description
+
+New governance proposal 6 (payload `ZeroRegistryRewardsPayload` eth:0x8e1ae43beC950Ea0E02F2Ed43101797c5A8dbfCD), in voting. It only targets the v6 Rollup (see aztecnetworkv6): a reward calculator that pays no sequencer reward to stakers of two token position registries. If the vote passes, it is executable from 2026-11-18.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        6
++        7
+    }
+```
+
 Generated with discovered.json: 0x936ba82e222c5ee6edc95b621fa421a92142f0fa
 
 # Diff at Thu, 05 Nov 2026 08:58:36 GMT:

@@ -1,4 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
+import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { PrivacyRosetteCell } from '~/pages/privacy/rosette/PrivacyRosetteCell'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { HOME_CELL_LINK_CLASS } from '../homeStyles'
@@ -25,6 +26,7 @@ export function HomePrivacyCard({
   return (
     <HomeDomainCard
       title="Privacy"
+      icon={<PrivacyIcon aria-hidden />}
       link={{ href: '/privacy', label: `All ${projectCount} projects` }}
       className={className}
     >

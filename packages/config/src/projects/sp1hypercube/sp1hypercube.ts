@@ -109,10 +109,12 @@ export const sp1hypercube: BaseProject = {
       {
         projectId: ProjectId('sophon'),
         sinceTimestamp: UnixTime(1771445567),
+        untilTimestamp: UnixTime(1794053003), // v31 upgrade, moved from Avail to Ethereum blobs
       },
       {
         projectId: ProjectId('lens'),
         sinceTimestamp: UnixTime(1771445567),
+        untilTimestamp: UnixTime(1794313883), // v31 upgrade, moved from Avail to Ethereum blobs
       },
       {
         projectId: ProjectId('galxegravity'),

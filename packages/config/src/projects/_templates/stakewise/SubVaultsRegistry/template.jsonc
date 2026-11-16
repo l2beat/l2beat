@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Per-meta-vault list of sub-vaults and the curator that allocates among them. Only the meta vault's admin changes either, and adding a meta vault as a sub-vault needs the vault registry owner's acceptance.",
+  "ignoreMethods": [
+    "calculateSubVaultsRedemptions",
+    "proxiableUUID",
+    "UPGRADE_INTERFACE_VERSION"
+  ],
+  "ignoreInWatchMode": [
+    "subVaultsTotalAssets",
+    "subVaultsRewardsNonce",
+    "canUpdateState",
+    "isStateUpdateRequired",
+    "ejectingSubVaultShares"
+  ],
+  "fields": {
+    "getSubVaults": {
+      "severity": "HIGH",
+      "description": "Vaults this meta vault deposits into."
+    },
+    "subVaultsCurator": {
+      "severity": "MEDIUM",
+      "description": "Contract that decides how deposits and exits are split across the sub-vaults."
+    }
+  }
+}

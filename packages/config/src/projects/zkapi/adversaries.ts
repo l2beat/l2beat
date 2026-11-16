@@ -1,13 +1,13 @@
 import {
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
-  PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
 const SRC =
   'https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/'
 const OA_CHAT =
-  'https://github.com/OpenAnonymity/oa-chat/blob/a2623612c17bea09d5efaf8f41b500fe98fb1c8a/'
+  'https://github.com/OpenAnonymity/oa-chat/blob/6c6046141f8b2cf4e4ba9e6967a7fa4dfcff716d/'
 
 // Linkage here is deposit-to-request. Deposits and withdrawals of one note are
 // publicly linked by note id, which the promise says.
@@ -76,23 +76,20 @@ export const zkApiAdversaries = definePrivacyAdversaries({
         'The app works in Tor Browser, and no third party sees both a deposit and a request.',
       exposureContinued:
         "The deposit reaches the wallet's RPC, or the app's public RPC when the user funds an address the app shows. A relay at refraction.network carries requests to OpenRouter and chain reads by default and sees their timing, and Fathom counts feature use.",
-      advice:
-        'Use the app in Tor Browser, and send the deposit through an IP-hiding route too.',
       interior: {
         ...PUBLIC_INTERIOR,
         linkage: {
           verdict: 'atRisk',
-          note: "Private only when IP-hiding routes keep the user's IP out of both the deposit and the requests.",
+          note: 'Private only when the requests go through Tor Browser and no prompt names the user.',
         },
       },
       sources: [
-        S.ipHidingRoutes,
         {
           title: 'App relay on by default, direct fallback',
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-10-30)',
+          title: 'Hosted app loads Fathom Analytics (checked 2026-11-11)',
           url: 'https://chat.openanonymity.ai',
         },
       ],
@@ -152,4 +149,22 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
   },
+  advice: [
+    {
+      name: 'Set up',
+      text: A.torBrowser,
+      against: ['networkObserver'],
+      outside: true,
+    },
+    {
+      name: 'Deposit',
+      text: 'Fund the address the app shows from any wallet, so no wallet connects to the session that sends your requests.',
+      against: ['networkObserver'],
+    },
+    {
+      name: 'Chat',
+      text: 'Leave your name, addresses and other identifying details out of prompts, since the provider reads them.',
+      against: ['networkObserver'],
+    },
+  ],
 })

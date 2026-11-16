@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xfbfc422528f899e13a0d180059a9e57c169103f7
+
+# Diff at Tue, 10 Nov 2026 14:26:44 GMT:
+
+- id: 8b7785e3
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ea16426fac1900c2fffd1cec3ecc6b84981c76 block: 1793614673
+- current timestamp: 1794319787
+
+## Description
+
+New governance proposal 6 (payload `ZeroRegistryRewardsPayload` eth:0x8e1ae43beC950Ea0E02F2Ed43101797c5A8dbfCD, wrapped in the GSEPayload eth:0x340d8F93C874f59D0e49400cb7a9Aff31eEd5E71), in voting. It sets a RegistryReductionCalculator (eth:0xbfa4597532b2bac2b7429EDe41da29E2fe3Ee43D, owned by the Governance) as `sequencerRewardCalculator` of the v6 Rollup, with a sequencer reward of 0 for two token position registries (eth:0x667d2641cb96734f386adA6A9afCF07B1815fB8b and eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80).
+
+https://forum.aztec.network/t/proposal-zero-sequencer-checkpoint-rewards-for-investor-and-employee-atp-registries/8694
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) [aztecnetwork/Governance] {
+    +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
+      values.proposalCount:
+-        6
++        7
+    }
+```
+
 Generated with discovered.json: 0x1a07f69c460b9a87577bc6137a989eae5740bf1e
 
 # Diff at Thu, 05 Nov 2026 08:58:36 GMT:

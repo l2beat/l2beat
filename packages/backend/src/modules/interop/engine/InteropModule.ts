@@ -38,6 +38,7 @@ import {
   type InteropTrpcRouter,
 } from './dashboard/trpc/router'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
+import { InteropFinancialsReprocessLoop } from './financials/InteropFinancialsReprocessLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
 import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
@@ -221,6 +222,12 @@ export function createInteropModule({
       batchSize: config.interop.financials.batchSize,
     },
   )
+  const financialsReprocessLoop = new InteropFinancialsReprocessLoop(
+    config.interop.capture.chains,
+    db,
+    tokenDbClient,
+    logger,
+  )
 
   let relayIndexers: { root: RelayRootIndexer; child: RelayIndexer } | undefined
   if (config.interop.relay) {
@@ -309,6 +316,7 @@ export function createInteropModule({
     if (config.interop && config.interop.financials.enabled) {
       await recentPricesIndexer.start()
       financialsService.start()
+      financialsReprocessLoop.start()
     }
     if (config.interop && config.interop.config.enabled) {
       for (const configLoop of configLoops) {

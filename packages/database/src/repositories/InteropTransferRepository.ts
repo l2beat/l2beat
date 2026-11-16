@@ -904,6 +904,71 @@ export class InteropTransferRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
+  async getUnidentifiedTokensSince(
+    since: UnixTime,
+  ): Promise<InteropTransferTokenAddress[]> {
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .select(['srcChain as chain', 'srcTokenAddress as address'])
+      .where((eb) => this.unidentifiedSince(eb, 'src', since))
+      .union((eb) =>
+        eb
+          .selectFrom('InteropTransfer')
+          .select(['dstChain as chain', 'dstTokenAddress as address'])
+          .where((eb) => this.unidentifiedSince(eb, 'dst', since)),
+      )
+      .execute()
+
+    return rows.flatMap((row) =>
+      row.address === null ? [] : [{ chain: row.chain, address: row.address }],
+    )
+  }
+
+  async markUnidentifiedAsUnprocessed(
+    tokens: InteropTransferTokenAddress[],
+    since: UnixTime,
+  ): Promise<number> {
+    if (tokens.length === 0) {
+      return 0
+    }
+
+    const result = await this.db
+      .updateTable('InteropTransfer')
+      .set({ isProcessed: false })
+      .where((eb) => {
+        const pairs = tokens.map((t) => eb.tuple(t.chain, t.address))
+        return eb.or([
+          eb.and([
+            this.unidentifiedSince(eb, 'src', since),
+            eb(eb.refTuple('srcChain', 'srcTokenAddress'), 'in', pairs),
+          ]),
+          eb.and([
+            this.unidentifiedSince(eb, 'dst', since),
+            eb(eb.refTuple('dstChain', 'dstTokenAddress'), 'in', pairs),
+          ]),
+        ])
+      })
+      .executeTakeFirst()
+
+    return Number(result.numUpdatedRows)
+  }
+
+  // A side without a raw amount gets no abstract token id even when its token
+  // is known, so it is left out to keep reprocessing from repeating forever.
+  private unidentifiedSince(
+    eb: ExpressionBuilder<DB, 'InteropTransfer'>,
+    side: 'src' | 'dst',
+    since: UnixTime,
+  ): Expression<SqlBool> {
+    return eb.and([
+      eb('isProcessed', '=', true),
+      eb('timestamp', '>=', UnixTime.toDate(since)),
+      eb(`${side}AbstractTokenId`, 'is', null),
+      eb(`${side}TokenAddress`, 'is not', null),
+      eb(`${side}RawAmount`, 'is not', null),
+    ])
+  }
+
   private financialsFilterExpression(
     eb: ExpressionBuilder<DB, 'InteropTransfer'>,
     filter: InteropTransferFinancialsFilter,

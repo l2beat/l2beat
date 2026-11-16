@@ -19,11 +19,11 @@ The user's wallet derives spending and viewing keys from a recovery phrase. The 
 
 ### App
 
-The app sends its traffic over built-in Tor, each sensitive call on its own circuit. It builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Instead of a broadcaster, the user can submit from a public account that pays the gas. On Ethereum, a public account without ETH can submit too, and the transaction pays a [block builder](https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/crates/wallet-ops/src/settings/effective.rs#L12-L15) from the private balance.
+The app sends its traffic over built-in Tor, each sensitive call on its own circuit. It builds Private Proofs of Innocence (PPoI) from a local copy of the lists. Instead of a broadcaster, the user can submit from a public account that pays the gas. On Ethereum, a public account without ETH can submit too, and the transaction pays a [block builder](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/settings/effective.rs#L12-L15) from the private balance.
 
 ### Swaps
 
-The app swaps through [CoW Protocol](https://docs.cow.fi/). Each swap uses a fresh swap account as its adapter. A broadcaster submits the account's EIP-7702 delegation to RelayAdapt7702. The account signs a CoW order, which the app sends over a separate Tor circuit. The order carries the signed unshield, so its nullifiers are public before it fills. At settlement the account unshields, trades and shields the proceeds back, or CoW pays them to an address the user names. [Across or NEAR Intents](https://github.com/triamazikamno/railoxide/blob/7981f35afe8fe5a198a450e0cad66d37f159556e/crates/wallet-ops/src/bridge/mod.rs#L1-L11) can deliver them on another chain instead. The account ties the setup to the swap, and an unfilled order to the later spend of its notes.
+The app swaps through [CoW Protocol](https://docs.cow.fi/). Each swap uses a fresh swap account as its adapter. A broadcaster submits the account's EIP-7702 delegation to RelayAdapt7702. The account signs a CoW order, which the app sends over a separate Tor circuit. The order carries the signed unshield, so its nullifiers are public before it fills. At settlement the account unshields, trades and shields the proceeds back, or CoW pays them to an address the user names. [Across or NEAR Intents](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/bridge/mod.rs#L1-L11) can deliver them on another chain instead. The account ties the setup to the swap, and an unfilled order to the later spend of its notes.
 
 ### Compliance
 

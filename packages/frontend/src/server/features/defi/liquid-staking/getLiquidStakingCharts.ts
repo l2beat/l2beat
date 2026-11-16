@@ -52,6 +52,16 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
   ethStaked: number | null
 }
 
+export async function getLiquidStakingCharts(
+  params: LiquidStakingChartsParams,
+): Promise<LiquidStakingCharts> {
+  const [yieldChart, costOfExit] = await Promise.all([
+    getLiquidStakingYieldChart(params),
+    getLiquidStakingCostOfExitChart(params),
+  ])
+  return { yield: yieldChart, costOfExit }
+}
+
 /** Annualised fractions over the previous 30 days. */
 export async function getLiquidStakingYieldChart(
   params: LiquidStakingChartsParams,

@@ -40,7 +40,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '- Active Relayers 30D: 7',
       '- Tracked on: Ethereum, BNB Smart Chain',
       '- Attributes: ZK, Fixed amounts',
-      '- Reference app: Classic app (most private of 2 checked)',
+      '- Reference app: Classic app (pinned, reproducible, most private of 2 checked)',
       'Tornado Cash is a non-custodial mixer.',
     )
   })
@@ -191,6 +191,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
+      '## How to stay private',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -243,7 +244,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     it('lists the reference app, then each checked app with its finding and fix', () => {
       expect(privacy()).toInclude(
-        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4)\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://ethbeat.org/publications/privacy-methodology#reference-app)',
+        '**Apps**\n\n- **[Classic app](https://tornado.example)** (Reference): The ratings assume this app, since 2026-10-13 · Source [17c54da](https://github.com/tornado-dao/classic-ui/tree/17c54dae9ad91bb3c6d62a7860df6cd365ab76d4) · Pinned: Every user can get the build we reviewed and check its hash or contract address against ours. · Reproducible: A rebuild of the public source gives the same app. · [Build recipe](https://recipe.example) · IPFS hash: bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a\n- **Mirror app** (Leaks more): Reads every note through a hosted indexer. Fix: Scan notes locally. · [Source (checked 2026-10-22)](https://mirror.example)\n\n[How we pick the reference](https://ethbeat.org/publications/privacy-methodology#reference-app)',
       )
     })
 
@@ -261,6 +262,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
                     ...closedApp,
                     build: '99da543',
                     checked: '2026-10-22',
+                    delivery: { type: 'hosted' },
                   },
                 },
               }
@@ -268,14 +270,36 @@ describe(renderPrivacyProjectMarkdown.name, () => {
         ),
       })
       expect(getSection(markdown, 'Privacy')).toInclude(
-        '(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22',
+        "(Reference): The ratings assume this app, since 2026-10-13 · Closed source, build 99da543, checked 2026-10-22 · Hosted: The website serves the code at each visit and can change it at any time, even for one user alone. · Closed: The source is not public, so our review rests on the app's observed behaviour.\n",
       )
     })
 
     it('grades the promise against each adversary and says why', () => {
       expect(privacy()).toInclude(
-        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.\n\n**Advice:** Wait before withdrawing.',
+        '### Chain analyst\n\nLink at risk (sentiment: warning)\n\n**Who:** Correlates all public data. Examples: Chain analytics firms.\n\nTiming narrows the anonymity set.',
       )
+    })
+
+    it('links the advice once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude(
+        '**Advice:** How to stay private, the next section.',
+      )
+      expect(privacy()).not.toInclude('**Advice:** Wait')
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude(
+        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: chain analyst.',
+      )
+    })
+
+    it('links each adversary to the steps that defend it', () => {
+      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+    })
+
+    it('names the adversaries no step helps against', () => {
+      expect(
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+      ).toInclude('**No step helps against:** future adversary.')
     })
 
     it('lists every inside field for the public observer, with notes', () => {
@@ -452,7 +476,6 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'warning',
       'Timing narrows the anonymity set.',
       {
-        advice: 'Wait before withdrawing.',
         interior: { ...PUBLIC_OBSERVER_INTERIOR, linkage: 'exposed' },
       },
     ),
@@ -475,6 +498,14 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
+  advice: [
+    {
+      name: 'Wait',
+      text: 'Wait before withdrawing.',
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+  ],
 }
 
 function chartSection(
@@ -540,6 +571,14 @@ const REFERENCE_APP: PrivacyReferenceApp = {
     repository: 'https://github.com/tornado-dao/classic-ui',
     commit: '17c54dae9ad91bb3c6d62a7860df6cd365ab76d4',
   },
+  delivery: {
+    type: 'pinned',
+    pin: {
+      type: 'ipfs',
+      cid: 'bafybeigduniojgqrz7e4vntsgmovdli3oi7a2pnzzvz2gfxlvj3yqwk75a',
+    },
+    rebuild: 'https://recipe.example',
+  },
   checkedApps: [
     {
       name: 'Mirror app',
@@ -560,6 +599,23 @@ const SECTIONS: ProjectDetailsSection[] = [
       title: 'Privacy',
       adversaries: ADVERSARIES,
       referenceApp: REFERENCE_APP,
+    },
+  },
+  {
+    type: 'PrivacyAdviceSection',
+    props: {
+      id: 'stay-private',
+      title: 'How to stay private',
+      steps: ADVERSARIES.advice ?? [],
+      adversaries: ADVERSARIES.adversaries,
+      waitWindowDays: 30,
+      sentiments: {
+        publicObserver: 'good',
+        chainAnalyst: 'warning',
+        networkObserver: 'good',
+        privilegedInsider: 'good',
+        futureAdversary: 'bad',
+      },
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),

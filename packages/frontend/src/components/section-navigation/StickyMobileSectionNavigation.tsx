@@ -75,11 +75,14 @@ function fillAboveWhileStuck(bar: HTMLElement) {
   fill.hidden = true
   document.body.append(fill)
 
-  // The animation moves the fill by the whole scroll range.
+  // The animation moves the fill by the whole scroll range. `innerHeight`, not
+  // `clientHeight`: iOS Safari keeps `clientHeight` at the toolbar-shown
+  // height, so once the toolbar hides, the range runs long and the fill drifts
+  // down over the bar, by up to the toolbar's height at the page's end.
   const updateRange = () =>
     root.style.setProperty(
       '--scroll-range',
-      `${root.scrollHeight - root.clientHeight}px`,
+      `${root.scrollHeight - window.innerHeight}px`,
     )
   // The range changes with the page's height, and with the viewport's, which
   // in-app browsers change as their bars hide.

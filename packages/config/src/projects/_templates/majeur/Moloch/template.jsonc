@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Moloch",
+  "category": "gov",
+  "description": "DAO of the Majeur framework. Holders of its shares vote on arbitrary calls, which the contract executes after the timelock. A proposal passes as soon as the quorum has voted with more votes for than against. Members can burn shares or loot for a pro-rata part of the treasury while ragequit is on.",
+  "ignoreMethods": [
+    "contractURI",
+    "createdAt",
+    "executed",
+    "futarchy",
+    "getMessageCount",
+    "messages",
+    "name",
+    "proposalIds",
+    "proposerOf",
+    "queuedAt",
+    "receiptProposal",
+    "receiptSupport",
+    "snapshotBlock",
+    "state",
+    "supplySnapshot",
+    "symbol",
+    "tallies",
+    "tokenURI",
+    "totalSupply"
+  ],
+  "ignoreRelatives": ["badges", "loot", "renderer", "rewardToken"],
+  "fields": {
+    "timelockDelay": {
+      "description": "Seconds between queueing a passed proposal and its execution."
+    },
+    "proposalTTL": {
+      "description": "Seconds after which an opened proposal that has not been queued expires."
+    },
+    "quorumBps": {
+      "description": "Share of the snapshot supply, in basis points, that must vote for a proposal to pass."
+    },
+    "proposalThreshold": {
+      "description": "Votes an account needs to open a proposal."
+    }
+  }
+}

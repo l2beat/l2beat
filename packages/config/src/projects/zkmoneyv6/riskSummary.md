@@ -6,13 +6,13 @@
 <br>
 ## Funds can be lost if
 1. a user loses their passkey.
-2. all registered signers stop serving, since nobody else can obtain the approved enclave image.
+2. all registered signers stop serving and nobody hosts and registers a new enclave on AWS Nitro.
 3. resolver screening blocks an external payment and the recipient lacks the tooling to re-derive its deposit address.
 <br>
 ## Privacy can be lost if
 1. a user pays a new contact, whose handshake reveals the recipient (see public observer).
 2. a user relies on today's anonymity set, which is still small (see chain analyst).
-3. the unpublished enclave image keeps or leaks what it reads, or AWS Nitro is compromised (see privileged insider).
+3. a registered enclave or AWS Nitro is compromised, exposing what the enclave reads (see privileged insider).
 4. the resolver operator links deposits paid through a name to their recipients (see privileged insider).
 5. the default endpoints, Alchemy and Aztec Labs' Aztec nodes, see deposit addresses and withdrawals in one session (see network observer and privileged insider).
 6. a portal freezes, and refunds publish note or deposit amounts on Ethereum.

@@ -27,7 +27,7 @@ anon.wei is one HTML page stored as contract code on Ethereum, each version immu
 
 ### Network
 
-The page reads the chain through public RPC nodes and syncs from the relay's history feed. It keeps a feed page only where the tree it builds matches a root the pool has held. The feed can still hide a note, which Rebuild recovers from chain logs. Under Endpoints the user can set their own node and another relay or none.
+The page reads the chain through public RPC nodes and syncs from the relay's history feed. It keeps a feed page only where the tree it builds matches a root the pool has held. The feed can still hide a note, which Rebuild recovers from chain logs. Under Endpoints the user can set their own node and another relay or none. A wallet pointed at an own Ethereum node also sends its transactions through it, which shows the node's IP to its peers with each shield.
 
 ### Exits
 

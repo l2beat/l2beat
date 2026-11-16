@@ -11,7 +11,7 @@
       "type": "CODE_CHANGE"
     },
     "authority": {
-      "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation.",
+      "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, upgrade the Bridge implementation and, in implementations that have `emergencyWithdraw()`, withdraw any asset held by the Bridge.",
       "severity": "HIGH",
       "type": "PERMISSION",
       "permissions": [{ "type": "act" }]

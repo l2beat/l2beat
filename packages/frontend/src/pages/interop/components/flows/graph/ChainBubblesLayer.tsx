@@ -14,6 +14,7 @@ interface ChainBubblesLayerProps {
   layout: FlowsGraphLayout
   chainData: FlowsGraphChainData[]
   isSmallScreen: boolean
+  linkChains?: boolean
 }
 
 export function ChainBubblesLayer({
@@ -21,6 +22,7 @@ export function ChainBubblesLayer({
   layout,
   chainData,
   isSmallScreen,
+  linkChains,
 }: ChainBubblesLayerProps) {
   const { highlightedChains, toggleHighlightedChain } = useInteropFlows()
 
@@ -39,7 +41,9 @@ export function ChainBubblesLayer({
         color={getChainColor(interopChains, chain.id)}
         netFlow={netFlow}
         isSmallScreen={isSmallScreen}
-        onClick={() => toggleHighlightedChain(chain.id)}
+        {...(linkChains
+          ? { href: chain.href }
+          : { onClick: () => toggleHighlightedChain(chain.id) })}
       />
     )
   })
@@ -52,7 +56,8 @@ interface ChainBubbleProps {
   color: string
   netFlow: number
   isSmallScreen: boolean
-  onClick: () => void
+  href?: string
+  onClick?: () => void
 }
 
 function ChainBubble({
@@ -62,6 +67,7 @@ function ChainBubble({
   color,
   netFlow,
   isSmallScreen,
+  href,
   onClick,
 }: ChainBubbleProps) {
   const { x, y, radius } = layout
@@ -78,8 +84,8 @@ function ChainBubble({
     highlightedChains.length,
   )
 
-  return (
-    <g className="cursor-pointer" onClick={onClick}>
+  const content = (
+    <>
       <circle
         cx={x}
         cy={y}
@@ -103,6 +109,7 @@ function ChainBubble({
         textAnchor="middle"
         className={cn(
           'fill-primary font-medium',
+          href && 'underline-offset-2 group-hover/chain:underline',
           isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
         )}
       >
@@ -123,6 +130,19 @@ function ChainBubble({
       >
         {`${netFlow > 0 ? '+' : ''}${formatCurrency(netFlow, 'usd')}`}
       </text>
+    </>
+  )
+
+  if (href) {
+    return (
+      <a href={href} aria-label={chain.name} className="group/chain">
+        {content}
+      </a>
+    )
+  }
+  return (
+    <g className={cn(onClick && 'cursor-pointer')} onClick={onClick}>
+      {content}
     </g>
   )
 }
