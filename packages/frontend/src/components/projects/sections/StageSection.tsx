@@ -264,7 +264,7 @@ export function StageSection({
                           </TooltipContent>
                         </Tooltip>
                       </div>
-                      <div className="rounded-lg border border-brand px-4 py-3">
+                      <div className="py-1">
                         <div className="flex">
                           {stage.principle.satisfied === 'UnderReview' ? (
                             <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
