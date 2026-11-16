@@ -21,7 +21,7 @@ export function TabInfoWithDrawer({
         <p className="text-secondary max-sm:hidden">{content}</p>
         <Drawer>
           <DrawerTrigger className="flex items-center gap-1 sm:hidden">
-            <InfoIcon className="size-3 fill-current text-secondary" />
+            <InfoIcon className="size-3 fill-blue-550" />
             <div className="font-medium text-label-value-13 text-secondary underline decoration-divider underline-offset-[0.3em]">
               {title}
             </div>
