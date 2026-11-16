@@ -5,7 +5,7 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
     case 'bad':
       return 'fill-orange-600'
     case 'warning':
-      return 'fill-yellow-200'
+      return 'fill-warning'
     case 'good':
       return 'fill-green-300 dark:fill-green-450'
     case 'neutral':

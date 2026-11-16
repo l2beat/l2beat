@@ -20,6 +20,13 @@ interface WarningBarProps {
   iconClassName?: string
 }
 
+/**
+ * The "(CRITICAL)" mark. It sits on red fills, where --negative is 3.7:1 in
+ * light, so light takes the deeper red-800.
+ */
+export const CRITICAL_TEXT_CLASS =
+  'font-semibold text-red-800 dark:text-negative'
+
 const iconVariants = cva('size-5', {
   variants: {
     color: {
@@ -43,18 +50,14 @@ export function WarningBar({
   const textElement = ignoreMarkdown ? (
     <>
       {text}
-      {isCritical && (
-        <span className="font-bold text-primary"> (CRITICAL)</span>
-      )}
+      {isCritical && <span className={CRITICAL_TEXT_CLASS}> (CRITICAL)</span>}
     </>
   ) : (
     <>
       <Markdown className="leading-snug" inline>
         {text}
       </Markdown>
-      {isCritical && (
-        <span className="font-bold text-primary"> (CRITICAL)</span>
-      )}
+      {isCritical && <span className={CRITICAL_TEXT_CLASS}> (CRITICAL)</span>}
     </>
   )
   const Icon = icon ?? ShieldIcon
