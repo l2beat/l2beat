@@ -141,6 +141,27 @@ describe('refs for repeated names', () => {
   })
 })
 
+describe('refs for names with a colon', () => {
+  it('prints the name behind its chain, which resolves', () => {
+    const entries: AgentEntry[] = [{ address: BRIDGE, name: 'Vault: USDC' }]
+    const text = describeLayout(
+      { project: 'linea', laneCount: 1, hideOthers: false },
+      {
+        status: 'arranged',
+        placed: [],
+        below: [{ id: BRIDGE, name: 'Vault: USDC' }],
+        notDrawn: [],
+      },
+      entries,
+      10_000,
+    ).join('\n')
+    expect(text).toInclude('below the lanes: eth:Vault: USDC.')
+    expect(resolveLanes(entries, [{ columns: [['eth:Vault: USDC']] }])).toEqual(
+      [[[BRIDGE]]],
+    )
+  })
+})
+
 describe(describeLayout.name, () => {
   const layout: Extract<ApiAgentLayout, { status: 'arranged' }> = {
     status: 'arranged',

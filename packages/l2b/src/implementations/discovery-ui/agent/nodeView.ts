@@ -126,8 +126,10 @@ function nameKeys(entry: AgentEntry): string[] {
   if (entry.name === undefined) {
     return []
   }
-  const chain = ChainSpecificAddress.chain(entry.address)
-  return [entry.name, `${chain}:${entry.name}`]
+  const qualified = `${ChainSpecificAddress.chain(entry.address)}:${entry.name}`
+  // resolveRef reads a colon as the end of a chain, so a name with one
+  // resolves only behind its chain.
+  return entry.name.includes(':') ? [qualified] : [entry.name, qualified]
 }
 
 function describeItem(

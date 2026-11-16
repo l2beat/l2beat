@@ -172,8 +172,11 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   // would drop a save still pending.
   useEffect(
     () => () => {
-      persistNodeLayout(useNodeStore.getState())
-      clear()
+      try {
+        persistNodeLayout(useNodeStore.getState())
+      } finally {
+        clear()
+      }
     },
     [clear],
   )
