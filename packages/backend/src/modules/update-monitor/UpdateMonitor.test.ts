@@ -132,9 +132,10 @@ const flatSourcesRepository = mockObject<Database['flatSources']>({
 describe(UpdateMonitor.name, () => {
   let updateNotifier = mockObject<UpdateNotifier>({})
   let updateDiffer = mockObject<UpdateDiffer>({})
-  const discoveryOutputCache = new DiscoveryOutputCache()
+  let discoveryOutputCache = new DiscoveryOutputCache()
 
   beforeEach(() => {
+    discoveryOutputCache = new DiscoveryOutputCache()
     updateNotifier = mockObject<UpdateNotifier>({
       handleUpdate: mockFn().resolvesTo(undefined),
       sendDailyReminder: mockFn().resolvesTo(undefined),
@@ -639,10 +640,8 @@ describe(UpdateMonitor.name, () => {
     it('generates the daily reminder for two different chains', async () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
         run: mockFn().resolvesTo({
-          ethereum: {
-            discovery: DISCOVERY_RESULT,
-            flatSources: {},
-          },
+          discovery: DISCOVERY_RESULT,
+          flatSources: {},
         }),
       })
 
@@ -687,49 +686,23 @@ describe(UpdateMonitor.name, () => {
       expect(Object.entries(result).length).toEqual(1)
       expect(result).toEqual({
         [PROJECT_A]: {
-          severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
+          severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
         },
       })
     })
 
-    it('does nothing for an empty cache', async () => {
-      const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: mockFn().resolvesTo({
-          ethereum: {
-            discovery: DISCOVERY_RESULT,
-            flatSources: {},
-          },
-        }),
-      })
-
-      const timestamp = 0
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-        upsert: async () => undefined,
-      })
+    it('does nothing for an empty cache', () => {
       const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => ({
-          ...mockProject,
-          entries: COMMITTED,
-        }),
-
         readConfig: (name: string) => mockConfig(name),
         readAllDiscoveredProjects: () => [PROJECT_A],
       })
-      const updateDiffRepository = mockObject<Database['updateDiff']>({
-        deleteAll: async () => 0,
-      })
 
       const updateMonitor = new UpdateMonitor(
-        discoveryRunner,
+        mockObject<DiscoveryRunner>({}),
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
-          updateMonitor: updateMonitorRepository,
-          flatSources: flatSourcesRepository,
-          updateDiff: updateDiffRepository,
-        }),
+        mockObject<Database>({}),
         mockObject<Clock>(),
         discoveryOutputCache,
         Logger.SILENT,
@@ -737,10 +710,7 @@ describe(UpdateMonitor.name, () => {
         instantWorkerPool,
       )
 
-      await updateMonitor.update(timestamp)
-      const result = updateMonitor.generateDailyReminder()
-
-      expect(Object.entries(result).length).toEqual(1)
+      expect(updateMonitor.generateDailyReminder()).toEqual({})
     })
   })
 })

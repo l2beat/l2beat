@@ -9,7 +9,9 @@ function withTimezone(tz: string, fn: () => void) {
   try {
     fn()
   } finally {
-    process.env.TZ = original
+    // Assigning undefined would store the string "undefined"
+    if (original === undefined) Reflect.deleteProperty(process.env, 'TZ')
+    else process.env.TZ = original
   }
 }
 
