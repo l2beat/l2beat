@@ -124,6 +124,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_GAS_FEES_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Gas fees',
+          href: '/gas-fees',
+          tags: ['pages', 'gas', 'fees', 'costs', 'transaction'],
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',

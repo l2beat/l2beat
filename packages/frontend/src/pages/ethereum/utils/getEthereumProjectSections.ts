@@ -3,6 +3,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
+import { getGasFeesUpgrades } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
@@ -10,6 +11,7 @@ import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
 import { getDaProjectRiskSummarySection } from './getDaProjectRiskSummarySection'
 import { getDaThroughputSection } from './getDaThroughputSection'
+import { getEthereumGasFeesChain } from './getEthereumGasFeesChain'
 
 export type EthereumProject = Project<
   'daLayer' | 'daBridge' | 'display' | 'statuses',
@@ -76,6 +78,19 @@ export async function getEthereumProjectSections({
       milestones: ethereum.milestones ?? [],
     },
   })
+
+  // Shown where /gas-fees is, so everywhere but production for now
+  if (env.CLIENT_SIDE_GAS_FEES_PAGE) {
+    items.push({
+      type: 'GasFeesSection',
+      props: {
+        id: 'gas-fees',
+        title: 'Gas fees',
+        ethereum: getEthereumGasFeesChain(ethereum),
+        upgrades: getGasFeesUpgrades(),
+      },
+    })
+  }
 
   if (liquidStakingSection) {
     items.push(liquidStakingSection)
