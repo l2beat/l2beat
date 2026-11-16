@@ -164,7 +164,7 @@ export function L2CompareCharts({
             />
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col max-md:divide-y max-md:divide-divider md:gap-4">
           {state.charts.map((config, index) => (
             <CompareChartCard
               // Charts carry no identity of their own in the URL, so the
