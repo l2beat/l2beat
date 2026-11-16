@@ -9,7 +9,7 @@ export function CountBadge({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'rounded-full bg-brand px-2 py-0.5 font-medium text-2xs text-primary-invert tabular-nums',
+        'rounded-full bg-brand px-2 py-0.5 font-semibold text-2xs text-primary-invert tabular-nums',
         className,
       )}
     >

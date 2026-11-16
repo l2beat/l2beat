@@ -125,7 +125,7 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
-                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md py-1 pr-3 pl-2.5 font-medium text-label-value-13',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md py-1 pr-3 pl-2.5 font-semibold text-label-value-13',
                 current
                   ? 'bg-brand text-white'
                   : 'text-primary hover:bg-pure-white/50 dark:hover:bg-black/40',

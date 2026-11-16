@@ -347,11 +347,7 @@ export function StageSection({
           )
         })}
       </div>
-      <CustomLink
-        href="/stages"
-        variant="plain"
-        className="mt-3 block text-label-value-14 decoration-divider underline-offset-[0.3em] hover:decoration-current"
-      >
+      <CustomLink href="/stages" className="mt-3 block text-label-value-14">
         Learn more about Stages
       </CustomLink>
       <Callout
