@@ -256,6 +256,7 @@ export const payy: ScalingProject = {
       name: 'Payy mobile app',
       url: 'https://payy.network',
       since: '2026-10-13',
+      delivery: { type: 'latestOnly', store: 'App Store and Google Play' },
     },
     trackedOn: ['ethereum'],
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription', {

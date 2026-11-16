@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xb11e2572b18c3bb97fa9b8bb7ad3c32149927300
+
+# Diff at Fri, 13 Nov 2026 13:03:56 GMT:
+
+- id: 0800cdc8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319787
+- current timestamp: 1794568266
+
+## Description
+
+The CoinIssuer entered its second year. mintAvailable is 20% of the current AZTEC supply of 10.35B, so 2.07B AZTEC. The issuer minted nothing in its first year, whose 2B budget lapsed.
+
+## Watched changes
+
+```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) [aztecnetwork/CoinIssuer] {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      values.mintAvailable:
+-        "2000000000000000000000000000"
++        "2070000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xfbfc422528f899e13a0d180059a9e57c169103f7
 
 # Diff at Tue, 10 Nov 2026 14:26:44 GMT:

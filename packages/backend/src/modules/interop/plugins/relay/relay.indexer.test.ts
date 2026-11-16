@@ -24,13 +24,15 @@ const CHAINS = [
 ]
 
 describe(RelayRootIndexer.name, () => {
-  it('never targets a second that has not fully elapsed', async () => {
+  it('waits until Relay publishes the requests of the target second', async () => {
     const target = await new RelayRootIndexer(
       Logger.SILENT,
       SAFE_TIME_OFFSET,
     ).tick()
 
-    expect(UnixTime.now() - target).toBeGreaterThanOrEqual(SAFE_TIME_OFFSET)
+    expect(UnixTime.now() - target).toBeGreaterThanOrEqual(
+      2 * UnixTime.MINUTE + SAFE_TIME_OFFSET,
+    )
   })
 })
 

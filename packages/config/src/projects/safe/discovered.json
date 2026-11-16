@@ -469,12 +469,14 @@
       "name": "SafeL2_v1_5_0",
       "address": "eth:0xEdd160fEBBD92E350D4D398fb636302fccd67C7e",
       "type": "Contract",
+      "template": "GnosisSafe",
       "sourceHashes": [
         "0x7433fb11ceff7ff5b21d1f54106fe478c5248eba6f5a3ad96f0863f22607ea71"
       ],
       "proxyType": "immutable",
       "description": "Same as the v1.5.0 implementation, but it also emits an event for every executed transaction, for indexing on chains without transaction tracing.",
       "critical": true,
+      "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xa611a4B78BeD437ff569E34Ce790c9C758d00d5a",
       "sinceTimestamp": 1751543207,
       "sinceBlock": 22838494,
@@ -999,5 +1001,5 @@
     "safe/SimulateTxAccessor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 26283152 },
-  "permissionsConfigHash": "0xae715681bb7e08f68e5fb9141358ab9894bfde1bd6767932d3881c1ad0f1c437"
+  "permissionsConfigHash": "0xda9c028a204e07270e2adcee603444d9c40e45ca971b91db8c44967d58b69cf1"
 }

@@ -189,7 +189,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e',
             ),
-            overrideUsedIn: [ProjectId('taiko')],
+            // its only route, 0x8b38038c, is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'notVerified',

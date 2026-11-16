@@ -1,3 +1,90 @@
+Generated with discovered.json: 0xe228afcec719de4f294ef0e3ef1d5cab72c527fd
+
+# Diff at Fri, 13 Nov 2026 13:03:53 GMT:
+
+- id: 0a877c1c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1781603706
+- current timestamp: 1794569221
+
+## Description
+
+AxelarServiceGovernance upgraded the Gateway: https://disco.l2beat.com/diff/eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098/eth:0x16C22cbDD77350b1AC88AdDA344F691c12f41960
+- New pauser role, held by the EOA eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF. It or governance can pause the Gateway without the governance timelock, and the pauser can transfer its role. A pause stops callContract, callContractWithToken and the use of approved contract calls, except by governance. Signed commands, mints included, still execute.
+- sendToken is removed.
+- The Gateway uses a new AxelarAuthWeighted: https://disco.l2beat.com/diff/eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0/eth:0x3d3C73E91B1b0C243f1437F2d8363b1D5B093BD0. It hashes an operator set from its canonical ABI encoding instead of the raw command bytes. Its deployer seeded the old module's last 15 operator sets (epochs 1093-1107) and then handed ownership to the Gateway. Later sets arrive through signed commands as before.
+
+Config: the AxelarAuthWeighted name and overrides follow the new address.
+
+## Watched changes
+
+```diff
+    contract Gateway (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc1a528b419310a96bdf3cdd6e8c3ae0ca76414a6c47559e9b39381cae14fbe12"
++        "0xce0f50f9511a7175bf9206e9246ddb0df93d584c77cabcae67b1542245f7ae7c"
+      values.$implementation:
+-        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x16C22cbDD77350b1AC88AdDA344F691c12f41960"
+      values.$pastUpgrades.9:
++        ["2026-11-12T00:07:35.000Z","0x412a5698beb96a03e4927b8cbedf35e3399699e0312a9d3b2bbaeab4dc1fd169",["eth:0x16C22cbDD77350b1AC88AdDA344F691c12f41960"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.authModule:
+-        "eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0"
++        "eth:0x3d3C73E91B1b0C243f1437F2d8363b1D5B093BD0"
+      values.implementation:
+-        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x16C22cbDD77350b1AC88AdDA344F691c12f41960"
+      values.paused:
++        false
+      values.pauser:
++        "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF"
+      implementationNames.eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098:
+-        "AxelarGateway"
+      implementationNames.eth:0x16C22cbDD77350b1AC88AdDA344F691c12f41960:
++        "AxelarGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AxelarAuthWeighted (eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarAuthWeighted (eth:0x3d3C73E91B1b0C243f1437F2d8363b1D5B093BD0) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AxelarAuthWeighted.sol                         |   2 +-
+ .../Gateway/AxelarGateway.sol                      | 196 +++++++++++++++++----
+ 2 files changed, 160 insertions(+), 38 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781603706 (main branch discovery), not current.
+
+```diff
+    contract AxelarAuthWeighted (eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) [N/A] {
+    +++ description: None
+      values.hashForEpoch:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0xa9545af4fbf5c516c85ab4324400ce477accdf4e7c03348c12fc0d03421a5867","0x90384adfd86ef09c40c7d46cb5de32c3e4524d9d2114f676c7877096879a173d","0x80f74ea511b9c5a14e44303ef7885797d65b814b533eefe63061daca575bed7c","0x84b48206effa66e6f9735627a12a8a8a7ca275e06eed0800d088893c589e2096"]
+      errors:
++        {"hashForEpoch":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x92dc5406e17bef5c6639a6b81251c5ee0ae176f8
 
 # Diff at Tue, 03 Nov 2026 11:23:05 GMT:

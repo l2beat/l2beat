@@ -4,6 +4,8 @@ import { useMatch, useNavigate } from 'react-router'
 import {
   openAgentEvents,
   postAgentContext,
+  postAgentGraph,
+  postAgentLayout,
   postAgentTab,
 } from '../../../api/api'
 import type { ApiAgentEvent } from '../../../api/types'
@@ -12,8 +14,10 @@ import { useDockingStore } from '../multi-view/store'
 import { useBoardStore } from '../panel-board/boardStore'
 import { useChatStore } from '../panel-chat/chatStore'
 import { useStore as useNodeStore } from '../panel-nodes/store/store'
+import { applyLayout } from './applyLayout'
 import { applyStep } from './applyStep'
 import { readContext } from './readContext'
+import { readGraph } from './readGraph'
 import { useAgentStore, useIsNoteShown } from './store'
 
 const TAB_ID_KEY = 'discoui-agent-tab-id'
@@ -158,6 +162,23 @@ function handleEvent(
         postAgentContext({ tab: TAB_ID, request: event.id, context }),
       )
       .catch((error) => console.warn('Agent context not sent', { error }))
+    return
+  }
+  if (event.type === 'graph-request') {
+    const graph = readGraph(useNodeStore.getState(), event.project)
+    postAgentGraph({ tab: TAB_ID, request: event.id, graph }).catch((error) =>
+      console.warn('Agent graph not sent', { error }),
+    )
+    return
+  }
+  if (event.type === 'layout-request') {
+    // The researcher sees the layout land, and a node view that was not
+    // open loads for the agent's next call.
+    useDockingStore.getState().ensureLeaf('nodes')
+    const layout = applyLayout(event)
+    postAgentLayout({ tab: TAB_ID, request: event.id, layout }).catch((error) =>
+      console.warn('Agent layout not sent', { error }),
+    )
     return
   }
   if (event.type === 'connected') {

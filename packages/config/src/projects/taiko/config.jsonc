@@ -125,22 +125,23 @@
       // RiscZeroGroth16Verifier v2.2.0 behind the active estop 0x1efD...
       "critical": { "sinceTimestamp": 1772638115 }
     },
+    // route 0x242f9d5b, estopped by tx 0x5eac4419...
     "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
-      // active RiscZeroVerifierEmergencyStop (selector 0x242f9d5b)
-      "critical": { "sinceTimestamp": 1772638115 }
+      // RiscZeroVerifierEmergencyStop (selector 0x242f9d5b)
+      "critical": { "sinceTimestamp": 1772638115, "untilTimestamp": 1794363191 }
     },
     "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
-      // RiscZeroSetVerifier behind the active estop 0x844D...
-      "critical": { "sinceTimestamp": 1772638115 }
+      // RiscZeroSetVerifier behind the estop 0x844D...
+      "critical": { "sinceTimestamp": 1772638115, "untilTimestamp": 1794363191 }
     },
-    // route 0x8b38038c, added to the router by tx 0x5005dff6...
+    // route 0x8b38038c, added to the router by tx 0x5005dff6..., estopped by tx 0x726f1663...
     "eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50": {
-      // active RiscZeroVerifierEmergencyStop (selector 0x8b38038c)
-      "critical": { "sinceTimestamp": 1793127383 }
+      // RiscZeroVerifierEmergencyStop (selector 0x8b38038c)
+      "critical": { "sinceTimestamp": 1793127383, "untilTimestamp": 1794362951 }
     },
     "eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e": {
-      // RiscZeroGroth16Verifier v3.1.0 behind the active estop 0x9660...
-      "critical": { "sinceTimestamp": 1793127383 }
+      // RiscZeroGroth16Verifier v3.1.0 behind the estop 0x9660...
+      "critical": { "sinceTimestamp": 1793127383, "untilTimestamp": 1794362951 }
     },
     // route 0xe71e6620, added to the router by tx 0xa61b5ba7...
     "eth:0x5144A37e65fd032F628663Cb21E16490378a8630": {

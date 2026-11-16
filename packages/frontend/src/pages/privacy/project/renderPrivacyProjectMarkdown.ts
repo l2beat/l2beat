@@ -19,6 +19,7 @@ import {
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { PRIVACY_WALKAWAY_TEST_TOOLTIPS } from '../privacyWalkawayTest'
 import {
+  getReferenceAppDelivery,
   getReferenceAppLabel,
   getReferenceAppNotes,
   REFERENCE_APP,
@@ -118,9 +119,15 @@ function getFacts(entry: ProjectPrivacyEntry) {
   ])
 }
 
-/** The app's name and release, then the notes the HTML shows under them. */
+/**
+ * The app's name and release, then its delivery, which the HTML shows as
+ * symbols, and the notes the HTML shows under the name.
+ */
 function formatReferenceApp(app: PrivacyReferenceApp) {
-  const notes = getReferenceAppNotes(app)
+  const notes = [
+    getReferenceAppDelivery(app).label.toLowerCase(),
+    ...getReferenceAppNotes(app),
+  ]
   const label = getReferenceAppLabel(app)
   return notes.length > 0 ? `${label} (${notes.join(', ')})` : label
 }
