@@ -3,6 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { Logo } from '~/components/Logo'
 import { cn } from '~/utils/cn'
 import { formatFee } from '../../metrics'
 import {
@@ -120,9 +121,9 @@ export function Track({
   const [ref, width] = useWidth<HTMLDivElement>()
   const ours = row.gwei
   const chipWidth = (w: { gwei: number; ours?: boolean }) =>
-    // Padding, plus the icon for wallets, plus about 7.7px a digit, so the
-    // estimate is never short of the chip and a chip at the edge stays inside
-    (w.ours ? 18 : 36) + gwei(w.gwei).length * 7.7
+    // Padding and the icon or logo, plus about 7.7px a digit, so the estimate
+    // is never short of the chip and a chip at the edge stays inside
+    38 + gwei(w.gwei).length * 7.7
   const placed = width > 0 ? place(row, width, chipWidth) : []
   const top = placed.find((w) => !w.ours)
 
@@ -167,11 +168,17 @@ export function Track({
           <Tooltip key={w.name}>
             <TooltipTrigger
               className={cn(
-                '-translate-x-1/2 absolute flex h-6 items-center rounded-full bg-primary px-2 font-bold text-primary-invert text-xs tabular-nums shadow-xs',
+                '-translate-x-1/2 absolute flex h-6 items-center gap-1 rounded-full bg-primary py-0.5 pr-2 pl-1 font-bold text-primary-invert text-xs tabular-nums shadow-xs',
                 w.lane === 0 ? 'top-0.5' : 'bottom-0.5',
               )}
               style={{ left: w.center }}
             >
+              <Logo
+                small
+                animated={false}
+                aria-hidden
+                className="mt-0 h-4 w-[18px]"
+              />
               <Gwei value={w.gwei} zerosClassName="opacity-60" />
             </TooltipTrigger>
             <TooltipContent className="flex flex-col gap-0.5 text-xs">
@@ -234,7 +241,7 @@ export function TrackLegend({ className }: { className?: string }) {
       )}
     >
       <span className="flex items-center gap-1.5">
-        <span className="size-2.5 rounded-full" style={{ background: OURS }} />
+        <Logo small animated={false} aria-hidden className="mt-0 h-3.5 w-4" />
         Our estimated tip
       </span>
       {WALLETS.map((wallet) => (
