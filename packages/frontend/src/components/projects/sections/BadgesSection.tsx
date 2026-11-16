@@ -33,9 +33,7 @@ export function BadgesSection({
         )}
       >
         {!hideTitle && (
-          <h2 className="font-semibold text-label-value-15 max-md:hidden">
-            Badges
-          </h2>
+          <h2 className="text-subtitle-12 uppercase max-md:hidden">Badges</h2>
         )}
         <OverflowWrapper className="-m-4">
           <div className="flex flex-row gap-1 p-4 lg:flex-wrap">

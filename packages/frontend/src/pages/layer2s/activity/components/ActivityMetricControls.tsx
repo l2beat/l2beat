@@ -18,6 +18,7 @@ export function ActivityMetricControls<T extends string>({
       name="activityMetric"
       value={value}
       onValueChange={onValueChange}
+      variant="highlighted"
       className={className}
     >
       <RadioGroupItem value="uops">UOPS</RadioGroupItem>

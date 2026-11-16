@@ -60,7 +60,6 @@ export function ActivityRatioChart({
           },
         ]}
         yAxis={{
-          // Two decimals at every tick ("1.00x"), like the other axes' "0.00"
           format: (value) => `${value.toFixed(2)}x`,
           domain: [1, 'auto'],
           headroom: 0.1,

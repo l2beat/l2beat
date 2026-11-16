@@ -6,8 +6,8 @@ import { getMarkdownAlternatePath } from '~/utils/getMarkdownAlternatePath'
 import { CustomLink } from './link/CustomLink'
 
 const FOOTER_LINKS = [
-  { title: 'About Us', href: '/about-us' },
-  { title: 'Brand Kit', href: '/brand-kit' },
+  { title: 'About us', href: '/about-us' },
+  { title: 'Brand kit', href: '/brand-kit' },
   { title: 'Changelog', href: '/changelog' },
   { title: 'Donate', href: '/donate' },
   { title: 'FAQ', href: '/faq' },
@@ -15,7 +15,7 @@ const FOOTER_LINKS = [
   { title: 'Glossary', href: '/glossary' },
   { title: 'Native rollups', href: '/native-rollups' },
   { title: 'Publications', href: '/publications' },
-  { title: 'Terms of Service', href: '/terms-of-service' },
+  { title: 'Terms of service', href: '/terms-of-service' },
   { title: 'Tools', href: externalLinks.tools },
 ]
 
