@@ -27,11 +27,11 @@ export function DefiTokensSection({
             <div>
               <div className="flex items-center gap-2">
                 {token.href ? (
-                  <CustomLink href={token.href} className="font-bold">
+                  <CustomLink href={token.href} className="font-semibold">
                     {token.symbol}
                   </CustomLink>
                 ) : (
-                  <span className="font-bold">{token.symbol}</span>
+                  <span className="font-semibold">{token.symbol}</span>
                 )}
                 <span className="text-secondary text-sm">{token.name}</span>
               </div>

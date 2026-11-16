@@ -98,6 +98,7 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* One control over a centred graph: it sits on the graph's axis. */}
       <div className="mx-auto">
         <FlowsChainsSelector allChains={interopChains} />
       </div>
@@ -109,30 +110,36 @@ function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
         baseDollarsPerParticle={EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE}
       />
-      {shouldShowInactiveChainsInfo && (
-        <div className="flex min-h-6 w-full items-center justify-center gap-1 max-lg:order-3">
-          {isLoading ? (
-            <Skeleton className="h-4 w-40 md:h-5" />
-          ) : (
-            <>
-              <span className="font-normal text-secondary text-xs leading-none md:text-base">
-                No transfers detected for
-              </span>
-              <ProjectIconList
-                projects={inactiveChains}
-                title="Chains without transfers"
-              />
-            </>
-          )}
-        </div>
-      )}
       {!isLoading && data && (
         <FlowsParticleLegend
-          className="max-lg:order-3"
+          layout="inline"
+          className="justify-center text-center text-label-value-13 max-lg:order-3"
           totalVolume={data.stats.totalVolume}
           dollarsPerParticle={dollarsPerParticle}
         />
       )}
+      {shouldShowInactiveChainsInfo && (
+        <div className="flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-3">
+          {isLoading ? (
+            <Skeleton className="h-4 w-40 md:h-5" />
+          ) : (
+            <>
+              <span className="text-label-value-13 text-secondary">
+                No transfers in the last 24 hours for
+                {inactiveChains.length <= 3 &&
+                  ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
+              </span>
+              {inactiveChains.length > 3 && (
+                <ProjectIconList
+                  projects={inactiveChains}
+                  title="Chains without transfers"
+                />
+              )}
+            </>
+          )}
+        </div>
+      )}
+
       {chainA && (
         <div className="grid grid-cols-1 gap-2 max-lg:order-3 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
           {visibleHighlightedChains.length === 1 && (

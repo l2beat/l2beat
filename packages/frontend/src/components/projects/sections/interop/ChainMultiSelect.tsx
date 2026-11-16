@@ -109,7 +109,7 @@ export function ChainMultiSelect({ label, chains, selected, onChange }: Props) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="font-medium text-paragraph-14 text-secondary">
+      <span className="font-medium text-paragraph-14 text-primary max-md:w-10 max-md:shrink-0">
         {label}
       </span>
       <Drawer>

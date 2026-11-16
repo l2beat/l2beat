@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { TransferTypeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
+import { cn } from '~/utils/cn'
 import {
   INTEROP_TYPE_TO_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,
@@ -15,8 +16,11 @@ type TransferType = keyof typeof TRANSFER_TYPE_DISPLAY
 
 export function InteropTransferTypeBreakdown({
   byType,
+  inSummary = false,
 }: {
   byType: TransferTypeDataPoint | undefined
+  /** In a summary card the title is a key like the stats beside it. */
+  inSummary?: boolean
 }) {
   const values = (Object.keys(TRANSFER_TYPE_DISPLAY) as TransferType[]).flatMap(
     (transferType) => {
@@ -32,7 +36,12 @@ export function InteropTransferTypeBreakdown({
 
   return (
     <div>
-      <span className="font-semibold text-label-value-13 leading-4">
+      <span
+        className={cn(
+          'block text-label-value-13 leading-4',
+          inSummary ? 'font-normal' : 'font-semibold',
+        )}
+      >
         Transfer type distribution
       </span>
       <Tooltip>

@@ -3,6 +3,10 @@ import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { Markdown } from '../../markdown/Markdown'
+import {
+  MARKDOWN_DIAGRAM_CLASSES,
+  MARKDOWN_HEADING_CLASSES,
+} from './markdownDiagramClasses'
 import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { TechnologyRisk } from './RiskList'
@@ -39,6 +43,8 @@ export function MarkdownSection({
         className={cn(
           mdClassName,
           'break-words text-paragraph-15 md:text-paragraph-16',
+          MARKDOWN_DIAGRAM_CLASSES,
+          MARKDOWN_HEADING_CLASSES,
         )}
       >
         {content}
