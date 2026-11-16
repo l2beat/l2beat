@@ -49,6 +49,83 @@ const contextSchema = z.object({
   }),
 })
 
+// A large project draws a few thousand contracts with a few links each, and
+// the 2mb body these routes take holds far less than these.
+const ITEMS_MAX = 10_000
+const LINKS_MAX = 100_000
+const MEMBERS_MAX = 10_000
+const coordinateSchema = z
+  .number()
+  .check((v) => Number.isFinite(v), 'Bad coordinate')
+const sizeSchema = z
+  .number()
+  .check((v) => Number.isFinite(v) && v >= 0, 'Bad size')
+const namedSchema = z.object({ id: shortString, name: shortString })
+const notLoadedSchema = z.object({
+  status: z.literal('not-loaded'),
+  project: safeStringSchema.optional(),
+})
+const graphItemSchema = z.object({
+  id: shortString,
+  name: shortString,
+  x: coordinateSchema,
+  y: coordinateSchema,
+  width: sizeSchema,
+  height: sizeSchema,
+  members: z
+    .array(shortString)
+    .check((v) => v.length <= MEMBERS_MAX, 'Too many members')
+    .optional(),
+})
+const loadedGraphSchema = z
+  .object({
+    status: z.literal('loaded'),
+    items: z
+      .array(graphItemSchema)
+      .check((v) => v.length <= ITEMS_MAX, 'Too many items'),
+    links: z
+      .array(z.tuple([countSchema, countSchema, shortString]))
+      .check((v) => v.length <= LINKS_MAX, 'Too many links'),
+    hidden: z
+      .array(namedSchema)
+      .check((v) => v.length <= ITEMS_MAX, 'Too many hidden'),
+  })
+  .check(
+    (graph) =>
+      graph.links.every(
+        ([source, target]) =>
+          source < graph.items.length && target < graph.items.length,
+      ),
+    'Link to an item that is not there',
+  )
+const graphSchema = z.object({
+  tab: tabSchema,
+  request: tabSchema,
+  graph: z.union([notLoadedSchema, loadedGraphSchema]),
+})
+
+// Never more than the agent named, which its own schema bounds lower.
+const NAMED_MAX = 1_000
+const layoutSchema = z.object({
+  tab: tabSchema,
+  request: tabSchema,
+  layout: z.union([
+    notLoadedSchema,
+    z.object({
+      status: z.literal('arranged'),
+      placed: z
+        .array(shortString)
+        .check((v) => v.length <= NAMED_MAX, 'Too many placed'),
+      below: z
+        .array(namedSchema)
+        .check((v) => v.length <= ITEMS_MAX, 'Too many below'),
+      notDrawn: z
+        .array(shortString)
+        .check((v) => v.length <= NAMED_MAX, 'Too many not drawn'),
+    }),
+  ]),
+})
+
 const reportSchema = z.object({
   tab: tabSchema,
   project: safeStringSchema.optional(),
@@ -72,6 +149,9 @@ export function createAgentRouter(
   const serverId = randomUUID()
   const router = express.Router()
   router.use(localOnly('DiscoUI agent routes answer only locally'))
+  // A large project's node view, read back by the tab, outgrows the limit
+  // the other routes keep. The parser after this one skips a parsed body.
+  router.use(['/graph', '/layout'], express.json({ limit: '2mb' }))
   router.use(express.json({ limit: '100kb' }))
   attachMcpRoutes(router, { configReader, tabs })
   const chat = new ChatSession(tabs, chatOptions)
@@ -127,6 +207,28 @@ export function createAgentRouter(
       code: context.code,
       note: context.note,
     })
+    res.status(isPending ? 200 : 404).json({ answered: isPending })
+  })
+
+  router.post('/graph', (req, res) => {
+    const body = graphSchema.safeParse(req.body)
+    if (!body.success) {
+      res.status(400).json({ error: body.message })
+      return
+    }
+    const { tab, request, graph } = body.data
+    const isPending = tabs.answerGraph(tab, request, graph)
+    res.status(isPending ? 200 : 404).json({ answered: isPending })
+  })
+
+  router.post('/layout', (req, res) => {
+    const body = layoutSchema.safeParse(req.body)
+    if (!body.success) {
+      res.status(400).json({ error: body.message })
+      return
+    }
+    const { tab, request, layout } = body.data
+    const isPending = tabs.answerLayout(tab, request, layout)
     res.status(isPending ? 200 : 404).json({ answered: isPending })
   })
 

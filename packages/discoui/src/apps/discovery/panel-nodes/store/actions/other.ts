@@ -54,10 +54,15 @@ export function setSpacePressed(
 // One hiding mechanism, one full reset: showing hidden means showing every
 // hidden value, which in turn shows every node hidden through those values.
 export function showHidden(state: State): Partial<State> {
-  const nodes = mapGraphItems(state.nodes, (node) =>
+  return updateNodePositions(state, {
+    nodes: withoutHiddenFields(state.nodes),
+  })
+}
+
+export function withoutHiddenFields(nodes: readonly Node[]): Node[] {
+  return mapGraphItems(nodes, (node) =>
     node.hiddenFields.length === 0 ? node : { ...node, hiddenFields: [] },
   )
-  return updateNodePositions(state, { nodes })
 }
 
 export function clear(): Partial<State> {

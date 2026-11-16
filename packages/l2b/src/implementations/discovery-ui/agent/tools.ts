@@ -16,6 +16,13 @@ import {
 import type { CodeSource } from './codeAnchor'
 import { describeContext } from './context'
 import { cutText } from './excerpt'
+import {
+  describeGraph,
+  describeLayout,
+  GRAPH_DESCRIPTION,
+  LAYOUT_DESCRIPTION,
+  resolveLanes,
+} from './nodeView'
 import { describePermissions } from './permissions'
 import {
   describeEntry,
@@ -30,12 +37,17 @@ import { ToolError } from './toolError'
 export const STEPS_MAX = 30
 // The tab answers from memory, so this only waits out a tab that went away.
 const CONTEXT_TIMEOUT_MS = 2_000
+const GRAPH_TIMEOUT_MS = 2_000
+// Laying out a large node view takes the tab a moment.
+const LAYOUT_TIMEOUT_MS = 5_000
 const NOTE_CHARACTERS_MAX = 2_000
 export const CALL_CHARACTERS_MAX = 40_000
 const OTHER_MATCHES_MAX = 10
 
 const NO_TAB =
   'DiscoUI has no open tab. Ask the researcher to open DiscoUI, or pass dryRun to only read the code.'
+const NO_OPEN_TAB = 'DiscoUI has no open tab. Ask the researcher to open it.'
+const NO_ANSWER = 'DiscoUI did not answer. Ask the researcher to reload it.'
 
 export interface DiscoUi {
   configReader: ConfigReader
@@ -99,6 +111,41 @@ const showSchema = z.object({
 })
 export type ShowInput = z.infer<typeof showSchema>
 
+const LANES_MAX = 20
+const COLUMNS_MAX = 30
+const LAYOUT_CONTRACTS_MAX = 500
+const laneSchema = z.object({
+  columns: z
+    .array(
+      z
+        .array(refSchema)
+        .check((v) => v.length > 0, 'A column names at least one contract'),
+    )
+    .check(
+      (v) => v.length > 0 && v.length <= COLUMNS_MAX,
+      `Between 1 and ${COLUMNS_MAX} columns per lane`,
+    ),
+})
+const layoutSchema = z.object({
+  project: safeStringSchema
+    .optional()
+    .meta({ description: 'defaults to the project open in DiscoUI' }),
+  lanes: z
+    .array(laneSchema)
+    .check(
+      (v) => v.length > 0 && v.length <= LANES_MAX,
+      `Between 1 and ${LANES_MAX} lanes`,
+    )
+    .check(
+      (v) => countContracts(v) <= LAYOUT_CONTRACTS_MAX,
+      `At most ${LAYOUT_CONTRACTS_MAX} contracts in all lanes`,
+    ),
+  others: z.enum(['keep', 'hide']).optional().meta({
+    description:
+      'keep (default) arranges the rest below the lanes, hide shows only the lanes',
+  }),
+})
+
 const boardSchema = z.object({
   project: safeStringSchema
     .optional()
@@ -149,6 +196,24 @@ export const AGENT_TOOLS: AgentTool[] = [
     input: boardSchema,
     readOnly: false,
     run: (input, ui) => board(ui, input),
+  }),
+  tool({
+    name: 'graph',
+    description: GRAPH_DESCRIPTION,
+    input: z.object({
+      project: safeStringSchema
+        .optional()
+        .meta({ description: 'defaults to the project open in DiscoUI' }),
+    }),
+    readOnly: true,
+    run: (input, ui) => graph(ui, input.project),
+  }),
+  tool({
+    name: 'layout',
+    description: LAYOUT_DESCRIPTION,
+    input: layoutSchema,
+    readOnly: false,
+    run: (input, ui) => layout(ui, input),
   }),
   tool({
     name: 'clear',
@@ -334,15 +399,11 @@ function printSteps(lines: string[], steps: ResolvedStep[]) {
 async function context(ui: DiscoUi): Promise<string[]> {
   const active = targetTab(ui)
   if (active === undefined) {
-    throw new ToolError(
-      'DiscoUI has no open tab. Ask the researcher to open it.',
-    )
+    throw new ToolError(NO_OPEN_TAB)
   }
   const answer = await ui.tabs.askContext(active.id, CONTEXT_TIMEOUT_MS)
   if (answer === undefined) {
-    throw new ToolError(
-      'DiscoUI did not answer. Ask the researcher to reload it.',
-    )
+    throw new ToolError(NO_ANSWER)
   }
   const project = answer.project
   if (project === undefined) {
@@ -362,9 +423,7 @@ async function context(ui: DiscoUi): Promise<string[]> {
 function board(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
   const active = targetTab(ui)
   if (active === undefined) {
-    throw new ToolError(
-      'DiscoUI has no open tab. Ask the researcher to open it.',
-    )
+    throw new ToolError(NO_OPEN_TAB)
   }
   const project = requireProject(ui, input.project ?? active.project)
   const resolved = resolveBoard(readAgentEntries(ui.configReader, project), {
@@ -375,6 +434,80 @@ function board(ui: DiscoUi, input: z.infer<typeof boardSchema>): string[] {
   })
   ui.tabs.showBoard(active.id, resolved)
   return describeBoard(resolved)
+}
+
+async function graph(
+  ui: DiscoUi,
+  requested: string | undefined,
+): Promise<string[]> {
+  const active = targetTab(ui)
+  if (active === undefined) {
+    throw new ToolError(NO_OPEN_TAB)
+  }
+  const project = requireProject(ui, requested ?? active.project)
+  const answer = await ui.tabs.askGraph(active.id, project, GRAPH_TIMEOUT_MS)
+  if (answer === undefined) {
+    throw new ToolError(NO_ANSWER)
+  }
+  if (answer.status === 'not-loaded') {
+    throw notLoaded(project, answer.project)
+  }
+  return describeGraph(
+    project,
+    answer,
+    readAgentEntries(ui.configReader, project),
+    CALL_CHARACTERS_MAX,
+  )
+}
+
+async function layout(
+  ui: DiscoUi,
+  input: z.infer<typeof layoutSchema>,
+): Promise<string[]> {
+  const active = targetTab(ui)
+  if (active === undefined) {
+    throw new ToolError(NO_OPEN_TAB)
+  }
+  const project = requireProject(ui, input.project ?? active.project)
+  const entries = readAgentEntries(ui.configReader, project)
+  const lanes = resolveLanes(entries, input.lanes)
+  const hideOthers = input.others === 'hide'
+  const answer = await ui.tabs.askLayout(
+    active.id,
+    { project, lanes, hideOthers },
+    LAYOUT_TIMEOUT_MS,
+  )
+  if (answer === undefined) {
+    throw new ToolError(NO_ANSWER)
+  }
+  if (answer.status === 'not-loaded') {
+    throw notLoaded(project, answer.project)
+  }
+  return describeLayout(
+    { project, laneCount: lanes.length, hideOthers },
+    answer,
+    entries,
+    CALL_CHARACTERS_MAX,
+  )
+}
+
+// The tab draws a project's node view only in a nodes panel, and show opens
+// one.
+function notLoaded(project: string, shown: string | undefined): ToolError {
+  return new ToolError(
+    "DiscoUI does not draw this project's node view. Call show for the project first, or ask the researcher to open its node view.",
+    { project, 'node view shows': shown ?? 'nothing' },
+  )
+}
+
+function countContracts(lanes: readonly { columns: string[][] }[]): number {
+  let count = 0
+  for (const lane of lanes) {
+    for (const column of lane.columns) {
+      count += column.length
+    }
+  }
+  return count
 }
 
 function clear(ui: DiscoUi): string[] {
