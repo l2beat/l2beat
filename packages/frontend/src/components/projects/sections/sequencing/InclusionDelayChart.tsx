@@ -5,7 +5,6 @@ import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   ChartTooltipRow,
-  ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -199,10 +198,8 @@ function InclusionDelayTooltip({
               gap="gap-x-3"
               wrapLabel={false}
             >
-              <ChartTooltipValue
-                value={entry.value}
-                format={formatTooltipDelay}
-              />
+              {/* null is "no inclusion", a result, not missing data. */}
+              {formatTooltipDelay(entry.value)}
             </ChartTooltipRow>
           ))}
         </div>
