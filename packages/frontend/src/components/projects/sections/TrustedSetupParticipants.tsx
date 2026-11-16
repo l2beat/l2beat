@@ -40,7 +40,7 @@ export function TrustedSetupParticipants(
                   <span className="font-normal">
                     {/* The middot stays with the label (no-break space), so a
                         wrapped line starts with the kind, never the dot. */}
-                    {`\u00a0· `}
+                    {'\u00a0· '}
                     <span className="whitespace-nowrap">
                       {PHASE_KINDS[summary.phase]}
                     </span>
