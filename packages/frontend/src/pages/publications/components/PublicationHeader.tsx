@@ -19,10 +19,9 @@ export function PublicationHeader<
 >({ publication }: { publication: T }) {
   return (
     <div>
-      <p className="flex flex-wrap items-baseline gap-x-1 text-label-value-13">
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-13">
         <PublicationTag tag={publication.tag} />
-        <span className="text-secondary">·</span>
-        <span className="text-secondary">
+        <span className="text-brand-deep text-subtitle-12 uppercase">
           {publication.readTimeInMinutes} min read · Published on{' '}
           {publication.publishedOn}
         </span>

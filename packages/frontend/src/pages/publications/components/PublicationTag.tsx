@@ -7,10 +7,9 @@ export function getPublicationTagLabel(tag: PublicationEntry['tag']) {
   return tag
 }
 
-/** The category is a key, so it stays ink; the meta beside it is secondary. */
 export function PublicationTag({ tag }: { tag: PublicationEntry['tag'] }) {
   return (
-    <span className="whitespace-nowrap font-medium text-label-value-13 text-primary">
+    <span className="whitespace-nowrap rounded-sm border border-brand px-[5px] py-[4.5px] font-bold text-brand-deep text-label-value-13 uppercase leading-none">
       {getPublicationTagLabel(tag)}
     </span>
   )
