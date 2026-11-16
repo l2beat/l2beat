@@ -1,10 +1,14 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const API_URL = 'https://api.relay.link'
 const MAX_PAGE_SIZE = 100
+
+// /published-requests lists a request only once it is a minute old by
+// createdAt, so a fast fill appears about a minute after its updatedAt.
+export const RELAY_PUBLISH_DELAY = 2 * UnixTime.MINUTE
 
 interface GetRequestsOptions {
   limit?: number
@@ -159,7 +163,7 @@ export class RelayApiClient {
       }
     }
 
-    const url = `${API_URL}/requests/v3?${new URLSearchParams(queryParams)}`
+    const url = `${API_URL}/published-requests?${new URLSearchParams(queryParams)}`
     const data = await this.fetchWithRetry(url)
     const parsed = RelayV3Response.parse(data)
     this.warnOnIncompleteActualData(parsed.requests)
