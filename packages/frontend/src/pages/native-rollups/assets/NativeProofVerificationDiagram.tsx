@@ -94,7 +94,7 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        Native EVM
+        NATIVE EVM
       </text>
 
       <rect
@@ -115,7 +115,7 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        Custom VM
+        CUSTOM VM
       </text>
 
       <rect
@@ -136,7 +136,7 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        ZK app
+        ZK APP
       </text>
     </svg>
   )

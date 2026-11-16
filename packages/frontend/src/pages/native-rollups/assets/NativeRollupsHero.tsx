@@ -61,7 +61,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        L2 block
+        L2 BLOCK
       </text>
       <rect
         x="24"
@@ -122,7 +122,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        Frame tx
+        FRAME TX
       </text>
       <rect
         x="216"
@@ -164,7 +164,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Blobs
+        BLOBS
       </text>
 
       <rect
@@ -184,7 +184,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Verify
+        VERIFY
       </text>
       <text
         x="261"
@@ -212,7 +212,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="700"
       >
-        Dependency
+        DEPENDENCY
       </text>
       <text
         x="261"
@@ -301,7 +301,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Aggregated
+        AGGREGATED
       </text>
 
       <path
@@ -334,7 +334,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="10"
         fontWeight="700"
       >
-        Key
+        KEY
       </text>
       <text
         x="322"
@@ -344,7 +344,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="10"
         fontWeight="700"
       >
-        Proof ✓
+        PROOF ✓
       </text>
 
       {/* EIP-8357, which holds the EVM program's key for each fork. */}
@@ -382,7 +382,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Key registry
+        KEY REGISTRY
       </text>
       <rect
         x="22"
@@ -429,7 +429,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        Rollup contract
+        ROLLUP CONTRACT
       </text>
       <rect
         x="153"
@@ -449,7 +449,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="700"
       >
-        Ethereum&apos;s EVM ✓
+        ETHEREUM&apos;S EVM ✓
       </text>
       <text
         x="210"
@@ -459,7 +459,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        New state root
+        NEW STATE ROOT
       </text>
     </svg>
   )
