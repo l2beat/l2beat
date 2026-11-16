@@ -22,6 +22,7 @@ export function CostsCompareControls({
           costs: { ...prev.costs, unit: value as CompareCostsUnit },
         }))
       }
+      variant="highlighted"
     >
       <RadioGroupItem value="usd" className="h-full px-2 text-sm">
         USD
