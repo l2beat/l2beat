@@ -26,6 +26,7 @@ import {
 } from '../pinned-projects/pinnedProjectsStore'
 import { trackScrollFades } from '../ScrollWithGradient'
 import { useSearchBarContext } from './SearchBarContext'
+import { isApple, Kbd, SearchBarTips } from './SearchBarTips'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { getEmptyStateGroups } from './searchBarEmptyState'
@@ -40,6 +41,14 @@ export function SearchBarDialog() {
   const { open, setOpen } = useSearchBarContext()
   const pinnedProjects = usePinnedProjects()
   const pathname = usePathname()
+  const [tipsOpen, setTipsOpen] = useState(false)
+  // Typing replaces the tips with results, and clearing brings them back.
+  const showsTips = tipsOpen && value === ''
+  const showsEmptyState = value === '' && !showsTips
+
+  useEffect(() => {
+    if (!open) setTipsOpen(false)
+  }, [open])
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -67,6 +76,10 @@ export function SearchBarDialog() {
       setValue('')
       return
     }
+    if (tipsOpen) {
+      setTipsOpen(false)
+      return
+    }
     setOpen(false)
   }
 
@@ -83,6 +96,17 @@ export function SearchBarDialog() {
     // Clear after the dialog's close animation (100ms) so the input
     // doesn't visibly reset and flash the "Recently added" list mid-close.
     setTimeout(() => setValue(''), 200)
+  }
+
+  function showTips() {
+    setValue('')
+    setTipsOpen(true)
+  }
+
+  function searchExample(query: string) {
+    setValue(query)
+    setTipsOpen(false)
+    inputRef.current?.focus()
   }
 
   // Hide virtual keyboard on touch start
@@ -106,7 +130,9 @@ export function SearchBarDialog() {
         />
         <CommandList
           ref={trackScrollFades}
-          className="max-h-screen supports-[height:100dvh]:max-h-dvh md:h-[270px] md:max-h-[270px]"
+          // Below md the dialog is full screen, and the list fills what the
+          // input and the footer leave.
+          className="max-md:max-h-none max-md:min-h-0 max-md:flex-1 md:h-[270px] md:max-h-[270px]"
         >
           {isLoading && (
             <CommandPrimitive.Loading>
@@ -139,9 +165,21 @@ export function SearchBarDialog() {
               </>
             ) : null}
           </SearchBarNotice>
-          {!searchProblem && <CommandEmpty>No results found.</CommandEmpty>}
+          {!searchProblem && !showsTips && (
+            <CommandEmpty>
+              No results found.{' '}
+              <button
+                type="button"
+                className={linkVariants()}
+                onClick={showTips}
+              >
+                See what you can search
+              </button>
+            </CommandEmpty>
+          )}
 
-          {value === '' && (
+          {showsTips && <SearchBarTips onExample={searchExample} />}
+          {showsEmptyState && (
             <>
               <SavedProjectsGroup
                 heading="Pinned"
@@ -155,7 +193,7 @@ export function SearchBarDialog() {
               />
             </>
           )}
-          {value === '' && emptyState.recentlyAdded.length > 0 && (
+          {showsEmptyState && emptyState.recentlyAdded.length > 0 && (
             <CommandGroup heading="Recently added projects">
               {emptyState.recentlyAdded.map((project) => {
                 return (
@@ -250,6 +288,10 @@ export function SearchBarDialog() {
               </CommandGroup>
             ))}
         </CommandList>
+        <SearchBarFooter
+          tipsOpen={showsTips}
+          onToggleTips={() => (showsTips ? setTipsOpen(false) : showTips())}
+        />
       </Command>
     </CommandDialog>
   )
@@ -335,6 +377,49 @@ function SearchBarNotice({ children }: { children: React.ReactNode }) {
       className="border-divider border-b px-4 py-3 text-center text-sm last:border-none empty:border-none empty:p-0"
     >
       {children}
+    </div>
+  )
+}
+
+/**
+ * Where the tips live: out of the way of the results, but always in reach,
+ * as few visitors guess that search finds tokens, pages and addresses too.
+ */
+function SearchBarFooter({
+  tipsOpen,
+  onToggleTips,
+}: {
+  tipsOpen: boolean
+  onToggleTips: () => void
+}) {
+  return (
+    <div className="flex shrink-0 items-center justify-between gap-4 border-divider border-t px-4 py-2 text-secondary text-xs">
+      <button
+        type="button"
+        aria-expanded={tipsOpen}
+        onClick={onToggleTips}
+        className="font-medium transition-colors hover:text-primary focus-visible:text-primary focus-visible:outline-none"
+      >
+        {tipsOpen ? 'Hide search tips' : 'Search tips'}
+      </button>
+      {/* Touch usually comes without a keyboard. */}
+      <div className="flex not-can-hover:hidden items-center gap-3">
+        <span className="flex items-center gap-1.5">
+          <Kbd>↵</Kbd>
+          Open
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="flex gap-0.5">
+            <Kbd>{isApple() ? '⌘' : 'Ctrl'}</Kbd>
+            <Kbd>↵</Kbd>
+          </span>
+          New tab
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Kbd>Esc</Kbd>
+          Close
+        </span>
+      </div>
     </div>
   )
 }
