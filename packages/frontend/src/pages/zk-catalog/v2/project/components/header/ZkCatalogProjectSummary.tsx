@@ -380,7 +380,7 @@ function TechStackSection({
 
   return (
     <div className="mt-3 flex flex-col gap-2 md:gap-3">
-      <h2 className="font-semibold text-label-value-15">Tech stack</h2>
+      <h2 className="font-semibold text-subtitle-12 uppercase">Tech stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col max-md:gap-4 md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
