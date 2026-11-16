@@ -1,7 +1,7 @@
 {
   "402x874": {
     "restyledPerRowLanded": 4440,
-    "quietPaintsPerSecond": 72,
+    "quietPaintsPerSecond": 30,
     "layouts": 120,
     "beltPaints": 634
   }

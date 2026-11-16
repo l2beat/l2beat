@@ -175,6 +175,7 @@ export const interfold: BaseProject = {
       name: 'Interfold governance app',
       url: 'https://governance.theinterfold.com',
       since: '2026-10-20',
+      delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/theinterfold/the-interfold-governance',
         commit: '870c40599fdb0e8dd73e225aa2dab44ac06477e5',

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositDataRegistry",
+  "category": "core",
+  "description": "Default key manager for vaults that publish a Merkle root of deposit data: a per-vault deposit data manager sets the root and anyone can register the next keys in it, subject to oracle approval in the keeper."
+}

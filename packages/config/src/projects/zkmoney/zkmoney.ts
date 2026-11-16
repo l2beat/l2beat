@@ -361,6 +361,14 @@ export const zkmoney: BaseProject = {
       name: 'zk.money Desktop',
       url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.5.0',
       since: '2026-10-05',
+      delivery: {
+        type: 'pinned',
+        pin: {
+          type: 'sha256',
+          file: 'zkmoney-desktop-linux-x86_64.AppImage',
+          hash: '97ba15a1b00d3949dc9faa6a4d8934206ebe71072a3f41fbcada20d64766493f',
+        },
+      },
       version: '0.5.0',
       source: {
         repository: 'https://github.com/aztec-labs-eng/zkmoney-public',

@@ -70,6 +70,7 @@ export async function getDefiProjectEntry(
       'contracts',
       'permissions',
       'tvsConfig',
+      'tvsInfo',
       'externalDependencies',
       'discoveryUpdates',
       'ossificationHistory',
@@ -98,7 +99,10 @@ export async function getDefiProjectEntry(
     getProjectOssification(project),
     getDefiTokens(project.defiInfo.tokens ?? []),
     project.liquidStaking
-      ? getLiquidStakingSummary(project, project.liquidStaking.risks)
+      ? getLiquidStakingSummary({
+          ...project,
+          liquidStaking: project.liquidStaking,
+        })
       : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
@@ -189,6 +193,8 @@ export async function getDefiProjectEntry(
           iconUrl: icon,
         },
         dataSource: getDefiTvlDataSource(project.defiInfo.tvl),
+        ethStakedToggle: !!project.liquidStaking,
+        warnings: project.tvsInfo?.warnings ?? [],
       },
     })
   }
