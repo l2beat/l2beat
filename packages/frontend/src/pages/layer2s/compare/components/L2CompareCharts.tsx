@@ -159,7 +159,7 @@ export function L2CompareCharts({
               }
               options={COMPARE_RANGE_OPTIONS.map((value) => ({
                 value,
-                label: value === 'max' ? 'Max' : value,
+                label: value.toUpperCase(),
               }))}
             />
           </div>
