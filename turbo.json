@@ -14,12 +14,10 @@
       "outputs": ["src/kysely/generated/**"]
     },
     "typecheck": {
-      "dependsOn": ["^build", "db:generate-types"],
-      "inputs": ["**/*.ts", "**/*.tsx", "tsconfig*.json"]
+      "dependsOn": ["^build", "db:generate-types"]
     },
     "test": {
-      "dependsOn": ["^build", "db:generate-types"],
-      "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
+      "dependsOn": ["^build", "db:generate-types"]
     },
     "lint": {
       "dependsOn": ["^build", "db:generate-types"]
