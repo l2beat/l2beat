@@ -1,3 +1,196 @@
+Generated with discovered.json: 0x036de1d5b384befe1db8baaf7bbfc1713eb9afb1
+
+# Diff at Mon, 16 Nov 2026 12:44:29 GMT:
+
+- id: 0c1fbcaa
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794319575
+- current timestamp: 1794825975
+
+## Description
+
+L2 part of Guardian dissolution is executed.
+
+The veto guardian of ZkTokenGovernor and ZkGovOpsGovernor changes from the L1 5/8 Guardians to the 3/6 ZK Foundation Era Multisig, a Safe on ZKsync Era with the same signers and threshold as the ZK Foundation Multisig on Ethereum (by redeploying the governor contracts, whose veto guardian is immutable). The L1 part of ZIP-19 (ProtocolUpgradeHandler upgrade and the new 2/2 EmergencyUpgradeBoard) is still pending. Governance flow of zk stack chains is to be updated after the L1 is finalized.
+
+See these proposals:
+- https://www.tally.xyz/gov/zksync/proposal/104794020732055103905008046624736361863307761965418890686383471704465618736740?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+- https://www.tally.xyz/gov/zksync/proposal/95099219650033505811430848209984462218844390725611066258767666502656782605818?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160
+- https://www.tally.xyz/gov/zksync/proposal/50493255232415902362620838873379866057752952721482013941205421986273471752436?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f
+
+## Watched changes
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor]
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200}]},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"role":".Executor"}]
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Executor.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Executor.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor]
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+    contract ZK Foundation Era Multisig (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenGovernor (zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf) [shared-zk-stack/ZkGovernor]
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 6539 --------------------
+ .../ZkGovOpsGovernor.sol}                          |    0
+ .../ZkTokenGovernor.sol                            |  224 +-
+ 3 files changed, 114 insertions(+), 6649 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794319575 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+      critical:
+-        true
++        {"untilTimestamp":1794577660}
+      values.PROPOSE_GUARDIAN:
+-        "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
++        "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
+      values.VETO_GUARDIAN:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
+      fieldMeta.isProposeGuarded:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+      values.VETO_GUARDIAN:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkGovOpsGovernor (zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c) [shared-zk-stack/ZkGovernor]
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
++   Status: CREATED
+    contract ZK Foundation Era Multisig (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfe51b3dfa47050b5aaebdae5d4ec0d722709a3bf
 
 # Diff at Tue, 10 Nov 2026 17:10:27 GMT:

@@ -212,6 +212,14 @@
       "updateId": "4cedd31d",
       "transaction": "0x2b8c70bf3fbfe352ba9ff54f044f5f835edc95ad1b510bc2b7b4d13cf8945acf",
       "reason": "Replaced the proof verifier for proof type 1 in LineaRollup with a new PlonkVerifierFull (VerifierAddressChanged 0x09ac... -> 0x1d93...), changing which proofs finalize state."
+    },
+    {
+      "timestamp": 1794605927,
+      "type": "state",
+      "contract": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "updateId": "ea41df25",
+      "transaction": "0x71cbe3d8869015abdfd434162b228108b44e70c601552327520d68c327f912d0",
+      "reason": "Replaced the proof verifier for proof type 0 in LineaRollup with a new PlonkVerifierFull (VerifierAddressChanged 0xAFF2... -> 0x0B39...), changing which proofs finalize state."
     }
   ],
   "ignoredTransactions": [

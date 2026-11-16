@@ -94,6 +94,14 @@
       "transaction": "0x2411554fd5c233e7f428730bf9795d7e6ac6fbb5d1aac27c8df48faedf6cb396",
       "updateId": "706bc529",
       "reason": "Rotated the OP Succinct aggregation and range verification keys to the mantle-v1.6.1 release (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
+    },
+    {
+      "timestamp": 1794381995,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0x3899acbdb98b132058db8d27766125ff539a1d8ee725a443641be9e58dfd1f17",
+      "updateId": "802b7446",
+      "reason": "Rotated the OP Succinct aggregation and range verification keys to the mantle-v1.6.3 release (AggregationVkeyUpdated and RangeVkeyCommitmentUpdated)."
     }
   ]
 }
