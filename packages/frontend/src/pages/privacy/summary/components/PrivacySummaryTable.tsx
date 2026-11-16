@@ -102,9 +102,13 @@ function getColumns(anonymitySetTooltip: string | undefined) {
 
         return (
           <ProjectNameInfoTooltip project={project}>
-            <TableLink href={ctx.row.original.href}>
+            <TableLink
+              href={ctx.row.original.href}
+              className="max-md:max-h-none"
+            >
               {/* On phones a long name wraps instead of pushing TVL, the
-                  figure after the rosette, out of the first view. */}
+                  figure after the rosette, out of the first view, so the
+                  link grows past the shared 52px cap. */}
               <TwoRowCell className="max-md:max-w-[90px] max-md:whitespace-normal">
                 <TwoRowCell.First>
                   <ProjectNameCell project={project} withInfoTooltip />

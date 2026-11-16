@@ -20,7 +20,7 @@ import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
-import { getDaDataParams } from './getDaDataParams'
+import { formatDaAxisTick, getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
   number,
@@ -135,7 +135,7 @@ export function ProjectDaAbsoluteThroughputChart({
         ariaLabel="Data throughput"
         syncedUntil={syncedUntil}
         yAxis={{
-          format: (value) => value.toFixed(2),
+          format: formatDaAxisTick,
           unit: ` ${unit}`,
           tickCount: 4,
         }}
