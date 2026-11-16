@@ -59,7 +59,7 @@ export function NativeRollupsHeroIllustration({
         y="70"
         className="fill-primary"
         letterSpacing="1.2"
-        fontSize="12"
+        fontSize="10"
         fontWeight="700"
       >
         L2 BLOCK
@@ -121,26 +121,26 @@ export function NativeRollupsHeroIllustration({
         y="34"
         className="fill-primary"
         letterSpacing="1"
-        fontSize="12"
+        fontSize="9.5"
         fontWeight="700"
       >
         FRAME TX
       </text>
       <rect
-        x="223"
+        x="220"
         y="23"
-        width="52"
+        width="50"
         height="15"
         rx="7.5"
         fill="var(--accent)"
       />
       <text
-        x="249"
+        x="245"
         y="33.5"
         textAnchor="middle"
         className="fill-primary-invert"
         letterSpacing="0.4"
-        fontSize="9"
+        fontSize="7.5"
         fontWeight="700"
       >
         EIP-8141
@@ -165,7 +165,7 @@ export function NativeRollupsHeroIllustration({
         y="52"
         className="fill-primary"
         letterSpacing="0.8"
-        fontSize="11"
+        fontSize="8"
         fontWeight="600"
       >
         BLOBS
@@ -186,7 +186,7 @@ export function NativeRollupsHeroIllustration({
         y="76.5"
         className="fill-primary"
         letterSpacing="0.6"
-        fontSize="11"
+        fontSize="8.5"
         fontWeight="600"
       >
         VERIFY
@@ -196,7 +196,7 @@ export function NativeRollupsHeroIllustration({
         y="76.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         0
@@ -215,7 +215,7 @@ export function NativeRollupsHeroIllustration({
         y="104.5"
         className="fill-primary-invert"
         letterSpacing="0.6"
-        fontSize="11"
+        fontSize="8.5"
         fontWeight="700"
       >
         DEPENDENCY
@@ -225,7 +225,7 @@ export function NativeRollupsHeroIllustration({
         y="104.5"
         textAnchor="end"
         className="fill-primary-invert"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         1
@@ -245,7 +245,7 @@ export function NativeRollupsHeroIllustration({
         x="160"
         y="132.5"
         className="fill-(--accent)"
-        fontSize="11"
+        fontSize="8.5"
         fontWeight="700"
         fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
       >
@@ -256,7 +256,7 @@ export function NativeRollupsHeroIllustration({
         y="132.5"
         textAnchor="end"
         className="fill-secondary"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         2
@@ -295,7 +295,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="0.8"
-        fontSize="12"
+        fontSize="9.5"
         fontWeight="700"
       >
         EIP-8288
@@ -306,7 +306,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-secondary"
         letterSpacing="0.8"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         AGGREGATED
@@ -340,7 +340,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-(--accent)"
         letterSpacing="0.6"
-        fontSize="10"
+        fontSize="7"
         fontWeight="700"
       >
         KEY
@@ -351,7 +351,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-(--accent)"
         letterSpacing="0.6"
-        fontSize="10"
+        fontSize="7"
         fontWeight="700"
       >
         PROOF ✓
@@ -381,7 +381,7 @@ export function NativeRollupsHeroIllustration({
         y="223.5"
         className="fill-primary"
         letterSpacing="0.8"
-        fontSize="12"
+        fontSize="9.5"
         fontWeight="700"
       >
         EIP-8357
@@ -391,7 +391,7 @@ export function NativeRollupsHeroIllustration({
         y="240"
         className="fill-secondary"
         letterSpacing="0.8"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         KEY REGISTRY
@@ -439,7 +439,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="1"
-        fontSize="12"
+        fontSize="9.5"
         fontWeight="700"
       >
         ROLLUP CONTRACT
@@ -460,7 +460,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-(--accent)"
         letterSpacing="0.4"
-        fontSize="11"
+        fontSize="8.5"
         fontWeight="700"
       >
         ETHEREUM&apos;S EVM ✓
@@ -471,7 +471,7 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-secondary"
         letterSpacing="0.8"
-        fontSize="11"
+        fontSize="7.5"
         fontWeight="600"
       >
         NEW STATE ROOT

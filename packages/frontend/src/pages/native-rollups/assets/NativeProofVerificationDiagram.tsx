@@ -51,7 +51,7 @@ export function NativeProofVerificationDiagram({
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="0.8"
-        fontSize="14"
+        fontSize="10"
         fontWeight="600"
       >
         EIP-8288
@@ -89,11 +89,11 @@ export function NativeProofVerificationDiagram({
       />
       <text
         x="64"
-        y="171"
+        y="170"
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="0.6"
-        fontSize="14"
+        fontSize="9.5"
         fontWeight="600"
       >
         NATIVE EVM
@@ -111,11 +111,11 @@ export function NativeProofVerificationDiagram({
       />
       <text
         x="180"
-        y="171"
+        y="170"
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="0.6"
-        fontSize="14"
+        fontSize="9.5"
         fontWeight="600"
       >
         CUSTOM VM
@@ -133,11 +133,11 @@ export function NativeProofVerificationDiagram({
       />
       <text
         x="296"
-        y="171"
+        y="170"
         textAnchor="middle"
         className="fill-primary"
         letterSpacing="0.6"
-        fontSize="14"
+        fontSize="9.5"
         fontWeight="600"
       >
         ZK APP
