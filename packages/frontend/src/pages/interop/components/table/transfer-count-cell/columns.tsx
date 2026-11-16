@@ -33,8 +33,7 @@ export function getTransferColumns(
       header: 'Timestamp',
       enableSorting: false,
       cell: (ctx) => (
-        // When it happened is meta: the amounts and chains are the row.
-        <span className="font-normal text-label-value-13 text-secondary tabular-nums">
+        <span className="font-normal text-label-value-13 text-primary tabular-nums">
           <UtcDateTime timestamp={ctx.row.original.timestamp} />
         </span>
       ),
