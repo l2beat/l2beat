@@ -1071,6 +1071,7 @@ export type ProjectDefiCategory =
   | 'Prediction market'
   | 'Multisig'
   | 'Payments'
+  | 'Attestations'
 
 export interface ProjectDefiInfo {
   /** Short category label shown on the project page, e.g. "Stablecoin". */

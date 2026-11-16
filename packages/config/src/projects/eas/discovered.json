@@ -1,0 +1,116 @@
+{
+  "name": "eas",
+  "timestamp": 1794834166,
+  "configHash": "0x9217c982392a01123a2d9b1dbef5391b10a14e197737b357c3171601edc4445b",
+  "entries": [
+    {
+      "name": "EAS",
+      "address": "eth:0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587",
+      "type": "Contract",
+      "template": "eas/EAS",
+      "sourceHashes": [
+        "0x64c98f2bf70a14dc8e7d2f6e02819a28dc81d1f2741e60ecb73f953a3c7733de"
+      ],
+      "proxyType": "immutable",
+      "description": "Records attestations: statements an attester makes under a registered schema, optionally about a recipient address. Each one is stored under a unique id, and only its attester can revoke it. Calls the schema's resolver, if it has one, on every attestation and revocation and forwards the ETH assigned to it. Also timestamps arbitrary 32-byte values. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x2bF22CAe1dc34f265cAE03F6ff419177b4f4FBb3",
+      "sinceTimestamp": 1677952943,
+      "sinceBlock": 16756728,
+      "values": {
+        "$immutable": true,
+        "getAttestTypeHash": "0xdbfdf8dc2b135c26253e00d5b6cbe6f20457e003fd526d97cea183883570de61",
+        "getDomainSeparator": "0x1b86e1aefca1c2cc067f67f9d06e2f79c85094c488f7c6b8d7bc828a69952348",
+        "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
+        "getSchemaRegistry": "eth:0xA7b39296258348C78294F95B872b282326A97BDF",
+        "VERSION": "0.26"
+      },
+      "implementationNames": {
+        "eth:0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587": "EAS"
+      }
+    },
+    {
+      "name": "SchemaRegistry",
+      "address": "eth:0xA7b39296258348C78294F95B872b282326A97BDF",
+      "type": "Contract",
+      "template": "eas/SchemaRegistry",
+      "sourceHashes": [
+        "0x0bc78f4f37a53c014046e63f05720408289c4248106b7a5833ee57dee4223da9"
+      ],
+      "proxyType": "immutable",
+      "description": "Registers schemas for EAS. A schema is a field layout, an optional resolver contract and a flag for whether its attestations can be revoked. Its id is the hash of the three, so a registered schema never changes. Anyone can register one. Immutable, with no owner.",
+      "critical": true,
+      "deployerAddress": "eth:0x2bF22CAe1dc34f265cAE03F6ff419177b4f4FBb3",
+      "sinceTimestamp": 1677952919,
+      "sinceBlock": 16756726,
+      "values": { "$immutable": true, "VERSION": "0.26" },
+      "implementationNames": {
+        "eth:0xA7b39296258348C78294F95B872b282326A97BDF": "SchemaRegistry"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587": [
+      "constructor(address registry)",
+      "error AccessDenied()",
+      "error AlreadyRevoked()",
+      "error AlreadyRevokedOffchain()",
+      "error AlreadyTimestamped()",
+      "error InsufficientValue()",
+      "error InvalidAttestation()",
+      "error InvalidAttestations()",
+      "error InvalidExpirationTime()",
+      "error InvalidLength()",
+      "error InvalidOffset()",
+      "error InvalidRegistry()",
+      "error InvalidRevocation()",
+      "error InvalidRevocations()",
+      "error InvalidSchema()",
+      "error InvalidSignature()",
+      "error InvalidVerifier()",
+      "error Irrevocable()",
+      "error NotFound()",
+      "error NotPayable()",
+      "error WrongSchema()",
+      "event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schema)",
+      "event Revoked(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schema)",
+      "event RevokedOffchain(address indexed revoker, bytes32 indexed data, uint64 indexed timestamp)",
+      "event Timestamped(bytes32 indexed data, uint64 indexed timestamp)",
+      "function VERSION() view returns (string)",
+      "function attest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data) request) payable returns (bytes32)",
+      "function attestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address attester) delegatedRequest) payable returns (bytes32)",
+      "function getAttestTypeHash() pure returns (bytes32)",
+      "function getAttestation(bytes32 uid) view returns (tuple(bytes32 uid, bytes32 schema, uint64 time, uint64 expirationTime, uint64 revocationTime, bytes32 refUID, address recipient, address attester, bool revocable, bytes data))",
+      "function getDomainSeparator() view returns (bytes32)",
+      "function getNonce(address account) view returns (uint256)",
+      "function getRevokeOffchain(address revoker, bytes32 data) view returns (uint64)",
+      "function getRevokeTypeHash() pure returns (bytes32)",
+      "function getSchemaRegistry() view returns (address)",
+      "function getTimestamp(bytes32 data) view returns (uint64)",
+      "function isAttestationValid(bytes32 uid) view returns (bool)",
+      "function multiAttest(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data)[] multiRequests) payable returns (bytes32[])",
+      "function multiAttestByDelegation(tuple(bytes32 schema, tuple(address recipient, uint64 expirationTime, bool revocable, bytes32 refUID, bytes data, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address attester)[] multiDelegatedRequests) payable returns (bytes32[])",
+      "function multiRevoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data)[] multiRequests) payable",
+      "function multiRevokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value)[] data, tuple(uint8 v, bytes32 r, bytes32 s)[] signatures, address revoker)[] multiDelegatedRequests) payable",
+      "function multiRevokeOffchain(bytes32[] data) returns (uint64)",
+      "function multiTimestamp(bytes32[] data) returns (uint64)",
+      "function revoke(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data) request) payable",
+      "function revokeByDelegation(tuple(bytes32 schema, tuple(bytes32 uid, uint256 value) data, tuple(uint8 v, bytes32 r, bytes32 s) signature, address revoker) delegatedRequest) payable",
+      "function revokeOffchain(bytes32 data) returns (uint64)",
+      "function timestamp(bytes32 data) returns (uint64)"
+    ],
+    "eth:0xA7b39296258348C78294F95B872b282326A97BDF": [
+      "error AlreadyExists()",
+      "event Registered(bytes32 indexed uid, address registerer)",
+      "function VERSION() view returns (string)",
+      "function getSchema(bytes32 uid) view returns (tuple(bytes32 uid, address resolver, bool revocable, string schema))",
+      "function register(string schema, address resolver, bool revocable) returns (bytes32)"
+    ]
+  },
+  "usedTemplates": {
+    "eas/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eas/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
+  "usedBlockNumbers": { "ethereum": 26427762 },
+  "permissionsConfigHash": "0x7cc81333f8dabf5b68e5aaf2a4b042cd46dfa30c0214838451416d453141732b"
+}

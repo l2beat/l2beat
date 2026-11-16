@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EAS",
+  "critical": true,
+  "description": "Records attestations: statements an attester makes under a registered schema, optionally about a recipient address. Each one is stored under a unique id, and only its attester can revoke it. Calls the schema's resolver, if it has one, on every attestation and revocation and forwards the ETH assigned to it. Also timestamps arbitrary 32-byte values. Immutable, with no owner."
+}
