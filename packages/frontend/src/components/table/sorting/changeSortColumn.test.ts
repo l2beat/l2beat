@@ -61,6 +61,6 @@ describe(withChangeSort.name, () => {
     if (typeof header !== 'function') {
       throw new Error('expected a header function')
     }
-    expect(header({ table } as never)).toEqual('7D%')
+    expect(header({ table } as never)).toEqual('7d')
   })
 })

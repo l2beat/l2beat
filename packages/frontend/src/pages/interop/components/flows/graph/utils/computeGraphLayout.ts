@@ -1,7 +1,14 @@
+import type { ChainLabel } from './chainLabel'
+import { type Rect, separateLabels } from './separateLabels'
+
 export interface ChainNodeLayout {
   x: number
   y: number
   radius: number
+  /** False when the net-flow line had no room and is left out */
+  showNetFlow: boolean
+  /** Name and net-flow boxes, kept clear of roads and particles */
+  labelBoxes: Rect[]
 }
 export type FlowsGraphLayout = Map<string, ChainNodeLayout>
 
@@ -15,6 +22,9 @@ const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
  * Sqrt makes the bubble area proportional to volume. This means:
  *   - 10x volume → ~3.2x radius → 10x area
  *   - Low-volume chains still get a small but visible bubble (MIN_RADIUS = 8px)
+ *
+ * With `labels`, bubbles are then nudged apart so that no chain's bubble,
+ * name or net flow overlaps another chain's (see `separateLabels`).
  */
 export function computeGraphLayout(
   chainIds: string[],
@@ -22,6 +32,7 @@ export function computeGraphLayout(
   size: number,
   isSmallScreen: boolean,
   topChainId?: string,
+  labels?: Map<string, ChainLabel>,
 ): FlowsGraphLayout {
   const layout: FlowsGraphLayout = new Map()
   if (chainIds.length === 0 || size === 0) return layout
@@ -57,6 +68,20 @@ export function computeGraphLayout(
       x: centerX + circleRadius * Math.cos(angle),
       y: centerY + circleRadius * Math.sin(angle),
       radius,
+      showNetFlow: true,
+      labelBoxes: [],
+    })
+  }
+
+  if (labels) {
+    const nodes = [...layout.entries()].flatMap(([chainId, node]) => {
+      const label = labels.get(chainId)
+      return label ? [{ chainId, ...node, label }] : []
+    })
+    const separated = separateLabels(nodes, size, isSmallScreen)
+    nodes.forEach(({ chainId, radius }, i) => {
+      const node = separated[i]
+      if (node) layout.set(chainId, { ...node, radius })
     })
   }
 

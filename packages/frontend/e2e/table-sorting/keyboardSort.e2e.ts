@@ -50,11 +50,11 @@ test('a table header sorts from the keyboard', async ({ browser }) => {
   )
 
   // The change companion sorts from the value column's header cell, and is
-  // named after that column: every change column reads "7D%".
+  // named after that column: every change column reads "7d".
   await page.getByRole('button', { name: /^total value secured$/i }).focus()
   await page.keyboard.press('Tab')
   await expect(
-    page.getByRole('button', { name: 'Total value secured 7D%' }),
+    page.getByRole('button', { name: 'Total value secured 7d' }),
   ).toBeFocused()
   await page.keyboard.press('Enter')
   await expect(proofSystemHeader).toHaveAttribute('aria-sort', 'none')

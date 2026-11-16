@@ -114,7 +114,7 @@ export function ActivityChartStatsPanel({ stats, metric, isLoading }: Props) {
         )}
       </ChartStatsItem>
       <ChartStatsItem
-        label="Past day UOPS/TPS Ratio"
+        label="Past day UOPS/TPS ratio"
         className="max-md:h-7"
         tooltip="The ratio of user operations to transactions over the past day. A high ratio indicates that for some transactions multiple individual user operations are bundled in a single transaction."
         isLoading={isLoading}

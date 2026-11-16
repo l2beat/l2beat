@@ -34,7 +34,7 @@ export function ActivityRatioChart({
 }: Props) {
   const chartMeta = {
     ratio: {
-      label: 'UOPS/TPS Ratio',
+      label: 'UOPS/TPS ratio',
       color: 'var(--chart-emerald)',
       indicatorType: {
         shape: 'line',

@@ -35,8 +35,8 @@ export const INTEROP_TYPE_TO_BADGE_BG_COLOR: Record<
   keyof typeof TRANSFER_TYPE_DISPLAY,
   string
 > = {
-  lockAndMint: 'bg-yellow-700',
-  burnAndMint: 'bg-teal-500',
+  lockAndMint: 'bg-[#8a6700]',
+  burnAndMint: 'bg-[#1b7f75]',
   nonMinting: 'bg-non-minting',
   unknown: 'bg-gray-650',
 }
