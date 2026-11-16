@@ -1,16 +1,21 @@
 import type { Project, ProjectLiquidStakingRisks } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
+import { getLatestTotalValueLocked } from '../getDefiTotalValueLocked'
+import { MAX_STAKE_AGE } from './getEthStakedAt'
 import {
   getLiquidStakingCharts,
   type LiquidStakingChartPoint,
   type LiquidStakingCharts,
+  type LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
+import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
 
 export interface LiquidStakingSummary {
   risks: ProjectLiquidStakingRisks
   totalValueLockedUsd?: number
+  /** The TVL in ETH at the protocol's rate, as a fraction of the ETH staked network-wide. */
+  stakedEthShare?: LiquidStakingStakedEthShare
   yield?: LiquidStakingLatestValue
   costOfExit?: LiquidStakingLatestValue
 }
@@ -21,6 +26,22 @@ export interface LiquidStakingLatestValue {
   /** It counts requests still queued, at an estimated wait. */
   estimated: boolean
 }
+
+export interface LiquidStakingStakedEthShare {
+  value: number
+  /** The day of the ETH staked it is a fraction of. */
+  timestamp: number
+}
+
+/** A project's latest TVL, also in ETH at the protocol's rate. */
+export interface LiquidStakingTvl {
+  valueUsd: number
+  valueEth?: number
+  timestamp: number
+}
+
+type LiquidStakingTvlProject = TvlInEthProject &
+  Pick<Project<'defiInfo'>, 'defiInfo'>
 
 /**
  * A value older than this shows as no data. Every page applies it, whatever
@@ -35,18 +56,42 @@ export function getLatestValuesRange(): ChartRange {
 
 /** The project's row of the liquid staking page, with the latest chart values. */
 export async function getLiquidStakingSummary(
-  project: Pick<Project<'defiInfo'>, 'id' | 'defiInfo'>,
-  risks: ProjectLiquidStakingRisks,
+  project: LiquidStakingTvlProject,
 ): Promise<LiquidStakingSummary> {
   const [tvlByProject, charts] = await Promise.all([
-    getTotalValueLockedByProject([project]),
+    getLiquidStakingTvl([project]),
     getLiquidStakingCharts({ range: getLatestValuesRange() }),
   ])
   return buildLiquidStakingSummary(
     project.id,
-    risks,
+    project.liquidStaking.risks,
     tvlByProject.get(project.id),
     charts,
+  )
+}
+
+/** The latest TVL of each project, in USD and in ETH. */
+export async function getLiquidStakingTvl(
+  projects: LiquidStakingTvlProject[],
+): Promise<Map<string, LiquidStakingTvl>> {
+  const latest = await getLatestTotalValueLocked(projects)
+  return new Map(
+    await Promise.all(
+      projects.flatMap((project) => {
+        const tvl = latest.get(project.id)
+        if (!tvl) return []
+        return getTvlInEthAt(project, [tvl.timestamp]).then(
+          ([valueEth]): [string, LiquidStakingTvl] => [
+            project.id,
+            {
+              valueUsd: tvl.valueUsd,
+              valueEth: valueEth ?? undefined,
+              timestamp: tvl.timestamp,
+            },
+          ],
+        )
+      }),
+    ),
   )
 }
 
@@ -54,17 +99,36 @@ export async function getLiquidStakingSummary(
 export function buildLiquidStakingSummary(
   projectId: string,
   risks: ProjectLiquidStakingRisks,
-  totalValueLockedUsd: number | undefined,
+  tvl: LiquidStakingTvl | undefined,
   charts: LiquidStakingCharts,
 ): LiquidStakingSummary {
   return {
     risks,
-    totalValueLockedUsd,
+    totalValueLockedUsd: tvl?.valueUsd,
+    stakedEthShare: tvl && getStakedEthShare(tvl, charts.yield),
     yield: getLatestValue(charts.yield, projectId, () => false),
     costOfExit: getLatestValue(charts.costOfExit, projectId, (point) =>
       point.estimated.includes(projectId),
     ),
   }
+}
+
+/** Same rule as the chart: the latest stake at or before the TVL's hour. */
+function getStakedEthShare(
+  tvl: LiquidStakingTvl,
+  points: LiquidStakingYieldPoint[],
+): LiquidStakingStakedEthShare | undefined {
+  const latest = points.findLast(
+    (point) => point.ethStaked != null && point.timestamp <= tvl.timestamp,
+  )
+  if (
+    tvl.valueEth === undefined ||
+    !latest?.ethStaked ||
+    tvl.timestamp - latest.timestamp > MAX_STAKE_AGE
+  ) {
+    return undefined
+  }
+  return { value: tvl.valueEth / latest.ethStaked, timestamp: latest.timestamp }
 }
 
 function getLatestValue<T extends LiquidStakingChartPoint>(

@@ -2,7 +2,6 @@ import type { ProjectDefiToken } from '@l2beat/config'
 import type { AbstractTokenRecord } from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { manifest } from '~/utils/Manifest'
-import { getTotalValueLockedByProject } from '../getDefiTotalValueLocked'
 import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
@@ -11,7 +10,9 @@ import {
 } from './getLiquidStakingProjects'
 import {
   buildLiquidStakingSummary,
+  getLiquidStakingTvl,
   type LiquidStakingSummary,
+  type LiquidStakingTvl,
 } from './getLiquidStakingSummary'
 
 export interface LiquidStakingEntry extends LiquidStakingSummary {
@@ -47,7 +48,7 @@ export async function loadLiquidStakingEntries(
 ): Promise<{ entries: LiquidStakingEntry[]; charts: LiquidStakingCharts }> {
   const projects = await getLiquidStakingProjects()
   const [tvlByProject, charts, findAbstractToken] = await Promise.all([
-    getTotalValueLockedByProject(projects),
+    getLiquidStakingTvl(projects),
     loadCharts(),
     getAbstractTokenLookup(
       projects.flatMap((project) => project.defiInfo.tokens ?? []),
@@ -62,7 +63,7 @@ export async function loadLiquidStakingEntries(
 /** Sorted by TVL, the projects without one last. */
 function getEntries(
   projects: LiquidStakingProject[],
-  tvlByProject: Map<string, number>,
+  tvlByProject: Map<string, LiquidStakingTvl>,
   charts: LiquidStakingCharts,
   findAbstractToken: (
     token: ProjectDefiToken,
