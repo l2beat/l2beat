@@ -59,6 +59,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               containerClassName="flex-nowrap"
               className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
+              changeContainerClassName="min-w-0"
               change={project.header.tvs.breakdown.totalChange}
               changePeriod={project.header.tvs.breakdown.totalChangePeriod}
             >
@@ -94,6 +95,7 @@ export function ProjectL2Stats({ project, className }: Props) {
               changePeriod={project.header.activity.uopsWeeklyChangePeriod}
               className={HEADLINE_FIGURE_CLASS}
               changeClassName="text-label-value-14 font-bold"
+              changeContainerClassName="min-w-0"
             >
               {formatActivityCount(project.header.activity.lastDayUops)}
             </ValueWithPercentageChange>
