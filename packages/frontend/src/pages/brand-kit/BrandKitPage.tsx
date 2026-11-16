@@ -14,10 +14,10 @@ export function BrandKitPage(props: AppLayoutProps) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader>Brand Kit</MainPageHeader>
+        <MainPageHeader>Brand kit</MainPageHeader>
         <div className="flex flex-col md:gap-6">
           <LogoSection
-            title="Full Logo"
+            title="Full logo"
             description='The logo is hand-lettered: always use the files as provided, with both the heart and "BEAT", and never retype the name in a font. Please do not change the placement of the pieces or the colors. Always use the full logo when space allows.'
             lightSvgHref="/brand-kit/logo-light.svg"
             darkSvgHref="/brand-kit/logo-dark.svg"
@@ -57,10 +57,12 @@ function LogoSection({
 }) {
   return (
     <PrimaryCard className="border-divider max-md:not-first:border-t">
-      <h2 className="mb-1 font-bold text-xl">{title}</h2>
-      <div className="mb-4 text-secondary text-xs">
-        <p>{description}</p>
-      </div>
+      <h2 className="mb-1 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        {title}
+      </h2>
+      <p className="mb-5 text-pretty text-label-value-15 text-secondary leading-5.5">
+        {description}
+      </p>
       <div className="grid gap-6 md:grid-cols-2">
         <LogoPreviewCard
           background="dark"
@@ -94,12 +96,14 @@ function LogoSection({
 function ColorsSection() {
   return (
     <PrimaryCard className="border-divider max-md:border-t">
-      <h2 className="mb-4 font-bold text-xl">Colors</h2>
+      <h2 className="mb-4 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Colors
+      </h2>
       <div className="grid gap-6 md:grid-cols-2">
         <div>
           <h3 className="mb-3 font-medium text-sm">Logo</h3>
           <div className="grid grid-cols-2 gap-3">
-            <ColorSwatch color="#FF3776" label="Heart Pink" />
+            <ColorSwatch color="#FF3776" label="Heart Pink" darkText />
             <ColorSwatch color="#0D0C0C" label="Ink" />
           </div>
         </div>
@@ -118,18 +122,26 @@ function ColorsSection() {
 function NameSection() {
   return (
     <PrimaryCard className="border-divider max-md:border-t">
-      <h2 className="mb-2 font-bold text-xl">Name</h2>
+      <h2 className="mb-2 font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Name
+      </h2>
       <div className="text-paragraph-15 md:text-paragraph-16">
         <p>
           The name should always be written in uppercase as{' '}
           <strong>ETHBEAT</strong>.
         </p>
-        <div className="flex items-center gap-2">
-          <SatisfiedIcon className="size-5" /> ETHBEAT
+        <div className="flex items-start gap-2">
+          <SatisfiedIcon className="mt-0.5 size-5 shrink-0" /> ETHBEAT
         </div>
-        <div className="flex items-center gap-2">
-          <MissingIcon className="size-5" /> EthBeat, Ethbeat, Eth Beat, ETH
-          BEAT, ETH-BEAT, etc.
+        <div className="flex items-start gap-2">
+          <MissingIcon className="mt-0.5 size-5 shrink-0" />
+          <span>
+            <span className="whitespace-nowrap">EthBeat</span>,{' '}
+            <span className="whitespace-nowrap">Ethbeat</span>,{' '}
+            <span className="whitespace-nowrap">Eth Beat</span>,{' '}
+            <span className="whitespace-nowrap">ETH BEAT</span>,{' '}
+            <span className="whitespace-nowrap">ETH-BEAT</span>, etc.
+          </span>
         </div>
         <p className="mt-4">
           We used to be called L2BEAT. That name and its logo are retired:

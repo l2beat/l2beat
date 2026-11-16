@@ -75,7 +75,7 @@ export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
     }),
     columnHelper.accessor((row) => row.activity?.volume ?? 0, {
       id: 'volume',
-      header: 'Last 24h\nVolume',
+      header: 'Last 24h\nvolume',
       cell: (ctx) => {
         const volume = ctx.row.original.activity?.volume
         if (!volume) return EM_DASH
@@ -194,13 +194,13 @@ export function getIntentBridgeColumns(transfer: InteropTransferDefaults) {
             <img
               src={topRoute.srcChain.iconUrl}
               alt={topRoute.srcChain.name}
-              className="size-4 rounded-sm object-contain"
+              className="size-4 shrink-0 rounded-sm object-contain"
             />
-            <ArrowRightIcon className="size-3 fill-brand" />
+            <ArrowRightIcon className="size-3 shrink-0 fill-brand" />
             <img
               src={topRoute.dstChain.iconUrl}
               alt={topRoute.dstChain.name}
-              className="size-4 rounded-sm object-contain"
+              className="size-4 shrink-0 rounded-sm object-contain"
             />
           </div>
         )
