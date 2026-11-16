@@ -64,7 +64,7 @@ export function OssificationDetails({
         </ChartStatsItem>
         <ChartStatsItem
           className={STACKED_ITEM}
-          label={`${OSSIFICATION_VALUE_LABELS[ossification.valueSource ?? 'tvs'].short} & changes (1Y)`}
+          label={`${OSSIFICATION_VALUE_LABELS[ossification.valueSource ?? 'tvs'].short} & changes (1y)`}
           tooltip={OSSIFICATION_TOOLTIPS.timeline}
         >
           <OssificationTimelineChart

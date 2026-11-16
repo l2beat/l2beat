@@ -7,7 +7,7 @@ export function mapLayerRisksToRosetteValues(
 ): RosetteValue[] {
   const values: RosetteValue[] = []
   if (risks.daLayer) {
-    values.push({ name: 'DA Layer', ...risks.daLayer })
+    values.push({ name: 'DA layer', ...risks.daLayer })
   }
   if (risks.economicSecurity) {
     values.push({ name: 'Economic security', ...risks.economicSecurity })
@@ -23,7 +23,7 @@ export function mapBridgeRisksToRosetteValues(
 ): RosetteValue[] {
   const values: RosetteValue[] = []
   if (risks.daBridge) {
-    values.push({ name: 'DA Bridge', ...risks.daBridge })
+    values.push({ name: 'DA bridge', ...risks.daBridge })
   }
   if (risks.committeeSecurity) {
     values.push({ name: 'Committee security', ...risks.committeeSecurity })

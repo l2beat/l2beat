@@ -57,6 +57,27 @@ describe('classNames', () => {
       expect(titledClassName.includes('rounded-tr-lg')).toEqual(false)
     })
 
+    it('starts a non-sortable first label where its values start', () => {
+      const base = {
+        groupParams: undefined,
+        isPinned: false,
+        headClassName: undefined,
+      }
+      expect(
+        getBasicTableHeaderCellClassName({ ...base, isSortable: false }),
+      ).toEqual('first:pl-3')
+      expect(
+        getBasicTableHeaderCellClassName({ ...base, isSortable: true }),
+      ).toEqual('')
+      expect(
+        getBasicTableHeaderCellClassName({
+          ...base,
+          isSortable: false,
+          align: 'right',
+        }),
+      ).toEqual('')
+    })
+
     it('keeps custom head class', () => {
       const className = getBasicTableHeaderCellClassName({
         groupParams: {

@@ -114,6 +114,7 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
             name="zkCatalogProverMetric"
             value={metric}
             onValueChange={(value) => setMetric(value as Metric)}
+            variant="highlighted"
             className="h-9"
           >
             <RadioGroupItem value="value" className="md:text-base">
