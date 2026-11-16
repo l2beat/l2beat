@@ -7,7 +7,7 @@ import {
   getTooltipEntries,
   sumEntries,
 } from '~/components/core/chart/ChartTooltip'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
@@ -41,18 +41,18 @@ export function StackedTvsChartTooltip<
           {formatSnapshotTimestamp(label, resolution)}
         </ChartTooltipTitle>
         {actualPayload.length > 1 && (
-          <>
-            <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
-              <span className="[@media(min-width:600px)]:hidden">Total</span>
-              <span className="hidden [@media(min-width:600px)]:inline">
-                Total value secured
-              </span>
-              <span className="text-primary">
-                {total !== null ? formatCurrency(total, unit) : 'No data'}
-              </span>
-            </div>
-            <HorizontalSeparator className="mt-1.5" />
-          </>
+          <TooltipHeader
+            className="mt-3"
+            label={
+              <>
+                <span className="[@media(min-width:600px)]:hidden">Total</span>
+                <span className="hidden [@media(min-width:600px)]:inline">
+                  Total value secured
+                </span>
+              </>
+            }
+            value={total !== null ? formatCurrency(total, unit) : 'No data'}
+          />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => (

@@ -15,7 +15,7 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { DaTvsProjectIds } from '~/server/features/data-availability/summary/getDaTvsProjectIds'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
@@ -151,18 +151,18 @@ function CustomTooltip({
           {formatSnapshotTimestamp(label, resolution)}
         </ChartTooltipTitle>
         {validPayload.length > 1 && (
-          <>
-            <div className="mt-3 mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
-              <span className="[@media(min-width:600px)]:hidden">Total</span>
-              <span className="hidden [@media(min-width:600px)]:inline">
-                Total value secured
-              </span>
-              <span className="text-primary">
-                {total !== null ? formatCurrency(total, 'usd') : 'No data'}
-              </span>
-            </div>
-            <HorizontalSeparator />
-          </>
+          <TooltipHeader
+            className="mt-3"
+            label={
+              <>
+                <span className="[@media(min-width:600px)]:hidden">Total</span>
+                <span className="hidden [@media(min-width:600px)]:inline">
+                  Total value secured
+                </span>
+              </>
+            }
+            value={total !== null ? formatCurrency(total, 'usd') : 'No data'}
+          />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {validPayload.map((entry) => {

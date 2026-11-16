@@ -3,6 +3,7 @@ import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { useCanHover } from '~/hooks/useCanHover'
 import { cn } from '~/utils/cn'
 import { tooltipSurfaceClassName } from '../tooltip/Tooltip'
+import { TooltipRow } from '../tooltip/TooltipParts'
 import { useChart } from './ChartContext'
 import { ChartDataIndicator } from './ChartDataIndicator'
 import { toNumber } from './utils/toNumber'
@@ -131,26 +132,20 @@ export function ChartTooltipRow({
   const config = meta[name]
   if (!config) return null
   return (
-    <div
+    <TooltipRow
       data-chart-tooltip-row
-      className={cn('flex w-full items-center justify-between', gap)}
-    >
-      <span className="flex items-center gap-1">
+      gap={gap}
+      indicator={
         <ChartDataIndicator
           backgroundColor={config.color}
           type={config.indicatorType}
         />
-        <span
-          className={cn(
-            'font-medium text-label-value-14',
-            wrapLabel && 'w-20 sm:w-fit',
-          )}
-        >
-          {config.label}
-        </span>
-      </span>
+      }
+      label={config.label}
+      labelClassName={cn(wrapLabel && 'w-20 sm:w-fit')}
+    >
       {children}
-    </div>
+    </TooltipRow>
   )
 }
 

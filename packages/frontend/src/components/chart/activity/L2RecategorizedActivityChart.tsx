@@ -17,7 +17,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -186,8 +186,7 @@ function CustomTooltip({
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(label, label + resolutionSeconds)}
         </ChartTooltipTitle>
-        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>
@@ -200,10 +199,10 @@ function CustomTooltip({
           ))}
         </div>
 
-        <span className="mt-3 text-heading-16">
-          {metric === 'uops' ? 'Operations' : 'Transactions'} count
-        </span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader
+          className="mt-3"
+          label={`${metric === 'uops' ? 'Operations' : 'Transactions'} count`}
+        />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>

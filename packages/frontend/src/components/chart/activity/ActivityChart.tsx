@@ -26,7 +26,7 @@ import {
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
@@ -185,8 +185,7 @@ export function ActivityCustomTooltip<
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(timestamp, timestamp + resolutionSeconds)}
         </ChartTooltipTitle>
-        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>
@@ -199,10 +198,10 @@ export function ActivityCustomTooltip<
           ))}
         </div>
 
-        <span className="mt-3 text-heading-16">
-          {metric === 'uops' ? 'Operations' : 'Transactions'} count
-        </span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader
+          className="mt-3"
+          label={`${metric === 'uops' ? 'Operations' : 'Transactions'} count`}
+        />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>

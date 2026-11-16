@@ -13,7 +13,7 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartResolution } from '~/utils/range/range'
@@ -132,15 +132,11 @@ function CustomTooltip({
           {formatSnapshotTimestamp(label, resolution)}
         </ChartTooltipTitle>
         {visible.length > 1 && (
-          <>
-            <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">
-              <span>Total</span>
-              <span className="text-primary">
-                {total !== null ? formatCurrency(total, 'usd') : 'No data'}
-              </span>
-            </div>
-            <HorizontalSeparator />
-          </>
+          <TooltipHeader
+            className="mt-3"
+            label="Total"
+            value={total !== null ? formatCurrency(total, 'usd') : 'No data'}
+          />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {[...visible]

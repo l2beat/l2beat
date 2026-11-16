@@ -25,7 +25,7 @@ import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/layer2s/costs/types'
 import { formatRange } from '~/utils/dates'
@@ -206,17 +206,13 @@ function CustomTooltip({
           {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
         </ChartTooltipTitle>
         {costPayload.length > 1 && (
-          <>
-            <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
-              <span>Total</span>
-              <span className="whitespace-nowrap text-primary tabular-nums">
-                {total !== null
-                  ? formatCostValue(total, unit, 'total')
-                  : 'No data'}
-              </span>
-            </div>
-            <HorizontalSeparator className="mt-1.5" />
-          </>
+          <TooltipHeader
+            className="mt-3"
+            label="Total"
+            value={
+              total !== null ? formatCostValue(total, unit, 'total') : 'No data'
+            }
+          />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {actualPayload.map((entry) => (
