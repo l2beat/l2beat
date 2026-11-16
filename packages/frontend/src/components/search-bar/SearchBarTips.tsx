@@ -77,9 +77,13 @@ export function SearchBarTips({
                     onClick={() => onExample(query)}
                     onKeyDown={keepEnterOnButton}
                     // Taller for a finger, where the panel has room to spare.
-                    className="rounded border border-divider bg-surface-secondary pointer-coarse:px-2 px-1.5 font-mono text-xs leading-5 pointer-coarse:leading-7 transition-colors hover:border-brand hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    className="flex h-[22px] pointer-coarse:h-[30px] items-center rounded border border-divider bg-surface-secondary pointer-coarse:px-2 px-1.5 font-mono text-xs transition-colors hover:border-brand hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
                   >
-                    {label}
+                    {/* Centred on the caps, not the line box, which has
+                        more room below the baseline than above. */}
+                    <span className="[text-box:trim-both_cap_alphabetic]">
+                      {label}
+                    </span>
                   </button>
                 ))}
               </span>
