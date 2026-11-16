@@ -439,7 +439,7 @@ function CustomTooltip({
         })}
         {projectRows.length > 20 && (
           <div className="font-medium text-label-value-14 text-secondary">
-            + {projectRows.length - 20} more
+            +{projectRows.length - 20} more
           </div>
         )}
       </div>

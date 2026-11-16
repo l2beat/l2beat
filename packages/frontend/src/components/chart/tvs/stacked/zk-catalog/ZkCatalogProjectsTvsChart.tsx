@@ -261,7 +261,7 @@ function CustomTooltip({
         })}
         {actualPayload.length > 20 && (
           <div className="font-medium text-label-value-14 text-secondary">
-            + {actualPayload.length - 20} more
+            +{actualPayload.length - 20} more
           </div>
         )}
       </div>
