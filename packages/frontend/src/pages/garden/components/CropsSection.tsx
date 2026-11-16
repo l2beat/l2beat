@@ -41,7 +41,7 @@ function CropCard({
   index: number
 }) {
   return (
-    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
       <div className="flex items-start gap-4 md:gap-5">
         {/* The badge centres the plant in its box; pulled back, the soil lines up with the text below. */}
         <div className="-ml-3">
@@ -73,7 +73,7 @@ function CropCard({
       )}
       <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
-          <h4 className="font-semibold text-paragraph-14 text-secondary">
+          <h4 className="font-semibold text-paragraph-14 text-primary md:text-paragraph-15">
             What we look for
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
@@ -91,7 +91,7 @@ function CropCard({
           </ul>
         </div>
         <div>
-          <h4 className="font-semibold text-paragraph-14 text-secondary">
+          <h4 className="font-semibold text-paragraph-14 text-primary md:text-paragraph-15">
             What lowers the rating
           </h4>
           <ul className="mt-3 flex flex-col gap-2.5">
@@ -102,7 +102,7 @@ function CropCard({
               >
                 <span
                   aria-hidden
-                  className="mx-[3px] mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-crop-warning"
+                  className="mx-[3px] mt-[9px] h-[2px] w-2.5 shrink-0 rounded-full bg-crop-warning-ink"
                 />
                 {pullDown}
               </li>
