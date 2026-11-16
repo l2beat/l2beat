@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xfb5e3ca5cbd1d222a9afb9dfe6705e99bf79837b
+
+# Diff at Mon, 16 Nov 2026 12:26:57 GMT:
+
+- id: ea41df25
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1792751428
+- current timestamp: 1794828337
+
+## Description
+
+Updated type 0 Linea verifier to v7.8.0, not yet regenerated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.0:
+-        "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F"
++        "eth:0x0B3943f4B1397C7a9f268D8b84f127A78C66414C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x0B3943f4B1397C7a9f268D8b84f127A78C66414C) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...rFull-eth:0x0B3943f4B1397C7a9f268D8b84f127A78C66414C.sol} | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792751428 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierFull (eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F) [N/A] {
+    +++ description: None
+      critical:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x03028ae157c0f853c392ec7d274e2874be849669
 
 # Diff at Fri, 23 Oct 2026 10:31:32 GMT:

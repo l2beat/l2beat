@@ -148,10 +148,15 @@ export const chains: ChainConfig[] = [
       3908235,
       EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
     ),
-    explorer: {
-      type: 'etherscan',
-      customUrl: 'https://block-explorer-api.mainnet.zksync.io/api',
-    },
+    explorer: [
+      {
+        type: 'etherscan',
+        customUrl: 'https://block-explorer-api.mainnet.zksync.io/api',
+      },
+      // EVM-bytecode contracts (run by the EVM emulator) are often verified
+      // only on Sourcify, e.g. the canonical Safe singletons
+      { type: 'sourcify' },
+    ],
     coingeckoPlatform: 'zksync',
   },
   {

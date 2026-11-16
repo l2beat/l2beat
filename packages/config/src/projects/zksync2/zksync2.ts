@@ -52,6 +52,9 @@ const guardiansExtendThreshold = discovery.getContractValue<number>(
   'EXTEND_LEGAL_VETO_THRESHOLD',
 )
 const zkFoundationStats = discovery.getMultisigStats('ZK Foundation Multisig')
+const zkFoundationEraStats = discovery.getMultisigStats(
+  'ZK Foundation Era Multisig',
+)
 const softFreezeS = discovery.getContractValue<number>(
   'ProtocolUpgradeHandler',
   'SOFT_FREEZE_PERIOD',
@@ -239,7 +242,7 @@ export const zksync2: ScalingProject = zkStackL2({
     },
     guardians: {
       Composition: `**${guardiansMainThreshold}/${guardiansMemberCount}** for vetoes and approvals, no fixed terms. Addresses and names of individuals that take Guardian role are [published in Schedule 4](https://docs.zknation.io/zksync-governance-procedures/schedule-4-zksync-guardians).`,
-      Powers: `**Veto + fallback approval + emergency co-sign.** L1 Onchain veto (${guardiansMainThreshold}/${guardiansMemberCount}) cancels Token/GovOps proposals during voting delay or vote. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} legal veto period; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
+      Powers: `**Veto + fallback approval + emergency co-sign.** The onchain veto that cancels Token/GovOps proposals during voting delay or vote is no longer held by the Guardians: it moved to the ${zkFoundationEraStats} ZK Foundation Era Multisig on ZKsync Era. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} legal veto period; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
       'Self-protection':
         '**Yes** — Guardian membership is changed via Protocol Governor proposal, but Guardians may explicitly veto proposals affecting the Guardian body itself (Schedule 4 §5.2). Token holders have no unconditional onchain removal path.',
     },

@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x12e39896f1a9d7b4fc058b6b02562abf8a5f657f
+
+# Diff at Mon, 16 Nov 2026 11:42:07 GMT:
+
+- id: ec9f75b9
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794219721
+- current timestamp: 1794829260
+
+## Description
+
+Pause Guardian paused Lighter on Nov 15 for 8h due to a compromised external party, the governor lifted the pause early after ~2.5h. During the pause the governor deactivated market 150 (ASELS), then re-created it on Nov 16 via L1CoreMessaging.
+
+## Watched changes
+
+```diff
+    contract L1CoreMessaging (eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) [lighter/L1CoreMessaging] {
+    +++ description: Entry point for all non-deposit L1 priority requests: users force withdrawals, orders, order cancellations, pool share burns and API key changes through it, and the network governor registers and updates assets, markets and the system config. Requests are validated here and appended to the priority queue of eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7, which accepts them only from this contract.
+      values.createdMarkets.0:
++        "ASELS"
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      values.pauseGuardianState.startedAt:
+-        1792223063
++        1794740819
+      values.pauseGuardianState.expiresAt:
+-        1792230263
++        0
+      values.pauseGuardianState.cooldownEndsAt:
+-        1792316663
++        1794836087
+    }
+```
+
 Generated with discovered.json: 0xc0953c11d874f07351c941b8a13cf8aff51bfbaf
 
 # Diff at Mon, 09 Nov 2026 10:23:06 GMT:
