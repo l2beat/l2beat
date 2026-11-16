@@ -33,11 +33,7 @@ def seconds_between(start, end):
     return (parse(end) - parse(start)).total_seconds()
 
 
-def fetch_jobs():
-    repo = os.environ["GITHUB_REPOSITORY"]
-    run = os.environ["GITHUB_RUN_ID"]
-    attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "1")
-    path = f"repos/{repo}/actions/runs/{run}/attempts/{attempt}/jobs?per_page=100"
+def gh_jobs(path):
     out = subprocess.run(
         ["gh", "api", "--paginate", path, "--jq", ".jobs[]"],
         check=True,
@@ -45,6 +41,24 @@ def fetch_jobs():
         text=True,
     ).stdout
     return [json.loads(line) for line in out.splitlines() if line]
+
+
+def fetch_jobs():
+    """The latest execution of each job in this run, across attempts.
+
+    "Re-run failed jobs" makes an attempt that holds only the rerun jobs, and
+    the others keep their results from earlier attempts, so a rerun of just
+    this check has to read those too.
+    """
+    repo = os.environ["GITHUB_REPOSITORY"]
+    run = os.environ["GITHUB_RUN_ID"]
+    attempts = int(os.environ.get("GITHUB_RUN_ATTEMPT", "1"))
+    latest = {}
+    for attempt in range(1, attempts + 1):
+        path = f"repos/{repo}/actions/runs/{run}/attempts/{attempt}/jobs?per_page=100"
+        for job in gh_jobs(path):
+            latest[job["name"]] = job
+    return list(latest.values())
 
 
 def budget_for(name, budgets):
