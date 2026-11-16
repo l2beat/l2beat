@@ -105,11 +105,6 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
-    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
-      "name": "LegacyGuardians",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
     "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860": {
       "name": "CTMDeploymentTracker",
       "type": "Contract",
@@ -265,6 +260,11 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
+    "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf": {
+      "name": "ZkTokenGovernor",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
     "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": {
       "name": "ZkToken",
       "type": "Contract",
@@ -275,8 +275,8 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
-    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
-      "name": "ZkTokenGovernor",
+    "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c": {
+      "name": "ZkGovOpsGovernor",
       "type": "Contract",
       "project": "shared-zk-stack"
     },
@@ -295,10 +295,28 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
+    "zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B": {
+      "name": "ZK Foundation Era Multisig",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
+    "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
+      "name": "LegacyGuardians",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": {
       "name": "ZkGovOpsGovernor",
       "type": "Contract",
-      "project": "shared-zk-stack"
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
+      "name": "ZkTokenGovernor",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
     },
     "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": {
       "name": "SecurityCouncil",

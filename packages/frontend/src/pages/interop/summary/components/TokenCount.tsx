@@ -25,11 +25,11 @@ export function TokenCount({
   return (
     <PrimaryCard className="flex flex-col border-transparent max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex h-[34px] shrink-0 items-center gap-2">
-        <h2 className="font-bold text-heading-20 md:text-heading-24">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           Count of all tokens
         </h2>
       </div>
-      <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
+      <div className="mt-1 font-normal text-label-value-13 text-secondary leading-5">
         Count of unique tokens transferred{' '}
         <div className="inline-block">
           <BetweenChainsInfo className="lowercase" />
@@ -41,7 +41,7 @@ export function TokenCount({
           <TokenCountSkeleton />
         ) : (
           <>
-            <span className="font-bold text-[44px] leading-none md:text-[56px]">
+            <span className="font-semibold text-heading-32 tabular-nums leading-none tracking-[-0.025em]">
               {formatInteger(tokenCount ?? 0)}
             </span>
             {hasTokens && topItems ? (

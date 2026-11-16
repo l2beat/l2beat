@@ -27,6 +27,8 @@ export interface LiquidStakingChartBackground {
   color: string
   formatAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
+  /** A second, smaller line under the tooltip value. */
+  formatTooltipSubValue?: (timestamp: number) => string | undefined
 }
 
 export type LiquidStakingChartData = ({ timestamp: number } & Record<
@@ -58,9 +60,12 @@ export function LiquidStakingLineChart({
   formatTooltipDate,
   background,
 }: Props) {
+  // The legend follows the meta's order. The dashed benchmark and the shaded
+  // background lead it, so their keys stay in view when the project keys
+  // overflow the strip.
   const chartMeta = useMemo<ChartMeta>(() => {
     const meta: ChartMeta = {}
-    for (const line of series) {
+    const addLine = (line: LiquidStakingChartSeries) => {
       meta[line.key] = {
         label: line.label,
         color: line.color,
@@ -70,6 +75,7 @@ export function LiquidStakingLineChart({
         },
       }
     }
+    series.filter((line) => line.dashed).forEach(addLine)
     if (background) {
       meta[background.key] = {
         label: background.label,
@@ -77,6 +83,7 @@ export function LiquidStakingLineChart({
         indicatorType: { shape: 'square' },
       }
     }
+    series.filter((line) => !line.dashed).forEach(addLine)
     return meta
   }, [series, background])
 
@@ -128,7 +135,9 @@ export function LiquidStakingLineChart({
         yAxis={{ format: formatYAxisLabel, tickCount: 4 }}
         rightAxis={
           background
-            ? { format: background.formatAxisLabel, tickCount: 3 }
+            ? // The same count as the left axis puts both sets of labels
+              // on the same gridlines.
+              { format: background.formatAxisLabel, tickCount: 4 }
             : undefined
         }
         renderTooltip={(row, keys) => (
@@ -169,6 +178,7 @@ function CustomTooltip({
   const backgroundEntry = visible.find(
     (entry) => entry.name === background?.key,
   )
+  const subValue = background?.formatTooltipSubValue?.(label)
 
   return (
     <ChartTooltipWrapper>
@@ -185,10 +195,18 @@ function CustomTooltip({
             />
           ))}
           {background && backgroundEntry && (
-            <TooltipRow
-              name={background.key}
-              value={background.formatTooltipValue(backgroundEntry.value)}
-            />
+            // A different unit on the right axis, set apart like that axis.
+            <div className="mt-1 border-divider border-t pt-2">
+              <TooltipRow
+                name={background.key}
+                value={background.formatTooltipValue(backgroundEntry.value)}
+              />
+              {subValue && (
+                <div className="mt-1 text-right font-medium text-label-value-13 text-secondary tabular-nums">
+                  {subValue}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

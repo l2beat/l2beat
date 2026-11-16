@@ -268,6 +268,14 @@
       "transaction": "0x9583c940852a52717f6f6d7fd3edaf8b3da2254d9f3136cbbcad07d29f9ee77e",
       "updateId": "555a0d79",
       "reason": "Replaced proof verifier version 10 with ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254)."
+    },
+    {
+      "timestamp": 1794326591,
+      "type": "state",
+      "contract": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F",
+      "transaction": "0x40b00411a189c46157f16b60041887687398d13394387962b899d7b548e599b0",
+      "updateId": "1098192f",
+      "reason": "Replaced proof verifier version 10 with ZkEvmVerifierPostFeynman (eth:0xb15417122fB6E853d84e498517268d33d7301e74), same plonk verifier and digests with a new wrapper."
     }
   ]
 }

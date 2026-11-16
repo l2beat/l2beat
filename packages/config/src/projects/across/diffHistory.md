@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x060cf2b8f5eff02a2a791bd443384424784a216e
+
+# Diff at Fri, 13 Nov 2026 13:03:51 GMT:
+
+- id: 369c7fc9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1792144273
+- current timestamp: 1794568158
+
+## Description
+
+The HubPool removed the WLD pool rebalance routes to Ethereum, OP Mainnet and World Chain (destination token set to zero). LP liquidity for WLD is no longer rebalanced to these chains.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ethereum.14.destinationToken:
+-        "eth:0x163f8C2467924be0ae7B5347228CABF260318753"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.OP Mainnet.10.destinationToken:
+-        "eth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.World Chain.4.destinationToken:
+-        "eth:0x2cFc85d8E48F8EAB294be644d9E25C3030863003"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xd5e149eb45f3b8eec92a07b2a1f7709f34dd2cc0
 
 # Diff at Tue, 20 Oct 2026 10:25:37 GMT:

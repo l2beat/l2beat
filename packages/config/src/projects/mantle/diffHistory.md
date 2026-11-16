@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x8e9f915e2c78ee1a69278375cf085dca3e2613a5
+
+# Diff at Mon, 16 Nov 2026 11:43:34 GMT:
+
+- id: 802b7446
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1792586696
+- current timestamp: 1794829337
+
+## Description
+
+OP Succinct programs upgraded to [mantle-v1.6.3](https://github.com/mantle-xyz/op-succinct/releases/tag/mantle-v1.6.3) (SP1 6.4.0 → 6.10.0 and a dependency security sweep). New vkeys are reproduced.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
++++ description: Verification key of the SP1 aggregation program: defines which validity proofs are accepted to finalize proposed state roots.
++++ severity: HIGH
+      values.aggregationVkey:
+-        "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf"
++        "0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e"
++++ description: Commitment to the verification key of the SP1 range program that proves the block-range state transitions aggregated into a proposal.
++++ severity: HIGH
+      values.rangeVkeyCommitment:
+-        "0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb"
++        "0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872"
+    }
+```
+
 Generated with discovered.json: 0x3df38be9af5c0c912db99012da1301f50f61e0c2
 
 # Diff at Thu, 05 Nov 2026 07:13:41 GMT:

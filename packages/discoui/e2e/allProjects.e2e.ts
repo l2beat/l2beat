@@ -3,7 +3,10 @@ import { join } from 'path'
 import { expect, type Page, type Request, test } from 'playwright/test'
 
 const PROJECTS_ROOT = join(__dirname, '../../config/src/projects')
-const SHARD_COUNT = 8
+// CI splits this suite over two runners with --shard, which counts tests, not
+// time. Sixteen chunks of ~17 s let each runner take an even share of them
+// (see the test-e2e-discoui job in .github/workflows/ci.yml)
+const SHARD_COUNT = 16
 
 const projects = readdirSync(PROJECTS_ROOT)
   .filter((name) => existsSync(join(PROJECTS_ROOT, name, 'discovered.json')))

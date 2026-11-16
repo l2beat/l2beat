@@ -11,7 +11,9 @@ export function OfficeHoursSection() {
       className="flex flex-col justify-between lg:col-span-3"
     >
       <div className="flex flex-col gap-4">
-        <div className="text-heading-24 md:text-heading-32">Office hours</div>
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+          Office hours
+        </h2>
         <p className="text-balance font-bold text-paragraph-16">
           To promote transparency and communication as delegates, we&apos;re
           hosting recurring Office Hours on Google Meets.

@@ -23,7 +23,7 @@ export function BetweenChainsInfo({
   return (
     <div
       className={cn(
-        'flex items-center gap-1 font-medium text-label-value-12 text-secondary leading-none md:text-label-value-14',
+        'flex items-center gap-1 font-normal text-label-value-13 text-secondary leading-4',
         className,
       )}
     >

@@ -15,19 +15,19 @@ const SKY =
 const RIDGES = [
   {
     d: 'M0 200 C200 200 380 140 560 114 C720 94 820 70 940 72 C1060 74 1130 90 1200 84 L1200 200 Z',
-    className: 'fill-[#d5e4cb] dark:fill-[#172131]',
+    className: 'fill-[#d5e4cb] dark:fill-[#1d2a3c]',
   },
   {
     d: 'M0 200 C220 200 420 166 600 142 C760 124 880 106 1000 110 C1100 113 1160 122 1200 120 L1200 200 Z',
-    className: 'fill-[#bdd6ac] dark:fill-[#152620]',
+    className: 'fill-[#bdd6ac] dark:fill-[#1c3328]',
   },
   {
     d: 'M0 200 C260 200 480 180 700 166 C860 154 1000 142 1200 150 L1200 200 Z',
-    className: 'fill-[#9fc48a] dark:fill-[#132b1b]',
+    className: 'fill-[#9fc48a] dark:fill-[#1b3a25]',
   },
   {
     d: 'M0 200 C300 200 560 192 800 182 C960 176 1100 172 1200 176 L1200 200 Z',
-    className: 'fill-[#7eab68] dark:fill-[#0f2314]',
+    className: 'fill-[#7eab68] dark:fill-[#17321d]',
   },
 ]
 

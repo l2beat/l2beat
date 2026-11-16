@@ -1,6 +1,6 @@
 {
   "name": "layerzero",
-  "timestamp": 1793874781,
+  "timestamp": 1794568200,
   "configHash": "0x258ec085fcb663d7b53079495ad633fdbccd688b7d2a5c155e45d4dee9b1f408",
   "entries": [
     {
@@ -210,6 +210,11 @@
     },
     {
       "address": "eth:0x601767c4ba4134cc2E906ea7cf25EaB845152A7C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -473,17 +478,18 @@
           "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
           "eth:0xdFE4027209C795B84d39FfBfF86bf73572571BAd",
           "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552",
-          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
+          "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23"
         ],
         "$threshold": 5,
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 648,
+        "nonce": 650,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
-        "totalSigners": 8,
+        "totalSigners": 9,
         "VERSION": "0.0.1"
       },
       "fieldMeta": {
@@ -567,7 +573,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 2079,
+        "nonce": 2084,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1387,8 +1393,8 @@
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
-  "usedBlockNumbers": { "ethereum": 26348057 },
-  "permissionsConfigHash": "0x521ef65229d7fe7b9128657c05433a22ec06ddf1cc296db333c8984f0eb6992a",
+  "usedBlockNumbers": { "ethereum": 26405652 },
+  "permissionsConfigHash": "0x3e51790455cea86b1c302c85062c846d06691e38b0dff086f5aaea8bb708e772",
   "permissions": {
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
       "receivedPermissions": [

@@ -42,9 +42,18 @@ export function L2SummaryPage({
   )
 
   const tvsChart = (
-    <L2SummaryTvsChart unit={SCALING_SUMMARY_UNIT} range={tvsChartRange} />
+    <L2SummaryTvsChart
+      unit={SCALING_SUMMARY_UNIT}
+      range={tvsChartRange}
+      rangeLabel={SCALING_SUMMARY_TVS_CHART_RANGE_ARGS[0]}
+    />
   )
-  const activityChart = <L2SummaryActivityChart range={activityChartRange} />
+  const activityChart = (
+    <L2SummaryActivityChart
+      range={activityChartRange}
+      rangeLabel={SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS[0]}
+    />
+  )
 
   return (
     <AppLayout {...props}>

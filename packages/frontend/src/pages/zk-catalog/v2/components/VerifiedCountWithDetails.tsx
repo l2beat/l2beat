@@ -82,7 +82,7 @@ export function CountWithAttesters({
   return (
     <div className="flex items-center gap-1">
       {!hideCount && (
-        <span className="font-bold text-label-value-16 text-secondary leading-none">
+        <span className="font-semibold text-label-value-15 text-primary leading-none">
           {count}
         </span>
       )}

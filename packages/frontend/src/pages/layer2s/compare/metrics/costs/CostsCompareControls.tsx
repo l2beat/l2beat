@@ -10,7 +10,7 @@ export function CostsCompareControls({
 }: CompareMetricControlsProps) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[132px]" />
+    return <Skeleton className="h-8 w-[132px]" />
   }
   return (
     <RadioGroup
@@ -23,7 +23,6 @@ export function CostsCompareControls({
         }))
       }
       variant="highlighted"
-      className="h-9"
     >
       <RadioGroupItem value="usd" className="h-full px-2 text-sm">
         USD

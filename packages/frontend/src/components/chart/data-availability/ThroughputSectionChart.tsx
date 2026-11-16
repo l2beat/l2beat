@@ -66,22 +66,21 @@ export function ThroughputSectionChart({
 
   return (
     <div>
-      <div className="mt-2 space-y-1">
-        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+      <div className="mt-2 space-y-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <RadioGroup
+            name="projectThroughputView"
+            value={view}
+            onValueChange={(value) => setView(value as View)}
+          >
+            <RadioGroupItem value="total">Total</RadioGroupItem>
+            <RadioGroupItem value="per-project">Per project</RadioGroupItem>
+          </RadioGroup>
           <EthereumProjectsOnlyCheckbox
             name="projectThroughputIncludeL2Only"
             checked={includeL2Only}
             onCheckedChange={setIncludeL2Only}
           />
-          <RadioGroup
-            name="projectThroughputView"
-            value={view}
-            onValueChange={(value) => setView(value as View)}
-            className="h-7"
-          >
-            <RadioGroupItem value="total">Total</RadioGroupItem>
-            <RadioGroupItem value="per-project">Per project</RadioGroupItem>
-          </RadioGroup>
         </div>
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange
@@ -99,32 +98,35 @@ export function ThroughputSectionChart({
           />
         </div>
       </div>
-      {view === 'total' ? (
-        <ProjectDaAbsoluteThroughputChart
-          isPlaceholderData={isPlaceholderData}
-          project={project}
-          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-          isLoading={isLoading}
-          milestones={milestones}
-          syncedUntil={data?.syncedUntil}
-          resolution={resolution}
-        />
-      ) : (
-        <DaThroughputByProjectChart
-          isPlaceholderData={isPlaceholderData}
-          data={data?.byProjectChart.data}
-          project={project}
-          syncedUntil={data?.syncedUntil}
-          isLoading={isLoading}
-          customColors={customColors}
-          capacity={{
-            projectId: project.id,
-            data: dataWithConfiguredThroughputs,
-          }}
-          milestones={milestones}
-          resolution={resolution}
-        />
-      )}
+      {/* 16px under the controls, like the Activity chart below it */}
+      <div className="mt-4">
+        {view === 'total' ? (
+          <ProjectDaAbsoluteThroughputChart
+            isPlaceholderData={isPlaceholderData}
+            project={project}
+            dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
+            isLoading={isLoading}
+            milestones={milestones}
+            syncedUntil={data?.syncedUntil}
+            resolution={resolution}
+          />
+        ) : (
+          <DaThroughputByProjectChart
+            isPlaceholderData={isPlaceholderData}
+            data={data?.byProjectChart.data}
+            project={project}
+            syncedUntil={data?.syncedUntil}
+            isLoading={isLoading}
+            customColors={customColors}
+            capacity={{
+              projectId: project.id,
+              data: dataWithConfiguredThroughputs,
+            }}
+            milestones={milestones}
+            resolution={resolution}
+          />
+        )}
+      </div>
     </div>
   )
 }

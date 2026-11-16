@@ -27,7 +27,7 @@ export function getEthereumProjectStats(
     { key: 'type', title: 'Type', value: project.type },
     {
       key: 'tvs',
-      title: 'Total Value Secured',
+      title: 'Total value secured',
       value: formatCurrency(header.tvs, 'usd'),
       tooltip:
         'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on ETHBEAT. It does not include the TVS of sovereign rollups.',

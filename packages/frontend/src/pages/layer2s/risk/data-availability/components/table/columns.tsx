@@ -47,12 +47,14 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         meta: {
           align: 'right',
           tooltip:
-            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7D ago. It leaves out data posted to other DA layers.',
+            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7 days ago. It leaves out data posted to other DA layers.',
         },
       }),
       (row) => ({
         change: row.dataPosted?.change,
-        period: row.dataPosted?.changePeriod,
+        // Data posted always compares to 7 days ago, so a tab with no data still
+        // labels its change column.
+        period: row.dataPosted?.changePeriod ?? '7D',
       }),
     ),
     !hideProofSystem &&

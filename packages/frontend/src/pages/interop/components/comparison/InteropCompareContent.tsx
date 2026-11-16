@@ -44,7 +44,9 @@ export function InteropCompareContent({
 
   return (
     <div>
-      <h2 className="font-bold text-heading-18 md:text-heading-20">{title}</h2>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        {title}
+      </h2>
       <p className="mt-1 font-medium text-secondary text-xs leading-[1.2]">
         {description}
       </p>

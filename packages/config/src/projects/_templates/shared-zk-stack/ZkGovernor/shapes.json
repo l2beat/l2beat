@@ -13,5 +13,17 @@
     "hash": "0x28225b42b3418d784a0b18e6a81a226fd40ec79b7bf482662058169ddf98f5ff",
     "address": "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
     "blockNumber": 58599111
+  },
+  "ZkTokenGovernor_v2.sol": {
+    "hash": "0x53a952ae34ad64c9b8f0c3b2201729e93b49a13f8e56d2b3fee3a5abce5936a8",
+    "address": "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf",
+    "chain": "zksync2",
+    "blockNumber": 72971277
+  },
+  "ZkGovOpsGovernor_v2.sol": {
+    "hash": "0x14675fae4a87900e3facf3b499e233aba347d7ca70d7271674c6bb08b7316aa3",
+    "address": "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c",
+    "chain": "zksync2",
+    "blockNumber": 72971277
   }
 }

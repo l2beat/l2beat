@@ -22,7 +22,7 @@ export function NativeRollupsPage({ talks, contributors, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout variant="wide">
-        <MainPageHeader>Native Rollups</MainPageHeader>
+        <MainPageHeader>Native rollups</MainPageHeader>
         <main className="[--accent:var(--color-brand-deep)]">
           <Hero />
           <WhyNativeSection />

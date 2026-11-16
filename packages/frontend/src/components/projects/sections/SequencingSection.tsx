@@ -47,7 +47,7 @@ export function SequencingSection({
       {diagram ? (
         <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-secondary text-xs">
+          <figcaption className="text-label-value-13 text-secondary">
             {diagram.caption}
           </figcaption>
         </figure>
@@ -56,7 +56,7 @@ export function SequencingSection({
         title={
           <SubsectionHeading
             id={name}
-            className="mb-2 font-bold text-lg md:text-xl"
+            className="mb-2 font-semibold text-heading-16 leading-6 md:text-heading-18"
           >
             <a href={`#${name}`}>{name}</a>
           </SubsectionHeading>
@@ -95,7 +95,7 @@ export function SequencingSection({
           <div className="mt-6">
             <Subsection
               title={
-                <SubsectionHeading className="mb-3 font-bold text-heading-20">
+                <SubsectionHeading className="mb-2 font-semibold text-heading-16 leading-6 md:text-heading-18">
                   Censorship resistance
                 </SubsectionHeading>
               }

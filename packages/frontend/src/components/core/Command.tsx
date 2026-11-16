@@ -136,10 +136,19 @@ const CommandInputActionButton = ({
       className: cn('shrink-0 text-xs', className),
     })}
     onClick={onClick}
+    onKeyDown={keepEnterOnButton}
   >
     {children}
   </button>
 )
+
+/**
+ * Enter on a focused button inside `Command` would otherwise reach cmdk,
+ * which cancels it to select the highlighted item instead.
+ */
+function keepEnterOnButton(e: React.KeyboardEvent) {
+  if (e.key === 'Enter') e.stopPropagation()
+}
 
 const CommandList = ({
   ref,
@@ -305,6 +314,7 @@ function staysOnPage(e: {
 }
 
 export {
+  keepEnterOnButton,
   Command,
   CommandDialog,
   CommandInput,

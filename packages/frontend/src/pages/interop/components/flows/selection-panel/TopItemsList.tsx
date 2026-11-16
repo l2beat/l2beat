@@ -38,7 +38,7 @@ function TopItemRow({ item }: { item: TopItem }) {
   if (item.href) {
     return (
       <a href={item.href} className={`${className} group`}>
-        <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+        <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
           <img
             src={item.iconUrl}
             alt={item.title}
@@ -55,7 +55,7 @@ function TopItemRow({ item }: { item: TopItem }) {
 
   return (
     <div className={className}>
-      <span className="flex min-w-0 items-center gap-1 font-medium text-secondary leading-none">
+      <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
         <img src={item.iconUrl} alt={item.title} className="size-4 shrink-0" />
         <span className="truncate">{item.title}</span>
       </span>

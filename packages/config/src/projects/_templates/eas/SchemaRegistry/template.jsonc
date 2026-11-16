@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SchemaRegistry",
+  "critical": true,
+  "description": "Registers schemas for EAS. A schema is a field layout, an optional resolver contract and a flag for whether its attestations can be revoked. Its id is the hash of the three, so a registered schema never changes. Anyone can register one. Immutable, with no owner."
+}

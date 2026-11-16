@@ -148,6 +148,59 @@ describe(AgentTabs.name, () => {
     expect(await tabs.askContext('a', 1)).toEqual(undefined)
   })
 
+  it('asks for the graph and a layout of the project named', async () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    tabs.connect('a', a)
+    const graphAnswer = tabs.askGraph('a', 'linea', 1_000)
+    const layoutAnswer = tabs.askLayout(
+      'a',
+      { project: 'linea', lanes: [], hideOthers: true },
+      1_000,
+    )
+    const [graphRequest, layoutRequest] = a.written.map((chunk) =>
+      JSON.parse(chunk.slice('data: '.length)),
+    )
+    expect(graphRequest).toEqual({
+      type: 'graph-request',
+      id: graphRequest.id,
+      project: 'linea',
+    })
+    expect(layoutRequest).toEqual({
+      type: 'layout-request',
+      id: layoutRequest.id,
+      project: 'linea',
+      lanes: [],
+      hideOthers: true,
+    })
+    const graph = { status: 'not-loaded' as const }
+    const layout = {
+      status: 'arranged' as const,
+      placed: [],
+      below: [],
+      notDrawn: [],
+    }
+    expect(tabs.answerGraph('a', graphRequest.id, graph)).toEqual(true)
+    expect(tabs.answerLayout('a', layoutRequest.id, layout)).toEqual(true)
+    expect(await graphAnswer).toEqual(graph)
+    expect(await layoutAnswer).toEqual(layout)
+  })
+
+  // Each kind of answer comes on its own route, so a mix-up is a tab bug.
+  it('refuses an answer of another kind than the request', async () => {
+    const tabs = new AgentTabs()
+    const a = stream()
+    tabs.connect('a', a)
+    const answer = tabs.askGraph('a', 'linea', 1_000)
+    const request = JSON.parse(a.written[0]?.slice('data: '.length) ?? '')
+    const context = { project: 'linea', selected: [] }
+    expect(tabs.answerContext('a', request.id, context)).toEqual(false)
+    expect(tabs.answerGraph('a', request.id, { status: 'not-loaded' })).toEqual(
+      true,
+    )
+    expect(await answer).toEqual({ status: 'not-loaded' })
+  })
+
   it('sends a show to its tab only', () => {
     const tabs = new AgentTabs()
     const a = stream()

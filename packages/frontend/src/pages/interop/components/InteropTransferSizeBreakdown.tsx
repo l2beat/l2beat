@@ -9,12 +9,19 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
-import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
+import { cn } from '~/utils/cn'
+import {
+  getTransferSizeBreakdown,
+  TRANSFER_SIZE_COLORS_CLASS,
+} from '../utils/transferSizeBuckets'
 
 export function InteropTransferSizeBreakdown({
   transferSize,
+  inSummary = false,
 }: {
   transferSize: TransferSizeDistribution | undefined
+  /** In a summary card the title is a key like the stats beside it. */
+  inSummary?: boolean
 }) {
   const breakdownValues = getTransferSizeBreakdown(transferSize).map(
     (bucket) => ({
@@ -25,8 +32,13 @@ export function InteropTransferSizeBreakdown({
   )
 
   return (
-    <div>
-      <span className="font-medium text-paragraph-12 text-secondary">
+    <div className={TRANSFER_SIZE_COLORS_CLASS}>
+      <span
+        className={cn(
+          'block text-label-value-13 leading-4',
+          inSummary ? 'font-normal' : 'font-semibold',
+        )}
+      >
         Transfer size
       </span>
       <Tooltip>
@@ -40,7 +52,7 @@ export function InteropTransferSizeBreakdown({
               {breakdownValues.map((value) => (
                 <div key={value.label} className="flex items-center gap-[3px]">
                   <div className="size-3.5 rounded-xs" style={value.style} />
-                  <span className="font-medium text-label-value-12 text-secondary leading-none">
+                  <span className="font-medium text-label-value-12 leading-none">
                     {value.label}
                   </span>
                 </div>
@@ -69,7 +81,7 @@ function TransferSizeTooltipContent({
   const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
 
   return (
-    <div className="flex flex-col">
+    <div className={cn('flex flex-col', TRANSFER_SIZE_COLORS_CLASS)}>
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between gap-x-6">
           <span className="font-medium text-label-value-14">

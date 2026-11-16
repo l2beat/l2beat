@@ -52,7 +52,7 @@ export function InteropProtocolSummary({
             )
           }
         />
-        <HorizontalSeparator className="col-span-3 my-4 max-md:hidden" />
+        <HorizontalSeparator className="my-1 md:col-span-3 md:my-4" />
         <StatsItem
           title="Last 24h avg. transfer time"
           value={
@@ -92,14 +92,19 @@ export function InteropProtocolSummary({
                 bridgeTypes: protocolData?.entry?.bridgeTypes ?? [],
               }}
               hideDialog
+              itemsType="default"
             />
           }
         />
       </div>
       <HorizontalSeparator className="my-4" />
-      <InteropTransferSizeBreakdown transferSize={protocolData.transferSize} />
+      <InteropTransferSizeBreakdown
+        transferSize={protocolData.transferSize}
+        inSummary
+      />
       <HorizontalSeparator className="my-4" />
       <InteropTransferTypeBreakdown
+        inSummary
         byType={getBridgeTypeVolumes(protocolData?.entry?.byBridgeType)}
       />
       {protocol.header.description && (
@@ -114,11 +119,13 @@ export function InteropProtocolSummary({
 
 function StatsItem({ title, value }: { title: string; value: ReactNode }) {
   return (
-    <div className="flex gap-1.5 max-md:justify-between md:flex-col">
-      <span className="font-medium text-paragraph-12 text-secondary">
+    <div className="flex gap-4 max-md:items-center max-md:justify-between md:flex-col md:gap-3">
+      <span className="shrink-0 font-normal text-label-value-13 text-primary leading-4">
         {title}
       </span>
-      <div className="font-bold text-label-value-16 leading-none">{value}</div>
+      <div className="min-w-0 font-bold text-label-value-16 leading-none max-md:text-right">
+        {value}
+      </div>
     </div>
   )
 }

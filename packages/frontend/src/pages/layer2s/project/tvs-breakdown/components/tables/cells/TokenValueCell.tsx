@@ -1,7 +1,7 @@
-import { formatNumberWithCommas } from '@l2beat/shared-pure'
 import { PercentChange } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { formatTokenValue } from '../formatTokenValue'
 
 interface Props {
   valueForProject: {
@@ -16,8 +16,8 @@ export function TokenValueCell({ valueForProject, syncStatus }: Props) {
   return (
     <SyncStatusWrapper isSynced={syncStatus === undefined}>
       <div className="flex items-center justify-end gap-1">
-        <div className="font-bold text-xs">
-          ${formatNumberWithCommas(+valueForProject.value)}
+        <div className="font-bold text-xs tabular-nums">
+          {formatTokenValue(+valueForProject.value)}
         </div>
         {valueForProject.change !== undefined && (
           <PercentChange

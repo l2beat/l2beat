@@ -52,10 +52,13 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
   const l2ProjectIds = new Set(
     projects.filter((p) => p.scalingInfo).map((p) => p.id),
   )
+  const chainIds = new Map(projects.map((p) => [p.id, getChainIdTag(p)]))
   return {
     projects: [
       ...projectRows,
-      ...selectChainProjects(l2ProjectIds).map(toSearchIndexChain),
+      ...selectChainProjects(l2ProjectIds).map((chain) =>
+        toSearchIndexChain(chain, chainIds.get(ProjectId(chain.slug))),
+      ),
     ],
     // The token query has no order, and a reordered list would change the
     // ETag, making browsers download the same index again.
@@ -82,6 +85,7 @@ type SearchIndexProjectKey =
   | 'ossificationHistory'
   | 'aliases'
   | 'versions'
+  | 'chainConfig'
 
 export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'scalingInfo',
@@ -93,6 +97,7 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'ossificationHistory',
   'aliases',
   'versions',
+  'chainConfig',
 ]
 
 type SearchIndexSourceProject = Project<never, SearchIndexProjectKey>
@@ -121,6 +126,7 @@ export function toSearchIndexProject(
       project.shortName,
       ...(project.aliases ?? []),
       project.versions?.group.name,
+      getChainIdTag(project),
     ].filter((tag): tag is string => !!tag),
     project.interopConfig?.name ?? null,
     project.interopConfig?.shortName ?? null,
@@ -180,8 +186,18 @@ function isSearchableDefiProject(
   )
 }
 
+/** So a chain is found by its id too, like 1101 for Polygon zkEVM. */
+function getChainIdTag(project: SearchIndexSourceProject): string | undefined {
+  const chainId = project.chainConfig?.chainId
+  if (chainId === undefined) return undefined
+  assert(Number.isSafeInteger(chainId), 'Chain id is not an integer')
+  assert(chainId > 0, 'Chain id is not positive')
+  return chainId.toString()
+}
+
 function toSearchIndexChain(
   chain: ReturnType<typeof selectChainProjects>[number],
+  chainIdTag: string | undefined,
 ): SearchIndexProject {
   return [
     chain.slug,
@@ -190,7 +206,7 @@ function toSearchIndexChain(
     manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     ['chain'],
     null,
-    [chain.display],
+    chainIdTag === undefined ? [chain.display] : [chain.display, chainIdTag],
     null,
     null,
   ]

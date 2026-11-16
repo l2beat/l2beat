@@ -97,15 +97,21 @@ export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
       )}
       key={i}
     >
-      <h3 className="font-bold text-red-300">{group.name}</h3>
-      <ol className="list-inside list-decimal px-1.5" start={group.start}>
+      <h3 className="font-semibold text-negative">{group.name}</h3>
+      <ol className="list-outside list-decimal pl-6" start={group.start}>
         {group.items.map((item, i) => (
           <li key={i}>
-            <a href={`#${item.referencedId}`} className="underline">
+            <a
+              href={`#${item.referencedId}`}
+              className="underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+            >
               {item.isCritical ? (
                 <>
                   {item.text.slice(0, -1)}{' '}
-                  <span className="text-red-300 underline"> (CRITICAL)</span>
+                  <span className="font-semibold text-negative">
+                    {' '}
+                    (CRITICAL)
+                  </span>
                   {item.text.slice(-1)}
                 </>
               ) : (

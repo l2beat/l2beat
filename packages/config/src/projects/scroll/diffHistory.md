@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xbc05606a288f467021152abaf8cb4cb616f359ee
+
+# Diff at Mon, 16 Nov 2026 12:27:37 GMT:
+
+- id: 1098192f
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1793617880
+- current timestamp: 1794828230
+
+## Description
+
+Verifier version 10 replaced with a new ZkEvmVerifierPostFeynman wrapper: https://disco.ethbeat.org/diff/eth:0x7966FE0De13e3B81533470640Ac489223476B254/eth:0xb15417122fB6E853d84e498517268d33d7301e74.
+
+Verifier code is refactored, but zk logic (vkeys and verifier digests) stays the same.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) [scroll/MultipleVersionRollupVerifier] {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x7966FE0De13e3B81533470640Ac489223476B254"
++        "eth:0xb15417122fB6E853d84e498517268d33d7301e74"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0xb15417122fB6E853d84e498517268d33d7301e74) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xb15417122fB6E853d84e498517268d33d7301e74.sol} | 90 ++++++++++++----------
+ 1 file changed, 49 insertions(+), 41 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793617880 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierPostFeynman (eth:0x7966FE0De13e3B81533470640Ac489223476B254) [N/A] {
+    +++ description: None
+      critical.untilTimestamp:
++        1794326591
+    }
+```
+
 Generated with discovered.json: 0xe4eb1c45b70d15bdb46a86393f9e0683f35d97e8
 
 # Diff at Mon, 02 Nov 2026 13:39:52 GMT:

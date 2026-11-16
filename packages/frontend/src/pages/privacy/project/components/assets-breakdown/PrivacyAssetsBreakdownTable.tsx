@@ -126,8 +126,12 @@ function BucketRow({
       <TableCell className="pl-8 font-medium text-primary md:pl-10">
         {formatBucketLabel(bucket.label)}
       </TableCell>
-      {showBucketsColumn && (
-        <TableCell align="right" className="w-[1%] whitespace-nowrap" />
+      {showTvl && (
+        <TableCell align="right" className="font-medium">
+          {bucket.totalValueUsd === null
+            ? '—'
+            : formatCurrency(bucket.totalValueUsd, 'usd')}
+        </TableCell>
       )}
       <TableCell align="right">
         <PrivacyDepositsMetric
@@ -147,12 +151,8 @@ function BucketRow({
           depositedValueUsd={bucket.depositedValueUsd.total}
         />
       </TableCell>
-      {showTvl && (
-        <TableCell align="right" className="font-medium">
-          {bucket.totalValueUsd === null
-            ? '—'
-            : formatCurrency(bucket.totalValueUsd, 'usd')}
-        </TableCell>
+      {showBucketsColumn && (
+        <TableCell align="right" className="w-[1%] whitespace-nowrap" />
       )}
     </TableRow>
   )
@@ -172,8 +172,15 @@ function TotalsRow({
       <TableCell className="border-divider border-t-2 font-bold text-base">
         Total
       </TableCell>
-      {showBucketsColumn && (
-        <TableCell align="right" className="border-divider border-t-2" />
+      {showTvl && (
+        <TableCell
+          align="right"
+          className="border-divider border-t-2 font-bold"
+        >
+          {totals.totalValueUsd === null
+            ? '—'
+            : formatCurrency(totals.totalValueUsd, 'usd')}
+        </TableCell>
       )}
       <TableCell align="right" className="border-divider border-t-2">
         <PrivacyDepositsMetric
@@ -193,15 +200,8 @@ function TotalsRow({
           depositedValueUsd={totals.depositedValueUsd.total}
         />
       </TableCell>
-      {showTvl && (
-        <TableCell
-          align="right"
-          className="border-divider border-t-2 font-bold"
-        >
-          {totals.totalValueUsd === null
-            ? '—'
-            : formatCurrency(totals.totalValueUsd, 'usd')}
-        </TableCell>
+      {showBucketsColumn && (
+        <TableCell align="right" className="border-divider border-t-2" />
       )}
     </TableRow>
   )
