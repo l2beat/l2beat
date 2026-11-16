@@ -162,7 +162,7 @@ export function TokenRelationsGraphView({
           <div className="flex min-h-0 flex-1 flex-col">
             <DiagramPane
               {...paneProps}
-              className="h-full"
+              className="min-h-0 flex-1"
               fillsView
               centersSelection={isMobile}
             />
@@ -199,32 +199,31 @@ function DiagramPane({
   centersSelection?: boolean
   className: string
 }) {
-  // Fills a flex-column parent; a no-op in block flow.
   return (
-    <div className="relative min-h-0 flex-1">
-      <RelationsDiagram
-        graph={visibleGraph}
-        unconnectedIds={unconnectedIds}
-        selectedNodeId={selectedNodeId}
-        onSelectNode={onSelectNode}
-        onExpand={onExpand}
-        fillsView={fillsView}
-        centersSelection={centersSelection}
-        coveredRight={detailsNode ? DETAILS_PANEL_COVER : undefined}
-        className={className}
-      />
-      {detailsNode && (
-        <aside className="absolute top-3 right-3 bottom-3 w-[min(88%,340px)]">
-          <RelationsDetails
-            graph={graph}
-            node={detailsNode}
-            onSelectNode={onSelectNode}
-            onClose={onCloseDetails}
-            className="overflow-hidden rounded-lg border border-divider shadow-xl"
-          />
-        </aside>
-      )}
-    </div>
+    <RelationsDiagram
+      graph={visibleGraph}
+      unconnectedIds={unconnectedIds}
+      selectedNodeId={selectedNodeId}
+      onSelectNode={onSelectNode}
+      onExpand={onExpand}
+      fillsView={fillsView}
+      centersSelection={centersSelection}
+      coveredRight={detailsNode ? DETAILS_PANEL_COVER : undefined}
+      className={className}
+      overlay={
+        detailsNode && (
+          <aside className="absolute top-3 right-3 bottom-3 w-[min(88%,340px)]">
+            <RelationsDetails
+              graph={graph}
+              node={detailsNode}
+              onSelectNode={onSelectNode}
+              onClose={onCloseDetails}
+              className="overflow-hidden rounded-lg border border-divider"
+            />
+          </aside>
+        )
+      }
+    />
   )
 }
 

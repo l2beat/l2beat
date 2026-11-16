@@ -39,6 +39,8 @@ interface Props {
   centersSelection?: boolean
   /** Pixels of the right edge that a details panel covers; the selected node is kept clear of them. */
   coveredRight?: number
+  /** Drawn over the frame, outside its pan and click handling (e.g. a details panel). */
+  overlay?: ReactNode
   className?: string
 }
 
@@ -51,6 +53,7 @@ export function RelationsDiagram({
   fillsView = false,
   centersSelection = false,
   coveredRight = 0,
+  overlay,
   className,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -133,155 +136,155 @@ export function RelationsDiagram({
   }, [graph.edges])
 
   return (
-    <div
-      ref={containerRef}
-      className={cn(
-        'relative select-none overflow-hidden rounded-lg border border-divider bg-background',
-        fillsView ? 'touch-none' : 'touch-pan-y',
-        className,
-      )}
-      {...pan.handlers}
-      onClick={() => {
-        if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
-      }}
-    >
-      {/* The camera moves the grid and the world by writing their transforms,
+    // Fills a flex-column parent; a no-op in block flow.
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div
+          ref={containerRef}
+          className={cn(
+            'relative select-none overflow-hidden rounded-lg border border-divider bg-background',
+            fillsView ? 'touch-none' : 'touch-pan-y',
+            className,
+          )}
+          {...pan.handlers}
+          onClick={() => {
+            if (!pan.consumeSuppressedClick()) onSelectNode(undefined)
+          }}
+        >
+          {/* The camera moves the grid and the world by writing their transforms,
           so React never re-renders the diagram for a pan or a pinch. */}
-      <div
-        ref={gridRef}
-        className="pointer-events-none absolute will-change-transform"
-        style={{
-          backgroundImage:
-            'radial-gradient(var(--color-divider) 1px, transparent 1px)',
-          ...initialStyles.grid,
-        }}
-        aria-hidden
-      />
-      <DiagramWatermark />
-      {/* The world paints a pixel of its own, too faint to see. With nothing
+          <div
+            ref={gridRef}
+            className="pointer-events-none absolute will-change-transform"
+            style={{
+              backgroundImage:
+                'radial-gradient(var(--color-divider) 1px, transparent 1px)',
+              ...initialStyles.grid,
+            }}
+            aria-hidden
+          />
+          <DiagramWatermark />
+          {/* The world paints a pixel of its own, too faint to see. With nothing
           to paint, it would leave Chrome to put the diagram in a layer of its
           own, scaled by `drawing`, which under will-change: transform Chrome
           keeps at the resolution it first drew it at: zoomed in, it blurs. */}
-      <div
-        ref={worldRef}
-        className="absolute top-0 left-0 size-px origin-top-left will-change-transform"
-        style={{
-          ...initialStyles.world,
-          backgroundColor: 'rgb(0 0 0 / 0.004)',
-        }}
-      >
-        <div
-          ref={drawingRef}
-          className="origin-top-left"
-          style={initialStyles.drawing}
-        >
-          <svg
-            width={layout.width}
-            height={layout.height}
-            className="absolute top-0 left-0 overflow-visible"
-            aria-hidden
+          <div
+            ref={worldRef}
+            className="absolute top-0 left-0 size-px origin-top-left will-change-transform"
+            style={{
+              ...initialStyles.world,
+              backgroundColor: 'rgb(0 0 0 / 0.004)',
+            }}
           >
-            <RelationsEdgeMarkers />
-            {layout.unconnectedDividerY !== undefined && (
-              <line
-                x1={0}
-                x2={layout.width}
-                y1={layout.unconnectedDividerY}
-                y2={layout.unconnectedDividerY}
-                className="stroke-divider"
-                strokeDasharray="2 6"
-              />
-            )}
-            {graph.edges.map((edge) => {
-              const path = paths.get(edgeKey(edge))
-              if (!path) return null
-              const isHighlighted = active?.edgeKeys.has(edgeKey(edge)) ?? false
-              return (
-                <RelationsEdgePath
-                  key={edgeKey(edge)}
-                  path={path}
-                  isHighlighted={isHighlighted}
-                  isDimmed={active !== undefined && !isHighlighted}
-                />
-              )
-            })}
-          </svg>
-          {graph.nodes.map((node) => {
-            const box = layout.boxes.get(node.id)
-            if (!box) return null
-            return (
-              <RelationsNode
-                key={node.id}
-                node={node}
-                box={box}
-                isSelected={selectedNodeId === node.id}
-                isDimmed={active !== undefined && !active.nodeIds.has(node.id)}
-                isUnconnected={unconnectedIds.has(node.id)}
-                isSource={sourceIds.has(node.id)}
-                // A touch drag that starts on a node may still end in a click on it.
-                onSelect={(id) => {
-                  if (!pan.consumeSuppressedClick()) onSelectNode(id)
-                }}
-                onHover={setHoveredId}
-              />
-            )
-          })}
-          {graph.edges.map((edge) => {
-            const path = paths.get(edgeKey(edge))
-            if (!path) return null
-            return (
-              <RelationsEdgeBadge
-                key={edgeKey(edge)}
-                edge={edge}
-                position={path}
-                isDimmed={
-                  active !== undefined && !active.edgeKeys.has(edgeKey(edge))
-                }
-              />
-            )
-          })}
+            <div
+              ref={drawingRef}
+              className="origin-top-left"
+              style={initialStyles.drawing}
+            >
+              <svg
+                width={layout.width}
+                height={layout.height}
+                className="absolute top-0 left-0 overflow-visible"
+                aria-hidden
+              >
+                <RelationsEdgeMarkers />
+                {layout.unconnectedDividerY !== undefined && (
+                  <line
+                    x1={0}
+                    x2={layout.width}
+                    y1={layout.unconnectedDividerY}
+                    y2={layout.unconnectedDividerY}
+                    className="stroke-divider"
+                    strokeDasharray="2 6"
+                  />
+                )}
+                {graph.edges.map((edge) => {
+                  const path = paths.get(edgeKey(edge))
+                  if (!path) return null
+                  const isHighlighted =
+                    active?.edgeKeys.has(edgeKey(edge)) ?? false
+                  return (
+                    <RelationsEdgePath
+                      key={edgeKey(edge)}
+                      path={path}
+                      isHighlighted={isHighlighted}
+                      isDimmed={active !== undefined && !isHighlighted}
+                    />
+                  )
+                })}
+              </svg>
+              {graph.nodes.map((node) => {
+                const box = layout.boxes.get(node.id)
+                if (!box) return null
+                return (
+                  <RelationsNode
+                    key={node.id}
+                    node={node}
+                    box={box}
+                    isSelected={selectedNodeId === node.id}
+                    isDimmed={
+                      active !== undefined && !active.nodeIds.has(node.id)
+                    }
+                    isUnconnected={unconnectedIds.has(node.id)}
+                    isSource={sourceIds.has(node.id)}
+                    // A touch drag that starts on a node may still end in a click on it.
+                    onSelect={(id) => {
+                      if (!pan.consumeSuppressedClick()) onSelectNode(id)
+                    }}
+                    onHover={setHoveredId}
+                  />
+                )
+              })}
+              {graph.edges.map((edge) => {
+                const path = paths.get(edgeKey(edge))
+                if (!path) return null
+                return (
+                  <RelationsEdgeBadge
+                    key={edgeKey(edge)}
+                    edge={edge}
+                    position={path}
+                    isDimmed={
+                      active !== undefined &&
+                      !active.edgeKeys.has(edgeKey(edge))
+                    }
+                  />
+                )
+              })}
+            </div>
+          </div>
         </div>
+        {overlay}
       </div>
-
-      <div className="absolute right-14 bottom-3 left-3 flex flex-col items-start gap-1 text-label-value-12 text-secondary">
-        {/* One chip, so the hints cover as few nodes as possible. */}
-        <p className="rounded-md border border-divider bg-surface-primary px-2 py-1">
-          Past 24h cross-chain volume ·{' '}
-          <span className="[@media(pointer:coarse)]:hidden">
-            {fillsView
-              ? 'Scroll or drag to move the diagram'
-              : 'Drag to move, Ctrl + scroll to zoom'}
-          </span>
-          <span className="hidden [@media(pointer:coarse)]:inline">
-            {fillsView
-              ? 'Drag to move, pinch to zoom'
-              : 'Use two fingers to move or zoom'}
-          </span>
-        </p>
-      </div>
-      {/* Drags don't start on the controls, so a touch that wanders off a
-          button neither pans the diagram nor leaves a click to filter out. */}
-      <div
-        className="absolute right-3 bottom-3 flex flex-col gap-1"
-        onPointerDown={(event) => event.stopPropagation()}
-      >
-        <ControlButton label="Zoom in" onClick={() => camera.zoomBy(ZOOM_STEP)}>
-          <Glyph d="M5 12h14M12 5v14" />
-        </ControlButton>
-        <ControlButton
-          label="Zoom out"
-          onClick={() => camera.zoomBy(1 / ZOOM_STEP)}
+      {/* Under the frame, not over it, so neither covers a node. */}
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <DiagramCaption fillsView={fillsView} />
+        {/* Drags don't start on the controls, so a touch that wanders off a
+            button neither pans the diagram nor leaves a click to filter out. */}
+        <div
+          className="flex shrink-0 gap-1"
+          onPointerDown={(event) => event.stopPropagation()}
         >
-          <Glyph d="M5 12h14" />
-        </ControlButton>
-        <ControlButton label="Reset view" onClick={camera.reset}>
-          <Glyph d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" />
-        </ControlButton>
-        {onExpand && (
-          <ControlButton label="Open larger view" onClick={onExpand}>
-            <Glyph d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+          <ControlButton
+            label="Zoom in"
+            onClick={() => camera.zoomBy(ZOOM_STEP)}
+          >
+            <Glyph d="M5 12h14M12 5v14" />
           </ControlButton>
-        )}
+          <ControlButton
+            label="Zoom out"
+            onClick={() => camera.zoomBy(1 / ZOOM_STEP)}
+          >
+            <Glyph d="M5 12h14" />
+          </ControlButton>
+          <ControlButton label="Reset view" onClick={camera.reset}>
+            <Glyph d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" />
+          </ControlButton>
+          {onExpand && (
+            <ControlButton label="Open larger view" onClick={onExpand}>
+              <Glyph d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+            </ControlButton>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -326,5 +329,24 @@ function Glyph({ d }: { d: string }) {
     >
       <path d={d} />
     </svg>
+  )
+}
+
+/** What the diagram measures and how to move it. */
+function DiagramCaption({ fillsView }: { fillsView: boolean }) {
+  return (
+    <p className="text-label-value-12 text-secondary leading-4">
+      Past 24h cross-chain volume ·{' '}
+      <span className="[@media(pointer:coarse)]:hidden">
+        {fillsView
+          ? 'Scroll or drag to move the diagram'
+          : 'Drag to move, Ctrl + scroll to zoom'}
+      </span>
+      <span className="hidden [@media(pointer:coarse)]:inline">
+        {fillsView
+          ? 'Drag to move, pinch to zoom'
+          : 'Use two fingers to move or zoom'}
+      </span>
+    </p>
   )
 }

@@ -414,8 +414,16 @@ export function wheelZoomFactor(
   return clamp(Math.exp(-deltaY / 100), 1 / WHEEL_ZOOM_STEP, WHEEL_ZOOM_STEP)
 }
 
-/** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
-function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
+/**
+ * Fits the width and anchors the top: a tall graph is panned, not shrunk into
+ * a smudge. A graph wider than the view opens on `focusX`, but never pans so
+ * far that empty canvas shows on one side while nodes are cut on the other.
+ */
+export function fitCamera(
+  content: Size,
+  viewport: Size,
+  focusX?: number,
+): Camera {
   if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
   const innerWidth = viewport.width - FIT_PADDING * 2
   const innerHeight = viewport.height - FIT_PADDING * 2
@@ -433,7 +441,11 @@ function fitCamera(content: Size, viewport: Size, focusX?: number): Camera {
         ? (viewport.width - width) / 2
         : focusX === undefined
           ? FIT_PADDING
-          : viewport.width / 2 - focusX * k,
+          : clamp(
+              viewport.width / 2 - focusX * k,
+              viewport.width - FIT_PADDING - width,
+              FIT_PADDING,
+            ),
     y: height <= innerHeight ? (viewport.height - height) / 2 : FIT_PADDING,
   }
 }
