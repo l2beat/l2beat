@@ -7,9 +7,9 @@
 # takes 25-30 s to unpack the same 185 packages.
 #
 # Otherwise it installs them through `playwright install-deps`, from the .deb
-# files in ~/.cache/webkit-packages where the cache has them, and with
-# SAVE_SNAPSHOT=true writes the snapshot for the next run. Runs before
-# `pnpm install`, so it runs the Playwright version from the lockfile
+# files in ~/.cache/webkit-packages where the cache has them, and leaves a
+# marker for snapshot-webkit-libs.sh, which main runs after the tests. Runs
+# before `pnpm install`, so it runs the Playwright version from the lockfile
 # (PLAYWRIGHT_VERSION) through npx.
 set -euo pipefail
 
@@ -25,7 +25,8 @@ if [[ -f "$snapshot" ]]; then
   exit 0
 fi
 
-marker=$(mktemp)
+marker="$RUNNER_TEMP/webkit-libs.marker"
+touch "$marker"
 sleep 1 # so files written below are strictly newer than the marker
 
 mkdir -p ~/.cache/webkit-packages
@@ -38,18 +39,4 @@ npx --yes "playwright@$PLAYWRIGHT_VERSION" install-deps webkit 2>&1 | tee "$log"
 if grep -q 'Cannot install dependencies' "$log"; then
   echo "::error::Playwright cannot install WebKit's system libraries on $ImageOS"
   exit 1
-fi
-
-if [[ "${SAVE_SNAPSHOT:-}" == true ]]; then
-  list="$RUNNER_TEMP/webkit-libs.txt"
-  # -cnewer, not -newer: dpkg keeps each file's packaged mtime, but
-  # unpacking sets its ctime. dpkg writes under /usr, /etc and /var only.
-  sudo find /usr /etc /var -xdev \
-    \( -path /var/log -o -path /var/cache/apt -o -path /var/lib/apt/lists \
-    -o -path /var/tmp \) -prune \
-    -o -cnewer "$marker" \( -type f -o -type l \) -print > "$list"
-  mkdir -p "$(dirname "$snapshot")"
-  sudo tar --zstd -cpf "$snapshot" -T "$list"
-  sudo chown "$USER" "$snapshot"
-  echo "Snapshot: $(wc -l < "$list") files, $(du -h "$snapshot" | cut -f1)"
 fi

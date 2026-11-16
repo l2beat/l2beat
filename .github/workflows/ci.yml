@@ -312,7 +312,6 @@ jobs:
         timeout-minutes: 3
         env:
           PLAYWRIGHT_VERSION: ${{ steps.image.outputs.playwright }}
-          SAVE_SNAPSHOT: ${{ github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true' }}
         run: .github/scripts/install-webkit-libs.sh
 
       - name: Set up pnpm and install dependencies
@@ -346,6 +345,10 @@ jobs:
       # Only main saves the cache, as with pnpm's. autoclean drops the
       # versions the mirror no longer serves, so a partial restore does not
       # pile them up
+      - name: Snapshot WebKit's system libraries
+        if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true'
+        run: .github/scripts/snapshot-webkit-libs.sh
+
       - name: Save WebKit's system libraries
         if: steps.affected.outputs.affected == 'true' && matrix.webkit && github.ref == 'refs/heads/main' && steps.webkit-snapshot.outputs.cache-hit != 'true'
         uses: actions/cache/save@v6
