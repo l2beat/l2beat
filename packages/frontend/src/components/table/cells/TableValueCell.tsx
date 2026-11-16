@@ -4,7 +4,7 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { sentimentToFillColor } from '~/utils/sentiment'
+import { sentimentToIconFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../../badge/UnderReviewBadge'
 import {
   Tooltip,
@@ -61,7 +61,7 @@ export function TableValueCell({
             <RoundedWarningIcon
               className={cn(
                 'size-3.5 md:size-4',
-                sentimentToFillColor(value.warning.sentiment),
+                sentimentToIconFillColor(value.warning.sentiment),
               )}
             />
           )}
