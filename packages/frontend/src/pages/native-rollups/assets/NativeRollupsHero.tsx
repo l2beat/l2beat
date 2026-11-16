@@ -61,7 +61,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        L2 block
+        L2 BLOCK
       </text>
       <rect
         x="24"
@@ -102,6 +102,7 @@ export function NativeRollupsHeroIllustration({
         y="14"
         width="144"
         height="140"
+        letterSpacing="1.2"
         rx="14"
         className="fill-pure-white dark:fill-zinc-900"
       />
@@ -122,7 +123,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        Frame tx
+        FRAME TX
       </text>
       <rect
         x="216"
@@ -164,13 +165,14 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Blobs
+        BLOBS
       </text>
 
       <rect
         x="150"
         y="62"
         width="120"
+        letterSpacing="1"
         height="22"
         rx="7"
         className="fill-pure-white dark:fill-zinc-900"
@@ -184,11 +186,12 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Verify
+        VERIFY
       </text>
       <text
         x="261"
         y="76.5"
+        letterSpacing="0.4"
         textAnchor="end"
         className="fill-secondary"
         fontSize="11"
@@ -212,7 +215,8 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="700"
       >
-        Dependency
+        DEPENDENCY
+        letterSpacing="0.8"
       </text>
       <text
         x="261"
@@ -233,6 +237,7 @@ export function NativeRollupsHeroIllustration({
         rx="7"
         className="fill-pure-white dark:fill-zinc-900"
         stroke="var(--accent)"
+        letterSpacing="0.6"
         strokeOpacity="0.5"
       />
       <text
@@ -262,6 +267,7 @@ export function NativeRollupsHeroIllustration({
         strokeWidth="2"
         strokeLinecap="round"
         markerEnd="url(#nr-arrow)"
+        letterSpacing="0.6"
       />
 
       {/* EIP-8288, which aggregates the declared proof. */}
@@ -301,7 +307,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Aggregated
+        AGGREGATED
       </text>
 
       <path
@@ -334,7 +340,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="10"
         fontWeight="700"
       >
-        Key
+        KEY
       </text>
       <text
         x="322"
@@ -344,13 +350,14 @@ export function NativeRollupsHeroIllustration({
         fontSize="10"
         fontWeight="700"
       >
-        Proof ✓
+        PROOF ✓
       </text>
 
       {/* EIP-8357, which holds the EVM program's key for each fork. */}
       <rect
         x="10"
         y="198"
+        letterSpacing="0.8"
         width="104"
         height="98"
         rx="14"
@@ -361,6 +368,7 @@ export function NativeRollupsHeroIllustration({
       <circle cx="27" cy="220" r="5" stroke="var(--accent)" strokeWidth="2.2" />
       <path
         d="M32 220h11m-4 0v4m4-4v3"
+        letterSpacing="0.8"
         stroke="var(--accent)"
         strokeWidth="2.2"
         strokeLinecap="round"
@@ -382,7 +390,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="11"
         fontWeight="600"
       >
-        Key registry
+        KEY REGISTRY
       </text>
       <rect
         x="22"
@@ -394,6 +402,7 @@ export function NativeRollupsHeroIllustration({
       />
       <rect
         x="22"
+        letterSpacing="0.6"
         y="264"
         width="66"
         height="7"
@@ -404,6 +413,7 @@ export function NativeRollupsHeroIllustration({
         x="22"
         y="276"
         width="66"
+        letterSpacing="0.6"
         height="7"
         rx="3.5"
         fill="var(--accent)"
@@ -429,7 +439,7 @@ export function NativeRollupsHeroIllustration({
         fontSize="12"
         fontWeight="700"
       >
-        Rollup contract
+        ROLLUP CONTRACT
       </text>
       <rect
         x="153"
@@ -447,20 +457,25 @@ export function NativeRollupsHeroIllustration({
         textAnchor="middle"
         className="fill-(--accent)"
         fontSize="11"
+        letterSpacing="0.8"
         fontWeight="700"
       >
-        Ethereum&apos;s EVM ✓
+        ETHEREUM&apos;S EVM ✓
       </text>
       <text
         x="210"
         y="280"
         textAnchor="middle"
         className="fill-secondary"
+        letterSpacing="0.8"
         fontSize="11"
         fontWeight="600"
       >
-        New state root
+        NEW STATE ROOT
       </text>
     </svg>
   )
 }
+        letterSpacing="1"
+        letterSpacing="0.4"
+        letterSpacing="0.8"
