@@ -220,7 +220,7 @@ function BlobPulse({
           <button
             type="button"
             onClick={() => brush.onView(undefined)}
-            className="col-start-3 justify-self-end whitespace-nowrap font-medium text-primary underline decoration-divider underline-offset-[0.3em] transition-colors hover:decoration-current"
+            className="col-start-3 justify-self-end whitespace-nowrap font-medium text-brand-deep underline-offset-[0.3em] hover:underline"
           >
             Back to live
           </button>
