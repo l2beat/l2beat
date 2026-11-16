@@ -31,7 +31,7 @@
     "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": {
       // validatorTimelock
       "fields": {
-        "validatorVTL": {
+        "rolesVTL": {
           // all roles of the ADI Diamond, the fields below give each role its permission
           "handler": {
             "type": "crossChainAccessControl",
@@ -51,7 +51,9 @@
             }
           ]
         },
-        "committerVTL": {
+        // COMMITTER_ROLE, named validatorVTL like in other ZK stack projects: blob
+        // sender tools read this role
+        "validatorVTL": {
           "handler": {
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B"

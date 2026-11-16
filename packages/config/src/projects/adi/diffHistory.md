@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x41463b7a9ba60e887ed6c265cd4d89dc9b914da4
+Generated with discovered.json: 0x3cc8c528db3c210726af68023820c6ac822a5fdc
 
-# Diff at Fri, 13 Nov 2026 13:41:05 GMT:
+# Diff at Mon, 16 Nov 2026 07:39:58 GMT:
 
 - id: 6375d5f0
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1792059502
+- comparing to: main@6b7652fc7bb78e30a78d32029e0fa90ecc6a073c block: 1792059502
 - current timestamp: 1794568019
 
 ## Description
@@ -18,15 +18,6 @@ Config: DA tracking follows the new committer, and each ValidatorTimelock role g
 ```diff
     contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
-      values.committerVTL.0:
--        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.committerVTL.1:
--        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.committerVTL.2:
--        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.committerVTL.3:
--        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-+        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
       values.executorVTL.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
       values.executorVTL.1:
@@ -62,50 +53,59 @@ Config: DA tracking follows the new committer, and each ValidatorTimelock role g
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
       values.reverterVTL.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-      values.validatorVTL.PRECOMMITTER_ROLE.members.0:
+      values.rolesVTL.PRECOMMITTER_ROLE.members.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.validatorVTL.PRECOMMITTER_ROLE.members.1:
+      values.rolesVTL.PRECOMMITTER_ROLE.members.1:
 -        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.validatorVTL.PRECOMMITTER_ROLE.members.2:
+      values.rolesVTL.PRECOMMITTER_ROLE.members.2:
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.validatorVTL.PRECOMMITTER_ROLE.members.3:
+      values.rolesVTL.PRECOMMITTER_ROLE.members.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
 +        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
-      values.validatorVTL.COMMITTER_ROLE.members.0:
+      values.rolesVTL.COMMITTER_ROLE.members.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.validatorVTL.COMMITTER_ROLE.members.1:
+      values.rolesVTL.COMMITTER_ROLE.members.1:
 -        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.validatorVTL.COMMITTER_ROLE.members.2:
+      values.rolesVTL.COMMITTER_ROLE.members.2:
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.validatorVTL.COMMITTER_ROLE.members.3:
+      values.rolesVTL.COMMITTER_ROLE.members.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
 +        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
-      values.validatorVTL.REVERTER_ROLE.members.0:
+      values.rolesVTL.REVERTER_ROLE.members.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.validatorVTL.REVERTER_ROLE.members.1:
+      values.rolesVTL.REVERTER_ROLE.members.1:
 -        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.validatorVTL.REVERTER_ROLE.members.2:
+      values.rolesVTL.REVERTER_ROLE.members.2:
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.validatorVTL.REVERTER_ROLE.members.3:
+      values.rolesVTL.REVERTER_ROLE.members.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
-      values.validatorVTL.PROVER_ROLE.members.0:
+      values.rolesVTL.PROVER_ROLE.members.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.validatorVTL.PROVER_ROLE.members.1:
+      values.rolesVTL.PROVER_ROLE.members.1:
 -        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.validatorVTL.PROVER_ROLE.members.2:
+      values.rolesVTL.PROVER_ROLE.members.2:
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.validatorVTL.PROVER_ROLE.members.3:
+      values.rolesVTL.PROVER_ROLE.members.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
 +        "eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b"
-      values.validatorVTL.EXECUTOR_ROLE.members.0:
+      values.rolesVTL.EXECUTOR_ROLE.members.0:
 -        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
-      values.validatorVTL.EXECUTOR_ROLE.members.1:
+      values.rolesVTL.EXECUTOR_ROLE.members.1:
 -        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
-      values.validatorVTL.EXECUTOR_ROLE.members.2:
+      values.rolesVTL.EXECUTOR_ROLE.members.2:
 -        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
-      values.validatorVTL.EXECUTOR_ROLE.members.3:
+      values.rolesVTL.EXECUTOR_ROLE.members.3:
 -        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
 +        "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8"
+      values.validatorVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.validatorVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.validatorVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.validatorVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
     }
 ```
 
@@ -119,7 +119,7 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
     EOA (eth:0x0b6f2116323C12EE731de6818e41861561bcd44C) {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".committerVTL"}
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
       receivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
       receivedPermissions.2:
@@ -139,7 +139,7 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
     EOA (eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51) {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".committerVTL"}
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
       receivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
       receivedPermissions.2:
@@ -159,7 +159,7 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
     EOA (eth:0x6090e365149d005517e2013926cD18d767f04Aa1) {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".committerVTL"}
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
       receivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
       receivedPermissions.2:
@@ -178,7 +178,8 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
 ```diff
     contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
-      values.committerVTL:
+      values.validatorVTL:
+-        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]}}
 +        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
       values.executorVTL:
 +        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
@@ -188,6 +189,8 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
 +        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
       values.reverterVTL:
 +        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.rolesVTL:
++        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]}}
     }
 ```
 
@@ -195,7 +198,7 @@ discovery. Values are for block 1792059502 (main branch discovery), not current.
     EOA (eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524) {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".committerVTL"}
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
       receivedPermissions.1:
 +        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
       receivedPermissions.2:
