@@ -448,6 +448,9 @@ export type ApiAgentEvent =
   | { type: 'connected'; serverId: string }
   // The tab answers with an ApiAgentContext for this id.
   | { type: 'context-request'; id: string }
+  // The tab answers with an ApiAgentGraph for this id.
+  | { type: 'graph-request'; id: string; project: string }
+  | ApiAgentLayoutRequest
   // Only to the tab that owns the chat; a replay restarts its transcript.
   | { type: 'chat'; event: ApiChatEvent }
   | { type: 'chat-replay'; events: ApiChatEvent[] }
@@ -461,6 +464,16 @@ export interface ApiAgentShowEvent {
   id: string
   project: string
   steps: ApiAgentStep[]
+}
+
+// The tab arranges its node view and answers with an ApiAgentLayout.
+export interface ApiAgentLayoutRequest {
+  type: 'layout-request'
+  id: string
+  project: string
+  // Lanes top to bottom, columns left to right, contracts top to bottom.
+  lanes: string[][][]
+  hideOthers: boolean
 }
 
 export interface ApiAgentBoard {
@@ -512,6 +525,50 @@ export interface ApiAgentContext {
   // The step of the agent's show on screen, 0-based.
   note?: { index: number; stepCount: number }
 }
+
+// The node view as drawn: top-level items, so a group the researcher made
+// is one item. Answered only for the project the request names.
+export type ApiAgentGraph =
+  | ApiAgentNodeViewNotLoaded
+  | {
+      status: 'loaded'
+      items: ApiAgentGraphItem[]
+      // [source item index, target item index, field name], one per field.
+      links: [number, number, string][]
+      // Contracts the view does not draw.
+      hidden: { id: string; name: string }[]
+    }
+
+// project is the one the node view shows, if any.
+export interface ApiAgentNodeViewNotLoaded {
+  status: 'not-loaded'
+  project?: string
+}
+
+export interface ApiAgentGraphItem {
+  id: string
+  name: string
+  // The footprint drawn, an open group's container included.
+  x: number
+  y: number
+  width: number
+  height: number
+  // Leaf ids, for groups only.
+  members?: string[]
+}
+
+// What is drawn after the arrangement, read back from the node view.
+export type ApiAgentLayout =
+  | ApiAgentNodeViewNotLoaded
+  | {
+      status: 'arranged'
+      // Top-level items placed in the lanes.
+      placed: string[]
+      // Drawn items the lanes do not name, arranged below them.
+      below: { id: string; name: string }[]
+      // Named contracts that are not drawn.
+      notDrawn: string[]
+    }
 
 export type ApiChatProvider = 'claude' | 'codex'
 

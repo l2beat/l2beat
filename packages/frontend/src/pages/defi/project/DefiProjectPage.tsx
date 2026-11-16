@@ -11,6 +11,7 @@ import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { LiquidStakingYieldAndExitSection } from '~/components/projects/sections/defi/LiquidStakingYieldAndExitSection'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import { env } from '~/env'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
@@ -20,6 +21,8 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 import type { ProjectSectionLink } from '~/server/features/projects/getProjectSectionLinks'
 import type { ProjectVersionLinks } from '~/server/features/projects/getProjectVersionLinks'
 import { LiquidStakingProjectSummary } from './components/LiquidStakingProjectSummary'
+
+const PAGE_SECTIONS = { LiquidStakingYieldAndExitSection }
 
 interface Props extends AppLayoutProps {
   entry: ProjectDefiEntry
@@ -133,6 +136,7 @@ export function DefiProjectPage({
                     <ProjectDetails
                       items={entry.sections}
                       selectedUpdateId={selectedUpdateId}
+                      pageSections={PAGE_SECTIONS}
                     />
                   </HighlightableLinkContextProvider>
                 </div>
