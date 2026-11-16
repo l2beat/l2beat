@@ -1,23 +1,24 @@
-Generated with discovered.json: 0x19fd9633fcd1c083500d93a7fda9fd286b5a91ef
+Generated with discovered.json: 0x9ee1550c6d026f9b851993d33a216c3d8723e023
 
-# Diff at Fri, 13 Nov 2026 13:41:51 GMT:
+# Diff at Mon, 16 Nov 2026 10:28:08 GMT:
 
 - id: 5aa16a25
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794320084
-- current timestamp: 1794572274
+- comparing to: main@a804ec828ab17a3a4cb8da9318a87814cec12858 block: 1794320084
+- current timestamp: 1794824811
 
 ## Description
 
-The 2/3 Safe base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA upgraded the Butter Bridge on Base through the AuthorityManager, re-initialized and unpaused it: https://disco.l2beat.com/diff/base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25/base:0x23fF8a1bB41FAa8A491aacF8e466AdeF2051200F. The Ethereum bridge at the same address runs the same code. The new code is a rewrite:
-- Inbound messages from the MAP relay chain (22776) need a proof that a new verifier accepts, base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4. Its implementation is unverified and its getters show a signer set of 2 of 3 EOAs, governed by the same AuthorityManager. The bridge no longer uses the MAP LightNode and VerifyTool, so the trust moves from MAP's validator set to these 3 keys and the bridge admins.
-- An accepted message becomes a pending payment. After the releaseDelay of 300 s it is released from a new reserve, base:0xf95f0359704A66DB38d159e5A99721F069f30D9c, with release signatures that the reserve checks. The reserve is unverified, has releaseThreshold 2 and its own AuthorityManager (admins: the 2/3 Safe and the 3/5 Safe base:0xfF0d780312BE250abA9Ef3Ba85166D3F7807CFFF). It holds no USDC or WETH yet.
-- Roles in the bridge AuthorityManager, all without delay: 4 relayer EOAs submit messages and release payments. 2 guardian EOAs can pause, freeze payments, extend the delay, lower limits, close routes, disable tokens and sweep stray balances to the reserve. The two admin Safes can upgrade, replace the verifier and reserve, shorten the delay and unfreeze.
+The 2/3 Safe 0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA upgraded the Butter Bridge on Base through the AuthorityManager, re-initialized and unpaused it: https://disco.l2beat.com/diff/base:0xa2bd213E4e5655125A8c18D716184b6b11F45F25/base:0x23fF8a1bB41FAa8A491aacF8e466AdeF2051200F. The Ethereum bridge at the same address runs the same code with the same roles, and discovery now watches it too. The new code is a rewrite:
+- Inbound messages from the MAP relay chain (22776) need a proof that a new verifier accepts (base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4, eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B). Its implementation is unverified and its getters show a signer set of 2 of 3 EOAs. The bridge no longer uses the MAP LightNode and VerifyTool, so the trust moves from MAP's validator set to these 3 keys and the bridge admins.
+- An accepted message becomes a pending payment. After the releaseDelay of 180 s it is released from a new reserve, 0xf95f0359704A66DB38d159e5A99721F069f30D9c on both chains, with release signatures that the reserve checks. The reserve is unverified, has releaseThreshold 2 and its own AuthorityManager. On Ethereum it holds about 30k USDC, 30k USDT and 10 WETH, on Base nothing.
+- Admins act without delay, and each Safe alone is enough. On forks of both chains, the 2/3 Safe replaced the verifier's signers with a 1 of 1 set of its choice, and as reserve admin it allowed an address and withdrew the reserve's funds to it without release signatures. The bridge admins are the 2/3 Safe and the 3/5 Safe 0x9987463102993e177b107e0cE97a0420428D1999, the reserve admins the 2/3 Safe and the 3/5 Safe 0xfF0d780312BE250abA9Ef3Ba85166D3F7807CFFF. The bridge admins can also upgrade, replace the verifier and reserve, shorten the delay and unfreeze.
+- 4 relayer EOAs submit messages and release payments. Guardian EOAs (2 on Base, 3 on Ethereum) can pause, freeze payments, extend the delay, lower limits, close routes, disable tokens, sweep stray balances to the reserve and remove verifier signers.
 - retryMessageIn and emergencyWithdraw are gone. rescue moves only tokens the bridge never listed, sweep moves stray balances to the reserve. A payout that fails to reach the recipient goes to failedReceiver, the 2/3 Safe.
 
 ETHBEAT verified the bridge implementation on Basescan from an exact Sourcify match, and the two verifier proxies (plain ERC1967Proxy) on Etherscan. No public source exists for the verifier implementations and the reserve.
 
-Config: Bridge template for the new code, relayer and guardian roles of the AuthorityManager, which now tracks the role of each restricted function, full-ABI fields for the unverified verifier and reserve. The LightNode and VerifyTool templates match nothing anymore and are removed. The GnosisSafe template gets the Safe 1.5.0 L2 shape.
+Config: Ethereum added to discovery. Bridge template for the new code, the AuthorityManager tracks the role of each restricted function, and the admin, guardian and relayer permissions name what each role can do. Full-ABI fields for the unverified verifier and reserve. The LightNode and VerifyTool templates match nothing anymore and are removed. The GnosisSafe template gets the Safe 1.5.0 L2 shape.
 
 ## Watched changes
 
@@ -62,7 +63,7 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
 +++ description: Seconds between an inbound message and the earliest release of its payment, the window to freeze it.
 +++ severity: HIGH
       values.releaseDelay:
-+        300
++        180
 +++ description: Contract that holds the liquidity and pays out released payments.
 +++ severity: HIGH
       values.reserve:
@@ -106,7 +107,7 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
     contract SafeL2 (base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA) [GnosisSafe] {
     +++ description: None
       receivedPermissions.1:
-+        {"permission":"interact","from":"base:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC","description":"grant or revoke roles, change role and target permissions, and execute the restricted management functions of the attached Butter contracts.","role":".adminRole"}
++        {"permission":"interact","from":"base:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC","description":"allow any address as a withdrawal target and withdraw the reserve's funds to it without release signatures, and change all roles of the reserve, without delay.","role":".adminRole"}
     }
 ```
 
@@ -143,6 +144,132 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
 ```
 
 ```diff
+    contract Butter Bridge (eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [butternetwork/Bridge] {
+    +++ description: Butter's bridge endpoint. Inbound messages from the MAP relay chain need a proof that the verifier accepts and become pending payments. After the release delay, a payment that is not frozen is released from the reserve with release signatures for the reserve to check. Relaying, releasing, freezing and all configuration are restricted by the authority.
+      name:
+-        "Bridge"
++        "Butter Bridge"
+      sourceHashes.1:
+-        "0xcdcece1862e16da26424ca2364fc88c7dc2ac699b0bb37e0540a885a07c6b585"
++        "0xb4587cd94ae4de51e134b442a936b6f2cac4b01cc2c67aceefe5b7828d095993"
+      values.$implementation:
+-        "eth:0x121355fc24792745F58d3153165017f0A0Eb2d1a"
++        "eth:0x5d287A93366C0ADa471440699966B34B6cd6bFa6"
+      values.$pastUpgrades.7:
++        ["2026-11-12T02:02:23.000Z","0x4d5dfaa562322a87abefc16a73ecbd9a25d4e083678fdb641355876c8af45dd6",["eth:0x5d287A93366C0ADa471440699966B34B6cd6bFa6"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.getImplementation:
+-        "eth:0x121355fc24792745F58d3153165017f0A0Eb2d1a"
+      values.getRelay:
+-        [22776,"eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56"]
+      values.getServiceContract:
+-        ["eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","eth:0x00071196A9129b7068404523E2047ef79F4Ed0de","eth:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.getTransferOutFailedReceiver:
+-        "eth:0x0000000000000000000000000000000000000000"
++++ severity: MEDIUM
+      values.paused:
+-        true
++        false
++++ description: Receives a payout when the transfer to the recipient fails.
++++ severity: HIGH
+      values.failedReceiver:
++        "eth:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA"
+      values.relayChainId:
++        22776
++++ description: Bridge contract on the MAP relay chain that messages are sent to.
+      values.relayMos:
++        "eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56"
++++ description: Seconds between an inbound message and the earliest release of its payment, the window to freeze it.
++++ severity: HIGH
+      values.releaseDelay:
++        180
++++ description: Contract that holds the liquidity and pays out released payments.
++++ severity: HIGH
+      values.reserve:
++        "eth:0xf95f0359704A66DB38d159e5A99721F069f30D9c"
++++ description: Contract that checks the proof of each inbound message.
++++ severity: HIGH
+      values.verifier:
++        "eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B"
+      values.wToken:
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      errors:
+-        {"getServiceContract":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+      implementationNames.eth:0x121355fc24792745F58d3153165017f0A0Eb2d1a:
+-        "Bridge"
+      implementationNames.eth:0x5d287A93366C0ADa471440699966B34B6cd6bFa6:
++        "Bridge"
+      template:
++        "butternetwork/Bridge"
+      description:
++        "Butter's bridge endpoint. Inbound messages from the MAP relay chain need a proof that the verifier accepts and become pending payments. After the release delay, a payment that is not frozen is released from the reserve with release signatures for the reserve to check. Relaying, releasing, freezing and all configuration are restricted by the authority."
+      fieldMeta:
++        {"authority":{"severity":"HIGH","description":"AccessManager that decides who can call the restricted functions, upgrades included."},"verifier":{"severity":"HIGH","description":"Contract that checks the proof of each inbound message."},"reserve":{"severity":"HIGH","description":"Contract that holds the liquidity and pays out released payments."},"releaseDelay":{"severity":"HIGH","description":"Seconds between an inbound message and the earliest release of its payment, the window to freeze it."},"failedReceiver":{"severity":"HIGH","description":"Receives a payout when the transfer to the recipient fails."},"relayMos":{"description":"Bridge contract on the MAP relay chain that messages are sent to."},"paused":{"severity":"MEDIUM"}}
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x00071196A9129b7068404523E2047ef79F4Ed0de) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract SafeL2 (eth:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xACC31A6756B60304C03d6626fc98c062E4539CCA","description":"pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses, sweep stray balances into the reserve and remove signers from the verifier.","role":".guardians"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC","description":"allow any address as a withdrawal target and withdraw the reserve's funds to it without release signatures, and change all roles of the reserve, without delay.","role":".adminRole"}
+    }
+```
+
+```diff
+    contract Butter AuthorityManager (eth:0xACC31A6756B60304C03d6626fc98c062E4539CCA) [butternetwork/AuthorityManager] {
+    +++ description: OpenZeppelin AccessManager-derived authority for the restricted functions of the Butter contracts that name it. Its role configuration controls who can change their validation, token and fee settings, pause them and upgrade them.
+      values.guardians.0:
++        "eth:0xDB3fF8ab8C1B853B0fA6B56f53b6bB181F51828B"
+      values.guardians.1:
++        "eth:0x617DEBa6b5C2466E29790134eDA768f4C752A2B4"
+      values.guardians.2:
++        "eth:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA"
+      values.relayers.0:
++        "eth:0x8d2823A8E8351a7FB9E7BeDF71f02A17efa142fE"
+      values.relayers.1:
++        "eth:0x5C32207180259DA36B698E30Bc08cc62efA46d57"
+      values.relayers.2:
++        "eth:0xBb0D81cadF3A905a12E4f4238eA354BB703C22d0"
+      values.relayers.3:
++        "eth:0x369CE683d79bEE60806fb1D06eC5eAb536Befd2c"
+      values.targetFunctionRoles.eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56:
++        [{"selector":"0xb0052121","roleId":1},{"selector":"0xff1d8a56","roleId":1},{"selector":"0x23e27a64","roleId":1},{"selector":"0x8456cb59","roleId":1},{"selector":"0xec13cc7b","roleId":1},{"selector":"0x3582c451","roleId":1},{"selector":"0xef9654f7","roleId":1},{"selector":"0x01681a62","roleId":1},{"selector":"0x8d66016a","roleId":1},{"selector":"0xad914bd6","roleId":1},{"selector":"0xe6443600","roleId":3},{"selector":"0x1da886be","roleId":3},{"selector":"0x70e160e3","roleId":3}]
+      values.targetFunctionRoles.eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B:
++        [{"selector":"0x3bad5426","roleId":1},{"selector":"0xb13289e4","roleId":1}]
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56","role":".authority"}
+      directlyReceivedPermissions.0.from:
+-        "eth:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6"
++        "eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Butter FeeService (eth:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6) [butternetwork/FeeService]
+    +++ description: Fee configuration contract used by Butter Bridge to calculate cross-chain message fees and select the fee recipient.
+```
+
+```diff
 +   Status: CREATED
     contract Butter Verifier (base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4) [N/A]
     +++ description: Verifier of inbound Butter Bridge messages from the MAP relay chain, running unverified code. Its getters name a signer set and a quorum.
@@ -157,7 +284,7 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
 ```diff
 +   Status: CREATED
     contract Butter Reserve (base:0xf95f0359704A66DB38d159e5A99721F069f30D9c) [N/A]
-    +++ description: Liquidity reserve of the Butter Bridge on Base, running unverified code.
+    +++ description: Liquidity reserve of the Butter Bridge, running unverified code.
 ```
 
 ```diff
@@ -166,21 +293,54 @@ Config: Bridge template for the new code, relayer and guardian roles of the Auth
     +++ description: None
 ```
 
+```diff
++   Status: CREATED
+    contract Butter Verifier (eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B) [N/A]
+    +++ description: Verifier of inbound Butter Bridge messages from the MAP relay chain, running unverified code. Its getters name a signer set and a quorum.
+```
+
+```diff
++   Status: CREATED
+    contract Butter AuthorityManager (eth:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC) [butternetwork/AuthorityManager]
+    +++ description: OpenZeppelin AccessManager-derived authority for the restricted functions of the Butter contracts that name it. Its role configuration controls who can change their validation, token and fee settings, pause them and upgrade them.
+```
+
+```diff
++   Status: CREATED
+    contract Butter Reserve (eth:0xf95f0359704A66DB38d159e5A99721F069f30D9c) [N/A]
+    +++ description: Liquidity reserve of the Butter Bridge, running unverified code.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xfF0d780312BE250abA9Ef3Ba85166D3F7807CFFF) [GnosisSafe]
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-...0xACC31A6756B60304C03d6626fc98c062E4539CCA.sol} |    0
+...:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC.sol | 3813 ++++++++++++++++++++
  ...:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC.sol | 3813 ++++++++++++++++++++
- .../Bridge => .flat/Butter Bridge}/Bridge.sol      | 2515 ++++++++-----
- .../Butter Bridge}/OmniServiceProxy.p.sol          |    0
- .../.flat/Butter Verifier/ERC1967Proxy.p.sol       |  612 ++++
+ .../Bridge.sol                                     | 2515 ++++++++-----
+ .../OmniServiceProxy.p.sol                         |    0
+ .../Bridge.sol                                     | 2515 ++++++++-----
+ .../OmniServiceProxy.p.sol                         |    0
+ .../dev/null                                       |  684 ----
+ .../Butter FeeService.sol}                         |    0
+ .../ERC1967Proxy.p.sol                             |  612 ++++
+ .../ERC1967Proxy.p.sol                             |  612 ++++
  .../LightNode/LightNode.sol => /dev/null           | 2177 -----------
  .../LightNode/LightNodeProxy.p.sol => /dev/null    |  685 ----
+ .../LightNodeProxy.p.sol => /dev/null              |  621 ----
+ .../src/projects/butternetwork/.flat/Safe/Safe.sol | 1797 +++++++++
+ .../butternetwork/.flat/Safe/SafeProxy.p.sol       |   42 +
  .../SafeL2.sol                                     | 1864 ++++++++++
  .../SafeProxy.p.sol                                |   42 +
  .../.flat@1794320084/VerifyTool.sol => /dev/null   | 2071 -----------
- .../Wrapped Ether Token.sol => /dev/null           |   63 -
- 11 files changed, 7860 insertions(+), 5982 deletions(-)
+ .../dev/null                                       |   63 -
+ .../dev/null                                       |   63 -
+ 20 files changed, 15653 insertions(+), 8336 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -256,7 +416,7 @@ discovery. Values are for block 1794320084 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.0.description:
 -        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
-+        "grant or revoke roles, change role and target permissions, and execute the restricted management functions of the attached Butter contracts."
++        "upgrade the Butter Bridge, replace its verifier and reserve, replace the verifier's signer set and quorum, shorten the release delay, unfreeze payments and change all roles, without delay."
     }
 ```
 
@@ -265,7 +425,7 @@ discovery. Values are for block 1794320084 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.0.description:
 -        "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations without delay, including the withdrawal of all assets held by the Bridge."
-+        "grant or revoke roles, change role and target permissions, and execute the restricted management functions of the attached Butter contracts."
++        "upgrade the Butter Bridge, replace its verifier and reserve, replace the verifier's signer set and quorum, shorten the release delay, unfreeze payments and change all roles, without delay."
     }
 ```
 
@@ -312,6 +472,48 @@ discovery. Values are for block 1794320084 (main branch discovery), not current.
 +   Status: CREATED
     contract Wrapped Ether Token (base:0x4200000000000000000000000000000000000006) [N/A]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x00071196A9129b7068404523E2047ef79F4Ed0de) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (eth:0x9987463102993e177b107e0cE97a0420428D1999) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (eth:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Butter AuthorityManager (eth:0xACC31A6756B60304C03d6626fc98c062E4539CCA) [butternetwork/AuthorityManager]
+    +++ description: OpenZeppelin AccessManager-derived authority for the restricted functions of the Butter contracts that name it. Its role configuration controls who can change their validation, token and fee settings, pause them and upgrade them.
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Butter FeeService (eth:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6) [butternetwork/FeeService]
+    +++ description: Fee configuration contract used by Butter Bridge to calculate cross-chain message fees and select the fee recipient.
 ```
 
 Generated with discovered.json: 0x53051bd603c4a411a8667ed7b63c9d6236dcdf48

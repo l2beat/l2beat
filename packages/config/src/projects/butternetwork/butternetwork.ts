@@ -10,30 +10,47 @@ import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('butternetwork')
 
-// Discovery watches only the Base bridge. The bridge is verified, its verifier
-// and reserve are not, so their texts rest on getters read by full ABI.
+// Discovery watches the Ethereum and Base deployments, which share addresses
+// except for the verifier. The bridge is verified, its verifier and reserve
+// are not, so their texts rest on getters read by full ABI and on fork tests.
 // Once they are verified, review them and rewrite the warning and settlement.
+const BRIDGE = '0x0000317Bec33Af037b5fAb2028f52d14658F6A56'
+const RESERVE = '0xf95f0359704A66DB38d159e5A99721F069f30D9c'
+const BRIDGE_AUTHORITY = '0xACC31A6756B60304C03d6626fc98c062E4539CCA'
+const VERIFIERS = {
+  eth: '0xA6a02d654c9a941EB95e8A925655903aD77BBe6B',
+  base: '0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4',
+}
+const perChain = (['eth', 'base'] as const).map((chain) => {
+  const verifier = `${chain}:${VERIFIERS[chain]}`
+  assert(
+    discovery.getContract(verifier).unverified === true &&
+      discovery.getContract(`${chain}:${RESERVE}`).unverified === true,
+    'Butter Verifier or Reserve is verified: review the new code',
+    { chain },
+  )
+  return {
+    signers: discovery.getContractValue<string[]>(verifier, 'signers').length,
+    quorum: discovery.getContractValue<number>(verifier, 'quorum'),
+    relayers: discovery.getContractValue<string[]>(
+      `${chain}:${BRIDGE_AUTHORITY}`,
+      'relayers',
+    ).length,
+    releaseDelay: discovery.getContractValue<number>(
+      `${chain}:${BRIDGE}`,
+      'releaseDelay',
+    ),
+  }
+})
+const [ethereum, base] = perChain
 assert(
-  discovery.getContract('Butter Verifier').unverified === true &&
-    discovery.getContract('Butter Reserve').unverified === true,
-  'Butter Verifier or Reserve on Base is verified: review the new code',
+  JSON.stringify(ethereum) === JSON.stringify(base),
+  'Butter on Ethereum and Base differ, describe each chain in the texts',
 )
-const verifierSigners = discovery.getContractValue<string[]>(
-  'Butter Verifier',
-  'signers',
-).length
-const verifierQuorum = discovery.getContractValue<number>(
-  'Butter Verifier',
-  'quorum',
-)
-// AuthorityManager of the bridge, the reserve has its own
-const relayerCount = discovery.getContractValue<string[]>(
-  'base:0xACC31A6756B60304C03d6626fc98c062E4539CCA',
-  'relayers',
-).length
-const releaseDelay = formatSeconds(
-  discovery.getContractValue<number>('Butter Bridge', 'releaseDelay'),
-)
+const verifierSigners = ethereum.signers
+const verifierQuorum = ethereum.quorum
+const relayerCount = ethereum.relayers
+const releaseDelay = formatSeconds(ethereum.releaseDelay)
 
 export const butternetwork: BaseProject = {
   id: ProjectId('butternetwork'),
@@ -43,7 +60,7 @@ export const butternetwork: BaseProject = {
   addedAt: UnixTime(1785915246),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
-    yellowWarning: `On Base, the verifier and the reserve of the bridge run unverified code. The verifier's getters show that inbound messages need signatures of ${verifierQuorum} of ${verifierSigners} signers.`,
+    yellowWarning: `On Ethereum and Base, the verifier and the reserve of the bridge run unverified code. The verifier's getters show that inbound messages need signatures of ${verifierQuorum} of ${verifierSigners} signers. Each admin multisig can replace these signers, and each reserve admin multisig can withdraw the reserve.`,
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -73,7 +90,7 @@ export const butternetwork: BaseProject = {
       settlement: {
         value: 'Internal (sidechain)',
         sentiment: 'bad',
-        description: `Transfers settle through the MAP relay chain, an external proof-of-stake chain. On Base, the bridge accepts a message from it with signatures of ${verifierQuorum} of ${verifierSigners} signers that the admins set. The payout waits ${releaseDelay}, during which guardians can freeze it.`,
+        description: `Transfers settle through the MAP relay chain, an external proof-of-stake chain. On Ethereum and Base, the bridge accepts a message from it with signatures of ${verifierQuorum} of ${verifierSigners} signers that the admins set. The payout waits ${releaseDelay}, during which guardians can freeze it.`,
       },
     },
     // as of 2026-08, MAPO (on ethereum and bsc) is the only token the bridge

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5796a44233159119c008175ca8847d9250630a0c
+Generated with discovered.json: 0xc0228be9efe21787c72e1fa77b0e73e38b4c813c
 
-# Diff at Fri, 13 Nov 2026 13:14:40 GMT:
+# Diff at Mon, 16 Nov 2026 10:29:55 GMT:
 
 - id: b1d59c14
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1793614694
+- comparing to: main@a804ec828ab17a3a4cb8da9318a87814cec12858 block: 1793614694
 - current timestamp: 1794571906
 
 ## Description
@@ -22,7 +22,7 @@ The risks stay the same. The only code change is an open uint8 intent instead of
 
 New intent 4, AddPasskeySIPA (compare UserOpSIPA: https://disco.l2beat.com/diff/eth:0x5180f0659D021368CDF5c4499967B9A329C775A0/eth:0x1890474918e04447b0ab718ffe60df749d953dc4). Sweeping a funded clone runs the account operation fixed in its address, signed by the account's current keys: add a passkey, set the user record, announce the account on Aztec. It then deposits the rest. The new factory blesses no open-ended UserOp intent.
 
-New OxidePortal_steakUSDC (eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf) for Steakhouse Prime USDC on Morpho, with the same verified portal code, TeeRegistry and refund verifiers. It holds about 31 USDC. Moving funds in routes DAI through a MultiStepExecutor, Maker's PSM, the vault and a PortalDepositAdapter, all verified and outside discovery. The Oxide manifest also lists the steakUSDC portal's PlainWithdrawalExecutor (eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698) and one StablecoinWithdrawalExecutor per portal, an optional payout route to USDC or USDT that no withdrawal has used yet. Their subsidy contracts pay relayers from their own balance and cannot change routing.
+New OxidePortal_steakUSDC (eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf) for Steakhouse Prime USDC on Morpho, with the same verified portal code, TeeRegistry and refund verifiers. It holds about 31 USDC. Moving funds in routes DAI through a MultiStepExecutor, Maker's PSM, the vault and a PortalDepositAdapter, all verified and outside discovery. The Oxide manifest also lists the steakUSDC portal's PlainWithdrawalExecutor (eth:0xc1Db06e5B9096ab71dF8F461D3DD08CD8438f698) and one StablecoinWithdrawalExecutor per portal, an optional payout contract that no withdrawal has used yet. Its routes to USDC and USDT and its gas swap use fixed DAI venues, so they only work on the DAI portal's executor. The recovery account a withdrawal commits to can execute it at any time through recover and name the recipient. Their subsidy contracts pay relayers from their own balance and cannot change routing.
 
 Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIPA and v6 ResolverVerifier templates. SIPAFactory reads the current implementation per intent from its events. The replaced SIPAFactory stays as LegacySIPAFactory with its table and implementations. PortalFactory lists its portals. ensNode moved into the Resolver template. Ossification event for the switch. The zk catalog lists the v6 resolver verifier with its verification steps. The payout contracts of the manifest are discovered, the StablecoinWithdrawalExecutor with a template that is not critical, since it is an optional route that holds funds only in transit.
 
@@ -30,7 +30,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
 
 ```diff
     contract StablecoinWithdrawalExecutor_sUSDS (eth:0x0E577Df99C43f258D38460b68326B002178B8369) [zkmoney/v6/StablecoinWithdrawalExecutor] {
-    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for.
       type:
 -        "EOA"
 +        "Contract"
@@ -42,7 +42,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
       sourceHashes:
 +        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
       description:
-+        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for."
       deployerAddress:
 +        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
       sinceTimestamp:
@@ -80,7 +80,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
 
 ```diff
     contract StablecoinWithdrawalExecutor (eth:0x7929694e5353ebE5908305aD680Dd600B08a99Ff) [zkmoney/v6/StablecoinWithdrawalExecutor] {
-    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for.
       type:
 -        "EOA"
 +        "Contract"
@@ -94,7 +94,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
       sourceHashes:
 +        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
       description:
-+        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for."
       deployerAddress:
 +        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
       sinceTimestamp:
@@ -128,7 +128,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
 
 ```diff
     contract StablecoinWithdrawalExecutor_steakUSDC (eth:0xA72bdcBE8901101f26D764698Ae120D0aE580d67) [zkmoney/v6/StablecoinWithdrawalExecutor] {
-    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.
+    +++ description: Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for.
       type:
 -        "EOA"
 +        "Contract"
@@ -140,7 +140,7 @@ Config: shapes for the new contracts in the zkmoney templates, new AddPasskeySIP
       sourceHashes:
 +        ["0x555ba4da47b09e95d431afc282a6e44f675dce5a3219350277df3d4ea8bf612b"]
       description:
-+        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails."
++        "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for."
       deployerAddress:
 +        "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4"
       sinceTimestamp:

@@ -1112,7 +1112,7 @@
         "0xa1cf2f96a20cf8bf91db8000fb7189b729d4fad2f9e4a9131c10494181028723"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults. A listed venue only has to report an asset. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.",
       "deployerAddress": "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
       "sinceTimestamp": 1794547991,
       "sinceBlock": 26403974,
@@ -1577,7 +1577,7 @@
         "0x2c18ba57366a7c586f1ec2ea28bf046c5889d23a81058b1c5f3c8587b60d1524"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults, Nest vaults and Wildcat V2 markets. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.",
+      "description": "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.",
       "deployerAddress": "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
       "sinceTimestamp": 1793376431,
       "sinceBlock": 26306662,

@@ -2,7 +2,7 @@
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "StablecoinWithdrawalExecutor",
   "category": "core",
-  "description": "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET, or swapped to USDC or USDT for at least a committed minimum, and can first swap up to MAX_DAI_FOR_GAS DAI to ETH within 2% of PRICE_FEED. The recovery account committed on Aztec can redirect a payout that fails.",
+  "description": "Optional payout contract for withdrawals and refunds. Only the PORTAL can call it. An ordinary withdrawal first pays FEE to BENEFICIARY. It pays the recipient committed on Aztec in ASSET. Its routes to USDC and USDT and its swap of up to MAX_DAI_FOR_GAS to ETH use fixed DAI venues (Maker's PSM, Curve 3pool, the Uniswap v2 DAI/WETH pair), so they only work when ASSET is DAI. Through recover, the recovery account committed on Aztec can execute a pending withdrawal itself at any time and have ASSET paid to a recipient it signs for.",
   // the portal's token, the fee receiver and the Chainlink ETH/USD feed
   "ignoreRelatives": ["ASSET", "BENEFICIARY", "PRICE_FEED"],
   "fields": {

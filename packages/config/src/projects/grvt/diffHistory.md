@@ -1,17 +1,19 @@
-Generated with discovered.json: 0xc2f8d0de6f21a20aa3aead173c60acde26517f64
+Generated with discovered.json: 0x0e1bf8f1d3a493f94ce269eb1ca63690adeace11
 
-# Diff at Fri, 13 Nov 2026 13:04:01 GMT:
+# Diff at Mon, 16 Nov 2026 10:29:50 GMT:
 
 - id: 3e7f8c2c
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319593
+- comparing to: main@a804ec828ab17a3a4cb8da9318a87814cec12858 block: 1794319593
 - current timestamp: 1794568877
 
 ## Description
 
 The CompartmentRegistry created a second compartment, the AxcessCompartment eth:0xa9e3AE58880702e02513225BC911d51781C60938. Its code is the HighYieldEarnVaultCompartment restricted to Axcess loan vaults (https://disco.l2beat.com/diff/eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF/eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946), with one vault listed (eth:0x3Ad29b602a7AB3A15b9D7C74324C83Fe9e705b11). The roles are the same: the EOA eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952 deposits into the vault and bridges back to GRVT, and the REGISTRY_ADMIN_ROLE lists venues and upgrades the compartment without delay through the UpgradeAuthority and a new ProxyAdmin.
 
-Config: AxcessCompartment template, which ignores the Axcess vaults like the other compartment.
+A listed venue only has to report an asset, so the REGISTRY_ADMIN_ROLE decides where an operator deposit can go. The bridge owner sets the parameters that derive the destination on GRVT.
+
+Config: AxcessCompartment template, which ignores the Axcess vaults like the other compartment. Both compartment descriptions now say who defines the venues and the bridge destination.
 
 ## Watched changes
 
@@ -56,7 +58,7 @@ Config: AxcessCompartment template, which ignores the Axcess vaults like the oth
 ```diff
 +   Status: CREATED
     contract AxcessCompartment (eth:0xa9e3AE58880702e02513225BC911d51781C60938) [grvt/AxcessCompartment]
-    +++ description: Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry.
+    +++ description: Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults. A listed venue only has to report an asset. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.
 ```
 
 ## Source code changes
@@ -66,6 +68,21 @@ Config: AxcessCompartment template, which ignores the Axcess vaults like the oth
  .../TransparentUpgradeableProxy.p.sol              | 1016 ++++
  ...:0x0516f36192d16D8EaeEED4a541810f50218E97f4.sol |  189 +
  3 files changed, 7224 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794319593 (main branch discovery), not current.
+
+```diff
+    contract HighYieldEarnVaultCompartment (eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44) [grvt/HighYieldEarnVaultCompartment] {
+    +++ description: Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.
+      description:
+-        "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults, Nest vaults and Wildcat V2 markets. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry."
++        "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets."
+    }
 ```
 
 Generated with discovered.json: 0xcd736e39f8f1008a61b85a396b5437062695c8f3

@@ -3,17 +3,38 @@
   "name": "butternetwork",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
+    "eth:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
     "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
     "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6"
   ],
   "names": {
+    "eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B": "Butter Verifier",
+    "eth:0xf95f0359704A66DB38d159e5A99721F069f30D9c": "Butter Reserve",
     "base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4": "Butter Verifier",
     "base:0xf95f0359704A66DB38d159e5A99721F069f30D9c": "Butter Reserve"
   },
+  // The same contracts on Ethereum and Base. Per chain: the Bridge
+  // AuthorityManager (0xACC3, role ids from its targetFunctionRoles mapping),
+  // the Reserve AuthorityManager (0xcCC7), and the verifier and reserve, whose
+  // code is unverified, so their fields are read by full ABI from the
+  // selectors in their bytecode. The admin powers were checked on a fork.
   "overrides": {
-    // Bridge AuthorityManager: role ids from its targetFunctionRoles mapping of the Bridge
-    "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
+    "eth:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
       "fields": {
+        "adminRole": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [0]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "upgrade the Butter Bridge, replace its verifier and reserve, replace the verifier's signer set and quorum, shorten the release delay, unfreeze payments and change all roles, without delay."
+            }
+          ]
+        },
         "guardians": {
           "handler": {
             "type": "call",
@@ -23,7 +44,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses and sweep stray balances into the reserve."
+              "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses, sweep stray balances into the reserve and remove signers from the verifier."
             }
           ]
         },
@@ -42,7 +63,174 @@
         }
       }
     },
-    // unverified code: fields read by full ABI, from the selectors in its bytecode
+    "eth:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC": {
+      "fields": {
+        "adminRole": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [0]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "allow any address as a withdrawal target and withdraw the reserve's funds to it without release signatures, and change all roles of the reserve, without delay."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xA6a02d654c9a941EB95e8A925655903aD77BBe6B": {
+      "description": "Verifier of inbound Butter Bridge messages from the MAP relay chain, running unverified code. Its getters name a signer set and a quorum.",
+      "fields": {
+        "signers": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function signers() view returns (address[])",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "sign inbound Butter Bridge messages from the MAP relay chain, as listed signers of the unverified verifier."
+            }
+          ]
+        },
+        "quorum": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function quorum() view returns (uint256)",
+            "args": []
+          }
+        },
+        "sourceChainId": {
+          "handler": {
+            "type": "call",
+            "method": "function sourceChainId() view returns (uint256)",
+            "args": []
+          }
+        },
+        "authority": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function authority() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "act"
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xf95f0359704A66DB38d159e5A99721F069f30D9c": {
+      "description": "Liquidity reserve of the Butter Bridge, running unverified code.",
+      "fields": {
+        "authority": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function authority() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "act"
+            }
+          ]
+        },
+        "releaseThreshold": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function releaseThreshold() view returns (uint256)",
+            "args": []
+          }
+        },
+        "mos": {
+          "handler": {
+            "type": "call",
+            "method": "function mos() view returns (address)",
+            "args": []
+          }
+        },
+        "paused": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function paused() view returns (bool)",
+            "args": []
+          }
+        }
+      }
+    },
+    "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
+      "fields": {
+        "adminRole": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [0]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "upgrade the Butter Bridge, replace its verifier and reserve, replace the verifier's signer set and quorum, shorten the release delay, unfreeze payments and change all roles, without delay."
+            }
+          ]
+        },
+        "guardians": {
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [1]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "pause the Butter Bridge, freeze pending payments, extend the release delay, lower limits, close routes, disable tokens, revoke trusted addresses, sweep stray balances into the reserve and remove signers from the verifier."
+            }
+          ]
+        },
+        "relayers": {
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [3]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "submit inbound messages with a proof to the Butter Bridge and release pending payments after the delay."
+            }
+          ]
+        }
+      }
+    },
+    "base:0xcCC7B6cb4BE1E57787e76Ab8989F4C34726aEccC": {
+      "fields": {
+        "adminRole": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [0]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "allow any address as a withdrawal target and withdraw the reserve's funds to it without release signatures, and change all roles of the reserve, without delay."
+            }
+          ]
+        }
+      }
+    },
     "base:0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4": {
       "description": "Verifier of inbound Butter Bridge messages from the MAP relay chain, running unverified code. Its getters name a signer set and a quorum.",
       "fields": {
@@ -82,12 +270,16 @@
             "method": "function authority() view returns (address)",
             "args": []
           },
-          "permissions": [{ "type": "act" }]
+          "permissions": [
+            {
+              "type": "act"
+            }
+          ]
         }
       }
     },
     "base:0xf95f0359704A66DB38d159e5A99721F069f30D9c": {
-      "description": "Liquidity reserve of the Butter Bridge on Base, running unverified code.",
+      "description": "Liquidity reserve of the Butter Bridge, running unverified code.",
       "fields": {
         "authority": {
           "severity": "HIGH",
@@ -96,7 +288,11 @@
             "method": "function authority() view returns (address)",
             "args": []
           },
-          "permissions": [{ "type": "act" }]
+          "permissions": [
+            {
+              "type": "act"
+            }
+          ]
         },
         "releaseThreshold": {
           "severity": "HIGH",
@@ -130,7 +326,11 @@
           "description": "Base gas component used by FeeService when pricing messages to Base. Authority members can change this value.",
           "severity": "HIGH",
           "type": "RISK_PARAMETER",
-          "handler": { "type": "call", "method": "baseGas", "args": [8453] }
+          "handler": {
+            "type": "call",
+            "method": "baseGas",
+            "args": [8453]
+          }
         },
         "baseFeeInfo": {
           "description": "FeeService's current Base/WETH pricing tuple: base gas, gas price, and fee receiver. Authority members can change the pricing inputs and receiver.",
