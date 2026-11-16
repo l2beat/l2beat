@@ -50,6 +50,7 @@ export function NativeProofVerificationDiagram({
         y="63"
         textAnchor="middle"
         className="fill-primary"
+        letterSpacing="0.8"
         fontSize="14"
         fontWeight="600"
       >
@@ -74,7 +75,6 @@ export function NativeProofVerificationDiagram({
         stroke="var(--accent)"
         strokeWidth="2.5"
         markerEnd="url(#npv-arrow)"
-        letterSpacing="0.8"
       />
 
       <rect
@@ -92,6 +92,7 @@ export function NativeProofVerificationDiagram({
         y="171"
         textAnchor="middle"
         className="fill-primary"
+        letterSpacing="0.6"
         fontSize="14"
         fontWeight="600"
       >
@@ -113,10 +114,10 @@ export function NativeProofVerificationDiagram({
         y="171"
         textAnchor="middle"
         className="fill-primary"
+        letterSpacing="0.6"
         fontSize="14"
         fontWeight="600"
       >
-        letterSpacing="0.6"
         CUSTOM VM
       </text>
 
@@ -135,13 +136,12 @@ export function NativeProofVerificationDiagram({
         y="171"
         textAnchor="middle"
         className="fill-primary"
+        letterSpacing="0.6"
         fontSize="14"
         fontWeight="600"
       >
-        letterSpacing="0.6"
         ZK APP
       </text>
     </svg>
   )
 }
-        letterSpacing="0.6"
