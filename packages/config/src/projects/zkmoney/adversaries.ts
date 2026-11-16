@@ -1,7 +1,7 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
@@ -204,7 +204,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Run Desktop on a system that sends ${adviceLink('all traffic through Tor', 'ipHidingRoutes')} and blocks UDP, such as Whonix. Set your own Aztec node and Ethereum node in the endpoint settings.`,
+      text: `Run Desktop on a system that sends all traffic through Tor and blocks UDP, such as ${toolLink('torSystems', 'Whonix')}. Set your own ${toolLink('aztecNode')} and ${toolLink('ethereumNode')} in the endpoint settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },

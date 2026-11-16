@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OsTokenVaultController",
+  "category": "core",
+  "description": "Share accounting behind the osToken. Registered vaults on an approved implementation mint, and registered vaults burn. Total assets grow at the reward rate written by the keeper, {{feePercent}} basis points of each increment go to the treasury, and the exchange rate is total assets over total shares. Minting is capped at {{capacityFormatted}} units of total assets.",
+  "ignoreMethods": ["convertToAssets", "convertToShares"],
+  "ignoreInWatchMode": [
+    "avgRewardPerSecond",
+    "totalAssets",
+    "totalShares",
+    "cumulativeFeePerShare"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the keeper allowed to write the reward rate, which also replaces the rate ceiling, and set the fee up to 100%, the treasury and the capacity, with no delay."
+        }
+      ]
+    },
+    "keeper": {
+      "severity": "HIGH"
+    },
+    "feePercent": {
+      "severity": "HIGH",
+      "description": "Basis points of osToken rewards minted to the treasury."
+    },
+    "capacity": {
+      "severity": "MEDIUM"
+    },
+    "capacityFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function capacity() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"],
+      "severity": "MEDIUM"
+    }
+  }
+}

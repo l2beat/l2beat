@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xf5033ba6f1a358e34b9bdfaa4507c75bf4907063
+
+# Diff at Fri, 13 Nov 2026 13:04:04 GMT:
+
+- id: f3a3f675
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319607
+- current timestamp: 1794568059
+
+## Description
+
+The batch with the L2 system contracts upgrade transaction was executed, which clears the pending upgrade fields.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        9268
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        9268
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xce51fa7f0cd7462fd368d2a0c7eeaff4f748f9d6d489295f57038ec5db44ae90"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x6cadc9763cc5cc05645a87b63634e5cfdbc67094
 
 # Diff at Tue, 10 Nov 2026 14:25:48 GMT:

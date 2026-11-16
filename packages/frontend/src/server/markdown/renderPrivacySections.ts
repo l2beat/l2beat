@@ -32,6 +32,7 @@ import {
 } from '~/pages/privacy/project/components/assets-breakdown/privacyAssetsBreakdown'
 import {
   getCheckedAppSourceLabel,
+  getReferenceAppDelivery,
   getReferenceAppSince,
   getReferenceAppSource,
   REFERENCE_APP,
@@ -87,10 +88,22 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       ? `${source.label} ${link(source.commit.label, source.commit.href)}`
       : source.label,
   ]
+  const delivery = getReferenceAppDelivery(app)
+  const check =
+    delivery.check &&
+    (delivery.check.value
+      ? `${delivery.check.label}: ${delivery.check.value}`
+      : delivery.check.label)
+  const deliveryMeta = [
+    `${delivery.kind.label}: ${delivery.kind.description}`,
+    `${delivery.source.label}: ${delivery.source.description}`,
+    delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
+    check,
+  ]
   return joinBlocks([
     `**${REFERENCE_APP.listTitle}**`,
     bulletList([
-      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta(meta)}`,
+      `**${link(app.name, app.url)}**${version} (${REFERENCE_APP.referenceChip}): ${joinMeta([...meta, ...deliveryMeta])}`,
       ...app.checkedApps.map((checkedApp) => {
         const meta = [
           checkedApp.fix && `${REFERENCE_APP.fixLabel}: ${checkedApp.fix}`,

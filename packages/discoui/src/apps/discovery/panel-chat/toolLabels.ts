@@ -5,6 +5,8 @@ const DISCOUI_LABELS: Record<string, string> = {
   context: 'Looked at your screen',
   permissions: 'Traced who controls it',
   board: 'Built a board',
+  graph: 'Read your node view',
+  layout: 'Arranged your node view',
   clear: 'Cleared its note',
 }
 

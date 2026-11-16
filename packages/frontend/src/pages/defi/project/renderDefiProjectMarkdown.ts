@@ -3,10 +3,12 @@ import type { ProjectDefiEntry } from '~/server/features/defi/project/getDefiPro
 import { formatUsd } from '~/server/markdown/markdown'
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import { formatUtcDateOrDay } from '~/server/markdown/renderSectionParts'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   formatLatestValue,
-  LIQUID_STAKING_METRICS,
+  getProjectMetrics,
+  STAKED_ETH_SHARE_TOOLTIP,
 } from '../liquid-staking/liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquid-staking/liquidStakingRisks'
 
@@ -63,15 +65,21 @@ function getFacts(
 /** The stats block of a liquid staking project page. */
 function getLiquidStakingFacts(summary: ProjectDefiEntry['liquidStaking']) {
   if (!summary) return []
+  const share = summary.stakedEthShare
   return compact([
-    ...LIQUID_STAKING_METRICS.map((metric) => {
+    share && {
+      label: 'Share of staked ETH',
+      value: `${formatPercent(share.value)} (ETH staked ${formatUtcDateOrDay(share.timestamp, false)}). ${STAKED_ETH_SHARE_TOOLTIP}`,
+    },
+    ...getProjectMetrics(summary.costOfExitDescription).map((metric) => {
       const latest = summary[metric.key]
-      return (
-        latest && {
-          label: metric.title,
-          value: `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)}). ${metric.tooltip}`,
-        }
-      )
+      const value = latest
+        ? `${formatLatestValue(metric, latest)} (${formatUtcDateOrDay(latest.timestamp, metric.dailyBuckets)})`
+        : 'No data'
+      return {
+        label: metric.title,
+        value: `${value}. ${metric.tooltip}`,
+      }
     }),
     ...LIQUID_STAKING_RISKS.map(({ key, title }) => {
       const risk = summary.risks[key]

@@ -19,7 +19,7 @@ The goal of this document is to describe certain edge cases that are not explici
 
 ## Liveness failure upper bound
 
-The new Stage 1 requirement announced [here](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) is presented as follows:
+The new Stage 1 requirement announced [here](https://forum.ethbeat.org/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) is presented as follows:
 
 > ➡️ The only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) is by compromising ≥75% of the Security Council.
 

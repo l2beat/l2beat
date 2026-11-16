@@ -8,7 +8,7 @@ import { getLatestValuesRange } from './getLiquidStakingSummary'
 export interface LiquidStakingOverview {
   entries: LiquidStakingStatsEntry[]
   /** ETH staked network-wide, absent when the range has no value. */
-  ethStaked?: { value: number; timestamp: number }
+  ethStaked?: { value: number; valueUsd: number | null; timestamp: number }
 }
 
 /** The protocols' latest numbers, without the risk comparison. */
@@ -23,7 +23,11 @@ export async function getLiquidStakingOverview(): Promise<LiquidStakingOverview>
     entries: entries.map(({ risks: _, ...entry }) => entry),
     ethStaked:
       latest?.ethStaked != null
-        ? { value: latest.ethStaked, timestamp: latest.timestamp }
+        ? {
+            value: latest.ethStaked,
+            valueUsd: latest.ethStakedUsd,
+            timestamp: latest.timestamp,
+          }
         : undefined,
   }
 }

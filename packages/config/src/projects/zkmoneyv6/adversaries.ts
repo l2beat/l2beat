@@ -1,15 +1,16 @@
 import {
   ADVICE_SNIPPETS as A,
-  adviceLink,
   definePrivacyAdversaries,
+  toolLink,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
-// zk.money Desktop v0.10.0, the reference client. vendor/oxide holds Oxide
-// 3b5e1f7c8, the commit the approved enclave image builds from. The manifest
-// names Oxide 3d8e29dc, with the portals, registry and PCR0 unchanged.
+// zk.money Desktop v0.12.0, the reference client. vendor/oxide holds Oxide
+// dab3d38, the commit the manifest names. The approved enclave image builds
+// from Oxide 3b5e1f7c8 (zkmoney-public f90b3f2). The cited Oxide lines are the
+// same in both.
 const ZKMONEY_REPO =
-  'https://github.com/aztec-labs-eng/zkmoney-public/blob/f90b3f24ad4dbe936070c6abc38bffea047006ba/'
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/c055ea1ca641d64256855d03802c927b0b1d3ad1/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
 const HANDSHAKE_REGISTRY =
   'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
@@ -115,19 +116,19 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         {
           title:
             'Endpoint settings: Aztec node, old-network node, L1 RPC and enclave',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/endpointOverrides.ts#L17`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/endpointOverrides.ts#L18`,
         },
         {
           title: 'Every L1 client reads the configured L1 RPC',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L666-L672`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L611-L617`,
         },
         {
           title: 'Withdrawal recipients are checked on a fixed Optimism RPC',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/withdraw/etherfiCheck.ts#L91-L116`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/features/withdraw/etherfiCheck.ts#L79-L103`,
         },
         {
           title: 'XMTP identity is the account bootstrap address',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L95-L109`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/platform/xmtp/WebXmtpClient.ts#L82-L96`,
         },
       ],
     },
@@ -159,15 +160,15 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
         {
           contract: 'TeeRegistry',
-          title: 'One approved image for both portals',
+          title: 'One approved image for all portals',
         },
         {
           title: "Deposit claims ask the Aztec node for the deposit's message",
-          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/sipaClaim.ts#L133`,
+          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/sipaClaim.ts#L138`,
         },
         {
           title: 'The resolver derives addresses paid through a name',
-          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/resolverPayments.ts#L164`,
+          url: `${ZKMONEY_REPO}packages/front-core/src/oxide/resolverPayments.ts#L196-L197`,
         },
       ],
     },
@@ -207,13 +208,13 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Set your own Ethereum node as the L1 endpoint. Send all traffic through NymVPN with the Random profile, an ${adviceLink('IP-hiding route', 'ipHidingRoutes')} that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like Whonix, keeps them but must reach your node.`,
+      text: `Set your own ${toolLink('ethereumNode')} as the L1 endpoint. Send all traffic through ${toolLink('nymVpn')} with the Random profile, an IP-hiding route that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like ${toolLink('torSystems', 'Whonix')}, keeps them but must reach your node.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Run a node',
-      text: 'Set your own Aztec node in the endpoint settings.',
+      text: `Set your own ${toolLink('aztecNode')} in the endpoint settings.`,
       against: ['privilegedInsider'],
       outside: true,
     },

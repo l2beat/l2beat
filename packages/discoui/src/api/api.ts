@@ -7,6 +7,8 @@ import type {
   ApiAddressUsageResponse,
   ApiAgentContext,
   ApiAgentEvent,
+  ApiAgentGraph,
+  ApiAgentLayout,
   ApiCodeResponse,
   ApiCodeSearchResponse,
   ApiConfigFileResponse,
@@ -171,6 +173,22 @@ export async function postAgentContext(answer: {
   context: ApiAgentContext
 }): Promise<void> {
   await fetchOk('/api/agent/context', jsonRequest('POST', answer))
+}
+
+export async function postAgentGraph(answer: {
+  tab: string
+  request: string
+  graph: ApiAgentGraph
+}): Promise<void> {
+  await fetchOk('/api/agent/graph', jsonRequest('POST', answer))
+}
+
+export async function postAgentLayout(answer: {
+  tab: string
+  request: string
+  layout: ApiAgentLayout
+}): Promise<void> {
+  await fetchOk('/api/agent/layout', jsonRequest('POST', answer))
 }
 
 // Answers the server's reason when the chat refuses, like a prompt while

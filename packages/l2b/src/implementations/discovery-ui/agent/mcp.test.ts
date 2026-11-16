@@ -1,6 +1,11 @@
-import type { ConfigReader } from '@l2beat/discovery'
+import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import express from 'express'
+import express, {
+  type NextFunction,
+  type Request,
+  type Response,
+} from 'express'
 import type { Server } from 'http'
 import type { AddressInfo } from 'net'
 import { attachMcpRoutes } from './mcp'
@@ -12,6 +17,20 @@ import { AgentTabs, type TabStream } from './tabs'
 function keep(chunk: string): boolean {
   return !chunk.includes('"chat-replay"') && !chunk.includes('"board-replay"')
 }
+
+const BRIDGE = ChainSpecificAddress(
+  'eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
+)
+const INBOX = ChainSpecificAddress(
+  'eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
+)
+// The routes read only the entries' addresses and names.
+const DISCOVERY = {
+  entries: [
+    { type: 'Contract', address: BRIDGE, name: 'Bridge' },
+    { type: 'Contract', address: INBOX, name: 'Inbox' },
+  ],
+} as unknown as DiscoveryOutput
 
 // A real HTTP round trip against the express app, the way an agent's MCP
 // client calls it.
@@ -28,7 +47,7 @@ describe(attachMcpRoutes.name, () => {
         if (project === 'missing') throw new Error('Project not found')
         return project === 'linea'
       },
-      readDiscoveryWithReferences: () => [],
+      readDiscoveryWithReferences: () => [DISCOVERY],
     })
     const chatOptions = {
       cwd: process.cwd(),
@@ -36,6 +55,17 @@ describe(attachMcpRoutes.name, () => {
       launch: () => ({ command: process.execPath, args: ['-e', ''] }),
     }
     app.use('/api/agent', createAgentRouter(configReader, chatOptions, tabs))
+    // Express logs the errors it answers itself, like a body over the limit.
+    app.use(
+      (
+        error: { status?: number },
+        _req: Request,
+        res: Response,
+        _next: NextFunction,
+      ) => {
+        res.status(error.status ?? 500).end()
+      },
+    )
     server = app.listen(0, '127.0.0.1')
     await new Promise((resolve) => server.once('listening', resolve))
     const { port } = server.address() as AddressInfo
@@ -75,6 +105,8 @@ describe(attachMcpRoutes.name, () => {
       'context',
       'permissions',
       'board',
+      'graph',
+      'layout',
       'clear',
     ])
     for (const tool of tools) {
@@ -247,6 +279,140 @@ describe(attachMcpRoutes.name, () => {
     tabs.disconnect('tab-1', stream)
     expect(result?.isError).toEqual(false)
     expect(JSON.stringify(result?.content)).toInclude('DiscoUI shows linea.')
+  })
+
+  // Like AgentBridge: the tab answers each request over HTTP, on the route
+  // of its kind.
+  function answeringTab(
+    route: string,
+    answer: (event: Record<string, unknown>) => object,
+  ): TabStream & { events: Record<string, unknown>[] } {
+    const events: Record<string, unknown>[] = []
+    return {
+      events,
+      write: (chunk) => {
+        if (!keep(chunk)) return
+        const event = JSON.parse(chunk.slice('data: '.length))
+        events.push(event)
+        void fetch(url.replace('/mcp', route), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tab: 'tab-1',
+            request: event.id,
+            ...answer(event),
+          }),
+        })
+      },
+      end: () => {},
+    }
+  }
+
+  // A large project's node view does not fit the other routes' 100kb.
+  it('reads a node view larger than the other routes take', async () => {
+    const items = Array.from({ length: 2_000 }, (_, index) => ({
+      id: `group:${index}`,
+      name: `Group number ${index}`,
+      x: index,
+      y: 0,
+      width: 200,
+      height: 50,
+      members: [],
+    }))
+    const graph = {
+      status: 'loaded',
+      items,
+      links: [[0, 1, 'owner']],
+      hidden: [],
+    }
+    expect(JSON.stringify(graph).length > 100_000).toEqual(true)
+    const stream = answeringTab('/graph', () => ({ graph }))
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 5, sequence: 5 })
+    const result = (await call('tools/call', { name: 'graph' })).result
+    tabs.disconnect('tab-1', stream)
+    expect(stream.events[0]).toEqual({
+      type: 'graph-request',
+      id: stream.events[0]?.id,
+      project: 'linea',
+    })
+    expect(result?.isError).toEqual(false)
+    const text = (result?.content as { text: string }[])[0]?.text ?? ''
+    expect(text).toInclude('linea node view: 2000 drawn, 0 hidden, 1 links.')
+    expect(text).toInclude('group "Group number 0" at 0,0 200×50')
+    expect(text).toInclude('→ Group number 1 (owner)')
+  })
+
+  it('still refuses a context answer over 100kb', async () => {
+    const response = await fetch(url.replace('/mcp', '/context'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ padding: 'x'.repeat(200_000) }),
+    })
+    expect(response.status).toEqual(413)
+  })
+
+  it('sends the lanes as addresses and says what the tab drew', async () => {
+    const stream = answeringTab('/layout', () => ({
+      layout: {
+        status: 'arranged',
+        placed: [BRIDGE],
+        below: [{ id: 'group:1', name: 'Admins' }],
+        notDrawn: [INBOX],
+      },
+    }))
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 6, sequence: 6 })
+    const result = (
+      await call('tools/call', {
+        name: 'layout',
+        arguments: { lanes: [{ columns: [['Bridge'], ['Inbox']] }] },
+      })
+    ).result
+    tabs.disconnect('tab-1', stream)
+    expect(stream.events[0]).toEqual({
+      type: 'layout-request',
+      id: stream.events[0]?.id,
+      project: 'linea',
+      lanes: [[[BRIDGE], [INBOX]]],
+      hideOthers: false,
+    })
+    expect(result?.isError).toEqual(false)
+    const text = (result?.content as { text: string }[])[0]?.text ?? ''
+    expect(text).toInclude('Lanes: 1, items placed: 1.')
+    expect(text).toInclude('below the lanes: Admins.')
+    expect(text).toInclude('Not drawn, so not placed: Inbox.')
+  })
+
+  it('tells the agent to open the node view the tab does not draw', async () => {
+    const stream = answeringTab('/layout', () => ({
+      layout: { status: 'not-loaded', project: 'arbitrum' },
+    }))
+    tabs.connect('tab-1', stream)
+    tabs.report('tab-1', { project: 'linea', focusedAt: 7, sequence: 7 })
+    const result = (
+      await call('tools/call', {
+        name: 'layout',
+        arguments: { lanes: [{ columns: [['Bridge']] }], others: 'hide' },
+      })
+    ).result
+    tabs.disconnect('tab-1', stream)
+    expect(stream.events[0]?.hideOthers).toEqual(true)
+    expect(result?.isError).toEqual(true)
+    const text = (result?.content as { text: string }[])[0]?.text ?? ''
+    expect(text).toInclude('Call show for the project first')
+    expect(text).toInclude('node view shows: arbitrum')
+  })
+
+  it('refuses lanes with an empty column before asking the tab', async () => {
+    const result = await call('tools/call', {
+      name: 'layout',
+      arguments: { lanes: [{ columns: [[]] }] },
+    })
+    expect(result.result?.isError).toEqual(true)
+    expect(JSON.stringify(result.result?.content)).toInclude(
+      'A column names at least one contract',
+    )
   })
 
   it('answers JSON it cannot parse with a JSON-RPC error', async () => {

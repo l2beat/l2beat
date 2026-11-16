@@ -15,36 +15,21 @@
       ]
     },
     // HIGH: the current implementation is the code that receives every new
-    // deposit, and the owner can replace it at any time.
-    "depositImplementation": {
-      "description": "Implementation cloned by new deposit addresses.",
+    // deposit, and the owner can replace it at any time. Read from events
+    // because the legacy factory types the intent as an enum, which rejects
+    // intents it does not know.
+    "implementations": {
+      "description": "Current implementation per intent (1 = Deposit, 2 = Registration, 3 = UserOp, 4 = AddPasskey), cloned by new addresses for that intent.",
       "severity": "HIGH",
       "handler": {
-        "type": "call",
-        "method": "function implementationFor(uint8 intent) view returns (address)",
-        "args": [1]
-      }
-    },
-    "registrationImplementation": {
-      "description": "Implementation cloned by new name registration addresses.",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function implementationFor(uint8 intent) view returns (address)",
-        "args": [2]
-      }
-    },
-    "userOpImplementation": {
-      "description": "Implementation cloned by new deposit addresses that run an ERC-4337 user operation.",
-      "severity": "HIGH",
-      "handler": {
-        "type": "call",
-        "method": "function implementationFor(uint8 intent) view returns (address)",
-        "args": [3]
+        "type": "event",
+        "select": "implementation",
+        "groupBy": "intent",
+        "set": { "event": "ImplementationBlessed" }
       }
     },
     "blessedImplementations": {
-      "description": "Blessed implementations per intent (1 = Deposit, 2 = Registration, 3 = UserOp). Clones of any of them count as blessed.",
+      "description": "All blessed implementations with their intent. Clones of any of them count as blessed.",
       "handler": {
         "type": "event",
         "select": ["implementation", "intent"],

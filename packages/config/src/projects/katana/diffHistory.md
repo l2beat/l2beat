@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x989311573d789f52ef7d36b24cc8347bc4fe4f34
+
+# Diff at Fri, 13 Nov 2026 13:04:03 GMT:
+
+- id: cf3fbceb
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1793874174
+- current timestamp: 1794567784
+
+## Description
+
+Conduit Multisig 1 removed a member and is 4 of 10. The Safe eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb, a member of the 1/4 Safe eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50, swapped three members and removed two, now 2 of 10. Thresholds are unchanged.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.8:
+-        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract Safe (eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x1319279d6d54dB0883F7bAF822191c7184Db0c3d"
++        "eth:0x97E3e9e9d5087CBf1fF5e7A68402F86e9C13B99b"
+      values.$members.6:
+-        "eth:0xF045025C845E786E343Df30cC6f67ec6BB822b34"
+      values.$members.7:
+-        "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6"
++        "eth:0xb20d2bA1C74744a0Df7852f62BF802AbC8e4d91E"
+      values.$members.8:
+-        "eth:0x6624307a4f672ec5C289fBA196952902BB518dc0"
++        "eth:0x5F050BECf0746E4E95C4dB3254eA0E9a56268C0d"
+      values.$members.11:
+-        "eth:0xdEb97974dfCC73178672205A1eadDc2BDeAc1Bd4"
+      values.multisigThreshold:
+-        "2 of 12 (17%)"
++        "2 of 10 (20%)"
+    }
+```
+
 Generated with discovered.json: 0x0cc6af454071d7014a6c8897c35b27d366dbefaa
 
 # Diff at Thu, 05 Nov 2026 15:33:57 GMT:

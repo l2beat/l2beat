@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SharedMevEscrow",
+  "category": "core",
+  "description": "Smoothing pool for the execution-layer rewards of vaults that opted into it at creation. The oracles attribute its balance in the rewards root and each registered vault pulls its share during a harvest.",
+  "ignoreMethods": []
+}
