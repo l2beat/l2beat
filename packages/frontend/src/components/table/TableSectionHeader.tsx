@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CountBadge } from '~/components/badge/CountBadge'
 
 interface Props {
   title: string
@@ -25,11 +26,7 @@ export function TableSectionHeader({
           <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
             {title}
           </h2>
-          {count !== undefined && (
-            <span className="ml-0.5 font-normal text-label-value-13 text-secondary leading-4">
-              {count}
-            </span>
-          )}
+          {count !== undefined && <CountBadge>{count}</CountBadge>}
         </div>
         {description && (
           <p className="mt-1 text-pretty text-label-value-15 text-secondary leading-5.5">
