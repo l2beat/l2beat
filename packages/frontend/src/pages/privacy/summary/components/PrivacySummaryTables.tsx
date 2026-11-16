@@ -1,5 +1,5 @@
-import { CountBadge } from '~/components/badge/CountBadge'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { TableSectionHeader } from '~/components/table/TableSectionHeader'
 import { PrivacyRosetteLegend } from '../../rosette/PrivacyRosetteLegend'
 import type { PrivacySummaryGroup } from '../privacySummaryGroups'
 import { PrivacySummaryTable } from './PrivacySummaryTable'
@@ -26,14 +26,12 @@ export function PrivacySummaryTables({
 function PrivacySummaryGroupCard({ group }: { group: PrivacySummaryGroup }) {
   return (
     <PrimaryCard className="flex min-w-0 flex-col">
-      <h2 className="flex items-center gap-2 font-bold text-heading-16 md:text-heading-20">
-        {group.label}
-        <CountBadge>{group.entries.length}</CountBadge>
-      </h2>
-      <p className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        {group.description}
-      </p>
-      <div className="mt-2 min-w-0">
+      <TableSectionHeader
+        title={group.label}
+        description={group.description}
+        count={group.entries.length}
+      />
+      <div className="min-w-0">
         <PrivacySummaryTable
           entries={group.entries}
           hiddenColumns={group.hiddenColumns}

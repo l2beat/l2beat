@@ -1,7 +1,10 @@
 import { Fragment, type ReactNode } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { PRIVACY_EXPOSURE_CHIP_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import {
+  PRIVACY_CHIP_BASE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
+} from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   getCheckedAppSourceLabel,
   getReferenceAppDelivery,
@@ -11,10 +14,11 @@ import {
 } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
+import { formatDate } from '~/utils/dates'
 import { DeliveryIcon, type DeliveryPart } from './PrivacyDelivery'
 
 const CHIPS = {
-  // Neutral, since green would read as a privacy verdict the app may not earn.
+  // Blue-grey, since green would read as a privacy verdict the app may not earn.
   reference: {
     label: REFERENCE_APP.referenceChip,
     className:
@@ -28,13 +32,13 @@ const CHIPS = {
 
 /** The reference app first, then the other apps checked against it. */
 export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
-  const source = getReferenceAppSource(app)
+  const source = getReferenceAppSource(app, formatDate)
   const delivery = getReferenceAppDelivery(app)
 
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-medium text-paragraph-12 text-secondary uppercase tracking-wide">
+        <span className="font-medium text-paragraph-12 uppercase tracking-wide">
           {REFERENCE_APP.listTitle}
         </span>
         <CustomLink
@@ -54,7 +58,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
         >
           <Meta
             parts={[
-              getReferenceAppSince(app),
+              getReferenceAppSince(app, formatDate),
               source.commit ? (
                 <>
                   {source.label}{' '}
@@ -125,7 +129,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
                   href={checkedApp.source}
                   className="whitespace-nowrap"
                 >
-                  {getCheckedAppSourceLabel(checkedApp)}
+                  {getCheckedAppSourceLabel(checkedApp, formatDate)}
                 </CustomLink>,
               ]}
             />
@@ -174,7 +178,8 @@ function AppRow({
           )}
           <span
             className={cn(
-              'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-2xs uppercase',
+              PRIVACY_CHIP_BASE_CLASS_NAME,
+              'uppercase',
               CHIPS[chip].className,
             )}
           >

@@ -7,21 +7,22 @@ import { PRIVACY_ASSETS_BREAKDOWN_HEADERS as HEADERS } from './privacyAssetsBrea
 
 const columnHelper = createColumnHelper<PrivacyAsset>()
 
+// Value locked leads, so phones see it without a sideways scroll; the
+// bucket count is descriptive and comes last.
 export const privacyAssetsBreakdownColumns = [
   columnHelper.accessor('symbol', {
     header: HEADERS.asset,
     cell: (ctx) => <AssetCell row={ctx.row} />,
     meta: { cellClassName: 'font-bold text-base' },
   }),
-  columnHelper.accessor('bucketCount', {
-    id: 'buckets',
-    header: HEADERS.buckets,
-    cell: (ctx) => ctx.getValue(),
-    meta: {
-      align: 'right',
-      headClassName: 'w-[1%] whitespace-nowrap',
-      cellClassName: 'w-[1%] whitespace-nowrap',
+  columnHelper.accessor((row) => row.totalValueUsd, {
+    id: 'valueLocked',
+    header: HEADERS.valueLocked,
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      return value === null ? '—' : formatCurrency(value, 'usd')
     },
+    meta: { align: 'right', cellClassName: 'font-medium' },
   }),
   columnHelper.accessor((row) => row.deposits.last7d, {
     id: 'deposits7d',
@@ -56,13 +57,14 @@ export const privacyAssetsBreakdownColumns = [
     ),
     meta: { align: 'right' },
   }),
-  columnHelper.accessor((row) => row.totalValueUsd, {
-    id: 'valueLocked',
-    header: HEADERS.valueLocked,
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return value === null ? '—' : formatCurrency(value, 'usd')
+  columnHelper.accessor('bucketCount', {
+    id: 'buckets',
+    header: HEADERS.buckets,
+    cell: (ctx) => ctx.getValue(),
+    meta: {
+      align: 'right',
+      headClassName: 'w-[1%] whitespace-nowrap',
+      cellClassName: 'w-[1%] whitespace-nowrap',
     },
-    meta: { align: 'right', cellClassName: 'font-medium' },
   }),
 ]
