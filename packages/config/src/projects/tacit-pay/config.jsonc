@@ -8,9 +8,6 @@
     "eth:0x8c7348d039f58c4e9cfa936ef410eec759213b12"
   ],
   "overrides": {
-    "eth:0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20": {
-      "ignoreMethods": ["getSeq", "nonceSequenceNumber"]
-    },
     "eth:0x0000000d42137547140b0812e1178f025e08bc49": {
       "fields": {
         "anonWeiTarget": {
@@ -41,6 +38,31 @@
               "description": "point the name anon.wei at any contract, which anon.wei.limo then serves."
             }
           ]
+        }
+      }
+    },
+    "eth:0x5E58BA0e06ED0F5558f83bE732a4b899a674053E": {
+      "fields": {
+        "zammSale": {
+          "description": "Terms on which anyone mints shares by paying ZAMM: price per share, remaining cap (0 for none), minting, active, loot instead of shares.",
+          "handler": {
+            "type": "call",
+            "method": "function sales(address payToken) view returns (uint256 pricePerShare, uint256 cap, bool minting, bool active, bool isLoot)",
+            "args": ["0xE9b1cFEA55BAA219e34301f2F31b9FD0921664ED"]
+          }
+        }
+      }
+    },
+    "eth:0x00a6bA94BBb5474725515De88fE04F854f2dCb12": {
+      "ignoreInWatchMode": ["previousAppOwnerVotes"],
+      "fields": {
+        "previousAppOwnerVotes": {
+          "description": "Votes of the account that held the anon.wei app's roles before the DAO.",
+          "handler": {
+            "type": "call",
+            "method": "function getVotes(address account) view returns (uint256)",
+            "args": ["0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20"]
+          }
         }
       }
     },

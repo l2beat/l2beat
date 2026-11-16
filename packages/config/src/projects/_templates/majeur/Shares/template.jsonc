@@ -2,5 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Shares",
   "category": "gov",
-  "description": "Voting token of a Majeur DAO with delegation and vote snapshots."
+  "description": "Voting token of a Majeur DAO with delegation and vote snapshots.",
+  "ignoreInWatchMode": ["totalSupply"]
 }

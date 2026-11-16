@@ -39,15 +39,7 @@
       "ignoreRelatives": ["resolverOperators"]
     },
     "eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F": {
-      "ignoreRelatives": ["ensResolver"],
-      "fields": {
-        "ensNode": {
-          "handler": {
-            "type": "hardcoded",
-            "value": "0xf605999a299a7229da9f2a3c65acf5cb829ae965cfe467f053e1b97c50b0eec2"
-          }
-        }
-      }
+      "ignoreRelatives": ["ensResolver"]
     }
   }
 }

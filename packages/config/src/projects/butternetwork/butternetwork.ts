@@ -1,4 +1,4 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -10,12 +10,47 @@ import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('butternetwork')
 
-// Discovery watches only the Base bridge, paused with all other chains for the
-// routing upgrade. Once it is unpaused, drop the yellowWarning and this assert.
+// Discovery watches the Ethereum and Base deployments, which share addresses
+// except for the verifier. The bridge is verified, its verifier and reserve
+// are not, so their texts rest on getters read by full ABI and on fork tests.
+// Once they are verified, review them and rewrite the warning and settlement.
+const BRIDGE = '0x0000317Bec33Af037b5fAb2028f52d14658F6A56'
+const RESERVE = '0xf95f0359704A66DB38d159e5A99721F069f30D9c'
+const BRIDGE_AUTHORITY = '0xACC31A6756B60304C03d6626fc98c062E4539CCA'
+const VERIFIERS = {
+  eth: '0xA6a02d654c9a941EB95e8A925655903aD77BBe6B',
+  base: '0xC1eFc08ab7481a9303D1670e8f955ABb38Cd69D4',
+}
+const perChain = (['eth', 'base'] as const).map((chain) => {
+  const verifier = `${chain}:${VERIFIERS[chain]}`
+  assert(
+    discovery.getContract(verifier).unverified === true &&
+      discovery.getContract(`${chain}:${RESERVE}`).unverified === true,
+    'Butter Verifier or Reserve is verified: review the new code',
+    { chain },
+  )
+  return {
+    signers: discovery.getContractValue<string[]>(verifier, 'signers').length,
+    quorum: discovery.getContractValue<number>(verifier, 'quorum'),
+    relayers: discovery.getContractValue<string[]>(
+      `${chain}:${BRIDGE_AUTHORITY}`,
+      'relayers',
+    ).length,
+    releaseDelay: discovery.getContractValue<number>(
+      `${chain}:${BRIDGE}`,
+      'releaseDelay',
+    ),
+  }
+})
+const [ethereum, base] = perChain
 assert(
-  discovery.getContractValue<boolean>('Butter Bridge', 'paused'),
-  'Butter Bridge on Base is unpaused: remove the routing upgrade yellowWarning and review the new code',
+  JSON.stringify(ethereum) === JSON.stringify(base),
+  'Butter on Ethereum and Base differ, describe each chain in the texts',
 )
+const verifierSigners = ethereum.signers
+const verifierQuorum = ethereum.quorum
+const relayerCount = ethereum.relayers
+const releaseDelay = formatSeconds(ethereum.releaseDelay)
 
 export const butternetwork: BaseProject = {
   id: ProjectId('butternetwork'),
@@ -25,8 +60,7 @@ export const butternetwork: BaseProject = {
   addedAt: UnixTime(1785915246),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
-    yellowWarning:
-      'The bridge is paused during a [routing infrastructure upgrade](https://x.com/ButterNetworkio/status/2110682522564825340). On Base, its admins withdrew all [USDC](https://basescan.org/tx/0x92f287eec13a8d25e9eb10d1d45c6b16e050e515ae09865e5940cbe58fd0c57c) and [WETH](https://basescan.org/tx/0x9e89a766ce74e84a25cc5c12084afbff1dcd37ecfc5baec200c4ccaf5d826e14) liquidity from the bridge to a multisig.',
+    yellowWarning: `On Ethereum and Base, the verifier and the reserve of the bridge run unverified code. The verifier's getters show that inbound messages need signatures of ${verifierQuorum} of ${verifierSigners} signers. Each admin multisig can replace these signers, and each reserve admin multisig can withdraw the reserve.`,
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -34,7 +68,7 @@ export const butternetwork: BaseProject = {
   },
   interopConfig: {
     description:
-      'Liquidity bridge and messaging protocol using the MAP relay chain (an alt-L1) and its light-client network to verify cross-chain messages.',
+      'Liquidity bridge and messaging protocol that routes cross-chain messages through the MAP relay chain (an alt-L1).',
     intent: {
       color: '#F5A524',
       intentModel: {
@@ -46,19 +80,17 @@ export const butternetwork: BaseProject = {
         value: 'None',
         sentiment: 'bad',
         description:
-          'There is no onchain refund: once assets are locked on the source chain, no contract path returns them. Failed destination deliveries can be permissionlessly re-executed via retryMessageIn, and failed token payouts are swept to an admin-set failedReceiver address.',
+          'There is no onchain refund: once assets are locked on the source chain, no contract path returns them. A payout that fails to reach the recipient goes to an admin-set failedReceiver address.',
       },
       solverAccess: {
         value: 'Internal',
         sentiment: 'bad',
-        description:
-          'There are no independent solvers or auctions: destination payouts come from bridge-held pool liquidity and only after settlement on the MAP relay chain. Anyone can trigger a payout by relaying the settled message with a receipt proof.',
+        description: `There are no independent solvers or auctions: destination payouts come from the bridge's reserve, after settlement on the MAP relay chain. Only ${relayerCount} permissioned relayers can submit messages and release payouts.`,
       },
       settlement: {
         value: 'Internal (sidechain)',
         sentiment: 'bad',
-        description:
-          'Transfers settle through the MAP relay chain, an external proof-of-stake chain. Destination chains verify only BLS signatures of its validator set via onchain light clients.',
+        description: `Transfers settle through the MAP relay chain, an external proof-of-stake chain. On Ethereum and Base, the bridge accepts a message from it with signatures of ${verifierQuorum} of ${verifierSigners} signers that the admins set. The payout waits ${releaseDelay}, during which guardians can freeze it.`,
       },
     },
     // as of 2026-08, MAPO (on ethereum and bsc) is the only token the bridge

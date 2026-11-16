@@ -23,6 +23,25 @@
     },
     {
       "mode": "auto",
+      "id": "zkmoneyv6-steakUSDC",
+      "priceId": "steakhouse-usdc",
+      "symbol": "steakUSDC",
+      "name": "Steakhouse Prime USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71229/large/steakusdc.png?1766513116",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbeef088055857739C12CD3765F20b7679Def0f51",
+        "chain": "ethereum",
+        "escrowAddress": "0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf",
+        "decimals": 18,
+        "sinceTimestamp": 1794498911
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zkmoneyv6-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",

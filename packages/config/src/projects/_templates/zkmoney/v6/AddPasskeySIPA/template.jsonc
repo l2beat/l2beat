@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AddPasskeySIPA",
+  "critical": true,
+  "category": "core",
+  "description": "Implementation of zk.money addresses that add a passkey to a user's L1 account. Sweeping a funded clone swaps USDC or USDT to DAI and runs the account operation fixed in the clone's address through the ERC-4337 EntryPoint, signed by the account's current keys: it adds the passkey, writes the user record and announces the account on Aztec through the NAME_PORTAL. It then pays the listed fees and deposits the rest into the portal its ForwardingTable names. The recipient's account can recover any funds from the clone.",
+  "ignoreMethods": [
+    "forwardingTable",
+    "intentHash",
+    "recoveryCommitment",
+    "resweepable",
+    "rollupVersion",
+    "swept"
+  ],
+  "ignoreRelatives": ["ENTRY_POINT"],
+  "fields": {
+    "ACCOUNT_FACTORY": { "template": "zkmoney/OxideAccountFactory" }
+  }
+}
