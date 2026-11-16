@@ -55,9 +55,7 @@ export function TrustedSetupCell({
                 size="sm"
                 className="shrink-0"
               />
-              <span className="text-xs leading-normal">
-                {trustedSetup.shortDescription}
-              </span>
+              <span>{trustedSetup.shortDescription}</span>
             </div>
           )
         })}

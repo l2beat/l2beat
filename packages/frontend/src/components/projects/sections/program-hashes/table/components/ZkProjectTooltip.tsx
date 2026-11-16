@@ -24,7 +24,9 @@ export function ZkProjectTooltip({
       </a>
       <TooltipContent>
         <p className="font-bold">{zkProject.name}</p>
-        <p className="text-secondary text-xs">Click to view project page</p>
+        <p className="text-paragraph-12 text-secondary">
+          Click to view project page
+        </p>
       </TooltipContent>
     </Tooltip>
   )
