@@ -117,6 +117,7 @@ function Header({
   setView: (view: View) => void
 }) {
   const hasData = used !== undefined && day !== undefined
+  const pastDay = hasData ? describePastDay(day) : undefined
   return (
     <ChartCardHeader
       title="Data posted"
@@ -132,11 +133,18 @@ function Header({
       }
       isLoading={isLoading}
       value={hasData ? formatBytes(used) : undefined}
-      // Names its day, as the live total below is over the last 24h
-      valueLabel={hasData ? describePastDay(day) : undefined}
+      // Names its day, as the live total below is over the last 24h. The
+      // figure's row doesn't wrap, so a label with a time goes under it.
+      valueLabel={pastDay?.hasTime ? undefined : pastDay?.label}
       meta={
-        !isLoading &&
-        !hasData && <span className="text-secondary">No data</span>
+        pastDay?.hasTime ? (
+          <span className="font-medium text-label-value-13 text-secondary">
+            {pastDay.label}
+          </span>
+        ) : (
+          !isLoading &&
+          !hasData && <span className="text-secondary">No data</span>
+        )
       }
     />
   )
@@ -146,8 +154,14 @@ function Header({
  * One date, not a range, so it reads as the value's day rather than the
  * chart's span. A lagging indexer's 24 hours end mid-day, so they get a time.
  */
-function describePastDay([from, to]: [number, number]): string {
+function describePastDay([from, to]: [number, number]): {
+  label: string
+  hasTime: boolean
+} {
   return from === UnixTime.toStartOf(from, 'day')
-    ? `on ${formatTimestamp(from)}`
-    : `in 24h to ${formatTimestamp(to, { mode: 'datetime' })}`
+    ? { label: `on ${formatTimestamp(from)}`, hasTime: false }
+    : {
+        label: `in 24h to ${formatTimestamp(to, { mode: 'datetime' })}`,
+        hasTime: true,
+      }
 }
