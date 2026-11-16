@@ -68,11 +68,6 @@ export function ThroughputSectionChart({
     <div>
       <div className="mt-2 space-y-3">
         <div className="flex flex-wrap items-center gap-3">
-          <EthereumProjectsOnlyCheckbox
-            name="projectThroughputIncludeL2Only"
-            checked={includeL2Only}
-            onCheckedChange={setIncludeL2Only}
-          />
           <RadioGroup
             name="projectThroughputView"
             value={view}
@@ -81,6 +76,11 @@ export function ThroughputSectionChart({
             <RadioGroupItem value="total">Total</RadioGroupItem>
             <RadioGroupItem value="per-project">Per project</RadioGroupItem>
           </RadioGroup>
+          <EthereumProjectsOnlyCheckbox
+            name="projectThroughputIncludeL2Only"
+            checked={includeL2Only}
+            onCheckedChange={setIncludeL2Only}
+          />
         </div>
         <div className="flex justify-between gap-x-1">
           <ProjectChartTimeRange
