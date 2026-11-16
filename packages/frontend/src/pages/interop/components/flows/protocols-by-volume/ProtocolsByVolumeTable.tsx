@@ -45,7 +45,12 @@ export function ProtocolsByVolumeTable({
     () => getProtocolsByVolumeColumns(apiSelection, breakpoint === undefined),
     [apiSelection, breakpoint],
   )
-  const table = useTable<ProtocolByVolumeRow>('ProtocolsByVolumeTable', {
+  // Phone picks are stored under their own key: desktop has no Columns menu,
+  // so a column hidden on a phone would otherwise stay hidden there for good.
+  const tableId = isPhone
+    ? 'ProtocolsByVolumeTable-phone'
+    : 'ProtocolsByVolumeTable'
+  const table = useTable<ProtocolByVolumeRow>(tableId, {
     data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),

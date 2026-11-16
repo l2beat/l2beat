@@ -63,7 +63,10 @@ export function AllProtocolsTable({
     ],
   )
 
-  const table = useTable<ProtocolRow>('AllProtocolsTable', {
+  // Phone picks are stored under their own key: desktop has no Columns menu,
+  // so a column hidden on a phone would otherwise stay hidden there for good.
+  const tableId = isPhone ? 'AllProtocolsTable-phone' : 'AllProtocolsTable'
+  const table = useTable<ProtocolRow>(tableId, {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
