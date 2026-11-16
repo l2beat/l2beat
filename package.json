@@ -51,7 +51,7 @@
     "ci:check": "turbo run ci:check",
     "checkout": "pnpm clean && pnpm && pnpm build",
     "coolify:check-env": "tsx scripts/coolify/check-env.ts",
-    "prepare": "sh scripts/git-hooks/install.sh"
+    "prepare": "[ ! -f scripts/git-hooks/install.sh ] || sh scripts/git-hooks/install.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",

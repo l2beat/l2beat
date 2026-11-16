@@ -3,7 +3,7 @@
 # installed hook is a stub that runs the copy in scripts/git-hooks/ of the
 # worktree you push from. A hook of your own under the same name, or a
 # core.hooksPath you set, is left alone. Outside a git checkout (e.g. a
-# Docker build) it does nothing.
+# Docker build, where `prepare` skips it) it does nothing.
 git rev-parse --git-dir >/dev/null 2>&1 || exit 0
 [ -n "$(git config core.hooksPath)" ] && exit 0
 hooks=$(git rev-parse --path-format=absolute --git-common-dir)/hooks
