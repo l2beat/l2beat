@@ -67,7 +67,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         },
       }),
     columnHelper.display({
-      header: 'DA layer',
+      header: 'DA Layer',
       meta: {
         tooltip:
           'The data availability layer where the data (transaction data or state diffs) is published.',
@@ -87,7 +87,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
       sortUndefined: 'last',
     }),
     columnHelper.display({
-      header: 'DA bridge',
+      header: 'DA Bridge',
       meta: {
         tooltip:
           'The DA bridge used for informing Ethereum contracts if data has been made available.',

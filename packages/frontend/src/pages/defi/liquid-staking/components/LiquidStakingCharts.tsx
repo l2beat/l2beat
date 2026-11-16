@@ -46,11 +46,11 @@ type ChartProject = Pick<
 const NETWORK_KEY = 'network'
 
 const RANGE_OPTIONS: { value: ChartRangeOptionValue; label: string }[] = [
-  { value: '30d', label: '30d' },
-  { value: '90d', label: '90d' },
-  { value: '180d', label: '180d' },
-  { value: '1y', label: '1y' },
-  { value: 'max', label: 'Max' },
+  { value: '30d', label: '30D' },
+  { value: '90d', label: '90D' },
+  { value: '180d', label: '180D' },
+  { value: '1y', label: '1Y' },
+  { value: 'max', label: 'MAX' },
 ]
 
 const ETH_STAKED: LiquidStakingChartBackground = {

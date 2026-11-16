@@ -74,6 +74,7 @@ export function NativeProofVerificationDiagram({
         stroke="var(--accent)"
         strokeWidth="2.5"
         markerEnd="url(#npv-arrow)"
+        letterSpacing="0.8"
       />
 
       <rect
@@ -94,7 +95,7 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        Native EVM
+        NATIVE EVM
       </text>
 
       <rect
@@ -115,7 +116,8 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        Custom VM
+        letterSpacing="0.6"
+        CUSTOM VM
       </text>
 
       <rect
@@ -136,8 +138,10 @@ export function NativeProofVerificationDiagram({
         fontSize="14"
         fontWeight="600"
       >
-        ZK app
+        letterSpacing="0.6"
+        ZK APP
       </text>
     </svg>
   )
 }
+        letterSpacing="0.6"

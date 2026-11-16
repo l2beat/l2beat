@@ -93,7 +93,7 @@ export function ThroughputSectionChart({
             setValue={setRange}
             options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
               value: v,
-              label: v === 'max' ? 'Max' : v,
+              label: v.toUpperCase(),
             }))}
           />
         </div>
