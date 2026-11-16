@@ -1,53 +1,27 @@
-An attestation is a record with an attester, an optional recipient, a schema and data. EAS stores it under a unique id. The attester is the address that sent the transaction. EAS checks no content, so an attestation is worth as much as its attester's word.
+An attestation is a record with an attester, an optional recipient, a schema and data. EAS stores it under a unique id and checks no content, so it is worth as much as its attester's word. The attester is the address that sent the transaction, or one that signed a request for someone else to submit.
 
-### Schemas
-
-A schema sets the fields of its attestations, whether they can be revoked and, optionally, a resolver. Anyone can register one in the SchemaRegistry. Its id is the hash of these three parts, so a registered schema never changes. EAS stores the data as raw bytes and does not check it against the fields.
-
-### Resolvers
-
-A resolver is a contract that the schema's creator chooses. EAS calls it on every attestation and revocation under that schema and stops when it refuses. A resolver can limit who attests, charge ETH or block revocations. EAS forwards the ETH that the sender assigns to it, and the resolver's code decides what happens with it.
-
-Anyone can register the same fields without a resolver. That is a separate schema with its own id.
+A schema sets the fields of its attestations, whether they can be revoked and, optionally, a resolver. Its id is the hash of these three parts, so a registered schema never changes. EAS does not check the data against these fields.
 
 ### Revocation and expiry
 
-Only the attester can revoke, and only when both the schema and the attestation allow it. A revoked attestation stays stored, with the time of its revocation.
+Only the attester can revoke, and only when both the schema and the attestation allow it. A revoked attestation stays stored, with the time of its revocation. EAS also stores an expiry time and does nothing when it passes. Its `isAttestationValid` function returns true for every attestation that exists, revoked and expired ones included.
 
-An attester can set an expiry time. EAS stores it and does nothing when it passes. Its `isAttestationValid` function returns true for every attestation that exists, revoked and expired ones included.
+### Resolvers
 
-### Delegated attestations
+A resolver is a contract that the schema's creator chooses. EAS calls it on every attestation and revocation under that schema and stops when it refuses. A resolver can limit who attests, charge ETH or block revocations. Anyone can register the same fields without a resolver, as a separate schema with its own id.
 
-An attester can sign a request and let someone else submit it and pay the gas. The attestation names the signer as attester.
-
-Each signature carries the attester's next counter value and works once. In v{{version}} it has no deadline. To void an unused one, the attester submits another signed request first. Contract accounts cannot sign such a request and have to attest directly.
-
-### ETH
-
-ETH sent with an attestation goes to the resolver, and EAS refunds the rest. One case is missing in v{{version}}: when the schema has no resolver, EAS keeps the ETH and no function can move it out. Later versions refund it.
+ETH sent with an attestation goes to the resolver, and EAS refunds the rest. When the schema has no resolver, v{{version}} keeps the ETH and no function can move it out. Later versions refund it.
 
 ### Offchain attestations
 
-An offchain attestation is a signed message that is never sent to the chain. Made with the SDK, it exists only where its signer sends it. Every holder can check it and pass it on with the signature. Its time is the signer's own claim.
+An offchain attestation is a signed message that is never sent to the chain. Made with the SDK, it exists only where its signer sends it, and its time is the signer's own claim. EAS can timestamp its id, once. The SDK adds a random salt, so the id reveals nothing about the content. With the SDK's `verifyOnchain` option, the RPC provider receives the content for a test run.
 
-EAS can timestamp an offchain attestation's id, once, and lets an address record that it revoked one. Both show the id and the sender's address onchain. The SDK adds a random salt, so the id reveals nothing about the content.
+A private data attestation holds a salted hash instead of its fields, onchain or offchain. Anyone can check a revealed field against the hash.
 
-The SDK's optional `verifyOnchain` check sends the content to the node it uses.
+### Deployment and interfaces
 
-### Private data attestations
+The Ethereum deployment dates from {{deployDate}}. Most other chains run newer versions, all at other addresses. On OP Mainnet and Base, EAS is upgradeable through the chain's proxy admin contract.
 
-The SDK can hash each field with a random salt and attest only the combined hash, onchain or offchain. The holder then reveals chosen fields, and anyone can check them against the hash. A revealed field is shown in the clear. Attester, recipient and time of an onchain attestation stay public.
-
-### Interfaces
-
-The EAS team runs easscan.org, an explorer that also registers schemas and makes attestations. It serves a search API and stores the offchain attestations that users publish there.
-
-The SDK and the command-line tool easctl call the contracts directly, through any Ethereum node. easctl's search commands use the easscan.org API.
-
-### Versions and other chains
-
-The Ethereum deployment dates from {{deployDate}} and is v{{version}}. Most other chains run newer versions, and all use other addresses. On OP Mainnet and Base, EAS is upgradeable through the chain's proxy admin contract. This page covers Ethereum.
-
-### Use by ETHBEAT
+The EAS team's explorer easscan.org also registers schemas and makes attestations, and stores the offchain attestations that users publish there. Search in the command-line tool easctl goes through its API.
 
 ETHBEAT publishes the list of protocols it reviewed for CROPS as attestations in this deployment.
