@@ -20,9 +20,9 @@ import {
   getPrivacyAdversaryDescription,
   getPrivacyAdversarySectionRosetteValue,
   PRIVACY_ADVERSARIES_TOOLTIP,
-  PRIVACY_CHIP_CLASS_NAME,
+  PRIVACY_CHIP_BASE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
-  PRIVACY_EXPOSURE_SENTIMENT,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
@@ -32,7 +32,6 @@ import {
 } from '~/pages/privacy/adviceUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
-import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 import { RiskBanner } from '../../RiskBanner'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -210,7 +209,7 @@ function ExposureDiff({
 
   return (
     <>
-      <dt className="col-span-2 font-medium text-label-value-13">
+      <dt className="col-span-2 font-medium text-paragraph-12 uppercase tracking-wide">
         Compared with a public observer
       </dt>
       <ExposureRow map={interior} fields={changed} />
@@ -236,15 +235,12 @@ function ExposureRow({
           return (
             <Tooltip key={field.id}>
               <TooltipTrigger asChild>
-                <span className={PRIVACY_CHIP_CLASS_NAME}>
-                  <span
-                    className={cn(
-                      'size-2 shrink-0 rounded-full',
-                      sentimentToOpaqueBgColor(
-                        PRIVACY_EXPOSURE_SENTIMENT[verdict],
-                      ),
-                    )}
-                  />
+                <span
+                  className={cn(
+                    PRIVACY_CHIP_BASE_CLASS_NAME,
+                    PRIVACY_EXPOSURE_CHIP_CLASS_NAME[verdict],
+                  )}
+                >
                   {field.label}
                   <span className="font-normal">
                     {PRIVACY_EXPOSURE_LABEL[verdict]}

@@ -22,7 +22,7 @@ export function PrivacyAdviceBanner({ className }: { className?: string }) {
           className="group flex items-center justify-between gap-4"
         >
           <span className="flex flex-col gap-1">
-            <span className="font-medium text-label-value-13 text-secondary">
+            <span className="font-medium text-2xs text-secondary uppercase">
               Ready for a new identity?
             </span>
             <span className="font-semibold text-heading-20 underline-offset-4 group-hover:underline md:text-heading-24">
