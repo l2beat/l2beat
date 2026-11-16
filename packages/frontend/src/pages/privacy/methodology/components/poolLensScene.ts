@@ -403,10 +403,10 @@ export function drawPoolScene(
     ctx.lineWidth = 1
   }
 
-  // Headings: keys, so in ink.
+  // Headings
   ctx.font = '500 11px Roboto, sans-serif'
   ctx.textBaseline = 'middle'
-  ctx.fillStyle = tokens.primary
+  ctx.fillStyle = tokens.secondary
   ctx.textAlign = 'left'
   ctx.fillText('Senders', 2, 14)
   ctx.textAlign = 'right'
