@@ -3,5 +3,6 @@
   "node-option": ["import=tsx"],
   "watchExtensions": "ts",
   "extension": "ts",
-  "reporter": "progress"
+  "reporter": "progress",
+  "require": ["../../scripts/mocha-random-order.cjs"]
 }

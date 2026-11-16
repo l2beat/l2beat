@@ -3,5 +3,8 @@
   "node-option": ["import=tsx"],
   "watchExtensions": ["ts", "tsx"],
   "extension": ["ts", "tsx"],
-  "require": ["./src/test/resolveEsmOnlyPackages.ts"]
+  "require": [
+    "./src/test/resolveEsmOnlyPackages.ts",
+    "../../scripts/mocha-random-order.cjs"
+  ]
 }

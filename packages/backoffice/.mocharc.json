@@ -3,5 +3,6 @@
   "node-option": ["import=tsx"],
   "watchExtensions": "ts",
   "extension": "ts",
-  "file": "src/test/setup.ts"
+  "file": "src/test/setup.ts",
+  "require": ["../../scripts/mocha-random-order.cjs"]
 }
