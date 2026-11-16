@@ -20,6 +20,7 @@ import {
 } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipRow } from '~/components/core/tooltip/TooltipParts'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -187,10 +188,9 @@ function LivenessCustomTooltip({
 
 function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
-    <div className="flex items-center justify-between gap-1.5">
-      <span className="font-medium text-label-value-14">{name}</span>
-      <span className="text-heading-16">{formatSeconds(seconds)}</span>
-    </div>
+    <TooltipRow gap="gap-x-4" label={name}>
+      {formatSeconds(seconds)}
+    </TooltipRow>
   )
 }
 

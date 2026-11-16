@@ -1,7 +1,6 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Tooltip,
   TooltipContent,
@@ -24,6 +23,7 @@ import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
 import { AvgDurationCell } from '../table/AvgDurationCell'
+import { TransferValueTooltipContent } from '../table/TransferValueTooltipContent'
 import { TokenFlowsCell } from './TokenFlowsCell'
 
 export type TokenRow = TokenData & BasicTableRow
@@ -161,34 +161,11 @@ function getCommonColumns<T extends CommonRow>(
             </TooltipTrigger>
             <TooltipPortal>
               <TooltipContent className="z-[1000] min-w-[200px]">
-                <div className="font-medium text-label-value-14">
-                  Transfer value
-                </div>
-                <HorizontalSeparator className="my-1" />
-                <div className="flex items-center justify-between gap-x-6">
-                  <span className="font-medium text-label-value-14">
-                    Minimum
-                  </span>
-                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                    {minValue}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-x-6">
-                  <span className="font-medium text-label-value-14">
-                    Average
-                  </span>
-                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                    {averageValue}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between gap-x-6">
-                  <span className="font-medium text-label-value-14">
-                    Maximum
-                  </span>
-                  <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                    {maxValue}
-                  </span>
-                </div>
+                <TransferValueTooltipContent
+                  min={minValue}
+                  average={averageValue}
+                  max={maxValue}
+                />
               </TooltipContent>
             </TooltipPortal>
           </Tooltip>
