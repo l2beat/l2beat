@@ -149,10 +149,14 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
 
 /** How the headline figures name the range, e.g. "1y" and "past 1y". */
 function getRangeLabels(range: ChartRange) {
+  const [from, to] = range
+  // rangeToOption calls a Max range "custom" once its end falls on yesterday.
+  if (from === null) return { change: 'all time', past: 'all time' }
   const option = rangeToOption(range, ['7d', '30d', '90d', '1y'])
-  if (option === 'max') return { change: 'all time', past: 'all time' }
-  if (option !== 'custom') return { change: option, past: `past ${option}` }
-  const days = rangeToDays(range)
+  if (option !== 'custom' && option !== 'max') {
+    return { change: option, past: `past ${option}` }
+  }
+  const days = rangeToDays([from, to])
   return { change: `${days}d`, past: `over ${days}d` }
 }
 
