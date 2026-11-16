@@ -2,8 +2,6 @@
 
 Rules for any agent or person building or changing ETHBEAT's UI (`packages/frontend`). Each rule comes from a correction by the design owner. The reason is under each rule. A reason marked *inferred* hasn't been confirmed yet. The HTML comment holds the date and the owner's words.
 
-Some rules have a check in `packages/frontend/src/designRules.test.ts`. That test runs with the frontend unit tests.
-
 ## Color
 
 - **Keep accent colour. Never neutralise an accent (pink, brand-deep, link blue, status, category palettes) to grey or ink for "consistency". Make its use consistent instead, one role per colour:**
@@ -21,7 +19,7 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
   Why (*inferred*): grey keys read washed out. Reviewer models keep proposing "Stripe-style" muted keys, so this needs to be written down.
   <!-- 2026-11-02: "I do not like the muted text change" (rosette tooltip, reverted) -->
 
-- **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`). Never use the brand kit's paper `#F5F3EE` or warm beige tints.** Checked by `designRules.test.ts` in source files and the SVGs under `static`.
+- **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`). Never use the brand kit's paper `#F5F3EE` or warm beige tints.**
   Why: paper is used nowhere on the site.
   <!-- 2026-11-03: "where did you get that stupid paper background from?" -->
 
@@ -58,7 +56,7 @@ Some rules have a check in `packages/frontend/src/designRules.test.ts`. That tes
   Why: no one notices them below the chart.
   <!-- 2026-11-12: "ultra bad — no one is gonna notice this below the chart" -->
 
-- **Prose inside cards has no line-length cap: no `max-w-prose` and no `max-w-[<N>ch]` on research or markdown text. It spans the card.** Display headlines outside those components may still use `ch` caps. Checked by `designRules.test.ts`, which flags any `ch` cap in `components/markdown` and `components/projects`.
+- **Prose inside cards has no line-length cap: no `max-w-prose` and no `max-w-[<N>ch]` on research or markdown text. It spans the card.** Display headlines outside those components may still use `ch` caps.
   Why: text should span the card like the tables and diagrams beside it, so each card has one right edge.
   <!-- 2026-11-12: "text should span the card like the tables and diagrams beside it" -->
 
