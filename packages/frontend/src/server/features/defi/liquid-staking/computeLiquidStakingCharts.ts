@@ -39,6 +39,8 @@ export interface YieldChartInputs {
   snapshots: LiquidStakingSnapshotRecord[]
   /** Daily, oldest first, from YIELD_WINDOW_DAYS before the first day. */
   network: EthereumStakingDailyRecord[]
+  /** USD per ETH, by timestamp. */
+  ethPrices: Map<number, number>
 }
 
 export interface CostOfExitChartInputs {
@@ -63,14 +65,25 @@ export function computeYieldChart(
   )
   const network = new NetworkSeries(inputs.network)
 
-  return inputs.days.map((day) => ({
-    timestamp: day,
-    projects: Object.fromEntries(
-      inputs.projectIds.map((id) => [id, rates.get(id)?.yieldAt(day) ?? null]),
-    ),
-    network: network.yieldAt(day),
-    ethStaked: network.ethStakedAt(day),
-  }))
+  return inputs.days.map((day) => {
+    const ethStaked = network.ethStakedAt(day)
+    const ethPrice = inputs.ethPrices.get(day)
+    return {
+      timestamp: day,
+      projects: Object.fromEntries(
+        inputs.projectIds.map((id) => [
+          id,
+          rates.get(id)?.yieldAt(day) ?? null,
+        ]),
+      ),
+      network: network.yieldAt(day),
+      ethStaked,
+      ethStakedUsd:
+        ethStaked !== null && ethPrice !== undefined
+          ? ethStaked * ethPrice
+          : null,
+    }
+  })
 }
 
 export function computeCostOfExitChart(

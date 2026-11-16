@@ -1,4 +1,4 @@
-import { formatNumber } from '@l2beat/shared-pure'
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import {
@@ -44,6 +44,7 @@ export type LiquidStakingChartProject = Pick<
 >
 
 const NETWORK_KEY = 'network'
+const ETH_STAKED_KEY = 'ethStaked'
 
 export const LIQUID_STAKING_RANGE_OPTIONS: {
   value: ChartRangeOptionValue
@@ -55,14 +56,6 @@ export const LIQUID_STAKING_RANGE_OPTIONS: {
   { value: '1y', label: '1Y' },
   { value: 'max', label: 'MAX' },
 ]
-
-const ETH_STAKED: LiquidStakingChartBackground = {
-  key: 'ethStaked',
-  label: ETH_STAKED_TITLE,
-  color: 'var(--chart-ethereum-secondary)',
-  formatAxisLabel: (value) => formatNumber(value),
-  formatTooltipValue: formatEthStaked,
-}
 
 export function LiquidStakingCharts({
   projects,
@@ -162,12 +155,28 @@ export function YieldChart({
           timestamp: point.timestamp,
           ...point.projects,
           [NETWORK_KEY]: point.network,
-          [ETH_STAKED.key]: point.ethStaked,
+          [ETH_STAKED_KEY]: point.ethStaked,
         })),
         projectSeries,
       ),
     [data, projectSeries],
   )
+  const ethStaked = useMemo<LiquidStakingChartBackground>(() => {
+    const usd = new Map(
+      data?.map((point) => [point.timestamp, point.ethStakedUsd]),
+    )
+    return {
+      key: ETH_STAKED_KEY,
+      label: ETH_STAKED_TITLE,
+      color: 'var(--chart-ethereum-secondary)',
+      formatAxisLabel: (value) => formatNumber(value),
+      formatTooltipValue: formatEthStaked,
+      formatTooltipSubValue: (timestamp) => {
+        const value = usd.get(timestamp)
+        return value != null ? formatCurrency(value, 'usd') : undefined
+      },
+    }
+  }, [data])
 
   return frame({
     title: 'Rate-implied yield',
@@ -190,7 +199,7 @@ export function YieldChart({
         formatTooltipDate={(timestamp) =>
           formatMetricDate(YIELD_METRIC, timestamp)
         }
-        background={ETH_STAKED}
+        background={ethStaked}
       />
     ),
   })
