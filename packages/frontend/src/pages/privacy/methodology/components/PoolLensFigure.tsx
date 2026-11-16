@@ -125,10 +125,10 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
               // stops the autoplay.
               onClick={() => pick(i)}
               className={cn(
-                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md py-1 pr-3 pl-2.5 font-medium text-label-value-13 text-primary',
+                'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md py-1 pr-3 pl-2.5 font-medium text-label-value-13',
                 current
-                  ? 'bg-pure-white dark:bg-black'
-                  : 'hover:bg-pure-white/50 dark:hover:bg-black/40',
+                  ? 'bg-brand text-white'
+                  : 'text-primary hover:bg-pure-white/50 dark:hover:bg-black/40',
               )}
             >
               {/* The rosette's colours, like the dots in the project pages' advice. */}
@@ -137,6 +137,8 @@ function PoolLens({ data }: { data: PrivacyMethodologyFigureData }) {
                   className={cn(
                     'size-2.5 shrink-0 rounded-full',
                     sentimentToOpaqueBgColor(verdicts[id].sentiment),
+                    // Keeps an orange or yellow dot apart from the pink.
+                    current && 'ring-1 ring-white',
                   )}
                 />
               ) : (
