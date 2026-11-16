@@ -3,6 +3,10 @@
 # changed files, then a typecheck of each package they are in. CI runs the
 # same checks on everything; this catches the common failures in seconds.
 #
+# Lint skips Biome's project rules (noFloatingPromises, noMisusedPromises),
+# which infer types across the whole repo: ~10 s even for one file. CI runs
+# them.
+#
 # Typechecks use tsrs (a Rust port of TypeScript 7) when it is installed, and
 # the repo's tsc otherwise. They read workspace dependencies from their build
 # output, so a change to a dependency's types is checked by CI, not here.
@@ -33,8 +37,12 @@ start=$(date +%s.%N)
 status=0
 
 echo "pre-push: Biome on ${#files[@]} changed files"
-pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true \
-  "${files[@]}" || status=1
+flags=(--no-errors-on-unmatched --files-ignore-unknown=true)
+# Formatting and import order, then lint. Biome 2.3 still prints lint
+# findings with the linter off, so lint runs only when the first step
+# passes, and a finding is not shown twice.
+pnpm exec biome check --linter-enabled=false "${flags[@]}" "${files[@]}" &&
+  pnpm exec biome lint --skip=project "${flags[@]}" "${files[@]}" || status=1
 
 packages=$(printf '%s\n' "${files[@]}" | grep -E '^packages/[^/]+/.*\.(ts|tsx|mts|cts)$' |
   cut -d/ -f1,2 | sort -u || true)
