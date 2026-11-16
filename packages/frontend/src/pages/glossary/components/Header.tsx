@@ -9,6 +9,11 @@ export function Header<T extends { id: string }>({
   return (
     <>
       <PrimaryCard className="relative z-10 w-full md:rounded-b-none md:pb-0">
+        {/* Below lg the page header is hidden and the top bar names no
+            section, so the intro would open the page untitled. */}
+        <h1 className="mb-3 font-bold text-[26px] leading-8 lg:hidden">
+          Glossary
+        </h1>
         <div className="space-y-4">
           <p className="text-base leading-[170%]">
             Explore the ETHBEAT Glossary, your comprehensive resource for
