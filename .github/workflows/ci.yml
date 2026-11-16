@@ -263,8 +263,9 @@ jobs:
               pnpm build:dependencies:frontend
               pnpm --dir packages/frontend build
 
+      # A wait step takes no `if`; on runners without WebKit it waits for a
+      # skipped step and goes straight on
       - name: Wait for WebKit's system libraries
-        if: matrix.webkit
         wait: webkit-libs
 
       - name: Run e2e tests
