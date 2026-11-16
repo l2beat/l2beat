@@ -142,7 +142,7 @@ function TopProtocolIdentity({
       <img
         src={topProtocol.iconUrl}
         alt={topProtocol.name}
-        className="size-8 shrink-0 rounded-full bg-white shadow"
+        className="size-8 shrink-0 rounded-full bg-white"
       />
       <div className="truncate font-medium text-label-value-18 text-primary">
         {topProtocol.name}
@@ -229,7 +229,7 @@ function ProtocolStat({
   if (variant === 'card') {
     return (
       <div className="flex h-14 flex-col justify-center rounded border border-divider px-4">
-        <div className="flex items-center justify-center text-center font-medium text-2xs text-secondary leading-none">
+        <div className="flex items-center justify-center text-center font-normal text-label-value-13 text-primary leading-none">
           {labelContent}
         </div>
         <div className="mt-1.5 text-center font-bold text-label-value-15 leading-none">
@@ -241,7 +241,7 @@ function ProtocolStat({
 
   return (
     <div className="flex items-center justify-between gap-3">
-      <div className="flex items-center gap-1 font-medium text-label-value-14 text-secondary leading-none">
+      <div className="flex items-center gap-1 font-normal text-label-value-14 text-primary leading-none">
         {labelContent}
       </div>
       <div className="text-right font-bold text-label-value-15 leading-none">

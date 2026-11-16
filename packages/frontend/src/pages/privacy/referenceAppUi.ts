@@ -34,21 +34,34 @@ export function getReferenceAppNotes(app: PrivacyReferenceApp) {
   ]
 }
 
-export function getReferenceAppSince(app: PrivacyReferenceApp) {
-  return `The ratings assume this app, since ${app.since}`
+/**
+ * Dates are ISO in the config and in the .md pages; the HTML page passes
+ * `formatDate` so they read like every other date on the site.
+ */
+type FormatDay = (isoDate: string) => string
+const isoDay: FormatDay = (isoDate) => isoDate
+
+export function getReferenceAppSince(
+  app: PrivacyReferenceApp,
+  formatDay = isoDay,
+) {
+  return `The ratings assume this app, since ${formatDay(app.since)}`
 }
 
 /**
  * The reviewed code: a short hash linking to its tree, or for a closed app the
  * served build and the day the review traced it.
  */
-export function getReferenceAppSource(app: PrivacyReferenceApp) {
+export function getReferenceAppSource(
+  app: PrivacyReferenceApp,
+  formatDay = isoDay,
+) {
   if (!app.source) {
     return {
       label: [
         'Closed source',
         ...(app.build ? [`build ${app.build}`] : []),
-        ...(app.checked ? [`checked ${app.checked}`] : []),
+        ...(app.checked ? [`checked ${formatDay(app.checked)}`] : []),
       ].join(', '),
     }
   }
@@ -61,6 +74,9 @@ export function getReferenceAppSource(app: PrivacyReferenceApp) {
   }
 }
 
-export function getCheckedAppSourceLabel(app: PrivacyCheckedApp) {
-  return app.checked ? `Source (checked ${app.checked})` : 'Source'
+export function getCheckedAppSourceLabel(
+  app: PrivacyCheckedApp,
+  formatDay = isoDay,
+) {
+  return app.checked ? `Source (checked ${formatDay(app.checked)})` : 'Source'
 }

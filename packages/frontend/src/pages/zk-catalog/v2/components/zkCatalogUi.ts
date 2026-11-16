@@ -19,3 +19,8 @@ export const VERIFIER_ID_DEFAULT_DESCRIPTION =
 
 export const PROGRAM_HASHES_SECTION_INTRO =
   "List of known guest zkVM programs used by this prover. Each program represents a piece of offchain execution that is verified onchain. The program hash serves as the program's unique identifier."
+
+/** The creator under a name, left out when it only repeats the name. */
+export function getCreatorLine(project: { name: string; creator?: string }) {
+  return project.creator !== project.name ? project.creator : undefined
+}

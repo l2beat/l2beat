@@ -4,10 +4,10 @@ import type { PrivacyAsset } from '~/server/features/privacy/types'
 export const PRIVACY_ASSETS_BREAKDOWN_HEADERS = {
   asset: 'Asset',
   buckets: 'Buckets',
-  deposits7d: 'Deposits 7D',
-  deposits30d: 'Deposits 30D',
-  depositsTotal: 'Deposits Total',
-  valueLocked: 'Value Locked',
+  deposits7d: 'Deposits 7d',
+  deposits30d: 'Deposits 30d',
+  depositsTotal: 'Deposits total',
+  valueLocked: 'Value locked',
 } as const
 
 export function formatBucketLabel(label: string) {
