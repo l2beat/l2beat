@@ -1,6 +1,7 @@
 import { hashJson } from '@l2beat/shared'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import { instrumentCoreFeatureRpcMetricsRun } from '../../tools/coreFeatureRpcMetrics'
+import { toActivityBlock } from '../../providers/ActivityBlockProviders'
+import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
@@ -11,9 +12,11 @@ import { HourActivityIndexer } from './indexers/HourActivityIndexer'
 import { HourTargetIndexer } from './indexers/HourTargetIndexer'
 import { SlotTargetIndexer } from './indexers/SlotTargetIndexer'
 import type { ActivityIndexer } from './indexers/types'
-import { HeadFollower } from './live/HeadFollower'
-import { LiveActivityCleaner } from './live/LiveActivityCleaner'
-import { RpcBlockFetcher } from './live/RpcBlockFetcher'
+import {
+  LIVE_BLOCKS_KEPT_FOR,
+  LiveActivityCleaner,
+} from './live/LiveActivityCleaner'
+import { LiveActivityIndexer } from './live/LiveActivityIndexer'
 import { StoredBlockSource } from './live/StoredBlockSource'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
 import { DayTxsCountService } from './services/txs/DayTxsCountService'
@@ -26,6 +29,7 @@ export function initActivityModule({
   db: database,
   clock,
   providers,
+  chainHeads,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.activity) {
     logger.info('Activity module disabled')
@@ -37,7 +41,7 @@ export function initActivityModule({
   const indexerService = new IndexerService(database)
 
   const indexers: ActivityIndexer[] = []
-  const headFollowers: HeadFollower[] = []
+  const liveIndexers: LiveActivityIndexer[] = []
 
   for (const project of config.activity.projects) {
     const onTick = async (target: UnixTime, blockTarget?: number) => {
@@ -67,50 +71,57 @@ export function initActivityModule({
           logger,
         )
 
+        const batchSize = project.activityConfig.batchSize ?? 100
         const rpc = project.followHead
           ? providers.clients.rpcClients.find(
               (client) => client.chain === project.chainName,
             )
           : undefined
-        const fetcher =
+        const chainHead =
           rpc &&
-          new RpcBlockFetcher(
-            rpc,
-            providers.uops.getUopsAnalyzer(project.chainName),
-            blockSource,
-          )
-        const headFollower =
-          fetcher &&
-          instrumentCoreFeatureRpcMetricsRun(
-            new HeadFollower(
-              {
-                projectId: project.id,
-                batchSize: project.activityConfig.batchSize ?? 100,
-                configHash: hashJson(
-                  project.activityConfig.adjustCount ?? null,
-                ),
-                fetcher,
-                db: database,
-              },
-              logger,
-            ),
-            'activity.live',
-            { chain: project.chainName, mode: 'head' },
+          chainHeads.get(project.chainName, {
+            batchSize,
+            keepFor: LIVE_BLOCKS_KEPT_FOR,
+          })
+        const uopsAnalyzer = providers.uops.getUopsAnalyzer(project.chainName)
+        const liveIndexer =
+          chainHead &&
+          new LiveActivityIndexer(
+            {
+              projectId: project.id,
+              batchSize,
+              configHash: hashJson(project.activityConfig.adjustCount ?? null),
+              parents: [chainHead],
+              blocks: chainHead,
+              count: (block) =>
+                blockSource.adjust(toActivityBlock(block, uopsAnalyzer)),
+              indexerService,
+              db: database,
+            },
+            logger,
           )
 
         const activityIndexer = new BlockActivityIndexer(
           {
             projectId: project.id,
-            batchSize: project.activityConfig.batchSize ?? 100,
+            batchSize,
             minHeight: project.activityConfig.startBlock ?? 1,
             parents: [blockTargetIndexer],
-            blockSource: fetcher
+            blockSource: rpc
               ? new StoredBlockSource(
                   {
                     projectId: project.id,
                     db: database,
                     fallback: blockSource,
-                    hashes: fetcher,
+                    hashes: {
+                      // asked by the activity indexer, outside the head's metrics
+                      getBlockHash: (number) =>
+                        withCoreFeatureRpcMetricsContext(
+                          'activity.live',
+                          { chain: rpc.chain, mode: 'verify' },
+                          async () => (await rpc.getBlock(number, false)).hash,
+                        ),
+                    },
                   },
                   logger,
                 )
@@ -122,7 +133,7 @@ export function initActivityModule({
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
-        if (headFollower) headFollowers.push(headFollower)
+        if (liveIndexer) liveIndexers.push(liveIndexer)
         break
       }
 
@@ -219,21 +230,20 @@ export function initActivityModule({
     }
   }
 
-  // also with no follower, so blocks stored before it was turned off go too
+  // also with no live indexer, so blocks stored before it was turned off go too
   const cleaner = new LiveActivityCleaner(database, logger)
 
   return {
     start: async () => {
-      await Promise.all(headFollowers.map((follower) => follower.initialize()))
       await Promise.all(
-        indexers.map(async (indexer) => {
+        liveIndexers.map((indexer) => indexer.dropBlocksOfAnotherConfig()),
+      )
+      await Promise.all(
+        [...indexers, ...liveIndexers].map(async (indexer) => {
           await indexer.start()
         }),
       )
       cleaner.start()
-      for (const follower of headFollowers) {
-        follower.start()
-      }
     },
   }
 }
