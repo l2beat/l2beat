@@ -3,12 +3,19 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { GasFeesConfig } from '../../modules/gas-fees/types'
 
 export function getGasFeesConfig(env: Env): GasFeesConfig {
+  const daysPerQuery = env.integer('GAS_FEES_FEES_DAYS_PER_QUERY', 10)
+  if (daysPerQuery < 1) {
+    // With none the indexer would move on without reading a day
+    throw new Error('Invalid gas fees days per query', {
+      cause: { daysPerQuery },
+    })
+  }
   return {
     fees: {
       // A day costs 0.3 to 0.5 Dune credits, so the history back to 2020 (750 to 1,250) is opted into
       firstDay: toDay(env.string('GAS_FEES_FEES_FIRST_DAY', '2025-11-01')),
       // At most about 5 Dune credits a query, under the 10-credit cap
-      daysPerQuery: env.integer('GAS_FEES_FEES_DAYS_PER_QUERY', 10),
+      daysPerQuery,
     },
     // A rolling year for the page, with a margin
     historyFirstDay: toDay(

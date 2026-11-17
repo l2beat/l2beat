@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, GasFeesDailyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
@@ -154,26 +154,42 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
           }
         }
       }
+      const oldest = late[0]?.day
       const newest = late.at(-1)?.day
-      if (newest === undefined) return
+      if (oldest === undefined || newest === undefined) return
 
-      // The newest days first, one batch a read: an old day Dune never loads mustn't widen every read
-      const oldest = newest - (this.$.daysPerQuery - 1) * UnixTime.DAY
-      const batch = late.filter(({ day }) => day >= oldest)
-      const firstLate = batch[0]?.day ?? newest
+      // Bounded reads: an old day Dune never loads mustn't widen every read. The newest late days
+      // in one, and the oldest in another when they lie further back, as a chain that is late
+      // every day keeps the newest on the last days and would starve an older day out of the window
+      const span = (this.$.daysPerQuery - 1) * UnixTime.DAY
+      const newestFrom = Math.max(oldest, newest - span)
+      const batches = [late.filter(({ day }) => day >= newestFrom)]
+      if (oldest < newestFrom) {
+        batches.push(
+          late.filter(({ day }) => day <= oldest + span && day < newestFrom),
+        )
+      }
       this.lateReadAt = now
-      const read = await this.$.readFeesDays(
-        [...new Set(batch.map(({ chain }) => chain))],
-        firstLate,
-        newest,
-      )
-      const records = read
-        .flatMap((day) => day.records)
-        .filter((r) => !have.has(`${r.chain}:${r.timestamp}`))
+      const records: GasFeesDailyRecord[] = []
+      for (const batch of batches) {
+        const first = batch[0]?.day
+        const last = batch.at(-1)?.day
+        if (first === undefined || last === undefined) continue
+        const read = await this.$.readFeesDays(
+          [...new Set(batch.map(({ chain }) => chain))],
+          first,
+          last,
+        )
+        records.push(
+          ...read
+            .flatMap((day) => day.records)
+            .filter((r) => !have.has(`${r.chain}:${r.timestamp}`)),
+        )
+      }
       await this.$.db.gasFeesDaily.upsertMany(records)
       const filled = new Set(records.map((r) => `${r.chain}:${r.timestamp}`))
       this.logger.info('Filled late gas fees chain days', {
-        from: firstLate,
+        from: oldest,
         filled: records.length,
         stillLate: late.filter(
           ({ day, chain }) => !filled.has(`${chain.id}:${day}`),
