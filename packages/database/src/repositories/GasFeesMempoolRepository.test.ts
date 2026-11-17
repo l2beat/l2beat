@@ -77,7 +77,7 @@ function dayData(day: number, buckets: number): GasFeesMempoolDayData {
       txCount: 3,
       nextBlockCount: 2,
       within2BlocksCount: 3,
-      within1MinuteCount: 3,
+      within5BlocksCount: 3,
     })),
   }
 }

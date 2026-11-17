@@ -1094,8 +1094,8 @@ model GasFeesTierWait {
   nextBlockCount     Int
   /// Of txCount, those that landed in the next block or the one after.
   within2BlocksCount Int
-  /// Of txCount, those that landed within the next 5 blocks, a minute.
-  within1MinuteCount Int
+  /// Of txCount, those that landed within the next 5 blocks. Those that landed within a minute of being seen can be counted from the wait buckets.
+  within5BlocksCount Int
 
   @@id([timestamp, tier, waitFromMs])
 }
