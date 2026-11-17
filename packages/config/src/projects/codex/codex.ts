@@ -59,7 +59,8 @@ export const codex: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.codex.xyz',
-        callsPerMinute: 300,
+        // Measured 2026-11-17: 429s start at ~34 req/s (~2000/min) per IP.
+        callsPerMinute: 1200,
       },
     ],
   },
