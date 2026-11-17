@@ -28,6 +28,9 @@ const WETH = EthereumAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')
 const UNISWAP_V3_QUOTER = ChainSpecificAddress(
   'eth:0x61fFE014bA17989E743c5F6cB21bF9697530B21e',
 )
+const PANCAKE_V3_QUOTER = ChainSpecificAddress(
+  'eth:0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997',
+)
 const BALANCER_QUERIES = ChainSpecificAddress(
   'eth:0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5',
 )
@@ -67,12 +70,16 @@ export function getMarketQuote(
       }
     }
     case 'uniswapV3':
+    case 'pancakeV3': {
+      const quoter =
+        quote.type === 'uniswapV3' ? UNISWAP_V3_QUOTER : PANCAKE_V3_QUOTER
       return {
-        call: encodeCall(abi, UNISWAP_V3_QUOTER, 'quoteExactInputSingle', [
+        call: encodeCall(abi, quoter, 'quoteExactInputSingle', [
           [token, WETH, MARKET_SALE, quote.fee, 0],
         ]),
         decode: amountOut,
       }
+    }
     case 'balancerV2':
       return {
         call: encodeCall(abi, BALANCER_QUERIES, 'querySwap', [

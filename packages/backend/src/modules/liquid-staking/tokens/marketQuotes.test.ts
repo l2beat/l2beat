@@ -30,6 +30,14 @@ describe(getMarketQuote.name, () => {
     expect(decode({ success: true, data: Bytes.fromHex(data) })).toEqual(OUT)
   })
 
+  it('asks PancakeSwap its own quoter', () => {
+    const uniswap = getMarketQuote(TOKEN, { type: 'uniswapV3', fee: 500 })
+    const pancake = getMarketQuote(TOKEN, { type: 'pancakeV3', fee: 500 })
+
+    expect(pancake.call.to).not.toEqual(uniswap.call.to)
+    expect(pancake.call.input).toEqual(uniswap.call.input)
+  })
+
   it('gives nothing for a pool that does not exist yet or reverts', () => {
     const { decode } = getMarketQuote(TOKEN, {
       type: 'curve',

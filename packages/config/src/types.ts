@@ -2110,8 +2110,8 @@ export type ProjectLiquidStakingMarketQuote =
       j: number
     }
   | {
-      /** Quoted by Uniswap's QuoterV2, against WETH. */
-      type: 'uniswapV3'
+      /** Quoted by the exchange's QuoterV2, against WETH. */
+      type: 'uniswapV3' | 'pancakeV3'
       /** The pool's fee tier, in hundredths of a basis point. */
       fee: number
     }

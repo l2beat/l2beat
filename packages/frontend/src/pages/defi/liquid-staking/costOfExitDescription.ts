@@ -44,7 +44,7 @@ export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
     ALL_ROUTES_TOOLTIP,
     MARKET_NOTE,
     INSTANT_NOTE,
-    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.',
+    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
   ].join(' '),
 }
 
