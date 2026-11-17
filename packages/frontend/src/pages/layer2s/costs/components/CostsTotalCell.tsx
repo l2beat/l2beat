@@ -72,9 +72,10 @@ function Warning({ warning }: { warning: WarningWithSentiment }) {
       </TooltipTrigger>
       <TooltipContent>
         <Callout
+          compact
           icon={
             <RoundedWarningIcon
-              className="size-5"
+              className="size-4"
               sentiment={warning.sentiment}
             />
           }

@@ -28,7 +28,9 @@ export function PrivacyTrustedSetupCell({
       </TooltipTrigger>
       <TooltipContent className="max-w-[320px]">
         <div className="space-y-2">
-          <div className="text-label-value-14">{trustedSetup.name}</div>
+          <div className="font-medium text-label-value-14">
+            {trustedSetup.name}
+          </div>
           <p>{trustedSetup.shortDescription}</p>
         </div>
       </TooltipContent>

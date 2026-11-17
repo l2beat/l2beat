@@ -71,6 +71,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           {tvsWarnings.map((warning, i) => (
             <WarningBar
               key={`tvs-warning-${i}`}
+              compact
               icon={RoundedWarningIcon}
               text={warning.value}
               color={sentimentToWarningBarColor(warning.sentiment)}

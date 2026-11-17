@@ -60,9 +60,7 @@ export function ProgramHashNameCell({
         </TooltipTrigger>
         <TooltipContent>
           <p className="text-heading-16">{title}</p>
-          {description && (
-            <p className="mt-2 font-medium text-paragraph-13">{description}</p>
-          )}
+          {description && <p className="mt-2">{description}</p>}
         </TooltipContent>
       </Tooltip>
     </div>
