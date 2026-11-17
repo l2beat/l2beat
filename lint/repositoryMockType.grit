@@ -1,0 +1,4 @@
+`mockObject<$type>($...)` where {
+  $type <: r"[A-Za-z0-9_]*Repository",
+  register_diagnostic(span=$type, message="Type a repository mock as Database['repo'] or TokenDatabase['repo'], e.g. mockObject<Database['activity']>(...). Do not export or import a repository class only for tests.", severity="error")
+}

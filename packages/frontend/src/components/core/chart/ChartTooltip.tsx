@@ -28,9 +28,8 @@ export function ChartTooltipWrapper({ children }: { children: ReactNode }) {
 }
 
 /**
- * A chart tooltip's first line: the date of the hovered point (see
- * `utils/dates.md`) or what it names. Primary, like every timestamp on the
- * site.
+ * A chart tooltip's first line: the date of the hovered point or what it
+ * names. Primary, like every timestamp on the site.
  */
 export function ChartTooltipTitle({
   children,
