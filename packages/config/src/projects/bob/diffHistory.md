@@ -9,7 +9,7 @@ Generated with discovered.json: 0x1c7084069d5250b7510de4caaa99bd119aaf5f16
 
 ## Description
 
-RiscZeroVerifierEmergencyStop: RISC Zero's EOA eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412 estopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of the RiscZeroVerifierRouter on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). An estop is permanent. No effect on Bob: the PermissionedDisputeGame has been the respected game type since 2026-09-16 ([tx](https://etherscan.io/tx/0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7)). Kailua games created before that stay valid for withdrawals, and the six still open can resolve without a proof. All 13 proofs Bob's Kailua games ever posted went through the Groth16 routes 0xbb001d44 and 0x73c457ba, which stay open.
+RiscZeroVerifierEmergencyStop: RISC Zero permanently stopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of its verifier router on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). No effect on Bob: all 13 proofs its Kailua games ever posted used the Groth16 routes 0xbb001d44 and 0x73c457ba, which stay open, and since 2026-09-16 ([tx](https://etherscan.io/tx/0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7)) state roots come from the PermissionedDisputeGame.
 
 ## Watched changes
 

@@ -11,7 +11,7 @@ Generated with discovered.json: 0x0fd3f405e9ccf430129a0bd0c3b500eb7145baa1
 
 Conduit Multisig 1: member removed; threshold 4/11 → 4/10.
 
-RiscZeroVerifierEmergencyStop: RISC Zero's EOA eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412 estopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of the RiscZeroVerifierRouter on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). An estop is permanent. No effect on Ronin: the PermissionedDisputeGame has been the respected game type since 2026-09-07 ([tx](https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482)). Kailua games created before that stay valid for withdrawals, the six still open can resolve without a proof, and Ronin's Kailua games never posted a proof.
+RiscZeroVerifierEmergencyStop: RISC Zero permanently stopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of its verifier router on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). No effect on Ronin: its Kailua games never posted a proof, and since 2026-09-07 ([tx](https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482)) state roots come from the PermissionedDisputeGame.
 
 ## Watched changes
 
