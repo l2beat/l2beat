@@ -186,6 +186,114 @@ describe(BatchingAndCachingProvider.name, () => {
     })
   })
 
+  describe(BatchingAndCachingProvider.prototype.getHeldTokens.name, () => {
+    const TOKEN = EthereumAddress.random()
+    const BLOCK = 100
+
+    function setup(
+      getHeldTokens: LowLevelProvider['getHeldTokens'],
+      cached: Record<string, string> = {},
+    ) {
+      const written: Record<string, string> = {}
+      const cache = mockObject<ReorgAwareCache>({
+        entry: async (_invocation, params) => {
+          const holder = String(params[1])
+          return {
+            read: () => cached[holder],
+            write: (value: string) => {
+              written[holder] = value
+            },
+          }
+        },
+      })
+      const provider = mockObject<LowLevelProvider>({ getHeldTokens })
+      const batchingProvider = new BatchingAndCachingProvider(
+        cache,
+        provider,
+        mockObject<MulticallClient>(),
+        logger,
+      )
+      return { batchingProvider, provider, written }
+    }
+
+    function holdEveryToken(holders: EthereumAddress[]) {
+      return Promise.resolve(holders.map(() => [TOKEN]))
+    }
+
+    // 25 holders per call is what the index can read cold within its time
+    // limit, so 60 holders have to go out as 25 + 25 + 10.
+    it('asks in calls of 25 holders and answers in the order asked', async () => {
+      const holders = Array.from({ length: 60 }, () => EthereumAddress.random())
+      const { batchingProvider, provider } = setup(
+        mockFn((asked: EthereumAddress[]) =>
+          Promise.resolve(asked.map((holder) => [holder])),
+        ),
+      )
+
+      const held = await batchingProvider.getHeldTokens(holders, [TOKEN], BLOCK)
+
+      expect(held).toEqual(holders.map((holder) => [holder]))
+      expect(provider.getHeldTokens).toHaveBeenCalledTimes(3)
+      expect(provider.getHeldTokens).toHaveBeenCalledWith(holders.slice(50), [
+        TOKEN,
+      ])
+    })
+
+    it('asks only about holders that are not cached and caches the answers', async () => {
+      const cachedHolder = EthereumAddress.random()
+      const newHolder = EthereumAddress.random()
+      const { batchingProvider, provider, written } = setup(
+        mockFn(holdEveryToken),
+        { [cachedHolder.toString()]: '[]' },
+      )
+
+      const held = await batchingProvider.getHeldTokens(
+        [cachedHolder, newHolder],
+        [TOKEN],
+        BLOCK,
+      )
+
+      expect(held).toEqual([[], [TOKEN]])
+      expect(provider.getHeldTokens).toHaveBeenOnlyCalledWith(
+        [newHolder],
+        [TOKEN],
+      )
+      expect(written).toEqual({
+        [newHolder.toString()]: JSON.stringify([TOKEN]),
+      })
+    })
+
+    // An RPC without the index refuses every call, and each call uploads the
+    // whole filter, so one refusal has to end the asking.
+    it('answers undefined and stops asking once the RPC refuses', async () => {
+      const holders = Array.from({ length: 200 }, () =>
+        EthereumAddress.random(),
+      )
+      const { batchingProvider, provider, written } = setup(
+        mockFn().rejectsWith(new Error('method not found')),
+      )
+
+      const held = await batchingProvider.getHeldTokens(holders, [TOKEN], BLOCK)
+
+      expect(held).toEqual(holders.map(() => undefined))
+      expect(provider.getHeldTokens).toHaveBeenCalledTimes(4)
+      expect(written).toEqual({})
+    })
+
+    it('knows without asking that no holder holds any of zero tokens', async () => {
+      const { batchingProvider, provider } = setup(mockFn(holdEveryToken))
+
+      const held = await batchingProvider.getHeldTokens(
+        [EthereumAddress.random()],
+        [],
+        BLOCK,
+      )
+
+      expect(held).toEqual([[]])
+      expect(provider.getHeldTokens).not.toHaveBeenCalled()
+    })
+  })
+
   describe('batch flush failure', () => {
     function setup() {
       const cache = mockObject<ReorgAwareCache>({

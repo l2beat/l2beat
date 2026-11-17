@@ -104,6 +104,87 @@ describe(LowLevelProvider.name, () => {
     ).toBeRejectedWith(errorMessage)
   })
 
+  describe(LowLevelProvider.prototype.getHeldTokens.name, () => {
+    const HOLDER = EthereumAddress.random()
+    const OTHER_HOLDER = EthereumAddress.random()
+    const TOKEN = EthereumAddress.random()
+
+    function setup(send: providers.JsonRpcProvider['send']) {
+      const ethersProvider = mockObject<providers.JsonRpcProvider>({ send })
+      return new LowLevelProvider(
+        ethersProvider,
+        ethersProvider,
+        ETHERSCAN_PROVIDER,
+        COINGECKO_CLIENT,
+      )
+    }
+
+    function answer(holder: EthereumAddress, tokens: EthereumAddress[]) {
+      return {
+        holder: holder.toLowerCase(),
+        tokens: tokens.map((token) => ({ address: token.toLowerCase() })),
+      }
+    }
+
+    it('asks for every holder with one filter and keeps their order', async () => {
+      const send = mockFn().resolvesTo({
+        holders: [answer(HOLDER, [TOKEN]), answer(OTHER_HOLDER, [])],
+      })
+      const provider = setup(send)
+
+      const held = await provider.getHeldTokens([HOLDER, OTHER_HOLDER], [TOKEN])
+
+      expect(held).toEqual([[TOKEN], []])
+      expect(send).toHaveBeenOnlyCalledWith('ethbeat_heldTokens', [
+        [HOLDER.toLowerCase(), OTHER_HOLDER.toLowerCase()],
+        { tokens: [TOKEN.toLowerCase()] },
+      ])
+    })
+
+    // -32603 is the lookup running out of time; its first attempt warms the
+    // index, so the spec asks for one retry.
+    it('retries once when the lookup fails internally', async () => {
+      const internalError = makeEthersError('processing response error', {
+        code: SERVER_ERROR,
+        error: makeEthersError('Internal error', { code: -32603 }),
+      })
+      const send = mockFn()
+        .rejectsWithOnce(internalError)
+        .resolvesToOnce({ holders: [answer(HOLDER, [TOKEN])] })
+      const provider = setup(send)
+
+      const held = await provider.getHeldTokens([HOLDER], [TOKEN])
+
+      expect(held).toEqual([[TOKEN]])
+      expect(send).toHaveBeenCalledTimes(2)
+    })
+
+    // The generic retry policy would back off for minutes here.
+    it('gives up at once when the RPC does not know the method', async () => {
+      const send = mockFn().rejectsWith(
+        makeEthersError('processing response error', {
+          code: SERVER_ERROR,
+          error: makeEthersError('method not found', { code: -32601 }),
+        }),
+      )
+      const provider = setup(send)
+
+      await expect(provider.getHeldTokens([HOLDER], [TOKEN])).toBeRejectedWith(
+        'processing response error',
+      )
+      expect(send).toHaveBeenCalledTimes(1)
+    })
+
+    it('rejects an answer about another holder', async () => {
+      const send = mockFn().resolvesTo({ holders: [answer(OTHER_HOLDER, [])] })
+      const provider = setup(send)
+
+      await expect(provider.getHeldTokens([HOLDER], [TOKEN])).toBeRejectedWith(
+        'Answer for another holder',
+      )
+    })
+  })
+
   const outOfGasMessage = [
     'out of gas', // normal
     'out of gas: out of gas', // whatever QuickNode is doing...

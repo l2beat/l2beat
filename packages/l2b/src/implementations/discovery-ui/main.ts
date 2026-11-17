@@ -33,7 +33,7 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
-import { getTvl } from './getTvl'
+import { getTvl, getTvls } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
 import { listenOnFreePort } from './listenOnFreePort'
 import { attachModulesRouter } from './modules'
@@ -101,6 +101,23 @@ const positiveIntFromString = z
 
 const tvlQuerySchema = z.object({
   top: positiveIntFromString.optional(),
+})
+
+// Bounds the work of one request; the largest project has ~460 addresses.
+const TVL_HOLDERS_MAX = 2000
+
+const tvlBatchBodySchema = z.object({
+  addresses: z
+    .array(ethereumAddressSchema)
+    .check(
+      (addresses) =>
+        addresses.length >= 1 && addresses.length <= TVL_HOLDERS_MAX,
+      `must list 1 to ${TVL_HOLDERS_MAX} addresses`,
+    ),
+  top: z
+    .number()
+    .check((v) => Number.isInteger(v) && v > 0, 'must be a positive integer')
+    .optional(),
 })
 
 const diffHistoryQuerySchema = z.object({
@@ -461,6 +478,36 @@ export function createDiscoveryUiApp({
 
       try {
         const response = await getTvl(providerCache, tvlCache, address, top)
+        res.json(response)
+      } catch (e) {
+        console.error(e)
+        res.status(500).json({ error: 'Failed to estimate TVL' })
+      }
+    })
+
+    // Values many addresses of one chain at once, answering in their order.
+    app.post('/api/projects/tvl', async (req, res) => {
+      const bodyValidation = tvlBatchBodySchema.safeParse(req.body)
+      if (!bodyValidation.success) {
+        res.status(400).json({ errors: bodyValidation.message })
+        return
+      }
+      const { addresses, top } = bodyValidation.data
+      const chainNames = new Set(addresses.map(ChainSpecificAddress.longChain))
+      const [chainName] = chainNames
+      if (chainNames.size !== 1 || chainName === undefined) {
+        res.status(400).json({ errors: 'addresses must be on one chain' })
+        return
+      }
+
+      try {
+        const response = await getTvls(
+          providerCache,
+          tvlCache,
+          chainName,
+          addresses,
+          top,
+        )
         res.json(response)
       } catch (e) {
         console.error(e)

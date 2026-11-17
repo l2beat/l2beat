@@ -114,8 +114,10 @@ async function withTemporaryFile<T>(
   const sqlCache = new SQLiteCache(file)
   const db = new DatabaseSync(file)
 
-  return fn(sqlCache, db).finally(() => {
+  // Closing the last connection is what removes the write-ahead log files.
+  return fn(sqlCache, db).finally(async () => {
     db.close()
+    await sqlCache.close()
     destroyFile(file)
   })
 }
