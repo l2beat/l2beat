@@ -29,6 +29,10 @@ Rules for any agent or person building or changing ETHBEAT's UI (`packages/front
   Why: the owner found the darker fills, the smaller label and the black badge text worse than main's.
   <!-- 2026-11-16: reverted the darker transfer-type fills and size: "got worse"; reverted black text on proof-system badges -->
 
+- **Warning glyphs keep main's yellow: `fill-yellow-700` in light mode, `fill-yellow-300` in dark.** This covers the (!) warning circle (`RoundedWarningIcon`), warning-bar icons and the yellow shields. Swapping them to the `warning` token (`fill-warning`) or any darker yellow, for consistency or contrast, is off the table.
+  Why: in light mode the `warning` token (`#8a6700`) reads as a muddy olive, not as a warning.
+  <!-- 2026-11-17: "can we ban this color swap in future?" (warning glyphs swapped from fill-yellow-700 to fill-warning in #13997, reverted) -->
+
 - **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`).** The brand kit's paper `#F5F3EE` and warm beige tints stay out.
   Why: paper is used nowhere on the site.
   <!-- 2026-11-03: "where did you get that stupid paper background from?" -->
