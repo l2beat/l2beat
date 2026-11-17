@@ -217,6 +217,10 @@ export class UpdateMonitor {
         this.logger,
       )
 
+      // The pool has given this worker's slot away already, so a second
+      // discovery here would run on top of the configured concurrency.
+      signal.throwIfAborted()
+
       // read previous state (committed vs DB) and prime flat sources if needed
       const previousDiscovery = await this.getPreviousDiscovery(
         runner,
@@ -258,9 +262,7 @@ export class UpdateMonitor {
       signal.throwIfAborted()
       await this.handleUpdateNotifier(diff, discovery, projectConfig, timestamp)
 
-      // No abort check here: once the notification is out, the baseline has to
-      // be saved or the next run notifies again. The repository ignores this
-      // write if a later run has saved a newer discovery already.
+      signal.throwIfAborted()
       await this.db.updateMonitor.upsert({
         projectId: projectConfig.name,
         timestamp,

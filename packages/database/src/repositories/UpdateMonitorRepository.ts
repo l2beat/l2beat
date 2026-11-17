@@ -56,26 +56,12 @@ export class UpdateMonitorRepository extends BaseRepository {
         .insertInto('UpdateMonitor')
         .values(batch)
         .onConflict((cb) =>
-          cb
-            .columns(['projectId'])
-            .doUpdateSet((eb) => ({
-              blockNumber: eb.ref('excluded.blockNumber'),
-              timestamp: eb.ref('excluded.timestamp'),
-              discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
-              configHash: eb.ref('excluded.configHash'),
-            }))
-            // An update that timed out can finish after the next one. Its
-            // older discovery must not replace the newer one.
-            .where((eb) =>
-              eb.or([
-                eb('UpdateMonitor.timestamp', 'is', null),
-                eb(
-                  'UpdateMonitor.timestamp',
-                  '<=',
-                  eb.ref('excluded.timestamp'),
-                ),
-              ]),
-            ),
+          cb.columns(['projectId']).doUpdateSet((eb) => ({
+            blockNumber: eb.ref('excluded.blockNumber'),
+            timestamp: eb.ref('excluded.timestamp'),
+            discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
+            configHash: eb.ref('excluded.configHash'),
+          })),
         )
         .execute()
     })

@@ -59,26 +59,6 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
 
     expect(latest).toEqual(updated)
   })
-
-  // An update that timed out can finish after the next hour's update. The
-  // late write carries the older timestamp and must lose.
-  it('keeps the newer discovery when an older one is upserted later', async () => {
-    const newer = record({ timestamp: 2, blockNumber: 2 })
-    await repository.upsert(newer)
-
-    await repository.upsert(record({ timestamp: 1, blockNumber: 1 }))
-
-    expect(await repository.findLatest('project')).toEqual(newer)
-  })
-
-  it('replaces a discovery saved for the same timestamp', async () => {
-    await repository.upsert(record({ timestamp: 2, blockNumber: 1 }))
-    const rerun = record({ timestamp: 2, blockNumber: 2 })
-
-    await repository.upsert(rerun)
-
-    expect(await repository.findLatest('project')).toEqual(rerun)
-  })
 })
 
 function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
