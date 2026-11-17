@@ -58,6 +58,11 @@ export class EthRpcClient {
     return vQuantity.parse(data)
   }
 
+  async getMaxPriorityFeePerGas(): Promise<bigint> {
+    const data = await this.rawCall('eth_maxPriorityFeePerGas')
+    return vQuantity.parse(data)
+  }
+
   async getGasPrice(): Promise<bigint> {
     const data = await this.rawCall('eth_gasPrice')
     return vQuantity.parse(data)

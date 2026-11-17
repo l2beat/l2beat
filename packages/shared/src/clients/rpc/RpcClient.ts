@@ -31,6 +31,7 @@ import {
   EVMTransactionReceiptResponse,
   EVMTransactionReceiptsResponse,
   EVMTransactionResponse,
+  MaxPriorityFeePerGasResponse,
   Quantity,
   RPCError,
   RpcResponse,
@@ -328,6 +329,18 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return feeHistory.data.result
+  }
+
+  async getMaxPriorityFeePerGas(): Promise<bigint> {
+    const response = await this.query('eth_maxPriorityFeePerGas', [])
+    const result = MaxPriorityFeePerGasResponse.safeParse(response)
+    if (!result.success) {
+      this.$.logger.warn('Invalid response', {
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing')
+    }
+    return result.data.result
   }
 
   async call(

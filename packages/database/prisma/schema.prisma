@@ -967,3 +967,72 @@ model AppState {
   updatedAt DateTime @db.Timestamp(6)
   updatedBy String   @db.VarChar(255)
 }
+
+/// One UTC day of fees on one chain, from Dune's gas.fees and the chain's blocks.
+/// Raw sums, so per-transaction and per-gas figures are derived when read.
+model GasFeesDaily {
+  /// Start of the day.
+  timestamp      DateTime @db.Timestamp(6)
+  /// The gas fees page's chain id: ethereum, arbitrum, base, optimism, zksync2, linea, scroll, unichain, ink, abstract, taiko, mantle.
+  chain          String   @db.VarChar(32)
+  /// Transactions that paid a fee; system transactions pay none and are left out.
+  txCount        Int
+  /// Fees paid, in the chain's gas token (ETH, MNT on Mantle).
+  totalFeeNative Float
+  /// Fees paid in USD, at Dune's price for each transaction; those it has no price for are left out. null when it has none.
+  totalFeeUsd    Float?
+  /// The part of the fees paid for posting data to Ethereum, gas token. 0 where gas.fees has no l1_fee (Ethereum, Linea, ZKsync).
+  l1FeeNative    Float
+  /// The part of the fees paid for blobs, gas token. Ethereum only.
+  blobFeeNative  Float
+  /// Base fee per gas times gas used, gas token. From the chain's blocks (on Arbitrum, its transactions), as gas.fees books all of a legacy transaction's fee as base fee. null where the chain had no base fee (Ethereum before London).
+  baseFeeNative  Float?
+  /// Gas used by the day's transactions. From the chain's blocks (on Arbitrum, its transactions, as its blocks undercount).
+  gasUsed        Float
+  /// Median fee per transaction in USD, approximate (Dune's approx_percentile). null when Dune has no price.
+  medianFeeUsd   Float?
+
+  @@id([chain, timestamp])
+}
+
+/// Our estimator's tips as of the start of each UTC hour, from the Ethereum
+/// blocks before it, with Chainlink's ETH/USD at the last of those blocks.
+model GasFeesTipHourly {
+  /// Start of the hour.
+  timestamp     DateTime @id @db.Timestamp(6)
+  /// The newest block read: the last one before the hour.
+  blockNumber   Int
+  slowTipGwei   Float
+  mediumTipGwei Float
+  fastTipGwei   Float
+  /// Chainlink ETH/USD at blockNumber.
+  ethUsd        Float
+}
+
+/// Our estimator's tips at the newest Ethereum block the backend has read.
+/// Holds at most one row: the backend replaces it as blocks arrive.
+model GasFeesLiveTips {
+  /// The newest block read.
+  blockNumber   Int      @id
+  slowTipGwei   Float
+  mediumTipGwei Float
+  fastTipGwei   Float
+  /// Chainlink ETH/USD at blockNumber.
+  ethUsd        Float
+  updatedAt     DateTime @db.Timestamp(6)
+}
+
+/// The tips wallets suggest now, read from their fee services or computed from
+/// their public code. A wallet with no good read for 30 minutes is deleted.
+model GasFeesWalletTip {
+  /// MetaMask, Rabby or Ambire.
+  wallet  String   @db.VarChar(32)
+  /// The wallet's own name for this option.
+  option  String   @db.VarChar(32)
+  /// The tier it is shown beside: slow, medium or fast. Not a match: wallets make their own promises.
+  tier    String   @db.VarChar(16)
+  tipGwei Float
+  readAt  DateTime @db.Timestamp(6)
+
+  @@id([wallet, option])
+}
