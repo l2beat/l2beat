@@ -20,14 +20,20 @@ the full logo's `viewBox="0 0 1038 442"`. JSX attributes are converted to HTML/S
 attributes (`className` to `class`, `fillRule` to `fill-rule`, and `clipRule` to
 `clip-rule`). React props and the component's animation are omitted.
 
-The central illustration reuses the first four paths, which form the heart and
-its ETH lettering, with `viewBox="0 0 501 442"`. The surrounding circles and pulse
-line are decorative SVG shapes drawn directly in this file. The heart has a
-small CSS animation; `prefers-reduced-motion` disables it.
+The pink panel reuses the first four paths, which form the heart and its ETH
+lettering, with the colors inverted: a white heart with pink letters. The outlines
+around it are copies of the heart's outer path, scaled about the heart's center
+with `transform` and drawn with `vector-effect="non-scaling-stroke"`. The panel
+crops them. The heart beats with a CSS animation; `prefers-reduced-motion`
+disables it.
 
-The SVG classes are styled locally using colors from
+All colors are tokens at the top of the `<style>` element, taken from
 [`globals.css`](../src/styles/globals.css): pink `#ff3776`, white lettering, and
 a `#0d0c0c` wordmark that becomes white in dark mode. No shared stylesheet is loaded.
+
+The `/* Hallmark · … */` comments at the top of the styles record the design
+review: the brand values used and the lint rules waived for a one-screen page.
+Keep them up to date or delete them together.
 
 ### Favicon
 
@@ -77,8 +83,8 @@ response status are configured by the host; the HTML alone cannot return a 503.
 ## Updating the page
 
 Edit copy and layout directly in `index.html`. When changing the branding, update
-all three copies of the mark: the header logo, the illustration's heart, and the
-encoded favicon. Preserve SVG path order, fill rules, and viewBoxes from the
+all three copies of the mark: the header logo, the pink panel's heart (and the
+outline paths around it, which copy the heart's outer path), and the encoded favicon. Preserve SVG path order, fill rules, and viewBoxes from the
 source component, and check the local color rules against the frontend palette.
 
 To encode an updated font or a standalone favicon SVG, run this command with
