@@ -12,7 +12,7 @@ import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
 /** Shorter than most chains take for a few blocks */
 const INTERVAL_MS = 10_000
-/** Each run in a row that finds no new block waits one more interval, up to a minute */
+/** Each run in a row that stores no block, failed ones too, waits one more interval, up to a minute */
 const MAX_IDLE_SKIPS = 5
 /** Stored blocks remembered to find where a reorg forked off */
 const REMEMBERED_BLOCKS = 64
@@ -87,15 +87,17 @@ export class HeadFollower extends TimeLoop {
       this.skips--
       return
     }
+    let stored = 0
     try {
-      const stored = await this.follow()
-      this.idleRuns =
-        stored > 0 ? 0 : Math.min(this.idleRuns + 1, MAX_IDLE_SKIPS)
-      this.skips = this.idleRuns
+      stored = await this.follow()
     } catch (error) {
       // the RPC named a block its node behind the load balancer has not got yet
       if (!(error instanceof NotFoundOnRpcError)) throw error
       this.logger.info('Latest block not served yet', { error })
+    } finally {
+      this.idleRuns =
+        stored > 0 ? 0 : Math.min(this.idleRuns + 1, MAX_IDLE_SKIPS)
+      this.skips = this.idleRuns
     }
   }
 

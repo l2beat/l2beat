@@ -216,6 +216,16 @@ describe(HeadFollower.name, () => {
       expect(chain.latestCalls()).toEqual(6)
     })
 
+    it('checks less and less often while the RPC fails', async () => {
+      const chain = new FakeChain(100)
+      chain.getLatestBlockNumber.rejectsWith(new Error('RPC down'))
+      const head = follower(chain, new FakeStore())
+
+      for (let i = 0; i < 6; i++) await head.run().catch(() => {})
+      // failed runs skip 1, then 2 runs, so 3 of the 6 check
+      expect(chain.latestCalls()).toEqual(3)
+    })
+
     it('waits for a block a node behind the load balancer has not got', async () => {
       const chain = new FakeChain(100)
       chain.getBlocks.rejectsWithOnce(new NotFoundOnRpcError('Block not found'))
