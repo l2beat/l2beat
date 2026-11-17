@@ -27,6 +27,9 @@ import {
 } from '../liquidStakingMetrics'
 
 const OTHER_STAKERS_LABEL = 'Other stakers'
+/** The block under the pointer keeps its colour while the rest of the bar fades. */
+const HIGHLIGHT_ON_HOVER =
+  'transition-opacity group-hover/bar:opacity-40 hover:opacity-100'
 
 interface Segment {
   id: string
@@ -189,7 +192,7 @@ function StakeBar({
       <div
         role="img"
         aria-label={`Share of staked ETH: ${label}`}
-        className="flex h-3 w-full overflow-hidden rounded bg-surface-tertiary"
+        className="group/bar flex h-3 w-full overflow-hidden rounded bg-surface-tertiary"
       >
         {segments.map((segment) =>
           segment.operators ? (
@@ -206,7 +209,10 @@ function StakeBar({
                 aria-label={`${segment.name}: ${formatPercent(segment.share)}`}
               >
                 <div
-                  className="h-full border-surface-primary border-r last:border-r-0"
+                  className={cn(
+                    'h-full border-surface-primary border-r last:border-r-0',
+                    HIGHLIGHT_ON_HOVER,
+                  )}
                   style={{
                     width: `${segment.share * 100}%`,
                     backgroundColor: segment.color,
@@ -290,6 +296,7 @@ function OperatorSegments({
             <div
               className={cn(
                 'h-full',
+                HIGHLIGHT_ON_HOVER,
                 // A line between operators, in the card's colour.
                 i > 0 && 'border-surface-primary border-l',
                 i > 0 &&
