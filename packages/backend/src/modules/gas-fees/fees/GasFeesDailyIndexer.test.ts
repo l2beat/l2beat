@@ -107,6 +107,26 @@ describe(GasFeesDailyIndexer.name, () => {
     ])
   })
 
+  it('keeps the newest late days when the read of the oldest fails', async () => {
+    const { indexer, daily, readFeesDays } = createIndexer([feesDay(day(8))], {
+      stored: ALL_STORED.filter(
+        (r) =>
+          r.chain !== 'abstract' ||
+          (r.timestamp !== day(0) && r.timestamp !== day(7)),
+      ),
+    })
+    readFeesDays.resolvesToOnce([feesDay(day(8))])
+    readFeesDays.resolvesToOnce([
+      { day: day(7), records: [record(day(7), 'abstract')], missing: [] },
+    ])
+    readFeesDays.rejectsWithOnce(new Error('Dune error'))
+
+    expect(await indexer.update(day(9), day(9))).toEqual(day(9))
+    expect(daily.upsertMany).toHaveBeenLastCalledWith([
+      record(day(7), 'abstract'),
+    ])
+  })
+
   it('leaves late days older than 30 days alone, as in a backfill', async () => {
     const { indexer, readFeesDays } = createIndexer([feesDay(day(2))], {
       stored: [record(day(1), 'ethereum')],
