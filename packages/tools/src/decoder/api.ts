@@ -59,44 +59,20 @@ export async function lookupTx(
 export async function lookupSignatures(selectors: `0x${string}`[]) {
   selectors = selectors.filter((x) => /0x[\da-f]{8}/.test(x))
   if (selectors.length === 0) return []
-  return await retry(async () => {
-    const res = await fetch(`${baseUrl}/api/lookup-signatures`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(selectors),
-    })
-    const json = await res.json()
-    return json as SignatureResult[]
-  })
+  return await postJson<SignatureResult[]>('/api/lookup-signatures', selectors)
 }
 
 export async function lookupAddress(chainId: number, address: `0x${string}`) {
-  return await retry(async () => {
-    const res = await fetch(`${baseUrl}/api/lookup-address`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chainId: Number(chainId),
-        address: address as `0x${string}`,
-      }),
-    })
-    const json = await res.json()
-    return json as AddressResult
+  return await postJson<AddressResult>('/api/lookup-address', {
+    chainId: Number(chainId),
+    address: address as `0x${string}`,
   })
 }
 
 export async function lookupPreimages(hashes: `0x${string}`[]) {
   hashes = hashes.filter((x) => /0x[\da-f]{64}/.test(x))
   if (hashes.length === 0) return []
-  return await retry(async () => {
-    const res = await fetch(`${baseUrl}/api/lookup-preimages`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(hashes),
-    })
-    const json = await res.json()
-    return json as PreimageResult[]
-  })
+  return await postJson<PreimageResult[]>('/api/lookup-preimages', hashes)
 }
 
 export async function getChains() {
@@ -105,14 +81,52 @@ export async function getChains() {
   return json as Chain[]
 }
 
-export async function retry<T>(fn: () => Promise<T>) {
-  let timeout = 100
-  while (true) {
+async function postJson<T>(path: string, body: unknown): Promise<T> {
+  return await retry(async () => {
+    const res = await fetch(`${baseUrl}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) {
+      throw new Error('HTTP error', { cause: { status: res.status } })
+    }
+    return (await res.json()) as T
+  })
+}
+
+const ATTEMPT_COUNT_MAX = 4
+const DELAY_MS_INITIAL = 100
+const DELAY_MS_MAX = 2_000
+
+// Bounded, so that an API that stays down ends in an error the page can show
+// instead of a wait that doubles forever.
+export async function retry<T>(fn: () => Promise<T>): Promise<T> {
+  let delayMs = DELAY_MS_INITIAL
+  for (let attempt = 1; attempt < ATTEMPT_COUNT_MAX; attempt++) {
     try {
       return await fn()
-    } catch {
-      await new Promise((r) => setTimeout(r, timeout))
-      timeout *= 2
+    } catch (error) {
+      if (!isRetryable(error)) throw error
     }
+    await new Promise((resolve) => setTimeout(resolve, delayMs))
+    delayMs = Math.min(delayMs * 2, DELAY_MS_MAX)
   }
+  return await fn()
+}
+
+// A 4xx or a malformed body fails the same way on every attempt.
+function isRetryable(error: unknown): boolean {
+  if (!(error instanceof Error)) return false
+  const status = httpStatus(error)
+  if (status !== undefined) return status >= 500
+  // fetch rejects with a TypeError when the request never got a response.
+  return error instanceof TypeError
+}
+
+function httpStatus(error: Error): number | undefined {
+  const cause = error.cause
+  if (typeof cause !== 'object' || cause === null) return undefined
+  if (!('status' in cause)) return undefined
+  return typeof cause.status === 'number' ? cause.status : undefined
 }

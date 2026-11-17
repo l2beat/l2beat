@@ -381,6 +381,7 @@ function APIChecker() {
   const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
   const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
   const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
+  const [lookupFailed, setLookupFailed] = useState(false)
 
   useEffect(() => {
     const selectorsToFetch: string[] = []
@@ -391,8 +392,9 @@ function APIChecker() {
       }
     }
     if (selectorsToFetch.length === 0) return
-    void API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
-      store.addSignatures(res),
+    API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then(
+      (res) => store.addSignatures(res),
+      () => setLookupFailed(true),
     )
   }, [requestedSignatures, store.addSignatures])
 
@@ -408,21 +410,24 @@ function APIChecker() {
       const [left, right] = prefixed.split(':')
       const chainId = Number(left)
       const address = right as `0x${string}`
-      void API.lookupAddress(chainId, address).then((res) => {
-        if (res.name) store.setName(chainId, address, res.name)
-        if (res.alias) store.setAlias(chainId, address, res.alias)
-        if (res.token) store.setToken(chainId, address, res.token)
-        if (res.abi.length > 0) {
-          store.addSignatures(
-            res.abi.map((x) => ({
-              selector: x.selector,
-              signature: x.signature,
-              address,
-              chainId,
-            })),
-          )
-        }
-      })
+      API.lookupAddress(chainId, address).then(
+        (res) => {
+          if (res.name) store.setName(chainId, address, res.name)
+          if (res.alias) store.setAlias(chainId, address, res.alias)
+          if (res.token) store.setToken(chainId, address, res.token)
+          if (res.abi.length > 0) {
+            store.addSignatures(
+              res.abi.map((x) => ({
+                selector: x.selector,
+                signature: x.signature,
+                address,
+                chainId,
+              })),
+            )
+          }
+        },
+        () => setLookupFailed(true),
+      )
     }
   }, [
     requestedAddresses,
@@ -440,16 +445,26 @@ function APIChecker() {
         apiRequested.add(hash)
       }
     }
-    void API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
+    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
       (res) => {
         for (const preimage of res) {
           store.setPreimage(preimage)
         }
       },
+      () => setLookupFailed(true),
     )
   }, [requestedPreimages, store.setPreimage])
 
-  return null
+  if (!lookupFailed) return null
+  return (
+    <div
+      role="alert"
+      className="mx-auto max-w-[1200px] px-12 pt-4 text-red-500"
+    >
+      Could not load signatures, names or preimages from the API, so the
+      decoding below may be incomplete. Reload the page to try again.
+    </div>
+  )
 }
 
 interface LocalAbi {
