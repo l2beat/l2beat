@@ -9,6 +9,7 @@ const bridge = discovery.getContract('AgglayerBridge')
 
 export const silicon: ScalingProject = agglayer({
   addedAt: UnixTime(1725027256), // 2024-08-30T14:14:16Z
+  archivedAt: UnixTime(1794907200), // 2026-11-17T06:00:00Z, deposits closed 2026-09-02, network shuts down 2026-12-31
   additionalBadges: [BADGES.RaaS.Nodeinfra],
   discovery,
   display: {
@@ -16,6 +17,8 @@ export const silicon: ScalingProject = agglayer({
     slug: 'silicon',
     description:
       'Silicon is a sovereign Agglayer chain built on the Polygon CDK, aiming to become the social network of the future.',
+    headerWarning:
+      'Silicon is [shutting down](https://cryptoslate.com/nearly-10-million-must-escape-a-dying-ethereum-network-before-new-years-eve-or-risk-becoming-unrecoverable/). Bridge deposits ended on September 2, 2026, and withdrawals are supported until December 31, 2026, 12:00 KST. Assets not withdrawn by then cannot be recovered.',
     links: {
       websites: ['https://silicon.network/'],
       bridges: ['https://bridge.silicon.network/'],
@@ -34,6 +37,7 @@ export const silicon: ScalingProject = agglayer({
     chainId: 2355,
     explorerUrl: 'https://scope.silicon.network',
     sinceTimestamp: UnixTime(1724183531),
+    untilTimestamp: UnixTime(1794664800), // 2026-11-14T14:00:00Z, last indexed hour
     apis: [
       { type: 'rpc', url: 'https://rpc.silicon.network', callsPerMinute: 300 },
     ],
@@ -51,6 +55,14 @@ export const silicon: ScalingProject = agglayer({
     }),
   ],
   milestones: [
+    {
+      title: 'Silicon announces shutdown',
+      url: 'https://cryptoslate.com/nearly-10-million-must-escape-a-dying-ethereum-network-before-new-years-eve-or-risk-becoming-unrecoverable/',
+      date: '2026-09-02',
+      description:
+        'Bridge deposits end. Withdrawals are supported until the network shuts down on December 31, 2026.',
+      type: 'general',
+    },
     {
       title: 'Migration to Pessimistic Proofs',
       url: 'https://etherscan.io/tx/0xa5a1c5e3c627e972e6c3656017e900007567f9e8b7ecbd9cebd15d317c3c173d#eventlog',
