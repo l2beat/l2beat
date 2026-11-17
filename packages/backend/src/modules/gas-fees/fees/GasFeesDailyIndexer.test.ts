@@ -99,6 +99,17 @@ describe(GasFeesDailyIndexer.name, () => {
     expect(readFeesDays).toHaveBeenLastCalledWith([ABSTRACT], day(7), day(7))
   })
 
+  it('leaves late days older than 30 days alone, as in a backfill', async () => {
+    const { indexer, readFeesDays } = createIndexer([feesDay(day(2))], {
+      stored: [record(day(1), 'ethereum')],
+      now: () => day(45),
+    })
+
+    await indexer.update(day(3), day(9))
+
+    expect(readFeesDays).toHaveBeenCalledTimes(1)
+  })
+
   it('keeps the stored days when the late chains read fails', async () => {
     const { indexer, readFeesDays } = createIndexer([feesDay(day(2))], {
       stored: [record(day(1), 'ethereum')],
@@ -155,7 +166,7 @@ describe(GasFeesDailyIndexer.name, () => {
         chains: CHAINS,
         db: mockDatabase({ gasFeesDaily: daily }),
         readFeesDays,
-        now: options.now,
+        now: options.now ?? (() => day(9)),
       },
       Logger.SILENT,
     )
