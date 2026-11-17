@@ -258,7 +258,9 @@ export class UpdateMonitor {
       signal.throwIfAborted()
       await this.handleUpdateNotifier(diff, discovery, projectConfig, timestamp)
 
-      signal.throwIfAborted()
+      // No abort check here: once the notification is out, the baseline has to
+      // be saved or the next run notifies again. The repository ignores this
+      // write if a later run has saved a newer discovery already.
       await this.db.updateMonitor.upsert({
         projectId: projectConfig.name,
         timestamp,
