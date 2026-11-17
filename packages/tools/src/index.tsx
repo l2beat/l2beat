@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -17,8 +18,8 @@ import { StatsPage as UopsStatsPage } from './uops/StatsPage'
 
 const queryClient = new QueryClient()
 
-// biome-ignore lint/style/noNonNullAssertion: We are sure it exists
-const root = document.getElementById('root')!
+const root = document.getElementById('root')
+assert(root !== null, 'Root element missing')
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>

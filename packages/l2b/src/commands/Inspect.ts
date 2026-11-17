@@ -70,8 +70,7 @@ export const Inspect = command({
         )
         return
       }
-      // biome-ignore lint/style/noNonNullAssertion: just checked
-      entry = matches[0]!
+      entry = matches[0]
     }
 
     const nameByAddress = new Map<string, string>()

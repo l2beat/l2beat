@@ -101,8 +101,7 @@ export class ArrayHandler implements Handler {
           }
           return {
             field: this.field,
-            // biome-ignore lint/style/noNonNullAssertion: we know it's there
-            value: current.value!,
+            value: current.value,
             fragment: arrayFragment,
           }
         }),

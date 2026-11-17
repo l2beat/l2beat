@@ -122,7 +122,7 @@ export function createInteropEventType<T>(
       return this.createCtx(
         {
           chain: capture.chain,
-          logIndex: capture.log.logIndex ?? -1, // log.logIndex being null should never happen!
+          logIndex: capture.log.logIndex,
           timestamp: capture.block.timestamp,
           txHash: capture.tx.hash ?? '', // tx.hash being null should never happen!
         },
@@ -169,16 +169,19 @@ export function createInteropEventType<T>(
   }
 }
 
+/** A mined log: viem types `logIndex` as nullable only for pending logs. */
+export type CapturedLog = Log & { logIndex: number }
+
 export interface LogToCapture {
-  log: Log
-  txLogs: Log[]
+  log: CapturedLog
+  txLogs: CapturedLog[]
   tx: InteropTransaction
   block: Block
   chain: string
 }
 
 export interface TxToCapture {
-  txLogs: Log[]
+  txLogs: CapturedLog[]
   tx: InteropTransaction
   block: Block
   chain: string

@@ -32,8 +32,7 @@ export function generateTokenNames(tokens: TokenToSave[]) {
 
     const counters: Record<string, number> = {}
     for (const token of chainTokens) {
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      const total = occurrences[token.name]!
+      const total = occurrences[token.name]
       let finalName = token.name
 
       if (total > 1) {

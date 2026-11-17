@@ -152,8 +152,7 @@ export class AxelarPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         contractCallWithToken.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log) => parseTransfer(log, null),
       )
 
@@ -221,8 +220,7 @@ export class AxelarPlugin implements InteropPlugin {
     if (contractCallExecuted) {
       const nearestTransferInfo = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log, _index) => {
           const transfer = parseTransfer(log, null)
           if (transfer) {

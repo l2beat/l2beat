@@ -107,8 +107,7 @@ function decodeParsed(
     offset *= 32
     const members = elements.map((e, i): DecodedValue => {
       if (e.dynamic) {
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        const start = dynamicOffsets[i]!
+        const start = dynamicOffsets[i]
         if (start !== offset) {
           throw new Error('Invalid encoding')
         }

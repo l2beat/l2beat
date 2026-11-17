@@ -9,12 +9,15 @@ import {
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
-import type { Log as ViemLog } from 'viem'
 import {
   type InteropTransaction,
   toInteropTransaction,
 } from '../../dto/interopTransaction'
-import type { InteropEvent, LogToCapture } from '../../plugins/types'
+import type {
+  CapturedLog,
+  InteropEvent,
+  LogToCapture,
+} from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
 import type {
@@ -179,7 +182,7 @@ export class CatchingUpState implements TimeloopState {
       rangeData.nextRange,
     )
 
-    const logsPerTx = new UpsertMap<string, ViemLog[]>()
+    const logsPerTx = new UpsertMap<string, CapturedLog[]>()
     const txsWithIncludedEvents = new Set<string>()
     const txsWithFullData = new Set<string>()
     for (const log of logs) {

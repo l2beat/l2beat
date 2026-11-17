@@ -999,8 +999,7 @@ function VariableDeclarationStatement(
   }
   if (node.variables) {
     if (node.variables.length === 1) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      formatAstNode(node.variables[0]! as AST.ASTNode, out)
+      formatAstNode(node.variables[0] as AST.ASTNode, out)
     } else {
       out.token('(')
       forEachSeparator(node.variables, (n, separate) => {
