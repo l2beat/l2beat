@@ -2,6 +2,10 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import {
+  type AggregatedInteropHistoryFilter,
+  isEmptyFilter,
+} from './AggregatedInteropHistoryFilter'
 import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTransferRecord {
@@ -31,6 +35,18 @@ export interface AggregatedInteropTransferRecord {
   carriedFrom?: UnixTime
   /** Computed while its syncers lagged, so it undercounts; never a carry source. */
   isPartial?: boolean
+}
+
+export interface AggregatedInteropTransferHistoryRecord {
+  timestamp: UnixTime
+  id: string
+  transferCount: number
+  transfersWithDurationCount: number
+  totalDurationSum: number
+  /** Lanes copied from an older snapshot because their syncers lagged. */
+  carriedLanes: number
+  /** Lanes computed while their syncers lagged, so they undercount. */
+  partialLanes: number
 }
 
 export interface AggregatedInteropTransferSeriesRecord {
@@ -705,5 +721,53 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     const rows = await query.execute()
 
     return rows.map(toRecord)
+  }
+
+  async getTimestamps(): Promise<UnixTime[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select('timestamp')
+      .distinct()
+      .orderBy('timestamp')
+      .execute()
+    return rows.map((row) => UnixTime.fromDate(row.timestamp))
+  }
+
+  async getHistoryStats(
+    filter: AggregatedInteropHistoryFilter,
+  ): Promise<AggregatedInteropTransferHistoryRecord[]> {
+    if (isEmptyFilter(filter)) return []
+
+    let query = this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select((eb) => [
+        'timestamp',
+        'id',
+        eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('transfersWithDurationCount').as('duration_count'),
+        sql<string>`sum("totalDurationSum"::bigint)`.as('duration_sum'),
+        sql<string>`count(*) filter (where "carriedFrom" is not null)`.as(
+          'carried_lanes',
+        ),
+        sql<string>`count(*) filter (where "isPartial")`.as('partial_lanes'),
+      ])
+      .where('timestamp', 'in', filter.timestamps.map(UnixTime.toDate))
+      .where('srcChain', 'in', filter.sourceChains)
+      .where('dstChain', 'in', filter.destinationChains)
+      .whereRef('srcChain', '!=', 'dstChain')
+    if (filter.protocolIds) {
+      query = query.where('id', 'in', filter.protocolIds)
+    }
+
+    const rows = await query.groupBy(['timestamp', 'id']).execute()
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      id: row.id,
+      transferCount: Number(row.transfer_count ?? 0),
+      transfersWithDurationCount: Number(row.duration_count ?? 0),
+      totalDurationSum: Number(row.duration_sum ?? 0),
+      carriedLanes: Number(row.carried_lanes),
+      partialLanes: Number(row.partial_lanes),
+    }))
   }
 }

@@ -201,6 +201,16 @@ export class InteropAggregateStatusRepository extends BaseRepository {
     return rows.map((row) => UnixTime.fromDate(row.timestamp))
   }
 
+  async getBlockedTimestamps(): Promise<UnixTime[]> {
+    const rows = await this.db
+      .selectFrom('InteropAggregateStatus')
+      .select('timestamp')
+      .where('status', '=', 'blocked')
+      .orderBy('timestamp')
+      .execute()
+    return rows.map((row) => UnixTime.fromDate(row.timestamp))
+  }
+
   async getByTimestamp(
     timestamp: UnixTime,
   ): Promise<InteropAggregateStatusRecord | undefined> {

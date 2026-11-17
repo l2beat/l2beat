@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server'
+import { env } from '~/env'
 import { getIntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
 import { getInteropBridgeSelectionData } from '~/server/features/layer2s/interop/getInteropBridgeSelectionData'
 import { getInteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
@@ -10,6 +12,8 @@ import { getInteropTokensInfinite } from '~/server/features/layer2s/interop/getI
 import { getInteropTokensPairsInfinite } from '~/server/features/layer2s/interop/getInteropTokensPairs'
 import { getInteropTokenTransfers } from '~/server/features/layer2s/interop/getInteropTokenTransfers'
 import { getTokenFrameworksData } from '~/server/features/layer2s/interop/getTokenFrameworksData'
+import { getInteropHistory } from '~/server/features/layer2s/interop/history/getInteropHistory'
+import { InteropHistoryParams } from '~/server/features/layer2s/interop/history/types'
 import {
   InteropBridgeSelectionParams,
   InteropDashboardParams,
@@ -22,6 +26,14 @@ import {
   InteropTopItemsInfiniteParams,
 } from '~/server/features/layer2s/interop/types'
 import { procedure, router } from '../trpc'
+
+/** For the history prototype alone, so with the page off nobody runs its queries */
+const historyProcedure = procedure.use(({ next }) => {
+  if (!env.CLIENT_SIDE_INTEROP_HISTORY_ENABLED) {
+    throw new TRPCError({ code: 'NOT_FOUND' })
+  }
+  return next()
+})
 
 export const interopRouter = router({
   dashboard: procedure
@@ -60,4 +72,7 @@ export const interopRouter = router({
   protocolsByVolume: procedure
     .input(InteropProtocolsByVolumeParams)
     .query(({ input }) => getInteropProtocolsByVolume(input)),
+  history: historyProcedure
+    .input(InteropHistoryParams)
+    .query(({ input }) => getInteropHistory(input)),
 })

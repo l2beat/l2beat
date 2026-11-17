@@ -5,6 +5,7 @@ import express, {
   type Request,
   type Response,
 } from 'express'
+import { env } from '~/env'
 import {
   serveMarkdown,
   serveMarkdownIfPreferred,
@@ -15,6 +16,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
 import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getInteropTransferTypeData } from './getInteropTransferTypeData'
+import { getInteropHistoryPageData } from './history/getInteropHistoryPageData'
 import { getInteropIntentBridgesData } from './intent-bridges/getInteropIntentBridgesData'
 import {
   getInteropProtocolMarkdown,
@@ -121,6 +123,20 @@ export function createInteropRouter(
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
+
+  if (env.CLIENT_SIDE_INTEROP_HISTORY_ENABLED) {
+    router.get(
+      '/interop/history',
+      validateRoute({
+        query: InteropQuery,
+      }),
+      async (req, res) => {
+        const data = await getInteropHistoryPageData(req, manifest)
+        const html = await render(data, req.originalUrl)
+        res.status(200).send(html)
+      },
+    )
+  }
 
   router.get('/interop/intent-bridges', async (req, res) => {
     const data = await getInteropIntentBridgesData(req, manifest, cache)

@@ -311,6 +311,31 @@ describeDatabase(InteropAggregateStatusRepository.name, (db) => {
       ])
     })
   })
+
+  describe(
+    InteropAggregateStatusRepository.prototype.getBlockedTimestamps.name,
+    () => {
+      it('returns blocked snapshots only', async () => {
+        await repository.upsertAuto({
+          timestamp: UnixTime(200),
+          status: 'blocked',
+        })
+        await repository.upsertAuto({
+          timestamp: UnixTime(100),
+          status: 'promoted',
+        })
+        await repository.upsertAuto({
+          timestamp: UnixTime(50),
+          status: 'blocked',
+        })
+
+        expect(await repository.getBlockedTimestamps()).toEqual([
+          UnixTime(50),
+          UnixTime(200),
+        ])
+      })
+    },
+  )
 })
 
 function transfer(timestamp: UnixTime): AggregatedInteropTransferRecord {

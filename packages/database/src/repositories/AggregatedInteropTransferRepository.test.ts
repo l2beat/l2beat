@@ -1701,6 +1701,108 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getHistoryStats.name,
+    () => {
+      it('sums the selected lanes per snapshot and protocol', async () => {
+        await repository.insertMany([
+          record({
+            id: 'p1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            transferCount: 3,
+            transfersWithDurationCount: 2,
+            totalDurationSum: 60,
+          }),
+          record({
+            id: 'p1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            transferCount: 4,
+            transfersWithDurationCount: 4,
+            totalDurationSum: 40,
+            carriedFrom: UnixTime(50),
+          }),
+          record({
+            id: 'p1',
+            timestamp: UnixTime(100),
+            srcChain: 'base',
+            dstChain: 'arbitrum',
+            transferCount: 9,
+            isPartial: true,
+          }),
+          record({
+            id: 'p1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'ethereum',
+            transferCount: 9,
+          }),
+          record({
+            id: 'p1',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            transferCount: 9,
+          }),
+        ])
+
+        const result = await repository.getHistoryStats({
+          timestamps: [UnixTime(100)],
+          sourceChains: ['ethereum'],
+          destinationChains: ['base', 'arbitrum', 'ethereum'],
+        })
+
+        expect(result).toEqual([
+          {
+            timestamp: UnixTime(100),
+            id: 'p1',
+            transferCount: 7,
+            transfersWithDurationCount: 6,
+            totalDurationSum: 100,
+            carriedLanes: 1,
+            partialLanes: 0,
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
+    AggregatedInteropTransferRepository.prototype.getTimestamps.name,
+    () => {
+      it('returns each snapshot once, oldest first', async () => {
+        await repository.insertMany([
+          record({
+            id: 'p1',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'base',
+          }),
+          record({
+            id: 'p2',
+            timestamp: UnixTime(200),
+            srcChain: 'ethereum',
+            dstChain: 'base',
+          }),
+          record({
+            id: 'p1',
+            timestamp: UnixTime(100),
+            srcChain: 'ethereum',
+            dstChain: 'base',
+          }),
+        ])
+
+        expect(await repository.getTimestamps()).toEqual([
+          UnixTime(100),
+          UnixTime(200),
+        ])
+      })
+    },
+  )
 })
 
 function record({

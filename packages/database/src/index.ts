@@ -18,9 +18,19 @@ export type {
   AggregatedInteropDeployedTokenRecord,
   AggregatedInteropDeployedTokenStats,
 } from './repositories/AggregatedInteropDeployedTokenRepository'
-export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
+export type { AggregatedInteropHistoryFilter } from './repositories/AggregatedInteropHistoryFilter'
+export type {
+  AggregatedInteropChainVolumeRecord,
+  AggregatedInteropLaneCandidateRecord,
+  AggregatedInteropLaneVolumeRecord,
+  AggregatedInteropProtocolVolumeRecord,
+  AggregatedInteropTokenLaneVolumeRecord,
+  AggregatedInteropTokenRecord,
+  AggregatedInteropTokenVolumeRecord,
+} from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
+  AggregatedInteropTransferHistoryRecord,
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
 } from './repositories/AggregatedInteropTransferRepository'
