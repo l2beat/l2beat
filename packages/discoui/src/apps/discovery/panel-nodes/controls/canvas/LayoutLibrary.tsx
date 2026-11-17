@@ -61,13 +61,18 @@ export function LayoutLibrary() {
   const nodeCount = useStore((state) => state.nodes.length)
   const [layoutName, setLayoutName] = useState('')
   const [description, setDescription] = useState('')
-  const [overwriteArmed, setOverwriteArmed] = useState(false)
+  // The confirmation holds for one exact name, so it cannot carry over to
+  // another layout when the name changes under it.
+  const [overwriteArmedName, setOverwriteArmedName] = useState<string | null>(
+    null,
+  )
+  const overwriteArmed = overwriteArmedName === normalizeLayoutName(layoutName)
   const [loadingName, setLoadingName] = useState<string | null>(null)
 
   const resetSaveForm = () => {
     setLayoutName(projectId)
     setDescription('')
-    setOverwriteArmed(false)
+    setOverwriteArmedName(null)
   }
 
   // The project can change under an open dialog, like when the agent opens
@@ -117,13 +122,13 @@ export function LayoutLibrary() {
       await queryClient.invalidateQueries({
         queryKey: ['project-layouts', projectId],
       })
-      setOverwriteArmed(false)
+      setOverwriteArmedName(null)
       setLayoutName(variables.name)
       toast.success(`Saved layout "${variables.name}"`)
     },
-    onError: (error) => {
+    onError: (error, variables) => {
       if (error.message.includes('already exists')) {
-        setOverwriteArmed(true)
+        setOverwriteArmedName(variables.name)
       }
       toast.error('Failed to save layout', {
         description: <pre>{error.message}</pre>,
@@ -213,14 +218,15 @@ export function LayoutLibrary() {
       return
     }
 
-    if (existingNames.has(normalizedName) && !overwriteArmed) {
-      setOverwriteArmed(true)
+    const overwriteConfirmed = overwriteArmedName === normalizedName
+    if (existingNames.has(normalizedName) && !overwriteConfirmed) {
+      setOverwriteArmedName(normalizedName)
       return
     }
 
     saveMutation.mutate({
       name: normalizedName,
-      overwrite: overwriteArmed,
+      overwrite: overwriteConfirmed,
     })
   }
 
@@ -340,10 +346,7 @@ export function LayoutLibrary() {
                   <span className="font-medium text-xs">Name</span>
                   <Input
                     value={layoutName}
-                    onChange={(e) => {
-                      setLayoutName(e.target.value)
-                      setOverwriteArmed(false)
-                    }}
+                    onChange={(e) => setLayoutName(e.target.value)}
                     placeholder={projectId || 'layout name'}
                     disabled={!canPersistCurrentLayout}
                   />
