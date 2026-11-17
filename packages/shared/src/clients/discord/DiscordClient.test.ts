@@ -1,3 +1,4 @@
+import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { DiscordClient } from './DiscordClient'
@@ -54,7 +55,7 @@ describe(DiscordClient.name, () => {
       )
     })
 
-    it('throws when discord returns an error', async () => {
+    it('throws when discord keeps returning an error', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetchRaw() {
           return new Response('bad request', {
@@ -64,10 +65,39 @@ describe(DiscordClient.name, () => {
         },
       })
       const discord = mockClient('', httpClient)
+      const time = install()
 
-      await expect(discord.sendMessage('message')).toBeRejectedWith(
-        'HTTP error: 400 Bad Request',
+      const result = expect(discord.sendMessage('message')).toBeRejectedWith(
+        'HTTP error',
       )
+      await time.runAllAsync()
+      await result
+      time.uninstall()
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
+    })
+
+    // A one-off webhook timeout must not drop the notification. Method: fail
+    // the first attempt, then check the message goes out after the backoff.
+    it('retries after a transient failure', async () => {
+      let calls = 0
+      const httpClient = mockObject<HttpClient>({
+        async fetchRaw() {
+          calls++
+          if (calls === 1) {
+            throw new Error('HTTP timeout')
+          }
+          return new Response(JSON.stringify({ id: '1' }), { status: 200 })
+        },
+      })
+      const discord = mockClient(webhookUrl, httpClient)
+      const time = install()
+
+      const result = discord.sendMessage('message')
+      await time.runAllAsync()
+      time.uninstall()
+
+      expect(await result).toEqual('1')
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(2)
     })
   })
 })
