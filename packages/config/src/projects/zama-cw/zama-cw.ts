@@ -398,6 +398,15 @@ export const zamaCw: BaseProject = {
           source:
             'https://github.com/mocarram/fhevm-wallet/blob/f942463b53c0637ffbd4573d0a6f7a7558e21aeb/src/core/fhe/FheService.ts#L40-L52',
         },
+        {
+          name: 'Zama SDK example app',
+          icon: 'zama-confidential-tokens',
+          finding:
+            "Runs on mainnet only with the user's own Zama API key, which Zama reviews and bills, or the user's own relayer.",
+          fix: "Serve a mainnet instance whose relayer key is not the user's.",
+          source:
+            'https://github.com/zama-ai/sdk/blob/c908f7709007fd501fa0afb50c43bbeabbc96266/examples/react-wagmi/README.md?plain=1#L66-L73',
+        },
       ],
     },
     trackedOn: ['ethereum'],
