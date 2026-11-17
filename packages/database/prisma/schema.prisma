@@ -61,6 +61,20 @@ model LiveActivityBlock {
   @@index([timestamp])
 }
 
+/// The newest blocks of each chain the backend follows at its head: one
+/// chain per `chain`, every block the child of the one before. Whatever is
+/// derived from blocks this fresh is checked against them
+model ChainBlock {
+  chain      String   @db.VarChar(64)
+  number     Int
+  hash       String   @db.VarChar(66)
+  parentHash String   @db.VarChar(66)
+  timestamp  DateTime @db.Timestamp(6)
+
+  @@id([chain, number])
+  @@index([timestamp])
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)
