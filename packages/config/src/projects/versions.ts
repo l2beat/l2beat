@@ -51,4 +51,13 @@ export const versionGroups: ProjectVersionGroup[] = [
       { project: ProjectId('zkmoneyv6'), label: 'v6' },
     ],
   },
+  {
+    id: 'derive',
+    name: 'Derive',
+    latest: ProjectId('derivev3'),
+    versions: [
+      { project: ProjectId('lyra'), label: 'v2' },
+      { project: ProjectId('derivev3'), label: 'v3' },
+    ],
+  },
 ]
