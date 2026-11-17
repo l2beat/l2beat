@@ -134,7 +134,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       --color-logo-ink: #0d0c0c;
       --font-body: "Roboto", Arial, sans-serif;
 
-      --space-xs: 8px;
       --space-md: 16px;
       --space-lg: 24px;
       --space-xl: 40px;
@@ -245,10 +244,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     }
 
     .footer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--space-xs) var(--space-lg);
       padding-block: var(--space-lg);
       color: var(--color-ink-2);
       font-size: var(--text-sm);
@@ -258,7 +253,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       :root { --gutter: 16px; }
       .header { padding-block: var(--space-md); }
       .logo { width: 84px; }
-      .stage { grid-template-columns: minmax(0, 1fr); align-self: start; height: auto; max-height: none; }
+      .stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(280px, 1fr); align-self: stretch; height: auto; max-height: none; }
       .message { padding: var(--space-xl) var(--space-lg); }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -309,8 +304,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       </div>
     </main>
     <footer class="footer">
-      <span>© ETHBEAT</span>
-      <span>Independent research. An informed Ethereum.</span>
+      <span>© ETHBEAT (formerly L2BEAT)</span>
     </footer>
   </div>
 </body>
