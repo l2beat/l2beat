@@ -120,6 +120,7 @@ export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LiquidStakingSnapshotRecord } from './repositories/LiquidStakingSnapshotRepository'
 export type {
   LiveActivityBlockRecord,
+  LiveActivityBucketRecord,
   LiveActivityHourRecord,
 } from './repositories/LiveActivityBlockRepository'
 export type {
