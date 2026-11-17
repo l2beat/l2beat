@@ -24,7 +24,7 @@ export type FeesRow = v.infer<typeof FeesRow>
 const BlocksRow = v.object({
   blockchain: v.string(),
   day: v.string(),
-  /** The three below are null on the days read only for their block range */
+  /** The three below are null on a neighbour day of a chain read from transactions, which is read only for its block range */
   base_fee: v.union([v.number(), v.null()]),
   gas_used: v.union([v.number(), v.null()]),
   /** Blocks of the day that had transactions */
