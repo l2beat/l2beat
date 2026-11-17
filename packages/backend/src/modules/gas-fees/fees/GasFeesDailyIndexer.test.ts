@@ -122,6 +122,7 @@ describe(GasFeesDailyIndexer.name, () => {
     readFeesDays.rejectsWithOnce(new Error('Dune error'))
 
     expect(await indexer.update(day(9), day(9))).toEqual(day(9))
+    expect(readFeesDays).toHaveBeenCalledTimes(3)
     expect(daily.upsertMany).toHaveBeenLastCalledWith([
       record(day(7), 'abstract'),
     ])
