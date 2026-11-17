@@ -50,16 +50,12 @@ describe(joinFeesDays.name, () => {
     ])
   })
 
-  it("takes a chain's day as whole only once both queries have a later day of it", () => {
+  it("takes a chain's day as whole only once its blocks run into a later day's", () => {
     const days = joinFeesDays(
       chains,
       day,
       UnixTime(day + UnixTime.DAY),
-      [
-        fees('zksync', '2026-10-01'),
-        fees('zksync', '2026-10-02'),
-        fees('zksync', '2026-10-03'),
-      ],
+      [fees('zksync', '2026-10-01'), fees('zksync', '2026-10-02')],
       [blocks('zksync', '2026-10-01'), blocks('zksync', '2026-10-02')],
     )
 
@@ -137,6 +133,33 @@ describe(joinFeesDays.name, () => {
         )
 
       expect(stored(halt)).toEqual([1, 0, 1])
+    })
+
+    it('checks the first day of a read against the day before it', () => {
+      // 30 Sep ends at -11, so ten blocks are missing before 1 Oct
+      const before = blocks('zksync', '2026-09-30', {
+        first_block: -110,
+        last_block: -11,
+      })
+
+      expect(stored([before, ...whole])).toEqual([0, 1, 1])
+    })
+
+    it('stores the last day of a read before a halt, from the day the chain resumes on', () => {
+      // No blocks on 2 Oct; 3 Oct, beyond the days read, carries on from 1 Oct
+      const resumed = blocks('zksync', '2026-10-03', {
+        first_block: 100,
+        last_block: 199,
+      })
+      const days = joinFeesDays(
+        [zksync],
+        day,
+        day,
+        [fees('zksync', '2026-10-01')],
+        [blocks('zksync', '2026-10-01'), resumed],
+      )
+
+      expect(days.map((d) => d.records.length)).toEqual([1])
     })
 
     it('refuses a day of a chain read from transactions when a block has none', () => {

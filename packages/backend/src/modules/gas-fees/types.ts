@@ -3,9 +3,9 @@ import type { UnixTime } from '@l2beat/shared-pure'
 export interface GasFeesConfig {
   /** Daily fees per chain, from Dune */
   fees: {
-    /** The first day stored. Every day after it costs 0.16 to 0.3 Dune credits */
+    /** The first day stored. Every day after it costs 0.3 to 0.5 Dune credits */
     firstDay: UnixTime
-    /** Contiguous days stored per Dune query, in one month, as Dune partitions by month. Each read takes the day after them too */
+    /** Contiguous days read per Dune query, in one month, as Dune partitions by month */
     daysPerQuery: number
   }
   /**

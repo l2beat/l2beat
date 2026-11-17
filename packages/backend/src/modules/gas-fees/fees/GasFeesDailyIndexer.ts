@@ -10,7 +10,7 @@ import { duneRetryStrategy, nextDays, UnfinishedDay } from '../days'
 import type { GasFeesChain } from './chains'
 import type { FeesDay } from './readFeesDays'
 
-/** Bump it when a fix changes what past days store: every day is read again, 0.16 to 0.3 Dune credits each */
+/** Bump it when a fix changes what past days store: every day is read again, 0.3 to 0.5 Dune credits each */
 const STORED_DATA_VERSION = '1'
 /**
  * A chain Dune is late with is read again for this long after the day. Counted
@@ -125,11 +125,27 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         ),
       )
       if (from >= before) return
+      // A day more, to see what leaves the window still late
+      const agedOut = UnixTime(from - UnixTime.DAY)
       const stored = await this.$.db.gasFeesDaily.getInRange(
-        from,
+        agedOut,
         UnixTime(before - UnixTime.DAY),
       )
       const have = new Set(stored.map((r) => `${r.chain}:${r.timestamp}`))
+      const lost = this.$.chains
+        .filter(
+          (chain) =>
+            agedOut >= this.$.firstDay &&
+            agedOut >= chain.requiredFrom &&
+            !have.has(`${chain.id}:${agedOut}`),
+        )
+        .map((chain) => chain.id)
+      if (lost.length > 0) {
+        this.logger.warn('Gas fees chain days left out, late for 30 days', {
+          day: agedOut,
+          chains: lost,
+        })
+      }
       const late: { day: UnixTime; chain: GasFeesChain }[] = []
       for (let day = from; day < before; day += UnixTime.DAY) {
         for (const chain of this.$.chains) {
