@@ -5,7 +5,7 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 | Rule | Runs in | What it rejects |
 |---|---|---|
 | `repositoryMockType` | packages that use the database | `mockObject<SomeRepository>(...)`. Type the mock as `Database['repo']` or `TokenDatabase['repo']`, so no repository class is exported only for tests. |
-| `utcDates` | `frontend` | Local-time date reads and formatting: `getDate()`, `toLocaleDateString()`, `Intl.DateTimeFormat` without `timeZone: 'UTC'`. See `packages/frontend/src/utils/dates.md`. |
+| `utcDates` | `frontend` | Local-time date reads and formatting: `getDate()`, `toLocaleDateString()`, `Intl.DateTimeFormat` without `timeZone: 'UTC'`. |
 
 The rules match syntax and know no types. `utcDates` leaves `toLocaleString()` alone, because numbers have it too.
 
