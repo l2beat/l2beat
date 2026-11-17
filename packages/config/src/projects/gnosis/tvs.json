@@ -2191,6 +2191,32 @@
     },
     {
       "mode": "auto",
+      "id": "gnosis-ZCHF",
+      "priceId": "frankencoin",
+      "symbol": "ZCHF",
+      "name": "Frankencoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37150/large/Coin_Logo_Frankencoin_1024px.png?1728679791",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD4dD9e2F021BB459D5A5f6c24C12fE09c5D45553",
+        "chain": "gnosis",
+        "decimals": 18,
+        "sinceTimestamp": 1749113880
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "gnosis-ZRX",
       "priceId": "0x",
       "symbol": "ZRX",

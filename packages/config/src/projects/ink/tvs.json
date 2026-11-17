@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "ink-ANITA",
+      "priceId": "anita",
+      "symbol": "ANITA",
+      "name": "ANITA INK",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68173/large/_L_L.png?1754996486",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "anita",
+        "decimals": 18,
+        "sinceTimestamp": 1754956800,
+        "address": "0x0606FC632ee812bA970af72F8489baAa443C4B98",
+        "chain": "ink"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "ink-CRV",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
@@ -126,6 +145,31 @@
     },
     {
       "mode": "auto",
+      "id": "ink-kHYPE",
+      "priceId": "kraken-wrapped-hype",
+      "symbol": "kHYPE",
+      "name": "Kraken Wrapped HYPE",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176672/large/kHYPE.png?1788459787",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAd09Cd20e513E4d8cB78036F77Ab9AfdE8555929",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1789689600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ink-rETH",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
@@ -142,6 +186,32 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "ink-SolvBTC-1",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaE4EFbc7736f963982aACb17EFA37fCBAb924cB3",
+        "chain": "ink",
+        "decimals": 18,
+        "sinceTimestamp": 1745034522
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -165,6 +235,32 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ink-syrupUSDT",
+      "priceId": "syrupusdt",
+      "symbol": "syrupUSDT",
+      "name": "Syrup USDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69514/large/syrupUSDT.png?1790836031",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8A76fe7fA6da27f85a626c5C53730B38D13603d7",
+        "chain": "ink",
+        "decimals": 6,
+        "sinceTimestamp": 1771354900
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }

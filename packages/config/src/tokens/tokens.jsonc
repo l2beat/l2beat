@@ -2344,6 +2344,82 @@
       "address": "0xb6EE9668771a79be7967ee29a63D4184F8097143",
       "coingeckoId": "cargox",
       "deploymentTimestamp": 1516145113
+    },
+    {
+      // Held by the Base L1StandardBridge.
+      "symbol": "SOSO",
+      "address": "0x76a0e27618462bdac7a29104bdcfff4e6bfcea2d",
+      "coingeckoId": "sosovalue"
+    },
+    {
+      // Held by the Polygon PoS bridge.
+      "symbol": "DIMO",
+      "address": "0x5fab9761d60419c9eeebe3915a8fa1ed7e8d2e1b",
+      "coingeckoId": "dimo"
+    },
+    {
+      // Held by the Polygon PoS bridge.
+      "symbol": "FTRB",
+      "address": "0x2596825a84888e8f24b747df29e11b5dd03c81d7",
+      "coingeckoId": "faith-tribe"
+    },
+    {
+      // New QUICK (1:1000 split), held by the Polygon PoS ERC20 predicate: 800M of 1B total
+      // while 621M circulate, so Polygon PoS marks it preminted.
+      "symbol": "QUICK",
+      "address": "0xd2ba23de8a19316a638dc1e7a9adda1d74233368",
+      "coingeckoId": "quickswap"
+    },
+    {
+      // Held by the Base L1StandardBridge: 2.23B while 2.11B circulate, so Base marks it
+      // preminted.
+      "symbol": "TOWNS",
+      "address": "0x000000fa00b200406de700041cfc6b19bbfb4d13",
+      "coingeckoId": "towns"
+    },
+    {
+      // Held by the Base L1StandardBridge: 853M of 1B total while 419M circulate, so Base
+      // marks it preminted.
+      "symbol": "SUP",
+      "address": "0xd05001db979ff2f1a3b2105875d3454e90dd2961",
+      "coingeckoId": "superfluid"
+    },
+    {
+      // Held by the Polygon PoS bridge.
+      "symbol": "MaticX",
+      "address": "0xf03a7eb46d01d9ecaa104558c732cf82f6b6b645",
+      "coingeckoId": "stader-maticx"
+    },
+    {
+      // Held by the Base L1StandardBridge.
+      "symbol": "ALIGN",
+      "address": "0x50614cc8e44f7814549c223aa31db9296e58057c",
+      "coingeckoId": "aligned"
+    },
+    {
+      // Held by the Polygon PoS bridge.
+      "symbol": "sPOL",
+      "address": "0x3b790d651e950497c7723d47b24e6f61534f7969",
+      "coingeckoId": "spol"
+    },
+    {
+      // Held by the Polygon PoS bridge.
+      "symbol": "MYST",
+      "address": "0x4cf89ca06ad997bc732dc876ed2a7f26a9e7f361",
+      "coingeckoId": "mysterium"
+    },
+    {
+      // Held by the Arbitrum One ERC20 gateway.
+      "symbol": "OBT",
+      "address": "0x4af322ff4a6f2858f6b51e546b9ec499654493c5",
+      "coingeckoId": "orbiter-finance"
+    },
+    {
+      // Held by the Base L1StandardBridge: nearly all of the 1B total while 180M circulate,
+      // so Base marks it preminted.
+      "symbol": "RNBW",
+      "address": "0x2f905eb214cde58b3462e1baff7dab64b0bc6471",
+      "coingeckoId": "rainbow-3-2"
     }
   ],
   "rise": [
@@ -2853,6 +2929,290 @@
       "symbol": "PROLOGUE",
       "address": "0xb9972ca7188e511174947e3936a5315ac7073277",
       "coingeckoId": "prologue",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // United Stables, issued at the same address on BNB Chain, Ethereum and Robinhood
+      // Chain; no bridge mints it here.
+      "symbol": "U",
+      "address": "0xce24439f2d9c6a2289f741120fe202248b666666",
+      "coingeckoId": "united-stables",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "AI",
+      "address": "0x2e8c31162b855a2ffa90f6f8634643ad6f111e18",
+      "coingeckoId": "artificial-inu-3",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "SWARM",
+      "address": "0x7eebda046d451bc7a7d12491eff72a861aa8136e",
+      "coingeckoId": "swarm-engine",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ORBIO",
+      "address": "0xaa07a0e9209e16ac99708c3ec70159c6ef3128a3",
+      "coingeckoId": "orbio-so",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "STANDARD",
+      "address": "0x88ad8ddf1e3898412146a534538d418c6f8a9062",
+      "coingeckoId": "standard",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PRIORS",
+      "address": "0xedbf91223639800bcd5756815caf908df3b890be",
+      "coingeckoId": "priors-agent",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "GLD",
+      "address": "0xc9a981fee1f9dec688bb123ccdecc63d0debfc4e",
+      "coingeckoId": "spdr-gold-shares-robinhood-token",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      // Base is O's home chain; this is the OFT copy.
+      "symbol": "O",
+      "address": "0x500a02a20b0b0a3f3efccfc0559543f5743bd1c4",
+      "coingeckoId": "o1-exchange",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "STATICS",
+      "address": "0x2d8d6f4a93acd7a916a5a654ec8b690ba3b3eadd",
+      "coingeckoId": "statics-protocol",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "BUN",
+      "address": "0x07ebb29a38fbcb41563817e5e19f2cec619c90d2",
+      "coingeckoId": "bundle-cat",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ZZZ",
+      "address": "0x7dbf38976f6d3b9c529e7d9484a71898b409ee6a",
+      "coingeckoId": "zzz-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "UBIK",
+      "address": "0x812486eaea648819853f8e372dc9f1516c7868bd",
+      "coingeckoId": "ubik",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TORCH",
+      "address": "0x000050e18ffa3f8f7ad170eb9cef160eb3ed1111",
+      "coingeckoId": "torch",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "DELTA",
+      "address": "0xe8ffd7e24187f72afb08d75b1bb13088a989a791",
+      "coingeckoId": "delta",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "WTH",
+      "address": "0xb8fa8010833463aac5595b55b9045479239eff79",
+      "coingeckoId": "what-the-hook",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "BONER",
+      "address": "0x98096d17e191b3da1d5f99a6d7b3584351b11e18",
+      "coingeckoId": "boner-coin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "VRAX",
+      "address": "0x94641b97010608c3827fb058074889f19868ff33",
+      "coingeckoId": "commander-vrax-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FRONG",
+      "address": "0x6245e67affa44a23077f0ea7f981a8dc743a0c47",
+      "coingeckoId": "frong",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "microduck",
+      "address": "0xd5f1afea47b1a9eab414d2ee740cf1d6d039e725",
+      "coingeckoId": "microduck",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "BOW",
+      "address": "0x451b42a15100c340ca12f7c66de06fac5ea2d751",
+      "coingeckoId": "longbow-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FOBO",
+      "address": "0x000de658153f47f23e92973c8eb1e89762703676",
+      "coingeckoId": "fobo",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "RAETO",
+      "address": "0x72be1277e198d0c476869253cb4e62807e14533c",
+      "coingeckoId": "raeto",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "JUGGERNAUT",
+      "address": "0xd7321801caae694090694ff55a9323139f043b88",
+      "coingeckoId": "the-juggernaut",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "VOLT",
+      "address": "0x5d102d1e69e77591d486aa4f663b3645151bbdf6",
+      "coingeckoId": "volt-inu-3",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "cbBTC",
+      "address": "0xcec185eb182c47d1ba1efc84e6959e18cd620be4",
+      "coingeckoId": "coinbase-wrapped-btc",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "GAGE",
+      "address": "0x7163ae1b5aea2f09ebc609c52b4dcac0a7a4bc2d",
+      "coingeckoId": "gage",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "HIMS",
+      "address": "0xccee82fe024c36fa15e1005ede3e9e4787e23d09",
+      "coingeckoId": "hims-hers-health-inc-robinhood-token",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "AMC",
+      "address": "0x05a3d1cd21d0c88145e82600e62e7e496e0f222b",
+      "coingeckoId": "amc-entertainment-holdings-inc-robinhood-token",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "SCHIFFY",
+      "address": "0x42afa2124ca5a2b83898e46b2da9a190995b1e18",
+      "coingeckoId": "schiffy",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TTWO",
+      "address": "0x5e81213613b6b86eab4c6c50d718d34359459786",
+      "coingeckoId": "take-two-interactive-software-robinhood-tokenized-stock",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "ROBINCAT",
+      "address": "0xded852de9fe9ba9b6f27f39e8e81cf851a5c79cc",
+      "coingeckoId": "robincat",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FOREVER",
+      "address": "0xacc8de336f5d2366fa7334383d8fab73499f582a",
+      "coingeckoId": "forever-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // World Is Flat, unrelated to dogwifhat.
+      "symbol": "WIF",
+      "address": "0x5173b8ea6923c2d40267890d45c46a3480954773",
+      "coingeckoId": "world-is-flat",
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"
@@ -4186,6 +4546,180 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      // Maple's syrupUSDG, a CCIP BurnMintERC20; the backing sits on Ethereum.
+      "symbol": "syrupUSDG",
+      "address": "0xe1b0dc5a21b10f1634fbfbe9976fba2ee2e1c762",
+      "coingeckoId": "syrup-usdg",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Global Dollar, moved burn-and-mint by its LayerZero OFT.
+      "symbol": "USDG",
+      "address": "0x004b506865409877c9fa29bfb1eba929984b9bbc",
+      "coingeckoId": "global-dollar",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "DRV",
+      "address": "0x77b7787a09818502305c95d68a2571f090abb135",
+      "coingeckoId": "derive",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // Issued on Arbitrum One by Monerium, not bridged.
+      "symbol": "EURe",
+      "address": "0x0c06ccf38114ddfc35e07427b9424adcca9f44f8",
+      "coingeckoId": "monerium-eur-money-2",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "reUSD",
+      "address": "0x76ce01f0ef25aa66cc5f1e546a005e4a63b25609",
+      "coingeckoId": "re-protocol-reusd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "NST",
+      "address": "0x88a269df8fe7f53e590c561954c52fccc8ec0cfb",
+      "coingeckoId": "ninja-squad",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SPA",
+      "address": "0x5575552988a3a80504bbaeb1311674fcfd40ad4b",
+      "coingeckoId": "sperax",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Base is CARV's home chain; this is the OFT copy.
+      "symbol": "CARV",
+      "address": "0xc08cd26474722ce93f4d0c34d16201461c10aa8c",
+      "coingeckoId": "carv",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "VSN",
+      "address": "0x6fbbbd8bfb1cd3986b1d05e7861a0f62f87db74b",
+      "coingeckoId": "vision-3",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LAVA",
+      "address": "0x11e969e9b3f89cb16d686a03cd8508c9fc0361af",
+      "coingeckoId": "lava-network",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar",
+            "slug": "axelar"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "EV",
+      "address": "0xe7e7e741c23a4767831a56a8c99f522c5ac1e7e7",
+      "coingeckoId": "everything",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      // Issued on Arbitrum One by Juno (FiatToken). LayerZero moves it to other chains
+      // burn-and-mint.
+      "symbol": "MXNB",
+      "address": "0xf197ffc28c23e0309b5559e7a166f2c6164c80aa",
+      "coingeckoId": "mxnb",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "nova": [
@@ -4713,6 +5247,86 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "OVER",
+      "address": "0xedf38688b27036816a50185caa430d5479e1c63e",
+      "coingeckoId": "overtime",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "DRV",
+      "address": "0x33800de7e817a70a694f31476313a7c572bba100",
+      "coingeckoId": "derive",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "alETH",
+      "address": "0x3e29d3a9316dab217754d13b28646b76607c5f04",
+      "coingeckoId": "alchemix-eth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "alUSD",
+      "address": "0xcb8fa9a76b8e203d8c3797bf438d8fb81ea3326a",
+      "coingeckoId": "alchemix-usd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ZCHF",
+      "address": "0xd4dd9e2f021bb459d5a5f6c24c12fe09c5d45553",
+      "coingeckoId": "frankencoin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -5803,6 +6417,748 @@
       "supply": "zero",
       "coingeckoId": "usd-coin",
       "category": "stablecoin"
+    },
+    {
+      // Aero, the token of the merged Aerodrome and Velodrome exchange. A separate contract
+      // and CoinGecko listing from Aerodrome's AERO above.
+      "symbol": "AERO",
+      "address": "0x3f5bf3edac59d650d8fdf9657a71f2f904a3a4ee",
+      "coingeckoId": "aero",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Horizen moved to Base; ZEN is issued here.
+      "symbol": "ZEN",
+      "address": "0xf43eb8de897fbc7f2502483b2bef7bb9ea179229",
+      "coingeckoId": "zencash",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Crown BRLV, an ERC-4626 vault holding the whole BRLY supply. BRLY is not listed, so
+      // nothing is counted twice. Backed by Brazilian government bonds and transferable
+      // without an allowlist, so rwaPublic like USDY.
+      "symbol": "BRLV",
+      "address": "0xd2047ebdb205ee6862b69ae9fb3501652cc97d36",
+      "coingeckoId": "crown-brlv",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "AVNT",
+      "address": "0x696f9436b67233384889472cd7cd58a6fb5df4f1",
+      "coingeckoId": "avantis",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "KTA",
+      "address": "0xc0634090f2fe6c6d75e61be2b949464abb498973",
+      "coingeckoId": "keeta",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Bridged from Nockchain: only the bridge MessageInbox can mint.
+      "symbol": "NOCK",
+      "address": "0x9b5e262cf9bb04869ab40b19af91d2dc85761722",
+      "coingeckoId": "nockchain",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Nockchain Bridge"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "EDGE",
+      "address": "0xed6e000def95780fb89734c07ee2ce9f6dcaf110",
+      "coingeckoId": "definitive",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "AXIS",
+      "address": "0x5be75e3b0aff5d1a042a5363ae36acb1d6d755ea",
+      "coingeckoId": "axis-robotics",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "XDP",
+      "address": "0x07b3d902783c3c12b077508c3b5c00113d1291d0",
+      "coingeckoId": "doppler-finance",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ELSA",
+      "address": "0x29cc30f9d113b356ce408667aa6433589cecbdca",
+      "coingeckoId": "elsa",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "TRUE",
+      "address": "0x21cfcfc3d8f98fc728f48341d10ad8283f6eb7ab",
+      "coingeckoId": "true",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by ZEC held off chain, same pattern as cbBTC.
+      "symbol": "cbZEC",
+      "address": "0xb2000000000000000000008501b13360000cb2ec",
+      "coingeckoId": "coinbase-wrapped-zec",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "Surplus",
+      "address": "0xc52aedec3374422d7510e294cfaa90799595cba3",
+      "coingeckoId": "surplus-intelligence",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Superform UP, a LayerZero OFT. Unrelated to the UP above.
+      "symbol": "UP",
+      "address": "0x5b2193fdc451c1f847be09ca9d13a4bf60f8c86b",
+      "coingeckoId": "superform",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LINGO",
+      "address": "0xfb42da273158b0f642f59f2ba7cc1d5457481677",
+      "coingeckoId": "lingo",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "apxUSD",
+      "address": "0xd993935e13851dd7517af10687ec7e5022127228",
+      "coingeckoId": "apxusd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "EDEL",
+      "address": "0xfb31f85a8367210b2e4ed2360d2da9dc2d2ccc95",
+      "coingeckoId": "edel",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by ADA held off chain, same pattern as cbBTC.
+      "symbol": "cbADA",
+      "address": "0xcbada732173e39521cdbe8bf59a6dc85a9fc7b8c",
+      "coingeckoId": "coinbase-wrapped-ada",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "CP",
+      "address": "0x001aad84c21a5cd4d696c56d44866e9703c43f77",
+      "coingeckoId": "cluster-protocol",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "UMIA",
+      "address": "0x56ab53b77f07da3af732150e8aec4783eb5bba7d",
+      "coingeckoId": "umia",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by DOGE held off chain, same pattern as cbBTC.
+      "symbol": "cbDOGE",
+      "address": "0xcbd06e5a2b0c65597161de254aa074e489deb510",
+      "coingeckoId": "coinbase-wrapped-doge",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "tGBP",
+      "address": "0x27f6c8289550fce67f6b50bed1f519966afe5287",
+      "coingeckoId": "tokenised-gbp",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "DEUS",
+      "address": "0x940a319b75861014a220d9c6c144d108552b089b",
+      "coingeckoId": "xmaquina",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // xWELL; nearly the whole circulating supply sits on Base.
+      "symbol": "WELL",
+      "address": "0xa88594d404727625a9437c3f886c7643872296ae",
+      "coingeckoId": "moonwell-artemis",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "RIZE",
+      "address": "0x9818b6c09f5ecc843060927e8587c427c7c93583",
+      "coingeckoId": "rize",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "MOR",
+      "address": "0x7431ada8a591c955a994a21710752ef9b882b8e3",
+      "coingeckoId": "morpheusai",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "DOT",
+      "address": "0x23a2847d772803f9efc64b4277b782b06296fe51",
+      "coingeckoId": "dot",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by HYPE held off chain, same pattern as cbBTC.
+      "symbol": "cbHYPE",
+      "address": "0xb200000000000000000000451d033a5000cb479e",
+      "coingeckoId": "coinbase-wrapped-hype",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "FROK",
+      "address": "0x42069babe14fb1802c5cb0f50bb9d2ad6fef55e2",
+      "coingeckoId": "frok-ai",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FLUID",
+      "address": "0x61e030a56d33e8260fdd81f03b162a79fe3449cd",
+      "coingeckoId": "instadapp",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Coinbase-issued wrapper backed 1:1 by LTC held off chain, same pattern as cbBTC.
+      "symbol": "cbLTC",
+      "address": "0xcb17c9db87b595717c857a08468793f5bab6445f",
+      "coingeckoId": "coinbase-wrapped-ltc",
+      "category": "other",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "LAPTOP",
+      "address": "0xb095274743941e953c746f9c228da9c18bb6ec29",
+      "coingeckoId": "hunter-biden-s-laptop-3",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "BIO",
+      "address": "0x226a2fa2556c48245e57cd1cba4c6c9e67077dd2",
+      "coingeckoId": "bio-protocol",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      // Issued on Base by StraitsX (FiatToken), not bridged.
+      "symbol": "XSGD",
+      "address": "0x0a4c9cb2778ab3302996a34befcf9a8bc288c33b",
+      "coingeckoId": "xsgd",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "OWB",
+      "address": "0xef5997c2cf2f6c138196f8a6203afc335206b3c1",
+      "coingeckoId": "owb",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Arbitrum One is CHIP's home chain; this is the OFT copy.
+      "symbol": "CHIP",
+      "address": "0x0c1c1c109fe34733fca54b82d7b46b75cfb71f6e",
+      "coingeckoId": "chip-2",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "RAVE",
+      "address": "0x1aa8fd5bcce2231c6100d55bf8b377cff33acfc3",
+      "coingeckoId": "ravedao",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PLAY",
+      "address": "0x853a7c99227499dba9db8c3a02aa691afdebf841",
+      "coingeckoId": "playsout",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PROMPT",
+      "address": "0x30c7235866872213f68cb1f08c37cb9eccb93452",
+      "coingeckoId": "wayfinder",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "REPPO",
+      "address": "0xff8104251e7761163fac3211ef5583fb3f8583d6",
+      "coingeckoId": "reppo",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "LFI",
+      "address": "0x3722264ab15a1dfce5a5af89e6547f7949a8aba3",
+      "coingeckoId": "lienfi",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PAXG",
+      "address": "0xe904aea5e1b110c9174728fa2effc8aed19e98ef",
+      "coingeckoId": "pax-gold",
+      "category": "rwaPublic",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LMTS",
+      "address": "0x9eadbe35f3ee3bf3e28180070c429298a1b02f93",
+      "coingeckoId": "limitless-3",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "SLC",
+      "address": "0x6bd83abc39391af1e24826e90237c4bd3468b5d2",
+      "coingeckoId": "silencio",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "THQ",
+      "address": "0x0b2558bdbc7ffec0f327fb3579c23dabd1699706",
+      "coingeckoId": "theoriq",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "FUN",
+      "address": "0x16ee7ecac70d1028e7712751e2ee6ba808a7dd92",
+      "coingeckoId": "football-fun",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // ZKsync Era is ZFI's home chain; this is the OFT copy.
+      "symbol": "ZFI",
+      "address": "0xd080ed3c74a20250a2c9821885203034acd2d5ae",
+      "coingeckoId": "zyfi",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ZCHF",
+      "address": "0xd4dd9e2f021bb459d5a5f6c24c12fe09c5d45553",
+      "coingeckoId": "frankencoin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "TREE",
+      "address": "0x52c2b317eb0bb61e650683d2f287f56c413e4cf6",
+      "coingeckoId": "tree-capital",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      // Wormhole NTT copy of HYPE (PeerToken); CoinGecko lists no Base address for HYPE.
+      "symbol": "HYPE",
+      "address": "0x15d0e0c55a3e7ee67152ad7e89acf164253ff68d",
+      "coingeckoId": "hyperliquid",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      // Wrapped PROS, a CCIP BurnMintERC20.
+      "symbol": "PROS",
+      "address": "0x8b7dde054be9d180c1be7fae0874697374a49832",
+      "coingeckoId": "wrapped-pros",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "KGEN",
+      "address": "0xf3d5b4c34ed623478cc5141861776e6cf7ae3a1e",
+      "coingeckoId": "kgen",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // Transfero BRZ, moved burn-and-mint by Wormhole NTT; CoinGecko lists no Base address
+      // for BRZ.
+      "symbol": "BRZ",
+      "address": "0xe9185ee218cae427af7b9764a011bb89fea761b4",
+      "coingeckoId": "brz",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vAPI",
+      "address": "0x1ea8deb921aa6015f4938010c848140b98108dd2",
+      "coingeckoId": "vapi-network",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "aeon",
+      "address": "0xbf8e8f0e8866a7052f948c16508644347c57aba3",
+      "coingeckoId": "aeon-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Arbitrum One is MXNB's home chain; this copy is minted through LayerZero.
+      "symbol": "MXNB",
+      "address": "0xf197ffc28c23e0309b5559e7a166f2c6164c80aa",
+      "coingeckoId": "mxnb",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BID",
+      "address": "0xa1832f7f4e534ae557f9b5ab76de54b1873e498b",
+      "coingeckoId": "creatorbid",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "OVER",
+      "address": "0x7750c092e284e2c7366f50c8306f43c7eb2e82a2",
+      "coingeckoId": "overtime",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "HANDL",
+      "address": "0x3bbcb624cb9a1f73163a886f460f47603e5e4425",
+      "coingeckoId": "handl-pay",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "SERV",
+      "address": "0x5576d6ed9181f2225aff5282ac0ed29f755437ea",
+      "coingeckoId": "openserv",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "MEZO",
+      "address": "0x8e4cbbcc33db6c0a18561fde1f6ba35906d4848b",
+      "coingeckoId": "mezo",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "MAVIA",
+      "address": "0x24fcfc492c1393274b6bcd568ac9e225bec93584",
+      "coingeckoId": "heroes-of-mavia",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // OFT copy of sUSDai; the vault and its USDai sit on Arbitrum One.
+      "symbol": "sUSDai",
+      "address": "0x0b2b2b2076d95dda7817e785989fe353fe955ef9",
+      "coingeckoId": "susdai",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "RWA",
+      "address": "0xe2b1dc2d4a3b4e59fdf0c47b71a7a86391a8b35a",
+      "coingeckoId": "rwa-inc",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "cyber": [
@@ -8525,6 +9881,63 @@
         ]
       },
       "deploymentTimestamp": 1761566506
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0xae4efbc7736f963982aacb17efa37fcbab924cb3",
+      "coingeckoId": "solv-btc",
+      "category": "btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Maple's syrupUSDT, a CCIP BurnMintERC20; CoinGecko lists no Ink address for it.
+      "symbol": "syrupUSDT",
+      "address": "0x8a76fe7fa6da27f85a626c5c53730b38d13603d7",
+      "coingeckoId": "syrupusdt",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Kraken-issued wrapper backed 1:1 by HYPE in Kraken custody, same pattern as kBTC.
+      "symbol": "kHYPE",
+      "address": "0xad09cd20e513e4d8cb78036f77ab9afde8555929",
+      "coingeckoId": "kraken-wrapped-hype",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ANITA",
+      "address": "0x0606fc632ee812ba970af72f8489baaa443c4b98",
+      "coingeckoId": "anita",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "soneium": [
@@ -9978,6 +11391,100 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      // PYUSD0, the LayerZero OFT form of PayPal USD.
+      "symbol": "PYUSD",
+      "address": "0x99af3eea856556646c98c8b9b2548fe815240750",
+      "coingeckoId": "paypal-usd",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // Polygon PoS is SOIL's home chain; CCIP locks it here for Ethereum.
+      "symbol": "SOIL",
+      "address": "0x43c73b90e0c2a355784dcf0da12f477729b31e77",
+      "coingeckoId": "soil",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "NAKA",
+      "address": "0x311434160d7537be358930def317afb606c0d737",
+      "coingeckoId": "nakamoto-games",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ZRO",
+      "address": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+      "coingeckoId": "layerzero",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // Issued on Polygon PoS by Monerium, not bridged.
+      "symbol": "EURe",
+      "address": "0xe0aea583266584dafbb3f9c3211d5588c73fea8d",
+      "coingeckoId": "monerium-eur-money-2",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      // Issued by Telcoin Digital Asset Bank at the same address on Ethereum, Polygon PoS
+      // and Base.
+      "symbol": "eUSD",
+      "address": "0x14913815bcfde78baead2111f463d038ac9c2949",
+      "coingeckoId": "eusd-2",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "MLC",
+      "address": "0x0566c506477cd2d8df4e0123512dbc344bd9d111",
+      "coingeckoId": "my-lovely-coin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Wormhole-wrapped SOL.
+      "symbol": "SOL",
+      "address": "0xd93f7e271cb87c23aaa73edc008a79646d1f9912",
+      "coingeckoId": "solana",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     }
   ],
   "ethereal": [
@@ -10324,6 +11831,22 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "symbol": "ZCHF",
+      "address": "0xd4dd9e2f021bb459d5a5f6c24c12fe09c5d45553",
+      "coingeckoId": "frankencoin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     }
   ],
   "codex": [
