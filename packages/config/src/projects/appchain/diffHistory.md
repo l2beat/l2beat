@@ -9,7 +9,7 @@ Generated with discovered.json: 0xdd68704d3cdb20f53550527cc8f231cf6d8770d1
 
 ## Description
 
-SequencerInbox `sequencerVersion` 0x88 → 0x00: batches are posted in full since batch 4102 on 2026-11-07 (block 26360756), 13 batches so far.
+SequencerInbox `sequencerVersion` 0x88 → 0x00: batches are posted in full since batch 4102 on 2026-11-07 (block 26360756).
 
 ## Watched changes
 
