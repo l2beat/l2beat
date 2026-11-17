@@ -80,6 +80,22 @@ describe(discoveryDiffToMarkdown.name, () => {
     )
   })
 
+  // Discord rejects messages over its limit, so the blank lines joining
+  // contracts must count too. Method: pick a limit that fits both blocks but
+  // not the separator between them.
+  it('counts the separators between contracts against maxLength', () => {
+    const fooLength = contractDiffToMarkdown(FOO_CONTRACT_DIFF).length
+    const barLength = contractDiffToMarkdown(BAR_CONTRACT_DIFF).length
+    const maxLength = fooLength + barLength + 1
+
+    const result = discoveryDiffToMarkdown(
+      [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
+      maxLength,
+    )
+
+    expect(result.length).toBeLessThanOrEqual(maxLength)
+  })
+
   it('truncating, single contract with meta', () => {
     const maxLength = 48
     const result = discoveryDiffToMarkdown([FOO_CONTRACT_DIFF], maxLength)

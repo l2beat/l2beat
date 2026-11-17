@@ -15,7 +15,8 @@ export function discoveryDiffToMarkdown(
   for (const diff of diffs) {
     const markdown = contractDiffToMarkdown(diff, maxLength - countOfNewLines)
 
-    lengthAccumulator += markdown.length
+    const separatorLength = result.length === 0 ? 0 : joinerString.length
+    lengthAccumulator += separatorLength + markdown.length
     if (lengthAccumulator > maxLength) {
       break
     }

@@ -1,7 +1,10 @@
 import { RateLimiter } from '@l2beat/backend-tools'
+import { retry } from '../../clients2/retries'
 import { HttpClient } from '../http/HttpClient'
 
 export const DISCORD_MAX_MESSAGE_LENGTH = 2000
+
+const SEND_RETRY_OPTIONS = { initialTimeoutMs: 2_000, maxAttempts: 3 }
 
 export class DiscordClient {
   private readonly httpClient = new HttpClient()
@@ -18,17 +21,24 @@ export class DiscordClient {
     }
 
     const urlWithWait = `${this.webhookUrl}?wait=true`
-
-    const res = await this.httpClient.fetchRaw(urlWithWait, {
-      method: 'POST',
-      body: JSON.stringify({ content: message }),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    })
+    const post = () =>
+      this.httpClient.fetchRaw(urlWithWait, {
+        method: 'POST',
+        body: JSON.stringify({ content: message }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      })
+    // Only timeouts and network failures get retried: Discord asks callers not
+    // to repeat rejected webhook calls. A timed-out attempt may still have been
+    // posted, so a retry can duplicate it; for alerts that beats a loss.
+    const res = await retry(post, SEND_RETRY_OPTIONS)
 
     if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+      await res.body?.cancel()
+      throw new Error('HTTP error', {
+        cause: { status: res.status, statusText: res.statusText },
+      })
     }
 
     const body = (await res.json()) as { id: string }
@@ -42,7 +52,9 @@ export class DiscordClient {
     })
 
     if (!res.ok) {
-      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: res.status, statusText: res.statusText },
+      })
     }
   }
 }
