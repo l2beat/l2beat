@@ -374,6 +374,14 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 }
 
 const apiRequested = new Set<string>()
+// Failed keys stay in apiRequested and are not asked again, so the warning
+// has to outlive the component too.
+let apiLookupFailed = false
+
+function rememberLookupFailure(setLookupFailed: (failed: boolean) => void) {
+  apiLookupFailed = true
+  setLookupFailed(true)
+}
 
 function APIChecker() {
   const store = useStore()
@@ -381,7 +389,7 @@ function APIChecker() {
   const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
   const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
   const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
-  const [lookupFailed, setLookupFailed] = useState(false)
+  const [lookupFailed, setLookupFailed] = useState(apiLookupFailed)
 
   useEffect(() => {
     const selectorsToFetch: string[] = []
@@ -394,7 +402,7 @@ function APIChecker() {
     if (selectorsToFetch.length === 0) return
     API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then(
       (res) => store.addSignatures(res),
-      () => setLookupFailed(true),
+      () => rememberLookupFailure(setLookupFailed),
     )
   }, [requestedSignatures, store.addSignatures])
 
@@ -426,7 +434,7 @@ function APIChecker() {
             )
           }
         },
-        () => setLookupFailed(true),
+        () => rememberLookupFailure(setLookupFailed),
       )
     }
   }, [
@@ -451,7 +459,7 @@ function APIChecker() {
           store.setPreimage(preimage)
         }
       },
-      () => setLookupFailed(true),
+      () => rememberLookupFailure(setLookupFailed),
     )
   }, [requestedPreimages, store.setPreimage])
 
