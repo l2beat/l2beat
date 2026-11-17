@@ -36,6 +36,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_GARDEN_ENABLED: featureFlag,
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
   CLIENT_SIDE_TOKENS_PAGE: featureFlag,
+  CLIENT_SIDE_INSIGHT_PAGE: featureFlag,
   CLIENT_SIDE_BLOBS_PAGE: featureFlag,
   CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag,
 }
@@ -86,6 +87,11 @@ const SERVER_CONFIG = {
     .optional(),
   INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
+  // ETHBEAT's Ethereum RPC, with the key: it serves `ethbeat_heldTokens`.
+  INSIGHT_ETHEREUM_RPC_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -147,6 +153,7 @@ function getRawEnv(): Record<
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
+    INSIGHT_ETHEREUM_RPC_URL: process.env.INSIGHT_ETHEREUM_RPC_URL,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
@@ -155,6 +162,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
     CLIENT_SIDE_TOKENS_PAGE: process.env.CLIENT_SIDE_TOKENS_PAGE,
+    CLIENT_SIDE_INSIGHT_PAGE: process.env.CLIENT_SIDE_INSIGHT_PAGE,
     CLIENT_SIDE_BLOBS_PAGE: process.env.CLIENT_SIDE_BLOBS_PAGE,
     CLIENT_SIDE_OSSIFICATION_ENABLED:
       process.env.CLIENT_SIDE_OSSIFICATION_ENABLED,
