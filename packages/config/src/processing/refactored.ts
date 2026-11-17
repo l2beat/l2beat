@@ -1,5 +1,6 @@
 import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
+import { aleo } from '../projects/aleo/aleo'
 import { aleoXreserve } from '../projects/aleo-xreserve/aleo-xreserve'
 import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
@@ -104,6 +105,7 @@ export const refactored: BaseProject[] = [
   stwo,
   barretenberg,
   zcash,
+  aleo,
   // da-beat
   ethereum,
   // chains

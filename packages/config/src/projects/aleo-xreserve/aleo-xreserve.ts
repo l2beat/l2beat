@@ -91,6 +91,16 @@ export const aleoXreserve: BaseProject = {
   },
   milestones: [
     {
+      // snarkVM d8cd2684a (2026-05-01) makes the batch randomizers absorb the
+      // opening proofs. The bug predates mainnet. See the aleo ZK catalog entry.
+      title: 'Aleo proof forgery fixed',
+      url: 'https://verialabs.com/blog/forging-transactions-on-aleo/',
+      date: '2026-05-03T00:00:00Z',
+      description:
+        'Until this fix, anyone could forge Aleo proofs and spend USDCx from any known address.',
+      type: 'incident',
+    },
+    {
       // usdcx_bridge_v2.aleo and shielded_usdcx_wrapper.aleo were deployed in
       // Aleo blocks 19336608 and 19336720, the wrapper's multisig wallet in
       // tx at1x8m8303zf7rgvtv5tdkjjrj60fry0slhfraj6cnzc323dzx08qxs5qcfkj.
@@ -115,6 +125,7 @@ export const aleoXreserve: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
     trackedOn: ['ethereum'],
+    zkCatalogId: ProjectId('aleo'),
     // The backing USDC is an internal GatewayWallet balance of the
     // AleoDepositor, not a token balance at an address, so no escrow.
     tokens: [],

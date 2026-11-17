@@ -16,6 +16,10 @@ Shield Swap is a hosted page at swap.shield.fi that builds the deposit, the mint
 
 Provable's record scanner gets the wallet's view key sealed to a public key the server hands out, with no proof that an enclave holds it. By default the wallet proves on Provable's servers, which see each transaction's sender, recipient and amount. The Local proving mode keeps those on the device and turns off the fee sponsor.
 
+### Aleo
+
+Aleo is a proof-of-stake chain whose validators and clients verify every proof. On November 17, 2026, 23 validators held the stake, and the largest 3 held over a third. Those 3 can halt the chain, which stops withdrawals. Provable ships Aleo's hard forks, 21 since its 2024 launch, and validators adopt each at a set block height. Each transaction shows its program and function, so the chain marks every private mint, transfer and burn as such.
+
 ### Compliance
 
 The token program encrypts every compliance record to one address fixed in the program. A freeze list blocks listed Aleo addresses, and private spends prove their sender is not on it. It held no address on November 16, 2026. Circle can also block addresses in xReserve and its Gateway contracts.

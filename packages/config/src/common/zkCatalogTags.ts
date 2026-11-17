@@ -380,6 +380,13 @@ export const zkCatalogTags = [
   },
   // Other
   {
+    id: 'Varuna',
+    type: ZkCatalogTagType.Other,
+    name: 'Varuna',
+    description:
+      'Universal SNARK of the Aleo blockchain, a variant of Marlin with KZG commitments, developed by Provable.',
+  },
+  {
     id: 'CustomCircuits',
     type: ZkCatalogTagType.Other,
     name: 'App-specific circuits',

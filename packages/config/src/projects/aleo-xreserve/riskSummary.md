@@ -5,12 +5,14 @@
 4. the owners of xReserve or Circle's Gateway contracts deploy a malicious [upgrade](#upgrades-and-governance), with no delay.
 5. Circle's attester key signs a mint without a deposit, or two of the Aleo depositor's attesters sign a withdrawal without a burn.
 6. the zk proof system is broken, allowing invalid spends or withdrawals.
+7. all [trusted setup](#trusted-setups) participants collude or leak their secrets, allowing forged proofs.
 <br>
 ## Funds can be frozen if
 1. Circle pauses or blocks the user's address in xReserve or its Gateway contracts.
 2. the freeze list manager adds the user's Aleo address, which stops its private spends.
 3. the pausers stop the USDCx token or bridge on Aleo.
 4. the Aleo depositor's attesters stop signing withdrawals.
+5. validators holding over a third of Aleo's stake halt the chain.
 <br>
 ## Privacy can be lost if
 1. the holder of the compliance key reads the records, which name sender, recipient and amount of every private action (see privileged insider).
