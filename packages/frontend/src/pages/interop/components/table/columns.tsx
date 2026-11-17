@@ -2,7 +2,6 @@ import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +25,7 @@ import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { InteropProjectNameTooltip } from './InteropProjectNameTooltip'
 import { SubgroupTooltip } from './SubgroupTooltip'
+import { TransferValueTooltipContent } from './TransferValueTooltipContent'
 import { TransferCountCell } from './transfer-count-cell/TransferCountCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
@@ -177,28 +177,11 @@ const averageValueColumn = columnHelper.accessor('averageValue', {
           </span>
         </TooltipTrigger>
         <TooltipContent className="min-w-[200px]">
-          <div className="font-medium text-label-value-14 text-secondary">
-            Transfer value
-          </div>
-          <HorizontalSeparator className="my-1" />
-          <div className="flex items-center justify-between gap-x-6">
-            <span className="font-medium text-label-value-14">Minimum</span>
-            <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {minTransferSize}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-x-6">
-            <span className="font-medium text-label-value-14">Average</span>
-            <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {averageValue}
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-x-6">
-            <span className="font-medium text-label-value-14">Maximum</span>
-            <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {maxTransferSize}
-            </span>
-          </div>
+          <TransferValueTooltipContent
+            min={minTransferSize}
+            average={averageValue}
+            max={maxTransferSize}
+          />
         </TooltipContent>
       </Tooltip>
     )

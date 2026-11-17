@@ -8,6 +8,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -103,9 +104,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-48 flex-col gap-1">
-        <div className="mb-1 font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-1">
           {formatSnapshotTimestamp(row.timestamp, resolution)}
-        </div>
+        </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">

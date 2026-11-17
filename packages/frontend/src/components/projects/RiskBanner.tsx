@@ -197,6 +197,7 @@ export function RiskBanner({
         )}
         {warning && !regular && (
           <WarningBar
+            compact
             className="mb-2"
             icon={RoundedWarningIcon}
             text={warning.value}

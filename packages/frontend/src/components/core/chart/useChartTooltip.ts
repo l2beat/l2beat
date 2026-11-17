@@ -9,7 +9,7 @@ import {
 
 export const TOOLTIP_OFFSET = 16
 /** The least room left between a tooltip and the window's edge. */
-const TOOLTIP_WINDOW_MARGIN = 8
+const TOOLTIP_WINDOW_MARGIN = 12
 
 /** A point in the root's pixels. */
 export interface Anchor {

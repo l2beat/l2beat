@@ -38,7 +38,7 @@ export function GroupedActorAddresses({
               <TooltipTrigger aria-label="Unverified contract">
                 <UnverifiedIcon className="fill-red-300" aria-hidden />
               </TooltipTrigger>
-              <TooltipContent>This contract is not verified</TooltipContent>
+              <TooltipContent>This contract is not verified.</TooltipContent>
             </Tooltip>
           )}
           {entry.name}

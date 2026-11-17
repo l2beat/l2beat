@@ -7,6 +7,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -116,12 +117,12 @@ function DataPostedCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-50 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(
             timestamp,
             timestamp + UnixTime.periodToSeconds(resolution),
           )}
-        </div>
+        </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>

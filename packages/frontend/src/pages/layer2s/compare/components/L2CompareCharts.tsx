@@ -311,7 +311,7 @@ function AddChartButton({
           </DashedButton>
         </TooltipTrigger>
         <TooltipContent>
-          Maximum of {MAX_COMPARE_CHARTS} charts reached
+          Maximum of {MAX_COMPARE_CHARTS} charts reached.
         </TooltipContent>
       </Tooltip>
     </div>

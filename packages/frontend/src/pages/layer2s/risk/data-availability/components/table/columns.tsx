@@ -63,7 +63,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
         meta: {
           tooltip:
-            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
         },
       }),
     columnHelper.display({

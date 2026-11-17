@@ -90,7 +90,7 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
         </button>
       </TooltipTrigger>
       <TooltipContent className="max-w-[380px]">
-        <span className="font-medium text-base">{displayValue}</span>
+        <span className="text-heading-16 tabular-nums">{displayValue}</span>
         <p className="mt-1 text-primary">{series.description}</p>
         {syncingNote !== undefined && (
           <p className="mt-2 text-secondary">{syncingNote}</p>
@@ -99,7 +99,8 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
           <p className="mt-2 text-secondary">{coverageNote}</p>
         )}
         <Callout
-          className="mt-2 px-3 py-2"
+          compact
+          className="mt-2"
           color="purple"
           icon={<UserIcon className="fill-purple-450" />}
           body={

@@ -3,6 +3,7 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
@@ -85,12 +86,12 @@ function ActivityCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(
             timestamp,
             timestamp + UnixTime.periodToSeconds(resolution),
           )}
-        </div>
+        </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">
             <ChartTooltipValue

@@ -1,4 +1,4 @@
-import { formatCount, formatCurrency } from '@l2beat/shared-pure'
+import { formatInteger } from '@l2beat/shared-pure'
 import { type PointerEvent, useId, useRef } from 'react'
 import {
   ChartContext,
@@ -7,6 +7,7 @@ import {
 import { ChartLegend } from '~/components/core/chart/ChartLegend'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
 import {
@@ -16,10 +17,11 @@ import {
 } from '~/components/core/chart/useChartTooltip'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { Logo } from '~/components/Logo'
-import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
+import { TransferSizeStatsRows } from '~/pages/interop/components/InteropTransferSizeBreakdown'
 import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
 import {
@@ -503,63 +505,31 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
-        {data.name}
-      </div>
+      <ChartTooltipTitle>{data.name}</ChartTooltipTitle>
 
-      <HorizontalSeparator className="my-1.5" />
-
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">
-            Total identified transfers
-          </span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatCount(totalTransfers, 'transfer')}
-          </span>
-        </div>
-        {orderedBuckets.map((bucket) => {
-          const count = data[percentageToCountKey[bucket]]
-
-          return (
-            <ChartTooltipRow
-              key={bucket}
-              name={bucket}
-              gap="gap-x-6"
-              wrapLabel={false}
-            >
-              <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formatCount(count, 'transfer')}
-              </span>
-            </ChartTooltipRow>
-          )
-        })}
-      </div>
-      <HorizontalSeparator className="my-1.5" />
-      <div className="flex flex-col gap-1">
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Min size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(data.minTransferValueUsd)}
-          </span>
-        </div>
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Average size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(data.averageTransferSizeUsd)}
-          </span>
-        </div>
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Max size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(data.maxTransferValueUsd)}
-          </span>
-        </div>
+      <TooltipHeader
+        className="mt-3"
+        label="Identified transfers"
+        value={formatInteger(totalTransfers)}
+      />
+      <div className="mt-2 flex flex-col gap-2">
+        {orderedBuckets.map((bucket) => (
+          <ChartTooltipRow
+            key={bucket}
+            name={bucket}
+            gap="gap-x-6"
+            wrapLabel={false}
+          >
+            {formatInteger(data[percentageToCountKey[bucket]])}
+          </ChartTooltipRow>
+        ))}
+        <HorizontalSeparator />
+        <TransferSizeStatsRows
+          min={data.minTransferValueUsd}
+          average={data.averageTransferSizeUsd}
+          max={data.maxTransferValueUsd}
+        />
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function formatTransferSize(value: number | undefined) {
-  return value !== undefined ? formatCurrency(value, 'usd') : EM_DASH
 }

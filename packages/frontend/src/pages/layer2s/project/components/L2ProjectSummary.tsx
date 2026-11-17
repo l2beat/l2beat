@@ -17,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
@@ -136,9 +137,9 @@ export function ProjectL2Summary({ project }: Props) {
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
                   />
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                    <TooltipFootnote className="mt-2 max-md:hidden">
                       Click to view TVS breakdown
-                    </p>
+                    </TooltipFootnote>
                   )}
                 </TooltipContent>
               </Tooltip>
@@ -197,16 +198,16 @@ export function ProjectL2Summary({ project }: Props) {
                     />
                   )}
                   {project.header.tvs && (
-                    <p className="text-label-value-13 text-secondary max-md:hidden">
+                    <TooltipFootnote className="max-md:hidden">
                       Click to view TVS breakdown
-                    </p>
+                    </TooltipFootnote>
                   )}
                   {project.header.tvs?.breakdown && (
-                    <p>
+                    <TooltipFootnote>
                       <PercentageChangeTooltipContent
                         period={project.header.tvs.breakdown.totalChangePeriod}
                       />
-                    </p>
+                    </TooltipFootnote>
                   )}
                 </TooltipContent>
               </Tooltip>

@@ -138,15 +138,15 @@ function ScalingFactorTooltip({ metric }: { metric: ActivityMetric }) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="flex flex-col gap-2">
-          <div className="font-bold">What is scaling factor?</div>
+          <div className="text-heading-16">What is the scaling factor?</div>
 
           <div>
             {`How many more ${metric === 'tps' ? 'transactions' : 'operations'} are settled by Ethereum if we take into
               account projects listed below.`}
           </div>
           <div className="flex flex-col gap-1">
-            <div className="font-bold text-xs">Exact formula:</div>
-            <div className="text-xs">
+            <div className="font-bold text-paragraph-12">Exact formula:</div>
+            <div className="text-paragraph-12">
               {`(project ${metric}/7d + ETH ${metric}/7d) / ETH ${metric}/7d`}
             </div>
           </div>

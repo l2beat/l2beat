@@ -52,7 +52,7 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
       cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
       meta: {
         tooltip:
-          'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+          'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
       },
     }),
     columnHelper.accessor(

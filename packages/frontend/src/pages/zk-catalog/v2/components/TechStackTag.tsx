@@ -34,7 +34,7 @@ export function TechStackTag({
         </div>
       </TooltipTrigger>
       <TooltipContent>
-        <span className="font-bold text-label-value-13">
+        <span className="mb-1 block font-medium text-label-value-14">
           {tag.type}: {tag.name}
         </span>
         <p>{tag.description}</p>
