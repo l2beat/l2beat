@@ -9,23 +9,11 @@ Generated with discovered.json: 0x640e0424fa3e207f09e44f26b1526fcf10a0ed7d
 
 ## Description
 
-Contracts upgraded by Boba Multisig through OPContractsManagerV2 `0xaBfaf0d2D33499010575671D28358AF35e4f85ED` (version 7.1.17) on 2026-11-12 in tx `0x5d4e93654c192fcb10f0f8e3a74b2f85046ee28b5b547b384615b717725ed3ac`: `upgradeSuperchain` for Boba's own SuperchainConfig, then `upgrade` for the chain. Each proxy went to the StorageSetter and then to an implementation that other 7.1.17 chains already use.
+op-contracts/v7.0.0: core L1 contracts upgraded to their v7 implementations through OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1) with the same absolute prestate. The DelayedWETH proxy is replaced by a new one.
 
-- Proofs: still permissioned. `respectedGameType` stays `1`, `game0` stays unset, and the upgrade enabled only game type 1. The new PermissionedDisputeGame keeps the absolute prestate `0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e` (op-program v1.9.0, whose embedded chain list does not include chain ID 288), the same proposer and challenger, and init bond `0`, now with the new MIPS, PreimageOracle and DelayedWETH. `maxClockDuration` `302400` s, `clockExtension` `10800` s, `maxGameDepth` `73` and `splitDepth` `30` are unchanged.
-- Withdrawals: proof maturity `604800` s and finality delay `302400` s are unchanged. AnchorStateRegistry keeps `retirementTimestamp` `1777917431` and its anchor game, so earlier proofs stay valid. ETH stays in OptimismPortal2: `ethLockbox()` is zero and `ETH_LOCKBOX` is off.
-- Pause: SuperchainConfig changes only its version string; the guardian is still Boba Multisig.
-- Upgrade keys: unchanged, except that a new DelayedWETH proxy replaces the old one, which holds 0 ETH. OPContractsManagerV2 deployed it because the old SystemConfig had no `delayedWETH` entry (`PermittedProxyDeployment: DelayedWETH`). Delay `302400` s and ProxyAdmin are the same.
-- SystemConfig `batchInbox` changed from `0xfFF0000000000000000000000000000000000288` to `0x0041E8023EDBD69B1631B7eb93EA96cdDAa691eF` (`0x00` ++ `keccak256(bytes32(288))[0:19]`): OPContractsManagerV2 re-initializes SystemConfig with `_chainIdToBatchInboxAddress(_cfg.l2ChainId)`. The node reads the inbox from its rollup config, and batches are still posted to `0xfFF0000000000000000000000000000000000288`.
+SystemConfig `batchInbox` changed to the chain-ID-derived default. Batches are still posted to `0xfFF0000000000000000000000000000000000288`.
 
-Code changes beyond version strings and shared libraries:
-
-- OptimismPortal2: proving reads `rootClaimByChainId(l2ChainId)` for super-root game types. `initialize` takes an `IETHLockbox` argument. New `migrateToSharedDisputeGame(IETHLockbox,IAnchorStateRegistry)` sets a new lockbox and AnchorStateRegistry, and new `migrateLiquidity()` sends the portal's whole balance to the lockbox (`ethLockbox.lockETH{ value: ethBalance }()`). Both revert unless `_isUsingInterop()` (`INTEROP` and `ETH_LOCKBOX` features, both off) and call `_assertOnlyProxyAdminOwner()`; `migrateToSharedDisputeGame` also requires the system to be unpaused. The ProxyAdmin owner can switch both features on with `SystemConfig.setFeature`, so Boba Multisig can now move the portal's ETH and repoint its AnchorStateRegistry without an upgrade. It could already do both by upgrading the portal.
-- AnchorStateRegistry: `isGameRegistered` drops the game's `anchorStateRegistry() == address(this)` check (`return address(factoryRegisteredGame) == address(_game);`). `initialize` resets the anchor game when a newer starting root is passed.
-- DisputeGameFactory: games are created with `cloneDeterministic(..., Hash.unwrap(uuid))`.
-- FaultDisputeGame base: `initialize` reverts if `l2BlockNumber() > type(uint64).max`; adds `rootClaimByChainId`.
-- MIPS64: accepts only state version 8 (was 7 or 8); `SYS_GETRANDOM` is always handled.
-- OptimismMintableERC20Factory: inherits `ProxyAdminOwnedBase`; `initialize` calls `_assertOnlyProxyAdminOrProxyAdminOwner()`.
-- SystemConfig: stores the OPCM address (`lastUsedOPCM`).
+All 16 contracts are templatized.
 
 Version changes and implementation diffs:
 
@@ -41,7 +29,7 @@ Version changes and implementation diffs:
 - PermissionedDisputeGame 2.2.0 -> 2.4.0: https://disco.l2beat.com/diff/eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A/eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e
 - MIPS 1.9.0 -> 1.10.1: https://disco.l2beat.com/diff/eth:0x6463dEE3828677F6270d83d45408044fc5eDB908/eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA
 - PreimageOracle 1.1.4 -> 1.1.5: https://disco.l2beat.com/diff/eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3/eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0
-- DelayedWETH 1.5.0 -> 1.5.1 (new proxy): https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
+- DelayedWETH 1.5.0 -> 1.5.1: https://disco.l2beat.com/diff/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998/eth:0xE440CC08A71694C8229323803F59024E3144630e
 
 ## Watched changes
 
