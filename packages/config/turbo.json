@@ -4,11 +4,7 @@
   "tasks": {
     "test": {
       "inputs": [
-        "**/*.ts",
-        "**/*.test.ts",
-        "src/**/*.md",
-        "**/*.json",
-        "**/*.jsonc",
+        "$TURBO_DEFAULT$",
         "../backend/**/*.json",
         "../backend/**/*.jsonc"
       ]

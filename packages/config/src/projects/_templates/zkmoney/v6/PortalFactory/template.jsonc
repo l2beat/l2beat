@@ -13,6 +13,14 @@
           "description": "deploy new OxidePortals for any token, L2 token contract and deposit and transaction caps. They share this factory's TeeRegistry and refund verifiers."
         }
       ]
+    },
+    "portals": {
+      "description": "OxidePortals deployed by this factory.",
+      "handler": {
+        "type": "event",
+        "select": "portal",
+        "add": { "event": "PortalDeployed" }
+      }
     }
   }
 }

@@ -4,7 +4,6 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -107,7 +106,7 @@ function TokenFrameworksContent({
         />
       </div>
       <div className="grid md:mt-4 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:grid-rows-12">
-        <div className="grid grid-cols-2 gap-2 border-divider border-b bg-surface-primary p-4 md:hidden">
+        <div className="grid grid-cols-2 gap-4 border-divider border-b bg-surface-primary p-4 md:hidden">
           <InteropTotalVolumeWidget
             totalVolume={data?.frameworkDominance.volume.total}
             isLoading={isLoading}
@@ -123,7 +122,7 @@ function TokenFrameworksContent({
         </div>
         <InteropDominanceCompareCard
           name="tokenFrameworksMode"
-          dominanceLabel="Framework Dominance"
+          dominanceLabel="Framework dominance"
           className="border-divider max-md:border-b md:col-span-2 lg:row-span-10"
           dominanceClassName="mt-2"
           compareClassName="mt-2"
@@ -166,7 +165,7 @@ function TokenFrameworksContent({
           entries={speedData?.frameworkDominance.transfers.entries}
           isLoading={isSpeedLoading}
           description="Select two chains to compare cross-chain transfer speed."
-          listHeading="All Frameworks"
+          listHeading="All frameworks"
           className="md:col-span-2 lg:col-start-3 lg:row-span-7 lg:row-start-6"
           scrollClassName="max-h-64.5"
         />
@@ -183,12 +182,12 @@ function TokenFrameworksContent({
           className="max-md:hidden lg:col-start-2 lg:row-span-2 lg:row-start-11"
         />
       </div>
-      <HorizontalSeparator className="md:my-4" />
+      <div aria-hidden className="border-divider max-md:border-t md:h-4" />
       <InteropTransferSizeCard
         data={data?.transferSizeChartData}
         isLoading={isLoading}
       />
-      <HorizontalSeparator className="md:my-4" />
+      <div aria-hidden className="border-divider max-md:border-t md:h-4" />
       <FrameworksTable
         tokenFrameworks={tokenFrameworks}
         data={data}

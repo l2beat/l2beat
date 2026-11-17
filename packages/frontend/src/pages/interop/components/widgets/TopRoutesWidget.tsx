@@ -15,6 +15,7 @@ import type {
   InteropDashboardFlowChain,
 } from '~/server/features/layer2s/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
+import { Last24HoursBadge } from '../Last24HoursBadge'
 
 export function TopRoutesWidget({
   isLoading,
@@ -36,11 +37,11 @@ export function TopRoutesWidget({
       )}
     >
       <div className="flex h-full flex-col">
-        <h2 className="font-bold text-heading-16 md:text-heading-20">
-          {subtitle}
-        </h2>
-        <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Last 24 hours
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+            {subtitle}
+          </h2>
+          <Last24HoursBadge />
         </div>
         <div className="mt-3 flex-1 md:mt-4">
           {isLoading && <LoadingState flowCount={2} />}
@@ -143,12 +144,10 @@ function RouteCard({
           isLarge && 'mt-3 gap-0.5',
         )}
       >
-        <span className="font-medium text-label-value-12 text-secondary md:text-label-value-14">
-          Volume
-        </span>
+        <span className="font-medium text-label-value-13">Volume</span>
         <div
           className={cn(
-            'font-bold',
+            'font-semibold tabular-nums tracking-[-0.025em]',
             isLarge ? 'text-heading-32' : 'text-heading-20 md:text-heading-24',
           )}
         >

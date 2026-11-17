@@ -111,7 +111,7 @@ function Stat({
   return (
     <StatCard
       color={statsMeta[type].color}
-      title={`${statsMeta[type].label} Past Day ${metric.toUpperCase()}`}
+      title={statsMeta[type].label}
       isLoading={isLoading}
       footer={
         type !== 'rollups' ? undefined : isLoading ? (
@@ -122,7 +122,7 @@ function Stat({
       }
     >
       <div className="flex min-h-[23px] items-center justify-center md:min-h-7">
-        <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
+        <div className="whitespace-nowrap font-semibold text-heading-20 tabular-nums tracking-[-0.02em] md:text-heading-24">
           {value !== undefined ? formatActivityCount(value) : 'No data'}
         </div>
       </div>
@@ -138,15 +138,15 @@ function ScalingFactorTooltip({ metric }: { metric: ActivityMetric }) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="flex flex-col gap-2">
-          <div className="font-bold">What is scaling factor?</div>
+          <div className="text-heading-16">What is the scaling factor?</div>
 
           <div>
             {`How many more ${metric === 'tps' ? 'transactions' : 'operations'} are settled by Ethereum if we take into
               account projects listed below.`}
           </div>
           <div className="flex flex-col gap-1">
-            <div className="font-bold text-xs">Exact formula:</div>
-            <div className="text-xs">
+            <div className="font-bold text-paragraph-12">Exact formula:</div>
+            <div className="text-paragraph-12">
               {`(project ${metric}/7d + ETH ${metric}/7d) / ETH ${metric}/7d`}
             </div>
           </div>

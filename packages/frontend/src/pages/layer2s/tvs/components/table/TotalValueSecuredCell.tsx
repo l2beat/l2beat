@@ -20,6 +20,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
@@ -64,7 +65,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
       <TooltipTrigger asChild disabledOnTouch>
         <TableLink href={props.href}>
           <SyncStatusWrapper isSynced={!props.syncWarning}>
-            <div className="flex flex-col items-end max-md:py-1">
+            <div className="flex flex-col items-end max-md:items-start max-md:py-1">
               <div className="flex items-center gap-1">
                 {tvsWarnings.length ? (
                   <RoundedWarningIcon
@@ -73,6 +74,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                   />
                 ) : null}
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={props.change}
                   changePeriod={props.changePeriod}
                 >
@@ -80,7 +82,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 </ValueWithPercentageChange>
               </div>
               {props.breakdown.type === 'bridgeType' ? (
-                <div className="inline-flex flex-col items-end gap-1">
+                <div className="inline-flex flex-col items-end gap-1 max-md:items-start">
                   <ValueSecuredBreakdown
                     canonical={props.breakdown.canonical}
                     external={props.breakdown.external}
@@ -134,13 +136,14 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             rwaPublic={props.breakdown.rwaPublic}
             rwaRestricted={props.breakdown.rwaRestricted}
             associated={props.breakdown.associated}
+            change={props.change}
             tvsWarnings={tvsWarnings}
             associatedTokens={props.associatedTokens ?? []}
           />
         )}
-        <p>
+        <TooltipFootnote>
           <PercentageChangeTooltipContent period={props.changePeriod} />
-        </p>
+        </TooltipFootnote>
       </TooltipContent>
     </Tooltip>
   )

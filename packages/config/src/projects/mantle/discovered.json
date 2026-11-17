@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1792586696,
+  "timestamp": 1794829337,
   "configHash": "0xb028b2bcdfd8e903202c2c7488d7792f1d3a9019334ae68f32c6c4b9dca9b2a6",
   "entries": [
     {
@@ -123,7 +123,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": [],
-        "aggregationVkey": "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf",
+        "aggregationVkey": "0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "deletedOutputs": [],
@@ -133,15 +133,15 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 102226346,
-        "latestOutputIndex": 22807,
-        "nextBlockNumber": 102228146,
-        "nextOutputIndex": 22808,
+        "latestBlockNumber": 103347746,
+        "latestOutputIndex": 23430,
+        "nextBlockNumber": 103349546,
+        "nextOutputIndex": 23431,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSER": "eth:0x0000000000000000000000000000000000000000",
-        "rangeVkeyCommitment": "0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb",
+        "rangeVkeyCommitment": "0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872",
         "rollupConfigHash": "0x40d5353fb8c9257f03461070a2bfc2b18f2f822b69c64f0c467402c2fc422ecb",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -383,7 +383,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 14 (43%)",
-        "nonce": 91,
+        "nonce": 93,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -520,7 +520,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704609",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292704743",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -673,8 +673,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593654,
-          "prevBlockNum": 26239921
+          "prevBoughtGas": 539404,
+          "prevBlockNum": 26426062
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -852,7 +852,7 @@
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "l1CrossDomainMessenger": "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629809",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629909",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -922,7 +922,7 @@
         "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "totalProcessed": "7077174882360678038883681",
+        "totalProcessed": "7234850735614419840288553",
         "version": "1.1.0"
       },
       "implementationNames": {
@@ -955,7 +955,7 @@
         "$upgradeCount": 0,
         "L1_MNT_ADDRESS": "mantle:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629813",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292629913",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1017,7 +1017,7 @@
         "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "totalProcessed": "2208159730913940460000000",
+        "totalProcessed": "2284317079809899530876975",
         "version": "1.1.0"
       },
       "implementationNames": {
@@ -1869,7 +1869,7 @@
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x9a1f78fb3786e973f0204ba0c2838e0a89a5abeba36441b67f62257a9fe0d58c"
   },
-  "usedBlockNumbers": { "ethereum": 26241056, "mantle": 102228192 },
+  "usedBlockNumbers": { "ethereum": 26427361, "mantle": 103349512 },
   "permissionsConfigHash": "0x035919e449f95aab69a7d73eb53524bc461a100a78f28b35a404b0914742ef98",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"

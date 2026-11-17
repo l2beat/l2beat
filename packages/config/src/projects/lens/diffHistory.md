@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x818a666babf6fc89f3e1cd7a82c3dffa25ec680f
+
+# Diff at Mon, 16 Nov 2026 12:37:54 GMT:
+
+- id: 4042b61e
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794568059
+- current timestamp: 1794568059
+
+## Description
+
+Rerun permissions after guardians are dissolved on L2.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794568059 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.1.from:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+    }
+```
+
+```diff
+    external contract (zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","role":".MinterAdmin","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"role":".Executor"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","role":".MinterAdmin","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"role":".Executor"}]
+    }
+```
+
+Generated with discovered.json: 0xf5033ba6f1a358e34b9bdfaa4507c75bf4907063
+
+# Diff at Fri, 13 Nov 2026 13:04:04 GMT:
+
+- id: f3a3f675
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1794319607
+- current timestamp: 1794568059
+
+## Description
+
+The batch with the L2 system contracts upgrade transaction was executed, which clears the pending upgrade fields.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        9268
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        9268
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xce51fa7f0cd7462fd368d2a0c7eeaff4f748f9d6d489295f57038ec5db44ae90"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x6cadc9763cc5cc05645a87b63634e5cfdbc67094
 
 # Diff at Tue, 10 Nov 2026 14:25:48 GMT:

@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xebc43c01790d5839fc6a8a3b597600b92ea393e6
+
+# Diff at Fri, 13 Nov 2026 13:04:23 GMT:
+
+- id: e0365239
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1793367325
+- current timestamp: 1794572098
+
+## Description
+
+The zk.money names now point to the redeployed v6 contracts (see zkmoneyv6), verified from public source. The ENS resolver of zk.money: https://disco.l2beat.com/diff/eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525/eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e, the RegistrationController in the NameRegistry: https://disco.l2beat.com/diff/eth:0x45F626E2a4D63232677C96B163ac46e20514a915/eth:0xeC4DDC3B27fFfc9593eE63085CbF05BfFAB6be37, and the ForwardingTable in the default resolver operator's entry: https://disco.l2beat.com/diff/eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C/eth:0x4cb0082B40d3CeE3Cf5237282d34B51129FF49Bd. Their only code change is an open intent type. The frozen v5 portals are unaffected.
+
+Config: ensNode moved into the Resolver template.
+
+## Watched changes
+
+```diff
+    contract Resolver (eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F) [zkmoney/Resolver] {
+    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
++++ description: Resolver set for zk.money in the ENS registry.
++++ severity: HIGH
+      values.ensResolver:
+-        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
++        "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e"
+    }
+```
+
+```diff
+    contract NameRegistry (eth:0xa9863B8F573D62377d987ccb9AF6e0000f99D14a) [zkmoney/NameRegistry] {
+    +++ description: Registry of zk.money names. It points to the RegistrationController and the AccountMetadataRegistry, which together decide where payments to a zk.money name resolve to.
++++ severity: HIGH
+      values.registrationController:
+-        "eth:0x45F626E2a4D63232677C96B163ac46e20514a915"
++        "eth:0xeC4DDC3B27fFfc9593eE63085CbF05BfFAB6be37"
++++ severity: HIGH
+      values.resolver:
+-        "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525"
++        "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e"
+    }
+```
+
+```diff
+    contract AccountMetadataRegistry (eth:0xDA79Bae4485c40291363D885Aae5B543d2D0Efa9) [zkmoney/AccountMetadataRegistry] {
+    +++ description: Stores user records (Aztec L2 address, keys, chosen resolver operator) and resolver operator entries. User records can be written by the user or by the RegistrationController. Anyone can register as a resolver operator.
+      values.resolverOperators.eth:0x4748f1359c4dFf0cfB7A36968C05cc314016b664.3:
+-        "eth:0xFf839a8Be7c90c804F42563f352324cEBcDfe41C"
++        "eth:0x4cb0082B40d3CeE3Cf5237282d34B51129FF49Bd"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793367325 (main branch discovery), not current.
+
+```diff
+    contract Resolver (eth:0x3e9BcF7cCA4b94885aBEB9Bbf0005aA99DC6307F) [zkmoney/Resolver] {
+    +++ description: ENS resolver for zk.money names. It returns a deposit address derived from a resolver operator's answer, which must come with a zk proof that it matches the user's registered keys and L2 address in the AccountMetadataRegistry.
+      fieldMeta.ensNode.description:
+-        "ENS node monitored for this deployment."
++        "ENS node of zk.money."
+    }
+```
+
 Generated with discovered.json: 0x0984759de245d03587959621b3d1879ad08cf4ce
 
 # Diff at Fri, 30 Oct 2026 14:00:36 GMT:

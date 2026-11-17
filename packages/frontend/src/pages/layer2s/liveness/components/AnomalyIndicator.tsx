@@ -37,7 +37,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
           />
         ))}
       </div>
-      <span className="whitespace-nowrap font-medium text-2xs text-blue-500 uppercase leading-none">
+      <span className="whitespace-nowrap font-medium text-2xs text-link uppercase leading-none">
         {uptimePercentage}% normal uptime
       </span>
     </div>
@@ -58,7 +58,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
         {hasOngoing ? (
           <div>There is an ongoing anomaly. Click to learn more.</div>
         ) : anomalies.length === 0 ? (
-          <div>No anomalies detected in the last 30 days</div>
+          <div>No anomalies detected in the last 30 days.</div>
         ) : (
           <div>
             There {anomalies.length === 1 ? 'was' : 'were'} {anomalies.length}{' '}

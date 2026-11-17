@@ -16,5 +16,11 @@
     "address": "eth:0xc329a74542688a3c4948B7d46F204d3d7e5Dd525",
     "chain": "ethereum",
     "blockNumber": 26290653
+  },
+  "Resolver_v6_2": {
+    "hash": "0x7dc10c4db47da7ea83124d71e2d70c71ae2796be501df348c3c82435a292424e",
+    "address": "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e",
+    "chain": "ethereum",
+    "blockNumber": 26405958
   }
 }

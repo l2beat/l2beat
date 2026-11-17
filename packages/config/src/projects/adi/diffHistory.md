@@ -1,3 +1,219 @@
+Generated with discovered.json: 0x3cc8c528db3c210726af68023820c6ac822a5fdc
+
+# Diff at Mon, 16 Nov 2026 07:39:58 GMT:
+
+- id: 6375d5f0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6b7652fc7bb78e30a78d32029e0fa90ecc6a073c block: 1792059502
+- current timestamp: 1794568019
+
+## Description
+
+ADI rotated its validators. The four EOAs that held every ValidatorTimelock role are removed. Now eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053 precommits and commits, eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b proves and eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8 executes. No account holds REVERTER_ROLE.
+
+Config: DA tracking follows the new committer, and each ValidatorTimelock role gets its own permission.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.executorVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.executorVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.executorVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.executorVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8"
+      values.precommitterVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.precommitterVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.precommitterVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.precommitterVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
+      values.proverVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.proverVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.proverVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.proverVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b"
+      values.reverterVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.reverterVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.reverterVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.reverterVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
+      values.rolesVTL.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.rolesVTL.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.rolesVTL.PRECOMMITTER_ROLE.members.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.rolesVTL.PRECOMMITTER_ROLE.members.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
+      values.rolesVTL.COMMITTER_ROLE.members.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.rolesVTL.COMMITTER_ROLE.members.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.rolesVTL.COMMITTER_ROLE.members.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.rolesVTL.COMMITTER_ROLE.members.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
+      values.rolesVTL.REVERTER_ROLE.members.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.rolesVTL.REVERTER_ROLE.members.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.rolesVTL.REVERTER_ROLE.members.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.rolesVTL.REVERTER_ROLE.members.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
+      values.rolesVTL.PROVER_ROLE.members.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.rolesVTL.PROVER_ROLE.members.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.rolesVTL.PROVER_ROLE.members.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.rolesVTL.PROVER_ROLE.members.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x658Ad9977ebA17e2596841E5745617f6b1c5Fb8b"
+      values.rolesVTL.EXECUTOR_ROLE.members.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.rolesVTL.EXECUTOR_ROLE.members.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.rolesVTL.EXECUTOR_ROLE.members.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.rolesVTL.EXECUTOR_ROLE.members.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8"
+      values.validatorVTL.0:
+-        "eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524"
+      values.validatorVTL.1:
+-        "eth:0x6090e365149d005517e2013926cD18d767f04Aa1"
+      values.validatorVTL.2:
+-        "eth:0x0b6f2116323C12EE731de6818e41861561bcd44C"
+      values.validatorVTL.3:
+-        "eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
++        "eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792059502 (main branch discovery), not current.
+
+```diff
+    EOA (eth:0x0b6f2116323C12EE731de6818e41861561bcd44C) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract.","role":".precommitterVTL"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"prove L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".proverVTL"}
+      receivedPermissions.0.role:
+-        ".validatorVTL"
++        ".reverterVTL"
+      receivedPermissions.0.description:
+-        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
++        "revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+    }
+```
+
+```diff
+    EOA (eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract.","role":".precommitterVTL"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"prove L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".proverVTL"}
+      receivedPermissions.0.role:
+-        ".validatorVTL"
++        ".reverterVTL"
+      receivedPermissions.0.description:
+-        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
++        "revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+    }
+```
+
+```diff
+    EOA (eth:0x6090e365149d005517e2013926cD18d767f04Aa1) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract.","role":".precommitterVTL"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"prove L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".proverVTL"}
+      receivedPermissions.0.role:
+-        ".validatorVTL"
++        ".reverterVTL"
+      receivedPermissions.0.description:
+-        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
++        "revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.validatorVTL:
+-        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]}}
++        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.executorVTL:
++        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.precommitterVTL:
++        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.proverVTL:
++        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.reverterVTL:
++        ["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]
+      values.rolesVTL:
++        {"PRECOMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"COMMITTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"REVERTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"PROVER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524","eth:0x6090e365149d005517e2013926cD18d767f04Aa1","eth:0x0b6f2116323C12EE731de6818e41861561bcd44C","eth:0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"]}}
+    }
+```
+
+```diff
+    EOA (eth:0xF8fF3e62E94807a5C687f418Fe36942dD3a24524) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"commit L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".validatorVTL"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"execute L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".executorVTL"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"precommit L2 blocks through the ValidatorTimelock in the ADI Diamond contract.","role":".precommitterVTL"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186","description":"prove L2 batches through the ValidatorTimelock in the ADI Diamond contract.","role":".proverVTL"}
+      receivedPermissions.0.role:
+-        ".validatorVTL"
++        ".reverterVTL"
+      receivedPermissions.0.description:
+-        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
++        "revert L2 batches through the ValidatorTimelock in the ADI Diamond contract."
+    }
+```
+
 Generated with discovered.json: 0x714fce89a63ceade2d0f47578bd385bf140a4111
 
 # Diff at Thu, 05 Nov 2026 15:35:14 GMT:

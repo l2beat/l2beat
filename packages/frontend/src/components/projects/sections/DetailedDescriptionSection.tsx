@@ -1,5 +1,10 @@
 import type { ReferenceLink } from '@l2beat/config'
+import { cn } from '~/utils/cn'
 import { Markdown } from '../../markdown/Markdown'
+import {
+  MARKDOWN_DIAGRAM_CLASSES,
+  MARKDOWN_HEADING_CLASSES,
+} from './markdownDiagramClasses'
 import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import type { ProjectSectionProps } from './types'
@@ -18,7 +23,13 @@ export function DetailedDescriptionSection({
 }: DetailedDescriptionSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <div className="text-paragraph-15 md:text-paragraph-16">
+      <div
+        className={cn(
+          'text-paragraph-15 md:text-paragraph-16',
+          MARKDOWN_DIAGRAM_CLASSES,
+          MARKDOWN_HEADING_CLASSES,
+        )}
+      >
         {description && <Markdown>{description}</Markdown>}
         {detailedDescription && (
           <Markdown className="mt-4">{detailedDescription}</Markdown>

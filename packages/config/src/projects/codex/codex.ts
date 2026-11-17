@@ -59,7 +59,7 @@ export const codex: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.codex.xyz',
-        callsPerMinute: 300,
+        callsPerMinute: 1200,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { formatCount, formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import type { CSSProperties } from 'react'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -7,14 +7,25 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import {
+  TooltipHeader,
+  TooltipRow,
+} from '~/components/core/tooltip/TooltipParts'
 import { EM_DASH } from '~/consts/characters'
 import type { TransferSizeDistribution } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
-import { getTransferSizeBreakdown } from '../utils/transferSizeBuckets'
+import { cn } from '~/utils/cn'
+import {
+  getTransferSizeBreakdown,
+  TRANSFER_SIZE_COLORS_CLASS,
+} from '../utils/transferSizeBuckets'
 
 export function InteropTransferSizeBreakdown({
   transferSize,
+  inSummary = false,
 }: {
   transferSize: TransferSizeDistribution | undefined
+  /** In a summary card the title is a key like the stats beside it. */
+  inSummary?: boolean
 }) {
   const breakdownValues = getTransferSizeBreakdown(transferSize).map(
     (bucket) => ({
@@ -25,8 +36,13 @@ export function InteropTransferSizeBreakdown({
   )
 
   return (
-    <div>
-      <span className="font-medium text-paragraph-12 text-secondary">
+    <div className={TRANSFER_SIZE_COLORS_CLASS}>
+      <span
+        className={cn(
+          'block text-label-value-13 leading-4',
+          inSummary ? 'font-normal' : 'font-semibold',
+        )}
+      >
         Transfer size
       </span>
       <Tooltip>
@@ -40,7 +56,7 @@ export function InteropTransferSizeBreakdown({
               {breakdownValues.map((value) => (
                 <div key={value.label} className="flex items-center gap-[3px]">
                   <div className="size-3.5 rounded-xs" style={value.style} />
-                  <span className="font-medium text-label-value-12 text-secondary leading-none">
+                  <span className="font-medium text-label-value-12 leading-none">
                     {value.label}
                   </span>
                 </div>
@@ -69,55 +85,49 @@ function TransferSizeTooltipContent({
   const totalTransfers = breakdownValues.reduce((sum, v) => sum + v.value, 0)
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">
-            Total identified transfers
-          </span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatCount(totalTransfers, 'transfer')}
-          </span>
-        </div>
-        {breakdownValues.map((entry) => (
-          <div
-            key={entry.label}
-            className="flex items-center justify-between gap-x-6"
-          >
-            <div className="flex items-center gap-1">
-              <div className="size-3 rounded-xs" style={entry.style} />
-              <span className="font-medium text-label-value-14">
-                {entry.label}
-              </span>
-            </div>
-            <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {formatCount(entry.value, 'transfer')}
-            </span>
-          </div>
-        ))}
-      </div>
-      <HorizontalSeparator className="my-1.5" />
-      <div className="flex flex-col gap-1">
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Min size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(transferSize?.minTransferValueUsd)}
-          </span>
-        </div>
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Average size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(transferSize?.averageTransferSizeUsd)}
-          </span>
-        </div>
-        <div className="flex items-center justify-between gap-x-6">
-          <span className="font-medium text-label-value-14">Max size</span>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatTransferSize(transferSize?.maxTransferValueUsd)}
-          </span>
-        </div>
-      </div>
+    <div className={cn('flex flex-col gap-2', TRANSFER_SIZE_COLORS_CLASS)}>
+      <TooltipHeader
+        label="Identified transfers"
+        value={formatInteger(totalTransfers)}
+      />
+      {breakdownValues.map((entry) => (
+        <TooltipRow
+          key={entry.label}
+          gap="gap-x-6"
+          indicator={<div className="size-3 rounded-xs" style={entry.style} />}
+          label={entry.label}
+        >
+          {formatInteger(entry.value)}
+        </TooltipRow>
+      ))}
+      <HorizontalSeparator />
+      <TransferSizeStatsRows
+        min={transferSize?.minTransferValueUsd}
+        average={transferSize?.averageTransferSizeUsd}
+        max={transferSize?.maxTransferValueUsd}
+      />
     </div>
+  )
+}
+
+/** The smallest, average and largest transfer, under a size breakdown. */
+export function TransferSizeStatsRows(props: {
+  min: number | undefined
+  average: number | undefined
+  max: number | undefined
+}) {
+  return (
+    <>
+      <TooltipRow gap="gap-x-6" label="Min size">
+        {formatTransferSize(props.min)}
+      </TooltipRow>
+      <TooltipRow gap="gap-x-6" label="Average size">
+        {formatTransferSize(props.average)}
+      </TooltipRow>
+      <TooltipRow gap="gap-x-6" label="Max size">
+        {formatTransferSize(props.max)}
+      </TooltipRow>
+    </>
   )
 }
 

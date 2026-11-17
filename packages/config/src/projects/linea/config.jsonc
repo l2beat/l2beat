@@ -23,7 +23,7 @@
     "eth:0x1d930e3Fac9fbc7026eC17962d2F57d558d37532": {
       "critical": true
     },
-    "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
+    "eth:0x0B3943f4B1397C7a9f268D8b84f127A78C66414C": {
       "critical": true
     },
     // Not critical: the Zodiac Delay eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436 only lets the

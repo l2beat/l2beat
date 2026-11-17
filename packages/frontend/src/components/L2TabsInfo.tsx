@@ -5,8 +5,8 @@ export function RollupsInfo() {
     <TabInfoWithDrawer
       title="What are rollups?"
       content="Rollups are L2s that periodically post state commitments to Ethereum.
-        These commitments are validated by either Validity Proofs or are
-        accepted optimistically and can be challenged via Fraud Proof mechanism
+        These commitments are validated by either validity proofs or are
+        accepted optimistically and can be challenged via a fraud proof mechanism
         within a certain fraud proof window. Additionally L2 data is also posted
         to Ethereum, hence there are no additional trust assumptions introduced."
     />
@@ -17,7 +17,7 @@ export function ValidiumsAndOptimiumsInfo() {
   return (
     <TabInfoWithDrawer
       title="What are Validiums and Optimiums?"
-      content="Validiums and Optimiums are L2s that, similarly to Rollups,
+      content="Validiums and Optimiums are L2s that, similarly to rollups,
       periodically post state commitments to Ethereum that are validated by it,
       however data is not posted to Ethereum. This means that additional trust
       assumptions, external to Ethereum, are introduced to prevent data

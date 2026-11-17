@@ -1,12 +1,15 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
+import {
+  TooltipHeader,
+  TooltipRow,
+  TooltipShare,
+} from '~/components/core/tooltip/TooltipParts'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { HorizontalSeparator } from '../core/HorizontalSeparator'
 import { NoDataBanner } from '../NoDataBanner'
+import { PercentChange } from '../PercentChange'
 import { Square } from '../Square'
-import { ValueWithPercentageChange } from '../table/cells/ValueWithPercentageChange'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
@@ -78,50 +81,26 @@ export function ValueSecuredBreakdownTooltipContent({
     },
   ] as const
   return (
-    <div className="space-y-2">
-      <div>
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-heading-16">TVS</span>
-          <ValueWithPercentageChange change={change}>
-            {formatCurrency(total, 'usd')}
-          </ValueWithPercentageChange>
-        </div>
-        {syncWarning && <NoDataBanner content={syncWarning} />}
-        <HorizontalSeparator className="mt-1.5 mb-3" />
-        <div className="space-y-1">
-          {values.map(
-            (v, i) =>
-              v.value > 0 && (
-                <div
-                  key={i}
-                  className="flex items-center justify-between gap-x-3"
-                >
-                  <span className="flex items-center gap-1">
-                    <Square
-                      variant={v.variant}
-                      size="small"
-                      className="-top-px relative"
-                    />
-                    <span className="font-medium text-label-value-15">
-                      {v.title}
-                    </span>
-                  </span>
-                  <span>
-                    <span className="mr-1 font-bold text-label-value-15">
-                      {formatCurrency(v.value, 'usd')}
-                    </span>
-                    <span className="font-medium text-label-value-15 text-secondary">
-                      ({formatPercent(v.value / total)})
-                    </span>
-                  </span>
-                </div>
-              ),
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col gap-2">
+      <TvsTooltipHeader total={total} change={change} />
+      {syncWarning && <NoDataBanner content={syncWarning} />}
+      {values.map(
+        (v) =>
+          v.value > 0 && (
+            <TooltipRow
+              key={v.variant}
+              indicator={<Square variant={v.variant} size="small" />}
+              label={v.title}
+            >
+              {formatCurrency(v.value, 'usd')}{' '}
+              <TooltipShare value={v.value / total} />
+            </TooltipRow>
+          ),
+      )}
       {tvsWarnings?.map((warning, i) => (
         <WarningBar
           key={`tvs-warning-${i}`}
+          compact
           icon={RoundedWarningIcon}
           text={warning.value}
           color={sentimentToWarningBarColor(warning.sentiment)}
@@ -132,5 +111,31 @@ export function ValueSecuredBreakdownTooltipContent({
         />
       ))}
     </div>
+  )
+}
+
+/** "TVS", the total and its change: the lead of every TVS breakdown. */
+export function TvsTooltipHeader({
+  total,
+  change,
+}: {
+  total: number
+  change?: number
+}) {
+  return (
+    <TooltipHeader
+      label="TVS"
+      value={
+        <>
+          {formatCurrency(total, 'usd')}
+          {change !== undefined && (
+            <PercentChange
+              value={change}
+              className="ml-1.5 min-w-0 font-medium text-label-value-14"
+            />
+          )}
+        </>
+      }
+    />
   )
 }

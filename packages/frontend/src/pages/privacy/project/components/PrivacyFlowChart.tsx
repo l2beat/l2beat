@@ -10,6 +10,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -147,9 +148,9 @@ function PrivacyFlowChartTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
-      </div>
+      </ChartTooltipTitle>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {getTooltipEntries(row, keys).map((entry) => {

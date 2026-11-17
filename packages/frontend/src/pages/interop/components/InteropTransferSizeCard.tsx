@@ -20,8 +20,8 @@ export function InteropTransferSizeCard({
       className={cn('flex h-[230px] flex-col', className)}
       data-hide-overflow-x
     >
-      <div className="flex items-center gap-2">
-        <h2 className="font-bold text-heading-20">
+      <div className="flex flex-wrap items-baseline gap-x-2">
+        <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
           Transfer size distribution
         </h2>
         <Last24HoursBadge />

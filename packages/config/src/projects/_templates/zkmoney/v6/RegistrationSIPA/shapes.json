@@ -4,5 +4,11 @@
     "address": "eth:0x96A52ed47Af73423D4b8a920913e5c1ceFdC1319",
     "chain": "ethereum",
     "blockNumber": 26290653
+  },
+  "RegistrationSIPA_2": {
+    "hash": "0x3b83c9f605bdfe979740118d41dc1311237d61bd872034b727a34a395314ee14",
+    "address": "eth:0x0dfaF0E5521CB1aEFfcA4458888e39374095eF93",
+    "chain": "ethereum",
+    "blockNumber": 26405958
   }
 }

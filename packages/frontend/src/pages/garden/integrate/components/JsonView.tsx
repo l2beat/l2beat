@@ -11,7 +11,7 @@ const TOKEN = {
   number: 'text-[#8a5200] dark:text-[#ffb454]',
   keyword: 'text-brand-deep',
   punct: 'text-secondary',
-  elision: 'text-secondary/70',
+  elision: 'text-secondary',
 }
 
 const ELISION_TEXT: Record<ElisionKind, string> = {

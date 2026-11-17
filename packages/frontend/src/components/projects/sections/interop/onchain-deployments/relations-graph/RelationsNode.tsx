@@ -58,9 +58,14 @@ export function RelationsNode({
       className={cn(
         'absolute flex flex-col overflow-hidden rounded-xl border bg-surface-primary text-left',
         'focus-visible:outline-2 focus-visible:outline-brand/50',
-        isSelected ? 'border-brand ring-1 ring-brand' : 'border-divider',
+        isSelected
+          ? 'border-brand ring-1 ring-brand'
+          : isSource
+            ? 'border-brand/50'
+            : 'border-divider',
         isUnconnected && 'border-dashed',
-        isSource && 'outline-4 outline-brand/20 outline-offset-2',
+        // A source backs others and is backed by none; a tint marks it.
+        isSource && 'bg-brand/5 dark:bg-brand/10',
         isDimmed && 'opacity-20',
       )}
       onClick={(event) => {

@@ -103,18 +103,14 @@ export function EthereumActivityChart({
       </div>
 
       <div className="flex justify-between gap-4">
-        <ActivityMetricControls
-          value={metric}
-          onValueChange={setMetric}
-          projectChart
-        />
+        <ActivityMetricControls value={metric} onValueChange={setMetric} />
         <RadioGroup
           name="activityChartScale"
           value={scale}
           onValueChange={(value) => setScale(value as ChartScale)}
         >
-          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
           <RadioGroupItem value="linear">LIN</RadioGroupItem>
+          <RadioGroupItem value="symlog">LOG</RadioGroupItem>
         </RadioGroup>
       </div>
       <ActivityChartStatsPanel

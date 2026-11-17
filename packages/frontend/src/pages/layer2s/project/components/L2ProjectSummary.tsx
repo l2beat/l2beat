@@ -17,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
@@ -54,7 +55,7 @@ export function ProjectL2Summary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
+      className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-xl md:bg-surface-primary md:px-6 md:py-5"
     >
       <div className="flex">
         <div className="w-full">
@@ -69,7 +70,7 @@ export function ProjectL2Summary({ project }: Props) {
             <div>
               <p
                 className={cn(
-                  'font-medium text-label-value-12 text-secondary',
+                  'text-label-value-13 text-primary leading-4',
                   !hasTokenWarnings && 'mb-2',
                 )}
               >
@@ -136,15 +137,15 @@ export function ProjectL2Summary({ project }: Props) {
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
                   />
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                    <TooltipFootnote className="mt-2 max-md:hidden">
                       Click to view TVS breakdown
-                    </p>
+                    </TooltipFootnote>
                   )}
                 </TooltipContent>
               </Tooltip>
             </div>
             <div>
-              <p className="mb-2 font-medium text-label-value-12 text-secondary">
+              <p className="mb-2 text-label-value-13 text-primary leading-4">
                 Value secured breakdown
               </p>
               <Tooltip>
@@ -197,16 +198,16 @@ export function ProjectL2Summary({ project }: Props) {
                     />
                   )}
                   {project.header.tvs && (
-                    <p className="text-label-value-13 text-secondary max-md:hidden">
+                    <TooltipFootnote className="max-md:hidden">
                       Click to view TVS breakdown
-                    </p>
+                    </TooltipFootnote>
                   )}
                   {project.header.tvs?.breakdown && (
-                    <p>
+                    <TooltipFootnote>
                       <PercentageChangeTooltipContent
                         period={project.header.tvs.breakdown.totalChangePeriod}
                       />
-                    </p>
+                    </TooltipFootnote>
                   )}
                 </TooltipContent>
               </Tooltip>
@@ -225,7 +226,7 @@ export function ProjectL2Summary({ project }: Props) {
             </>
           )}
         </div>
-        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
+        <VerticalSeparator className="mx-6 h-[unset] self-stretch max-lg:hidden" />
 
         <ProjectL2Rosette project={project} size="small" />
       </div>

@@ -1,7 +1,9 @@
 import type { PrivacyAttribute } from '@l2beat/config'
+import { PRIVACY_CHIP_BASE_CLASS_NAME } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
+/** Each attribute's own pastel with dark text, the same in both modes. */
 const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
   fhe: 'text-[#5C3B00] bg-[#FFE8A3] border-[#D9A31A]',
   zk: 'text-[#6B2D00] bg-[#FFD5A3] border-[#E2872A]',
@@ -25,7 +27,7 @@ export function PrivacyAttributeTag({
       <TooltipTrigger asChild>
         <span
           className={cn(
-            'inline-flex select-none items-center rounded border px-1.5 py-0.5 font-medium text-xs',
+            PRIVACY_CHIP_BASE_CLASS_NAME,
             ATTRIBUTE_CLASS_NAMES[attribute.id],
           )}
         >

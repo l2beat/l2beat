@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1794403523,
+      "type": "code",
+      "contract": "eth:0x532eDc4A4113602c18029d80d9770d959c52AEd7",
+      "transaction": "0x550473895c9beea50d43545d716d2036afe38f2e0e4b8d56ed3f0dd641dbbeb8",
+      "updateId": "b1d59c14",
+      "reason": "New deposit address code: the NameRegistry switched to a new RegistrationController, and within the hour to a new Resolver, that deploy deposit addresses through this new SIPAFactory with new Deposit, Registration and AddPasskey implementations and a new ForwardingTable."
+    }
+  ]
+}

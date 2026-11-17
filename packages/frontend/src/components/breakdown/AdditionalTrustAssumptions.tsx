@@ -9,7 +9,7 @@ interface AdditionalTrustAssumptionsProps {
   className?: string
 }
 
-const additionalTrustBannerVariants = cva('w-full rounded-md px-2.5 py-2', {
+const additionalTrustBannerVariants = cva('w-full rounded-md px-3 py-2', {
   variants: {
     sentiment: {
       good: 'bg-positive/15 dark:bg-positive/20',
@@ -54,7 +54,7 @@ export function AdditionalTrustAssumptionsBanner({
 
   return (
     <div className={additionalTrustBannerVariants({ sentiment })}>
-      <p className="text-pretty text-label-value-13 text-primary leading-snug">
+      <p className="text-pretty">
         <AdditionalTrustAssumptionsContent percentage={percentage}>
           of TVS {ADDITIONAL_TRUST_ASSUMPTIONS_COMPARISON}.
         </AdditionalTrustAssumptionsContent>

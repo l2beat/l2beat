@@ -12,6 +12,7 @@ import type {
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -20,7 +21,7 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -225,17 +226,15 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatSnapshotTimestamp(label, resolution)}
-      </div>
-      <div className="mt-3 flex w-full items-center justify-between gap-2 text-heading-16">
-        <span>Total</span>
-        <span className="whitespace-nowrap text-primary tabular-nums">
-          {formatCurrency(total, unit)}
-        </span>
-      </div>
-      <HorizontalSeparator className="my-2" />
-      <div className="flex flex-col gap-2">
+      </ChartTooltipTitle>
+      <TooltipHeader
+        className="mt-3"
+        label="Total"
+        value={formatCurrency(total, unit)}
+      />
+      <div className="mt-2 flex flex-col gap-2">
         {actualPayload.slice(0, 20).map((entry, index) => {
           return (
             <ChartTooltipRow
@@ -260,7 +259,7 @@ function CustomTooltip({
         })}
         {actualPayload.length > 20 && (
           <div className="font-medium text-label-value-14 text-secondary">
-            + {actualPayload.length - 20} more
+            +{actualPayload.length - 20} more
           </div>
         )}
       </div>

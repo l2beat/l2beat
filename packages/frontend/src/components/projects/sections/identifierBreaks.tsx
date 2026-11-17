@@ -1,0 +1,20 @@
+/**
+ * Contract and program names are identifiers ("L2CrossDomainMessenger",
+ * "StarkWare_GpsStatementVerifier_2026_14"). On narrow columns they may break
+ * only between words (before an inner capital, after a word's "_"), never
+ * mid-word, and a trailing version like "2026_14" stays whole.
+ */
+export function withIdentifierBreaks(
+  name: string,
+  { atCapitals = true }: { atCapitals?: boolean } = {},
+) {
+  // Names with underscores are already split into words by them; breaking at
+  // capitals there too would split brand names like "StarkWare".
+  const pattern =
+    atCapitals && !name.includes('_')
+      ? /(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Za-z]_)/
+      : /(?<=[A-Za-z]_)/
+  return name
+    .split(pattern)
+    .flatMap((part, i) => (i === 0 ? [part] : [<wbr key={i} />, part]))
+}

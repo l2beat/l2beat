@@ -55,7 +55,14 @@ const columnHelper = createColumnHelper<L2ActivityTableEntry>()
 
 export const getL2ActivityColumns = (
   metric: ActivityMetric,
-  opts?: CommonProjectColumnsOptions,
+  opts?: CommonProjectColumnsOptions & {
+    /**
+     * Hides Type with CSS on phones, for the markup painted before the
+     * viewport is known. After that the table hides it through its column
+     * visibility, which the Columns menu can turn back on.
+     */
+    hideTypeOnPhones?: boolean
+  },
 ) =>
   compact([
     ...getL2CommonProjectColumns(
@@ -68,6 +75,9 @@ export const getL2ActivityColumns = (
     ),
     columnHelper.accessor('type', {
       header: 'Type',
+      meta: opts?.hideTypeOnPhones
+        ? { headClassName: 'max-md:hidden', cellClassName: 'max-md:hidden' }
+        : undefined,
       cell: (ctx) => {
         const { type, id, stacks } = ctx.row.original
 
@@ -108,8 +118,8 @@ export const getL2ActivityColumns = (
               <ValueWithPercentageChange
                 change={data.pastDayCount.change}
                 changePeriod={data.pastDayCount.changePeriod}
-                className="font-medium"
-                containerClassName="justify-end"
+                className="font-medium md:text-label-value-15"
+                containerClassName="flex-nowrap justify-end"
               >
                 {formatActivityCount(data.pastDayCount.value)}
               </ValueWithPercentageChange>
@@ -119,8 +129,7 @@ export const getL2ActivityColumns = (
         sortUndefined: 'last',
         meta: {
           align: 'right',
-          headClassName: 'max-w-[110px]',
-          tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`,
+          tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7 days ago.`,
           colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
         },
       }),
@@ -158,7 +167,7 @@ export const getL2ActivityColumns = (
       columnHelper,
       columnHelper.accessor((row) => row.data?.summedCount.value, {
         id: 'summedCount',
-        header: '30D Count',
+        header: '30d count',
         cell: (ctx) => {
           const data = ctx.row.original.data
           if (!data) {
@@ -169,7 +178,7 @@ export const getL2ActivityColumns = (
               <ValueWithPercentageChange
                 change={data.summedCount.change}
                 changePeriod={data.summedCount.changePeriod}
-                className="font-medium"
+                className="font-medium md:text-label-value-15"
                 containerClassName="justify-end"
               >
                 {formatInteger(data.summedCount.value)}
@@ -181,6 +190,7 @@ export const getL2ActivityColumns = (
         meta: {
           align: 'right',
           hideIfNull: true,
+          tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} over the last 30 days, shown together with a percentage change compared to the previous 30 days.`,
         },
       }),
       (row) => ({
@@ -217,7 +227,7 @@ export const getL2ActivityColumns = (
       }),
     columnHelper.accessor((row) => row.data?.ratio, {
       id: 'data_ratio',
-      header: 'UOPS/TPS RATIO',
+      header: 'UOPS/TPS\nratio',
       sortUndefined: 'last',
       cell: (ctx) => {
         const data = ctx.row.original.data

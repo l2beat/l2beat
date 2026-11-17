@@ -245,7 +245,7 @@ describe(renderProjectSection.name, () => {
     expect(markdown).toInclude(
       '![A diagram](https://ethbeat.org/images/diagram.png)',
       '### Prover: [SP1](https://ethbeat.org/zk-catalog/sp1)\n\n#### Trusted setups\n\n- Groth16 (Groth16):\n  - Aztec Ignition, risk green (lowest risk) per the [Trusted Setups Risk Framework](https://forum.ethbeat.org/t/the-trusted-setups-framework-for-zk-catalog/381): Large ceremony.\n  - Used in: none\n  - Verifiers: 2 successful',
-      '### Program Hashes\n\n#### Aggregation program',
+      '### Program hashes\n\n#### Aggregation program',
       'Hashes are checked onchain.',
     )
     expect(markdown).not.toInclude('List of known guest zkVM programs')
@@ -418,7 +418,7 @@ describe(renderProjectSection.name, () => {
       '### Ongoing anomaly\n\n- No state updates have been performed for the past 2h (since 2026-08-29 10:40 UTC). These typically occur every 1h on average.',
       'The interactive liveness chart is shown on [the HTML page](https://ethbeat.org/layer2s/projects/arbitrum#liveness).',
       '#### State updates\n\n- functionCall: 2023-11-14 22:13 UTC - now; currently used; address: [0x1111111111111111111111111111111111111111](https://etherscan.io/address/0x1111111111111111111111111111111111111111); selector: 0x12345678; signature: `function update()`',
-      '### Last 30 day anomalies',
+      '### Anomalies in the past 30 days',
     )
   })
 
@@ -513,13 +513,17 @@ describe(renderProjectSection.name, () => {
     )
   })
 
-  it('lists the liquid staking protocols with their latest numbers, marking missing ones and protocols under review', () => {
+  it('lists the liquid staking protocols with their latest numbers, linking the tokens with a page and marking missing numbers and protocols under review', () => {
     const markdown = render({
       type: 'LiquidStakingSection',
       props: {
         id: 'liquid-staking',
         title: 'Liquid staking',
-        ethStaked: { value: 35_400_000, timestamp: UnixTime(1762646400) },
+        ethStaked: {
+          value: 35_400_000,
+          valueUsd: 120_000_000_000,
+          timestamp: UnixTime(1762646400),
+        },
         entries: [
           {
             id: 'lido',
@@ -529,7 +533,10 @@ describe(renderProjectSection.name, () => {
             href: '/defi/projects/lido',
             description: 'Lido description',
             isUnderReview: false,
-            tokens: ['stETH', 'wstETH'],
+            tokens: [
+              { symbol: 'stETH', href: '/tokens/steth/lido/steth' },
+              { symbol: 'wstETH' },
+            ],
             totalValueLockedUsd: 30_000_000_000,
             yield: { value: 0.0275, timestamp: 1762646400, estimated: false },
             costOfExit: { value: 2.5, timestamp: 1762646400, estimated: true },
@@ -542,15 +549,15 @@ describe(renderProjectSection.name, () => {
             href: '/defi/projects/wbeth',
             description: 'wBETH description',
             isUnderReview: true,
-            tokens: ['wBETH'],
+            tokens: [{ symbol: 'wBETH' }],
           },
         ],
       },
     })
 
     expect(markdown).toInclude(
-      'ETH staked: 35.40 M ETH (as of 2025-11-09 00:00 UTC)',
-      '| [Lido](https://ethbeat.org/defi/projects/lido) | stETH, wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
+      'ETH staked: 35.40 M ETH ($120.00 B) (as of 2025-11-09 00:00 UTC)',
+      '| [Lido](https://ethbeat.org/defi/projects/lido) | [stETH](https://ethbeat.org/tokens/steth/lido/steth), wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
       '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
     )
   })

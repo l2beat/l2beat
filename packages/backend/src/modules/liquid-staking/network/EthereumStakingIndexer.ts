@@ -12,7 +12,7 @@ import {
 import { ELECTRA_SLOT, SUPPORTED_FORK_VERSIONS } from '../ethereumForks'
 import type { EthereumBlockFinder } from '../types'
 import { type DepositsRpc, readCreditedDeposits } from './creditedDeposits'
-import type { ExecutionDay } from './dune/readExecutionDay'
+import type { ExecutionDay } from './executionDay'
 
 /**
  * Validators that earn nothing: those waiting to enter, and those exited but

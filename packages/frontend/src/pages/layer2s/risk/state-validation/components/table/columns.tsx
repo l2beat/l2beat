@@ -35,7 +35,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
     columnHelper,
     columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
       id: 'total',
-      header: 'Total value secured',
+      header: 'Value secured',
       cell: (ctx) => {
         const value = ctx.row.original.tvs
         return (
@@ -57,7 +57,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
         align: 'right' as const,
         cellClassName: 'pl-3',
         tooltip:
-          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+          'Value secured is the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
       },
     }),
     (row) => ({
@@ -66,6 +66,10 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
     }),
   )
 }
+
+// The cell link is `w-max`, so it must be released for the text to wrap.
+const WRAP_ON_DESKTOP =
+  'lg:whitespace-normal lg:min-w-[150px] lg:max-w-[150px] lg:[&_a]:w-auto'
 
 const validityColumnHelper =
   createColumnHelper<L2RiskStateValidationValidityEntry>()
@@ -79,8 +83,11 @@ export const l2RiskStateValidationValidityColumns = [
     header: 'Proof system',
     cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
     meta: {
+      // Dual-prover pairs ("SP1 Hypercube / RISC Zero") wrap, so the value
+      // column stays in view on desktop.
+      cellClassName: WRAP_ON_DESKTOP,
       tooltip:
-        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
     },
   }),
   validityColumnHelper.display({
@@ -106,7 +113,7 @@ export const l2RiskStateValidationValidityColumns = [
     },
   }),
   validityColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+    header: 'Execution delay',
     cell: (ctx) => {
       const { executionDelay, executionDelayMode } = ctx.row.original
       return (
@@ -144,6 +151,7 @@ export const l2RiskStateValidationValidityColumns = [
       />
     ),
     meta: {
+      cellClassName: WRAP_ON_DESKTOP,
       tooltip:
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
@@ -166,7 +174,7 @@ export const l2RiskStateValidationValidityColumns = [
     },
     meta: {
       tooltip:
-        'Trusted setup information for the proof system used by this project',
+        'Trusted setup information for the proof system used by this project.',
     },
   }),
   ...getTvsColumns(validityColumnHelper),
@@ -185,11 +193,11 @@ export const l2RiskStateValidationOptimisticColumns = [
     cell: (ctx) => <OptimisticProofSystemCell {...ctx.row.original} />,
     meta: {
       tooltip:
-        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
     },
   }),
   optimisticColumnHelper.accessor('challengePeriod', {
-    header: 'Challenge Period',
+    header: 'Challenge period',
     cell: (ctx) => (
       <TableValueCell
         value={
@@ -206,7 +214,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     ),
   }),
   optimisticColumnHelper.accessor('executionDelay', {
-    header: 'Execution Delay',
+    header: 'Execution delay',
     cell: (ctx) => {
       const { executionDelay, executionDelayMode } = ctx.row.original
       return (
@@ -230,7 +238,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     },
   }),
   optimisticColumnHelper.accessor('initialBond', {
-    header: 'Initial Bond',
+    header: 'Initial bond',
     cell: (ctx) => {
       const { initialBond, defenderAdvantage } = ctx.row.original
       return (

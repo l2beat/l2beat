@@ -9,6 +9,7 @@ import type {
 import {
   ChartTooltipRow,
   ChartTooltipRows,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -137,9 +138,9 @@ function AnonymitySetTooltip({
 }) {
   return (
     <ChartTooltipWrapper>
-      <div className="mb-2 font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle className="mb-2">
         {formatTitle(row.timestamp)}
-      </div>
+      </ChartTooltipTitle>
       {/* Keyed by point, so each new point opens at its largest sets. */}
       <ChartTooltipRows key={row.timestamp} className="flex flex-col gap-2">
         {getTooltipEntries(row, keys, { skipNull: true })

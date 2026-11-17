@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -37,9 +38,9 @@ export function TvsCustomTooltip<
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3">
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">

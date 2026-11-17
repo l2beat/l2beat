@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x86d997c0d0a4d7d9072ffe666ca5090780b9184f
+
+# Diff at Fri, 13 Nov 2026 13:04:08 GMT:
+
+- id: 3e3733a9
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ced572b97485e6dc1fc02f958ee2a731593430e block: 1793093365
+- current timestamp: 1793093365
+
+## Description
+
+Config: the Safe 1.5.0 L2 singleton matches the GnosisSafe template through a new shape. No onchain change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793093365 (main branch discovery), not current.
+
+```diff
+    contract SafeL2_v1_5_0 (eth:0xEdd160fEBBD92E350D4D398fb636302fccd67C7e) [GnosisSafe] {
+    +++ description: Same as the v1.5.0 implementation, but it also emits an event for every executed transaction, for indexing on chains without transaction tracing.
+      template:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xd913d4859be57bb369f0e3310c704faca4638612
 
 # Diff at Tue, 03 Nov 2026 11:22:19 GMT:

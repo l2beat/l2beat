@@ -17,6 +17,10 @@ const ZK_MONEY_CIRCUITS =
 const ZK_MONEY_V6_CIRCUITS =
   'https://github.com/aztec-labs-eng/zkmoney-public/tree/8fd198412a956f214639b5782d3a86e3d47ca60e/vendor/oxide/noir-projects/'
 
+// The commit whose pinned resolver verifier matches the deployed v6 one.
+const ZK_MONEY_V6_RESOLVER_CIRCUIT =
+  'https://github.com/aztec-labs-eng/zkmoney-public/tree/7a72b6b47219c1a7d4a089d93a2b2ad57d294cd2/vendor/oxide/noir-projects/resolver_circuit'
+
 const zkMoneyDiscovery = new ProjectDiscovery('zkmoney')
 const zkMoneyV6Discovery = new ProjectDiscovery('zkmoneyv6')
 const aztecV5Discovery = new ProjectDiscovery('aztecnetwork')
@@ -76,19 +80,15 @@ function getVerifierKeyHash(
   }
   return keyHash
 }
-// v5 and v6 deploy the same resolver verifier source with the same key.
+// The v5 resolver verifier, built with Barretenberg 5.2.0.
 function getResolverVerifierKeyHash(): string {
-  const [v5, v6] = [zkMoneyDiscovery, zkMoneyV6Discovery].map((discovery) =>
-    getVerifierKeyHash(
-      discovery,
-      ['ResolverVerifier'],
-      '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
-      '0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2',
-      [ZK_MONEY_RELATIONS_LIB_HASH, ZK_MONEY_TRANSCRIPT_LIB_HASH],
-    ),
+  return getVerifierKeyHash(
+    zkMoneyDiscovery,
+    ['ResolverVerifier'],
+    '0x279d6dad93155d6c03ddd050359fb4675a66c08812b5306f6dfc9754e42827b7',
+    '0x4037936aa34f65195d0dc7ef3c98cc82e4f969470558a15ede8590867175baf2',
+    [ZK_MONEY_RELATIONS_LIB_HASH, ZK_MONEY_TRANSCRIPT_LIB_HASH],
   )
-  assert(v5 === v6, 'zk.money resolver verifier keys diverged')
-  return v5
 }
 
 export const barretenberg: BaseProject = {
@@ -453,6 +453,34 @@ export const barretenberg: BaseProject = {
         ),
       },
       {
+        hash: getVerifierKeyHash(
+          zkMoneyV6Discovery,
+          ['ResolverVerifier'],
+          '0x012486c74ac5045c0bd91bde9cbbf5f815d2d4761eb54601f0b0c5840dac28ff',
+          '0xf09fea5d02f2348a9e442aaf846a7b9805f4b15264ceb4d3ba4bd1ed09f3d27d',
+          [
+            '0x828f194959938caf18480eccaf0b72a4be00471ef1e49f9c1577ac6182315210',
+            '0xcac36305f0ae33c6dccd29ba11c4715f64459cebb27085a02ccf8edfbdf9941e',
+          ],
+        ),
+        name: 'zk.money v6 resolver verifier',
+        description:
+          'Verifies that the secret behind a deposit address returned for a zk.money name was derived from the registered user and resolver operator keys, and binds the address to the registered Aztec address. Compiled with the Aztec 6.0.0 toolchain and generated with the zero-knowledge option.',
+        sourceLink: ZK_MONEY_V6_RESOLVER_CIRCUIT,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: zkMoneyV6Discovery.getContract('ResolverVerifier').address,
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'barretenberg',
+          'verificationSteps-zkmoneyv6-resolver',
+        ),
+      },
+      {
         hash: getResolverVerifierKeyHash(),
         name: 'zk.money resolver verifier',
         description:
@@ -462,9 +490,6 @@ export const barretenberg: BaseProject = {
         knownDeployments: [
           {
             address: zkMoneyDiscovery.getContract('ResolverVerifier').address,
-          },
-          {
-            address: zkMoneyV6Discovery.getContract('ResolverVerifier').address,
           },
         ],
         verificationStatus: 'successful',

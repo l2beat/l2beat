@@ -10,13 +10,17 @@ import type {
   ChartMeta,
   ChartProject,
 } from '~/components/core/chart/ChartContext'
-import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
+import {
+  ChartTooltipTitle,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/ChartTooltip'
 import {
   type ChartSeries,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipRow } from '~/components/core/tooltip/TooltipParts'
 import { formatRange } from '~/utils/dates'
 import type { ChartResolution } from '~/utils/range/range'
 
@@ -41,7 +45,7 @@ interface Props {
 
 const chartMeta = {
   range: {
-    label: 'Min&max submission interval',
+    label: 'Min & max submission interval',
     color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
@@ -169,12 +173,12 @@ function LivenessCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
-        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-1 whitespace-nowrap">
           {formatRange(
             timestamp,
             timestamp + UnixTime.periodToSeconds(resolution),
           )}
-        </div>
+        </ChartTooltipTitle>
         <HorizontalSeparator className="mt-1.5" />
         {content}
       </div>
@@ -184,10 +188,9 @@ function LivenessCustomTooltip({
 
 function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
-    <div className="flex items-center justify-between gap-1.5">
-      <span className="font-medium text-label-value-14">{name}</span>
-      <span className="text-heading-16">{formatSeconds(seconds)}</span>
-    </div>
+    <TooltipRow gap="gap-x-4" label={name}>
+      {formatSeconds(seconds)}
+    </TooltipRow>
   )
 }
 

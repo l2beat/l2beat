@@ -159,7 +159,9 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
             // unset the ring inset from the popover trigger classnames
             'focus-visible:[--tw-ring-inset:_]!',
-            'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+            // the popover trigger's own chip background would show on the track
+            'bg-transparent primary-card:bg-transparent',
+            'data-[state=checked]:bg-pure-white primary-card:data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black dark:primary-card:data-[state=checked]:bg-black',
           )}
         >
           <CalendarIcon className="size-5 shrink-0" />
@@ -218,7 +220,9 @@ function PredefinedOptions({
       className={cn(
         'group/radio-group items-center gap-1 rounded-lg p-1 font-medium',
         layout === 'bar' ? 'inline-flex h-8 w-max' : 'flex w-full',
-        'bg-surface-primary primary-card:bg-surface-secondary',
+        // Off a card the page is already --surface-secondary, so the track
+        // steps one darker and keeps the white pill used inside cards
+        'bg-surface-tertiary primary-card:bg-surface-secondary dark:bg-surface-secondary',
       )}
     >
       {options.map((option) => {
@@ -254,7 +258,7 @@ function PredefinedOptions({
               'rounded-md px-2 text-xs disabled:cursor-not-allowed disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 md:text-sm',
               layout === 'bar' ? 'h-full' : 'h-10 min-w-0 flex-1 px-1',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
-              'data-[state=checked]:bg-surface-tertiary primary-card:data-[state=checked]:bg-pure-white dark:primary-card:data-[state=checked]:bg-black',
+              'data-[state=checked]:bg-pure-white dark:data-[state=checked]:bg-black',
             )}
           >
             {option.label}

@@ -48,12 +48,12 @@ export function EndpointsSection({
 
 function ApiNotes() {
   return (
-    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
       <ul className="flex flex-col gap-2.5">
         {API_NOTES.map((note) => (
           <li
             key={note}
-            className="flex gap-2.5 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16"
+            className="flex gap-2.5 text-pretty text-paragraph-14 md:text-paragraph-15"
           >
             <SproutIcon className="mt-1 size-4 shrink-0 text-garden-accent" />
             <span>
@@ -62,7 +62,7 @@ function ApiNotes() {
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
+      <p className="mt-4 text-pretty text-paragraph-14 md:text-paragraph-15">
         Browse the{' '}
         <ExternalLink href={CROPS_API_DOCS_URL}>interactive docs</ExternalLink>{' '}
         or read the{' '}
@@ -100,7 +100,7 @@ function EndpointCard({
   example: IntegrateExample
 }) {
   return (
-    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl md:p-8">
+    <PrimaryCard className="max-md:mx-4 max-md:rounded-xl">
       {/* Out of a line box, so the card opens on the chip's edge like the other cards. */}
       <div className="flex">
         <Code>{endpoint.path}</Code>
@@ -108,7 +108,7 @@ function EndpointCard({
       <h3 className="mt-3 font-bold text-heading-18 md:text-heading-20">
         {endpoint.summary}
       </h3>
-      <p className="mt-1 text-pretty text-paragraph-14 text-secondary md:text-paragraph-16">
+      <p className="mt-1 text-pretty text-paragraph-14 text-secondary md:text-paragraph-15">
         <Markup text={endpoint.description} />
       </p>
       {endpoint.params.length > 0 && (
@@ -127,7 +127,7 @@ function EndpointCard({
         copy={example.request}
         copyText="Copy URL"
       />
-      <CodeSnippet className="mt-3" label="response">
+      <CodeSnippet className="mt-3" label="Response">
         <JsonView value={example.response} />
       </CodeSnippet>
     </PrimaryCard>

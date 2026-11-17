@@ -43,7 +43,9 @@ export function ActivityCompareChart({
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      formatYAxisLabel={(value) => formatActivityCount(value)}
+      formatYAxisLabel={(value) =>
+        `${formatActivityAxisCount(value)} ${unit.toUpperCase()}`
+      }
       formatTooltipValue={(value) =>
         `${formatActivityCount(value)} ${unit.toUpperCase()}`
       }
@@ -52,4 +54,13 @@ export function ActivityCompareChart({
       }
     />
   )
+}
+
+/**
+ * Whole counts below 1000 drop their decimals ("600", "0"). Abbreviated
+ * counts keep two, or 1,000 and 1,500 would both read "1 K".
+ */
+function formatActivityAxisCount(value: number) {
+  const isWholeCount = value === 0 || (value >= 10 && value < 1000)
+  return formatActivityCount(value, { decimals: isWholeCount ? 0 : 2 })
 }

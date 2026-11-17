@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { useElementSize } from '~/hooks/useElementSize'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
@@ -386,7 +387,7 @@ function BatchTooltipContent({
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', formatAddress(batch.to)])
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center gap-1.5 font-bold text-label-value-14">
+      <div className="flex items-center gap-1.5 font-semibold text-label-value-14">
         {poster.iconUrl && (
           <img src={poster.iconUrl} alt="" className="size-4 rounded-full" />
         )}
@@ -397,8 +398,8 @@ function BatchTooltipContent({
           key={label}
           className="flex justify-between gap-4 text-label-value-13"
         >
-          <span className="text-secondary">{label}</span>
-          <span className="tabular-nums">{value}</span>
+          <span>{label}</span>
+          <span className="font-medium tabular-nums">{value}</span>
         </div>
       ))}
       {pinned ? (
@@ -406,15 +407,13 @@ function BatchTooltipContent({
           href={etherscanTxUrl(batch.txHash)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 pt-1 font-bold text-brand-deep text-label-value-13"
+          className="flex w-max items-center gap-1 pt-1 font-medium text-brand-deep text-label-value-13 underline-offset-[0.3em] hover:underline"
         >
           Open on Etherscan
           <CustomLinkIcon className="size-3.5 fill-current" />
         </a>
       ) : (
-        <div className="text-label-value-12 text-secondary">
-          Click to open on Etherscan
-        </div>
+        <TooltipFootnote>Click to open on Etherscan</TooltipFootnote>
       )}
     </div>
   )

@@ -4,6 +4,7 @@ import type {
   CalculationFormula,
   ValueFormula,
 } from '@l2beat/config'
+import { isAmountFormulaActive } from '@l2beat/config/build/utils/tvsFormulas'
 import { assert, notUndefined, type UnixTime } from '@l2beat/shared-pure'
 import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
 import type { DataStorage } from '../tools/DataStorage'
@@ -126,10 +127,7 @@ export class ValueService {
 
     const config = createAmountConfig(formula)
 
-    if (
-      timestamp < config.sinceTimestamp ||
-      (config.untilTimestamp && timestamp > config.untilTimestamp)
-    ) {
+    if (!isAmountFormulaActive(formula, timestamp)) {
       return undefined
     }
 

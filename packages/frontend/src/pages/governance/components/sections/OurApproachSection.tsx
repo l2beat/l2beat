@@ -1,4 +1,3 @@
-import { cn } from '~/utils/cn'
 import { GovernanceCard } from '../GovernanceCard'
 
 interface Props {
@@ -7,8 +6,10 @@ interface Props {
 
 export function OurApproachSection({ className }: Props) {
   return (
-    <GovernanceCard mobileFull className={cn(className, 'h-min')}>
-      <div className="text-heading-24 md:text-heading-32">Our approach</div>
+    <GovernanceCard mobileFull className={className}>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Our approach
+      </h2>
       <p className="mt-6 text-paragraph-16 md:text-paragraph-15">
         We recognize that achieving successful decentralized governance stands
         as a vital challenge within the blockchain realm. Our goal is to

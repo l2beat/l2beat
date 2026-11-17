@@ -7,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -76,34 +77,31 @@ export function OptimisticProofSystemCell({
                   {hasSuccessful && (
                     <Callout
                       color="green"
-                      small
-                      icon={<VerifiedIcon className="mt-px size-4" />}
-                      className="p-2"
+                      compact
+                      icon={<VerifiedIcon className="size-4" />}
                       body={getSuccessfulText(zkCatalog.successful)}
                     />
                   )}
                   {hasNotVerified && (
                     <Callout
                       color="gray"
-                      small
-                      className="p-2"
-                      icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
+                      compact
+                      icon={<CircleQuestionMarkIcon className="size-4" />}
                       body={getNotVerifiedText(zkCatalog.notVerified)}
                     />
                   )}
                   {hasUnsuccessful && (
                     <Callout
                       color="red"
-                      small
-                      className="p-2"
-                      icon={<UnverifiedIcon className="mt-px size-4" />}
+                      compact
+                      icon={<UnverifiedIcon className="size-4" />}
                       body={getUnsuccessfulText(zkCatalog.unsuccessful)}
                     />
                   )}
                 </div>
-                <p className="mt-2 text-label-value-13 text-secondary">
+                <TooltipFootnote className="mt-2">
                   Click to view details
-                </p>
+                </TooltipFootnote>
               </TooltipContent>
             </Tooltip>
           )}
@@ -122,7 +120,7 @@ export function OptimisticProofSystemCell({
         </div>
       </div>
       {permissioned !== undefined && (
-        <div className="text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]">
+        <div className="text-label-value-13 text-secondary leading-4">
           {permissioned ? 'Permissioned' : 'Permissionless'}
         </div>
       )}

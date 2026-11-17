@@ -1,3 +1,154 @@
+Generated with discovered.json: 0xf61ab263ca3d9c86619dcb28fcb91c2843757805
+
+# Diff at Mon, 16 Nov 2026 12:37:52 GMT:
+
+- id: cc127e04
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794568877
+- current timestamp: 1794568877
+
+## Description
+
+Rerun permissions after guardians are dissolved on L2.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794568877 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions.1.from:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+    }
+```
+
+```diff
+    external contract (zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","role":".MinterAdmin","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"role":".Executor"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"},{"permission":"interact","from":"zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}]
+    }
+```
+
+```diff
+    external contract (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E","description":"grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.","role":".MinterAdmin","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200}]},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d","delay":259200,"role":".Executor"}]
+    }
+```
+
+Generated with discovered.json: 0x0e1bf8f1d3a493f94ce269eb1ca63690adeace11
+
+# Diff at Mon, 16 Nov 2026 10:29:50 GMT:
+
+- id: 3e7f8c2c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a804ec828ab17a3a4cb8da9318a87814cec12858 block: 1794319593
+- current timestamp: 1794568877
+
+## Description
+
+The CompartmentRegistry created a second compartment, the AxcessCompartment eth:0xa9e3AE58880702e02513225BC911d51781C60938. Its code is the HighYieldEarnVaultCompartment restricted to Axcess loan vaults (https://disco.l2beat.com/diff/eth:0x28F188A3b89f24B838D0a6e37c7602b5F319DbAF/eth:0x414f3BD3B2F6eE7bbCc9692D5Eed06BAEdE10946), with one vault listed (eth:0x3Ad29b602a7AB3A15b9D7C74324C83Fe9e705b11). The roles are the same: the EOA eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952 deposits into the vault and bridges back to GRVT, and the REGISTRY_ADMIN_ROLE lists venues and upgrades the compartment without delay through the UpgradeAuthority and a new ProxyAdmin.
+
+A listed venue only has to report an asset, so the REGISTRY_ADMIN_ROLE decides where an operator deposit can go. The bridge owner sets the parameters that derive the destination on GRVT.
+
+Config: AxcessCompartment template, which ignores the Axcess vaults like the other compartment. Both compartment descriptions now say who defines the venues and the bridge destination.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x0AaBB14Da51F3c2ddB678A73f71239760fc9e952) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xa9e3AE58880702e02513225BC911d51781C60938","description":"bridge the compartment's funds to its vault on GRVT.","role":".rebalancer"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xa9e3AE58880702e02513225BC911d51781C60938","description":"deposit the compartment's funds into its listed Axcess loan vaults and withdraw them back to the compartment.","role":".operator"}
+    }
+```
+
+```diff
+    contract CompartmentRegistry (eth:0x55e271ae274BE015Fc46cdf43a2C7C96eF1dFB89) [grvt/CompartmentRegistry] {
+    +++ description: Registry of compartments: contracts on Ethereum that hold the capital of GRVT vaults withdrawn from L2, deploy it into external yield venues and bridge it back to the vaults on GRVT. The registry also holds the roles and the global pause for all compartments.
+      values.compartmentCount:
+-        1
++        2
++++ description: All compartments created by the registry.
+      values.compartments.1:
++        "eth:0xa9e3AE58880702e02513225BC911d51781C60938"
+    }
+```
+
+```diff
+    contract UpgradeAuthority (eth:0x736258fdd7dc998A1180333AFec1C045868EAcdf) [grvt/UpgradeAuthority] {
+    +++ description: Owns the ProxyAdmins of the CompartmentRegistry and of every compartment. Accounts with the REGISTRY_ADMIN_ROLE in the CompartmentRegistry can use it to upgrade these contracts without delay.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xa9e3AE58880702e02513225BC911d51781C60938","role":"admin","via":[{"address":"eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x0516f36192d16D8EaeEED4a541810f50218E97f4) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxcessCompartment (eth:0xa9e3AE58880702e02513225BC911d51781C60938) [grvt/AxcessCompartment]
+    +++ description: Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults. A listed venue only has to report an asset. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.
+```
+
+## Source code changes
+
+```diff
+.../.flat/AxcessCompartment/AxcessCompartment.sol  | 6019 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 1016 ++++
+ ...:0x0516f36192d16D8EaeEED4a541810f50218E97f4.sol |  189 +
+ 3 files changed, 7224 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794319593 (main branch discovery), not current.
+
+```diff
+    contract HighYieldEarnVaultCompartment (eth:0xD3A975f7dca47D7bDfA426BB7cD64F4145CcEc44) [grvt/HighYieldEarnVaultCompartment] {
+    +++ description: Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets.
+      description:
+-        "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into listed Axcess loan vaults, Nest vaults and Wildcat V2 markets. Proceeds of venue exits always return to the compartment, and funds can only leave it to a listed venue or to the vault's deposit proxy on GRVT through the GRVTBridgeProxy. Venues are listed by the REGISTRY_ADMIN_ROLE of the CompartmentRegistry."
++        "Compartment of a GRVT vault. It holds vault capital withdrawn from GRVT and deploys it into venues that the REGISTRY_ADMIN_ROLE of the CompartmentRegistry lists as Axcess loan vaults, Nest vaults or Wildcat V2 markets. Proceeds of venue exits return to the compartment. Apart from venue deposits, its code moves funds only to GRVT through the GRVTBridgeProxy, which derives the destination from the compartment's registered vault id and from parameters that the bridge owner sets."
+    }
+```
+
 Generated with discovered.json: 0xcd736e39f8f1008a61b85a396b5437062695c8f3
 
 # Diff at Tue, 10 Nov 2026 17:10:21 GMT:

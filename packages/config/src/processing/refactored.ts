@@ -19,6 +19,7 @@ import { circlegateway } from '../projects/circlegateway/circlegateway'
 import { cloaked } from '../projects/cloaked/cloaked'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
+import { eas } from '../projects/eas/eas'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { etherfi } from '../projects/etherfi/etherfi'
@@ -152,6 +153,7 @@ export const refactored: BaseProject[] = [
   rocketpool,
   safe,
   splitsv2,
+  eas,
   // privacy
   cloaked,
   fluidkey,

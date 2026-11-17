@@ -23,6 +23,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './ChartContext'
 import { useLegendHint } from './ChartLegendOnboardingContext'
 import { previousChartDataClassName } from './ChartPreviousData'
+import { ChartTooltipTitle } from './ChartTooltip'
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
@@ -143,9 +144,9 @@ function MilestoneTooltipContent({ milestones }: { milestones: Milestone[] }) {
 
   return (
     <>
-      <div className="mb-1 whitespace-nowrap">
+      <ChartTooltipTitle className="mb-2 whitespace-nowrap">
         {formatDate(firstMilestone.date.slice(0, 10))}
-      </div>
+      </ChartTooltipTitle>
       <div className="flex max-w-[216px] flex-col gap-2 text-left">
         {milestones.map((milestone) => (
           <MilestoneTooltipItem
@@ -172,7 +173,7 @@ function MilestoneTooltipItem({
   return (
     <div className={cn(useArrowLink && 'flex gap-2')}>
       <div className={cn('min-w-0', useArrowLink ? 'flex-1' : 'flex flex-col')}>
-        <div className="flex font-bold">
+        <div className="flex items-center font-semibold text-label-value-14">
           <MilestoneListIcon milestone={milestone} />
           <span className="ml-1.5">{milestone.title}</span>
         </div>
@@ -182,7 +183,7 @@ function MilestoneTooltipItem({
         {!useArrowLink && (
           <CustomLink
             href={milestone.url}
-            className="mt-1 ml-auto block w-fit text-[12px]"
+            className="mt-1 ml-auto block w-fit text-paragraph-12"
           >
             {label}
           </CustomLink>
@@ -192,7 +193,7 @@ function MilestoneTooltipItem({
         <CustomLink
           href={milestone.url}
           underline={false}
-          className="flex shrink-0 self-center text-[12px]"
+          className="flex shrink-0 self-center text-paragraph-12"
           aria-label={label}
         >
           <ArrowRightIcon className="size-3.5" />

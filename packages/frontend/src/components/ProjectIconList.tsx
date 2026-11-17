@@ -158,7 +158,7 @@ function IconImage({ project }: { project: ProjectIconListItem }) {
       height={20}
       src={project.iconUrl}
       alt={`${project.name} logo`}
-      className={cn('size-5 min-w-5 rounded-full shadow', iconBackdropClasses)}
+      className={cn('size-5 min-w-5 rounded-full', iconBackdropClasses)}
     />
   )
 }
@@ -198,7 +198,7 @@ function ProjectIcon({
           icon and change the row's width while open. */}
       <TooltipPortal>
         <TooltipContent>
-          <p className="font-bold text-label-value-15">{project.name}</p>
+          <p className="text-heading-16">{project.name}</p>
           {project.description && (
             <p className="text-label-value-13 text-secondary">
               {project.description}

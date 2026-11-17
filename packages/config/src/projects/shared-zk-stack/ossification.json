@@ -166,6 +166,14 @@
       "contract": "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076",
       "transaction": "0x0c1e348271747cd4b44e7328deb9b954ed722c819f1348c8096f1f8dabadbb23",
       "reason": "ZIP-18 (v31) follow-up: recorded Era's historical migration interval on the Era Gateway (batches 501260-505960, Gateway batches 440-2746), which the MessageRoot uses to validate proofs of those batches, and unpaused chain migrations in the L1ChainAssetHandler. One minute after the implementation upgrades of update 3fdb1623."
+    },
+    {
+      "timestamp": 1794577660,
+      "type": "state",
+      "contract": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+      "transaction": "0xecb56e767f21112a85a2507563a05e62a0cdec18c540b8c43b4403db406631ac",
+      "updateId": "0c1fbcaa",
+      "reason": "Token governance replaced: a ZkTokenGovernor proposal execution moved the PROPOSER, EXECUTOR and CANCELLER roles of the ZkTokenTimelockController from the old ZkTokenGovernor 0xb83F…5746 to the redeployed ZkTokenGovernor 0x1C52…caFf, whose veto guardian is the 3/6 ZK Foundation Era Multisig instead of the L1 Guardians (RoleGranted/RoleRevoked events on ZKsync Era)."
     }
   ]
 }

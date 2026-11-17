@@ -17,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { PercentageChangeTooltipContent } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
@@ -70,6 +71,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           {tvsWarnings.map((warning, i) => (
             <WarningBar
               key={`tvs-warning-${i}`}
+              compact
               icon={RoundedWarningIcon}
               text={warning.value}
               color={sentimentToWarningBarColor(warning.sentiment)}
@@ -99,6 +101,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
               <div className="flex items-center">
                 {icon}
                 <ValueWithPercentageChange
+                  className="font-medium md:text-label-value-15"
                   change={props.change}
                   changePeriod={props.changePeriod}
                 >
@@ -136,9 +139,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           />
         )}
         {props.change !== undefined && props.changePeriod !== undefined && (
-          <p>
+          <TooltipFootnote>
             <PercentageChangeTooltipContent period={props.changePeriod} />
-          </p>
+          </TooltipFootnote>
         )}
       </TooltipContent>
     </Tooltip>

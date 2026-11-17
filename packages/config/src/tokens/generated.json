@@ -5955,6 +5955,20 @@
       "supply": "zero"
     },
     {
+      "name": "Steakhouse Prime USDC",
+      "coingeckoId": "steakhouse-usdc",
+      "address": "0xbeef088055857739C12CD3765F20b7679Def0f51",
+      "symbol": "steakUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1761602363,
+      "coingeckoListingTimestamp": 1766966400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71229/large/steakusdc.png?1766513116",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Steakhouse Prime USDT",
       "coingeckoId": "tether",
       "address": "0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9",

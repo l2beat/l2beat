@@ -46,7 +46,7 @@ export function MobileProjectLinks({
                 >
                   <th
                     className={cn(
-                      'w-[110px] py-3 align-top font-medium text-secondary',
+                      'w-[110px] py-3 align-top font-medium',
                       i === 0 && 'pt-0',
                     )}
                   >
@@ -87,7 +87,7 @@ export function MobileProjectLinks({
               ))}
               {markdownHref && (
                 <tr className="border-divider border-t first:border-none">
-                  <th className="w-[110px] py-3 align-top font-medium text-secondary">
+                  <th className="w-[110px] py-3 align-top font-medium">
                     Markdown
                   </th>
                   <td className="py-3">

@@ -147,7 +147,7 @@ export async function getInteropProtocolEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: milestones.toSorted(
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
         ),
