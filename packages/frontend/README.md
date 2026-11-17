@@ -2,6 +2,12 @@
 
 The dynamic, public-facing frontend of ETHBEAT.
 
+## Maintenance page
+
+[`maintenance/index.html`](maintenance/index.html) is a standalone maintenance page
+for independent hosting. See the
+[maintenance README](maintenance/README.md) for asset embedding, updates, and preview instructions.
+
 ## Setup
 
 To run or develop frontend you need to install and build its dependencies. You can do it by running the following
