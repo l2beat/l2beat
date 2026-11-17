@@ -46,6 +46,12 @@ describe(getMempoolDayQuery.name, () => {
     expect(sql).toInclude('else 243\n    end as bucket')
   })
 
+  it("counts a tip equal to a tier's estimate, so an estimate of 0 has a band", () => {
+    expect(sql).toInclude(
+      'coalesce(c.tip_wei = e.slow_wei or (c.tip_wei > e.slow_wei and c.tip_wei < e.slow_wei * 1.26), false) as in_slow',
+    )
+  })
+
   it('puts round tips at the start of a level', () => {
     expect(sql).toInclude('when tip_wei < 1050000000 then 1000000000')
   })

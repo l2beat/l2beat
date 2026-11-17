@@ -73,7 +73,8 @@ export function getMempoolDayQuery(input: MempoolDayQueryInput): string {
     }),
   ).join(',\n')
   const inTier = (tier: string) =>
-    `coalesce(c.tip_wei >= e.${tier}_wei and c.tip_wei < e.${tier}_wei * ${TIER_BAND}, false) as in_${tier}`
+    // At the estimate counts, so a tier that says a tip of 0 is graded on the transactions tipping 0
+    `coalesce(c.tip_wei = e.${tier}_wei or (c.tip_wei > e.${tier}_wei and c.tip_wei < e.${tier}_wei * ${TIER_BAND}), false) as in_${tier}`
 
   return `
 with b as (
