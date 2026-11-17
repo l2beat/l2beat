@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, GasFeesDailyRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
@@ -170,7 +170,7 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         )
       }
       this.lateReadAt = now
-      const records: GasFeesDailyRecord[] = []
+      const filled = new Set<string>()
       for (const batch of batches) {
         const first = batch[0]?.day
         const last = batch.at(-1)?.day
@@ -180,17 +180,16 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
           first,
           last,
         )
-        records.push(
-          ...read
-            .flatMap((day) => day.records)
-            .filter((r) => !have.has(`${r.chain}:${r.timestamp}`)),
-        )
+        const records = read
+          .flatMap((day) => day.records)
+          .filter((r) => !have.has(`${r.chain}:${r.timestamp}`))
+        // Stored before the next read, so that its failure doesn't lose these
+        await this.$.db.gasFeesDaily.upsertMany(records)
+        for (const r of records) filled.add(`${r.chain}:${r.timestamp}`)
       }
-      await this.$.db.gasFeesDaily.upsertMany(records)
-      const filled = new Set(records.map((r) => `${r.chain}:${r.timestamp}`))
       this.logger.info('Filled late gas fees chain days', {
         from: oldest,
-        filled: records.length,
+        filled: filled.size,
         stillLate: late.filter(
           ({ day, chain }) => !filled.has(`${chain.id}:${day}`),
         ).length,
