@@ -18,7 +18,9 @@ or {
       `getDay`,
       `getHours`,
       `getMinutes`,
-      `getSeconds`
+      `getSeconds`,
+      `toDateString`,
+      `toTimeString`
     }
   }
 } where {
