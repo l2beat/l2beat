@@ -71,6 +71,11 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
         getDayBlocks(this.$.blockFinder, day),
         this.$.readFlashbotsLandedCount(day),
       ])
+    const settled = now >= day + UnixTime.DAY + SETTLE_SECONDS
+    if (flashbotsLandedCount === undefined && !settled) {
+      // Without Flashbots' count the day can't be complete, so the Dune read would be paid for nothing
+      return this.unfinished.fail(day, now, { day, flashbotsLandedCount })
+    }
     const mempool = await this.$.readMempoolDay({
       day,
       previousDayFirstBlock: previous.firstBlock,
@@ -80,7 +85,7 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
     const status = getMempoolDayStatus(
       mempool.landedCount,
       flashbotsLandedCount,
-      now >= day + UnixTime.DAY + SETTLE_SECONDS,
+      settled,
     )
     const counts = {
       day,

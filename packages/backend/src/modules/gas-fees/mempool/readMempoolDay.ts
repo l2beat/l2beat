@@ -1,38 +1,31 @@
 import type {
   GasFeesTierWaitRecord,
   GasFeesTipLevelWaitRecord,
+  GasFeesWaitBucket,
 } from '@l2beat/database'
 import type { DuneQueryService } from '@l2beat/shared'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { GAS_FEES_TIERS } from '../tips/estimateTips'
 import { TIP_LEVELS, toWaitBucket } from './buckets'
 import {
   getMempoolDayQuery,
   type MempoolDayQueryInput,
+  TIER_COUNT_BLOCKS,
 } from './getMempoolDayQuery'
 
 export type MempoolDune = Pick<DuneQueryService, 'query'>
 
 const MempoolRow = v.object({
-  grouping_set: v.number(),
   tip_from_wei: v.union([v.number(), v.null()]),
   bucket: v.union([v.number(), v.null()]),
-  landed: v.number(),
+  /** Only on the day's totals */
+  landed: v.union([v.number(), v.null()]),
   kept: v.number(),
   next_block: v.number(),
   tip_sum_gwei: v.number(),
-  slow: v.number(),
-  slow_next_block: v.number(),
-  slow_within_2_blocks: v.number(),
-  slow_within_5_blocks: v.number(),
-  medium: v.number(),
-  medium_next_block: v.number(),
-  medium_within_2_blocks: v.number(),
-  medium_within_5_blocks: v.number(),
-  fast: v.number(),
-  fast_next_block: v.number(),
-  fast_within_2_blocks: v.number(),
-  fast_within_5_blocks: v.number(),
+  /** Only on the rows per wait bucket: TIER_COUNT_BLOCKS for each of GAS_FEES_TIERS */
+  tier_counts: v.union([v.array(v.number()), v.null()]),
 })
 export type MempoolRow = v.infer<typeof MempoolRow>
 
@@ -43,11 +36,6 @@ export interface MempoolDay {
   tipLevelWaits: GasFeesTipLevelWaitRecord[]
   tierWaits: GasFeesTierWaitRecord[]
 }
-
-/** grouping() of (tip_from_wei, bucket): a bit is set for each column left out */
-const BY_LEVEL_AND_BUCKET = 0
-const BY_BUCKET = 2
-const TOTAL = 3
 
 export async function readMempoolDay(
   dune: MempoolDune,
@@ -69,19 +57,24 @@ export function toMempoolDay(
   if (rows.length === 0) {
     return { landedCount: 0, keptCount: 0, tipLevelWaits: [], tierWaits: [] }
   }
-  const total = rows.filter((row) => row.grouping_set === TOTAL)
-  if (total.length !== 1 || !total[0]) {
-    throw new Error('Mempool day malformed', { cause: { timestamp } })
-  }
+  const malformed = (row?: MempoolRow) =>
+    new Error('Mempool row malformed', { cause: { timestamp, row } })
   const levels = new Map(TIP_LEVELS.map((level) => [level.fromWei, level]))
   const tipLevelWaits: GasFeesTipLevelWaitRecord[] = []
   const tierWaits: GasFeesTierWaitRecord[] = []
+  const totals: { landedCount: number; keptCount: number }[] = []
   for (const row of rows) {
-    if (row.grouping_set === BY_LEVEL_AND_BUCKET) {
+    if (row.tier_counts !== null) {
+      if (row.bucket === null) throw malformed(row)
+      tierWaits.push(
+        ...toTierWaits(timestamp, toWaitBucket(row.bucket), row.tier_counts),
+      )
+    } else if (row.bucket === null) {
+      if (row.tip_from_wei !== null || row.landed === null) throw malformed(row)
+      totals.push({ landedCount: row.landed, keptCount: row.kept })
+    } else {
       const level = levels.get(row.tip_from_wei ?? Number.NaN)
-      if (!level || row.bucket === null) {
-        throw new Error('Mempool row malformed', { cause: { timestamp, row } })
-      }
+      if (!level) throw malformed(row)
       tipLevelWaits.push({
         timestamp,
         tipFromWei: level.fromWei,
@@ -91,29 +84,48 @@ export function toMempoolDay(
         nextBlockCount: row.next_block,
         tipSumGwei: row.tip_sum_gwei,
       })
-    } else if (row.grouping_set === BY_BUCKET) {
-      if (row.bucket === null) {
-        throw new Error('Mempool row malformed', { cause: { timestamp, row } })
-      }
-      const bucket = toWaitBucket(row.bucket)
-      for (const tier of GAS_FEES_TIERS) {
-        if (row[tier] === 0) continue
-        tierWaits.push({
-          timestamp,
-          tier,
-          ...bucket,
-          txCount: row[tier],
-          nextBlockCount: row[`${tier}_next_block`],
-          within2BlocksCount: row[`${tier}_within_2_blocks`],
-          within5BlocksCount: row[`${tier}_within_5_blocks`],
-        })
-      }
     }
   }
-  return {
-    landedCount: total[0].landed,
-    keptCount: total[0].kept,
-    tipLevelWaits,
-    tierWaits,
+  const total = totals[0]
+  if (totals.length !== 1 || !total) {
+    throw new Error('Mempool day malformed', { cause: { timestamp } })
   }
+  return { ...total, tipLevelWaits, tierWaits }
+}
+
+/** The tiers with transactions in the wait bucket, from a row's tier_counts */
+function toTierWaits(
+  timestamp: UnixTime,
+  bucket: GasFeesWaitBucket,
+  counts: number[],
+): GasFeesTierWaitRecord[] {
+  const perTier = TIER_COUNT_BLOCKS.length
+  const malformed = new Error('Mempool tier counts malformed', {
+    cause: { timestamp, counts },
+  })
+  if (counts.length !== GAS_FEES_TIERS.length * perTier) throw malformed
+  return GAS_FEES_TIERS.flatMap((tier, i) => {
+    const [txCount, nextBlockCount, within2BlocksCount, within5BlocksCount] =
+      counts.slice(i * perTier, (i + 1) * perTier)
+    if (
+      txCount === undefined ||
+      nextBlockCount === undefined ||
+      within2BlocksCount === undefined ||
+      within5BlocksCount === undefined
+    ) {
+      throw malformed
+    }
+    if (txCount === 0) return []
+    return [
+      {
+        timestamp,
+        tier,
+        ...bucket,
+        txCount,
+        nextBlockCount,
+        within2BlocksCount,
+        within5BlocksCount,
+      },
+    ]
+  })
 }

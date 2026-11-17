@@ -5,11 +5,16 @@ import { type MempoolRow, toMempoolDay } from './readMempoolDay'
 describe(toMempoolDay.name, () => {
   const day = UnixTime.fromDate(new Date('2026-11-10T00:00:00Z'))
 
-  it('splits the grouping sets into level waits, tier waits and totals', () => {
+  it('splits the rows into level waits, tier waits and totals', () => {
     const result = toMempoolDay(day, [
-      row({ grouping_set: 0, tip_from_wei: 1e9, bucket: 3, kept: 5 }),
-      row({ grouping_set: 2, bucket: 241, kept: 7, fast: 2 }),
-      row({ grouping_set: 3, landed: 1000, kept: 460 }),
+      row({ tip_from_wei: 1e9, bucket: 3, kept: 5 }),
+      // Two fast transactions, one of them within 5 blocks; none in the other tiers
+      row({
+        bucket: 241,
+        kept: 7,
+        tier_counts: [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1],
+      }),
+      row({ landed: 1000, kept: 460 }),
     ])
 
     expect(result.landedCount).toEqual(1000)
@@ -44,11 +49,20 @@ describe(toMempoolDay.name, () => {
     expect(toMempoolDay(day, []).landedCount).toEqual(0)
   })
 
+  it('fails on tier counts of another length', () => {
+    expect(() =>
+      toMempoolDay(day, [
+        row({ bucket: 1, tier_counts: [1, 1, 1, 1] }),
+        row({ landed: 0 }),
+      ]),
+    ).toThrow('Mempool tier counts malformed')
+  })
+
   it('fails on a tip level it does not know', () => {
     expect(() =>
       toMempoolDay(day, [
-        row({ grouping_set: 0, tip_from_wei: 123, bucket: 1 }),
-        row({ grouping_set: 3 }),
+        row({ tip_from_wei: 123, bucket: 1 }),
+        row({ landed: 0 }),
       ]),
     ).toThrow('Mempool row malformed')
   })
@@ -56,25 +70,13 @@ describe(toMempoolDay.name, () => {
 
 function row(values: Partial<MempoolRow>): MempoolRow {
   return {
-    grouping_set: 3,
     tip_from_wei: null,
     bucket: null,
-    landed: 0,
+    landed: null,
     kept: 0,
     next_block: 1,
     tip_sum_gwei: 2,
-    slow: 0,
-    slow_next_block: 0,
-    slow_within_2_blocks: 0,
-    slow_within_5_blocks: 0,
-    medium: 0,
-    medium_next_block: 0,
-    medium_within_2_blocks: 0,
-    medium_within_5_blocks: 0,
-    fast: 0,
-    fast_next_block: 0,
-    fast_within_2_blocks: 0,
-    fast_within_5_blocks: 1,
+    tier_counts: null,
     ...values,
   }
 }

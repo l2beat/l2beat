@@ -78,10 +78,13 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
         incompleteBlocks: tips.incomplete_blocks,
         unknownCount: tips.unknown_count,
       }
-      if (now < day + UnixTime.DAY + SETTLE_SECONDS) {
+      // A second look before giving up: a day read once, as in a backfill, may have been caught mid-load
+      const settled = now >= day + UnixTime.DAY + SETTLE_SECONDS
+      if (!settled || !this.unfinished.has(day)) {
         return this.unfinished.fail(day, now, cause)
       }
       // Stored as no row, never as partial totals, so the later days aren't held back for good
+      this.unfinished.clear()
       this.logger.error('Tip payers day left out, incomplete on Dune', cause)
       return day + UnixTime.DAY
     }

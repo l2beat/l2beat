@@ -14,8 +14,8 @@ export async function readFlashbotsLandedCount(
   const date = UnixTime.toYYYYMMDD(day)
   const url = `${ARCHIVE}/${date.slice(0, 7)}/${date}_summary.txt`
   const response = await fetchText(url)
-  // The archive's storage may answer a missing file with 403
-  if (response.status === 404 || response.status === 403) return undefined
+  // Any other failure is thrown: taken as no summary, it would store a whole day as partial
+  if (response.status === 404) return undefined
   if (response.status !== 200) {
     throw new Error('Flashbots summary error', {
       cause: { url, status: response.status },

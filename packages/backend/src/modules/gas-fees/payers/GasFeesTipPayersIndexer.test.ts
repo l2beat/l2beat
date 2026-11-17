@@ -53,13 +53,19 @@ describe(GasFeesTipPayersIndexer.name, () => {
     expect(payers.upsert).not.toHaveBeenCalled()
   })
 
-  it('leaves out a day still incomplete 3 days after it ends, and moves on', async () => {
-    const { indexer, payers } = createIndexer(
+  it('leaves out a day incomplete 3 days after it ends, on the second read, and moves on', async () => {
+    let now = UnixTime(next + 3 * UnixTime.DAY)
+    const { indexer, payers, readTipPayersDay } = createIndexer(
       { ...TIPS, incomplete_blocks: 3 },
-      () => UnixTime(next + 3 * UnixTime.DAY),
+      () => now,
     )
 
+    await expect(indexer.update(next, next)).toBeRejectedWith(
+      'Tip payers day incomplete on Dune',
+    )
+    now = UnixTime(now + 6 * UnixTime.HOUR)
     expect(await indexer.update(next, next)).toEqual(next)
+    expect(readTipPayersDay).toHaveBeenCalledTimes(2)
     expect(payers.upsert).not.toHaveBeenCalled()
   })
 

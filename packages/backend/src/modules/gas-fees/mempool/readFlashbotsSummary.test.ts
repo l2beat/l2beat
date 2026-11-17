@@ -27,6 +27,14 @@ describe(readFlashbotsLandedCount.name, () => {
     expect(await readFlashbotsLandedCount(fetchText, day)).toEqual(undefined)
   })
 
+  it('fails when the archive refuses, as that is not a missing summary', async () => {
+    const fetchText = mockFn<FetchText>().resolvesTo({ status: 403, text: '' })
+
+    await expect(readFlashbotsLandedCount(fetchText, day)).toBeRejectedWith(
+      'Flashbots summary error',
+    )
+  })
+
   it('fails on a summary without the count', () => {
     expect(() => parseLandedCount('- Transactions: 1')).toThrow(
       'Flashbots summary malformed',

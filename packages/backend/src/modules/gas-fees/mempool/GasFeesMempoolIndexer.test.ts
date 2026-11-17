@@ -79,6 +79,17 @@ describe(GasFeesMempoolIndexer.name, () => {
     expect(readMempoolDay).not.toHaveBeenCalled()
   })
 
+  it("doesn't pay for the Dune read while Flashbots has no summary of an unsettled day", async () => {
+    const { indexer, readMempoolDay, readFlashbotsLandedCount } =
+      createIndexer()
+    readFlashbotsLandedCount.resolvesTo(undefined)
+
+    await expect(indexer.update(day + 1, next)).toBeRejectedWith(
+      'Mempool day incomplete on Dune',
+    )
+    expect(readMempoolDay).not.toHaveBeenCalled()
+  })
+
   it('stores a settled day Dune never got as missing, without waits', async () => {
     const { indexer, mempool } = createIndexer({
       landed: 0,

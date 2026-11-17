@@ -70,6 +70,11 @@ export class UnfinishedDay {
     }
   }
 
+  /** Whether the day was found unfinished by the read before this one */
+  has(day: UnixTime): boolean {
+    return this.last?.day === day
+  }
+
   fail(day: UnixTime, now: UnixTime, cause: Record<string, unknown>): never {
     this.last = { day, cause, readAt: now }
     throw new Error(this.message, { cause })
