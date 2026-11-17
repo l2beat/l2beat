@@ -1,5 +1,3 @@
-import { Skeleton } from '~/components/core/Skeleton'
-import { useIsClient } from '~/hooks/useIsClient'
 import type { LivenessTimeRange } from '~/server/features/layer2s/liveness/types'
 import { useLivenessTimeRangeContext } from '../LivenessTimeRangeContext'
 
@@ -8,12 +6,7 @@ interface Props {
 }
 
 export function IntervalsHeader({ average }: Props) {
-  const isClient = useIsClient()
   const { timeRange } = useLivenessTimeRangeContext()
-
-  if (!isClient) {
-    return <Skeleton className="mb-[5px] h-[19px] w-[225px]" />
-  }
 
   return (
     <span>
