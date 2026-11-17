@@ -104,7 +104,7 @@ export class HeadFollower extends TimeLoop {
   /** Stores the blocks up to the latest one and returns how many it stored */
   async follow(): Promise<number> {
     const latest = await this.$.fetcher.getLatestBlockNumber()
-    const remembered = await this.getRemembered()
+    const remembered = await this.getRemembered(latest)
     let next = (remembered.at(-1)?.number ?? latest - 1) + 1
     let stored = 0
 
@@ -146,20 +146,24 @@ export class HeadFollower extends TimeLoop {
   }
 
   /**
-   * Picks up from the stored blocks, unless they are older than the cleaner
-   * keeps them: every block since would be fetched for nobody to read
+   * Picks up from the remembered blocks, unless they are older than the
+   * cleaner keeps them and the chain has moved on, as after an outage: every
+   * block since would be fetched for nobody to read
    */
-  private async getRemembered(): Promise<StoredTip[]> {
+  private async getRemembered(latest: number): Promise<StoredTip[]> {
     if (this.remembered === undefined) {
-      const stored = await this.$.db.liveActivityBlock.getNewest(
+      this.remembered = await this.$.db.liveActivityBlock.getNewest(
         this.$.projectId,
         REMEMBERED_BLOCKS,
       )
-      const newest = stored.at(-1)
-      const fresh =
-        newest !== undefined &&
-        newest.timestamp >= UnixTime.now() - LIVE_BLOCKS_KEPT_FOR
-      this.remembered = fresh ? stored : []
+    }
+    const tip = this.remembered.at(-1)
+    if (
+      tip !== undefined &&
+      latest > tip.number &&
+      tip.timestamp < UnixTime.now() - LIVE_BLOCKS_KEPT_FOR
+    ) {
+      this.remembered = []
     }
     return this.remembered
   }

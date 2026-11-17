@@ -106,6 +106,24 @@ describe(HeadFollower.name, () => {
       expect(store.numbers()).toEqual([50, 100])
     })
 
+    it('starts at the latest block when the chain moves on from a tip the cleaner deletes', async () => {
+      const chain = new FakeChain(100)
+      const old = {
+        ...chain.block(100),
+        timestamp: UnixTime.now() - LIVE_BLOCKS_KEPT_FOR - 60,
+      }
+      const head = follower(chain, new FakeStore([old]))
+
+      // an idle chain keeps its tip
+      await head.follow()
+      expect(chain.fetched()).toEqual([])
+
+      // the RPC came back after an outage longer than the cleaner keeps blocks
+      chain.latest = 150
+      await head.follow()
+      expect(chain.fetched()).toEqual([[150, 150]])
+    })
+
     it('deletes reorged blocks and stores what replaced them next time', async () => {
       const chain = new FakeChain(100)
       const store = new FakeStore([chain.block(97), chain.block(98)])
