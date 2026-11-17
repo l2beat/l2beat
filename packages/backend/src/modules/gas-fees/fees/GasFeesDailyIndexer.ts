@@ -14,8 +14,11 @@ import type { FeesDay } from './readFeesDays'
 const STORED_DATA_VERSION = '1'
 /** A chain Dune is late with is read again for this long. After it, its days stay missing */
 const LATE_DAYS = 30
-/** Every read is billed, so late chains are read again this often at most */
-const LATE_RECHECK_SECONDS = 6 * UnixTime.HOUR
+/**
+ * Every read is billed, so late chains are read at most this often. Once synced
+ * the indexer runs daily; this bounds a backfill, where it runs many times an hour
+ */
+const LATE_READ_MIN_GAP_SECONDS = 6 * UnixTime.HOUR
 
 interface GasFeesDailyIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
@@ -94,7 +97,7 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
       const now = this.$.now?.() ?? UnixTime.now()
       if (
         this.lateReadAt !== undefined &&
-        now < this.lateReadAt + LATE_RECHECK_SECONDS
+        now < this.lateReadAt + LATE_READ_MIN_GAP_SECONDS
       ) {
         return
       }
@@ -107,24 +110,26 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         UnixTime(before - UnixTime.DAY),
       )
       const have = new Set(stored.map((r) => `${r.chain}:${r.timestamp}`))
-      const lateDays: UnixTime[] = []
-      const lateChains = new Set<GasFeesChain>()
+      const late: { day: UnixTime; chain: GasFeesChain }[] = []
       for (let day = from; day < before; day += UnixTime.DAY) {
         for (const chain of this.$.chains) {
           if (day >= chain.requiredFrom && !have.has(`${chain.id}:${day}`)) {
-            lateDays.push(day)
-            lateChains.add(chain)
+            late.push({ day, chain })
           }
         }
       }
-      const firstLate = lateDays[0]
-      if (firstLate === undefined) return
+      const newest = late.at(-1)?.day
+      if (newest === undefined) return
 
+      // The newest days first, one batch a read: an old day Dune never loads mustn't widen every read
+      const oldest = newest - (this.$.daysPerQuery - 1) * UnixTime.DAY
+      const batch = late.filter(({ day }) => day >= oldest)
+      const firstLate = batch[0]?.day ?? newest
       this.lateReadAt = now
       const read = await this.$.readFeesDays(
-        [...lateChains],
+        [...new Set(batch.map(({ chain }) => chain))],
         firstLate,
-        lateDays.at(-1) ?? firstLate,
+        newest,
       )
       const records = read
         .flatMap((day) => day.records)
@@ -133,6 +138,7 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
       this.logger.info('Filled late gas fees chain days', {
         from: firstLate,
         filled: records.length,
+        stillLate: late.length - records.length,
       })
     } catch (error) {
       this.logger.error('Late gas fees chains read failed', { error })

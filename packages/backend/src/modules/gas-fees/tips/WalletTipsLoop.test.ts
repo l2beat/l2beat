@@ -3,12 +3,13 @@ import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
+import type { FetchText } from '../fetchText'
 import { WalletTipsLoop } from './WalletTipsLoop'
 
 describe(WalletTipsLoop.name, () => {
   it('stores the good reads and deletes those over 30 minutes old', async () => {
-    const { loop, walletTips, fetchJson } = createLoop(true)
-    fetchJson.rejectsWith(new Error('down'))
+    const { loop, walletTips, fetchText } = createLoop(true)
+    fetchText.resolvesTo({ status: 503, text: '' })
 
     await loop.run()
 
@@ -19,23 +20,21 @@ describe(WalletTipsLoop.name, () => {
   })
 
   it('asks a fee service that answered 429 again only after 30 minutes', async () => {
-    const { loop, fetchJson } = createLoop(true)
-    fetchJson.rejectsWith(
-      new Error('Wallet fee service error', { cause: { status: 429 } }),
-    )
+    const { loop, fetchText } = createLoop(true)
+    fetchText.resolvesTo({ status: 429, text: '' })
 
     await loop.run()
     await loop.run()
 
-    expect(fetchJson).toHaveBeenCalledTimes(2)
+    expect(fetchText).toHaveBeenCalledTimes(2)
   })
 
   it('polls no fee service when they are switched off', async () => {
-    const { loop, fetchJson } = createLoop(false)
+    const { loop, fetchText } = createLoop(false)
 
     await loop.run()
 
-    expect(fetchJson).not.toHaveBeenCalled()
+    expect(fetchText).not.toHaveBeenCalled()
   })
 })
 
@@ -44,7 +43,7 @@ function createLoop(walletServices: boolean) {
     upsertMany: mockFn().resolvesTo(0),
     deleteReadBefore: mockFn().resolvesTo(0),
   })
-  const fetchJson = mockFn<(url: string) => Promise<unknown>>().resolvesTo({})
+  const fetchText = mockFn<FetchText>().resolvesTo({ status: 200, text: '{}' })
   const rpc = {
     getLatestBlockNumber: mockFn().resolvesTo(100),
     getFeeHistory: mockFn().resolvesTo({
@@ -62,9 +61,9 @@ function createLoop(walletServices: boolean) {
       db: mockDatabase({ gasFeesWalletTip: walletTips }),
       rpc,
       walletServices,
-      fetchJson,
+      fetchText,
     },
     Logger.SILENT,
   )
-  return { loop, walletTips, fetchJson }
+  return { loop, walletTips, fetchText }
 }

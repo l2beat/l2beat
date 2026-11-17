@@ -59,38 +59,42 @@ export class GasFeesTipIndexer extends ManagedChildIndexer {
     ) {
       hours.push(hour)
     }
-    const lastHour = hours.at(-1)
-    if (lastHour === undefined) return to
-
-    const blocks = await findLastBlocksBefore(
+    const points = await findLastBlocksBefore(
       this.$.blockFinder,
       this.$.rpc,
       hours,
     )
-    const firstBlock = (blocks[0] ?? 0) - HISTORY_BLOCKS + 1
-    const lastBlock = blocks.at(-1) ?? 0
-    const [tips, prices] = await Promise.all([
-      readBlockTips(this.$.rpc, firstBlock, lastBlock),
-      Promise.all(blocks.map((block) => readEthUsd(this.$.rpc, block))),
-    ])
-    const records: GasFeesTipHourlyRecord[] = hours.map((hour, i) => {
-      const blockNumber = blocks[i] ?? 0
-      const estimate = estimateTips(tips.slice(0, blockNumber - firstBlock + 1))
-      return {
-        timestamp: hour,
-        blockNumber,
-        slowTipGwei: estimate.slow,
-        mediumTipGwei: estimate.medium,
-        fastTipGwei: estimate.fast,
-        ethUsd: prices[i] ?? 0,
-      }
-    })
+    const first = points[0]
+    const last = points.at(-1)
+    if (!first || !last) return to
+
+    const firstBlock = first.blockNumber - HISTORY_BLOCKS + 1
+    const blockTips = readBlockTips(this.$.rpc, firstBlock, last.blockNumber)
+    const records: GasFeesTipHourlyRecord[] = await Promise.all(
+      points.map(async ({ timestamp, blockNumber }) => {
+        const [tips, ethUsd] = await Promise.all([
+          blockTips,
+          readEthUsd(this.$.rpc, blockNumber),
+        ])
+        const estimate = estimateTips(
+          tips.slice(0, blockNumber - firstBlock + 1),
+        )
+        return {
+          timestamp,
+          blockNumber,
+          slowTipGwei: estimate.slow,
+          mediumTipGwei: estimate.medium,
+          fastTipGwei: estimate.fast,
+          ethUsd,
+        }
+      }),
+    )
     await this.$.db.gasFeesTipHourly.upsertMany(records)
     this.logger.info('Saved gas fees tips', {
       from: hours[0],
       hours: hours.length,
     })
-    return lastHour
+    return last.timestamp
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
