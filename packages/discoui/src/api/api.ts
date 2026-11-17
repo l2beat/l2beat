@@ -135,6 +135,19 @@ export function getTvl(
   })
 }
 
+// Values many addresses of one chain in a single request, answering in their
+// order. The server can then ask its holder index about all of them at once.
+export function getTvls(
+  addresses: string[],
+  top: number,
+  signal: AbortSignal,
+): Promise<ApiTvlResponse[]> {
+  return fetchJson('/api/projects/tvl', {
+    ...jsonRequest('POST', { addresses, top }),
+    signal,
+  })
+}
+
 export function executeDiscover(
   project: string,
   devMode: boolean,

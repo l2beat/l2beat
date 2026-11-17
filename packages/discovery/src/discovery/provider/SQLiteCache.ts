@@ -20,6 +20,12 @@ export class SQLiteCache implements DiscoveryCache {
     }
 
     this.db = new DatabaseSync(databaseUrl, { timeout: 1000 })
+    // Every write is its own transaction, and by default each one waits for
+    // the disk: 726 writes took 2.2 s, against 25 ms with a write-ahead log.
+    // A power cut can then lose the last writes, which a cache can afford,
+    // but it cannot corrupt the database.
+    this.db.exec('PRAGMA journal_mode = WAL')
+    this.db.exec('PRAGMA synchronous = NORMAL')
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS cache (
         key TEXT PRIMARY KEY,

@@ -14,6 +14,7 @@ export const ProviderMeasurement = {
   GET_BLOCK: 8,
   GET_BLOCKNUMBER: 9,
   GET_BLOCK_NUMBER_AT_OR_BEFORE: 10,
+  GET_HELD_TOKENS: 11,
 } as const
 
 export const ProviderMeasurementCount = Object.keys(ProviderMeasurement).length
