@@ -7,7 +7,10 @@ import {
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import {
+  type ChartXAxis,
+  TimeSeriesChart,
+} from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 
 interface ActivityRatioChartDataPoint {
@@ -20,6 +23,7 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  xAxis?: ChartXAxis
   /** The period a point covers, as its tooltip's title */
   formatPeriod: (timestamp: number) => string
 }
@@ -29,6 +33,7 @@ export function ActivityRatioChart({
   isLoading,
   isPlaceholderData,
   syncedUntil,
+  xAxis,
   formatPeriod,
 }: Props) {
   const chartMeta = {
@@ -64,6 +69,7 @@ export function ActivityRatioChart({
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
+        xAxis={xAxis}
         syncedUntil={syncedUntil}
         renderTooltip={(row) => (
           <ActivityCustomTooltip row={row} formatPeriod={formatPeriod} />
