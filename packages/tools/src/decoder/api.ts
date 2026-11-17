@@ -115,11 +115,14 @@ export async function retry<T>(fn: () => Promise<T>): Promise<T> {
   return await fn()
 }
 
-// A 4xx or a malformed body fails the same way on every attempt.
+// A 4xx or a malformed body fails the same way on every attempt, except a
+// request timeout (408) and a rate limit (429), which clear on their own.
 function isRetryable(error: unknown): boolean {
   if (!(error instanceof Error)) return false
   const status = httpStatus(error)
-  if (status !== undefined) return status >= 500
+  if (status !== undefined) {
+    return status >= 500 || status === 408 || status === 429
+  }
   // fetch rejects with a TypeError when the request never got a response.
   return error instanceof TypeError
 }

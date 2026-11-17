@@ -58,6 +58,17 @@ describe(lookupSignatures.name, () => {
     })
   })
 
+  it('retries a rate limit and returns the later success', async () => {
+    const fetchStub = mockFn<typeof fetch>()
+      .resolvesToOnce(new Response('slow down', { status: 429 }))
+      .resolvesTo(Response.json(signatures))
+
+    const outcome = await settle(fetchStub)
+
+    expect(fetchStub).toHaveBeenCalledTimes(2)
+    expect(outcome).toEqual({ value: signatures, error: undefined })
+  })
+
   it('retries a 500 and returns the later success', async () => {
     const fetchStub = mockFn<typeof fetch>()
       .resolvesToOnce(new Response('{"error":"down"}', { status: 500 }))
