@@ -3,6 +3,7 @@ import type { Database, GasFeesWallet } from '@l2beat/database'
 import type { IRpcClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../tools/TimeLoop'
+import { type FetchText, fetchText } from '../fetchText'
 import {
   AMBIRE_BLOCKS,
   AMBIRE_PERCENTILES,
@@ -42,23 +43,22 @@ export class WalletTipsLoop extends TimeLoop {
       rpc: WalletRpc
       /** Whether to poll MetaMask's and Rabby's fee services */
       walletServices: boolean
-      fetchJson?: (url: string) => Promise<unknown>
+      fetchText?: FetchText
     },
     protected logger: Logger,
   ) {
     super({ intervalMs: WALLET_INTERVAL_MS })
     this.logger = logger.for(this)
-    const fetchJson = $.fetchJson ?? getJson
     this.sources = [
       ...($.walletServices
         ? [
             {
               wallet: 'MetaMask' as const,
-              read: async () => parseMetaMask(await fetchJson(METAMASK_FEES)),
+              read: () => this.readService(METAMASK_FEES, parseMetaMask),
             },
             {
               wallet: 'Rabby' as const,
-              read: async () => parseRabby(await fetchJson(RABBY_FEES)),
+              read: () => this.readService(RABBY_FEES, parseRabby),
             },
           ]
         : []),
@@ -88,7 +88,7 @@ export class WalletTipsLoop extends TimeLoop {
     try {
       return await source.read()
     } catch (error) {
-      if (isRateLimited(error)) {
+      if (error instanceof RateLimited) {
         this.retryAt.set(source.wallet, UnixTime(now + WALLET_BACKOFF_SECONDS))
         this.logger.warn('Wallet fee service rate limited', {
           wallet: source.wallet,
@@ -101,6 +101,18 @@ export class WalletTipsLoop extends TimeLoop {
       }
       return []
     }
+  }
+
+  private async readService(
+    url: string,
+    parse: (json: unknown) => WalletTip[],
+  ): Promise<WalletTip[]> {
+    const { status, text } = await (this.$.fetchText ?? fetchText)(url)
+    if (status === 429) throw new RateLimited()
+    if (status !== 200) {
+      throw new Error('Wallet fee service error', { cause: { url, status } })
+    }
+    return parse(JSON.parse(text))
   }
 
   private async computeAmbire(): Promise<WalletTip[]> {
@@ -116,19 +128,8 @@ export class WalletTipsLoop extends TimeLoop {
   }
 }
 
-function isRateLimited(error: unknown) {
-  return (
-    error instanceof Error &&
-    (error.cause as { status?: number } | undefined)?.status === 429
-  )
-}
-
-async function getJson(url: string): Promise<unknown> {
-  const response = await fetch(url, { signal: AbortSignal.timeout(5_000) })
-  if (!response.ok) {
-    throw new Error('Wallet fee service error', {
-      cause: { url, status: response.status },
-    })
+class RateLimited extends Error {
+  constructor() {
+    super('Wallet fee service rate limited')
   }
-  return await response.json()
 }

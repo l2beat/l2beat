@@ -22,7 +22,12 @@ describe(findLastBlocksBefore.name, () => {
 
     expect(
       await findLastBlocksBefore(finder, { getBlockTimestamp }, hours),
-    ).toEqual(hours.map(lastBefore))
+    ).toEqual(
+      hours.map((timestamp) => ({
+        timestamp,
+        blockNumber: lastBefore(timestamp),
+      })),
+    )
     expect(finder.getBlockNumberAtOrBefore).toHaveBeenCalledTimes(1)
     expect(getBlockTimestamp.calls.length).toBeLessThanOrEqual(6 * 4)
   })

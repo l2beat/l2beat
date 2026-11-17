@@ -84,6 +84,21 @@ describe(GasFeesDailyIndexer.name, () => {
     expect(readFeesDays).toHaveBeenCalledTimes(3)
   })
 
+  it('reads one batch of the newest late days, however old the oldest is', async () => {
+    const { indexer, readFeesDays } = createIndexer([feesDay(day(8))], {
+      // Abstract is missing on days 0 and 7, further apart than a batch of 3
+      stored: ALL_STORED.filter(
+        (r) =>
+          r.chain !== 'abstract' ||
+          (r.timestamp !== day(0) && r.timestamp !== day(7)),
+      ),
+    })
+
+    await indexer.update(day(9), day(9))
+
+    expect(readFeesDays).toHaveBeenLastCalledWith([ABSTRACT], day(7), day(7))
+  })
+
   it('keeps the stored days when the late chains read fails', async () => {
     const { indexer, readFeesDays } = createIndexer([feesDay(day(2))], {
       stored: [record(day(1), 'ethereum')],

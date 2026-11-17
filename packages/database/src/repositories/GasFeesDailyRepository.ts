@@ -15,7 +15,7 @@ export interface GasFeesDailyRecord {
   totalFeeUsd: number | null
   l1FeeNative: number
   blobFeeNative: number
-  /** Base fee per gas times gas used, from blocks. null where the chain had no base fee */
+  /** Base fee per gas times gas used, from blocks. null where the chain had no base fee. On Arbitrum it already contains l1FeeNative */
   baseFeeNative: number | null
   gasUsed: number
   /** null when Dune has no price */

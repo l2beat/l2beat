@@ -15,8 +15,8 @@ export async function findLastBlocksBefore(
   finder: BlockFinder,
   rpc: BlockTimestampRpc,
   timestamps: UnixTime[],
-): Promise<number[]> {
-  const blocks: number[] = []
+): Promise<{ timestamp: UnixTime; blockNumber: number }[]> {
+  const blocks: { timestamp: UnixTime; blockNumber: number }[] = []
   let known: { number: number; timestamp: number } | undefined
   for (const timestamp of timestamps) {
     let number = known
@@ -34,7 +34,7 @@ export async function findLastBlocksBefore(
       at = next
     }
     known = { number, timestamp: at }
-    blocks.push(number)
+    blocks.push({ timestamp, blockNumber: number })
   }
   return blocks
 }

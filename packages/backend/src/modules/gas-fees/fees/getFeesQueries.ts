@@ -38,7 +38,7 @@ export function getBlocksQuery(
   return chains
     .map((chain) =>
       chain.gasFromTransactions
-        ? // Its tips are ignored, so a transaction pays the base fee on all its gas
+        ? // Its tips are ignored, so a transaction pays the base fee on all its gas, the gas charged for L1 data included
           `
 select
   '${chain.dune}' as blockchain,
