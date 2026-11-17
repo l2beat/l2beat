@@ -16,7 +16,9 @@ describe(WalletTipsLoop.name, () => {
     const stored = walletTips.upsertMany.calls[0]?.args[0] ?? []
     expect(stored.map((t) => t.wallet)).toEqual(['Ambire', 'Ambire', 'Ambire'])
     const cutoff = walletTips.deleteReadBefore.calls[0]?.args[0] ?? 0
-    expect(UnixTime.now() - cutoff).toEqual(30 * 60)
+    // The loop reads the clock itself, a moment before this line does
+    expect(UnixTime.now() - cutoff).toBeGreaterThanOrEqual(30 * 60)
+    expect(UnixTime.now() - cutoff).toBeLessThanOrEqual(30 * 60 + 1)
   })
 
   it('asks a fee service that answered 429 again only after 30 minutes', async () => {

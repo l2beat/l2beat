@@ -89,7 +89,7 @@ describe(GasFeesDailyIndexer.name, () => {
     expect(readFeesDays).toHaveBeenCalledTimes(3)
   })
 
-  it('reads one batch of the newest late days, however old the oldest is', async () => {
+  it('reads the newest late days and the oldest in two bounded reads, not all between', async () => {
     const { indexer, readFeesDays } = createIndexer([feesDay(day(8))], {
       // Abstract is missing on days 0 and 7, further apart than a batch of 3
       stored: ALL_STORED.filter(
@@ -101,7 +101,10 @@ describe(GasFeesDailyIndexer.name, () => {
 
     await indexer.update(day(9), day(9))
 
-    expect(readFeesDays).toHaveBeenLastCalledWith([ABSTRACT], day(7), day(7))
+    expect(readFeesDays.calls.slice(1).map((c) => c.args)).toEqual([
+      [[ABSTRACT], day(7), day(7)],
+      [[ABSTRACT], day(0), day(0)],
+    ])
   })
 
   it('leaves late days older than 30 days alone, as in a backfill', async () => {
