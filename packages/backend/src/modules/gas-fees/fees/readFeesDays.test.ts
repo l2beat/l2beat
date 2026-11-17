@@ -5,8 +5,13 @@ import { type BlocksRow, type FeesRow, joinFeesDays } from './readFeesDays'
 
 describe(joinFeesDays.name, () => {
   const day = UnixTime.fromDate(new Date('2026-10-01T00:00:00Z'))
+  const zksync: GasFeesChain = {
+    id: 'zksync2',
+    dune: 'zksync',
+    requiredFrom: day,
+  }
   const chains: GasFeesChain[] = [
-    { id: 'zksync2', dune: 'zksync', requiredFrom: day },
+    zksync,
     {
       id: 'new',
       dune: 'new',
@@ -62,37 +67,83 @@ describe(joinFeesDays.name, () => {
     expect(days.map((d) => d.missing)).toEqual([[], ['zksync2', 'new']])
   })
 
-  it('refuses a day with a hole, though a later day is there', () => {
-    const whole = (day1: BlocksRow) =>
+  describe("a hole in Dune's data", () => {
+    // 100 blocks a day from block 0 on 1 Oct, with a later day to show each has finished
+    const stored = (october: BlocksRow[], chain = zksync) =>
       joinFeesDays(
-        chains,
+        [chain],
         day,
-        day,
-        [fees('zksync', '2026-10-01'), fees('zksync', '2026-10-02')],
-        [day1, blocks('zksync', '2026-10-02')],
-      )[0]?.records.length
+        UnixTime(day + 2 * UnixTime.DAY),
+        ['01', '02', '03', '04'].map((d) => fees('zksync', `2026-10-${d}`)),
+        october,
+      ).map((d) => d.records.length)
+    const whole = ['01', '02', '03', '04'].map((d) =>
+      blocks('zksync', `2026-10-${d}`),
+    )
+    const withDay = (date: string, overrides: Partial<BlocksRow>) =>
+      whole.map((row) => (row.day === date ? { ...row, ...overrides } : row))
 
-    expect(whole(blocks('zksync', '2026-10-01'))).toEqual(1)
-    // Fee rows from fewer blocks than had transactions
-    expect(
-      whole(blocks('zksync', '2026-10-01', { blocks_with_txs: 95 })),
-    ).toEqual(0)
-    // A block missing within the day
-    expect(whole(blocks('zksync', '2026-10-01', { blocks: 99 }))).toEqual(0)
-    // Blocks missing before the next day's first
-    expect(
-      whole(blocks('zksync', '2026-10-01', { blocks: 98, last_block: 97 })),
-    ).toEqual(0)
-    // Read from transactions, so only the fee rows' coverage is checked
-    expect(
-      whole(
-        blocks('zksync', '2026-10-01', {
-          blocks: null,
-          first_block: null,
-          last_block: null,
-        }),
-      ),
-    ).toEqual(1)
+    it('stores days that join their neighbours on both sides', () => {
+      expect(stored(whole)).toEqual([1, 1, 1])
+    })
+
+    it('refuses a day whose fee rows come from fewer blocks than had transactions', () => {
+      expect(stored(withDay('2026-10-02', { blocks_with_txs: 95 }))).toEqual([
+        1, 0, 1,
+      ])
+    })
+
+    it('refuses a day with a block missing inside it', () => {
+      expect(stored(withDay('2026-10-02', { blocks: 99 }))).toEqual([1, 0, 1])
+    })
+
+    it('refuses both days around a hole that crosses midnight', () => {
+      // 2 Oct ends at 189 and 3 Oct starts at 210
+      const gap = withDay('2026-10-02', { blocks: 90, last_block: 189 }).map(
+        (row) =>
+          row.day === '2026-10-03'
+            ? { ...row, blocks: 90, first_block: 210 }
+            : row,
+      )
+
+      expect(stored(gap)).toEqual([1, 0, 0])
+    })
+
+    it('refuses both days around a day Dune has no blocks of', () => {
+      // 1 Oct has blocks 0 to 49, 2 Oct none, 3 Oct 250 to 299
+      const gap = whole
+        .filter((row) => row.day !== '2026-10-02')
+        .map((row) =>
+          row.day === '2026-10-01'
+            ? { ...row, blocks: 50, last_block: 49 }
+            : row.day === '2026-10-03'
+              ? { ...row, blocks: 50, first_block: 250 }
+              : row,
+        )
+
+      expect(stored(gap)).toEqual([0, 0, 0])
+    })
+
+    it('stores the days around a halt, when the chain made no blocks', () => {
+      // No blocks on 2 Oct, and 3 Oct carries on from 1 Oct
+      const halt = whole
+        .filter((row) => row.day !== '2026-10-02')
+        .map((row) =>
+          row.day === '2026-10-03'
+            ? { ...row, first_block: 100, last_block: 199 }
+            : row.day === '2026-10-04'
+              ? { ...row, first_block: 200, last_block: 299 }
+              : row,
+        )
+
+      expect(stored(halt)).toEqual([1, 0, 1])
+    })
+
+    it('refuses a day of a chain read from transactions when a block has none', () => {
+      expect(stored(whole, { ...zksync, gasFromTransactions: true })).toEqual([
+        0, 0, 0,
+      ])
+    })
   })
 })
 

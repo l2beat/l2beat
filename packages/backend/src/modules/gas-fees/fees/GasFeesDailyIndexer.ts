@@ -95,6 +95,16 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         day.missing.map((chain) => ({ day: day.day, chain })),
       ),
     })
+    // Too old for the late-chain read, so these stay missing
+    const dueFrom = UnixTime.toStartOf(now, 'day') - LATE_DAYS * UnixTime.DAY
+    const leftOut = loaded
+      .filter((day) => day.day < dueFrom)
+      .flatMap((day) => day.missing.map((chain) => ({ day: day.day, chain })))
+    if (leftOut.length > 0) {
+      this.logger.warn('Gas fees chain days left out, not whole on Dune', {
+        leftOut,
+      })
+    }
     await this.fillLateChains(first, now)
     return last.day + UnixTime.DAY
   }
