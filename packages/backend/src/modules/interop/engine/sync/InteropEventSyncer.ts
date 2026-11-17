@@ -239,16 +239,38 @@ export class InteropEventSyncer extends TimeLoop {
     })
   }
 
+  // A plugin that throws is logged and skipped like in InteropBlockProcessor.
+  // Rethrowing would make the syncer retry the same range forever and stall
+  // every plugin of the cluster on this chain.
   captureLog(logToCapture: LogToCapture) {
     for (const plugin of this.cluster.plugins) {
-      const produced = plugin.capture(logToCapture)
-      if (produced) {
-        return produced.map((p) => ({ ...p, plugin: plugin.name }))
+      try {
+        const produced = plugin.capture(logToCapture)
+        if (produced) {
+          return produced.map((p) => ({ ...p, plugin: plugin.name }))
+        }
+      } catch (e) {
+        this.logger.error('Capture failed', e, {
+          plugin: plugin.name,
+          chain: this.chain,
+          blockNumber: logToCapture.block.number,
+          tx: logToCapture.tx.hash,
+          logIndex: logToCapture.log.logIndex,
+          topic: logToCapture.log.topics[0],
+        })
       }
     }
   }
 
   captureTx(txToCapture: TxToCapture): TxCaptureResult | undefined {
+    return this.captureTxReportingFailure(txToCapture).result
+  }
+
+  private captureTxReportingFailure(txToCapture: TxToCapture): {
+    result?: TxCaptureResult
+    failed: boolean
+  } {
+    let failed = false
     for (const plugin of this.cluster.plugins) {
       if (!plugin.captureTx) {
         continue
@@ -260,14 +282,28 @@ export class InteropEventSyncer extends TimeLoop {
             plugin.name,
           )
         : undefined
-      const produced = plugin.captureTx(txToCapture, creatorEvents)
-      if (produced) {
-        return {
-          events: produced.map((p) => ({ ...p, plugin: plugin.name })),
-          fulfilledCreatorEvents: creatorEvents ?? [],
+      try {
+        const produced = plugin.captureTx(txToCapture, creatorEvents)
+        if (produced) {
+          return {
+            result: {
+              events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+              fulfilledCreatorEvents: creatorEvents ?? [],
+            },
+            failed,
+          }
         }
+      } catch (e) {
+        failed = true
+        this.logger.error('Capture failed', e, {
+          plugin: plugin.name,
+          chain: this.chain,
+          blockNumber: txToCapture.block.number,
+          tx: txToCapture.tx.hash,
+        })
       }
     }
+    return { failed }
   }
 
   async capturePendingHistoricalTxs(beforeBlock: bigint) {
@@ -278,10 +314,17 @@ export class InteropEventSyncer extends TimeLoop {
     )
     const interopEvents: InteropEvent[] = []
     const fulfilledCreatorEvents: InteropEvent[] = []
+    const keepPending = new Set<string>()
 
     for (const txHash of txHashes) {
       const tx = await this.getTransactionByHash(txHash)
-      if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+      if (tx && tx.blockNumber !== null && tx.blockNumber >= beforeBlock) {
+        // Captured live with its block. If that capture throws, the next
+        // history check retries it.
+        keepPending.add(txHash)
+        continue
+      }
+      if (!tx || tx.blockNumber === null) {
         continue
       }
 
@@ -291,7 +334,7 @@ export class InteropEventSyncer extends TimeLoop {
       const block = await this.getBlockByNumber(tx.blockNumber)
       assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
 
-      const result = this.captureTx({
+      const { result, failed } = this.captureTxReportingFailure({
         chain: this.chain,
         tx: toTransaction(tx),
         block: toBlock(block),
@@ -303,12 +346,17 @@ export class InteropEventSyncer extends TimeLoop {
         interopEvents.push(...result.events)
         fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
       }
+      if (failed) {
+        // Its creator events get another history check instead of being lost.
+        // Fulfilled ones leave the store, so a retry can't capture them twice.
+        keepPending.add(txHash)
+      }
     }
 
     const checkedInHistoryEvents =
       this.store.derivedTxStore.markCheckedInHistory(
         this.chain,
-        txHashes,
+        txHashes.filter((txHash) => !keepPending.has(txHash)),
         pluginNames,
       )
 

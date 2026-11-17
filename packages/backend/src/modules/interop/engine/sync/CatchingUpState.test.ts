@@ -1,13 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { BlockRangeWithTimestamps } from '@l2beat/database'
-import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
+import type { BlockRangeWithTimestamps, Database } from '@l2beat/database'
+import type {
+  EthRpcClient,
+  RpcBlock,
+  RpcLog,
+  RpcTransaction,
+} from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { InteropEvent, LogToCapture } from '../../plugins/types'
+import type {
+  InteropEvent,
+  InteropPluginResyncable,
+  LogToCapture,
+} from '../../plugins/types'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 import { CatchingUpState } from './CatchingUpState'
 import { FollowingState } from './FollowingState'
-import type { InteropEventSyncer } from './InteropEventSyncer'
-import { LogQuery } from './InteropEventSyncer'
+import { InteropEventSyncer, LogQuery } from './InteropEventSyncer'
 
 const CHAIN = 'ethereum'
 const CLUSTER_NAME = 'mock-cluster'
@@ -251,6 +260,56 @@ describe(CatchingUpState.name, () => {
       expect(captureLog).toHaveBeenCalledTimes(2)
       expect(saveProducedInteropEvents).toHaveBeenCalledWith(
         [eventA, eventB, eventC],
+        {
+          fromBlock: 1n,
+          fromTimestamp: UnixTime(1),
+          toBlock: 2n,
+          toTimestamp: UnixTime(2),
+        },
+      )
+    })
+
+    it('saves the range when a plugin throws on one of its logs', async () => {
+      const event = { eventId: 'evt-1' } as Omit<InteropEvent, 'plugin'>
+      const capture = mockFn<InteropPluginResyncable['capture']>()
+        .throwsOnce(new Error('boom'))
+        .returnsOnce([event])
+      const error = mockFn().returns(undefined)
+      const clusterSyncer = new InteropEventSyncer(
+        CHAIN,
+        {
+          name: CLUSTER_NAME,
+          plugins: [{ name: 'across', capture, getDataRequests: () => [] }],
+        },
+        mockObject<EthRpcClient>(),
+        mockObject<InteropEventStore>(),
+        mockObject<Database>(),
+        mockObject<Logger>({
+          for: mockFn().returns(mockObject<Logger>({ error })),
+        }),
+      )
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(makeNonEmptyLogQuery()),
+        getLogs: mockFn().resolvesTo([
+          makeRpcLog({ txHash: '0xaaa', blockNumber: 2n, blockTimestamp: 2n }),
+          makeRpcLog({ txHash: '0xbbb', blockNumber: 2n, blockTimestamp: 2n }),
+        ]),
+        captureLog: (logToCapture) => clusterSyncer.captureLog(logToCapture),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
+      expect(error).toHaveBeenCalledTimes(1)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [{ ...event, plugin: 'across' }],
         {
           fromBlock: 1n,
           fromTimestamp: UnixTime(1),
