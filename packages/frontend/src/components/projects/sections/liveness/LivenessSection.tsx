@@ -103,13 +103,14 @@ export function LivenessSection({
         duplicateData={duplicateData}
       />
       {!isArchived && anomalies.length > 0 && (
-        <>
+        // Taller than anything beside it, so Data posted keeps its own height.
+        <div data-grows-card>
           <HorizontalSeparator className="my-6" />
           <Last30DayAnomalies
             anomalies={anomalies}
             hasTrackedContractsChanged={hasTrackedContractsChanged}
           />
-        </>
+        </div>
       )}
     </ProjectSection>
   )

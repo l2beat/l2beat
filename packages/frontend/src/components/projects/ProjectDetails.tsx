@@ -80,14 +80,16 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 side === undefined
                   ? '@min-[1200px]/details:col-span-2'
                   : // Both cards as tall as the row (each keeps its top
-                    // margin), until either opens something, e.g. Tracked
-                    // transactions: the other then keeps its own height
-                    // instead of stretching into an empty box.
+                    // margin), until either grows: an open Tracked
+                    // transactions, or Liveness' list of past anomalies. The
+                    // other then keeps its own height instead of stretching
+                    // into an empty box.
                     [
-                      '[&:has([data-state=open])>*]:h-auto! @min-[1200px]/details:[&>*]:h-[calc(100%-1rem)]',
+                      '@min-[1200px]/details:[&>*]:h-[calc(100%-1rem)]',
+                      '[&:has([data-grows-card])>*]:h-auto! [&:has([data-state=open])>*]:h-auto!',
                       side === 'left'
-                        ? '[&:has(+*_[data-state=open])>*]:h-auto!'
-                        : '[*:has([data-state=open])+&>*]:h-auto!',
+                        ? '[&:has(+*_[data-grows-card])>*]:h-auto! [&:has(+*_[data-state=open])>*]:h-auto!'
+                        : '[*:has([data-grows-card])+&>*]:h-auto! [*:has([data-state=open])+&>*]:h-auto!',
                     ],
               )}
               eager={
