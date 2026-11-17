@@ -22,5 +22,5 @@ or {
     }
   }
 } where {
-  register_diagnostic(span=$call, message="Every date and time on the site is in UTC. Format it with a helper from ~/utils/dates (formatTimestamp, formatRange, <UtcDateTime>), or read it through getUTC*() or Intl.DateTimeFormat with timeZone: 'UTC'. Local time shows the previous day west of UTC and breaks hydration.", severity="error")
+  register_diagnostic(span=$call, message="Every date and time on the site is in UTC. Format it with formatTimestamp or formatRange from ~/utils/dates or <UtcDateTime> from ~/components/core/UtcDateTime, or read it through getUTC*() or Intl.DateTimeFormat with timeZone: 'UTC'. Local time shows the previous day west of UTC and breaks hydration.", severity="error")
 }
