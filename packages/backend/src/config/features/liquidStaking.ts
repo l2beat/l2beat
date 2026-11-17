@@ -17,6 +17,7 @@ export async function getLiquidStakingConfig(
       configurationId: getLiquidStakingConfigurationId(
         project.id,
         project.liquidStaking.contracts,
+        project.liquidStaking.marketQuotes,
       ),
       projectId: project.id,
       contracts: project.liquidStaking.contracts,

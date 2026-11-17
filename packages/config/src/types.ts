@@ -1099,8 +1099,8 @@ export interface ProjectLiquidStaking {
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
   /**
-   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
-   * the market exit. A pool that doesn't exist yet gives no quote.
+   * Pools quoted for selling 1 token (stETH for Lido); the best quote is the
+   * market exit. A pool that doesn't exist yet gives no quote.
    */
   marketQuotes: ProjectLiquidStakingMarketQuote[]
   /** The row of the liquid staking risk comparison. */
@@ -2102,15 +2102,16 @@ export type ProjectLiquidStakingContracts =
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =
   | {
-      type: 'curve'
+      /** `curveCrypto` is a pool that takes its coin indexes as uint256. */
+      type: 'curve' | 'curveCrypto'
       pool: ChainSpecificAddress
       /** Coin indexes of the token sold and of ETH or WETH. */
       i: number
       j: number
     }
   | {
-      /** Quoted by Uniswap's QuoterV2, against WETH. */
-      type: 'uniswapV3'
+      /** Quoted by the exchange's QuoterV2, against WETH. */
+      type: 'uniswapV3' | 'pancakeV3'
       /** The pool's fee tier, in hundredths of a basis point. */
       fee: number
     }
@@ -2118,6 +2119,13 @@ export type ProjectLiquidStakingMarketQuote =
       /** Quoted by BalancerQueries, against WETH. */
       type: 'balancerV2'
       poolId: string
+    }
+  | {
+      /** A boosted pool, quoted by Balancer V3's BatchRouter. */
+      type: 'balancerV3'
+      pool: ChainSpecificAddress
+      /** The ERC-4626 wrapper the pool holds in place of WETH. */
+      wrappedWeth: ChainSpecificAddress
     }
   | {
       type: 'fluid'

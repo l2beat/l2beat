@@ -19,9 +19,9 @@ export interface LiquidStakingSnapshotRecord {
   instantExitFeeBps: number | null
   /** Lock on an onchain redemption (wBETH), seconds. */
   lockTime: number | null
-  /** ETH the best onchain pool pays for 100 tokens, wei; null without a quote. */
+  /** ETH the best onchain pool pays for 1 token, wei; null without a quote. */
   marketExitEth: bigint | null
-  /** What those tokens are worth at the protocol's rate, wei. */
+  /** What that token is worth at the protocol's rate, wei. */
   marketExitValueEth: bigint | null
 }
 
