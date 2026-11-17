@@ -9,7 +9,7 @@ Generated with discovered.json: 0xa610ef12738b22bddec80deb3daa8e978e2783ec
 
 ## Description
 
-EtherfiL1SyncPoolETH: a GUARDIAN_ROLE EOA paused deposit syncing for 24h with `pauseUntil` on 2026-11-08 ([tx](https://etherscan.io/tx/0x3f120043a2e7574b91bdd9d342d4d9265b96a2ca1b5336a2b49d6d43e1850f13)). The pause ran out on 2026-11-09 17:32:47 UTC without being lifted early. It fell between two scheduled syncs, and the next one went through on 2026-11-10 ([tx](https://etherscan.io/tx/0x70488c99dae0a2ae48f177f271fe6fed66aef2e6c7456aba02395f9ff43253ef)).
+EtherfiL1SyncPoolETH: a GUARDIAN_ROLE EOA paused deposit syncing for 24h with `pauseUntil` on 2026-11-08; the pause expired on 2026-11-09.
 
 ## Watched changes
 

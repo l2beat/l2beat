@@ -9,7 +9,7 @@ Generated with discovered.json: 0x64b1b29024764f653a3d0347e00aa7936d805723
 
 ## Description
 
-StrategyManager: `getPendingOperatorSets` is empty again; the slashed shares of the operator set listed on 2026-11-06 were cleared on 2026-11-12 ([tx](https://etherscan.io/tx/0xa50792059ecb6849102c0676a9b357b9bad9aace6bff17b6110739287a1fdc01)).
+StrategyManager: `getPendingOperatorSets` is empty again; the slashed shares of the operator set listed on 2026-11-06 were cleared on 2026-11-12.
 
 ## Watched changes
 
