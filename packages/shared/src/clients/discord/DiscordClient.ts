@@ -20,21 +20,19 @@ export class DiscordClient {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 
-    // A timed-out attempt may still have been posted, so a retry can duplicate
-    // the message. Notifications are alerts: a duplicate is cheaper than a loss.
-    return await retry(() => this.postMessage(message), SEND_RETRY_OPTIONS)
-  }
-
-  private async postMessage(message: string) {
     const urlWithWait = `${this.webhookUrl}?wait=true`
-
-    const res = await this.httpClient.fetchRaw(urlWithWait, {
-      method: 'POST',
-      body: JSON.stringify({ content: message }),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    })
+    const post = () =>
+      this.httpClient.fetchRaw(urlWithWait, {
+        method: 'POST',
+        body: JSON.stringify({ content: message }),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      })
+    // Only timeouts and network failures get retried: Discord asks callers not
+    // to repeat rejected webhook calls. A timed-out attempt may still have been
+    // posted, so a retry can duplicate it; for alerts that beats a loss.
+    const res = await retry(post, SEND_RETRY_OPTIONS)
 
     if (!res.ok) {
       await res.body?.cancel()

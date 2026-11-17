@@ -55,25 +55,21 @@ describe(DiscordClient.name, () => {
       )
     })
 
-    it('throws when discord keeps returning an error', async () => {
+    it('throws without retrying when discord rejects the message', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetchRaw() {
-          return new Response('bad request', {
-            status: 400,
-            statusText: 'Bad Request',
+          return new Response('not found', {
+            status: 404,
+            statusText: 'Not Found',
           })
         },
       })
       const discord = mockClient('', httpClient)
-      const time = install()
 
-      const result = expect(discord.sendMessage('message')).toBeRejectedWith(
+      await expect(discord.sendMessage('message')).toBeRejectedWith(
         'HTTP error',
       )
-      await time.runAllAsync()
-      await result
-      time.uninstall()
-      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
     })
 
     // A one-off webhook timeout must not drop the notification. Method: fail
