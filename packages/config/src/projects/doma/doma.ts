@@ -50,7 +50,7 @@ export const doma: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://rpc.doma.xyz',
-        callsPerMinute: 300,
+        callsPerMinute: 1500,
       },
     ],
   },
