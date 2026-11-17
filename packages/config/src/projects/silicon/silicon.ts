@@ -18,7 +18,7 @@ export const silicon: ScalingProject = agglayer({
     description:
       'Silicon is a sovereign Agglayer chain built on the Polygon CDK, aiming to become the social network of the future.',
     headerWarning:
-      'Silicon is [shutting down](https://cryptoslate.com/nearly-10-million-must-escape-a-dying-ethereum-network-before-new-years-eve-or-risk-becoming-unrecoverable/). Bridge deposits ended on September 2, 2026, and withdrawals are supported until December 31, 2026, 12:00 KST. Assets not withdrawn by then cannot be recovered.',
+      'Silicon is [shutting down](https://docs.silicon.network/important-service-termination). Bridge deposits ended on September 2, 2026, and withdrawals are supported until December 31, 2026, 12:00 KST. Assets not withdrawn by then cannot be recovered.',
     links: {
       websites: ['https://silicon.network/'],
       bridges: ['https://bridge.silicon.network/'],
@@ -57,7 +57,7 @@ export const silicon: ScalingProject = agglayer({
   milestones: [
     {
       title: 'Silicon announces shutdown',
-      url: 'https://cryptoslate.com/nearly-10-million-must-escape-a-dying-ethereum-network-before-new-years-eve-or-risk-becoming-unrecoverable/',
+      url: 'https://docs.silicon.network/important-service-termination',
       date: '2026-09-02',
       description:
         'Bridge deposits end. Withdrawals are supported until the network shuts down on December 31, 2026.',
