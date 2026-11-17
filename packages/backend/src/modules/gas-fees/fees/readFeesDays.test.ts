@@ -61,6 +61,39 @@ describe(joinFeesDays.name, () => {
     expect(days.map((d) => d.records.length)).toEqual([1, 0])
     expect(days.map((d) => d.missing)).toEqual([[], ['zksync2', 'new']])
   })
+
+  it('refuses a day with a hole, though a later day is there', () => {
+    const whole = (day1: BlocksRow) =>
+      joinFeesDays(
+        chains,
+        day,
+        day,
+        [fees('zksync', '2026-10-01'), fees('zksync', '2026-10-02')],
+        [day1, blocks('zksync', '2026-10-02')],
+      )[0]?.records.length
+
+    expect(whole(blocks('zksync', '2026-10-01'))).toEqual(1)
+    // Fee rows from fewer blocks than had transactions
+    expect(
+      whole(blocks('zksync', '2026-10-01', { blocks_with_txs: 95 })),
+    ).toEqual(0)
+    // A block missing within the day
+    expect(whole(blocks('zksync', '2026-10-01', { blocks: 99 }))).toEqual(0)
+    // Blocks missing before the next day's first
+    expect(
+      whole(blocks('zksync', '2026-10-01', { blocks: 98, last_block: 97 })),
+    ).toEqual(0)
+    // Read from transactions, so only the fee rows' coverage is checked
+    expect(
+      whole(
+        blocks('zksync', '2026-10-01', {
+          blocks: null,
+          first_block: null,
+          last_block: null,
+        }),
+      ),
+    ).toEqual(1)
+  })
 })
 
 function fees(blockchain: string, day: string): FeesRow {
@@ -73,9 +106,26 @@ function fees(blockchain: string, day: string): FeesRow {
     l1_fee: 0.1,
     blob_fee: 0,
     median_fee_usd: null,
+    fee_blocks: 90,
   }
 }
 
-function blocks(blockchain: string, day: string): BlocksRow {
-  return { blockchain, day, base_fee: 0.5, gas_used: 1e9 }
+/** 100 blocks a day from block 0 on 2026-10-01, 90 of them with transactions */
+function blocks(
+  blockchain: string,
+  day: string,
+  overrides: Partial<BlocksRow> = {},
+): BlocksRow {
+  const first = (Number(day.slice(-2)) - 1) * 100
+  return {
+    blockchain,
+    day,
+    base_fee: 0.5,
+    gas_used: 1e9,
+    blocks_with_txs: 90,
+    blocks: 100,
+    first_block: first,
+    last_block: first + 99,
+    ...overrides,
+  }
 }

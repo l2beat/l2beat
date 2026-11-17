@@ -16,6 +16,8 @@ const FeesRow = v.object({
   l1_fee: v.number(),
   blob_fee: v.number(),
   median_fee_usd: v.union([v.number(), v.null()]),
+  /** Blocks the day's fee rows come from */
+  fee_blocks: v.number(),
 })
 export type FeesRow = v.infer<typeof FeesRow>
 
@@ -24,6 +26,12 @@ const BlocksRow = v.object({
   day: v.string(),
   base_fee: v.union([v.number(), v.null()]),
   gas_used: v.number(),
+  /** Blocks of the day that had transactions */
+  blocks_with_txs: v.number(),
+  /** From the blocks table. null where the day is read from transactions (Arbitrum) */
+  blocks: v.union([v.number(), v.null()]),
+  first_block: v.union([v.number(), v.null()]),
+  last_block: v.union([v.number(), v.null()]),
 })
 export type BlocksRow = v.infer<typeof BlocksRow>
 
@@ -31,7 +39,7 @@ export interface FeesDay {
   day: UnixTime
   /** The chains Dune has the whole day of */
   records: GasFeesDailyRecord[]
-  /** Chains required on the day that Dune doesn't have the whole day of yet */
+  /** Chains required on the day that Dune doesn't have the whole day of: still loading, or with a hole */
   missing: string[]
 }
 
@@ -39,6 +47,7 @@ export interface FeesDay {
  * Reads the days from `fromDay` to `toDay`, both included, in two Dune queries.
  * They read one day more: a chain's day is whole only once Dune has a later day
  * of it, as Dune loads some chains a day late and a day half loaded looks like a quiet one.
+ * It must also have no hole: see isWholeDay.
  */
 export async function readFeesDays(
   dune: FeesDune,
@@ -83,10 +92,12 @@ export function joinFeesDays(
     for (const chain of chains) {
       const fee = feesByKey.get(`${chain.dune}:${date}`)
       const block = blocksByKey.get(`${chain.dune}:${date}`)
-      const whole =
+      const loaded =
         (lastFeesDay.get(chain.dune) ?? '') > date &&
         (lastBlocksDay.get(chain.dune) ?? '') > date
-      if (fee && block && whole) {
+      const nextDate = UnixTime.toYYYYMMDD(UnixTime(day + UnixTime.DAY))
+      const nextBlock = blocksByKey.get(`${chain.dune}:${nextDate}`)
+      if (fee && block && loaded && isWholeDay(fee, block, nextBlock)) {
         result.records.push({
           timestamp: day,
           chain: chain.id,
@@ -106,6 +117,31 @@ export function joinFeesDays(
     days.push(result)
   }
   return days
+}
+
+/**
+ * Whether Dune has the day without a hole: the fee rows cover every block that
+ * had transactions, and no block is missing within the day or before the next
+ * one. On the days checked, both held exactly on all 12 chains.
+ */
+function isWholeDay(
+  fee: FeesRow,
+  block: BlocksRow,
+  nextBlock: BlocksRow | undefined,
+): boolean {
+  if (fee.fee_blocks !== block.blocks_with_txs) return false
+  if (
+    block.blocks === null ||
+    block.first_block === null ||
+    block.last_block === null
+  ) {
+    return true
+  }
+  const contiguous = block.last_block - block.first_block + 1 === block.blocks
+  const reachesNextDay =
+    nextBlock?.first_block == null ||
+    nextBlock.first_block === block.last_block + 1
+  return contiguous && reachesNextDay
 }
 
 /** The last day each chain has rows of, as YYYY-MM-DD, which sorts as dates do */
