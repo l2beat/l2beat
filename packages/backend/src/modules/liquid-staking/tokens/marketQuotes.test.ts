@@ -9,6 +9,14 @@ const TOKEN = ChainSpecificAddress(
 const POOL = ChainSpecificAddress(
   'eth:0x2222222222222222222222222222222222222222',
 )
+const WRAPPED_WETH = ChainSpecificAddress(
+  'eth:0x3333333333333333333333333333333333333333',
+)
+const WRAPPED = ChainSpecificAddress.address(WRAPPED_WETH)
+const WETH = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+const ROUTER = new utils.Interface([
+  'function querySwapExactIn((address tokenIn, (address pool, address tokenOut, bool isBuffer)[] steps, uint256 exactAmountIn, uint256 minAmountOut)[] paths, address sender, bytes userData)',
+])
 const OUT = 10n ** 20n
 
 describe(getMarketQuote.name, () => {
@@ -32,6 +40,31 @@ describe(getMarketQuote.name, () => {
 
     expect(decode({ success: true, data: Bytes.EMPTY })).toEqual(undefined)
     expect(decode({ success: false, data: Bytes.EMPTY })).toEqual(undefined)
+  })
+
+  it('reads the Balancer V3 path amount, behind the array offsets', () => {
+    const { call, decode } = getMarketQuote(TOKEN, {
+      type: 'balancerV3',
+      pool: POOL,
+      wrappedWeth: WRAPPED_WETH,
+    })
+    const data = utils.defaultAbiCoder.encode(
+      ['uint256[]', 'address[]', 'uint256[]'],
+      [[OUT], [WETH], [OUT]],
+    )
+
+    expect(decode({ success: true, data: Bytes.fromHex(data) })).toEqual(OUT)
+    // Sells into the pool, then unwraps to WETH through the vault's buffer.
+    const [paths] = ROUTER.decodeFunctionData(
+      'querySwapExactIn',
+      call.input.toString(),
+    )
+    expect(
+      paths[0].steps.map((s: utils.Result) => [s.pool, s.tokenOut, s.isBuffer]),
+    ).toEqual([
+      [ChainSpecificAddress.address(POOL), WRAPPED, false],
+      [WRAPPED, WETH, true],
+    ])
   })
 
   it('reads the Fluid swap result from its revert', () => {
