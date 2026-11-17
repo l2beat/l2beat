@@ -31,9 +31,6 @@ All colors are tokens at the top of the `<style>` element, taken from
 [`globals.css`](../src/styles/globals.css): pink `#ff3776`, white lettering, and
 a `#0d0c0c` wordmark that becomes white in dark mode. No shared stylesheet is loaded.
 
-The two links (X and GitHub) are plain navigation to other hosts. The browser
-loads nothing from them until a visitor clicks.
-
 The `/* Hallmark · … */` comments at the top of the styles record the design
 review: the brand values used and the lint rules waived for a one-screen page.
 Keep them up to date or delete them together.

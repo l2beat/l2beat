@@ -129,9 +129,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       --color-ink-2: #5f6470;
       --color-brand: #ff3776;
       --color-brand-light: #ff8fb0;
-      --color-button: #ca0055;
-      --color-on-button: #fafafa;
-      --color-focus: #ca0055;
       /* Logo fills, from ../src/components/Logo.tsx */
       --color-logo-letters: #ffffff;
       --color-logo-ink: #0d0c0c;
@@ -145,12 +142,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       --gutter: 32px;
       --container: 1200px;
       --radius-card: 12px;
-      --radius-control: 8px;
       --text-sm: 0.875rem;
       --text-md: 1rem;
       --text-lead: clamp(1.125rem, 0.4vw + 1rem, 1.375rem);
       --text-display: clamp(3.25rem, 8vw + 1rem, 9rem);
-      --dur-micro: 120ms;
       --beat: 2.8s;
     }
     @media (prefers-color-scheme: dark) {
@@ -159,9 +154,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         --color-surface: #1b1e2a;
         --color-ink: #fafafa;
         --color-ink-2: #abb1c1;
-        --color-button: #ff3776;
-        --color-on-button: #131215;
-        --color-focus: #ff8fb0;
         --color-logo-ink: #ffffff;
       }
     }
@@ -229,44 +221,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       line-height: 1.45;
       text-wrap: pretty;
     }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-md) var(--space-lg);
-      margin-top: var(--space-xs);
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      min-height: 48px;
-      padding-inline: var(--space-lg);
-      border-radius: var(--radius-control);
-      background: var(--color-button);
-      color: var(--color-on-button);
-      font-weight: 700;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background-color var(--dur-micro) ease-out, transform var(--dur-micro) ease-out;
-    }
-    .button:hover { background: color-mix(in oklab, var(--color-button) 85%, var(--color-ink)); }
-    .button:active { transform: translateY(1px); }
-    .link {
-      color: var(--color-ink);
-      font-weight: 700;
-      text-decoration: underline;
-      text-decoration-color: var(--color-brand);
-      text-decoration-thickness: 2px;
-      text-underline-offset: 0.25em;
-      white-space: nowrap;
-      transition: text-decoration-color var(--dur-micro) ease-out;
-    }
-    .link:hover { text-decoration-color: var(--color-ink); }
-    .link:active { color: var(--color-ink-2); }
-    .button:focus-visible, .link:focus-visible {
-      outline: 2px solid var(--color-focus);
-      outline-offset: 3px;
-    }
 
     .beat {
       position: relative;
@@ -310,7 +264,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     }
     @media (prefers-reduced-motion: reduce) {
       .heart { animation: none; }
-      .button, .link { transition: none; }
     }
     @media (forced-colors: active) {
       .message, .beat { border: 1px solid CanvasText; }
@@ -338,10 +291,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       <section class="message" aria-labelledby="maintenance-title">
         <h1 id="maintenance-title">Back in a beat.</h1>
         <p class="lead">ETHBEAT is under maintenance. Our research and data will be back shortly.</p>
-        <div class="actions">
-          <a class="button" href="https://x.com/ethbeat_org">Follow us on X</a>
-          <a class="link" href="https://github.com/l2beat/l2beat">Read the research on GitHub</a>
-        </div>
       </section>
       <div class="beat" aria-hidden="true">
         <svg class="beat-art logo-mark" viewBox="-194.5 -224 890 890" overflow="visible" focusable="false">
