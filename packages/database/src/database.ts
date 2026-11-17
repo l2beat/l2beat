@@ -20,6 +20,12 @@ import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
+import { GasFeesDailyRepository } from './repositories/GasFeesDailyRepository'
+import { GasFeesLiveTipsRepository } from './repositories/GasFeesLiveTipsRepository'
+import { GasFeesMempoolRepository } from './repositories/GasFeesMempoolRepository'
+import { GasFeesTipHourlyRepository } from './repositories/GasFeesTipHourlyRepository'
+import { GasFeesTipPayersDailyRepository } from './repositories/GasFeesTipPayersDailyRepository'
+import { GasFeesWalletTipRepository } from './repositories/GasFeesWalletTipRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
 import { IndexerStateRepository } from './repositories/IndexerStateRepository'
@@ -120,6 +126,15 @@ export function createDatabase(
     defiTvl: new DefiTvlRepository(db),
     liquidStakingSnapshot: new LiquidStakingSnapshotRepository(db),
     ethereumStakingDaily: new EthereumStakingDailyRepository(db),
+    // #endregion
+
+    // #region Gas fees
+    gasFeesDaily: new GasFeesDailyRepository(db),
+    gasFeesTipHourly: new GasFeesTipHourlyRepository(db),
+    gasFeesLiveTips: new GasFeesLiveTipsRepository(db),
+    gasFeesWalletTip: new GasFeesWalletTipRepository(db),
+    gasFeesMempool: new GasFeesMempoolRepository(db),
+    gasFeesTipPayersDaily: new GasFeesTipPayersDailyRepository(db),
     // #endregion
 
     // #region UIF

@@ -65,6 +65,29 @@ export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
 } from './repositories/FlatSourcesRepository'
+export type { GasFeesDailyRecord } from './repositories/GasFeesDailyRepository'
+export type { GasFeesLiveTipsRecord } from './repositories/GasFeesLiveTipsRepository'
+export type {
+  GasFeesMempoolDayData,
+  GasFeesMempoolDayRecord,
+  GasFeesMempoolDayStatus,
+  GasFeesTierWaitRecord,
+  GasFeesTipLevelWaitRecord,
+  GasFeesWaitBucket,
+} from './repositories/GasFeesMempoolRepository'
+export type {
+  GasFeesTier,
+  GasFeesTipHourlyRecord,
+  GasFeesTipsReading,
+} from './repositories/GasFeesTipHourlyRepository'
+export type {
+  GasFeesTipGroup,
+  GasFeesTipPayersDailyRecord,
+} from './repositories/GasFeesTipPayersDailyRepository'
+export type {
+  GasFeesWallet,
+  GasFeesWalletTipRecord,
+} from './repositories/GasFeesWalletTipRepository'
 export type { HourlyActivityRecord } from './repositories/HourlyActivityRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
