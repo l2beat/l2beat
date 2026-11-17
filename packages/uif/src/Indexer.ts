@@ -51,6 +51,18 @@ export abstract class Indexer {
     })
 
   /**
+   * For indexers that follow a chain's head. Never gives up, as the infinite
+   * strategy, but never waits longer than a minute: what is read at the head
+   * is only worth anything while it keeps up
+   */
+  static getLiveRetryStrategy: () => RetryStrategy = () =>
+    Retries.exponentialBackOff({
+      initialTimeoutMs: 1000,
+      maxAttempts: Number.POSITIVE_INFINITY,
+      maxTimeoutMs: 60 * 1000,
+    })
+
+  /**
    * Initializes the indexer.
    *
    * This method is expected to read the height that was saved previously with
@@ -124,9 +136,10 @@ export abstract class Indexer {
    * @returns The height that the indexer has synced up to. Returning
    * `from` means that the indexer has synced a single data point. Returning
    * a value greater than `from` means that the indexer has synced up
-   * to that height. Returning a value less than `from` will trigger
-   * invalidation down to the returned value. Returning a value greater than
-   * `to` is not permitted.
+   * to that height. Returning a value less than `from - 1` says that what
+   * was synced above it is wrong, and will trigger invalidation down to the
+   * returned value. Returning `from - 1`, which neither syncs nor invalidates
+   * anything, or a value greater than `to` is not permitted.
    */
   abstract update(from: number, to: number): Promise<number>
 
@@ -279,7 +292,7 @@ export abstract class Indexer {
     this.logger.info('Updating', { from, to: effect.targetHeight })
     try {
       const newHeight = await this.update(from, effect.targetHeight)
-      if (newHeight < from || newHeight > effect.targetHeight) {
+      if (newHeight === from - 1 || newHeight > effect.targetHeight) {
         this.logger.critical('Update returned invalid height', {
           from,
           to: effect.targetHeight,

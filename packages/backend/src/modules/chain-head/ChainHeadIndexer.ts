@@ -5,7 +5,7 @@ import {
   NotFoundOnRpcError,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { Retries, RootIndexer } from '@l2beat/uif'
+import { Indexer, RootIndexer } from '@l2beat/uif'
 import range from 'lodash/range'
 import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
 
@@ -17,8 +17,6 @@ const MAX_IDLE_TICKS = 5
 const QUIET_GAPS = 3
 /** Stored blocks remembered to find where a reorg forked off without reading the table */
 export const REMEMBERED_BLOCKS = 64
-/** How long a failing source is left alone at most before it is asked again */
-const MAX_RETRY_MS = 60_000
 const CLEAN_EVERY = 10 * UnixTime.MINUTE
 
 /** Where a chain's newest blocks come from */
@@ -92,7 +90,7 @@ export class ChainHeadIndexer extends RootIndexer {
     logger: Logger,
   ) {
     super(logger.tag({ tag: $.chain, chain: $.chain }), {
-      tickRetryStrategy: getHeadRetryStrategy(),
+      tickRetryStrategy: Indexer.getLiveRetryStrategy(),
     })
     this.keepFor = $.keepFor
     this.batchSize = $.batchSize
@@ -481,19 +479,6 @@ export class ChainHeadIndexer extends RootIndexer {
     clearTimeout(this.timer)
     this.timer = setTimeout(() => this.requestTick(), ms)
   }
-}
-
-/**
- * Retries without end, as the hourly indexers do, but never waiting longer
- * than a minute: what is read at the head is only worth anything while it
- * keeps up
- */
-export function getHeadRetryStrategy() {
-  return Retries.exponentialBackOff({
-    initialTimeoutMs: 1000,
-    maxAttempts: Number.POSITIVE_INFINITY,
-    maxTimeoutMs: MAX_RETRY_MS,
-  })
 }
 
 function isLinked(blocks: Header[]): boolean {

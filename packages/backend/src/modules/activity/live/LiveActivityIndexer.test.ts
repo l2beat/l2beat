@@ -42,13 +42,13 @@ describe(LiveActivityIndexer.name, () => {
       expect(store.numbers()).toEqual(range(3590, 3601))
     })
 
-    it('fills in from the stored blocks when they end below the update', async () => {
-      const store = new FakeStore([3590])
+    it('starts at the newest block when the stored ones do not reach up to the update', async () => {
+      const store = new FakeStore([3500])
       const { indexer } = setup(store)
 
-      expect(await indexer.update(3596, 3600)).toEqual(3600)
+      expect(await indexer.update(3591, 3600)).toEqual(3600)
 
-      expect(store.numbers()).toEqual(range(3590, 3601))
+      expect(store.numbers()).toEqual([3500, 3600])
     })
 
     it('starts at the newest block when the stored ones are older than the cleaner keeps', async () => {
@@ -83,84 +83,31 @@ describe(LiveActivityIndexer.name, () => {
   })
 
   describe('stored blocks from a chain the head left', () => {
-    it('replaces the ones above the newest block the head has too', async () => {
+    it('returns the newest stored block the head has too, to be invalidated down to', async () => {
       const store = new FakeStore(range(3595, 3600))
       store.headHashes = new Map([
         [3597, '0x3597'],
         [3598, '0x3598-1'],
         [3599, '0x3599-1'],
       ])
-      const onHead = (number: number) => ({
-        ...block(number),
-        hash: number > 3597 ? `0x${number}-1` : `0x${number}`,
-        parentHash: number > 3598 ? `0x${number - 1}-1` : `0x${number - 1}`,
-      })
-      const { indexer } = setup(store, 100, onHead)
+      const { indexer, getBlocks } = setup(store)
 
-      expect(await indexer.update(3600, 3600)).toEqual(3600)
+      expect(await indexer.update(3600, 3600)).toEqual(3597)
 
-      expect(store.rows.map((r) => r.hash)).toEqual([
-        '0x3595',
-        '0x3596',
-        '0x3597',
-        '0x3598-1',
-        '0x3599-1',
-        '0x3600-1',
-      ])
+      expect(store.numbers()).toEqual(range(3595, 3600))
+      expect(getBlocks).not.toHaveBeenCalled()
     })
 
-    it('goes on up to the height it was asked for when a batch ends below it', async () => {
-      const store = new FakeStore(range(3590, 3600))
-      store.headHashes = new Map([[3590, '0x3590']])
-      const onHead = (number: number) => ({
-        ...block(number),
-        hash: number > 3590 ? `0x${number}-1` : `0x${number}`,
-        parentHash: number > 3591 ? `0x${number - 1}-1` : `0x${number - 1}`,
-      })
-      const { indexer } = setup(store, 4, onHead)
-
-      expect(await indexer.update(3600, 3600)).toEqual(3600)
-
-      expect(store.rows.map((r) => r.hash)).toEqual([
-        '0x3590',
-        ...range(3591, 3601).map((number) => `0x${number}-1`),
-      ])
-    })
-
-    it('goes on from where it got to when a batch failed half way', async () => {
-      const store = new FakeStore(range(3590, 3600))
-      const onHead = (number: number) => ({
-        ...block(number),
-        hash: number > 3590 ? `0x${number}-1` : `0x${number}`,
-        parentHash: number > 3591 ? `0x${number - 1}-1` : `0x${number - 1}`,
-      })
-      store.headHashes = new Map(
-        range(3590, 3601).map((number) => [number, onHead(number).hash]),
-      )
-      const { indexer, getBlocks } = setup(store, 4, onHead)
-      getBlocks.resolvesToOnce([3591, 3592, 3593, 3594].map(onHead))
-      getBlocks.rejectsWithOnce(new Error('rate limited'))
-
-      await expect(indexer.update(3600, 3600)).toBeRejectedWith('rate limited')
-      expect(await indexer.update(3600, 3600)).toEqual(3600)
-
-      expect(store.rows.map((r) => r.hash)).toEqual([
-        '0x3590',
-        ...range(3591, 3601).map((number) => `0x${number}-1`),
-      ])
-    })
-
-    it('starts over at the newest block when the head has none of the stored blocks', async () => {
+    it('returns 0 when the head has none of the stored blocks', async () => {
       const store = new FakeStore(range(3595, 3600))
       // the head started over at the latest block, as after a reorg past
       // every block it remembered, and can serve nothing older
       store.headHashes = new Map([[3600, '0x3600']])
       const { indexer, getBlocks } = setup(store)
 
-      expect(await indexer.update(3600, 3600)).toEqual(3600)
+      expect(await indexer.update(3600, 3600)).toEqual(0)
 
-      expect(store.numbers()).toEqual([3600])
-      expect(getBlocks).toHaveBeenOnlyCalledWith(3600, 3600)
+      expect(getBlocks).not.toHaveBeenCalled()
     })
   })
 
@@ -215,13 +162,9 @@ describe(LiveActivityIndexer.name, () => {
   })
 })
 
-function setup(
-  store: FakeStore,
-  batchSize = 100,
-  served: (number: number) => EVMBlockWithTransactions = block,
-) {
+function setup(store: FakeStore, batchSize = 100) {
   const getBlocks = mockFn(async (from: number, to: number) =>
-    range(from, to + 1).map(served),
+    range(from, to + 1).map(block),
   )
   const indexer = new LiveActivityIndexer(
     {

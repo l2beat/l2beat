@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, LiveActivityBlockRecord } from '@l2beat/database'
 import type { EVMBlockWithTransactions } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
 import {
   createIndexerId,
   INDEXER_NAMES,
@@ -10,10 +11,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import {
-  getHeadRetryStrategy,
-  REMEMBERED_BLOCKS,
-} from '../../chain-head/ChainHeadIndexer'
+import { REMEMBERED_BLOCKS } from '../../chain-head/ChainHeadIndexer'
 import type { ActivityBlock } from '../services/txs/types'
 import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
@@ -59,8 +57,8 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
         name: INDEXER_NAMES.LIVE_ACTIVITY,
         tags: { tag: $.projectId, project: $.projectId },
         minHeight: 0,
-        updateRetryStrategy: getHeadRetryStrategy(),
-        invalidateRetryStrategy: getHeadRetryStrategy(),
+        updateRetryStrategy: Indexer.getLiveRetryStrategy(),
+        invalidateRetryStrategy: Indexer.getLiveRetryStrategy(),
       },
       logger,
     )
@@ -85,30 +83,13 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const stored = await this.getStoredBelow(from)
-    let start = to
-    if (stored) {
-      start = (await this.isOnHead(stored))
-        ? stored.number + 1
-        : await this.dropBlocksOffTheHead(stored, to)
+    if (stored && !(await this.isOnHead(stored))) {
+      return await this.findAgreed(stored)
     }
 
-    // the stored blocks may end below `from` after some were dropped: UIF
-    // takes no height lower than it asked for, so the update goes on up to
-    // there. What is stored on the way stays if a later batch fails
-    let end = start - 1
-    do {
-      end = await this.store(await this.getBatch(end + 1, to))
-    } while (end < from)
-    return end
-  }
-
-  private getBatch(start: number, to: number) {
+    const start = stored ? from : to
     const end = Math.min(start + this.$.batchSize - 1, to)
-    return this.$.blocks.getBlocks(start, end)
-  }
-
-  /** Returns the number of the last block stored */
-  private async store(blocks: EVMBlockWithTransactions[]): Promise<number> {
+    const blocks = await this.$.blocks.getBlocks(start, end)
     await this.$.db.liveActivityBlock.upsertMany(
       blocks.map((block) => {
         const counted = this.$.count(block)
@@ -130,7 +111,7 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
       hash: last.hash,
       timestamp: last.timestamp,
     }
-    return last.number
+    return end
   }
 
   /** The chain no longer has the blocks above the height: what replaced them comes with the next update */
@@ -150,11 +131,11 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
   }
 
   /**
-   * The newest stored block, when the stored blocks are worth adding to.
-   * They are not on the first run, after a reorg past every block the head
-   * remembered, or once they are older than the cleaner keeps them, as after
-   * an outage: every block since would be fetched for nobody to read. The
-   * update then starts at the newest block
+   * The stored block right below `from`, when the stored blocks reach up to
+   * there and are worth adding to. They are not on the first run, after a
+   * reorg past every block the head remembered, or once they are older than
+   * the cleaner keeps them, as after an outage: every block since would be
+   * fetched for nobody to read. The update then starts at the newest block
    */
   private async getStoredBelow(from: number): Promise<Stored | undefined> {
     if (this.newest === undefined) {
@@ -166,7 +147,7 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
     }
     const continues =
       this.newest !== undefined &&
-      this.newest.number < from &&
+      this.newest.number === from - 1 &&
       this.newest.timestamp >= UnixTime.now() - LIVE_BLOCKS_KEPT_FOR
     return continues ? this.newest : undefined
   }
@@ -185,15 +166,12 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
    * The head does not have the newest stored block, so stored blocks are
    * from a chain it left, or it started over at the latest block. The head
    * lowers its height for both, but a crash between its dropping the blocks
-   * and the children hearing of it loses the notice. Deletes the stored
-   * blocks above the newest one the head has too, and returns where to store
-   * from: the block after it, or `to` when the head has none of the blocks
-   * it would remember
+   * and the children hearing of it loses the notice. Returns the newest
+   * stored block the head has too, or 0 when it has none of the blocks it
+   * would remember: a height below the update's, so UIF invalidates down to
+   * it
    */
-  private async dropBlocksOffTheHead(
-    newest: Stored,
-    to: number,
-  ): Promise<number> {
+  private async findAgreed(newest: Stored): Promise<number> {
     const from = newest.number - REMEMBERED_BLOCKS
     const [stored, onHead] = await Promise.all([
       this.$.db.liveActivityBlock.getByProjectNumberRange(
@@ -208,16 +186,12 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
       .reverse()
       .find((block) => headHashes.get(block.number) === block.hash)
 
-    const deleted = await this.$.db.liveActivityBlock.deleteByProjectAfter(
-      this.$.projectId,
-      agreed?.number ?? 0,
-    )
-    this.newest = undefined
-    this.logger.warn('Deleted stored blocks the chain head does not have', {
+    this.logger.warn('Stored blocks are not on the chain the head follows', {
       newest: newest.number,
       agreed: agreed?.number,
-      deleted,
     })
-    return agreed ? agreed.number + 1 : to
+    // UIF takes the height right below the update's for neither syncing
+    // nor invalidating, and the newest stored block is not agreed on anyway
+    return Math.min(agreed?.number ?? 0, newest.number - 1)
   }
 }

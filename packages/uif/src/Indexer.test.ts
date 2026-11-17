@@ -256,6 +256,62 @@ describe(Indexer.name, () => {
 
     await child.finishUpdate(200)
   })
+
+  describe('update that returns a height below the one it started from', () => {
+    it('invalidates down to it, then updates from there', async () => {
+      const parent = new TestRootIndexer(200)
+      const child = new TestChildIndexer([parent], 100)
+
+      await parent.start()
+      await child.start()
+      await child.finishInvalidate(100)
+      expect(child.updateFrom).toEqual(101)
+
+      // what it synced above 80 turned out wrong
+      await child.finishUpdate(80)
+
+      await waitUntil(() => child.invalidating)
+      expect(child.invalidateTo).toEqual(80)
+      expect(child.safeHeight).toEqual(80)
+
+      await child.finishInvalidate(80)
+
+      await waitUntil(() => child.updating)
+      expect(child.updateFrom).toEqual(81)
+      expect(child.updateTo).toEqual(200)
+    })
+
+    it('invalidates its own children down to it as well', async () => {
+      const parent = new TestRootIndexer(200)
+      const middle = new TestChildIndexer([parent], 100)
+      const child = new TestChildIndexer([middle], 100)
+
+      await parent.start()
+      await middle.start()
+      await child.start()
+      await middle.finishInvalidate(100)
+      await child.finishInvalidate(100)
+
+      await middle.finishUpdate(80)
+
+      await waitUntil(() => child.invalidating && middle.invalidating)
+      expect(child.invalidateTo).toEqual(80)
+      expect(middle.invalidateTo).toEqual(80)
+    })
+
+    it('fails for good when the update neither syncs nor invalidates', async () => {
+      const parent = new TestRootIndexer(200)
+      const child = new TestChildIndexer([parent], 100)
+
+      await parent.start()
+      await child.start()
+      await child.finishInvalidate(100)
+
+      await child.finishUpdate(100)
+
+      expect(child.getState().status).toEqual('errored')
+    })
+  })
 })
 
 export async function waitUntil(predicate: () => boolean): Promise<void> {
