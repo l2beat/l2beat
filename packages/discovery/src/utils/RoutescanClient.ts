@@ -1,6 +1,7 @@
 import { type Logger, redactUrl } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { Retries, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
+import { callWithBackoff, isPermanentHttpError } from './callWithBackoff'
 import { EtherscanClient } from './EtherscanClient'
 import { tryParseEtherscanResponse } from './EtherscanModels'
 import type {
@@ -9,13 +10,6 @@ import type {
 } from './IEtherscanClient'
 
 class RoutescanError extends Error {}
-
-const shouldRetry = Retries.exponentialBackOff({
-  stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
-  maxAttempts: 10,
-  maxDistanceMs: Number.POSITIVE_INFINITY,
-  notifyAfterAttempts: Number.POSITIVE_INFINITY,
-})
 
 export class RoutescanClient
   extends EtherscanClient
@@ -49,54 +43,58 @@ export class RoutescanClient
     action: string,
     params: Record<string, string>,
   ): Promise<unknown> {
-    let attempts = 0
-    while (true) {
-      try {
-        const query = new URLSearchParams({
-          module,
-          action,
-          ...params,
-          apikey: this.apiKey,
-        })
-        const url = `${this.url}?${query.toString()}`
+    return await callWithBackoff(
+      () => this.callRoutescan(module, action, params),
+      {
+        random: Math.random,
+        isPermanentError: isPermanentHttpError,
+        retryCallback: (attempts, error) => {
+          this.logger.warn('Retrying', { attempts, error })
+        },
+      },
+    )
+  }
 
-        const response = await this.httpClient.fetch(url, {
-          timeout: this.timeoutMs,
-        })
+  private async callRoutescan(
+    module: string,
+    action: string,
+    params: Record<string, string>,
+  ): Promise<unknown> {
+    const query = new URLSearchParams({
+      module,
+      action,
+      ...params,
+      apikey: this.apiKey,
+    })
+    const url = `${this.url}?${query.toString()}`
 
-        const etherscanResponse = tryParseEtherscanResponse(response)
+    const response = await this.httpClient.fetch(url, {
+      timeout: this.timeoutMs,
+    })
 
-        if (!etherscanResponse) {
-          throw new TypeError('Invalid Routescan response', {
-            cause: { url: redactUrl(url), response },
-          })
-        }
+    const etherscanResponse = tryParseEtherscanResponse(response)
 
-        // PATCH POINT
-        // Handle the specific case where Routescan returns NOTOK with "Contract source code is not verified"
-        // They've been fixing this for past two years.
-        if (
-          etherscanResponse.message === 'NOTOK' &&
-          etherscanResponse.result === 'Contract source code not verified'
-        ) {
-          return EtherscanContractSourceCodeNotVerified
-        }
-
-        if (etherscanResponse.message !== 'OK') {
-          throw new RoutescanError(etherscanResponse.result)
-        }
-
-        return etherscanResponse.result
-      } catch (error) {
-        attempts++
-        const result = shouldRetry(attempts, error)
-        if (result.shouldStop) {
-          throw error
-        }
-        this.logger.warn('Retrying', { attempts, error })
-        await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
-      }
+    if (!etherscanResponse) {
+      throw new TypeError('Invalid Routescan response', {
+        cause: { url: redactUrl(url), response },
+      })
     }
+
+    // PATCH POINT
+    // Handle the specific case where Routescan returns NOTOK with "Contract source code is not verified"
+    // They've been fixing this for past two years.
+    if (
+      etherscanResponse.message === 'NOTOK' &&
+      etherscanResponse.result === 'Contract source code not verified'
+    ) {
+      return EtherscanContractSourceCodeNotVerified
+    }
+
+    if (etherscanResponse.message !== 'OK') {
+      throw new RoutescanError(etherscanResponse.result)
+    }
+
+    return etherscanResponse.result
   }
 }
 

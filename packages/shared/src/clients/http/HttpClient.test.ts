@@ -34,6 +34,7 @@ describe(HttpClient.name, () => {
             .catch((e: unknown) => e)
           expect((error as Error).cause).toEqual({
             url: `${url}/feed?key=REDACTED`,
+            status: 404,
           })
         },
       )

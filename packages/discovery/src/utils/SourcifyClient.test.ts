@@ -1,5 +1,6 @@
 import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { SourcifyClient } from './SourcifyClient'
 
@@ -44,7 +45,61 @@ describe(SourcifyClient.name, () => {
       expect(source.rootFile).toEqual(undefined)
     })
   })
+
+  // Methodology: time is faked, so the retry waits pass without sleeping.
+  describe(SourcifyClient.prototype.callWithRetries.name, () => {
+    let time: InstalledClock
+
+    beforeEach(() => {
+      time = install()
+    })
+
+    afterEach(() => {
+      time.uninstall()
+    })
+
+    it('does not retry an HTTP 400', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(httpResponse(400, 'Bad Request')),
+      })
+      const client = new SourcifyClient(httpClient, 1)
+
+      const result = client
+        .getContractSource(EthereumAddress.random())
+        .catch((e: unknown) => e)
+      await time.runAllAsync()
+
+      const error = await result
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual('HTTP error')
+      expect((error as Error).cause).toEqual({
+        status: 400,
+        statusText: 'Bad Request',
+      })
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(1)
+    })
+
+    it('retries an HTTP 503 and an HTTP 429', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn()
+          .resolvesToOnce(httpResponse(503, 'Service Unavailable'))
+          .resolvesToOnce(httpResponse(429, 'Too Many Requests'))
+          .resolvesToOnce(httpResponse(404, 'Not Found')),
+      })
+      const client = new SourcifyClient(httpClient, 1)
+
+      const result = client.getContractSource(EthereumAddress.random())
+      await time.runAllAsync()
+
+      expect((await result).isVerified).toEqual(false)
+      expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
+    })
+  })
 })
+
+function httpResponse(status: number, statusText: string) {
+  return { status, statusText, ok: false, json: async () => ({}) }
+}
 
 function clientReturning(body: unknown) {
   const httpClient = mockObject<HttpClient>({
