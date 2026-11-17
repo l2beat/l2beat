@@ -1,5 +1,5 @@
 import type { AztecBlockProvider, BlockProvider } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type Block } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import type {
   ActivityBlock,
@@ -60,14 +60,21 @@ export class StandardActivityBlockProvider implements ActivityBlockProvider {
     return await Promise.all(
       range(from, to + 1).map(async (number) => {
         const block = await this.provider.getBlockWithTransactions(number)
-        return {
-          number: block.number,
-          timestamp: block.timestamp,
-          txsCount: block.transactions.length,
-          uopsCount: this.uopsAnalyzer?.calculateUops(block) ?? null,
-        }
+        return toActivityBlock(block, this.uopsAnalyzer)
       }),
     )
+  }
+}
+
+export function toActivityBlock(
+  block: Block,
+  uopsAnalyzer: UopsAnalyzer | undefined,
+): ActivityBlock {
+  return {
+    number: block.number,
+    timestamp: block.timestamp,
+    txsCount: block.transactions.length,
+    uopsCount: uopsAnalyzer?.calculateUops(block) ?? null,
   }
 }
 

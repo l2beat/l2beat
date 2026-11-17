@@ -59,6 +59,7 @@ function builderBlock(
     parentHash: '0x',
     logsBloom: '0x',
     number: 0,
+    gasUsed: 0,
     miner: BUILDER,
     baseFeePerGas: 10n,
     withdrawals: withdrawalsGwei.map((amount) => ({ amount })),
