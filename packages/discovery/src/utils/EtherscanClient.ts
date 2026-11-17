@@ -382,8 +382,7 @@ function parsePath(path: string | undefined): string | undefined {
   if (path.includes(':')) {
     const parts = path.split(':')
     assert(parts.length === 2, 'Expected only a single colon')
-    // biome-ignore lint/style/noNonNullAssertion: we know it's there
-    return parts[0]!
+    return parts[0]
   }
 
   return path

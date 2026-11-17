@@ -8,7 +8,6 @@ process.env.NO_PROXY = [process.env.NO_PROXY, 'localhost,127.0.0.1']
 
 const PORT = 2022
 
-// biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.e2e.ts',

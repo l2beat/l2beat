@@ -195,6 +195,16 @@
   },
   "overrides": [
     {
+      "includes": ["**/*.config.ts", "**/*.config.mts", "**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "**/test/**/*.ts",
         "**/test/**/*.tsx",

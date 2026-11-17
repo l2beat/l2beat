@@ -87,8 +87,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     offset *= 32
     const array = elements.map((e, i) => {
       if (e.dynamic) {
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        const start = dynamicOffsets[i]!
+        const start = dynamicOffsets[i]
         if (start !== offset) {
           throw new Error('Invalid encoding')
         }
