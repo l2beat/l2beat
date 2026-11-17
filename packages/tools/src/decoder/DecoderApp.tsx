@@ -192,6 +192,7 @@ interface State {
   preimages: Record<`0x${string}`, API.PreimageResult>
   requestedPreimages: Record<`0x${string}`, boolean>
   tooltipId: string
+  lookupFailed: boolean
 }
 
 interface Actions {
@@ -210,6 +211,7 @@ interface Actions {
   requestPreimage(hash: `0x${string}`): void
   setPreimage(preimage: API.PreimageResult): void
   showTooltip(id: string): void
+  markLookupFailed(): void
 }
 
 function compareSignatures(a: Signature, b: Signature): number {
@@ -273,6 +275,7 @@ const useStore = create<State & Actions>((set) => ({
   preimages: {},
   requestedPreimages: {},
   tooltipId: '',
+  lookupFailed: false,
   requestSignature: (selector) =>
     set((state) => {
       if (state.requestedSignatures[selector]) return {}
@@ -359,6 +362,7 @@ const useStore = create<State & Actions>((set) => ({
     })),
   showTooltip: (id) =>
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
+  markLookupFailed: () => set({ lookupFailed: true }),
 }))
 
 // @ts-expect-error
@@ -374,14 +378,6 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 }
 
 const apiRequested = new Set<string>()
-// Failed keys stay in apiRequested and are not asked again, so the warning
-// has to outlive the component too.
-let apiLookupFailed = false
-
-function rememberLookupFailure(setLookupFailed: (failed: boolean) => void) {
-  apiLookupFailed = true
-  setLookupFailed(true)
-}
 
 function APIChecker() {
   const store = useStore()
@@ -389,7 +385,6 @@ function APIChecker() {
   const requestedSignatures = useDebouncedValue(store.requestedSignatures, 100)
   const requestedAddresses = useDebouncedValue(store.requestedAddresses, 100)
   const requestedPreimages = useDebouncedValue(store.requestedPreimages, 100)
-  const [lookupFailed, setLookupFailed] = useState(apiLookupFailed)
 
   useEffect(() => {
     const selectorsToFetch: string[] = []
@@ -402,7 +397,7 @@ function APIChecker() {
     if (selectorsToFetch.length === 0) return
     API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then(
       (res) => store.addSignatures(res),
-      () => rememberLookupFailure(setLookupFailed),
+      store.markLookupFailed,
     )
   }, [requestedSignatures, store.addSignatures])
 
@@ -418,24 +413,21 @@ function APIChecker() {
       const [left, right] = prefixed.split(':')
       const chainId = Number(left)
       const address = right as `0x${string}`
-      API.lookupAddress(chainId, address).then(
-        (res) => {
-          if (res.name) store.setName(chainId, address, res.name)
-          if (res.alias) store.setAlias(chainId, address, res.alias)
-          if (res.token) store.setToken(chainId, address, res.token)
-          if (res.abi.length > 0) {
-            store.addSignatures(
-              res.abi.map((x) => ({
-                selector: x.selector,
-                signature: x.signature,
-                address,
-                chainId,
-              })),
-            )
-          }
-        },
-        () => rememberLookupFailure(setLookupFailed),
-      )
+      API.lookupAddress(chainId, address).then((res) => {
+        if (res.name) store.setName(chainId, address, res.name)
+        if (res.alias) store.setAlias(chainId, address, res.alias)
+        if (res.token) store.setToken(chainId, address, res.token)
+        if (res.abi.length > 0) {
+          store.addSignatures(
+            res.abi.map((x) => ({
+              selector: x.selector,
+              signature: x.signature,
+              address,
+              chainId,
+            })),
+          )
+        }
+      }, store.markLookupFailed)
     }
   }, [
     requestedAddresses,
@@ -453,17 +445,17 @@ function APIChecker() {
         apiRequested.add(hash)
       }
     }
-    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
-      (res) => {
-        for (const preimage of res) {
-          store.setPreimage(preimage)
-        }
-      },
-      () => rememberLookupFailure(setLookupFailed),
-    )
+    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then((res) => {
+      for (const preimage of res) {
+        store.setPreimage(preimage)
+      }
+    }, store.markLookupFailed)
   }, [requestedPreimages, store.setPreimage])
 
-  if (!lookupFailed) return null
+  // Failed keys stay in apiRequested and are not asked again, so the flag
+  // lives in the store, where it outlives this component and reaches
+  // whichever instance is mounted when a lookup fails.
+  if (!store.lookupFailed) return null
   return (
     <div
       role="alert"
