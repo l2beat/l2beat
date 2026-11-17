@@ -39,6 +39,13 @@ describe(getMempoolDayQuery.name, () => {
     expect(sql).toInclude('(1794268800000, 2000, 6400000, 99000000)')
   })
 
+  it('numbers the wait buckets the way they are read back', () => {
+    expect(sql).toInclude(
+      'when delay_ms < 120000 then greatest(delay_ms, 0) / 500\n      when delay_ms < 300000 then 240',
+    )
+    expect(sql).toInclude('else 243\n    end as bucket')
+  })
+
   it('puts round tips at the start of a level', () => {
     expect(sql).toInclude('when tip_wei < 1050000000 then 1000000000')
   })

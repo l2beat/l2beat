@@ -61,6 +61,17 @@ describe(GasFeesMempoolIndexer.name, () => {
     expect(mempool.replaceDay).not.toHaveBeenCalled()
   })
 
+  it("doesn't pay for the Dune read when Flashbots' count can't be read", async () => {
+    const { indexer, readMempoolDay, readFlashbotsLandedCount } =
+      createIndexer()
+    readFlashbotsLandedCount.rejectsWith(new Error('Flashbots summary error'))
+
+    await expect(indexer.update(day + 1, next)).toBeRejectedWith(
+      'Flashbots summary error',
+    )
+    expect(readMempoolDay).not.toHaveBeenCalled()
+  })
+
   it('stores a settled day Dune never got as missing, without waits', async () => {
     const { indexer, mempool } = createIndexer({
       landed: 0,
@@ -89,6 +100,9 @@ describe(GasFeesMempoolIndexer.name, () => {
       tipLevelWaits: [],
       tierWaits: [],
     } satisfies MempoolDay)
+    const readFlashbotsLandedCount = mockFn<
+      (day: UnixTime) => Promise<number | undefined>
+    >().resolvesTo(options.flashbots ?? 1001)
     const indexer = new GasFeesMempoolIndexer(
       {
         parents: [],
@@ -102,14 +116,18 @@ describe(GasFeesMempoolIndexer.name, () => {
           getBlockNumberAtOrBefore: mockFn(async (t: UnixTime) => Number(t)),
         },
         readMempoolDay,
-        readFlashbotsLandedCount: mockFn().resolvesTo(
-          options.flashbots ?? 1001,
-        ),
+        readFlashbotsLandedCount,
         now: options.now ?? (() => next),
       },
       Logger.SILENT,
     )
-    return { indexer, mempool, readMempoolDay, tipHourly }
+    return {
+      indexer,
+      mempool,
+      readMempoolDay,
+      readFlashbotsLandedCount,
+      tipHourly,
+    }
   }
 
   const HOURS: GasFeesTipHourlyRecord[] = Array.from(

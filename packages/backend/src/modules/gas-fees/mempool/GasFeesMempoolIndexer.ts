@@ -7,7 +7,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { getDayBlocks, getHourlyTips } from '../dayInputs'
-import { duneRetryStrategy, nextDays } from '../days'
+import { duneRetryStrategy, nextDays, UnfinishedDay } from '../days'
 import type { BlockFinder } from '../types'
 import type { MempoolDayQueryInput } from './getMempoolDayQuery'
 import type { MempoolDay } from './readMempoolDay'
@@ -18,9 +18,6 @@ const STORED_DATA_VERSION = '1'
 const SETTLE_SECONDS = 3 * UnixTime.DAY
 /** The share of Flashbots' landed transactions Dune must have for a complete day */
 const COMPLETE_SHARE = 0.99
-/** Dune loads a day at once and every read is billed, so a thin day is read again this often at most */
-const THIN_DAY_RECHECK_SECONDS = 6 * UnixTime.HOUR
-
 interface GasFeesMempoolIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
   firstDay: UnixTime
@@ -37,9 +34,9 @@ interface GasFeesMempoolIndexerDeps
  * after the end of the last stored day.
  */
 export class GasFeesMempoolIndexer extends ManagedChildIndexer {
-  private thinDay:
-    | { day: UnixTime; counts: object; readAt: UnixTime }
-    | undefined
+  private readonly unfinished = new UnfinishedDay(
+    'Mempool day incomplete on Dune',
+  )
 
   constructor(
     private readonly $: GasFeesMempoolIndexerDeps,
@@ -62,31 +59,24 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
     if (day === undefined) return to
 
     const now = this.$.now?.() ?? UnixTime.now()
-    if (
-      this.thinDay?.day === day &&
-      now < this.thinDay.readAt + THIN_DAY_RECHECK_SECONDS
-    ) {
-      throw new Error('Mempool day incomplete on Dune', {
-        cause: this.thinDay.counts,
-      })
-    }
+    this.unfinished.throwIfRecent(day, now)
 
     const previousDay = UnixTime(day - UnixTime.DAY)
-    // Some transactions landing on the day were first seen the day before
-    const [hourlyTips, previous, blocks] = await Promise.all([
-      getHourlyTips(this.$.db, previousDay, day),
-      getDayBlocks(this.$.blockFinder, previousDay),
-      getDayBlocks(this.$.blockFinder, day),
-    ])
-    const [mempool, flashbotsLandedCount] = await Promise.all([
-      this.$.readMempoolDay({
-        day,
-        previousDayFirstBlock: previous.firstBlock,
-        ...blocks,
-        hourlyTips,
-      }),
-      this.$.readFlashbotsLandedCount(day),
-    ])
+    // Flashbots' count comes before the Dune read, which is billed: if it fails, the retry has paid for nothing
+    const [hourlyTips, previous, blocks, flashbotsLandedCount] =
+      await Promise.all([
+        // Some transactions landing on the day were first seen the day before
+        getHourlyTips(this.$.db, previousDay, day),
+        getDayBlocks(this.$.blockFinder, previousDay),
+        getDayBlocks(this.$.blockFinder, day),
+        this.$.readFlashbotsLandedCount(day),
+      ])
+    const mempool = await this.$.readMempoolDay({
+      day,
+      previousDayFirstBlock: previous.firstBlock,
+      ...blocks,
+      hourlyTips,
+    })
     const status = getMempoolDayStatus(
       mempool.landedCount,
       flashbotsLandedCount,
@@ -98,11 +88,11 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
       flashbotsLandedCount,
     }
     if (status === undefined) {
-      this.thinDay = { day, counts, readAt: now }
-      throw new Error('Mempool day incomplete on Dune', { cause: counts })
+      return this.unfinished.fail(day, now, counts)
     }
-    this.thinDay = undefined
+    this.unfinished.clear()
 
+    // A missing day has no rows on Dune, so its waits are empty
     await this.$.db.gasFeesMempool.replaceDay({
       day: {
         timestamp: day,
@@ -111,8 +101,8 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
         flashbotsLandedCount: flashbotsLandedCount ?? null,
         keptCount: mempool.keptCount,
       },
-      tipLevelWaits: status === 'missing' ? [] : mempool.tipLevelWaits,
-      tierWaits: status === 'missing' ? [] : mempool.tierWaits,
+      tipLevelWaits: mempool.tipLevelWaits,
+      tierWaits: mempool.tierWaits,
     })
     if (status === 'complete') {
       this.logger.info('Saved mempool day', counts)

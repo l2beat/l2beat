@@ -24,6 +24,18 @@ const BUCKET_MS = 500
 const FINE_BUCKETS_UNTIL_MS = 120_000
 const COARSE_BUCKET_STARTS_MS = [120_000, 300_000, 600_000, 1_800_000]
 
+/** The SQL `when` lines that number a wait in `column`, milliseconds, the way toWaitBucket reads it back */
+export function getWaitBucketCases(column: string): string[] {
+  const fine = FINE_BUCKETS_UNTIL_MS / BUCKET_MS
+  return [
+    `when ${column} < ${FINE_BUCKETS_UNTIL_MS} then greatest(${column}, 0) / ${BUCKET_MS}`,
+    ...COARSE_BUCKET_STARTS_MS.slice(1).map(
+      (until, i) => `when ${column} < ${until} then ${fine + i}`,
+    ),
+    `else ${fine + COARSE_BUCKET_STARTS_MS.length - 1}`,
+  ]
+}
+
 /** The query's wait bucket numbers: 0 to 239 are 500 ms wide, 240 to 243 the coarse ones */
 export function toWaitBucket(bucket: number): GasFeesWaitBucket {
   const fine = FINE_BUCKETS_UNTIL_MS / BUCKET_MS

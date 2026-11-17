@@ -1,10 +1,10 @@
 import type {
-  GasFeesTier,
   GasFeesTierWaitRecord,
   GasFeesTipLevelWaitRecord,
 } from '@l2beat/database'
 import type { DuneQueryService } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
+import { GAS_FEES_TIERS } from '../tips/estimateTips'
 import { TIP_LEVELS, toWaitBucket } from './buckets'
 import {
   getMempoolDayQuery,
@@ -44,7 +44,6 @@ export interface MempoolDay {
   tierWaits: GasFeesTierWaitRecord[]
 }
 
-const TIERS: GasFeesTier[] = ['slow', 'medium', 'fast']
 /** grouping() of (tip_from_wei, bucket): a bit is set for each column left out */
 const BY_LEVEL_AND_BUCKET = 0
 const BY_BUCKET = 2
@@ -97,7 +96,7 @@ export function toMempoolDay(
         throw new Error('Mempool row malformed', { cause: { timestamp, row } })
       }
       const bucket = toWaitBucket(row.bucket)
-      for (const tier of TIERS) {
+      for (const tier of GAS_FEES_TIERS) {
         if (row[tier] === 0) continue
         tierWaits.push({
           timestamp,

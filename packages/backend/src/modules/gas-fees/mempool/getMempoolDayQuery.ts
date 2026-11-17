@@ -1,6 +1,8 @@
 import type { GasFeesTipHourlyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { TIP_LEVELS } from './buckets'
+import { GAS_FEES_TIERS } from '../tips/estimateTips'
+import { gweiToWei } from '../units'
+import { getWaitBucketCases, TIP_LEVELS } from './buckets'
 
 export interface MempoolDayQueryInput {
   /** Start of the UTC day */
@@ -46,20 +48,21 @@ export function getMempoolDayQuery(input: MempoolDayQueryInput): string {
     (level) => `      when tip_wei < ${level.toWei} then ${level.fromWei}`,
   ).join('\n')
   const lowest = TIP_LEVELS[0]?.fromWei ?? 0
+  const waitBuckets = getWaitBucketCases('delay_ms')
+    .map((line) => `      ${line}`)
+    .join('\n')
   const estimates = input.hourlyTips
     .map(
       (hour) =>
-        `(${hour.timestamp * 1000}, ${toWei(hour.slowTipGwei)}, ${toWei(hour.mediumTipGwei)}, ${toWei(hour.fastTipGwei)})`,
+        `(${hour.timestamp * 1000}, ${gweiToWei(hour.slowTipGwei)}, ${gweiToWei(hour.mediumTipGwei)}, ${gweiToWei(hour.fastTipGwei)})`,
     )
     .join(',\n    ')
-  const tierColumns = ['slow', 'medium', 'fast']
-    .map(
-      (tier) => `  count_if(is_kept and in_${tier}) as ${tier},
+  const tierColumns = GAS_FEES_TIERS.map(
+    (tier) => `  count_if(is_kept and in_${tier}) as ${tier},
   count_if(is_kept and in_${tier} and blocks <= 1) as ${tier}_next_block,
   count_if(is_kept and in_${tier} and blocks <= 2) as ${tier}_within_2_blocks,
   count_if(is_kept and in_${tier} and blocks <= 5) as ${tier}_within_1_minute`,
-    )
-    .join(',\n')
+  ).join(',\n')
   const inTier = (tier: string) =>
     `coalesce(c.tip_wei >= e.${tier}_wei and c.tip_wei < e.${tier}_wei * ${TIER_BAND}, false) as in_${tier}`
 
@@ -121,11 +124,7 @@ c as (
 ${levels}
     end as tip_from_wei,
     case
-      when delay_ms < 120000 then greatest(delay_ms, 0) / 500
-      when delay_ms < 300000 then 240
-      when delay_ms < 600000 then 241
-      when delay_ms < 1800000 then 242
-      else 243
+${waitBuckets}
     end as bucket,
     height - next_number + 1 as blocks
   from j
@@ -138,9 +137,7 @@ e as (
 k as (
   select c.tip, c.tip_from_wei, c.bucket, c.blocks,
     c.reason = '9 kept' as is_kept,
-    ${inTier('slow')},
-    ${inTier('medium')},
-    ${inTier('fast')}
+    ${GAS_FEES_TIERS.map(inTier).join(',\n    ')}
   from c
   left join e on e.hour_ms = c.seen_ms - c.seen_ms % 3600000
 )
@@ -159,8 +156,4 @@ having grouping(tip_from_wei, bucket) = 3
   or (count_if(is_kept) > 0 and (grouping(tip_from_wei, bucket) = 2 or tip_from_wei is not null))
 order by 1, 2, 3
 `
-}
-
-function toWei(gwei: number): bigint {
-  return BigInt(Math.round(gwei * 1e9))
 }

@@ -8,11 +8,9 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { GAS_FEES_CHAINS } from './fees/chains'
 import { GasFeesDailyIndexer } from './fees/GasFeesDailyIndexer'
 import { readFeesDays } from './fees/readFeesDays'
+import { fetchText } from './fetchText'
 import { GasFeesMempoolIndexer } from './mempool/GasFeesMempoolIndexer'
-import {
-  fetchText,
-  readFlashbotsLandedCount,
-} from './mempool/readFlashbotsSummary'
+import { readFlashbotsLandedCount } from './mempool/readFlashbotsSummary'
 import { readMempoolDay } from './mempool/readMempoolDay'
 import { GasFeesTipPayersIndexer } from './payers/GasFeesTipPayersIndexer'
 import { readTipPayersDay } from './payers/readTipPayersDay'

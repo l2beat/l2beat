@@ -24,7 +24,6 @@ const TipPayersRow = v.object({
 })
 export type TipPayersDay = v.infer<typeof TipPayersRow>
 
-/** Fails while Dune is missing any of the day's blocks or transactions */
 export async function readTipPayersDay(
   dune: TipPayersDune,
   input: TipPayersDayQueryInput,
@@ -35,16 +34,20 @@ export async function readTipPayersDay(
     v.array(TipPayersRow),
   )
   const row = rows[0]
-  if (
-    rows.length !== 1 ||
-    row === undefined ||
-    row.blocks !== input.lastBlock - input.firstBlock + 1 ||
-    row.incomplete_blocks !== 0 ||
-    row.unknown_count !== 0
-  ) {
-    throw new Error('Tip payers day incomplete on Dune', {
-      cause: { day: input.day, rows },
-    })
+  if (rows.length !== 1 || row === undefined) {
+    throw new Error('Tip payers day malformed', { cause: { day: input.day } })
   }
   return row
+}
+
+/** Whether Dune has every block of the day and all of each block's transactions */
+export function isWholeTipPayersDay(
+  day: TipPayersDay,
+  input: Pick<TipPayersDayQueryInput, 'firstBlock' | 'lastBlock'>,
+): boolean {
+  return (
+    day.blocks === input.lastBlock - input.firstBlock + 1 &&
+    day.incomplete_blocks === 0 &&
+    day.unknown_count === 0
+  )
 }

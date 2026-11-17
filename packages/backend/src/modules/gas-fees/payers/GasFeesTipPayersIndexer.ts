@@ -7,10 +7,11 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { getDayBlocks, getHourlyTips } from '../dayInputs'
-import { duneRetryStrategy, nextDays } from '../days'
+import { duneRetryStrategy, nextDays, UnfinishedDay } from '../days'
 import type { BlockFinder } from '../types'
+import { gweiToWei } from '../units'
 import type { TipPayersDayQueryInput } from './getTipPayersDayQuery'
-import type { TipPayersDay } from './readTipPayersDay'
+import { isWholeTipPayersDay, type TipPayersDay } from './readTipPayersDay'
 
 /** Bump it when a fix changes what past days store: every day is read again from Dune */
 const STORED_DATA_VERSION = '1'
@@ -21,6 +22,7 @@ interface GasFeesTipPayersIndexerDeps
   db: Database
   blockFinder: BlockFinder
   readTipPayersDay: (input: TipPayersDayQueryInput) => Promise<TipPayersDay>
+  now?: () => UnixTime
 }
 
 /**
@@ -28,6 +30,10 @@ interface GasFeesTipPayersIndexerDeps
  * boundary at or after the end of the last stored day.
  */
 export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
+  private readonly unfinished = new UnfinishedDay(
+    'Tip payers day incomplete on Dune',
+  )
+
   constructor(
     private readonly $: GasFeesTipPayersIndexerDeps,
     logger: Logger,
@@ -48,6 +54,9 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
     const day = nextDays(from, to)[0]
     if (day === undefined) return to
 
+    const now = this.$.now?.() ?? UnixTime.now()
+    this.unfinished.throwIfRecent(day, now)
+
     const [hourlyTips, blocks] = await Promise.all([
       getHourlyTips(this.$.db, day, day),
       getDayBlocks(this.$.blockFinder, day),
@@ -58,8 +67,17 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
     const tips = await this.$.readTipPayersDay({
       day,
       ...blocks,
-      fastTipWei: BigInt(Math.round(fastTipGwei * 1e9)),
+      fastTipWei: gweiToWei(fastTipGwei),
     })
+    if (!isWholeTipPayersDay(tips, blocks)) {
+      return this.unfinished.fail(day, now, {
+        day,
+        blocks: tips.blocks,
+        incompleteBlocks: tips.incomplete_blocks,
+        unknownCount: tips.unknown_count,
+      })
+    }
+    this.unfinished.clear()
     const group = (txCount: number, tipEth: number): GasFeesTipGroup => ({
       txCount,
       tipEth,

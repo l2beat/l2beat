@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import type { FetchText } from '../fetchText'
 import {
   parseLandedCount,
   readFlashbotsLandedCount,
@@ -9,7 +10,7 @@ describe(readFlashbotsLandedCount.name, () => {
   const day = UnixTime.fromDate(new Date('2025-12-02T00:00:00Z'))
 
   it("reads the day's summary file", async () => {
-    const fetchText = mockFn().resolvesTo({
+    const fetchText = mockFn<FetchText>().resolvesTo({
       status: 200,
       text: '- Transactions: 1,125,000\n- Included on-chain:    818,146 (72.9%)\n',
     })
@@ -21,7 +22,7 @@ describe(readFlashbotsLandedCount.name, () => {
   })
 
   it('returns undefined when the day has no summary', async () => {
-    const fetchText = mockFn().resolvesTo({ status: 404, text: '' })
+    const fetchText = mockFn<FetchText>().resolvesTo({ status: 404, text: '' })
 
     expect(await readFlashbotsLandedCount(fetchText, day)).toEqual(undefined)
   })

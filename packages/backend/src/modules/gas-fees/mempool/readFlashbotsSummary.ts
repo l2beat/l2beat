@@ -1,10 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { FetchText } from '../fetchText'
 
 const ARCHIVE = 'https://mempool-dumpster.flashbots.net/ethereum/mainnet'
-
-export type FetchText = (
-  url: string,
-) => Promise<{ status: number; text: string }>
 
 /**
  * "Included on-chain" in Flashbots' summary of a UTC day: the mempool
@@ -34,9 +31,4 @@ export function parseLandedCount(summary: string): number {
     throw new Error('Flashbots summary malformed')
   }
   return Number(match[1].replaceAll(',', ''))
-}
-
-export async function fetchText(url: string) {
-  const response = await fetch(url, { signal: AbortSignal.timeout(30_000) })
-  return { status: response.status, text: await response.text() }
 }

@@ -34,3 +34,34 @@ export function nextDays(from: number, to: number, maxDays = 1): UnixTime[] {
   }
   return days
 }
+
+/** Dune loads a day at once and every read is billed, so an unfinished day is read again this often at most */
+const UNFINISHED_REREAD_SECONDS = 6 * UnixTime.HOUR
+
+/** Remembers the day last found unfinished on Dune, so its retries don't each pay for a read */
+export class UnfinishedDay {
+  private last:
+    | { day: UnixTime; cause: Record<string, unknown>; readAt: UnixTime }
+    | undefined
+
+  constructor(private readonly message: string) {}
+
+  /** Fails as before, without a read, when the day was found unfinished less than 6 hours ago */
+  throwIfRecent(day: UnixTime, now: UnixTime): void {
+    if (
+      this.last?.day === day &&
+      now < this.last.readAt + UNFINISHED_REREAD_SECONDS
+    ) {
+      throw new Error(this.message, { cause: this.last.cause })
+    }
+  }
+
+  fail(day: UnixTime, now: UnixTime, cause: Record<string, unknown>): never {
+    this.last = { day, cause, readAt: now }
+    throw new Error(this.message, { cause })
+  }
+
+  clear(): void {
+    this.last = undefined
+  }
+}
