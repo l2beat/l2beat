@@ -1,0 +1,26 @@
+or {
+  or {
+    `new Intl.DateTimeFormat($arguments)`,
+    `Intl.DateTimeFormat($arguments)`
+  } as $call where { $arguments <: not contains `timeZone: 'UTC'` },
+  `$_.$method($arguments)` as $call where {
+    $method <: or {
+      `toLocaleDateString`,
+      `toLocaleTimeString`
+    },
+    $arguments <: not contains `timeZone: 'UTC'`
+  },
+  `$_.$method()` as $call where {
+    $method <: or {
+      `getFullYear`,
+      `getMonth`,
+      `getDate`,
+      `getDay`,
+      `getHours`,
+      `getMinutes`,
+      `getSeconds`
+    }
+  }
+} where {
+  register_diagnostic(span=$call, message="Every date and time on the site is in UTC. Format it with a helper from ~/utils/dates (formatTimestamp, formatRange, <UtcDateTime>), or read it through getUTC*() or Intl.DateTimeFormat with timeZone: 'UTC'. Local time shows the previous day west of UTC and breaks hydration. See src/utils/dates.md.", severity="error")
+}

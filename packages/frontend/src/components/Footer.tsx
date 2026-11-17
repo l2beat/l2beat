@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function Footer({ className, columnClassName }: Props) {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getUTCFullYear()
   const markdownHref = getMarkdownAlternatePath(usePathname())
 
   return (

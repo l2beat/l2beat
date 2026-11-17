@@ -35,6 +35,7 @@ The tooltip date follows what the point measures:
 ## Code
 
 - Read dates through UTC: `getUTCDate()`, `getUTCDay()`, `getUTCMonth()`, `toISOString()`, or `Intl.DateTimeFormat` with `timeZone: 'UTC'`. Local getters (`getDate()`, `toLocaleDateString()` without `timeZone`) show the previous day west of UTC and break hydration. The one local-time helper is `formatLocalDateTime`, and it runs only in the browser.
+- Lint (`lint/utcDates.grit`) rejects the local getters, `toLocaleDateString()`, `toLocaleTimeString()` and `Intl.DateTimeFormat` without `timeZone: 'UTC'`.
 - Test time-zone-sensitive code under a zone west of UTC, with `withTimezone` from `withTimezone.ts`.
 
 ## Markdown pages
