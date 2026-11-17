@@ -8,8 +8,9 @@ type HomeStage = Stage | 'UnderReview' | 'NotApplicable'
 
 /**
  * The tables' stage badge, in its colours, at the size of the row text: a
- * smaller badge in sentence case, so the row stays calm next to its figures.
- * It links to the stage section of the project page.
+ * smaller badge, so the row stays calm next to its figures, in the same all
+ * caps as the stage badge everywhere else. It links to the stage section of
+ * the project page.
  */
 export function HomeStageBadge({
   stage,
@@ -22,7 +23,7 @@ export function HomeStageBadge({
     <TableLink href={`${projectHref}#stage`} className={HOME_CELL_LINK_CLASS}>
       <span
         className={cn(
-          'inline-flex h-5 items-center whitespace-nowrap rounded-sm px-1.5 font-medium text-label-value-13',
+          'inline-flex h-5 items-center whitespace-nowrap rounded-sm px-1.5 font-medium text-label-value-13 uppercase',
           getStageBadgeClassName(stage),
         )}
       >
