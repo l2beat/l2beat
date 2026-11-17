@@ -12,7 +12,11 @@ import type { FeesDay } from './readFeesDays'
 
 /** Bump it when a fix changes what past days store: every day is read again, 0.16 to 0.3 Dune credits each */
 const STORED_DATA_VERSION = '1'
-/** A chain Dune is late with is read again for this long. After it, its days stay missing */
+/**
+ * A chain Dune is late with is read again for this long after the day. Counted
+ * from now, not from the days being read, so a backfill can't run past a day
+ * that is still due. After it, the day stays missing
+ */
 const LATE_DAYS = 30
 /**
  * Every read is billed, so late chains are read at most this often. Once synced
@@ -102,7 +106,10 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         return
       }
       const from = UnixTime(
-        Math.max(this.$.firstDay, before - LATE_DAYS * UnixTime.DAY),
+        Math.max(
+          this.$.firstDay,
+          UnixTime.toStartOf(now, 'day') - LATE_DAYS * UnixTime.DAY,
+        ),
       )
       if (from >= before) return
       const stored = await this.$.db.gasFeesDaily.getInRange(
