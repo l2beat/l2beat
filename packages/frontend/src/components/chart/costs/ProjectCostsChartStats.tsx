@@ -14,7 +14,7 @@ export function ProjectCostsChartStats({
   data: ProjectCostsChartResponse | undefined
 }) {
   return (
-    <ChartStats className="mt-4 lg:grid-cols-3">
+    <ChartStats className="mt-4 md:grid-cols-3 lg:grid-cols-3">
       <ChartStatsItem
         label={`Total ${unitToLabel(unit)}`}
         className="max-md:h-7"

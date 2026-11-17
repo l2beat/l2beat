@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartPreviousDataDim } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DataPostedRangeControls } from '~/pages/layer2s/data-posted/DataPostedRangeControls'
 import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
@@ -61,8 +60,10 @@ export function ProjectDataPostedChart({
           project={project}
         />
       </div>
-      <HorizontalSeparator className="my-4" />
-      <ChartPreviousDataDim isPlaceholderData={isPlaceholderData}>
+      <ChartPreviousDataDim
+        isPlaceholderData={isPlaceholderData}
+        className="mt-1"
+      >
         <ProjectDataPostedChartStats data={data?.stats} isLoading={isLoading} />
       </ChartPreviousDataDim>
     </div>
