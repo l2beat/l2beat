@@ -44,6 +44,13 @@ describe(GasFeesMempoolIndexer.name, () => {
     })
   })
 
+  it('starts at its first day when the hourly tips lower it below', async () => {
+    const { indexer, readMempoolDay } = createIndexer()
+
+    expect(await indexer.update(day - UnixTime.DAY, next)).toEqual(next)
+    expect(readMempoolDay.calls[0]?.args[0].day).toEqual(day)
+  })
+
   it('fails on a thin day until it has settled, reading it again after 6 hours at most', async () => {
     let now = next
     const { indexer, mempool, readMempoolDay } = createIndexer({

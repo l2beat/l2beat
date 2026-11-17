@@ -83,7 +83,7 @@ CREATE TABLE "GasFeesTierWait" (
     "txCount" INTEGER NOT NULL,
     "nextBlockCount" INTEGER NOT NULL,
     "within2BlocksCount" INTEGER NOT NULL,
-    "within1MinuteCount" INTEGER NOT NULL,
+    "within5BlocksCount" INTEGER NOT NULL,
 
     CONSTRAINT "GasFeesTierWait_pkey" PRIMARY KEY ("timestamp","tier","waitFromMs")
 );

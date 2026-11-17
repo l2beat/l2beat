@@ -15,6 +15,8 @@ import { isWholeTipPayersDay, type TipPayersDay } from './readTipPayersDay'
 
 /** Bump it when a fix changes what past days store: every day is read again from Dune */
 const STORED_DATA_VERSION = '1'
+/** Ethereum's raw tables have a day within hours. A day still short of blocks this long after it ends is left out */
+const SETTLE_SECONDS = 3 * UnixTime.DAY
 
 interface GasFeesTipPayersIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
@@ -51,7 +53,7 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const day = nextDays(from, to)[0]
+    const day = nextDays(this.$.firstDay, from, to)[0]
     if (day === undefined) return to
 
     const now = this.$.now?.() ?? UnixTime.now()
@@ -70,12 +72,18 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
       fastTipWei: gweiToWei(fastTipGwei),
     })
     if (!isWholeTipPayersDay(tips, blocks)) {
-      return this.unfinished.fail(day, now, {
+      const cause = {
         day,
         blocks: tips.blocks,
         incompleteBlocks: tips.incomplete_blocks,
         unknownCount: tips.unknown_count,
-      })
+      }
+      if (now < day + UnixTime.DAY + SETTLE_SECONDS) {
+        return this.unfinished.fail(day, now, cause)
+      }
+      // Stored as no row, never as partial totals, so the later days aren't held back for good
+      this.logger.error('Tip payers day left out, incomplete on Dune', cause)
+      return day + UnixTime.DAY
     }
     this.unfinished.clear()
     const group = (txCount: number, tipEth: number): GasFeesTipGroup => ({

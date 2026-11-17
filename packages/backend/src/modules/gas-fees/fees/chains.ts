@@ -16,6 +16,10 @@ export interface GasFeesChain {
 
 const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
 
+/**
+ * A chain added later gets only its last 30 days, as a late chain does. To read
+ * its history, bump the fees indexer's STORED_DATA_VERSION: every chain's days are read again.
+ */
 export const GAS_FEES_CHAINS: GasFeesChain[] = [
   { id: 'ethereum', dune: 'ethereum', requiredFrom: day('2015-08-08') },
   {

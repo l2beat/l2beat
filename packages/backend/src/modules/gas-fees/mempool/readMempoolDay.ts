@@ -24,15 +24,15 @@ const MempoolRow = v.object({
   slow: v.number(),
   slow_next_block: v.number(),
   slow_within_2_blocks: v.number(),
-  slow_within_1_minute: v.number(),
+  slow_within_5_blocks: v.number(),
   medium: v.number(),
   medium_next_block: v.number(),
   medium_within_2_blocks: v.number(),
-  medium_within_1_minute: v.number(),
+  medium_within_5_blocks: v.number(),
   fast: v.number(),
   fast_next_block: v.number(),
   fast_within_2_blocks: v.number(),
-  fast_within_1_minute: v.number(),
+  fast_within_5_blocks: v.number(),
 })
 export type MempoolRow = v.infer<typeof MempoolRow>
 
@@ -105,7 +105,7 @@ export function toMempoolDay(
           txCount: row[tier],
           nextBlockCount: row[`${tier}_next_block`],
           within2BlocksCount: row[`${tier}_within_2_blocks`],
-          within1MinuteCount: row[`${tier}_within_1_minute`],
+          within5BlocksCount: row[`${tier}_within_5_blocks`],
         })
       }
     }

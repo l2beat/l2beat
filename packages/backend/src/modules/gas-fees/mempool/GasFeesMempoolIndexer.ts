@@ -55,7 +55,7 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const day = nextDays(from, to)[0]
+    const day = nextDays(this.$.firstDay, from, to)[0]
     if (day === undefined) return to
 
     const now = this.$.now?.() ?? UnixTime.now()

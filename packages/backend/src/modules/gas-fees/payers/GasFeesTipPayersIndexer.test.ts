@@ -53,6 +53,23 @@ describe(GasFeesTipPayersIndexer.name, () => {
     expect(payers.upsert).not.toHaveBeenCalled()
   })
 
+  it('leaves out a day still incomplete 3 days after it ends, and moves on', async () => {
+    const { indexer, payers } = createIndexer(
+      { ...TIPS, incomplete_blocks: 3 },
+      () => UnixTime(next + 3 * UnixTime.DAY),
+    )
+
+    expect(await indexer.update(next, next)).toEqual(next)
+    expect(payers.upsert).not.toHaveBeenCalled()
+  })
+
+  it('starts at its first day when the hourly tips lower it below', async () => {
+    const { indexer, readTipPayersDay } = createIndexer(TIPS)
+
+    expect(await indexer.update(day - UnixTime.DAY, next)).toEqual(next)
+    expect(readTipPayersDay.calls[0]?.args[0].day).toEqual(day)
+  })
+
   function createIndexer(tips: TipPayersDay, now?: () => UnixTime) {
     const payers = mockObject<Database['gasFeesTipPayersDaily']>({
       upsert: mockFn().resolvesTo(undefined),

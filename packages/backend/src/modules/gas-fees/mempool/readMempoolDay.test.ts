@@ -35,7 +35,7 @@ describe(toMempoolDay.name, () => {
         txCount: 2,
         nextBlockCount: 0,
         within2BlocksCount: 0,
-        within1MinuteCount: 1,
+        within5BlocksCount: 1,
       },
     ])
   })
@@ -66,15 +66,15 @@ function row(values: Partial<MempoolRow>): MempoolRow {
     slow: 0,
     slow_next_block: 0,
     slow_within_2_blocks: 0,
-    slow_within_1_minute: 0,
+    slow_within_5_blocks: 0,
     medium: 0,
     medium_next_block: 0,
     medium_within_2_blocks: 0,
-    medium_within_1_minute: 0,
+    medium_within_5_blocks: 0,
     fast: 0,
     fast_next_block: 0,
     fast_within_2_blocks: 0,
-    fast_within_1_minute: 1,
+    fast_within_5_blocks: 1,
     ...values,
   }
 }

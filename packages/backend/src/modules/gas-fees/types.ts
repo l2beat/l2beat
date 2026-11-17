@@ -5,7 +5,7 @@ export interface GasFeesConfig {
   fees: {
     /** The first day stored. Every day after it costs 0.16 to 0.3 Dune credits */
     firstDay: UnixTime
-    /** Contiguous days read per Dune query, never across a month, as Dune partitions by month */
+    /** Contiguous days stored per Dune query, in one month, as Dune partitions by month. Each read takes the day after them too */
     daysPerQuery: number
   }
   /**

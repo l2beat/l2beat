@@ -6,7 +6,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { duneRetryStrategy, nextDays } from '../days'
+import { duneRetryStrategy, nextDays, UnfinishedDay } from '../days'
 import type { GasFeesChain } from './chains'
 import type { FeesDay } from './readFeesDays'
 
@@ -46,6 +46,7 @@ interface GasFeesDailyIndexerDeps
  */
 export class GasFeesDailyIndexer extends ManagedChildIndexer {
   private lateReadAt: UnixTime | undefined
+  private readonly unloaded = new UnfinishedDay('Gas fees day not on Dune yet')
 
   constructor(
     private readonly $: GasFeesDailyIndexerDeps,
@@ -65,9 +66,11 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const days = nextDays(from, to, this.$.daysPerQuery)
+    const days = nextDays(this.$.firstDay, from, to, this.$.daysPerQuery)
     const first = days[0]
     if (first === undefined) return to
+    const now = this.$.now?.() ?? UnixTime.now()
+    this.unloaded.throwIfRecent(first, now)
 
     const read = await this.$.readFeesDays(
       this.$.chains,
@@ -79,8 +82,9 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
     const loaded = unloaded === -1 ? read : read.slice(0, unloaded)
     const last = loaded.at(-1)
     if (!last) {
-      throw new Error('Gas fees day not on Dune yet', { cause: { day: first } })
+      return this.unloaded.fail(first, now, { day: first })
     }
+    this.unloaded.clear()
     await this.$.db.gasFeesDaily.upsertMany(
       loaded.flatMap((day) => day.records),
     )
@@ -91,14 +95,13 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         day.missing.map((chain) => ({ day: day.day, chain })),
       ),
     })
-    await this.fillLateChains(first)
+    await this.fillLateChains(first, now)
     return last.day + UnixTime.DAY
   }
 
   /** Fails soft: the days already stored shouldn't be read again because a late chain's read failed */
-  private async fillLateChains(before: UnixTime): Promise<void> {
+  private async fillLateChains(before: UnixTime, now: UnixTime): Promise<void> {
     try {
-      const now = this.$.now?.() ?? UnixTime.now()
       if (
         this.lateReadAt !== undefined &&
         now < this.lateReadAt + LATE_READ_MIN_GAP_SECONDS

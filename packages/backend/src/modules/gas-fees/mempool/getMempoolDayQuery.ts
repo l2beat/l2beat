@@ -61,7 +61,7 @@ export function getMempoolDayQuery(input: MempoolDayQueryInput): string {
     (tier) => `  count_if(is_kept and in_${tier}) as ${tier},
   count_if(is_kept and in_${tier} and blocks <= 1) as ${tier}_next_block,
   count_if(is_kept and in_${tier} and blocks <= 2) as ${tier}_within_2_blocks,
-  count_if(is_kept and in_${tier} and blocks <= 5) as ${tier}_within_1_minute`,
+  count_if(is_kept and in_${tier} and blocks <= 5) as ${tier}_within_5_blocks`,
   ).join(',\n')
   const inTier = (tier: string) =>
     `coalesce(c.tip_wei >= e.${tier}_wei and c.tip_wei < e.${tier}_wei * ${TIER_BAND}, false) as in_${tier}`

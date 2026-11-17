@@ -24,6 +24,11 @@ const FEES_DELAY_SECONDS = 3 * UnixTime.HOUR
 const MEMPOOL_DELAY_SECONDS = 18 * UnixTime.HOUR
 /** Ethereum's raw tables trail by minutes */
 const TIP_PAYERS_DELAY_SECONDS = 3 * UnixTime.HOUR
+/**
+ * The service gives up after 2 minutes by default, queueing included, without stopping the run on Dune:
+ * a query slower than that would be billed and thrown away on every retry
+ */
+const DUNE_TIMEOUT_MS = 15 * 60_000
 /** A minute or two old at most, in a few eth_feeHistory calls a minute */
 const LIVE_TIPS_INTERVAL_MS = 15_000
 
@@ -47,7 +52,11 @@ export function createGasFeesModule({
 
   const { fees, historyFirstDay, walletServices } = config.gasFees
   const indexerService = new IndexerService(db)
-  const dune = new DuneQueryService({ logger, duneClient })
+  const dune = new DuneQueryService({
+    logger,
+    duneClient,
+    timeoutMs: DUNE_TIMEOUT_MS,
+  })
   const rpc = providers.clients.getRpcClient('ethereum')
   const blockFinder = providers.block.getBlockProvider('ethereum')
   // Each source has a day at its own delay, so each has its own day clock

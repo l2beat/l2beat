@@ -17,9 +17,20 @@ export function duneRetryStrategy() {
  * The days a daily indexer stores next, as their starts: those that end after
  * the height `from - 1` and by `to`, at most `maxDays`, in one calendar month.
  * A height is a day boundary at or after the end of the last stored day.
+ *
+ * Never a day before `firstDay`: an indexer starts no higher than its parents,
+ * so one whose parent starts earlier is asked for days before its own first.
  */
-export function nextDays(from: number, to: number, maxDays = 1): UnixTime[] {
-  const first = UnixTime(UnixTime.toEndOf(UnixTime(from), 'day') - UnixTime.DAY)
+export function nextDays(
+  firstDay: UnixTime,
+  from: number,
+  to: number,
+  maxDays = 1,
+): UnixTime[] {
+  const start = Math.max(from, firstDay + UnixTime.DAY)
+  const first = UnixTime(
+    UnixTime.toEndOf(UnixTime(start), 'day') - UnixTime.DAY,
+  )
   const lastEnd = UnixTime.toStartOf(UnixTime(to), 'day')
   const month = UnixTime.toDate(first).getUTCMonth()
   const days: UnixTime[] = []

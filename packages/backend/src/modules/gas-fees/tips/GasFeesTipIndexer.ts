@@ -16,7 +16,10 @@ import {
 import { type FeeHistoryRpc, readBlockTips } from './readBlockTips'
 import { type EthUsdRpc, readEthUsd } from './readEthUsd'
 
-/** Bump it when the estimator changes: every hour is read again, from blocks over RPC */
+/**
+ * Bump it when the estimator changes: every hour is read again, from blocks over RPC.
+ * The Dune indexers that grade against these hours start again too, and pay for every day once more
+ */
 const STORED_DATA_VERSION = '1'
 /** A day's blocks take about 9 eth_feeHistory calls */
 const HOURS_PER_UPDATE = 24
