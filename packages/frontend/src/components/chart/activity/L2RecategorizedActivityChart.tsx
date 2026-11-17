@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -28,21 +29,21 @@ import type { ChartScale } from '../types'
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
     label: 'Rollups',
-    color: 'var(--chart-pink)',
+    color: L2_CATEGORY_COLORS.rollups,
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'var(--chart-cyan)',
+    color: L2_CATEGORY_COLORS.validiumsAndOptimiums,
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'var(--chart-yellow)',
+    color: L2_CATEGORY_COLORS.others,
     indicatorType: {
       shape: 'line',
     },

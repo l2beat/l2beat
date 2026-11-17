@@ -1,5 +1,6 @@
 import { formatActivityCount } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
+import { L2_CATEGORY_COLORS } from '~/components/chart/l2CategoryColors'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -67,16 +68,15 @@ export function L2RecategorizedActivityStats({ entries }: Props) {
 const statsMeta = {
   rollups: {
     label: 'Rollups',
-    // As in the charts above, where rollups are the pink series.
-    color: 'var(--chart-pink)',
+    color: L2_CATEGORY_COLORS.rollups,
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'var(--chart-teal)',
+    color: L2_CATEGORY_COLORS.validiumsAndOptimiums,
   },
   others: {
     label: 'Others',
-    color: 'var(--chart-yellow)',
+    color: L2_CATEGORY_COLORS.others,
   },
   ethereum: {
     label: 'Ethereum',
