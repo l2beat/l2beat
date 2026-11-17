@@ -5,9 +5,9 @@ import type { GasFeesConfig } from '../../modules/gas-fees/types'
 export function getGasFeesConfig(env: Env): GasFeesConfig {
   return {
     fees: {
-      // A day costs 0.16 to 0.3 Dune credits, so the history back to 2020 (400 to 750) is opted into
+      // A day costs 0.3 to 0.5 Dune credits, so the history back to 2020 (750 to 1,250) is opted into
       firstDay: toDay(env.string('GAS_FEES_FEES_FIRST_DAY', '2025-11-01')),
-      // At most about 3 Dune credits a query, well under the 10-credit cap
+      // At most about 5 Dune credits a query, under the 10-credit cap
       daysPerQuery: env.integer('GAS_FEES_FEES_DAYS_PER_QUERY', 10),
     },
     // A rolling year for the page, with a margin

@@ -31,26 +31,26 @@ group by 1, 2
 }
 
 /**
- * How far back the blocks tables are read for the block a day should follow.
- * Past the day before, so the day a chain resumes on after a halt of up to this
- * long is checked against the day it stopped on. The blocks tables are cheap to read.
+ * How far either side of the days the blocks tables are read, for the blocks a
+ * day should follow and run into. Past the adjacent days, so that the days
+ * around a chain's halt of up to this long are checked against each other.
+ * The blocks tables are cheap to read.
  */
-const NEIGHBOUR_LOOKBACK_DAYS = 30
+const NEIGHBOUR_DAYS = 30
 
 /**
  * Base fee and gas used per chain and day, from `fromDay` to `toDay`, both
  * included, with the blocks to check a day against: how many had transactions,
  * and from the blocks table their count and range. The range is read for
- * NEIGHBOUR_LOOKBACK_DAYS before `fromDay` too.
+ * NEIGHBOUR_DAYS either side too.
  */
 export function getBlocksQuery(
   chains: GasFeesChain[],
   fromDay: UnixTime,
   toDay: UnixTime,
 ): string {
-  const lookbackFrom = UnixTime(
-    fromDay - NEIGHBOUR_LOOKBACK_DAYS * UnixTime.DAY,
-  )
+  const neighboursFrom = UnixTime(fromDay - NEIGHBOUR_DAYS * UnixTime.DAY)
+  const neighboursTo = UnixTime(toDay + NEIGHBOUR_DAYS * UnixTime.DAY)
   return chains
     .map((chain) =>
       chain.gasFromTransactions
@@ -72,7 +72,7 @@ from (
     min(number) as first_block,
     max(number) as last_block
   from ${chain.dune}.blocks
-  where ${dateRange('date', lookbackFrom, toDay)}
+  where ${dateRange('date', neighboursFrom, neighboursTo)}
   group by 1
 ) as b
 left join (
@@ -96,7 +96,7 @@ select
   min(number) as first_block,
   max(number) as last_block
 from ${chain.dune}.blocks
-where ${dateRange('date', lookbackFrom, toDay)}
+where ${dateRange('date', neighboursFrom, neighboursTo)}
 group by 2`,
     )
     .join('\nunion all')

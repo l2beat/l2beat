@@ -46,9 +46,7 @@ export interface FeesDay {
 
 /**
  * Reads the days from `fromDay` to `toDay`, both included, in two Dune queries.
- * They read one day more: a chain's day is whole only once Dune has a later day
- * of it, as Dune loads some chains a day late and a day half loaded looks like a quiet one.
- * It must also have no hole: see isWholeDay. The blocks tables are read further back for that.
+ * A chain's day is stored only when Dune has it whole: see toWholeDay.
  */
 export async function readFeesDays(
   dune: FeesDune,
@@ -56,15 +54,14 @@ export async function readFeesDays(
   fromDay: UnixTime,
   toDay: UnixTime,
 ): Promise<FeesDay[]> {
-  const readTo = UnixTime(toDay + UnixTime.DAY)
   const [fees, blocks] = await Promise.all([
     dune.query(
-      getFeesQuery(chains, fromDay, readTo),
+      getFeesQuery(chains, fromDay, toDay),
       'medium',
       v.array(FeesRow),
     ),
     dune.query(
-      getBlocksQuery(chains, fromDay, readTo),
+      getBlocksQuery(chains, fromDay, toDay),
       'medium',
       v.array(BlocksRow),
     ),
@@ -81,7 +78,6 @@ export function joinFeesDays(
   blocks: BlocksRow[],
 ): FeesDay[] {
   const feesByKey = new Map(fees.map((r) => [`${r.blockchain}:${r.day}`, r]))
-  const lastFeesDay = getLastDays(fees)
   const blocksByChain = new Map<string, BlocksRow[]>()
   for (const row of blocks) {
     const rows = blocksByChain.get(row.blockchain) ?? []
@@ -95,9 +91,7 @@ export function joinFeesDays(
     for (const chain of chains) {
       const fee = feesByKey.get(`${chain.dune}:${date}`)
       const record =
-        fee &&
-        (lastFeesDay.get(chain.dune) ?? '') > date &&
-        toWholeDay(chain, fee, blocksByChain.get(chain.dune) ?? [])
+        fee && toWholeDay(chain, fee, blocksByChain.get(chain.dune) ?? [])
       if (record) {
         result.records.push({ ...record, timestamp: day })
       } else if (day >= chain.requiredFrom) {
@@ -110,14 +104,17 @@ export function joinFeesDays(
 }
 
 /**
- * The chain's day, if Dune has it without a hole. That takes all of:
- * - the fee rows come from every block that had transactions;
+ * The chain's day, if Dune has it whole: finished loading, and without a hole.
+ * Dune loads some chains a day late, and a day half loaded looks like a quiet
+ * one. That takes all of:
  * - no block is missing within the day;
- * - a later day has blocks, and its first follows the day's last, so the day is
- *   finished and nothing is missing at its end. The nearest later day, as a
- *   halted chain has days without blocks;
+ * - a later day has blocks, and its first follows the day's last, so the blocks
+ *   table has the day to its end. The nearest later day, as a halted chain has
+ *   days without blocks;
  * - the day's first block follows the last of the nearest earlier day read, if
- *   any. Unchecked, a hole across midnight would be stored on the day after it.
+ *   any. Unchecked, a hole across midnight would be stored on the day after it;
+ * - the fee rows come from every block that had transactions, so the fee table
+ *   has loaded all the blocks table has.
  *
  * A hole at a day's edge keeps both days out: which of them lost the blocks can't be told.
  * On the year checked, the block checks held on every day of all 12 chains.
@@ -172,15 +169,4 @@ function latest(rows: BlocksRow[]): BlocksRow | undefined {
     (max, row) => (max && max.day > row.day ? max : row),
     undefined,
   )
-}
-
-/** The last day each chain has rows of, as YYYY-MM-DD, which sorts as dates do */
-function getLastDays(rows: { blockchain: string; day: string }[]) {
-  const last = new Map<string, string>()
-  for (const row of rows) {
-    if (row.day > (last.get(row.blockchain) ?? '')) {
-      last.set(row.blockchain, row.day)
-    }
-  }
-  return last
 }
