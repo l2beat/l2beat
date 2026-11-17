@@ -248,11 +248,13 @@ describe(EthRpcClient.name, () => {
       200,
       JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
     )
-    const result = await client.call(
-      { to: EthereumAddress.random(), input: '0xdeadbeef' },
-      'latest',
-    )
+    const to = EthereumAddress.random()
+    const result = await client.call({ to, input: '0xdeadbeef' }, 'latest')
     expect(result).toEqual({ reverted: false, data: '0x1234' })
+    expect(JSON.parse(http.lastFetch?.init.body as string).params).toEqual([
+      { to, data: '0xdeadbeef' },
+      'latest',
+    ])
   })
 
   it('eth_call revert #1', async () => {

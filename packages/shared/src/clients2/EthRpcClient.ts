@@ -391,7 +391,8 @@ function encodeTransaction(transaction: TransactionParameter) {
     encoded.value = encodeQuantity(transaction.value)
   }
   if (transaction.input !== undefined) {
-    encoded.input = transaction.input
+    // pre-Bedrock Optimism (legacy l2geth) ignores `input`
+    encoded.data = transaction.input
   }
   return encoded
 }
