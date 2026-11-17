@@ -41,6 +41,14 @@ export interface LiquidStakingStakedEthShare {
   timestamp: number
 }
 
+/** The ETH held by all active validators on a day. */
+export interface LiquidStakingEthStaked {
+  value: number
+  valueUsd: number | null
+  /** The day the stake is as of. */
+  timestamp: number
+}
+
 /** A project's latest TVL, also in ETH at the protocol's rate. */
 export interface LiquidStakingTvl {
   valueUsd: number
@@ -143,6 +151,24 @@ function getStakedEthShare(
     return undefined
   }
   return { value: tvl.valueEth / latest.ethStaked, timestamp: latest.timestamp }
+}
+
+/**
+ * The latest ETH staked network-wide in the chart, the total the shares of
+ * staked ETH are fractions of. Missing when it is too old to show.
+ */
+export function getLatestEthStaked(
+  points: LiquidStakingYieldPoint[],
+): LiquidStakingEthStaked | undefined {
+  const latest = points.findLast((point) => point.ethStaked != null)
+  if (!latest?.ethStaked || UnixTime.now() - latest.timestamp > MAX_STAKE_AGE) {
+    return undefined
+  }
+  return {
+    value: latest.ethStaked,
+    valueUsd: latest.ethStakedUsd,
+    timestamp: latest.timestamp,
+  }
 }
 
 function getLatestValue<T extends LiquidStakingChartPoint>(

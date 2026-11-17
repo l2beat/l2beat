@@ -1,7 +1,10 @@
 import type { ProjectLiquidStakingRisks } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { buildLiquidStakingSummary } from './getLiquidStakingSummary'
+import {
+  buildLiquidStakingSummary,
+  getLatestEthStaked,
+} from './getLiquidStakingSummary'
 
 describe(buildLiquidStakingSummary.name, () => {
   it('takes the latest value of each chart, unless it is over 30 days old', () => {
@@ -94,6 +97,38 @@ describe(buildLiquidStakingSummary.name, () => {
     expect(stale.stakedEthShare).toEqual(undefined)
   })
 })
+
+describe(getLatestEthStaked.name, () => {
+  const today = UnixTime.toStartOf(UnixTime.now(), 'day')
+
+  it('takes the latest day with a stake', () => {
+    const points = [
+      stakePoint(today - 2 * UnixTime.DAY, 33_000_000, 99e9),
+      stakePoint(today - UnixTime.DAY, 34_000_000, 100e9),
+      stakePoint(today, null, null),
+    ]
+
+    expect(getLatestEthStaked(points)).toEqual({
+      value: 34_000_000,
+      valueUsd: 100e9,
+      timestamp: today - UnixTime.DAY,
+    })
+  })
+
+  it('has no stake when the latest is over 3 days old', () => {
+    const points = [stakePoint(today - 4 * UnixTime.DAY, 34_000_000, null)]
+
+    expect(getLatestEthStaked(points)).toEqual(undefined)
+  })
+})
+
+function stakePoint(
+  timestamp: number,
+  ethStaked: number | null,
+  ethStakedUsd: number | null,
+) {
+  return { ...point(timestamp, {}), network: null, ethStaked, ethStakedUsd }
+}
 
 function point(timestamp: number, projects: Record<string, number | null>) {
   return { timestamp, projects }

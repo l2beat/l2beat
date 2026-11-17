@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { LIQUID_STAKING_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import { loadLiquidStakingEntries } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import { getLatestEthStaked } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getItemListStructuredData } from '~/ssr/head/structured-data/getItemListStructuredData'
 import type { RenderData } from '~/ssr/types'
@@ -14,7 +15,7 @@ export async function getLiquidStakingData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const { appLayoutProps, entries, defaultChartRange, queryState } =
+  const { appLayoutProps, entries, ethStaked, defaultChartRange, queryState } =
     await cache.get(
       {
         key: ['defi', 'liquid-staking', 'data'],
@@ -51,6 +52,7 @@ export async function getLiquidStakingData(
       props: {
         ...appLayoutProps,
         entries,
+        ethStaked,
         defaultChartRange,
         queryState,
       },
@@ -62,7 +64,7 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
 
-  const [appLayoutProps, { entries }] = await Promise.all([
+  const [appLayoutProps, { entries, charts }] = await Promise.all([
     getAppLayoutProps(),
     // The chart queries also fill the query cache, so the charts hydrate
     // without a request.
@@ -86,6 +88,7 @@ async function getCachedData() {
   return {
     appLayoutProps,
     entries,
+    ethStaked: getLatestEthStaked(charts.yield),
     defaultChartRange,
     queryState: helpers.dehydrate(),
   }

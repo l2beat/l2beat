@@ -94,3 +94,37 @@ export function formatEthStakedWithUsd(
   const usd = valueUsd !== null ? ` (${formatCurrency(valueUsd, 'usd')})` : ''
   return `${formatEthStaked(value)}${usd}`
 }
+
+/**
+ * The shares of stake at which a group of validators acting together can
+ * change what the chain does. From the consensus rules: finality needs
+ * attestations from 2/3 of the stake, and the fork choice follows the
+ * heaviest chain by stake.
+ */
+export const CONSENSUS_THRESHOLDS = [
+  {
+    fraction: '⅓',
+    share: 1 / 3,
+    title: 'Halt finality',
+    description:
+      'With more than ⅓ of the stake, validators can stop the chain from finalizing by not attesting. Blocks keep coming, but none become final until the inactivity leak drains the offline stake, which can take weeks.',
+  },
+  {
+    fraction: '½',
+    share: 1 / 2,
+    title: 'Censor and reorg',
+    description:
+      'With more than ½, validators control the fork choice: they can keep transactions out of the chain and reorg blocks that are not yet final. The community could respond by moving to a minority fork.',
+  },
+  {
+    fraction: '⅔',
+    share: 2 / 3,
+    title: 'Finalize alone',
+    description:
+      'With ⅔, validators can finalize the chain they choose, censorship included, without anyone else. Only a social-layer fork that drops their stake could undo it.',
+  },
+] as const
+
+/** The note on the bar's split and marks, for the tooltip beside it. */
+export const STAKED_ETH_BAR_NOTE =
+  "The marks show the shares of stake that change what validators acting together can do. A protocol's validators are run by its node operators, so its share is not one party's stake: it is how much rests on the protocol's contracts and governance. No share lets validators make nodes accept an invalid block."

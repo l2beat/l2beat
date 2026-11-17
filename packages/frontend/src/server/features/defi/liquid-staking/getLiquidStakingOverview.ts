@@ -3,12 +3,16 @@ import {
   type LiquidStakingStatsEntry,
   loadLiquidStakingEntries,
 } from './getLiquidStakingEntries'
-import { getLatestValuesRange } from './getLiquidStakingSummary'
+import {
+  getLatestEthStaked,
+  getLatestValuesRange,
+  type LiquidStakingEthStaked,
+} from './getLiquidStakingSummary'
 
 export interface LiquidStakingOverview {
   entries: LiquidStakingStatsEntry[]
-  /** ETH staked network-wide, absent when the range has no value. */
-  ethStaked?: { value: number; valueUsd: number | null; timestamp: number }
+  /** ETH staked network-wide, absent when the latest is too old to show. */
+  ethStaked?: LiquidStakingEthStaked
 }
 
 /** The protocols' latest numbers, without the risk comparison. */
@@ -16,18 +20,9 @@ export async function getLiquidStakingOverview(): Promise<LiquidStakingOverview>
   const { entries, charts } = await loadLiquidStakingEntries(() =>
     getLiquidStakingCharts({ range: getLatestValuesRange() }),
   )
-  // The yield chart draws it in the background, so it is already read.
-  const latest = charts.yield.findLast((point) => point.ethStaked != null)
-
   return {
     entries: entries.map(({ risks: _, ...entry }) => entry),
-    ethStaked:
-      latest?.ethStaked != null
-        ? {
-            value: latest.ethStaked,
-            valueUsd: latest.ethStakedUsd,
-            timestamp: latest.timestamp,
-          }
-        : undefined,
+    // The yield chart draws it in the background, so it is already read.
+    ethStaked: getLatestEthStaked(charts.yield),
   }
 }

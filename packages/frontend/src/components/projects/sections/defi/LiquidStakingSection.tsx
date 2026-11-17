@@ -22,9 +22,12 @@ import {
   getLiquidStakingStatColumns,
   TVL_COLUMN_ID,
 } from '~/pages/defi/liquid-staking/components/liquidStakingColumns'
+import { StakedEthBar } from '~/pages/defi/liquid-staking/components/StakedEthBreakdown'
 import {
   ETH_STAKED_TOOLTIP,
   formatEthStaked,
+  STAKED_ETH_BAR_NOTE,
+  STAKED_ETH_SHARE_TOOLTIP,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
@@ -143,13 +146,25 @@ export function LiquidStakingSection({
               <TooltipTrigger aria-label="More info">
                 <InfoIcon className="size-3.5" />
               </TooltipTrigger>
-              <TooltipContent>
-                {ETH_STAKED_TOOLTIP} Latest value from{' '}
-                {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}.
+              <TooltipContent className="max-w-80">
+                <p>
+                  {ETH_STAKED_TOOLTIP} Latest value from{' '}
+                  {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}. The
+                  bar splits it between the liquid staking protocols below.
+                </p>
+                <p className="mt-2">{STAKED_ETH_SHARE_TOOLTIP}</p>
+                <p className="mt-2">{STAKED_ETH_BAR_NOTE}</p>
               </TooltipContent>
             </Tooltip>
           </span>
         </div>
+      )}
+      {ethStaked && (
+        <StakedEthBar
+          entries={entries}
+          ethStaked={ethStaked}
+          className="mb-6"
+        />
       )}
       <BasicTable table={table} compact />
       <CompareProjectsLink

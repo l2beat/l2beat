@@ -8,18 +8,23 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import type { LiquidStakingEthStaked } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import type { ChartRange } from '~/utils/range/range'
 import { LiquidStakingCharts } from './components/LiquidStakingCharts'
 import { LiquidStakingTable } from './components/LiquidStakingTable'
+import { StakedEthBreakdown } from './components/StakedEthBreakdown'
 
 interface Props extends AppLayoutProps {
   entries: LiquidStakingEntry[]
+  /** Missing when the latest stake is too old to show. */
+  ethStaked: LiquidStakingEthStaked | undefined
   defaultChartRange: ChartRange
   queryState: DehydratedState
 }
 
 export function LiquidStakingPage({
   entries,
+  ethStaked,
   defaultChartRange,
   queryState,
   ...props
@@ -31,6 +36,9 @@ export function LiquidStakingPage({
           <MainPageHeader description={LIQUID_STAKING_DESCRIPTION}>
             Liquid staking
           </MainPageHeader>
+          {ethStaked && (
+            <StakedEthBreakdown entries={entries} ethStaked={ethStaked} />
+          )}
           <LiquidStakingCharts
             projects={entries}
             defaultRange={defaultChartRange}
