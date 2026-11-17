@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1c7084069d5250b7510de4caaa99bd119aaf5f16
+
+# Diff at Mon, 16 Nov 2026 22:33:53 GMT:
+
+- id: d28c5a3d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1794320593
+- current timestamp: 1794868331
+
+## Description
+
+RiscZeroVerifierEmergencyStop: RISC Zero permanently stopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of its verifier router on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). No effect on Bob: all 13 proofs its Kailua games ever posted used the Groth16 routes 0xbb001d44 and 0x73c457ba, which stay open, and since 2026-09-16 ([tx](https://etherscan.io/tx/0x6f54452af0caf09baf9e3c24b167cc850901088082dff2a244a5c39b1dee3bc7)) state roots come from the PermissionedDisputeGame.
+
+## Watched changes
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x3346044de93922f7473bd27c47d898329451a495
 
 # Diff at Tue, 10 Nov 2026 14:25:43 GMT:

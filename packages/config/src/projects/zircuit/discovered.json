@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1793982702,
+  "timestamp": 1794868590,
   "configHash": "0xecc561f6b222fea62837c1b59647005add09275d390c893533ff6731b35f94e7",
   "entries": [
     {
@@ -234,8 +234,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 26352529
+          "prevBoughtGas": 517494,
+          "prevBlockNum": 26421643
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -353,13 +353,13 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0x3f4d240DF5352a37F7b4Ab3d8c7D8e053C76F6A9",
+        "anchorGame": "eth:0x182eAc790348f0B5B18454dd5a5AB6aE1e3EA6BC",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x6a82d3c1393087c892d4217790ef4367e79c4a03636fc9b4d29427e303130a6c",
-          36716996
+          "0xc616fbaea17c9da4c68c39a92cf1aaaf258619dcb6cd9bdb972e1164d18db568",
+          37147898
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -493,7 +493,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641542",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641556",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -917,7 +917,6 @@
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
@@ -925,8 +924,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 374,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 378,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1071,7 +1070,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 189,
+        "gameCount": 209,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1082,7 +1081,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfa2613d77ffbe105ca861d526061dc3ef191e1705164555e021b913963e2d17de97efcc2723d3ec037000000000000000000000000000000000000000000000000000000000000bf042d14057c3ad6b04a480b06da2356adcdf5ed97ee4a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 189,
+        "permissionedGamesTotal": 209,
         "proposerFromDGF": "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE",
         "proxyAdmin": "eth:0x3A317fCEE068868BE7628eFb233170df2DD5B71d",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1323,11 +1322,6 @@
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1630,10 +1624,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 180224810,
+        "basefee": 144978830,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 12500214,
+        "blobBaseFee": 7311539,
         "blobBaseFeeScalar": 862000,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -1643,15 +1637,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xb1889e3f167dd277a869b5c8e0419bf466d9a348753b66c32440f173f8a2a022",
+        "hash": "0x95f1f586b46f0edba9b4353eeeb248dce0f4aea39bd861e040d404561ed2981b",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26357017,
+        "number": 26430616,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 1,
-        "timestamp": 1793982635,
+        "sequenceNumber": 4,
+        "timestamp": 1794868523,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -2657,8 +2651,8 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26357022, "zircuit": 37023243 },
-  "permissionsConfigHash": "0x6fdab8a40c6cbb8f2c27e2b7a6c6b8806110359460253f2d09e8844d779aad6d",
+  "usedBlockNumbers": { "ethereum": 26430621, "zircuit": 37466187 },
+  "permissionsConfigHash": "0x19d3275fdf2245e8241a93457033b0f5b26fe3a39cf326fd5c910386f72c49cc",
   "permissions": {
     "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE": {
       "receivedPermissions": [
