@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { LiveActivityBlock } from '../kysely/generated/types'
 
@@ -12,6 +12,18 @@ export interface LiveActivityBlockRecord {
   count: number
   uopsCount: number | null
   gasUsed: number
+}
+
+/** The blocks of one hour of a project's chain, summed */
+export interface LiveActivityHourRecord {
+  timestamp: UnixTime
+  blocks: number
+  count: number
+  /** The transaction count of blocks with no user operations counted */
+  uopsCount: number
+  firstNumber: number
+  lastNumber: number
+  lastTimestamp: UnixTime
 }
 
 function toRecord(row: Selectable<LiveActivityBlock>): LiveActivityBlockRecord {
@@ -85,6 +97,44 @@ export class LiveActivityBlockRepository extends BaseRepository {
       .orderBy('number')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /** The project's blocks above the number, oldest hour first */
+  async getHoursAfter(
+    projectId: ProjectId,
+    number: number,
+  ): Promise<LiveActivityHourRecord[]> {
+    const { rows } = await sql<{
+      timestamp: Date
+      blocks: string
+      count: string
+      uopsCount: string
+      firstNumber: number
+      lastNumber: number
+      lastTimestamp: Date
+    }>`
+      SELECT
+        date_trunc('hour', "timestamp") AS "timestamp",
+        count(*) AS "blocks",
+        sum("count") AS "count",
+        sum(coalesce("uopsCount", "count")) AS "uopsCount",
+        min("number") AS "firstNumber",
+        max("number") AS "lastNumber",
+        max("timestamp") AS "lastTimestamp"
+      FROM "LiveActivityBlock"
+      WHERE "projectId" = ${projectId.toString()} AND "number" > ${number}
+      GROUP BY 1
+      ORDER BY 1
+    `.execute(this.db)
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      blocks: Number(row.blocks),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      firstNumber: row.firstNumber,
+      lastNumber: row.lastNumber,
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
+    }))
   }
 
   async deleteByProjectAfter(
