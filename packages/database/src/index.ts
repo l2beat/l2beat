@@ -68,10 +68,22 @@ export type {
 export type { GasFeesDailyRecord } from './repositories/GasFeesDailyRepository'
 export type { GasFeesLiveTipsRecord } from './repositories/GasFeesLiveTipsRepository'
 export type {
+  GasFeesMempoolDayData,
+  GasFeesMempoolDayRecord,
+  GasFeesMempoolDayStatus,
+  GasFeesTierWaitRecord,
+  GasFeesTipLevelWaitRecord,
+  GasFeesWaitBucket,
+} from './repositories/GasFeesMempoolRepository'
+export type {
   GasFeesTier,
   GasFeesTipHourlyRecord,
   GasFeesTipsReading,
 } from './repositories/GasFeesTipHourlyRepository'
+export type {
+  GasFeesTipGroup,
+  GasFeesTipPayersDailyRecord,
+} from './repositories/GasFeesTipPayersDailyRepository'
 export type {
   GasFeesWallet,
   GasFeesWalletTipRecord,

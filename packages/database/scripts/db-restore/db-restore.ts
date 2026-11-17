@@ -47,6 +47,10 @@ const FEATURES: Record<string, string[]> = {
     'GasFeesTipHourly',
     'GasFeesLiveTips',
     'GasFeesWalletTip',
+    'GasFeesMempoolDay',
+    'GasFeesTipLevelWait',
+    'GasFeesTierWait',
+    'GasFeesTipPayersDaily',
   ],
   activity: [
     'IndexerState',

@@ -1,0 +1,139 @@
+import { Logger } from '@l2beat/backend-tools'
+import type { Database, GasFeesTipHourlyRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import { mockDatabase } from '../../../test/database'
+import type { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import {
+  GasFeesMempoolIndexer,
+  getMempoolDayStatus,
+} from './GasFeesMempoolIndexer'
+import type { MempoolDay } from './readMempoolDay'
+
+describe(GasFeesMempoolIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
+  const day = UnixTime.fromDate(new Date('2026-11-10T00:00:00Z'))
+  const next = UnixTime(day + UnixTime.DAY)
+
+  it("reads the day with the hours since the day before's start", async () => {
+    const { indexer, mempool, readMempoolDay, tipHourly } = createIndexer()
+
+    expect(await indexer.update(day + 1, next + 5 * UnixTime.DAY)).toEqual(next)
+    expect(tipHourly.getInRange).toHaveBeenOnlyCalledWith(
+      UnixTime(day - UnixTime.DAY),
+      UnixTime(next - UnixTime.HOUR),
+    )
+    // Block numbers stand in for the timestamps they were looked up for
+    expect(readMempoolDay.calls[0]?.args[0]).toEqual({
+      day,
+      previousDayFirstBlock: day - UnixTime.DAY + 1,
+      firstBlock: day + 1,
+      lastBlock: next,
+      hourlyTips: HOURS,
+    })
+    expect(mempool.replaceDay.calls[0]?.args[0].day).toEqual({
+      timestamp: day,
+      status: 'complete',
+      duneLandedCount: 1000,
+      flashbotsLandedCount: 1001,
+      keptCount: 460,
+    })
+  })
+
+  it('fails on a thin day until it has settled, reading it again after 6 hours at most', async () => {
+    let now = next
+    const { indexer, mempool, readMempoolDay } = createIndexer({
+      flashbots: 2000,
+      now: () => now,
+    })
+
+    for (const hours of [0, 5, 6]) {
+      now = UnixTime(next + hours * UnixTime.HOUR)
+      await expect(indexer.update(day + 1, next)).toBeRejectedWith(
+        'Mempool day incomplete on Dune',
+      )
+    }
+    expect(readMempoolDay).toHaveBeenCalledTimes(2)
+    expect(mempool.replaceDay).not.toHaveBeenCalled()
+  })
+
+  it('stores a settled day Dune never got as missing, without waits', async () => {
+    const { indexer, mempool } = createIndexer({
+      landed: 0,
+      now: () => UnixTime(next + 7 * UnixTime.DAY),
+    })
+
+    await indexer.update(day + 1, next)
+
+    const stored = mempool.replaceDay.calls[0]?.args[0]
+    expect(stored?.day.status).toEqual('missing')
+    expect(stored?.tipLevelWaits).toEqual([])
+  })
+
+  function createIndexer(
+    options: { landed?: number; flashbots?: number; now?: () => UnixTime } = {},
+  ) {
+    const mempool = mockObject<Database['gasFeesMempool']>({
+      replaceDay: mockFn().resolvesTo(undefined),
+    })
+    const tipHourly = mockObject<Database['gasFeesTipHourly']>({
+      getInRange: mockFn().resolvesTo(HOURS),
+    })
+    const readMempoolDay = mockFn().resolvesTo({
+      landedCount: options.landed ?? 1000,
+      keptCount: 460,
+      tipLevelWaits: [],
+      tierWaits: [],
+    } satisfies MempoolDay)
+    const indexer = new GasFeesMempoolIndexer(
+      {
+        parents: [],
+        indexerService: mockObject<IndexerService>(),
+        firstDay: day,
+        db: mockDatabase({
+          gasFeesMempool: mempool,
+          gasFeesTipHourly: tipHourly,
+        }),
+        blockFinder: {
+          getBlockNumberAtOrBefore: mockFn(async (t: UnixTime) => Number(t)),
+        },
+        readMempoolDay,
+        readFlashbotsLandedCount: mockFn().resolvesTo(
+          options.flashbots ?? 1001,
+        ),
+        now: options.now ?? (() => next),
+      },
+      Logger.SILENT,
+    )
+    return { indexer, mempool, readMempoolDay, tipHourly }
+  }
+
+  const HOURS: GasFeesTipHourlyRecord[] = Array.from(
+    { length: 24 },
+    (_, h) => ({
+      timestamp: UnixTime(day + h * UnixTime.HOUR),
+      blockNumber: h,
+      slowTipGwei: 0,
+      mediumTipGwei: 0,
+      fastTipGwei: 0.1,
+      ethUsd: 4000,
+    }),
+  )
+})
+
+describe(getMempoolDayStatus.name, () => {
+  it('is complete with 99% of the Flashbots count', () => {
+    expect(getMempoolDayStatus(990, 1000, false)).toEqual('complete')
+    expect(getMempoolDayStatus(989, 1000, false)).toEqual(undefined)
+  })
+
+  it('is partial or missing once settled', () => {
+    expect(getMempoolDayStatus(500, 1000, true)).toEqual('partial')
+    expect(getMempoolDayStatus(500, undefined, true)).toEqual('partial')
+    expect(getMempoolDayStatus(0, 1000, true)).toEqual('missing')
+  })
+})
