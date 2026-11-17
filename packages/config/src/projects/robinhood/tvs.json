@@ -2645,7 +2645,7 @@
         "type": "circulatingSupply",
         "apiId": "what-the-hook",
         "decimals": 18,
-        "sinceTimestamp": 1786752000,
+        "sinceTimestamp": 1786838400,
         "address": "0xb8Fa8010833463Aac5595b55B9045479239EfF79",
         "chain": "robinhood"
       },

@@ -6709,6 +6709,7 @@
       "category": "other",
       "source": "external",
       "supply": "totalSupply",
+      "deploymentTimestamp": 1746090553,
       "bridgedUsing": {
         "bridges": [
           {
