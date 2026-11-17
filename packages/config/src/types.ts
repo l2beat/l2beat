@@ -1105,6 +1105,38 @@ export interface ProjectLiquidStaking {
   marketQuotes: ProjectLiquidStakingMarketQuote[]
   /** The row of the liquid staking risk comparison. */
   risks: ProjectLiquidStakingRisks
+  /**
+   * Who runs the protocol's validators, read from the beacon chain and the
+   * protocol's contracts. Absent where one company runs them all.
+   */
+  validatorOperators?: ProjectLiquidStakingOperators
+}
+
+export interface ProjectLiquidStakingOperators {
+  /** The finalized beacon slot the validators were read at. */
+  slot: number
+  /** Unix seconds of that slot's block. */
+  timestamp: number
+  /** Balance of every active validator on Ethereum, in ETH. */
+  totalEth: number
+  /** Balance of the protocol's active validators, in ETH. */
+  eth: number
+  validators: number
+  /** Every operator with an active validator, counted one by one. */
+  operatorCount: number
+  /** The largest first. Small operators may be summed into one row. */
+  operators: ProjectStakingOperator[]
+}
+
+export interface ProjectStakingOperator {
+  /** The operator's onchain name, or its address when it has none. */
+  name: string
+  /** Set when the protocol knows the operator by an address. */
+  address?: string
+  eth: number
+  validators: number
+  /** Set when the row sums several operators, such as a module's. */
+  operatorCount?: number
 }
 
 export interface ProjectLiquidStakingRisks {

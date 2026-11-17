@@ -8,6 +8,7 @@ import {
   formatStakedEthShare,
   LIQUID_STAKING_METRICS,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
+import { getLargestOperator } from '../features/defi/liquid-staking/getLiquidStakingOperators'
 import {
   formatUsd,
   joinBlocks,
@@ -36,6 +37,7 @@ export function renderLiquidStakingSection({
           ),
         ].join('\n')
       : '',
+    renderOperators(entries),
     table(
       [
         'Name',
@@ -63,4 +65,22 @@ export function renderLiquidStakingSection({
     ),
     `${link('Compare the risks of liquid staking protocols', '/defi/liquid-staking')}.`,
   ])
+}
+
+/** Who runs each protocol's validators, for the protocols we can trace. */
+function renderOperators(
+  entries: LiquidStakingSectionProps['entries'],
+): string {
+  const traced = entries.flatMap((entry) =>
+    entry.operators ? [{ entry, operators: entry.operators }] : [],
+  )
+  const first = traced[0]
+  if (!first) return ''
+  return [
+    `Who runs the validators, from the beacon chain at ${formatUtcDateTime(first.operators.timestamp)}:`,
+    ...traced.map(({ entry, operators }) => {
+      const largest = getLargestOperator(operators.operators)
+      return `- ${entry.name}: ${operators.operatorCount.toLocaleString('en-US')} operators${largest ? `; the largest, ${largest.name}, runs ${formatStakedEthShare(largest.stakedEthShare)}` : ''}`
+    }),
+  ].join('\n')
 }

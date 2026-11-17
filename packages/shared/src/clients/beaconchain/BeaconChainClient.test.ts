@@ -188,6 +188,92 @@ describe(BeaconChainClient.name, () => {
     })
   })
 
+  describe(BeaconChainClient.prototype.getBlockNumbers.name, () => {
+    it('reads the slot, then only the execution block number', async () => {
+      const result = await withServer(
+        (req, res) => {
+          res.setHeader('Content-Type', 'application/json')
+          if (req.url === '/eth/v1/beacon/headers/finalized') {
+            res.end(
+              JSON.stringify({
+                data: { root: '0xabc', header: { message: { slot: '100' } } },
+              }),
+            )
+            return
+          }
+          expect(req.url).toEqual('/eth/v2/beacon/blocks/0xabc')
+          // The transactions never arrive; the read must not wait for them.
+          res.write(
+            '{"data":{"message":{"slot":"100","body":{"execution_payload":{"block_number":"2000","transactions":[',
+          )
+        },
+        (url) =>
+          mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          }).getBlockNumbers('finalized'),
+      )
+
+      expect(result).toEqual({ slot: 100, blockNumber: 2000 })
+    })
+  })
+
+  describe(BeaconChainClient.prototype.getValidators.name, () => {
+    it('yields each validator with its withdrawal address', async () => {
+      const validator = (credentials: string, balance: string) => ({
+        index: '0',
+        balance,
+        status: 'active_ongoing',
+        validator: { pubkey: '0xkey', withdrawal_credentials: credentials },
+      })
+      const body = JSON.stringify({
+        data: [
+          validator(`0x01${'0'.repeat(22)}${'a'.repeat(40)}`, '32000000000'),
+          validator(`0x02${'0'.repeat(22)}${'b'.repeat(40)}`, '2048000000000'),
+          validator(`0x00${'c'.repeat(62)}`, '1'),
+        ],
+      })
+
+      const result = await withServer(
+        (req, res) => {
+          expect(req.url).toEqual(
+            '/eth/v1/beacon/states/100/validators?status=active_ongoing,active_exiting',
+          )
+          res.setHeader('Content-Type', 'application/json')
+          res.end(body)
+        },
+        async (url) => {
+          const client = mockClient({
+            http: new HttpClient(),
+            beaconApiUrl: `${url}/`,
+          })
+          const validators = []
+          for await (const v of client.getValidators(100, [
+            'active_ongoing',
+            'active_exiting',
+          ])) {
+            validators.push(v)
+          }
+          return validators
+        },
+      )
+
+      expect(result).toEqual([
+        {
+          pubkey: '0xkey',
+          withdrawalAddress: `0x${'a'.repeat(40)}`,
+          balanceGwei: 32_000_000_000n,
+        },
+        {
+          pubkey: '0xkey',
+          withdrawalAddress: `0x${'b'.repeat(40)}`,
+          balanceGwei: 2_048_000_000_000n,
+        },
+        { pubkey: '0xkey', withdrawalAddress: undefined, balanceGwei: 1n },
+      ])
+    })
+  })
+
   describe(BeaconChainClient.prototype.getPendingDepositsAmount.name, () => {
     it('sums the queued deposit amounts, in wei', async () => {
       const body = JSON.stringify({

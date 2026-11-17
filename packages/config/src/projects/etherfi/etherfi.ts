@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getValidatorOperators } from '../../liquid-staking/stakingOperators'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -241,6 +242,7 @@ export const etherfi: BaseProject = {
         description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
       },
     },
+    validatorOperators: getValidatorOperators('etherfi'),
   },
   externalDependencies: [
     {
