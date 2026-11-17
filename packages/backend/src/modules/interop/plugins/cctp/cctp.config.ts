@@ -161,6 +161,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       abi: ABI,
       functionName: 'localDomain',
     })
+    const previousV2 = this.store.get(CCTPV2Config) ?? []
 
     const chainPromises = this.chains.map(async (chain) => {
       const rpc = this.rpcs.get(chain.name)
@@ -191,8 +192,15 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           domain: decoded,
           messageTransmitter: V2_MESSAGE_TRANSMITTER,
         }
-      } catch {
-        return
+      } catch (error) {
+        this.logger.warn('Failed to resolve CCTP V2 domain for chain', {
+          chain: chain.name,
+          error,
+        })
+        // The override alone has no message transmitter, so capture would throw
+        return previousV2.find(
+          (n) => n.chain === chain.name && n.messageTransmitter,
+        )
       }
     })
 
