@@ -212,6 +212,80 @@ describe('createWorkerPool', () => {
       expect(timedOut).toEqual(false)
     })
 
+    // Methodology: the job outlives its timeout and records the signal it
+    // sees afterwards, the way a job checks before a late write.
+    it('aborts the signal of a job that outlives its timeout', async () => {
+      const workerPool = createWorkerPool({
+        workerCount: 1,
+        timeoutPerTaskMs: 100,
+        timeoutPerRunMs: 5000,
+        logger: Logger.SILENT,
+      })
+
+      let abortedBeforeTimeout: boolean | undefined
+      let abortedAfterTimeout: boolean | undefined
+      let abortReason: unknown
+      const tasks = [
+        {
+          identity: { id: 'slow', name: 'Slow' },
+          job: async (signal: AbortSignal) => {
+            abortedBeforeTimeout = signal.aborted
+            await wait(200)
+            abortedAfterTimeout = signal.aborted
+            abortReason = signal.reason
+            return 'slow'
+          },
+        },
+      ]
+
+      const resultPromise = workerPool.runInPool(tasks)
+      await time.runAllAsync()
+      const { results, errors } = await resultPromise
+
+      expect(abortedBeforeTimeout).toEqual(false)
+      expect(abortedAfterTimeout).toEqual(true)
+      expect(abortReason).toEqual(errors[0].error)
+      expect(results).toEqual([])
+      expect(errors.map((e) => e.identity.id)).toEqual(['slow'])
+      expect(errors[0].error.message).toEqual('Task timeout')
+      expect(errors[0].error.cause).toEqual({ taskId: 'slow', timeoutMs: 100 })
+    })
+
+    // Why: a timer left behind keeps the process alive and fires for a task
+    // that already finished.
+    it('clears the task and run timers once the run finishes', async () => {
+      const workerPool = createWorkerPool({
+        workerCount: 2,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
+        logger: Logger.SILENT,
+      })
+
+      const signals: AbortSignal[] = []
+      const tasks = ['a', 'b', 'c'].map((id) => ({
+        identity: { id, name: id },
+        job: async (signal: AbortSignal) => {
+          signals.push(signal)
+          await wait(10)
+          return id
+        },
+      }))
+
+      const resultPromise = workerPool.runInPool(tasks)
+      await time.tickAsync(20)
+      const { results } = await resultPromise
+
+      expect(results.length).toEqual(3)
+      expect(time.countTimers()).toEqual(0)
+
+      await time.tickAsync(10_000)
+      expect(signals.map((signal) => signal.aborted)).toEqual([
+        false,
+        false,
+        false,
+      ])
+    })
+
     it('does not timeout tasks that finish just in time', async () => {
       const workerPool = createWorkerPool({
         workerCount: 1,
@@ -266,6 +340,47 @@ describe('createWorkerPool', () => {
       expect(timedOut).toEqual(true)
       // Not all tasks should complete
       expect(results.length).toBeLessThan(10)
+    })
+
+    // Methodology: one worker, so at the run timeout task 0 is done, task 1
+    // is running and tasks 2-3 never started.
+    it('reports every task exactly once after a run timeout', async () => {
+      const workerPool = createWorkerPool({
+        workerCount: 1,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 150,
+        logger: Logger.SILENT,
+      })
+
+      const startedTaskIds: string[] = []
+      const abortedAfterWait: Record<string, boolean> = {}
+      const tasks = Array.from({ length: 4 }, (_, i) => ({
+        identity: { id: `task${i}`, name: `Task ${i}` },
+        job: async (signal: AbortSignal) => {
+          startedTaskIds.push(`task${i}`)
+          await wait(100)
+          abortedAfterWait[`task${i}`] = signal.aborted
+          return `result${i}`
+        },
+      }))
+
+      const resultPromise = workerPool.runInPool(tasks)
+      await time.runAllAsync()
+      const { results, errors, timedOut } = await resultPromise
+
+      expect(timedOut).toEqual(true)
+      expect(startedTaskIds).toEqual(['task0', 'task1'])
+      expect(results.map((r) => r.identity.id)).toEqual(['task0'])
+      expect(errors.map((e) => [e.identity.id, e.error.message])).toEqual([
+        ['task1', 'Run timeout'],
+        ['task2', 'Task not started'],
+        ['task3', 'Task not started'],
+      ])
+      expect(errors[1].error.cause).toEqual({
+        taskId: 'task2',
+        runTimedOut: true,
+      })
+      expect(abortedAfterWait).toEqual({ task0: false, task1: true })
     })
 
     it('completes all tasks if run finishes before timeout', async () => {
