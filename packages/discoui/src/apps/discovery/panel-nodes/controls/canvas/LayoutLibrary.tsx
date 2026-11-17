@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import {
   getProjectLayout,
@@ -64,19 +64,19 @@ export function LayoutLibrary() {
   const [overwriteArmed, setOverwriteArmed] = useState(false)
   const [loadingName, setLoadingName] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (!open) {
-      return
-    }
-
+  const resetSaveForm = () => {
     setLayoutName(projectId)
     setDescription('')
     setOverwriteArmed(false)
-  }, [open, projectId])
+  }
 
-  useEffect(() => {
-    setOverwriteArmed(false)
-  }, [layoutName, projectId])
+  // The project can change under an open dialog, like when the agent opens
+  // another one, and the form must not keep the previous project's name.
+  const [formProjectId, setFormProjectId] = useState(projectId)
+  if (formProjectId !== projectId) {
+    setFormProjectId(projectId)
+    resetSaveForm()
+  }
 
   const layoutsQuery = useQuery({
     queryKey: ['project-layouts', projectId],
@@ -226,7 +226,15 @@ export function LayoutLibrary() {
 
   return (
     <>
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root
+        open={open}
+        onOpenChange={(nextOpen) => {
+          if (nextOpen) {
+            resetSaveForm()
+          }
+          setOpen(nextOpen)
+        }}
+      >
         <Dialog.Trigger asChild>
           <ToolbarButton
             label="Saved layouts"
@@ -332,7 +340,10 @@ export function LayoutLibrary() {
                   <span className="font-medium text-xs">Name</span>
                   <Input
                     value={layoutName}
-                    onChange={(e) => setLayoutName(e.target.value)}
+                    onChange={(e) => {
+                      setLayoutName(e.target.value)
+                      setOverwriteArmed(false)
+                    }}
                     placeholder={projectId || 'layout name'}
                     disabled={!canPersistCurrentLayout}
                   />
