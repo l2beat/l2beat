@@ -25,9 +25,9 @@ export function getLastChartDay(
 }
 /**
  * The exit the cost is measured for. A protocol's instant exit counts only
- * when it can pay this out, and the market quotes sell 100 tokens.
+ * when it can pay this out, and the market quotes sell 1 token.
  */
-export const REFERENCE_EXIT_ETH = 100
+export const REFERENCE_EXIT_ETH = 1
 /** Requests still queued are estimated at the finalization pace of this many days. */
 const PACE_WINDOW_DAYS = 7
 

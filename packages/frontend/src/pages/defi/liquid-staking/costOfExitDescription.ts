@@ -15,13 +15,13 @@ interface ExitRoute {
 }
 
 const INTRO =
-  'How many days of staking yield a holder gives up to exit about 100 ETH'
+  'How many days of staking yield a holder gives up to exit about 1 ETH'
 const ESTIMATE_NOTE =
   "~ marks an estimate: requests still queued are timed at the last 7 days' pace."
 const MARKET_NOTE =
-  "The discount is the day's median of hourly quotes for selling 100 tokens on the deepest pools, on days they could fill the sale for most hours."
+  "The discount is the day's median of hourly quotes for selling 1 token on the deepest pools, on days they could fill the sale for most hours."
 const INSTANT_NOTE =
-  'An instant exit counts on days it could pay out 100 ETH for most hours.'
+  'An instant exit counts on days it could pay out 1 ETH for most hours.'
 
 const QUEUE: ExitRoute = {
   phrase: "the protocol's withdrawal queue, which earns nothing while it waits",
@@ -44,7 +44,7 @@ export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
     ALL_ROUTES_TOOLTIP,
     MARKET_NOTE,
     INSTANT_NOTE,
-    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time; its pools are too thin to quote.',
+    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
   ].join(' '),
 }
 
@@ -90,7 +90,7 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         routes: [
           {
             phrase: 'burning rETH, which pays out at once',
-            note: 'Burning counts on days it could pay out 100 ETH for most hours.',
+            note: 'Burning counts on days it could pay out 1 ETH for most hours.',
           },
         ],
         queued: false,

@@ -147,7 +147,7 @@ describe(computeCostOfExitChart.name, () => {
       ['wbeth'],
       [
         snapshot('wbeth', START + DAY, 1.0),
-        // 100 tokens fetch 0.1% under what they're worth at the rate.
+        // The sale fetches 0.1% under what it's worth at the rate.
         snapshot('wbeth', DAY_31, 1.01, {
           lockTime: 40 * DAY,
           marketExitEth: (100_899n * ETH) / 1000n,
@@ -196,9 +196,9 @@ describe(computeCostOfExitChart.name, () => {
         ],
       ).costOfExit[0]?.projects.rocketpool
 
-    expect(at(100n * ETH)).toEqual(0)
+    expect(at(ETH)).toEqual(0)
     // Dust in the buffer pays out nothing worth counting.
-    expect(at(ETH)).toEqual(null)
+    expect(at(ETH / 1000n)).toEqual(null)
   })
 
   it('counts an instant redemption’s fee in days of yield', () => {
