@@ -47,7 +47,7 @@ export interface GasFeesTierWaitRecord extends GasFeesWaitBucket {
   txCount: number
   nextBlockCount: number
   within2BlocksCount: number
-  within1MinuteCount: number
+  within5BlocksCount: number
 }
 
 export interface GasFeesMempoolDayData {
