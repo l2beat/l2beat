@@ -80,7 +80,8 @@ export function getProjectMetrics(
 }
 
 export const ETH_STAKED_TITLE = 'ETH staked'
-export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'
+export const ETH_STAKED_TOOLTIP =
+  'Balance of all active Ethereum validators, without deposits still waiting to enter.'
 
 export function formatEthStaked(value: number): string {
   return `${formatNumber(value)} ETH`
@@ -105,26 +106,26 @@ export const CONSENSUS_THRESHOLDS = [
   {
     fraction: '⅓',
     share: 1 / 3,
-    title: 'Halt finality',
+    title: 'Stall finality',
     description:
-      'With more than ⅓ of the stake, validators can stop the chain from finalizing by not attesting. Blocks keep coming, but none become final until the inactivity leak drains the offline stake, which can take weeks.',
+      'With more than ⅓ of the stake, validators can stop the chain from finalizing by not attesting. Blocks keep coming, and finality returns once the inactivity leak has drained the validators not voting below ⅓, which can take weeks. If the network is badly split, about ⅓ could instead finalize two conflicting chains, and would be slashed heavily for it.',
   },
   {
     fraction: '½',
     share: 1 / 2,
     title: 'Censor and reorg',
     description:
-      'With more than ½, validators control the fork choice: they can keep transactions out of the chain and reorg blocks that are not yet final. The community could respond by moving to a minority fork.',
+      'With more than ½, validators control the fork choice: they can keep transactions out of the chain and reorg blocks that are not yet final, at will. Around ½, they can also keep two forks from finalizing until the inactivity leak finalizes both, and the community has to choose one. Before proposer boost, short reorgs took far less stake; it mostly closed that gap.',
   },
   {
     fraction: '⅔',
     share: 2 / 3,
     title: 'Finalize alone',
     description:
-      'With ⅔, validators can finalize the chain they choose, censorship included, without anyone else. Only a social-layer fork that drops their stake could undo it.',
+      'With ⅔, validators can finalize the chain they choose, censorship included, without anyone else. Only a social-layer fork that drops their stake could undo it. Blocks already final stay final: reverting them would get more than ⅓ of all stake slashed.',
   },
 ] as const
 
 /** The note on the bar's split and marks, for the tooltip beside it. */
 export const STAKED_ETH_BAR_NOTE =
-  "The marks show the shares of stake that change what validators acting together can do. A protocol's validators are run by its node operators, so its share is not one party's stake: it is how much rests on the protocol's contracts and governance. No share lets validators make nodes accept an invalid block."
+  "The marks show the shares of stake that change what validators acting together can do. A protocol's validators are run by its node operators, so its share is not one party's stake: it is how much rests on the protocol's contracts and governance. In practice the ⅓ and ½ marks sit slightly lower, because honest validators that are offline also count against finality and the fork choice; at usual uptime that is a fraction of a percentage point. No share lets validators make nodes accept an invalid block."

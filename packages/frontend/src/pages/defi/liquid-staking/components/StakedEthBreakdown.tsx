@@ -198,6 +198,23 @@ function StakeBar({
             </TooltipContent>
           </Tooltip>
         ))}
+        {otherShare > 0 && (
+          <Tooltip>
+            <TooltipTrigger
+              asChild
+              disabledOnTouch
+              aria-label={`${OTHER_STAKERS_LABEL}: ${formatPercent(otherShare)}`}
+            >
+              {/* Fills the rest, so rounding never leaves a gap at the end. */}
+              <div className="h-full flex-1" />
+            </TooltipTrigger>
+            <TooltipContent className="max-w-72">
+              {OTHER_STAKERS_LABEL}: {formatPercent(otherShare)} of staked ETH.
+              Everyone who stakes outside the protocols listed here, such as
+              solo stakers, exchanges and other staking services.
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
       {CONSENSUS_THRESHOLDS.map((threshold) => (
         <div
