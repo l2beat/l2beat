@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getL2StageTvsShares } from '~/server/features/layer2s/summary/getL2StageTvsShares'
 import { getL2SummaryEntries } from '~/server/features/layer2s/summary/getL2SummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -83,8 +84,14 @@ async function getCachedData() {
     ),
   ])
 
+  const stageShares = await getL2StageTvsShares(
+    [...entries.rollups, ...entries.validiumsAndOptimiums, ...entries.others],
+    tvsChartRange,
+  )
+
   return {
     entries,
+    stageShares,
     queryState: helpers.dehydrate(),
   }
 }
