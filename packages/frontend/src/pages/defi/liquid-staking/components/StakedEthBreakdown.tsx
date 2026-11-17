@@ -8,6 +8,7 @@ import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import {
   getLargestOperator,
+  type LiquidStakingOperator,
   type LiquidStakingOperators,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingOperators'
 import type { LiquidStakingEthStaked } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
@@ -258,6 +259,14 @@ function StakeBar({
  * A protocol's slice split between the operators that run its validators, by
  * their part of the protocol's stake on the beacon chain.
  */
+/**
+ * Below this part of the bar an operator is a sliver, so the smallest are
+ * drawn as one block: a divider every pixel would read as a pattern.
+ */
+const MIN_OPERATOR_WIDTH = 0.003
+/** Narrower than this, a divider is left out on small screens. */
+const MIN_OPERATOR_WIDTH_MOBILE = 0.01
+
 function OperatorSegments({
   segment,
   operators,
@@ -265,45 +274,92 @@ function OperatorSegments({
   segment: Segment
   operators: LiquidStakingOperators
 }) {
+  const blocks = getOperatorBlocks(segment, operators)
   return (
     <div
       className="flex h-full border-surface-primary border-r last:border-r-0"
       style={{ width: `${segment.share * 100}%` }}
     >
-      {operators.operators.map((operator, i) => (
-        <Tooltip key={operator.name}>
+      {blocks.map((block, i) => (
+        <Tooltip key={block.name}>
           <TooltipTrigger
             asChild
             disabledOnTouch
-            aria-label={`${operator.name}, ${segment.name}: ${formatPercent(operator.stakedEthShare)} of staked ETH`}
+            aria-label={`${block.name}, ${segment.name}: ${formatPercent(block.stakedEthShare)} of staked ETH`}
           >
             <div
-              className="h-full"
+              className={cn(
+                'h-full',
+                // A line between operators, in the card's colour.
+                i > 0 && 'border-surface-primary border-l',
+                i > 0 &&
+                  segment.share * block.protocolShare <
+                    MIN_OPERATOR_WIDTH_MOBILE &&
+                  'max-md:border-l-0',
+              )}
               style={{
-                width: `${operator.protocolShare * 100}%`,
+                width: `${block.protocolShare * 100}%`,
                 backgroundColor: segment.color,
-                // Every other operator lighter, so neighbours stay apart.
-                opacity: i % 2 === 0 ? 1 : 0.7,
               }}
             />
           </TooltipTrigger>
           <TooltipContent className="max-w-72">
-            <p className="font-medium">{operator.name}</p>
-            <p className="text-secondary">
-              {operator.operatorCount
-                ? `${formatCount(operator.operatorCount)} ${segment.name} operators`
-                : `${segment.name} operator`}
-            </p>
+            <p className="font-medium">{block.name}</p>
+            <p className="text-secondary">{block.description}</p>
             <p className="mt-1">
-              {formatEthStaked(operator.eth)} in{' '}
-              {formatCount(operator.validators)} validators:{' '}
-              {formatPercent(operator.stakedEthShare)} of staked ETH
+              {formatEthStaked(block.eth)} in {formatCount(block.validators)}{' '}
+              validators: {formatPercent(block.stakedEthShare)} of staked ETH
             </p>
           </TooltipContent>
         </Tooltip>
       ))}
     </div>
   )
+}
+
+interface OperatorBlock extends LiquidStakingOperator {
+  description: string
+}
+
+/** The operators wide enough to draw alone, then the rest as one block. */
+function getOperatorBlocks(
+  segment: Segment,
+  operators: LiquidStakingOperators,
+): OperatorBlock[] {
+  const describe = (operator: LiquidStakingOperator) =>
+    operator.operatorCount
+      ? `${formatCount(operator.operatorCount)} ${segment.name} operators`
+      : `${segment.name} operator`
+  const wide = operators.operators.filter(
+    (operator) => segment.share * operator.protocolShare >= MIN_OPERATOR_WIDTH,
+  )
+  const narrow = operators.operators.filter(
+    (operator) => !wide.includes(operator),
+  )
+  const blocks = wide.map((operator) => ({
+    ...operator,
+    description: describe(operator),
+  }))
+  if (narrow.length === 0) return blocks
+  const count = narrow.reduce((sum, o) => sum + (o.operatorCount ?? 1), 0)
+  const sum = (
+    key: 'eth' | 'validators' | 'protocolShare' | 'stakedEthShare',
+  ) => narrow.reduce((total, operator) => total + operator[key], 0)
+  return [
+    ...blocks,
+    {
+      name:
+        wide.length === 0
+          ? `All ${segment.name} operators`
+          : 'Smaller operators',
+      description: `${formatCount(count)} ${segment.name} operators, too small to show one by one`,
+      eth: sum('eth'),
+      validators: sum('validators'),
+      protocolShare: sum('protocolShare'),
+      stakedEthShare: sum('stakedEthShare'),
+      operatorCount: count,
+    },
+  ]
 }
 
 /** When the operators were read, and the largest one. */
