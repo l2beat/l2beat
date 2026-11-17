@@ -29,8 +29,6 @@ export const lyra: ScalingProject = opStackL2({
   ],
   display: {
     name: 'Derive',
-    headerWarning:
-      'Derive migrated from Derive Chain to [Derive V3](https://l2beat.com/scaling/projects/derivev3), a separate system that settles on Ethereum. Derive Chain is being wound down. See the [proposal](https://forums.derive.xyz/t/dip-launch-derive-v3/322) for details.',
     warning:
       'The fault proof system is deployed but is not functional. The dispute game commits to an op-program release that predates the Jovian hardfork active on the chain, so it cannot derive current blocks and no dispute can be resolved correctly by execution. Security relies entirely on the permissioned proposer and challengers.',
     aliases: ['Lyra'],
