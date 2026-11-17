@@ -145,10 +145,13 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
         .flatMap((day) => day.records)
         .filter((r) => !have.has(`${r.chain}:${r.timestamp}`))
       await this.$.db.gasFeesDaily.upsertMany(records)
+      const filled = new Set(records.map((r) => `${r.chain}:${r.timestamp}`))
       this.logger.info('Filled late gas fees chain days', {
         from: firstLate,
         filled: records.length,
-        stillLate: late.length - records.length,
+        stillLate: late.filter(
+          ({ day, chain }) => !filled.has(`${chain.id}:${day}`),
+        ).length,
       })
     } catch (error) {
       this.logger.error('Late gas fees chains read failed', { error })

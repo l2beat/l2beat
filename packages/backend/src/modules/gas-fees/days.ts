@@ -49,7 +49,10 @@ export function nextDays(
 /** Dune loads a day at once and every read is billed, so an unfinished day is read again this often at most */
 const UNFINISHED_REREAD_SECONDS = 6 * UnixTime.HOUR
 
-/** Remembers the day last found unfinished on Dune, so its retries don't each pay for a read */
+/**
+ * Remembers the day last found unfinished on Dune, so its retries don't each pay for a read.
+ * In memory only: after a restart the day is read once more
+ */
 export class UnfinishedDay {
   private last:
     | { day: UnixTime; cause: Record<string, unknown>; readAt: UnixTime }
