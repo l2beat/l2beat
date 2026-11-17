@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xdd68704d3cdb20f53550527cc8f231cf6d8770d1
+
+# Diff at Mon, 16 Nov 2026 22:34:21 GMT:
+
+- id: 9adcbbce
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1793982721
+- current timestamp: 1794868381
+
+## Description
+
+SequencerInbox `sequencerVersion` 0x88 → 0x00: batches are posted in full since batch 4102 on 2026-11-07 (block 26360756).
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
 Generated with discovered.json: 0xeb16b1b3e247bf82ca9884c9174b5a2ba5b60f5d
 
 # Diff at Fri, 06 Nov 2026 16:33:08 GMT:
