@@ -1103,6 +1103,7 @@ model GasFeesTierWait {
 /// Tips paid on Ethereum in one UTC day, by every transaction in every block,
 /// private ones included. Ordinary: a tip under 2.5 gwei, not sent by the
 /// block's fee recipient, not sent to the forwarder 0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc.
+/// A day Dune never had every block of has no row.
 model GasFeesTipPayersDaily {
   /// Start of the day.
   timestamp          DateTime @id @db.Timestamp(6)
