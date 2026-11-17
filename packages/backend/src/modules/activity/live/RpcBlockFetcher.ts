@@ -2,12 +2,14 @@ import type { IRpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import { toActivityBlock } from '../../../providers/ActivityBlockProviders'
+import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import type { BlockTxsCountService } from '../services/txs/BlockTxsCountService'
 import type { UopsAnalyzer } from '../services/uops/types'
 import type { BlockFetcher, LinkedBlock } from './HeadFollower'
+import type { BlockHashSource } from './StoredBlockSource'
 
 /** Counts each block as the activity indexer would, so a stored block can stand in for fetching it */
-export class RpcBlockFetcher implements BlockFetcher {
+export class RpcBlockFetcher implements BlockFetcher, BlockHashSource {
   constructor(
     private readonly rpc: IRpcClient,
     private readonly uopsAnalyzer: UopsAnalyzer | undefined,
@@ -16,6 +18,15 @@ export class RpcBlockFetcher implements BlockFetcher {
 
   getLatestBlockNumber(): Promise<number> {
     return this.rpc.getLatestBlockNumber()
+  }
+
+  /** Asked by the activity indexer, outside the follower's metrics */
+  getBlockHash(number: number): Promise<string> {
+    return withCoreFeatureRpcMetricsContext(
+      'activity.live',
+      { chain: this.rpc.chain, mode: 'verify' },
+      async () => (await this.rpc.getBlock(number, false)).hash,
+    )
   }
 
   async getBlocks(from: number, to: number): Promise<LinkedBlock[]> {
