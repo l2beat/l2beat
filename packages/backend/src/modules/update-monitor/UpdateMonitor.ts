@@ -217,10 +217,6 @@ export class UpdateMonitor {
         this.logger,
       )
 
-      // The pool has given this worker's slot away already, so a second
-      // discovery here would run on top of the configured concurrency.
-      signal.throwIfAborted()
-
       // read previous state (committed vs DB) and prime flat sources if needed
       const previousDiscovery = await this.getPreviousDiscovery(
         runner,
@@ -343,6 +339,9 @@ export class UpdateMonitor {
       previousDiscovery = databaseEntry.discovery
     }
 
+    // The pool has given an aborted task's slot away already, so a second
+    // discovery here would run on top of the configured concurrency.
+    signal.throwIfAborted()
     const runResult = await runner.run(
       projectConfig,
       previousDiscovery.timestamp,
