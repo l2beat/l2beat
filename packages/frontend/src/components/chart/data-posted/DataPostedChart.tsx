@@ -71,6 +71,8 @@ export function DataPostedChart({
       interactiveLegend={{
         dataKeys,
         onItemClick: toggleDataKey,
+        // One series: toggling it only empties the chart, so no hint.
+        disableOnboarding: true,
       }}
       legend
     >

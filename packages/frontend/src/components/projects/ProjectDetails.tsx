@@ -1,6 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { ComponentType } from 'react'
 import { LazyHydrate } from '~/components/LazyHydrate'
+import { cn } from '~/utils/cn'
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
@@ -67,21 +68,67 @@ interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div>
-      {props.items.map((item, index) => (
-        <LazyHydrate
-          key={item.props.id}
-          className="max-md:border-divider max-md:border-b max-md:last:border-none"
-          eager={
-            props.nested ||
-            (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
-          }
-        >
-          {renderSection(props, item, index)}
-        </LazyHydrate>
-      ))}
+    <div className="@container/details">
+      <div className="@min-[1200px]/details:grid @min-[1200px]/details:grid-cols-2 @min-[1200px]/details:gap-x-4">
+        {props.items.map((item, index) => {
+          const side = props.nested ? undefined : pairSide(props.items, index)
+          return (
+            <LazyHydrate
+              key={item.props.id}
+              className={cn(
+                'max-md:border-divider max-md:border-b max-md:last:border-none',
+                side === undefined
+                  ? '@min-[1200px]/details:col-span-2'
+                  : // Both cards as tall as the row (each keeps its top
+                    // margin), until either opens something, e.g. Tracked
+                    // transactions: the other then keeps its own height
+                    // instead of stretching into an empty box.
+                    [
+                      '[&:has([data-state=open])>*]:h-auto! @min-[1200px]/details:[&>*]:h-[calc(100%-1rem)]',
+                      side === 'left'
+                        ? '[&:has(+*_[data-state=open])>*]:h-auto!'
+                        : '[*:has([data-state=open])+&>*]:h-auto!',
+                    ],
+              )}
+              eager={
+                props.nested ||
+                (item.type === 'UpdatesSection' && !!props.selectedUpdateId)
+              }
+            >
+              {renderSection(props, item, index)}
+            </LazyHydrate>
+          )
+        })}
+      </div>
     </div>
   )
+}
+
+/**
+ * Sections that sit side by side when the column is wide enough, so a wide
+ * screen shows two charts a row; both must be there, in this order.
+ */
+const SIDE_BY_SIDE: [
+  ProjectDetailsSection['type'],
+  ProjectDetailsSection['type'],
+][] = [
+  ['ActivitySection', 'CostsSection'],
+  ['DataPostedSection', 'LivenessSection'],
+]
+
+/** Which side of a side-by-side pair the section sits on, if any. */
+function pairSide(
+  items: ProjectDetailsSection[],
+  index: number,
+): 'left' | 'right' | undefined {
+  const type = items[index]?.type
+  const next = items[index + 1]?.type
+  const previous = items[index - 1]?.type
+  for (const [left, right] of SIDE_BY_SIDE) {
+    if (type === left && next === right) return 'left'
+    if (type === right && previous === left) return 'right'
+  }
+  return undefined
 }
 
 function renderSection(

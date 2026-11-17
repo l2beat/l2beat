@@ -46,7 +46,7 @@ export function FlowsStatsPanel({
       {singleProtocolId && !hasRouteSelection ? (
         data && <BridgeFlowStats data={data} chainId={statsChainA} />
       ) : (
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
+        <div className="grid @min-[1200px]/details:grid-cols-1! grid-cols-1 gap-2 lg:grid-cols-4 @min-[1200px]/details:[&>*:first-child]:row-span-1! lg:[&>*:first-child]:row-span-3 @min-[1200px]/details:[&>*]:col-span-1! lg:[&>*]:col-span-2">
           {hasRouteSelection && statsChainB ? (
             <MultipleChainsStats
               chainIdA={statsChainA}
