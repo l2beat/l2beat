@@ -10,9 +10,9 @@ Generated with discovered.json: 0xf664179d797aa918008f302f5d0e6c01da3e72b0
 ## Description
 
 The CalderaMultisig changed three RollupProxy settings through the UpgradeExecutor on 2026-11-12:
-- `anyTrustFastConfirmer` moved from the 1/1 SxNetworkMultisig to a new 2/2 Safe whose signers are the SxNetworkMultisig signer and a new EOA ([tx](https://etherscan.io/tx/0xe2bfd3a5e6b9c9e521f6df475d8aa9faf2b060415c839785fbb8ba5fdbb97048)).
-- The new Safe and the new EOA were added as validators ([tx](https://etherscan.io/tx/0x24d9dcea735076e5b80c6855193ff8af0dac781092999e050439789464685dc1)).
-- `minimumAssertionPeriod` 75 → 21,600 L1 blocks, 15m → 3d ([tx](https://etherscan.io/tx/0x9f9e60e485845748873c7aeebbf41de7a2cd389683252734a3686d795f1c01cb)). State roots, and so withdrawals, now come at most every 3 days instead of every 15 minutes: the next one was created on 2026-11-15 and fast-confirmed on 2026-11-16.
+- `anyTrustFastConfirmer` moved from the 1/1 SxNetworkMultisig to a new 2/2 Safe whose signers are the SxNetworkMultisig signer and a new EOA.
+- The new Safe and the new EOA were added as validators.
+- `minimumAssertionPeriod` 75 → 21,600 L1 blocks, 15m → 3d. State roots, and so withdrawals, now come at most every 3 days instead of every 15 minutes: the next one was created on 2026-11-15 and fast-confirmed on 2026-11-16.
 
 ## Watched changes
 
