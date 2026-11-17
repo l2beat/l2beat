@@ -14,7 +14,7 @@ const INTERVAL_MS = 10_000
 /** Each tick in a row that stores no block waits one more interval, up to a minute */
 const MAX_IDLE_TICKS = 5
 /** Stored blocks remembered to find where a reorg forked off */
-const REMEMBERED_BLOCKS = 64
+export const REMEMBERED_BLOCKS = 64
 /** How long a failing source is left alone at most before it is asked again */
 const MAX_RETRY_MS = 60_000
 const CLEAN_EVERY = 10 * UnixTime.MINUTE
@@ -81,11 +81,7 @@ export class ChainHeadIndexer extends RootIndexer {
     logger: Logger,
   ) {
     super(logger.tag({ tag: $.chain, chain: $.chain }), {
-      tickRetryStrategy: Retries.exponentialBackOff({
-        initialTimeoutMs: 1000,
-        maxAttempts: Number.POSITIVE_INFINITY,
-        maxTimeoutMs: MAX_RETRY_MS,
-      }),
+      tickRetryStrategy: getHeadRetryStrategy(),
     })
     this.keepFor = $.keepFor
   }
@@ -105,8 +101,10 @@ export class ChainHeadIndexer extends RootIndexer {
       'chainHead',
       { chain: this.$.chain, mode: 'head' },
       async () => {
-        const followed = await this.follow()
+        // before the blocks are followed: a failure after a reorg was unwound
+        // would keep the lowered height from the children
         await this.clean()
+        const followed = await this.follow()
 
         this.idleTicks =
           followed.stored > 0 ? 0 : Math.min(this.idleTicks + 1, MAX_IDLE_TICKS)
@@ -318,6 +316,19 @@ export class ChainHeadIndexer extends RootIndexer {
     clearTimeout(this.timer)
     this.timer = setTimeout(() => this.requestTick(), ms)
   }
+}
+
+/**
+ * Retries without end, as the hourly indexers do, but never waiting longer
+ * than a minute: what is read at the head is only worth anything while it
+ * keeps up
+ */
+export function getHeadRetryStrategy() {
+  return Retries.exponentialBackOff({
+    initialTimeoutMs: 1000,
+    maxAttempts: Number.POSITIVE_INFINITY,
+    maxTimeoutMs: MAX_RETRY_MS,
+  })
 }
 
 function isLinked(blocks: EVMBlockWithTransactions[]): boolean {

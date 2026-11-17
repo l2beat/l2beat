@@ -359,6 +359,22 @@ describe(ChainHeadIndexer.name, () => {
       expect(secondsToNextTick(time)).toEqual(10)
     })
 
+    it('still drops to the fork after a tick that failed to delete old blocks', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      const indexer = head(chain, store)
+      chain.reorg(99, 101)
+      store.repository.deleteBefore.rejectsWithOnce(new Error('timeout'))
+
+      await expect(indexer.tick()).toBeRejectedWith('timeout')
+
+      expect(await indexer.tick()).toEqual(98)
+    })
+
     it('deletes the blocks too old to keep, every ten minutes', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [chain.block(100)])

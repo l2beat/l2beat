@@ -89,6 +89,7 @@ export function initActivityModule({
           new LiveActivityIndexer(
             {
               projectId: project.id,
+              chain: project.chainName,
               batchSize,
               configHash: hashJson(project.activityConfig.adjustCount ?? null),
               parents: [chainHead],

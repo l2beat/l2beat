@@ -76,7 +76,46 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
     expect(rows().map((r) => r.hash)).toEqual(['0x105-1'])
   })
 
-  function setup() {
+  it('replaces stored blocks the head left while the child never heard of it', async () => {
+    // the head dropped block 100 for a reorg and stored what replaced it, and
+    // the process died before the child was invalidated
+    const { rows, start } = setup((chain, chainBlocks, live) => {
+      const [before, replaced] = [chain.block(99), chain.block(100)]
+      chain.reorg(100, 101)
+      chainBlocks.rows = [before, chain.block(100), chain.block(101)].map(
+        (block) => ({
+          chain: 'base',
+          number: block.number,
+          hash: block.hash,
+          parentHash: block.parentHash,
+          timestamp: block.timestamp,
+        }),
+      )
+      live.rows = [before, replaced].map((block) => ({
+        projectId: PROJECT,
+        number: block.number,
+        hash: block.hash,
+        parentHash: block.parentHash,
+        timestamp: block.timestamp,
+        count: 0,
+        uopsCount: null,
+        gasUsed: block.gasUsed,
+      }))
+      return { safeHeight: 100 }
+    })
+    await start()
+    await time.tickAsync(1)
+
+    expect(rows().map((r) => r.hash)).toEqual(['0x99', '0x100-1', '0x101-1'])
+  })
+
+  function setup(
+    prepare?: (
+      chain: FakeChain,
+      chainBlocks: FakeChainBlocks,
+      live: FakeLiveBlocks,
+    ) => { safeHeight: number },
+  ) {
     const chain = new FakeChain(100, NOW - 100)
     const chainBlocks = new FakeChainBlocks('base')
     const live = new FakeLiveBlocks()
@@ -84,6 +123,13 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
       string,
       { safeHeight: number; configHash?: string }
     >()
+    const prepared = prepare?.(chain, chainBlocks, live)
+    if (prepared) {
+      states.set('live_activity::base', {
+        safeHeight: prepared.safeHeight,
+        configHash: 'current',
+      })
+    }
     const db = mockObject<Database>({
       chainBlock: chainBlocks.repository,
       liveActivityBlock: live.repository,
@@ -115,6 +161,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
     const indexer = new LiveActivityIndexer(
       {
         projectId: PROJECT,
+        chain: 'base',
         batchSize: 100,
         configHash: 'current',
         blocks: head,
@@ -161,6 +208,8 @@ class FakeLiveBlocks {
       this.rows.sort((a, b) => a.number - b.number)
       return records.length
     },
+    getByProjectNumberRange: async (_, from, to) =>
+      this.rows.filter((r) => r.number >= from && r.number <= to),
     deleteByProjectAfter: async (_, number) => {
       const before = this.rows.length
       this.rows = this.rows.filter((r) => r.number <= number)

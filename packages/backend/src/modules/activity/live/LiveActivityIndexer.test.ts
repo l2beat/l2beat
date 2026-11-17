@@ -82,6 +82,64 @@ describe(LiveActivityIndexer.name, () => {
     })
   })
 
+  describe('stored blocks from a chain the head left', () => {
+    it('replaces the ones above the newest block the head has too', async () => {
+      const store = new FakeStore(range(3595, 3600))
+      store.headHashes = new Map([
+        [3597, '0x3597'],
+        [3598, '0x3598-1'],
+        [3599, '0x3599-1'],
+      ])
+      const onHead = (number: number) => ({
+        ...block(number),
+        hash: number > 3597 ? `0x${number}-1` : `0x${number}`,
+        parentHash: number > 3598 ? `0x${number - 1}-1` : `0x${number - 1}`,
+      })
+      const { indexer } = setup(store, 100, onHead)
+
+      expect(await indexer.update(3600, 3600)).toEqual(3600)
+
+      expect(store.rows.map((r) => r.hash)).toEqual([
+        '0x3595',
+        '0x3596',
+        '0x3597',
+        '0x3598-1',
+        '0x3599-1',
+        '0x3600-1',
+      ])
+    })
+
+    it('goes on up to the height it was asked for when a batch ends below it', async () => {
+      const store = new FakeStore(range(3590, 3600))
+      store.headHashes = new Map([[3590, '0x3590']])
+      const onHead = (number: number) => ({
+        ...block(number),
+        hash: number > 3590 ? `0x${number}-1` : `0x${number}`,
+        parentHash: number > 3591 ? `0x${number - 1}-1` : `0x${number - 1}`,
+      })
+      const { indexer } = setup(store, 4, onHead)
+
+      expect(await indexer.update(3600, 3600)).toEqual(3600)
+
+      expect(store.rows.map((r) => r.hash)).toEqual([
+        '0x3590',
+        ...range(3591, 3601).map((number) => `0x${number}-1`),
+      ])
+    })
+
+    it('starts over at the newest block when the head has none of the blocks it would remember', async () => {
+      const store = new FakeStore(range(3595, 3600))
+      const { indexer } = setup(store, 100, (number) => ({
+        ...block(number),
+        parentHash: '0xother',
+      }))
+
+      expect(await indexer.update(3600, 3600)).toEqual(3600)
+
+      expect(store.numbers()).toEqual([3600])
+    })
+  })
+
   describe(LiveActivityIndexer.prototype.invalidate.name, () => {
     it('deletes the blocks above the height the chain head dropped to', async () => {
       const store = new FakeStore(range(3595, 3601))
@@ -133,13 +191,18 @@ describe(LiveActivityIndexer.name, () => {
   })
 })
 
-function setup(store: FakeStore, batchSize = 100) {
+function setup(
+  store: FakeStore,
+  batchSize = 100,
+  served: (number: number) => EVMBlockWithTransactions = block,
+) {
   const getBlocks = mockFn(async (from: number, to: number) =>
-    range(from, to + 1).map(block),
+    range(from, to + 1).map(served),
   )
   const indexer = new LiveActivityIndexer(
     {
       projectId: PROJECT,
+      chain: 'base',
       batchSize,
       configHash: CONFIG_HASH,
       blocks: { getBlocks },
@@ -173,9 +236,13 @@ function block(number: number): EVMBlockWithTransactions {
 class FakeStore {
   rows: LiveActivityBlockRecord[]
   configHash: string | undefined
+  /** What the chain head stored, by block number */
+  headHashes = new Map<number, string>()
   readonly db = mockDatabase({
     liveActivityBlock: mockObject<Database['liveActivityBlock']>({
       getNewest: async (_, limit) => this.rows.slice(-limit),
+      getByProjectNumberRange: async (_, from, to) =>
+        this.rows.filter((r) => r.number >= from && r.number <= to),
       upsertMany: async (records) => {
         const numbers = new Set(records.map((r) => r.number))
         this.rows = [
@@ -188,6 +255,18 @@ class FakeStore {
       deleteByProjectAfter: async (_, number) =>
         this.keep((r) => r.number <= number),
       deleteByProject: async () => this.keep(() => false),
+    }),
+    chainBlock: mockObject<Database['chainBlock']>({
+      getByNumberRange: async (chain, from, to) =>
+        [...this.headHashes]
+          .filter(([number]) => number >= from && number <= to)
+          .map(([number, hash]) => ({
+            chain,
+            number,
+            hash,
+            parentHash: '0x',
+            timestamp: GENESIS + number,
+          })),
     }),
     indexerState: mockObject<Database['indexerState']>({
       findByIndexerId: async (indexerId) =>
