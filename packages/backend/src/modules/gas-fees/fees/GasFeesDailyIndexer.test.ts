@@ -54,6 +54,11 @@ describe(GasFeesDailyIndexer.name, () => {
     await expect(indexer.update(day(2), day(9))).toBeRejectedWith(
       'Gas fees day not on Dune yet',
     )
+    // The retry within 6 hours fails without a read
+    await expect(indexer.update(day(2), day(9))).toBeRejectedWith(
+      'Gas fees day not on Dune yet',
+    )
+    expect(readFeesDays).toHaveBeenCalledTimes(2)
   })
 
   it('reads the late chains of earlier days again, 6 hours apart at most', async () => {

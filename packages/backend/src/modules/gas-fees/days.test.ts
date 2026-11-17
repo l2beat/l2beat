@@ -4,30 +4,42 @@ import { nextDays } from './days'
 
 describe(nextDays.name, () => {
   const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
+  const firstDay = day('2026-10-01')
 
   it('starts after the stored days and stops at the last finished one', () => {
     // Height: the end of 2026-10-01, `to`: midday of 2026-10-04
     expect(
-      nextDays(day('2026-10-02') + 1, day('2026-10-04') + 12 * 3600, 10),
+      nextDays(
+        firstDay,
+        day('2026-10-02') + 1,
+        day('2026-10-04') + 12 * 3600,
+        10,
+      ),
     ).toEqual([day('2026-10-02'), day('2026-10-03')])
   })
 
   it('starts at the first day from the initial height', () => {
-    expect(nextDays(day('2026-10-02'), day('2026-10-09'), 2)).toEqual([
-      day('2026-10-01'),
-      day('2026-10-02'),
-    ])
+    expect(nextDays(firstDay, day('2026-10-02'), day('2026-10-09'), 2)).toEqual(
+      [day('2026-10-01'), day('2026-10-02')],
+    )
+  })
+
+  it('waits for its first day when a parent starts earlier', () => {
+    // The hourly tips start a day before, and lower their children to their height
+    const lowered = day('2026-09-30')
+    expect(nextDays(firstDay, lowered, day('2026-10-01') + 3600)).toEqual([])
+    expect(nextDays(firstDay, lowered, day('2026-10-02'))).toEqual([firstDay])
   })
 
   it('stays in one month', () => {
-    expect(nextDays(day('2026-10-31') + 1, day('2026-11-05'), 10)).toEqual([
-      day('2026-10-31'),
-    ])
+    expect(
+      nextDays(firstDay, day('2026-10-31') + 1, day('2026-11-05'), 10),
+    ).toEqual([day('2026-10-31')])
   })
 
   it('returns no day before one has finished', () => {
-    expect(nextDays(day('2026-10-02') + 1, day('2026-10-02') + 3600)).toEqual(
-      [],
-    )
+    expect(
+      nextDays(firstDay, day('2026-10-02') + 1, day('2026-10-02') + 3600),
+    ).toEqual([])
   })
 })
