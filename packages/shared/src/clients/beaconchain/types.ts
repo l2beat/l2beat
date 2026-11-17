@@ -16,3 +16,18 @@ export const BeaconChainError = v.object({
 export const ForkSchema = v.object({
   data: v.object({ current_version: v.string() }),
 })
+
+export const HeaderSchema = v.object({
+  data: v.object({
+    root: v.string(),
+    header: v.object({ message: v.object({ slot: v.string() }) }),
+  }),
+})
+
+export const ValidatorSchema = v.object({
+  balance: v.string(),
+  validator: v.object({
+    pubkey: v.string(),
+    withdrawal_credentials: v.string(),
+  }),
+})

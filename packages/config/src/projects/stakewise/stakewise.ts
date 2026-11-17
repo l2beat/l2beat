@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getValidatorOperators } from '../../liquid-staking/stakingOperators'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -270,6 +271,7 @@ export const stakewise: BaseProject = {
         description: `Core contracts cannot be upgraded, but the ${daoSafe} DAO multisig changes oracles, collateral rules and approved vault code, and can register any contract as a vault, with no delay. SWISE votes can also execute through SafeSnap after ${voteDelay}. Holders have no veto.`,
       },
     },
+    validatorOperators: getValidatorOperators('stakewise'),
   },
   externalDependencies: [
     {

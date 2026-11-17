@@ -1,0 +1,783 @@
+{
+  "slot": 15675072,
+  "blockNumber": 26435294,
+  "timestamp": 1794924887,
+  "totalEth": 44400623,
+  "validators": 790205,
+  "protocols": {
+    "lido": {
+      "eth": 9499975,
+      "validators": 199734,
+      "operatorCount": 466,
+      "operators": [
+        {
+          "name": "Community Staking Module",
+          "eth": 773691,
+          "validators": 24175,
+          "operatorCount": 423
+        },
+        {
+          "name": "RockLogic",
+          "eth": 293798,
+          "validators": 1028
+        },
+        {
+          "name": "Launchnodes",
+          "eth": 285517,
+          "validators": 1893
+        },
+        {
+          "name": "MAVAN",
+          "eth": 275589,
+          "validators": 675
+        },
+        {
+          "name": "stakefish",
+          "eth": 273616,
+          "validators": 643
+        },
+        {
+          "name": "Everstake",
+          "eth": 273247,
+          "validators": 1289
+        },
+        {
+          "name": "Ebunker",
+          "eth": 273217,
+          "validators": 1837
+        },
+        {
+          "name": "HashKey Cloud",
+          "eth": 270432,
+          "validators": 4196
+        },
+        {
+          "name": "Stakely",
+          "eth": 265668,
+          "validators": 722
+        },
+        {
+          "name": "DSRV",
+          "eth": 258821,
+          "validators": 8085
+        },
+        {
+          "name": "Gateway FM",
+          "eth": 258287,
+          "validators": 8006
+        },
+        {
+          "name": "Solstice",
+          "eth": 258018,
+          "validators": 7997
+        },
+        {
+          "name": "Twinstake",
+          "eth": 257935,
+          "validators": 140
+        },
+        {
+          "name": "Chainlayer",
+          "eth": 257910,
+          "validators": 1658
+        },
+        {
+          "name": "Develp",
+          "eth": 257903,
+          "validators": 7994
+        },
+        {
+          "name": "Blockscape",
+          "eth": 257890,
+          "validators": 8056
+        },
+        {
+          "name": "ChainSafe",
+          "eth": 257855,
+          "validators": 8055
+        },
+        {
+          "name": "Prysm by Offchain",
+          "eth": 257846,
+          "validators": 7247
+        },
+        {
+          "name": "Figment",
+          "eth": 257796,
+          "validators": 8053
+        },
+        {
+          "name": "P2P.org",
+          "eth": 257715,
+          "validators": 819
+        },
+        {
+          "name": "Allnodes",
+          "eth": 257539,
+          "validators": 8045
+        },
+        {
+          "name": "Stakin by The Tie",
+          "eth": 254965,
+          "validators": 5601
+        },
+        {
+          "name": "ParaFi Technologies",
+          "eth": 254713,
+          "validators": 7511
+        },
+        {
+          "name": "Blockdaemon",
+          "eth": 254477,
+          "validators": 7548
+        },
+        {
+          "name": "RockawayX Infra",
+          "eth": 254261,
+          "validators": 7250
+        },
+        {
+          "name": "Kukis Global",
+          "eth": 253918,
+          "validators": 7491
+        },
+        {
+          "name": "RockX",
+          "eth": 253521,
+          "validators": 7920
+        },
+        {
+          "name": "SenseiNode",
+          "eth": 251742,
+          "validators": 5539
+        },
+        {
+          "name": "Sigma Prime",
+          "eth": 250122,
+          "validators": 6324
+        },
+        {
+          "name": "Attestant",
+          "eth": 247508,
+          "validators": 5025
+        },
+        {
+          "name": "InfStones",
+          "eth": 246344,
+          "validators": 6076
+        },
+        {
+          "name": "Staking Facilities",
+          "eth": 246262,
+          "validators": 6018
+        },
+        {
+          "name": "Simply Staking",
+          "eth": 245975,
+          "validators": 4705
+        },
+        {
+          "name": "Galaxy",
+          "eth": 245842,
+          "validators": 7113
+        },
+        {
+          "name": "Simple DVT Module",
+          "eth": 160037,
+          "validators": 5000,
+          "operatorCount": 10
+        }
+      ]
+    },
+    "etherfi": {
+      "eth": 1768487,
+      "validators": 24540,
+      "operatorCount": 15,
+      "operators": [
+        {
+          "name": "0xF905168FB8Df460F2eBcD2eb35773BA8cdFD9087",
+          "address": "0xF905168FB8Df460F2eBcD2eb35773BA8cdFD9087",
+          "eth": 258564,
+          "validators": 1801
+        },
+        {
+          "name": "0x6A410216CfaCfE943E97A905C8CF92dEaAb43FF6",
+          "address": "0x6A410216CfaCfE943E97A905C8CF92dEaAb43FF6",
+          "eth": 190562,
+          "validators": 439
+        },
+        {
+          "name": "0xf92204022cdf7ee0763Ef794f69427A9dD9A7834",
+          "address": "0xf92204022cdf7ee0763Ef794f69427A9dD9A7834",
+          "eth": 160539,
+          "validators": 2069
+        },
+        {
+          "name": "0xe2F8CeFcDee51F48e3CE5c4Deea3095c43369b36",
+          "address": "0xe2F8CeFcDee51F48e3CE5c4Deea3095c43369b36",
+          "eth": 156444,
+          "validators": 3000
+        },
+        {
+          "name": "0x6916487F0c4553B9EE2f401847B6C58341B76991",
+          "address": "0x6916487F0c4553B9EE2f401847B6C58341B76991",
+          "eth": 145267,
+          "validators": 1792
+        },
+        {
+          "name": "0x6A54cF0befD629A8F74348Bb622a84A63f944532",
+          "address": "0x6A54cF0befD629A8F74348Bb622a84A63f944532",
+          "eth": 129951,
+          "validators": 1656
+        },
+        {
+          "name": "0x5bEA039DB7A516A2f1c258Fe002C9ec9aC75730D",
+          "address": "0x5bEA039DB7A516A2f1c258Fe002C9ec9aC75730D",
+          "eth": 124033,
+          "validators": 3875
+        },
+        {
+          "name": "0xAfBD66706F90BC56D29c39A260930b34B2757ed8",
+          "address": "0xAfBD66706F90BC56D29c39A260930b34B2757ed8",
+          "eth": 103390,
+          "validators": 3230
+        },
+        {
+          "name": "0xcA2e28756379f660d15f1113dB5Cf34A73CbE89b",
+          "address": "0xcA2e28756379f660d15f1113dB5Cf34A73CbE89b",
+          "eth": 84506,
+          "validators": 683
+        },
+        {
+          "name": "0x78cA32Ac90D7F99225a3B9288D561E0cB3744899",
+          "address": "0x78cA32Ac90D7F99225a3B9288D561E0cB3744899",
+          "eth": 82397,
+          "validators": 840
+        },
+        {
+          "name": "0x7C0576343975A1360CEb91238e7B7985B8d71BF4",
+          "address": "0x7C0576343975A1360CEb91238e7B7985B8d71BF4",
+          "eth": 79297,
+          "validators": 1871
+        },
+        {
+          "name": "0x771A428b865a3984085eD49A0ca550Dd222bb60b",
+          "address": "0x771A428b865a3984085eD49A0ca550Dd222bb60b",
+          "eth": 75023,
+          "validators": 56
+        },
+        {
+          "name": "0xA8304775e435146650A7Ae65aa39B2a38F0152AE",
+          "address": "0xA8304775e435146650A7Ae65aa39B2a38F0152AE",
+          "eth": 70587,
+          "validators": 60
+        },
+        {
+          "name": "0x74B44741EFbC3EDc7f0cdAdE165eAb1AfE9c65ca",
+          "address": "0x74B44741EFbC3EDc7f0cdAdE165eAb1AfE9c65ca",
+          "eth": 54344,
+          "validators": 1494
+        },
+        {
+          "name": "0xB8db44e12eacc48F7C2224a248c8990289556fAe",
+          "address": "0xB8db44e12eacc48F7C2224a248c8990289556fAe",
+          "eth": 53582,
+          "validators": 1674
+        }
+      ]
+    },
+    "rocketpool": {
+      "eth": 420140,
+      "validators": 13128,
+      "operatorCount": 1339,
+      "operators": [
+        {
+          "name": "0x287A041489A735e51224229A9f997620c4f48c6B",
+          "address": "0x287A041489A735e51224229A9f997620c4f48c6B",
+          "eth": 25538,
+          "validators": 798
+        },
+        {
+          "name": "0x1f92eE8cf6483677C0c6381C48e2Bf272764f0CC",
+          "address": "0x1f92eE8cf6483677C0c6381C48e2Bf272764f0CC",
+          "eth": 13251,
+          "validators": 414
+        },
+        {
+          "name": "0xca317A4ecCbe0Dd5832dE2A7407e3c03F88b2CdD",
+          "address": "0xca317A4ecCbe0Dd5832dE2A7407e3c03F88b2CdD",
+          "eth": 11332,
+          "validators": 354
+        },
+        {
+          "name": "0xb8ed9ea221bf33d37360A76DDD52bA7b1E66AA5C",
+          "address": "0xb8ed9ea221bf33d37360A76DDD52bA7b1E66AA5C",
+          "eth": 10853,
+          "validators": 339
+        },
+        {
+          "name": "0x66283163ACAb1BB1aF6b6cE7E05e1C81E1328e32",
+          "address": "0x66283163ACAb1BB1aF6b6cE7E05e1C81E1328e32",
+          "eth": 9571,
+          "validators": 299
+        },
+        {
+          "name": "0xD91EEcc267ff626399798040d88DE62c9e70Acf0",
+          "address": "0xD91EEcc267ff626399798040d88DE62c9e70Acf0",
+          "eth": 8258,
+          "validators": 258
+        },
+        {
+          "name": "0x84ba027280cC6cc1e592a01270c5f21A494F46Cb",
+          "address": "0x84ba027280cC6cc1e592a01270c5f21A494F46Cb",
+          "eth": 7299,
+          "validators": 228
+        },
+        {
+          "name": "0x5B2C08Eb8533e537119ECBA829BB0Dc4E100DC2c",
+          "address": "0x5B2C08Eb8533e537119ECBA829BB0Dc4E100DC2c",
+          "eth": 7170,
+          "validators": 224
+        },
+        {
+          "name": "0x2d2BfE2389B7b3779fa04d101f75a89F6A62DcD6",
+          "address": "0x2d2BfE2389B7b3779fa04d101f75a89F6A62DcD6",
+          "eth": 6945,
+          "validators": 217
+        },
+        {
+          "name": "0xc1A95D5F674F809b80D768c12cAd12fbEB5c370c",
+          "address": "0xc1A95D5F674F809b80D768c12cAd12fbEB5c370c",
+          "eth": 6051,
+          "validators": 189
+        },
+        {
+          "name": "0x86C4c582215Bb0eC70310C6AE971f33772cB0e59",
+          "address": "0x86C4c582215Bb0eC70310C6AE971f33772cB0e59",
+          "eth": 4866,
+          "validators": 152
+        },
+        {
+          "name": "0xab331A3cCfA7C5d3b42eDb522FC6878b9D3D9c1d",
+          "address": "0xab331A3cCfA7C5d3b42eDb522FC6878b9D3D9c1d",
+          "eth": 4737,
+          "validators": 148
+        },
+        {
+          "name": "0xD93aeF2867144297802B41E7887C5C0d5b853fED",
+          "address": "0xD93aeF2867144297802B41E7887C5C0d5b853fED",
+          "eth": 4514,
+          "validators": 141
+        },
+        {
+          "name": "0x665dd495742e25BFd5778E40d44A8C70303f7CEe",
+          "address": "0x665dd495742e25BFd5778E40d44A8C70303f7CEe",
+          "eth": 4418,
+          "validators": 138
+        },
+        {
+          "name": "0xf0e52218A721bec51cFfC3AFC8E3bBb9EfBC8293",
+          "address": "0xf0e52218A721bec51cFfC3AFC8E3bBb9EfBC8293",
+          "eth": 4258,
+          "validators": 133
+        },
+        {
+          "name": "0xB984b9492b80325e09E7ddAd1b52Ac49d5808e9E",
+          "address": "0xB984b9492b80325e09E7ddAd1b52Ac49d5808e9E",
+          "eth": 4257,
+          "validators": 133
+        },
+        {
+          "name": "0x1De3626d6fc2d7c14AF8020B5E8A0c3371D9195D",
+          "address": "0x1De3626d6fc2d7c14AF8020B5E8A0c3371D9195D",
+          "eth": 4002,
+          "validators": 125
+        },
+        {
+          "name": "0x24a9db8f232948c2f64A4BBD68AC52A2694efa9F",
+          "address": "0x24a9db8f232948c2f64A4BBD68AC52A2694efa9F",
+          "eth": 3842,
+          "validators": 120
+        },
+        {
+          "name": "0x174E0b45C03318B0C9bc03573028605B26764931",
+          "address": "0x174E0b45C03318B0C9bc03573028605B26764931",
+          "eth": 3554,
+          "validators": 111
+        },
+        {
+          "name": "0xF6fd4eC926d83AdaDd725E67D4005763832f4679",
+          "address": "0xF6fd4eC926d83AdaDd725E67D4005763832f4679",
+          "eth": 3425,
+          "validators": 107
+        },
+        {
+          "name": "0xc23B28337896AB92d7e8Ed0303cec0609A58143B",
+          "address": "0xc23B28337896AB92d7e8Ed0303cec0609A58143B",
+          "eth": 3392,
+          "validators": 107
+        },
+        {
+          "name": "0x64627611655C8CdcaFaE7607589b4483a1578f4A",
+          "address": "0x64627611655C8CdcaFaE7607589b4483a1578f4A",
+          "eth": 3329,
+          "validators": 104
+        },
+        {
+          "name": "0x2A3ff5cA414bD3cE6e6B625e0e718B6A02E98Fe3",
+          "address": "0x2A3ff5cA414bD3cE6e6B625e0e718B6A02E98Fe3",
+          "eth": 3073,
+          "validators": 96
+        },
+        {
+          "name": "0x1959eE824A1523A2264adA2eAF9839b0B8EdEDbB",
+          "address": "0x1959eE824A1523A2264adA2eAF9839b0B8EdEDbB",
+          "eth": 2849,
+          "validators": 89
+        },
+        {
+          "name": "0x21f3e66382bC47D46E9D28331561dBDCDf34ff1B",
+          "address": "0x21f3e66382bC47D46E9D28331561dBDCDf34ff1B",
+          "eth": 2817,
+          "validators": 88
+        },
+        {
+          "name": "0xDDcBFa9234D1E6943dD6707223Ef089fcb965a87",
+          "address": "0xDDcBFa9234D1E6943dD6707223Ef089fcb965a87",
+          "eth": 2753,
+          "validators": 86
+        },
+        {
+          "name": "0x0aFE84a5445117B9EFfd0F4C085085438E36Fec5",
+          "address": "0x0aFE84a5445117B9EFfd0F4C085085438E36Fec5",
+          "eth": 2721,
+          "validators": 85
+        },
+        {
+          "name": "0xED8Da4DAF5B1b112fD27123ca414496cf033A3bb",
+          "address": "0xED8Da4DAF5B1b112fD27123ca414496cf033A3bb",
+          "eth": 2592,
+          "validators": 81
+        },
+        {
+          "name": "0x33E1593232a4EA27e7CdE4733D000b53B47bA392",
+          "address": "0x33E1593232a4EA27e7CdE4733D000b53B47bA392",
+          "eth": 2560,
+          "validators": 80
+        },
+        {
+          "name": "0xDB21B164A38a5eF18bA33E6A61BA192B3649f879",
+          "address": "0xDB21B164A38a5eF18bA33E6A61BA192B3649f879",
+          "eth": 2529,
+          "validators": 79
+        },
+        {
+          "name": "0x7818614Ff330B1c5C0C00f10710412f48927D1c6",
+          "address": "0x7818614Ff330B1c5C0C00f10710412f48927D1c6",
+          "eth": 2464,
+          "validators": 77
+        },
+        {
+          "name": "0x9e43d1a488a2b3E0d5Bf8e0f4201b057f5Bb4391",
+          "address": "0x9e43d1a488a2b3E0d5Bf8e0f4201b057f5Bb4391",
+          "eth": 2401,
+          "validators": 75
+        },
+        {
+          "name": "0x135Fc07e43DFc021d1dc95bBC4A4EDf77BCC685c",
+          "address": "0x135Fc07e43DFc021d1dc95bBC4A4EDf77BCC685c",
+          "eth": 2305,
+          "validators": 72
+        },
+        {
+          "name": "0xaCfAd9f0D80F74aD7E280A55eA025f4f09844B0F",
+          "address": "0xaCfAd9f0D80F74aD7E280A55eA025f4f09844B0F",
+          "eth": 2273,
+          "validators": 71
+        },
+        {
+          "name": "0x8990D7555Fee1e164b8CB09A6fA51Aa616f32618",
+          "address": "0x8990D7555Fee1e164b8CB09A6fA51Aa616f32618",
+          "eth": 2177,
+          "validators": 68
+        },
+        {
+          "name": "0x30039AeAAa203B660db1e09388550341523f854d",
+          "address": "0x30039AeAAa203B660db1e09388550341523f854d",
+          "eth": 2112,
+          "validators": 66
+        },
+        {
+          "name": "0x3b6fC5cC2feeFc357212617930AEDAc9493288aF",
+          "address": "0x3b6fC5cC2feeFc357212617930AEDAc9493288aF",
+          "eth": 2017,
+          "validators": 63
+        },
+        {
+          "name": "0x90E0E78E259Ae3525BEaC2331Af9Fc6b86D7b9eF",
+          "address": "0x90E0E78E259Ae3525BEaC2331Af9Fc6b86D7b9eF",
+          "eth": 2017,
+          "validators": 63
+        },
+        {
+          "name": "0x8e827814d5d86bE1dc648A2E5fe9ab4872046aBD",
+          "address": "0x8e827814d5d86bE1dc648A2E5fe9ab4872046aBD",
+          "eth": 1985,
+          "validators": 62
+        },
+        {
+          "name": "Other nodes",
+          "eth": 223586,
+          "validators": 6988,
+          "operatorCount": 1300
+        }
+      ]
+    },
+    "stakewise": {
+      "eth": 315456,
+      "validators": 3285,
+      "operatorCount": 41,
+      "operators": [
+        {
+          "name": "Genesis Vault",
+          "eth": 155013,
+          "validators": 88
+        },
+        {
+          "name": "0xe6d8d8aC54461b1C5eD15740EEe322043F696C08",
+          "address": "0xe6d8d8aC54461b1C5eD15740EEe322043F696C08",
+          "eth": 57180,
+          "validators": 1267
+        },
+        {
+          "name": "0x4FEF9D741011476750A243aC70b9789a63dd47Df",
+          "address": "0x4FEF9D741011476750A243aC70b9789a63dd47Df",
+          "eth": 26050,
+          "validators": 814
+        },
+        {
+          "name": "0xB266274F55e784689e97b7E363B0666d92e6305B",
+          "address": "0xB266274F55e784689e97b7E363B0666d92e6305B",
+          "eth": 24420,
+          "validators": 763
+        },
+        {
+          "name": "0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6",
+          "address": "0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6",
+          "eth": 8666,
+          "validators": 6
+        },
+        {
+          "name": "0x4AafdB911085dd7703e57951279744DD713f744d",
+          "address": "0x4AafdB911085dd7703e57951279744DD713f744d",
+          "eth": 7864,
+          "validators": 6
+        },
+        {
+          "name": "0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8",
+          "address": "0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8",
+          "eth": 5578,
+          "validators": 4
+        },
+        {
+          "name": "0xA8cB2e35F594b308726b242136f0a8995BF19E97",
+          "address": "0xA8cB2e35F594b308726b242136f0a8995BF19E97",
+          "eth": 5332,
+          "validators": 3
+        },
+        {
+          "name": "0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034",
+          "address": "0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034",
+          "eth": 5134,
+          "validators": 3
+        },
+        {
+          "name": "0x4c09BC47db288F998b33CD63BCc1b6ddCCe13F33",
+          "address": "0x4c09BC47db288F998b33CD63BCc1b6ddCCe13F33",
+          "eth": 2963,
+          "validators": 10
+        },
+        {
+          "name": "0x4425Bb38D4CA95e522F9308175eC7D8188E8284e",
+          "address": "0x4425Bb38D4CA95e522F9308175eC7D8188E8284e",
+          "eth": 2337,
+          "validators": 73
+        },
+        {
+          "name": "0xdBAe74906DCdbFe4FE7c296ADEc58863C16EFbdf",
+          "address": "0xdBAe74906DCdbFe4FE7c296ADEc58863C16EFbdf",
+          "eth": 2091,
+          "validators": 65
+        },
+        {
+          "name": "0x579ECfE4270Ce23589D8b0A41DD234316018c11C",
+          "address": "0x579ECfE4270Ce23589D8b0A41DD234316018c11C",
+          "eth": 1953,
+          "validators": 61
+        },
+        {
+          "name": "0x729970a33B1680B763F941aa2Da9fA46c5DBDf5A",
+          "address": "0x729970a33B1680B763F941aa2Da9fA46c5DBDf5A",
+          "eth": 1922,
+          "validators": 1
+        },
+        {
+          "name": "0xB36Fc5e542cb4fC562a624912f55dA2758998113",
+          "address": "0xB36Fc5e542cb4fC562a624912f55dA2758998113",
+          "eth": 1722,
+          "validators": 14
+        },
+        {
+          "name": "0x8A93A876912c9F03F88Bc9114847cf5b63c89f56",
+          "address": "0x8A93A876912c9F03F88Bc9114847cf5b63c89f56",
+          "eth": 1630,
+          "validators": 50
+        },
+        {
+          "name": "0x8216e50b1dD76FAEb1ff4caFABA6790EA71910df",
+          "address": "0x8216e50b1dD76FAEb1ff4caFABA6790EA71910df",
+          "eth": 943,
+          "validators": 2
+        },
+        {
+          "name": "0xb1E3Ca426d3A3810EdB58017a4D6a71fc6221f44",
+          "address": "0xb1E3Ca426d3A3810EdB58017a4D6a71fc6221f44",
+          "eth": 768,
+          "validators": 1
+        },
+        {
+          "name": "0x663580B3edAd914D0b59CeA88616F06278D42bb2",
+          "address": "0x663580B3edAd914D0b59CeA88616F06278D42bb2",
+          "eth": 493,
+          "validators": 1
+        },
+        {
+          "name": "0x5610297Eb32542B8f13378Fe7d783DCB1AC3B1a1",
+          "address": "0x5610297Eb32542B8f13378Fe7d783DCB1AC3B1a1",
+          "eth": 441,
+          "validators": 11
+        },
+        {
+          "name": "0x1B3CE55dDE0e0D4b9A200855406e7b14334C10B0",
+          "address": "0x1B3CE55dDE0e0D4b9A200855406e7b14334C10B0",
+          "eth": 425,
+          "validators": 7
+        },
+        {
+          "name": "0x089A97A8bC0C0F016f89F9CF42181Ff06afB2Daf",
+          "address": "0x089A97A8bC0C0F016f89F9CF42181Ff06afB2Daf",
+          "eth": 383,
+          "validators": 1
+        },
+        {
+          "name": "0x99510bFc5D420cd3c41458F4692B1C3321908734",
+          "address": "0x99510bFc5D420cd3c41458F4692B1C3321908734",
+          "eth": 300,
+          "validators": 1
+        },
+        {
+          "name": "0x05E393ec11D0197a88D84457908EDD4FF235f323",
+          "address": "0x05E393ec11D0197a88D84457908EDD4FF235f323",
+          "eth": 256,
+          "validators": 8
+        },
+        {
+          "name": "0x5799BE451eE9fddD171c23bf5BE86eCcFE1f062F",
+          "address": "0x5799BE451eE9fddD171c23bf5BE86eCcFE1f062F",
+          "eth": 250,
+          "validators": 2
+        },
+        {
+          "name": "0x649955f4189c3921df60e25F58Cb1E81070fEdb0",
+          "address": "0x649955f4189c3921df60e25F58Cb1E81070fEdb0",
+          "eth": 240,
+          "validators": 5
+        },
+        {
+          "name": "0x9f246c7D0EF39FffaF4101C073D3a3615e80E842",
+          "address": "0x9f246c7D0EF39FffaF4101C073D3a3615e80E842",
+          "eth": 166,
+          "validators": 1
+        },
+        {
+          "name": "0x579684ECEF8EA89224F1898D69FDcc820eE12431",
+          "address": "0x579684ECEF8EA89224F1898D69FDcc820eE12431",
+          "eth": 162,
+          "validators": 1
+        },
+        {
+          "name": "0x3F2f7424074bac9337DDCA38E83e1518436e0ED0",
+          "address": "0x3F2f7424074bac9337DDCA38E83e1518436e0ED0",
+          "eth": 132,
+          "validators": 1
+        },
+        {
+          "name": "0xB0fd1783826Ce1A254BA8d5C409B267238FAA9Cd",
+          "address": "0xB0fd1783826Ce1A254BA8d5C409B267238FAA9Cd",
+          "eth": 93,
+          "validators": 1
+        },
+        {
+          "name": "0x907660805FB78aE4E8419f76537671CC4df2D4ab",
+          "address": "0x907660805FB78aE4E8419f76537671CC4df2D4ab",
+          "eth": 88,
+          "validators": 1
+        },
+        {
+          "name": "0x3102B4013cB506481e959c8F4500B994D2bFF22e",
+          "address": "0x3102B4013cB506481e959c8F4500B994D2bFF22e",
+          "eth": 66,
+          "validators": 1
+        },
+        {
+          "name": "0x4e0A83509f5D0EF2e55B6F08dbF2462b72BcD30a",
+          "address": "0x4e0A83509f5D0EF2e55B6F08dbF2462b72BcD30a",
+          "eth": 64,
+          "validators": 2
+        },
+        {
+          "name": "0x91211A4965e75152Cb549b308f8ba398c3aB337e",
+          "address": "0x91211A4965e75152Cb549b308f8ba398c3aB337e",
+          "eth": 64,
+          "validators": 2
+        },
+        {
+          "name": "0xB46DBA422BCF7F113dA2EEB41c0E2CC6298d6Bba",
+          "address": "0xB46DBA422BCF7F113dA2EEB41c0E2CC6298d6Bba",
+          "eth": 64,
+          "validators": 2
+        },
+        {
+          "name": "0x2ca762ed936e48c23B8a32403dD754020b07E86f",
+          "address": "0x2ca762ed936e48c23B8a32403dD754020b07E86f",
+          "eth": 43,
+          "validators": 1
+        },
+        {
+          "name": "0x0aF0a2671Bb19D4be5D6c6899EC712341E472D4B",
+          "address": "0x0aF0a2671Bb19D4be5D6c6899EC712341E472D4B",
+          "eth": 33,
+          "validators": 1
+        },
+        {
+          "name": "0x745847818a5790CB406c3040A386907559869be2",
+          "address": "0x745847818a5790CB406c3040A386907559869be2",
+          "eth": 32,
+          "validators": 1
+        },
+        {
+          "name": "0xA071D03D96554e185a86ab178ea3d76C9cAaaAD8",
+          "address": "0xA071D03D96554e185a86ab178ea3d76C9cAaaAD8",
+          "eth": 32,
+          "validators": 1
+        },
+        {
+          "name": "Other vaults",
+          "eth": 64,
+          "validators": 2,
+          "operatorCount": 2
+        }
+      ]
+    }
+  }
+}

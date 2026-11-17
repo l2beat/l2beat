@@ -28,7 +28,8 @@
     "stargatev2-pools": "tsx scripts/stargatev2-pools/index.ts",
     "diff": "./scripts/diff/diff.sh",
     "tvs:update-schema": "tsx ./scripts/tvs/update-schema.ts",
-    "crops:generate-licenses": "tsx scripts/crops/generateOsiLicenses.ts"
+    "crops:generate-licenses": "tsx scripts/crops/generateOsiLicenses.ts",
+    "liquid-staking:operators": "tsx scripts/liquid-staking/generateStakingOperators.ts"
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",

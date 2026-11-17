@@ -6,6 +6,11 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import {
+  getLargestOperator,
+  type LiquidStakingOperator,
+  type LiquidStakingOperators,
+} from '~/server/features/defi/liquid-staking/getLiquidStakingOperators'
 import type { LiquidStakingEthStaked } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -22,17 +27,21 @@ import {
 } from '../liquidStakingMetrics'
 
 const OTHER_STAKERS_LABEL = 'Other stakers'
+/** The block under the pointer keeps its colour while the rest of the bar fades. */
+const HIGHLIGHT_ON_HOVER =
+  'transition-opacity group-hover/bar:opacity-40 hover:opacity-100'
 
 interface Segment {
   id: string
   name: string
   share: number
   color: string
+  operators?: LiquidStakingOperators
 }
 
 type StakedEthBarEntry = Pick<
   LiquidStakingStatsEntry,
-  'id' | 'name' | 'shortName' | 'stakedEthShare'
+  'id' | 'name' | 'shortName' | 'stakedEthShare' | 'operators'
 >
 
 /** The liquid staking page's card: the ETH staked over its split. */
@@ -100,6 +109,7 @@ export function StakedEthBar({
             name: entry.shortName ?? entry.name,
             share: entry.stakedEthShare.value,
             color: colors[i] ?? 'var(--secondary)',
+            operators: entry.operators,
           },
         ]
       : [],
@@ -121,6 +131,10 @@ export function StakedEthBar({
             color={segment.color}
             name={segment.name}
             share={segment.share}
+            detail={
+              segment.operators &&
+              `${formatCount(segment.operators.operatorCount)} operators`
+            }
           />
         ))}
         <LegendItem
@@ -130,6 +144,8 @@ export function StakedEthBar({
           muted
         />
       </ul>
+
+      <OperatorsNote segments={segments} />
 
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 border-divider border-t pt-3 text-label-value-13">
         {CONSENSUS_THRESHOLDS.map((threshold) => (
@@ -176,28 +192,39 @@ function StakeBar({
       <div
         role="img"
         aria-label={`Share of staked ETH: ${label}`}
-        className="flex h-3 w-full overflow-hidden rounded bg-surface-tertiary"
+        className="group/bar flex h-3 w-full overflow-hidden rounded bg-surface-tertiary"
       >
-        {segments.map((segment) => (
-          <Tooltip key={segment.id}>
-            <TooltipTrigger
-              asChild
-              disabledOnTouch
-              aria-label={`${segment.name}: ${formatPercent(segment.share)}`}
-            >
-              <div
-                className="h-full border-surface-primary border-r last:border-r-0"
-                style={{
-                  width: `${segment.share * 100}%`,
-                  backgroundColor: segment.color,
-                }}
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              {segment.name}: {formatPercent(segment.share)} of staked ETH
-            </TooltipContent>
-          </Tooltip>
-        ))}
+        {segments.map((segment) =>
+          segment.operators ? (
+            <OperatorSegments
+              key={segment.id}
+              segment={segment}
+              operators={segment.operators}
+            />
+          ) : (
+            <Tooltip key={segment.id}>
+              <TooltipTrigger
+                asChild
+                disabledOnTouch
+                aria-label={`${segment.name}: ${formatPercent(segment.share)}`}
+              >
+                <div
+                  className={cn(
+                    'h-full border-surface-primary border-r last:border-r-0',
+                    HIGHLIGHT_ON_HOVER,
+                  )}
+                  style={{
+                    width: `${segment.share * 100}%`,
+                    backgroundColor: segment.color,
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                {segment.name}: {formatPercent(segment.share)} of staked ETH
+              </TooltipContent>
+            </Tooltip>
+          ),
+        )}
         {otherShare > 0 && (
           <Tooltip>
             <TooltipTrigger
@@ -234,15 +261,155 @@ function StakeBar({
   )
 }
 
+/**
+ * A protocol's slice split between the operators that run its validators, by
+ * their part of the protocol's stake on the beacon chain.
+ */
+/**
+ * Below this part of the bar an operator is a sliver, so the smallest are
+ * drawn as one block: a divider every pixel would read as a pattern.
+ */
+const MIN_OPERATOR_WIDTH = 0.003
+/** Narrower than this, a divider is left out on small screens. */
+const MIN_OPERATOR_WIDTH_MOBILE = 0.01
+
+function OperatorSegments({
+  segment,
+  operators,
+}: {
+  segment: Segment
+  operators: LiquidStakingOperators
+}) {
+  const blocks = getOperatorBlocks(segment, operators)
+  return (
+    <div
+      className="flex h-full border-surface-primary border-r last:border-r-0"
+      style={{ width: `${segment.share * 100}%` }}
+    >
+      {blocks.map((block, i) => (
+        <Tooltip key={block.name}>
+          <TooltipTrigger
+            asChild
+            disabledOnTouch
+            aria-label={`${block.name}, ${segment.name}: ${formatPercent(block.stakedEthShare)} of staked ETH`}
+          >
+            <div
+              className={cn(
+                'h-full',
+                HIGHLIGHT_ON_HOVER,
+                // A line between operators, in the card's colour.
+                i > 0 && 'border-surface-primary border-l',
+                i > 0 &&
+                  segment.share * block.protocolShare <
+                    MIN_OPERATOR_WIDTH_MOBILE &&
+                  'max-md:border-l-0',
+              )}
+              style={{
+                width: `${block.protocolShare * 100}%`,
+                backgroundColor: segment.color,
+              }}
+            />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-72">
+            <p className="font-medium">{block.name}</p>
+            <p className="text-secondary">{block.description}</p>
+            <p className="mt-1">
+              {formatEthStaked(block.eth)} in {formatCount(block.validators)}{' '}
+              validators: {formatPercent(block.stakedEthShare)} of staked ETH
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  )
+}
+
+interface OperatorBlock extends LiquidStakingOperator {
+  description: string
+}
+
+/** The operators wide enough to draw alone, then the rest as one block. */
+function getOperatorBlocks(
+  segment: Segment,
+  operators: LiquidStakingOperators,
+): OperatorBlock[] {
+  const describe = (operator: LiquidStakingOperator) =>
+    operator.operatorCount
+      ? `${formatCount(operator.operatorCount)} ${segment.name} operators`
+      : `${segment.name} operator`
+  const wide = operators.operators.filter(
+    (operator) => segment.share * operator.protocolShare >= MIN_OPERATOR_WIDTH,
+  )
+  const narrow = operators.operators.filter(
+    (operator) => !wide.includes(operator),
+  )
+  const blocks = wide.map((operator) => ({
+    ...operator,
+    description: describe(operator),
+  }))
+  if (narrow.length === 0) return blocks
+  const count = narrow.reduce((sum, o) => sum + (o.operatorCount ?? 1), 0)
+  const sum = (
+    key: 'eth' | 'validators' | 'protocolShare' | 'stakedEthShare',
+  ) => narrow.reduce((total, operator) => total + operator[key], 0)
+  return [
+    ...blocks,
+    {
+      name:
+        wide.length === 0
+          ? `All ${segment.name} operators`
+          : 'Smaller operators',
+      description: `${formatCount(count)} ${segment.name} operators, too small to show one by one`,
+      eth: sum('eth'),
+      validators: sum('validators'),
+      protocolShare: sum('protocolShare'),
+      stakedEthShare: sum('stakedEthShare'),
+      operatorCount: count,
+    },
+  ]
+}
+
+/** When the operators were read, and the largest one. */
+function OperatorsNote({ segments }: { segments: Segment[] }) {
+  const traced = segments.flatMap((segment) =>
+    segment.operators
+      ? segment.operators.operators.map((operator) => ({
+          operator,
+          protocol: segment.name,
+          timestamp: segment.operators?.timestamp ?? 0,
+        }))
+      : [],
+  )
+  const largest = getLargestOperator(traced.map((t) => t.operator))
+  const first = traced[0]
+  if (!largest || !first) return null
+  const protocol = traced.find((t) => t.operator === largest)?.protocol
+
+  return (
+    <p className="mt-2 text-label-value-13 text-secondary leading-5">
+      Protocols split by the operators that run their validators, from the
+      beacon chain on {formatTimestamp(first.timestamp, { mode: 'date' })}. The
+      largest single operator, {largest.name} ({protocol}), runs{' '}
+      {formatPercent(largest.stakedEthShare)} of staked ETH.
+    </p>
+  )
+}
+
+function formatCount(value: number) {
+  return value.toLocaleString('en-US')
+}
+
 function LegendItem({
   color,
   name,
   share,
+  detail,
   muted,
 }: {
   color: string
   name: string
   share: number
+  detail?: string
   muted?: boolean
 }) {
   return (
@@ -254,7 +421,10 @@ function LegendItem({
       <span className={cn('font-medium', muted && 'text-secondary')}>
         {name}
       </span>
-      <span className="text-secondary">{formatPercent(share)}</span>
+      <span className="text-secondary">
+        {formatPercent(share)}
+        {detail && ` · ${detail}`}
+      </span>
     </li>
   )
 }

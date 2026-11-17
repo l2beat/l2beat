@@ -5,6 +5,10 @@ import { manifest } from '~/utils/Manifest'
 import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
+  getLiquidStakingOperators,
+  type LiquidStakingOperators,
+} from './getLiquidStakingOperators'
+import {
   getLiquidStakingProjects,
   type LiquidStakingProject,
 } from './getLiquidStakingProjects'
@@ -25,6 +29,8 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   description: string
   isUnderReview: boolean
   tokens: LiquidStakingToken[]
+  /** Who runs the validators, where more than one company does. */
+  operators?: LiquidStakingOperators
 }
 
 export interface LiquidStakingToken {
@@ -87,6 +93,9 @@ function getEntries(
             href: abstractToken && getInteropTokenUrl(abstractToken),
           }
         }),
+        operators: getLiquidStakingOperators(
+          project.liquidStaking.validatorOperators,
+        ),
         ...buildLiquidStakingSummary(
           project.id,
           project.liquidStaking.risks,

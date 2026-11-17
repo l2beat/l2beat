@@ -1,5 +1,6 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getValidatorOperators } from '../../liquid-staking/stakingOperators'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -247,6 +248,7 @@ export const rocketpool: BaseProject = {
         description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
       },
     },
+    validatorOperators: getValidatorOperators('rocketpool'),
   },
   // Declared empty on purpose: the protocol has no bridge, no third-party price
   // feed, and no external contract it depends on. Its only outside contract is

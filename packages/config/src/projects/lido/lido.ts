@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getValidatorOperators } from '../../liquid-staking/stakingOperators'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -263,6 +264,7 @@ export const lido: BaseProject = {
         description: `Code changes go through Dual Governance and take at least ${days(dgSubmitDays + dgScheduleDays)}. Holders locking ${vetoPercent}% of stETH delay a change; at ${rageQuitPercent}% they can exit before it applies. Until ${emergencyEnd}, emergency committees can freeze execution.`,
       },
     },
+    validatorOperators: getValidatorOperators('lido'),
   },
   externalDependencies: [],
   permissions: discovery.getDiscoveredPermissions(),
