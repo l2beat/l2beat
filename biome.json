@@ -195,7 +195,11 @@
   },
   "overrides": [
     {
-      "includes": ["**/*.config.ts", "**/*.config.mts", "**/*.d.ts"],
+      "includes": [
+        "**/vite.config.mts",
+        "**/playwright.config.ts",
+        "**/*.d.ts"
+      ],
       "linter": {
         "rules": {
           "style": {

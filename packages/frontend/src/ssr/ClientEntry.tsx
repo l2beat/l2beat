@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
 import { hydrateRoot } from 'react-dom/client'
 import { linkGlossaryTerms } from '~/utils/markdown/glossaryPlugin'
 import { watchThemeChanges } from '~/utils/theme'
@@ -7,7 +6,9 @@ import { getSsrData } from './pageDataScripts'
 
 async function main() {
   const root = document.getElementById('root')
-  assert(root !== null, 'Root element missing')
+  if (root === null) {
+    throw new Error('Root element missing')
+  }
   const ssrData = getSsrData()
   const pageElement = await getPageElement(
     ssrData,
