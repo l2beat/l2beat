@@ -44,6 +44,23 @@ model HourlyActivity {
   @@id([projectId, timestamp])
 }
 
+/// Each project's blocks of the last few hours, counted as Activity counts
+/// them, with the hashes that link them to their parents. Live views read
+/// them, and Activity sums them instead of fetching the blocks again
+model LiveActivityBlock {
+  projectId  String   @db.VarChar(255)
+  number     Int
+  hash       String   @db.VarChar(66)
+  parentHash String   @db.VarChar(66)
+  timestamp  DateTime @db.Timestamp(6)
+  count      Int
+  uopsCount  Int?
+  gasUsed    BigInt
+
+  @@id([projectId, number])
+  @@index([timestamp])
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)
