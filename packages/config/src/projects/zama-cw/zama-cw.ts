@@ -402,8 +402,8 @@ export const zamaCw: BaseProject = {
           name: 'Zama SDK example app',
           icon: 'zama-confidential-tokens',
           finding:
-            "Runs on mainnet only with the user's own Zama API key, which Zama reviews and bills, or the user's own relayer.",
-          fix: "Serve a mainnet instance whose relayer key is not the user's.",
+            'On mainnet the user has to run it themselves, with their own Zama API key, which Zama reviews and bills, or their own relayer.',
+          fix: "Host a mainnet instance, so its relayer key is the host's and not the user's.",
           source:
             'https://github.com/zama-ai/sdk/blob/c908f7709007fd501fa0afb50c43bbeabbc96266/examples/react-wagmi/README.md?plain=1#L66-L73',
         },
