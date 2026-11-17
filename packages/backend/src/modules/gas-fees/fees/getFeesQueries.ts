@@ -31,15 +31,26 @@ group by 1, 2
 }
 
 /**
+ * How far back the blocks tables are read for the block a day should follow.
+ * Past the day before, so the day a chain resumes on after a halt of up to this
+ * long is checked against the day it stopped on. The blocks tables are cheap to read.
+ */
+const NEIGHBOUR_LOOKBACK_DAYS = 30
+
+/**
  * Base fee and gas used per chain and day, from `fromDay` to `toDay`, both
- * included, with the blocks to check the day against: how many had transactions,
- * and from the blocks table their count and range, to see none is missing.
+ * included, with the blocks to check a day against: how many had transactions,
+ * and from the blocks table their count and range. The range is read for
+ * NEIGHBOUR_LOOKBACK_DAYS before `fromDay` too.
  */
 export function getBlocksQuery(
   chains: GasFeesChain[],
   fromDay: UnixTime,
   toDay: UnixTime,
 ): string {
+  const lookbackFrom = UnixTime(
+    fromDay - NEIGHBOUR_LOOKBACK_DAYS * UnixTime.DAY,
+  )
   return chains
     .map((chain) =>
       chain.gasFromTransactions
@@ -47,16 +58,33 @@ export function getBlocksQuery(
           `
 select
   '${chain.dune}' as blockchain,
-  cast(block_date as varchar) as day,
-  sum(cast(effective_gas_price as double) * cast(gas_used as double)) / 1e18 as base_fee,
-  sum(cast(gas_used as double)) as gas_used,
-  count(distinct block_number) as blocks_with_txs,
-  cast(null as bigint) as blocks,
-  cast(null as bigint) as first_block,
-  cast(null as bigint) as last_block
-from ${chain.dune}.transactions
-where ${dateRange('block_date', fromDay, toDay)}
-group by 2`
+  b.day,
+  t.base_fee,
+  t.gas_used,
+  t.blocks_with_txs,
+  b.blocks,
+  b.first_block,
+  b.last_block
+from (
+  select
+    cast(date as varchar) as day,
+    count(*) as blocks,
+    min(number) as first_block,
+    max(number) as last_block
+  from ${chain.dune}.blocks
+  where ${dateRange('date', lookbackFrom, toDay)}
+  group by 1
+) as b
+left join (
+  select
+    cast(block_date as varchar) as day,
+    sum(cast(effective_gas_price as double) * cast(gas_used as double)) / 1e18 as base_fee,
+    sum(cast(gas_used as double)) as gas_used,
+    count(distinct block_number) as blocks_with_txs
+  from ${chain.dune}.transactions
+  where ${dateRange('block_date', fromDay, toDay)}
+  group by 1
+) as t on t.day = b.day`
         : `
 select
   '${chain.dune}' as blockchain,
@@ -68,7 +96,7 @@ select
   min(number) as first_block,
   max(number) as last_block
 from ${chain.dune}.blocks
-where ${dateRange('date', fromDay, toDay)}
+where ${dateRange('date', lookbackFrom, toDay)}
 group by 2`,
     )
     .join('\nunion all')

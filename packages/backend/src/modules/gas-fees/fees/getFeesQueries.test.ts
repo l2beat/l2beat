@@ -18,13 +18,17 @@ describe('gas fees queries', () => {
     expect(sql).toInclude('count(distinct block_number) as fee_blocks')
   })
 
-  it("reads Arbitrum's gas from its transactions and the others' from blocks", () => {
+  it("reads Arbitrum's gas from its transactions and every chain's block range from its blocks, 30 days further back", () => {
     const sql = getBlocksQuery(GAS_FEES_CHAINS, from, to)
 
-    expect(sql).toInclude('from arbitrum.transactions')
-    expect(sql).not.toInclude('from arbitrum.blocks')
     expect(sql).toInclude(
-      "from ethereum.blocks\nwhere date between date '2026-10-01' and date '2026-10-10'",
+      "from arbitrum.transactions\n  where block_date between date '2026-10-01' and date '2026-10-10'",
+    )
+    expect(sql).toInclude(
+      "from arbitrum.blocks\n  where date between date '2026-09-01' and date '2026-10-10'",
+    )
+    expect(sql).toInclude(
+      "from ethereum.blocks\nwhere date between date '2026-09-01' and date '2026-10-10'",
     )
     expect(sql.match(/union all/g)?.length).toEqual(GAS_FEES_CHAINS.length - 1)
   })
