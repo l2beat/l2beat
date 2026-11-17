@@ -95,6 +95,7 @@ export const lighter: ScalingProject = {
           'SKY',
           'LDO',
           'AZTEC',
+          'XAUt',
         ],
       }),
     ],

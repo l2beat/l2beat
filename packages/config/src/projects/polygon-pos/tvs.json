@@ -2715,6 +2715,55 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-DIMO",
+      "priceId": "dimo",
+      "symbol": "DIMO",
+      "name": "Dimo",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28383/large/square_coin_720.png?1732072773",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5fab9761d60419C9eeEbe3915A8FA1ed7e8d2E1B",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1671148800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5fab9761d60419C9eeEbe3915A8FA1ed7e8d2E1B",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1671148800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5fab9761d60419C9eeEbe3915A8FA1ed7e8d2E1B",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1671148800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5fab9761d60419C9eeEbe3915A8FA1ed7e8d2E1B",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1671148800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-DIP",
       "priceId": "etherisc",
       "symbol": "DIP",
@@ -3270,6 +3319,24 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-EURe",
+      "priceId": "monerium-eur-money-2",
+      "symbol": "EURe",
+      "name": "Monerium EURe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54303/large/eure.jpg?1739167959",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE0aEa583266584DafBB3f9C3211d5588c73fEa8d",
+        "chain": "polygonpos",
+        "decimals": 18,
+        "sinceTimestamp": 1739750400
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-EURS",
       "priceId": "stasis-eurs",
       "symbol": "EURS",
@@ -3364,6 +3431,24 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-eUSD-1",
+      "priceId": "eusd-2",
+      "symbol": "eUSD",
+      "name": "eUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71602/large/eUSD.png?1768507474",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x14913815bCFDE78BAeAd2111F463D038Ac9C2949",
+        "chain": "polygonpos",
+        "decimals": 6,
+        "sinceTimestamp": 1768435200
+      },
+      "category": "stablecoin",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -3649,6 +3734,55 @@
           {
             "type": "balanceOfEscrow",
             "address": "0xef3A930e1FfFFAcd2fc13434aC81bD278B0ecC8d",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-FLUID",
+      "priceId": "instadapp",
+      "symbol": "FLUID",
+      "name": "Fluid",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14688/large/Logo_1_%28brighter%29.png?1734430693",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1623801600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1623801600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1623801600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb",
             "chain": "ethereum",
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,
@@ -4000,6 +4134,55 @@
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,
             "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-FTRB",
+      "priceId": "faith-tribe",
+      "symbol": "FTRB",
+      "name": "Faith Tribe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/23939/large/2.5.jpg?1738877317",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2596825a84888E8f24b747DF29e11b5dd03C81D7",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1645747200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2596825a84888E8f24b747DF29e11b5dd03C81D7",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1645747200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2596825a84888E8f24b747DF29e11b5dd03C81D7",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1645747200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2596825a84888E8f24b747DF29e11b5dd03C81D7",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1645747200
           }
         ]
       },
@@ -5614,6 +5797,55 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-MaticX",
+      "priceId": "stader-maticx",
+      "symbol": "MaticX",
+      "name": "Liquid Staking Matic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25383/large/maticx.png?1696524516",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf03A7Eb46d01d9EcAA104558C732Cf82f6B6B645",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf03A7Eb46d01d9EcAA104558C732Cf82f6B6B645",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf03A7Eb46d01d9EcAA104558C732Cf82f6B6B645",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xf03A7Eb46d01d9EcAA104558C732Cf82f6B6B645",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-Metis",
       "priceId": "metis-token",
       "symbol": "Metis",
@@ -5810,6 +6042,25 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-MLC",
+      "priceId": "my-lovely-coin",
+      "symbol": "MLC",
+      "name": "MyLovelyCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38829/large/Token_logo_CMC.png?1719150043",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "my-lovely-coin",
+        "decimals": 18,
+        "sinceTimestamp": 1719273600,
+        "address": "0x0566C506477cD2d8dF4e0123512dBc344bD9D111",
+        "chain": "polygonpos"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-MLN",
       "priceId": "melon",
       "symbol": "MLN",
@@ -5904,6 +6155,74 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-MYST",
+      "priceId": "mysterium",
+      "symbol": "MYST",
+      "name": "Mysterium",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/757/large/mysterium.png?1696501911",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Cf89ca06ad997bC732Dc876ed2A7F26a9E7f361",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1597691280
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Cf89ca06ad997bC732Dc876ed2A7F26a9E7f361",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1598436664
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Cf89ca06ad997bC732Dc876ed2A7F26a9E7f361",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1613100777
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Cf89ca06ad997bC732Dc876ed2A7F26a9E7f361",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-NAKA",
+      "priceId": "nakamoto-games",
+      "symbol": "NAKA",
+      "name": "Nakamoto.Games",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19073/large/flCKDeh6_400x400.jpg?1696518523",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "nakamoto-games",
+        "decimals": 18,
+        "sinceTimestamp": 1636638032,
+        "address": "0x311434160D7537be358930def317AfB606C0D737",
+        "chain": "polygonpos"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -7182,6 +7501,32 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-PYUSD",
+      "priceId": "paypal-usd",
+      "symbol": "PYUSD",
+      "name": "PayPal USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x99aF3EeA856556646C98c8B9b2548Fe815240750",
+        "chain": "polygonpos",
+        "decimals": 6,
+        "sinceTimestamp": 1765229639
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-QNT",
       "priceId": "quant-network",
       "symbol": "QNT",
@@ -7222,6 +7567,69 @@
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,
             "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-QUICK",
+      "priceId": "quickswap",
+      "symbol": "QUICK",
+      "name": "QuickSwap",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25393/large/quickswap.png?1696524525",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xd2bA23dE8a19316A638dc1e7a9ADdA1d74233368",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          },
+          {
+            "type": "calculation",
+            "operator": "min",
+            "arguments": [
+              {
+                "type": "circulatingSupply",
+                "apiId": "quickswap",
+                "decimals": 18,
+                "sinceTimestamp": 1653264000,
+                "address": "0xd2bA23dE8a19316A638dc1e7a9ADdA1d74233368",
+                "chain": "ethereum"
+              },
+              {
+                "type": "balanceOfEscrow",
+                "address": "0xd2bA23dE8a19316A638dc1e7a9ADdA1d74233368",
+                "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+                "chain": "ethereum",
+                "decimals": 18,
+                "sinceTimestamp": 1653264000
+              }
+            ]
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xd2bA23dE8a19316A638dc1e7a9ADdA1d74233368",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xd2bA23dE8a19316A638dc1e7a9ADdA1d74233368",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1653264000
           }
         ]
       },
@@ -8260,6 +8668,51 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-SOIL",
+      "priceId": "soil",
+      "symbol": "SOIL",
+      "name": "Soil",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32050/large/SOIL_sygnet_dark_blue.png?1696530847",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "soil",
+        "decimals": 18,
+        "sinceTimestamp": 1696982400,
+        "address": "0x43C73b90E0C2A355784dCf0Da12f477729b31e77",
+        "chain": "polygonpos"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-SOL-1",
+      "priceId": "solana",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd93f7E271cB87c23AaA73edC008A79646d1F9912",
+        "chain": "polygonpos",
+        "decimals": 9,
+        "sinceTimestamp": 1636471264
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-SOUL",
       "priceId": "phantasma",
       "symbol": "SOUL",
@@ -8349,6 +8802,55 @@
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,
             "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-sPOL",
+      "priceId": "spol",
+      "symbol": "sPOL",
+      "name": "Staked POL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102173011/large/logo-sPOL.png?1777127883",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3B790d651e950497c7723D47B24E6f61534f7969",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1777075200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3B790d651e950497c7723D47B24E6f61534f7969",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1777075200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3B790d651e950497c7723D47B24E6f61534f7969",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1777075200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3B790d651e950497c7723D47B24E6f61534f7969",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1777075200
           }
         ]
       },
@@ -10322,6 +10824,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-ZRO",
+      "priceId": "layerzero",
+      "symbol": "ZRO",
+      "name": "LayerZero",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28206/large/ftxG9_TJ_400x400.jpeg?1696527208",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+        "chain": "polygonpos",
+        "decimals": 18,
+        "sinceTimestamp": 1718841600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

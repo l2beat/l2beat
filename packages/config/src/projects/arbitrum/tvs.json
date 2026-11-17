@@ -1415,6 +1415,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-CARV",
+      "priceId": "carv",
+      "symbol": "CARV",
+      "name": "CARV",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37689/large/CARV_%281%29.png?1728418485",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc08Cd26474722cE93F4D0c34D16201461c10AA8C",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1728518400
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-CATCH",
       "priceId": "spacecatch",
       "symbol": "CATCH",
@@ -2502,6 +2528,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-DRV",
+      "priceId": "derive",
+      "symbol": "DRV",
+      "name": "Derive",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52889/large/Token_Logo.png?1734601695",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x77b7787a09818502305C95d68A2571F090abb135",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1736899200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-DYDX",
       "priceId": "dydx",
       "symbol": "DYDX",
@@ -3228,6 +3280,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-EURe",
+      "priceId": "monerium-eur-money-2",
+      "symbol": "EURe",
+      "name": "Monerium EURe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54303/large/eure.jpg?1739167959",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0c06cCF38114ddfc35e07427B9424adcca9F44F8",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1739750400
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-EURS",
       "priceId": "stasis-eurs",
       "symbol": "EURS",
@@ -3342,6 +3412,32 @@
       "category": "rwaRestricted",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-EV",
+      "priceId": "everything",
+      "symbol": "EV",
+      "name": "Everything",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71690/large/EV_token_v2_White.png?1773933783",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE7E7E741C23a4767831A56A8C99F522c5aC1E7E7",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1773878400
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4952,6 +5048,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-LAVA",
+      "priceId": "lava-network",
+      "symbol": "LAVA",
+      "name": "Axelar Wrapped LAVA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37354/large/lava_logo.png?1714098423",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x11e969e9B3f89cB16D686a03Cd8508C9fC0361AF",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1722297600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar",
+            "slug": "axelar"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-LDO",
       "priceId": "lido-dao",
       "symbol": "LDO",
@@ -6019,6 +6141,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-MXNB",
+      "priceId": "mxnb",
+      "symbol": "MXNB",
+      "name": "MXNB",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39136/large/MNXB_Logo.png?1746088156",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xF197FFC28c23E0309B5559e7a166f2c6164C80aA",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1730927768
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MYRIA",
       "priceId": "myria",
       "symbol": "MYRIA",
@@ -6137,6 +6277,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-NST",
+      "priceId": "ninja-squad",
+      "symbol": "NST",
+      "name": "Ninja Squad Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22248/large/nst-logo-200x200.png?1711559985",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x88a269Df8fe7F53E590c561954C52FCCC8EC0cFB",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1711307189
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-NSTR",
       "priceId": "nostra",
       "symbol": "NSTR",
@@ -6161,6 +6327,39 @@
             "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
             "decimals": 18,
             "sinceTimestamp": 1718236800
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-OBT",
+      "priceId": "orbiter-finance",
+      "symbol": "OBT",
+      "name": "Orbiter Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53783/large/orbiter.jpg?1737352795",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4af322Ff4A6f2858F6B51E546B9EC499654493C5",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1737331200
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4af322Ff4A6f2858F6B51E546B9EC499654493C5",
+            "chain": "ethereum",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "decimals": 18,
+            "sinceTimestamp": 1737331200
           }
         ]
       },
@@ -10818,6 +11017,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-reUSD",
+      "priceId": "re-protocol-reusd",
+      "symbol": "reUSD",
+      "name": "Re Protocol Deposit Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66291/large/Points_Program_Group_91.png?1749676055",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x76cE01F0Ef25AA66cC5F1E546a005e4A63B25609",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1750204800
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-RGT",
       "priceId": "rari-governance-token",
       "symbol": "RGT",
@@ -11597,6 +11822,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-SPA",
+      "priceId": "sperax",
+      "symbol": "SPA",
+      "name": "Sperax",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12232/large/logo.png?1752656446",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "sperax",
+        "decimals": 18,
+        "sinceTimestamp": 1639808335,
+        "address": "0x5575552988A3A80504bBaeB1311674fCFd40aD4B",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-SPARTA",
       "priceId": "spartadex",
       "symbol": "SPARTA",
@@ -12199,6 +12443,32 @@
         "chain": "arbitrum",
         "decimals": 6,
         "sinceTimestamp": 1753290053
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-syrupUSDG",
+      "priceId": "syrup-usdg",
+      "symbol": "syrupUSDG",
+      "name": "syrupUSDG",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174289/large/syrupUSDG.png?1790836053",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE1B0dC5A21b10f1634fBfbE9976fBA2Ee2e1c762",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1788981365
       },
       "category": "stablecoin",
       "source": "external",
@@ -12962,6 +13232,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-USDG",
+      "priceId": "global-dollar",
+      "symbol": "USDG",
+      "name": "Global Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51281/large/GDN_USDG_Token_200x200.png?1730484111",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x004B506865409877C9fA29bfb1ebA929984B9bbC",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1770912318
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-USDM-1",
       "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
@@ -13345,6 +13641,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-VSN",
+      "priceId": "vision-3",
+      "symbol": "VSN",
+      "name": "Vision",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67399/large/Logo-Vision-Symbol-BG-Green.png?1752676915",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6fBBbD8bFB1cd3986B1D05e7861a0f62F87DB74b",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1752624000
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

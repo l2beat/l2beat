@@ -61,6 +61,58 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-alETH",
+      "priceId": "alchemix-eth",
+      "symbol": "alETH",
+      "name": "Alchemix ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16271/large/aleth.png?1696515869",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3E29D3A9316dAB217754d13b28646B76607c5f04",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1653955741
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-alUSD-1",
+      "priceId": "alchemix-usd",
+      "symbol": "alUSD",
+      "name": "Alchemix USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1653955245
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-AMO",
       "priceId": "amino",
       "symbol": "AMO",
@@ -542,6 +594,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-DRV",
+      "priceId": "derive",
+      "symbol": "DRV",
+      "name": "Derive",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52889/large/Token_Logo.png?1734601695",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x33800De7E817A70A694F31476313A7c572BBa100",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1736899200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1363,6 +1441,32 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-OVER",
+      "priceId": "overtime",
+      "symbol": "OVER",
+      "name": "Overtime DAO Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54973/large/over.png?1742959291",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xedF38688b27036816A50185cAA430D5479e1C63e",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1743033600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-PENDLE",
       "priceId": "pendle",
       "symbol": "PENDLE",
@@ -1742,6 +1846,25 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -2610,6 +2733,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-ZCHF",
+      "priceId": "frankencoin",
+      "symbol": "ZCHF",
+      "name": "Frankencoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37150/large/Coin_Logo_Frankencoin_1024px.png?1728679791",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD4dD9e2F021BB459D5A5f6c24C12fE09c5D45553",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1749108769
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
