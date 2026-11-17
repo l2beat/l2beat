@@ -1631,5 +1631,6 @@
   "static/icons/alcove.png": "a1860a96a25a8fbb6632507d62c2806a",
   "static/icons/aleo-xreserve.png": "6ae9238adef26611965c24b82810acd7",
   "static/icons/shield-wallet.png": "03d783df6c23c8d58d9695234b68531e",
-  "static/meta-images/privacy/projects/aleo-xreserve/opengraph-image.png": "9ab3fcc9717da122cda6e7428551cc02"
+  "static/meta-images/privacy/projects/aleo-xreserve/opengraph-image.png": "9ab3fcc9717da122cda6e7428551cc02",
+  "static/meta-images/zk-catalog/projects/aleo/opengraph-image.png": "a0a9e5b2a7ed840d20fc3bfc5d2ad36f"
 }
