@@ -1036,3 +1036,98 @@ model GasFeesWalletTip {
 
   @@id([wallet, option])
 }
+
+/// One UTC day of Flashbots mempool data on Dune, by the block a transaction
+/// landed in. Says whether the day's waits in GasFeesTipLevelWait and
+/// GasFeesTierWait are complete, as Dune's copy drops whole days.
+model GasFeesMempoolDay {
+  /// Start of the day.
+  timestamp            DateTime @id @db.Timestamp(6)
+  /// complete: Dune has at least 99% of the landed transactions in Flashbots' daily summary.
+  /// partial: fewer, or there was no summary to check against.
+  /// missing: Dune has none; the day has no waits.
+  status               String   @db.VarChar(16)
+  /// Mempool transactions that landed in the day's blocks, on Dune.
+  duneLandedCount      Int
+  /// "Included on-chain" in Flashbots' summary of the day; null when it has none.
+  flashbotsLandedCount Int?
+  /// Landed transactions kept by the methodology's filters, so the tip decides the wait.
+  keptCount            Int
+}
+
+/// Waits of the kept mempool transactions of a day, by tip level. Additive:
+/// sum days, then take percentiles.
+model GasFeesTipLevelWait {
+  /// Start of the day.
+  timestamp      DateTime @db.Timestamp(6)
+  /// The tip level's lower bound, inclusive, wei. The tip is the effective gas price minus the base fee.
+  tipFromWei     Int
+  /// The tip level's upper bound, exclusive, wei.
+  tipToWei       Int
+  /// The wait bucket's lower bound, inclusive, milliseconds from first seen to the timestamp of the block it landed in.
+  waitFromMs     Int
+  /// The wait bucket's upper bound, exclusive, milliseconds; null for the last bucket.
+  waitToMs       Int?
+  txCount        Int
+  /// Of txCount, those that landed in the next block.
+  nextBlockCount Int
+  /// The tips of txCount added up, gwei, for the level's average tip.
+  tipSumGwei     Float
+
+  @@id([timestamp, tipFromWei, waitFromMs])
+}
+
+/// Waits of the kept mempool transactions of a day that tipped 1× to 1.26× what
+/// our estimator's tier said in the hour they were first seen (GasFeesTipHourly).
+model GasFeesTierWait {
+  /// Start of the day.
+  timestamp          DateTime @db.Timestamp(6)
+  /// slow, medium or fast.
+  tier               String   @db.VarChar(16)
+  /// The wait bucket's lower bound, inclusive, milliseconds from first seen to the timestamp of the block it landed in.
+  waitFromMs         Int
+  /// The wait bucket's upper bound, exclusive, milliseconds; null for the last bucket.
+  waitToMs           Int?
+  txCount            Int
+  /// Of txCount, those that landed in the next block.
+  nextBlockCount     Int
+  /// Of txCount, those that landed in the next block or the one after.
+  within2BlocksCount Int
+  /// Of txCount, those that landed within the next 5 blocks, a minute.
+  within1MinuteCount Int
+
+  @@id([timestamp, tier, waitFromMs])
+}
+
+/// Tips paid on Ethereum in one UTC day, by every transaction in every block,
+/// private ones included. Ordinary: a tip under 2.5 gwei, not sent by the
+/// block's fee recipient, not sent to the forwarder 0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc.
+model GasFeesTipPayersDaily {
+  /// Start of the day.
+  timestamp          DateTime @id @db.Timestamp(6)
+  /// The day's mean of our hourly Chainlink ETH/USD reads (GasFeesTipHourly), used for every USD amount here.
+  ethUsd             Float
+  /// The day's mean of our hourly fast tips (GasFeesTipHourly), the cap in atFastTip.
+  fastTipGwei        Float
+  /// Ordinary transactions tipping under 0.1 gwei, zero included.
+  lowTxCount         Int
+  lowTipEth          Float
+  lowTipUsd          Float
+  /// Ordinary transactions tipping 0.1 gwei to under 1 gwei.
+  middleTxCount      Int
+  middleTipEth       Float
+  middleTipUsd       Float
+  /// Ordinary transactions tipping 1 gwei to under 2.5 gwei.
+  highTxCount        Int
+  highTipEth         Float
+  highTipUsd         Float
+  /// Ordinary transactions tipping 1.000 or 2.000 gwei, to three decimals.
+  roundTipTxCount    Int
+  /// Ordinary transactions' tips, each capped at fastTipGwei.
+  atFastTipEth       Float
+  atFastTipUsd       Float
+  /// The other transactions: tips from 2.5 gwei, to the forwarder, or from the fee recipient.
+  nonOrdinaryTxCount Int
+  nonOrdinaryTipEth  Float
+  nonOrdinaryTipUsd  Float
+}

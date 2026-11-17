@@ -22,7 +22,9 @@ import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDa
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { GasFeesDailyRepository } from './repositories/GasFeesDailyRepository'
 import { GasFeesLiveTipsRepository } from './repositories/GasFeesLiveTipsRepository'
+import { GasFeesMempoolRepository } from './repositories/GasFeesMempoolRepository'
 import { GasFeesTipHourlyRepository } from './repositories/GasFeesTipHourlyRepository'
+import { GasFeesTipPayersDailyRepository } from './repositories/GasFeesTipPayersDailyRepository'
 import { GasFeesWalletTipRepository } from './repositories/GasFeesWalletTipRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
@@ -131,6 +133,8 @@ export function createDatabase(
     gasFeesTipHourly: new GasFeesTipHourlyRepository(db),
     gasFeesLiveTips: new GasFeesLiveTipsRepository(db),
     gasFeesWalletTip: new GasFeesWalletTipRepository(db),
+    gasFeesMempool: new GasFeesMempoolRepository(db),
+    gasFeesTipPayersDaily: new GasFeesTipPayersDailyRepository(db),
     // #endregion
 
     // #region UIF
