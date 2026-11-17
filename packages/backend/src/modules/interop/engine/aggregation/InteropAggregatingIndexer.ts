@@ -75,16 +75,16 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
-      await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
+      await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPromotedPerDayBefore(
         retentionCutoff,
       )
-      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
+      await this.$.db.aggregatedInteropToken.deleteAllButEarliestPromotedPerDayBefore(
         retentionCutoff,
       )
-      await this.$.db.aggregatedInteropDeployedToken.deleteAllButEarliestPerDayBefore(
+      await this.$.db.aggregatedInteropDeployedToken.deleteAllButEarliestPromotedPerDayBefore(
         retentionCutoff,
       )
-      await this.$.db.aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore(
+      await this.$.db.aggregatedInteropTokensPair.deleteAllButEarliestPromotedPerDayBefore(
         retentionCutoff,
       )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
