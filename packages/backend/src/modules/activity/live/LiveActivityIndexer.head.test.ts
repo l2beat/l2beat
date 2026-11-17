@@ -109,6 +109,29 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
     expect(rows().map((r) => r.hash)).toEqual(['0x99', '0x100-1', '0x101-1'])
   })
 
+  it('starts over when the head dropped every block while the child never heard of it', async () => {
+    // a reorg past every remembered block emptied the head's blocks, and the
+    // process died before the child was invalidated
+    const { rows, start } = setup((chain, _, live) => {
+      live.rows = [chain.block(99), chain.block(100)].map((block) => ({
+        projectId: PROJECT,
+        number: block.number,
+        hash: block.hash,
+        parentHash: block.parentHash,
+        timestamp: block.timestamp,
+        count: 0,
+        uopsCount: null,
+        gasUsed: block.gasUsed,
+      }))
+      chain.reorg(50, 105)
+      return { safeHeight: 100 }
+    })
+    await start()
+    await time.tickAsync(1)
+
+    expect(rows().map((r) => r.hash)).toEqual(['0x105-1'])
+  })
+
   function setup(
     prepare?: (
       chain: FakeChain,

@@ -85,19 +85,20 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const stored = await this.getStoredBelow(from)
-    let start = stored ? from : to
-    let blocks = await this.getBatch(start, to)
-    if (stored && blocks[0].parentHash !== stored.hash) {
-      start = await this.dropBlocksOffTheHead(stored, to)
-      blocks = await this.getBatch(start, to)
+    let start = to
+    if (stored) {
+      start = (await this.isOnHead(stored))
+        ? stored.number + 1
+        : await this.dropBlocksOffTheHead(stored, to)
     }
 
-    // a batch may end below `from` after blocks were dropped: UIF takes no
-    // height lower than it asked for, so the update goes on up to there
-    let end = await this.store(blocks)
-    while (end < from) {
+    // the stored blocks may end below `from` after some were dropped: UIF
+    // takes no height lower than it asked for, so the update goes on up to
+    // there. What is stored on the way stays if a later batch fails
+    let end = start - 1
+    do {
       end = await this.store(await this.getBatch(end + 1, to))
-    }
+    } while (end < from)
     return end
   }
 
@@ -149,11 +150,11 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
   }
 
   /**
-   * The stored block right below `from`, when the stored blocks reach up to
-   * there and are worth adding to. They are not on the first run, after a
-   * reorg past every block the head remembered, or once they are older than
-   * the cleaner keeps them, as after an outage: every block since would be
-   * fetched for nobody to read. The update then starts at the newest block
+   * The newest stored block, when the stored blocks are worth adding to.
+   * They are not on the first run, after a reorg past every block the head
+   * remembered, or once they are older than the cleaner keeps them, as after
+   * an outage: every block since would be fetched for nobody to read. The
+   * update then starts at the newest block
    */
   private async getStoredBelow(from: number): Promise<Stored | undefined> {
     if (this.newest === undefined) {
@@ -165,18 +166,29 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
     }
     const continues =
       this.newest !== undefined &&
-      this.newest.number === from - 1 &&
+      this.newest.number < from &&
       this.newest.timestamp >= UnixTime.now() - LIVE_BLOCKS_KEPT_FOR
     return continues ? this.newest : undefined
   }
 
+  /** Whether the head stored this very block, so that it can serve the ones after it */
+  private async isOnHead(block: Stored): Promise<boolean> {
+    const [onHead] = await this.$.db.chainBlock.getByNumberRange(
+      this.$.chain,
+      block.number,
+      block.number,
+    )
+    return onHead?.hash === block.hash
+  }
+
   /**
-   * The next block is not the child of the newest stored one, so stored
-   * blocks are from a chain the head left. The head lowers its height for
-   * that, but a crash between its dropping the blocks and the children
-   * hearing of it loses the notice. Deletes the stored blocks above the
-   * newest one the head has too, and returns where to store from: the block
-   * after it, or `to` when the head has none of the blocks it would remember
+   * The head does not have the newest stored block, so stored blocks are
+   * from a chain it left, or it started over at the latest block. The head
+   * lowers its height for both, but a crash between its dropping the blocks
+   * and the children hearing of it loses the notice. Deletes the stored
+   * blocks above the newest one the head has too, and returns where to store
+   * from: the block after it, or `to` when the head has none of the blocks
+   * it would remember
    */
   private async dropBlocksOffTheHead(
     newest: Stored,

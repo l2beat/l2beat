@@ -42,13 +42,13 @@ describe(LiveActivityIndexer.name, () => {
       expect(store.numbers()).toEqual(range(3590, 3601))
     })
 
-    it('starts at the newest block when the stored ones do not reach up to the update', async () => {
-      const store = new FakeStore([3500])
+    it('fills in from the stored blocks when they end below the update', async () => {
+      const store = new FakeStore([3590])
       const { indexer } = setup(store)
 
-      expect(await indexer.update(3591, 3600)).toEqual(3600)
+      expect(await indexer.update(3596, 3600)).toEqual(3600)
 
-      expect(store.numbers()).toEqual([3500, 3600])
+      expect(store.numbers()).toEqual(range(3590, 3601))
     })
 
     it('starts at the newest block when the stored ones are older than the cleaner keeps', async () => {
@@ -127,16 +127,40 @@ describe(LiveActivityIndexer.name, () => {
       ])
     })
 
-    it('starts over at the newest block when the head has none of the blocks it would remember', async () => {
-      const store = new FakeStore(range(3595, 3600))
-      const { indexer } = setup(store, 100, (number) => ({
+    it('goes on from where it got to when a batch failed half way', async () => {
+      const store = new FakeStore(range(3590, 3600))
+      const onHead = (number: number) => ({
         ...block(number),
-        parentHash: '0xother',
-      }))
+        hash: number > 3590 ? `0x${number}-1` : `0x${number}`,
+        parentHash: number > 3591 ? `0x${number - 1}-1` : `0x${number - 1}`,
+      })
+      store.headHashes = new Map(
+        range(3590, 3601).map((number) => [number, onHead(number).hash]),
+      )
+      const { indexer, getBlocks } = setup(store, 4, onHead)
+      getBlocks.resolvesToOnce([3591, 3592, 3593, 3594].map(onHead))
+      getBlocks.rejectsWithOnce(new Error('rate limited'))
+
+      await expect(indexer.update(3600, 3600)).toBeRejectedWith('rate limited')
+      expect(await indexer.update(3600, 3600)).toEqual(3600)
+
+      expect(store.rows.map((r) => r.hash)).toEqual([
+        '0x3590',
+        ...range(3591, 3601).map((number) => `0x${number}-1`),
+      ])
+    })
+
+    it('starts over at the newest block when the head has none of the stored blocks', async () => {
+      const store = new FakeStore(range(3595, 3600))
+      // the head started over at the latest block, as after a reorg past
+      // every block it remembered, and can serve nothing older
+      store.headHashes = new Map([[3600, '0x3600']])
+      const { indexer, getBlocks } = setup(store)
 
       expect(await indexer.update(3600, 3600)).toEqual(3600)
 
       expect(store.numbers()).toEqual([3600])
+      expect(getBlocks).toHaveBeenOnlyCalledWith(3600, 3600)
     })
   })
 
@@ -236,8 +260,8 @@ function block(number: number): EVMBlockWithTransactions {
 class FakeStore {
   rows: LiveActivityBlockRecord[]
   configHash: string | undefined
-  /** What the chain head stored, by block number */
-  headHashes = new Map<number, string>()
+  /** What the chain head stored, by block number. Every block as `block()` makes it, unless set */
+  headHashes: Map<number, string> | undefined
   readonly db = mockDatabase({
     liveActivityBlock: mockObject<Database['liveActivityBlock']>({
       getNewest: async (_, limit) => this.rows.slice(-limit),
@@ -258,7 +282,10 @@ class FakeStore {
     }),
     chainBlock: mockObject<Database['chainBlock']>({
       getByNumberRange: async (chain, from, to) =>
-        [...this.headHashes]
+        [
+          ...(this.headHashes ??
+            range(from, to + 1).map((n) => [n, block(n).hash] as const)),
+        ]
           .filter(([number]) => number >= from && number <= to)
           .map(([number, hash]) => ({
             chain,
