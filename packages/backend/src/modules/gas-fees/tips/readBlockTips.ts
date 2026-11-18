@@ -16,34 +16,25 @@ export async function readBlockTips(
   to: number,
   percentiles: number[],
 ): Promise<number[][]> {
-  const calls: { newest: number; count: number }[] = []
-  for (let newest = to; newest >= from; newest -= MAX_BLOCKS_PER_CALL) {
-    calls.push({
-      newest,
-      count: Math.min(MAX_BLOCKS_PER_CALL, newest - from + 1),
-    })
-  }
-  const histories = await Promise.all(
-    calls.map(({ newest, count }) =>
-      rpc.getFeeHistory(count, newest, percentiles),
-    ),
-  )
   const tips: number[][] = []
-  for (const [i, history] of histories.entries()) {
-    const call = calls[i]
+  // Newest first, one call after another: a node with a lower limit returns
+  // the newest blocks of those asked for, and the rest are asked for next
+  for (let newest = to; newest >= from; ) {
+    const count = Math.min(MAX_BLOCKS_PER_CALL, newest - from + 1)
+    const history = await rpc.getFeeHistory(count, newest, percentiles)
+    const rows = history.reward ?? []
     if (
-      !call ||
-      history.oldestBlock !== call.newest - call.count + 1 ||
-      history.reward?.length !== call.count ||
-      history.reward.some((row) => row.length !== percentiles.length)
+      rows.length === 0 ||
+      rows.length > count ||
+      history.oldestBlock !== newest - rows.length + 1 ||
+      rows.some((row) => row.length !== percentiles.length)
     ) {
       throw new Error('Fee history malformed', {
-        cause: { call, oldestBlock: history.oldestBlock },
+        cause: { newest, count, oldestBlock: history.oldestBlock },
       })
     }
-    tips.unshift(
-      ...history.reward.map((row) => row.map((wei) => Number(wei) / 1e9)),
-    )
+    tips.unshift(...rows.map((row) => row.map((wei) => Number(wei) / 1e9)))
+    newest -= rows.length
   }
   return tips
 }

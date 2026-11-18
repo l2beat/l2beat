@@ -87,16 +87,24 @@ export class DuneDayWait {
 
   /**
    * Runs `read` for `day`, which calls `wait` when Dune hasn't got the day.
-   * If the day was read less than 6 hours ago and wasn't there, waits again without reading.
+   * If the day was read less than 6 hours ago and wasn't there, waits again
+   * without reading. From `readAgainAt` on it reads whatever the gap, for a
+   * caller that stops waiting then.
    */
   async run<T>(
     day: UnixTime,
     now: UnixTime,
     read: (wait: (cause: Cause) => never) => Promise<T>,
+    readAgainAt?: UnixTime,
   ): Promise<T> {
     const waiting = this.waiting
-    if (waiting?.day === day && now < waiting.readAt + REREAD_SECONDS) {
-      return this.throwWait(waiting.cause)
+    if (waiting?.day === day) {
+      const gapEnds = waiting.readAt + REREAD_SECONDS
+      const due =
+        readAgainAt !== undefined && readAgainAt > waiting.readAt
+          ? Math.min(gapEnds, readAgainAt)
+          : gapEnds
+      if (now < due) return this.throwWait(waiting.cause)
     }
     const result = await read((cause) => {
       this.waiting = { day, cause, readAt: now }

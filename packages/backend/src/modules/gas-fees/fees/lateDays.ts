@@ -23,9 +23,28 @@ export function getDueFrom(now: UnixTime): UnixTime {
   return UnixTime(UnixTime.toStartOf(now, 'day') - LATE_DAYS * UnixTime.DAY)
 }
 
+/** Whether any chain is expected on the day. A chain is expected from its `requiredFrom` on */
+export function isAnyChainExpected(
+  chains: GasFeesChain[],
+  day: UnixTime,
+): boolean {
+  return chains.some((chain) => day >= chain.requiredFrom)
+}
+
+/** The records of the given chain-days only */
+export function pickChainDays<T extends { chain: string; timestamp: UnixTime }>(
+  records: T[],
+  chainDays: ChainDay[],
+): T[] {
+  const wanted = new Set(
+    chainDays.map(({ chain, day }) => `${chain.id}:${day}`),
+  )
+  return records.filter((r) => wanted.has(`${r.chain}:${r.timestamp}`))
+}
+
 /**
  * The chain-days from `from` to `to`, both included, that should be stored and
- * are not among `stored`, oldest first. A chain is expected from its `requiredFrom` on.
+ * are not among `stored`, oldest first.
  */
 export function getMissingChainDays(
   chains: GasFeesChain[],

@@ -123,6 +123,62 @@ describe(GasFeesDailyIndexer.name, () => {
     ])
   })
 
+  it('reads the oldest late days when the read of the newest fails', async () => {
+    const { indexer, daily, readFeesDays } = createIndexer([feesDay(day(8))], {
+      stored: ALL_STORED.filter(
+        (r) =>
+          r.chain !== 'abstract' ||
+          (r.timestamp !== day(0) && r.timestamp !== day(7)),
+      ),
+    })
+    readFeesDays.resolvesToOnce([feesDay(day(8))])
+    readFeesDays.rejectsWithOnce(new Error('Dune error'))
+    readFeesDays.resolvesToOnce([
+      { day: day(0), records: [record(day(0), 'abstract')] },
+    ])
+
+    expect(await indexer.update(day(9), day(9))).toEqual(day(9))
+    expect(daily.upsertMany).toHaveBeenLastCalledWith([
+      record(day(0), 'abstract'),
+    ])
+  })
+
+  it('stores only the late chain-days of a late read, leaving stored ones as they are', async () => {
+    const { indexer, daily, readFeesDays } = createIndexer([feesDay(day(2))], {
+      stored: [
+        record(day(0), 'ethereum'),
+        record(day(0), 'abstract'),
+        record(day(1), 'ethereum'),
+      ],
+    })
+    readFeesDays.resolvesToOnce([feesDay(day(2))])
+    readFeesDays.resolvesToOnce([
+      {
+        day: day(1),
+        records: [record(day(1), 'ethereum'), record(day(1), 'abstract')],
+      },
+    ])
+
+    await indexer.update(day(3), day(9))
+
+    expect(daily.upsertMany).toHaveBeenLastCalledWith([
+      record(day(1), 'abstract'),
+    ])
+  })
+
+  it('moves past a day before any chain is expected', async () => {
+    const { indexer, readFeesDays } = createIndexer(
+      [
+        { day: day(0), records: [] },
+        { day: day(1), records: [] },
+      ],
+      { chains: [{ ...ETHEREUM, requiredFrom: day(2) }] },
+    )
+
+    expect(await indexer.update(day(1), day(2))).toEqual(day(2))
+    expect(readFeesDays).toHaveBeenCalledTimes(1)
+  })
+
   it('leaves late days older than 30 days alone, as in a backfill', async () => {
     const { indexer, readFeesDays } = createIndexer([feesDay(day(2))], {
       stored: [record(day(1), 'ethereum')],
@@ -162,7 +218,11 @@ describe(GasFeesDailyIndexer.name, () => {
 
   function createIndexer(
     days: FeesDay[],
-    options: { stored?: GasFeesDailyRecord[]; now?: () => UnixTime } = {},
+    options: {
+      stored?: GasFeesDailyRecord[]
+      now?: () => UnixTime
+      chains?: GasFeesChain[]
+    } = {},
   ) {
     const daily = mockObject<Database['gasFeesDaily']>({
       upsertMany: mockFn().resolvesTo(0),
@@ -187,7 +247,7 @@ describe(GasFeesDailyIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         firstDay,
         daysPerQuery: 3,
-        chains: CHAINS,
+        chains: options.chains ?? CHAINS,
         db: mockDatabase({ gasFeesDaily: daily }),
         readFeesDays,
         now: options.now ?? (() => day(9)),

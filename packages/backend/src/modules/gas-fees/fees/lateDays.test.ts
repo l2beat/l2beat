@@ -1,7 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { GasFeesChain } from './chains'
-import { getMissingChainDays, planLateReads } from './lateDays'
+import {
+  getMissingChainDays,
+  isAnyChainExpected,
+  pickChainDays,
+  planLateReads,
+} from './lateDays'
 
 const day = (n: number) => UnixTime(n * UnixTime.DAY)
 const a: GasFeesChain = { id: 'a', dune: 'a', requiredFrom: day(0) }
@@ -18,6 +23,27 @@ describe(getMissingChainDays.name, () => {
       { chain: a, day: day(2) },
       { chain: a, day: day(3) },
       { chain: b, day: day(3) },
+    ])
+  })
+})
+
+describe(isAnyChainExpected.name, () => {
+  it("is false before every chain's first required day", () => {
+    expect(isAnyChainExpected([b], day(1))).toEqual(false)
+    expect(isAnyChainExpected([a, b], day(1))).toEqual(true)
+  })
+})
+
+describe(pickChainDays.name, () => {
+  it('keeps the records of the given chain-days only', () => {
+    const records = [
+      { chain: 'a', timestamp: day(1) },
+      { chain: 'a', timestamp: day(2) },
+      { chain: 'b', timestamp: day(2) },
+    ]
+
+    expect(pickChainDays(records, [{ chain: a, day: day(2) }])).toEqual([
+      { chain: 'a', timestamp: day(2) },
     ])
   })
 })
