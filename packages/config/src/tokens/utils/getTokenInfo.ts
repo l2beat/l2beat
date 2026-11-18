@@ -168,7 +168,7 @@ async function getDeploymentTimestamp(
       : creationBlock
   logger.assert(
     startBlock !== undefined,
-    'totalSupply() reverts at the latest block, provide manual override in tokens.jsonc',
+    'totalSupply() is unreadable at the latest block, provide manual override in tokens.jsonc',
   )
   if (startBlock !== creationBlock) {
     logger.notify(

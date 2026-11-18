@@ -9,7 +9,7 @@ import { findFirstBlockWithTotalSupply } from './findFirstBlock'
 // for a revert and for an HTTP 503 from mainnet.base.org and a local server.
 describe(findFirstBlockWithTotalSupply.name, () => {
   const ADDRESS = EthereumAddress('0x61E030A56D33e8260FdD81f03B162A79Fe3449Cd')
-  const CREATION_BLOCK = 29158926
+  const CREATION_BLOCK = 29131108
   const UPGRADE_BLOCK = 29650603
   const LATEST_BLOCK = 38000000
 
