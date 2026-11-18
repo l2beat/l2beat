@@ -86,6 +86,11 @@
     "eth:0x1951828Ce913DC4383a8A1695695D537a11D896a": {
       "ignoreDiscovery": true
     },
+    // OPContractsManager 9.0.3: Ignored so discovery doesn't follow it into
+    // bare implementations; authority is the SuperchainProxyAdminOwner.
+    "eth:0x2d91e6F2bcF6CD1df90E1FAF9714E18705EA331f": {
+      "ignoreDiscovery": true
+    },
     "eth:0x24424336F04440b1c28685a38303aC33C9D14a25": {
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "ignoreInWatchMode": ["timeSinceLastETHbeatInteraction"],
