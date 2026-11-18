@@ -5,7 +5,10 @@ import { cn } from '~/utils/cn'
 /** An early-morning plot: clouds, furrows, seedlings and an empty trellis. */
 export function PlotBackground() {
   return (
-    <PageBackdrop name="plot">
+    <PageBackdrop
+      name="plot"
+      ground={['var(--plot-soil-far)', 'var(--plot-soil-near)']}
+    >
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-canvas via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
 
       <PageBackdropScenery>
@@ -32,17 +35,17 @@ export function PlotBackground() {
 
         <div className="absolute inset-x-0 bottom-0 h-44">
           <svg
-            className="absolute inset-0 size-full overflow-visible"
+            className="absolute inset-0 size-full"
             viewBox="0 0 1200 176"
             preserveAspectRatio="none"
           >
             <path
-              d={`M0 66 C300 54 900 54 1200 66 L1200 ${GROUND_BOTTOM} L0 ${GROUND_BOTTOM} Z`}
-              className="fill-[#e7dcc6]/70 dark:fill-[#241f16]/75"
+              d="M0 66 C300 54 900 54 1200 66 L1200 176 L0 176 Z"
+              className="fill-(--plot-soil-far)"
             />
             <path
-              d={`M0 96 C300 86 900 86 1200 96 L1200 ${GROUND_BOTTOM} L0 ${GROUND_BOTTOM} Z`}
-              className="fill-[#d8c9ac]/70 dark:fill-[#2a251b]/75"
+              d="M0 96 C300 86 900 86 1200 96 L1200 176 L0 176 Z"
+              className="fill-(--plot-soil-near)"
             />
             {FURROWS.map((furrow) => (
               <path
@@ -71,13 +74,6 @@ export function PlotBackground() {
 }
 
 const FURROWS = [112, 134, 156]
-
-/**
- * Where the soil's fill stops, in viewBox units: past the svg's 176, so the
- * soil runs on below the small viewport down to the backdrop's bottom edge.
- * 480 is ~300px, more than any browser toolbar is tall.
- */
-const GROUND_BOTTOM = 480
 
 const POLLEN = [
   { left: '18%', bottom: '150px', duration: '11s', delay: '0s' },
