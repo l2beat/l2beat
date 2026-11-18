@@ -102,4 +102,13 @@ describe('findAddressAlias', () => {
       findAddressAlias('0xzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', 10, names),
     ).toEqual(undefined)
   })
+
+  it('looks the alias up without scanning known addresses', () => {
+    const indexed = new Proxy(names, {
+      ownKeys() {
+        throw new Error('Must not scan addresses')
+      },
+    })
+    expect(findAddressAlias(alias, 10, indexed)?.address).toEqual(l1)
+  })
 })

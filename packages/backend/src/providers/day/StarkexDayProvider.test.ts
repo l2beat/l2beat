@@ -75,6 +75,20 @@ describe(StarkexDayProvider.name, () => {
       expect(starkexClient.getDailyCount).not.toHaveBeenCalled()
     })
 
+    it('handles zero counts', async () => {
+      const starkexClient = mockObject<StarkexClient>({
+        getDailyCount: mockFn().resolvesTo(0),
+      })
+
+      const provider = new StarkexDayProvider(starkexClient, ['product1'])
+      const result = await provider.getDailyTxsCount(1, 3)
+
+      expect(result).toEqual({
+        [1 * UnixTime.DAY]: 0,
+        [2 * UnixTime.DAY]: 0,
+      })
+    })
+
     it('handles API errors gracefully', async () => {
       const starkexClient = mockObject<StarkexClient>({
         getDailyCount: mockFn().rejectsWithOnce(new Error('API Error')),

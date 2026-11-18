@@ -499,6 +499,36 @@ describe('createWorkerPool', () => {
   })
 
   describe('edge cases', () => {
+    // Update monitor jobs resolve to undefined, so a falsy result is a success
+    it('handles tasks that return undefined', async () => {
+      const workerPool = createWorkerPool({
+        workerCount: 1,
+        timeoutPerTaskMs: 1000,
+        timeoutPerRunMs: 5000,
+        logger: Logger.SILENT,
+      })
+
+      const tasks = [
+        {
+          identity: { id: 'undef', name: 'Undefined' },
+          job: async () => undefined,
+        },
+        { identity: { id: 'value', name: 'Value' }, job: async () => 'value' },
+      ]
+
+      const resultPromise = workerPool.runInPool(tasks)
+      await time.runAllAsync()
+      const { results, errors, timedOut } = await resultPromise
+
+      expect(results.length).toEqual(2)
+      expect(results[0].identity.id).toEqual('undef')
+      expect(results[0].result).toEqual(undefined)
+      expect(results[1].identity.id).toEqual('value')
+      expect(results[1].result).toEqual('value')
+      expect(errors).toEqual([])
+      expect(timedOut).toEqual(false)
+    })
+
     it('handles mix of success, error, and timeout', async () => {
       const workerPool = createWorkerPool({
         workerCount: 2,

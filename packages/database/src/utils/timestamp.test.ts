@@ -19,6 +19,12 @@ describe('timestamp utilities', () => {
       const result = fromTimestamp(undefined)
       expect(result).toEqual(undefined)
     })
+
+    it('handles epoch timestamp', () => {
+      const unixTime = UnixTime(0)
+      const result = fromTimestamp(unixTime)
+      expect(result).toEqual(new Date('1970-01-01T00:00:00Z'))
+    })
   })
 
   describe(toTimestamp.name, () => {
