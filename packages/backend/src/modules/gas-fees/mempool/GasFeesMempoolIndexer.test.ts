@@ -28,12 +28,12 @@ describe(GasFeesMempoolIndexer.name, () => {
       UnixTime(day - UnixTime.DAY),
       next,
     )
-    // Block numbers stand in for the timestamps they were looked up for
+    // The fake chain has a block every second, numbered by its timestamp
     expect(readMempoolDay.calls[0]?.args[0]).toEqual({
       day,
-      previousDayFirstBlock: day - UnixTime.DAY + 1,
-      firstBlock: day + 1,
-      lastBlock: next,
+      previousDayFirstBlock: day - UnixTime.DAY,
+      firstBlock: day,
+      lastBlock: next - 1,
       hourlyTips: hours(UnixTime(day - UnixTime.DAY), next),
     })
     expect(mempool.replaceDay.calls[0]?.args[0].day).toEqual({

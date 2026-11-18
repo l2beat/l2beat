@@ -12,8 +12,9 @@ describe(getDayBlocks.name, () => {
     const finder = { getBlockNumberAtOrBefore: mockFn(async (t) => blockAt(t)) }
 
     expect(await getDayBlocks(finder, day)).toEqual({
-      firstBlock: 7201,
-      lastBlock: 14_400,
+      // The fake has a block at each midnight: 7200 starts the day, 14400 the next
+      firstBlock: 7200,
+      lastBlock: 14_399,
     })
   })
 

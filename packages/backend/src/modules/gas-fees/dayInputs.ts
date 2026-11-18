@@ -2,15 +2,15 @@ import type { Database, GasFeesTipHourlyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { BlockFinder } from './types'
 
-/** The first and last block of a UTC day. Day boundaries never fall on a slot */
+/** The first and last block of a UTC day. A block at midnight starts a day */
 export async function getDayBlocks(
   finder: BlockFinder,
   day: UnixTime,
 ): Promise<{ firstBlock: number; lastBlock: number }> {
   const dayEnd = UnixTime(day + UnixTime.DAY)
   const [before, last, later] = await Promise.all([
-    finder.getBlockNumberAtOrBefore(day),
-    finder.getBlockNumberAtOrBefore(dayEnd),
+    finder.getBlockNumberAtOrBefore(UnixTime(day - 1)),
+    finder.getBlockNumberAtOrBefore(UnixTime(dayEnd - 1)),
     finder.getBlockNumberAtOrBefore(UnixTime(dayEnd + UnixTime.HOUR)),
   ])
   // Asked for a time past its newest block, the finder answers with that block:
