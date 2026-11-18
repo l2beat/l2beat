@@ -29,8 +29,8 @@ interface GasFeesMempoolIndexerDeps
 
 /**
  * Mempool waits per finished UTC day, against Flashbots' own count of the
- * day, as Dune's copy silently drops days. A height is a day boundary at or
- * after the end of the last stored day.
+ * day, as Dune's copy silently drops days. A height is a time at or after the
+ * end of the last stored day: an hour within a day, when the hourly tips set it.
  */
 export class GasFeesMempoolIndexer extends ManagedChildIndexer {
   private readonly waits: DuneDayWait
