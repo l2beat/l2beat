@@ -8,6 +8,7 @@ import {
   toBuckets,
   toSteps,
   valueAt,
+  withDashAnchor,
   withUsual,
 } from './liveSteps'
 
@@ -147,3 +148,20 @@ function usualHour(hour: number, median: number): UsualHour {
   const range = { median, min: median, max: median }
   return { hour: UnixTime(hour), tps: range, uops: range }
 }
+
+describe(withDashAnchor.name, () => {
+  const step = { timestamp: 4000, value: 1, ratio: 1, blocks: 1 }
+
+  it('starts with an empty step at the hour before the window', () => {
+    expect(withDashAnchor([step], 4000)[0]).toEqual({
+      timestamp: 3600,
+      value: null,
+      ratio: null,
+      blocks: 0,
+    })
+  })
+
+  it('takes the hour before a window starting on the hour', () => {
+    expect(withDashAnchor([step], 3600)[0]?.timestamp).toEqual(0)
+  })
+})
