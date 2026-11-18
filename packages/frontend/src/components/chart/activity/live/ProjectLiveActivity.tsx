@@ -60,7 +60,7 @@ import {
   withDashAnchor,
   withUsual,
 } from './liveSteps'
-import { useLivePlayhead } from './useLivePlayhead'
+import { LOOKAHEAD_DRAWINGS, useLivePlayhead } from './useLivePlayhead'
 
 /** Seconds between the time ticks of each range */
 const TICK_SECONDS: Record<LiveRange, number> = {
@@ -72,8 +72,12 @@ const TICK_SECONDS: Record<LiveRange, number> = {
 const formatBlocks = (value: number) => formatNumber(value, 1)
 const formatGas = (value: number) => formatNumber(value, 1)
 const formatGasTick = (value: number) => formatNumber(value, 0)
-/** The chart's own, kept here to place the head on its plot */
-const CHART_MARGIN = { top: 20, right: 1, bottom: 25, left: 0 }
+/**
+ * The chart's own, kept here to place the head on its plot, but with none on
+ * the right: what slides in is cut at the edge, so a step shows only once the
+ * head reaches it
+ */
+const CHART_MARGIN = { top: 20, right: 0, bottom: 25, left: 0 }
 
 /**
  * The chain's blocks of the last hours, laid out as the history: a window of
@@ -163,7 +167,8 @@ export function ProjectLiveActivity({
     holding,
   )
   // drawn past the right edge too, for what slides in before the next drawing
-  const lookahead = playhead === undefined ? 0 : 2 * redrawEvery
+  const lookahead =
+    playhead === undefined ? 0 : LOOKAHEAD_DRAWINGS * redrawEvery
   const domain: [number, number] | undefined = data
     ? playhead !== undefined
       ? [playhead - LIVE_RANGES[range], playhead]
@@ -323,7 +328,7 @@ export function ProjectLiveActivity({
         {playhead !== undefined && (
           <div
             ref={head}
-            className="pointer-events-none invisible absolute top-0 left-0 transition-transform duration-150 motion-reduce:transition-none"
+            className="pointer-events-none invisible absolute top-0 left-0"
           >
             <LiveDot
               color={color}
