@@ -13,6 +13,14 @@ describe(resolveDefiDependencies.name, () => {
         href: '/defi/projects/chainlink',
       },
     ],
+    [
+      'across',
+      {
+        name: 'Across',
+        slug: 'across',
+        href: '/interop/protocols/across',
+      },
+    ],
   ])
 
   it('links tracked dependencies that exist as DeFi projects', () => {
@@ -51,6 +59,26 @@ describe(resolveDefiDependencies.name, () => {
         icon: '/icons/reth.png',
         description: 'rETH rate',
         reviewed: false,
+      },
+    ])
+  })
+
+  it('links tracked non-DeFi projects to their project page', () => {
+    const dependencies: ProjectExternalDependency[] = [
+      {
+        type: 'tracked',
+        projectId: ProjectId('across'),
+        description: 'Bridge',
+      },
+    ]
+
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+      {
+        name: 'Across',
+        icon: '/icons/across.png',
+        description: 'Bridge',
+        href: '/interop/protocols/across',
+        reviewed: true,
       },
     ])
   })
