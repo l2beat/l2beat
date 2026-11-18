@@ -1052,12 +1052,13 @@ model GasFeesMempoolDay {
   duneLandedCount      Int
   /// "Included on-chain" in Flashbots' summary of the day; null when it has none.
   flashbotsLandedCount Int?
-  /// Landed transactions kept by the methodology's filters, so the tip decides the wait.
+  /// Landed transactions kept by the methodology's filters, so the tip decides the wait. At any tip: more than the tip levels of GasFeesTipLevelWait hold.
   keptCount            Int
 }
 
 /// Waits of the kept mempool transactions of a day, by tip level. Additive:
-/// sum days, then take percentiles.
+/// sum days, then take percentiles. Only tips within the levels, 0.01 to 2.05
+/// gwei: a transaction tipping less or more is in no row here.
 model GasFeesTipLevelWait {
   /// Start of the day.
   timestamp      DateTime @db.Timestamp(6)
