@@ -15,7 +15,7 @@ describe('gas fees queries', () => {
     )
     expect(sql).toInclude("'zksync', 'linea'")
     expect(sql).not.toInclude('tx_fee_raw')
-    expect(sql).toInclude('count(distinct block_number) as fee_blocks')
+    expect(sql).toInclude('sum(cast(gas_used as double)) as gas_used')
   })
 
   it("reads Arbitrum's gas from its transactions and every chain's block range from its blocks, 30 days either side", () => {

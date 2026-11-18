@@ -119,3 +119,15 @@ export class DuneDayWait {
     throw new Error(this.message, { cause })
   }
 }
+
+/** Dune has a day within a day of its end */
+const SETTLE_SECONDS = 3 * UnixTime.DAY
+
+/**
+ * When to stop waiting for Dune to have the whole of `day`. Until then an
+ * indexer waits; from then it goes on with what Dune has, so a day Dune never
+ * loads doesn't hold back the days after it.
+ */
+export function settlesAt(day: UnixTime): UnixTime {
+  return UnixTime(day + UnixTime.DAY + SETTLE_SECONDS)
+}

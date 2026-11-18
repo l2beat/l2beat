@@ -37,10 +37,10 @@ describe(GasFeesDailyIndexer.name, () => {
   })
 
   it('stops at a day no chain has yet, and fails when it is the first', async () => {
-    const { indexer, daily, readFeesDays } = createIndexer([
-      feesDay(day(0)),
-      { day: day(1), records: [] },
-    ])
+    const { indexer, daily, readFeesDays } = createIndexer(
+      [feesDay(day(0)), { day: day(1), records: [] }],
+      { now: () => day(3) },
+    )
 
     expect(await indexer.update(day(1), day(9))).toEqual(day(1))
     expect(daily.upsertMany.calls[0]?.args[0]).toHaveLength(1)
@@ -54,6 +54,15 @@ describe(GasFeesDailyIndexer.name, () => {
       'Gas fees day not on Dune yet',
     )
     expect(readFeesDays).toHaveBeenCalledTimes(2)
+  })
+
+  it('moves past a day no chain has once it has settled', async () => {
+    const { indexer } = createIndexer(
+      [{ day: day(1), records: [] }, feesDay(day(2))],
+      { now: () => day(5) },
+    )
+
+    expect(await indexer.update(day(2), day(9))).toEqual(day(3))
   })
 
   it('reads the late chains of earlier days again, 6 hours apart at most', async () => {

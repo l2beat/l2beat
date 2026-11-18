@@ -22,7 +22,7 @@ select
   sum(coalesce(element_at(tx_fee_breakdown, 'l1_fee'), 0)) as l1_fee,
   sum(coalesce(element_at(tx_fee_breakdown, 'blob_fee'), 0)) as blob_fee,
   approx_percentile(tx_fee_usd, 0.5) filter (where tx_fee > 0) as median_fee_usd,
-  count(distinct block_number) as fee_blocks
+  sum(cast(gas_used as double)) as gas_used
 from gas.fees
 where ${dateRange('block_date', fromDay, toDay)}
   and blockchain in (${chains.map((c) => `'${c.dune}'`).join(', ')})
@@ -40,9 +40,8 @@ const NEIGHBOUR_DAYS = 30
 
 /**
  * Base fee and gas used per chain and day, from `fromDay` to `toDay`, both
- * included, with the blocks to check a day against: how many had transactions,
- * and from the blocks table their count and range. The range is read for
- * NEIGHBOUR_DAYS either side too.
+ * included, with the blocks to check a day against: their count and range from
+ * the blocks table. The range is read for NEIGHBOUR_DAYS either side too.
  */
 export function getBlocksQuery(
   chains: GasFeesChain[],
@@ -61,7 +60,7 @@ select
   b.day,
   t.base_fee,
   t.gas_used,
-  t.blocks_with_txs,
+  t.tx_blocks,
   b.blocks,
   b.first_block,
   b.last_block
@@ -80,7 +79,7 @@ left join (
     cast(block_date as varchar) as day,
     sum(cast(effective_gas_price as double) * cast(gas_used as double)) / 1e18 as base_fee,
     sum(cast(gas_used as double)) as gas_used,
-    count(distinct block_number) as blocks_with_txs
+    count(distinct block_number) as tx_blocks
   from ${chain.dune}.transactions
   where ${dateRange('block_date', fromDay, toDay)}
   group by 1
@@ -91,7 +90,7 @@ select
   cast(date as varchar) as day,
   sum(cast(base_fee_per_gas as double) * gas_used) / 1e18 as base_fee,
   sum(cast(gas_used as double)) as gas_used,
-  count_if(gas_used > 0) as blocks_with_txs,
+  cast(null as bigint) as tx_blocks,
   count(*) as blocks,
   min(number) as first_block,
   max(number) as last_block

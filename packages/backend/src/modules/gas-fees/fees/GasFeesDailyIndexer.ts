@@ -6,7 +6,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { DuneDayWait, nextDays } from '../days'
+import { DuneDayWait, nextDays, settlesAt } from '../days'
 import type { GasFeesChain } from './chains'
 import {
   type ChainDay,
@@ -45,6 +45,7 @@ interface GasFeesDailyIndexerDeps
  * Fees per chain and finished UTC day. Each chain's day is stored once Dune
  * has all of it, so a chain Dune loads late (Abstract, by a day) or stops
  * loading doesn't hold back the others; its days are filled in afterwards.
+ * A day no chain has is waited for until it settles, then is late on every chain.
  * A height is a day boundary at or after the end of the last stored day.
  */
 export class GasFeesDailyIndexer extends ManagedChildIndexer {
@@ -77,13 +78,15 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
     if (first === undefined || last === undefined) return to
     const now = this.$.now?.() ?? UnixTime.now()
 
-    return await this.waits.run(first, now, async (wait) => {
+    const readDays = async (wait: (cause: { day: UnixTime }) => never) => {
       const read = await this.$.readFeesDays(this.$.chains, first, last)
-      // A day no chain has all of is one Dune is still loading, unless none is expected on it yet
+      // A day no chain has all of is one Dune is still loading, unless none is
+      // expected on it yet, or it has settled
       const unloaded = read.findIndex(
         (day) =>
           day.records.length === 0 &&
-          isAnyChainExpected(this.$.chains, day.day),
+          isAnyChainExpected(this.$.chains, day.day) &&
+          now < settlesAt(day.day),
       )
       const loaded = unloaded === -1 ? read : read.slice(0, unloaded)
       const records = loaded.flatMap((day) => day.records)
@@ -106,7 +109,8 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
       // Too old to be read again
       this.warnLeftOut(late.filter(({ day }) => day < getDueFrom(now)))
       return lastLoaded.day + UnixTime.DAY
-    })
+    }
+    return await this.waits.run(first, now, readDays, settlesAt(first))
   }
 
   /**
