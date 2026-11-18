@@ -9,9 +9,9 @@ Generated with discovered.json: 0x0169eedc27754d1a8171741bea3eeaeda307079f
 
 ## Description
 
-The Safe katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC added a sixth signer with the threshold unchanged, now 3 of 6. It upgrades the L2 predeploys directly and the L2 bridge and exit root manager through the L2Timelock. Its signers now equal those of Polygon Multisig 2 on Ethereum.
+The Safe katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC added a sixth signer with the threshold unchanged, now 3 of 6. It upgrades the L2 predeploys directly and the L2 bridge and exit root manager through the L2Timelock. Its signers now equal those of the Safe at the same address on Ethereum (Polygon Multisig 2, eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC).
 
-The Safe eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50, which only receives the yield of the vault bridge tokens, removed two of its four owners and is now 1 of 2. Its owner, the Katana yieldRecipient Multisig, swapped one signer and stays 2 of 6.
+The Safe eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50, which only receives the yield of the vault bridge tokens, removed two of its four owners and is now 1 of 2. One of its two owners, the Katana yieldRecipient Multisig, swapped one signer and stays 2 of 6.
 
 No code or threshold changes.
 

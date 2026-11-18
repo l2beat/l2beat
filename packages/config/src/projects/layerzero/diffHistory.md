@@ -9,7 +9,7 @@ Generated with discovered.json: 0xe47dbada3894444b51a8fe2d676b820d7bbb11fa
 
 ## Description
 
-The rsETH OFT adapter moved its ownership and its endpoint delegate in one transaction, from a 3 of 6 Safe to the 6 of 11 Safe eth:0xb3696a817D01C8623E66D156B6798291fa10a46d. Four of the eleven signers were already signers of the old Safe. The new Safe alone can now change the peers, message libraries and DVN configs of the adapter, which decide who can release the escrowed rsETH. The configs themselves are unchanged.
+The rsETH OFT adapter moved its ownership and its endpoint delegate in one [transaction](https://etherscan.io/tx/0x8d1ba241520ee255cfec426158b1036a642a347cab1af6205ce634a23bf952c7), from a 3 of 6 Safe to the 6 of 11 Safe eth:0xb3696a817D01C8623E66D156B6798291fa10a46d. Four of the eleven signers were already signers of the old Safe. The new Safe alone can now change the peers, message libraries and DVN configs of the adapter, which decide who can release the escrowed rsETH. The configs themselves are unchanged.
 
 ## Watched changes
 

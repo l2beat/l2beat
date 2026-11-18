@@ -27,6 +27,9 @@ const discovery = new ProjectDiscovery('zama-cw')
 const ERC20_TRANSFER_EVENT =
   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
+// Every registered wrapper. The observer and pauser asserts below cover all
+// of them. Only wrappers whose underlying is in the token list are tracked
+// for TVS and privacy metrics, the others are skipped in trackedWrappers.
 const WRAPPER_NAMES = [
   'ConfidentialUSDCWrapper',
   'ConfidentialUSDTWrapper',
