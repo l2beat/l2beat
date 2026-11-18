@@ -6,6 +6,7 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
+import { formatError } from '../../../utils/formatError'
 import type { RpcClientConfig } from './types'
 
 const DECIMALS_ABI = parseAbi(['function decimals() view returns (uint8)'])
@@ -45,7 +46,7 @@ export class RpcClient {
       if (error instanceof Error) {
         return {
           success: false,
-          error: error.message,
+          error: formatError(error),
         }
       }
       return {

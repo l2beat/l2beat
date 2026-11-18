@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { formatError } from '../../../utils/formatError'
 import {
   ContractCreationResultSchema,
   type EtherscanClientConfig,
@@ -26,7 +27,7 @@ export class EtherscanClient {
       if (error instanceof Error) {
         return {
           success: false,
-          error: error.message,
+          error: formatError(error),
         }
       }
       return {

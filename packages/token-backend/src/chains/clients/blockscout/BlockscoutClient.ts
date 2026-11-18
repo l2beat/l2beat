@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { formatError } from '../../../utils/formatError'
 import {
   type BlockscoutClientConfig,
   BlockscoutResponseSchema,
@@ -22,7 +23,7 @@ export class BlockscoutClient {
       if (error instanceof Error) {
         return {
           success: false,
-          error: error.message,
+          error: formatError(error),
         }
       }
       return {

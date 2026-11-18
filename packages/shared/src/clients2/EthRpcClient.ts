@@ -35,6 +35,9 @@ export interface FilterParameter {
   blockHash?: string
 }
 
+// The body goes to the logs with the error, where nothing else bounds it
+const BODY_LENGTH_MAX = 1000
+
 export class EthRpcClient {
   private readonly batcher: RpcBatcher
 
@@ -294,7 +297,10 @@ export class EthRpcClient {
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
       if (!parsed.success) {
         throw new Error('RPC call failed. Unexpected HTTP response', {
-          cause: { httpStatus: response.status, body: response.body },
+          cause: {
+            httpStatus: response.status,
+            body: response.body.slice(0, BODY_LENGTH_MAX),
+          },
         })
       }
       const byId = new Map(
@@ -348,7 +354,10 @@ export class EthRpcClient {
       const parsed = JsonRpcResponse.safeValidate(data)
       if (!jsonSuccess || !parsed.success) {
         throw new Error('RPC call failed. Unexpected HTTP response', {
-          cause: { httpStatus: response.status, body: response.body },
+          cause: {
+            httpStatus: response.status,
+            body: response.body.slice(0, BODY_LENGTH_MAX),
+          },
         })
       }
       const envelope = parsed.data

@@ -40,7 +40,7 @@ export class RetryHandler {
       this.$.logger.warn('Scheduling retry', {
         attempt: attempt,
         delay,
-        error: error instanceof Error ? error.message : error,
+        error,
         url: metadata?.url,
         init: metadata?.init,
       })
