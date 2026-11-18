@@ -81,7 +81,14 @@ export class GasFeesMempoolRepository extends BaseRepository {
       await this.batch(data.tipLevelWaits, 5_000, async (batch) => {
         await this.db
           .insertInto('GasFeesTipLevelWait')
-          .values(batch.map((r) => ({ ...r, timestamp })))
+          .values(
+            batch.map((r) => ({
+              ...r,
+              timestamp,
+              tipFromWei: String(r.tipFromWei),
+              tipToWei: String(r.tipToWei),
+            })),
+          )
           .execute()
       })
       await this.batch(data.tierWaits, 5_000, async (batch) => {
@@ -172,7 +179,13 @@ function toDayRecord(
 function toTipLevelWaitRecord(
   row: Selectable<GasFeesTipLevelWait>,
 ): GasFeesTipLevelWaitRecord {
-  return { ...row, timestamp: UnixTime.fromDate(row.timestamp) }
+  return {
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    // 64-bit in the table for headroom; the bounds themselves are a few gwei
+    tipFromWei: Number(row.tipFromWei),
+    tipToWei: Number(row.tipToWei),
+  }
 }
 
 function toTierWaitRecord(

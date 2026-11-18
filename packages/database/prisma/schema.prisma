@@ -1062,9 +1062,9 @@ model GasFeesTipLevelWait {
   /// Start of the day.
   timestamp      DateTime @db.Timestamp(6)
   /// The tip level's lower bound, inclusive, wei. The tip is the effective gas price minus the base fee.
-  tipFromWei     Int
+  tipFromWei     BigInt
   /// The tip level's upper bound, exclusive, wei.
-  tipToWei       Int
+  tipToWei       BigInt
   /// The wait bucket's lower bound, inclusive, milliseconds from first seen to the timestamp of the block it landed in.
   waitFromMs     Int
   /// The wait bucket's upper bound, exclusive, milliseconds; null for the last bucket.
@@ -1103,33 +1103,31 @@ model GasFeesTierWait {
 /// Tips paid on Ethereum in one UTC day, by every transaction in every block,
 /// private ones included. Ordinary: a tip under 2.5 gwei, not sent by the
 /// block's fee recipient, not sent to the forwarder 0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc.
-/// A day Dune never had every block of has no row.
+/// Amounts are in ETH only: multiply by ethUsd for USD.
 model GasFeesTipPayersDaily {
   /// Start of the day.
   timestamp          DateTime @id @db.Timestamp(6)
-  /// The day's mean of our hourly Chainlink ETH/USD reads (GasFeesTipHourly), used for every USD amount here.
-  ethUsd             Float
-  /// The day's mean of our hourly fast tips (GasFeesTipHourly), the cap in atFastTip.
-  fastTipGwei        Float
+  /// complete: Dune had every block of the day and all of each block's transactions.
+  /// missing: it never did; every column below is null.
+  status             String   @db.VarChar(16)
+  /// The day's mean of our hourly Chainlink ETH/USD reads (GasFeesTipHourly).
+  ethUsd             Float?
+  /// The day's mean of our hourly fast tips (GasFeesTipHourly), the cap in atFastTipEth.
+  fastTipGwei        Float?
   /// Ordinary transactions tipping under 0.1 gwei, zero included.
-  lowTxCount         Int
-  lowTipEth          Float
-  lowTipUsd          Float
+  lowTxCount         Int?
+  lowTipEth          Float?
   /// Ordinary transactions tipping 0.1 gwei to under 1 gwei.
-  middleTxCount      Int
-  middleTipEth       Float
-  middleTipUsd       Float
+  middleTxCount      Int?
+  middleTipEth       Float?
   /// Ordinary transactions tipping 1 gwei to under 2.5 gwei.
-  highTxCount        Int
-  highTipEth         Float
-  highTipUsd         Float
+  highTxCount        Int?
+  highTipEth         Float?
   /// Ordinary transactions tipping 1.000 or 2.000 gwei, to three decimals.
-  roundTipTxCount    Int
+  roundTipTxCount    Int?
   /// Ordinary transactions' tips, each capped at fastTipGwei.
-  atFastTipEth       Float
-  atFastTipUsd       Float
+  atFastTipEth       Float?
   /// The other transactions: tips from 2.5 gwei, to the forwarder, or from the fee recipient.
-  nonOrdinaryTxCount Int
-  nonOrdinaryTipEth  Float
-  nonOrdinaryTipUsd  Float
+  nonOrdinaryTxCount Int?
+  nonOrdinaryTipEth  Float?
 }

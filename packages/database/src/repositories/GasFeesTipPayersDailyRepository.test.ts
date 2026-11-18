@@ -22,12 +22,26 @@ describeDatabase(GasFeesTipPayersDailyRepository.name, (db) => {
       await repository.getInRange(UnixTime(0), UnixTime(10 * UnixTime.DAY)),
     ).toEqual([record(1, 700), record(2, 600)])
   })
+
+  it('stores a missing day without figures, also over a complete one', async () => {
+    const missing = {
+      timestamp: UnixTime(UnixTime.DAY),
+      status: 'missing' as const,
+    }
+    await repository.upsert(record(1, 600))
+    await repository.upsert(missing)
+
+    expect(
+      await repository.getInRange(UnixTime(0), UnixTime(10 * UnixTime.DAY)),
+    ).toEqual([missing])
+  })
 })
 
 function record(day: number, lowTxCount: number): GasFeesTipPayersDailyRecord {
-  const group = (txCount: number) => ({ txCount, tipEth: 1.5, tipUsd: 6000 })
+  const group = (txCount: number) => ({ txCount, tipEth: 1.5 })
   return {
     timestamp: UnixTime(day * UnixTime.DAY),
+    status: 'complete',
     ethUsd: 4000,
     fastTipGwei: 0.1,
     low: group(lowTxCount),
@@ -35,7 +49,6 @@ function record(day: number, lowTxCount: number): GasFeesTipPayersDailyRecord {
     high: group(100),
     roundTipTxCount: 50,
     atFastTipEth: 0.5,
-    atFastTipUsd: 2000,
     nonOrdinary: group(10),
   }
 }
