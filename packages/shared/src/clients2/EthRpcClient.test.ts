@@ -286,7 +286,8 @@ describe(EthRpcClient.name, () => {
     )
     expect(result).toEqual({
       reverted: true,
-      reason: 'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
+      reason:
+        'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
     })
   })
 
