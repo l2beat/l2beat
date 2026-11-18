@@ -44,7 +44,7 @@ export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
     ALL_ROUTES_TOOLTIP,
     MARKET_NOTE,
     INSTANT_NOTE,
-    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
+    'wBETH unwraps wait for Binance to allocate ETH, and for the operator-set lock time as it stands when they are claimed. ~ also marks an unwrap still inside the lock.',
   ].join(' '),
 }
 
@@ -103,7 +103,7 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         routes: [{ phrase: 'unwrapping, which earns nothing while it waits' }],
         queued: true,
         notes: [
-          'Unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
+          'Unwraps wait for Binance to allocate ETH, and for the operator-set lock time as it stands when they are claimed. ~ also marks an unwrap still inside the lock.',
         ],
       }
     case 'cbeth':

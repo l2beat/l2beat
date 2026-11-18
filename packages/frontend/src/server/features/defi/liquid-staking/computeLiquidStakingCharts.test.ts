@@ -363,6 +363,22 @@ describe(computeCostOfExitChart.name, () => {
     )
     expect(allocated.costOfExit[0]?.projects.wbeth).toEqual(10)
   })
+
+  it('counts wBETH’s lock as it stands when the unwrap can be claimed', () => {
+    const at = (days: number, lockDays: number) =>
+      snapshot('wbeth', DAY_31 + days * DAY, 1, { lockTime: lockDays * DAY })
+
+    // Cut from 60 days to 10 on day 5, so claimable once 10 days have passed.
+    const cut = compute(['wbeth'], [at(0, 60), at(5, 10), at(10, 10)])
+    expect(cut.costOfExit[0]?.projects.wbeth).toEqual(10)
+    expect(cut.costOfExit[0]?.estimated).toEqual([])
+
+    // Raised from 10 days to 40 on day 5, before the 10 days had passed.
+    // Still locked at the last snapshot, so the 40 days are a projection.
+    const raised = compute(['wbeth'], [at(0, 10), at(5, 40), at(10, 40)])
+    expect(raised.costOfExit[0]?.projects.wbeth).toEqual(40)
+    expect(raised.costOfExit[0]?.estimated).toEqual(['wbeth'])
+  })
 })
 
 describe(getQueueWaits.name, () => {
