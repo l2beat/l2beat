@@ -391,7 +391,9 @@ function encodeTransaction(transaction: TransactionParameter) {
     encoded.value = encodeQuantity(transaction.value)
   }
   if (transaction.input !== undefined) {
+    // Legacy nodes, e.g. l2geth serving pre-Bedrock Optimism, read only `data`.
     encoded.input = transaction.input
+    encoded.data = transaction.input
   }
   return encoded
 }
