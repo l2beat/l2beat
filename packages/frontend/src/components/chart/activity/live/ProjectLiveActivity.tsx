@@ -536,16 +536,18 @@ function LiveTooltip({
 
 /**
  * Where the stored blocks start: the buffer's start, or while it fills, as
- * after a chain is first followed, its oldest block. At least a range back
+ * after a chain is first followed, its oldest block. On the minute, as the
+ * overview's bars are, and at least a range back
  */
 function getBufferFrom(
   newest: number,
   oldest: number | undefined,
   range: LiveRange,
 ) {
+  const start = Math.max(newest - LIVE_BUFFER_SECONDS, oldest ?? newest)
   return Math.min(
     newest - LIVE_RANGES[range],
-    Math.max(newest - LIVE_BUFFER_SECONDS, oldest ?? newest),
+    start - (start % UnixTime.MINUTE),
   )
 }
 

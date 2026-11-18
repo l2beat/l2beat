@@ -90,7 +90,7 @@ export function LiveOverview({
     <svg
       ref={ref}
       className={cn(
-        'h-10 w-full cursor-pointer touch-none select-none overflow-visible rounded-sm focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2',
+        'h-10 w-full cursor-pointer touch-none select-none overflow-visible rounded-sm outline-none focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-solid focus-visible:outline-offset-2',
         className,
       )}
       viewBox={`0 0 100 ${HEIGHT}`}
