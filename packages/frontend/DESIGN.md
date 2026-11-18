@@ -11,16 +11,16 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
   - positive, warning and negative for status;
   - each category's own palette for identity tags.
 
-  If a colour use fails contrast or clashes, restyle it with the role's token. Removing an accent, or neutralising it to grey or ink for "consistency", is off the table. So is toning down or recolouring the pink.
+  If a colour use fails contrast or clashes, restyle it with the role's token, unless a rule below keeps main's colour for that use. Removing an accent, or neutralising it to grey or ink for "consistency", is off the table. So is toning down or recolouring the pink.
   Why: without its accents the site reads as grayscale and loses its identity. Reviewer models keep proposing "make it neutral", so this needs to be written down.
 
-- **Labels, keys, category names and table values (timestamps included) stay `text-primary`. Build hierarchy with size and weight.** Hints and footnotes that are already secondary on main can stay secondary.
+- **Labels, keys, category names and table values (timestamps included) stay `text-primary`. Build hierarchy with size and weight.** Hints and footnotes that are already secondary on main can stay secondary. Editorial meta (article dates, tags, breadcrumbs) is not a label here and takes brand-deep, per the accent roles above. A date in a table cell is a value and stays `text-primary`.
   Why (*inferred*): grey keys read washed out. Reviewer models keep proposing "Stripe-style" muted keys, so this needs to be written down.
 
 - **Rosette slice and chip colours stay exactly as on main, including when sentiment tokens change.**
   Why (*inferred*): readers learn risk from the rosette's colours, so they must mean the same everywhere.
 
-- **Coloured badges keep main's fill, size and text colour:** transfer-type badges are white all-caps text on `bg-yellow-700` (Lock & Mint) and `bg-teal-500` (Burn & Mint); proof-system badges keep their coloured text. Contrast fixes that darken a fill, shrink a label or switch its text to ink are off the table.
+- **Coloured badges keep main's fill, size and text colour:** transfer-type badges are white all-caps text on `bg-yellow-700` (Lock & Mint) and `bg-teal-500` (Burn & Mint); proof-system badges keep their coloured text. Contrast fixes that darken a fill, shrink a label or switch its text to ink are off the table. This is a known exception to the contrast fix above: white on `bg-teal-500` (`#27ac9f`) is about 2.8:1, below WCAG AA, and the owner keeps it anyway.
   Why: the owner found the darker fills, the smaller label and the black badge text worse than main's.
 
 - **Warning glyphs keep main's yellow: `fill-yellow-700` in light mode, `fill-yellow-300` in dark.** This covers the (!) warning circle (`RoundedWarningIcon`), warning-bar icons and the yellow shields. Swapping them to the `warning` token (`fill-warning`) or any darker yellow, for consistency or contrast, is off the table.
