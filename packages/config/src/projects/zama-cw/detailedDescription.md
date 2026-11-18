@@ -36,7 +36,7 @@ The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainn
 
 ### Compliance
 
-Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. Today no token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
+Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. No token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
 
 ### Fees
 

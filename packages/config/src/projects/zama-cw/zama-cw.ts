@@ -322,7 +322,7 @@ export const zamaCw: BaseProject = {
       url: 'https://www.zama.org/post/the-freeze-on-zamas-cusdc-contract-has-been-lifted-and-all-systems-are-back-to-normal',
       date: '2026-05-30T00:00:00Z',
       description:
-        'A court order makes Circle blacklist the cUSDC wrapper for almost three days, blocking every unwrap.',
+        'Circle blacklists the cUSDC wrapper for almost three days, blocking every unwrap.',
       type: 'incident',
     },
     {
@@ -390,23 +390,6 @@ export const zamaCw: BaseProject = {
           source:
             'https://play.google.com/store/apps/datasafety?id=org.bron.mobile',
           checked: '2026-10-27',
-        },
-        {
-          name: 'cToken',
-          icon: 'ctoken',
-          finding:
-            "Reads the chain through Alchemy and PublicNode straight from the browser, so both see the user's address and IP on every read.",
-          fix: "Read the chain through the app's own server, as the Zama app does.",
-          source: 'https://ct-7984-chriswilder.netlify.app',
-          checked: '2026-10-27',
-        },
-        {
-          name: 'fhevm-wallet',
-          finding:
-            "Needs the user's own Zama API key on mainnet, which Zama reviews and bills, so Zama ties every request to the user.",
-          fix: 'Relay requests under a key that is not tied to the user.',
-          source:
-            'https://github.com/mocarram/fhevm-wallet/blob/f942463b53c0637ffbd4573d0a6f7a7558e21aeb/src/core/fhe/FheService.ts#L40-L52',
         },
         {
           name: 'Zama SDK example app',

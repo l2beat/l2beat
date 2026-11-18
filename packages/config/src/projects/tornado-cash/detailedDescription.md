@@ -17,7 +17,7 @@ The app is pinned on tornadocash.eth. Each proposal that changes it names the [s
 
 ### Compliance
 
-Tornado Cash has no screening or approval list. The app's [compliance page](https://github.com/torndao777-eng/classic-ui/blob/8af0abd14d7eeb734f943b968ce687cb5946eac6/pages/compliance.vue) builds a report that links one of the user's withdrawals to its deposit, for the user to share. The US sanctions on the pools were lifted in March 2025.
+Tornado Cash has no screening or approval list. The app's [compliance page](https://github.com/torndao777-eng/classic-ui/blob/8af0abd14d7eeb734f943b968ce687cb5946eac6/pages/compliance.vue) builds a report that links one of the user's withdrawals to its deposit, for the user to share. On 2025-03-21 OFAC [removed Tornado Cash from its sanctions list](https://home.treasury.gov/news/press-releases/sb0057).
 
 ### Fees
 
