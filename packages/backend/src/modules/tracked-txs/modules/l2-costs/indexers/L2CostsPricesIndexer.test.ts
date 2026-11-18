@@ -4,6 +4,7 @@ import { CoingeckoQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
   ETHEREUM_COINGECKO_ID,
   L2CostsPricesIndexer,
@@ -13,31 +14,39 @@ import {
 const NOW = UnixTime(1714662000)
 
 describe(L2CostsPricesIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
   describe(L2CostsPricesIndexer.prototype.update.name, () => {
-    it('updates correctly', async () => {
+    it('saves hourly ETH prices from Coingecko', async () => {
       const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
         insertMany: mockFn().resolvesTo(1),
       })
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getUsdPriceHistoryHourly: mockFn().resolvesTo([
+          { timestamp: from, value: 3000 },
+        ]),
+      })
 
       const indexer = createIndexer({
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),
+        coingeckoQueryService,
       })
-
-      const prices = [{ timestamp: from, priceUsd: 3000 }]
-      const fetchPricesMock = mockFn().resolvesTo(prices)
-      indexer.fetchPrices = fetchPricesMock
 
       const result = await indexer.update(from, to)
 
-      expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
-
-      expect(repository.insertMany).toHaveBeenCalledWith(prices)
-
+      expect(
+        coingeckoQueryService.getUsdPriceHistoryHourly,
+      ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to)
+      expect(repository.insertMany).toHaveBeenCalledWith([
+        { timestamp: from, priceUsd: 3000 },
+      ])
       expect(result).toEqual(to)
     })
 
@@ -50,21 +59,14 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tags: { tag: 'update-nothing-to-save' },
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),
       })
 
-      const fetchPricesMock = mockFn().resolvesTo([])
-      indexer.fetchPrices = fetchPricesMock
-
       const result = await indexer.update(from, to)
 
-      expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
-
       expect(repository.insertMany).not.toHaveBeenCalled()
-
       expect(result).toEqual(to)
     })
 
@@ -77,56 +79,20 @@ describe(L2CostsPricesIndexer.name, () => {
       const shiftedTo =
         from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY
 
-      const repository = mockObject<Database['l2CostPrice']>({
-        insertMany: mockFn().resolvesTo(1),
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getUsdPriceHistoryHourly: mockFn().resolvesTo([
+          { timestamp: from, value: 3000 },
+        ]),
       })
 
-      const indexer = createIndexer({
-        tags: { tag: 'update-max-range' },
-        db: mockObject<Database>({
-          l2CostPrice: repository,
-        }),
-      })
-
-      const prices = [{ timestamp: from, priceUsd: 3000 }]
-      const fetchPricesMock = mockFn().resolvesTo(prices)
-      indexer.fetchPrices = fetchPricesMock
+      const indexer = createIndexer({ coingeckoQueryService })
 
       const result = await indexer.update(from, to)
 
-      expect(fetchPricesMock).toHaveBeenCalledWith(from, shiftedTo)
-
-      expect(result).toEqual(shiftedTo)
-    })
-  })
-
-  describe(L2CostsPricesIndexer.prototype.fetchPrices.name, () => {
-    it('fetches prices', async () => {
-      const from = NOW - 1 * UnixTime.HOUR
-      const to = NOW
-
-      const prices = [{ timestamp: from, value: 3000 }]
-      const coingeckoQueryServiceMock = mockObject<CoingeckoQueryService>({
-        getUsdPriceHistoryHourly: mockFn().resolvesTo(prices),
-      })
-
-      const indexer = createIndexer({
-        tags: { tag: 'fetchPrices' },
-        coingeckoQueryService: coingeckoQueryServiceMock,
-      })
-
-      const result = await indexer.fetchPrices(from, to)
-
       expect(
-        coingeckoQueryServiceMock.getUsdPriceHistoryHourly,
-      ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to)
-
-      expect(result).toEqual([
-        {
-          timestamp: from,
-          priceUsd: 3000,
-        },
-      ])
+        coingeckoQueryService.getUsdPriceHistoryHourly,
+      ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, shiftedTo)
+      expect(result).toEqual(shiftedTo)
     })
   })
 
@@ -137,7 +103,6 @@ describe(L2CostsPricesIndexer.name, () => {
       })
 
       const indexer = createIndexer({
-        tags: { tag: 'invalidate' },
         db: mockObject<Database>({
           l2CostPrice: repository,
         }),

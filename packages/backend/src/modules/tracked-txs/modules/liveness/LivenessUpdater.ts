@@ -30,7 +30,9 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
     await this.db.liveness.deleteFromById(id, fromInclusive)
   }
 
-  transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
+  private transformTransactions(
+    transactions: TrackedTxResult[],
+  ): LivenessRecord[] {
     return transactions.map((transaction) => {
       const record: LivenessRecord = {
         timestamp: transaction.blockTimestamp,

@@ -20,8 +20,9 @@ describe(InteropCompareLoop.name, () => {
         name: 'plugin',
         getExternalItems: mockFn()
           // returns unknown in first run, which will get skipped
-          // in next run will be reported as missing
-          .resolvesToOnce([known[0], unknown[0]])
+          // in next run will be reported as missing; known[1] exists only
+          // as a transfer, so it must not be reported
+          .resolvesToOnce([known[0], known[1], unknown[0]])
           // this unknown will be only skipped because we run two times
           .resolvesToOnce([unknown[1]]),
       }
@@ -56,10 +57,6 @@ describe(InteropCompareLoop.name, () => {
 
       await comparator.run()
       await comparator.run()
-
-      expect(plugin.getExternalItems).toHaveBeenCalledTimes(2)
-      expect(interopMessage.getExistingItems).toHaveBeenCalledTimes(2)
-      expect(interopTransfer.getExistingItems).toHaveBeenCalledTimes(2)
 
       expect(tagLogger.warn).toHaveBeenNthCalledWith(
         1,

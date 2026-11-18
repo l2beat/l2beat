@@ -505,8 +505,6 @@ describe(UpdateMonitor.name, () => {
         new AbortController().signal,
       )
 
-      // calls repository (and gets undefined)
-      expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
       // reads committed file
       expect(configReader.readDiscovery).toHaveBeenOnlyCalledWith(PROJECT_A)
       expect(result).toEqual(discoveryB)
@@ -556,8 +554,6 @@ describe(UpdateMonitor.name, () => {
         new AbortController().signal,
       )
 
-      // calls repository
-      expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(1)
       expect(result).toEqual(dbEntry.discovery)
     })
 

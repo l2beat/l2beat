@@ -29,7 +29,9 @@ describe(buildPermissionsModel.name, () => {
     )
 
     expect(model ?? '').toInclude('permission(')
-    expect(model ?? '').toInclude(modelId(PROXY_ADMIN))
+    expect(model ?? '').toInclude(
+      'eth_0x0000000000000000000000000000000000000222',
+    )
     expect(model ?? '').toInclude('"upgrade"')
   })
 
@@ -124,8 +126,4 @@ function proxyAdministeredBy(admin: ChainSpecificAddress): StructureEntry {
 
 function address(hex: string): ChainSpecificAddress {
   return ChainSpecificAddress.from('eth', EthereumAddress.from(hex))
-}
-
-function modelId(address: ChainSpecificAddress): string {
-  return address.toLowerCase().replaceAll(':', '_')
 }

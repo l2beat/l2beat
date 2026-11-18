@@ -3,7 +3,6 @@ import { Bytes, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import { getLiquidStakingReads } from './liquidStakingReads'
-import { MARKET_SALE } from './marketQuotes'
 
 const A = ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111')
 const B = ChainSpecificAddress('eth:0x2222222222222222222222222222222222222222')
@@ -30,7 +29,7 @@ describe(getLiquidStakingReads.name, () => {
       TIMESTAMP,
     )
     expect(state.marketExitEth).toEqual(110n * ETH)
-    expect(state.marketExitValueEth).toEqual((MARKET_SALE * RATE) / ETH)
+    expect(state.marketExitValueEth).toEqual(RATE)
   })
 
   it('stores no quote when no pool gives one', () => {
@@ -78,7 +77,7 @@ describe(getLiquidStakingReads.name, () => {
       [ok((12n * ETH) / 10n), ok(1n), ok(1n), ok((9_995n * ETH) / 100n)],
       TIMESTAMP,
     )
-    expect(state.marketExitValueEth).toEqual(MARKET_SALE)
+    expect(state.marketExitValueEth).toEqual(ETH)
   })
 
   for (const [name, failed] of [

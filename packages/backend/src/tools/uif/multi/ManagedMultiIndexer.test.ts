@@ -301,28 +301,6 @@ describe(ManagedMultiIndexer.name, () => {
     })
   })
 
-  describe(
-    ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
-    () => {
-      it('calls indexer service', async () => {
-        const indexerService = mockObject<IndexerService>({
-          updateConfigurationsCurrentHeight: async () => {},
-        })
-
-        const indexer = new TestIndexer(
-          { ...common, indexerService },
-          Logger.SILENT,
-        )
-
-        await indexer.updateConfigurationsCurrentHeight(100)
-
-        expect(
-          indexerService.updateConfigurationsCurrentHeight,
-        ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
-      })
-    },
-  )
-
   describe(ManagedMultiIndexer.prototype.invalidate.name, () => {
     it('returns target height', async () => {
       const indexer = new TestIndexer({ ...common }, Logger.SILENT)

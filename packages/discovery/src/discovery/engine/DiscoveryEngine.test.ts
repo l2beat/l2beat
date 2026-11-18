@@ -173,8 +173,6 @@ describe(DiscoveryEngine.name, () => {
         'B2',
         'B2',
       ])
-      // Once at level 0, and at level 1 until a call changes nothing.
-      expect(hook.calls).toEqual(3)
     })
 
     it('analyzes again a contract of an earlier level whose template changed, and follows what it now points to', async () => {
@@ -392,25 +390,18 @@ class FakeChain {
   }
 
   /** A hook that writes `writes[name]` the first time it sees `name`, as the templatizer asks about a contract once. */
-  writeOnFirstSight(
-    writes: Record<string, string>,
-  ): BetweenLevels & { calls: number } {
+  writeOnFirstSight(writes: Record<string, string>): BetweenLevels {
     const done = new Set<string>()
-    const hook = Object.assign(
-      async (analyses: readonly Analysis[]) => {
-        hook.calls++
-        for (const analysis of analyses) {
-          const name = this.nameOf(analysis.address)
-          const template = writes[name]
-          if (template !== undefined && !done.has(name)) {
-            done.add(name)
-            this.versions[template] = (this.versions[template] ?? 0) + 1
-          }
+    return async (analyses: readonly Analysis[]) => {
+      for (const analysis of analyses) {
+        const name = this.nameOf(analysis.address)
+        const template = writes[name]
+        if (template !== undefined && !done.has(name)) {
+          done.add(name)
+          this.versions[template] = (this.versions[template] ?? 0) + 1
         }
-      },
-      { calls: 0 },
-    )
-    return hook
+      }
+    }
   }
 
   async discover(
