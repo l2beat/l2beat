@@ -50,25 +50,21 @@ export function HoldingsTable({
         <TableHeader>
           <TableHeaderRow>
             <TableHead>Token</TableHead>
+            <TableHead>Bridges</TableHead>
             <TableHead align="right">Value</TableHead>
-            <TableHead align="right">Balance</TableHead>
-            <TableHead className="pl-8">Bridges</TableHead>
           </TableHeaderRow>
         </TableHeader>
         <TableBody>
           {visible.map((holding) => (
             <TableRow key={holding.address} highlightId={undefined}>
-              <TableCell className="py-2.5">
+              <TableCell className="w-[38%] py-2">
                 <TokenName holding={holding} />
               </TableCell>
-              <TableCell align="right" className="tabular-nums">
-                <Value holding={holding} muted={muteValues} />
-              </TableCell>
-              <TableCell align="right" className="text-secondary tabular-nums">
-                {formatBalance(holding)}
-              </TableCell>
-              <TableCell className="whitespace-normal py-2.5 pl-8 text-label-value-13">
+              <TableCell className="whitespace-normal py-2 pr-4 text-label-value-13">
                 <BackingCell backing={holding.backing} />
+              </TableCell>
+              <TableCell align="right" className="py-2 tabular-nums">
+                <ValueAndBalance holding={holding} muted={muteValues} />
               </TableCell>
             </TableRow>
           ))}
@@ -76,17 +72,10 @@ export function HoldingsTable({
       </Table>
       <ul className="flex flex-col divide-y divide-divider md:hidden">
         {visible.map((holding) => (
-          <li key={holding.address} className="flex flex-col gap-1.5 py-3">
+          <li key={holding.address} className="flex flex-col gap-1 py-2.5">
             <div className="flex items-start justify-between gap-3">
               <TokenName holding={holding} />
-              <div className="flex shrink-0 flex-col items-end tabular-nums">
-                <span className="text-label-value-15">
-                  <Value holding={holding} muted={muteValues} />
-                </span>
-                <span className="text-label-value-13 text-secondary">
-                  {formatBalance(holding)}
-                </span>
-              </div>
+              <ValueAndBalance holding={holding} muted={muteValues} />
             </div>
             <div className="pl-9 text-label-value-13">
               <BackingCell backing={holding.backing} />
@@ -154,20 +143,32 @@ function TokenName({ holding }: { holding: InsightHolding }) {
   )
 }
 
-function Value({
+/** Value on top, the amount it comes from underneath, as on a statement. */
+function ValueAndBalance({
   holding,
   muted,
 }: {
   holding: InsightHolding
   muted: boolean
 }) {
-  if (holding.valueUsd === null) {
-    return <span className="text-secondary">No price</span>
-  }
   return (
-    <span className={cn(muted && 'text-secondary')}>
-      {formatCurrency(holding.valueUsd, 'usd')}
-    </span>
+    <div className="flex shrink-0 flex-col items-end tabular-nums">
+      {holding.valueUsd === null ? (
+        <span className="text-label-value-14 text-secondary">No price</span>
+      ) : (
+        <span
+          className={cn(
+            'font-bold text-label-value-15',
+            muted && 'font-medium text-secondary',
+          )}
+        >
+          {formatCurrency(holding.valueUsd, 'usd')}
+        </span>
+      )}
+      <span className="text-label-value-12 text-secondary">
+        {formatBalance(holding)} {holding.symbol}
+      </span>
+    </div>
   )
 }
 
