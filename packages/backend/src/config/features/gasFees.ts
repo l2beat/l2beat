@@ -8,7 +8,11 @@ export function getGasFeesConfig(env: Env): GasFeesConfig {
   const daysPerQuery = env.integer('GAS_FEES_FEES_DAYS_PER_QUERY', 10)
   // With none the indexer would move on without reading a day. A day costs up
   // to 0.5 Dune credits and a query is capped at 10, so 20 days is the most
-  if (daysPerQuery < 1 || daysPerQuery > 20) {
+  if (
+    !Number.isInteger(daysPerQuery) ||
+    daysPerQuery < 1 ||
+    daysPerQuery > 20
+  ) {
     throw new Error('Invalid gas fees days per query', {
       cause: { daysPerQuery },
     })

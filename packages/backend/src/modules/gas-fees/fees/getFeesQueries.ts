@@ -42,6 +42,9 @@ const NEIGHBOUR_DAYS = 30
  * Base fee and gas used per chain and day, from `fromDay` to `toDay`, both
  * included, with the blocks to check a day against: their count and range from
  * the blocks table. The range is read for NEIGHBOUR_DAYS either side too.
+ *
+ * The base fee is what transactions paid, so not on the gas of those that pay
+ * nothing: an OP Stack chain's deposits use gas, 40% of Mantle's, for free.
  */
 export function getBlocksQuery(
   chains: GasFeesChain[],
@@ -60,6 +63,7 @@ select
   b.day,
   t.base_fee,
   t.gas_used,
+  cast(0 as double) as free_gas,
   t.tx_blocks,
   b.blocks,
   b.first_block,
@@ -87,15 +91,23 @@ left join (
         : `
 select
   '${chain.dune}' as blockchain,
-  cast(date as varchar) as day,
-  sum(cast(base_fee_per_gas as double) * gas_used) / 1e18 as base_fee,
-  sum(cast(gas_used as double)) as gas_used,
+  cast(b.date as varchar) as day,
+  sum(cast(b.base_fee_per_gas as double) * (b.gas_used - coalesce(f.gas_used, 0))) / 1e18 as base_fee,
+  sum(cast(b.gas_used as double)) as gas_used,
+  sum(cast(coalesce(f.gas_used, 0) as double)) as free_gas,
   cast(null as bigint) as tx_blocks,
   count(*) as blocks,
-  min(number) as first_block,
-  max(number) as last_block
-from ${chain.dune}.blocks
-where ${dateRange('date', neighboursFrom, neighboursTo)}
+  min(b.number) as first_block,
+  max(b.number) as last_block
+from ${chain.dune}.blocks as b
+left join (
+  select block_number, sum(gas_used) as gas_used
+  from ${chain.dune}.transactions
+  where ${dateRange('block_date', fromDay, toDay)}
+    and gas_price = 0
+  group by 1
+) as f on f.block_number = b.number
+where ${dateRange('b.date', neighboursFrom, neighboursTo)}
 group by 2`,
     )
     .join('\nunion all')
