@@ -11,5 +11,5 @@
 <br>
 ## Privacy can be lost if
 1. the operator, which custodies both legs, makes the release of either depend on who the user is (see privileged insider).
-2. the lightwalletd server Zodl syncs from ties the payout and the exit to the account through the transparent addresses each sync sends (see network observer).
+2. Valar's PIR server ties the payout and the exit to one wallet through the block ranges its private queries reveal (see network observer).
 3. elliptic-curve cryptography is broken, which recovers each account's viewing key from its payout addresses on NEAR (see future adversary).

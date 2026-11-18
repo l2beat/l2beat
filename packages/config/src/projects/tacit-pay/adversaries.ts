@@ -38,10 +38,10 @@ export const REFERENCE_APP = {
       name: 'tacit.finance',
       icon: 'tacit-finance',
       finding:
-        "Sends ten of the user's deposit addresses per request to one public node at every sign-in, with no setting for the user's own node.",
+        "Sends ten of the user's deposit addresses per request to Tacit's relay at every sign-in, with no setting for the user's own node.",
       fix: 'Read each deposit address in its own request and offer an own-node setting, as anon.wei does.',
       source: 'https://tacit.finance/pay/eth/',
-      checked: '2026-11-09',
+      checked: '2026-11-18',
     },
   ],
 } satisfies ProjectPrivacyReferenceApp
@@ -116,7 +116,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The user's own Ethereum node can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.",
       exposureContinued:
-        'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. Base and Robinhood Chain nodes still receive the deposit addresses, which are the same on every chain.',
+        'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. On Base and Robinhood Chain, public nodes receive the deposit addresses, which are the same on every chain.',
       interior: {
         ...INTERIOR,
         linkage: {

@@ -184,10 +184,10 @@ export const strk20: BaseProject = {
           name: 'Haven web app',
           icon: 'haven',
           finding:
-            "Reads the account's balances and transfers through Cartridge's public RPC, a third party that refuses most Tor circuits.",
-          fix: "Read the chain through Haven's own servers or a user-set RPC, and accept Tor there.",
+            "Reads the account's balances and transfers through PublicNode's public RPC, with no setting for the user's own node.",
+          fix: 'Let users set their own RPC, as Bramble does.',
           source: 'https://go.haven.hn',
-          checked: '2026-10-30',
+          checked: '2026-11-18',
         },
         {
           name: 'OffMarket web app',

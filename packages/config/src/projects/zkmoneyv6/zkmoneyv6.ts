@@ -389,22 +389,22 @@ export const zkmoneyv6: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'zk.money Desktop',
-      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.12.0',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.13.0',
       since: '2026-10-28',
       delivery: {
         type: 'pinned',
         pin: {
           type: 'sha256',
           file: 'zkmoney-desktop-linux-x86_64.AppImage',
-          hash: '4f6b4c4a6ec70b594ad1aec35122513e1a0e9e28f777f58b249d3d3ca26714db',
+          hash: 'b19141c64915ca567a9da4ff029a8fe8d844147ed284dededf6ce17cf534c03d',
         },
         rebuild:
-          'https://github.com/aztec-labs-eng/zkmoney-public/blob/c055ea1ca641d64256855d03802c927b0b1d3ad1/.github/workflows/release-desktop.yml',
+          'https://github.com/aztec-labs-eng/zkmoney-public/blob/516d90660400aee97166376ba69c5b61ce82a7e4/.github/workflows/release-desktop.yml',
       },
-      version: '0.12.0',
+      version: '0.13.0',
       source: {
         repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
-        commit: 'c055ea1ca641d64256855d03802c927b0b1d3ad1',
+        commit: '516d90660400aee97166376ba69c5b61ce82a7e4',
       },
       checkedApps: [
         {
@@ -414,7 +414,7 @@ export const zkmoneyv6: BaseProject = {
             "Runs whatever code Aztec Labs' server sends on each visit, so a changed build could read the user's viewing keys.",
           fix: 'Serve each build under an onchain pin, such as an ENS contenthash, so every code change shows onchain.',
           source: 'https://wallet.zk.money',
-          checked: '2026-11-11',
+          checked: '2026-11-18',
         },
       ],
     },

@@ -194,7 +194,7 @@ export const privacyPools: BaseProject = {
       delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/0xbow-io/privacy-pools-website',
-        commit: '7df411128f7a18a61a77f7a0371bf0b857969e2a',
+        commit: '8b3fbf0ce8cf00fbb7461df218dbea3b71a84c76',
       },
       checkedApps: [
         {
