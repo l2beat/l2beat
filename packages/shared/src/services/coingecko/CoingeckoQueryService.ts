@@ -50,7 +50,7 @@ export class CoingeckoQueryService {
     range: { from: UnixTime; to: UnixTime },
   ): Promise<QueryResultPoint[]> {
     const supplies = await this.querySupplies(coingeckoId, range)
-    if (supplies.some((p) => isValidSupply(p.value))) {
+    if (!canLookAhead(supplies)) {
       return this.repairInvalidSupplies(coingeckoId, supplies)
     }
 
@@ -379,6 +379,16 @@ function combineResults(results: CoinMarketChartRangeData[]) {
   data.marketCaps.sort((a, b) => a.date.getTime() - b.date.getTime())
 
   return data
+}
+
+// Only a window with no valid hour needs one from after it, and one longer than
+// the repairable gap would be refused anyway.
+function canLookAhead(supplies: QueryResultPoint[]) {
+  return (
+    supplies.length > 0 &&
+    supplies.length <= MAX_REPAIRED_SUPPLY_GAP_HOURS &&
+    supplies.every((p) => !isValidSupply(p.value))
+  )
 }
 
 function isValidSupply(value: number) {

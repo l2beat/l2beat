@@ -241,60 +241,33 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(adjustedTo)
     })
 
-    it('handles insufficient data errors', async () => {
-      const from = 100
-      const to = 300
-      const adjustedTo = 250
+    // Methodology: the logger is a mock, so the level a skip is reported at is
+    // observable. The sync optimizer mock says which timestamp holds the
+    // configuration's first record.
+    it('warns and skips when the first record is before the range', async () => {
+      const configuration = config('config-1', 'ethereum', 18, 50)
+      const { indexer, logger, provider, tvsAmountRepository } =
+        setupInsufficientData(configuration, 50)
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getCirculatingSupplies: mockFn().throwsOnce(
-          new Error('Insufficient data in response for ethereum'),
-        ),
-      })
-
-      const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
-      })
-
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
-        upsertMany: mockFn().returnsOnce(undefined),
-      })
-
-      const indexer = new CirculatingSupplyAmountIndexer(
-        {
-          configurations: [config('config-1', 'ethereum', 18)],
-          circulatingSupplyProvider,
-          db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-          syncOptimizer,
-          parents: [],
-          indexerService: mockObject<IndexerService>({}),
-        },
-        Logger.SILENT,
-      )
-
-      const updateFn = await indexer.multiUpdate(from, to, [
-        config('config-1', 'ethereum', 18),
-      ])
+      const updateFn = await indexer.multiUpdate(100, 300, [configuration])
       const safeHeight = await updateFn()
 
-      expect(
-        circulatingSupplyProvider.getCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(CoingeckoId('ethereum'), {
-        from,
-        to: adjustedTo,
-      })
-
+      expect(provider.getCirculatingSupplies).toHaveBeenOnlyCalledWith(
+        CoingeckoId('ethereum'),
+        { from: 100, to: 250 },
+      )
+      expect(logger.warn).toHaveBeenCalledTimes(1)
+      expect(logger.critical).not.toHaveBeenCalled()
       expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith([])
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toEqual(250)
     })
 
-    // Methodology: the logger is a mock, so the level the skip is reported at
-    // is observable; the start is set via the configuration's minHeight.
-    it('alerts at critical level when the skipped range holds the start', async () => {
+    it('alerts at critical level when the range holds the first record', async () => {
       const configuration = config('config-1', 'ethereum', 18, 150)
-      const { indexer, logger, tvsAmountRepository } =
-        setupInsufficientData(configuration)
+      const { indexer, logger, tvsAmountRepository } = setupInsufficientData(
+        configuration,
+        150,
+      )
 
       const updateFn = await indexer.multiUpdate(100, 300, [configuration])
       const safeHeight = await updateFn()
@@ -315,15 +288,15 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(250)
     })
 
-    it('warns when the skipped range is past the start', async () => {
+    it('alerts when the start is in an earlier window but its first record is not', async () => {
       const configuration = config('config-1', 'ethereum', 18, 50)
-      const { indexer, logger } = setupInsufficientData(configuration)
+      const { indexer, logger } = setupInsufficientData(configuration, 200)
 
       const updateFn = await indexer.multiUpdate(100, 300, [configuration])
       await updateFn()
 
-      expect(logger.warn).toHaveBeenCalledTimes(1)
-      expect(logger.critical).not.toHaveBeenCalled()
+      expect(logger.critical).toHaveBeenCalledTimes(1)
+      expect(logger.warn).not.toHaveBeenCalled()
     })
 
     it('rethrows other errors', async () => {
@@ -421,7 +394,10 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
   })
 })
 
-function setupInsufficientData(configuration: ReturnType<typeof config>) {
+function setupInsufficientData(
+  configuration: ReturnType<typeof config>,
+  firstRecord: number,
+) {
   const warn = mockFn().returns(undefined)
   const critical = mockFn().returns(undefined)
   const logger: Logger = mockObject<Logger>({
@@ -434,25 +410,32 @@ function setupInsufficientData(configuration: ReturnType<typeof config>) {
   const tvsAmountRepository = mockObject<Database['tvsAmount']>({
     upsertMany: mockFn().returnsOnce(undefined),
   })
+  const provider = mockObject<CirculatingSupplyProvider>({
+    getAdjustedTo: mockFn().returnsOnce(250),
+    getCirculatingSupplies: mockFn().throwsOnce(
+      new Error('Insufficient data in response for ethereum'),
+    ),
+  })
   const indexer = new CirculatingSupplyAmountIndexer(
     {
       configurations: [configuration],
-      circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
-        getAdjustedTo: mockFn().returnsOnce(250),
-        getCirculatingSupplies: mockFn().throwsOnce(
-          new Error('Insufficient data in response for ethereum'),
-        ),
-      }),
+      circulatingSupplyProvider: provider,
       db: mockDatabase({ tvsAmount: tvsAmountRepository }),
       syncOptimizer: mockObject<SyncOptimizer>({
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+        getTimestampToSync: mockFn().returns(UnixTime(firstRecord)),
       }),
       parents: [],
       indexerService: mockObject<IndexerService>({}),
     },
     logger,
   )
-  return { indexer, logger: { warn, critical }, tvsAmountRepository }
+  return {
+    indexer,
+    logger: { warn, critical },
+    provider,
+    tvsAmountRepository,
+  }
 }
 
 function config(id: string, apiId: string, decimals: number, minHeight = 0) {

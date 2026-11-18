@@ -428,6 +428,18 @@ describe(CoingeckoQueryService.name, () => {
       expect(supplies).toEqual([{ timestamp: START, value: 200000 }])
     })
 
+    it('returns nothing for a window without a whole hour', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-15T00:00:00Z'))
+
+      const coingeckoClient = supplyClient(START, [10, 10], [-1, -1])
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('what-the-hook'),
+        { from: START + 600, to: START + 1200 },
+      )
+      expect(supplies).toEqual([])
+    })
+
     it('throws when no valid hour follows an invalid window within the repairable gap', async () => {
       const START = UnixTime.fromDate(new Date('2026-08-15T00:00:00Z'))
       const hours = MAX_REPAIRED_SUPPLY_GAP_HOURS + 2

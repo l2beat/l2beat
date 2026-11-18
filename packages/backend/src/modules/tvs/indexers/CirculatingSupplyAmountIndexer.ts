@@ -106,7 +106,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               // supply config while CoinGecko never fills the gap. Skipping is
               // harmless mid-range, but a skipped start leaves a permanent hole
               // that stalls the project's TVS, so a human has to step in.
-              if (isStartInRange(configuration, from, adjustedTo)) {
+              if (this.holdsFirstRecord(configuration, from, adjustedTo)) {
                 // Use critical level to trigger maintenance alert
                 this.logger.critical(
                   'Skipped circulating supply at its start',
@@ -164,6 +164,19 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
     }
   }
 
+  // The first record is the first synced timestamp at or after the start, which
+  // can fall in a later window than the start itself when sampling is sparse.
+  private holdsFirstRecord(
+    configuration: Configuration<CirculatingSupplyAmountFormula>,
+    from: number,
+    to: number,
+  ) {
+    const first = this.$.syncOptimizer.getTimestampToSync(
+      configuration.minHeight,
+    )
+    return from <= first && first <= to
+  }
+
   private isEmptyRange(from: number, adjustedTo: number) {
     return (
       this.$.syncOptimizer.getTimestampsToSync(from, adjustedTo, 1).length === 0
@@ -200,12 +213,4 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   static SOURCE() {
     return 'l2b-circulating-supply'
   }
-}
-
-function isStartInRange(
-  configuration: Configuration<CirculatingSupplyAmountFormula>,
-  from: number,
-  to: number,
-) {
-  return from <= configuration.minHeight && configuration.minHeight <= to
 }
