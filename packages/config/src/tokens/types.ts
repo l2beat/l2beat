@@ -25,8 +25,9 @@ export const GeneratedToken = z.object({
   // Contract creation, or for a totalSupply token the first block where
   // totalSupply() answers. The token starts at the later of these two.
   deploymentTimestamp: z.number().transform(UnixTime),
-  // First CoinGecko price, or for a circulatingSupply token the first real
-  // market cap. Falls back to the min timestamp of ethereum.
+  // First CoinGecko price, or for a circulatingSupply token the first point
+  // with both a positive price and market cap. The chart query starts at
+  // ethereum's min TVL timestamp, so it is never earlier.
   coingeckoListingTimestamp: z.number().transform(UnixTime),
   untilTimestamp: z.number().transform(UnixTime).optional(),
   /** @deprecated */
