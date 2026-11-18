@@ -7,8 +7,14 @@ import {
   INTEGRATE_CROPS_PATH,
   SUBMIT_PROTOCOL_PATH,
 } from '~/pages/garden/paths'
-import { getChainProjects } from './features/chains/getChainProjects'
-import { isListedDefiProject } from './features/defi/isListedDefiProject'
+import {
+  getProjectPath,
+  getProjectTvsBreakdownPath,
+} from '~/utils/project/getProjectPath'
+import {
+  PROJECT_PAGE_FIELDS,
+  selectProjectPages,
+} from './features/projects/getProjectPage'
 import { ps } from './projects'
 
 type PagePath = `/${string}`
@@ -44,7 +50,6 @@ export const STATIC_PAGE_PATHS = [
   '/interop/intent-bridges',
   '/privacy/summary',
   '/privacy/archived',
-  '/projects/ethereum',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -84,44 +89,26 @@ export async function getPages(): Promise<Page[]> {
 }
 
 async function getDynamicPages(): Promise<Page[]> {
-  const [
-    l2Projects,
-    zkCatalogProjects,
-    privacyProjects,
-    defiProjects,
-    interopProtocols,
-    chainProjects,
-  ] = await Promise.all([
-    ps.getProjects({
-      where: ['scalingInfo'],
-      whereNot: ['archivedAt'],
-      optional: ['tvsConfig'],
-    }),
-    ps.getProjects({ select: ['zkCatalogInfo'] }),
-    ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
-    env.CLIENT_SIDE_DEFI_ENABLED
-      ? ps
-          .getProjects({ select: ['defiInfo'] })
-          .then((projects) =>
-            projects.filter((p) => isListedDefiProject(p.defiInfo)),
-          )
-      : Promise.resolve([]),
-    // Protocols that are also scaling projects redirect to the scaling page.
-    ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),
-    getChainProjects(),
-  ])
+  const projects = await ps.getProjects({
+    optional: [...PROJECT_PAGE_FIELDS, 'tvsConfig', 'archivedAt'],
+  })
 
-  const pages: Page[] = [
-    ...l2Projects.map(projectPage('/layer2s/projects')),
-    ...l2Projects
-      .filter((project) => project.tvsConfig)
-      .map(projectPage('/layer2s/projects', '/tvs-breakdown')),
-    ...zkCatalogProjects.map(projectPage('/zk-catalog')),
-    ...privacyProjects.map(projectPage('/privacy/projects')),
-    ...defiProjects.map(projectPage('/defi/projects')),
-    ...interopProtocols.map(projectPage('/interop/protocols')),
-    ...chainProjects.map(projectPage('/projects')),
-  ]
+  const pages: Page[] = []
+  for (const page of selectProjectPages(projects)) {
+    const { project } = page
+    // Archived scaling and privacy projects keep their page but leave the
+    // sitemap, unless another section still lists them.
+    const listed = page.listed.filter(
+      (section) =>
+        !project?.archivedAt ||
+        (section !== 'layer2s' && section !== 'privacy'),
+    )
+    if (listed.length === 0) continue
+    pages.push({ path: getProjectPath(page.slug) })
+    if (listed.includes('layer2s') && project?.tvsConfig) {
+      pages.push({ path: getProjectTvsBreakdownPath(page.slug) })
+    }
+  }
 
   const publications = [
     ...getCollection('governance-publications'),
@@ -135,10 +122,4 @@ async function getDynamicPages(): Promise<Page[]> {
   }
 
   return pages
-}
-
-function projectPage(prefix: PagePath, suffix = '') {
-  return (project: { slug: string }): Page => ({
-    path: `${prefix}/${project.slug}${suffix}`,
-  })
 }

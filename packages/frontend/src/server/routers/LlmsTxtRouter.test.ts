@@ -97,15 +97,8 @@ describe(createLlmsTxtRouter.name, () => {
     )
 
     expect(urls).toEqual([
-      'https://ethbeat.org/layer2s/projects/{slug}.md',
-      'https://ethbeat.org/projects/ethereum.md',
-      'https://ethbeat.org/privacy/projects/{slug}.md',
-      'https://ethbeat.org/interop/protocols/{slug}.md',
-      'https://ethbeat.org/zk-catalog/{slug}.md',
+      'https://ethbeat.org/projects/{slug}.md',
       'https://ethbeat.org/tokens/{slug}.md',
-      ...(env.CLIENT_SIDE_DEFI_ENABLED
-        ? ['https://ethbeat.org/defi/projects/{slug}.md']
-        : []),
     ])
   })
 
@@ -116,7 +109,7 @@ describe(createLlmsTxtRouter.name, () => {
     expect(body.length).toBeLessThan(12_000)
     expect(links.length).toBeLessThan(60)
     expect(links.map((l) => l.url)).not.toInclude(
-      'https://ethbeat.org/layer2s/projects/arbitrum',
+      'https://ethbeat.org/projects/arbitrum',
     )
   })
 

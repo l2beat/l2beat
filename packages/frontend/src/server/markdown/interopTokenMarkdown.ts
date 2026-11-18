@@ -11,11 +11,8 @@ import type {
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
-import {
-  formatAverageDuration,
-  formatTransferCount,
-  interopProtocolUrl,
-} from './interopMarkdown'
+import { getProjectPath } from '~/utils/project/getProjectPath'
+import { formatAverageDuration, formatTransferCount } from './interopMarkdown'
 import {
   bulletList,
   formatUsd,
@@ -203,5 +200,5 @@ function renderProtocolName(entry: ProtocolEntry) {
     entry.subgroup && `using ${entry.subgroup.name}`,
   ].filter(Boolean)
   const suffix = notes.length > 0 ? ` (${notes.join(', ')})` : ''
-  return `${link(entry.name, interopProtocolUrl(entry.slug))}${suffix}`
+  return `${link(entry.name, getProjectPath(entry.slug))}${suffix}`
 }

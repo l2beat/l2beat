@@ -149,7 +149,7 @@ describe('resolveCrops', () => {
       const path = (project: Partial<Parameters<typeof resolveGarden>[0]>) =>
         resolveGarden({ slug: 'p', crops: crops(), ...project }).path
       expect(path({ privacyInfo: {} as ProjectPrivacyInfo })).toEqual(
-        '/privacy/projects/p',
+        '/projects/p',
       )
       expect(path({ defiInfo: {} as ProjectDefiInfo })).toEqual(null)
       expect(
@@ -157,7 +157,7 @@ describe('resolveCrops', () => {
           defiInfo: {} as ProjectDefiInfo,
           ossificationHistory: {} as OssificationHistory,
         }),
-      ).toEqual('/defi/projects/p')
+      ).toEqual('/projects/p')
     })
   })
 })

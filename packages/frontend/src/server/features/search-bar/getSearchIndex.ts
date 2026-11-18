@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import {
   isCoingeckoIcon,
   MAX_RECENTLY_ADDED,
@@ -10,14 +10,18 @@ import {
   toCoingeckoIcon,
 } from '~/components/search-bar/searchIndex'
 import { env } from '~/env'
-import { selectChainProjects } from '~/server/features/chains/getChainProjects'
-import { isListedDefiProject } from '~/server/features/defi/isListedDefiProject'
 import { hasDefiProjectPage } from '~/server/features/defi/project/hasDefiProjectPage'
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
 import {
   getActiveInteropAbstractTokens,
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import {
+  PROJECT_PAGE_FIELDS,
+  type ProjectPageEntry,
+  type ProjectPageSection,
+  selectProjectPages,
+} from '~/server/features/projects/getProjectPage'
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
@@ -39,27 +43,19 @@ export function getSearchIndexJson(): Promise<string> {
 export async function buildSearchIndex(): Promise<SearchIndex> {
   const [tokens, projects, cropsAttested] = await Promise.all([
     getActiveInteropAbstractTokens(),
-    ps.getProjects({ optional: SEARCH_INDEX_PROJECT_KEYS }),
+    ps.getProjects({ optional: [...SEARCH_INDEX_PROJECT_KEYS] }),
     getCropsAttestedIds(),
   ])
 
+  const chainIds = new Map(projects.map((p) => [p.slug, getChainIdTag(p)]))
   // Rows are arrays themselves, so they are wrapped to survive flatMap.
-  const projectRows = projects.flatMap((p) => {
-    const row = toSearchIndexProject(p, cropsAttested)
+  const projectRows = selectProjectPages(projects).flatMap((entry) => {
+    const row = toSearchIndexProject(entry, cropsAttested, chainIds)
     return row ? [row] : []
   })
   const indexedIds = new Set(projectRows.map(([id]) => id))
-  const l2ProjectIds = new Set(
-    projects.filter((p) => p.scalingInfo).map((p) => p.id),
-  )
-  const chainIds = new Map(projects.map((p) => [p.id, getChainIdTag(p)]))
   return {
-    projects: [
-      ...projectRows,
-      ...selectChainProjects(l2ProjectIds).map((chain) =>
-        toSearchIndexChain(chain, chainIds.get(ProjectId(chain.slug))),
-      ),
-    ],
+    projects: projectRows,
     // The token query has no order, and a reordered list would change the
     // ETag, making browsers download the same index again.
     tokens: tokens
@@ -75,42 +71,57 @@ export async function buildSearchIndex(): Promise<SearchIndex> {
   }
 }
 
-type SearchIndexProjectKey =
-  | 'scalingInfo'
-  | 'interopConfig'
-  | 'zkCatalogInfo'
-  | 'privacyInfo'
-  | 'defiInfo'
-  | 'garden'
-  | 'ossificationHistory'
-  | 'aliases'
-  | 'versions'
-  | 'chainConfig'
-
-export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
-  'scalingInfo',
-  'interopConfig',
-  'zkCatalogInfo',
-  'privacyInfo',
-  'defiInfo',
+export const SEARCH_INDEX_PROJECT_KEYS = [
+  ...PROJECT_PAGE_FIELDS,
   'garden',
-  'ossificationHistory',
   'aliases',
   'versions',
   'chainConfig',
-]
+] as const
 
-type SearchIndexSourceProject = Project<never, SearchIndexProjectKey>
+type SearchIndexSourceProject = Project<
+  never,
+  (typeof SEARCH_INDEX_PROJECT_KEYS)[number]
+>
 
 /**
- * Undefined for projects with no page the search bar links to.
+ * Undefined for a page the search bar does not link to.
  * `cropsAttested`: ids the current CROPS attestation names.
+ * `chainIds`: the chain id tag of each project, for pages of chains alone.
  */
 export function toSearchIndexProject(
-  project: SearchIndexSourceProject,
+  entry: ProjectPageEntry<SearchIndexSourceProject>,
   cropsAttested: ReadonlySet<string>,
+  chainIds: ReadonlyMap<string, string | undefined> = new Map(),
 ): SearchIndexProject | undefined {
-  const kinds = getProjectKinds(project, cropsAttested)
+  if (entry.kind === 'chain') {
+    const { slug, chain } = entry
+    const chainIdTag = chainIds.get(slug)
+    return [
+      slug,
+      slug,
+      chain.name,
+      manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      ['chain'],
+      null,
+      chainIdTag === undefined ? [chain.display] : [chain.display, chainIdTag],
+      null,
+      null,
+    ]
+  }
+  const { project } = entry
+  const kinds = entry.sections.flatMap((section): SearchIndexProjectKind[] => {
+    if (!isSearchable(project, entry.listed, section, cropsAttested)) return []
+    switch (section) {
+      case 'layer2s':
+        return project.scalingInfo ? [project.scalingInfo.layer] : []
+      // Listed as a chain only when the page shows nothing else.
+      case 'chain':
+        return []
+      default:
+        return [section]
+    }
+  })
   if (kinds.length === 0) return undefined
 
   return [
@@ -151,34 +162,20 @@ function getVersionGroups(projects: SearchIndexSourceProject[]): string[][] {
   return [...groups.values()]
 }
 
-function getProjectKinds(
-  project: SearchIndexSourceProject,
-  cropsAttested: ReadonlySet<string>,
-): SearchIndexProjectKind[] {
-  const kinds: SearchIndexProjectKind[] = []
-  if (project.id === ProjectId.ETHEREUM) kinds.push('ethereum')
-  if (project.scalingInfo) kinds.push(project.scalingInfo.layer)
-  // A scaling project's bridge is listed on its scaling page.
-  if (project.interopConfig && !project.scalingInfo) kinds.push('interop')
-  if (project.zkCatalogInfo) kinds.push('zkCatalog')
-  if (project.privacyInfo) kinds.push('privacy')
-  if (isSearchableDefiProject(project, cropsAttested)) kinds.push('defi')
-  return kinds
-}
-
 /**
- * A DeFi project outside a listed category is found once the current CROPS
- * attestation names it, as the garden lists it only then.
+ * A section lists the project, or, for a DeFi project outside a listed
+ * category, the current CROPS attestation names it, as the garden lists it
+ * only then.
  */
-function isSearchableDefiProject(
+function isSearchable(
   project: SearchIndexSourceProject,
+  listed: ProjectPageSection[],
+  section: ProjectPageSection,
   cropsAttested: ReadonlySet<string>,
 ): boolean {
-  if (!project.defiInfo) return false
-  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
-    return true
-  }
+  if (listed.includes(section)) return true
   return (
+    section === 'defi' &&
     env.CLIENT_SIDE_GARDEN_ENABLED &&
     project.garden !== undefined &&
     cropsAttested.has(project.id) &&
@@ -193,23 +190,6 @@ function getChainIdTag(project: SearchIndexSourceProject): string | undefined {
   assert(Number.isSafeInteger(chainId), 'Chain id is not an integer')
   assert(chainId > 0, 'Chain id is not positive')
   return chainId.toString()
-}
-
-function toSearchIndexChain(
-  chain: ReturnType<typeof selectChainProjects>[number],
-  chainIdTag: string | undefined,
-): SearchIndexProject {
-  return [
-    chain.slug,
-    chain.slug,
-    chain.name,
-    manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    ['chain'],
-    null,
-    chainIdTag === undefined ? [chain.display] : [chain.display, chainIdTag],
-    null,
-    null,
-  ]
 }
 
 export function toSearchIndexToken(
