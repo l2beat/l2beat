@@ -32,7 +32,10 @@ describe(buildReport.name, () => {
 
   it('values, counts and orders holdings', async () => {
     const tokens: KnownToken[] = [
-      known(NATIVE_TOKEN, 'ETH', 18, { coingeckoId: 'ethereum' }),
+      known(NATIVE_TOKEN, 'ETH', 18, {
+        coingeckoId: 'ethereum',
+        reviewed: true,
+      }),
       known(address('1'), 'USDC', 6, { coingeckoId: 'usd-coin' }),
       known(address('2'), 'NOPRICE', 18, { coingeckoId: null }),
       known(address('3'), 'SHAKY', 18, {
@@ -91,7 +94,9 @@ describe(buildReport.name, () => {
       ['NOPRICE', null],
       ['SHAKY', null],
     ])
-    expect(report.totalValueUsd).toEqual(6005)
+    // USDC is unreviewed here, so its value stays out of the total.
+    expect(report.totalValueUsd).toEqual(6000)
+    expect(report.unreviewedValueUsd).toEqual(5)
     expect(report.blockNumber).toEqual(21_000_000)
     expect(report.priceTimestamp).toEqual(UnixTime.toStartOf(now, 'hour'))
     expect(report.emptyTrackedTokenCount).toEqual(1)

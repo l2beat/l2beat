@@ -13,7 +13,7 @@ export function InsightPage({ holder, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <MainPageHeader description="Paste an Ethereum address or ENS name to see which tokens it holds, who issues each of them and which bridges mint them. A proof of concept: Ethereum only, and only tokens in our token database.">
+        <MainPageHeader description="See which tokens an Ethereum address holds, who issues them and which bridges they rely on. Ethereum only, and only tokens in our token database.">
           Insight
         </MainPageHeader>
         <div className="flex flex-col gap-4">

@@ -138,7 +138,8 @@ export async function buildReport(
     blockNumber,
     priceTimestamp,
     holdings,
-    totalValueUsd: holdings.reduce((sum, h) => sum + (h.valueUsd ?? 0), 0),
+    totalValueUsd: sumValueUsd(holdings.filter((h) => h.reviewed)),
+    unreviewedValueUsd: sumValueUsd(holdings.filter((h) => !h.reviewed)),
     untrackedTokenCount,
     emptyTrackedTokenCount,
     unreadableTokenCount,
@@ -251,6 +252,10 @@ function toHolding(
     valueUsd: priceUsd === undefined ? null : amount * priceUsd,
     backing,
   }
+}
+
+function sumValueUsd(holdings: InsightHolding[]): number {
+  return holdings.reduce((sum, h) => sum + (h.valueUsd ?? 0), 0)
 }
 
 function compareHoldings(a: InsightHolding, b: InsightHolding): number {

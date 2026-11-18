@@ -16,6 +16,7 @@ export function getMockInsightReport(holder: string): InsightReport {
     blockNumber: 24_000_000,
     priceTimestamp: UnixTime.toStartOf(UnixTime.now(), 'hour'),
     totalValueUsd: 1_208_514.02,
+    unreviewedValueUsd: 0,
     untrackedTokenCount: 9_871,
     emptyTrackedTokenCount: 412,
     unreadableTokenCount: 1,

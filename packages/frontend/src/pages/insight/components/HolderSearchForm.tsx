@@ -24,26 +24,26 @@ export function HolderSearchForm({ initialValue }: { initialValue: string }) {
           window.location.assign(`/insight/${encodeURIComponent(segment)}`)
         }}
       >
-        <label htmlFor="insight-holder" className="text-label-value-14">
+        <label htmlFor="insight-holder" className="sr-only">
           Ethereum address or ENS name
         </label>
-        <div className="flex gap-2 max-md:flex-col">
+        <div className="flex gap-2">
           <input
             id="insight-holder"
             type="text"
             spellCheck={false}
             autoComplete="off"
-            placeholder="0x… or vitalik.eth"
+            placeholder="Ethereum address or ENS name, e.g. vitalik.eth"
             aria-invalid={isInvalid}
             aria-describedby={isInvalid ? 'insight-holder-error' : undefined}
-            className="min-w-0 flex-1 rounded-lg border border-divider bg-surface-secondary px-3 py-2 font-mono text-sm outline-none focus:border-brand"
+            className="h-10 min-w-0 flex-1 rounded-lg border border-divider bg-surface-secondary px-3 font-mono text-label-value-14 outline-none placeholder:font-sans placeholder:text-secondary focus-visible:border-brand"
             value={value}
             onChange={(event) => {
               setValue(event.target.value)
               setIsInvalid(false)
             }}
           />
-          <Button type="submit" variant="fill">
+          <Button type="submit" variant="fill" className="h-10 shrink-0">
             Check
           </Button>
         </div>

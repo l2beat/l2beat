@@ -22,7 +22,13 @@ export interface InsightReport {
   priceTimestamp: UnixTime
   /** Valued holdings first, by value; then the unpriced ones by symbol. */
   holdings: InsightHolding[]
+  /**
+   * Value of the reviewed holdings only. Unreviewed tokens are mostly airdrops
+   * to well-known addresses, priced off thin markets, and would dwarf it.
+   */
   totalValueUsd: number
+  /** Value of the unreviewed holdings, kept out of the total. */
+  unreviewedValueUsd: number
   /**
    * Tokens the holder index lists but token-db does not know. Their balances
    * are not read, so a holding may hide among them.
