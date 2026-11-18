@@ -240,12 +240,13 @@ describe(computeCostOfExitChart.name, () => {
         }),
       ],
     )
-    // The hour waited so far would undercut the sale's 3 days.
+    // The hour waited so far would undercut the sale's 3 days, so the sale
+    // is shown, as a value the queue could still come in under.
     expect(present(charts.costOfExit[0]?.projects.stakewise)).toBeCloseTo(
       (0.001 * 365) / (0.01 * (365 / 30)),
       1e-9,
     )
-    expect(charts.costOfExit[0]?.estimated).toEqual([])
+    expect(charts.costOfExit[0]?.estimated).toEqual(['stakewise'])
   })
 
   it('times an unpaced wBETH unwrap at the lock, and leaves it unknown past the lock', () => {
@@ -294,6 +295,29 @@ describe(computeCostOfExitChart.name, () => {
       ],
     )
     expect(charts.costOfExit[0]?.projects.cbeth).toEqual(null)
+  })
+
+  it('leaves the market value unmarked once the queue has waited longer than it costs', () => {
+    const quoted = {
+      marketExitEth: (100_899n * ETH) / 1000n,
+      marketExitValueEth: 101n * ETH,
+    }
+    const waiting = { ...quoted, lastRequestId: 6, lastFinalizedRequestId: 5 }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', START + DAY, 1.0),
+        snapshot('stakewise', DAY_31, 1.01, {
+          ...quoted,
+          lastRequestId: 5,
+          lastFinalizedRequestId: 5,
+        }),
+        snapshot('stakewise', DAY_31 + HOUR, 1.01, waiting),
+        // Unpaid for 5 days, longer than the 3 days the sale costs.
+        snapshot('stakewise', DAY_31 + 5 * DAY, 1.01, waiting),
+      ],
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual([])
   })
 
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
