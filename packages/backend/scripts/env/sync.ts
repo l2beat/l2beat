@@ -451,7 +451,7 @@ main()
   .then(() => process.exit(0))
   .catch((error) => {
     if (error instanceof Error && error.cause !== undefined) {
-      console.error(error.message, error.cause)
+      console.error('%s', error.message, error.cause)
     } else {
       console.error(error instanceof Error ? error.message : String(error))
     }
