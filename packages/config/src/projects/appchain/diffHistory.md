@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xd790ac3f62331a819e1be74b20e2d9a7f924c97a
+
+# Diff at Wed, 18 Nov 2026 14:45:22 GMT:
+
+- id: 737077f6
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@985ce2018d26fb4e764f5dc61e5e3d905efa7234 block: 1794868381
+- current timestamp: 1795013056
+
+## Description
+
+SequencerInbox upgraded: non-empty batches can also be posted through the standard Arbitrum batch functions with an Espresso CAS certificate, signed by a TEE signer registered in the EspressoTEEVerifier. Empty batches no longer need a certificate or TEE signature. Batch poster rotated. The first batch since the upgrade carries an AnyTrust DAC certificate (`sequencerVersion` 0x00 -> 0x88).
+
+New EspressoTEEVerifier and EspressoNitroTEEVerifier, with one registered enclave hash (Espresso CAS image). The verifier and its ProxyAdmin are owned by a 2/2 SafeL2 of Caldera Multisig 3 and the Safe that owned the previous verifier. The NitroEnclaveVerifier is unchanged.
+
+All 23 contracts are templatized.
+
+Implementation diffs:
+
+- SequencerInbox: https://disco.l2beat.com/diff/eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A/eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4
+- EspressoTEEVerifier: https://disco.l2beat.com/diff/eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0/eth:0x946fb276dFD92b50458170473711fd9C8cbf0FB2
+- EspressoNitroTEEVerifier: https://disco.l2beat.com/diff/eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a/eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a) [espresso/Sequencing/EspressoNitroTEEVerifier_WithServices]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoTEEVerifier (eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67) [espresso/Sequencing/EspressoTEEVerifier_onlyNitro]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67","description":"add, remove or disable supported enclave hashes.","role":".owner"},{"permission":"interact","from":"eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67","description":"change the TEE verifier contract.","role":".owner"}]
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473) [orbitstack/SequencerInbox_Espresso_CAS] {
+    +++ description: Batch posters registered in this contract submit transaction batches or commitments here. While `espressoTEEVerifier` is set, each non-empty batch from a batch poster must be signed by a signer valid in that verifier, either as a CAS certificate in front of the batch data or as a signature passed with the batch.
+      template:
+-        "orbitstack/SequencerInbox_Espresso"
++        "orbitstack/SequencerInbox_Espresso_CAS"
+      sourceHashes.1:
+-        "0x02b5ed4b727632bc3bef07ea342e78a72508a1be7313d874dfd5ee7511a4e571"
++        "0x8ed81f5b8a4aad6e8e716e8dd885c13f5d8c82ea0bf065dbe075357d0c5c94d8"
+      description:
+-        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "Batch posters registered in this contract submit transaction batches or commitments here. While `espressoTEEVerifier` is set, each non-empty batch from a batch poster must be signed by a signer valid in that verifier, either as a CAS certificate in front of the batch data or as a signature passed with the batch."
+      values.$implementation:
+-        "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A"
++        "eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4"
+      values.$pastUpgrades.4:
++        ["2026-11-17T13:34:47.000Z","0xa62438aea4f65f183df95b97bdaf4fc6315122b69be8117ec2dff95dfebee455",["eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4"]]
+      values.$upgradeCount:
+-        4
++        5
++++ severity: LOW
+      values.batchPosters.0:
+-        "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"
++        "eth:0xBa7F4cd9f6ad55d1e2452cdEb356CF778E242DD1"
+      values.espressoTEEVerifier:
+-        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67"
++        "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896"
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+      values.setIsBatchPosterCount:
+-        5
++        7
+      values.ESPRESSO_CERT_LEN:
++        137
+      implementationNames.eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A:
+-        "SequencerInbox"
+      implementationNames.eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    EOA (eth:0xC5dD640885cE582464e2fCa7b169581417822e6C) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","role":".batchPosters"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (eth:0x809375C1e76653De11AdDE7E7bB59885af89b896) [espresso/Sequencing/EspressoTEEVerifier_onlyNitro_v2]
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699) [espresso/Sequencing/EspressoNitroTEEVerifier_WithServices]
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+## Source code changes
+
+```diff
+.../EspressoTEEVerifier.sol => /dev/null           | 7047 --------------------
+ ...0x47783CC0820d50324d03C8Dee07F8654ab24e573.sol} |    0
+ .../src/projects/appchain/.flat/SafeL2/SafeL2.sol  | 1286 ++++
+ .../projects/appchain/.flat/SafeL2/SafeProxy.p.sol |   42 +
+ .../SequencerInbox/SequencerInbox.sol              |  397 +-
+ 5 files changed, 1590 insertions(+), 7182 deletions(-)
+```
+
 Generated with discovered.json: 0xdd68704d3cdb20f53550527cc8f231cf6d8770d1
 
 # Diff at Mon, 16 Nov 2026 22:34:21 GMT:

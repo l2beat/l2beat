@@ -1,7 +1,7 @@
 import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { ESPRESSO } from '../../common/sequencing'
+import { ESPRESSO_CAS } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
@@ -46,7 +46,7 @@ export const appchain: ScalingProject = orbitStackL2({
     },
   },
   nonTemplateTechnology: {
-    sequencing: ESPRESSO,
+    sequencing: ESPRESSO_CAS,
   },
   chainConfig: {
     name: 'appchain',
