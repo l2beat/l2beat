@@ -148,6 +148,7 @@ class ExitCostSeries {
   private readonly hoursByDay: Map<number, LiquidStakingSnapshotRecord[]>
   /** Per queue: request day → the request-weighted wait of its requests, null when unknown. */
   private readonly queueWaits: Map<number, ExitCost | null>[]
+  private readonly locks: LockSchedule
 
   constructor(snapshots: LiquidStakingSnapshotRecord[]) {
     this.rates = new ExchangeRates(snapshots)
@@ -158,7 +159,7 @@ class ExitCostSeries {
       hours.push(snapshot)
       this.hoursByDay.set(day, hours)
     }
-    const lockTimes = new Map(snapshots.map((s) => [s.timestamp, s.lockTime]))
+    this.locks = new LockSchedule(snapshots)
     this.queueWaits = [
       getQueueWaits(snapshots),
       // A queue the protocol replaced pays its requests apart from the new one's.
@@ -169,13 +170,7 @@ class ExitCostSeries {
           lastFinalizedRequestId: s.retiredLastFinalizedRequestId,
         })),
       ),
-    ].map((waits) =>
-      averageWaitByDay(
-        waits,
-        // An unwrapped wBETH request also waits out its lock.
-        (timestamp) => lockTimes.get(timestamp) ?? 0,
-      ),
-    )
+    ].map((waits) => averageWaitByDay(waits, this.locks))
   }
 
   /** Days of yield an exit costs, by the cheapest route. */
@@ -196,10 +191,15 @@ class ExitCostSeries {
       .filter((wait) => wait !== undefined)
     // Each queue is a route of its own, and one with an unknown wait is none.
     if (waits.length > 0) return cheapest(waits.filter((w) => w !== null))
-    // Without requests that day, an exit would still wait out the lock. Only
-    // wBETH has one.
-    const lockTime = this.hoursByDay.get(day)?.[0]?.lockTime
-    return lockTime != null ? { days: lockTime / DAY, estimated: false } : null
+    // Without requests that day, an exit would still wait out the lock, as
+    // a request made when the day starts. Only wBETH has one.
+    const start = this.hoursByDay.get(day)?.[0]
+    if (start?.lockTime == null) return null
+    const { at, projected } = this.locks.claimableAt(
+      start.timestamp,
+      start.timestamp,
+    )
+    return { days: (at - start.timestamp) / DAY, estimated: projected }
   }
 
   /**
@@ -240,6 +240,60 @@ class ExitCostSeries {
     // Selling at a premium exits for free.
     const days = toYieldDays(Math.max(0, cost), annualYield)
     return days === null ? null : { days, estimated: false }
+  }
+}
+
+/**
+ * wBETH's lock counts as it stands when an unwrap is claimed, not as it stood
+ * when the unwrap was requested, so a change also moves requests that are
+ * already waiting.
+ */
+class LockSchedule {
+  /** Oldest first. */
+  private readonly locks: { timestamp: number; lockTime: number }[]
+
+  constructor(
+    snapshots: Pick<LiquidStakingSnapshotRecord, 'timestamp' | 'lockTime'>[],
+  ) {
+    this.locks = snapshots.flatMap((s) =>
+      s.lockTime === null
+        ? []
+        : [{ timestamp: s.timestamp, lockTime: s.lockTime }],
+    )
+  }
+
+  /**
+   * When a request made at `requested`, and payable from `ready`, can be
+   * claimed: at the first snapshot from `ready` on by which its lock has
+   * passed. Past the last snapshot the lock is taken to stay as it is, which
+   * makes the time a projection.
+   */
+  claimableAt(
+    requested: number,
+    ready: number,
+  ): { at: number; projected: boolean } {
+    const last = this.locks.at(-1)
+    if (last === undefined) return { at: ready, projected: false }
+    for (let i = this.firstFrom(ready); i < this.locks.length; i++) {
+      const lock = this.locks[i]
+      if (lock && lock.timestamp - requested >= lock.lockTime) {
+        return { at: lock.timestamp, projected: false }
+      }
+    }
+    const at = Math.max(ready, requested + last.lockTime)
+    return { at, projected: at > ready }
+  }
+
+  /** The index of the first snapshot at or after `timestamp`. */
+  private firstFrom(timestamp: number): number {
+    let low = 0
+    let high = this.locks.length
+    while (low < high) {
+      const middle = (low + high) >> 1
+      if ((this.locks[middle]?.timestamp ?? 0) < timestamp) low = middle + 1
+      else high = middle
+    }
+    return low
   }
 }
 
@@ -362,14 +416,13 @@ function estimateQueuedWaits(
 /**
  * The request-weighted wait of each day's requests, in days. Requests made in
  * the hour before a snapshot belong to that hour, so midnight closes a day.
- * `minimumWait` is the wait, in seconds, of every request at a snapshot. An
- * unpaced request still inside it is timed at that minimum. Past it, or
- * without one, the wait is unknown: its day has no average, and is kept apart
- * from a day without requests.
+ * A request also waits out its lock. An unpaced request still inside the lock
+ * is timed at it. Past it, or without one, the wait is unknown: its day has
+ * no average, and is kept apart from a day without requests.
  */
 function averageWaitByDay(
   waits: QueueWait[],
-  minimumWait: (timestamp: number) => number,
+  locks: LockSchedule,
 ): Map<number, ExitCost | null> {
   const totals = new Map<
     number,
@@ -383,11 +436,14 @@ function averageWaitByDay(
       estimated: false,
       unknown: false,
     }
-    const minimum = minimumWait(wait.timestamp) / UnixTime.HOUR
+    const ready = wait.timestamp + wait.hours * UnixTime.HOUR
+    const { at, projected } = locks.claimableAt(wait.timestamp, ready)
+    const hours =
+      at === ready ? wait.hours : (at - wait.timestamp) / UnixTime.HOUR
     total.requests += wait.requests
-    total.hours += wait.requests * Math.max(wait.hours, minimum)
-    total.estimated ||= wait.estimated
-    total.unknown ||= wait.unpaced && wait.hours >= minimum
+    total.hours += wait.requests * hours
+    total.estimated ||= wait.estimated || projected
+    total.unknown ||= wait.unpaced && at === ready
     totals.set(day, total)
   }
   return new Map(
