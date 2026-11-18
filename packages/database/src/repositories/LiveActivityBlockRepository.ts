@@ -139,7 +139,7 @@ export class LiveActivityBlockRepository extends BaseRepository {
       gasUsed: string
     }>`
       SELECT
-        floor(extract(epoch FROM "timestamp") / ${seconds}) * ${seconds} AS "timestamp",
+        floor(date_part('epoch', "timestamp") / ${seconds}) * ${seconds} AS "timestamp",
         count(*) AS "blocks",
         sum("count") AS "count",
         sum(coalesce("uopsCount", "count")) AS "uopsCount",

@@ -77,18 +77,49 @@ export function getBlockSeconds(timestamps: UnixTime[]) {
   return gaps.length === 0 ? 1 : Math.min(...gaps)
 }
 
-/** Per second, in the hour of the day `hour` starts, over the days given */
-export function getUsualRates(hours: HourlyActivityRecord[], hour: UnixTime) {
-  const sameHour = hours.filter(
-    (h) => (hour - h.timestamp) % UnixTime.DAY === 0,
-  )
-  if (sameHour.length === 0) return undefined
-  const average = (values: number[]) =>
-    values.reduce((sum, value) => sum + value, 0) /
-    values.length /
-    UnixTime.HOUR
-  return {
-    tps: average(sameHour.map((h) => h.count)),
-    uops: average(sameHour.map((h) => h.uopsCount ?? h.count)),
+/** Per second, over the same hour on the days given */
+export interface UsualRange {
+  median: number
+  min: number
+  max: number
+}
+
+export interface UsualHour {
+  hour: UnixTime
+  tps: UsualRange
+  uops: UsualRange
+}
+
+/**
+ * Each hour from `first` to `last`, as it was on the days given. The median,
+ * as a single busy day would pull an average far above a usual one
+ */
+export function getUsualRates(
+  hours: HourlyActivityRecord[],
+  first: UnixTime,
+  last: UnixTime,
+): UsualHour[] {
+  const usual: UsualHour[] = []
+  for (let hour = first; hour <= last; hour += UnixTime.HOUR) {
+    const sameHour = hours.filter(
+      (h) => (hour - h.timestamp) % UnixTime.DAY === 0,
+    )
+    if (sameHour.length === 0) continue
+    usual.push({
+      hour,
+      tps: toUsualRange(sameHour.map((h) => h.count)),
+      uops: toUsualRange(sameHour.map((h) => h.uopsCount ?? h.count)),
+    })
   }
+  return usual
+}
+
+function toUsualRange(counts: number[]): UsualRange {
+  const rates = counts.map((c) => c / UnixTime.HOUR).sort((a, b) => a - b)
+  const middle = Math.floor(rates.length / 2)
+  const median =
+    rates.length % 2 === 1
+      ? (rates[middle] ?? 0)
+      : ((rates[middle - 1] ?? 0) + (rates[middle] ?? 0)) / 2
+  return { median, min: rates[0] ?? 0, max: rates.at(-1) ?? 0 }
 }

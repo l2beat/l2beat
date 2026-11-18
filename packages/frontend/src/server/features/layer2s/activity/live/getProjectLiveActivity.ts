@@ -19,6 +19,7 @@ import {
   getLiveWindow,
   getUsualRates,
   LAST_MINUTE_BUCKET,
+  type UsualHour,
 } from './liveWindow'
 
 const OVERVIEW_BUCKET_SECONDS = 60
@@ -54,8 +55,8 @@ export interface ProjectLiveActivity {
   }
   /** Per second, over the minute up to the newest block, while it is recent */
   now: { tps: number; uops: number } | undefined
-  /** Per second, in the hour the window ends in, on the days of the last week */
-  usual: { tps: number; uops: number } | undefined
+  /** The hours the window is in, as they were on the days of the last week */
+  usual: UsualHour[]
 }
 
 const cache = new FrontendInMemoryCache('getProjectLiveActivity')
@@ -96,7 +97,8 @@ async function readProjectLiveActivity({
     getBlockSeconds(latest.map((b) => b.timestamp)),
     to,
   )
-  const hour = UnixTime.toStartOf(window.to, 'hour')
+  const firstHour = UnixTime.toStartOf(window.from, 'hour')
+  const lastHour = UnixTime.toStartOf(window.to, 'hour')
   const [oldest, lastMinute, overview, hours, detail] = await Promise.all([
     db.liveActivityBlock.getOldestTimestamp(id),
     db.liveActivityBlock.getProjectBuckets(
@@ -105,15 +107,10 @@ async function readProjectLiveActivity({
       newest,
       LAST_MINUTE_BUCKET,
     ),
-    db.liveActivityBlock.getProjectBuckets(
-      id,
-      newest - LIVE_BUFFER_SECONDS,
-      newest - (newest % OVERVIEW_BUCKET_SECONDS) - 1,
-      OVERVIEW_BUCKET_SECONDS,
-    ),
+    getOverview(id, newest - (newest % OVERVIEW_BUCKET_SECONDS)),
     db.hourlyActivity.getByProjectsAndTimeRange(
       [id],
-      [hour - USUAL_DAYS * UnixTime.DAY, hour - UnixTime.DAY],
+      [firstHour - USUAL_DAYS * UnixTime.DAY, lastHour - UnixTime.DAY],
     ),
     db.liveActivityBlock.getProjectBuckets(
       id,
@@ -131,8 +128,29 @@ async function readProjectLiveActivity({
     now: isLiveFresh(newest, now)
       ? getLastMinuteRates(lastMinute, newest)
       : undefined,
-    usual: getUsualRates(hours, hour),
+    usual: getUsualRates(hours, firstHour, lastHour),
   }
+}
+
+/**
+ * The buffer, a minute a point, up to `end`. Only whole minutes are in, so
+ * it is read once a minute, not with every window: for a chain of short
+ * blocks it is the read that costs most
+ */
+function getOverview(id: ProjectId, end: UnixTime) {
+  return cache.get(
+    {
+      key: ['project-live-overview', id, end.toString()],
+      ttl: OVERVIEW_BUCKET_SECONDS,
+    },
+    () =>
+      getDb().liveActivityBlock.getProjectBuckets(
+        id,
+        end - LIVE_BUFFER_SECONDS,
+        end - 1,
+        OVERVIEW_BUCKET_SECONDS,
+      ),
+  )
 }
 
 /** Whether the project's blocks are followed, so it has a live view */
@@ -171,6 +189,6 @@ function emptyActivity(now: UnixTime, range: LiveRange): ProjectLiveActivity {
       points: [],
     },
     now: undefined,
-    usual: undefined,
+    usual: [],
   }
 }
