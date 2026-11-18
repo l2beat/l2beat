@@ -39,6 +39,21 @@ describe(GasFeesTipIndexer.name, () => {
     expect(records[2]?.ethUsd).toEqual(4000)
   })
 
+  it('stores no hour before its first', async () => {
+    const { indexer, hourly } = createIndexer()
+    const before = firstHour - 5 * UnixTime.HOUR
+
+    expect(await indexer.update(before, before + UnixTime.HOUR)).toEqual(
+      before + UnixTime.HOUR,
+    )
+    expect(hourly.upsertMany).not.toHaveBeenCalled()
+
+    await indexer.update(before, firstHour)
+    expect(hourly.upsertMany.calls[0]?.args[0].map((r) => r.timestamp)).toEqual(
+      [firstHour],
+    )
+  })
+
   function createIndexer() {
     const hourly = mockObject<Database['gasFeesTipHourly']>({
       upsertMany: mockFn().resolvesTo(0),

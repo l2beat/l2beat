@@ -21,6 +21,17 @@ const FeesRow = v.object({
 })
 export type FeesRow = v.infer<typeof FeesRow>
 
+/** A chain's day without fee rows: no transaction paid a fee on it */
+const NO_FEES: Omit<FeesRow, 'blockchain' | 'day'> = {
+  tx_count: 0,
+  total_fee: 0,
+  total_fee_usd: 0,
+  l1_fee: 0,
+  blob_fee: 0,
+  median_fee_usd: null,
+  gas_used: 0,
+}
+
 const BlocksRow = v.object({
   blockchain: v.string(),
   day: v.string(),
@@ -82,9 +93,9 @@ export function joinFeesDays(
     const key = (chain: GasFeesChain) =>
       `${chain.dune}:${UnixTime.toYYYYMMDD(day)}`
     const records = chains.flatMap((chain) => {
-      const fee = feesByKey.get(key(chain))
+      const fee = feesByKey.get(key(chain)) ?? NO_FEES
       const block = blocksByKey.get(key(chain))
-      const record = fee && block && toWholeDay(chain, fee, block)
+      const record = block && toWholeDay(chain, fee, block)
       return record ? [{ ...record, timestamp: day }] : []
     })
     days.push({ day, records })
@@ -109,12 +120,46 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
     // YYYY-MM-DD sorts as dates do
     rows.sort((a, b) => a.day.localeCompare(b.day))
     rows.forEach((row, i) => {
+      const later = rows[i + 1]
       days.set(`${row.blockchain}:${row.day}`, {
         row,
         earlier: rows[i - 1],
-        later: rows[i + 1],
+        later,
       })
+      // The chain made no blocks on the days up to the next row, or Dune lacks
+      // them. Each is checked as a day without blocks, which only a halt passes
+      for (const day of daysBetween(row.day, later?.day)) {
+        days.set(`${row.blockchain}:${day}`, {
+          row: {
+            blockchain: row.blockchain,
+            day,
+            base_fee: 0,
+            gas_used: 0,
+            tx_blocks: 0,
+            blocks: 0,
+            first_block: row.last_block + 1,
+            last_block: row.last_block,
+          },
+          earlier: row,
+          later,
+        })
+      }
     })
+  }
+  return days
+}
+
+/** The days after `from` and before `to`, both as YYYY-MM-DD */
+function daysBetween(from: string, to: string | undefined): string[] {
+  if (to === undefined) return []
+  const start = (day: string) => UnixTime.fromDate(new Date(`${day}T00:00:00Z`))
+  const days: string[] = []
+  for (
+    let day = start(from) + UnixTime.DAY;
+    day < start(to);
+    day += UnixTime.DAY
+  ) {
+    days.push(UnixTime.toYYYYMMDD(UnixTime(day)))
   }
   return days
 }
@@ -134,12 +179,14 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
  *   19 June 2026 with 7 of 245,226 transactions missing.
  *
  * A hole at a day's edge keeps both days out: which of them lost the blocks can't be told.
+ * A day the chain made no blocks on passes as a day without transactions, and
+ * is stored as one: left out, it would be read again for a month.
  * On the year checked, the block checks held on every day of all 12 chains, and
  * the gas of 249 of the 252 chain-days sampled matched.
  */
 function toWholeDay(
   chain: GasFeesChain,
-  fee: FeesRow,
+  fee: typeof NO_FEES,
   { row, earlier, later }: BlocksDay,
 ): Omit<GasFeesDailyRecord, 'timestamp'> | undefined {
   if (row.gas_used === null || !later) return undefined

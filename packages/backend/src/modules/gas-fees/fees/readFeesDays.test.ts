@@ -118,7 +118,7 @@ describe(joinFeesDays.name, () => {
       expect(stored(gap)).toEqual([0, 0, 0])
     })
 
-    it('stores the days around a halt, when the chain made no blocks', () => {
+    it('stores a day the chain made no blocks on as one without transactions', () => {
       // No blocks on 2 Oct, and 3 Oct carries on from 1 Oct
       const halt = whole
         .filter((row) => row.day !== '2026-10-02')
@@ -129,8 +129,27 @@ describe(joinFeesDays.name, () => {
               ? { ...row, first_block: 200, last_block: 299 }
               : row,
         )
+      const days = joinFeesDays(
+        [zksync],
+        day,
+        UnixTime(day + 2 * UnixTime.DAY),
+        ['01', '03', '04'].map((d) => fees('zksync', `2026-10-${d}`)),
+        halt,
+      )
 
-      expect(stored(halt)).toEqual([1, 0, 1])
+      expect(days.map((d) => d.records.length)).toEqual([1, 1, 1])
+      expect(days[1]?.records[0]).toEqual({
+        timestamp: UnixTime(day + UnixTime.DAY),
+        chain: 'zksync2',
+        txCount: 0,
+        totalFeeNative: 0,
+        totalFeeUsd: 0,
+        l1FeeNative: 0,
+        blobFeeNative: 0,
+        baseFeeNative: 0,
+        gasUsed: 0,
+        medianFeeUsd: null,
+      })
     })
 
     it('checks the first day of a read against the day before it', () => {
@@ -234,15 +253,10 @@ describe('joinFeesDays on what Dune had', () => {
     ).toEqual([
       ['taiko'],
       ['taiko'],
-      // The 22nd is short of fee rows, and the chain made no blocks from the 23rd to the 29th
+      // The 22nd is short of fee rows
       [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
+      // No blocks from the 23rd to the 29th: days without transactions
+      ...Array.from({ length: 7 }, () => ['taiko']),
       // The day it resumed joins the 22nd across the halt
       ['taiko'],
     ])

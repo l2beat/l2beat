@@ -55,8 +55,10 @@ export class GasFeesTipIndexer extends ManagedChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const hours: UnixTime[] = []
+    // Never an hour before the first: with a first hour ahead of now, the clock asks for earlier ones
+    const start = UnixTime(Math.max(from, this.$.firstHour))
     for (
-      let hour = UnixTime.toEndOf(UnixTime(from), 'hour');
+      let hour = UnixTime.toEndOf(start, 'hour');
       hour <= to && hours.length < HOURS_PER_UPDATE;
       hour = UnixTime(hour + UnixTime.HOUR)
     ) {
