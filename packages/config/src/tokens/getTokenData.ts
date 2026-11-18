@@ -176,6 +176,7 @@ export async function getTokenData(
         chainConfig,
         token.address,
         token.symbol,
+        supply,
         token.deploymentTimestamp,
       )
 
@@ -277,6 +278,7 @@ async function fetchTokenInfo(
   chain: ChainConfig,
   address: EthereumAddress,
   symbol: string,
+  supply: GeneratedToken['supply'],
   deploymentTimestampOverride?: UnixTime,
 ) {
   const defaultRpcUrl = chain.apis.find((api) => api.type === 'rpc')?.url
@@ -298,6 +300,7 @@ async function fetchTokenInfo(
     address,
     symbol,
     coingeckoId,
+    supply,
     deploymentTimestampOverride,
   )
 

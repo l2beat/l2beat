@@ -1,4 +1,4 @@
-import type { CoingeckoClient } from '@l2beat/shared'
+import type { CoingeckoClient, CoinMarketChartRangeData } from '@l2beat/shared'
 import {
   assert,
   type CoingeckoId,
@@ -7,8 +7,14 @@ import {
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
 import { MIN_TIMESTAMP_FOR_TVL } from '../../projects/ethereum/ethereum'
-import { getContractCreationTimestamp } from './getContractCreationTimestamp'
+import type { GeneratedToken } from '../types'
+import {
+  findCreationBlock,
+  findFirstBlockWithTotalSupply,
+} from './findFirstBlock'
 import type { ScriptLogger } from './ScriptLogger'
+
+type Supply = GeneratedToken['supply']
 
 export async function getTokenInfo(
   logger: ScriptLogger,
@@ -17,6 +23,7 @@ export async function getTokenInfo(
   address: EthereumAddress,
   symbolFromConfig: string,
   coingeckoId: CoingeckoId,
+  supply: Supply,
   deploymentTimestampOverride?: UnixTime,
 ) {
   const [
@@ -35,9 +42,10 @@ export async function getTokenInfo(
       logger,
       provider,
       address,
+      supply,
       deploymentTimestampOverride,
     ),
-    getCoingeckoListingTimestamp(logger, coingeckoClient, coingeckoId),
+    getCoingeckoListingTimestamp(logger, coingeckoClient, coingeckoId, supply),
   ])
 
   logger.assert(
@@ -138,6 +146,7 @@ async function getDeploymentTimestamp(
   logger: ScriptLogger,
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
+  supply: Supply,
   override?: UnixTime,
 ) {
   if (override) {
@@ -146,42 +155,79 @@ async function getDeploymentTimestamp(
 
   logger.fetching('sinceTimestamp (this will take a while)')
 
-  const contractCreationTimestamp = await getContractCreationTimestamp(
-    provider,
-    address,
+  const latestBlock = await provider.getBlockNumber()
+  const creationBlock = await findCreationBlock(provider, address, latestBlock)
+  const startBlock =
+    supply === 'totalSupply'
+      ? await findFirstBlockWithTotalSupply(
+          provider,
+          address,
+          creationBlock,
+          latestBlock,
+        )
+      : creationBlock
+  logger.assert(
+    startBlock !== undefined,
+    'totalSupply() reverts at the latest block, provide manual override in tokens.jsonc',
   )
+  if (startBlock !== creationBlock) {
+    logger.notify(
+      'totalSupply() first readable',
+      `at block ${startBlock}, not at creation block ${creationBlock}`,
+    )
+  }
 
+  const timestamp = UnixTime((await provider.getBlock(startBlock)).timestamp)
   assert(
-    contractCreationTimestamp > MIN_TIMESTAMP_FOR_TVL,
+    timestamp > MIN_TIMESTAMP_FOR_TVL,
     'Deployment timestamp looks odd, provide manual override in tokens.jsonc',
   )
 
-  return contractCreationTimestamp
+  return timestamp
 }
 
 async function getCoingeckoListingTimestamp(
   logger: ScriptLogger,
   coingeckoClient: CoingeckoClient,
   coingeckoId: CoingeckoId,
+  supply: Supply,
 ) {
   logger.fetching('coingeckoListingTimestamp')
 
-  const coingeckoPriceHistoryData =
-    await coingeckoClient.getCoinMarketChartRange(
-      coingeckoId,
-      'usd',
-      MIN_TIMESTAMP_FOR_TVL,
-      UnixTime.now(),
-    )
+  const history = await coingeckoClient.getCoinMarketChartRange(
+    coingeckoId,
+    'usd',
+    MIN_TIMESTAMP_FOR_TVL,
+    UnixTime.now(),
+  )
 
+  const timestamp = getFirstUsableCoingeckoTimestamp(history, supply)
   logger.assert(
-    coingeckoPriceHistoryData.prices.length >= 1,
-    `No price history found for token: ${coingeckoId.toString()}`,
+    timestamp !== undefined,
+    supply === 'circulatingSupply'
+      ? `No market cap history found for token: ${coingeckoId.toString()}`
+      : `No price history found for token: ${coingeckoId.toString()}`,
   )
 
-  const firstCoingeckoPriceTimestamp = UnixTime(
-    Math.floor(coingeckoPriceHistoryData.prices[0].date.getTime() / 1000),
-  )
+  return timestamp
+}
 
-  return firstCoingeckoPriceTimestamp
+// CoinGecko can list a price days before a real market cap (-1 or 0 until
+// then). A circulating supply is market cap / price, so it starts only once
+// both are real.
+export function getFirstUsableCoingeckoTimestamp(
+  history: CoinMarketChartRangeData,
+  supply: Supply,
+): UnixTime | undefined {
+  const firstUsable =
+    supply === 'circulatingSupply'
+      ? history.marketCaps.find(
+          (marketCap, i) =>
+            marketCap.value > 0 && (history.prices[i]?.value ?? 0) > 0,
+        )
+      : history.prices[0]
+
+  return firstUsable
+    ? UnixTime(Math.floor(firstUsable.date.getTime() / 1000))
+    : undefined
 }
