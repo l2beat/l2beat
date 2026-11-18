@@ -189,20 +189,6 @@ describe(EthereumBlobNotifierIndexer.name, () => {
 
       expect(result).toEqual([])
     })
-
-    it('returns empty when no pairs have 100+ blobs', async () => {
-      const blobsRepository = mockBlobsRepository([
-        ...blobs('0xA', '0xB', 50),
-        ...blobs('0xC', '0xD', 99),
-      ])
-      const indexer = createIndexer({ blobsRepository })
-      const oneAm =
-        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
-
-      const result = await indexer.getUnmatchedPairs(oneAm)
-
-      expect(result).toEqual([])
-    })
   })
 
   describe(

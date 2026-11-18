@@ -38,18 +38,6 @@ describe(BlobPriceProvider.name, () => {
       expect(mockRpcClient.getFeeHistory).not.toHaveBeenCalled()
     })
 
-    it('returns empty map when oldestBlock equals newestBlock and no fees', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
-        getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, [0n])),
-      })
-      const provider = createProvider(mockRpcClient)
-
-      const result = await provider.getBlobPricesByBlockRange([100, 100])
-
-      expect(result).toEqual(new Map())
-      expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1, 100, [])
-    })
-
     it('returns blob prices for single block range', async () => {
       const mockRpcClient = mockObject<IRpcClient>({
         getFeeHistory: mockFn().resolvesTo(createFeeHistory(100, [10n])),

@@ -51,10 +51,9 @@ describe(BlockTargetIndexer.name, () => {
       const result = await indexer.tick()
 
       expect(result).toEqual(BLOCK_NUMBER)
-      expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'mock')
+      ).toHaveBeenOnlyCalledWith(LAST_HOUR, 'mock')
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

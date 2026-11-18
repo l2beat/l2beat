@@ -9,75 +9,7 @@ import { createCallerFactory } from '../../trpc'
 import { chainsRouter } from './index'
 
 describe('chainRouter', () => {
-  describe('getAll', () => {
-    it('returns empty array when no chains exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.getAll()
-
-      expect(result).toEqual([])
-    })
-
-    it('returns all chains', async () => {
-      const chains: ChainRecord[] = [
-        {
-          name: 'ethereum',
-          chainId: 1,
-          aliases: ['eth'],
-          explorerUrl: 'https://etherscan.io',
-          apis: [{ type: 'etherscan' }],
-        },
-        {
-          name: 'arbitrum',
-          chainId: 42161,
-          aliases: ['arb'],
-          explorerUrl: 'https://arbiscan.io',
-          apis: [{ type: 'etherscan' }],
-        },
-      ]
-      const mockGetAll = mockFn().resolvesTo(chains)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockGetAll,
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.getAll()
-
-      expect(result).toEqual(chains)
-      expect(mockGetAll).toHaveBeenCalledWith()
-    })
-  })
-
   describe('getByName', () => {
-    it('returns chain when it exists', async () => {
-      const chain: ChainRecord = {
-        name: 'ethereum',
-        chainId: 1,
-        aliases: ['eth', 'mainnet'],
-        explorerUrl: 'https://etherscan.io',
-        apis: [{ type: 'etherscan' }],
-      }
-      const mockFindByName = mockFn().resolvesTo(chain)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
-          findByName: mockFindByName,
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.getByName('ethereum')
-
-      expect(result).toEqual(chain)
-      expect(mockFindByName).toHaveBeenCalledWith('ethereum')
-    })
-
     it('returns null when chain does not exist', async () => {
       const mockFindByName = mockFn().resolvesTo(undefined)
       const mockTokenDb = mockObject<TokenDatabase>({

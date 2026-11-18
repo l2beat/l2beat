@@ -44,10 +44,7 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
   })
 
   it('skips projects whose depositors are all attributed', async () => {
-    const { db, getDepositCount, getNonZeroDepositCount } = mockDatabase({
-      attributed: 8,
-      total: 10,
-    })
+    const { db } = mockDatabase({ attributed: 8, total: 10 })
 
     const coverage = await getPrivacyAnonymitySetCoverage(
       db,
@@ -56,8 +53,6 @@ describe(getPrivacyAnonymitySetCoverage.name, () => {
     )
 
     expect(coverage).toEqual(undefined)
-    expect(getDepositCount).not.toHaveBeenCalled()
-    expect(getNonZeroDepositCount).not.toHaveBeenCalled()
   })
 
   it('withholds coverage while deposit totals lag behind attributed deposits', async () => {

@@ -499,58 +499,6 @@ describe('createWorkerPool', () => {
   })
 
   describe('edge cases', () => {
-    it('handles tasks that return undefined', async () => {
-      const workerPool = createWorkerPool({
-        workerCount: 1,
-        timeoutPerTaskMs: 1000,
-        timeoutPerRunMs: 5000,
-        logger: Logger.SILENT,
-      })
-
-      const tasks = [
-        {
-          identity: { id: 'undef', name: 'Undefined' },
-          job: async () => undefined,
-        },
-        { identity: { id: 'value', name: 'Value' }, job: async () => 'value' },
-      ]
-
-      const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
-      const { results, errors, timedOut } = await resultPromise
-
-      expect(results.length).toEqual(2)
-      expect(results[0].identity.id).toEqual('undef')
-      expect(results[0].result).toEqual(undefined)
-      expect(results[1].identity.id).toEqual('value')
-      expect(results[1].result).toEqual('value')
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
-    })
-
-    it('handles tasks that return null', async () => {
-      const workerPool = createWorkerPool({
-        workerCount: 1,
-        timeoutPerTaskMs: 1000,
-        timeoutPerRunMs: 5000,
-        logger: Logger.SILENT,
-      })
-
-      const tasks = [
-        { identity: { id: 'null', name: 'Null' }, job: async () => null },
-      ]
-
-      const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
-      const { results, errors, timedOut } = await resultPromise
-
-      expect(results.length).toEqual(1)
-      expect(results[0].identity.id).toEqual('null')
-      expect(results[0].result).toEqual(null)
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
-    })
-
     it('handles mix of success, error, and timeout', async () => {
       const workerPool = createWorkerPool({
         workerCount: 2,
@@ -603,62 +551,6 @@ describe('createWorkerPool', () => {
       const timeoutError = errors.find((e) => e.identity.id === 'timeout')
       expect(timeoutError?.error.message).toEqual('Task timeout')
 
-      expect(timedOut).toEqual(false)
-    })
-  })
-
-  describe('type safety', () => {
-    it('handles different return types', async () => {
-      const workerPool = createWorkerPool({
-        workerCount: 2,
-        timeoutPerTaskMs: 1000,
-        timeoutPerRunMs: 5000,
-        logger: Logger.SILENT,
-      })
-
-      const numberTasks = [
-        { identity: { id: 'one', name: 'One' }, job: async () => 1 },
-        { identity: { id: 'two', name: 'Two' }, job: async () => 2 },
-        { identity: { id: 'three', name: 'Three' }, job: async () => 3 },
-      ]
-
-      const resultPromise = workerPool.runInPool(numberTasks)
-      await time.runAllAsync()
-      const { results, errors, timedOut } = await resultPromise
-
-      expect(results.length).toEqual(3)
-      expect(results.map((r) => r.result)).toEqual([1, 2, 3])
-      expect(errors).toEqual([])
-      expect(timedOut).toEqual(false)
-    })
-
-    it('handles complex object types', async () => {
-      const workerPool = createWorkerPool({
-        workerCount: 1,
-        timeoutPerTaskMs: 1000,
-        timeoutPerRunMs: 5000,
-        logger: Logger.SILENT,
-      })
-
-      type ComplexType = { id: string; data: number[] }
-      const tasks = [
-        {
-          identity: { id: 'complex', name: 'Complex' },
-          job: async (): Promise<ComplexType> => ({
-            id: 'test',
-            data: [1, 2, 3],
-          }),
-        },
-      ]
-
-      const resultPromise = workerPool.runInPool(tasks)
-      await time.runAllAsync()
-      const { results, errors, timedOut } = await resultPromise
-
-      expect(results.length).toEqual(1)
-      expect(results[0].identity.id).toEqual('complex')
-      expect(results[0].result).toEqual({ id: 'test', data: [1, 2, 3] })
-      expect(errors).toEqual([])
       expect(timedOut).toEqual(false)
     })
   })

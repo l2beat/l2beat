@@ -39,7 +39,7 @@ describe(SimpleMethodHandler.name, () => {
 
     const provider = mockObject<IProvider>({
       async callMethod() {
-        throw new Error('Execution reverted')
+        return undefined
       },
     })
     const address = ChainSpecificAddress.random()

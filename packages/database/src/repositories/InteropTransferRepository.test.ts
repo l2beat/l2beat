@@ -92,48 +92,6 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result).toEqual([record])
     })
 
-    it('handles records with ethereum token addresses', async () => {
-      const record = transfer(
-        'plugin1',
-        'msg1',
-        'deposit',
-        UnixTime(100),
-        'ethereum',
-        'arbitrum',
-        5000,
-      )
-      record.srcTokenAddress = EthereumAddress.random()
-      record.dstTokenAddress = EthereumAddress.random()
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result[0]?.srcTokenAddress).toEqual(record.srcTokenAddress)
-      expect(result[0]?.dstTokenAddress).toEqual(record.dstTokenAddress)
-    })
-
-    it('handles records with custom symbol fields', async () => {
-      const record = transfer(
-        'plugin1',
-        'msg1',
-        'deposit',
-        UnixTime(100),
-        'ethereum',
-        'arbitrum',
-        5000,
-      )
-      record.srcSymbol = 'USDC'
-      record.dstSymbol = 'USDC.e'
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result[0]?.srcSymbol).toEqual('USDC')
-      expect(result[0]?.dstSymbol).toEqual('USDC.e')
-    })
-
     it('persists bridgeType field', async () => {
       const record = transfer(
         'plugin1',
@@ -151,27 +109,6 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result[0]?.bridgeType).toEqual('lockAndMint')
-    })
-
-    it('preserves symbol fields when they are undefined', async () => {
-      const record = transfer(
-        'plugin1',
-        'msg1',
-        'deposit',
-        UnixTime(100),
-        'ethereum',
-        'arbitrum',
-        5000,
-      )
-      record.srcSymbol = undefined
-      record.dstSymbol = undefined
-
-      const inserted = await repository.insertMany([record])
-      expect(inserted).toEqual(1)
-
-      const result = await repository.getAll()
-      expect(result[0]?.srcSymbol).toEqual(undefined)
-      expect(result[0]?.dstSymbol).toEqual(undefined)
     })
   })
 

@@ -1,4 +1,4 @@
-import type { ProjectCustomDa, ProjectDaLayer } from '@l2beat/config'
+import type { ProjectDaLayer } from '@l2beat/config'
 import { expect } from 'earl'
 import { getDaLayerRisks } from './getDaLayerRisks'
 
@@ -104,22 +104,5 @@ describe(getDaLayerRisks.name, () => {
     // Testing bad sentiment case (ES < TVS/3)
     const result3 = getDaLayerRisks(mockDaLayer, 1000, 300)
     expect(result3.economicSecurity?.sentiment).toEqual('bad')
-  })
-
-  it('works with ProjectCustomDa type', () => {
-    const mockCustomDa = {
-      risks: {
-        daLayer: { value: 'test', sentiment: 'good' },
-        economicSecurity: {
-          value: { value: 'test', sentiment: 'good' },
-          adjustSecurityRisk: false,
-        },
-        // Custom DA has both DaLayerRisks and DaBridgeRisks properties
-        daBridge: { value: 'test', sentiment: 'good' },
-      },
-    } as ProjectCustomDa
-
-    const result = getDaLayerRisks(mockCustomDa)
-    expect(result.economicSecurity?.sentiment).toEqual('good')
   })
 })

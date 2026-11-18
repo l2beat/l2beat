@@ -46,15 +46,14 @@ describe(TvsCleaner.name, () => {
       })
 
       const to = timestamp('2026-04-07T00:00:00Z')
-      const adjustedTo = UnixTime.toStartOf(to, 'day')
-      const syncOptimizer = testSyncOptimizer()
+      // Hourly records are kept for 14 days, six-hourly ones for 100 days
       const hourlyRange = {
         from: undefined,
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
+        to: timestamp('2026-03-24T00:00:00Z'),
       }
       const sixHourlyRange = {
         from: undefined,
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
+        to: timestamp('2025-12-28T00:00:00Z'),
       }
 
       const result = await indexer.update(0, to)
@@ -84,17 +83,19 @@ describe(TvsCleaner.name, () => {
         safeHeight = to
       }
 
-      const syncOptimizer = testSyncOptimizer()
-      const days = ['2026-04-10', '2026-04-11', '2026-04-12', '2026-04-13']
-      const midnights = days.map((day) => timestamp(`${day}T00:00:00Z`))
-      const hourlyRanges = midnights.slice(1).map((midnight, i) => ({
-        from: syncOptimizer.getHourlyCutOffWithGracePeriod(midnights[i]),
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(midnight),
-      }))
-      const sixHourlyRanges = midnights.slice(1).map((midnight, i) => ({
-        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(midnights[i]),
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(midnight),
-      }))
+      // Midnights of 04-11, 04-12 and 04-13 each move both cutoffs by a day
+      const hourlyRanges = consecutiveRanges([
+        '2026-03-27',
+        '2026-03-28',
+        '2026-03-29',
+        '2026-03-30',
+      ])
+      const sixHourlyRanges = consecutiveRanges([
+        '2025-12-31',
+        '2026-01-01',
+        '2026-01-02',
+        '2026-01-03',
+      ])
       for (const repository of Object.values(repositories)) {
         expectDeleteCallsInOrder(repository, hourlyRanges, sixHourlyRanges)
       }
@@ -126,16 +127,14 @@ describe(TvsCleaner.name, () => {
 
       const from = timestamp('2026-04-10T15:00:00Z') + 1
       const to = timestamp('2026-04-13T10:00:00Z')
-      const cleanedMidnight = timestamp('2026-04-10T00:00:00Z')
-      const lastMidnight = timestamp('2026-04-13T00:00:00Z')
-      const syncOptimizer = testSyncOptimizer()
+      // From the cutoffs of the cleaned 04-10 midnight to those of 04-13
       const hourlyRange = {
-        from: syncOptimizer.getHourlyCutOffWithGracePeriod(cleanedMidnight),
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(lastMidnight),
+        from: timestamp('2026-03-27T00:00:00Z'),
+        to: timestamp('2026-03-30T00:00:00Z'),
       }
       const sixHourlyRange = {
-        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(cleanedMidnight),
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(lastMidnight),
+        from: timestamp('2025-12-31T00:00:00Z'),
+        to: timestamp('2026-01-03T00:00:00Z'),
       }
 
       const result = await indexer.update(from, to)
@@ -197,6 +196,13 @@ async function createInitializedIndexer(
 
 function timestamp(value: string): UnixTime {
   return UnixTime.fromDate(new Date(value))
+}
+
+function consecutiveRanges(days: string[]) {
+  return days.slice(1).map((day, i) => ({
+    from: timestamp(`${days[i]}T00:00:00Z`),
+    to: timestamp(`${day}T00:00:00Z`),
+  }))
 }
 
 function testSyncOptimizer(): SyncOptimizer {

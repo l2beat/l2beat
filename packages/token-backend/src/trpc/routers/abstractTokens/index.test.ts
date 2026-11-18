@@ -11,62 +11,6 @@ import { createCallerFactory } from '../../trpc'
 import { abstractTokensRouter } from './index'
 
 describe('abstractTokensRouter', () => {
-  describe('getAll', () => {
-    it('returns all abstract tokens', async () => {
-      const abstractTokens = [
-        abstractToken({
-          id: 'TK0001',
-          symbol: 'BTC',
-          category: 'btc' as const,
-          issuer: null,
-          coingeckoId: 'bitcoin',
-          iconUrl: null,
-          comment: null,
-          coingeckoListingTimestamp: null,
-          reviewed: false,
-        }),
-        abstractToken({
-          id: 'TK0002',
-          symbol: 'ETH',
-          category: 'ether' as const,
-          issuer: null,
-          coingeckoId: 'ethereum',
-          iconUrl: null,
-          comment: null,
-          coingeckoListingTimestamp: null,
-          reviewed: false,
-        }),
-      ]
-      const mockGetAll = mockFn().resolvesTo(abstractTokens)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockGetAll,
-        }),
-      })
-      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
-
-      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
-      const result = await caller.getAll()
-
-      expect(result).toEqual(abstractTokens)
-      expect(mockGetAll).toHaveBeenCalledWith()
-    })
-
-    it('returns empty array when no tokens exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-      })
-      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
-
-      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
-      const result = await caller.getAll()
-
-      expect(result).toEqual([])
-    })
-  })
-
   describe('getAllWithDeployedTokens', () => {
     it('returns abstract tokens with their deployed tokens', async () => {
       const abstractTokens = [

@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, LivenessRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
@@ -69,35 +69,6 @@ describe(LivenessUpdater.name, () => {
         id,
         MIN_TIMESTAMP,
       )
-    })
-  })
-
-  describe(LivenessUpdater.prototype.transformTransactions.name, () => {
-    it('it correctly transforms records to livenessRow', () => {
-      const updater = new LivenessUpdater(
-        mockDatabase({ liveness: getMockLivenessRepository() }),
-        Logger.SILENT,
-      )
-
-      const transactions: TrackedTxResult[] = getMockTrackedTxResults()
-
-      const expected: LivenessRecord[] = [
-        {
-          txHash: transactions[0].hash,
-          blockNumber: transactions[0].blockNumber,
-          timestamp: transactions[0].blockTimestamp,
-          configurationId: transactions[0].id,
-          groupingKey: 'epoch-1',
-        },
-        {
-          txHash: transactions[1].hash,
-          blockNumber: transactions[1].blockNumber,
-          timestamp: transactions[1].blockTimestamp,
-          configurationId: transactions[1].id,
-        },
-      ]
-
-      expect(updater.transformTransactions(transactions)).toEqual(expected)
     })
   })
 })

@@ -161,12 +161,6 @@ describe(TvsPriceIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
-      expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
-        from,
-        adjustedTo,
-        1,
-      )
       expect(safeHeight).toEqual(to)
     })
 

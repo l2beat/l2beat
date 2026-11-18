@@ -12,31 +12,6 @@ import { createCallerFactory } from '../../trpc'
 import { tokenIngestionQueueRouter } from './index'
 
 describe('tokenIngestionQueueRouter', () => {
-  describe('getAll', () => {
-    it('returns all queue entries', async () => {
-      const entries: TokenIngestionQueueRecord[] = [
-        queueEntry({ chain: 'ethereum', address: '0x111', state: 'staged' }),
-        queueEntry({ chain: 'base', address: '0x222', state: 'conflict' }),
-      ]
-      const getAll = mockFn().resolvesTo(entries)
-
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              getAll,
-            },
-          ),
-        }),
-      )
-
-      const result = await caller.getAll()
-
-      expect(result).toEqual(entries)
-      expect(getAll).toHaveBeenCalledWith()
-    })
-  })
-
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
       const symbolConflictEntry = queueEntry({

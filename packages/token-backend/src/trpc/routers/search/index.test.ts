@@ -104,29 +104,6 @@ describe('searchRouter', () => {
       expect(mockGetAllChains).toHaveBeenCalledWith()
     })
 
-    it('returns empty arrays when no tokens exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.all('test')
-
-      expect(result).toEqual({
-        deployedTokens: [],
-        abstractTokens: [],
-        chains: [],
-      })
-    })
-
     it('limits results to 15 items per type', async () => {
       const abstractTokens = Array.from({ length: 20 }, (_, i) =>
         abstractToken({

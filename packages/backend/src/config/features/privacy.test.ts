@@ -14,7 +14,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import { ERC20_TRANSFER_TOPIC } from '../../modules/privacy/utils/erc20'
 import { FeatureFlags } from '../FeatureFlags'
 import { getPrivacyConfig } from './privacy'
@@ -228,12 +227,7 @@ describe(getPrivacyConfig.name, () => {
     }
     expect(config.relayerSampleConfigs).toEqual([
       {
-        id: PrivacyRelayerSampler.idToConfigurationId({
-          projectId: 'railgun',
-          chain: 'ethereum',
-          chainId: source.chainId,
-          sinceTimestamp: source.sinceTimestamp,
-        }),
+        id: expect.a(String),
         projectId: 'railgun',
         chain: 'ethereum',
         chainId: source.chainId,

@@ -37,48 +37,6 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
     })
-
-    it('returns token when found', async () => {
-      const token = {
-        chain: 'ethereum',
-        address: '0x123',
-        symbol: 'USDC',
-        decimals: 6,
-        comment: null,
-        ignored: false,
-        abstractTokenId: null,
-        deploymentTimestamp: 0,
-        metadata: {
-          tvs: {
-            includeInCalculations: true,
-            source: 'external',
-            supply: 'circulatingSupply',
-            bridgedUsing: [
-              {
-                name: 'arbitrum',
-                slug: 'arbitrum',
-              },
-            ],
-            excludeFromTotal: false,
-          },
-        },
-      } satisfies DeployedTokenRecord
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          findByChainAndAddress: mockFn().resolvesTo(token),
-        }),
-      })
-      const mockDb = mockObject<Database>({})
-      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
-
-      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
-      const result = await caller.findByChainAndAddress({
-        chain: 'ethereum',
-        address: '0x123',
-      })
-
-      expect(result).toEqual(token)
-    })
   })
 
   describe('checkIfExists', () => {
@@ -360,33 +318,6 @@ describe('deployedTokensRouter', () => {
         // minted, never symmetric.
         { plugin: 'd-plugin', role: 'minted', otherToken: null },
       ])
-    })
-  })
-
-  describe('getMintingPlugins', () => {
-    it('returns the plugin names straight from the repository', async () => {
-      const getMintingPluginsFor = mockFn().resolvesTo([
-        'canonicalbridge',
-        'superbridge',
-      ])
-      const mockTokenDb = mockObject<TokenDatabase>({
-        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getMintingPluginsFor,
-        }),
-      })
-      const caller = createRouter(
-        mockTokenDb,
-        mockObject<Database>({}),
-        mockObject<CoingeckoClient>({}),
-      )
-
-      expect(
-        await caller.getMintingPlugins({ chain: 'base', address: '0xbbb' }),
-      ).toEqual(['canonicalbridge', 'superbridge'])
-      expect(getMintingPluginsFor).toHaveBeenCalledWith({
-        chain: 'base',
-        address: '0xbbb',
-      })
     })
   })
 

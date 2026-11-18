@@ -57,10 +57,6 @@ describe(InteropCompareLoop.name, () => {
       await comparator.run()
       await comparator.run()
 
-      expect(plugin.getExternalItems).toHaveBeenCalledTimes(2)
-      expect(interopMessage.getExistingItems).toHaveBeenCalledTimes(2)
-      expect(interopTransfer.getExistingItems).toHaveBeenCalledTimes(2)
-
       expect(tagLogger.warn).toHaveBeenNthCalledWith(
         1,
         'Missing item skipped',

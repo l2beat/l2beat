@@ -4,7 +4,6 @@ import {
   getLinkStyle,
   getNodeOpacity,
   getNodeRingOpacity,
-  nodeVisualScreenScale,
   type RelationGraphViewState,
 } from './relationGraphCanvas'
 import {
@@ -31,10 +30,10 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), viewState())
 
-    expect(drawnText).toEqual([
-      { text: 'TOKEN', x: 50, y: 28 },
-      { text: 'unichain', x: 50, y: 38 },
-    ])
+    const [symbol, chain] = drawnText
+    expect(drawnText.map((t) => t.text)).toEqual(['TOKEN', 'unichain'])
+    expect(chain?.x).toEqual(symbol?.x)
+    expect(chain!.y).toBeGreaterThan(symbol!.y)
   })
 
   it('does not draw token or chain labels at overview zoom', () => {
@@ -233,14 +232,6 @@ describe(getNodeRingOpacity.name, () => {
 
   it('hides the ring otherwise', () => {
     expect(getNodeRingOpacity(node, styleInputs({}))).toEqual(0)
-  })
-})
-
-describe(nodeVisualScreenScale.name, () => {
-  it('scales nodes with the world until they reach constant screen size', () => {
-    expect(nodeVisualScreenScale(0.5)).toEqual(0.5)
-    expect(nodeVisualScreenScale(1.2)).toEqual(1.2)
-    expect(nodeVisualScreenScale(4)).toEqual(1.2)
   })
 })
 

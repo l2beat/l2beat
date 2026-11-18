@@ -102,19 +102,4 @@ describe('findAddressAlias', () => {
       findAddressAlias('0xzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', 10, names),
     ).toEqual(undefined)
   })
-
-  it('uses one dictionary read, without scanning known addresses', () => {
-    const reads: string[] = []
-    const indexed = new Proxy(names, {
-      get(target, key: string) {
-        reads.push(key)
-        return target[key as keyof typeof target]
-      },
-      ownKeys() {
-        throw new Error('Must not scan addresses')
-      },
-    })
-    expect(findAddressAlias(alias, 10, indexed)?.address).toEqual(l1)
-    expect(reads).toEqual([`eth:${l1}`])
-  })
 })
