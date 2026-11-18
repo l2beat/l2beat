@@ -65,7 +65,6 @@ export const zcashNearIntents: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'Vizor for Linux',
-      icon: 'vizor',
       url: 'https://github.com/chainapsis/vizor-wallet/releases/tag/release/v0.0.64',
       since: '2026-11-18',
       delivery: {
@@ -84,7 +83,7 @@ export const zcashNearIntents: BaseProject = {
       checkedApps: [
         {
           name: 'Zodl',
-          icon: 'zcash-near-intents',
+          icon: 'zodl',
           finding:
             "Each sync sends the account's transparent addresses to its lightwalletd, Zodl's own by default, which can tie the payout and exit to the account.",
           fix: 'Fetch account records through private information retrieval, as Vizor does.',
