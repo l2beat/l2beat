@@ -221,6 +221,9 @@ export const tacitPay: BaseProject = {
       },
     ],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
@@ -260,9 +263,6 @@ export const tacitPay: BaseProject = {
     ],
     adversaries: tacitPayAdversaries,
     riskSummary: readProjectMarkdown('tacit-pay', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),
-    },
   },
   crops: {
     censorshipResistance: {

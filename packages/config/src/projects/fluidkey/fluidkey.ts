@@ -45,6 +45,9 @@ export const fluidkey: BaseProject = {
     },
     badges: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
     referenceApp: {
@@ -102,9 +105,6 @@ export const fluidkey: BaseProject = {
       },
     ],
     riskSummary: readProjectMarkdown('fluidkey', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),
-    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

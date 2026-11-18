@@ -31,6 +31,7 @@ const schema = {
   display: 'TEXT',
   colors: 'TEXT',
   milestones: 'TEXT',
+  upgradesAndGovernance: 'TEXT',
   chainConfig: 'TEXT',
   escrows: 'TEXT',
 

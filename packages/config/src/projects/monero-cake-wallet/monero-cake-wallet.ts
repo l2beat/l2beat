@@ -48,6 +48,9 @@ export const moneroCakeWallet: BaseProject = {
     },
     badges: [],
   },
+  upgradesAndGovernance: {
+    content: readProjectMarkdown('monero-cake-wallet', 'upgradesAndGovernance'),
+  },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
@@ -147,11 +150,5 @@ export const moneroCakeWallet: BaseProject = {
     ],
     adversaries: moneroCakeWalletAdversaries,
     riskSummary: readProjectMarkdown('monero-cake-wallet', 'riskSummary'),
-    upgradesAndGovernance: {
-      content: readProjectMarkdown(
-        'monero-cake-wallet',
-        'upgradesAndGovernance',
-      ),
-    },
   },
 }
