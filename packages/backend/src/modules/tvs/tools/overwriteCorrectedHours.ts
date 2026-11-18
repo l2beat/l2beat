@@ -22,10 +22,33 @@ import type { SyncOptimizer } from './SyncOptimizer'
  * an hour CoinGecko returned nothing for, and its token value was then
  * calculated from the latest older row.
  *
+ * A token value at an unlisted hour is never recomputed, also when it was
+ * calculated from a corrected hour's price because its own hour has none. To
+ * correct such an hour, list it.
+ *
  * Runs in one transaction, because the next run only recomputes token values
- * for prices and supplies it still finds uncorrected.
+ * for prices and supplies it still finds uncorrected. A run that fails keeps
+ * nothing and reports the error without throwing: it runs before the
+ * indexers start, and the data it could not find may be theirs to fetch.
  */
 export async function overwriteCorrectedHours(
+  corrections: CoingeckoCorrection[],
+  config: Pick<TvsConfig, 'prices' | 'amounts' | 'projects'>,
+  syncOptimizer: SyncOptimizer,
+  db: Database,
+  logger: Logger,
+): Promise<void> {
+  try {
+    await overwriteInTransaction(corrections, config, syncOptimizer, db, logger)
+  } catch (error) {
+    logger.error(
+      'Failed to overwrite stored data with CoinGecko corrections',
+      error,
+    )
+  }
+}
+
+async function overwriteInTransaction(
   corrections: CoingeckoCorrection[],
   config: Pick<TvsConfig, 'prices' | 'amounts' | 'projects'>,
   syncOptimizer: SyncOptimizer,

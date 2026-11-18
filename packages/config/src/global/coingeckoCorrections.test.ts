@@ -35,7 +35,10 @@ describe('COINGECKO_CORRECTIONS', () => {
         expect(correction.points.length).toBeGreaterThan(0)
         for (const point of correction.points) {
           expect(point.at).toMatchRegex(FULL_HOUR_UTC)
-          expect(Number.isNaN(Date.parse(point.at))).toEqual(false)
+          // a date that does not exist, like April 31, is read as May 1
+          expect(new Date(point.at).toISOString()).toEqual(
+            point.at.replace('Z', '.000Z'),
+          )
           expect(point.value).toBeGreaterThan(0)
         }
       })

@@ -3,7 +3,7 @@ import type { TvsToken } from '@l2beat/config'
 import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database } from '@l2beat/database'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { describeDatabase } from '../../../test/database'
 import type { Clock } from '../../../tools/Clock'
 import { TokenValueIndexer } from '../indexers/TokenValueIndexer'
@@ -192,9 +192,11 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
 
   // A run that stored the corrected price but failed before recomputing the
   // token value must not keep the price: the next run would find it correct
-  // and never recompute. Makes the recomputation fail by leaving out the
-  // amount, then adds it and runs again.
-  it('keeps nothing from a run that fails, so the next run repeats it', async () => {
+  // and never recompute. It must not throw either, because it runs before
+  // the indexers start and they may be the ones to fetch what it is missing.
+  // Makes the recomputation fail by leaving out the amount, then adds it and
+  // runs again.
+  it('keeps nothing from a run that fails, reports it, and repeats it on the next run', async () => {
     const token = tokenWith({
       type: 'totalSupply',
       address: EthereumAddress.ZERO,
@@ -204,17 +206,19 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     })
     const { config, amount } = configFor(token)
     await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
+    const { logger, error } = recordingLogger()
     const run = () =>
       overwriteCorrectedHours(
         [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
         config,
         syncOptimizer,
         db,
-        Logger.SILENT,
+        logger,
       )
 
-    await expect(run()).toBeRejected()
+    await run()
     expect(await storedPrices(db)).toEqual([])
+    expect(error).toHaveBeenCalledTimes(1)
 
     await db.tvsAmount.upsertMany([
       { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },
@@ -222,6 +226,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     await run()
     expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 2119]])
     expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 21190, 2119]])
+    expect(error).toHaveBeenCalledTimes(1)
   })
 
   // The overwrite runs on every backend start. Postgres keeps a price as a
@@ -269,6 +274,17 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     expect(value).toEqual(1)
   })
 })
+
+function recordingLogger() {
+  const error = mockFn().returns(undefined)
+  const logger: Logger = mockObject<Logger>({
+    for: () => logger,
+    info: () => {},
+    warn: () => {},
+    error,
+  })
+  return { logger, error }
+}
 
 function tokenWith(amount: TvsToken['amount']): TvsToken {
   return {
