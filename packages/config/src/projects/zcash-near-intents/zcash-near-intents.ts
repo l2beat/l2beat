@@ -64,7 +64,7 @@ export const zcashNearIntents: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
-      name: 'Vizor Desktop',
+      name: 'Vizor for Linux',
       icon: 'vizor',
       url: 'https://github.com/chainapsis/vizor-wallet/releases/tag/release/v0.0.64',
       since: '2026-11-18',

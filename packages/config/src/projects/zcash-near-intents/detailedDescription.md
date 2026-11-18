@@ -12,7 +12,7 @@ Users trust the NEAR Intents operator, which holds the Ethereum funds in a custo
 
 ### App
 
-The ratings cover Vizor's desktop release 0.0.64 with Tor and Private queries on, both off by default. Private queries, marked experimental, send the account's transparent lookups and transaction fetches to Valar Group's private information retrieval (PIR) servers. Lightwalletd, by default zec.rocks, serves blocks and broadcasts. With Tor on, every connection goes over Tor, each PIR request and 1Click call on its own circuit. Swap quotes, deposits and status checks pass Vizor's server, which adds Vizor's referral and fee. Vizor's mobile builds have no published source pin.
+The ratings cover Vizor's Linux desktop release 0.0.64 with Tor and Private queries on, both off by default. Private queries, marked experimental, send the account's transparent lookups and transaction fetches to Valar Group's private information retrieval (PIR) servers. Lightwalletd, by default zec.rocks, serves blocks and broadcasts. With Tor on, every connection goes over Tor, each PIR request and 1Click call on its own circuit. Swap quotes, deposits and status checks pass Vizor's server, which adds Vizor's referral and fee. Vizor's mobile builds have no published source pin.
 
 ### Custody
 
