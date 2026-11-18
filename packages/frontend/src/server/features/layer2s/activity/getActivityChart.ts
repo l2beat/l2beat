@@ -61,13 +61,14 @@ export type ActivityChartData = {
 }
 /**
  * A function that computes values for chart data of the activity over time.
+ * @param options.live Whether a project's own chart reaches its newest stored
+ * block. Off for the public API, which keeps to what activity has summed
  * @returns [timestamp, projectsTxCount, ethereumTxCount, projectsUopsCount, ethereumUopsCount][] - all numbers
  */
-export async function getActivityChart({
-  filter,
-  range,
-  hourly,
-}: ActivityChartParams): Promise<ActivityChartData> {
+export async function getActivityChart(
+  { filter, range, hourly }: ActivityChartParams,
+  { live = true }: { live?: boolean } = {},
+): Promise<ActivityChartData> {
   if (env.MOCK) {
     return getMockActivityChart({ filter, range })
   }
@@ -164,7 +165,7 @@ export async function getActivityChart({
     return {
       ...(await withRecentPoints(
         dailyData,
-        projectId,
+        live ? projectId : undefined,
         range,
         'day',
         UnixTime.toStartOf(UnixTime.now(), 'day'),
@@ -206,7 +207,7 @@ export async function getActivityChart({
   return {
     ...(await withRecentPoints(
       hourlyData,
-      projectId,
+      live ? projectId : undefined,
       range,
       'hour',
       lastHour + UnixTime.HOUR,
