@@ -14,6 +14,7 @@ import {
 } from './projectTvsChartValues'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
+import { pinTvsRange } from './utils/pinTvsRange'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
   range: ChartRange,
@@ -57,11 +58,12 @@ export type DetailedTvsChartWithProjectsRangesData = {
  * @returns detailed chart data split by project id and timestamp
  */
 export async function getDetailedTvsChartWithProjectsRanges({
-  range,
+  range: requestedRange,
   excludeAssociatedTokens,
   excludeRwaRestrictedTokens,
   projects,
 }: TvsChartWithProjectsRangesDataParams): Promise<DetailedTvsChartWithProjectsRangesData> {
+  const range = pinTvsRange(requestedRange)
   if (env.MOCK) {
     return getMockDetailedTvsChartWithProjectsRangesData({
       range,

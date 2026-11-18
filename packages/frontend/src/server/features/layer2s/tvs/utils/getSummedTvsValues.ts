@@ -5,6 +5,7 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
+import { pinTvsRange } from './pinTvsRange'
 
 export type SummedTvsValues = {
   timestamp: number
@@ -22,7 +23,7 @@ export type SummedTvsValues = {
 
 export async function getSummedTvsValues(
   projects: ProjectId[],
-  range: ChartRange,
+  requestedRange: ChartRange,
   {
     forSummary,
     excludeAssociatedTokens,
@@ -33,6 +34,7 @@ export async function getSummedTvsValues(
     excludeRwaRestrictedTokens: boolean
   },
 ): Promise<SummedTvsValues[]> {
+  const range = pinTvsRange(requestedRange)
   const db = getDb()
   const resolution = rangeToResolution(range)
 

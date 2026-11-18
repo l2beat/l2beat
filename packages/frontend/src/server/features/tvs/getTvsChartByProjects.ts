@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { pinTvsRange } from '~/server/features/layer2s/tvs/utils/pinTvsRange'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
@@ -19,31 +20,29 @@ export interface TvsChartByProjectsResponse {
   syncedUntil: number | undefined
 }
 
-export async function getTvsChartByProjects(
-  params: TvsChartByProjectsParams,
-): Promise<TvsChartByProjectsResponse> {
-  if (params.projectIds.length === 0) {
+export async function getTvsChartByProjects({
+  projectIds,
+  range: requestedRange,
+}: TvsChartByProjectsParams): Promise<TvsChartByProjectsResponse> {
+  const range = pinTvsRange(requestedRange)
+  if (projectIds.length === 0) {
     return { chart: [], syncedUntil: undefined }
   }
 
   if (env.MOCK) {
-    return getMockTvsChartByProjects(params)
+    return getMockTvsChartByProjects({ projectIds, range })
   }
 
   const db = getDb()
-  const forSummary = params.projectIds.length !== 1
+  const forSummary = projectIds.length !== 1
 
   const [records, firstTimestamp] = await Promise.all([
-    db.tvsTokenValue.getSummedByProjectForRanges(
-      params.projectIds,
-      [params.range],
-      {
-        forSummary,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: false,
-      },
-    ),
-    db.tvsTokenValue.getFirstTimestampByProjects(params.projectIds),
+    db.tvsTokenValue.getSummedByProjectForRanges(projectIds, [range], {
+      forSummary,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: false,
+    }),
+    db.tvsTokenValue.getFirstTimestampByProjects(projectIds),
   ])
 
   if (records.length === 0) {
@@ -66,10 +65,10 @@ export async function getTvsChartByProjects(
     projectMap.set(record.timestamp, record.value)
   }
 
-  const resolution = rangeToResolution(params.range)
+  const resolution = rangeToResolution(range)
 
   const startTimestamp = getChartStartTimestamp({
-    rangeStart: params.range[0],
+    rangeStart: range[0],
     firstProjectTimestamp: firstTimestamp,
     dataStart: minTimestamp,
     resolution,
@@ -84,7 +83,7 @@ export async function getTvsChartByProjects(
   const chart: TvsChartByProjectsResponse['chart'] = timestamps.map(
     (timestamp) => {
       const valuesByProjectAtTimestamp: Record<string, number | null> = {}
-      for (const projectId of params.projectIds) {
+      for (const projectId of projectIds) {
         valuesByProjectAtTimestamp[projectId] =
           valuesByProject.get(projectId)?.get(timestamp) ?? null
       }
