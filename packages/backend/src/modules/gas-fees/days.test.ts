@@ -51,13 +51,17 @@ describe(DuneDayWait.name, () => {
         return wait({ day })
       })
 
-    for (const hours of [0, 1, 5, 6]) {
+    for (const [hours, readsSoFar] of [
+      [0, 1],
+      [1, 1],
+      [5, 1],
+      [6, 2],
+    ] as const) {
       await expect(read(day + hours * UnixTime.HOUR)).toBeRejectedWith(
         'Not on Dune yet',
       )
+      expect(reads).toEqual(readsSoFar)
     }
-
-    expect(reads).toEqual(2)
   })
 
   it('keeps a wait out of the failed attempts, retried hourly', async () => {
@@ -121,9 +125,10 @@ describe(DuneDayWait.name, () => {
   it('forgets the wait once the day is read', async () => {
     const waits = new DuneDayWait('Not on Dune yet')
     await waits.run(day, day, async (wait) => wait({ day })).catch(() => {})
-    const later = UnixTime(day + 6 * UnixTime.HOUR)
+    // Within the 6 hours of the wait, so a wait still kept would refuse the second read
+    const later = UnixTime(day + UnixTime.HOUR)
 
-    expect(await waits.run(day, later, async () => 1)).toEqual(1)
+    expect(await waits.run(day, later, async () => 1, later)).toEqual(1)
     expect(await waits.run(day, later, async () => 2)).toEqual(2)
   })
 })

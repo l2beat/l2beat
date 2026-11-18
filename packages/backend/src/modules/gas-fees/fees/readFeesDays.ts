@@ -11,7 +11,8 @@ const FeesRow = v.object({
   blockchain: v.string(),
   day: v.string(),
   tx_count: v.number(),
-  total_fee: v.number(),
+  /** Null when Dune has no price to convert a chain's fees with */
+  total_fee: v.union([v.number(), v.null()]),
   total_fee_usd: v.union([v.number(), v.null()]),
   l1_fee: v.number(),
   blob_fee: v.number(),
@@ -38,6 +39,8 @@ const BlocksRow = v.object({
   /** The two below are null on a neighbour day of a chain read from transactions, which is read only for its block range */
   base_fee: v.union([v.number(), v.null()]),
   gas_used: v.union([v.number(), v.null()]),
+  /** Gas of the transactions that paid nothing, part of gas_used */
+  free_gas: v.number(),
   /** Blocks its transactions come from. Only of a chain read from transactions */
   tx_blocks: v.union([v.number(), v.null()]),
   /** From the chain's blocks table */
@@ -135,6 +138,7 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
             day,
             base_fee: 0,
             gas_used: 0,
+            free_gas: 0,
             tx_blocks: 0,
             blocks: 0,
             first_block: row.last_block + 1,
@@ -189,7 +193,9 @@ function toWholeDay(
   fee: typeof NO_FEES,
   { row, earlier, later }: BlocksDay,
 ): Omit<GasFeesDailyRecord, 'timestamp'> | undefined {
-  if (row.gas_used === null || !later) return undefined
+  if (row.gas_used === null || fee.total_fee === null || !later) {
+    return undefined
+  }
   const whole =
     // Sums of whole numbers far below 2^53, so exact as doubles
     fee.gas_used === row.gas_used &&
@@ -210,7 +216,8 @@ function toWholeDay(
     l1FeeNative: fee.l1_fee,
     blobFeeNative: fee.blob_fee,
     baseFeeNative: row.base_fee,
-    gasUsed: row.gas_used,
+    // Of the transactions that paid, as the fees are
+    gasUsed: row.gas_used - row.free_gas,
     medianFeeUsd: fee.median_fee_usd,
   }
 }

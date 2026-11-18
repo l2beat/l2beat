@@ -49,6 +49,22 @@ describe(joinFeesDays.name, () => {
     ])
   })
 
+  it('stores the gas of the transactions that paid, as the fees are theirs', () => {
+    // An OP Stack chain's deposits: 4e8 of the day's 1e9 gas paid nothing
+    const days = joinFeesDays(
+      chains,
+      day,
+      day,
+      [fees('zksync', '2026-10-01')],
+      [
+        blocks('zksync', '2026-10-01', { free_gas: 4e8 }),
+        blocks('zksync', '2026-10-02'),
+      ],
+    )
+
+    expect(days[0]?.records[0]?.gasUsed).toEqual(6e8)
+  })
+
   it("takes a chain's day as whole only once its blocks run into a later day's", () => {
     const days = joinFeesDays(
       chains,
@@ -85,6 +101,18 @@ describe(joinFeesDays.name, () => {
       expect(stored(withDay('2026-10-02', { gas_used: 1e9 + 21_000 }))).toEqual(
         [1, 0, 1],
       )
+    })
+
+    it('refuses a day whose fees Dune could not convert', () => {
+      const days = joinFeesDays(
+        [zksync],
+        day,
+        day,
+        [{ ...fees('zksync', '2026-10-01'), total_fee: null }],
+        whole,
+      )
+
+      expect(days[0]?.records).toEqual([])
     })
 
     it('refuses a day with a block missing inside it', () => {
@@ -327,6 +355,7 @@ function blocks(
     day,
     base_fee: 0.5,
     gas_used: 1e9,
+    free_gas: 0,
     tx_blocks: null,
     blocks: 100,
     first_block: first,
