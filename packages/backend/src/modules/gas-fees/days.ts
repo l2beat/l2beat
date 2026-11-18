@@ -50,6 +50,9 @@ type Cause = Record<string, unknown>
  */
 export class DuneDayWait {
   private waiting: { day: UnixTime; cause: Cause; readAt: UnixTime } | undefined
+  /** A wait was thrown since the framework last counted a failed update */
+  private waitThrown = false
+  /** The failed update the framework counted last was a wait */
   private lastWasWait = false
   private readonly failures = Retries.exponentialBackOff({
     // A failed read is billed too, so retries start slow
@@ -60,16 +63,26 @@ export class DuneDayWait {
 
   constructor(private readonly message: string) {}
 
-  /** The indexer's `updateRetryStrategy` */
+  /**
+   * The indexer's `updateRetryStrategy`. The framework asks `attempts`, then
+   * calls `markAttempt`, once for every update that throws. Only one that threw
+   * a wait is treated as one, so a failure anywhere else in the update counts,
+   * also right after a wait.
+   */
   readonly retryStrategy: RetryStrategy = {
     shouldRetry: () => this.failures.shouldRetry(),
+    attempts: () => (this.waitThrown ? 0 : this.failures.attempts()),
     markAttempt: () => {
+      this.lastWasWait = this.waitThrown
+      this.waitThrown = false
       if (!this.lastWasWait) this.failures.markAttempt()
     },
     timeoutMs: () =>
       this.lastWasWait ? MAX_RETRY_MS : this.failures.timeoutMs(),
-    attempts: () => (this.lastWasWait ? 0 : this.failures.attempts()),
-    clear: () => this.failures.clear(),
+    clear: () => {
+      this.lastWasWait = false
+      this.failures.clear()
+    },
   }
 
   /**
@@ -83,17 +96,19 @@ export class DuneDayWait {
   ): Promise<T> {
     const waiting = this.waiting
     if (waiting?.day === day && now < waiting.readAt + REREAD_SECONDS) {
-      this.lastWasWait = true
-      throw new Error(this.message, { cause: waiting.cause })
+      return this.throwWait(waiting.cause)
     }
-    this.lastWasWait = false
     const result = await read((cause) => {
       this.waiting = { day, cause, readAt: now }
-      this.lastWasWait = true
-      throw new Error(this.message, { cause })
+      return this.throwWait(cause)
     })
     this.waiting = undefined
     return result
+  }
+
+  private throwWait(cause: Cause): never {
+    this.waitThrown = true
+    throw new Error(this.message, { cause })
   }
 }
 

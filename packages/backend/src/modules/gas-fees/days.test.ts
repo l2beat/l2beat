@@ -63,25 +63,33 @@ describe(DuneDayWait.name, () => {
   it('keeps a wait out of the failed attempts, retried hourly', async () => {
     const waits = new DuneDayWait('Not on Dune yet')
     const { retryStrategy } = waits
-    // What the framework does when an update throws
-    const fail = async (
-      now: number,
-      read: Parameters<typeof waits.run<number>>[2],
-    ) => {
-      await waits
-        .run(day, UnixTime(now), read)
-        .catch(() => retryStrategy.markAttempt())
-      return [retryStrategy.attempts(), retryStrategy.timeoutMs()]
+    // What the framework does when an update throws: it asks the attempt for its log, then counts
+    const fail = async (update: () => Promise<unknown>) => {
+      let attempt = -1
+      await update().catch(() => {
+        attempt = retryStrategy.attempts()
+        retryStrategy.markAttempt()
+      })
+      return { attempt, retryInMs: retryStrategy.timeoutMs() }
     }
     const duneError = () => Promise.reject(new Error('Dune error'))
+    const waitAt = (now: number) => () =>
+      waits.run(day, UnixTime(now), async (wait) => wait({ day }))
 
-    expect(await fail(day, duneError)).toEqual([1, 5 * 60_000])
-    expect(await fail(day, async (wait) => wait({ day }))).toEqual([0, HOUR_MS])
-    // A failure after the wait counts on from where the failures were
-    expect(await fail(day + 6 * UnixTime.HOUR, duneError)).toEqual([
-      2,
-      10 * 60_000,
-    ])
+    expect(await fail(() => waits.run(day, day, duneError))).toEqual({
+      attempt: 0,
+      retryInMs: 5 * 60_000,
+    })
+    expect(await fail(waitAt(day))).toEqual({ attempt: 0, retryInMs: HOUR_MS })
+    // A failure before the read is reached, right after a wait, still counts
+    expect(await fail(duneError)).toEqual({
+      attempt: 1,
+      retryInMs: 10 * 60_000,
+    })
+    expect(await fail(waitAt(day + UnixTime.HOUR))).toEqual({
+      attempt: 0,
+      retryInMs: HOUR_MS,
+    })
   })
 
   it('forgets the wait once the day is read', async () => {
