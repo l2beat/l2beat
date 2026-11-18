@@ -217,7 +217,8 @@ class ExitCostSeries {
   /** Selling at a discount costs the days of yield the discount equals. */
   private marketAt(day: number, annualYield: number | null): ExitCost | null {
     return this.routeAt(day, annualYield, (s) =>
-      s.marketExitEth !== null && s.marketExitValueEth
+      // A sale that paid nothing wasn't filled.
+      s.marketExitEth && s.marketExitValueEth
         ? 1 - toEth(s.marketExitEth) / toEth(s.marketExitValueEth)
         : null,
     )
@@ -353,7 +354,7 @@ function estimateQueuedWaits(
       requests: to - from,
       hours: (last.timestamp - timestamp) / UnixTime.HOUR + hoursLeft,
       estimated: true,
-      unpaced: finalizedPerHour === 0,
+      unpaced: finalizedPerHour <= 0,
     }
   })
 }

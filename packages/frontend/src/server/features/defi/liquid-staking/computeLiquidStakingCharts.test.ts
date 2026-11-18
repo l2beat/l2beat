@@ -282,6 +282,20 @@ describe(computeCostOfExitChart.name, () => {
     expect(overdue.costOfExit[0]?.projects.wbeth).toEqual(null)
   })
 
+  it('has no market route for a sale that paid nothing', () => {
+    const charts = compute(
+      ['cbeth'],
+      [
+        snapshot('cbeth', START + DAY, 1.0),
+        snapshot('cbeth', DAY_31, 1.01, {
+          marketExitEth: 0n,
+          marketExitValueEth: 101n * ETH,
+        }),
+      ],
+    )
+    expect(charts.costOfExit[0]?.projects.cbeth).toEqual(null)
+  })
+
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
     const at = (instantExitEth: bigint) =>
       compute(
