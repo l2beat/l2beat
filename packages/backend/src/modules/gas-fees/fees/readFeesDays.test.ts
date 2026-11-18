@@ -170,6 +170,117 @@ describe(joinFeesDays.name, () => {
   })
 })
 
+describe('joinFeesDays on what Dune had', () => {
+  const stored = (
+    chains: GasFeesChain[],
+    from: string,
+    to: string,
+    feeRows: FeesRow[],
+    blockRows: BlocksRow[],
+  ) =>
+    joinFeesDays(chains, date(from), date(to), feeRows, blockRows).map((d) =>
+      d.records.map((r) => r.chain),
+    )
+
+  it('Taiko, June 2026: a halt from the 22nd to the 30th, and fee rows missing on the 22nd', () => {
+    // Block counts, ranges and fee_blocks as read from Dune on 17 Nov 2026
+    const taiko: GasFeesChain = {
+      id: 'taiko',
+      dune: 'taiko',
+      requiredFrom: date('2024-06-01'),
+    }
+    const blockRows = (
+      [
+        ['2026-06-18', 34_469, 7_975_057, 8_009_525],
+        ['2026-06-19', 33_187, 8_009_526, 8_042_712],
+        ['2026-06-20', 33_446, 8_042_713, 8_076_158],
+        ['2026-06-21', 29_954, 8_076_159, 8_106_112],
+        ['2026-06-22', 3_896, 8_106_113, 8_110_008],
+        // No blocks until the 30th, which carries on from the 22nd
+        ['2026-06-30', 33_140, 8_110_009, 8_143_148],
+        ['2026-07-01', 43_151, 8_143_149, 8_186_299],
+        ['2026-07-02', 43_140, 8_186_300, 8_229_439],
+      ] as const
+    ).map(([day, count, first, last]) =>
+      blocks('taiko', day, {
+        blocks: count,
+        blocks_with_txs: count,
+        first_block: first,
+        last_block: last,
+      }),
+    )
+    const feeRows = (
+      [
+        ['2026-06-20', 33_446],
+        ['2026-06-21', 29_954],
+        // gas.fees has rows from 2,467 of the day's 3,896 blocks
+        ['2026-06-22', 2_467],
+        ['2026-06-30', 33_140],
+      ] as const
+    ).map(([day, feeBlocks]) => ({
+      ...fees('taiko', day),
+      fee_blocks: feeBlocks,
+    }))
+
+    expect(
+      stored([taiko], '2026-06-20', '2026-06-30', feeRows, blockRows),
+    ).toEqual([
+      ['taiko'],
+      ['taiko'],
+      // The 22nd is short of fee rows, and the chain made no blocks from the 23rd to the 29th
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      // The day it resumed joins the 22nd across the halt
+      ['taiko'],
+    ])
+  })
+
+  it('Abstract, loaded a day late: its newest day waits while the other chains are stored', () => {
+    // The shape Dune had at 03:00 on 17 Nov 2026: Abstract's blocks ended around noon on the 16th
+    const chains: GasFeesChain[] = ['ethereum', 'abstract'].map((id) => ({
+      id,
+      dune: id,
+      requiredFrom: date('2025-01-27'),
+    }))
+    const day = (chain: string, day: string, first: number, count: number) => ({
+      fee: { ...fees(chain, day), fee_blocks: count },
+      block: blocks(chain, day, {
+        blocks: count,
+        blocks_with_txs: count,
+        first_block: first,
+        last_block: first + count - 1,
+      }),
+    })
+    const rows = [
+      day('ethereum', '2026-11-15', 0, 7_200),
+      day('ethereum', '2026-11-16', 7_200, 7_200),
+      day('ethereum', '2026-11-17', 14_400, 900),
+      day('abstract', '2026-11-15', 0, 43_000),
+      day('abstract', '2026-11-16', 43_000, 21_000),
+    ]
+
+    expect(
+      stored(
+        chains,
+        '2026-11-15',
+        '2026-11-16',
+        rows.map((r) => r.fee),
+        rows.map((r) => r.block),
+      ),
+    ).toEqual([['ethereum', 'abstract'], ['ethereum']])
+  })
+})
+
+function date(day: string): UnixTime {
+  return UnixTime.fromDate(new Date(`${day}T00:00:00Z`))
+}
+
 function fees(blockchain: string, day: string): FeesRow {
   return {
     blockchain,
