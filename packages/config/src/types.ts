@@ -2119,6 +2119,8 @@ export type ProjectLiquidStakingMarketQuote =
       /** Quoted by BalancerQueries, against WETH. */
       type: 'balancerV2'
       poolId: string
+      /** The pool isn't quoted from this block on: it was drained. */
+      untilBlock?: number
     }
   | {
       /** A boosted pool, quoted by Balancer V3's BatchRouter. */

@@ -27,12 +27,19 @@ export function getLiquidStakingReads(
 ): LiquidStakingReads {
   const protocol = getProtocolReads(project.contracts, blockNumber)
   const reads = Object.entries(protocol.calls)
-  const quotes = project.marketQuotes.map((quote) =>
-    getMarketQuote(protocol.token, quote),
-  )
+  const quotes = project.marketQuotes
+    .filter(
+      (quote) =>
+        !(
+          quote.type === 'balancerV2' &&
+          quote.untilBlock !== undefined &&
+          blockNumber >= quote.untilBlock
+        ),
+    )
+    .map((quote) => getMarketQuote(protocol.token, quote))
   const calls = [
     ...reads.map(([_, call]) => call),
-    ...quotes.map((quote) => quote.call),
+    ...quotes.flatMap((quote) => quote.calls),
   ]
 
   return {
@@ -55,10 +62,13 @@ export function getLiquidStakingReads(
       )
       const state = protocol.toState(results, timestamp)
 
+      let next = reads.length
       const best = quotes
-        .map((quote, i) =>
-          quote.decode(responses[reads.length + i] as MulticallV3Response),
-        )
+        .map((quote) => {
+          const own = responses.slice(next, next + quote.calls.length)
+          next += quote.calls.length
+          return quote.decode(own)
+        })
         .reduce<bigint | undefined>(
           // A sale that pays nothing wasn't filled.
           (best, out) =>

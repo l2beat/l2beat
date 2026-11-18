@@ -218,7 +218,7 @@ export const stakewise: BaseProject = {
       redeemer: discovery.getContract('OsTokenRedeemer').address,
       previousRedeemer: discovery.getContract('RetiredOsTokenRedeemer').address,
     },
-    // Balancer's V2 pool was the ETH market until it was drained on
+    // Balancer's V2 pool was the ETH market until an exploit drained it on
     // 2025-11-03. Its V3 pool has quoted since 2024-12, and is the only quote
     // in the months Fluid's pool, opened in 2026-01, stood empty.
     marketQuotes: [
@@ -226,6 +226,10 @@ export const stakewise: BaseProject = {
         type: 'balancerV2',
         poolId:
           '0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635',
+        // The exploit's block. The dust left in the pool quotes at a 99.99%
+        // discount, which would stand as the price whenever no other pool
+        // quotes.
+        untilBlock: 23_717_397,
       },
       {
         type: 'balancerV3',

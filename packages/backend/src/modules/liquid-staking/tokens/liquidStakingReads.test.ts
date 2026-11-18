@@ -49,6 +49,22 @@ describe(getLiquidStakingReads.name, () => {
     expect(state.marketExitValueEth).toEqual(null)
   })
 
+  it('stops quoting a pool from the block it was drained at', () => {
+    const drained = {
+      ...rocketpool,
+      marketQuotes: [
+        {
+          type: 'balancerV2' as const,
+          poolId: `0x${'11'.repeat(32)}`,
+          untilBlock: 100,
+        },
+      ],
+    }
+
+    expect(getLiquidStakingReads(drained, 99).calls.length).toEqual(3)
+    expect(getLiquidStakingReads(drained, 100).calls.length).toEqual(2)
+  })
+
   it('values Lido’s sale at one ETH per stETH', () => {
     const { toState } = getLiquidStakingReads(
       {
