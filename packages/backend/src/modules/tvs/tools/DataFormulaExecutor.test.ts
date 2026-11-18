@@ -128,21 +128,15 @@ describe(DataFormulaExecutor.name, () => {
   })
 
   // `tvs:execute` fetches historical prices and supplies itself, past the
-  // indexers. Each test has the provider return a bad value for an hour that
-  // COINGECKO_CORRECTIONS covers, using whichever correction of that field
-  // comes first, so it holds as the list changes.
+  // indexers, and assumes 0 when a fetch fails. The providers here have no
+  // methods, so any call to CoinGecko fails: a corrected hour has to get its
+  // value from COINGECKO_CORRECTIONS alone. Uses whichever correction of the
+  // field comes first, so the tests hold as the list changes.
   describe('CoinGecko corrections', () => {
-    it('uses the corrected price for an hour CoinGecko got wrong', async () => {
+    it('uses the corrected price for a listed hour without asking CoinGecko', async () => {
       const { coingeckoId, timestamp, value } = firstCorrection('price')
-      const executor = executorWith({
-        priceProvider: mockObject<PriceProvider>({
-          getUsdPriceHistoryHourly: mockFn().resolvesTo([
-            { timestamp, value: value * 10 },
-          ]),
-        }),
-      })
 
-      const price = await executor.fetchPrice(
+      const price = await executorWithoutCoingecko().fetchPrice(
         { id: 'price', priceId: coingeckoId, sinceTimestamp: UnixTime(0) },
         timestamp,
       )
@@ -150,18 +144,11 @@ describe(DataFormulaExecutor.name, () => {
       expect(price).toEqual(value)
     })
 
-    it('uses the corrected circulating supply for an hour CoinGecko got wrong', async () => {
+    it('uses the corrected circulating supply for a listed hour without asking CoinGecko', async () => {
       const { coingeckoId, timestamp, value } =
         firstCorrection('circulatingSupply')
-      const executor = executorWith({
-        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
-          getCirculatingSupplies: mockFn().resolvesTo([
-            { timestamp, value: value * 2 },
-          ]),
-        }),
-      })
 
-      const supply = await executor.fetchCirculatingSupply(
+      const supply = await executorWithoutCoingecko().fetchCirculatingSupply(
         {
           id: 'supply',
           type: 'circulatingSupply',
@@ -190,16 +177,12 @@ function firstCorrection(field: 'price' | 'circulatingSupply') {
   }
 }
 
-function executorWith(providers: {
-  priceProvider?: PriceProvider
-  circulatingSupplyProvider?: CirculatingSupplyProvider
-}) {
+function executorWithoutCoingecko() {
   return new DataFormulaExecutor(
     mockObject<LocalStorage>({}),
     undefined,
-    providers.priceProvider ?? mockObject<PriceProvider>({}),
-    providers.circulatingSupplyProvider ??
-      mockObject<CirculatingSupplyProvider>({}),
+    mockObject<PriceProvider>({}),
+    mockObject<CirculatingSupplyProvider>({}),
     new Map(),
     mockObject<BlockTimestampProvider>({}),
     mockObject<TotalSupplyProvider>({}),

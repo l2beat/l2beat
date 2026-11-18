@@ -190,10 +190,10 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 15450, 1545]])
   })
 
-  // A run that corrected the price but failed before recomputing the token
-  // value must not keep the price: the next run would find it correct and
-  // never recompute. Makes the recomputation fail by leaving out the amount,
-  // then adds it and runs again.
+  // A run that stored the corrected price but failed before recomputing the
+  // token value must not keep the price: the next run would find it correct
+  // and never recompute. Makes the recomputation fail by leaving out the
+  // amount, then adds it and runs again.
   it('keeps nothing from a run that fails, so the next run repeats it', async () => {
     const token = tokenWith({
       type: 'totalSupply',
@@ -202,8 +202,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       decimals: 0,
       sinceTimestamp: UnixTime(0),
     })
-    const { config, price, amount } = configFor(token)
-    await storePrice(db, price.id, WRONG_HOUR, 1545)
+    const { config, amount } = configFor(token)
     await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
     const run = () =>
       overwriteCorrectedHours(
@@ -215,7 +214,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       )
 
     await expect(run()).toBeRejected()
-    expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 1545]])
+    expect(await storedPrices(db)).toEqual([])
 
     await db.tvsAmount.upsertMany([
       { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },

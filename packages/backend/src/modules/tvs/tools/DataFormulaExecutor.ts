@@ -18,7 +18,7 @@ import {
   type OnchainAmountConfig,
   type PriceConfig,
 } from '../types'
-import { applyCoingeckoCorrections } from './coingeckoCorrections'
+import { correctedValues } from './coingeckoCorrections'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
 
@@ -521,17 +521,21 @@ export class DataFormulaExecutor {
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
+    const corrected = correctedValues(
+      COINGECKO_CORRECTIONS,
+      'price',
+      config.priceId,
+    ).get(timestamp)
+    if (corrected !== undefined) {
+      return corrected
+    }
+
     try {
       this.logger.debug(`Fetching price for ${config.priceId}`)
-      const response = applyCoingeckoCorrections(
-        COINGECKO_CORRECTIONS,
-        'price',
-        config.priceId,
-        await this.priceProvider.getUsdPriceHistoryHourly(
-          CoingeckoId(config.priceId),
-          timestamp,
-          timestamp,
-        ),
+      const response = await this.priceProvider.getUsdPriceHistoryHourly(
+        CoingeckoId(config.priceId),
+        timestamp,
+        timestamp,
       )
       assert(
         response.length === 1,
@@ -548,18 +552,23 @@ export class DataFormulaExecutor {
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
   ): Promise<bigint> {
+    const corrected = correctedValues(
+      COINGECKO_CORRECTIONS,
+      'circulatingSupply',
+      config.apiId,
+    ).get(timestamp)
+    if (corrected !== undefined) {
+      return BigInt(corrected * 10 ** config.decimals)
+    }
+
     this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
-      const circulating = applyCoingeckoCorrections(
-        COINGECKO_CORRECTIONS,
-        'circulatingSupply',
-        config.apiId,
+      const circulating =
         await this.circulatingSupplyProvider.getCirculatingSupplies(
           CoingeckoId(config.apiId),
           { from: timestamp, to: timestamp },
-        ),
-      )
+        )
       assert(
         circulating.length === 1,
         `${config.apiId}: Too many supplies fetched ${JSON.stringify(circulating)}`,
