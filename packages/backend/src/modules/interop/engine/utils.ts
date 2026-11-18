@@ -11,24 +11,24 @@ export function errorToString(error: unknown): string {
     return JSON.stringify({ message: String(error), value: error })
   }
   try {
-    return JSON.stringify(ownProperties(error), (_key, value: unknown) =>
-      typeof value === 'bigint' ? value.toString() : value,
-    )
+    return JSON.stringify(error, errorReplacer)
   } catch {
     // A cause that cannot be serialized must not hide the error itself
     return JSON.stringify({ message: error.message, stack: error.stack })
   }
 }
 
-// An array replacer would filter nested objects too and empty out `cause`
-function ownProperties(error: Error): Record<string, unknown> {
-  const properties: Record<string, unknown> = {}
-  for (const name of Object.getOwnPropertyNames(error)) {
-    const value = (error as unknown as Record<string, unknown>)[name]
-    properties[name] =
-      value instanceof Error
-        ? { name: value.name, message: value.message, cause: value.cause }
-        : value
+// Error fields are not enumerable, so list them for errors at every depth
+function errorReplacer(_key: string, value: unknown): unknown {
+  if (typeof value === 'bigint') {
+    return value.toString()
   }
-  return properties
+  if (value instanceof Error) {
+    const properties: Record<string, unknown> = {}
+    for (const name of Object.getOwnPropertyNames(value)) {
+      properties[name] = (value as unknown as Record<string, unknown>)[name]
+    }
+    return properties
+  }
+  return value
 }
