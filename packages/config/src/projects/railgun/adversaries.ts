@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
@@ -143,21 +143,21 @@ export function railgunAdversaries(upgradeDelay: string) {
         ],
       },
     },
-    advice: [
+    usageFlow: [
       {
         name: 'Set up',
-        text: `Before unlocking RailOxide, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the direct endpoint for reads, and keep one public endpoint for submissions.`,
+        text: `Assumes a ${toolLink('ethereumNode', 'local Ethereum node')} is set as RailOxide's direct endpoint for reads before unlocking, with one public endpoint kept for submissions.`,
         against: ['networkObserver'],
         outside: true,
       },
       {
         name: 'Shield',
-        text: 'Shield a token many others shield, since an unshield hides only among shields of the same token.',
+        text: 'Assumes a token many others shield, since an unshield hides only among shields of the same token.',
         against: ['chainAnalyst'],
       },
       {
         name: 'Receive',
-        text: 'Share your 0zk address privately, and only with payers you trust to keep it.',
+        text: 'Assumes the 0zk address is shared privately, and only with payers trusted to keep it.',
         against: ['futureAdversary'],
       },
       {
@@ -173,7 +173,7 @@ export function railgunAdversaries(upgradeDelay: string) {
       },
       {
         name: 'Watch',
-        text: 'Watch governance proposals, and unshield before an upgrade you reject executes.',
+        text: 'Assumes the user follows governance proposals and unshields before an upgrade they reject executes.',
         against: ['privilegedInsider'],
       },
     ],

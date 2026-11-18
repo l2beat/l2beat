@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -144,21 +144,21 @@ export function fluidkeyAdversaries(accounts: number) {
         ],
       },
     },
-    advice: [
+    usageFlow: [
       {
         name: 'Sign in',
-        text: `${A.torBrowser} Connect a new wallet that has never sent a transaction, not a Google, Apple, email or Farcaster login.`,
+        text: `${A.torBrowser} Sign-in uses a new wallet that has never sent a transaction, not a Google, Apple, email or Farcaster login.`,
         against: ['networkObserver', 'futureAdversary'],
         outside: true,
       },
       {
         name: 'Receive',
-        text: 'Share a fresh Safe address for each payment instead of your name. Use a new one for each chain as well. Label payments by payer.',
+        text: 'Assumes a fresh Safe address is shared for each payment instead of a name, with a new one for each chain as well. Payments are labelled by payer.',
         against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
       },
       {
         name: 'Spend',
-        text: 'Send from one label at a time, to destinations with no public link to you.',
+        text: 'Assumes sends from one label at a time, to destinations with no public link to the user.',
         against: ['publicObserver'],
       },
     ],

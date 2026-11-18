@@ -2,17 +2,20 @@ import type {
   PrivacyAdversary,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
-  PrivacyAdviceStep,
+  PrivacyUsageFlowStep,
 } from '@l2beat/config'
 import upperFirst from 'lodash/upperFirst'
+import { Callout } from '~/components/Callout'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
+import { InfoIcon } from '~/icons/Info'
 import {
   getPrivacyAdversaryBlockId,
   PRIVACY_CHIP_CLASS_NAME,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   ADVICE,
+  getAdviceNotice,
   getAdviceStepId,
   getStepAdversaries,
   getUncoveredAdversaries,
@@ -24,7 +27,9 @@ import type { ProjectSectionProps } from '../types'
 import { PrivacyWaitDraw } from './PrivacyWaitDraw'
 
 export interface PrivacyAdviceSectionProps extends ProjectSectionProps {
-  steps: PrivacyAdviceStep[]
+  /** Named in the notice that the steps are no recommendation to use it. */
+  projectName: string
+  steps: PrivacyUsageFlowStep[]
   /** In rosette order, which the labels under each step keep. */
   adversaries: PrivacyAdversary[]
   /** Each adversary cell's colour, so a step's links match the rosette. */
@@ -33,8 +38,9 @@ export interface PrivacyAdviceSectionProps extends ProjectSectionProps {
   waitWindowDays: number
 }
 
-/** The advice of every adversary cell, as steps in the order the user takes them. */
+/** The usage flow every adversary cell assumes, as steps in the order of use. */
 export function PrivacyAdviceSection({
+  projectName,
   steps,
   adversaries,
   sentiments,
@@ -44,12 +50,20 @@ export function PrivacyAdviceSection({
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return (
     <ProjectSection {...sectionProps}>
-      <div className="flex flex-col items-start gap-y-1.5">
-        <p className="text-paragraph-15 md:text-paragraph-16">{ADVICE.intro}</p>
-        <CustomLink href={ADVICE.methodologyHref} className="text-paragraph-13">
-          {ADVICE.methodologyLink}
-        </CustomLink>
-      </div>
+      <Callout
+        className="p-4"
+        color="blue"
+        small
+        icon={<InfoIcon variant="blue" className="mt-0.5 size-4 shrink-0" />}
+        body={
+          <p className="text-paragraph-14 md:text-paragraph-15">
+            {getAdviceNotice(projectName)}{' '}
+            <CustomLink href={ADVICE.methodologyHref}>
+              {ADVICE.methodologyLink}
+            </CustomLink>
+          </p>
+        }
+      />
       <ol className="mt-6 flex flex-col">
         {steps.map((step, i) => (
           <li

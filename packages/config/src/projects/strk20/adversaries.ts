@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -175,7 +175,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Set up',
       text: A.ipHidingRoute('Bramble'),
@@ -184,12 +184,12 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: 'Hold STRK or USDC. Deposit in its own transaction, and pay a new contact only afterwards.',
+      text: 'Assumes STRK or USDC, deposited in its own transaction, with payments to a new contact only afterwards.',
       against: ['chainAnalyst', 'networkObserver'],
     },
     {
       name: 'Pay',
-      text: 'Submit every private action through a paymaster. Treat the first payment to a new contact, and any DeFi action, as public.',
+      text: 'Assumes every private action is submitted through a paymaster. The first payment to a new contact, and any DeFi action, count as public.',
       against: ['publicObserver'],
     },
     {
@@ -200,7 +200,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Withdraw',
-      text: `Withdraw amounts that match no deposit. ${A.freshAddress}`,
+      text: `Assumes withdrawals of amounts that match no deposit. ${A.freshAddress}`,
       against: ['chainAnalyst'],
     },
   ],

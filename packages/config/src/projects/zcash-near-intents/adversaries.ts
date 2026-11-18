@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 import type { PrivacyFieldExposure } from '../../types'
@@ -203,21 +203,21 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Set up',
-      text: 'Turn on Tor in Zodl and point it at a lightwalletd server you run.',
+      text: 'Assumes Tor is on in Zodl and pointed at a lightwalletd server the user runs.',
       against: ['networkObserver'],
       outside: true,
     },
     {
       name: 'Hold',
-      text: 'Hold the ZEC in the pool for days, and split or merge it with other shielded funds.',
+      text: 'Assumes the ZEC is held in the pool for days, and split or merged with other shielded funds.',
       against: ['chainAnalyst'],
     },
     {
       name: 'Swap back',
-      text: `Swap back amounts that match no payout. ${A.freshAddress}`,
+      text: `Assumes swaps back of amounts that match no payout. ${A.freshAddress}`,
       against: ['chainAnalyst'],
     },
   ],

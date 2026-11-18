@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
@@ -112,16 +112,16 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
         ],
       },
     },
-    advice: [
+    usageFlow: [
       {
         name: 'Load',
-        text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic. Install ${toolLink('ipfsDesktop')} and open the reviewed release at \`http://localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source gives the same hash.`,
+        text: `Reviewed with all traffic routed through ${toolLink('nymVpn')} (Random profile) and the reviewed release loaded from a local IPFS node (${toolLink('ipfsDesktop')}) at \`localhost:8080/ipfs/${appCid}\`. A [rebuild](${RECIPE}) from the reviewed source produces the same hash.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },
       {
         name: 'Deposit',
-        text: `${A.largestPool} Deposit several notes at different times, not in one batch. Save each note yourself and leave the onchain backup off.`,
+        text: 'Assumes deposits into the pool with the most depositors, made as several notes at different times rather than one batch, with notes saved locally and the onchain backup off.',
         against: ['chainAnalyst', 'futureAdversary'],
       },
       {
@@ -132,7 +132,7 @@ export function tornadoCashAdversaries(upgradeDelay: string, appCid: string) {
       },
       {
         name: 'Exit',
-        text: `${A.relayer('relayer')} Pick a popular one, connect no wallet and withdraw each note on its own. ${A.freshAddress}`,
+        text: 'Assumes each note is withdrawn separately through a widely used relayer, with no wallet connected, to a new address.',
         against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
       },
     ],

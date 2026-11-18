@@ -1,6 +1,6 @@
 import {
-  ADVICE_ANCHORS,
   PRIVACY_METHODOLOGY_URL,
+  USAGE_FLOW_ANCHORS,
 } from '@l2beat/config/build/common/privacyAdversaries'
 import { expect } from 'earl'
 import { PRIVACY_METHODOLOGY_PATH, PRIVACY_ROUTES_ANCHOR } from './paths'
@@ -10,6 +10,6 @@ import { PRIVACY_METHODOLOGY_PATH, PRIVACY_ROUTES_ANCHOR } from './paths'
 describe('privacy methodology paths', () => {
   it('match the links config writes into advice steps', () => {
     expect(PRIVACY_METHODOLOGY_PATH).toEqual(PRIVACY_METHODOLOGY_URL)
-    expect(PRIVACY_ROUTES_ANCHOR).toEqual(ADVICE_ANCHORS.routes)
+    expect(PRIVACY_ROUTES_ANCHOR).toEqual(USAGE_FLOW_ANCHORS.routes)
   })
 })

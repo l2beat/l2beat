@@ -188,7 +188,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
     expect(headings).toEqual([
       '## Summary',
       '## Privacy',
-      '## How to stay private',
+      '## Reviewed usage flow',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -277,25 +277,37 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       )
     })
 
-    it('links the advice once, which lists each step with the adversaries it defends', () => {
-      expect(privacy()).toInclude(
-        '**Advice:** How to stay private, the next section.',
-      )
-      expect(privacy()).not.toInclude('**Advice:** Wait')
+    it('links the usage flow once, which lists each step with the adversaries it defends', () => {
+      expect(privacy()).toInclude('Reviewed usage flow: the next section.')
+      expect(privacy()).not.toInclude('**Assumption:** Wait')
       expect(
-        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'Reviewed usage flow'),
       ).toInclude(
-        '1. **Wait.** Wait before withdrawing. Draw the wait once, at random between 0 and 30 days, the window the anonymity set counts. Against: Chain analyst.',
+        '1. **Wait.** Wait before withdrawing. The 0–30 day range is the window the anonymity set counts. Against: Chain analyst.',
       )
     })
 
+    it('says the usage flow is no recommendation to use the project, before the steps', () => {
+      const section = getSection(
+        renderPrivacyProjectMarkdown(ENTRY),
+        'Reviewed usage flow',
+      )
+      const notice =
+        '**This is the technical setup of a careful user that our ratings assume, not a recommendation to use Tornado Cash.**'
+      expect(section).not.toInclude('The setup our privacy ratings assume.')
+      expect(section).toInclude(
+        `${notice} [Assumptions explained](https://ethbeat.org/publications/privacy-methodology#usage-flow)`,
+      )
+      expect(section.indexOf(notice)).toBeLessThan(section.indexOf('1. '))
+    })
+
     it('links each adversary to the steps that defend it', () => {
-      expect(privacy()).toInclude('**Advice:** step 1 (Wait).')
+      expect(privacy()).toInclude('**Assumption:** step 1 (Wait).')
     })
 
     it('names the adversaries no step helps against', () => {
       expect(
-        getSection(renderPrivacyProjectMarkdown(ENTRY), 'How to stay private'),
+        getSection(renderPrivacyProjectMarkdown(ENTRY), 'Reviewed usage flow'),
       ).toInclude('**No step helps against:** Future adversary.')
     })
 
@@ -495,7 +507,7 @@ const ADVERSARIES: ProjectPrivacyAdversaries = {
       'A quantum computer could break the commitments.',
     ),
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Wait',
       text: 'Wait before withdrawing.',
@@ -601,9 +613,10 @@ const SECTIONS: ProjectDetailsSection[] = [
   {
     type: 'PrivacyAdviceSection',
     props: {
-      id: 'stay-private',
-      title: 'How to stay private',
-      steps: ADVERSARIES.advice ?? [],
+      id: 'usage-flow',
+      title: 'Reviewed usage flow',
+      projectName: 'Tornado Cash',
+      steps: ADVERSARIES.usageFlow ?? [],
       adversaries: ADVERSARIES.adversaries,
       waitWindowDays: 30,
       sentiments: {

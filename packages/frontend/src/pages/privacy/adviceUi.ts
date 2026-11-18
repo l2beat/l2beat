@@ -2,19 +2,21 @@ import type {
   PrivacyAdversary,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
-  PrivacyAdviceStep,
+  PrivacyUsageFlowStep,
 } from '@l2beat/config'
-import { PRIVACY_ADVICE_HREF, PRIVACY_ADVICE_TITLE } from './methodology/paths'
+import {
+  PRIVACY_ADVICE_HREF,
+  PRIVACY_ADVICE_TITLE,
+  PRIVACY_LEGACY_ADVICE_ANCHOR,
+} from './methodology/paths'
 
 /**
  * Copy shared by the project page and its markdown alternate. Only project
  * pages import this on the client, which keeps it in their chunk.
  */
 export const ADVICE = {
-  sectionId: 'stay-private',
+  sectionId: 'usage-flow',
   title: PRIVACY_ADVICE_TITLE,
-  intro:
-    'What a careful user does with the reference app, in order. The ratings assume these steps.',
   againstLabel: 'Against',
   /** Leads the adversaries whose cell is not green and that no step names. */
   uncoveredLabel: 'No step helps against',
@@ -22,21 +24,26 @@ export const ADVICE = {
   outsideLabel: 'outside the app',
   drawWaitLabel: 'Draw a wait',
   redrawWaitLabel: 'Draw again',
-  waitAfterDeposit: 'after your deposit',
+  waitAfterDeposit: 'after the deposit',
   /** Under the control once a wait is drawn. */
   redrawWaitNote: 'Clicking often to get a shorter time reduces privacy.',
-  /** Our word for the steps, as the framework uses it, linking to this section. */
-  label: 'Advice',
-  methodologyLink: 'Every habit explained',
+  /** Leads the steps an adversary block links. */
+  label: 'Assumption',
+  methodologyLink: 'Assumptions explained',
   methodologyHref: PRIVACY_ADVICE_HREF,
 } as const
+
+/** Leads the section, before the steps. */
+export function getAdviceNotice(projectName: string): string {
+  return `This is the technical setup of a careful user that our ratings assume, not a recommendation to use ${projectName}.`
+}
 
 /**
  * The adversaries the steps leave the promised field exposed or at risk to:
  * a cell that is not green and that no step defends. In rosette order.
  */
 export function getUncoveredAdversaries(
-  steps: PrivacyAdviceStep[],
+  steps: PrivacyUsageFlowStep[],
   adversaries: PrivacyAdversary[],
   sentiments: Record<PrivacyAdversaryId, PrivacyAdversarySentiment>,
 ): PrivacyAdversary[] {
@@ -49,7 +56,7 @@ export function getUncoveredAdversaries(
 
 /** The adversaries one step defends, in rosette order. */
 export function getStepAdversaries(
-  step: PrivacyAdviceStep,
+  step: PrivacyUsageFlowStep,
   adversaries: PrivacyAdversary[],
 ): PrivacyAdversary[] {
   return adversaries.filter((adversary) => step.against.includes(adversary.id))
@@ -62,12 +69,22 @@ export function getAdviceStepId(index: number): string {
 
 /** The steps that defend one adversary, with their position in the list. */
 export function getStepsAgainst(
-  steps: PrivacyAdviceStep[] | undefined,
+  steps: PrivacyUsageFlowStep[] | undefined,
   id: PrivacyAdversaryId,
-): { step: PrivacyAdviceStep; index: number }[] {
+): { step: PrivacyUsageFlowStep; index: number }[] {
   return (steps ?? [])
     .map((step, index) => ({ step, index }))
     .filter(({ step }) => step.against.includes(id))
+}
+
+/**
+ * The new anchor for an old #stay-private or #stay-private-N link, or
+ * undefined when the hash is not one of them.
+ */
+export function getLegacyAdviceHash(hash: string): string | undefined {
+  const legacy = `#${PRIVACY_LEGACY_ADVICE_ANCHOR}`
+  if (hash !== legacy && !hash.startsWith(`${legacy}-`)) return undefined
+  return `#${ADVICE.sectionId}${hash.slice(legacy.length)}`
 }
 
 /** Under the draw button: the range the wait comes from. */
@@ -75,9 +92,9 @@ export function getWaitNote(windowDays: number): string {
   return `Random between 0 and ${windowDays} days, the anonymity set's window.`
 }
 
-/** The markdown alternate cannot draw, so it says how to. */
+/** The markdown alternate cannot draw, so it says where the range comes from. */
 export function getWaitInstruction(windowDays: number): string {
-  return `Draw the wait once, at random between 0 and ${windowDays} days, the window the anonymity set counts.`
+  return `The 0–${windowDays} day range is the window the anonymity set counts.`
 }
 
 /** "12 days 7 hours", "7 hours", and minutes only under an hour: "42 minutes". */

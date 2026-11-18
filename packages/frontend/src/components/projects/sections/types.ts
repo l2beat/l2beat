@@ -87,7 +87,7 @@ export type SectionId =
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
-  | 'stay-private'
+  | 'usage-flow'
   | 'external-dependencies'
   | 'defi-tokens'
   | 'liquid-staking'

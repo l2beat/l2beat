@@ -32,7 +32,7 @@ describe(createLegacyPathsRouter.name, () => {
     ['/ecosystems/agglayer.md', '/layer2s/summary'],
     [
       '/publications/privacy-best-practices',
-      '/publications/privacy-methodology#stay-private',
+      '/publications/privacy-methodology#usage-flow',
     ],
   ] as const) {
     it(`redirects ${from} to ${to}`, async () => {

@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   toolLink,
 } from '../../common/privacyAdversaries'
@@ -205,27 +205,27 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Set up',
-      text: `Set your own ${toolLink('ethereumNode')} as the L1 endpoint. Send all traffic through ${toolLink('nymVpn')} with the Random profile, an IP-hiding route that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like ${toolLink('torSystems', 'Whonix')}, keeps them but must reach your node.`,
+      text: `Assumes the user's own ${toolLink('ethereumNode')} as the L1 endpoint, and all traffic through ${toolLink('nymVpn')} with the Random profile, an IP-hiding route that carries UDP, under which contacts and payment requests fail. A system on Tor with UDP blocked, like ${toolLink('torSystems', 'Whonix')}, keeps them but must reach the user's node.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Run a node',
-      text: `Set your own ${toolLink('aztecNode')} in the endpoint settings.`,
+      text: `Assumes the user's own ${toolLink('aztecNode')} is set in the endpoint settings.`,
       against: ['privilegedInsider'],
       outside: true,
     },
     {
       name: 'Register',
-      text: 'Claim your name from a wallet without a public link to you.',
+      text: 'Assumes the name is claimed from a wallet without a public link to the user.',
       against: ['publicObserver'],
     },
     {
       name: 'Deposit',
-      text: 'Fund each deposit address once and let it be swept. Give outside payers a deposit address your wallet created.',
+      text: 'Assumes each deposit address is funded once and left to be swept, and outside payers get a deposit address the wallet created.',
       against: ['publicObserver', 'privilegedInsider'],
     },
     {

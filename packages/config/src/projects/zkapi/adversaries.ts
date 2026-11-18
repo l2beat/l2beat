@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
@@ -149,7 +149,7 @@ export const zkApiAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Set up',
       text: A.torBrowser,
@@ -158,12 +158,12 @@ export const zkApiAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: 'Fund the address the app shows from any wallet, so no wallet connects to the session that sends your requests.',
+      text: 'Assumes the address the app shows is funded from any wallet, so no wallet connects to the session that sends requests.',
       against: ['networkObserver'],
     },
     {
       name: 'Chat',
-      text: 'Leave your name, addresses and other identifying details out of prompts, since the provider reads them.',
+      text: 'Assumes names, addresses and other identifying details are left out of prompts, since the provider reads them.',
       against: ['networkObserver'],
     },
   ],

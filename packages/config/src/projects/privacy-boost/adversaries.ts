@@ -146,10 +146,10 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Withdraw',
-      text: "Withdraw through the operator's relay, since a forced withdrawal publishes your account and the notes it spends.",
+      text: "Assumes withdrawals through the operator's relay, since a forced withdrawal publishes the user's account and the notes it spends.",
       against: ['publicObserver'],
     },
   ],

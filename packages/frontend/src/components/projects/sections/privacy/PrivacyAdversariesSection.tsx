@@ -70,9 +70,8 @@ export function PrivacyAdversariesSection({
         <span className="font-medium">at risk</span> stay private only under the
         condition in their note.
       </p>
-      {adversaries.advice && (
+      {adversaries.usageFlow && (
         <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
-          <span className="font-medium">{ADVICE.label}: </span>
           <CustomLink href={`#${ADVICE.sectionId}`}>{ADVICE.title}</CustomLink>
         </p>
       )}
@@ -91,7 +90,7 @@ export function PrivacyAdversariesSection({
             cell={block.cell}
             baseline={block.id === 'publicObserver' ? undefined : baseline}
             fields={adversaries.fields}
-            steps={getStepsAgainst(adversaries.advice, block.id)}
+            steps={getStepsAgainst(adversaries.usageFlow, block.id)}
           />
         ))}
       </div>
@@ -109,7 +108,7 @@ function AdversaryBlock({
   /** The adversary's rosette slice. */
   value: RosetteValue
   cell: PrivacyAdversaryCell
-  /** The advice steps that defend this cell. */
+  /** The usage flow steps that defend this cell. */
   steps: ReturnType<typeof getStepsAgainst>
   /** The public observer cell; undefined when rendering the baseline itself. */
   baseline: PrivacyAdversaryCell | undefined
@@ -130,7 +129,7 @@ function AdversaryBlock({
         }
         size="large"
       />
-      {/* One value column for every row, like "Against:" in the advice steps. */}
+      {/* One value column for every row, like "Against:" in the usage flow steps. */}
       <dl className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-3 gap-y-2 text-paragraph-13">
         {cell.interior &&
           (baseline?.interior ? (

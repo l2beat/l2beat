@@ -337,13 +337,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  const advice = details.adversaries.advice
+  const advice = details.adversaries.usageFlow
   if (advice) {
     sections.splice(adversariesSectionIndex, 0, {
       type: 'PrivacyAdviceSection',
       props: {
         id: ADVICE.sectionId,
         title: ADVICE.title,
+        projectName: details.name,
         steps: advice,
         adversaries: details.adversaries.adversaries,
         sentiments: mapValues(

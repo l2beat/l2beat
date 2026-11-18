@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -126,10 +126,10 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Deposit',
-      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool} Your usual browser and wallet will do, since the deposit is public.`,
+      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool} The user's usual browser and wallet do not change the rating here, since the deposit is public.`,
       against: ['futureAdversary', 'chainAnalyst'],
     },
     {
@@ -140,13 +140,13 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Sign in',
-      text: `${A.torBrowser} Sign in with your recovery phrase, so no wallet address is queried. Open no explorer links in that session.`,
+      text: `${A.torBrowser} Sign-in uses the recovery phrase, so no wallet address is queried, and no explorer links are opened in that session.`,
       against: ['networkObserver'],
       outside: true,
     },
     {
       name: 'Check',
-      text: 'Before withdrawing, find the latest RootUpdated event of the Entrypoint contract and open the list it names on IPFS. Withdraw only if the list holds many deposits.',
+      text: 'Assumes the list named by the latest RootUpdated event of the Entrypoint contract is opened on IPFS before withdrawing, and a withdrawal only if it holds many deposits.',
       against: ['privilegedInsider'],
       outside: true,
     },
@@ -157,7 +157,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Ragequit',
-      text: 'Ragequit only deposits you never withdrew from, since ragequitting a change note reveals the withdrawal that left it.',
+      text: 'Assumes a ragequit only of deposits never withdrawn from, since ragequitting a change note reveals the withdrawal that left it.',
       against: ['publicObserver'],
     },
   ],

@@ -20,6 +20,7 @@ import {
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import {
   ADVICE,
+  getAdviceNotice,
   getStepAdversaries,
   getStepsAgainst,
   getUncoveredAdversaries,
@@ -64,15 +65,13 @@ export function renderPrivacyAdversaries(
     `**What the protocol promises:** ${adversaries.promise.text}`,
     referenceApp ? renderReferenceApps(referenceApp) : '',
     `${PRIVACY_ADVERSARIES_TOOLTIP} Fields marked at risk stay private only under the condition in their note.`,
-    adversaries.advice
-      ? `**${ADVICE.label}:** ${ADVICE.title}, the next section.`
-      : '',
+    adversaries.usageFlow ? `${ADVICE.title}: the next section.` : '',
     ...adversaries.adversaries.map((adversary) => {
       const cell = adversaries.cells[adversary.id]
       return renderAdversary(adversary, cell, level, {
         baseline: adversary.id === 'publicObserver' ? undefined : baseline,
         fields: adversaries.fields,
-        steps: getStepsAgainst(adversaries.advice, adversary.id),
+        steps: getStepsAgainst(adversaries.usageFlow, adversary.id),
       })
     }),
   ])
@@ -156,17 +155,18 @@ function renderAdversary(
 
 /** The steps in order, each with the adversaries it defends, like the HTML. */
 export function renderPrivacyAdvice({
+  projectName,
   steps,
   adversaries,
   sentiments,
   waitWindowDays,
 }: Pick<
   PrivacyAdviceSectionProps,
-  'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
+  'projectName' | 'steps' | 'adversaries' | 'sentiments' | 'waitWindowDays'
 >) {
   const uncovered = getUncoveredAdversaries(steps, adversaries, sentiments)
   return joinBlocks([
-    `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
+    `**${getAdviceNotice(projectName)}** ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
         const against = getStepAdversaries(step, adversaries).map(

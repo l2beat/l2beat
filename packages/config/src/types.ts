@@ -1540,7 +1540,7 @@ export interface PrivacyAdversaryAssessment {
    * reference client?": good = yes, warning = only outside supported options
    * or by accepting a leak to another adversary, bad = no. It judges the
    * promised field only; other leaks are a derived marker. User
-   * hygiene never lowers the sentiment (it goes into the advice steps and `atRisk`
+   * hygiene never lowers the sentiment (it goes into the usage flow steps and `atRisk`
    * notes); facts about the deployment do, such as an anonymity set too small
    * for care to matter or a structural leak the adversary exploits. Network
    * observer baseline: Tor, and an own node where the client has an RPC
@@ -1604,14 +1604,15 @@ export interface PrivacyPromise {
 }
 
 /**
- * One step of our advice for the reference app, shown under How to stay
- * private. The steps run in the order the user takes them and are the single
- * home of the advice. Each adversary block links the steps that defend it.
+ * One step of the usage flow the ratings assume for the reference app, shown
+ * under Reviewed usage flow. The steps run in the order of use and are the
+ * single home of these assumptions. Each adversary block links the steps that
+ * defend it. Steps describe the reviewed setup; they are not recommendations.
  */
-export interface PrivacyAdviceStep {
+export interface PrivacyUsageFlowStep {
   /** One or two words, e.g. "Exit". Unique within the project. */
   name: string
-  /** What the user does, imperative markdown, three sentences at most. */
+  /** What the reviewed setup assumes, descriptive markdown ("Assumes …"), three sentences at most. */
   text: string
   /**
    * The adversaries this step keeps the promised field from, or a field their
@@ -1637,8 +1638,8 @@ export interface PrivacyAdversariesConfig {
   /** Overrides the default field description for this project, e.g. when linkage means something other than a transfer link. */
   fieldDescriptions?: Partial<Record<PrivacyField, string>>
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
-  /** Our advice as ordered steps. Absent when no step changes a cell, e.g. every cell is red. */
-  advice?: PrivacyAdviceStep[]
+  /** The reviewed usage flow as ordered steps. Absent when no step changes a cell, e.g. every cell is red. */
+  usageFlow?: PrivacyUsageFlowStep[]
 }
 
 /** A field this adversary learns more about than the public observer. */
@@ -1669,7 +1670,7 @@ export interface ProjectPrivacyAdversaries {
   adversaries: PrivacyAdversary[]
   fields: PrivacyFieldInfo[]
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
-  advice?: PrivacyAdviceStep[]
+  usageFlow?: PrivacyUsageFlowStep[]
 }
 
 // #endregion

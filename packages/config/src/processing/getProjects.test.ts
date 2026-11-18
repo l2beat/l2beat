@@ -17,8 +17,8 @@ import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
 import {
-  ADVICE_SNIPPETS,
   PRIVACY_METHODOLOGY_URL,
+  USAGE_FLOW_SNIPPETS,
 } from '../common/privacyAdversaries'
 import { PRIVACY_TOOLS, type PrivacyTool } from '../common/privacyTools'
 import { asArray } from '../templates/utils'
@@ -561,23 +561,23 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
-    // Steps are the single home of the advice, and a red cell has nothing a user can do.
-    it('every advice step defends a cell that is not red', () => {
+    // Steps are the single home of the usage flow, and a red cell has nothing a user can do.
+    it('every usage flow step defends a cell that is not red', () => {
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
         const adversaries = privacyInfo.adversaries
-        if (!adversaries?.advice) continue
-        const names = adversaries.advice.map((step) => step.name)
+        if (!adversaries?.usageFlow) continue
+        const names = adversaries.usageFlow.map((step) => step.name)
         if (new Set(names).size !== names.length) {
           problems.push(`${project.id}: step names repeat`)
         }
-        for (const step of adversaries.advice) {
+        for (const step of adversaries.usageFlow) {
           if (step.against.length === 0) {
             problems.push(`${project.id} ${step.name}: defends no cell`)
           }
-          // The wait snippet tells the user to wait a random time, which the page draws.
+          // The wait snippet assumes a random wait, which the page draws.
           if (
-            (step.text === ADVICE_SNIPPETS.wait) !==
+            (step.text === USAGE_FLOW_SNIPPETS.wait) !==
             (step.randomWait === true)
           ) {
             problems.push(
@@ -596,7 +596,7 @@ describe('getProjects', () => {
 
     // The entry holds the download and why we chose the app, so a step
     // links it, never the vendor.
-    it('every advice step links the tools it names to their entries', () => {
+    it('every usage flow step links the tools it names to their entries', () => {
       const tools: PrivacyTool[] = Object.values(PRIVACY_TOOLS)
       const downloads = tools.flatMap((tool) =>
         [...`${tool.head} ${tool.text}`.matchAll(/\]\((https:[^)]+)\)/g)].map(
@@ -605,7 +605,7 @@ describe('getProjects', () => {
       )
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
-        for (const step of privacyInfo.adversaries?.advice ?? []) {
+        for (const step of privacyInfo.adversaries?.usageFlow ?? []) {
           const links = [...step.text.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)]
           const unlinked = step.text.replace(/\[[^\]]+\]\([^)]+\)/g, '')
           for (const tool of tools) {

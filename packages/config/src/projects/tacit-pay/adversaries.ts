@@ -1,10 +1,10 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
-  ADVICE_SNIPPETS as A,
-  adviceLink,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
+  usageFlowLink,
 } from '../../common/privacyAdversaries'
 import type {
   PrivacyExposureMap,
@@ -205,22 +205,22 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Load',
-      text: 'Save the reviewed page version from your own node, check its hash and serve it from localhost, as the App section describes, not from anon.wei.limo.',
+      text: "Assumes the reviewed page version is saved from the user's own node, checked against its hash and served from localhost, as the App section describes, not from anon.wei.limo.",
       against: ['privilegedInsider'],
       outside: true,
     },
     {
       name: 'Sign in',
-      text: `Set your own ${toolLink('ethereumNode')} under Endpoints and in your wallet before signing in. Send all other traffic through an ${adviceLink('IP-hiding route', 'routes')}, so the relay sees no IP of yours.`,
+      text: `Assumes the user's own ${toolLink('ethereumNode')} is set under Endpoints and in the wallet before sign-in. All other traffic goes through an ${usageFlowLink('IP-hiding route', 'routes')}, so the relay sees no IP of the user's.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Shield',
-      text: 'Shield your own funds from that wallet, not through a deposit address. Give each payer their own deposit address.',
+      text: "Assumes the user's own funds are shielded from that wallet, not through a deposit address, and each payer gets their own deposit address.",
       against: ['networkObserver', 'publicObserver'],
     },
     {

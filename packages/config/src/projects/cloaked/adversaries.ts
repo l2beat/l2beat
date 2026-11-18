@@ -120,20 +120,20 @@ export const cloakedAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Sign up',
-      text: `Create your account with a passkey, not from a wallet signature or email. Keep the backup file from setup, since the passkey works only on Cloaked's domain. Leave your own ENS name unlinked.`,
+      text: `Assumes an account created with a passkey, not from a wallet signature or email. The backup file from setup is kept, since the passkey works only on Cloaked's domain, and the user's own ENS name stays unlinked.`,
       against: ['networkObserver', 'futureAdversary'],
     },
     {
       name: 'Receive',
-      text: 'Share a payment link or a fresh address for each payment instead of your name.',
+      text: 'Assumes a payment link or a fresh address is shared for each payment instead of a name.',
       against: ['publicObserver', 'networkObserver'],
     },
     {
       name: 'Spend',
-      text: 'Spend one address at a time with Advanced Control, and send to destinations with no public link to you. Space out related payments and avoid distinctive amounts. A payee can trace the change of their payment, so choose which address pays whom.',
+      text: 'Assumes one address is spent at a time with Advanced Control, to destinations with no public link to the user. Related payments are spaced out and amounts are not distinctive. A payee can trace the change of their payment, so the user chooses which address pays whom.',
       against: ['publicObserver', 'chainAnalyst'],
     },
   ],

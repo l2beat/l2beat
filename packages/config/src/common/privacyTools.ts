@@ -1,6 +1,6 @@
 /**
  * One entry of the privacy methodology's tool lists: an outside app or system
- * our advice steps tell the user to get.
+ * our usage flow steps name.
  */
 export interface PrivacyTool {
   /**
@@ -25,7 +25,7 @@ export interface PrivacyTool {
 }
 
 /**
- * Every outside app our advice names, in the order the methodology lists
+ * Every outside app our usage flow steps name, in the order the methodology lists
  * them: routes by the effort they take, then the other tools. An app joins
  * with the reason we chose it, and a step links its entry, never the vendor.
  */

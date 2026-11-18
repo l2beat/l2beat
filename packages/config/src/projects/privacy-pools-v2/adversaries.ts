@@ -1,5 +1,5 @@
 import {
-  ADVICE_SNIPPETS as A,
+  USAGE_FLOW_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
@@ -208,21 +208,21 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       ],
     },
   },
-  advice: [
+  usageFlow: [
     {
       name: 'Set up',
-      text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Assumes ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic, reconnected before each session. A ${toolLink('ethereumNode', 'local Ethereum node')} is set as the app's endpoint before sign-in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Deposit',
-      text: 'Deposit into ppETH or ppUSDC, the pools with the most depositors.',
+      text: 'Assumes deposits into ppETH or ppUSDC, the pools with the most depositors.',
       against: ['chainAnalyst'],
     },
     {
       name: 'Pay',
-      text: 'Reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label.',
+      text: 'Assumes a reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label.',
       against: ['chainAnalyst'],
     },
     {
@@ -233,18 +233,18 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Check',
-      text: "Before withdrawing, find the ASPRegistry's latest root and open the list it names on IPFS. Withdraw only if the list holds many deposits.",
+      text: "Assumes the list named by the ASPRegistry's latest root is opened on IPFS before withdrawing, and a withdrawal only if it holds many deposits.",
       against: ['privilegedInsider'],
       outside: true,
     },
     {
       name: 'Withdraw',
-      text: `Sign in with the account key in a private window instead of with a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
+      text: `Assumes sign-in with the account key in a private window instead of with a wallet, and withdrawals of common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
     {
       name: 'Ragequit',
-      text: 'Ragequit only notes you deposited and never spent from.',
+      text: 'Assumes a ragequit only of notes the user deposited and never spent from.',
       against: ['publicObserver'],
     },
   ],
