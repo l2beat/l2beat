@@ -7,9 +7,17 @@ export function toEventSelector(eventSignature: string): string {
 }
 
 export function errorToString(error: unknown): string {
-  return error instanceof Error
-    ? JSON.stringify(ownProperties(error))
-    : JSON.stringify({ message: String(error), value: error })
+  if (!(error instanceof Error)) {
+    return JSON.stringify({ message: String(error), value: error })
+  }
+  try {
+    return JSON.stringify(ownProperties(error), (_key, value: unknown) =>
+      typeof value === 'bigint' ? value.toString() : value,
+    )
+  } catch {
+    // A cause that cannot be serialized must not hide the error itself
+    return JSON.stringify({ message: error.message, stack: error.stack })
+  }
 }
 
 // An array replacer would filter nested objects too and empty out `cause`

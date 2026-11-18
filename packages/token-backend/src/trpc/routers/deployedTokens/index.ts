@@ -86,13 +86,10 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
           deployedToken.abstractTokenId,
         )
         if (abstractToken === undefined) {
-          throw new Error('Missing abstract token assigned to deployed token', {
-            cause: {
-              abstractTokenId: deployedToken.abstractTokenId,
-              chain: deployedToken.chain,
-              address: deployedToken.address,
-            },
-          })
+          throw new Error(
+            // biome-ignore lint/plugin/staticErrorMessage: tRPC passes only the message to the token UI, and it must name the corrupt record
+            `Missing abstract token ${deployedToken.abstractTokenId} assigned to ${deployedToken.chain}:${deployedToken.address}`,
+          )
         }
         return { deployedToken, abstractToken }
       }),
@@ -102,9 +99,10 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       .query(async ({ ctx, input }) => {
         const relation = await ctx.tokenDb.tokenRelation.findByPrimaryKey(input)
         if (relation === undefined) {
-          throw new Error('Token relation no longer exists', {
-            cause: { relation: formatTokenRelationPrimaryKey(input) },
-          })
+          throw new Error(
+            // biome-ignore lint/plugin/staticErrorMessage: tRPC passes only the message to the token UI, and it must name the relation
+            `Token relation ${formatTokenRelationPrimaryKey(input)} no longer exists`,
+          )
         }
         return relation
       }),

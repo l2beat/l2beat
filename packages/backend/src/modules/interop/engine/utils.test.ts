@@ -17,4 +17,16 @@ describe(errorToString.name, () => {
       rpcMessage: 'header not found',
     })
   })
+
+  // Called while handling a failure, so it must never throw itself
+  it('serializes a cause holding a bigint or a cycle', () => {
+    const cycle: Record<string, unknown> = {}
+    cycle.self = cycle
+
+    const withBigint = errorToString(new Error('x', { cause: { value: 1n } }))
+    const withCycle = errorToString(new Error('y', { cause: cycle }))
+
+    expect(JSON.parse(withBigint).cause).toEqual({ value: '1' })
+    expect(JSON.parse(withCycle).message).toEqual('y')
+  })
 })

@@ -19,9 +19,10 @@ function createFrontendClient(baseUrl: string) {
       getAll: async (): Promise<FrontendChain[]> => {
         const response = await fetch(`${baseUrl}/api/interop/chains`)
         if (!response.ok) {
-          throw new Error('Failed to fetch frontend chains', {
-            cause: { baseUrl, status: response.status },
-          })
+          throw new Error(
+            // biome-ignore lint/plugin/staticErrorMessage: ChainsSummaryPage shows only the message, and the operator needs the endpoint and status
+            `Failed to fetch frontend chains from ${baseUrl}: ${response.status}`,
+          )
         }
         return FrontendChains.parse(await response.json())
       },
