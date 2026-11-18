@@ -9,14 +9,14 @@ import { getL2CommonProjectColumns } from '~/components/table/common-project-col
 import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { TableLink } from '~/components/table/TableLink'
 import type { L2RiskDaEntry } from '~/server/features/layer2s/risks/data-availability/getL2RiskDaEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 const columnHelper = createColumnHelper<L2RiskDaEntry>()
 
 export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
   return compact([
-    ...getL2CommonProjectColumns(
-      columnHelper,
-      (row) => `/layer2s/projects/${row.slug}`,
+    ...getL2CommonProjectColumns(columnHelper, (row) =>
+      getProjectPath(row.slug),
     ),
     ...withChangeSort(
       columnHelper,
@@ -31,7 +31,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
 
           return (
             <TableLink
-              href={`/layer2s/projects/${ctx.row.original.slug}#data-posted`}
+              href={`${getProjectPath(ctx.row.original.slug)}#data-posted`}
             >
               <ValueWithPercentageChange
                 change={data.change}

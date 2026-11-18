@@ -2,6 +2,7 @@ import type { ProjectDefiToken } from '@l2beat/config'
 import type { AbstractTokenRecord } from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
@@ -77,7 +78,7 @@ function getEntries(
         name: project.name,
         shortName: project.shortName,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/defi/projects/${project.slug}`,
+        href: getProjectPath(project.slug),
         description: project.display.description,
         isUnderReview: !!project.statuses.reviewStatus,
         tokens: (project.defiInfo.tokens ?? []).map((token) => {

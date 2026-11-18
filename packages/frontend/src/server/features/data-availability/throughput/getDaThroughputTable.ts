@@ -9,6 +9,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 type LargestPoster = Omit<DataAvailabilityRecord, 'configurationId'> & {
@@ -221,7 +222,7 @@ function getPastDayData(
           ),
           totalPosted: Number(largestPoster.totalSize),
           href: largestPoster.slug
-            ? `/layer2s/projects/${largestPoster.slug}`
+            ? getProjectPath(largestPoster.slug)
             : undefined,
         }
       : undefined,
@@ -246,7 +247,7 @@ function getMockDaThroughputTableData(
                   name: 'Base',
                   percentage: 12,
                   totalPosted: 123123,
-                  href: '/layer2s/projects/base',
+                  href: getProjectPath('base'),
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
@@ -279,7 +280,7 @@ function getMockDaThroughputTableData(
                   name: 'Base',
                   percentage: 40,
                   totalPosted: 123123,
-                  href: '/layer2s/projects/base',
+                  href: getProjectPath('base'),
                 },
                 avgThroughputPerSecond: 100000,
               },

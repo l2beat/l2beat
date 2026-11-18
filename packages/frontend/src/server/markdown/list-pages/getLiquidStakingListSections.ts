@@ -1,5 +1,6 @@
 import { LIQUID_STAKING_RISKS } from '~/pages/defi/liquid-staking/liquidStakingRisks'
 import { getLiquidStakingProjects } from '~/server/features/defi/liquid-staking/getLiquidStakingProjects'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   firstSentence,
   type LinkListSection,
@@ -12,10 +13,10 @@ export async function getLiquidStakingListSections(): Promise<
   const projects = await getLiquidStakingProjects()
   return [
     {
-      heading: 'Liquid staking protocols (/defi/projects/{slug})',
+      heading: 'Liquid staking protocols (/projects/{slug})',
       links: projects.map((p) => ({
         name: p.name,
-        path: `/defi/projects/${p.slug}`,
+        path: getProjectPath(p.slug),
         description: withFacts(
           firstSentence(p.display.description),
           LIQUID_STAKING_RISKS.map(
