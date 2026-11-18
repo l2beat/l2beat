@@ -12,9 +12,7 @@ export function findSelected(
       if (contract.address === address) {
         const blockNumber = chain.blockNumbers[contract.chain]
         if (blockNumber === undefined) {
-          throw new Error('Block number is undefined', {
-            cause: { chain: contract.chain },
-          })
+          throw new Error(`Block number for ${contract.chain} is undefined`)
         }
         return { ...contract, blockNumber, sourceProject: chain.project }
       }
@@ -23,9 +21,7 @@ export function findSelected(
       if (contract.address === address) {
         const blockNumber = chain.blockNumbers[contract.chain]
         if (blockNumber === undefined) {
-          throw new Error('Block number is undefined', {
-            cause: { chain: contract.chain },
-          })
+          throw new Error(`Block number for ${contract.chain} is undefined`)
         }
         return { ...contract, blockNumber, sourceProject: chain.project }
       }
@@ -34,9 +30,7 @@ export function findSelected(
       if (eoa.address === address) {
         const blockNumber = chain.blockNumbers[eoa.chain]
         if (blockNumber === undefined) {
-          throw new Error('Block number is undefined', {
-            cause: { chain: eoa.chain },
-          })
+          throw new Error(`Block number for ${eoa.chain} is undefined`)
         }
         return { ...eoa, blockNumber, sourceProject: chain.project }
       }

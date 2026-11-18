@@ -26,19 +26,17 @@ describe(DaBeatStatsProvider.name, () => {
     it('throws error for a layer other than ethereum', async () => {
       const provider = new DaBeatStatsProvider(undefined)
 
-      const error = await provider.getStats('celestia').catch((e: unknown) => e)
-
-      expect((error as Error).message).toEqual('Stats provider not implemented')
-      expect((error as Error).cause).toEqual({ projectId: 'celestia' })
+      await expect(provider.getStats('celestia')).toBeRejectedWith(
+        'Stats provider not implemented for: celestia',
+      )
     })
 
     it('throws error for unknown project ID', async () => {
       const provider = new DaBeatStatsProvider(undefined)
 
-      const error = await provider.getStats('unknown').catch((e: unknown) => e)
-
-      expect((error as Error).message).toEqual('Stats provider not implemented')
-      expect((error as Error).cause).toEqual({ projectId: 'unknown' })
+      await expect(provider.getStats('unknown')).toBeRejectedWith(
+        'Stats provider not implemented for: unknown',
+      )
     })
   })
 

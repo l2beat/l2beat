@@ -12,7 +12,7 @@ export function unifyPercentagesAsIntegers<T extends number[]>(
   const ALLOWED_ERROR = 0.001
   const summed = sum(percentages)
   if (summed < 100 - ALLOWED_ERROR || summed > 100 + ALLOWED_ERROR) {
-    throw new Error('Values do not sum to 100', { cause: { summed } })
+    throw new Error(`Values do not sum to 100, they sum to ${summed}`)
   }
 
   const intParts = percentages.map(Math.floor)

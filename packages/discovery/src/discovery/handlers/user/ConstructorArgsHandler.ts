@@ -142,9 +142,7 @@ export function serializeResult(result: ethers.utils.Result): ContractValue {
     return result
   }
 
-  throw new Error("Don't know how to serialize", {
-    cause: { type: typeof result },
-  })
+  throw new Error(`Don't know how to serialize: ${typeof result}`)
 }
 
 /** @internal */

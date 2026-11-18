@@ -34,7 +34,6 @@ describe('tokens script', () => {
         for (const [key, value] of Object.entries(source)) {
           if (!isEqual(output[key as keyof typeof output], value))
             throw new Error(
-              // biome-ignore lint/plugin/staticErrorMessage: mocha prints only the message of a failed test and drops cause, and the token, field and "pnpm tokens" hint are what the reader needs
               `${chain}:${source.symbol} has different ${key} in generated.json. Please run "pnpm tokens"`,
             )
         }

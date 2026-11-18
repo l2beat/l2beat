@@ -15,9 +15,9 @@ export async function checkForBlobs(
   )
   const missingIndex = rpcTxs.findIndex((x) => x === undefined)
   if (missingIndex !== -1) {
-    throw new Error('Transaction is missing', {
-      cause: { hash: sequencerTxs[missingIndex]?.hash },
-    })
+    throw new Error(
+      `Transaction ${sequencerTxs[missingIndex]?.hash} is missing`,
+    )
   }
 
   return (

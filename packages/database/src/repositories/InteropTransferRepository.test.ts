@@ -2342,15 +2342,9 @@ describe('InteropTransferRepository toRecord', () => {
       bridgeType: 'invalid-category',
     } as Selectable<InteropTransfer>
 
-    expect(() => toRecord(row)).toThrow('Invalid interop transfer bridge type')
-    try {
-      toRecord(row)
-    } catch (error) {
-      expect((error as Error).cause).toEqual({
-        bridgeType: 'invalid-category',
-        transferId: row.transferId,
-      })
-    }
+    expect(() => toRecord(row)).toThrow(
+      'Invalid interop transfer bridge type: invalid-category',
+    )
   })
 })
 

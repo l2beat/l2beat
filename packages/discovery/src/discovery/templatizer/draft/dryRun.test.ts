@@ -232,7 +232,7 @@ describe(dryRunDraft.name, () => {
     expect(result.findings).toEqual([
       {
         path: 'draft',
-        message: `dry run at block ${BLOCK} failed as a whole: The edit of a field failed: {"fieldName":"finalized","error":"Assertion Error: String keys only work on objects"}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
+        message: `dry run at block ${BLOCK} failed as a whole: The edit of field finalized failed: Assertion Error: String keys only work on objects; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
       },
     ])
     expect(result.record.fields.map((field) => field.size)).toEqual([
@@ -260,7 +260,7 @@ describe(dryRunDraft.name, () => {
     expect(result.findings).toEqual([
       {
         path: 'draft',
-        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies: {"unresolved":"lastFinalized waits for {{ lastFinalizedBatchIndex }}"}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
+        message: `dry run at block ${BLOCK} failed as a whole: Impossible to resolve dependencies: lastFinalized waits for {{ lastFinalizedBatchIndex }}; this is usually a {{ reference }} to a name no field or getter has, a reference cycle, or an edit that does not fit its value: fix the fields involved or leave them out`,
       },
     ])
   })

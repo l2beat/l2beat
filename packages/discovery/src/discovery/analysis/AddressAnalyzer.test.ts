@@ -548,7 +548,7 @@ describe(AddressAnalyzer.name, () => {
           getTemplateHash: (template: string) => {
             const hash = templates.hashes[template]
             if (hash === undefined) {
-              throw new Error('no template', { cause: { template } })
+              throw new Error(`no template ${template}`)
             }
             return hash
           },

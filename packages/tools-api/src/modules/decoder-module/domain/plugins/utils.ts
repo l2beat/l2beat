@@ -41,9 +41,9 @@ export class BinaryReader {
 
   read(n: number): `0x${string}` {
     if (!this.has(n)) {
-      throw new Error('Cannot read bytes past the end of the input', {
-        cause: { bytes: n, position: this.position, total: this.length },
-      })
+      throw new Error(
+        `Cannot read ${n} bytes. Position: ${this.position}, total: ${this.length}`,
+      )
     }
 
     const start = this.position * 2 + 2

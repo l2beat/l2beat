@@ -23,9 +23,9 @@ export class KnowledgeBase {
   ): ClingoFact | undefined {
     const facts = this.getFacts(id, params)
     if (facts.length > 1) {
-      throw new Error('Found multiple facts with the same id and params', {
-        cause: { id, params },
-      })
+      throw new Error(
+        `Found multiple facts with "${id}" id and params: ${JSON.stringify(params)}`,
+      )
     }
     return facts[0]
   }
@@ -33,9 +33,9 @@ export class KnowledgeBase {
   getFact(id: string, params: (string | number | undefined)[]): ClingoFact {
     const fact = this.getFactOrUndefined(id, params)
     if (fact === undefined) {
-      throw new Error('No fact found with the id and params', {
-        cause: { id, params },
-      })
+      throw new Error(
+        `No fact found with id "${id}" and params: ${JSON.stringify(params)}`,
+      )
     }
     return fact
   }

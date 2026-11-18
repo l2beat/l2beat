@@ -26,13 +26,13 @@ export function getTooltipTriggerDescription(html: string) {
 
 function sliceElementById(html: string, id: string) {
   const idIndex = html.indexOf(`id="${id}"`)
-  if (idIndex === -1) throw new Error('No element with id', { cause: { id } })
+  if (idIndex === -1) throw new Error(`No element with id ${id}`)
   return sliceElementStartingAt(html, html.lastIndexOf('<', idIndex))
 }
 
 function sliceElementStartingAt(html: string, openStart: number) {
   const tag = html.slice(openStart + 1).match(/^\w+/)?.[0]
-  if (!tag) throw new Error('No tag at position', { cause: { openStart } })
+  if (!tag) throw new Error(`No tag at ${openStart}`)
 
   let depth = 0
   const tags = new RegExp(`<(/?)${tag}\\b[^>]*>`, 'g')
@@ -42,5 +42,5 @@ function sliceElementStartingAt(html: string, openStart: number) {
       return html.slice(openStart, openStart + match.index + match[0].length)
     }
   }
-  throw new Error('Tag is not closed', { cause: { tag, openStart } })
+  throw new Error(`<${tag}> at ${openStart} is not closed`)
 }

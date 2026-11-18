@@ -26,7 +26,7 @@
  * `$schema`, and anything may be added there. A path that exists is a
  * problem for the model to fix, never a replacement.
  */
-import { parseJsonc } from '@l2beat/shared-pure'
+import { getErrorMessage, parseJsonc } from '@l2beat/shared-pure'
 import { type Node, parseTree } from 'jsonc-parser'
 import { ColorContract } from '../../config/ColorConfig'
 import { ContractPermission } from '../../config/PermissionConfig'
@@ -484,10 +484,7 @@ function assertKeepsValues(old: unknown, merged: unknown, path: string): void {
   }
   if (JSON.stringify(old) !== JSON.stringify(merged)) {
     throw new Error(
-      'mergeTemplate would change the template; nothing was written',
-      {
-        cause: { path: path || 'the template' },
-      },
+      `mergeTemplate would change ${path || 'the template'}; nothing was written`,
     )
   }
 }
@@ -500,8 +497,8 @@ function assertLoadsAsTemplate(text: string): void {
     ColorContract.parse(json)
     ContractPermission.parse(json)
   } catch (error) {
-    throw new Error('The merged template.jsonc does not load', {
-      cause: { error },
-    })
+    throw new Error(
+      `The merged template.jsonc does not load: ${getErrorMessage(error)}`,
+    )
   }
 }

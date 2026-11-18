@@ -1,6 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { describeError } from '../clients/rpc/describeError'
 import {
   BATCH_REJECTED,
   isBatchRejected,
@@ -34,9 +33,6 @@ export interface FilterParameter {
   topics?: (string | null | (string | null)[])[]
   blockHash?: string
 }
-
-// The body goes to the logs with the error, where nothing else bounds it
-const BODY_LENGTH_MAX = 1000
 
 export class EthRpcClient {
   private readonly batcher: RpcBatcher
@@ -134,7 +130,7 @@ export class EthRpcClient {
       ])
     } catch (e) {
       if (isRevert(e)) {
-        return { reverted: true, reason: describeError(e) }
+        return { reverted: true, reason: e.message }
       }
       throw e
     }
@@ -156,7 +152,7 @@ export class EthRpcClient {
       ])
     } catch (e) {
       if (isRevert(e)) {
-        return { reverted: true, reason: describeError(e) }
+        return { reverted: true, reason: e.message }
       }
       throw e
     }
@@ -296,12 +292,9 @@ export class EthRpcClient {
       }
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
       if (!parsed.success) {
-        throw new Error('RPC call failed. Unexpected HTTP response', {
-          cause: {
-            httpStatus: response.status,
-            body: response.body.slice(0, BODY_LENGTH_MAX),
-          },
-        })
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
       }
       const byId = new Map(
         parsed.data.map((envelope) => [envelope.id, envelope]),
@@ -312,12 +305,9 @@ export class EthRpcClient {
           throw new Error('RPC call failed. ID mismatch.')
         }
         if ('error' in envelope) {
-          throw new Error('RPC call failed. RPC error', {
-            cause: {
-              rpcCode: envelope.error.code,
-              rpcMessage: envelope.error.message,
-            },
-          })
+          throw new Error(
+            `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+          )
         }
         return envelope.result
       })
@@ -353,21 +343,15 @@ export class EthRpcClient {
       }
       const parsed = JsonRpcResponse.safeValidate(data)
       if (!jsonSuccess || !parsed.success) {
-        throw new Error('RPC call failed. Unexpected HTTP response', {
-          cause: {
-            httpStatus: response.status,
-            body: response.body.slice(0, BODY_LENGTH_MAX),
-          },
-        })
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        )
       }
       const envelope = parsed.data
       if ('error' in envelope) {
-        throw new Error('RPC call failed. RPC error', {
-          cause: {
-            rpcCode: envelope.error.code,
-            rpcMessage: envelope.error.message,
-          },
-        })
+        throw new Error(
+          `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+        )
       }
       if (envelope.id !== id) {
         throw new Error('RPC call failed. ID mismatch.')
@@ -696,10 +680,10 @@ function isRevert(e: unknown): e is Error {
   return (
     e instanceof Error &&
     e.message.startsWith('RPC call failed') &&
-    (describeError(e).includes('invalid opcode: INVALID') ||
-      describeError(e).includes('CALL_EXCEPTION') ||
-      describeError(e).includes('revert') ||
-      describeError(e).includes('reverted') ||
-      describeError(e).includes('gas required exceeds allowance'))
+    (e.message.includes('invalid opcode: INVALID') ||
+      e.message.includes('CALL_EXCEPTION') ||
+      e.message.includes('revert') ||
+      e.message.includes('reverted') ||
+      e.message.includes('gas required exceeds allowance'))
   )
 }

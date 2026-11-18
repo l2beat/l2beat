@@ -215,6 +215,6 @@ export function getProjectChartMeta(projectId: ProjectId) {
         },
       } satisfies ChartMeta
     default:
-      throw new Error('Unknown project ID', { cause: { projectId } })
+      throw new Error(`Unknown project ID: ${projectId}`)
   }
 }

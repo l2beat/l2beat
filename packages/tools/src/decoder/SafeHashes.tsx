@@ -5,17 +5,6 @@ import { getSafeState } from './api'
 import { useRegisterKnownHash } from './HashReferences'
 import { calculateNearbySafeHashes, calculateSafeHashes } from './safe'
 
-// The page shows this text to a person, who needs the values that live in the
-// cause (such as the unsupported Safe version), not only the static message.
-function describeError(error: Error): string {
-  const cause = error.cause
-  if (typeof cause !== 'object' || cause === null) return error.message
-  const details = Object.entries(cause)
-    .map(([key, value]) => `${key}: ${String(value)}`)
-    .join(', ')
-  return `${error.message} (${details})`
-}
-
 export function SafeHashes(props: {
   calldata: Hex
   address?: Hex
@@ -49,8 +38,7 @@ export function SafeHashes(props: {
         nonce,
       })
     } catch (e) {
-      error =
-        e instanceof Error ? describeError(e) : 'Cannot calculate Safe hashes.'
+      error = e instanceof Error ? e.message : 'Cannot calculate Safe hashes.'
     }
   }
 

@@ -24,7 +24,6 @@ describe('tinify', () => {
 
     if (missing.length > 0) {
       throw new Error(
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         'Not all images were tinified. Run `pnpm tinify` to tinify them. Missing: ' +
           missing.join(', '),
       )
@@ -47,27 +46,22 @@ describe('tinify', () => {
       const hash = metadata[path.relative(process.cwd(), icon)]
 
       if (!hash) {
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         throw new Error(`${icon} not in metadata, run pnpm tinify`)
       }
 
       if (hash !== expectedHash) {
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         throw new Error(`${icon} hash mismatch`)
       }
 
       if (width !== 128) {
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         throw new Error(`${icon} must be 128 px wide`)
       }
 
       if (height !== 128) {
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         throw new Error(`${icon} must be 128 px high`)
       }
 
       if (size > 14796) {
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         throw new Error(`${icon} must be less than 14796 bytes`)
       }
     }

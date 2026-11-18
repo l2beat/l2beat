@@ -150,7 +150,7 @@ export const AVAILABLE_CHAINS: Chain[] = [
 export function getChain(shortName: string): Chain {
   const chain = AVAILABLE_CHAINS.find((c) => c.shortName === shortName)
   if (chain === undefined) {
-    throw new Error('Unknown chain short name', { cause: { shortName } })
+    throw new Error(`Unknown chain short name: ${shortName}`)
   }
   return chain
 }

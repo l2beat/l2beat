@@ -11,7 +11,6 @@ import {
 } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
-import { thrownBy } from '../../../utils/thrownBy'
 import { trailDirectory } from '../artifacts'
 import {
   copyTemplatesHiding,
@@ -62,14 +61,9 @@ describe(copyTemplatesHiding.name, () => {
   })
 
   it('refuses a template that is not there, rather than benchmark with nothing hidden', () => {
-    const error = thrownBy(() =>
+    expect(() =>
       copyTemplatesHiding(join(root, 'source'), join(root, 'copy'), 'nope/X'),
-    )
-    expect(error.message).toEqual('Template does not exist in the source')
-    expect(error.cause).toEqual({
-      template: 'nope/X',
-      source: join(root, 'source'),
-    })
+    ).toThrow('Template nope/X does not exist')
   })
 })
 

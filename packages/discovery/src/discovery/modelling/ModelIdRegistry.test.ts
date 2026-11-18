@@ -1,5 +1,4 @@
 import { expect } from 'earl'
-import { thrownBy } from '../../utils/thrownBy'
 import type { ClingoFact } from './clingoparser'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
@@ -40,9 +39,9 @@ describe(ModelIdRegistry.name, () => {
     })
 
     it('throws when address is not found', () => {
-      const error = thrownBy(() => registry.getAddressData('abc'))
-      expect(error.message).toEqual('No address data found for modelId')
-      expect(error.cause).toEqual({ modelId: 'abc' })
+      expect(() => registry.getAddressData('abc')).toThrow(
+        'No address data found for modelId abc',
+      )
     })
   })
 

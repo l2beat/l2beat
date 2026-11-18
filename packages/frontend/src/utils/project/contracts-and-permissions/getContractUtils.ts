@@ -125,7 +125,7 @@ function createContractUtils(
     getChainName(chain) {
       const name = chainNameMap.get(chain)
       if (!name) {
-        throw new Error('Unknown chain', { cause: { chain } })
+        throw new Error(`Unknown chain: ${chain}`)
       }
       return name
     },

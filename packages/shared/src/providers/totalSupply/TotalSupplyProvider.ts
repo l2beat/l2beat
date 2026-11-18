@@ -64,7 +64,7 @@ export class TotalSupplyProvider {
       }
     }
 
-    throw new Error('Missing RpcClient', { cause: { chain } })
+    throw new Error(`Missing RpcClient for ${chain}`)
   }
 }
 

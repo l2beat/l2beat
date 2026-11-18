@@ -160,9 +160,7 @@ describe(Templatizer.name, () => {
     return instance.templatizeDiscovered(analyses, (address) => {
       const found = requests.get(address.toString())
       return found === undefined
-        ? Promise.reject(
-            new Error('no request', { cause: { address: address.toString() } }),
-          )
+        ? Promise.reject(new Error(`no request for ${address}`))
         : Promise.resolve(found)
     })
   }
@@ -427,7 +425,7 @@ describe(Templatizer.name, () => {
       '',
     )
     const THRESHOLD_FAILS =
-      'threshold fails on the new code: Cannot find a matching method: {"method":"threshold"}'
+      'threshold fails on the new code: Cannot find a matching method for threshold'
 
     function writeOldTemplate(text = OLD_TEMPLATE) {
       const directory = join(root, '_templates', 'proj', 'Registry')

@@ -170,9 +170,7 @@ export class RpcClientCompat implements IRpcClient {
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const block = await this.getBlock(blockNumber, false)
     if (!block.parentBeaconBlockRoot) {
-      throw new Error('parentBeaconBlockRoot should be defined', {
-        cause: { blockNumber },
-      })
+      throw new Error(`Block ${block}: parentBeaconBlockRoot should be defined`)
     }
     return block.parentBeaconBlockRoot
   }
@@ -228,7 +226,7 @@ export class RpcClientCompat implements IRpcClient {
   async getTransaction(txHash: string): Promise<EVMTransaction> {
     const tx = await this.ethRpcClient.getTransactionByHash(txHash)
     if (tx === null) {
-      throw new Error('Transaction not found', { cause: { txHash } })
+      throw new Error(`Transaction ${txHash} not found`)
     }
     return toTx(tx)
   }
@@ -236,7 +234,7 @@ export class RpcClientCompat implements IRpcClient {
   async getTransactionReceipt(txHash: string): Promise<Receipt> {
     const receipt = await this.ethRpcClient.getTransactionReceipt(txHash)
     if (receipt === null) {
-      throw new Error('Transaction not found', { cause: { txHash } })
+      throw new Error(`Transaction ${txHash} not found`)
     }
     return toReceipt(receipt)
   }
@@ -347,9 +345,7 @@ export class RpcClientCompat implements IRpcClient {
   async multicall(calls: CallParameters[], blockNumber: number) {
     const client = this.multicallClient
     if (!(client && client.sinceBlock <= blockNumber)) {
-      throw new Error('Multicall not configured for block', {
-        cause: { blockNumber },
-      })
+      throw new Error(`Multicall not configured for block ${blockNumber}`)
     }
     const batches = client.encodeBatches(calls)
     const batchedResults = await Promise.all(
@@ -413,7 +409,7 @@ export function toEVMBlock(
     throw new NotFoundOnRpcError('Block not found', { cause: { blockNumber } })
   }
   if (block.hash === null || block.number === null) {
-    throw new Error('Block is pending', { cause: { blockNumber } })
+    throw new Error(`Block ${blockNumber} is pending`)
   }
   const base: EVMBlock = {
     hash: block.hash,

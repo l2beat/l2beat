@@ -129,7 +129,7 @@ describe(ArrayHandler.name, () => {
             'function someName(uint256 a, uint256 b) view returns (uint256)',
             'function someName() view returns (uint256)',
           ]),
-      ).toThrow('Cannot find a matching method')
+      ).toThrow('Cannot find a matching method for someName')
     })
 
     it('finds the method by method name', () => {
@@ -163,7 +163,7 @@ describe(ArrayHandler.name, () => {
             'function bar(uint256 a, uint256 b) view returns (uint256)',
             'function bar() view returns (uint256)',
           ]),
-      ).toThrow('Cannot find a matching method')
+      ).toThrow('Cannot find a matching method for bar')
     })
   })
 

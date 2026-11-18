@@ -80,7 +80,7 @@ function parseBlock(lines: string[]): DiffHistoryBlock {
   if (type !== undefined) i++
   const header = parseHeaderLine(lines[i] ?? '')
   if (header === undefined)
-    throw new Error('Bad diff block header', { cause: { line: lines[i] } })
+    throw new Error(`Bad diff block header: ${lines[i]}`)
   i++
 
   const block: DiffHistoryBlock = { ...header.block }

@@ -25,9 +25,7 @@ export function getPublicationEntryFromGovernance(
     `/meta-images/publications/${governanceArticle.id}.png`,
   )
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', {
-      cause: { publicationId: governanceArticle.id },
-    })
+    throw new Error(`Thumbnail not found for ${governanceArticle.id}`)
   }
   return {
     id: governanceArticle.id,
@@ -54,9 +52,7 @@ export function getPublicationEntryFromOtherPublication(
     `/meta-images/publications/${otherPublication.id}.png`,
   )
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', {
-      cause: { publicationId: otherPublication.id },
-    })
+    throw new Error(`Thumbnail not found for ${otherPublication.id}`)
   }
   return {
     id: otherPublication.id,
@@ -83,9 +79,7 @@ export function getPublicationEntryFromMonthlyUpdate(
     `/meta-images/publications/${monthlyUpdate.id}.png`,
   )
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', {
-      cause: { publicationId: monthlyUpdate.id },
-    })
+    throw new Error(`Thumbnail not found for ${monthlyUpdate.id}`)
   }
   return {
     id: monthlyUpdate.id,
@@ -112,9 +106,7 @@ export function getPublicationEntryFromExternalPublication(
     `/meta-images/publications/${externalPublication.id}.png`,
   )
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', {
-      cause: { publicationId: externalPublication.id },
-    })
+    throw new Error(`Thumbnail not found for ${externalPublication.id}`)
   }
   return {
     id: externalPublication.id,

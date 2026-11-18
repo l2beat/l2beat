@@ -10,7 +10,6 @@ import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
 import type { BlockHeader, LogsTopicFilter } from '../types'
-import { describeError } from './describeError'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
 import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
@@ -144,7 +143,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         includeTxs,
         response: JSON.stringify(blockResponse),
       })
-      throw new Error('Block: Error during parsing', { cause: { blockNumber } })
+      throw new Error(`Block ${blockNumber}: Error during parsing`)
     }
 
     return { ...block.data.result }
@@ -159,7 +158,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         txHash,
         response: JSON.stringify(response),
       })
-      throw new Error('Tx: Error during parsing', { cause: { txHash } })
+      throw new Error(`Tx ${txHash}: Error during parsing`)
     }
 
     return { ...transaction.data.result }
@@ -174,7 +173,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         txHash,
         response: JSON.stringify(response),
       })
-      throw new Error('Receipt: Error during parsing', { cause: { txHash } })
+      throw new Error(`Receipt ${txHash}: Error during parsing`)
     }
 
     return { ...receipt.data.result }
@@ -198,9 +197,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
         txHashes,
         response: JSON.stringify(responses),
       })
-      throw new Error('Receipts: Error during parsing', {
-        cause: { transactionCount: txHashes.length },
-      })
+      throw new Error(
+        `Receipts of ${txHashes.length} txs: Error during parsing`,
+      )
     }
 
     return receipts.data.map((receipt) => ({ ...receipt.result }))
@@ -248,9 +247,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
         holder,
         response: JSON.stringify(balanceResponse),
       })
-      throw new Error('Balance: Error during parsing', {
-        cause: { holder, blockNumber },
-      })
+      throw new Error(
+        `Balance of ${holder} at block ${blockNumber}: Error during parsing`,
+      )
     }
     return balance.data.result
   }
@@ -587,11 +586,7 @@ function buildCallObject(callParams: CallParameters): Record<string, string> {
   }
 }
 
-export function isLimitExceededError(error: {
-  message: string
-  cause?: unknown
-}) {
-  const message = describeError(error)
+export function isLimitExceededError({ message }: { message: string }) {
   return (
     message.includes('Log response size exceeded') ||
     message.includes('query exceeds max block range 100000') ||

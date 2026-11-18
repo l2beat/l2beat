@@ -864,7 +864,7 @@ function DetailRow({
 function JsonDetails({ label, value }: { label: string; value: unknown }) {
   const json = JSON.stringify(value, null, 2)
   if (json === undefined) {
-    throw new Error('Cannot serialize value', { cause: { label } })
+    throw new Error(`Cannot serialize ${label}`)
   }
   return (
     <details className="rounded-md border p-2">
@@ -903,7 +903,7 @@ function ErrorState({ message }: { message: string }) {
 function findNode(graph: RelationGraph, id: string) {
   const node = graph.nodes.find((node) => node.id === id)
   if (node === undefined) {
-    throw new Error('Graph node does not exist', { cause: { id } })
+    throw new Error(`Graph node ${id} does not exist`)
   }
   return node
 }
@@ -913,7 +913,7 @@ function findRelation(graph: RelationGraph, id: string) {
     (relation) => relationId(relation) === id,
   )
   if (relation === undefined) {
-    throw new Error('Graph relation does not exist', { cause: { id } })
+    throw new Error(`Graph relation ${id} does not exist`)
   }
   return relation
 }
@@ -962,9 +962,7 @@ function optionalString(value: Record<string, unknown>, key: string) {
   const field = value[key]
   if (field === undefined) return undefined
   if (typeof field !== 'string') {
-    throw new Error('Token relation transfer evidence must be a string', {
-      cause: { key },
-    })
+    throw new Error(`Token relation transfer evidence ${key} must be a string`)
   }
   return field
 }
@@ -973,9 +971,7 @@ function optionalNumber(value: Record<string, unknown>, key: string) {
   const field = value[key]
   if (field === undefined) return undefined
   if (typeof field !== 'number') {
-    throw new Error('Token relation transfer evidence must be a number', {
-      cause: { key },
-    })
+    throw new Error(`Token relation transfer evidence ${key} must be a number`)
   }
   return field
 }

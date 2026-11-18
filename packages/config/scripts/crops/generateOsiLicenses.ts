@@ -60,9 +60,7 @@ async function fetchAll<T>(endpoint: string): Promise<T[]> {
     const url = `${endpoint}?per_page=${PER_PAGE}&page=${page}`
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error('OSI license request failed', {
-        cause: { url, status: response.status },
-      })
+      throw new Error(`${url} responded ${response.status}`)
     }
     items.push(...((await response.json()) as T[]))
     const totalPages = Number(response.headers.get('x-wp-totalpages') ?? '1')

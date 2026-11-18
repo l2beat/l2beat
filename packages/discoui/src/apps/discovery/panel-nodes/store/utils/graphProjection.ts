@@ -192,8 +192,7 @@ export function mapGraphItems(
     }
     const subnodes = current.node.subnodes.map((node) => {
       const next = updated.get(node.id)
-      if (next === undefined)
-        throw new Error('Missing updated node', { cause: { nodeId: node.id } })
+      if (next === undefined) throw new Error(`Missing updated node ${node.id}`)
       return next
     })
     const childrenChanged = subnodes.some(
@@ -276,9 +275,7 @@ function indexEdges(leafNodes: readonly Node[]): {
     hiddenFieldsBySource.set(node.id, new Set(node.hiddenFields))
     for (const field of node.fields) {
       if (fieldNames.has(field.name)) {
-        throw new Error('Duplicate field name', {
-          cause: { nodeId: node.id, fieldName: field.name },
-        })
+        throw new Error(`Duplicate field name ${node.id}:${field.name}`)
       }
       fieldNames.add(field.name)
       if (!leafIds.has(field.target)) continue

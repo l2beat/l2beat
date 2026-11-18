@@ -58,9 +58,9 @@ export class EtherscanClient {
       throw new Error('Cannot parse Etherscan response')
     }
     if (parsed.data.status !== '1') {
-      throw new Error('Etherscan returned an error', {
-        cause: { message: parsed.data.message, result: parsed.data.result },
-      })
+      throw new Error(
+        `Etherscan error: ${parsed.data.message}: ${parsed.data.result}`,
+      )
     }
     return parsed.data.result[0]
   }

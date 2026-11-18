@@ -591,7 +591,7 @@ function compileShader(
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     const log = gl.getShaderInfoLog(shader) ?? 'unknown'
     gl.deleteShader(shader)
-    throw new Error('Shader compile error', { cause: { log } })
+    throw new Error(`Shader compile error: ${log}`)
   }
   return shader
 }
@@ -611,7 +611,7 @@ function linkProgram(
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
     const log = gl.getProgramInfoLog(program) ?? 'unknown'
     gl.deleteProgram(program)
-    throw new Error('Program link error', { cause: { log } })
+    throw new Error(`Program link error: ${log}`)
   }
   return program
 }
@@ -634,7 +634,7 @@ function requireUniform(
   name: string,
 ): WebGLUniformLocation {
   const loc = gl.getUniformLocation(program, name)
-  if (loc === null) throw new Error('Uniform not found', { cause: { name } })
+  if (loc === null) throw new Error(`uniform ${name} not found`)
   return loc
 }
 

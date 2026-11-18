@@ -53,7 +53,7 @@ export function mergePermissions(
 export function safeGetImplementation(entry: EntryParameters): EthereumAddress {
   const implementation = get$Implementations(entry.values)[0]
   if (!implementation) {
-    throw new Error('No implementation found', { cause: { name: entry.name } })
+    throw new Error(`No implementation found for ${entry.name}`)
   }
   return ChainSpecificAddress.address(implementation)
 }

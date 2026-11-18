@@ -2,10 +2,7 @@
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
   "extends": ["../../../biome.json"],
-  "plugins": [
-    "../../lint/repositoryMockType.grit",
-    "../../lint/staticErrorMessage.grit"
-  ],
+  "plugins": ["../../lint/repositoryMockType.grit"],
   "linter": {
     "rules": {
       "style": {

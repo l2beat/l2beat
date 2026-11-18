@@ -310,8 +310,7 @@ function getCentralizedSequencingExit(
     }
     default:
       throw new Error(
-        'Centralized sequencing exit derivation is not implemented for this fraud proof type',
-        { cause: { fraudProofType } },
+        `Centralized sequencing exit derivation is not implemented for fraud proof type ${fraudProofType}`,
       )
   }
 }

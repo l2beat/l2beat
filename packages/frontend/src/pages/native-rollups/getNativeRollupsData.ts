@@ -55,8 +55,7 @@ function getNativeRollupsTalks(): Talk[] {
       )
       if (!thumbnail || !source || !description) {
         throw new Error(
-          'Native rollups talk must have a generated thumbnail, a source, and a description',
-          { cause: { publicationId: publication.id } },
+          `Native rollups talk ${publication.id} must have a generated thumbnail, a source, and a description`,
         )
       }
       return {

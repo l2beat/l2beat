@@ -88,7 +88,6 @@ describe('tokens', () => {
           .join(', \n')
 
         throw new Error(
-          // biome-ignore lint/plugin/staticErrorMessage: mocha prints only the message of a failed test and drops cause, and the missing token list is what the reader needs
           `
             Following tokens are missing:
             \n${missingTokensPretty}

@@ -261,9 +261,7 @@ export class LiveBlobsFeed {
       this.reading = undefined
     })
     if (!(await settlesWithin(this.reading, READ_TIMEOUT))) {
-      throw new Error('Live blobs read timed out', {
-        cause: { timeoutSeconds: READ_TIMEOUT },
-      })
+      throw new Error(`Live blobs read took over ${READ_TIMEOUT} s`)
     }
   }
 

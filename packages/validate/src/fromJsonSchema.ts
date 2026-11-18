@@ -171,7 +171,7 @@ function resolveRef(ref: string, context: ConversionContext): Parser<unknown> {
   if (ref.startsWith('#/definitions/')) {
     const lazyGetter = context.lazyRefs.get(ref)
     if (!lazyGetter) {
-      throw new Error('Reference not found', { cause: { ref } })
+      throw new Error(`Reference not found: ${ref}`)
     }
 
     return v.lazy(lazyGetter)
@@ -181,5 +181,5 @@ function resolveRef(ref: string, context: ConversionContext): Parser<unknown> {
     return v.lazy(() => convertSchema(context.root, context))
   }
 
-  throw new Error('Unsupported $ref format', { cause: { ref } })
+  throw new Error(`Unsupported $ref format: ${ref}`)
 }

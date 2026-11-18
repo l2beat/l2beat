@@ -29,17 +29,17 @@ export function getOtherPublicationEntry(
 ): OtherPublicationEntry {
   const author = getCollectionEntry('authors', post.data.authorId)
   if (!author) {
-    throw new Error('Author not found', { cause: { postId: post.id } })
+    throw new Error(`Author not found for ${post.id}`)
   }
 
   const avatar = getImageParams(`/images/avatars/${author.id}.png`)
   if (!avatar) {
-    throw new Error('Avatar not found', { cause: { authorId: author.id } })
+    throw new Error(`Avatar not found for ${author.id}`)
   }
 
   const thumbnail = getImageParams(`/meta-images/publications/${post.id}.png`)
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', { cause: { postId: post.id } })
+    throw new Error(`Thumbnail not found for ${post.id}`)
   }
 
   return {

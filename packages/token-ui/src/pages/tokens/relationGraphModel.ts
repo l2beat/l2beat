@@ -95,9 +95,9 @@ export function relationColor(relation: RelationGraphRelation) {
     case 'lockAndMint':
       return RELATION_COLORS.lockAndMint
     default:
-      throw new Error('Unexpected bridge type in relations graph', {
-        cause: { bridgeType: relation.bridgeType },
-      })
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
+      )
   }
 }
 
@@ -108,9 +108,9 @@ export function relationTypeLabel(relation: RelationGraphRelation) {
     case 'lockAndMint':
       return 'Lock & Mint'
     default:
-      throw new Error('Unexpected bridge type in relations graph', {
-        cause: { bridgeType: relation.bridgeType },
-      })
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
+      )
   }
 }
 
@@ -126,9 +126,9 @@ export function relationIsDirectional(relation: RelationGraphRelation) {
     case 'lockAndMint':
       return relation.lockedToken !== null
     default:
-      throw new Error('Unexpected bridge type in relations graph', {
-        cause: { bridgeType: relation.bridgeType },
-      })
+      throw new Error(
+        `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
+      )
   }
 }
 
@@ -384,9 +384,7 @@ export function getRelationGraphFocus(
     (relation) => relationId(relation) === selection.id,
   )
   if (relation === undefined || deletedRelationIds?.has(selection.id)) {
-    throw new Error('Selected relation is not in graph', {
-      cause: { relationId: selection.id },
-    })
+    throw new Error(`Selected relation ${selection.id} is not in graph`)
   }
   nodeIds.add(sourceId(relation))
   nodeIds.add(targetId(relation))

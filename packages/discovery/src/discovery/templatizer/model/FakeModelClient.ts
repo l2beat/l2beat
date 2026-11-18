@@ -61,9 +61,9 @@ export class FakeModelClient implements ModelClient {
     const response = this.queue.shift()
     if (response === undefined) {
       return Promise.reject(
-        new Error('FakeModelClient has no response left', {
-          cause: { turn: this.calls.length },
-        }),
+        new Error(
+          `FakeModelClient has no response left for turn ${this.calls.length}`,
+        ),
       )
     }
     if (response instanceof Error) {

@@ -235,7 +235,7 @@ describe(validateDraft.name, () => {
       ).findings.map((finding) => finding.message)
 
     expect(messages('getZkConfig')).toEqual([
-      `V1 cannot construct this handler: Cannot find a matching method: {"method":"getZkConfig"}${hint}`,
+      `V1 cannot construct this handler: Cannot find a matching method for getZkConfig${hint}`,
     ])
     expect(
       messages(

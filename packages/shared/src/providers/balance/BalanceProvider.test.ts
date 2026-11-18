@@ -289,12 +289,9 @@ describe(BalanceProvider.name, () => {
 
       const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
 
-      const error = await balanceProvider
-        .getBalances(QUERIES, BLOCK, CHAIN)
-        .catch((e: unknown) => e)
-
-      expect((error as Error).message).toEqual('Missing RpcClient')
-      expect((error as Error).cause).toEqual({ chain: CHAIN })
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith(`Missing RpcClient for ${CHAIN}`)
     })
   })
 })

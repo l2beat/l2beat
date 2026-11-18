@@ -87,15 +87,9 @@ describe(StarknetTotalSupplyProvider.name, () => {
         Logger.SILENT,
       )
 
-      let error: unknown
-      try {
-        void totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN)
-      } catch (e) {
-        error = e
-      }
-
-      expect((error as Error).message).toEqual('Missing starknet client')
-      expect((error as Error).cause).toEqual({ chain: CHAIN })
+      expect(() =>
+        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
+      ).toThrow(`Missing starknet client for ${CHAIN}`)
     })
   })
 })

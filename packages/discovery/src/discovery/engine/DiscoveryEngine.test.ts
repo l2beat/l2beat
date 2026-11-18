@@ -436,7 +436,7 @@ class FakeChain {
         const name = this.nameOf(address)
         const contract = this.contracts[name]
         if (contract === undefined) {
-          throw new Error('no contract', { cause: { name } })
+          throw new Error(`no contract ${name}`)
         }
         this.analyzed.push(name)
         const byReferrer = [...(suggested ?? [])][0]

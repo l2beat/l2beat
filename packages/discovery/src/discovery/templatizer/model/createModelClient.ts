@@ -78,9 +78,9 @@ function openCodeEffort(
 ): string | undefined {
   if (levels === undefined) {
     const provider = model.slice(0, model.indexOf('/'))
-    throw new Error('opencode lists no such model', {
-      cause: { model, listModelsCommand: `opencode models ${provider}` },
-    })
+    throw new Error(
+      `opencode lists no model ${model}; \`opencode models ${provider}\` shows the ones there are`,
+    )
   }
   if (levels.length === 0 && asked === undefined) {
     return undefined
@@ -91,24 +91,22 @@ function openCodeEffort(
   }
   if (levels.length === 0) {
     throw new Error(
-      'The model has no effort levels; leave --ai-effort out to run it',
-      { cause: { model } },
+      `${model} has no effort levels; leave --ai-effort out to run it`,
     )
   }
   const which =
     asked === undefined ? `${effort} effort, the default` : `${effort} effort`
   throw new Error(
-    'The model does not offer that effort; pass --ai-effort with one of its levels',
-    { cause: { model, effort: which, levels } },
+    `${model} has no ${which}; pass --ai-effort with one of ${levels.join(', ')}`,
   )
 }
 
 function codexEffort(effort: string): ReasoningEffort {
   const known = REASONING_EFFORTS.find((level) => level === effort)
   if (known === undefined) {
-    throw new Error('Codex does not take that --ai-effort', {
-      cause: { effort, accepted: [...REASONING_EFFORTS] },
-    })
+    throw new Error(
+      `Codex takes --ai-effort ${REASONING_EFFORTS.join(', ')}; got ${effort}`,
+    )
   }
   return known
 }

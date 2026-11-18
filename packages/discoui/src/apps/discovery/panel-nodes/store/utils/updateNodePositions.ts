@@ -89,9 +89,7 @@ export function updateNodePositions(
       const field = node.fields[i] as Field
       const targetBox = nextBoxes.get(field.target)
       if (!targetBox) {
-        throw new Error('Missing dimensions for node', {
-          cause: { nodeId: field.target },
-        })
+        throw new Error('missing dimensions for node ' + field.target)
       }
 
       const nextFieldBox: Box = {

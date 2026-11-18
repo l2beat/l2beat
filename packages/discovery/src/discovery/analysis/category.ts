@@ -9,9 +9,7 @@ export function resolveCategory(
 
   const result = config.categories?.[config.category]
   if (result === undefined) {
-    throw new Error('Category not found in categories', {
-      cause: { category: config.category },
-    })
+    throw new Error(`Category ${config.category} not found in categories`)
   }
 
   return result

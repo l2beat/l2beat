@@ -29,7 +29,7 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
         method,
         response: JSON.stringify(response),
       })
-      throw new Error('Error during parsing', { cause: { method } })
+      throw new Error(`${method}: Error during parsing`)
     }
 
     return parsedResponse.data.result
@@ -51,7 +51,7 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
         limit,
         response: JSON.stringify(response),
       })
-      throw new Error('Error during parsing', { cause: { method } })
+      throw new Error(`${method}: Error during parsing`)
     }
 
     return parsedResponse.data.result
@@ -76,7 +76,7 @@ export class AztecRpcClient extends ClientCore implements AztecBlockClient {
         limit,
         response: JSON.stringify(response),
       })
-      throw new Error('Error during parsing', { cause: { method } })
+      throw new Error(`${method}: Error during parsing`)
     }
 
     return parsedResponse.data.result

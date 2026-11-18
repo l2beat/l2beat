@@ -508,8 +508,7 @@ function Queue({
       setCsvInput('')
       setError(null)
     } catch (err) {
-      const message =
-        err instanceof Error ? describeError(err) : 'Failed to parse CSV'
+      const message = err instanceof Error ? err.message : 'Failed to parse CSV'
       setError(message)
     }
   }
@@ -640,17 +639,6 @@ function Queue({
   )
 }
 
-// The import form shows this text to a person, who needs the line number and
-// content that live in the cause, not only the static message.
-function describeError(error: Error): string {
-  const cause = error.cause
-  if (typeof cause !== 'object' || cause === null) return error.message
-  const details = Object.entries(cause)
-    .map(([key, value]) => `${key}: ${String(value)}`)
-    .join(', ')
-  return `${error.message} (${details})`
-}
-
 function parseCSV(csv: string): QueueItem[] {
   const lines = csv.trim().split('\n')
   const tokens: QueueItem[] = []
@@ -662,16 +650,13 @@ function parseCSV(csv: string): QueueItem[] {
     const parts = line.split(',').map((part) => part.trim())
     if (parts.length < 2 || parts.length > 3) {
       throw new Error(
-        'Expected format "chain*,address*,abstractTokenId" on every line',
-        { cause: { line: i + 1, content: line } },
+        `Line ${i + 1}: Expected format "chain*,address*,abstractTokenId", got "${line}"`,
       )
     }
 
     const [chain, address, abstractTokenId] = parts
     if (!chain || !address) {
-      throw new Error('Both chain and address are required', {
-        cause: { line: i + 1 },
-      })
+      throw new Error(`Line ${i + 1}: Both chain and address are required`)
     }
 
     tokens.push({

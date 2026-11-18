@@ -42,14 +42,9 @@ export class BalanceProvider {
               !r.success ||
               (r.data.length === 0 && queries[i].token === 'native')
             ) {
-              throw new Error('Failed to fetch balance', {
-                cause: {
-                  token: queries[i].token,
-                  holder: queries[i].holder,
-                  blockNumber,
-                  chain,
-                },
-              })
+              throw new Error(
+                `Failed to fetch balance of ${queries[i].token} for ${queries[i].holder} at block ${blockNumber}`,
+              )
             }
             if (r.data.length === 0) {
               // token not deployed at this block
@@ -82,7 +77,7 @@ export class BalanceProvider {
       }
     }
 
-    throw new Error('Missing RpcClient', { cause: { chain } })
+    throw new Error(`Missing RpcClient for ${chain}`)
   }
 }
 

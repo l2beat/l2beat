@@ -8,13 +8,9 @@ export const StakeAmountSchema = v.union([v.number(), v.string()])
 export async function fetchJson(url: string): Promise<unknown> {
   const response = await fetch(url)
   if (!response.ok) {
-    throw new Error('Failed to fetch', {
-      cause: {
-        url,
-        status: response.status,
-        statusText: response.statusText,
-      },
-    })
+    throw new Error(
+      `Failed to fetch ${url}: ${response.status} ${response.statusText}`,
+    )
   }
 
   return await response.json()
@@ -46,7 +42,7 @@ export function toFiniteNumber(value: unknown, name: string): number {
         : Number.NaN
 
   if (!Number.isFinite(numberValue)) {
-    throw new Error('Value is not a finite number', { cause: { name } })
+    throw new Error(`${name} is not a finite number`)
   }
 
   return numberValue
@@ -55,7 +51,7 @@ export function toFiniteNumber(value: unknown, name: string): number {
 export function toSnapshotDate(value: string, name: string): string {
   const date = value.match(/^\d{4}-\d{2}-\d{2}/)?.[0]
   if (!date || !isDateOnly(date)) {
-    throw new Error('Value is not a valid date', { cause: { name, value } })
+    throw new Error(`${name} is not a valid date: ${value}`)
   }
 
   return date

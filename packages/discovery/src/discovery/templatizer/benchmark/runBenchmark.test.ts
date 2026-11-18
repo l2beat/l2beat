@@ -370,7 +370,7 @@ describe(runBenchmark.name, () => {
     })
     expect(report.projects.map((p) => p.failure)).toEqual([
       'config.jsonc is broken',
-      'The provider at the committed timestamp is at a different block than the one discovered.json was read at: {"project":"elsewhere","chain":"ethereum","timestamp":1700000000,"providerBlockNumber":1000,"discoveredBlockNumber":999}',
+      'The ethereum provider at the committed timestamp 1700000000 is at block 1000, but elsewhere/discovered.json was read at block 999',
     ])
     expect(fakes.analyzed).toEqual([])
     for (const name of ['broken', 'elsewhere']) {

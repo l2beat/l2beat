@@ -91,8 +91,12 @@ export class EventHandler implements Handler {
       const abiCompatible = eventsAreCompatible(action, stringAbi)
       if (!abiCompatible) {
         throw new Error(
-          'ABI compatibility error: all events in an action must contain compatible parameter names and types',
-          { cause: { receivedEvents: actionEvents } },
+          'ABI compatibility error: The following events have incompatible parameter structures:\n' +
+            `• Received events:\n${actionEvents.map((e) => `  - ${e}`).join('\n')}\n\n` +
+            'All events in an action must contain compatible parameter names and types. ' +
+            'Check that these fields match across all event ABIs:\n' +
+            '  1. Parameter names\n' +
+            '  2. Parameter types',
         )
       }
 

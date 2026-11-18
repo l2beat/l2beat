@@ -16,6 +16,6 @@ export function setOutput(name: string, value: string) {
 
 export function requireEnv(name: string): string {
   const value = process.env[name]
-  if (!value) throw new Error('Missing env', { cause: { name } })
+  if (!value) throw new Error(`Missing env ${name}`)
   return value
 }

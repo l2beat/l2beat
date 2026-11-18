@@ -737,9 +737,7 @@ export class ProjectDiscovery {
 
     this.contracts.forEach((contract) => {
       if (result[contract.address] !== undefined) {
-        throw new Error('Duplicate contract address entry', {
-          cause: { address: contract.address },
-        })
+        throw new Error(`Duplicate contract address entry: ${contract.address}`)
       }
       result[contract.address] = contract
     })

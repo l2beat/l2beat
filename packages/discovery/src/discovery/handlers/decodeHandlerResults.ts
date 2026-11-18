@@ -1,6 +1,6 @@
+import { getErrorMessage } from '@l2beat/shared-pure'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type { BlipEnv } from '../../blip/type'
-import { getErrorMessage } from '../../utils/getErrorMessage'
 import type {
   DiscoveryCustomType,
   StructureContract,
@@ -85,9 +85,10 @@ function executeEdit(
   try {
     return runtime.executeBlip(value, edit)
   } catch (error) {
-    throw new Error('The edit of a field failed', {
-      cause: { fieldName, error },
-    })
+    throw new Error(
+      `The edit of field ${fieldName} failed: ${getErrorMessage(error)}`,
+      { cause: error },
+    )
   }
 }
 

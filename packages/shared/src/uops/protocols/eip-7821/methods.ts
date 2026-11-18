@@ -77,7 +77,7 @@ function executionModeId(mode: string): number {
     case '0x01000000000078210002':
       return 3
     default:
-      throw new Error('Unsupported execution mode', { cause: { mode } })
+      throw new Error(`Unsupported execution mode: ${mode}`)
   }
 }
 

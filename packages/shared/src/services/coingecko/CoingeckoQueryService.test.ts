@@ -385,15 +385,12 @@ describe(CoingeckoQueryService.name, () => {
         marketCaps,
       )
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-      const error = await coingeckoQueryService
-        .getCirculatingSupplies(CoingeckoId('venice-token'), {
-          from: START,
-          to: START + (hours - 1) * UnixTime.HOUR,
-        })
-        .catch((e: unknown) => e)
-
-      expect((error as Error).message).toEqual('Insufficient data in response')
-      expect((error as Error).cause).toEqual({ coingeckoId: 'venice-token' })
+      await expect(async () => {
+        await coingeckoQueryService.getCirculatingSupplies(
+          CoingeckoId('venice-token'),
+          { from: START, to: START + (hours - 1) * UnixTime.HOUR },
+        )
+      }).toBeRejectedWith('Insufficient data in response for venice-token')
     })
 
     it('throws when all values are invalid', async () => {
@@ -401,15 +398,12 @@ describe(CoingeckoQueryService.name, () => {
 
       const coingeckoClient = supplyClient(START, [10, 10, 10], [-1, -1, -1])
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-      const error = await coingeckoQueryService
-        .getCirculatingSupplies(CoingeckoId('venice-token'), {
-          from: START,
-          to: START + 2 * UnixTime.HOUR,
-        })
-        .catch((e: unknown) => e)
-
-      expect((error as Error).message).toEqual('Insufficient data in response')
-      expect((error as Error).cause).toEqual({ coingeckoId: 'venice-token' })
+      await expect(async () => {
+        await coingeckoQueryService.getCirculatingSupplies(
+          CoingeckoId('venice-token'),
+          { from: START, to: START + 2 * UnixTime.HOUR },
+        )
+      }).toBeRejectedWith('Insufficient data in response for venice-token')
     })
   })
 

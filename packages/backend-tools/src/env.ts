@@ -61,9 +61,7 @@ export class Env {
       if (result.toString() === resolved.value) {
         return result
       }
-      throw new Error('Environment variable is not an integer', {
-        cause: { key: resolved.key },
-      })
+      throw new Error(`Environment variable ${resolved.key} is not an integer!`)
     }
   }
 
@@ -89,9 +87,9 @@ export class Env {
       if (trueValues.includes(lowerCased)) return true
       if (falseValues.includes(lowerCased)) return false
 
-      throw new Error('Environment variable is not a boolean value', {
-        cause: { key: resolved.key },
-      })
+      throw new Error(
+        `Environment variable ${resolved.key} is not a boolean value!`,
+      )
     }
   }
 }
@@ -99,9 +97,10 @@ export class Env {
 function throwMissingEnvVar(keys: string | string[]): never {
   if (Array.isArray(keys)) {
     throw new Error(
-      'Missing at least one required environment variable, provide one of the keys',
-      { cause: { keys } },
+      `Missing at least one required environment variable. Please provide one of the following: ${keys.join(
+        ', ',
+      )}`,
     )
   }
-  throw new Error('Missing environment variable', { cause: { keys } })
+  throw new Error(`Missing environment variable: ${keys}`)
 }

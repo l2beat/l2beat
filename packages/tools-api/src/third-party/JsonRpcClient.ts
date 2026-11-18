@@ -29,12 +29,9 @@ export class JsonRpcClient {
       throw new Error('Cannot parse JSON-RPC response')
     }
     if ('error' in parsed.data) {
-      throw new Error('JSON-RPC returned an error', {
-        cause: {
-          code: parsed.data.error.code,
-          message: parsed.data.error.message,
-        },
-      })
+      throw new Error(
+        `JSON-RPC Error (${parsed.data.error.code}): ${parsed.data.error.message}`,
+      )
     }
     return parsed.data.result
   }

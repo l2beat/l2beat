@@ -58,8 +58,8 @@ export function runProcess(
       clearTimeout(timer)
       running.delete(child)
       reject(
-        new Error('could not run the binary', {
-          cause: { binary, error },
+        new Error(`could not run ${binary}: ${error.message}`, {
+          cause: error,
         }),
       )
     })

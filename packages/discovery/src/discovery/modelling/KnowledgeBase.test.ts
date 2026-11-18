@@ -1,5 +1,4 @@
 import { expect } from 'earl'
-import { thrownBy } from '../../utils/thrownBy'
 import type { ClingoFact } from './clingoparser'
 import { KnowledgeBase } from './KnowledgeBase'
 
@@ -54,28 +53,25 @@ describe(KnowledgeBase.name, () => {
         },
       ]
       const knowledgeBase = new KnowledgeBase(facts)
-      const params = [undefined, 'can', 'eat']
-      for (const read of [
-        () => knowledgeBase.getFactOrUndefined('fact', params),
-        () => knowledgeBase.getFact('fact', params),
-      ]) {
-        const error = thrownBy(read)
-        expect(error.message).toEqual(
-          'Found multiple facts with the same id and params',
-        )
-        expect(error.cause).toEqual({ id: 'fact', params })
-      }
+      expect(() =>
+        knowledgeBase.getFactOrUndefined('fact', [undefined, 'can', 'eat']),
+      ).toThrow(
+        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
+      )
+      expect(() =>
+        knowledgeBase.getFact('fact', [undefined, 'can', 'eat']),
+      ).toThrow(
+        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
+      )
     })
   })
 
   describe(KnowledgeBase.prototype.getFact.name, () => {
     it('throws when no facts are found', () => {
       const knowledgeBase = new KnowledgeBase(FACTS)
-      const error = thrownBy(() =>
-        knowledgeBase.getFact('contract', ['abc', 'def']),
+      expect(() => knowledgeBase.getFact('contract', ['abc', 'def'])).toThrow(
+        'No fact found with id "contract" and params: ["abc","def"]',
       )
-      expect(error.message).toEqual('No fact found with the id and params')
-      expect(error.cause).toEqual({ id: 'contract', params: ['abc', 'def'] })
     })
   })
 })

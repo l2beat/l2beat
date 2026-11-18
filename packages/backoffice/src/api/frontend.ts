@@ -20,7 +20,6 @@ function createFrontendClient(baseUrl: string) {
         const response = await fetch(`${baseUrl}/api/interop/chains`)
         if (!response.ok) {
           throw new Error(
-            // biome-ignore lint/plugin/staticErrorMessage: ChainsSummaryPage shows only the message, and the operator needs the endpoint and status
             `Failed to fetch frontend chains from ${baseUrl}: ${response.status}`,
           )
         }

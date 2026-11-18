@@ -950,14 +950,7 @@ export function getZKStackVerifiers(
     result.push(verifier.address)
   } else {
     throw new Error(
-      'Cannot configure ZK Stack project verifiers: unknown verifier template',
-      {
-        cause: {
-          projectName: discovery.projectName,
-          template,
-          verifierAddress: verifier.address,
-        },
-      },
+      `Cannot configure ZK Stack project verifiers (${discovery.projectName}): unknown verifier template ${template} of ${verifier.address}`,
     )
   }
   if (discovery.hasContract('SP1VerifierGateway')) {

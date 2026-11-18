@@ -1,6 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { thrownBy } from '../../utils/thrownBy'
 import type { StructureEntry } from '../output/types'
 import { interpolateString } from './interpolateString'
 
@@ -33,10 +32,8 @@ describe(interpolateString.name, () => {
       values: { numberField: 1122 },
     }
 
-    const error = thrownBy(() => interpolateString(description, structure))
-    expect(error.message).toEqual(
-      'Value for variable in contract field not found in contract analysis',
+    expect(() => interpolateString(description, structure)).toThrow(
+      'Value for variable "{{ missingValue }}" in contract field not found in contract analysis',
     )
-    expect(error.cause).toEqual({ key: 'missingValue' })
   })
 })

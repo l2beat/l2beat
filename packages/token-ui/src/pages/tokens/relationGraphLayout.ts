@@ -127,9 +127,7 @@ function buildClusters<Node extends LayoutNode, Link extends LayoutLink<Node>>(
 
       const node = nodeById.get(id)
       if (node === undefined) {
-        throw new Error('Graph cluster contains unknown node', {
-          cause: { id },
-        })
+        throw new Error(`Graph cluster contains unknown node ${id}`)
       }
       visited.add(id)
       component.push(node)
@@ -206,7 +204,7 @@ function getNeighbors(
 ): Set<string> {
   const result = neighbors.get(id)
   if (result === undefined) {
-    throw new Error('Graph link contains unknown node', { cause: { id } })
+    throw new Error(`Graph link contains unknown node ${id}`)
   }
   return result
 }
@@ -231,7 +229,7 @@ function cumulativeOffsets(sizes: number[]) {
 function getItem<T>(items: T[], index: number): T {
   const item = items[index]
   if (item === undefined) {
-    throw new Error('Missing graph layout item', { cause: { index } })
+    throw new Error(`Missing graph layout item at index ${index}`)
   }
   return item
 }

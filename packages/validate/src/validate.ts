@@ -109,7 +109,6 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     if (result.success) {
       return result.data
     }
-    // biome-ignore lint/plugin/staticErrorMessage: the validation failure text is this library's public output, asserted by tests across the repo and shown to users
     throw new Error(`At ${result.path || '@'}: ${result.message}`)
   }
 
@@ -133,7 +132,6 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     if (result.success) {
       return result.data
     }
-    // biome-ignore lint/plugin/staticErrorMessage: the validation failure text is this library's public output, asserted by tests across the repo and shown to users
     throw new Error(`At ${result.path || '@'}: ${result.message}`)
   }
 
@@ -201,7 +199,7 @@ const RESERVED_METADATA_KEYS = new Set([
 function assertValidMetadata(metadata: Record<string, string>) {
   for (const key of Object.keys(metadata)) {
     if (RESERVED_METADATA_KEYS.has(key)) {
-      throw new Error('Metadata key is reserved', { cause: { key } })
+      throw new Error(`Metadata key "${key}" is reserved.`)
     }
   }
 }

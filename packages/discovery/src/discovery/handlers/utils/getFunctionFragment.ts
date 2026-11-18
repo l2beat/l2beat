@@ -19,7 +19,7 @@ export function getFunctionFragment(
     .map(toFunctionFragment)
     .find(predicate)
   if (!fragment) {
-    throw new Error('Cannot find a matching method', { cause: { method } })
+    throw new Error(`Cannot find a matching method for ${method}`)
   }
   return fragment
 }

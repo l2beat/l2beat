@@ -14,7 +14,7 @@ export function getEventFragment(
     .map(toEventFragment)[0]
 
   if (!fragment) {
-    throw new Error('Cannot find a matching event', { cause: { event } })
+    throw new Error(`Cannot find a matching event for ${event}`)
   }
   return fragment
 }

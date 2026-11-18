@@ -138,9 +138,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       return stream.slice(index, index + 1).toString()
     }
 
-    throw new Error('Unexpected first byte, cannot decode as RLP', {
-      cause: { firstByte },
-    })
+    throw new Error(`Unexpected first byte ${firstByte}, cannot decode as RLP`)
   }
 
   decodeCalldata(calldata: string): utils.Result {
@@ -156,9 +154,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
       return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
     }
-    throw new Error('Unexpected function signature', {
-      cause: { signature: calldata.slice(0, 10) },
-    })
+    throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}`)
   }
 
   async getLastEventWithTxInput(

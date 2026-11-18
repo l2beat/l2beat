@@ -21,7 +21,7 @@ export class StarknetTotalSupplyProvider {
     const client = this.starknetClients.find((r) => r.chain === chain)
 
     if (!client) {
-      throw new Error('Missing starknet client', { cause: { chain } })
+      throw new Error(`Missing starknet client for ${chain}`)
     }
 
     const calls = tokens.map((address) => ({

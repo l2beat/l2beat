@@ -14,11 +14,10 @@ export class HttpClient {
     if (!res.ok) {
       // Release the socket back to the pool instead of leaving it pinned
       await res.body?.cancel()
-      throw new Error('HTTP error', {
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
         cause: {
           url: redactUrl(url),
           status: res.status,
-          statusText: res.statusText,
         },
       })
     }

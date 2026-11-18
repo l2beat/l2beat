@@ -18,9 +18,7 @@ export class DaBeatStatsProvider {
       case 'ethereum':
         return await this.getEthereumStats()
       default:
-        throw new Error('Stats provider not implemented', {
-          cause: { projectId },
-        })
+        throw new Error(`Stats provider not implemented for: ${projectId}`)
     }
   }
 

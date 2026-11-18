@@ -44,9 +44,7 @@ function decodeCommitment(commitment: string): CelestiaCommitmentData {
     }
   }
 
-  throw new Error('Unknown byteDerivationVersion', {
-    cause: { prefix: hexBody.slice(0, 8) },
-  })
+  throw new Error(`Unknown byteDerivationVersion: ${hexBody.slice(0, 8)}`)
 }
 
 /**

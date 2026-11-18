@@ -25,12 +25,12 @@ export function getGovernancePublicationEntry(
 ): GovernancePublicationEntry {
   const author = getCollectionEntry('authors', post.data.authorId)
   if (!author) {
-    throw new Error('Author not found', { cause: { postId: post.id } })
+    throw new Error(`Author not found for ${post.id}`)
   }
 
   const thumbnail = getImageParams(`/meta-images/publications/${post.id}.png`)
   if (!thumbnail) {
-    throw new Error('Thumbnail not found', { cause: { postId: post.id } })
+    throw new Error(`Thumbnail not found for ${post.id}`)
   }
 
   return {

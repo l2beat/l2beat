@@ -32,9 +32,7 @@ function discoverRoot(): string {
     }
     dir = dirname(dir)
   }
-  throw new Error('Cannot locate the config file', {
-    cause: { configFilename: CONFIG_FILENAME },
-  })
+  throw new Error(`Cannot locate the ${CONFIG_FILENAME} file`)
 }
 
 const ConfigInput = v.object({

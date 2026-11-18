@@ -123,9 +123,7 @@ export function getFraudProofType(
   if (respectedGameType === 621) {
     return 'AggregateProof'
   }
-  throw new Error('Unexpected respectedGameType', {
-    cause: { respectedGameType },
-  })
+  throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 // The active permissionless game's init bond. Pre-Karst it is initBonds[0] (game

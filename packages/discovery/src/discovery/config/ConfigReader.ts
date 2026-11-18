@@ -25,12 +25,12 @@ function parseLayer(contents: unknown, label: string): ParsedLayer {
   const importResult = JustImport.safeValidate(contents)
   if (!importResult.success) {
     console.log(formatAsciiBorder([importResult.message, label]))
-    throw new Error('Cannot parse file', { cause: { label } })
+    throw new Error(`Cannot parse file ${label}`)
   }
   const layerResult = ConfigLayer.safeParse(contents)
   if (!layerResult.success) {
     console.log(formatAsciiBorder([layerResult.message, label]))
-    throw new Error('Cannot parse file', { cause: { label } })
+    throw new Error(`Cannot parse file ${label}`)
   }
   return { imports: importResult.data.import ?? [], layer: layerResult.data }
 }
@@ -213,7 +213,7 @@ export class ConfigReader {
     for (const importPath of imports) {
       const resolvedPath = path.resolve(basePath, importPath)
       if (visited.has(resolvedPath)) {
-        throw new Error('Circular import detected', { cause: { importPath } })
+        throw new Error(`Circular import detected: ${importPath}`)
       }
       visited.add(resolvedPath)
 

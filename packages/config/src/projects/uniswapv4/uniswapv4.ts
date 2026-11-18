@@ -27,7 +27,7 @@ const feeBuckets = discovery.getContractValue<FeeBucket[]>(
 const bucketFee = (lpFee: number): number => {
   const bucket = feeBuckets.filter((b) => b.lpFeeFloor <= lpFee).at(-1)
   if (bucket === undefined) {
-    throw new Error('No fee bucket covers LP fee', { cause: { lpFee } })
+    throw new Error(`No fee bucket covers LP fee ${lpFee}`)
   }
   const fee =
     bucket.alphaPips + (bucket.betaPips * (lpFee - bucket.lpFeeFloor)) / 1e6

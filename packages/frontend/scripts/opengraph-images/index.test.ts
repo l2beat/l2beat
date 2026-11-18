@@ -36,7 +36,6 @@ describe('opengraph images', () => {
 
     if (missingProjects.length > 0) {
       throw new Error(
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         `Missing opengraph images for projects: ${missingProjects.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }
@@ -61,14 +60,12 @@ describe('opengraph images', () => {
 
     if (reviews.length > 0) {
       throw new Error(
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         `Missing opengraph images for governance reviews: ${reviews.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }
 
     if (articles.length > 0) {
       throw new Error(
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         `Missing opengraph images for governance articles: ${articles.join(', ')}. Please add them`,
       )
     }
@@ -89,7 +86,6 @@ describe('opengraph images', () => {
 
     if (missingUpdates.length > 0) {
       throw new Error(
-        // biome-ignore lint/plugin/staticErrorMessage: a mocha failure shows only the message, and the missing images are what the developer must act on
         `Missing opengraph images for monthly updates: ${missingUpdates.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }

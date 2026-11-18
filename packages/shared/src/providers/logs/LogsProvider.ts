@@ -23,6 +23,6 @@ export class LogsProvider {
       }
     }
 
-    throw new Error('Missing log client', { cause: { chain: this.chain } })
+    throw new Error(`Missing ${this.chain} log client`)
   }
 }

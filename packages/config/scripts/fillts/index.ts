@@ -23,9 +23,7 @@ function getRpcUrl(chain: string): string {
   const envVar = `${chain.toUpperCase()}_RPC_URL`
   const rpcUrl = process.env[envVar]
   if (!rpcUrl) {
-    throw new Error('RPC URL not found in .env file', {
-      cause: { chain, envVar },
-    })
+    throw new Error(`RPC URL for chain ${chain} not found in .env file`)
   }
   return rpcUrl
 }

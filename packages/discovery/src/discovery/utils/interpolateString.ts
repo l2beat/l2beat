@@ -13,8 +13,7 @@ export function interpolateString(
       key === '$.address' ? structure.address : structure.values?.[key]
     if (value === undefined) {
       throw new Error(
-        'Value for variable in contract field not found in contract analysis',
-        { cause: { key } },
+        `Value for variable "{{ ${key} }}" in contract field not found in contract analysis`,
       )
     }
     return String(value)
