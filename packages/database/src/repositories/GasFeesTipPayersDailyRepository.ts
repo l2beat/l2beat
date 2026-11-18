@@ -7,15 +7,12 @@ import type { GasFeesTipPayersDaily } from '../kysely/generated/types'
 export interface GasFeesTipGroup {
   txCount: number
   tipEth: number
-  tipUsd: number
 }
 
-/** Tips paid on Ethereum in one UTC day, see the GasFeesTipPayersDaily schema. */
-export interface GasFeesTipPayersDailyRecord {
-  /** Start of the day. */
-  timestamp: UnixTime
+/** The day's figures, see the GasFeesTipPayersDaily schema. USD is tipEth times ethUsd. */
+export interface GasFeesTipPayersStats {
   ethUsd: number
-  /** The cap in atFastTip. */
+  /** The cap in atFastTipEth. */
   fastTipGwei: number
   /** Ordinary, under 0.1 gwei. */
   low: GasFeesTipGroup
@@ -25,39 +22,44 @@ export interface GasFeesTipPayersDailyRecord {
   high: GasFeesTipGroup
   roundTipTxCount: number
   atFastTipEth: number
-  atFastTipUsd: number
   nonOrdinary: GasFeesTipGroup
 }
+
+/** Tips paid on Ethereum in one UTC day. `timestamp` is the start of the day. */
+export type GasFeesTipPayersDailyRecord =
+  | ({ timestamp: UnixTime; status: 'complete' } & GasFeesTipPayersStats)
+  /** Dune never had the whole day */
+  | { timestamp: UnixTime; status: 'missing' }
 
 function toRecord(
   row: Selectable<GasFeesTipPayersDaily>,
 ): GasFeesTipPayersDailyRecord {
+  const timestamp = UnixTime.fromDate(row.timestamp)
+  if (row.status !== 'complete') return { timestamp, status: 'missing' }
+  const stat = (value: number | null) => {
+    if (value === null) {
+      throw new Error('Complete tip payers day lacks a figure', {
+        cause: { timestamp },
+      })
+    }
+    return value
+  }
   return {
-    timestamp: UnixTime.fromDate(row.timestamp),
-    ethUsd: row.ethUsd,
-    fastTipGwei: row.fastTipGwei,
-    low: {
-      txCount: row.lowTxCount,
-      tipEth: row.lowTipEth,
-      tipUsd: row.lowTipUsd,
-    },
+    timestamp,
+    status: 'complete',
+    ethUsd: stat(row.ethUsd),
+    fastTipGwei: stat(row.fastTipGwei),
+    low: { txCount: stat(row.lowTxCount), tipEth: stat(row.lowTipEth) },
     middle: {
-      txCount: row.middleTxCount,
-      tipEth: row.middleTipEth,
-      tipUsd: row.middleTipUsd,
+      txCount: stat(row.middleTxCount),
+      tipEth: stat(row.middleTipEth),
     },
-    high: {
-      txCount: row.highTxCount,
-      tipEth: row.highTipEth,
-      tipUsd: row.highTipUsd,
-    },
-    roundTipTxCount: row.roundTipTxCount,
-    atFastTipEth: row.atFastTipEth,
-    atFastTipUsd: row.atFastTipUsd,
+    high: { txCount: stat(row.highTxCount), tipEth: stat(row.highTipEth) },
+    roundTipTxCount: stat(row.roundTipTxCount),
+    atFastTipEth: stat(row.atFastTipEth),
     nonOrdinary: {
-      txCount: row.nonOrdinaryTxCount,
-      tipEth: row.nonOrdinaryTipEth,
-      tipUsd: row.nonOrdinaryTipUsd,
+      txCount: stat(row.nonOrdinaryTxCount),
+      tipEth: stat(row.nonOrdinaryTipEth),
     },
   }
 }
@@ -65,25 +67,22 @@ function toRecord(
 function toRow(
   record: GasFeesTipPayersDailyRecord,
 ): Insertable<GasFeesTipPayersDaily> {
+  const stats = record.status === 'complete' ? record : undefined
   return {
     timestamp: UnixTime.toDate(record.timestamp),
-    ethUsd: record.ethUsd,
-    fastTipGwei: record.fastTipGwei,
-    lowTxCount: record.low.txCount,
-    lowTipEth: record.low.tipEth,
-    lowTipUsd: record.low.tipUsd,
-    middleTxCount: record.middle.txCount,
-    middleTipEth: record.middle.tipEth,
-    middleTipUsd: record.middle.tipUsd,
-    highTxCount: record.high.txCount,
-    highTipEth: record.high.tipEth,
-    highTipUsd: record.high.tipUsd,
-    roundTipTxCount: record.roundTipTxCount,
-    atFastTipEth: record.atFastTipEth,
-    atFastTipUsd: record.atFastTipUsd,
-    nonOrdinaryTxCount: record.nonOrdinary.txCount,
-    nonOrdinaryTipEth: record.nonOrdinary.tipEth,
-    nonOrdinaryTipUsd: record.nonOrdinary.tipUsd,
+    status: record.status,
+    ethUsd: stats?.ethUsd ?? null,
+    fastTipGwei: stats?.fastTipGwei ?? null,
+    lowTxCount: stats?.low.txCount ?? null,
+    lowTipEth: stats?.low.tipEth ?? null,
+    middleTxCount: stats?.middle.txCount ?? null,
+    middleTipEth: stats?.middle.tipEth ?? null,
+    highTxCount: stats?.high.txCount ?? null,
+    highTipEth: stats?.high.tipEth ?? null,
+    roundTipTxCount: stats?.roundTipTxCount ?? null,
+    atFastTipEth: stats?.atFastTipEth ?? null,
+    nonOrdinaryTxCount: stats?.nonOrdinary.txCount ?? null,
+    nonOrdinaryTipEth: stats?.nonOrdinary.tipEth ?? null,
   }
 }
 

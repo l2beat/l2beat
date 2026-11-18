@@ -63,8 +63,8 @@ CREATE TABLE "GasFeesMempoolDay" (
 -- CreateTable
 CREATE TABLE "GasFeesTipLevelWait" (
     "timestamp" TIMESTAMP(6) NOT NULL,
-    "tipFromWei" INTEGER NOT NULL,
-    "tipToWei" INTEGER NOT NULL,
+    "tipFromWei" BIGINT NOT NULL,
+    "tipToWei" BIGINT NOT NULL,
     "waitFromMs" INTEGER NOT NULL,
     "waitToMs" INTEGER,
     "txCount" INTEGER NOT NULL,
@@ -91,23 +91,19 @@ CREATE TABLE "GasFeesTierWait" (
 -- CreateTable
 CREATE TABLE "GasFeesTipPayersDaily" (
     "timestamp" TIMESTAMP(6) NOT NULL,
-    "ethUsd" DOUBLE PRECISION NOT NULL,
-    "fastTipGwei" DOUBLE PRECISION NOT NULL,
-    "lowTxCount" INTEGER NOT NULL,
-    "lowTipEth" DOUBLE PRECISION NOT NULL,
-    "lowTipUsd" DOUBLE PRECISION NOT NULL,
-    "middleTxCount" INTEGER NOT NULL,
-    "middleTipEth" DOUBLE PRECISION NOT NULL,
-    "middleTipUsd" DOUBLE PRECISION NOT NULL,
-    "highTxCount" INTEGER NOT NULL,
-    "highTipEth" DOUBLE PRECISION NOT NULL,
-    "highTipUsd" DOUBLE PRECISION NOT NULL,
-    "roundTipTxCount" INTEGER NOT NULL,
-    "atFastTipEth" DOUBLE PRECISION NOT NULL,
-    "atFastTipUsd" DOUBLE PRECISION NOT NULL,
-    "nonOrdinaryTxCount" INTEGER NOT NULL,
-    "nonOrdinaryTipEth" DOUBLE PRECISION NOT NULL,
-    "nonOrdinaryTipUsd" DOUBLE PRECISION NOT NULL,
+    "status" VARCHAR(16) NOT NULL,
+    "ethUsd" DOUBLE PRECISION,
+    "fastTipGwei" DOUBLE PRECISION,
+    "lowTxCount" INTEGER,
+    "lowTipEth" DOUBLE PRECISION,
+    "middleTxCount" INTEGER,
+    "middleTipEth" DOUBLE PRECISION,
+    "highTxCount" INTEGER,
+    "highTipEth" DOUBLE PRECISION,
+    "roundTipTxCount" INTEGER,
+    "atFastTipEth" DOUBLE PRECISION,
+    "nonOrdinaryTxCount" INTEGER,
+    "nonOrdinaryTipEth" DOUBLE PRECISION,
 
     CONSTRAINT "GasFeesTipPayersDaily_pkey" PRIMARY KEY ("timestamp")
 );
