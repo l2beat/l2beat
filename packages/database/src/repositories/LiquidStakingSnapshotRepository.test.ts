@@ -96,6 +96,8 @@ function record(
     exchangeRate: 10n ** 18n,
     lastRequestId: 10,
     lastFinalizedRequestId: 8,
+    retiredLastRequestId: 5,
+    retiredLastFinalizedRequestId: 4,
     instantExitEth: null,
     instantExitFeeBps: null,
     lockTime: null,
