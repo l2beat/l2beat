@@ -88,21 +88,12 @@ export function useLivePlayhead(
         dataEnd,
         now - Math.max(...lags.current) - MARGIN_SECONDS,
       )
-      const previous = last.current
-      const next =
-        previous === undefined || target - previous.playhead > JUMP_SECONDS
-          ? target
-          : Math.max(
-              previous.playhead,
-              Math.min(
-                target,
-                previous.playhead + (now - previous.at) * CATCH_UP,
-              ),
-            )
+      const next = advancePlayhead(last.current, target, dataEnd, now)
       last.current = { playhead: next, at: now }
       if (
         requested.current === undefined ||
-        next - requested.current >= redrawEvery
+        next - requested.current >= redrawEvery ||
+        next < requested.current
       ) {
         requested.current = next
         setPlayhead(next)
@@ -115,4 +106,26 @@ export function useLivePlayhead(
   }, [dataEnd, redrawEvery])
 
   return playhead
+}
+
+/**
+ * Where the window ends next: on toward `target`, at most `CATCH_UP` times as
+ * fast as the clock, and not back for a later target, unless far behind. But
+ * never past the data: a longer range's data ends on its longer bucket, so
+ * switching to one can end it before where the window had got to
+ */
+export function advancePlayhead(
+  previous: { playhead: number; at: number } | undefined,
+  target: number,
+  dataEnd: number,
+  now: number,
+) {
+  const next =
+    previous === undefined || target - previous.playhead > JUMP_SECONDS
+      ? target
+      : Math.max(
+          previous.playhead,
+          Math.min(target, previous.playhead + (now - previous.at) * CATCH_UP),
+        )
+  return Math.min(next, dataEnd)
 }

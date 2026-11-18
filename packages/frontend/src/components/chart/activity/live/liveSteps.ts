@@ -97,6 +97,19 @@ export function getWindowStats(
   }
 }
 
+/**
+ * An empty step at the start of the hour before the window: a dashed line
+ * drawn from there keeps its dashes in place as the window moves, rather than
+ * starting them anew at its edge with every drawing
+ */
+export function withDashAnchor(
+  steps: ReturnType<typeof toSteps>,
+  from: number,
+) {
+  const hour = Math.floor((from - 1) / UnixTime.HOUR) * UnixTime.HOUR
+  return [{ timestamp: hour, value: null, ratio: null, blocks: 0 }, ...steps]
+}
+
 /** Each step with the usual range of the hour it is in, null without one, as for gas */
 export function withUsual<T extends { timestamp: number }>(
   steps: T[],

@@ -16,11 +16,21 @@ import type {
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { ChartTooltipWrapper } from '~/components/core/chart/ChartTooltip'
+import {
+  ChartTooltipRow,
+  ChartTooltipTitle,
+  ChartTooltipValue,
+  ChartTooltipWrapper,
+} from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { getYAxisTicks } from '~/components/core/chart/utils/yAxisTicks'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import {
+  TooltipHeader,
+  TooltipRow,
+} from '~/components/core/tooltip/TooltipParts'
+import { PercentChange } from '~/components/PercentChange'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RollingNumber } from '~/pages/blobs/components/live-blobs/liveMotion'
 import { HOME_TEXT } from '~/pages/home/homeStyles'
@@ -47,6 +57,7 @@ import {
   toBuckets,
   toSteps,
   valueAt,
+  withDashAnchor,
   withUsual,
 } from './liveSteps'
 import { useLivePlayhead } from './useLivePlayhead'
@@ -168,7 +179,10 @@ export function ProjectLiveActivity({
     buckets &&
     domain &&
     withUsual(
-      toSteps(buckets, bucket, [domain[0], domain[1] + lookahead]),
+      withDashAnchor(
+        toSteps(buckets, bucket, [domain[0], domain[1] + lookahead]),
+        domain[0],
+      ),
       data?.usual ?? [],
       metric,
     )
@@ -296,7 +310,12 @@ export function ProjectLiveActivity({
               }}
               margin={CHART_MARGIN}
               renderTooltip={(row) => (
-                <LiveTooltip row={row} bucket={bucket} metric={metric} />
+                <LiveTooltip
+                  row={row}
+                  bucket={bucket}
+                  metric={metric}
+                  color={color}
+                />
               )}
             />
           </ChartContainer>
@@ -478,11 +497,12 @@ function LiveStats({
 
 const STATS_CLASS = 'mt-4 max-md:gap-y-2.5 md:grid-cols-3 lg:grid-cols-3'
 
-/** The bucket's rate, and the total it comes from with the blocks it is in */
+/** The bucket's rate, the total it comes from, and the past week's range at this hour */
 function LiveTooltip({
   row,
   bucket,
   metric,
+  color,
 }: {
   row: {
     timestamp: number
@@ -494,43 +514,124 @@ function LiveTooltip({
   }
   bucket: number
   metric: LiveMetric
+  color: string
 }) {
   const { value, blocks, usualMin, usualMedian, usualMax } = row
+  const format = metric === 'gas' ? formatGas : formatRate
+  const total =
+    value === null || blocks === 0
+      ? 'No blocks'
+      : `${metric === 'gas' ? formatGas(value * bucket) : formatInteger(Math.round(value * bucket))} ${TOTAL_LABEL[metric]} in ${formatInteger(blocks)} ${blocks === 1 ? 'block' : 'blocks'}`
   return (
     <ChartTooltipWrapper>
-      <div className="flex flex-col gap-1">
-        <div className="font-medium text-label-value-14 text-secondary">
+      <div className="flex w-60 flex-col">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatBucket(row.timestamp, bucket)}
-        </div>
+        </ChartTooltipTitle>
         {value === null ? (
-          <div className="text-secondary">No blocks stored yet</div>
+          <span className="text-secondary">No blocks stored yet</span>
         ) : (
           <>
-            <div className="font-bold tabular-nums">
-              {metric === 'gas'
-                ? `${formatGas(value)} gas/s`
-                : `${formatActivityCount(value)} ${metric.toUpperCase()}`}
+            <TooltipHeader label={RATE_LABEL[metric]} />
+            <div className="mt-2 flex flex-col gap-1">
+              <ChartTooltipRow name="value">
+                <ChartTooltipValue
+                  value={value}
+                  format={format}
+                  className="tabular-nums"
+                />
+              </ChartTooltipRow>
+              <span className="text-right text-2xs text-secondary tabular-nums">
+                {total}
+              </span>
             </div>
-            <div className="text-secondary text-xs tabular-nums">
-              {blocks === 0
-                ? 'No blocks'
-                : `${
-                    metric === 'gas'
-                      ? `${formatGas(value * bucket)} gas`
-                      : `${formatInteger(Math.round(value * bucket))} ${metric === 'uops' ? 'operations' : 'transactions'}`
-                  } in ${formatInteger(blocks)} ${blocks === 1 ? 'block' : 'blocks'}`}
-            </div>
-            {usualMedian !== null && usualMin !== null && usualMax !== null && (
-              <div className="text-secondary text-xs tabular-nums">
-                Usually {formatActivityCount(usualMedian)} (
-                {formatActivityCount(usualMin)}–{formatActivityCount(usualMax)})
-                at this hour
-              </div>
+            {usualMin !== null && usualMedian !== null && usualMax !== null && (
+              <>
+                <TooltipHeader className="mt-3" label="Past week, this hour" />
+                <UsualRange
+                  value={value}
+                  min={usualMin}
+                  median={usualMedian}
+                  max={usualMax}
+                  color={color}
+                  format={format}
+                />
+              </>
             )}
           </>
         )}
       </div>
     </ChartTooltipWrapper>
+  )
+}
+
+const RATE_LABEL: Record<LiveMetric, string> = {
+  uops: 'UOPS',
+  tps: 'TPS',
+  gas: 'Gas per second',
+}
+const TOTAL_LABEL: Record<LiveMetric, string> = {
+  uops: 'operations',
+  tps: 'transactions',
+  gas: 'gas',
+}
+const formatRate = (value: number) =>
+  formatActivityCount(value, { decimals: value < 100 ? 1 : 0 })
+
+/** The rate on the past week's range at this hour, from low to high, with the median marked */
+function UsualRange({
+  value,
+  min,
+  median,
+  max,
+  color,
+  format,
+}: {
+  value: number
+  min: number
+  median: number
+  max: number
+  color: string
+  format: (value: number) => string
+}) {
+  const low = Math.min(min, value)
+  const high = Math.max(max, value)
+  const at = (v: number) =>
+    `${high > low ? ((v - low) / (high - low)) * 100 : 50}%`
+  return (
+    <div className="mt-2 flex flex-col gap-2">
+      <TooltipRow label="Median">
+        <span className="flex items-baseline gap-1">
+          <ChartTooltipValue
+            value={median}
+            format={format}
+            className="tabular-nums"
+          />
+          {median > 0 && (
+            <PercentChange value={value / median - 1} className="min-w-0" />
+          )}
+        </span>
+      </TooltipRow>
+      <div className="relative mx-1.5 h-3" aria-hidden>
+        <div className="absolute inset-x-0 top-1/2 h-px bg-divider" />
+        <div
+          className="-translate-y-1/2 absolute top-1/2 h-1.5 rounded-full bg-secondary/40"
+          style={{ left: at(min), width: `calc(${at(max)} - ${at(min)})` }}
+        />
+        <div
+          className="-translate-x-1/2 absolute inset-y-0 w-0.5 rounded-full bg-secondary"
+          style={{ left: at(median) }}
+        />
+        <div
+          className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 size-3 rounded-full ring-2 ring-surface-primary dark:ring-header-secondary"
+          style={{ left: at(value), backgroundColor: color }}
+        />
+      </div>
+      <div className="flex justify-between text-2xs text-secondary tabular-nums">
+        <span>Low {format(min)}</span>
+        <span>High {format(max)}</span>
+      </div>
+    </div>
   )
 }
 
