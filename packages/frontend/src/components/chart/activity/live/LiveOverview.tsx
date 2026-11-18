@@ -10,8 +10,16 @@ import { cn } from '~/utils/cn'
 import { type LiveMetric, METRIC_INDEX } from './liveSteps'
 
 const HEIGHT = 40
-/** Keys pressed closer together than this move the window once, after the last */
+/** Keys let go closer together than this move the window once, after the last */
 const KEYS_SETTLE_MS = 400
+const MOVE_KEYS = [
+  'ArrowLeft',
+  'ArrowDown',
+  'ArrowRight',
+  'ArrowUp',
+  'Home',
+  'End',
+]
 
 /**
  * The whole buffer, a bar a minute, with the window the chart below shows.
@@ -25,6 +33,7 @@ export function LiveOverview({
   to,
   window,
   windowText,
+  length,
   metric,
   onMove,
   onSeeking,
@@ -36,6 +45,8 @@ export function LiveOverview({
   to: number
   /** The edges of the window shown below */
   window: [number, number]
+  /** What the range picked spans, which a move reads */
+  length: number
   /** The window as a screen reader says it */
   windowText: string
   metric: LiveMetric
@@ -56,13 +67,17 @@ export function LiveOverview({
   const seeking = useRef(onSeeking)
   seeking.current = onSeeking
   const target = useRef<number | undefined>(undefined)
+  const keys = useRef(new Set<string>())
   const [seekTo, setSeekTo] = useState<number>()
   const span = to - from
-  const length = window[1] - window[0]
+  const lowest = Math.min(from + length, to)
   const end =
     seekTo === undefined
       ? window[1]
       : Math.min(to, Math.max(from + length, seekTo))
+  // while moved, as it will be read, which a range just picked may not be yet
+  const [shownFrom, shownTo] =
+    seekTo === undefined ? window : [end - length, end]
   const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
   // the window and the first bar start on their buckets, so can before `from`
   const xOf = (t: number) =>
@@ -101,7 +116,16 @@ export function LiveOverview({
     const next = ends[event.key]
     if (next === undefined) return
     event.preventDefault()
+    keys.current.add(event.key)
+    clearTimeout(settle.current)
     seek(next)
+  }
+  // a held key repeats, so the window is read only once all are let go
+  const onKeyUp = (event: KeyboardEvent) => {
+    if (!MOVE_KEYS.includes(event.key)) return
+    keys.current.delete(event.key)
+    if (keys.current.size > 0 || target.current === undefined) return
+    if (dragging.current) return
     clearTimeout(settle.current)
     settle.current = setTimeout(() => stop(true), KEYS_SETTLE_MS)
   }
@@ -123,11 +147,18 @@ export function LiveOverview({
       role="slider"
       tabIndex={0}
       aria-label="Look back through the last hours"
-      aria-valuemin={from + length}
+      // a window longer than what is stored can't move
+      aria-valuemin={lowest}
       aria-valuemax={to}
-      aria-valuenow={Math.round(end)}
+      aria-valuenow={Math.round(Math.min(to, Math.max(lowest, end)))}
       aria-valuetext={windowText}
       onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
+      // a key let go elsewhere would leave the window unread
+      onBlur={() => {
+        keys.current.clear()
+        if (!dragging.current) stop(true)
+      }}
       onPointerDown={(event) => {
         dragging.current = true
         event.currentTarget.setPointerCapture(event.pointerId)
@@ -152,9 +183,9 @@ export function LiveOverview({
         )
       })}
       <rect
-        x={xOf(end - length)}
+        x={xOf(shownFrom)}
         y={0}
-        width={Math.max(0.5, xOf(end) - xOf(end - length))}
+        width={Math.max(0.5, xOf(shownTo) - xOf(shownFrom))}
         height={HEIGHT}
         className="fill-brand/15 stroke-brand"
         strokeWidth={1}

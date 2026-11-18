@@ -97,7 +97,8 @@ async function readProjectLiveActivity({
     getBlockSeconds(latest.map((b) => b.timestamp)),
     to,
   )
-  const firstHour = UnixTime.toStartOf(window.from, 'hour')
+  // from where it is read, as the window following live trails the data
+  const firstHour = UnixTime.toStartOf(window.readFrom, 'hour')
   const lastHour = UnixTime.toStartOf(window.to, 'hour')
   const [oldest, lastMinute, overview, hours, detail] = await Promise.all([
     db.liveActivityBlock.getOldestTimestamp(id),

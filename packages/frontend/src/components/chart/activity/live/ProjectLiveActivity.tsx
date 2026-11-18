@@ -149,7 +149,10 @@ export function ProjectLiveActivity({
   // every 1/300 of it, about 2.5 pixels, and slid along in between
   const charts = useRef<HTMLDivElement>(null)
   const head = useRef<HTMLDivElement>(null)
-  const redrawEvery = LIVE_RANGES[range] / 300
+  // a new range's placeholder is drawn as the range it was read for, rather
+  // than squeezed into the new one, until the new range's data comes
+  const shown = (data && rangeOf(data.detail)) ?? range
+  const redrawEvery = LIVE_RANGES[shown] / 300
   const playhead = useLivePlayhead(
     live && data?.newest !== undefined ? data.detail.to + 1 : undefined,
     dataUpdatedAt,
@@ -165,7 +168,7 @@ export function ProjectLiveActivity({
         top,
         CHART_MARGIN,
       )
-      glideCharts(charts.current, seconds, LIVE_RANGES[range])
+      glideCharts(charts.current, seconds, LIVE_RANGES[shown])
     },
     holding,
   )
@@ -174,7 +177,7 @@ export function ProjectLiveActivity({
     playhead === undefined ? 0 : LOOKAHEAD_DRAWINGS * redrawEvery
   const domain: [number, number] | undefined = data
     ? playhead !== undefined
-      ? [playhead - LIVE_RANGES[range], playhead]
+      ? [playhead - LIVE_RANGES[shown], playhead]
       : [data.detail.from, data.detail.to + 1]
     : undefined
 
@@ -213,10 +216,12 @@ export function ProjectLiveActivity({
     },
   }
   const xAxis = domain && {
-    ticks: ticksOf(domain[0], domain[1] + lookahead, range),
+    ticks: ticksOf(domain[0], domain[1] + lookahead, shown),
     format: formatTick,
     domain,
   }
+
+  const stats = buckets && domain && getWindowStats(buckets, bucket, domain)
 
   // without recent blocks the section goes back to the history
   const available = data && isLiveFresh(data.newest, UnixTime.now())
@@ -237,7 +242,7 @@ export function ProjectLiveActivity({
   const clampTo = (end: number | undefined, range: LiveRange) => {
     if (end === undefined || newest === undefined) return undefined
     const clamped = Math.max(
-      getBufferFrom(newest, data?.oldest, range) + LIVE_RANGES[range],
+      getBufferFrom(newest, data?.oldest) + LIVE_RANGES[range],
       end,
     )
     return clamped >= newest - LIVE_RANGES[range] / 20 ? undefined : clamped
@@ -362,15 +367,20 @@ export function ProjectLiveActivity({
           </span>
           <LiveOverview
             points={data.overview}
-            from={getBufferFrom(newest, data.oldest, range)}
+            from={getBufferFrom(newest, data.oldest)}
             to={newest}
-            // looking back, where it was asked to end, before that is read
-            window={to === undefined ? domain : [to - LIVE_RANGES[range], to]}
+            // where it was asked to end while that is read, not where it was
+            window={
+              to !== undefined && isPlaceholderData
+                ? [to - LIVE_RANGES[range], to]
+                : domain
+            }
             windowText={
               live
                 ? 'Live'
                 : formatRange(domain[0], domain[1], { seconds: true })
             }
+            length={LIVE_RANGES[range]}
             metric={metric}
             // on a bucket, so moves within one share a read
             onMove={(end) =>
@@ -399,13 +409,14 @@ export function ProjectLiveActivity({
       </RadioGroup>
       <LiveStats
         usual={
-          metric !== 'gas' && data && domain
-            ? getUsualRate(data.usual, metric, domain)
+          metric !== 'gas' && data && stats
+            ? // over the buckets the rate is
+              getUsualRate(data.usual, metric, [stats.from, stats.to])
             : undefined
         }
         metric={metric}
-        stats={buckets && domain && getWindowStats(buckets, bucket, domain)}
-        window={live ? range : domain}
+        stats={stats}
+        window={live ? shown : domain}
         isLoading={isLoading}
       />
     </div>
@@ -686,17 +697,18 @@ function UsualBar({
 /**
  * Where the stored blocks start: the buffer's start, or while it fills, as
  * after a chain is first followed, its oldest block. On the minute, as the
- * overview's bars are, and at least a range back
+ * overview's bars are, and at least a minute back
  */
-function getBufferFrom(
-  newest: number,
-  oldest: number | undefined,
-  range: LiveRange,
-) {
+function getBufferFrom(newest: number, oldest: number | undefined) {
   const start = Math.max(newest - LIVE_BUFFER_SECONDS, oldest ?? newest)
-  return Math.min(
-    newest - LIVE_RANGES[range],
-    start - (start % UnixTime.MINUTE),
+  return Math.min(newest - UnixTime.MINUTE, start - (start % UnixTime.MINUTE))
+}
+
+/** The range a window read for spans */
+function rangeOf(detail: { from: number; to: number }) {
+  const span = detail.to + 1 - detail.from
+  return (Object.keys(LIVE_RANGES) as LiveRange[]).find(
+    (range) => LIVE_RANGES[range] === span,
   )
 }
 

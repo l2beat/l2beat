@@ -81,7 +81,13 @@ describe(getWindowStats.name, () => {
       [14, 66],
     )
 
-    expect(result).toEqual({ rate: 3, blocksPerMinute: 10, gasPerSecond: 20 })
+    expect(result).toEqual({
+      from: 24,
+      to: 60,
+      rate: 3,
+      blocksPerMinute: 10,
+      gasPerSecond: 20,
+    })
   })
 
   it('has none before any stored block', () => {
@@ -117,6 +123,12 @@ describe(getUsualRate.name, () => {
     )
 
     expect(rate).toEqual(7)
+  })
+
+  it('has none when the past week lacks an hour of the window', () => {
+    expect(getUsualRate([usualHour(0, 4)], 'tps', [2700, 6300])).toEqual(
+      undefined,
+    )
   })
 
   it('has none without a usual hour in the window', () => {
