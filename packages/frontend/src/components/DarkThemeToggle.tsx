@@ -41,13 +41,14 @@ export function DarkThemeToggle({ className }: DarkThemeToggleProps) {
     style.setProperty('--circle-y', `${y}px`)
     style.setProperty('--circle-radius', `${radius}px`)
 
-    document
-      .startViewTransition(() => setTheme(newTheme))
-      .finished.finally(() => {
-        style.removeProperty('--circle-x')
-        style.removeProperty('--circle-y')
-        style.removeProperty('--circle-radius')
-      })
+    const transition = document.startViewTransition(() => setTheme(newTheme))
+    // Skipped by a second click, `ready` rejects, which nothing else awaits.
+    transition.ready.catch(() => {})
+    transition.finished.finally(() => {
+      style.removeProperty('--circle-x')
+      style.removeProperty('--circle-y')
+      style.removeProperty('--circle-radius')
+    })
   }
 
   return (
