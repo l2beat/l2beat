@@ -18,15 +18,9 @@ describe('gas fees queries', () => {
     expect(sql).toInclude('sum(cast(gas_used as double)) as gas_used')
   })
 
-  it("reads Arbitrum's gas from its transactions and every chain's block range from its blocks, 30 days either side", () => {
+  it("reads every chain's base fee and block range from its blocks, 30 days either side", () => {
     const sql = getBlocksQuery(GAS_FEES_CHAINS, from, to)
 
-    expect(sql).toInclude(
-      "from arbitrum.transactions\n  where block_date between date '2026-10-01' and date '2026-10-10'",
-    )
-    expect(sql).toInclude(
-      "from arbitrum.blocks\n  where date between date '2026-09-01' and date '2026-11-09'",
-    )
     expect(sql).toInclude(
       "from ethereum.blocks as b\nleft join (\n  select block_number, sum(gas_used) as gas_used\n  from ethereum.transactions\n  where block_date between date '2026-10-01' and date '2026-10-10'\n    and gas_price = 0",
     )

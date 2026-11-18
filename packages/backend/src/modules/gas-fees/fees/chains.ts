@@ -10,8 +10,6 @@ export interface GasFeesChain {
    * launch, so days before it are stored when Dune has them but never awaited
    */
   requiredFrom: UnixTime
-  /** Arbitrum's blocks undercount gas used, so its gas and base fee come from its transactions */
-  gasFromTransactions?: true
 }
 
 const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
@@ -22,12 +20,7 @@ const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
  */
 export const GAS_FEES_CHAINS: GasFeesChain[] = [
   { id: 'ethereum', dune: 'ethereum', requiredFrom: day('2015-08-08') },
-  {
-    id: 'arbitrum',
-    dune: 'arbitrum',
-    requiredFrom: day('2021-08-31'),
-    gasFromTransactions: true,
-  },
+  { id: 'arbitrum', dune: 'arbitrum', requiredFrom: day('2021-08-31') },
   { id: 'base', dune: 'base', requiredFrom: day('2023-08-09') },
   // Dune's data starts at the regenesis of 11 Nov 2021
   { id: 'optimism', dune: 'optimism', requiredFrom: day('2021-11-12') },

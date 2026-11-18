@@ -36,13 +36,11 @@ const NO_FEES: Omit<FeesRow, 'blockchain' | 'day'> = {
 const BlocksRow = v.object({
   blockchain: v.string(),
   day: v.string(),
-  /** The two below are null on a neighbour day of a chain read from transactions, which is read only for its block range */
+  /** Null where the chain's blocks have no base fee */
   base_fee: v.union([v.number(), v.null()]),
   gas_used: v.union([v.number(), v.null()]),
   /** Gas of the transactions that paid nothing, part of gas_used */
   free_gas: v.number(),
-  /** Blocks its transactions come from. Only of a chain read from transactions */
-  tx_blocks: v.union([v.number(), v.null()]),
   /** From the chain's blocks table */
   blocks: v.number(),
   first_block: v.number(),
@@ -139,7 +137,6 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
             base_fee: 0,
             gas_used: 0,
             free_gas: 0,
-            tx_blocks: 0,
             blocks: 0,
             first_block: row.last_block + 1,
             last_block: row.last_block,
@@ -199,9 +196,6 @@ function toWholeDay(
   const whole =
     // Sums of whole numbers far below 2^53, so exact as doubles
     fee.gas_used === row.gas_used &&
-    // Gas read from transactions can't show that table is whole. Its blocks can:
-    // on the days checked every block of such a chain had a transaction
-    (!chain.gasFromTransactions || row.tx_blocks === row.blocks) &&
     row.last_block - row.first_block + 1 === row.blocks &&
     later.first_block === row.last_block + 1 &&
     (earlier
