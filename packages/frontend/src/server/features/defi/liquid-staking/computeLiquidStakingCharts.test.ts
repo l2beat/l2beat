@@ -246,6 +246,40 @@ describe(computeCostOfExitChart.name, () => {
     expect(charts.costOfExit[0]?.estimated).toEqual([])
   })
 
+  it('times an unpaced wBETH unwrap at the lock, and leaves it unknown past the lock', () => {
+    const lockTime = 10 * DAY
+    // Requested in a queue that has allocated nothing lately.
+    const requested = [
+      snapshot('wbeth', DAY_31, 1, {
+        lockTime,
+        lastRequestId: 5,
+        lastFinalizedRequestId: 5,
+      }),
+      snapshot('wbeth', DAY_31 + HOUR, 1, {
+        lockTime,
+        lastRequestId: 6,
+        lastFinalizedRequestId: 5,
+      }),
+    ]
+    const locked = compute(['wbeth'], requested)
+    expect(locked.costOfExit[0]?.projects.wbeth).toEqual(10)
+    expect(locked.costOfExit[0]?.estimated).toEqual(['wbeth'])
+
+    const overdue = compute(
+      ['wbeth'],
+      [
+        ...requested,
+        snapshot('wbeth', DAY_31 + 11 * DAY, 1, {
+          lockTime,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 5,
+        }),
+      ],
+    )
+    // Not the lock alone, which is for days without requests.
+    expect(overdue.costOfExit[0]?.projects.wbeth).toEqual(null)
+  })
+
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
     const at = (instantExitEth: bigint) =>
       compute(
@@ -324,14 +358,26 @@ describe(getQueueWaits.name, () => {
         { timestamp: 2 * HOUR, lastRequestId: 5, lastFinalizedRequestId: 3 },
       ]),
     ).toEqual([
-      { timestamp: HOUR, requests: 2, hours: 1, estimated: false },
+      {
+        timestamp: HOUR,
+        requests: 2,
+        hours: 1,
+        estimated: false,
+        unpaced: false,
+      },
       // One request finalized an hour. Requests 4 and 5 are one and two
       // ahead of the finalized 3, so they wait 1.5 hours on average.
-      { timestamp: 2 * HOUR, requests: 2, hours: 1.5, estimated: true },
+      {
+        timestamp: 2 * HOUR,
+        requests: 2,
+        hours: 1.5,
+        estimated: true,
+        unpaced: false,
+      },
     ])
   })
 
-  it('leaves the wait unknown when nothing has finalized lately', () => {
+  it('counts only the wait so far when nothing has finalized lately', () => {
     expect(
       getQueueWaits([
         { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
@@ -342,8 +388,9 @@ describe(getQueueWaits.name, () => {
       {
         timestamp: HOUR,
         requests: 1,
-        hours: Number.POSITIVE_INFINITY,
+        hours: 2,
         estimated: true,
+        unpaced: true,
       },
     ])
   })

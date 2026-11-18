@@ -146,8 +146,8 @@ class ExitCostSeries {
   private readonly rates: ExchangeRates
   /** Day start → that day's hourly snapshots. */
   private readonly hoursByDay: Map<number, LiquidStakingSnapshotRecord[]>
-  /** Request day → the request-weighted wait of its requests. */
-  private readonly queueWaits: Map<number, ExitCost>
+  /** Request day → the request-weighted wait of its requests, null when unknown. */
+  private readonly queueWaits: Map<number, ExitCost | null>
 
   constructor(snapshots: LiquidStakingSnapshotRecord[]) {
     this.rates = new ExchangeRates(snapshots)
@@ -193,7 +193,7 @@ class ExitCostSeries {
   /** A queued exit earns nothing while it waits, so it costs the wait. */
   private queueAt(day: number): ExitCost | null {
     const wait = this.queueWaits.get(day)
-    if (wait) return wait
+    if (wait !== undefined) return wait
     // Without requests that day, an exit would still wait out the lock. Only
     // wBETH has one.
     const lockTime = this.hoursByDay.get(day)?.[0]?.lockTime
@@ -251,9 +251,10 @@ interface QueueWait {
   /** The snapshot that first counted the requests. */
   timestamp: number
   requests: number
-  /** Infinite when unknown. */
   hours: number
   estimated: boolean
+  /** Still queued with no pace to time the rest by: `hours` is only the wait so far. */
+  unpaced: boolean
 }
 
 /**
@@ -297,6 +298,7 @@ export function getQueueWaits(
           requests: last - requestId,
           hours: (finalized.timestamp - current.timestamp) / UnixTime.HOUR,
           estimated: false,
+          unpaced: false,
         })
         requestId = last
       }
@@ -309,7 +311,7 @@ export function getQueueWaits(
 /**
  * Requests still queued finalize in order at the pace of the last
  * PACE_WINDOW_DAYS. A queue that finalized nothing in them gives no pace, and
- * the time waited so far is only a lower bound, so the wait is unknown.
+ * the time waited so far is then only a lower bound.
  */
 function estimateQueuedWaits(
   snapshots: Pick<
@@ -333,13 +335,13 @@ function estimateQueuedWaits(
   return queued.map(({ timestamp, from, to }) => {
     // The portion's requests are from + 1 to to; the middle one stands for all.
     const ahead = Math.max(0, (from + 1 + to) / 2 - lastFinalized)
-    const hoursLeft =
-      finalizedPerHour > 0 ? ahead / finalizedPerHour : Number.POSITIVE_INFINITY
+    const hoursLeft = finalizedPerHour > 0 ? ahead / finalizedPerHour : 0
     return {
       timestamp,
       requests: to - from,
       hours: (last.timestamp - timestamp) / UnixTime.HOUR + hoursLeft,
       estimated: true,
+      unpaced: finalizedPerHour === 0,
     }
   })
 }
@@ -347,16 +349,18 @@ function estimateQueuedWaits(
 /**
  * The request-weighted wait of each day's requests, in days. Requests made in
  * the hour before a snapshot belong to that hour, so midnight closes a day.
- * `minimumWait` is the wait, in seconds, of every request at a snapshot. A day
- * with a request of unknown wait has no average.
+ * `minimumWait` is the wait, in seconds, of every request at a snapshot. An
+ * unpaced request still inside it is timed at that minimum. Past it, or
+ * without one, the wait is unknown: its day has no average, and is kept apart
+ * from a day without requests.
  */
 function averageWaitByDay(
   waits: QueueWait[],
   minimumWait: (timestamp: number) => number,
-): Map<number, ExitCost> {
+): Map<number, ExitCost | null> {
   const totals = new Map<
     number,
-    { requests: number; hours: number; estimated: boolean }
+    { requests: number; hours: number; estimated: boolean; unknown: boolean }
   >()
   for (const wait of waits) {
     const day = UnixTime.toStartOf(UnixTime(wait.timestamp - 1), 'day')
@@ -364,23 +368,22 @@ function averageWaitByDay(
       requests: 0,
       hours: 0,
       estimated: false,
+      unknown: false,
     }
-    const hours = Math.max(
-      wait.hours,
-      minimumWait(wait.timestamp) / UnixTime.HOUR,
-    )
+    const minimum = minimumWait(wait.timestamp) / UnixTime.HOUR
     total.requests += wait.requests
-    total.hours += wait.requests * hours
+    total.hours += wait.requests * Math.max(wait.hours, minimum)
     total.estimated ||= wait.estimated
+    total.unknown ||= wait.unpaced && wait.hours >= minimum
     totals.set(day, total)
   }
   return new Map(
-    [...totals]
-      .filter(([, t]) => Number.isFinite(t.hours))
-      .map(([day, t]) => [
-        day,
-        { days: t.hours / t.requests / 24, estimated: t.estimated },
-      ]),
+    [...totals].map(([day, t]) => [
+      day,
+      t.unknown
+        ? null
+        : { days: t.hours / t.requests / 24, estimated: t.estimated },
+    ]),
   )
 }
 
