@@ -289,6 +289,43 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(adjustedTo)
     })
 
+    // Methodology: the logger is a mock, so the level the skip is reported at
+    // is observable; the start is set via the configuration's minHeight.
+    it('alerts at critical level when the skipped range holds the start', async () => {
+      const configuration = config('config-1', 'ethereum', 18, 150)
+      const { indexer, logger, tvsAmountRepository } =
+        setupInsufficientData(configuration)
+
+      const updateFn = await indexer.multiUpdate(100, 300, [configuration])
+      const safeHeight = await updateFn()
+
+      expect(logger.critical).toHaveBeenOnlyCalledWith(
+        'Skipped circulating supply at its start',
+        {
+          apiId: 'ethereum',
+          configurationId: 'config-1',
+          from: 100,
+          to: 250,
+          sinceTimestamp: 150,
+          error: expect.a(Error),
+        },
+      )
+      expect(logger.warn).not.toHaveBeenCalled()
+      expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith([])
+      expect(safeHeight).toEqual(250)
+    })
+
+    it('warns when the skipped range is past the start', async () => {
+      const configuration = config('config-1', 'ethereum', 18, 50)
+      const { indexer, logger } = setupInsufficientData(configuration)
+
+      const updateFn = await indexer.multiUpdate(100, 300, [configuration])
+      await updateFn()
+
+      expect(logger.warn).toHaveBeenCalledTimes(1)
+      expect(logger.critical).not.toHaveBeenCalled()
+    })
+
     it('rethrows other errors', async () => {
       const from = 100
       const to = 300
@@ -384,14 +421,48 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
   })
 })
 
-function config(id: string, apiId: string, decimals: number) {
+function setupInsufficientData(configuration: ReturnType<typeof config>) {
+  const warn = mockFn().returns(undefined)
+  const critical = mockFn().returns(undefined)
+  const logger: Logger = mockObject<Logger>({
+    info: mockFn().returns(undefined),
+    warn,
+    critical,
+    tag: () => logger,
+    for: () => logger,
+  })
+  const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+    upsertMany: mockFn().returnsOnce(undefined),
+  })
+  const indexer = new CirculatingSupplyAmountIndexer(
+    {
+      configurations: [configuration],
+      circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
+        getAdjustedTo: mockFn().returnsOnce(250),
+        getCirculatingSupplies: mockFn().throwsOnce(
+          new Error('Insufficient data in response for ethereum'),
+        ),
+      }),
+      db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+      syncOptimizer: mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
+      }),
+      parents: [],
+      indexerService: mockObject<IndexerService>({}),
+    },
+    logger,
+  )
+  return { indexer, logger: { warn, critical }, tvsAmountRepository }
+}
+
+function config(id: string, apiId: string, decimals: number, minHeight = 0) {
   return {
     id,
-    minHeight: 0,
+    minHeight,
     maxHeight: null,
     properties: {
       type: 'circulatingSupply' as const,
-      sinceTimestamp: 0,
+      sinceTimestamp: minHeight,
       apiId,
       decimals,
       address: EthereumAddress.ZERO,

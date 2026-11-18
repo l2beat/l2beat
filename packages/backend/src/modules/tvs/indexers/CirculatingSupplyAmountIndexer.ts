@@ -102,13 +102,32 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               error instanceof Error &&
               error.message.startsWith('Insufficient data in response')
             ) {
-              this.logger.warn(
-                `Failed to fetch for ${configuration.properties.apiId}`,
-                {
-                  priceId: configuration.properties.apiId,
-                  error,
-                },
-              )
+              // Configs share one checkpoint, so rethrowing would block every
+              // supply config while CoinGecko never fills the gap. Skipping is
+              // harmless mid-range, but a skipped start leaves a permanent hole
+              // that stalls the project's TVS, so a human has to step in.
+              if (isStartInRange(configuration, from, adjustedTo)) {
+                // Use critical level to trigger maintenance alert
+                this.logger.critical(
+                  'Skipped circulating supply at its start',
+                  {
+                    apiId: configuration.properties.apiId,
+                    configurationId: configuration.id,
+                    from,
+                    to: adjustedTo,
+                    sinceTimestamp: configuration.minHeight,
+                    error,
+                  },
+                )
+              } else {
+                this.logger.warn(
+                  `Failed to fetch for ${configuration.properties.apiId}`,
+                  {
+                    priceId: configuration.properties.apiId,
+                    error,
+                  },
+                )
+              }
               return []
             }
             this.logger.error(
@@ -181,4 +200,12 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   static SOURCE() {
     return 'l2b-circulating-supply'
   }
+}
+
+function isStartInRange(
+  configuration: Configuration<CirculatingSupplyAmountFormula>,
+  from: number,
+  to: number,
+) {
+  return from <= configuration.minHeight && configuration.minHeight <= to
 }

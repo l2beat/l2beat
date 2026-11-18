@@ -49,11 +49,41 @@ export class CoingeckoQueryService {
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
   ): Promise<QueryResultPoint[]> {
+    const supplies = await this.querySupplies(coingeckoId, range)
+    if (supplies.some((p) => isValidSupply(p.value))) {
+      return this.repairInvalidSupplies(coingeckoId, supplies)
+    }
+
+    // A window can end before CoinGecko's first valid supply, e.g. a one-hour
+    // window at a token's start. Look past it so the repair rule can fill the
+    // window from the next valid hour, as it would in a wider window.
+    const lookaheadTo = UnixTime(
+      Math.min(
+        range.to + MAX_REPAIRED_SUPPLY_GAP_HOURS * UnixTime.HOUR,
+        UnixTime.toStartOf(UnixTime.now(), 'hour'),
+      ),
+    )
+    if (lookaheadTo <= range.to) {
+      return this.repairInvalidSupplies(coingeckoId, supplies)
+    }
+    const extended = await this.querySupplies(coingeckoId, {
+      from: range.from,
+      to: lookaheadTo,
+    })
+    return this.repairInvalidSupplies(coingeckoId, extended).filter(
+      (p) => p.timestamp <= range.to,
+    )
+  }
+
+  private async querySupplies(
+    coingeckoId: CoingeckoId,
+    range: { from: UnixTime; to: UnixTime },
+  ): Promise<QueryResultPoint[]> {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       range,
     )
-    const supplies = zip(queryResult.prices, queryResult.marketCaps).map(
+    return zip(queryResult.prices, queryResult.marketCaps).map(
       ([price, marketCap]) => {
         assert(price && marketCap && price.timestamp === marketCap.timestamp)
 
@@ -64,7 +94,6 @@ export class CoingeckoQueryService {
         }
       },
     )
-    return this.repairInvalidSupplies(coingeckoId, supplies)
   }
 
   // Coingecko occasionally poisons single points of its market cap history

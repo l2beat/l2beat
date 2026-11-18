@@ -405,6 +405,49 @@ describe(CoingeckoQueryService.name, () => {
         )
       }).toBeRejectedWith('Insufficient data in response for venice-token')
     })
+    // Methodology: the mock returns the same hourly series for every call, so
+    // the first query sees only the invalid requested hour and the lookahead
+    // query sees the valid hours after it.
+    it('fills an invalid one-hour window from a valid hour after it', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-15T00:00:00Z'))
+      const hours = 25
+
+      const marketCaps = new Array(hours).fill(-1)
+      marketCaps[20] = 2_000_000
+
+      const coingeckoClient = supplyClient(
+        START,
+        new Array(hours).fill(10),
+        marketCaps,
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('what-the-hook'),
+        { from: START, to: START },
+      )
+      expect(supplies).toEqual([{ timestamp: START, value: 200000 }])
+    })
+
+    it('throws when no valid hour follows an invalid window within the repairable gap', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-15T00:00:00Z'))
+      const hours = MAX_REPAIRED_SUPPLY_GAP_HOURS + 2
+
+      const marketCaps = new Array(hours).fill(-1)
+      marketCaps[hours - 1] = 2_000_000
+
+      const coingeckoClient = supplyClient(
+        START,
+        new Array(hours).fill(10),
+        marketCaps,
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      await expect(async () => {
+        await coingeckoQueryService.getCirculatingSupplies(
+          CoingeckoId('what-the-hook'),
+          { from: START, to: START },
+        )
+      }).toBeRejectedWith('Insufficient data in response for what-the-hook')
+    })
   })
 
   describe(CoingeckoQueryService.calculateAdjustedTo.name, () => {
