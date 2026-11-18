@@ -11,16 +11,16 @@ export function GardenBackground() {
         <Sun className="absolute top-10 right-14 max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:hidden" />
         <Moon className="absolute top-10 right-14 hidden max-md:top-6 max-md:right-6 max-md:scale-75 max-md:opacity-60 dark:block" />
         <svg
-          className="absolute bottom-0 left-0 h-36 w-full"
+          className="absolute bottom-0 left-0 h-36 w-full overflow-visible"
           viewBox="0 0 1200 160"
           preserveAspectRatio="none"
         >
           <path
-            d="M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z"
+            d={`M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 ${GROUND_BOTTOM} L0 ${GROUND_BOTTOM} Z`}
             className="fill-[#dcead3]/70 dark:fill-[#1b2415]/70"
           />
           <path
-            d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
+            d={`M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 ${GROUND_BOTTOM} L0 ${GROUND_BOTTOM} Z`}
             className="fill-garden-border/70"
           />
         </svg>
@@ -28,6 +28,13 @@ export function GardenBackground() {
     </PageBackdrop>
   )
 }
+
+/**
+ * Where the hills' fill stops, in viewBox units: past the svg's 160, so the
+ * ground runs on below the small viewport down to the backdrop's bottom edge.
+ * 480 is ~290px, more than any browser toolbar is tall.
+ */
+const GROUND_BOTTOM = 480
 
 export function Sun({ className }: { className?: string }) {
   const rays = Array.from({ length: 8 }, (_, i) => i * 45)

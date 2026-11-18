@@ -35,13 +35,11 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
           <TableRow key={entry.slug} highlightId={undefined}>
             <TableCell className="whitespace-nowrap max-md:py-3 max-md:pr-0">
               {/* On phones the row stacks, so all four plants show without a sideways scroll. */}
-              <div className="flex items-center justify-between gap-3">
+              {/* Top-aligned, so a change's extra line under the amount does not push the name down. */}
+              <div className="flex items-start justify-between gap-3">
                 <ProjectCell entry={entry} />
                 <div className="md:hidden">
-                  <MetricCell
-                    metric={entry.metric}
-                    alwaysReserveChange={false}
-                  />
+                  <MetricCell metric={entry.metric} stacked />
                 </div>
               </div>
               <EvaluatedCrops
@@ -218,22 +216,22 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
 
 /**
  * In the table the change has a column of its own, empty when there is none,
- * so amounts and the dash share a right edge. A phone row stands alone, so
- * without a change its amount goes to the row's right edge instead.
+ * so amounts and the dash share a right edge. A phone row has no room for
+ * that column, so its change goes on a line under the amount, which keeps
+ * every row's amount on the same right edge.
  */
 function MetricCell({
   metric,
-  alwaysReserveChange = true,
+  stacked = false,
 }: {
   metric: GardenEntry['metric']
-  alwaysReserveChange?: boolean
+  stacked?: boolean
 }) {
-  const reserveChange = alwaysReserveChange || metric?.change !== undefined
   return (
     <div
       className={cn(
         'inline-grid items-baseline gap-x-1 gap-y-px text-right',
-        reserveChange ? 'grid-cols-[auto_3.5rem]' : 'grid-cols-[auto]',
+        stacked ? 'grid-cols-[auto]' : 'grid-cols-[auto_3.5rem]',
       )}
     >
       {metric ? (
@@ -246,14 +244,16 @@ function MetricCell({
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
-          {reserveChange && (
+          {stacked ? (
+            metric.change !== undefined && (
+              <span className="row-start-3">
+                <ChangeOverWeek change={metric.change} />
+              </span>
+            )
+          ) : (
             <span className="row-start-2 text-left">
               {metric.change !== undefined && (
-                <PercentChange
-                  value={metric.change}
-                  period="7D"
-                  textClassName="text-xs"
-                />
+                <ChangeOverWeek change={metric.change} />
               )}
             </span>
           )}
@@ -269,4 +269,8 @@ function MetricCell({
       )}
     </div>
   )
+}
+
+function ChangeOverWeek({ change }: { change: number }) {
+  return <PercentChange value={change} period="7D" textClassName="text-xs" />
 }
