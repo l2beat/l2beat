@@ -2635,7 +2635,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "robinhood-WTH",
       "priceId": "what-the-hook",
       "symbol": "WTH",
