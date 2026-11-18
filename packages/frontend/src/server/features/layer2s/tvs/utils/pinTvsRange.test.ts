@@ -25,6 +25,17 @@ describe(pinTvsRange.name, () => {
     expect(pinTvsRange([start, end], noon)).toEqual([pin - 7 * DAY, noon])
   })
 
+  it('keeps a preset seven days long when requested late in the day', () => {
+    const end = pin + DAY + 18 * UnixTime.HOUR
+    const start = UnixTime.toStartOf(end, 'day') - 7 * DAY
+    expect(pinTvsRange([start, end], pin)).toEqual([pin - 7 * DAY, pin])
+  })
+
+  it('keeps three picked days three days long', () => {
+    const range: [number, number] = [pin + DAY, pin + 4 * DAY - 1]
+    expect(pinTvsRange(range, pin)).toEqual([pin - 3 * DAY, pin])
+  })
+
   it('keeps a single picked day one day long', () => {
     const range: [number, number] = [pin + DAY, pin + 2 * DAY - 1]
     expect(pinTvsRange(range, pin)).toEqual([pin - DAY, pin])
