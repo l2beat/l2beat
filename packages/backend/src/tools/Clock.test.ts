@@ -31,7 +31,9 @@ describe(Clock.name, () => {
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstHour()
-      expect(firstHour).toEqual(UnixTime.toNext(start, 'hour'))
+      expect(firstHour).toEqual(
+        UnixTime.fromDate(new Date('1973-11-29T22:00:00Z')),
+      )
     })
 
     it('cannot get first hour with minTimestamp in the future', () => {
@@ -45,13 +47,15 @@ describe(Clock.name, () => {
   })
 
   describe(Clock.prototype.getFirstDay.name, () => {
-    it('returns minTimestamp aligned to an hour', () => {
+    it('returns minTimestamp aligned to a day', () => {
       time.setSystemTime(10_000_000_000_000)
       const start = UnixTime(123456789)
       const clock = new Clock(start, 0)
 
-      const firstHour = clock.getFirstDay()
-      expect(firstHour).toEqual(UnixTime.toNext(start, 'day'))
+      const firstDay = clock.getFirstDay()
+      expect(firstDay).toEqual(
+        UnixTime.fromDate(new Date('1973-11-30T00:00:00Z')),
+      )
     })
 
     it('cannot get first day with minTimestamp in the future', () => {

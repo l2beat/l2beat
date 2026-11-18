@@ -1,4 +1,9 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -186,14 +191,25 @@ export const rocketpool: BaseProject = {
       type: 'rocketpool',
       rETH: discovery.getContract('RocketTokenRETH').address,
     },
-    // Balancer's pool was the deepest until it was drained in 2025-11.
+    // Balancer's V2 pool was the deepest until it was drained in 2025-11;
+    // the liquidity then moved to its V3 pool.
     marketQuotes: [
       {
         type: 'balancerV2',
         poolId:
           '0x1e19cf2d73a72ef1332c882f20534b6519be0276000200000000000000000112',
       },
+      {
+        type: 'balancerV3',
+        pool: ChainSpecificAddress(
+          'eth:0x1ea5870f7C037930CE1d5d8d9317c670e89e13E3',
+        ),
+        wrappedWeth: ChainSpecificAddress(
+          'eth:0x0bfc9d54Fc184518A81162F8fB99c2eACa081202',
+        ),
+      },
       { type: 'uniswapV3', fee: 100 },
+      { type: 'uniswapV3', fee: 500 },
     ],
     risks: {
       minting: {

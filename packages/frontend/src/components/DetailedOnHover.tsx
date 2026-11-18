@@ -16,7 +16,7 @@ export function DetailedOnHover({ children, value }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger>{children}</TooltipTrigger>
-      <TooltipContent className="font-medium text-xs">
+      <TooltipContent className="text-label-value-13 tabular-nums">
         {value.toFixed(precision)}
       </TooltipContent>
     </Tooltip>

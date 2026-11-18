@@ -7,6 +7,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -118,9 +119,9 @@ function TvsValueChartTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatSnapshotTimestamp(row.timestamp, resolution)}
-      </div>
+      </ChartTooltipTitle>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {payload.map((entry) => (

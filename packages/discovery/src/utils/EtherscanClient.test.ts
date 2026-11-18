@@ -224,4 +224,77 @@ describe(EtherscanClient.name, () => {
     await time.runAllAsync()
     expect(await result).toEqual(TX_HASH)
   })
+
+  it('does not retry an HTTP 4xx that a retry cannot fix', async () => {
+    const error = new Error('HTTP error: 403 Forbidden', {
+      cause: { url: URL, status: 403 },
+    })
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn().rejectsWith(error),
+    })
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const result = client
+      .getContractDeploymentTx(EthereumAddress.random())
+      .catch((e: unknown) => e)
+    await time.runAllAsync()
+
+    expect(await result).toEqual(error)
+    expect(httpClient.fetch).toHaveBeenCalledTimes(1)
+  })
+
+  it('retries a rate limit reported as NOTOK or as HTTP 429', async () => {
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn()
+        .resolvesToOnce({ message: 'NOTOK', result: 'Max rate limit reached' })
+        .rejectsWithOnce(
+          new Error('HTTP error: 429 Too Many Requests', {
+            cause: { url: URL, status: 429 },
+          }),
+        )
+        .resolvesToOnce({ message: 'OK', result: '1234' }),
+    })
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const result = client.getBlockNumberAtOrBefore(UnixTime(1000))
+    await time.runAllAsync()
+
+    expect(await result).toEqual(1234)
+    expect(httpClient.fetch).toHaveBeenCalledTimes(3)
+  })
+
+  it('gives up on a failing explorer within the capped waits', async () => {
+    const httpClient = mockObject<HttpClient>({
+      fetch: mockFn().rejectsWith(new Error('socket hang up')),
+    })
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
+
+    const startedAtMs = Date.now()
+    const result = client
+      .getContractDeploymentTx(EthereumAddress.random())
+      .catch((e: unknown) => e)
+    await time.runAllAsync()
+    await result
+
+    expect(httpClient.fetch).toHaveBeenCalledTimes(10)
+    expect(Date.now() - startedAtMs <= 7 * 60_000).toEqual(true)
+  })
 })

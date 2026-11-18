@@ -450,6 +450,10 @@ async function formatGoogleError(response: {
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-    console.error(error instanceof Error ? error.message : String(error))
+    if (error instanceof Error && error.cause !== undefined) {
+      console.error('%s', error.message, error.cause)
+    } else {
+      console.error(error instanceof Error ? error.message : String(error))
+    }
     process.exit(1)
   })

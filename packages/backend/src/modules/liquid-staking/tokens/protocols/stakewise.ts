@@ -1,5 +1,6 @@
 import type { ProjectLiquidStakingContracts } from '@l2beat/config'
 import type { CallParameters } from '@l2beat/shared'
+import type { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { encodeCall, UNIT, uint, word } from '../calls'
 import { saleAtRate } from '../marketQuotes'
@@ -29,67 +30,69 @@ const REDEEMERS = {
 const TICKET_UNIT = UNIT / 1000n
 
 /**
- * The rate, and the counters of osETH's exit queue: tickets entered and
- * tickets processed. A queue's third value also counts the shares redeemed or
- * bought since its last checkpoint, which holders can only claim after the
- * next one, so those are entered but not yet processed.
+ * The rate, and the counters of osETH's exit queues: tickets entered and
+ * tickets processed. The first queue was replaced with unpaid shares left in
+ * it, which it can still process, so each queue is counted on its own: added
+ * up, that leftover would make the newest requests look unpaid. A queue's
+ * third value also counts the shares redeemed or bought since its last
+ * checkpoint, which holders can only claim after the next one, so those are
+ * entered but not yet processed.
  */
 export function getStakeWiseReads(
   contracts: Extract<ProjectLiquidStakingContracts, { type: 'stakewise' }>,
   blockNumber: number,
 ): ProtocolReads {
-  const rate = encodeCall(abi, contracts.vaultController, 'convertToAssets', [
-    UNIT,
-  ])
-  const token = { token: contracts.osETH, saleValue: saleAtRate }
-
-  if (blockNumber < REDEEMERS.first) {
-    return protocolReads({
-      ...token,
-      calls: { rate },
-      toState: (r) => ({ ...EMPTY_EXIT, exchangeRate: uint(r.rate) }),
-    })
+  const calls: Record<string, CallParameters> = {
+    rate: encodeCall(abi, contracts.vaultController, 'convertToAssets', [UNIT]),
+  }
+  const addQueue = (name: QueueName, queue: ChainSpecificAddress) => {
+    calls[`${name}Queue`] = encodeCall(abi, queue, 'getExitQueueData')
+    calls[`${name}Redeemed`] = encodeCall(abi, queue, 'redeemedShares')
+    calls[`${name}Swapped`] = encodeCall(abi, queue, 'swappedShares')
+  }
+  if (blockNumber >= REDEEMERS.first) {
+    addQueue('retired', contracts.previousRedeemer)
+  }
+  if (blockNumber >= REDEEMERS.second) {
+    addQueue('current', contracts.redeemer)
   }
 
-  // The retired queue can still process the shares left in it, so both count.
-  const queues =
-    blockNumber < REDEEMERS.second
-      ? [contracts.previousRedeemer]
-      : [contracts.previousRedeemer, contracts.redeemer]
-  const calls: Record<string, CallParameters> = { rate }
-  queues.forEach((queue, i) => {
-    calls[`queue${i}`] = encodeCall(abi, queue, 'getExitQueueData')
-    calls[`redeemed${i}`] = encodeCall(abi, queue, 'redeemedShares')
-    calls[`swapped${i}`] = encodeCall(abi, queue, 'swappedShares')
-  })
   return protocolReads<string>({
-    ...token,
+    token: contracts.osETH,
+    saleValue: saleAtRate,
     calls,
     toState: (r) => {
-      let entered = 0n
-      let processed = 0n
-      for (let i = 0; i < queues.length; i++) {
-        const data = r[`queue${i}`]
-        const redeemed = r[`redeemed${i}`]
-        const swapped = r[`swapped${i}`]
-        if (
-          data === undefined ||
-          redeemed === undefined ||
-          swapped === undefined
-        ) {
-          throw new Error('Missing exit queue read')
-        }
-        const queued = word(data, 0)
-        const tickets = word(data, 2)
-        entered += tickets + queued
-        processed += tickets - uint(redeemed) - uint(swapped)
-      }
+      const current = getQueueCounters(r, 'current')
+      const retired = getQueueCounters(r, 'retired')
       return {
         ...EMPTY_EXIT,
-        exchangeRate: uint(r.rate),
-        lastRequestId: Number(entered / TICKET_UNIT),
-        lastFinalizedRequestId: Number(processed / TICKET_UNIT),
+        exchangeRate: uint(r.rate as Bytes),
+        lastRequestId: current?.entered ?? null,
+        lastFinalizedRequestId: current?.processed ?? null,
+        retiredLastRequestId: retired?.entered ?? null,
+        retiredLastFinalizedRequestId: retired?.processed ?? null,
       }
     },
   })
+}
+
+type QueueName = 'current' | 'retired'
+
+/** Nothing for a queue that isn't read at the block. */
+function getQueueCounters(
+  results: Record<string, Bytes>,
+  name: QueueName,
+): { entered: number; processed: number } | undefined {
+  const data = results[`${name}Queue`]
+  const redeemed = results[`${name}Redeemed`]
+  const swapped = results[`${name}Swapped`]
+  if (data === undefined || redeemed === undefined || swapped === undefined) {
+    return undefined
+  }
+  const queued = word(data, 0)
+  const tickets = word(data, 2)
+  return {
+    entered: Number((tickets + queued) / TICKET_UNIT),
+    processed: Number((tickets - uint(redeemed) - uint(swapped)) / TICKET_UNIT),
+  }
 }

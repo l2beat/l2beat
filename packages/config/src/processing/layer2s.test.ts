@@ -242,47 +242,38 @@ describe('layer2s', () => {
     expect(missing).toEqual([])
   }).timeout(10_000)
 
-  describe('display', () => {
-    it('every description ends with a dot', () => {
-      const invalid = layer2s
-        .filter((l) => !l.display.description.endsWith('.'))
-        .map((l) => l.id)
-      expect(invalid).toEqual([])
-    })
+  it('every technology choice is correctly formatted', () => {
+    const keys = [
+      'dataAvailability',
+      'operator',
+      'forceTransactions',
+      'exitMechanisms',
+      'massExit',
+      'otherConsiderations',
+    ] as const satisfies (keyof ProjectScalingTechnology)[]
 
-    it('every technology choice is correctly formatted', () => {
-      const keys = [
-        'dataAvailability',
-        'operator',
-        'forceTransactions',
-        'exitMechanisms',
-        'massExit',
-        'otherConsiderations',
-      ] as const satisfies (keyof ProjectScalingTechnology)[]
-
-      const problems: string[] = []
-      for (const layer2 of layer2s) {
-        for (const key of keys) {
-          const item = layer2.technology?.[key]
-          const choices = item === undefined ? [] : [item].flat()
-          for (const [i, choice] of choices.entries()) {
-            const label = `${layer2.id} ${key}[${i}]`
-            if (choice.name.endsWith('.')) {
-              problems.push(`${label}.name ends with a dot`)
-            }
-            if (!choice.description.endsWith('.')) {
-              problems.push(`${label}.description does not end with a dot`)
-            }
-            for (const risk of choice.risks) {
-              if (!isRiskCorrectlyFormatted(risk)) {
-                problems.push(`${label}.risks: ${risk.text}`)
-              }
+    const problems: string[] = []
+    for (const layer2 of layer2s) {
+      for (const key of keys) {
+        const item = layer2.technology?.[key]
+        const choices = item === undefined ? [] : [item].flat()
+        for (const [i, choice] of choices.entries()) {
+          const label = `${layer2.id} ${key}[${i}]`
+          if (choice.name.endsWith('.')) {
+            problems.push(`${label}.name ends with a dot`)
+          }
+          if (!choice.description.endsWith('.')) {
+            problems.push(`${label}.description does not end with a dot`)
+          }
+          for (const risk of choice.risks) {
+            if (!isRiskCorrectlyFormatted(risk)) {
+              problems.push(`${label}.risks: ${risk.text}`)
             }
           }
         }
       }
-      expect(problems).toEqual([])
-    })
+    }
+    expect(problems).toEqual([])
   })
 
   describe('others', () => {

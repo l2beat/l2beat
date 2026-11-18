@@ -149,7 +149,7 @@ export const cbeth: BaseProject = {
     marketQuotes: [
       { type: 'uniswapV3', fee: 500 },
       {
-        type: 'curve',
+        type: 'curveCrypto',
         pool: ChainSpecificAddress(
           'eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A',
         ),

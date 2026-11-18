@@ -91,17 +91,20 @@ export async function getTokensOnChain(
   return tokens
 }
 
+// `multicall` is the Multicall3 of the chain. With it gas token balances are
+// read in the same batches as the token ones; without it each costs a request.
 export async function getBalances(
   provider: IProvider,
   holder: ChainSpecificAddress,
   tokens: Token[],
+  multicall?: ChainSpecificAddress,
 ): Promise<TokenBalance[]> {
   const balances = await Promise.all(
     tokens.map(async (token) => ({
       ...token,
       balance:
         token.address === undefined
-          ? await getNativeBalance(provider, holder)
+          ? await getNativeBalance(provider, holder, multicall)
           : await getTokenBalance(provider, holder, token.address),
     })),
   )
@@ -125,8 +128,20 @@ async function getTokenBalance(
 async function getNativeBalance(
   provider: IProvider,
   holder: ChainSpecificAddress,
+  multicall: ChainSpecificAddress | undefined,
 ): Promise<bigint> {
   const rawHolder = ChainSpecificAddress.address(holder).toString()
+  if (multicall !== undefined) {
+    const balance = await provider.callMethod<BigNumber>(
+      multicall,
+      'function getEthBalance(address addr) view returns (uint256 balance)',
+      [rawHolder],
+    )
+    if (balance !== undefined) {
+      return balance.toBigInt()
+    }
+  }
+
   const balance = await provider.raw(
     `native-balance-${provider.chain}-${rawHolder}-${provider.blockNumber}`,
     async ({ baseProvider }) =>

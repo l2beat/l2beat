@@ -79,7 +79,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
   describe(
     AggregatedInteropTokensPairRepository.prototype
-      .deleteAllButEarliestPerDayBefore.name,
+      .deleteAllButEarliestPromotedPerDayBefore.name,
     () => {
       it('keeps earliest record per day and deletes others before timestamp', async () => {
         const day1Early = UnixTime(100)
@@ -147,9 +147,10 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + UnixTime.DAY),
+          )
         expect(deleted).toEqual(3)
 
         const remaining = await repository.getAll()
@@ -157,9 +158,10 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
       })
 
       it('returns 0 when no records exist', async () => {
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(100),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(100),
+          )
         expect(deleted).toEqual(0)
       })
     },

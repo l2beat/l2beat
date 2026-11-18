@@ -31,17 +31,17 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       await blobService.save(blobs)
 
-      expect(mockBlobRepository.insertMany).toHaveBeenCalledWith(
-        blobs.map((blob) => ({
-          blockNumber: blob.blockNumber,
-          timestamp: blob.blockTimestamp,
-          daLayer: blob.daLayer,
-          from: blob.sequencer,
-          to: blob.inbox,
-          topics: blob.topics ?? null,
+      expect(mockBlobRepository.insertMany).toHaveBeenOnlyCalledWith([
+        {
+          blockNumber: 1,
+          timestamp: 100_000,
+          daLayer: 'ethereum',
+          from: '0x456',
+          to: '0x123',
+          topics: ['0xabc', '0xdef'],
           size: null,
-        })),
-      )
+        },
+      ])
     })
   })
 
@@ -71,18 +71,18 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       const blobs = await blobService.get('ethereum', 1, 100)
 
-      expect(blobs).toEqualUnsorted(
-        records.map((record) => ({
+      expect(blobs).toEqual([
+        {
           type: 'ethereum',
-          daLayer: record.daLayer,
-          blockTimestamp: record.timestamp,
-          blockNumber: record.blockNumber,
+          daLayer: 'ethereum',
+          blockTimestamp: 100_000,
+          blockNumber: 100,
           size: ETHEREUM_BLOB_SIZE_BYTES,
-          inbox: record.to ?? '',
-          sequencer: record.from,
-          topics: record.topics ?? [],
-        })),
-      )
+          inbox: '0x456',
+          sequencer: '0x123',
+          topics: ['0xabc', '0xdef'],
+        },
+      ])
 
       expect(mockBlobRepository.getByBlockRangeInclusive).toHaveBeenCalledWith(
         'ethereum',

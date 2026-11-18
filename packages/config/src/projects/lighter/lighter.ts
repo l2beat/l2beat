@@ -95,6 +95,7 @@ export const lighter: ScalingProject = {
           'SKY',
           'LDO',
           'AZTEC',
+          'XAUt',
         ],
       }),
     ],
@@ -365,6 +366,14 @@ export const lighter: ScalingProject = {
     ...discovery.getDiscoveredPermissions(),
   },
   milestones: [
+    {
+      title: 'Security Council redirects stolen withdrawals',
+      url: 'https://etherscan.io/tx/0x68d0fc6274acbbacdac97074e05dd7cde056dcfb798a96fe93768d38b738b290',
+      date: '2026-11-16T00:00:00Z',
+      description:
+        "API key leak: $10.4M stolen. An instant upgrade sent the attacker's $5.1M queued exit to the victim.",
+      type: 'incident',
+    },
     {
       title: 'Lighter experiences 4.5h of downtime',
       url: 'https://x.com/Lighter_xyz/status/1977252708533911614',

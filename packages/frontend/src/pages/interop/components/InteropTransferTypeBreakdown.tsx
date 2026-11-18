@@ -5,6 +5,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import {
+  TooltipHeader,
+  TooltipRow,
+} from '~/components/core/tooltip/TooltipParts'
 import type { TransferTypeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
 import {
@@ -81,28 +85,20 @@ function TransferTypeTooltipContent({
   const totalVolume = values.reduce((sum, v) => sum + v.value, 0)
 
   return (
-    <div className="flex flex-col gap-0.5">
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Total volume</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatCurrency(totalVolume, 'usd')}
-        </span>
-      </div>
+    <div className="flex flex-col gap-2">
+      <TooltipHeader
+        label="Total volume"
+        value={formatCurrency(totalVolume, 'usd')}
+      />
       {values.map((entry) => (
-        <div
+        <TooltipRow
           key={entry.label}
-          className="flex items-center justify-between gap-x-6"
+          gap="gap-x-6"
+          indicator={<div className={`size-3 rounded-xs ${entry.className}`} />}
+          label={entry.label}
         >
-          <div className="flex items-center gap-1">
-            <div className={`size-3 rounded-xs ${entry.className}`} />
-            <span className="font-medium text-label-value-14">
-              {entry.label}
-            </span>
-          </div>
-          <span className="font-medium text-label-value-15 text-primary tabular-nums">
-            {formatCurrency(entry.value, 'usd')}
-          </span>
-        </div>
+          {formatCurrency(entry.value, 'usd')}
+        </TooltipRow>
       ))}
     </div>
   )

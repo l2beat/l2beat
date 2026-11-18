@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd5b24314a3987c2963fb2f456d2a13e6eca90dd9
+
+# Diff at Mon, 16 Nov 2026 22:38:00 GMT:
+
+- id: 83031d38
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1787834344
+- current timestamp: 1794868568
+
+## Description
+
+Conduit Multisig 1: member removed; threshold 4/11 → 4/10.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.8:
+-        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x822c524d8dc567b2d7705d3dd1f1e074d325c7ea
 
 # Diff at Fri, 16 Oct 2026 09:37:49 GMT:

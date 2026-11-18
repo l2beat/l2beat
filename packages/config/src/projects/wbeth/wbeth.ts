@@ -1,4 +1,10 @@
-import { assert, formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -103,9 +109,19 @@ export const wbeth: BaseProject = {
       wBETH: discovery.getContract('wBETH').address,
       unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
     },
-    // Its pools were never deep, and have been empty since 2026; Binance
-    // redeems off-chain.
-    marketQuotes: [],
+    // Its pools were never deep: each holds a few ETH. Binance redeems
+    // off-chain.
+    marketQuotes: [
+      { type: 'pancakeV3', fee: 500 },
+      {
+        type: 'curve',
+        pool: ChainSpecificAddress(
+          'eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6',
+        ),
+        i: 1,
+        j: 0,
+      },
+    ],
     risks: {
       minting: {
         value: 'Permissionless',

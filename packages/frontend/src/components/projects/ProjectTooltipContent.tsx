@@ -65,7 +65,7 @@ export function ProjectTooltipContent({
   if (sectionsFirst) {
     return (
       <>
-        <span className="text-heading-18">What is {projectName}?</span>
+        <span className="text-heading-16">What is {projectName}?</span>
         {sectionList}
         {description && <p>{description}</p>}
         {badgeList}
@@ -75,7 +75,7 @@ export function ProjectTooltipContent({
 
   return (
     <>
-      <span className="text-heading-18">What is {projectName}?</span>
+      <span className="text-heading-16">What is {projectName}?</span>
       {description && <p>{description}</p>}
       {sectionList}
       {badgeList}

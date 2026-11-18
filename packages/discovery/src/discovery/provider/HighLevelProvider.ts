@@ -165,6 +165,30 @@ export class HighLevelProvider implements IProvider {
     return result
   }
 
+  async getHeldTokens(
+    holders: ChainSpecificAddress[],
+    tokens: ChainSpecificAddress[],
+  ): Promise<(ChainSpecificAddress[] | undefined)[]> {
+    let duration = -performance.now()
+    const held = await this.provider.getHeldTokens(
+      holders.map((holder) => this.safeGetRawAddress(holder)),
+      tokens.map((token) => this.safeGetRawAddress(token)),
+      this.blockNumber,
+    )
+    duration += performance.now()
+    this.stats.mark(
+      ProviderMeasurement.GET_HELD_TOKENS,
+      duration,
+      Math.max(1, holders.length),
+    )
+
+    return held.map((tokensOfHolder) =>
+      tokensOfHolder?.map((token) =>
+        ChainSpecificAddress.fromLong(this.chain, token),
+      ),
+    )
+  }
+
   async getStorage(
     address: ChainSpecificAddress,
     slot: number | bigint | Bytes,

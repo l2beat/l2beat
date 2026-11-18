@@ -122,6 +122,7 @@ export function formatDate(date: string) {
 export function formatLocalDateTime(timestamp: number) {
   if (new Date(timestamp * 1000).getTimezoneOffset() === 0) return undefined
 
+  // biome-ignore lint/plugin/utcDates: the one local-time helper, called only in the browser
   const parts = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: '2-digit',

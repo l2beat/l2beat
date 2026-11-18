@@ -329,7 +329,9 @@ export class RpcClientCompat implements IRpcClient {
       blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
     )
     if (result.reverted) {
-      throw new Error('Call reverted')
+      throw new Error('Call reverted', {
+        cause: { reason: result.reason, to: callParams.to, blockNumber },
+      })
     }
     return Bytes.fromHex(result.data)
   }
@@ -414,6 +416,7 @@ export function toEVMBlock(
     parentHash: block.parentHash,
     number: Number(block.number),
     timestamp: Number(block.timestamp),
+    gasUsed: Number(block.gasUsed),
     logsBloom: block.logsBloom,
     parentBeaconBlockRoot: block.parentBeaconBlockRoot,
   }

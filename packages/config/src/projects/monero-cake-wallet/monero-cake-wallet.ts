@@ -41,7 +41,7 @@ export const moneroCakeWallet: BaseProject = {
       ],
       socialMedia: ['https://x.com/cakewallet', 'https://x.com/monero'],
       other: [
-        'https://github.com/cake-tech/cake_wallet/blob/d803aecf9de21461c7459c974ce5e3f2d92b70ed/PRIVACY.md',
+        'https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/PRIVACY.md',
         'https://changenow.io/faq/kyc-aml',
         'https://kycnot.me/service/trocador',
       ],
@@ -58,14 +58,14 @@ export const moneroCakeWallet: BaseProject = {
         type: 'pinned',
         pin: {
           type: 'sha256',
-          file: 'Cake_Wallet_v6.5.3-arm64-v8a.apk',
-          hash: '7a7d0f982699caf4c647aa8dc617d14a8390c77065a7f23e1732f382d1fce6da',
+          file: 'Cake_Wallet_v6.5.4-arm64-v8a.apk',
+          hash: 'f9eee98888b432df7069e8756b8a6655767e467dfb2f7f5ebb4fa0b90d4cd2b4',
         },
       },
-      version: '6.5.3',
+      version: '6.5.4',
       source: {
         repository: 'https://github.com/cake-tech/cake_wallet',
-        commit: 'd803aecf9de21461c7459c974ce5e3f2d92b70ed',
+        commit: 'ae2765659afce6b353d20504830b81198b2fc5e2',
       },
       checkedApps: [
         {
@@ -93,7 +93,7 @@ export const moneroCakeWallet: BaseProject = {
             "Its built-in Tor skips Ethereum, so Stack's Ethereum node gets every balance lookup with the user's IP.",
           fix: 'Route the Ethereum client through the built-in Tor, like its other coins.',
           source:
-            'https://github.com/cypherstack/stack_wallet/blob/f920c360f999a183e8faf01a3188f1199f316df5/lib/wallets/wallet/impl/ethereum_wallet.dart#L53-L60',
+            'https://github.com/cypherstack/stack_wallet/blob/7ce7b34f260f7bb481ee50e2ebebebfb42c2ed1c/lib/wallets/wallet/impl/ethereum_wallet.dart#L144-L151',
         },
         {
           name: 'Edge',
@@ -109,7 +109,7 @@ export const moneroCakeWallet: BaseProject = {
           icon: 'atomic-wallet',
           finding:
             "Has no Tor or proxy option, so Atomic's servers get the user's IP with every wallet address they sync.",
-          fix: 'Add built-in Tor that carries every request, swaps included.',
+          fix: 'Add built-in Tor that carries every request.',
           source: 'https://atomicwallet.io/downloads',
           checked: '2026-10-27',
         },

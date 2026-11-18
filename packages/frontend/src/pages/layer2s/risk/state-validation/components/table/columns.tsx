@@ -87,7 +87,7 @@ export const l2RiskStateValidationValidityColumns = [
       // column stays in view on desktop.
       cellClassName: WRAP_ON_DESKTOP,
       tooltip:
-        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
     },
   }),
   validityColumnHelper.display({
@@ -174,7 +174,7 @@ export const l2RiskStateValidationValidityColumns = [
     },
     meta: {
       tooltip:
-        'Trusted setup information for the proof system used by this project',
+        'Trusted setup information for the proof system used by this project.',
     },
   }),
   ...getTvsColumns(validityColumnHelper),
@@ -193,7 +193,7 @@ export const l2RiskStateValidationOptimisticColumns = [
     cell: (ctx) => <OptimisticProofSystemCell {...ctx.row.original} />,
     meta: {
       tooltip:
-        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+        'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
     },
   }),
   optimisticColumnHelper.accessor('challengePeriod', {

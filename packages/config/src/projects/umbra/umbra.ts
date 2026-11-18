@@ -84,6 +84,7 @@ export const umbra: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-07-31')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -120,7 +121,7 @@ export const umbra: BaseProject = {
       delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/ScopeLift/umbra-protocol',
-        commit: '685f710e4e846db3b88f8138e6f78ee82482a391',
+        commit: '53ed4af5e575919680a4e70c1a090feafe365275',
       },
     },
     trackedOn: ['ethereum'],

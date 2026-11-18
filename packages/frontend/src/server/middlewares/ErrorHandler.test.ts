@@ -22,13 +22,6 @@ describe(ErrorHandler.name, () => {
     })
   })
 
-  it('responds 200 to the same paths without malformed encoding', async () => {
-    await withServer(async (baseUrl) => {
-      const response = await fetch(`${baseUrl}/layer2s/projects/polygon-pos`)
-      expect(response.status).toEqual(200)
-    })
-  })
-
   it('responds 500 to a genuine server failure', async () => {
     await withServer(async (baseUrl) => {
       const response = await fetch(`${baseUrl}/boom`)

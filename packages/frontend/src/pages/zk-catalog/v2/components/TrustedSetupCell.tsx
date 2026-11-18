@@ -38,7 +38,7 @@ export function TrustedSetupCell({
         />
       </TooltipTrigger>
       <TooltipContent>
-        <div className="mb-3 text-paragraph-14">
+        <div className="mb-2 text-heading-16">
           Trusted setups for{' '}
           <TechStackTag
             tag={proofSystem}
@@ -55,9 +55,7 @@ export function TrustedSetupCell({
                 size="sm"
                 className="shrink-0"
               />
-              <span className="text-xs leading-normal">
-                {trustedSetup.shortDescription}
-              </span>
+              <span>{trustedSetup.shortDescription}</span>
             </div>
           )
         })}

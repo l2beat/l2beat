@@ -7,6 +7,7 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
+import { pinTvsRange } from '../utils/pinTvsRange'
 
 const TokenParams = z.object({
   projectId: z.string(),
@@ -32,9 +33,10 @@ type TokenTvsChartData = {
  * @returns [timestamp, amount, usdValue][] - all numbers
  */
 export async function getTokenTvsChart({
-  range,
+  range: requestedRange,
   token,
 }: TokenTvsChartParams): Promise<TokenTvsChartData> {
+  const range = pinTvsRange(requestedRange)
   if (env.MOCK) {
     return getMockTokenTvsChartData({ range, token })
   }

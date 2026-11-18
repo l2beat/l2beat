@@ -1,6 +1,6 @@
 {
   "name": "eclipse",
-  "timestamp": 1791789506,
+  "timestamp": 1794986370,
   "configHash": "0xc5e02f06ee56be31dd65b208e3679e991c58a67ec74d966e1687034932a287c8",
   "entries": [
     {
@@ -81,7 +81,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -141,9 +141,9 @@
         "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
-        "depositIndex": 546,
+        "depositIndex": 571,
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
-        "fraudWindowDuration": 604800,
+        "fraudWindowDuration": 86400,
         "getVersionComponents": { "major": 3, "minor": 0, "patch": 0 },
         "MIN_DEPOSIT": 2000000000000000,
         "paused": false,
@@ -157,6 +157,11 @@
           "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
           "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
         ]
+      },
+      "fieldMeta": {
+        "fraudWindowDuration": {
+          "description": "Seconds between the authorization of a withdrawal and the time its recipient can claim it. The contract enforces a minimum of 1 day. The withdraw canceller can delete an authorized withdrawal until it is claimed."
+        }
       },
       "implementationNames": {
         "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a": "CanonicalBridgeV3"
@@ -816,14 +821,14 @@
     ]
   },
   "usedTemplates": {
-    "eclipse/CanonicalBridge": "0xb51e8c0128452f7113c7d08ed5b8891f7813d76e3939be3931f7f0b66428bbc1",
+    "eclipse/CanonicalBridge": "0x5961ff55066ba27b8a1460e4d88145b65adeeb4814b3580c3cb1c5610fd4e862",
     "eclipse/EtherBridge": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
     "eclipse/Mailbox": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
     "eclipse/Treasury": "0x08a8222e3c470e18a1546220ba08a53b24e40935a0cb002af4a516050794b89a",
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26174845 },
+  "usedBlockNumbers": { "ethereum": 26440401 },
   "permissionsConfigHash": "0xa76f8be073f865c4cbaf5fafbc7ca48e181d034302e0a5396cd58909348827bd",
   "permissions": {
     "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE": {

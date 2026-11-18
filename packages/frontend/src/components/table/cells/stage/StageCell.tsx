@@ -1,5 +1,4 @@
 import type { ProjectScalingStage } from '@l2beat/config'
-
 import { StageBadge } from '~/components/badge/StageBadge'
 import {
   Tooltip,
@@ -7,6 +6,7 @@ import {
   TooltipTrigger,
   TooltipVisualOnly,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { TableLink } from '~/components/table/TableLink'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { StopwatchIcon } from '~/icons/Stopwatch'
@@ -67,9 +67,9 @@ export function StageCell({
           walkAway={walkAway}
         />
         <TooltipVisualOnly>
-          <p className="mt-3 text-label-value-13 text-secondary">
+          <TooltipFootnote className="mt-3">
             Click to view details
-          </p>
+          </TooltipFootnote>
         </TooltipVisualOnly>
       </TooltipContent>
     </Tooltip>

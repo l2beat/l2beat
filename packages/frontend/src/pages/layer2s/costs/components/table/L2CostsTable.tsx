@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo } from 'react'
+import { useLayoutEffect, useMemo, useRef } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
@@ -53,16 +53,20 @@ export function L2CostsTable({ entries }: Props) {
     },
   })
 
-  useEffect(() => {
-    if (table.getState().sorting[0]?.id === 'total-cost') {
-      setSorting([
-        {
-          id: 'total-cost',
-          desc: metric === 'total',
-        },
-      ])
-    }
-  }, [metric, setSorting, table])
+  // Total cost sorts high first, the per-unit metrics low first. Only a
+  // metric change re-points it, so a reader's own toggle stays. A layout
+  // effect, so the table never paints in the previous metric's order.
+  const sortedForMetric = useRef<CostsMetric | undefined>(undefined)
+  useLayoutEffect(() => {
+    if (sortedForMetric.current === metric) return
+    sortedForMetric.current = metric
+    const desc = metric === 'total'
+    setSorting((current) => {
+      const first = current[0]
+      if (first?.id !== 'total-cost' || first.desc === desc) return current
+      return [{ id: 'total-cost', desc }]
+    })
+  }, [metric, setSorting])
 
   return (
     <>

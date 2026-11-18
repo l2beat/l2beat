@@ -148,8 +148,8 @@ export function OssificationTimelineChart({ timeline, valueSource }: Props) {
       </TooltipTrigger>
       <TooltipContent className="flex max-w-80 flex-col gap-1.5 whitespace-normal">
         <div>
-          <div className="font-bold">{description.title}</div>
-          <div className="text-secondary">{description.period}</div>
+          <div className="text-heading-16">{description.title}</div>
+          <div>{description.period}</div>
         </div>
         {description.lines.map((line) => (
           <span key={line}>{line}</span>

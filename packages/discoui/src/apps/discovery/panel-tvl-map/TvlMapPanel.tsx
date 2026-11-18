@@ -1,7 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQueries } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { getTvl } from '../../../api/api'
+import { getTvls } from '../../../api/api'
 import type {
   ApiAddressEntry,
   ApiTvlEntry,
@@ -18,6 +18,7 @@ import { squarify, type Tile } from './squarify'
 
 // Tokens below this cut hold under 1% of all market cap, which is the trade the
 // map makes to value every address of a project at once.
+// It applies only on chains whose RPC keeps no holder index.
 const TOP_TOKENS = 500
 const TOKENS_PER_TILE = 3
 const TILE_GAP = 2
@@ -60,16 +61,22 @@ export function TvlMapPanel() {
     ])
     .filter((entry) => !isBurned(entry.address))
 
-  // One request per address, so the map fills in as answers land.
+  // One request per chain: the server values a chain's addresses together,
+  // which is far faster than one address at a time.
+  const holdersByChain = groupByChain(holders)
   const results = useQueries({
-    queries: holders.map((holder) => ({
-      queryKey: ['projects', project, 'tvl', holder.address, TOP_TOKENS],
-      queryFn: ({ signal }) => getTvl(holder.address, TOP_TOKENS, signal),
-      staleTime: STALE_MS,
-      gcTime: STALE_MS,
-      refetchOnWindowFocus: false,
-      retry: 1,
-    })),
+    queries: holdersByChain.map((group) => {
+      const addresses = group.map((holder) => holder.address)
+      return {
+        queryKey: ['projects', project, 'tvl', addresses, TOP_TOKENS],
+        queryFn: ({ signal }: { signal: AbortSignal }) =>
+          getTvls(addresses, TOP_TOKENS, signal),
+        staleTime: STALE_MS,
+        gcTime: STALE_MS,
+        refetchOnWindowFocus: false,
+        retry: 1,
+      }
+    }),
   })
 
   if (projectResponse.isError) {
@@ -82,9 +89,9 @@ export function TvlMapPanel() {
     return <ActionNeededState message="No addresses to value" />
   }
 
-  const swept = results.filter((result) => !result.isPending).length
-  const failed = results.filter((result) => result.isError).length
-  const holdings = toHoldings(holders, results)
+  const swept = countHolders(holdersByChain, results, (r) => !r.isPending)
+  const failed = countHolders(holdersByChain, results, (r) => r.isError)
+  const holdings = toHoldings(holdersByChain, results)
 
   if (swept === holders.length && holdings.length === 0) {
     return failed > 0 ? (
@@ -104,7 +111,13 @@ export function TvlMapPanel() {
         swept={swept}
         failed={failed}
       />
-      <TreeMap holdings={holdings} />
+      {holdings.length === 0 ? (
+        <div className="min-h-0 flex-1">
+          <LoadingState />
+        </div>
+      ) : (
+        <TreeMap holdings={holdings} />
+      )}
     </div>
   )
 }
@@ -131,7 +144,7 @@ function Summary(props: {
           ? `${props.swept}/${props.addressCount} swept`
           : `${props.holdings.length}/${props.addressCount} hold value`}
         {props.failed > 0 && ` · ${props.failed} failed`}
-        {` · top ${TOP_TOKENS} tokens`}
+        {` · top ${TOP_TOKENS} tokens on unindexed chains`}
       </span>
       {isSweeping && (
         <div
@@ -248,21 +261,50 @@ function isBurned(address: string): boolean {
   return BURNED.includes(address.slice(address.indexOf(':') + 1).toLowerCase())
 }
 
+// By the chain of the address itself, which is what the server checks.
+function groupByChain(holders: ApiAddressEntry[]): ApiAddressEntry[][] {
+  const groups = new Map<string, ApiAddressEntry[]>()
+  for (const holder of holders) {
+    const chain = holder.address.slice(0, holder.address.indexOf(':'))
+    const group = groups.get(chain) ?? []
+    group.push(holder)
+    groups.set(chain, group)
+  }
+  return [...groups.values()]
+}
+
+function countHolders<Result>(
+  holdersByChain: ApiAddressEntry[][],
+  results: readonly Result[],
+  counts: (result: Result) => boolean,
+): number {
+  let count = 0
+  for (let index = 0; index < holdersByChain.length; index++) {
+    const result = results[index]
+    if (result !== undefined && counts(result)) {
+      count += holdersByChain[index]?.length ?? 0
+    }
+  }
+  return count
+}
+
 function toHoldings(
-  holders: ApiAddressEntry[],
-  results: readonly { data: ApiTvlResponse | undefined }[],
+  holdersByChain: ApiAddressEntry[][],
+  results: readonly { data: ApiTvlResponse[] | undefined }[],
 ): Holding[] {
-  const chains = [...new Set(holders.map((holder) => holder.chain))]
-  return holders
-    .map((holder, index) => {
-      const tokens = results[index]?.data ?? []
-      const chain = chains.indexOf(holder.chain) % CHAIN_STYLES.length
-      return {
-        holder,
-        tvl: tokens.reduce((sum, token) => sum + token.tvl, 0),
-        tokens: tokens.slice(0, TOKENS_PER_TILE),
-        chainStyle: CHAIN_STYLES[chain] ?? '',
-      }
+  return holdersByChain
+    .flatMap((holders, chainIndex) => {
+      const chainStyle = CHAIN_STYLES[chainIndex % CHAIN_STYLES.length] ?? ''
+      const tvls = results[chainIndex]?.data
+      return holders.map((holder, index) => {
+        const tokens = tvls?.[index] ?? []
+        return {
+          holder,
+          tvl: tokens.reduce((sum, token) => sum + token.tvl, 0),
+          tokens: tokens.slice(0, TOKENS_PER_TILE),
+          chainStyle,
+        }
+      })
     })
     .filter((holding) => holding.tvl > 0)
     .sort((a, b) => b.tvl - a.tvl)

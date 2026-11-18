@@ -495,7 +495,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
   describe(
     AggregatedInteropTransferRepository.prototype
-      .deleteAllButEarliestPerDayBefore.name,
+      .deleteAllButEarliestPromotedPerDayBefore.name,
     () => {
       it('keeps earliest record per day and deletes others before timestamp', async () => {
         // Day 1: timestamps at 100, 200, 300 - should keep 100
@@ -550,9 +550,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + UnixTime.DAY),
+          )
         expect(deleted).toEqual(3) // Should delete record2, record3, record5
 
         const remaining = await repository.getAll()
@@ -612,7 +613,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         // Delete before day2Mid (which is 200 + DAY)
         const deleted =
-          await repository.deleteAllButEarliestPerDayBefore(day2Mid)
+          await repository.deleteAllButEarliestPromotedPerDayBefore(day2Mid)
         // Should delete record2 (day1Mid), but keep record1 (earliest of day1)
         // Should keep record3 (earliest of day2) and record4 (at timestamp boundary)
         // Should keep record5 (after timestamp)
@@ -622,10 +623,98 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(remaining).toEqualUnsorted([record1, record3, record4, record5])
       })
 
+      describe('with promotion statuses', () => {
+        const statuses = db.interopAggregateStatus
+
+        beforeEach(async () => {
+          await statuses.deleteAll()
+        })
+
+        after(async () => {
+          await statuses.deleteAll()
+        })
+
+        async function insertSnapshots(
+          snapshots: [number, 'promoted' | 'blocked' | undefined][],
+        ) {
+          await repository.insertMany(
+            snapshots.map(([timestamp], i) =>
+              record({
+                id: `id${i}`,
+                timestamp: UnixTime(timestamp),
+                srcChain: 'ethereum',
+                dstChain: 'arbitrum',
+              }),
+            ),
+          )
+          for (const [timestamp, status] of snapshots) {
+            if (status) {
+              await statuses.upsertAuto({
+                timestamp: UnixTime(timestamp),
+                status,
+              })
+            }
+          }
+        }
+
+        async function remainingTimestamps() {
+          const remaining = await repository.getAll()
+          return remaining.map((r) => r.timestamp)
+        }
+
+        it('keeps the earliest promoted snapshot when an earlier one is blocked', async () => {
+          await insertSnapshots([
+            [100, 'blocked'],
+            [200, 'promoted'],
+            [300, 'promoted'],
+          ])
+
+          const deleted =
+            await repository.deleteAllButEarliestPromotedPerDayBefore(
+              UnixTime(UnixTime.DAY),
+            )
+
+          expect(deleted).toEqual(2)
+          expect(await remainingTimestamps()).toEqual([UnixTime(200)])
+        })
+
+        it('keeps the earliest snapshot when none of that day is promoted', async () => {
+          await insertSnapshots([
+            [100, 'blocked'],
+            [200, 'blocked'],
+            [300, undefined],
+          ])
+
+          const deleted =
+            await repository.deleteAllButEarliestPromotedPerDayBefore(
+              UnixTime(UnixTime.DAY),
+            )
+
+          expect(deleted).toEqual(2)
+          expect(await remainingTimestamps()).toEqual([UnixTime(100)])
+        })
+
+        it('deletes a blocked snapshot when the promoted one of its day is at or after the timestamp', async () => {
+          await insertSnapshots([
+            [100, 'blocked'],
+            [200, 'promoted'],
+          ])
+
+          const deleted =
+            await repository.deleteAllButEarliestPromotedPerDayBefore(
+              UnixTime(200),
+            )
+
+          expect(deleted).toEqual(1)
+          expect(await remainingTimestamps()).toEqual([UnixTime(200)])
+        })
+      })
+
       it('returns 0 when no records exist', async () => {
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(100),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(100),
+          )
         expect(deleted).toEqual(0)
       })
 
@@ -652,9 +741,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           }),
         ])
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(50),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(50),
+          )
         expect(deleted).toEqual(0)
 
         const remaining = await repository.getAll()
@@ -694,9 +784,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + 2 * UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + 2 * UnixTime.DAY),
+          )
         // All records are earliest of their day, so nothing to delete
         expect(deleted).toEqual(0)
 
@@ -738,9 +829,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500),
+          )
         // Should keep earliest (record1), delete others
         expect(deleted).toEqual(2)
 
@@ -826,9 +918,10 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + 2 * UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + 2 * UnixTime.DAY),
+          )
         // Should keep: record1 (earliest day1), record3 (earliest day2), record6 (earliest day3)
         // Should delete: record2, record4, record5, record7
         expect(deleted).toEqual(4)

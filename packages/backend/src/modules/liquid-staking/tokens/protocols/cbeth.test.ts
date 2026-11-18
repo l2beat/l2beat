@@ -22,6 +22,8 @@ describe(getCbethReads.name, () => {
       exchangeRate: 1_143_741_657_481_477_622n,
       lastRequestId: null,
       lastFinalizedRequestId: null,
+      retiredLastRequestId: null,
+      retiredLastFinalizedRequestId: null,
       instantExitEth: null,
       instantExitFeeBps: null,
       lockTime: null,

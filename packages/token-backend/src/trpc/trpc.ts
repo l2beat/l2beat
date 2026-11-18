@@ -4,6 +4,7 @@ import { initTRPC } from '@trpc/server'
 import type { jwtVerify } from 'jose'
 import type { Config } from '../config/Config'
 import type { TokenIngestionProcessor } from '../ingestion/TokenIngestionProcessor'
+import { formatError } from '../utils/formatError'
 import { getSession } from '../utils/getSession'
 
 export const createTRPCContext = async (opts: {
@@ -34,6 +35,8 @@ export const trcpRoot = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
     return {
       ...shape,
+      // The token UI shows only this message, and the details are in `cause`
+      message: error.cause ? formatError(error.cause) : shape.message,
       data: {
         ...shape.data,
         zodError: error.cause,

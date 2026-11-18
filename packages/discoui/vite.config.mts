@@ -23,7 +23,6 @@ function isEditorPackage(id: string): boolean {
 }
 
 // https://vitejs.dev/config/
-// biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ mode }) => {
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env }
   return {

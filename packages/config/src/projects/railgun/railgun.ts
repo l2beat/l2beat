@@ -192,7 +192,7 @@ export const railgun: BaseProject = {
       url: 'https://etherscan.io/tx/0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361',
       date: '2022-05-08T00:00:00Z',
       description:
-        "The proxy that holds today's pool is unpaused with the RailgunLogic implementation.",
+        "The pool's proxy is unpaused with the RailgunLogic implementation.",
       type: 'general',
     },
   ],
@@ -282,11 +282,11 @@ export const railgun: BaseProject = {
           name: 'Anon Wallet',
           icon: 'anon-wallet',
           finding:
-            "Asks Anon's server for each stealth account's balance under the user's login, so Anon can link them to each other and to the user's addresses.",
-          fix: "Read stealth account balances from the user's RPC only, without the login token.",
+            "Asks Anon's server for every stealth account's balance in one burst per chain, so Anon can link them to each other and to the user's IP.",
+          fix: "Read stealth account balances from the user's RPC only.",
           source:
             'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
-          checked: '2026-11-11',
+          checked: '2026-11-18',
         },
         {
           name: 'Terminal Wallet',

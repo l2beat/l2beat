@@ -11,7 +11,9 @@ export function mapToRecordWithConfig(
 ): LivenessRecordWithConfig {
   const config = configurations.find((c) => c.id === record.configurationId)
   if (!config) {
-    throw new Error(`Configuration with id ${record.configurationId} not found`)
+    throw new Error('Configuration not found', {
+      cause: { configurationId: record.configurationId },
+    })
   }
   return {
     ...record,

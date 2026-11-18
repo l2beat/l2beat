@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { useElementSize } from '~/hooks/useElementSize'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
@@ -412,9 +413,7 @@ function BatchTooltipContent({
           <CustomLinkIcon className="size-3.5 fill-current" />
         </a>
       ) : (
-        <div className="text-label-value-12 text-secondary">
-          Click to open on Etherscan
-        </div>
+        <TooltipFootnote>Click to open on Etherscan</TooltipFootnote>
       )}
     </div>
   )

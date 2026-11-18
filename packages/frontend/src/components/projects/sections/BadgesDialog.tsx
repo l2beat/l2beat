@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import {
   Dialog,
@@ -52,20 +52,18 @@ export function BadgesDialog({
   const isSwitchingBadges = isFetching && isPlaceholderData
 
   // The badge on show changes once its data lands, not on the click, and
-  // takes the clicked badge's slot among the related.
+  // takes the clicked badge's slot among the related. Adjusted during
+  // render, so no frame shows the old badge without its dimming.
   const [shown, setShown] = useState(data)
   const [slots, setSlots] = useState<string[]>()
-  useEffect(() => {
+  if (!data) {
     // Settled with nothing, e.g. a failed fetch: the unavailable state
     // rather than the badge before.
-    if (!data) {
-      if (!isFetching && shown) setShown(undefined)
-      return
-    }
-    if (data === shown) return
+    if (!isFetching && shown) setShown(undefined)
+  } else if (data !== shown) {
     setShown(data)
     setSlots(keepSlots(shown, slots, data))
-  }, [data, shown, slots, isFetching])
+  }
   // How much shorter the drawer's hero is than the tallest of its type.
   const [heroSlack, setHeroSlack] = useState(0)
   const shownOrLoading = shown ?? data
@@ -319,7 +317,7 @@ function MeasuredDescription({
 }) {
   const shownRef = useRef<HTMLParagraphElement>(null)
   const tallestRef = useRef<HTMLDivElement>(null)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: measure again whenever the text changes
+  // The observer also reports the first size and every change of the text.
   useLayoutEffect(() => {
     const shownEl = shownRef.current
     const tallestEl = tallestRef.current
@@ -331,7 +329,7 @@ function MeasuredDescription({
     observer.observe(shownEl)
     observer.observe(tallestEl)
     return () => observer.disconnect()
-  }, [onSlack, data])
+  }, [onSlack])
   const text = 'text-pretty text-base text-secondary'
   return (
     <div className={cn('relative', className)}>

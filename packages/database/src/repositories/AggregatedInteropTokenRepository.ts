@@ -1,7 +1,8 @@
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
-import { type Insertable, type Selectable, sql } from 'kysely'
+import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropToken } from '../kysely/generated/types'
+import { deleteAllButEarliestPromotedPerDayBefore } from '../utils/deleteAllButEarliestPromotedPerDayBefore'
 import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTokenRecord {
@@ -205,23 +206,14 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       : undefined
   }
 
-  async deleteAllButEarliestPerDayBefore(timestamp: UnixTime): Promise<number> {
-    const query = this.db
-      .with('earliest_timestamp_by_day', (eb) =>
-        eb
-          .selectFrom('AggregatedInteropToken')
-          .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
-          .groupBy(sql`date_trunc('day', timestamp)`),
-      )
-      .deleteFrom('AggregatedInteropToken')
-      .where('timestamp', '<', UnixTime.toDate(timestamp))
-      .where('timestamp', 'not in', (eb) =>
-        eb.selectFrom('earliest_timestamp_by_day').select('min_timestamp'),
-      )
-
-    const result = await query.executeTakeFirst()
-
-    return Number(result.numDeletedRows)
+  deleteAllButEarliestPromotedPerDayBefore(
+    timestamp: UnixTime,
+  ): Promise<number> {
+    return deleteAllButEarliestPromotedPerDayBefore(
+      this.db,
+      'AggregatedInteropToken',
+      timestamp,
+    )
   }
 
   async deleteByTimestamp(timestamp: UnixTime): Promise<number> {

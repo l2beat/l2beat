@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x0169eedc27754d1a8171741bea3eeaeda307079f
+
+# Diff at Wed, 18 Nov 2026 08:06:31 GMT:
+
+- id: c08bebf8
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1794567784
+- current timestamp: 1794986113
+
+## Description
+
+The Safe katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC added a sixth signer with the threshold unchanged, now 3 of 6. It upgrades the L2 predeploys directly and the L2 bridge and exit root manager through the L2Timelock. Its signers now equal those of the Safe at the same address on Ethereum (Polygon Multisig 2, eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC).
+
+The Safe eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50, which only receives the yield of the vault bridge tokens, removed two of its four owners and is now 1 of 2. One of its two owners, the Katana yieldRecipient Multisig, swapped one signer and stays 2 of 6.
+
+No code or threshold changes.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c)
+    +++ description: None
+```
+
+```diff
+    contract Safe (eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21"
+      values.$members.1:
+-        "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 2 (50%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
++        "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8"
+    }
+```
+
+```diff
+    contract SafeL2 (katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "katana:0x21a2Db679b4e9f6183E3143cc7Dcfef955b400a6"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol => /dev/null                          | 1216 --------------------
+ .../SafeProxy.p.sol => /dev/null                   |   42 -
+ 2 files changed, 1258 deletions(-)
+```
+
 Generated with discovered.json: 0x989311573d789f52ef7d36b24cc8347bc4fe4f34
 
 # Diff at Fri, 13 Nov 2026 13:04:03 GMT:

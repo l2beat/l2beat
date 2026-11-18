@@ -27,6 +27,9 @@ const discovery = new ProjectDiscovery('zama-cw')
 const ERC20_TRANSFER_EVENT =
   '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
+// Every registered wrapper. The observer and pauser asserts below cover all
+// of them. Only wrappers whose underlying is in the token list are tracked
+// for TVS and privacy metrics, the others are skipped in trackedWrappers.
 const WRAPPER_NAMES = [
   'ConfidentialUSDCWrapper',
   'ConfidentialUSDTWrapper',
@@ -54,6 +57,13 @@ const WRAPPER_NAMES = [
   'ConfidentialRoxcUSDCWrapper',
   'ConfidentialRoxUSDCyWrapper',
   'ConfidentialPAPYWrapper',
+  'ConfidentialYzPRVTWrapper',
+  'ConfidentialSatcUSDCWrapper',
+  'ConfidentialEEARNWrapper',
+  'ConfidentialPPLUSWrapper',
+  'ConfidentialNvHOMEWrapper',
+  'ConfidentialNOPALWrapper',
+  'ConfidentialRe7coUSDCWrapper',
 ]
 
 const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
@@ -312,7 +322,7 @@ export const zamaCw: BaseProject = {
       url: 'https://www.zama.org/post/the-freeze-on-zamas-cusdc-contract-has-been-lifted-and-all-systems-are-back-to-normal',
       date: '2026-05-30T00:00:00Z',
       description:
-        'A court order makes Circle blacklist the cUSDC wrapper for almost three days, blocking every unwrap.',
+        'Circle blacklists the cUSDC wrapper for almost three days, blocking every unwrap.',
       type: 'incident',
     },
     {
@@ -382,21 +392,13 @@ export const zamaCw: BaseProject = {
           checked: '2026-10-27',
         },
         {
-          name: 'cToken',
-          icon: 'ctoken',
+          name: 'Zama SDK example app',
+          icon: 'zama-confidential-tokens',
           finding:
-            "Reads the chain through Alchemy and PublicNode straight from the browser, so both see the user's address and IP on every read.",
-          fix: "Read the chain through the app's own server, as the Zama app does.",
-          source: 'https://ct-7984-chriswilder.netlify.app',
-          checked: '2026-10-27',
-        },
-        {
-          name: 'fhevm-wallet',
-          finding:
-            "Needs the user's own Zama API key on mainnet, which Zama reviews and bills, so Zama ties every request to the user.",
-          fix: 'Relay requests under a key that is not tied to the user.',
+            'On mainnet the user has to run it themselves, with their own Zama API key, which Zama reviews and bills, or their own relayer.',
+          fix: "Host a mainnet instance, so its relayer key is the host's and not the user's.",
           source:
-            'https://github.com/mocarram/fhevm-wallet/blob/f942463b53c0637ffbd4573d0a6f7a7558e21aeb/src/core/fhe/FheService.ts#L40-L52',
+            'https://github.com/zama-ai/sdk/blob/c908f7709007fd501fa0afb50c43bbeabbc96266/examples/react-wagmi/README.md?plain=1#L66-L73',
         },
       ],
     },

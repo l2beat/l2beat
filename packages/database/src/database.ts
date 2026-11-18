@@ -34,6 +34,7 @@ import { InteropTransferRepository } from './repositories/InteropTransferReposit
 import { L2CostPriceRepository } from './repositories/L2CostPriceRepository'
 import { L2CostRepository } from './repositories/L2CostRepository'
 import { LiquidStakingSnapshotRepository } from './repositories/LiquidStakingSnapshotRepository'
+import { LiveActivityBlockRepository } from './repositories/LiveActivityBlockRepository'
 import { LiveBlobBatchRepository } from './repositories/LiveBlobBatchRepository'
 import { LiveBlockRepository } from './repositories/LiveBlockRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
@@ -74,6 +75,7 @@ export function createDatabase(
     // #region Activity
     activity: new ActivityRepository(db),
     hourlyActivity: new HourlyActivityRepository(db),
+    liveActivityBlock: new LiveActivityBlockRepository(db),
     // #endregion
 
     // #region Interop

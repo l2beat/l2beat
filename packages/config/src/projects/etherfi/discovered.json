@@ -1,6 +1,6 @@
 {
   "name": "etherfi",
-  "timestamp": 1793982763,
+  "timestamp": 1794868372,
   "configHash": "0x08c960d010c878609b53ecd91c3ff640e6e2bcb83b362ee02b6fae22f1f8e082",
   "entries": [
     {
@@ -19,8 +19,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x4a70270000000000",
-        "get_deposit_root": "0x4ec47c8539ec8a707640b69bbe0497e73e7fc329d5bd41ba81aeced76d011511"
+        "get_deposit_count": "0x9187270000000000",
+        "get_deposit_root": "0xeddf0adb5ffe2861a862781916ea8b9d3fdaf966781f0508fcdb0780510d4f1a"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -79,7 +79,7 @@
         "MIN_PAUSE_DURATION": 28800,
         "minBidAmount": 1100000000000000,
         "nodeOperatorManager": "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E",
-        "numberOfActiveBids": 17736,
+        "numberOfActiveBids": 17720,
         "numberOfBids": 120675,
         "paused": false,
         "pausedUntil": 0,
@@ -129,7 +129,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 121,
+        "nonce": 122,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -213,15 +213,15 @@
         "acceptableRebaseAprInBps": 500,
         "auctionManager": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
         "BASIS_POINTS_DENOMINATOR": 10000,
-        "blockForNextReportToProcess": 26356531,
+        "blockForNextReportToProcess": 26429268,
         "DEFAULT_MAX_NEGATIVE_REBASE_BPS": 3,
         "effectiveMaxNegativeRebaseBps": 3,
         "etherFiNodesManager": "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F",
         "etherFiOracle": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
         "getImplementation": "eth:0x841fA691AA6E30E97c817608F90111701a3D0Ac8",
-        "lastAdminExecutionBlock": 26356831,
-        "lastHandledReportRefBlock": 26356530,
-        "lastHandledReportRefSlot": 15596063,
+        "lastAdminExecutionBlock": 26429511,
+        "lastHandledReportRefBlock": 26429267,
+        "lastHandledReportRefSlot": 15669023,
         "lastStaleReportFinalizationBlock": 0,
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "MAX_PROTOCOL_FEE_INV_RATIO": 5,
@@ -236,7 +236,7 @@
         "postReportWaitTimeInSlots": 50,
         "priorityWithdrawalQueue": "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
-        "slotForNextReportToProcess": 15596064,
+        "slotForNextReportToProcess": 15669024,
         "stakingManager": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
         "STALE_REPORT_FINALIZATION_COOLDOWN": 7200,
         "staleOracleReportBlockWindow": 100800,
@@ -312,7 +312,7 @@
         "eigenLayerDelegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenLayerStrategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
         "etherFiRedemptionManager": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-        "getTotalPooledEther": "483727245002957190707823",
+        "getTotalPooledEther": "465237820150761822491341",
         "isDelegated": true,
         "lido": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "lidoWithdrawalQueue": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -797,7 +797,7 @@
           ]
         ],
         "$upgradeCount": 17,
-        "amountPerShareCeil": "1107514366336005425",
+        "amountPerShareCeil": "1108304800363477046",
         "blacklister": "eth:0x5585996E7cFE95f2D99e61168B8b35C66Ff99B18",
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "escrowMigrationCompleted": true,
@@ -805,7 +805,7 @@
         "etherFiRedemptionManager": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
         "feeRecipient": "eth:0x0c83EAe1FE72c390A02E426572854931EefF93BA",
         "getImplementation": "eth:0x17A16747D03006c9754548AC0d0afF48783A4a45",
-        "getTotalPooledEther": "2268986076034394184940544",
+        "getTotalPooledEther": "2278220278465827230354879",
         "liquifier": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
         "MAX_PAUSE_DURATION": 2592000,
         "MAX_POSITIVE_REBASE_BPS": 25,
@@ -822,8 +822,8 @@
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "SHARE_UNIT": "1000000000000000000",
         "stakingManager": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d",
-        "totalValueInLp": "2361089887813520508185",
-        "totalValueOutOfLp": "2266624986146580664432359",
+        "totalValueInLp": "143995847607592969318",
+        "totalValueOutOfLp": "2278076282618219637385561",
         "validatorSizeWei": "1901000000000000000000",
         "withdrawRequestNFT": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c"
       },
@@ -965,8 +965,8 @@
         "rateLimiter": "eth:0x6C7c54cfC2225fA985cD25F04d923B93c60a02F8",
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "eETH",
-        "totalShares": "2048719316879735519003737",
-        "totalSupply": "2268986076034394184940544"
+        "totalShares": "2055590012529646579009420",
+        "totalSupply": "2278220278465827230354879"
       },
       "implementationNames": {
         "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2": "UUPSProxy",
@@ -1076,10 +1076,10 @@
         ],
         "tierDeposits": [[0, 0], [0, 0], [0, 0], [0, 0]],
         "tierVaults": [
-          ["38141871392292407871", "37391816744837806666"],
+          ["37146868029506190477", "36416379986133883209"],
           ["28926056508743319431", "28102309792759335756"],
-          ["39899756587494652235", "38413127856643741717"],
-          ["583744591758012719529", "556930598987573659739"]
+          ["39530348151658291193", "38057483243975794461"],
+          ["574424453903615159729", "548038576635359476204"]
         ],
         "topUpCooltimePeriod": 2419200,
         "withdrawalLockBlocks": 3600
@@ -1241,16 +1241,16 @@
         "$upgradeCount": 5,
         "beaconGenesisTimestamp": 1606824023,
         "blockStampForNextReport": {
-          "slotFrom": 15596064,
-          "slotTo": 15597343,
-          "blockFrom": 26356531
+          "slotFrom": 15669024,
+          "slotTo": 15670303,
+          "blockFrom": 26429268
         },
         "computeSlotAtTimestamp": [],
         "consensusVersion": 1,
         "etherFiAdmin": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
         "getImplementation": "eth:0x0565c8Ea133fF27ba9D471330A52068a268A2b9e",
-        "lastPublishedReportRefBlock": 26356530,
-        "lastPublishedReportRefSlot": 15596063,
+        "lastPublishedReportRefBlock": 26429267,
+        "lastPublishedReportRefSlot": 15669023,
         "minQuorumSize": 3,
         "numActiveCommitteeMembers": 3,
         "numCommitteeMembers": 3,
@@ -1259,7 +1259,7 @@
         "reportPeriodSlot": 1280,
         "reportStartSlot": 7749600,
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
-        "slotForNextReport": 15597343
+        "slotForNextReport": 15670303
       },
       "implementationNames": {
         "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41": "UUPSProxy",
@@ -1576,18 +1576,18 @@
         "$upgradeCount": 6,
         "BASIS_POINT_SCALE": 10000,
         "blacklister": "eth:0x5585996E7cFE95f2D99e61168B8b35C66Ff99B18",
-        "ethAmountLockedForWithdrawal": "3822849271936452798380",
+        "ethAmountLockedForWithdrawal": "551120383420876878",
         "etherFiAdmin": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
-        "finalizationRatesLength": 509,
+        "finalizationRatesLength": 552,
         "getApproved": [],
         "getImplementation": "eth:0x41617D01362770ebAAC10311aB899FBc8a4E4A7E",
         "isValid": [],
-        "lastFinalizedRequestId": 84224,
+        "lastFinalizedRequestId": 84499,
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "MAX_PAUSE_DURATION": 2592000,
         "MIN_PAUSE_DURATION": 28800,
         "name": "Withdraw Request NFT",
-        "nextRequestId": 84231,
+        "nextRequestId": 84529,
         "ownerOf": [],
         "paused": false,
         "pausedUntil": 0,
@@ -1977,7 +1977,7 @@
         "blacklister": "eth:0x5585996E7cFE95f2D99e61168B8b35C66Ff99B18",
         "etherfiRestaker": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
         "getImplementation": "eth:0x263A74E56EB07C2A2A84FD510615a17b66e10E70",
-        "getTotalPooledEther": "1172617956384800793591",
+        "getTotalPooledEther": "1386384563232398760793",
         "l1SyncPool": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
         "lido": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "lidoWithdrawalQueue": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
@@ -2322,7 +2322,7 @@
         "DOMAIN_SEPARATOR": "0xe481930428c599d86cf3522b2e43b0e3006041a472f66cb41fa924ac01d3a22b",
         "eETH": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "getImplementation": "eth:0xA6Ca0607190d03CF16fe6F2865Cf40c3D160ccf3",
-        "getRate": "1107514366336005424",
+        "getRate": "1108304800363477045",
         "liquidityPool": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
         "MAX_PAUSE_DURATION": 2592000,
         "MIN_PAUSE_DURATION": 28800,
@@ -2333,7 +2333,7 @@
         "pauseUntilDuration": 28800,
         "roleRegistry": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
         "symbol": "weETH",
-        "totalSupply": "1979986814749600522964768"
+        "totalSupply": "1991921965340088875572618"
       },
       "implementationNames": {
         "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": "UUPSProxy",
@@ -2375,7 +2375,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 184,
+        "nonce": 185,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2562,12 +2562,12 @@
         "getLiquifier": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
         "getLockBox": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
         "getTokenOut": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-        "getTotalUnbackedTokens": "46753118095725641726",
+        "getTotalUnbackedTokens": "46960416091474254981",
         "MAX_PAUSE_DURATION": 259200,
         "MIN_PAUSE_DURATION": 28800,
         "oAppVersion": { "senderVersion": 0, "receiverVersion": 1 },
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
-        "pausedUntil": 0,
+        "pausedUntil": 1794245567,
         "PAUSER_UNTIL_COOLDOWN": 86400,
         "pauseUntilDuration": 86400
       },
@@ -5435,7 +5435,7 @@
     "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26357027 },
+  "usedBlockNumbers": { "ethereum": 26430603 },
   "permissionsConfigHash": "0x9497a454e9f3bedc1beca407a72d3cb189378eeb3c9621b63f5a3646b61b33de",
   "permissions": {
     "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a": {

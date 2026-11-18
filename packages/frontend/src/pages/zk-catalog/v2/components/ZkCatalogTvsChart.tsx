@@ -9,14 +9,15 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -232,17 +233,11 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-[200px] flex-col [@media(min-width:600px)]:min-w-60">
-        <div className="font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle>
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         {unit === 'absolute' && (
-          <>
-            <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">
-              <span>Total</span>
-              <span className="text-primary">{format(total)}</span>
-            </div>
-            <HorizontalSeparator />
-          </>
+          <TooltipHeader className="mt-3" label="Total" value={format(total)} />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {visible.map(({ name, amount }) => {

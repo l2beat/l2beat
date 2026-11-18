@@ -218,8 +218,7 @@ function findRedeemedTokens(
   weth: EthereumAddress | undefined,
 ): RedeemedTokens | undefined {
   let redeemed: RedeemedTokens | undefined
-  // biome-ignore lint/style/noNonNullAssertion: It's there
-  for (const [log] of iterateLogs(input.txLogs, input.log.logIndex!, 'after')) {
+  for (const [log] of iterateLogs(input.txLogs, input.log.logIndex, 'after')) {
     if (parseLogTransferRedeemed(log, [tokenBridge])) break
 
     const payout = parseRedeemedTokens(log, tokenBridge, weth)

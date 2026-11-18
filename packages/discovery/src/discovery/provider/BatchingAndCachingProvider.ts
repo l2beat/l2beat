@@ -3,8 +3,9 @@ import { type BlobsInBlock, getBlockNumberAtOrBefore } from '@l2beat/shared'
 import {
   assert,
   Bytes,
-  type EthereumAddress,
+  EthereumAddress,
   type Hash256,
+  toBatches,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
@@ -14,9 +15,10 @@ import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { CacheEntry } from './DiscoveryCache'
 import type { RawProviders } from './IProvider'
-import type {
-  LowLevelProvider,
-  RawContractDeployment,
+import {
+  HELD_TOKENS_FILTER_MAX,
+  type LowLevelProvider,
+  type RawContractDeployment,
 } from './LowLevelProvider'
 import type { MulticallClient } from './multicall/MulticallClient'
 import type { ReorgAwareCache } from './ReorgAwareCache'
@@ -67,6 +69,14 @@ interface LogExecutionItem {
     errored: boolean
   }[]
 }
+
+// A never-read holder costs the index about 130 ms of disk, one after another
+// within a call and against a 10 s limit: 100 holders in one call time out,
+// 25 take 3 s. Past 4 calls at once the disks are saturated.
+const HELD_TOKENS_HOLDERS_PER_CALL = 25
+const HELD_TOKENS_CALLS_IN_FLIGHT = 4
+// The RPC refuses to answer with more tokens than this.
+const HELD_TOKENS_ANSWER_MAX = 100_000
 
 const REVERT_MARKER_VALUE = '{execution reverted}'
 const UNDEFINED_MARKER_VALUE = '{undefined value}'
@@ -632,6 +642,119 @@ export class BatchingAndCachingProvider {
     return transaction
   }
 
+  // Per holder: the `tokens` it ever sent or received, or undefined when the
+  // RPC cannot tell, which is the case on every RPC but ours and for chains
+  // whose holder index is not built. The caller then has to check every token.
+  //
+  // Cached under the block, which is sound because a token first touched after
+  // that block has no balance at it. Undefined is never cached, so a chain
+  // starts using its index as soon as the index is ready.
+  async getHeldTokens(
+    holders: EthereumAddress[],
+    tokens: EthereumAddress[],
+    blockNumber: number,
+  ): Promise<(EthereumAddress[] | undefined)[]> {
+    if (tokens.length === 0) {
+      return holders.map(() => [])
+    }
+    if (tokens.length > HELD_TOKENS_FILTER_MAX) {
+      this.logger.warn('Too many tokens for the holder index', {
+        tokens: tokens.length,
+      })
+      return holders.map(() => undefined)
+    }
+
+    const start = performance.now()
+    const filter = tokens.map((token) => token.toLowerCase())
+    const filterHash = createHash('sha256')
+      .update(filter.join(','))
+      .digest('hex')
+    const entries = await Promise.all(
+      holders.map((holder) =>
+        this.cache.entry(
+          'getHeldTokens',
+          [blockNumber, holder, filterHash],
+          blockNumber,
+        ),
+      ),
+    )
+
+    const held: (EthereumAddress[] | undefined)[] = []
+    const missing: number[] = []
+    for (let index = 0; index < holders.length; index++) {
+      const cached = entries[index]?.read()
+      if (cached === undefined) {
+        held.push(undefined)
+        missing.push(index)
+      } else {
+        held.push((parseCacheEntry(cached) as string[]).map(EthereumAddress))
+        this.stats.mark(
+          ProviderMeasurement.GET_HELD_TOKENS,
+          performance.now() - start,
+        )
+      }
+    }
+
+    const holdersPerCall = Math.min(
+      HELD_TOKENS_HOLDERS_PER_CALL,
+      Math.floor(HELD_TOKENS_ANSWER_MAX / tokens.length),
+    )
+    const fetched = await this.fetchHeldTokens(
+      missing.map((index) => holders[index] as EthereumAddress),
+      tokens,
+      holdersPerCall,
+    )
+    for (let i = 0; i < missing.length; i++) {
+      const index = missing[i] as number
+      const answer = fetched[i]
+      held[index] = answer
+      if (answer !== undefined) {
+        entries[index]?.write(JSON.stringify(answer))
+      }
+    }
+    return held
+  }
+
+  // Stops asking at the first refusal: an RPC without the index would refuse
+  // every call, and each one uploads the whole filter.
+  private async fetchHeldTokens(
+    holders: EthereumAddress[],
+    tokens: EthereumAddress[],
+    holdersPerCall: number,
+  ): Promise<(EthereumAddress[] | undefined)[]> {
+    assert(holdersPerCall >= 1, 'A call has to ask about some holder')
+    const calls = toBatches(holders, holdersPerCall)
+    const answers: (EthereumAddress[][] | undefined)[] = calls.map(
+      () => undefined,
+    )
+
+    let next = 0
+    let refused = false
+    const askUntilRefused = async () => {
+      while (!refused && next < calls.length) {
+        const index = next++
+        try {
+          answers[index] = await this.provider.getHeldTokens(
+            calls[index] as EthereumAddress[],
+            tokens,
+          )
+        } catch (e) {
+          refused = true
+          this.logger.warn('Holder index unavailable', {
+            reason: toRpcErrorMessage(e),
+          })
+        }
+      }
+    }
+    await Promise.all(
+      Array.from({ length: HELD_TOKENS_CALLS_IN_FLIGHT }, askUntilRefused),
+    )
+
+    return calls.flatMap(
+      (call, index) => answers[index] ?? call.map(() => undefined),
+    )
+  }
+
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
@@ -843,4 +966,12 @@ function isRangeTooLarge(error: Error): boolean {
     error.message.includes('Log response size exceeded') ||
     error.message.includes('Consider reducing your block range')
   )
+}
+
+// The error itself is not logged: ethers puts the RPC URL in it, API key
+// included. The message of the JSON-RPC error inside carries the reason.
+function toRpcErrorMessage(error: unknown): string {
+  const rpcError = (error as { error?: unknown } | null)?.error
+  const message = (rpcError as { message?: unknown } | null)?.message
+  return typeof message === 'string' ? message : 'unknown'
 }

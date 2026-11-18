@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "facet",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
@@ -33,6 +34,28 @@
     },
     "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": {
       "ignoreDiscovery": true
+    },
+    "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
+      "fields": {
+        // deployed by Solady's ERC1967Factory, which keeps the upgrade admin itself
+        // and leaves the EIP-1967 admin slot empty
+        "$admin": {
+          "description": "Upgrade admin of the proxy, read from Solady's ERC1967Factory.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "address": "eth:0x0000000000006396FF2a80c067f99B3d2Ab4Df24",
+            "method": "function adminOf(address proxy) view returns (address)",
+            "args": ["0x0000000000000b07ED001607f5263D85bf28Ce4C"]
+          },
+          "permissions": [
+            {
+              "type": "upgrade",
+              "description": "upgrade the bridge implementation, which can reopen deposits or withdrawals and change how ETH held by the bridge can be moved."
+            }
+          ]
+        }
+      }
     },
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": {
       "ignoreMethods": [

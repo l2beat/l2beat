@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x6c6006c930d345497fc50d4cf511ffc6b5e18c25
+
+# Diff at Wed, 18 Nov 2026 13:41:50 GMT:
+
+- id: 17e0c259
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1780407005
+- current timestamp: 1795007625
+
+## Description
+
+Facet shut down its ETH fast bridge (snapshot at L1 block 26,401,162, see https://github.com/0xFacet/facet-bridge-claims). The bridge is upgraded to `FacetEtherBridgeV6Shutdown`: deposits are closed, the bridge is locked (withdrawals disabled, no unlock), the admin ETH sweep is removed and ETH is paid out only through admin `disburse` batches from an offchain payout list. All ETH has been paid out in 47 batches. The Facet Multisig remains both the logic admin and the upgrade admin (via Solady's ERC1967Factory, now read into `$admin`).
+
+## Watched changes
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) [facet/FacetEtherBridgeShutdown] {
+    +++ description: Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function.
+      template:
+-        "facet/FacetEtherBridge"
++        "facet/FacetEtherBridgeShutdown"
+      sourceHashes.1:
+-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
++        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
+      description:
+-        "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
++        "Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function."
+      values.$implementation:
+-        "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE"
++        "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570"
+      values.eip712Domain:
+-        {"fields":"0x0f","name":"Facet Ether Bridge","version":"1","chainId":1,"verifyingContract":"eth:0x0000000000000b07ED001607f5263D85bf28Ce4C","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
++++ description: Whether deposits are refused (also true once the bridge is locked).
+      values.depositsClosed:
++        true
++++ description: Admin of the bridge logic, set in contract storage separately from the upgrade admin.
++++ severity: HIGH
+      values.getAdmin:
++        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++++ description: Whether withdrawals and deposits are disabled. Only an upgrade can unlock the bridge.
+      values.isLocked:
++        true
+      fieldMeta.getAdmin:
++        {"severity":"HIGH","description":"Admin of the bridge logic, set in contract storage separately from the upgrade admin."}
+      fieldMeta.depositsClosed:
++        {"description":"Whether deposits are refused (also true once the bridge is locked)."}
+      fieldMeta.isLocked:
++        {"description":"Whether withdrawals and deposits are disabled. Only an upgrade can unlock the bridge."}
+      implementationNames.eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE:
+-        "FacetEtherBridgeV6"
+      implementationNames.eth:0x0490244C989b73952DeaF2AE075DE2E72e877570:
++        "FacetEtherBridgeV6Shutdown"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0000000000000b07ED001607f5263D85bf28Ce4C","description":"send any ETH held by the bridge to addresses and amounts of its choice in payout batches, transfer the bridge's FCT on Facet, mark withdrawals as completed, close deposits, lock the bridge and change the admin.","role":".getAdmin"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../FacetEtherBridgeV6Shutdown.sol}                | 243 ++++++++++++++-------
+ 1 file changed, 161 insertions(+), 82 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780407005 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) [facet/FacetEtherBridge] {
+    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
++++ description: Upgrade admin of the proxy, read from Solady's ERC1967Factory.
++++ severity: HIGH
+      values.$admin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      fieldMeta:
++        {"$admin":{"severity":"HIGH","description":"Upgrade admin of the proxy, read from Solady's ERC1967Factory."}}
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x0000000000000b07ED001607f5263D85bf28Ce4C","description":"upgrade the bridge implementation, which can reopen deposits or withdrawals and change how ETH held by the bridge can be moved.","role":".$admin"}
+    }
+```
+
 Generated with discovered.json: 0x278bbbd5f2ebbc8b091cc41ffa1e521c6fc59fa2
 
 # Diff at Tue, 20 Oct 2026 12:39:57 GMT:

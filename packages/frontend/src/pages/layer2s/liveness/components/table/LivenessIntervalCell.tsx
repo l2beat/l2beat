@@ -1,15 +1,17 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import {
+  TooltipHeader,
+  TooltipRow,
+} from '~/components/core/tooltip/TooltipParts'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { WarningBar } from '~/components/WarningBar'
-import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { DurationCell } from '~/pages/layer2s/liveness/components/table/DurationCell'
 import type { LivenessDataPoint } from '~/server/features/layer2s/liveness/types'
@@ -21,12 +23,6 @@ export function LivenessIntervalCell(props: {
   entry: L2LivenessTableEntry
   dataType: TrackedTxsConfigSubtype
 }) {
-  const isClient = useIsClient()
-
-  if (!isClient) {
-    return <Skeleton className="h-6 w-[100px]" />
-  }
-
   const data = props.entry.data?.[props.dataType]
   const durationInSeconds = data?.averageInSeconds
   const isSynced = props.entry.data?.isSynced
@@ -66,7 +62,8 @@ export function LivenessIntervalCell(props: {
         <LivenessTooltip data={data} />
         {data.warning && (
           <WarningBar
-            className="mt-2"
+            compact
+            className="mt-3"
             icon={RoundedWarningIcon}
             text={data.warning}
             color="yellow"
@@ -80,28 +77,17 @@ export function LivenessIntervalCell(props: {
 
 function LivenessTooltip(props: { data: LivenessDataPoint }) {
   return (
-    <div className="font-medium">
-      <IntervalsHeader />
-      <ul className="mt-1 list-inside list-disc">
-        <li className="flex justify-between gap-4">
-          Minimum:
-          <LivenessDurationCell
-            durationInSeconds={props.data.minimumInSeconds}
-          />
-        </li>
-        <li className="flex justify-between gap-4">
-          Average:
-          <LivenessDurationCell
-            durationInSeconds={props.data.averageInSeconds}
-          />
-        </li>
-        <li className="flex justify-between gap-4">
-          Maximum:
-          <LivenessDurationCell
-            durationInSeconds={props.data.maximumInSeconds}
-          />
-        </li>
-      </ul>
+    <div className="flex flex-col gap-2">
+      <TooltipHeader label={<IntervalsHeader />} />
+      <TooltipRow gap="gap-x-4" label="Minimum">
+        <LivenessDurationCell durationInSeconds={props.data.minimumInSeconds} />
+      </TooltipRow>
+      <TooltipRow gap="gap-x-4" label="Average">
+        <LivenessDurationCell durationInSeconds={props.data.averageInSeconds} />
+      </TooltipRow>
+      <TooltipRow gap="gap-x-4" label="Maximum">
+        <LivenessDurationCell durationInSeconds={props.data.maximumInSeconds} />
+      </TooltipRow>
     </div>
   )
 }

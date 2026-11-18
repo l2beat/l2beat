@@ -58,7 +58,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
         {hasOngoing ? (
           <div>There is an ongoing anomaly. Click to learn more.</div>
         ) : anomalies.length === 0 ? (
-          <div>No anomalies detected in the last 30 days</div>
+          <div>No anomalies detected in the last 30 days.</div>
         ) : (
           <div>
             There {anomalies.length === 1 ? 'was' : 'were'} {anomalies.length}{' '}

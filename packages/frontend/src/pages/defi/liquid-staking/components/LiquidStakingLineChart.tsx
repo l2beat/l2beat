@@ -4,6 +4,7 @@ import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -183,9 +184,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
-        <div className="font-medium text-label-value-14 text-secondary">
-          {formatDate(label)}
-        </div>
+        <ChartTooltipTitle>{formatDate(label)}</ChartTooltipTitle>
         <div className="mt-2 flex flex-col gap-2">
           {lines.map((entry) => (
             <TooltipRow

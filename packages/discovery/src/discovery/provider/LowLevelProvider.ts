@@ -41,6 +41,12 @@ const shouldRetry = Retries.exponentialBackOff({
   notifyAfterAttempts: Number.POSITIVE_INFINITY,
 })
 
+// What one ethbeat_heldTokens call accepts.
+export const HELD_TOKENS_HOLDERS_MAX = 100
+export const HELD_TOKENS_FILTER_MAX = 10_000
+
+const HELD_TOKENS_INTERNAL_ERROR_CODE = -32603
+
 export class LowLevelProvider {
   public stats: ProviderStats = new ProviderStats()
 
@@ -146,6 +152,30 @@ export class LowLevelProvider {
         `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
       )
     }, ProviderMeasurement.GET_LOGS)
+  }
+
+  // Which of `tokens` each holder ever sent or received, in the order of
+  // `holders`. The method exists only on our own RPC and only for chains whose
+  // holder index is built, so everywhere else this throws.
+  getHeldTokens(
+    holders: EthereumAddress[],
+    tokens: EthereumAddress[],
+  ): Promise<EthereumAddress[][]> {
+    assert(holders.length >= 1, 'No holders to ask about')
+    assert(holders.length <= HELD_TOKENS_HOLDERS_MAX, 'Too many holders')
+    assert(tokens.length >= 1, 'No tokens to filter by')
+    assert(tokens.length <= HELD_TOKENS_FILTER_MAX, 'Too many tokens')
+
+    return this.measure(async () => {
+      const params = [
+        holders.map((holder) => holder.toLowerCase()),
+        { tokens: tokens.map((token) => token.toLowerCase()) },
+      ]
+      const response: unknown = await retryOnceOnInternalError(() =>
+        this.provider.send('ethbeat_heldTokens', params),
+      )
+      return parseHeldTokens(response, holders)
+    }, ProviderMeasurement.GET_HELD_TOKENS)
   }
 
   getTransaction(
@@ -323,6 +353,47 @@ export class LowLevelProvider {
       this.stats.mark(key, duration)
     }
   }
+}
+
+// rpcWithRetries would not do: it backs off for minutes on any JSON-RPC
+// error, including the one that says the method does not exist. The index
+// asks for exactly one retry, of the lookup that ran out of time: the first
+// attempt has read the rows into memory.
+async function retryOnceOnInternalError<T>(fn: () => Promise<T>): Promise<T> {
+  try {
+    return await fn()
+  } catch (e) {
+    const code = (e as { error?: { code?: unknown } } | null)?.error?.code
+    if (code !== HELD_TOKENS_INTERNAL_ERROR_CODE) {
+      throw e
+    }
+  }
+  return await fn()
+}
+
+const HeldTokensResponse = v.object({
+  holders: v.array(
+    v.object({
+      holder: v.string(),
+      tokens: v.array(v.object({ address: v.string() })),
+    }),
+  ),
+})
+
+export function parseHeldTokens(
+  response: unknown,
+  holders: EthereumAddress[],
+): EthereumAddress[][] {
+  const answers = HeldTokensResponse.parse(response).holders
+  assert(answers.length === holders.length, 'Answer for another holder count')
+
+  return answers.map((answer, index) => {
+    assert(
+      answer.holder === holders[index]?.toLowerCase(),
+      'Answer for another holder',
+    )
+    return answer.tokens.map((token) => EthereumAddress(token.address))
+  })
 }
 
 export async function rpcWithRetries<T>(

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x64b1b29024764f653a3d0347e00aa7936d805723
+
+# Diff at Mon, 16 Nov 2026 22:34:49 GMT:
+
+- id: 1a5905c7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1793982984
+- current timestamp: 1794868373
+
+## Description
+
+StrategyManager: `getPendingOperatorSets` is empty again; the slashed shares of the operator set listed on 2026-11-06 were cleared on 2026-11-12.
+
+## Watched changes
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) [eigenlayer/StrategyManager] {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      values.getPendingOperatorSets.0:
+-        {"avs":"eth:0xF1fA499AE90903fE52d1325145D9944D7D2C4651","id":0}
+    }
+```
+
 Generated with discovered.json: 0x483333e8c8aca8f7025720e44d0a9e5f22c32d2f
 
 # Diff at Fri, 06 Nov 2026 16:37:36 GMT:

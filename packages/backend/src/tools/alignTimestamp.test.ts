@@ -9,14 +9,14 @@ describe(alignTimestamp.name, () => {
       timestamp: UnixTime(100),
       hourlyCutOff: UnixTime(1),
       sixHourlyCutoff: 0,
-      expected: UnixTime.toEndOf(100, 'hour'),
+      expected: UnixTime(3600),
     },
     {
       name: 'Greater than sixHourly cutoff',
       timestamp: UnixTime(100),
       hourlyCutOff: UnixTime(100_000),
       sixHourlyCutoff: UnixTime(1),
-      expected: UnixTime.toEndOf(100, 'six hours'),
+      expected: UnixTime(21600),
     },
     {
       name: 'Greater than sixHourly cutoff but after .toEndOf is greater than hourlyCutoff',
@@ -30,7 +30,7 @@ describe(alignTimestamp.name, () => {
       timestamp: UnixTime(100),
       hourlyCutOff: UnixTime(200_00),
       sixHourlyCutoff: UnixTime(100_000),
-      expected: UnixTime.toEndOf(100, 'day'),
+      expected: UnixTime(86400),
     },
     {
       name: 'Before six hourly but after .toEndOf is greater than sixHourlyCutoff',

@@ -22,6 +22,7 @@ export async function getActivityConfig(
       .map((p) => ({
         id: p.id,
         chainName: p.chainConfig.name,
+        followHead: flags.isEnabled('activity', 'live', p.id),
         activityConfig: {
           ...p.activityConfig,
           ...(p.activityConfig.type === 'block'

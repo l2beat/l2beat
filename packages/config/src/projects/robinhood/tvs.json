@@ -55,6 +55,43 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-AI",
+      "priceId": "artificial-inu-3",
+      "symbol": "AI",
+      "name": "Artificial Inu",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176647/large/5ou9sb7h478ezv28urbjpzf1fl3e.?1788401429",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "artificial-inu-3",
+        "decimals": 18,
+        "sinceTimestamp": 1784505600,
+        "address": "0x2E8c31162b855A2ffa90F6F8634643Ad6F111e18",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-AMC",
+      "priceId": "amc-entertainment-holdings-inc-robinhood-token",
+      "symbol": "AMC",
+      "name": "AMC Entertainment • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175476/large/AMC.png?1786375197",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x05a3d1Cd21d0C88145E82600E62e7E496e0F222B",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1786579200
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-AMD",
       "priceId": "amd-robinhood-tokenized-stock",
       "symbol": "AMD",
@@ -160,6 +197,96 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-BNT",
+      "priceId": "bancor",
+      "symbol": "BNT",
+      "name": "Bancor Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/736/large/bancor-bnt.png?1696501892",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-BONER",
+      "priceId": "boner-coin",
+      "symbol": "BONER",
+      "name": "Boner Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176671/large/boner.jpg?1788451067",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "boner-coin",
+        "decimals": 18,
+        "sinceTimestamp": 1787270400,
+        "address": "0x98096d17e191B3dA1d5f99a6D7b3584351b11E18",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-BOW",
+      "priceId": "longbow-2",
+      "symbol": "BOW",
+      "name": "Longbow",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175862/large/longbow.jpg?1787808621",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "longbow-2",
+        "decimals": 18,
+        "sinceTimestamp": 1787788800,
+        "address": "0x451b42A15100C340CA12F7c66DE06fac5EA2D751",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-BUN",
+      "priceId": "bundle-cat",
+      "symbol": "BUN",
+      "name": "Bundle Cat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176682/large/catttyyy_%281%29.png?1788500479",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "bundle-cat",
+        "decimals": 18,
+        "sinceTimestamp": 1788480000,
+        "address": "0x07EBB29a38Fbcb41563817e5E19f2ceC619C90D2",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-CASHCAT",
       "priceId": "cash-cat",
       "symbol": "CASHCAT",
@@ -176,6 +303,32 @@
       "category": "other",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-cbBTC-1",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCEC185eB182c47d1bA1EFc84e6959e18cd620Be4",
+        "chain": "robinhood",
+        "decimals": 8,
+        "sinceTimestamp": 1786636561
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -303,6 +456,91 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-CTX",
+      "priceId": "cryptex-finance",
+      "symbol": "CTX",
+      "name": "Cryptex",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14932/large/CTX_Logo_200px.png?1723514786",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-DELTA",
+      "priceId": "delta",
+      "symbol": "DELTA",
+      "name": "Delta",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176692/large/fsh29xwdtuxwvc6pcdhi0jqrl5vd.?1788505313",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "delta",
+        "decimals": 18,
+        "sinceTimestamp": 1785542400,
+        "address": "0xe8ffd7e24187F72afB08d75B1bb13088A989a791",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-ELON",
+      "priceId": "dogelon-mars",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1696514622",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -344,6 +582,39 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-EURC",
+      "priceId": "euro-coin",
+      "symbol": "EURC",
+      "name": "Euro Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 6,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 6,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-EWY",
       "priceId": "ishares-msci-south-korea-fund-robinhood-tokenized-stock",
       "symbol": "EWY",
@@ -355,6 +626,133 @@
         "chain": "robinhood",
         "decimals": 18,
         "sinceTimestamp": 1782432000
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-FOBO",
+      "priceId": "fobo",
+      "symbol": "FOBO",
+      "name": "FOBO",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102179795/large/fobo.jpg?1793096316",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "fobo",
+        "decimals": 18,
+        "sinceTimestamp": 1793059200,
+        "address": "0x000DE658153f47f23e92973C8EB1e89762703676",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-FOREVER",
+      "priceId": "forever-2",
+      "symbol": "FOREVER",
+      "name": "Forever",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102179913/large/forever.jpg?1793346107",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "forever-2",
+        "decimals": 18,
+        "sinceTimestamp": 1793318400,
+        "address": "0xaCC8De336F5D2366FA7334383D8FaB73499F582A",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-FRONG",
+      "priceId": "frong",
+      "symbol": "FRONG",
+      "name": "frong",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175259/large/frong.png?1786003344",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "frong",
+        "decimals": 18,
+        "sinceTimestamp": 1785974400,
+        "address": "0x6245e67affA44a23077f0Ea7f981a8DC743a0c47",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-frxUSD",
+      "priceId": "frax-usd",
+      "symbol": "frxUSD",
+      "name": "Frax USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53963/large/frxUSD.png?1737792154",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-GAGE",
+      "priceId": "gage",
+      "symbol": "GAGE",
+      "name": "GAGE",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176839/large/w5wyrkznf1hhp7npgdzf36otoni1.?1788877817",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "gage",
+        "decimals": 18,
+        "sinceTimestamp": 1788825600,
+        "address": "0x7163aE1B5AeA2f09EBc609C52b4dcAc0a7a4bC2d",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-GLD",
+      "priceId": "spdr-gold-shares-robinhood-token",
+      "symbol": "GLD",
+      "name": "SPDR Gold Trust • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175452/large/GLD.png?1786367509",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC9a981FEE1F9DEc688bb123ccDeCc63D0deBFC4e",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1786579200
       },
       "category": "rwaPublic",
       "source": "native",
@@ -391,6 +789,24 @@
         "chain": "robinhood",
         "decimals": 18,
         "sinceTimestamp": 1782432000
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-HIMS",
+      "priceId": "hims-hers-health-inc-robinhood-token",
+      "symbol": "HIMS",
+      "name": "Hims & Hers Health • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175360/large/HIMS.png?1786131590",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCceE82fE024c36fA15E1005edE3E9e4787e23D09",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1786579200
       },
       "category": "rwaPublic",
       "source": "native",
@@ -491,6 +907,124 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-JUGGERNAUT",
+      "priceId": "the-juggernaut",
+      "symbol": "JUGGERNAUT",
+      "name": "The Juggernaut",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174595/large/juggernaut.jpg?1784167487",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "the-juggernaut",
+        "decimals": 18,
+        "sinceTimestamp": 1784160000,
+        "address": "0xD7321801CAae694090694Ff55A9323139F043B88",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-LIT",
+      "priceId": "lighter",
+      "symbol": "LIT",
+      "name": "Lighter",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71121/large/lighter.png?1765888098",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x232CE3bd40fCd6f80f3d55A522d03f25Df784Ee2",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-LUSD",
+      "priceId": "liquity-usd",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1696514341",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-META",
       "priceId": "meta-platforms-robinhood-tokenized-stock",
       "symbol": "META",
@@ -523,6 +1057,58 @@
       },
       "category": "rwaPublic",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-microduck",
+      "priceId": "microduck",
+      "symbol": "microduck",
+      "name": "microduck",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176663/large/bvw8hqnmvgvs61nw2h4et0zj00jx.?1788422151",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "microduck",
+        "decimals": 18,
+        "sinceTimestamp": 1787961600,
+        "address": "0xD5f1afEA47b1A9eab414D2ee740cF1d6d039E725",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-MORPHO",
+      "priceId": "morpho",
+      "symbol": "MORPHO",
+      "name": "Morpho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58D97B57BB95320F9a05dC918Aef65434969c2B2",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -617,6 +1203,117 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-O",
+      "priceId": "o1-exchange",
+      "symbol": "O",
+      "name": "o1.exchange",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102173974/large/o1.png?1781654491",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x500A02a20B0B0A3F3efCCFc0559543F5743bd1C4",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1791276495
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-OHM",
+      "priceId": "olympus",
+      "symbol": "OHM",
+      "name": "Olympus",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14483/large/token_OHM_%281%29.png?1696514169",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 9,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 9,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-OLAS",
+      "priceId": "autonolas",
+      "symbol": "OLAS",
+      "name": "Autonolas",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-ORBIO",
+      "priceId": "orbio-so",
+      "symbol": "ORBIO",
+      "name": "Orbio.so",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176665/large/orbio.jpg?1788424660",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "orbio-so",
+        "decimals": 18,
+        "sinceTimestamp": 1788307200,
+        "address": "0xAa07A0e9209e16aC99708C3EC70159c6eF3128A3",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-ORCL",
       "priceId": "oracle-robinhood-tokenized-stock",
       "symbol": "ORCL",
@@ -663,6 +1360,72 @@
         ]
       },
       "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-PENDLE",
+      "priceId": "pendle",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x808507121B80c02388fAd14726482e061B8da827",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x808507121B80c02388fAd14726482e061B8da827",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -737,6 +1500,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-PRIORS",
+      "priceId": "priors-agent",
+      "symbol": "PRIORS",
+      "name": "Priors Agents",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178765/large/priors.jpg?1790233255",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "priors-agent",
+        "decimals": 18,
+        "sinceTimestamp": 1790208000,
+        "address": "0xeDBf91223639800BCd5756815CAf908Df3b890bE",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-PROLOGUE",
       "priceId": "prologue",
       "symbol": "PROLOGUE",
@@ -774,6 +1556,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-RAETO",
+      "priceId": "raeto",
+      "symbol": "RAETO",
+      "name": "Raeto",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102179638/large/raeto.jpg?1792417069",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "raeto",
+        "decimals": 18,
+        "sinceTimestamp": 1792368000,
+        "address": "0x72bE1277E198D0C476869253Cb4E62807e14533c",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-RAM",
       "priceId": "ramses",
       "symbol": "RAM",
@@ -797,6 +1598,39 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -836,6 +1670,44 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-ROBINCAT",
+      "priceId": "robincat",
+      "symbol": "ROBINCAT",
+      "name": "ROBINCAT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176715/large/IMG_4475.png?1791901838",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "robincat",
+        "decimals": 18,
+        "sinceTimestamp": 1788220800,
+        "address": "0xded852De9fe9bA9b6f27f39e8e81CF851A5C79cc",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SCHIFFY",
+      "priceId": "schiffy",
+      "symbol": "SCHIFFY",
+      "name": "SCHIFFY",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176912/large/437ilu0a4p3x2igq9tp8ermhbkr9.?1789018298",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "schiffy",
+        "decimals": 18,
+        "sinceTimestamp": 1788998400,
+        "address": "0x42aFA2124ca5a2B83898E46B2dA9a190995b1E18",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-SGOV",
       "priceId": "ishares-0-3-month-treasury-bond-etf-robinhood-tokenized-stock",
       "symbol": "SGOV",
@@ -850,6 +1722,72 @@
       },
       "category": "rwaPublic",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SIS",
+      "priceId": "symbiosis-finance",
+      "symbol": "SIS",
+      "name": "Symbiosis",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20805/large/SymbiosisFinance_logo-150x150.jpeg?1696520198",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -959,6 +1897,44 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-STANDARD",
+      "priceId": "standard",
+      "symbol": "STANDARD",
+      "name": "STANDARD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178385/large/standard.png?1789445039",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "standard",
+        "decimals": 18,
+        "sinceTimestamp": 1789430400,
+        "address": "0x88ad8DdF1E3898412146a534538d418c6F8A9062",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-STATICS",
+      "priceId": "statics-protocol",
+      "symbol": "STATICS",
+      "name": "Statics",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176707/large/04_Statics_Icon_Only_Dark.png?1788516332",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "statics-protocol",
+        "decimals": 18,
+        "sinceTimestamp": 1788480000,
+        "address": "0x2d8d6F4A93AcD7a916A5a654ec8b690bA3B3EAdd",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-STONKBROKER",
       "priceId": "stonkbroker",
       "symbol": "STONKBROKER",
@@ -974,6 +1950,39 @@
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-STRK",
+      "priceId": "starknet",
+      "symbol": "STRK",
+      "name": "StarkNet Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1007,6 +2016,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-SWARM",
+      "priceId": "swarm-engine",
+      "symbol": "SWARM",
+      "name": "SWARM ENGINE",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102179329/large/logo_SWARM.jpg?1791469499",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "swarm-engine",
+        "decimals": 18,
+        "sinceTimestamp": 1791467293,
+        "address": "0x7EeBdA046d451bC7a7D12491eff72a861AA8136e",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1056,6 +2084,58 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-tGBP",
+      "priceId": "tokenised-gbp",
+      "symbol": "tGBP",
+      "name": "tGBP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70647/large/tgbp-square.png?1762953800",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x27f6c8289550fCE67f6B50BeD1F519966aFE5287",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-TORCH",
+      "priceId": "torch",
+      "symbol": "TORCH",
+      "name": "Torch",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102179438/large/photo_2026-08-07_13-08-05.jpg?1791793419",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "torch",
+        "decimals": 18,
+        "sinceTimestamp": 1791763200,
+        "address": "0x000050E18ffa3F8F7aD170Eb9CeF160eb3Ed1111",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-TSLA",
       "priceId": "tesla-robinhood-tokenized-stock",
       "symbol": "TSLA",
@@ -1087,6 +2167,61 @@
         "sinceTimestamp": 1782432000
       },
       "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-TTWO",
+      "priceId": "take-two-interactive-software-robinhood-tokenized-stock",
+      "symbol": "TTWO",
+      "name": "Take-Two Interactive Software • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174176/large/0x5e81213613b6b86eab4c6c50d718d34359459786.png?1782444740",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5e81213613b6B86EaB4c6c50d718d34359459786",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1783641600
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-U",
+      "priceId": "united-stables",
+      "symbol": "U",
+      "name": "United Stables",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71157/large/united-stables-logo.jpg?1766061640",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcE24439F2D9C6a2289F741120FE202248B666666",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1788490569
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-UBIK",
+      "priceId": "ubik",
+      "symbol": "UBIK",
+      "name": "ubik",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176699/large/ubik.webp?1788510522",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "ubik",
+        "decimals": 18,
+        "sinceTimestamp": 1788480000,
+        "address": "0x812486EAea648819853F8E372dc9f1516C7868Bd",
+        "chain": "robinhood"
+      },
+      "category": "other",
       "source": "native",
       "isAssociated": false
     },
@@ -1261,6 +2396,39 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 18,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-USDT",
       "priceId": "tether",
       "symbol": "USDT",
@@ -1345,6 +2513,96 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-VOLT",
+      "priceId": "volt-inu-3",
+      "symbol": "VOLT",
+      "name": "Volt Inu",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178510/large/Bazaart_AA3B7569-80A4-429F-A4DD-3ABFA751EAD2.jpeg?1789769029",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "volt-inu-3",
+        "decimals": 18,
+        "sinceTimestamp": 1789689600,
+        "address": "0x5d102d1E69E77591D486aa4f663B3645151BBdf6",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-VRAX",
+      "priceId": "commander-vrax-2",
+      "symbol": "VRAX",
+      "name": "Commander Vrax",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102178985/large/9ynfoj2ibjxo3rlf9aghubks9n96.?1790822107",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "commander-vrax-2",
+        "decimals": 18,
+        "sinceTimestamp": 1790812800,
+        "address": "0x94641b97010608C3827fB058074889f19868FF33",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0x85001CC4867C5e1C22dA4B79BB8852B9e2a06da0",
+            "decimals": 8,
+            "sinceTimestamp": 1777567931
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            "chain": "ethereum",
+            "escrowAddress": "0xF7e12b9614b509C747ab4423bC4ACF923759Cf1B",
+            "decimals": 8,
+            "sinceTimestamp": 1777567931
+          }
+        ]
+      },
+      "category": "btc",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-WIF",
+      "priceId": "world-is-flat",
+      "symbol": "WIF",
+      "name": "World is Flat",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175446/large/our_logo_200.png?1786347883",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "world-is-flat",
+        "decimals": 18,
+        "sinceTimestamp": 1786406400,
+        "address": "0x5173b8eA6923c2d40267890D45C46a3480954773",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
@@ -1374,6 +2632,44 @@
       },
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "robinhood-WTH",
+      "priceId": "what-the-hook",
+      "symbol": "WTH",
+      "name": "what the hook?",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102175551/large/Hook_Logo_Metallic_Black_BG.png?1788414631",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "what-the-hook",
+        "decimals": 18,
+        "sinceTimestamp": 1786838400,
+        "address": "0xb8Fa8010833463Aac5595b55B9045479239EfF79",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-ZZZ",
+      "priceId": "zzz-2",
+      "symbol": "ZZZ",
+      "name": "ZZZ",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176737/large/zzz-new-logo-black.png?1791254593",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "zzz-2",
+        "decimals": 18,
+        "sinceTimestamp": 1788566400,
+        "address": "0x7dbf38976f6D3b9c529e7D9484A71898B409eE6a",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     }
   ]

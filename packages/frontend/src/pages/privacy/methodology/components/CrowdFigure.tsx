@@ -59,9 +59,11 @@ export function CrowdFigure() {
   const size = useElementSize(boxRef)
   const tokens = useThemeTokens()
 
+  // Autoplay moves the traffic every frame, so it lives in a ref and moves
+  // the slider directly; the state only redraws a still frame on input.
+  const trafficRef = useRef(BUSY)
+  const trafficInputRef = useRef<HTMLInputElement>(null)
   const [traffic, setTraffic] = useState(BUSY)
-  const trafficRef = useRef(traffic)
-  trafficRef.current = traffic
   const [crowd, setCrowd] = useState(0)
   const [lost, setLost] = useState(false)
   const [mine, setMine] = useState<number>()
@@ -94,7 +96,9 @@ export function CrowdFigure() {
     if (playing) {
       clock.current += dt
       trafficRef.current = autoTraffic(clock.current)
-      setTraffic(trafficRef.current)
+      if (trafficInputRef.current) {
+        trafficInputRef.current.value = String(trafficRef.current)
+      }
     }
     stepCrowdScene(scene(), dt, toRate(trafficRef.current))
     draw()
@@ -153,7 +157,8 @@ export function CrowdFigure() {
               min={0}
               max={1}
               step="any"
-              value={traffic}
+              ref={trafficInputRef}
+              defaultValue={BUSY}
               onChange={(e) => {
                 pick(0)
                 const next = Number(e.target.value)
@@ -163,6 +168,7 @@ export function CrowdFigure() {
                   setMine(undefined)
                   setResult(undefined)
                 }
+                trafficRef.current = next
                 setTraffic(next)
               }}
               className="mt-1 w-full accent-brand"

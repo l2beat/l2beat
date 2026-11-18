@@ -33,7 +33,7 @@ export function SparklineTooltip({
     typeof value === 'number' ? formatValue(value) : 'No data'
   return (
     <PointTooltip anchorX={anchorX} side={side}>
-      <div className="whitespace-nowrap text-label-value-13 text-secondary">
+      <div className="whitespace-nowrap text-label-value-13 text-primary">
         {formatRange(label, label + WEEK_DAYS * UnixTime.DAY)}
       </div>
       <div className="flex items-baseline gap-1.5 whitespace-nowrap">
@@ -49,7 +49,7 @@ export function SparklineTooltip({
           key={partLabel}
           className="flex justify-between gap-3 whitespace-nowrap text-label-value-13"
         >
-          <span className="text-secondary">{partLabel}</span>
+          <span>{partLabel}</span>
           <span className="font-medium tabular-nums">
             {format(point.parts[index])}
           </span>

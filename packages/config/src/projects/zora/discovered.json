@@ -1,6 +1,6 @@
 {
   "name": "zora",
-  "timestamp": 1789544397,
+  "timestamp": 1794868620,
   "configHash": "0x6116fd59efca2da1901017688125dffe34cb2f4d283e3a427e38b45277d1c4a2",
   "entries": [
     {
@@ -194,8 +194,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 200000,
-          "prevBlockNum": 25976279
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 26398748
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -352,7 +352,6 @@
           "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
@@ -360,8 +359,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 320,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 378,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -416,13 +415,13 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0x7C3C67C10902432ae6b504DDC12c9313a54aD74B",
+        "anchorGame": "eth:0x37705df16065188626AdF2786c1b7ea42517BB99",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xec245e5177d6e602e9e032e3cd559c76ab2aac4e9f5a1958317d26f1fb2d4e97",
-          51111518
+          "0x7d5d048ea77d4edc091af2048c086c5c837332ce65df54652bf24b1af31917bf",
+          53778087
         ],
         "getStartingAnchorRoot": {
           "root": "0x0da4462cd1b36cd4947cb82f9a307b776532841c14360e98082937b7cf401637",
@@ -595,11 +594,6 @@
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -917,7 +911,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 2038,
+        "gameCount": 2285,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -928,7 +922,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0xdead000000000000000000000000000000000000000000000000000000000000acc005dcd857b401e4732e6f7837135a22825cfa54027b388330415a34b2dba9e6d25895649eeff1f25e70aea14e0b9794e05d3a9bfbdeec9acd6bb1000000000000000000000000000000000000000000000000000000000076adf148247032092e7b0ecf5def611ad89eaf3fc888dd4a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 2038,
+        "permissionedGamesTotal": 2285,
         "proposerFromDGF": "eth:0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "proxyAdmin": "eth:0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1251,7 +1245,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640074",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640083",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2315,8 +2309,8 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 25988599 },
-  "permissionsConfigHash": "0x48bb9ebf7bc97a4a31988e9f57df8689b2ec09bb6119666228d339dabd6d869b",
+  "usedBlockNumbers": { "ethereum": 26430624 },
+  "permissionsConfigHash": "0x82d27f0401d126626b05942d4670eafec172fdb1f58179d171a5f861ce519f92",
   "permissions": {
     "eth:0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd": {
       "receivedPermissions": [

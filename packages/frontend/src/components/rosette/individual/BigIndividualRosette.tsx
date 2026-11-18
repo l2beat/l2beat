@@ -104,13 +104,13 @@ function RosetteTooltipContent() {
       className="flex w-[300px] flex-col gap-2"
     >
       <div className="flex flex-col gap-1">
-        <span className="text-[#787E8D] text-[13px] uppercase">
+        <span className="text-subtitle-11 uppercase">
           {context.content?.outerProjectName}
         </span>
         <ProjectRiskTooltipContent risk={content.outer} variant="rosette" />
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-[#787E8D] text-[13px] uppercase">
+        <span className="text-subtitle-11 uppercase">
           {context.content?.innerProjectName}
         </span>
         <ProjectRiskTooltipContent risk={content.inner} variant="rosette" />

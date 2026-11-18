@@ -16,7 +16,7 @@ The tokens follow [ERC-7984](https://eips.ethereum.org/EIPS/eip-7984) and use fu
 
 ### App
 
-Before every write, the app checks the address with Zama's screening service, which refuses fresh addresses. A client built on Zama's open SDK needs a Zama [API key](https://docs.zama.org/protocol/sdk/guides/relayer-api-keys) or a [self-run relayer](https://github.com/zama-ai/fhevm/blob/4bf50a083e65f0a53997292ca5848010faf98b79/relayer/docs/SELF_HOSTING.md). The vault deposit form shares the user's vault balance with Merkl for extra rewards, [on by default, opt-out available](https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim).
+Before every write, the app checks the address with Zama's screening service, which refuses fresh addresses. A client built on Zama's open SDK, such as its [example app](https://github.com/zama-ai/sdk/tree/c908f7709007fd501fa0afb50c43bbeabbc96266/examples/react-wagmi), needs a Zama [API key](https://docs.zama.org/protocol/sdk/guides/relayer-api-keys) or a [self-run relayer](https://github.com/zama-ai/fhevm/blob/4bf50a083e65f0a53997292ca5848010faf98b79/relayer/docs/SELF_HOSTING.md). A self-run relayer's wallet signs and pays for every request, which publicly links the accounts it serves. The vault deposit form shares the user's vault balance with Merkl for extra rewards, [on by default, opt-out available](https://www.zama.org/post/confidential-rewards-with-merkl-are-now-available-to-claim).
 
 ### Yield vaults
 
@@ -36,7 +36,7 @@ The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainn
 
 ### Compliance
 
-Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. Today no token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
+Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. No token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
 
 ### Fees
 

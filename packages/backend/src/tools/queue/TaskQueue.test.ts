@@ -250,13 +250,22 @@ describe(TaskQueue.name, () => {
     queue.addToBack(3)
     queue.addToBack(5)
     queue.addToBack(1)
-    queue.addToBack(2)
+    queue.addToBack(15)
+
+    let emptied = false
+    const empty = queue.waitTillEmpty().then(() => {
+      emptied = true
+    })
+
+    // At the 100ms poll nothing is queued, but the 150ms task is still running
+    await time.tickAsync(120)
+    expect(emptied).toEqual(false)
 
     await time.runAllAsync()
+    await empty
 
-    await queue.waitTillEmpty()
-
-    expect(queue.length).toEqual(0)
+    expect(emptied).toEqual(true)
+    expect(completed).toEqualUnsorted([1, 1, 3, 5, 15])
   })
 
   it('wakes up for the earliest retry', async () => {

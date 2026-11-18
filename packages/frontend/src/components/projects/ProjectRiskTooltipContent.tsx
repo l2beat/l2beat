@@ -60,7 +60,7 @@ const standaloneDescriptionVariants = cva('text-primary', {
   },
 })
 
-const warningVariants = cva('px-3 py-2', {
+const warningVariants = cva('', {
   variants: {
     variant: {
       table: 'mt-2',
@@ -94,6 +94,7 @@ export function ProjectRiskTooltipContent({ risk, variant }: Props) {
         />
         {risk.warning && (
           <WarningBar
+            compact
             className={warningVariants({ variant })}
             icon={RoundedWarningIcon}
             text={risk.warning.value}
@@ -113,6 +114,7 @@ export function ProjectRiskTooltipContent({ risk, variant }: Props) {
       />
       {risk.warning && (
         <WarningBar
+          compact
           className={warningVariants({ variant })}
           icon={RoundedWarningIcon}
           text={risk.warning.value}

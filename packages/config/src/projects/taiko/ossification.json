@@ -1255,7 +1255,7 @@
       "reason": "The timelock granted proposer, executor and canceller to the EOA 0xF616…d412, so one signer can again add and remove RISC Zero verifier routes. The 2/5 Safe renounced its roles on 2026-10-22."
     },
     {
-      "timestamp": 1793127383,
+      "timestamp": 1793115083,
       "type": "state",
       "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
       "updateId": "cf2226a4",

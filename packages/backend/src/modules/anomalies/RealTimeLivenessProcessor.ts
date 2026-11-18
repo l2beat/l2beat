@@ -472,7 +472,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     })
   }
 
-  async deleteForArchivedProjects() {
+  private async deleteForArchivedProjects() {
     const archivedProjectIds = this.trackedTxsConfig.projects
       .filter((project) => project.isArchived)
       .map((project) => project.id.toString())

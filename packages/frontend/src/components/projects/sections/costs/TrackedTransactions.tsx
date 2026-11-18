@@ -160,7 +160,7 @@ function TransactionDetails({
                 </TooltipTrigger>
                 <TooltipContent>
                   Tracked function calls are those ones with first parameter in
-                  calldata equal to {transaction.params.firstParameter}
+                  calldata equal to {transaction.params.firstParameter}.
                 </TooltipContent>
               </Tooltip>
             )}

@@ -144,8 +144,7 @@ export class HyperlaneMerklyTokenBridgePlugin
       const senderAddress = input.log.address.toLowerCase()
       const messageId = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (txLog, index) => {
           const dispatch = parseDispatch(txLog, null)
           if (!dispatch) return

@@ -194,6 +194,8 @@ The activity feature is configured via the following environment variables:
 **Feature flags:**
 
 - `activity` - enables activity feature
+- `activity.live` - stores the blocks at the heads of EVM chains as they come, for live views. On whenever
+  `activity` is, unless `!activity.live` is set. `activity.live.<project>` turns it on or off for one project
 
 ### `da.liveBlobs` feature
 
