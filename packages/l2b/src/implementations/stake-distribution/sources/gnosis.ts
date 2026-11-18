@@ -25,9 +25,12 @@ export async function fetchGnosisValidators(): Promise<StakingDataset> {
     throw new Error('Gnosis Analytics response is empty')
   }
   if (validatorSnapshot.as_of_date !== stakeSnapshot.as_of_date) {
-    throw new Error(
-      `Gnosis Analytics snapshots are not aligned: ${validatorSnapshot.as_of_date} and ${stakeSnapshot.as_of_date}`,
-    )
+    throw new Error('Gnosis Analytics snapshots are not aligned', {
+      cause: {
+        validatorSnapshotDate: validatorSnapshot.as_of_date,
+        stakeSnapshotDate: stakeSnapshot.as_of_date,
+      },
+    })
   }
 
   return {

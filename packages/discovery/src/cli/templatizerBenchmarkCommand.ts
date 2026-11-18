@@ -170,7 +170,7 @@ function parseSuiteName(value: string): SuiteName {
   if (value === 'quick' || value === 'full') {
     return value
   }
-  throw new Error(`--suite must be quick or full, got ${value}`)
+  throw new Error('--suite must be quick or full', { cause: { value } })
 }
 
 function splitList(values: readonly string[]): string[] {

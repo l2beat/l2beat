@@ -99,7 +99,10 @@ function addressFiles(
     const chainId = chains[entry.chain]
     if (chainId === undefined) {
       throw new Error(
-        `Chain ${entry.chain} has no chain id, but ${entry.address} is reviewed`,
+        'Chain has no chain id, but a reviewed address is on it',
+        {
+          cause: { chain: entry.chain, address: entry.address },
+        },
       )
     }
     const address = entry.address.toLowerCase()

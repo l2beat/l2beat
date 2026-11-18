@@ -394,7 +394,9 @@ export function TokenRelationsGraph({
       zoomToNodeRef.current = (nodeId) => {
         const node = scene.nodeById.get(nodeId)
         if (node === undefined) {
-          throw new Error(`Cannot zoom to missing graph node ${nodeId}`)
+          throw new Error('Cannot zoom to missing graph node', {
+            cause: { nodeId },
+          })
         }
         // Center within the part of the viewport the details panel leaves
         // visible — selecting a search result always opens the panel.

@@ -120,6 +120,7 @@ describe('getProjects', () => {
       const path = findNonSerializable(project, [])
       if (path) {
         throw new Error(
+          // biome-ignore lint/plugin/staticErrorMessage: mocha prints only the message of a failed test and drops cause, and the project id and path are what the reader needs
           `Project ${project.id} cannot be serialized. Path: ${path.join('.')}`,
         )
       }

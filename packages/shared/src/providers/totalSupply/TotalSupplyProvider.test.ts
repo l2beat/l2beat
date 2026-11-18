@@ -229,9 +229,12 @@ describe(TotalSupplyProvider.name, () => {
         Logger.SILENT,
       )
 
-      await expect(
-        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith(`Missing RpcClient for ${CHAIN}`)
+      const error = await totalSupplyProvider
+        .getTotalSupplies(TOKENS, BLOCK, CHAIN)
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Missing RpcClient')
+      expect((error as Error).cause).toEqual({ chain: CHAIN })
     })
   })
 })

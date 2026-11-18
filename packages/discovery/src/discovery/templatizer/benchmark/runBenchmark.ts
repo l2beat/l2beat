@@ -114,7 +114,8 @@ class BenchmarkRun {
       const missing = missingFromSuite(project, suiteProject)
       if (missing.length > 0) {
         throw new Error(
-          `The suite lists ${missing.join(', ')} for ${suiteProject.name}, which its committed discovered.json does not hold as a verified contract with a template; update suite.json`,
+          'The suite lists contracts that the committed discovered.json does not hold as a verified contract with a template; update suite.json',
+          { cause: { project: suiteProject.name, missing } },
         )
       }
       report.blockNumber = project.blockNumber
@@ -154,7 +155,16 @@ class BenchmarkRun {
     const provider = await this.deps.providerFor(project)
     if (provider.blockNumber !== project.blockNumber) {
       throw new Error(
-        `The ${project.chain} provider at the committed timestamp ${project.timestamp} is at block ${provider.blockNumber}, but ${project.name}/discovered.json was read at block ${project.blockNumber}`,
+        'The provider at the committed timestamp is at a different block than the one discovered.json was read at',
+        {
+          cause: {
+            project: project.name,
+            chain: project.chain,
+            timestamp: project.timestamp,
+            providerBlockNumber: provider.blockNumber,
+            discoveredBlockNumber: project.blockNumber,
+          },
+        },
       )
     }
     return provider

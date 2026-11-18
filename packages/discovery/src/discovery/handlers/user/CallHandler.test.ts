@@ -184,7 +184,7 @@ describe(CallHandler.name, () => {
             'function someName(uint256 i) view returns (uint256)',
             'function someName(uint256 a, uint256 b) view returns (uint256)',
           ]),
-      ).toThrow('Cannot find a matching method for someName')
+      ).toThrow('Cannot find a matching method')
     })
 
     it('finds the method by method name', () => {
@@ -222,7 +222,7 @@ describe(CallHandler.name, () => {
               'function bar(uint256 a, uint256 b) view returns (uint256)',
             ],
           ),
-      ).toThrow('Cannot find a matching method for bar')
+      ).toThrow('Cannot find a matching method')
     })
   })
 

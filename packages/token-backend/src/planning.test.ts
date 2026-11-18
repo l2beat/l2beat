@@ -899,6 +899,8 @@ function assertSuccess<T>(
   result: { outcome: 'success'; plan: T } | { outcome: 'error'; error: string },
 ): asserts result is { outcome: 'success'; plan: T } {
   if (result.outcome !== 'success') {
-    throw new Error(`Expected success, got error: ${result.error}`)
+    throw new Error('Expected success, got error', {
+      cause: { error: result.error },
+    })
   }
 }

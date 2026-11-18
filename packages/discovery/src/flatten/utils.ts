@@ -237,9 +237,9 @@ function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
   const linesLineCount = lines.length
 
   if (inputLineCount !== linesLineCount) {
-    throw new Error(
-      `Line count mismatch: ${inputLineCount} vs ${linesLineCount}`,
-    )
+    throw new Error('Line count mismatch', {
+      cause: { inputLineCount, linesLineCount },
+    })
   }
 }
 

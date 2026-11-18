@@ -16,7 +16,9 @@ export function decodePacked(
   chainId?: number,
 ): DecodedValue {
   if (!/^0x[\da-f]*$/i.test(encoded)) {
-    throw new Error(`Invalid ${schema.name} encoding`)
+    throw new Error('Invalid packed encoding', {
+      cause: { schemaName: schema.name },
+    })
   }
 
   const fields = schema.fields.map((field) => ({
@@ -27,9 +29,9 @@ export function decodePacked(
   const actualLength = (encoded.length - 2) / 2
 
   if (!Number.isInteger(actualLength) || actualLength !== expectedLength) {
-    throw new Error(
-      `Invalid ${schema.name} length: expected ${expectedLength}, got ${actualLength}`,
-    )
+    throw new Error('Invalid packed length', {
+      cause: { schemaName: schema.name, expectedLength, actualLength },
+    })
   }
 
   let offset = 0
@@ -88,7 +90,7 @@ function decodePackedField(
     return { ...common, type: 'number', value: value.toString() }
   }
 
-  throw new Error(`Unsupported packed type: ${type}`)
+  throw new Error('Unsupported packed type', { cause: { type } })
 }
 
 function packedTypeSize(type: string): number {
@@ -99,15 +101,15 @@ function packedTypeSize(type: string): number {
   if (bytes) {
     const size = Number(bytes[1])
     if (size >= 1 && size <= 32) return size
-    throw new Error(`Invalid packed type: ${type}`)
+    throw new Error('Invalid packed type', { cause: { type } })
   }
 
   const integer = /^(?:u?int)(\d*)$/.exec(type)
   if (integer) {
     const bits = integer[1] === '' ? 256 : Number(integer[1])
     if (bits >= 8 && bits <= 256 && bits % 8 === 0) return bits / 8
-    throw new Error(`Invalid packed type: ${type}`)
+    throw new Error('Invalid packed type', { cause: { type } })
   }
 
-  throw new Error(`Unsupported packed type: ${type}`)
+  throw new Error('Unsupported packed type', { cause: { type } })
 }

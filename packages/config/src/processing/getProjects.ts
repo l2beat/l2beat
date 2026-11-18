@@ -305,7 +305,8 @@ function getType(p: ScalingProject): ProjectScalingCategory | undefined {
 
   if (typesPerDA.size > 1) {
     throw new Error(
-      `Multiple DAs assigned to project ${p.id} lead to different scaling types. Update the logic to support this case.`,
+      'Multiple DAs assigned to a project lead to different scaling types. Update the logic to support this case.',
+      { cause: { projectId: p.id } },
     )
   }
   return Array.from(typesPerDA)[0]
@@ -491,9 +492,13 @@ function getTvsConfig(project: { id: ProjectId }): TvsToken[] | undefined {
   )
 
   if (!result.success) {
-    throw new Error(
-      `Invalid TVS config for project ${project.id}: ${result.path} : ${result.message}`,
-    )
+    throw new Error('Invalid TVS config', {
+      cause: {
+        projectId: project.id,
+        path: result.path,
+        message: result.message,
+      },
+    })
   }
 
   return result.data.tokens

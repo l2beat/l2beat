@@ -66,9 +66,9 @@ async function getJson(baseUrl: string, path: string): Promise<unknown> {
   })
   const body = await response.text()
   if (response.status !== 200) {
-    throw new Error(
-      `${path} -> HTTP ${response.status}\n${body.slice(0, 1500)}`,
-    )
+    throw new Error('Request failed', {
+      cause: { path, status: response.status, body: body.slice(0, 1500) },
+    })
   }
   return JSON.parse(body)
 }

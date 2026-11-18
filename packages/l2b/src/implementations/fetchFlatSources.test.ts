@@ -55,9 +55,21 @@ describe(syncFlatSources.name, () => {
       entry('a', { 'A.sol': 'new a' }),
     ])
 
-    await expect(
-      syncFlatSources(quietCli(), url, discoveryPath, undefined),
-    ).toBeRejectedWith('Flat sources response ended after 1 of 2 projects')
+    const error = await syncFlatSources(
+      quietCli(),
+      url,
+      discoveryPath,
+      undefined,
+    ).catch((e: unknown) => e)
+
+    expect(error).toBeA(Error)
+    expect((error as Error).message).toEqual(
+      'Flat sources response ended early',
+    )
+    expect((error as Error).cause).toEqual({
+      receivedProjectCount: 1,
+      projectCount: 2,
+    })
 
     expect(readTree('a')).toEqual({ 'Old.sol': 'old' })
     expect(readdirSync(path.join(discoveryPath, 'a'))).toEqual(['.flat'])

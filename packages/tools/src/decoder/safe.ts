@@ -75,7 +75,9 @@ export function calculateSafeHashes(input: {
   // These releases use the same SafeTx schema. Older releases omit chainId.
   const legacy = ['1.1.1', '1.2.0'].includes(input.version)
   if (!legacy && !['1.3.0', '1.4.1'].includes(input.version)) {
-    throw new Error(`Safe version ${input.version} is not supported.`)
+    throw new Error('Safe version is not supported', {
+      cause: { version: input.version },
+    })
   }
   const domainHash = hashStruct({
     primaryType: 'EIP712Domain',

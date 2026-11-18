@@ -116,7 +116,9 @@ export class CoingeckoQueryService {
         context,
       )
       // this prefix makes callers skip the configuration instead of halting
-      throw new Error(`Insufficient data in response for ${coingeckoId}`)
+      throw new Error('Insufficient data in response', {
+        cause: { coingeckoId },
+      })
     }
 
     this.logger.error(
@@ -233,7 +235,9 @@ export class CoingeckoQueryService {
         marketCaps: marketCaps.length,
       })
 
-      throw new Error(`Insufficient data in response for ${coingeckoId}`)
+      throw new Error('Insufficient data in response', {
+        cause: { coingeckoId },
+      })
     }
   }
 

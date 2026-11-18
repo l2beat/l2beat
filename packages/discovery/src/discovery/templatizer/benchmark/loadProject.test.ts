@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
+import { thrownBy } from '../../../utils/thrownBy'
 import type { EntryParameters } from '../../output/types'
 import {
   loadProject,
@@ -112,9 +113,12 @@ describe(selectSuiteProjects.name, () => {
     expect(
       selectSuiteProjects(suite, ['plumenetwork', 'scroll']).map((p) => p.name),
     ).toEqual(['plumenetwork', 'scroll'])
-    expect(() => selectSuiteProjects(suite, ['arbitrum'])).toThrow(
-      'arbitrum is not in the suite (suite: scroll, base, plumenetwork)',
-    )
+    const error = thrownBy(() => selectSuiteProjects(suite, ['arbitrum']))
+    expect(error.message).toEqual('Project is not in the suite')
+    expect(error.cause).toEqual({
+      project: 'arbitrum',
+      suite: ['scroll', 'base', 'plumenetwork'],
+    })
   })
 })
 
@@ -147,9 +151,9 @@ describe(quickSuiteProjects.name, () => {
     expect(
       quickSuiteProjects(suite, ['scroll', 'zora']).map((p) => p.name),
     ).toEqual(['scroll', 'zora'])
-    expect(() => quickSuiteProjects(suite, ['arbitrum'])).toThrow(
-      'arbitrum is not in the quick suite',
-    )
+    const error = thrownBy(() => quickSuiteProjects(suite, ['arbitrum']))
+    expect(error.message).toEqual('Project is not in the quick suite')
+    expect((error.cause as { project: string }).project).toEqual('arbitrum')
   })
 
   it('collects the unreachable fields by template, for every contract of it in either suite', () => {
@@ -249,8 +253,16 @@ describe(loadProject.name, () => {
   })
 
   it('refuses a chain the committed discovery was not read on', () => {
-    expect(() => loadProject(root, { name: 'proj', chain: 'base' })).toThrow(
-      'proj/discovered.json has no usedBlockNumbers entry for base (has: ethereum, scroll)',
+    const error = thrownBy(() =>
+      loadProject(root, { name: 'proj', chain: 'base' }),
     )
+    expect(error.message).toEqual(
+      'discovered.json has no usedBlockNumbers entry for chain',
+    )
+    expect(error.cause).toEqual({
+      project: 'proj',
+      chain: 'base',
+      chainsWithEntry: ['ethereum', 'scroll'],
+    })
   })
 })

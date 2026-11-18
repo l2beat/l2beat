@@ -179,7 +179,9 @@ async function verifyTarget(
 
 function assertPositiveInteger(value: number, name: string): void {
   if (!Number.isInteger(value) || value < 1) {
-    throw new Error(`${name} must be a positive integer`)
+    throw new Error('Option must be a positive integer', {
+      cause: { name, value },
+    })
   }
 }
 

@@ -258,7 +258,9 @@ function mockIndexer($: {
     getBlockTimestamp: mockFn(async (_: string, blockNumber: number) => {
       const timestamp = $.blockTimestamps?.[blockNumber]
       if (timestamp === undefined) {
-        throw new Error(`No timestamp mocked for block ${blockNumber}`)
+        throw new Error('No timestamp mocked for block', {
+          cause: { blockNumber },
+        })
       }
       return UnixTime(timestamp)
     }),

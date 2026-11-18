@@ -96,7 +96,9 @@ export class ArbitrumActorsHandler implements Handler {
           const address = addresses[i]
           const flag = flags[i]
           if (address === undefined || flag === undefined) {
-            throw new Error(`Invalid input to ${this.setValidatorFn}`)
+            throw new Error('Invalid input to the setValidator function', {
+              cause: { setValidatorFn: this.setValidatorFn },
+            })
           }
           isValidator[address] = flag
         }

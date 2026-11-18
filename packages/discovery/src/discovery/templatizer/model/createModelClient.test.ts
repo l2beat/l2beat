@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { rejectedBy } from '../../../utils/thrownBy'
 import { CodexClient } from './CodexClient'
 import { chooseModel, describeModel } from './createModelClient'
 import { OpenCodeClient } from './OpenCodeClient'
@@ -62,19 +63,28 @@ describe(chooseModel.name, () => {
       'opencode-go/qwen3.8-flash': ['low', 'medium', 'xhigh'],
     })
 
-    await expect(
+    const asked = await rejectedBy(
       chooseModel(
         { model: 'opencode-go/deepseek-v4.1-flash', effort: 'medium' },
         levelsOf,
       ),
-    ).toBeRejectedWith(
-      'opencode-go/deepseek-v4.1-flash has no medium effort; pass --ai-effort with one of low, high, max',
     )
-    await expect(
+    expect(asked.message).toEqual(
+      'The model does not offer that effort; pass --ai-effort with one of its levels',
+    )
+    expect(asked.cause).toEqual({
+      model: 'opencode-go/deepseek-v4.1-flash',
+      effort: 'medium effort',
+      levels: ['low', 'high', 'max'],
+    })
+    const byDefault = await rejectedBy(
       chooseModel({ model: 'opencode-go/qwen3.8-flash' }, levelsOf),
-    ).toBeRejectedWith(
-      'opencode-go/qwen3.8-flash has no high effort, the default; pass --ai-effort with one of low, medium, xhigh',
     )
+    expect(byDefault.cause).toEqual({
+      model: 'opencode-go/qwen3.8-flash',
+      effort: 'high effort, the default',
+      levels: ['low', 'medium', 'xhigh'],
+    })
   })
 
   it('runs a model without effort levels as it is, unless an effort was asked for', async () => {
@@ -93,20 +103,27 @@ describe(chooseModel.name, () => {
       label: 'opencode-go/kimi-k2.7-code',
       effort: undefined,
     })
-    await expect(
+    const error = await rejectedBy(
       chooseModel(
         { model: 'opencode-go/kimi-k2.7-code', effort: 'high' },
         levelsOf,
       ),
-    ).toBeRejectedWith('opencode-go/kimi-k2.7-code has no effort levels')
+    )
+    expect(error.message).toEqual(
+      'The model has no effort levels; leave --ai-effort out to run it',
+    )
+    expect(error.cause).toEqual({ model: 'opencode-go/kimi-k2.7-code' })
   })
 
   it('refuses a model opencode does not list', async () => {
-    await expect(
+    const error = await rejectedBy(
       chooseModel({ model: 'opencode-go/deepsek-v4.1-flash' }, listing({})),
-    ).toBeRejectedWith(
-      'opencode lists no model opencode-go/deepsek-v4.1-flash; `opencode models opencode-go` shows the ones there are',
     )
+    expect(error.message).toEqual('opencode lists no such model')
+    expect(error.cause).toEqual({
+      model: 'opencode-go/deepsek-v4.1-flash',
+      listModelsCommand: 'opencode models opencode-go',
+    })
   })
 
   it('sends any other model to codex, at high effort by default, a provider/model name of no opencode gateway included', async () => {
@@ -138,9 +155,14 @@ describe(chooseModel.name, () => {
     expect((await chooseModel({}, noOpenCode)).client).toEqual(
       new CodexClient({ model: undefined, reasoningEffort: 'high' }),
     )
-    await expect(
+    const error = await rejectedBy(
       chooseModel({ effort: 'extreme' }, noOpenCode),
-    ).toBeRejectedWith('Codex takes --ai-effort none, minimal, low')
+    )
+    expect(error.message).toEqual('Codex does not take that --ai-effort')
+    expect(error.cause).toEqual({
+      effort: 'extreme',
+      accepted: ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'],
+    })
   })
 
   describe(describeModel.name, () => {

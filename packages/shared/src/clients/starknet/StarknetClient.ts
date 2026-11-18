@@ -60,7 +60,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
     const blockResponse = StarknetGetBlockWithTxsResponse.safeParse(response)
 
     if (!blockResponse.success) {
-      throw new Error(`Block ${blockNumber}: Error during parsing`)
+      throw new Error('Block: Error during parsing', { cause: { blockNumber } })
     }
 
     // Paradex bug workaround: Paradex returns empty/malformed transactions
@@ -69,7 +69,9 @@ export class StarknetClient extends ClientCore implements BlockClient {
     const validTransactions = blockResponse.data.result.transactions.filter(
       (t): t is StarknetTransaction & { transaction_hash: string } => {
         if (!t.transaction_hash && this.$.sourceName !== 'paradex') {
-          throw new Error(`Block ${blockNumber}: Missing transaction hash`)
+          throw new Error('Block: Missing transaction hash', {
+            cause: { blockNumber },
+          })
         }
         return !!t.transaction_hash
       },

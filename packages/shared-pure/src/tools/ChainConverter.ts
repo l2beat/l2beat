@@ -14,7 +14,7 @@ export class ChainConverter {
   toChainId(name: string): number {
     const id = this.nameToId.get(name)
     if (!id) {
-      throw new Error(`Unknown chain name: ${name}`)
+      throw new Error('Unknown chain name', { cause: { name } })
     }
     return id
   }
@@ -25,7 +25,7 @@ export class ChainConverter {
     }
     const name = this.idToName.get(id)
     if (!name) {
-      throw new Error(`Unknown chain id: ${id.valueOf()}`)
+      throw new Error('Unknown chain id', { cause: { id } })
     }
     return name
   }

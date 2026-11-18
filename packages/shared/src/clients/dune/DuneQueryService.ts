@@ -52,9 +52,9 @@ export class DuneQueryService {
           executionId: execution_id,
           timeoutMs: this.timeoutMs,
         })
-        throw new Error(
-          `Query timeout: execution exceeded ${this.timeoutMs}ms (${Math.round(this.timeoutMs / 1000)}s)`,
-        )
+        throw new Error('Query timeout: execution exceeded the limit', {
+          cause: { executionId: execution_id, timeoutMs: this.timeoutMs },
+        })
       }
 
       let status
@@ -65,9 +65,9 @@ export class DuneQueryService {
           executionId: execution_id,
           error: error instanceof Error ? error.message : String(error),
         })
-        throw new Error(
-          `Failed to get execution status after ${Math.round(elapsedMs / 1000)}s: ${error instanceof Error ? error.message : String(error)}`,
-        )
+        throw new Error('Failed to get execution status', {
+          cause: { executionId: execution_id, elapsedMs, error },
+        })
       }
 
       switch (status.state) {
@@ -118,7 +118,9 @@ export class DuneQueryService {
             state: status.state,
             elapsedMs,
           })
-          throw new Error(`Query failed: ${status.state}`)
+          throw new Error('Query failed', {
+            cause: { executionId: status.execution_id, state: status.state },
+          })
         }
       }
       lastState = status.state

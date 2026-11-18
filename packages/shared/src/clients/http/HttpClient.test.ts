@@ -19,7 +19,7 @@ describe(HttpClient.name, () => {
         (_, res) => res.writeHead(404).end(),
         async (url) =>
           expect(async () => await http.fetch(url, {})).toBeRejectedWith(
-            'HTTP error: 404 Not Found',
+            'HTTP error',
           ),
       )
     })
@@ -35,6 +35,7 @@ describe(HttpClient.name, () => {
           expect((error as Error).cause).toEqual({
             url: `${url}/feed?key=REDACTED`,
             status: 404,
+            statusText: 'Not Found',
           })
         },
       )

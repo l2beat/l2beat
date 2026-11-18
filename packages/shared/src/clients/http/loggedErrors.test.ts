@@ -56,9 +56,9 @@ describe('logged errors', () => {
   })
 
   it('redact a key in the query string of a third-party error', () => {
-    const error = new Error(
-      `processing response error (body="", requestMethod="POST", url="https://rpc.example.com/?apikey=${QUERY_KEY}", code=SERVER_ERROR, version=web/5.7.1)`,
-    )
+    // A third-party library builds this message, so it is not ours to make static
+    const thirdPartyMessage = `processing response error (body="", requestMethod="POST", url="https://rpc.example.com/?apikey=${QUERY_KEY}", code=SERVER_ERROR, version=web/5.7.1)`
+    const error = new Error(thirdPartyMessage)
 
     expectRedacted(
       logError(error),

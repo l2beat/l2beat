@@ -96,7 +96,8 @@ function field(name: string): Field {
 
 function entry(tree: ExpandedField[], property: string): ExpandedField {
   const found = tree.find((entry) => entry.property === property)
-  if (found === undefined) throw new Error(`No tree entry ${property}`)
+  if (found === undefined)
+    throw new Error('No tree entry', { cause: { property } })
   return found
 }
 

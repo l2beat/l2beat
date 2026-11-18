@@ -99,6 +99,11 @@ export class BlockProvider {
       }
     }
 
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+    throw new Error('Missing RPC URL', {
+      cause: {
+        chain: this.chain,
+        envVariable: `${this.chain.toUpperCase()}_RPC_URL`,
+      },
+    })
   }
 }

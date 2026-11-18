@@ -82,6 +82,8 @@ export class AztecBlockProvider {
       }
     }
 
-    throw new Error(`Missing Aztec RPC client for ${this.chain}`)
+    throw new Error('Missing Aztec RPC client', {
+      cause: { chain: this.chain },
+    })
   }
 }

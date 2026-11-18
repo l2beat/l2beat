@@ -250,9 +250,9 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     )
     const chain = L2Inboxes[targetInbox.toString()]
     if (chain === undefined) {
-      throw new Error(
-        `Unknown inbox address ${targetInbox.toString()} for L2 call`,
-      )
+      throw new Error('Unknown inbox address for L2 call', {
+        cause: { targetInbox: targetInbox.toString() },
+      })
     }
     const l2Executor = ChainSpecificAddress.fromLong(
       provider.chain,
@@ -285,9 +285,9 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
 
     const chain = L2Inboxes[targetInbox.toString()]
     if (chain === undefined) {
-      throw new Error(
-        `Unknown inbox address ${targetInbox.toString()} for L2 call`,
-      )
+      throw new Error('Unknown inbox address for L2 call', {
+        cause: { targetInbox: targetInbox.toString() },
+      })
     }
     const parsed = InboxInterface.parseTransaction({ data: inboxCalldata })
 

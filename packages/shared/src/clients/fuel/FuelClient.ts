@@ -103,7 +103,7 @@ export class FuelClient extends ClientCore implements BlockClient {
     const blockResponse = FuelBlockResponse.safeParse(response)
 
     if (!blockResponse.success) {
-      throw new Error(`Block ${blockNumber}: Error during parsing`)
+      throw new Error('Block: Error during parsing', { cause: { blockNumber } })
     }
 
     return {

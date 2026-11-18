@@ -95,7 +95,7 @@ describe(L2CostsUpdater.name, () => {
       )
 
       await expect(updater.update(transactions)).toBeRejectedWith(
-        'Blob base fee not found for block 2',
+        'Blob base fee not found for block',
       )
     })
   })
@@ -158,7 +158,7 @@ describe(L2CostsUpdater.name, () => {
       const blobBaseFeeByBlock = new Map<number, bigint>()
 
       expect(() => updater.transform(transactions, blobBaseFeeByBlock)).toThrow(
-        'Blob base fee not found for block 2',
+        'Blob base fee not found for block',
       )
     })
 

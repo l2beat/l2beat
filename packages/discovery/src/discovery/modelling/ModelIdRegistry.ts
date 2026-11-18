@@ -36,7 +36,9 @@ export class ModelIdRegistry {
       const value = String(fact.params[1])
       const data = this.dataById[modelId]
       if (data === undefined) {
-        throw new Error(`No address data found for modelId ${modelId}`)
+        throw new Error('No address data found for modelId', {
+          cause: { modelId },
+        })
       }
       data[field] = value
     }
@@ -58,7 +60,9 @@ export class ModelIdRegistry {
   getAddressData(modelId: string): AddressData {
     const data = this.getAddressDataOrUndefined(modelId)
     if (data === undefined) {
-      throw new Error(`No address data found for modelId ${modelId}`)
+      throw new Error('No address data found for modelId', {
+        cause: { modelId },
+      })
     }
     return data
   }

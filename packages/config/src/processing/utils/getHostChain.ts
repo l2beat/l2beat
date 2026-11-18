@@ -7,7 +7,7 @@ export function getHostChain(id: ProjectId) {
   }
   const host = layer2s.find((x) => x.id === id)
   if (!host) {
-    throw new Error(`Invalid host chain: ${host}`)
+    throw new Error('Invalid host chain', { cause: { id } })
   }
   return {
     id,

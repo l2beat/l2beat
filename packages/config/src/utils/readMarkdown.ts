@@ -19,7 +19,7 @@ export function readMarkdown(
 ): string {
   const filePath = join(SRC_DIR, pathFromSrc)
   if (!existsSync(filePath)) {
-    throw new Error(`Markdown file not found: ${filePath}`)
+    throw new Error('Markdown file not found', { cause: { filePath } })
   }
   const content = readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n').trim()
   const used = new Set<string>()
@@ -27,17 +27,17 @@ export function readMarkdown(
     used.add(name)
     const value = vars?.[name]
     if (value === undefined) {
-      throw new Error(
-        `Missing template variable {{${name}}} for ${pathFromSrc}`,
-      )
+      throw new Error('Missing template variable', {
+        cause: { name, pathFromSrc },
+      })
     }
     return String(value)
   })
   const unused = Object.keys(vars ?? {}).filter((name) => !used.has(name))
   if (unused.length > 0) {
-    throw new Error(
-      `Unused template variables for ${pathFromSrc}: ${unused.join(', ')}`,
-    )
+    throw new Error('Unused template variables', {
+      cause: { pathFromSrc, unused },
+    })
   }
   return result
 }

@@ -94,7 +94,8 @@ function mockConfigReader(discoveries: DiscoveryOutput[]): ConfigReader {
     readAllDiscoveredProjects: () => discoveries.map((x) => x.name),
     readDiscovery: (name: string) => {
       const found = byName.get(name)
-      if (found === undefined) throw new Error(`Unknown project ${name}`)
+      if (found === undefined)
+        throw new Error('Unknown project', { cause: { name } })
       return found
     },
   })

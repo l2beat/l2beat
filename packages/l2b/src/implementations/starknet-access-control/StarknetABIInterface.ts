@@ -24,7 +24,7 @@ export class StarknetABIInterface {
     const hash = event.keys[0]
     const entry = this.map.get(hash)
     if (entry === undefined) {
-      throw new Error(`Unknown event ${hash}`)
+      throw new Error('Unknown event', { cause: { hash } })
     }
 
     const values: Record<string, string> = {}

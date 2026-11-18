@@ -15,9 +15,10 @@
  * a method or event exists, and what a handler does at the block, is the dry
  * run's to report.
  */
-import { getErrorMessage, parseJsonc } from '@l2beat/shared-pure'
+import { parseJsonc } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { ContractConfigSchema } from '../../../schemas/schemas'
+import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { StructureContract } from '../../config/StructureConfig'
 import {
   isPlainObject,

@@ -113,9 +113,9 @@ async function getTokenFrameworks(
     const project = projectsById.get(framework.projectId)
 
     if (!project) {
-      throw new Error(
-        `Token framework project not found: ${framework.projectId}`,
-      )
+      throw new Error('Token framework project not found', {
+        cause: { projectId: framework.projectId },
+      })
     }
 
     return {

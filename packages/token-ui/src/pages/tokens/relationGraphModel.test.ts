@@ -465,15 +465,24 @@ describe(getRelationGraphFocus.name, () => {
     const deletedRelation = relations[0]
     if (deletedRelation === undefined) throw new Error('Missing test relation')
 
-    expect(() =>
+    let error: unknown
+    try {
       getRelationGraphFocus(
         graph,
         { type: 'relation', id: relationId(deletedRelation) },
         new Set([relationId(deletedRelation)]),
-      ),
-    ).toThrow(
-      `Selected relation ${relationId(deletedRelation)} is not in graph`,
+      )
+    } catch (e) {
+      error = e
+    }
+
+    expect(error).toBeA(Error)
+    expect((error as Error).message).toEqual(
+      'Selected relation is not in graph',
     )
+    expect((error as Error).cause).toEqual({
+      relationId: relationId(deletedRelation),
+    })
   })
 })
 
@@ -484,7 +493,7 @@ function node(
 ): RelationGraphNode {
   const [chain, address] = id.split(':')
   if (chain === undefined || address === undefined) {
-    throw new Error(`Invalid test node id ${id}`)
+    throw new Error('Invalid test node id', { cause: { id } })
   }
   return {
     id,
@@ -500,7 +509,7 @@ function node(
 function missingNode(id: string): RelationGraphNode {
   const [chain, address] = id.split(':')
   if (chain === undefined || address === undefined) {
-    throw new Error(`Invalid test node id ${id}`)
+    throw new Error('Invalid test node id', { cause: { id } })
   }
   return {
     id,

@@ -113,9 +113,9 @@ async function fetchFlatSources(
     },
   )
   if (!response.ok) {
-    throw new Error(
-      `Fetching flat sources failed: HTTP ${response.status} ${response.statusText}`,
-    )
+    throw new Error('Fetching flat sources failed', {
+      cause: { status: response.status, statusText: response.statusText },
+    })
   }
   assert(response.body !== null)
   const lines = readLines(response.body as ReadableStream<Uint8Array>)
@@ -175,17 +175,17 @@ async function* readProjects(
   for (let index = 0; index < projectCount; index++) {
     const line = await lines.next()
     if (line.done) {
-      throw new Error(
-        `Flat sources response ended after ${index} of ${projectCount} projects`,
-      )
+      throw new Error('Flat sources response ended early', {
+        cause: { receivedProjectCount: index, projectCount },
+      })
     }
     yield FlatSourcesApiEntry.parse(JSON.parse(line.value))
   }
   const end = await lines.next()
   if (!end.done) {
-    throw new Error(
-      `Flat sources response has more than ${projectCount} projects`,
-    )
+    throw new Error('Flat sources response has more projects than announced', {
+      cause: { projectCount },
+    })
   }
   onDone()
 }

@@ -89,7 +89,13 @@ export async function updateDiffHistoryForChain(
   // TODO(radomski): Use timestamp after the merge
   if ((discoveryFromMainBranch?.timestamp ?? 0) > curDiscovery.timestamp) {
     throw new Error(
-      `Main branch discovery timestamp (${discoveryFromMainBranch?.timestamp}) is higher than current discovery timestamp (${curDiscovery.timestamp})`,
+      'Main branch discovery timestamp is higher than current discovery timestamp',
+      {
+        cause: {
+          mainBranchTimestamp: discoveryFromMainBranch?.timestamp,
+          currentTimestamp: curDiscovery.timestamp,
+        },
+      },
     )
   }
 

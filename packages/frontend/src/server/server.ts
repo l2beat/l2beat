@@ -217,7 +217,9 @@ async function getTemplate(
   }
 
   if (!productionTemplate) {
-    throw new Error(`Missing production template at ${CLIENT_TEMPLATE_PATH}`)
+    throw new Error('Missing production template', {
+      cause: { path: CLIENT_TEMPLATE_PATH },
+    })
   }
 
   return productionTemplate

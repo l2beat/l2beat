@@ -95,7 +95,7 @@ export class CombiningEtherscanClient implements IEtherscanClient {
   ): Promise<T> {
     const result = await this.tryClients(fn)
     if (result === undefined) {
-      throw new Error(`No client could fetch ${label}`)
+      throw new Error('No client could fetch', { cause: { label } })
     }
     return result
   }

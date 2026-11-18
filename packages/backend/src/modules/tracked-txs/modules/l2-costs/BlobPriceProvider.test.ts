@@ -30,11 +30,18 @@ describe(BlobPriceProvider.name, () => {
       })
       const provider = createProvider(mockRpcClient)
 
-      await expect(
-        provider.getBlobPricesByBlockRange([100, 50]),
-      ).toBeRejectedWith(
-        'Invalid block range: oldestBlock (100) is greater than newestBlock (50)',
+      const error = await provider
+        .getBlobPricesByBlockRange([100, 50])
+        .catch((e: unknown) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual(
+        'Invalid block range: oldestBlock is greater than newestBlock',
       )
+      expect((error as Error).cause).toEqual({
+        oldestBlock: 100,
+        newestBlock: 50,
+      })
       expect(mockRpcClient.getFeeHistory).not.toHaveBeenCalled()
     })
 
@@ -237,11 +244,15 @@ describe(BlobPriceProvider.name, () => {
       })
       const provider = createProvider(mockRpcClient)
 
-      await expect(
-        provider.getBlobPricesByBlockRange([99, 1500]),
-      ).toBeRejectedWith(
-        'Blob price for block 100 was already set. This indicates overlapping ranges or duplicate processing.',
+      const error = await provider
+        .getBlobPricesByBlockRange([99, 1500])
+        .catch((e: unknown) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual(
+        'Blob price for block was already set, this indicates overlapping ranges or duplicate processing',
       )
+      expect((error as Error).cause).toEqual({ blockNumber: 100 })
     })
   })
 })

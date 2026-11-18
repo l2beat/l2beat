@@ -412,8 +412,13 @@ describe('validate', () => {
     it('should reject reserved schema keys', () => {
       const Foo = v.object({ x: v.number() })
       expect(() => Foo.meta({ anyOf: 'true' })).toThrow(
-        'Metadata key "anyOf" is reserved.',
+        'Metadata key is reserved',
       )
+      try {
+        Foo.meta({ anyOf: 'true' })
+      } catch (error) {
+        expect((error as Error).cause).toEqual({ key: 'anyOf' })
+      }
     })
   })
 })

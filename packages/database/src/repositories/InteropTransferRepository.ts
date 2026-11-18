@@ -220,9 +220,9 @@ export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
   if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
-    throw new Error(
-      `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.transferId}`,
-    )
+    throw new Error('Invalid interop transfer bridge type', {
+      cause: { bridgeType: row.bridgeType, transferId: row.transferId },
+    })
   }
 
   return {
@@ -473,9 +473,12 @@ export class InteropTransferRepository extends BaseRepository {
 
     return rows.map((row) => {
       if (row.bridgeType !== null && !isInteropBridgeType(row.bridgeType)) {
-        throw new Error(
-          `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.sampleTransferId}`,
-        )
+        throw new Error('Invalid interop transfer bridge type', {
+          cause: {
+            bridgeType: row.bridgeType,
+            transferId: row.sampleTransferId,
+          },
+        })
       }
 
       return {

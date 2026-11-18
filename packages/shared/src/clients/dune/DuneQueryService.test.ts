@@ -140,9 +140,15 @@ describe(DuneQueryService.name, () => {
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      await expect(
-        service.query('SELECT * FROM test', 'large', resultSchema),
-      ).toBeRejectedWith('Query failed: QUERY_STATE_FAILED')
+      const error = await service
+        .query('SELECT * FROM test', 'large', resultSchema)
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Query failed')
+      expect((error as Error).cause).toEqual({
+        executionId: 'exec-123',
+        state: 'QUERY_STATE_FAILED',
+      })
     })
 
     it('throws error when query is canceled', async () => {
@@ -169,9 +175,15 @@ describe(DuneQueryService.name, () => {
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      await expect(
-        service.query('SELECT * FROM test', 'large', resultSchema),
-      ).toBeRejectedWith('Query failed: QUERY_STATE_CANCELED')
+      const error = await service
+        .query('SELECT * FROM test', 'large', resultSchema)
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Query failed')
+      expect((error as Error).cause).toEqual({
+        executionId: 'exec-123',
+        state: 'QUERY_STATE_CANCELED',
+      })
     })
 
     it('throws error when query times out', async () => {
@@ -198,9 +210,15 @@ describe(DuneQueryService.name, () => {
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      await expect(
-        service.query('SELECT * FROM test', 'large', resultSchema),
-      ).toBeRejectedWith('Query failed: QUERY_STATE_TIMED_OUT')
+      const error = await service
+        .query('SELECT * FROM test', 'large', resultSchema)
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Query failed')
+      expect((error as Error).cause).toEqual({
+        executionId: 'exec-123',
+        state: 'QUERY_STATE_TIMED_OUT',
+      })
     })
 
     it('throws error when query completes partially', async () => {
@@ -227,9 +245,15 @@ describe(DuneQueryService.name, () => {
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      await expect(
-        service.query('SELECT * FROM test', 'large', resultSchema),
-      ).toBeRejectedWith('Query failed: QUERY_STATE_COMPLETED_PARTIAL')
+      const error = await service
+        .query('SELECT * FROM test', 'large', resultSchema)
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Query failed')
+      expect((error as Error).cause).toEqual({
+        executionId: 'exec-123',
+        state: 'QUERY_STATE_COMPLETED_PARTIAL',
+      })
     })
 
     it('throws error when getExecutionStatus fails', async () => {
@@ -277,7 +301,7 @@ describe(DuneQueryService.name, () => {
 
       await expect(
         service.query('SELECT * FROM test', 'large', resultSchema),
-      ).toBeRejectedWith(/Query timeout: execution exceeded/)
+      ).toBeRejectedWith('Query timeout: execution exceeded the limit')
     })
 
     it('parses result with schema', async () => {

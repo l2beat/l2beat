@@ -73,6 +73,7 @@ export const LogLevelValue: Type<string, LogLevel> = {
         resolve(str as LogLevel)
       } else {
         const allLogLevels = Object.keys(LEVEL).join(', ')
+        // biome-ignore lint/plugin/staticErrorMessage: cmd-ts shows only the message of a failed argument parse to the person at the terminal
         reject(new Error(`Undefined LogLevel provided, use ${allLogLevels}`))
       }
     })

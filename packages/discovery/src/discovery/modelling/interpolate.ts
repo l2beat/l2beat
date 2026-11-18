@@ -22,9 +22,9 @@ export function interpolateModelTemplate(
         if (orNil) {
           return 'nil'
         }
-        throw new Error(
-          `Field "${key}" not found in contract ${values['$.name']}`,
-        )
+        throw new Error('Field not found in contract', {
+          cause: { key, contractName: values['$.name'] },
+        })
       }
       if (Array.isArray(value)) {
         return `(${value

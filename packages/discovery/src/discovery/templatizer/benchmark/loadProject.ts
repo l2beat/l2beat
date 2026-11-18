@@ -89,8 +89,9 @@ export function quickSuiteProjects(
   return names.map((name) => {
     const project = projects.find((p) => p.name === name)
     if (project === undefined) {
-      const known = projects.map((p) => p.name).join(', ')
-      throw new Error(`${name} is not in the quick suite (suite: ${known})`)
+      throw new Error('Project is not in the quick suite', {
+        cause: { project: name, suite: projects.map((p) => p.name) },
+      })
     }
     return project
   })
@@ -127,8 +128,9 @@ export function selectSuiteProjects(
   return names.map((name) => {
     const project = suite.projects.find((p) => p.name === name)
     if (project === undefined) {
-      const known = suite.projects.map((p) => p.name).join(', ')
-      throw new Error(`${name} is not in the suite (suite: ${known})`)
+      throw new Error('Project is not in the suite', {
+        cause: { project: name, suite: suite.projects.map((p) => p.name) },
+      })
     }
     return project
   })
@@ -191,10 +193,13 @@ function committedBlock(
 ): number {
   const block = discovered.usedBlockNumbers[chain]
   if (block === undefined) {
-    const known = Object.keys(discovered.usedBlockNumbers).join(', ')
-    throw new Error(
-      `${name}/discovered.json has no usedBlockNumbers entry for ${chain} (has: ${known || 'none'})`,
-    )
+    throw new Error('discovered.json has no usedBlockNumbers entry for chain', {
+      cause: {
+        project: name,
+        chain,
+        chainsWithEntry: Object.keys(discovered.usedBlockNumbers),
+      },
+    })
   }
   return block
 }

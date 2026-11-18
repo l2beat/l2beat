@@ -26,9 +26,14 @@ export async function openCodeEffortLevels(
     LIST_TIMEOUT_MS,
   )
   if (run.timedOut || run.exitCode !== 0) {
-    throw new Error(
-      `\`opencode models ${provider} --verbose\` failed (exit ${run.exitCode}${run.timedOut ? ', timed out' : ''}): ${run.stderr.trim().slice(0, 300)}`,
-    )
+    throw new Error('`opencode models --verbose` failed', {
+      cause: {
+        provider,
+        exitCode: run.exitCode,
+        timedOut: run.timedOut,
+        stderr: run.stderr.trim().slice(0, 300),
+      },
+    })
   }
   return parseVerboseModels(run.stdout).get(model)
 }
@@ -54,7 +59,9 @@ function variantsOf(name: string, block: string): string[] {
   try {
     model = JSON.parse(block)
   } catch {
-    throw new Error(`could not read ${name} in opencode's model list`)
+    throw new Error("could not read the model in opencode's model list", {
+      cause: { name },
+    })
   }
   const variants =
     typeof model === 'object' && model !== null && 'variants' in model

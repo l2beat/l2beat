@@ -165,7 +165,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       decoded: { type: 'bytes', value: bytes, extra: '0x', dynamic: false },
     }
   }
-  throw new Error(`Invalid type: ${type.type}`)
+  throw new Error('Invalid type', { cause: { type: type.type } })
 }
 
 function decodeUint(type: string, encoded: `0x${string}`) {
@@ -176,7 +176,9 @@ function decodeUint(type: string, encoded: `0x${string}`) {
   const max = 2n ** size - 1n
   const uint = BigInt(encoded)
   if (uint > max) {
-    throw new Error(`Invalid encoding, ${type} too large`)
+    throw new Error('Invalid encoding, value too large for type', {
+      cause: { type },
+    })
   }
   return uint
 }
@@ -191,14 +193,18 @@ function decodeInt(type: string, encoded: `0x${string}`) {
   const uint = BigInt(encoded)
   const int = uint > INT_COMPLEMENT ? uint - INT_COMPLEMENT * 2n : uint
   if (int > max || int < min) {
-    throw new Error(`Invalid encoding, ${type} too large`)
+    throw new Error('Invalid encoding, value too large for type', {
+      cause: { type },
+    })
   }
   return int
 }
 
 function decodeBytes(type: string, encoded: `0x${string}`) {
   if (encoded.length < 66) {
-    throw new Error(`Invalid encoding, ${type} too short`)
+    throw new Error('Invalid encoding, value too short for type', {
+      cause: { type },
+    })
   }
   const length = Number.parseInt(sliceBytes(encoded, 0, 32), 16)
   const bytesEnd = 32 + length

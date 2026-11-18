@@ -13,6 +13,7 @@ export const StarknetAddressValue: Type<string, string> = {
 
       if (!isValidHex) {
         throw new Error(
+          // biome-ignore lint/plugin/staticErrorMessage: cmd-ts shows only the message of a failed argument parse to the person at the terminal
           `Invalid Starknet address: ${str}. Must be a 64-character hex string with optional 0x prefix.`,
         )
       }

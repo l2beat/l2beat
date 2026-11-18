@@ -57,17 +57,18 @@ export function parseGoogleSheetRows(rows: string[][]): SyncedEnvEntry[] {
     }
 
     if (!ENV_KEY.test(key)) {
-      throw new Error(`Invalid env variable name: ${key}`)
+      throw new Error('Invalid env variable name', { cause: { key } })
     }
 
     if (key.startsWith(LOCAL_ONLY_KEY_PREFIX)) {
       throw new Error(
-        `${key} configures env:sync itself and must stay local, remove it from the sheet`,
+        'Key configures env:sync itself and must stay local, remove it from the sheet',
+        { cause: { key } },
       )
     }
 
     if (seen.has(key)) {
-      throw new Error(`Duplicate env variable name: ${key}`)
+      throw new Error('Duplicate env variable name', { cause: { key } })
     }
 
     assertRenderableValue(key, value)
@@ -215,10 +216,12 @@ function formatUtc(date: Date) {
 // values, and a single quote cannot be represented inside the latter.
 function assertRenderableValue(key: string, value: string) {
   if (value.includes('\n') || value.includes('\r')) {
-    throw new Error(`Multiline values are not supported: ${key}`)
+    throw new Error('Multiline values are not supported', { cause: { key } })
   }
   if (value.includes("'")) {
-    throw new Error(`Values must not contain single quotes: ${key}`)
+    throw new Error('Values must not contain single quotes', {
+      cause: { key },
+    })
   }
 }
 

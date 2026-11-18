@@ -41,9 +41,9 @@ function orderByDependencies(handlers: Handler[]): Handler[][] {
       }
     }
     if (batch.length === 0) {
-      throw new Error(
-        `Impossible to resolve dependencies: ${describeUnresolved(remaining, known)}`,
-      )
+      throw new Error('Impossible to resolve dependencies', {
+        cause: { unresolved: describeUnresolved(remaining, known) },
+      })
     }
     for (const handler of batch) {
       known.add(handler.field)

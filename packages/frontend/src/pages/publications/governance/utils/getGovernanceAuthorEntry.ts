@@ -15,7 +15,7 @@ export function getGovernanceAuthorEntry(
 ): GovernanceAuthorEntry {
   const avatar = getImageParams(`/images/avatars/${author.id}.png`)
   if (!avatar) {
-    throw new Error(`Avatar not found for ${author.id}`)
+    throw new Error('Avatar not found', { cause: { authorId: author.id } })
   }
 
   return {

@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { thrownBy } from '../../utils/thrownBy'
 import {
   getReferencedName,
   getReferencedPath,
@@ -57,10 +58,12 @@ describe(resolveReference.name, () => {
   })
 
   it('throws when the sub-path is missing', () => {
-    expect(() =>
+    const error = thrownBy(() =>
       resolveReference('{{ constructorArgs._owner }}', {
         constructorArgs: { _other: 'alice' },
       }),
-    ).toThrow('Missing dependency: constructorArgs._owner')
+    )
+    expect(error.message).toEqual('Missing dependency')
+    expect(error.cause).toEqual({ dependency: 'constructorArgs._owner' })
   })
 })

@@ -86,7 +86,9 @@ export function buildRelationGraphScene(
 
   const nodes = workingNodes.map((node): SceneNode => {
     if (node.x === undefined || node.y === undefined) {
-      throw new Error(`Graph layout left node ${node.id} without a position`)
+      throw new Error('Graph layout left node without a position', {
+        cause: { nodeId: node.id },
+      })
     }
     return {
       data: node.data,
@@ -99,7 +101,9 @@ export function buildRelationGraphScene(
   const sceneNodeOf = (working: WorkingNode) => {
     const node = nodeById.get(working.id)
     if (node === undefined) {
-      throw new Error(`Graph layout returned unknown node ${working.id}`)
+      throw new Error('Graph layout returned unknown node', {
+        cause: { nodeId: working.id },
+      })
     }
     return node
   }
@@ -163,9 +167,9 @@ function buildVirtualLinks<
       .sort((a, b) => a.id.localeCompare(b.id))
       .at(0)
     if (anchor === undefined) {
-      throw new Error(
-        `Graph cluster has no node of its abstract token ${abstractTokenId}`,
-      )
+      throw new Error('Graph cluster has no node of its abstract token', {
+        cause: { abstractTokenId },
+      })
     }
     const current = anchors.get(abstractTokenId)
     if (current === undefined || component.length > current.clusterSize) {
@@ -265,7 +269,9 @@ function buildSceneLinks(
 function requireNode<Node>(nodeById: Map<string, Node>, id: string): Node {
   const node = nodeById.get(id)
   if (node === undefined) {
-    throw new Error(`Relation graph contains unknown endpoint ${id}`)
+    throw new Error('Relation graph contains unknown endpoint', {
+      cause: { id },
+    })
   }
   return node
 }

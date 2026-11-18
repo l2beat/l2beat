@@ -14,7 +14,7 @@ export function assert(
 }
 
 export function assertUnreachable(unhandled: never): never {
-  throw new Error(
-    `There are more values to handle.\n${JSON.stringify(unhandled)}`,
-  )
+  throw new Error('There are more values to handle.', {
+    cause: { unhandled: JSON.stringify(unhandled) },
+  })
 }

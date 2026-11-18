@@ -188,7 +188,9 @@ export async function runClingoForSingleModel(clingoInput: string) {
     throw new Error(clingoResult.Error)
   }
   if (clingoResult.Models.Number !== 1) {
-    throw new Error('Expected 1 model, got ' + clingoResult.Models.Number)
+    throw new Error('Expected 1 model', {
+      cause: { models: clingoResult.Models.Number },
+    })
   }
   const facts = clingoResult.Call[0]?.Witnesses[0]?.Value as string[]
   if (!facts) {

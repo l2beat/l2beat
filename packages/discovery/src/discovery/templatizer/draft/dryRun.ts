@@ -20,8 +20,9 @@
  * events", and a count of addresses says nothing certain about what they
  * are.
  */
-import { getErrorMessage } from '@l2beat/shared-pure'
+
 import { utils } from 'ethers'
+import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type {
   StructureContract,
   StructureContractField,

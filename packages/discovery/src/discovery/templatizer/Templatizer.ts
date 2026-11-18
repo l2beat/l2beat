@@ -538,7 +538,9 @@ export class Templatizer {
   private templateTextOf(templateId: string): string {
     const text = this.templateService.readTemplateFile(templateId)
     if (text === undefined) {
-      throw new Error(`Template ${templateId} has no template.jsonc`)
+      throw new Error('Template has no template.jsonc', {
+        cause: { templateId },
+      })
     }
     return text
   }
@@ -692,9 +694,14 @@ function fieldNames(result: Accepted): string[] {
 /** A draft that passed the checks merges; one that does not is a bug here. */
 function mergedText(result: MergeResult): string {
   if ('problems' in result) {
-    throw new Error(
-      `A checked draft does not merge: ${result.problems.map((p) => `${p.path}: ${p.message}`).join('; ')}`,
-    )
+    throw new Error('A checked draft does not merge', {
+      cause: {
+        problems: result.problems.map((p) => ({
+          path: p.path,
+          message: p.message,
+        })),
+      },
+    })
   }
   return result.text
 }

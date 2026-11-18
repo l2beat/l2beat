@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { rejectedBy } from '../../../utils/thrownBy'
 import { CodexTurnError } from './CodexClient'
 import { FakeModelClient } from './FakeModelClient'
 
@@ -40,8 +41,8 @@ describe(FakeModelClient.name, () => {
 
   it('rejects once the script runs out', async () => {
     const client = new FakeModelClient([])
-    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
-      /no response left for turn 1/,
-    )
+    const error = await rejectedBy(client.start({ prompt: 'p', schema: {} }))
+    expect(error.message).toEqual('FakeModelClient has no response left')
+    expect(error.cause).toEqual({ turn: 1 })
   })
 })

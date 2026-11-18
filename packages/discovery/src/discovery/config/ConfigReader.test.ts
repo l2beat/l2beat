@@ -1,6 +1,7 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
+import { thrownBy } from '../../utils/thrownBy'
 import { ConfigReader } from './ConfigReader'
 
 describe('resolveImports', () => {
@@ -305,9 +306,11 @@ describe('config and discovery resolution', () => {
           }),
         })
 
-        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
-          'Cannot parse file usdc/config.jsonc',
+        const error = thrownBy(() =>
+          new ConfigReader('/base').readConfig('usdc'),
         )
+        expect(error.message).toEqual('Cannot parse file')
+        expect(error.cause).toEqual({ label: 'usdc/config.jsonc' })
       })
 
       it('a names key with an invalid checksum, naming the file', () => {
@@ -319,9 +322,11 @@ describe('config and discovery resolution', () => {
           }),
         })
 
-        expect(() => new ConfigReader('/base').readConfig('usdc')).toThrow(
-          'Cannot parse file usdc/config.jsonc',
+        const error = thrownBy(() =>
+          new ConfigReader('/base').readConfig('usdc'),
         )
+        expect(error.message).toEqual('Cannot parse file')
+        expect(error.cause).toEqual({ label: 'usdc/config.jsonc' })
       })
 
       it('a merged config without initialAddresses', () => {

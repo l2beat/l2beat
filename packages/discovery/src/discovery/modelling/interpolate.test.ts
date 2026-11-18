@@ -1,5 +1,6 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { thrownBy } from '../../utils/thrownBy'
 import type { ContractValue, EntryParameters } from '../output/types'
 import {
   interpolateModelTemplate,
@@ -138,9 +139,11 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const values = toInterpolationValues(contract)
-    expect(() => interpolateModelTemplate(modelTemplate, values, {})).toThrow(
-      'Field "two" not found in contract ContactMsigA',
+    const error = thrownBy(() =>
+      interpolateModelTemplate(modelTemplate, values, {}),
     )
+    expect(error.message).toEqual('Field not found in contract')
+    expect(error.cause).toEqual({ key: 'two', contractName: 'ContactMsigA' })
   })
 })
 

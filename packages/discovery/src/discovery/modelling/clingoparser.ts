@@ -88,7 +88,9 @@ class ClingoFactParser {
 
   fail(msg: string): never {
     const ctx = JSON.stringify(this.src.slice(this.pos, this.pos + 20))
-    throw new Error(`Parse error at ${this.pos}: ${msg}, got ${ctx}`)
+    throw new Error('Parse error', {
+      cause: { position: this.pos, reason: msg, got: ctx },
+    })
   }
 
   parseFact(): ClingoFact {

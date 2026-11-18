@@ -56,7 +56,8 @@ export function resolveReference<T>(
   for (const element of path) {
     if (typeof result !== 'object' || Array.isArray(result)) {
       throw new Error(
-        `Unexpected element found while resolving reference path ${dependency}`,
+        'Unexpected element found while resolving reference path',
+        { cause: { dependency } },
       )
     }
 
@@ -64,7 +65,7 @@ export function resolveReference<T>(
   }
 
   if (result === undefined) {
-    throw new Error(`Missing dependency: ${dependency}`)
+    throw new Error('Missing dependency', { cause: { dependency } })
   }
 
   return result

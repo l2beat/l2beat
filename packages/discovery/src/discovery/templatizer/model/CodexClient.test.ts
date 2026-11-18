@@ -2,6 +2,7 @@ import { expect } from 'earl'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import { rejectedBy } from '../../../utils/thrownBy'
 import {
   CODEX_INSTRUCTIONS_FILE,
   CODEX_ISOLATION_FLAGS,
@@ -328,8 +329,10 @@ describe(CodexClient.name, () => {
       binary: path.join(directory, 'no-such-codex'),
       codexHome: directory,
     })
-    await expect(client.start({ prompt: 'p', schema: {} })).toBeRejectedWith(
-      /could not run .*no-such-codex/,
+    const error = await rejectedBy(client.start({ prompt: 'p', schema: {} }))
+    expect(error.message).toEqual('could not run the binary')
+    expect((error.cause as { binary: string }).binary).toEqual(
+      path.join(directory, 'no-such-codex'),
     )
   })
 

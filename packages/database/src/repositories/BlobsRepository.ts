@@ -51,7 +51,7 @@ export function daLayerToNumber(daLayer: string): number {
     case 'eigen-da':
       return 3
     default:
-      throw new Error(`Unknown daLayer: ${daLayer}`)
+      throw new Error('Unknown daLayer', { cause: { daLayer } })
   }
 }
 
@@ -66,7 +66,7 @@ export function numberToDaLayer(daLayer: number): string {
     case 3:
       return 'eigen-da'
     default:
-      throw new Error(`Unknown daLayer number: ${daLayer}`)
+      throw new Error('Unknown daLayer number', { cause: { daLayer } })
   }
 }
 

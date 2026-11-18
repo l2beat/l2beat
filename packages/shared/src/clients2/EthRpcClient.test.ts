@@ -30,9 +30,15 @@ describe(EthRpcClient.name, () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
-    await expect(client.getBlockNumber()).toBeRejectedWith(
-      'RPC call failed. HTTP status: 503, body: Oops, our server is down',
+    const error = await client.getBlockNumber().catch((e: unknown) => e)
+
+    expect((error as Error).message).toEqual(
+      'RPC call failed. Unexpected HTTP response',
     )
+    expect((error as Error).cause).toEqual({
+      httpStatus: 503,
+      body: 'Oops, our server is down',
+    })
   })
 
   it('handles a jsonrpc error response', async () => {
@@ -46,9 +52,13 @@ describe(EthRpcClient.name, () => {
         error: { code: -32000, message: 'Server error' },
       }),
     )
-    await expect(client.getBlockNumber()).toBeRejectedWith(
-      'RPC call failed. RPC code: -32000, message: Server error',
-    )
+    const error = await client.getBlockNumber().catch((e: unknown) => e)
+
+    expect((error as Error).message).toEqual('RPC call failed. RPC error')
+    expect((error as Error).cause).toEqual({
+      rpcCode: -32000,
+      rpcMessage: 'Server error',
+    })
   })
 
   // Methodology: a batch answered out of order, with one receipt the node has
@@ -99,9 +109,15 @@ describe(EthRpcClient.name, () => {
       ]),
     )
 
-    await expect(
-      client.getTransactionReceipts([HASH_A, HASH_B]),
-    ).toBeRejectedWith('RPC call failed. RPC code: -32005, message: Limit')
+    const error = await client
+      .getTransactionReceipts([HASH_A, HASH_B])
+      .catch((e: unknown) => e)
+
+    expect((error as Error).message).toEqual('RPC call failed. RPC error')
+    expect((error as Error).cause).toEqual({
+      rpcCode: -32005,
+      rpcMessage: 'Limit',
+    })
   })
 
   describe('batches', () => {
@@ -290,7 +306,8 @@ describe(EthRpcClient.name, () => {
     )
     expect(result).toEqual({
       reverted: true,
-      reason: 'RPC call failed. RPC code: 3, message: execution reverted',
+      reason:
+        'RPC call failed. RPC error {"rpcCode":3,"rpcMessage":"execution reverted"}',
     })
   })
 
@@ -305,7 +322,7 @@ describe(EthRpcClient.name, () => {
     expect(result).toEqual({
       reverted: true,
       reason:
-        'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
+        'RPC call failed. Unexpected HTTP response {"httpStatus":400,"body":"invalid opcode: INVALID"}',
     })
   })
 

@@ -33,7 +33,7 @@ describe(generateCropsApiFiles.name, () => {
   ): BodyOf[K] => {
     const file = files.find((x) => x.route === route && x.path === path)
     if (!file) {
-      throw new Error(`Missing ${path}`)
+      throw new Error('Missing file', { cause: { path } })
     }
     return file.body as BodyOf[K]
   }
@@ -58,13 +58,17 @@ describe(generateCropsApiFiles.name, () => {
     for (const file of files) {
       const route = CROPS_API_ROUTES.find((x) => x.key === file.route)
       if (!route) {
-        throw new Error(`${file.path} is not published`)
+        throw new Error('File is not published', {
+          cause: { path: file.path },
+        })
       }
       const result = CROPS_API_SCHEMAS[route.result].safeParse(
         JSON.parse(JSON.stringify(file.body)),
       )
       if (!result.success) {
-        throw new Error(`${file.path}: ${result.message}`)
+        throw new Error('File does not match its route validator', {
+          cause: { path: file.path, message: result.message },
+        })
       }
     }
   })
@@ -163,9 +167,20 @@ describe(generateCropsApiFiles.name, () => {
   })
 
   it('fails when a reviewed address sits on a chain with no chain id', () => {
-    expect(() =>
-      generateCropsApiFiles({ ...FIXTURE_INPUT, chains: { ethereum: 1 } }),
-    ).toThrow(/arbitrum/)
+    let error: unknown
+    try {
+      generateCropsApiFiles({ ...FIXTURE_INPUT, chains: { ethereum: 1 } })
+    } catch (e) {
+      error = e
+    }
+
+    expect(error).toBeA(Error)
+    expect((error as Error).message).toEqual(
+      'Chain has no chain id, but a reviewed address is on it',
+    )
+    expect((error as Error).cause as object).toHaveSubset({
+      chain: 'arbitrum',
+    })
   })
 
   it('sorts the output by path so a rerun produces a byte-identical site', () => {

@@ -7,7 +7,7 @@ import type { DiscoveryChainConfig } from './types'
 export function getChainShortName(chain: string) {
   const chainConfig = chains.find((c) => c.name === chain)
   if (!chainConfig) {
-    throw new Error(`No config for chain: ${chain}`)
+    throw new Error('No config for chain', { cause: { chain } })
   }
   return chainConfig.shortName
 }
@@ -15,7 +15,7 @@ export function getChainShortName(chain: string) {
 export function getChainFullName(shortName: string) {
   const chainConfig = chains.find((c) => c.shortName === shortName)
   if (!chainConfig) {
-    throw new Error(`No config for chain: ${shortName}`)
+    throw new Error('No config for chain', { cause: { shortName } })
   }
   return chainConfig.name
 }
@@ -39,7 +39,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
 
   const chainConfig = chains.find((c) => c.name === chain)
   if (!chainConfig) {
-    throw new Error(`No config for chain: ${chain}`)
+    throw new Error('No config for chain', { cause: { chain } })
   }
 
   const ENV_NAME = chainConfig.name.toUpperCase()

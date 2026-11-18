@@ -26,7 +26,7 @@ export class StarkexClient extends ClientCore {
     const parsedResponse = StarkexApiSuccessResponse.safeParse(response)
 
     if (!parsedResponse.success) {
-      throw new Error(`${product} - Day ${day}: Error during parsing`)
+      throw new Error('Error during parsing', { cause: { product, day } })
     }
     return parsedResponse.data.count
   }

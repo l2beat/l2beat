@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { thrownBy } from '../../../utils/thrownBy'
 import { parseVerboseModels } from './openCodeModels'
 
 describe(parseVerboseModels.name, () => {
@@ -32,10 +33,12 @@ describe(parseVerboseModels.name, () => {
   })
 
   it('throws rather than guess when a block no longer parses', () => {
-    expect(() =>
+    const error = thrownBy(() =>
       parseVerboseModels('opencode-go/deepseek-v4.1-flash\nid: deepseek\n'),
-    ).toThrow(
-      "could not read opencode-go/deepseek-v4.1-flash in opencode's model list",
     )
+    expect(error.message).toEqual(
+      "could not read the model in opencode's model list",
+    )
+    expect(error.cause).toEqual({ name: 'opencode-go/deepseek-v4.1-flash' })
   })
 })

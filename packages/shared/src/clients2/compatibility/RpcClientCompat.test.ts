@@ -196,9 +196,9 @@ describe(RpcClientCompat.name, () => {
     })
 
     it('does not split a single block when limit exceeded', async () => {
-      const error = new Error(
-        'RPC call failed. RPC code: -32602, message: Log response size exceeded',
-      )
+      const error = new Error('RPC call failed. RPC error', {
+        cause: { rpcCode: -32602, rpcMessage: 'Log response size exceeded' },
+      })
       const getLogs = mockFn<EthRpcClient['getLogs']>()
         .rejectsWithOnce(error)
         .resolvesTo([])

@@ -17,6 +17,7 @@ export const ChainValue: Type<string, string> = {
       if (!chainNames.includes(str)) {
         reject(
           new Error(
+            // biome-ignore lint/plugin/staticErrorMessage: cmd-ts prints only this message to the person who typed a wrong chain, and the chain list is what they need
             `Possible chains are: ${chainNames.join(', ')}. If want to add a chain modify chains.ts in discovery.`,
           ),
         )
@@ -35,6 +36,7 @@ export const PositiveInteger: Type<string, number> = extendType(number, {
   from(value): Promise<number> {
     if (!Number.isInteger(value) || value < 1) {
       return Promise.reject(
+        // biome-ignore lint/plugin/staticErrorMessage: cmd-ts prints only this message to the person who typed a wrong count
         new Error(`Expected a positive integer, got ${value}`),
       )
     }

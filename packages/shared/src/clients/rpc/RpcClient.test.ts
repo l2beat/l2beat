@@ -1169,9 +1169,12 @@ describe(RpcClient.name, () => {
       )
       const rpc = batchingClient(node.http)
 
-      await expect(rpc.getTransactionReceipts(['0x1', '0x2'])).toBeRejectedWith(
-        'Receipts of 2 txs: Error during parsing',
-      )
+      const error = await rpc
+        .getTransactionReceipts(['0x1', '0x2'])
+        .catch((e: unknown) => e)
+
+      expect((error as Error).message).toEqual('Receipts: Error during parsing')
+      expect((error as Error).cause).toEqual({ transactionCount: 2 })
       expect(node.requests.map(callsIn)).toEqual([2])
     })
   })
@@ -1246,7 +1249,7 @@ function fakeNode(answer: (request: RpcRequest | RpcRequest[]) => Reply) {
     fetch: async (_url: string, init: FetchInit) => {
       const { status, body } = reply(init)
       if (status !== 200) {
-        throw new Error(`HTTP error: ${status}`)
+        throw new Error('HTTP error', { cause: { status } })
       }
       return body as json
     },

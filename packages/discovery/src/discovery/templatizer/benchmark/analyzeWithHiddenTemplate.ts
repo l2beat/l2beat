@@ -159,7 +159,9 @@ export function copyTemplatesHiding(
   fs.cpSync(source, target, { recursive: true })
   const directory = path.join(target, hidden)
   if (!fs.existsSync(directory)) {
-    throw new Error(`Template ${hidden} does not exist in ${source}`)
+    throw new Error('Template does not exist in the source', {
+      cause: { template: hidden, source },
+    })
   }
   for (const item of fs.readdirSync(directory, { withFileTypes: true })) {
     if (!item.isDirectory()) {

@@ -22,7 +22,7 @@ export class StarknetBalanceProvider {
     const client = this.starknetClients.find((r) => r.chain === chain)
 
     if (!client) {
-      throw new Error(`Missing starknet client for ${chain}`)
+      throw new Error('Missing starknet client', { cause: { chain } })
     }
 
     return Promise.all(

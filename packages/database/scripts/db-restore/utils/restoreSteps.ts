@@ -83,7 +83,9 @@ export function copyTablesSince(
        WHERE table_schema = 'public' AND table_name = ${quoteLiteral(table)}`,
     )
     if (!columns) {
-      throw new Error(`Table "${table}" not found on the remote database.`)
+      throw new Error('Table not found on the remote database', {
+        cause: { table },
+      })
     }
     const copyFile = `./${table}.copy`
     psqlExec(

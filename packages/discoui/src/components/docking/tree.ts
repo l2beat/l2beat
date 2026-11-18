@@ -11,6 +11,7 @@ import type {
 
 export function assert(condition: unknown, message: string): asserts condition {
   if (!condition) {
+    // biome-ignore lint/plugin/staticErrorMessage: generic assertion helper, the message is the caller's own static text
     throw new Error(`docking: ${message}`)
   }
 }

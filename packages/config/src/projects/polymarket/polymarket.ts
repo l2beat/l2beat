@@ -26,7 +26,7 @@ const multisigRatio = (contract: string): string => {
   )
   const match = /^(\d+) of (\d+)/.exec(threshold)
   if (!match) {
-    throw new Error(`Unexpected multisigThreshold "${threshold}"`)
+    throw new Error('Unexpected multisigThreshold', { cause: { threshold } })
   }
   return `${match[1]}/${match[2]}`
 }

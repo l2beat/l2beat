@@ -31,9 +31,9 @@ export function chooseTemplateId(
   }
   const suffixed = `${base}-${shortHash(facts.shapeHash)}`
   if (templateService.exists(suffixed)) {
-    throw new Error(
-      `Template ids ${base} and ${suffixed} both exist and neither matches this shape`,
-    )
+    throw new Error('Both template ids exist and neither matches this shape', {
+      cause: { base, suffixed },
+    })
   }
   return suffixed
 }
@@ -106,9 +106,9 @@ function assertMatches(
 ): void {
   const matching = templateService.findMatchingTemplates(sources, facts.address)
   if (!matching.includes(templateId)) {
-    throw new Error(
-      `Template ${templateId} was written but V1 does not match it for ${facts.address} (matches: ${matching.join(', ') || 'none'})`,
-    )
+    throw new Error('Template was written but V1 does not match it', {
+      cause: { templateId, address: facts.address.toString(), matching },
+    })
   }
 }
 

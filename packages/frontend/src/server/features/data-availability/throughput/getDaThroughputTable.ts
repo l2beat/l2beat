@@ -428,5 +428,7 @@ function enrichPoster(
     return { ...poster, name: sovereignName, slug: undefined }
   }
 
-  throw new Error(`Project not found: ${poster.projectId}`)
+  throw new Error('Project not found', {
+    cause: { projectId: poster.projectId },
+  })
 }

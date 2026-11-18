@@ -36,17 +36,17 @@ const formatProtocolFee = (packed: number): string => {
   const token0Side = packed % 16
   const token1Side = Math.floor(packed / 16)
   if (token0Side !== token1Side) {
-    throw new Error(
-      `Asymmetric protocol fee ${packed}: update the description wording`,
-    )
+    throw new Error('Asymmetric protocol fee: update the description wording', {
+      cause: { packed },
+    })
   }
   if (token0Side === 0) {
     return 'off'
   }
   if (token0Side < 4 || token0Side > 10) {
-    throw new Error(
-      `Invalid protocol fee ${packed}: update the description wording`,
-    )
+    throw new Error('Invalid protocol fee: update the description wording', {
+      cause: { packed },
+    })
   }
   return `1/${token0Side} of LP fees per side`
 }

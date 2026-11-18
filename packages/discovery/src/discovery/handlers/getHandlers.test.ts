@@ -166,7 +166,10 @@ describe(getHandlers.name, () => {
 
     const handlers = getHandlers([], config)
     expect(handlers).toEqual([
-      new ErrorHandler('foo', 'Cannot find a matching method for foo'),
+      new ErrorHandler(
+        'foo',
+        'Cannot find a matching method: {"method":"foo"}',
+      ),
     ])
   })
 })

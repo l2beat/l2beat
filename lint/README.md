@@ -5,9 +5,10 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 | Rule | Runs in | What it rejects |
 |---|---|---|
 | `repositoryMockType` | packages that use the database | `mockObject<SomeRepository>(...)`. Type the mock as `Database['repo']` or `TokenDatabase['repo']`, so no repository class is exported only for tests. |
+| `staticErrorMessage` | every package | `new Error(...)` with a template or concatenated message. Write a fixed message and put the values in `cause`: `new Error('HTTP error', { cause: { status } })`. A fixed message lets one exact match in Elasticsearch find every occurrence. |
 | `utcDates` | `frontend` | Local-time date reads and formatting: `getDate()`, `toLocaleDateString()`, `Intl.DateTimeFormat` without `timeZone: 'UTC'`. |
 
-The rules match syntax and know no types. `utcDates` leaves `toLocaleString()` alone, because numbers have it too.
+The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too.
 
 ## Adding a rule
 

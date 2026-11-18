@@ -85,9 +85,15 @@ describe(StarknetBalanceProvider.name, () => {
         Logger.SILENT,
       )
 
-      expect(() => balanceProvider.getBalances(BALANCES, BLOCK, CHAIN)).toThrow(
-        `Missing starknet client for ${CHAIN}`,
-      )
+      let error: unknown
+      try {
+        void balanceProvider.getBalances(BALANCES, BLOCK, CHAIN)
+      } catch (e) {
+        error = e
+      }
+
+      expect((error as Error).message).toEqual('Missing starknet client')
+      expect((error as Error).cause).toEqual({ chain: CHAIN })
     })
   })
 })
