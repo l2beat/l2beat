@@ -1,5 +1,5 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { providers } from 'ethers'
+import { type providers, utils } from 'ethers'
 
 const TOTAL_SUPPLY_SELECTOR = '0x18160ddd'
 
@@ -31,32 +31,38 @@ export async function findFirstBlockWithTotalSupply(
   return await findFirstBlock(fromBlock, latestBlock, isReadable)
 }
 
+// eth_call goes through send() because ethers' call() reports any failure,
+// a 503 included, as CALL_EXCEPTION and returns revert data as a result.
 async function isTotalSupplyReadable(
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
   block: number,
 ): Promise<boolean> {
   try {
-    const result = await provider.call(
+    const result: unknown = await provider.send('eth_call', [
       { to: address.toString(), data: TOTAL_SUPPLY_SELECTOR },
-      block,
-    )
-    return result !== '0x'
+      utils.hexValue(block),
+    ])
+    return isUint256(result)
   } catch (error) {
-    if (isRevert(error)) {
+    if (isEvmRevert(error)) {
       return false
     }
     throw error
   }
 }
 
-// Treating an RPC outage as a revert would silently move the start later.
-function isRevert(error: unknown): boolean {
+function isUint256(result: unknown): boolean {
+  return utils.isHexString(result, 32)
+}
+
+// A revert is a JSON-RPC error from the node. Anything else (HTTP status,
+// timeout) is an outage, and treating it as a revert would silently move the
+// start later.
+function isEvmRevert(error: unknown): boolean {
+  const rpcError = (error as { error?: { message?: unknown } } | null)?.error
   return (
-    typeof error === 'object' &&
-    error !== null &&
-    'code' in error &&
-    error.code === 'CALL_EXCEPTION'
+    typeof rpcError?.message === 'string' && /revert/i.test(rpcError.message)
   )
 }
 

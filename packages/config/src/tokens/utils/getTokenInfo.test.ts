@@ -26,6 +26,17 @@ describe(getFirstUsableCoingeckoTimestamp.name, () => {
     )
   })
 
+  it('pairs market caps with the price of the same date', () => {
+    const missingFirstPrice = { ...history, prices: history.prices.slice(1) }
+    const realFromAug16 = {
+      ...missingFirstPrice,
+      marketCaps: [point(AUG_15, 1), ...history.marketCaps.slice(1)],
+    }
+    expect(
+      getFirstUsableCoingeckoTimestamp(realFromAug16, 'circulatingSupply'),
+    ).toEqual(AUG_17)
+  })
+
   it('returns undefined when no market cap is real yet', () => {
     const unusable = { ...history, marketCaps: history.marketCaps.slice(0, 2) }
     expect(

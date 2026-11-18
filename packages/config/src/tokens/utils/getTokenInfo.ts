@@ -219,11 +219,15 @@ export function getFirstUsableCoingeckoTimestamp(
   history: CoinMarketChartRangeData,
   supply: Supply,
 ): UnixTime | undefined {
+  const priceAt = new Map(
+    history.prices.map((price) => [price.date.getTime(), price.value]),
+  )
   const firstUsable =
     supply === 'circulatingSupply'
       ? history.marketCaps.find(
-          (marketCap, i) =>
-            marketCap.value > 0 && (history.prices[i]?.value ?? 0) > 0,
+          (marketCap) =>
+            marketCap.value > 0 &&
+            (priceAt.get(marketCap.date.getTime()) ?? 0) > 0,
         )
       : history.prices[0]
 
