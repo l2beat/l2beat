@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useDockingHook } from './context'
 import type { DropTarget } from './types'
 
@@ -8,17 +8,13 @@ export function DragOverlay() {
   const mouse = useStore((state) => state.mouse)
   const dragHover = useStore((state) => state.dragHover)
   const config = useStore((state) => state.config)
-  const [hoverRect, setHoverRect] = useState<DOMRect | null>(null)
 
   // The layout cannot change mid-drag (tree mutations happen on drop), so the
   // hover rect only moves when the hover target does, not with the mouse.
-  useEffect(() => {
-    if (!dragHover) {
-      setHoverRect(null)
-      return
-    }
-    setHoverRect(computeSplitRect(dragHover))
-  }, [dragHover])
+  const hoverRect = useMemo(
+    () => (dragHover ? computeSplitRect(dragHover) : null),
+    [dragHover],
+  )
 
   if (pickedUpLeaf === undefined) return null
 
