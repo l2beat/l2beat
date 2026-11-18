@@ -37,8 +37,9 @@ const LABEL_TO_TITLE = 32
 const LABEL = { size: 40, min: 30, lineHeight: 1.2, tracking: 1.4 / 24 }
 // A logo's drawn part runs from the label's cap top to the title's baseline, so
 // its edges line up with both (a wide one gets as wide as that span is tall,
-// centred on it), and text starts `gap` right of it. Its corners round like an
-// app icon's.
+// centred on it), and text starts `gap` right of it. Without a label it keeps
+// that size, centred on the title's capitals. Its corners round like an app
+// icon's.
 const LOGO = { gap: 32, radius: 0.22 }
 
 const placement = place(
@@ -141,19 +142,19 @@ export function wordsOutline(
 export function textLeftBesideLogo(
   measure: TextMeasure,
   titleSize: number,
-  withLabel: boolean,
   ink: DarkGroundLogo['ink'],
 ) {
-  const span = logoSpan(measure, titleSize, withLabel)
+  const span = logoSpan(measure, titleSize)
   return MARGIN + logoInkSize(span, ink).width + LOGO.gap
 }
 
-/** From the label's cap top (or the title's) to the title's first baseline. */
-function logoSpan(measure: TextMeasure, titleSize: number, withLabel: boolean) {
-  const title = measure.capHeight(titleSize)
-  return withLabel
-    ? title + LABEL_TO_TITLE + measure.capHeight(LABEL.size)
-    : title
+/** From the label's cap top to the title's first baseline. */
+function logoSpan(measure: TextMeasure, titleSize: number) {
+  return (
+    measure.capHeight(titleSize) +
+    LABEL_TO_TITLE +
+    measure.capHeight(LABEL.size)
+  )
 }
 
 /** How big a logo's drawn part shows: as tall as the span, and no wider. */
@@ -183,7 +184,7 @@ export function HeartbeatFrame({
   logo: DarkGroundLogo | undefined
 }) {
   const capTop = baseline - measure.capHeight(titleSize)
-  const span = logoSpan(measure, titleSize, label !== undefined)
+  const span = logoSpan(measure, titleSize)
   const logoInk = logo && logoInkSize(span, logo.ink)
   const textLeft =
     logoInk === undefined ? MARGIN : MARGIN + logoInk.width + LOGO.gap
@@ -200,8 +201,12 @@ export function HeartbeatFrame({
           size: titleSize,
           lines: title.length,
         })
+  const spanTop =
+    label === undefined
+      ? capTop - (span - measure.capHeight(titleSize)) / 2
+      : baseline - span
   const logoInkTop =
-    logoInk === undefined ? 0 : baseline - span + (span - logoInk.height) / 2
+    logoInk === undefined ? 0 : spanTop + (span - logoInk.height) / 2
 
   // The rings stay off everything drawn over them.
   const outline = [

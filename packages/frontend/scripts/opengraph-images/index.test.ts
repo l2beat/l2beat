@@ -2,41 +2,27 @@ import { existsSync } from 'fs'
 import partition from 'lodash/partition'
 import path from 'path'
 import { getCollection } from '~/content/getCollection'
-import { ps } from '~/server/projects'
-import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'
+import { getProjectOgImagePath } from '~/utils/project/getProjectPath'
+import { getProjectOgImagePages } from './projects/generateProjectOgImages'
 
 describe('opengraph images', () => {
-  it('should contain project page opengraph images for all projects', async () => {
-    const projects = await ps.getProjects({
-      optional: [
-        'scalingInfo',
-        'zkCatalogInfo',
-        'interopConfig',
-        'privacyInfo',
-        'defiInfo',
-      ],
-    })
-
-    const missingProjects = projects
-      .filter((p) => {
-        const types = getOpengraphProjectTypes(p)
-        if (!types) {
-          return false
-        }
-        return types
-          .map((type) =>
+  it('should contain an opengraph image for every project page', async () => {
+    const missing = (await getProjectOgImagePages())
+      .filter(
+        (page) =>
+          !existsSync(
             path.join(
               __dirname,
-              `../../static/meta-images/${type}/projects/${p.slug}/opengraph-image.png`,
+              '../../static',
+              getProjectOgImagePath(page.slug),
             ),
-          )
-          .some((p) => !existsSync(p))
-      })
-      .map((p) => p.slug)
+          ),
+      )
+      .map((page) => page.slug)
 
-    if (missingProjects.length > 0) {
+    if (missing.length > 0) {
       throw new Error(
-        `Missing opengraph images for projects: ${missingProjects.join(', ')}. Run \`pnpm og-images\` to generate them.`,
+        `Missing opengraph images for project pages: ${missing.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }
   })
