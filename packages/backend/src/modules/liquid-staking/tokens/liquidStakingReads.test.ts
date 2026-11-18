@@ -41,6 +41,14 @@ describe(getLiquidStakingReads.name, () => {
     expect(state.marketExitValueEth).toEqual(null)
   })
 
+  it('stores no quote when the only pool pays nothing for the sale', () => {
+    const { toState } = getLiquidStakingReads(rocketpool, 0)
+
+    const state = toState([ok(RATE), ok(0n), ok(0n), FAILED], TIMESTAMP)
+    expect(state.marketExitEth).toEqual(null)
+    expect(state.marketExitValueEth).toEqual(null)
+  })
+
   it('values Lido’s sale at one ETH per stETH', () => {
     const { toState } = getLiquidStakingReads(
       {

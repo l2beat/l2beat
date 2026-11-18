@@ -146,8 +146,8 @@ class ExitCostSeries {
   private readonly rates: ExchangeRates
   /** Day start → that day's hourly snapshots. */
   private readonly hoursByDay: Map<number, LiquidStakingSnapshotRecord[]>
-  /** Request day → the request-weighted wait of its requests, null when unknown. */
-  private readonly queueWaits: Map<number, ExitCost | null>
+  /** Per queue: request day → the request-weighted wait of its requests, null when unknown. */
+  private readonly queueWaits: Map<number, ExitCost | null>[]
 
   constructor(snapshots: LiquidStakingSnapshotRecord[]) {
     this.rates = new ExchangeRates(snapshots)
@@ -159,20 +159,22 @@ class ExitCostSeries {
       this.hoursByDay.set(day, hours)
     }
     const lockTimes = new Map(snapshots.map((s) => [s.timestamp, s.lockTime]))
-    this.queueWaits = averageWaitByDay(
-      [
-        ...getQueueWaits(snapshots),
-        // A queue the protocol replaced pays its requests apart from the new one's.
-        ...getQueueWaits(
-          snapshots.map((s) => ({
-            timestamp: s.timestamp,
-            lastRequestId: s.retiredLastRequestId,
-            lastFinalizedRequestId: s.retiredLastFinalizedRequestId,
-          })),
-        ),
-      ],
-      // An unwrapped wBETH request also waits out its lock.
-      (timestamp) => lockTimes.get(timestamp) ?? 0,
+    this.queueWaits = [
+      getQueueWaits(snapshots),
+      // A queue the protocol replaced pays its requests apart from the new one's.
+      getQueueWaits(
+        snapshots.map((s) => ({
+          timestamp: s.timestamp,
+          lastRequestId: s.retiredLastRequestId,
+          lastFinalizedRequestId: s.retiredLastFinalizedRequestId,
+        })),
+      ),
+    ].map((waits) =>
+      averageWaitByDay(
+        waits,
+        // An unwrapped wBETH request also waits out its lock.
+        (timestamp) => lockTimes.get(timestamp) ?? 0,
+      ),
     )
   }
 
@@ -183,17 +185,17 @@ class ExitCostSeries {
       this.queueAt(day),
       this.instantAt(day, annualYield),
       this.marketAt(day, annualYield),
-    ].filter((route): route is ExitCost => route !== null)
-    return routes.reduce<ExitCost | null>(
-      (best, route) => (best === null || route.days < best.days ? route : best),
-      null,
-    )
+    ].filter((route) => route !== null)
+    return cheapest(routes)
   }
 
   /** A queued exit earns nothing while it waits, so it costs the wait. */
   private queueAt(day: number): ExitCost | null {
-    const wait = this.queueWaits.get(day)
-    if (wait !== undefined) return wait
+    const waits = this.queueWaits
+      .map((queue) => queue.get(day))
+      .filter((wait) => wait !== undefined)
+    // Each queue is a route of its own, and one with an unknown wait is none.
+    if (waits.length > 0) return cheapest(waits.filter((w) => w !== null))
     // Without requests that day, an exit would still wait out the lock. Only
     // wBETH has one.
     const lockTime = this.hoursByDay.get(day)?.[0]?.lockTime
@@ -238,6 +240,13 @@ class ExitCostSeries {
     const days = toYieldDays(Math.max(0, cost), annualYield)
     return days === null ? null : { days, estimated: false }
   }
+}
+
+function cheapest(routes: ExitCost[]): ExitCost | null {
+  return routes.reduce<ExitCost | null>(
+    (best, route) => (best === null || route.days < best.days ? route : best),
+    null,
+  )
 }
 
 /** A cost as a share of the exit, in the days of yield it takes to earn. */
@@ -323,8 +332,11 @@ function estimateQueuedWaits(
   const last = snapshots.at(-1)
   const lastFinalized = last?.lastFinalizedRequestId
   if (last === undefined || lastFinalized == null) return []
+  // A queue opened inside the window is paced from its first snapshot.
   const paceStart = snapshots.find(
-    (s) => s.timestamp >= last.timestamp - PACE_WINDOW_DAYS * DAY,
+    (s) =>
+      s.timestamp >= last.timestamp - PACE_WINDOW_DAYS * DAY &&
+      s.lastFinalizedRequestId != null,
   )
   const finalizedPerHour =
     paceStart?.lastFinalizedRequestId != null && paceStart !== last

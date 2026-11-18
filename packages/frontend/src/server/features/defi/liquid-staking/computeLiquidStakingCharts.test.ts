@@ -143,16 +143,18 @@ describe(computeCostOfExitChart.name, () => {
   })
 
   it('times a replaced queue apart, so its unpaid requests do not hold up the new one', () => {
-    // Two requests have been left unpaid in the queue the protocol replaced.
+    // The replaced queue holds two unpaid requests, and gets a third the
+    // same day, which it never pays either.
     const retired = {
-      retiredLastRequestId: 10,
+      retiredLastRequestId: 11,
       retiredLastFinalizedRequestId: 8,
     }
     const charts = compute(
       ['stakewise'],
       [
         snapshot('stakewise', DAY_31, 1, {
-          ...retired,
+          retiredLastRequestId: 10,
+          retiredLastFinalizedRequestId: 8,
           lastRequestId: 0,
           lastFinalizedRequestId: 0,
         }),
@@ -371,6 +373,34 @@ describe(getQueueWaits.name, () => {
         timestamp: 2 * HOUR,
         requests: 2,
         hours: 1.5,
+        estimated: true,
+        unpaced: false,
+      },
+    ])
+  })
+
+  it('paces a queue opened inside the window from its first snapshot', () => {
+    expect(
+      getQueueWaits([
+        { timestamp: 0, lastRequestId: null, lastFinalizedRequestId: null },
+        { timestamp: HOUR, lastRequestId: 0, lastFinalizedRequestId: 0 },
+        { timestamp: 2 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 0 },
+        { timestamp: 3 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 1 },
+      ]),
+    ).toEqual([
+      {
+        timestamp: 2 * HOUR,
+        requests: 1,
+        hours: 1,
+        estimated: false,
+        unpaced: false,
+      },
+      // One request finalized in two hours. Requests 2 and 3 are 1.5 ahead
+      // of it on average, so they wait three more hours.
+      {
+        timestamp: 2 * HOUR,
+        requests: 2,
+        hours: 4,
         estimated: true,
         unpaced: false,
       },

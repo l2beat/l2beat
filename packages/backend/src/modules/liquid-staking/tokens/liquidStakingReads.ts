@@ -60,8 +60,9 @@ export function getLiquidStakingReads(
           quote.decode(responses[reads.length + i] as MulticallV3Response),
         )
         .reduce<bigint | undefined>(
+          // A sale that pays nothing wasn't filled.
           (best, out) =>
-            out !== undefined && (best === undefined || out > best)
+            out !== undefined && out > 0n && (best === undefined || out > best)
               ? out
               : best,
           undefined,
