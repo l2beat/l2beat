@@ -43,6 +43,17 @@ describe(findFirstBlockWithTotalSupply.name, () => {
     expect(await find(rpc)).toEqual(undefined)
   })
 
+  it('fails when a probe past the start was misread as a revert', async () => {
+    let calls = 0
+    const rpc = mockRpc(async (block) => {
+      calls++
+      const misread = calls === 2
+      return block < UPGRADE_BLOCK || misread ? reverted : returns(SUPPLY)
+    })
+
+    await expect(find(rpc)).toBeRejectedWith('readable before the found start')
+  })
+
   it('rethrows RPC outages instead of treating them as reverts', async () => {
     const rpc = mockRpc(async (block) => {
       if (block < UPGRADE_BLOCK) {

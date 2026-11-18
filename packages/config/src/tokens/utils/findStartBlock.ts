@@ -34,7 +34,15 @@ export async function findFirstBlockWithTotalSupply(
   if (!(await isReadable(latestBlock))) {
     return undefined
   }
-  return await findFirstBlock(fromBlock, latestBlock, isReadable)
+  const start = await findFirstBlock(fromBlock, latestBlock, isReadable)
+  // A probe misread as a revert (an outage whose body says "revert") pushes
+  // the start later, and then the block before it reads fine.
+  if (start > fromBlock && (await isReadable(start - 1))) {
+    throw new Error('totalSupply() readable before the found start, rerun', {
+      cause: { start },
+    })
+  }
+  return start
 }
 
 /**

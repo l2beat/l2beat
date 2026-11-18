@@ -181,7 +181,7 @@ async function getCoingeckoListingTimestamp(
   return timestamp
 }
 
-export function getFirstPriceTimestamp(
+function getFirstPriceTimestamp(
   history: CoinMarketChartRangeData,
 ): UnixTime | undefined {
   const first = history.prices.at(0)

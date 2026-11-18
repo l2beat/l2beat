@@ -1,9 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  getFirstMarketCapTimestamp,
-  getFirstPriceTimestamp,
-} from './getTokenInfo'
+import { getFirstMarketCapTimestamp } from './getTokenInfo'
 
 // Method: replay the daily CoinGecko history WTH (Robinhood) had when it was
 // added. Its first points carry a price but a market cap of -1, then 0.
@@ -33,12 +30,6 @@ describe(getFirstMarketCapTimestamp.name, () => {
   it('returns undefined when no market cap is real yet', () => {
     const unusable = { ...history, marketCaps: history.marketCaps.slice(0, 2) }
     expect(getFirstMarketCapTimestamp(unusable)).toEqual(undefined)
-  })
-})
-
-describe(getFirstPriceTimestamp.name, () => {
-  it('starts at the first price, whatever the market cap', () => {
-    expect(getFirstPriceTimestamp(history)).toEqual(AUG_15)
   })
 })
 
