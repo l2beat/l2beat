@@ -1,31 +1,40 @@
-import type { CoingeckoClient, CoinMarketChartRangeData } from '@l2beat/shared'
+import type {
+  CoingeckoClient,
+  CoinMarketChartRangeData,
+  EthRpcClient,
+} from '@l2beat/shared'
 import {
   assert,
   type CoingeckoId,
   type EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { type providers, utils } from 'ethers'
+import { utils } from 'ethers'
 import { MIN_TIMESTAMP_FOR_TVL } from '../../projects/ethereum/ethereum'
 import type { GeneratedToken } from '../types'
 import {
   findCreationBlock,
   findFirstBlockWithTotalSupply,
-} from './findFirstBlock'
+} from './findStartBlock'
 import type { ScriptLogger } from './ScriptLogger'
 
-type Supply = GeneratedToken['supply']
+interface TokenToFetch {
+  address: EthereumAddress
+  symbol: string
+  coingeckoId: CoingeckoId
+  supply: GeneratedToken['supply']
+  deploymentTimestampOverride?: UnixTime
+}
 
 export async function getTokenInfo(
   logger: ScriptLogger,
-  provider: providers.JsonRpcProvider,
+  rpc: EthRpcClient,
   coingeckoClient: CoingeckoClient,
-  address: EthereumAddress,
-  symbolFromConfig: string,
-  coingeckoId: CoingeckoId,
-  supply: Supply,
-  deploymentTimestampOverride?: UnixTime,
+  token: TokenToFetch,
 ) {
+  // The TVS indexer stalls wherever the amount is unreadable, so start once the
+  // supply formula has data: totalSupply() on-chain, or a real market cap for a
+  // circulating supply (market cap / price).
   const [
     name,
     symbol,
@@ -34,96 +43,60 @@ export async function getTokenInfo(
     deploymentTimestamp,
     coingeckoListingTimestamp,
   ] = await Promise.all([
-    getName(provider, logger, address),
-    getSymbol(provider, logger, address),
-    getDecimals(provider, logger, address),
-    getImageUrl(coingeckoClient, logger, coingeckoId),
-    getDeploymentTimestamp(
-      logger,
-      provider,
-      address,
-      supply,
-      deploymentTimestampOverride,
-    ),
-    getCoingeckoListingTimestamp(logger, coingeckoClient, coingeckoId, supply),
+    callView(rpc, logger, token.address, 'name'),
+    callView(rpc, logger, token.address, 'symbol'),
+    callView(rpc, logger, token.address, 'decimals'),
+    getImageUrl(coingeckoClient, logger, token.coingeckoId),
+    token.deploymentTimestampOverride ??
+      getDeploymentTimestamp(logger, rpc, token.address, {
+        requireTotalSupply: token.supply === 'totalSupply',
+      }),
+    getCoingeckoListingTimestamp(logger, coingeckoClient, token.coingeckoId, {
+      requireMarketCap: token.supply === 'circulatingSupply',
+    }),
   ])
 
   logger.assert(
-    symbol === symbolFromConfig,
-    ` symbol mismatch  ${symbol} !== ${symbolFromConfig}`,
+    symbol === token.symbol,
+    ` symbol mismatch  ${symbol} !== ${token.symbol}`,
   )
 
   return {
-    name,
-    symbol,
-    decimals,
+    name: String(name),
+    symbol: String(symbol),
+    decimals: Number(decimals),
     iconUrl,
     deploymentTimestamp,
     coingeckoListingTimestamp,
-    coingeckoId,
+    coingeckoId: token.coingeckoId,
   }
 }
 
-const ABI = [
-  'function aggregate(tuple(address target, bytes callData)[] calls) view returns (uint256 blockNumber, logger, bytes[] returnData)',
+const CODER = new utils.Interface([
   'function name() view returns (string)',
   'function symbol() view returns (string)',
   'function decimals() view returns (uint8)',
-]
-const CODER = new utils.Interface(ABI)
+])
 
-async function getName(
-  provider: providers.JsonRpcProvider,
+async function callView(
+  rpc: EthRpcClient,
   logger: ScriptLogger,
   address: EthereumAddress,
-) {
-  logger.fetching('name')
+  method: 'name' | 'symbol' | 'decimals',
+): Promise<unknown> {
+  logger.fetching(method)
 
-  const name = await provider.call({
-    to: address.toString(),
-    data: '0x06fdde03', // name()
-  })
-
-  logger.assert(name !== '0x', 'Could not find name for token')
-
-  return CODER.decodeFunctionResult('name', name)[0] as string
-}
-
-async function getSymbol(
-  provider: providers.JsonRpcProvider,
-  logger: ScriptLogger,
-  address: EthereumAddress,
-) {
-  logger.fetching('symbol')
-
-  const symbol = await provider.call({
-    to: address.toString(),
-    data: '0x95d89b41', // symbol()
-  })
-
-  logger.assert(symbol !== '0x', 'Could not find symbol for token')
-
-  return CODER.decodeFunctionResult('symbol', symbol)[0] as string
-}
-
-async function getDecimals(
-  provider: providers.JsonRpcProvider,
-  logger: ScriptLogger,
-  address: EthereumAddress,
-) {
-  logger.fetching('decimals')
-
-  const decimals = await provider.call({
-    to: address.toString(),
-    data: '0x313ce567', // decimals()
-  })
-
-  logger.assert(decimals !== '0x', 'Could not find decimals for token')
-
-  return Number.parseInt(
-    CODER.decodeFunctionResult('decimals', decimals)[0] as string,
-    10,
+  const result = await rpc.call(
+    { to: address, input: CODER.getSighash(method) },
+    'latest',
   )
+
+  logger.assert(
+    !result.reverted && result.data !== '0x',
+    `Could not find ${method} for token`,
+  )
+
+  return CODER.decodeFunctionResult(method, result.data)[0]
 }
 
 async function getImageUrl(
@@ -144,28 +117,22 @@ async function getImageUrl(
 
 async function getDeploymentTimestamp(
   logger: ScriptLogger,
-  provider: providers.JsonRpcProvider,
+  rpc: EthRpcClient,
   address: EthereumAddress,
-  supply: Supply,
-  override?: UnixTime,
+  { requireTotalSupply }: { requireTotalSupply: boolean },
 ) {
-  if (override) {
-    return override
-  }
-
   logger.fetching('sinceTimestamp (this will take a while)')
 
-  const latestBlock = await provider.getBlockNumber()
-  const creationBlock = await findCreationBlock(provider, address, latestBlock)
-  const startBlock =
-    supply === 'totalSupply'
-      ? await findFirstBlockWithTotalSupply(
-          provider,
-          address,
-          creationBlock,
-          latestBlock,
-        )
-      : creationBlock
+  const latestBlock = Number(await rpc.getBlockNumber())
+  const creationBlock = await findCreationBlock(rpc, address, latestBlock)
+  const startBlock = requireTotalSupply
+    ? await findFirstBlockWithTotalSupply(
+        rpc,
+        address,
+        creationBlock,
+        latestBlock,
+      )
+    : creationBlock
   logger.assert(
     startBlock !== undefined,
     'totalSupply() is unreadable at the latest block, provide manual override in tokens.jsonc',
@@ -177,7 +144,9 @@ async function getDeploymentTimestamp(
     )
   }
 
-  const timestamp = UnixTime((await provider.getBlock(startBlock)).timestamp)
+  const block = await rpc.getBlockByNumber(BigInt(startBlock), false)
+  assert(block, 'Start block not found')
+  const timestamp = UnixTime(Number(block.timestamp))
   assert(
     timestamp > MIN_TIMESTAMP_FOR_TVL,
     'Deployment timestamp looks odd, provide manual override in tokens.jsonc',
@@ -190,7 +159,7 @@ async function getCoingeckoListingTimestamp(
   logger: ScriptLogger,
   coingeckoClient: CoingeckoClient,
   coingeckoId: CoingeckoId,
-  supply: Supply,
+  { requireMarketCap }: { requireMarketCap: boolean },
 ) {
   logger.fetching('coingeckoListingTimestamp')
 
@@ -201,37 +170,35 @@ async function getCoingeckoListingTimestamp(
     UnixTime.now(),
   )
 
-  const timestamp = getFirstUsableCoingeckoTimestamp(history, supply)
+  const timestamp = requireMarketCap
+    ? getFirstMarketCapTimestamp(history)
+    : getFirstPriceTimestamp(history)
   logger.assert(
     timestamp !== undefined,
-    supply === 'circulatingSupply'
-      ? `No market cap history found for token: ${coingeckoId.toString()}`
-      : `No price history found for token: ${coingeckoId.toString()}`,
+    `No usable price history found for token: ${coingeckoId.toString()}`,
   )
 
   return timestamp
 }
 
-// CoinGecko can list a price days before a real market cap (-1 or 0 until
-// then). A circulating supply is market cap / price, so it starts only once
-// both are real.
-export function getFirstUsableCoingeckoTimestamp(
+export function getFirstPriceTimestamp(
   history: CoinMarketChartRangeData,
-  supply: Supply,
+): UnixTime | undefined {
+  const first = history.prices.at(0)
+  return first && UnixTime.fromDate(first.date)
+}
+
+// CoinGecko can list a price days before a real market cap (-1 or 0 until
+// then), and a circulating supply is market cap / price, so both must be real.
+export function getFirstMarketCapTimestamp(
+  history: CoinMarketChartRangeData,
 ): UnixTime | undefined {
   const priceAt = new Map(
     history.prices.map((price) => [price.date.getTime(), price.value]),
   )
-  const firstUsable =
-    supply === 'circulatingSupply'
-      ? history.marketCaps.find(
-          (marketCap) =>
-            marketCap.value > 0 &&
-            (priceAt.get(marketCap.date.getTime()) ?? 0) > 0,
-        )
-      : history.prices[0]
-
-  return firstUsable
-    ? UnixTime(Math.floor(firstUsable.date.getTime() / 1000))
-    : undefined
+  const first = history.marketCaps.find(
+    (marketCap) =>
+      marketCap.value > 0 && (priceAt.get(marketCap.date.getTime()) ?? 0) > 0,
+  )
+  return first && UnixTime.fromDate(first.date)
 }

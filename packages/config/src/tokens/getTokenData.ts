@@ -2,17 +2,11 @@ import { getEnv, Logger } from '@l2beat/backend-tools'
 import {
   CoingeckoClient,
   type CoinListPlatformEntry,
+  EthRpcClient,
+  Http,
   HttpClient,
 } from '@l2beat/shared'
-import {
-  AssetId,
-  ChainConverter,
-  ChainId,
-  type CoingeckoId,
-  type EthereumAddress,
-  type UnixTime,
-} from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import { AssetId, ChainConverter, ChainId } from '@l2beat/shared-pure'
 import isEqual from 'lodash/isEqual'
 import { ProjectService } from '../ProjectService'
 import type { ChainConfig } from '../types'
@@ -169,15 +163,17 @@ export async function getTokenData(
           token.address,
         )
 
-      const info = await fetchTokenInfo(
+      const info = await getTokenInfo(
         tokenLogger,
+        getRpcClient(tokenLogger, chainConfig),
         coingeckoClient,
-        coingeckoId,
-        chainConfig,
-        token.address,
-        token.symbol,
-        supply,
-        token.deploymentTimestamp,
+        {
+          address: token.address,
+          symbol: token.symbol,
+          coingeckoId,
+          supply,
+          deploymentTimestampOverride: token.deploymentTimestamp,
+        },
       )
 
       saveToken({
@@ -271,16 +267,7 @@ function findTokenInOutput(
   })
 }
 
-async function fetchTokenInfo(
-  logger: ScriptLogger,
-  coingeckoClient: CoingeckoClient,
-  coingeckoId: CoingeckoId,
-  chain: ChainConfig,
-  address: EthereumAddress,
-  symbol: string,
-  supply: GeneratedToken['supply'],
-  deploymentTimestampOverride?: UnixTime,
-) {
+function getRpcClient(logger: ScriptLogger, chain: ChainConfig) {
   const defaultRpcUrl = chain.apis.find((api) => api.type === 'rpc')?.url
   const env = getEnv()
   const rpcUrl = env.string(
@@ -291,25 +278,5 @@ async function fetchTokenInfo(
     rpcUrl !== undefined,
     `Missing environmental variable: ${chain.name.toUpperCase()}_RPC_URL`,
   )
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-
-  const tokenInfo = await getTokenInfo(
-    logger,
-    provider,
-    coingeckoClient,
-    address,
-    symbol,
-    coingeckoId,
-    supply,
-    deploymentTimestampOverride,
-  )
-
-  return {
-    name: tokenInfo.name,
-    coingeckoId: tokenInfo.coingeckoId,
-    decimals: tokenInfo.decimals,
-    deploymentTimestamp: tokenInfo.deploymentTimestamp,
-    coingeckoListingTimestamp: tokenInfo.coingeckoListingTimestamp,
-    iconUrl: tokenInfo.iconUrl,
-  }
+  return new EthRpcClient(new Http(), rpcUrl)
 }
