@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockTimestampProvider,
@@ -8,7 +9,7 @@ import type {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { OnchainAmountConfig } from '../types'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
@@ -125,4 +126,86 @@ describe(DataFormulaExecutor.name, () => {
       ])
     })
   })
+
+  // `tvs:execute` fetches historical prices and supplies itself, past the
+  // indexers. Each test has the provider return a bad value for an hour that
+  // COINGECKO_CORRECTIONS covers, using whichever correction of that field
+  // comes first, so it holds as the list changes.
+  describe('CoinGecko corrections', () => {
+    it('uses the corrected price for an hour CoinGecko got wrong', async () => {
+      const { coingeckoId, timestamp, value } = firstCorrection('price')
+      const executor = executorWith({
+        priceProvider: mockObject<PriceProvider>({
+          getUsdPriceHistoryHourly: mockFn().resolvesTo([
+            { timestamp, value: value * 10 },
+          ]),
+        }),
+      })
+
+      const price = await executor.fetchPrice(
+        { id: 'price', priceId: coingeckoId, sinceTimestamp: UnixTime(0) },
+        timestamp,
+      )
+
+      expect(price).toEqual(value)
+    })
+
+    it('uses the corrected circulating supply for an hour CoinGecko got wrong', async () => {
+      const { coingeckoId, timestamp, value } =
+        firstCorrection('circulatingSupply')
+      const executor = executorWith({
+        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
+          getCirculatingSupplies: mockFn().resolvesTo([
+            { timestamp, value: value * 2 },
+          ]),
+        }),
+      })
+
+      const supply = await executor.fetchCirculatingSupply(
+        {
+          id: 'supply',
+          type: 'circulatingSupply',
+          apiId: coingeckoId,
+          decimals: 0,
+          sinceTimestamp: UnixTime(0),
+          address: EthereumAddress.ZERO,
+          chain: 'ethereum',
+        },
+        timestamp,
+      )
+
+      expect(supply).toEqual(BigInt(value))
+    })
+  })
 })
+
+function firstCorrection(field: 'price' | 'circulatingSupply') {
+  const correction = COINGECKO_CORRECTIONS.find((c) => c.field === field)
+  assert(correction, 'No correction of this field to test with')
+  const [point] = correction.points
+  return {
+    coingeckoId: correction.coingeckoId,
+    timestamp: UnixTime.fromDate(new Date(point.at)),
+    value: point.value,
+  }
+}
+
+function executorWith(providers: {
+  priceProvider?: PriceProvider
+  circulatingSupplyProvider?: CirculatingSupplyProvider
+}) {
+  return new DataFormulaExecutor(
+    mockObject<LocalStorage>({}),
+    undefined,
+    providers.priceProvider ?? mockObject<PriceProvider>({}),
+    providers.circulatingSupplyProvider ??
+      mockObject<CirculatingSupplyProvider>({}),
+    new Map(),
+    mockObject<BlockTimestampProvider>({}),
+    mockObject<TotalSupplyProvider>({}),
+    mockObject<StarknetTotalSupplyProvider>({}),
+    mockObject<StarknetBalanceProvider>({}),
+    mockObject<BalanceProvider>({}),
+    Logger.SILENT,
+  )
+}

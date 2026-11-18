@@ -221,7 +221,13 @@ export function initTvsModule({
   const tvsProjects = config.tvs.projects
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
-    await overwriteCorrectedHours(COINGECKO_CORRECTIONS, tvsConfig, db, logger)
+    await overwriteCorrectedHours(
+      COINGECKO_CORRECTIONS,
+      tvsConfig,
+      syncOptimizer,
+      db,
+      logger,
+    )
     await hourlyIndexer.start()
     await priceIndexer.start()
 

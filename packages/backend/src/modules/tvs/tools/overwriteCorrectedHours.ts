@@ -3,17 +3,24 @@ import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoC
 import type { Database } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { TvsConfig } from '../../../config/Config'
-import { calculateTokenValueRecords } from '../indexers/TokenValueIndexer'
+import {
+  calculateTokenValueRecords,
+  TokenValueIndexer,
+} from '../indexers/TokenValueIndexer'
 import { ValueService } from '../services/ValueService'
 import { correctedValues } from './coingeckoCorrections'
 import { DBStorage } from './DBStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
+import type { SyncOptimizer } from './SyncOptimizer'
 
 /**
- * Makes the data stored before a correction existed match it: overwrites the
- * prices and circulating supplies of the corrected hours, then recomputes the
- * token values that were calculated from them. Hours the indexers have not
- * stored are left to them, since they apply the corrections while fetching.
+ * Makes the data stored before a correction existed match it: stores the
+ * corrected price or circulating supply at each listed hour, then recomputes
+ * the token values that were calculated from them.
+ *
+ * A listed hour without a stored row gets one too, because the indexers skip
+ * an hour CoinGecko returned nothing for, and its token value was then
+ * calculated from the latest older row.
  *
  * Runs in one transaction, because the next run only recomputes token values
  * for prices and supplies it still finds uncorrected.
@@ -21,13 +28,14 @@ import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 export async function overwriteCorrectedHours(
   corrections: CoingeckoCorrection[],
   config: Pick<TvsConfig, 'prices' | 'amounts' | 'projects'>,
+  syncOptimizer: SyncOptimizer,
   db: Database,
   logger: Logger,
 ): Promise<void> {
   await db.transaction(async () => {
     const overwritten = new Map<string, UnixTime[]>([
-      ...(await overwritePrices(corrections, config, db)),
-      ...(await overwriteSupplies(corrections, config, db)),
+      ...(await overwritePrices(corrections, config, syncOptimizer, db)),
+      ...(await overwriteSupplies(corrections, config, syncOptimizer, db)),
     ])
     if (overwritten.size === 0) {
       return
@@ -51,23 +59,33 @@ type Overwritten = [configurationId: string, timestamps: UnixTime[]][]
 async function overwritePrices(
   corrections: CoingeckoCorrection[],
   config: Pick<TvsConfig, 'prices'>,
+  syncOptimizer: SyncOptimizer,
   db: Database,
 ): Promise<Overwritten> {
   const overwritten: Overwritten = []
   for (const price of config.prices) {
     const corrected = correctedValues(corrections, 'price', price.priceId)
     if (corrected.size === 0) continue
-    const stored = await db.tvsPrice.getPricesInRange(
-      [price.id],
-      ...range(corrected),
+    const stored = new Map(
+      (await db.tvsPrice.getPricesInRange([price.id], ...range(corrected))).map(
+        (record) => [record.timestamp, record.priceUsd],
+      ),
     )
-    const records = stored.flatMap((record) => {
-      const priceUsd = corrected.get(record.timestamp)
-      // prices are stored as 32-bit floats, so compare at that precision
-      return priceUsd === undefined ||
-        Math.fround(priceUsd) === Math.fround(record.priceUsd)
-        ? []
-        : { ...record, priceUsd }
+    const records = [...corrected].flatMap(([timestamp, priceUsd]) => {
+      const current = stored.get(timestamp)
+      const needsWrite =
+        current === undefined
+          ? isKeptByIndexer(price, timestamp, syncOptimizer)
+          : // prices are stored as 32-bit floats, so compare at that precision
+            Math.fround(current) !== Math.fround(priceUsd)
+      return needsWrite
+        ? {
+            configurationId: price.id,
+            priceId: price.priceId,
+            timestamp,
+            priceUsd,
+          }
+        : []
     })
     if (records.length > 0) {
       await db.tvsPrice.upsertMany(records)
@@ -80,6 +98,7 @@ async function overwritePrices(
 async function overwriteSupplies(
   corrections: CoingeckoCorrection[],
   config: Pick<TvsConfig, 'amounts'>,
+  syncOptimizer: SyncOptimizer,
   db: Database,
 ): Promise<Overwritten> {
   const overwritten: Overwritten = []
@@ -91,15 +110,19 @@ async function overwriteSupplies(
       supply.apiId,
     )
     if (corrected.size === 0) continue
-    const stored = await db.tvsAmount.getAmountsInRange(
-      [supply.id],
-      ...range(corrected),
+    const stored = new Map(
+      (
+        await db.tvsAmount.getAmountsInRange([supply.id], ...range(corrected))
+      ).map((record) => [record.timestamp, record.amount]),
     )
-    const records = stored.flatMap((record) => {
-      const value = corrected.get(record.timestamp)
-      if (value === undefined) return []
+    const records = [...corrected].flatMap(([timestamp, value]) => {
       const amount = BigInt(value * 10 ** supply.decimals)
-      return amount === record.amount ? [] : { ...record, amount }
+      const current = stored.get(timestamp)
+      const needsWrite =
+        current === undefined
+          ? isKeptByIndexer(supply, timestamp, syncOptimizer)
+          : current !== amount
+      return needsWrite ? { configurationId: supply.id, timestamp, amount } : []
     })
     if (records.length > 0) {
       await db.tvsAmount.upsertMany(records)
@@ -107,6 +130,20 @@ async function overwriteSupplies(
     }
   }
   return overwritten
+}
+
+/** Whether the indexer of this price or supply would store a row at this hour. */
+function isKeptByIndexer(
+  config: { sinceTimestamp: UnixTime; untilTimestamp?: UnixTime },
+  timestamp: UnixTime,
+  syncOptimizer: SyncOptimizer,
+): boolean {
+  return (
+    timestamp >= config.sinceTimestamp &&
+    (config.untilTimestamp === undefined ||
+      timestamp <= config.untilTimestamp) &&
+    syncOptimizer.shouldTimestampBeSynced(timestamp)
+  )
 }
 
 async function recomputeTokenValues(
@@ -131,9 +168,20 @@ async function recomputeTokenValues(
         Math.min(...affected),
         Math.max(...affected),
       )
+      // Values stored under an older configuration of the token are wiped by
+      // its indexer on start, and the data the current one needs at their
+      // hours may not be stored yet.
+      const configurationId = TokenValueIndexer.idToConfigurationId(
+        token,
+        project.storeEscrowValues,
+      )
       const timestamps = stored
+        .filter(
+          (r) =>
+            r.configurationId === configurationId &&
+            affected.includes(r.timestamp),
+        )
         .map((r) => r.timestamp)
-        .filter((timestamp) => affected.includes(timestamp))
 
       const { records, escrowRecords } = await calculateTokenValueRecords(
         valueService,

@@ -3,14 +3,25 @@ import type { TvsToken } from '@l2beat/config'
 import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database } from '@l2beat/database'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import { describeDatabase } from '../../../test/database'
+import type { Clock } from '../../../tools/Clock'
 import { TokenValueIndexer } from '../indexers/TokenValueIndexer'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 import { overwriteCorrectedHours } from './overwriteCorrectedHours'
+import { SyncOptimizer } from './SyncOptimizer'
 
 const WRONG_HOUR = UnixTime.fromDate(new Date('2026-05-31T00:00:00Z'))
 const NEXT_HOUR = UnixTime(WRONG_HOUR + UnixTime.HOUR)
+const DAY_BEFORE = UnixTime(WRONG_HOUR - UnixTime.DAY)
+
+// Half a year after the corrected hours, where the indexers keep one point a
+// day.
+const syncOptimizer = new SyncOptimizer(
+  mockObject<Clock>({
+    getLastHour: () => UnixTime.fromDate(new Date('2026-11-18T00:00:00Z')),
+  }),
+)
 
 // Runs against Postgres because the behavior depends on it: prices are stored
 // as 32-bit floats, supplies as 80-digit decimals, and the overwrite and the
@@ -44,12 +55,18 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     const corrections = [
       correction('price', [
         { at: '2026-05-31T00:00:00Z', value: 2119 },
-        // an hour the indexers have not stored stays theirs to fill
-        { at: '2026-06-01T00:00:00Z', value: 2119 },
+        // an hour the indexers no longer keep gets no row
+        { at: '2026-05-31T03:00:00Z', value: 2119 },
       ]),
     ]
 
-    await overwriteCorrectedHours(corrections, config, db, Logger.SILENT)
+    await overwriteCorrectedHours(
+      corrections,
+      config,
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
 
     expect(await storedPrices(db)).toEqual([
       [WRONG_HOUR, 2119],
@@ -90,6 +107,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
         ]),
       ],
       config,
+      syncOptimizer,
       db,
       Logger.SILENT,
     )
@@ -102,6 +120,109 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       },
     ])
     expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 904, 2]])
+  })
+
+  // The price indexer stores nothing for an hour CoinGecko returned nothing
+  // for, and the token value of that hour is then calculated from the latest
+  // older price. Stores such a token value with no price of its own hour: the
+  // correction has to add the price and recompute the value from it.
+  it('stores the corrected price of an hour the indexer skipped and recomputes its token value', async () => {
+    const token = tokenWith({
+      type: 'totalSupply',
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
+      decimals: 0,
+      sinceTimestamp: UnixTime(0),
+    })
+    const { config, price, amount } = configFor(token)
+    await storePrice(db, price.id, DAY_BEFORE, 1545)
+    await db.tvsAmount.upsertMany([
+      { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },
+    ])
+    await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
+
+    await overwriteCorrectedHours(
+      [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
+      config,
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
+
+    expect(await storedPrices(db)).toEqual([
+      [DAY_BEFORE, 1545],
+      [WRONG_HOUR, 2119],
+    ])
+    expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 21190, 2119]])
+  })
+
+  // After a deploy that changes a token, its stored values still carry the
+  // old configuration id until the indexer wipes them, and the amount the new
+  // configuration needs is not stored yet. Recomputing such a value would
+  // throw and stop the backend from starting, on every restart.
+  it('leaves token values stored under an older configuration of the token', async () => {
+    const token = tokenWith({
+      type: 'totalSupply',
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
+      decimals: 0,
+      sinceTimestamp: UnixTime(0),
+    })
+    const { config, price } = configFor(token)
+    await storePrice(db, price.id, WRONG_HOUR, 1545)
+    await storeTokenValue(
+      db,
+      token,
+      WRONG_HOUR,
+      { amount: 10, value: 15450 },
+      'older-config',
+    )
+
+    await overwriteCorrectedHours(
+      [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
+      config,
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
+
+    expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 2119]])
+    expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 15450, 1545]])
+  })
+
+  // A run that corrected the price but failed before recomputing the token
+  // value must not keep the price: the next run would find it correct and
+  // never recompute. Makes the recomputation fail by leaving out the amount,
+  // then adds it and runs again.
+  it('keeps nothing from a run that fails, so the next run repeats it', async () => {
+    const token = tokenWith({
+      type: 'totalSupply',
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
+      decimals: 0,
+      sinceTimestamp: UnixTime(0),
+    })
+    const { config, price, amount } = configFor(token)
+    await storePrice(db, price.id, WRONG_HOUR, 1545)
+    await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
+    const run = () =>
+      overwriteCorrectedHours(
+        [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
+        config,
+        syncOptimizer,
+        db,
+        Logger.SILENT,
+      )
+
+    await expect(run()).toBeRejected()
+    expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 1545]])
+
+    await db.tvsAmount.upsertMany([
+      { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },
+    ])
+    await run()
+    expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 2119]])
+    expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 21190, 2119]])
   })
 
   // The overwrite runs on every backend start. Postgres keeps a price as a
@@ -129,9 +250,21 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       ]),
     ]
 
-    await overwriteCorrectedHours(corrections, config, db, Logger.SILENT)
+    await overwriteCorrectedHours(
+      corrections,
+      config,
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
     await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 1 })
-    await overwriteCorrectedHours(corrections, config, db, Logger.SILENT)
+    await overwriteCorrectedHours(
+      corrections,
+      config,
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
 
     const [[, value]] = await storedTokenValues(db)
     expect(value).toEqual(1)
@@ -196,10 +329,11 @@ async function storeTokenValue(
   token: TvsToken,
   timestamp: UnixTime,
   { amount, value }: { amount: number; value: number },
+  configurationId = TokenValueIndexer.idToConfigurationId(token, false),
 ) {
   await db.tvsTokenValue.upsertMany([
     {
-      configurationId: TokenValueIndexer.idToConfigurationId(token, false),
+      configurationId,
       projectId: 'project',
       tokenId: token.id,
       timestamp,

@@ -2,7 +2,9 @@ import { expect } from 'earl'
 import { getProjects } from '../processing/getProjects'
 import { COINGECKO_CORRECTIONS } from './coingeckoCorrections'
 
-const HOUR_MS = 3_600_000
+// An explicit UTC time: without the Z the hour would depend on where the
+// backend runs.
+const FULL_HOUR_UTC = /^\d{4}-\d{2}-\d{2}T\d{2}:00:00Z$/
 
 describe('COINGECKO_CORRECTIONS', () => {
   // A correction is matched to TVS data by id alone, so a typo would silently
@@ -28,15 +30,12 @@ describe('COINGECKO_CORRECTIONS', () => {
       })
 
       // The backend matches a point to stored data by its exact hour, so a
-      // point off the hour or a repeated hour would silently do nothing.
-      it('lists each full hour once, with a positive value', () => {
-        const times = correction.points.map((p) => Date.parse(p.at))
-        expect(times.length).toBeGreaterThan(0)
-        expect(new Set(times).size).toEqual(times.length)
-        for (const time of times) {
-          expect(time % HOUR_MS).toEqual(0)
-        }
+      // point off the hour would silently do nothing.
+      it('lists full hours in UTC, with positive values', () => {
+        expect(correction.points.length).toBeGreaterThan(0)
         for (const point of correction.points) {
+          expect(point.at).toMatchRegex(FULL_HOUR_UTC)
+          expect(Number.isNaN(Date.parse(point.at))).toEqual(false)
           expect(point.value).toBeGreaterThan(0)
         }
       })
@@ -52,4 +51,13 @@ describe('COINGECKO_CORRECTIONS', () => {
       }
     })
   }
+
+  // The backend merges every entry of a coin and field into one list, where
+  // the last value given for an hour silently wins.
+  it('gives each hour of a coin one value', () => {
+    const hours = COINGECKO_CORRECTIONS.flatMap((c) =>
+      c.points.map((p) => `${c.coingeckoId} ${c.field} ${Date.parse(p.at)}`),
+    )
+    expect(new Set(hours).size).toEqual(hours.length)
+  })
 })

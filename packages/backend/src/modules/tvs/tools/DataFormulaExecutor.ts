@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockProvider,
@@ -17,6 +18,7 @@ import {
   type OnchainAmountConfig,
   type PriceConfig,
 } from '../types'
+import { applyCoingeckoCorrections } from './coingeckoCorrections'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
 
@@ -521,10 +523,15 @@ export class DataFormulaExecutor {
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
     try {
       this.logger.debug(`Fetching price for ${config.priceId}`)
-      const response = await this.priceProvider.getUsdPriceHistoryHourly(
-        CoingeckoId(config.priceId),
-        timestamp,
-        timestamp,
+      const response = applyCoingeckoCorrections(
+        COINGECKO_CORRECTIONS,
+        'price',
+        config.priceId,
+        await this.priceProvider.getUsdPriceHistoryHourly(
+          CoingeckoId(config.priceId),
+          timestamp,
+          timestamp,
+        ),
       )
       assert(
         response.length === 1,
@@ -544,11 +551,15 @@ export class DataFormulaExecutor {
     this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
-      const circulating =
+      const circulating = applyCoingeckoCorrections(
+        COINGECKO_CORRECTIONS,
+        'circulatingSupply',
+        config.apiId,
         await this.circulatingSupplyProvider.getCirculatingSupplies(
           CoingeckoId(config.apiId),
           { from: timestamp, to: timestamp },
-        )
+        ),
+      )
       assert(
         circulating.length === 1,
         `${config.apiId}: Too many supplies fetched ${JSON.stringify(circulating)}`,
