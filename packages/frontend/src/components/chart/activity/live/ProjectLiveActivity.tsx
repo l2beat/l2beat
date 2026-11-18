@@ -105,6 +105,8 @@ export function ProjectLiveActivity({
 }) {
   const trpc = useTRPC()
   const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
+  // while the window is moved on the overview, before it is read
+  const [seeking, setSeeking] = useState(false)
   const query = useQuery({
     ...trpc.activity.liveProject.queryOptions({
       projectId: project.id,
@@ -279,7 +281,7 @@ export function ProjectLiveActivity({
             data={rows}
             meta={meta}
             isLoading={isLoading}
-            isPlaceholderData={isPlaceholderData}
+            isPlaceholderData={isPlaceholderData || seeking}
             project={project}
             legend
           >
@@ -325,7 +327,7 @@ export function ProjectLiveActivity({
             />
           </ChartContainer>
         </div>
-        {playhead !== undefined && (
+        {playhead !== undefined && !seeking && !isPlaceholderData && (
           <div
             ref={head}
             className="pointer-events-none invisible absolute top-0 left-0"
@@ -341,7 +343,7 @@ export function ProjectLiveActivity({
             <ActivityRatioChart
               data={rows}
               isLoading={isLoading}
-              isPlaceholderData={isPlaceholderData}
+              isPlaceholderData={isPlaceholderData || seeking}
               syncedUntil={undefined}
               xAxis={xAxis}
               formatPeriod={(timestamp) => formatBucket(timestamp, bucket)}
@@ -361,7 +363,8 @@ export function ProjectLiveActivity({
             points={data.overview}
             from={getBufferFrom(newest, data.oldest, range)}
             to={newest}
-            window={domain}
+            // looking back, where it was asked to end, before that is read
+            window={to === undefined ? domain : [to - LIVE_RANGES[range], to]}
             windowText={
               live
                 ? 'Live'
@@ -372,6 +375,7 @@ export function ProjectLiveActivity({
             onMove={(end) =>
               setTo(clampTo(end - (end % LIVE_BUCKET_SECONDS[range]), range))
             }
+            onSeeking={setSeeking}
           />
         </div>
       )}

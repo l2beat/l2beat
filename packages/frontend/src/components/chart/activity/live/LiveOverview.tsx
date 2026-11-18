@@ -1,14 +1,23 @@
-import { type KeyboardEvent, type PointerEvent, useEffect, useRef } from 'react'
+import {
+  type KeyboardEvent,
+  type PointerEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import type { LiveActivityPoint } from '~/server/features/layer2s/activity/live/liveRanges'
 import { cn } from '~/utils/cn'
 import { type LiveMetric, METRIC_INDEX } from './liveSteps'
 
 const HEIGHT = 40
-const MOVE_EVERY_MS = 200
+/** Keys pressed closer together than this move the window once, after the last */
+const KEYS_SETTLE_MS = 400
 
 /**
  * The whole buffer, a bar a minute, with the window the chart below shows.
- * Pressing or dragging on it, or the arrow keys, move the window
+ * Pressing or dragging on it, or the arrow keys, move the window. While they
+ * go on only the strip's window moves, and the chart reads where it ends once
+ * they stop, rather than every window passed on the way
  */
 export function LiveOverview({
   points,
@@ -18,6 +27,7 @@ export function LiveOverview({
   windowText,
   metric,
   onMove,
+  onSeeking,
   className,
 }: {
   points: LiveActivityPoint[]
@@ -29,61 +39,76 @@ export function LiveOverview({
   /** The window as a screen reader says it */
   windowText: string
   metric: LiveMetric
-  /** Where the window should end */
+  /** Where the window should end, once it stops moving */
   onMove: (to: number) => void
+  /** Whether the window is being moved, before it is read */
+  onSeeking: (seeking: boolean) => void
   className?: string
 }) {
   const ref = useRef<SVGSVGElement>(null)
   const dragging = useRef(false)
-  const sentAt = useRef(0)
-  const queued = useRef<ReturnType<typeof setTimeout>>(undefined)
-  useEffect(() => () => clearTimeout(queued.current), [])
-  // a queued move is clamped as the view is when it is sent, as the range
-  // may have changed since
+  const settle = useRef<ReturnType<typeof setTimeout>>(undefined)
+  useEffect(() => () => clearTimeout(settle.current), [])
+  // a move is clamped as the view is when it is made, as the range may have
+  // changed since it started
   const move = useRef(onMove)
   move.current = onMove
+  const seeking = useRef(onSeeking)
+  seeking.current = onSeeking
+  const target = useRef<number | undefined>(undefined)
+  const [seekTo, setSeekTo] = useState<number>()
   const span = to - from
+  const length = window[1] - window[0]
+  const end =
+    seekTo === undefined
+      ? window[1]
+      : Math.min(to, Math.max(from + length, seekTo))
   const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
   // the window and the first bar start on their buckets, so can before `from`
   const xOf = (t: number) =>
     Math.min(100, Math.max(0, ((t - from) / span) * 100))
-  const length = window[1] - window[0]
 
-  // a drag or a held key reads a window at most every MOVE_EVERY_MS, the
-  // last one too
-  const moveTo = (end: number) => {
-    const send = () => {
-      sentAt.current = performance.now()
-      move.current(Math.round(end))
-    }
-    clearTimeout(queued.current)
-    const wait = sentAt.current + MOVE_EVERY_MS - performance.now()
-    if (wait <= 0) send()
-    else queued.current = setTimeout(send, wait)
+  const seek = (next: number) => {
+    if (target.current === undefined) seeking.current(true)
+    target.current = next
+    setSeekTo(next)
+  }
+  const stop = (read: boolean) => {
+    clearTimeout(settle.current)
+    const next = target.current
+    target.current = undefined
+    setSeekTo(undefined)
+    if (next === undefined) return
+    if (read) move.current(Math.round(next))
+    seeking.current(false)
   }
   const pointTo = (event: PointerEvent) => {
     const box = ref.current?.getBoundingClientRect()
     if (!box) return
-    moveTo(from + ((event.clientX - box.left) / box.width) * span + length / 2)
+    seek(from + ((event.clientX - box.left) / box.width) * span + length / 2)
   }
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return
     const step = length / 10
     const ends: Record<string, number> = {
-      ArrowLeft: window[1] - step,
-      ArrowDown: window[1] - step,
-      ArrowRight: window[1] + step,
-      ArrowUp: window[1] + step,
+      ArrowLeft: end - step,
+      ArrowDown: end - step,
+      ArrowRight: end + step,
+      ArrowUp: end + step,
       Home: from + length,
       End: to,
     }
-    const end = ends[event.key]
-    if (end === undefined) return
+    const next = ends[event.key]
+    if (next === undefined) return
     event.preventDefault()
-    moveTo(end)
+    seek(next)
+    clearTimeout(settle.current)
+    settle.current = setTimeout(() => stop(true), KEYS_SETTLE_MS)
   }
-  const stop = () => {
+  const release = (read: boolean) => {
+    if (!dragging.current) return
     dragging.current = false
+    stop(read)
   }
 
   return (
@@ -100,9 +125,7 @@ export function LiveOverview({
       aria-label="Look back through the last hours"
       aria-valuemin={from + length}
       aria-valuemax={to}
-      aria-valuenow={Math.round(
-        Math.min(to, Math.max(from + length, window[1])),
-      )}
+      aria-valuenow={Math.round(end)}
       aria-valuetext={windowText}
       onKeyDown={onKeyDown}
       onPointerDown={(event) => {
@@ -111,9 +134,9 @@ export function LiveOverview({
         pointTo(event)
       }}
       onPointerMove={(event) => dragging.current && pointTo(event)}
-      onPointerUp={stop}
-      onPointerCancel={stop}
-      onLostPointerCapture={stop}
+      onPointerUp={() => release(true)}
+      onPointerCancel={() => release(false)}
+      onLostPointerCapture={() => release(true)}
     >
       {points.map((point) => {
         const height = (metricOf(point, metric) / busiest) * (HEIGHT - 2)
@@ -129,9 +152,9 @@ export function LiveOverview({
         )
       })}
       <rect
-        x={xOf(window[0])}
+        x={xOf(end - length)}
         y={0}
-        width={Math.max(0.5, xOf(window[1]) - xOf(window[0]))}
+        width={Math.max(0.5, xOf(end) - xOf(end - length))}
         height={HEIGHT}
         className="fill-brand/15 stroke-brand"
         strokeWidth={1}
