@@ -288,7 +288,9 @@ export function createToken(
       break
 
     default:
-      throw new Error(`Unsupported supply type ${legacyToken.supply}`)
+      throw new Error('Unsupported supply type', {
+        cause: { supply: legacyToken.supply },
+      })
   }
 
   return {

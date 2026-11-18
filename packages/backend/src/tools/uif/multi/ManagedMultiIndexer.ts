@@ -217,7 +217,9 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   abstract wipeData(configurations: WipeRemovalConfiguration[]): Promise<void>
 
   trimData(_: TrimRemovalConfiguration[]): Promise<void> {
-    throw new Error(`trimData not implemented for ${this.indexerId}`)
+    throw new Error('trimData not implemented', {
+      cause: { indexerId: this.indexerId },
+    })
   }
 
   // #endregion

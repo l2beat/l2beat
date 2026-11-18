@@ -494,7 +494,8 @@ function differOver(discoveries: {
     mockObject<ConfigReader>({
       readDiscovery: (name: string) => {
         const found = discoveries.onDisk[name]
-        if (found === undefined) throw new Error(`Unknown project ${name}`)
+        if (found === undefined)
+          throw new Error('Unknown project', { cause: { name } })
         return found
       },
     }),

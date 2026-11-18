@@ -23,7 +23,7 @@ describe(ManagedChildIndexer.name, () => {
       new TestIndexer({ ...common, name: 'a' }, Logger.SILENT)
       expect(() => {
         new TestIndexer({ ...common, name: 'a' }, Logger.SILENT)
-      }).toThrow('Indexer id a is duplicated!')
+      }).toThrow('Indexer id is duplicated')
     })
   })
 

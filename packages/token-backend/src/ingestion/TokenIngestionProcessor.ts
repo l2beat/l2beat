@@ -565,7 +565,8 @@ export class TokenIngestionProcessor {
     )
     if (!transfer) {
       throw new Error(
-        `Supporting transfer ${source.match.sampleTransferId} no longer exists; the interop transfer index is stale`,
+        'Supporting transfer no longer exists; the interop transfer index is stale',
+        { cause: { sampleTransferId: source.match.sampleTransferId } },
       )
     }
     return nonSwappingTransferProof(transfer)
