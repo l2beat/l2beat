@@ -6706,6 +6706,7 @@
       "symbol": "FLUID",
       "address": "0x61e030a56d33e8260fdd81f03b162a79fe3449cd",
       "coingeckoId": "instadapp",
+      "deploymentTimestamp": 1746090553,
       "category": "other",
       "source": "external",
       "supply": "totalSupply",
