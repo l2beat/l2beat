@@ -14,8 +14,8 @@ export interface LiquidStakingSnapshotRecord {
   lastRequestId: number | null
   lastFinalizedRequestId: number | null
   /** The same counters of a queue the protocol has replaced (StakeWise). It still holds requests, paid apart from the new queue's. */
-  retiredLastRequestId?: number | null
-  retiredLastFinalizedRequestId?: number | null
+  retiredLastRequestId: number | null
+  retiredLastFinalizedRequestId: number | null
   /** ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei. */
   instantExitEth: bigint | null
   /** The instant exit's fee, basis points. */

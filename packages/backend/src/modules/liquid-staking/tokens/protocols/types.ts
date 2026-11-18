@@ -7,6 +7,8 @@ export type LiquidStakingState = Pick<
   | 'exchangeRate'
   | 'lastRequestId'
   | 'lastFinalizedRequestId'
+  | 'retiredLastRequestId'
+  | 'retiredLastFinalizedRequestId'
   | 'instantExitEth'
   | 'instantExitFeeBps'
   | 'lockTime'
@@ -39,6 +41,8 @@ export function protocolReads<K extends string>(
 export const EMPTY_EXIT = {
   lastRequestId: null,
   lastFinalizedRequestId: null,
+  retiredLastRequestId: null,
+  retiredLastFinalizedRequestId: null,
   instantExitEth: null,
   instantExitFeeBps: null,
   lockTime: null,
