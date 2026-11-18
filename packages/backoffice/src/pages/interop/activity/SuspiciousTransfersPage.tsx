@@ -42,9 +42,8 @@ export function SuspiciousTransfersPage() {
   const response: SuspiciousTransfersResponse | undefined =
     suspiciousTransfersData
   const rows: SuspiciousTransferRow[] = response?.items ?? []
-  const valueDiffThresholdPercent = response?.valueDiffThresholdPercent ?? 15
-  const minimumSideValueUsdThreshold =
-    response?.minimumSideValueUsdThreshold ?? 50
+  const minimumLargerSideValueUsd = response?.minimumLargerSideValueUsd
+  const minimumValueRatio = response?.minimumValueRatio
   const chains = chainsData ?? []
   const explorerUrlsByChain = new Map(
     chains.flatMap((chain) =>
@@ -68,7 +67,7 @@ export function SuspiciousTransfersPage() {
   return (
     <TablePageLayout
       title="Suspicious transfers"
-      description="Value-mismatch transfers migrated from the legacy anomalies page."
+      description="Value-mismatch transfers that trigger the Discord suspicious-transfer alert."
       actions={
         <>
           <TransferDataRangeSelect
@@ -97,10 +96,10 @@ export function SuspiciousTransfersPage() {
         <>
           <Badge variant="secondary">{rows.length} flagged transfers</Badge>
           <Badge variant="secondary">
-            {'>'} {valueDiffThresholdPercent.toFixed(2)}% diff
+            {'≥'} {formatDollars(minimumLargerSideValueUsd)} larger side
           </Badge>
           <Badge variant="secondary">
-            {formatDollars(minimumSideValueUsdThreshold)} min side value
+            {'≥'} {minimumValueRatio ?? '-'}x value ratio
           </Badge>
           <Badge variant="secondary">
             {formatDollars(totalSrcValue)} total source value
@@ -128,7 +127,6 @@ export function SuspiciousTransfersPage() {
         <SuspiciousTransfersTable
           data={rows}
           getExplorerUrl={(chain) => explorerUrlsByChain.get(chain)}
-          valueDiffThresholdPercent={valueDiffThresholdPercent}
           enableCsvExport
           highlightTransferId={highlightTransferId}
         />
