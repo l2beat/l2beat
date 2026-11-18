@@ -6732,6 +6732,7 @@
       "symbol": "LAPTOP",
       "address": "0xb095274743941e953c746f9c228da9c18bb6ec29",
       "coingeckoId": "hunter-biden-s-laptop-3",
+      "deploymentTimestamp": 1788962400,
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"
