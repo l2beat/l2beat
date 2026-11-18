@@ -1,0 +1,116 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessControlManager",
+  "category": "gov",
+  "description": "Central role and pause registry for one staking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits {{coreMethodsPaused}}, bot functions {{botMethodsPaused}}, operator functions {{operatorMethodsPaused}}, withdrawals {{withdrawalsPaused}}.",
+  "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "PLATFORM_ADMIN"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x4ff52032f36e32ac782042a01802e20394d4255c84a3c046490be98ab632691b": "PLATFORM_ADMIN",
+          "0x902cbe3a02736af9827fb6a90bada39e955c0941e08f0c63b3a662a7b17a4e2b": "BOT",
+          "0x2d75377dcb6dd2e926b45cf6146dc2d7b3733f67c9846fef3fefd0e32c3c74e4": "REPRICER",
+          "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c": "PAUSER",
+          "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448": "UNPAUSER",
+          "0xf9684f0897a6401e489bf73554930da5b5a20193e61dc1e6c9df178a61ae1994": "DELETE_ACTIVE_VALIDATORS",
+          "0x549433fa03f8bf67fba86db288fa1a7305349c38832642a8e4f463d1792adddb": "PROCESS_WITHDRAWALS"
+        }
+      }
+    },
+    "defaultAdminAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke every role of the system except the bot role."
+        }
+      ]
+    },
+    "platformAdminAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PLATFORM_ADMIN",
+        "roleNames": {
+          "0x4ff52032f36e32ac782042a01802e20394d4255c84a3c046490be98ab632691b": "PLATFORM_ADMIN"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the token, exit queue, deposit manager, operator registry and treasury addresses that every contract resolves through this registry; set the reprice bounds, fees and withdrawal limits; enable the whitelist; grant or revoke the bot role."
+        }
+      ]
+    },
+    "botAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "BOT",
+        "roleNames": {
+          "0x902cbe3a02736af9827fb6a90bada39e955c0941e08f0c63b3a662a7b17a4e2b": "BOT"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "report validator balances and rewards, which reprices the token within the token's per-update bound and mints the fee shares; process the exit queue up to any request; choose which node operators' next registered keys receive deposits and move ETH between the system's contracts."
+        }
+      ]
+    },
+    "pauserAC": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSER",
+        "roleNames": {
+          "0x539440820030c4994db4e31b6b800deafd503688728f932addfe7a410515c14c": "PAUSER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay."
+        }
+      ]
+    },
+    "unpauserAC": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "UNPAUSER",
+        "roleNames": {
+          "0x82b32d9ab5100db08aeb9a0e08b422d14851ec118736590462bf9c085a6e9448": "UNPAUSER"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "lift any pause, with no delay."
+        }
+      ]
+    },
+    "deleteActiveValidatorsAC": {
+      "severity": "LOW",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DELETE_ACTIVE_VALIDATORS",
+        "roleNames": {
+          "0xf9684f0897a6401e489bf73554930da5b5a20193e61dc1e6c9df178a61ae1994": "DELETE_ACTIVE_VALIDATORS"
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove validator records from the operator registry, which changes how operator fees are split; no ETH moves."
+        }
+      ]
+    }
+  }
+}

@@ -61,6 +61,7 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { sweth } from '../projects/sweth/sweth'
 import { tacitPay } from '../projects/tacit-pay/tacit-pay'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
@@ -149,6 +150,7 @@ export const refactored: BaseProject[] = [
   wbeth,
   stakewise,
   cbeth,
+  sweth,
   polymarket,
   rocketpool,
   safe,

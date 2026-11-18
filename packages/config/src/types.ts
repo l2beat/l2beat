@@ -2098,6 +2098,12 @@ export type ProjectLiquidStakingContracts =
       redeemer: ChainSpecificAddress
       previousRedeemer: ChainSpecificAddress
     }
+  | {
+      type: 'sweth'
+      swETH: ChainSpecificAddress
+      /** swEXIT. Its request counters give the queue wait. */
+      exitQueue: ChainSpecificAddress
+    }
 
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =
