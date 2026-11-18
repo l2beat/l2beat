@@ -125,8 +125,8 @@ const SETTLE_SECONDS = 3 * UnixTime.DAY
 
 /**
  * When to stop waiting for Dune to have the whole of `day`. Until then an
- * indexer waits; from then it stores the day as what it is, partial or missing,
- * so the days after it aren't held back.
+ * indexer waits; from then it goes on with what Dune has, so a day Dune never
+ * loads doesn't hold back the days after it.
  */
 export function settlesAt(day: UnixTime): UnixTime {
   return UnixTime(day + UnixTime.DAY + SETTLE_SECONDS)

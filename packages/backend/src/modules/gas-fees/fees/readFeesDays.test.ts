@@ -81,10 +81,10 @@ describe(joinFeesDays.name, () => {
       expect(stored(whole)).toEqual([1, 1, 1])
     })
 
-    it('refuses a day whose fee rows come from fewer blocks than had transactions', () => {
-      expect(stored(withDay('2026-10-02', { blocks_with_txs: 95 }))).toEqual([
-        1, 0, 1,
-      ])
+    it('refuses a day whose fee rows used less gas than its blocks', () => {
+      expect(stored(withDay('2026-10-02', { gas_used: 1e9 + 21_000 }))).toEqual(
+        [1, 0, 1],
+      )
     })
 
     it('refuses a day with a block missing inside it', () => {
@@ -160,10 +160,22 @@ describe(joinFeesDays.name, () => {
       expect(days.map((d) => d.records.length)).toEqual([1])
     })
 
+    it('refuses the earliest day read unless it starts the chain', () => {
+      // 1 Oct starts at block 50 with no earlier day to follow
+      const cut = withDay('2026-10-01', { blocks: 50, first_block: 50 })
+
+      expect(stored(cut)).toEqual([0, 1, 1])
+    })
+
     it('refuses a day of a chain read from transactions when a block has none', () => {
-      expect(stored(whole, { ...zksync, gasFromTransactions: true })).toEqual([
-        0, 0, 0,
-      ])
+      const fromTransactions = { ...zksync, gasFromTransactions: true as const }
+      const all = whole.map((row) => ({ ...row, tx_blocks: 100 }))
+      const short = all.map((row) =>
+        row.day === '2026-10-02' ? { ...row, tx_blocks: 99 } : row,
+      )
+
+      expect(stored(all, fromTransactions)).toEqual([1, 1, 1])
+      expect(stored(short, fromTransactions)).toEqual([1, 0, 1])
     })
   })
 })
@@ -181,7 +193,7 @@ describe('joinFeesDays on what Dune had', () => {
     )
 
   it('Taiko, June 2026: a halt from the 22nd to the 30th, and fee rows missing on the 22nd', () => {
-    // Block counts, ranges and fee_blocks as read from Dune on 17 Nov 2026
+    // Block counts, ranges and gas as read from Dune in November 2026
     const taiko: GasFeesChain = {
       id: 'taiko',
       dune: 'taiko',
@@ -189,36 +201,33 @@ describe('joinFeesDays on what Dune had', () => {
     }
     const blockRows = (
       [
-        ['2026-06-18', 34_469, 7_975_057, 8_009_525],
-        ['2026-06-19', 33_187, 8_009_526, 8_042_712],
-        ['2026-06-20', 33_446, 8_042_713, 8_076_158],
-        ['2026-06-21', 29_954, 8_076_159, 8_106_112],
-        ['2026-06-22', 3_896, 8_106_113, 8_110_008],
+        ['2026-06-18', 34_469, 7_975_057, 8_009_525, 4_589_427_921],
+        ['2026-06-19', 33_187, 8_009_526, 8_042_712, 4_357_157_516],
+        ['2026-06-20', 33_446, 8_042_713, 8_076_158, 4_386_826_736],
+        ['2026-06-21', 29_954, 8_076_159, 8_106_112, 3_907_623_841],
+        ['2026-06-22', 3_896, 8_106_113, 8_110_008, 480_112_545],
         // No blocks until the 30th, which carries on from the 22nd
-        ['2026-06-30', 33_140, 8_110_009, 8_143_148],
-        ['2026-07-01', 43_151, 8_143_149, 8_186_299],
-        ['2026-07-02', 43_140, 8_186_300, 8_229_439],
+        ['2026-06-30', 33_140, 8_110_009, 8_143_148, 5_008_752_320],
+        ['2026-07-01', 43_151, 8_143_149, 8_186_299, null],
+        ['2026-07-02', 43_140, 8_186_300, 8_229_439, null],
       ] as const
-    ).map(([day, count, first, last]) =>
+    ).map(([day, count, first, last, gas]) =>
       blocks('taiko', day, {
         blocks: count,
-        blocks_with_txs: count,
         first_block: first,
         last_block: last,
+        gas_used: gas,
       }),
     )
     const feeRows = (
       [
-        ['2026-06-20', 33_446],
-        ['2026-06-21', 29_954],
-        // gas.fees has rows from 2,467 of the day's 3,896 blocks
-        ['2026-06-22', 2_467],
-        ['2026-06-30', 33_140],
+        ['2026-06-20', 4_386_826_736],
+        ['2026-06-21', 3_907_623_841],
+        // gas.fees has 2,842 of the day's 4,549 transactions
+        ['2026-06-22', 302_778_838],
+        ['2026-06-30', 5_008_752_320],
       ] as const
-    ).map(([day, feeBlocks]) => ({
-      ...fees('taiko', day),
-      fee_blocks: feeBlocks,
-    }))
+    ).map(([day, gas]) => ({ ...fees('taiko', day), gas_used: gas }))
 
     expect(
       stored([taiko], '2026-06-20', '2026-06-30', feeRows, blockRows),
@@ -247,10 +256,9 @@ describe('joinFeesDays on what Dune had', () => {
       requiredFrom: date('2025-01-27'),
     }))
     const day = (chain: string, day: string, first: number, count: number) => ({
-      fee: { ...fees(chain, day), fee_blocks: count },
+      fee: fees(chain, day),
       block: blocks(chain, day, {
         blocks: count,
-        blocks_with_txs: count,
         first_block: first,
         last_block: first + count - 1,
       }),
@@ -289,11 +297,11 @@ function fees(blockchain: string, day: string): FeesRow {
     l1_fee: 0.1,
     blob_fee: 0,
     median_fee_usd: null,
-    fee_blocks: 90,
+    gas_used: 1e9,
   }
 }
 
-/** 100 blocks a day from block 0 on 2026-10-01, 90 of them with transactions */
+/** 100 blocks a day from block 0 on 2026-10-01 */
 function blocks(
   blockchain: string,
   day: string,
@@ -305,7 +313,7 @@ function blocks(
     day,
     base_fee: 0.5,
     gas_used: 1e9,
-    blocks_with_txs: 90,
+    tx_blocks: null,
     blocks: 100,
     first_block: first,
     last_block: first + 99,

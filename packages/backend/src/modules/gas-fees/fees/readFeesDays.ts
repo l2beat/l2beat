@@ -16,19 +16,19 @@ const FeesRow = v.object({
   l1_fee: v.number(),
   blob_fee: v.number(),
   median_fee_usd: v.union([v.number(), v.null()]),
-  /** Blocks the day's fee rows come from */
-  fee_blocks: v.number(),
+  /** Gas used by the day's fee rows */
+  gas_used: v.number(),
 })
 export type FeesRow = v.infer<typeof FeesRow>
 
 const BlocksRow = v.object({
   blockchain: v.string(),
   day: v.string(),
-  /** The three below are null on a neighbour day of a chain read from transactions, which is read only for its block range */
+  /** The two below are null on a neighbour day of a chain read from transactions, which is read only for its block range */
   base_fee: v.union([v.number(), v.null()]),
   gas_used: v.union([v.number(), v.null()]),
-  /** Blocks of the day that had transactions */
-  blocks_with_txs: v.union([v.number(), v.null()]),
+  /** Blocks its transactions come from. Only of a chain read from transactions */
+  tx_blocks: v.union([v.number(), v.null()]),
   /** From the chain's blocks table */
   blocks: v.number(),
   first_block: v.number(),
@@ -126,29 +126,34 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
  * - no block is missing within the day;
  * - a later day has blocks, and its first follows the day's last, so the blocks
  *   table has the day to its end;
- * - the day's first block follows the last of the earlier day read, if any.
- *   Unchecked, a hole across midnight would be stored on the day after it;
- * - the fee rows come from every block that had transactions, so the fee table
- *   has loaded all the blocks table has.
+ * - the day's first block follows the last of the earlier day read. Unchecked,
+ *   a hole across midnight would be stored on the day after it. With no earlier
+ *   day within the days read, the day has to start the chain;
+ * - the fee rows used as much gas as the day's blocks did, so the fee table has
+ *   every transaction. Counting blocks is not enough: Dune had Abstract's
+ *   19 June 2026 with 7 of 245,226 transactions missing.
  *
  * A hole at a day's edge keeps both days out: which of them lost the blocks can't be told.
- * On the year checked, the block checks held on every day of all 12 chains.
+ * On the year checked, the block checks held on every day of all 12 chains, and
+ * the gas of 249 of the 252 chain-days sampled matched.
  */
 function toWholeDay(
   chain: GasFeesChain,
   fee: FeesRow,
   { row, earlier, later }: BlocksDay,
 ): Omit<GasFeesDailyRecord, 'timestamp'> | undefined {
-  if (row.gas_used === null || row.blocks_with_txs === null || !later) {
-    return undefined
-  }
+  if (row.gas_used === null || !later) return undefined
   const whole =
-    fee.fee_blocks === row.blocks_with_txs &&
-    // On the days checked every block of a chain read from transactions had one
-    (!chain.gasFromTransactions || row.blocks_with_txs === row.blocks) &&
+    // Sums of whole numbers far below 2^53, so exact as doubles
+    fee.gas_used === row.gas_used &&
+    // Gas read from transactions can't show that table is whole. Its blocks can:
+    // on the days checked every block of such a chain had a transaction
+    (!chain.gasFromTransactions || row.tx_blocks === row.blocks) &&
     row.last_block - row.first_block + 1 === row.blocks &&
     later.first_block === row.last_block + 1 &&
-    (!earlier || earlier.last_block + 1 === row.first_block)
+    (earlier
+      ? earlier.last_block + 1 === row.first_block
+      : row.first_block <= 1)
   if (!whole) return undefined
   return {
     chain: chain.id,
