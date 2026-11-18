@@ -1,7 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  CoingeckoId,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -377,6 +383,53 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         'l2b-circulating-supply',
       )
     })
+  })
+
+  // Same reproduction as for prices: the provider returns a bad supply for an
+  // hour that COINGECKO_CORRECTIONS covers, and the saved amount has to be the
+  // corrected one. Uses whichever supply correction comes first.
+  it('saves the corrected supply for an hour CoinGecko got wrong', async () => {
+    const correction = COINGECKO_CORRECTIONS.find(
+      (c) => c.field === 'circulatingSupply',
+    )
+    assert(correction, 'No supply correction to test with')
+    const corrected = correction.points[0]
+    const timestamp = UnixTime.fromDate(new Date(corrected.at))
+    const configs = [config('config-1', correction.coingeckoId, 18)]
+
+    const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+    const indexer = new CirculatingSupplyAmountIndexer(
+      {
+        configurations: configs,
+        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
+          getAdjustedTo: mockFn().returnsOnce(timestamp),
+          getCirculatingSupplies: mockFn().returnsOnce([
+            { timestamp, value: corrected.value * 2 },
+          ]),
+        }),
+        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
+        syncOptimizer: mockObject<SyncOptimizer>({
+          getTimestampsToSync: mockFn().returnsOnce([timestamp]),
+          shouldTimestampBeSynced: mockFn().returns(true),
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(timestamp, timestamp, configs)
+    await save()
+
+    expect(tvsAmountRepository.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        timestamp,
+        amount: BigInt(corrected.value * 10 ** 18),
+      },
+    ])
   })
 
   beforeEach(() => {

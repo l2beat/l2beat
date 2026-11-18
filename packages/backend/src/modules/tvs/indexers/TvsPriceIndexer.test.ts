@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database, TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { assert, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -297,6 +298,53 @@ describe(TvsPriceIndexer.name, () => {
         },
       ])
     })
+  })
+
+  // Reproduces a wrong price reaching the database: the provider returns a
+  // bad value for an hour that COINGECKO_CORRECTIONS covers, and the saved
+  // record has to carry the corrected value. Uses whichever price correction
+  // comes first, so it holds as the list changes.
+  it('saves the corrected price for an hour CoinGecko got wrong', async () => {
+    const correction = COINGECKO_CORRECTIONS.find((c) => c.field === 'price')
+    assert(correction, 'No price correction to test with')
+    const corrected = correction.points[0]
+    const timestamp = UnixTime.fromDate(new Date(corrected.at))
+    const configs = [config('config-1', correction.coingeckoId)]
+
+    const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+    const indexer = new TvsPriceIndexer(
+      {
+        configurations: configs,
+        priceProvider: mockObject<PriceProvider>({
+          getAdjustedTo: mockFn().returnsOnce(timestamp),
+          getUsdPriceHistoryHourly: mockFn().returnsOnce([
+            { timestamp, value: corrected.value * 10 },
+          ]),
+        }),
+        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        syncOptimizer: mockObject<SyncOptimizer>({
+          getTimestampsToSync: mockFn().returnsOnce([timestamp]),
+          shouldTimestampBeSynced: mockFn().returns(true),
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(timestamp, timestamp, configs)
+    await save()
+
+    expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        timestamp,
+        priceUsd: corrected.value,
+        priceId: correction.coingeckoId,
+      },
+    ])
   })
 
   beforeEach(() => {

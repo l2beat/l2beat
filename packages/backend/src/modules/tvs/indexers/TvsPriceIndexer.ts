@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
@@ -11,6 +12,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { applyCoingeckoCorrections } from '../tools/coingeckoCorrections'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
 
@@ -61,10 +63,15 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       await Promise.all(
         configurations.map(async (configuration) => {
           try {
-            const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-              CoingeckoId(configuration.properties.priceId),
-              UnixTime(from),
-              adjustedTo,
+            const prices = applyCoingeckoCorrections(
+              COINGECKO_CORRECTIONS,
+              'price',
+              configuration.properties.priceId,
+              await this.$.priceProvider.getUsdPriceHistoryHourly(
+                CoingeckoId(configuration.properties.priceId),
+                UnixTime(from),
+                adjustedTo,
+              ),
             )
             const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
               configurationId: configuration.id,

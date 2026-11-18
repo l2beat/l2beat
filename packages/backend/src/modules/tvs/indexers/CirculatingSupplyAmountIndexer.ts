@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
@@ -12,6 +13,7 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import { applyCoingeckoCorrections } from '../tools/coingeckoCorrections'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 export interface CirculatingSupplyAmountIndexerDeps
@@ -64,11 +66,15 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
       await Promise.all(
         configurations.map(async (configuration) => {
           try {
-            const supplies =
+            const supplies = applyCoingeckoCorrections(
+              COINGECKO_CORRECTIONS,
+              'circulatingSupply',
+              configuration.properties.apiId,
               await this.$.circulatingSupplyProvider.getCirculatingSupplies(
                 CoingeckoId(configuration.properties.apiId),
                 { from: from, to: adjustedTo },
-              )
+              ),
+            )
 
             // defense in depth: a non-finite value would crash the BigInt
             // conversion below and halt the whole indexer
