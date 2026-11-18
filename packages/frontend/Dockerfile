@@ -2,8 +2,9 @@
 # check=skip=SecretsUsedInArgOrEnv
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
+ARG NPM_VERSION="^11.21.2"
 
-FROM node:24.22.1 AS pruner
+FROM node:24.22.3 AS pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
@@ -14,7 +15,7 @@ COPY . .
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/frontend
 
-FROM node:24.22.1 AS builder
+FROM node:24.22.3 AS builder
 ARG TURBO_TEAM
 ENV TURBO_TEAM=$TURBO_TEAM
 ARG COREPACK_VERSION
@@ -47,12 +48,17 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
   rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --store-dir /pnpm/store
 
-FROM node:24.22.1-slim AS release
+FROM node:24.22.3-slim AS release
+ARG NPM_VERSION
 
-# Install curl for healthcheck and create non-root user
-RUN apt update && \
-  apt install -y curl && \
-  apt clean && \
+# Patch the package manager bundled in Node separately from workspace dependencies.
+RUN npm install --global npm@${NPM_VERSION} && npm cache clean --force
+
+# Refresh available distro patches, install curl for healthcheck, and create non-root user
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y curl && \
+  apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
