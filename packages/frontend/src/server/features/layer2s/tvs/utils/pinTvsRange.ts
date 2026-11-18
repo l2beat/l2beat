@@ -14,6 +14,7 @@ export function pinTvsRange(
   if (pin === undefined || range[1] <= pin) {
     return range
   }
-  const shift = UnixTime.toStartOf(range[1] - pin, 'day')
+  const shift =
+    UnixTime.toStartOf(range[1], 'day') - UnixTime.toStartOf(pin, 'day')
   return [range[0] === null ? null : range[0] - shift, pin]
 }
