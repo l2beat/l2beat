@@ -91,6 +91,9 @@ export function getWindowStats(
   const sum = (get: (b: LiveBucket) => number) =>
     inWindow.reduce((total, b) => total + get(b), 0)
   return {
+    /** Where the buckets the figures come from start and end */
+    from: inWindow[0]?.start ?? from,
+    to: (inWindow.at(-1)?.start ?? to - bucket) + bucket,
     rate: sum((b) => b.value ?? 0) / inWindow.length,
     blocksPerMinute: (sum((b) => b.blocks) / seconds) * 60,
     gasPerSecond: sum((b) => b.gas) / seconds,
@@ -132,7 +135,10 @@ export function withUsual<T extends { timestamp: number }>(
   })
 }
 
-/** The usual rate over the window: each hour's median, by how much of the window it covers */
+/**
+ * The usual rate over the window: each hour's median, by how much of the
+ * window it covers. None unless the past week has every hour of it
+ */
 export function getUsualRate(
   usual: UsualHour[],
   metric: ActivityMetric,
@@ -147,7 +153,9 @@ export function getUsualRate(
     total += u[metric].median * seconds
     covered += seconds
   }
-  return covered > 0 ? total / covered : undefined
+  // a rate measured over more than the past week has hours for compares
+  // with nothing
+  return covered > 0 && covered >= to - from ? total / covered : undefined
 }
 
 /** The value drawn at `timestamp`: of the last step starting at or before it */
