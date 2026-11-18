@@ -4,6 +4,7 @@ import {
   getLinkStyle,
   getNodeOpacity,
   getNodeRingOpacity,
+  nodeVisualScreenScale,
   type RelationGraphViewState,
 } from './relationGraphCanvas'
 import {
@@ -232,6 +233,14 @@ describe(getNodeRingOpacity.name, () => {
 
   it('hides the ring otherwise', () => {
     expect(getNodeRingOpacity(node, styleInputs({}))).toEqual(0)
+  })
+})
+
+describe(nodeVisualScreenScale.name, () => {
+  it('scales nodes with the world until they reach constant screen size', () => {
+    expect(nodeVisualScreenScale(0.5)).toEqual(0.5)
+    expect(nodeVisualScreenScale(1.2)).toEqual(1.2)
+    expect(nodeVisualScreenScale(4)).toEqual(1.2)
   })
 })
 
