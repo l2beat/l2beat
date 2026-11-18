@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { sql } from 'kysely'
 import { BaseRepository } from './BaseRepository'
 import type { Database } from './database'
 import { describeDatabase } from './test/database'
@@ -70,6 +71,17 @@ describeDatabase(BaseRepository.name, (db) => {
       })
       const results = await repository.getAll()
       expect(results).toEqual([1, 2])
+    })
+
+    it('runs at the isolation level it asks for', async () => {
+      const level = await db.transaction(async () => {
+        const { rows } = await sql<{
+          transaction_isolation: string
+        }>`SHOW transaction_isolation`.execute(db.activity['client'].db)
+        return rows[0]?.transaction_isolation
+      }, 'repeatable read')
+
+      expect(level).toEqual('repeatable read')
     })
 
     it('rollbacks inside a transaction', async () => {

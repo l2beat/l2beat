@@ -45,10 +45,11 @@ export class DatabaseClient {
       // TODO: consider checking for isolation levels in the future
       return cb()
     }
-    const tx = this.kysely.transaction()
-    if (isolationLevel !== undefined) {
-      tx.setIsolationLevel(isolationLevel)
-    }
+    // setIsolationLevel returns a new builder, leaving the one it is called on
+    const tx =
+      isolationLevel === undefined
+        ? this.kysely.transaction()
+        : this.kysely.transaction().setIsolationLevel(isolationLevel)
     return tx.execute((trx) => this.context.run(trx, cb))
   }
 
