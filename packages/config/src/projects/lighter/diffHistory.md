@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x15d614604346cd84a4f78a659c24453985ee97dd
+
+# Diff at Wed, 18 Nov 2026 13:02:31 GMT:
+
+- id: efc977ec
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794829260
+- current timestamp: 1795005121
+
+## Description
+
+Emergency upgrade of Lighter contract to stop ~$5M of hacked funds in the exit queue (https://disco.ethbeat.org/diff/eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f/eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f).
+
+Also, upgraded governance so upgrades clear pause state: https://disco.ethbeat.org/diff/eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43/eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80.
+
+## Watched changes
+
+```diff
+    contract L1CoreMessaging (eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) [lighter/L1CoreMessaging] {
+    +++ description: Entry point for all non-deposit L1 priority requests: users force withdrawals, orders, order cancellations, pool share burns and API key changes through it, and the network governor registers and updates assets, markets and the system config. Requests are validated here and appended to the priority queue of eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7, which accepts them only from this contract.
+      values.createdMarkets.1:
++        "ANT"
+    }
+```
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithCoreMessaging] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, keeps the priority queue (deposits are submitted here, all other L1 requests only through eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      sourceHashes.1:
+-        "0x80f076a3e553ee1ed01e5bdc4ed1257e8d33905f1a835cc85a32e586082e512d"
++        "0xab7e96eb43f2c53f7e8b2b14eb2a96994fb87c634a21e49c60d658247ded4f0a"
+      values.$implementation.0:
+-        "eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f"
++        "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f"
+      values.$pastUpgrades.25:
++        ["2026-11-16T17:50:59.000Z","0x68d0fc6274acbbacdac97074e05dd7cde056dcfb798a96fe93768d38b738b290",["eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f"]]
+      values.$upgradeCount:
+-        25
++        26
+      values.getTarget:
+-        "eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f"
++        "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f"
+      implementationNames.eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f:
+-        "ZkLighter"
+      implementationNames.eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f:
++        "ZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      values.versionId:
+-        80
++        81
+    }
+```
+
+```diff
+    contract Governance (eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1) [lighter/GovernancePausable] {
+    +++ description: Manages the list of validators, the network governor and the emergency pause guardians.
+      sourceHashes.1:
+-        "0x87a6efe7d369db405cf65a6d33bb772aae12a632406fb4533c845a4b4a2e8869"
++        "0x54124ce8dfe63677bd848871bb38f839e1ecad982742e3285c1a8348261ea45d"
+      values.$implementation:
+-        "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43"
++        "eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80"
+      values.$pastUpgrades.2:
++        ["2026-11-16T17:50:59.000Z","0x68d0fc6274acbbacdac97074e05dd7cde056dcfb798a96fe93768d38b738b290",["eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getTarget:
+-        "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43"
++        "eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80"
+      values.pauseGuardianState.startedAt:
+-        1794740819
++        0
+      values.pauseGuardianState.cooldownEndsAt:
+-        1794836087
++        0
+      implementationNames.eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43:
+-        "Governance"
+      implementationNames.eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80:
++        "Governance"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Governance/Governance.sol                      | 17 +++++++++
+ .../Lighter/ZkLighter.1.sol                        | 43 ++++++++++++++++------
+ 2 files changed, 48 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0x12e39896f1a9d7b4fc058b6b02562abf8a5f657f
 
 # Diff at Mon, 16 Nov 2026 11:42:07 GMT:

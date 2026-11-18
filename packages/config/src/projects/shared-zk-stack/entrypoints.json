@@ -111,7 +111,7 @@
       "project": "shared-zk-stack"
     },
     "eth:0x69462a81ba94D64c404575f1899a464F123497A2": {
-      "name": "GnosisSafe",
+      "name": "Safe",
       "type": "Contract",
       "project": "shared-zk-stack"
     },

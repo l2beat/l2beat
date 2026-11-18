@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x53d68096470e7b4bacdaf3cddf1a338a7d5bbe11
+
+# Diff at Wed, 18 Nov 2026 10:13:36 GMT:
+
+- id: 73c41e0e
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794319613
+- current timestamp: 1794996740
+
+## Description
+
+Validator `0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3` got upgrader role on the shared ValidatorTimelock.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_v31] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by at least 3h. Duration could be configured individually for zk stack chains by chain admins. All delays are capped at 30 days.
+      values.upgraderVTL.UPGRADER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"]}
+    }
+```
+
+```diff
+    EOA (eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","description":"Permissioned to call `upgradeChainFromVersion()` through the ValidatorTimelock, executing the protocol upgrade (diamond cut) of the main Diamond contract that is pre-approved for its current protocol version in the ChainTypeManager.","role":".upgraderVTL"}
+    }
+```
+
 Generated with discovered.json: 0x468771744af2cdc493da60fcc2cfcbdc9dc335dc
 
 # Diff at Mon, 16 Nov 2026 12:37:54 GMT:
