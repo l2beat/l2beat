@@ -54,7 +54,11 @@ function createLoop(walletServices: boolean) {
       gasUsedRatio: [],
       baseFeePerBlobGas: [],
       blobGasUsedRatio: [],
-      reward: [[1n, 2n, 3n]],
+      reward: [
+        [1n, 2n, 3n],
+        [1n, 2n, 3n],
+        [1n, 2n, 3n],
+      ],
     }),
     getMaxPriorityFeePerGas: mockFn().resolvesTo(1n),
   }

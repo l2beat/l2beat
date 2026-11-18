@@ -45,7 +45,6 @@ describe(joinFeesDays.name, () => {
             medianFeeUsd: null,
           },
         ],
-        missing: [],
       },
     ])
   })
@@ -60,7 +59,6 @@ describe(joinFeesDays.name, () => {
     )
 
     expect(days.map((d) => d.records.length)).toEqual([1, 0])
-    expect(days.map((d) => d.missing)).toEqual([[], ['zksync2', 'new']])
   })
 
   describe("a hole in Dune's data", () => {

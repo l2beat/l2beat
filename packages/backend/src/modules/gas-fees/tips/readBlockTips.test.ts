@@ -12,7 +12,7 @@ describe(readBlockTips.name, () => {
       ): Promise<EVMFeeHistory> => history(newest - count + 1, count),
     )
 
-    const tips = await readBlockTips({ getFeeHistory }, 1, 2000)
+    const tips = await readBlockTips({ getFeeHistory }, 1, 2000, [10, 25])
 
     expect(getFeeHistory.calls.map((c) => c.args)).toEqual([
       [1024, 2000, [10, 25]],
@@ -26,9 +26,17 @@ describe(readBlockTips.name, () => {
   it('fails when the node returns other blocks than asked', async () => {
     const getFeeHistory = mockFn().resolvesTo(history(5, 10))
 
-    await expect(readBlockTips({ getFeeHistory }, 1, 10)).toBeRejectedWith(
-      'Fee history malformed',
-    )
+    await expect(
+      readBlockTips({ getFeeHistory }, 1, 10, [10, 25]),
+    ).toBeRejectedWith('Fee history malformed')
+  })
+
+  it('fails on a block without a tip at every percentile', async () => {
+    const getFeeHistory = mockFn().resolvesTo(history(1, 10))
+
+    await expect(
+      readBlockTips({ getFeeHistory }, 1, 10, [10, 25, 50]),
+    ).toBeRejectedWith('Fee history malformed')
   })
 })
 

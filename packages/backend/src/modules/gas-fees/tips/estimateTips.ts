@@ -56,11 +56,18 @@ function tierTip(
   const column = BLOCK_PERCENTILES.indexOf(rule.blockPercentile)
   const values = blockTips
     .slice(-rule.blocks)
-    .map((row) => row[column] ?? 0)
+    .map((row) => required(row[column]))
     .sort((a, b) => a - b)
   const index = Math.min(
     values.length - 1,
     Math.floor(rule.share * values.length),
   )
-  return Math.max(tierBelow, values[index] ?? 0)
+  return Math.max(tierBelow, required(values[index]))
+}
+
+function required(tip: number | undefined): number {
+  if (tip === undefined) {
+    throw new Error('Block tips lack a percentile')
+  }
+  return tip
 }
