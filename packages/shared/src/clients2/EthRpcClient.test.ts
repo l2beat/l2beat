@@ -270,7 +270,10 @@ describe(EthRpcClient.name, () => {
       { to: EthereumAddress.random(), input: '0xdeadbeef' },
       'latest',
     )
-    expect(result).toEqual({ reverted: true })
+    expect(result).toEqual({
+      reverted: true,
+      reason: 'RPC call failed. RPC code: 3, message: execution reverted',
+    })
   })
 
   it('eth_call revert #2', async () => {
@@ -281,7 +284,10 @@ describe(EthRpcClient.name, () => {
       { to: EthereumAddress.random(), input: '0xdeadbeef' },
       'latest',
     )
-    expect(result).toEqual({ reverted: true })
+    expect(result).toEqual({
+      reverted: true,
+      reason: 'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
+    })
   })
 
   it('eth_call fail', async () => {

@@ -119,7 +119,9 @@ export class EthRpcClient {
   async call(
     transaction: TransactionParameter,
     block: BlockParameter,
-  ): Promise<{ reverted: false; data: string } | { reverted: true }> {
+  ): Promise<
+    { reverted: false; data: string } | { reverted: true; reason: string }
+  > {
     let data: unknown
     try {
       data = await this.rawCall('eth_call', [
@@ -128,7 +130,7 @@ export class EthRpcClient {
       ])
     } catch (e) {
       if (isRevert(e)) {
-        return { reverted: true }
+        return { reverted: true, reason: e.message }
       }
       throw e
     }
@@ -139,7 +141,9 @@ export class EthRpcClient {
   async estimateGas(
     transaction: TransactionParameter,
     block: BlockParameter,
-  ): Promise<{ reverted: false; gas: bigint } | { reverted: true }> {
+  ): Promise<
+    { reverted: false; gas: bigint } | { reverted: true; reason: string }
+  > {
     let data: unknown
     try {
       data = await this.rawCall('eth_estimateGas', [
@@ -148,7 +152,7 @@ export class EthRpcClient {
       ])
     } catch (e) {
       if (isRevert(e)) {
-        return { reverted: true }
+        return { reverted: true, reason: e.message }
       }
       throw e
     }
