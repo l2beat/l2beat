@@ -7,7 +7,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { getDayBlocks, getHourlyTips } from '../dayInputs'
-import { DuneDayWait, isSettled, nextDays } from '../days'
+import { DuneDayWait, nextDays, settlesAt } from '../days'
 import type { BlockFinder } from '../types'
 import type { TipPayersDayQueryInput } from './getTipPayersDayQuery'
 import type { TipPayersDay } from './readTipPayersDay'
@@ -55,45 +55,54 @@ export class GasFeesTipPayersIndexer extends ManagedChildIndexer {
     if (day === undefined) return to
     const now = this.$.now?.() ?? UnixTime.now()
 
-    return await this.waits.run(day, now, async (wait) => {
-      const [hourlyTips, blocks] = await Promise.all([
-        getHourlyTips(this.$.db, day, day),
-        getDayBlocks(this.$.blockFinder, day),
-      ])
-      // The day's price is the mean of our hourly Chainlink reads, as the methodology's is a mean of reads
-      const ethUsd = mean(hourlyTips.map((hour) => hour.ethUsd))
-      const fastTipGwei = mean(hourlyTips.map((hour) => hour.fastTipGwei))
-      const tips = await this.$.readTipPayersDay({
-        day,
-        ...blocks,
-        fastTipGwei,
-      })
-      if (!tips.whole && !isSettled(day, now)) {
-        return wait({ day, ...tips.check })
-      }
-
-      if (tips.whole) {
-        await this.$.db.gasFeesTipPayersDaily.upsert({
-          timestamp: day,
-          status: 'complete',
-          ethUsd,
-          fastTipGwei,
-          ...tips.figures,
-        })
-        this.logger.info('Saved tip payers day', { day })
-      } else {
-        // Never as partial totals
-        await this.$.db.gasFeesTipPayersDaily.upsert({
-          timestamp: day,
-          status: 'missing',
-        })
-        this.logger.warn('Saved missing tip payers day', {
+    return await this.waits.run(
+      day,
+      now,
+      async (wait) => {
+        const [hourlyTips, blocks] = await Promise.all([
+          getHourlyTips(
+            this.$.db,
+            day,
+            UnixTime(day + UnixTime.DAY - UnixTime.HOUR),
+          ),
+          getDayBlocks(this.$.blockFinder, day),
+        ])
+        // The day's price is the mean of our hourly Chainlink reads, as the methodology's is a mean of reads
+        const ethUsd = mean(hourlyTips.map((hour) => hour.ethUsd))
+        const fastTipGwei = mean(hourlyTips.map((hour) => hour.fastTipGwei))
+        const tips = await this.$.readTipPayersDay({
           day,
-          ...tips.check,
+          ...blocks,
+          fastTipGwei,
         })
-      }
-      return day + UnixTime.DAY
-    })
+        if (!tips.whole && now < settlesAt(day)) {
+          return wait({ day, ...tips.check })
+        }
+
+        if (tips.whole) {
+          await this.$.db.gasFeesTipPayersDaily.upsert({
+            timestamp: day,
+            status: 'complete',
+            ethUsd,
+            fastTipGwei,
+            ...tips.figures,
+          })
+          this.logger.info('Saved tip payers day', { day })
+        } else {
+          // Never as partial totals
+          await this.$.db.gasFeesTipPayersDaily.upsert({
+            timestamp: day,
+            status: 'missing',
+          })
+          this.logger.warn('Saved missing tip payers day', {
+            day,
+            ...tips.check,
+          })
+        }
+        return day + UnixTime.DAY
+      },
+      settlesAt(day),
+    )
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

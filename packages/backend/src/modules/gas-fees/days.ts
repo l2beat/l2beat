@@ -124,10 +124,10 @@ export class DuneDayWait {
 const SETTLE_SECONDS = 3 * UnixTime.DAY
 
 /**
- * Whether to stop waiting for Dune to have the whole of `day`. Until then an
- * indexer waits; after, it stores the day as what it is, partial or missing,
+ * When to stop waiting for Dune to have the whole of `day`. Until then an
+ * indexer waits; from then it stores the day as what it is, partial or missing,
  * so the days after it aren't held back.
  */
-export function isSettled(day: UnixTime, now: UnixTime): boolean {
-  return now >= day + UnixTime.DAY + SETTLE_SECONDS
+export function settlesAt(day: UnixTime): UnixTime {
+  return UnixTime(day + UnixTime.DAY + SETTLE_SECONDS)
 }

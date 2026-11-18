@@ -23,9 +23,10 @@ describe(GasFeesMempoolIndexer.name, () => {
     const { indexer, mempool, readMempoolDay, tipHourly } = createIndexer()
 
     expect(await indexer.update(day + 1, next + 5 * UnixTime.DAY)).toEqual(next)
+    // From the day before, as some were first seen then, to the hour after the day
     expect(tipHourly.getInRange).toHaveBeenOnlyCalledWith(
       UnixTime(day - UnixTime.DAY),
-      UnixTime(next - UnixTime.HOUR),
+      next,
     )
     // Block numbers stand in for the timestamps they were looked up for
     expect(readMempoolDay.calls[0]?.args[0]).toEqual({
@@ -33,7 +34,7 @@ describe(GasFeesMempoolIndexer.name, () => {
       previousDayFirstBlock: day - UnixTime.DAY + 1,
       firstBlock: day + 1,
       lastBlock: next,
-      hourlyTips: HOURS,
+      hourlyTips: hours(UnixTime(day - UnixTime.DAY), next),
     })
     expect(mempool.replaceDay.calls[0]?.args[0].day).toEqual({
       timestamp: day,
@@ -90,6 +91,24 @@ describe(GasFeesMempoolIndexer.name, () => {
     expect(readMempoolDay).not.toHaveBeenCalled()
   })
 
+  it('reads a thin day again when it settles, though read less than 6 hours before', async () => {
+    const settles = UnixTime(next + 3 * UnixTime.DAY)
+    let now = UnixTime(settles - UnixTime.HOUR)
+    const { indexer, mempool, readMempoolDay } = createIndexer({
+      flashbots: 2000,
+      now: () => now,
+    })
+
+    await expect(indexer.update(day + 1, next)).toBeRejectedWith(
+      'Mempool day incomplete on Dune',
+    )
+    now = settles
+    expect(await indexer.update(day + 1, next)).toEqual(next)
+
+    expect(readMempoolDay).toHaveBeenCalledTimes(2)
+    expect(mempool.replaceDay.calls[0]?.args[0].day.status).toEqual('partial')
+  })
+
   it('stores a settled day Dune never got as missing, without waits', async () => {
     const { indexer, mempool } = createIndexer({
       landed: 0,
@@ -110,7 +129,9 @@ describe(GasFeesMempoolIndexer.name, () => {
       replaceDay: mockFn().resolvesTo(undefined),
     })
     const tipHourly = mockObject<Database['gasFeesTipHourly']>({
-      getInRange: mockFn().resolvesTo(HOURS),
+      getInRange: mockFn(async (from: UnixTime, to: UnixTime) =>
+        hours(from, to),
+      ),
     })
     const readMempoolDay = mockFn().resolvesTo({
       landedCount: options.landed ?? 1000,
@@ -148,17 +169,17 @@ describe(GasFeesMempoolIndexer.name, () => {
     }
   }
 
-  const HOURS: GasFeesTipHourlyRecord[] = Array.from(
-    { length: 24 },
-    (_, h) => ({
-      timestamp: UnixTime(day + h * UnixTime.HOUR),
+  function hours(from: UnixTime, to: UnixTime): GasFeesTipHourlyRecord[] {
+    const count = (to - from) / UnixTime.HOUR + 1
+    return Array.from({ length: count }, (_, h) => ({
+      timestamp: UnixTime(from + h * UnixTime.HOUR),
       blockNumber: h,
       slowTipGwei: 0,
       mediumTipGwei: 0,
       fastTipGwei: 0.1,
       ethUsd: 4000,
-    }),
-  )
+    }))
+  }
 })
 
 describe(getMempoolDayStatus.name, () => {

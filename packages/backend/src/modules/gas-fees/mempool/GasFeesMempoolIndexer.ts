@@ -7,7 +7,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { getDayBlocks, getHourlyTips } from '../dayInputs'
-import { DuneDayWait, isSettled, nextDays } from '../days'
+import { DuneDayWait, nextDays, settlesAt } from '../days'
 import type { BlockFinder } from '../types'
 import type { MempoolDayQueryInput } from './getMempoolDayQuery'
 import type { MempoolDay } from './readMempoolDay'
@@ -58,52 +58,61 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
     if (day === undefined) return to
     const now = this.$.now?.() ?? UnixTime.now()
 
-    return await this.waits.run(day, now, async (wait) => {
-      const settled = isSettled(day, now)
-      // Read before Dune, which is billed: without Flashbots' count the day can't be shown complete
-      const flashbotsLandedCount = await this.$.readFlashbotsLandedCount(day)
-      if (flashbotsLandedCount === undefined && !settled) {
-        return wait({ day, flashbotsLandedCount })
-      }
+    const settled = now >= settlesAt(day)
+    return await this.waits.run(
+      day,
+      now,
+      async (wait) => {
+        // Read before Dune, which is billed: without Flashbots' count the day can't be shown complete
+        const flashbotsLandedCount = await this.$.readFlashbotsLandedCount(day)
+        if (flashbotsLandedCount === undefined && !settled) {
+          return wait({ day, flashbotsLandedCount })
+        }
 
-      const mempool = await this.readDay(day)
-      const status = getMempoolDayStatus(
-        mempool.landedCount,
-        flashbotsLandedCount,
-      )
-      const counts = {
-        day,
-        duneLandedCount: mempool.landedCount,
-        flashbotsLandedCount,
-      }
-      if (status !== 'complete' && !settled) return wait(counts)
-
-      // A missing day has no rows on Dune, so its waits are empty
-      await this.$.db.gasFeesMempool.replaceDay({
-        day: {
-          timestamp: day,
-          status,
+        const mempool = await this.readDay(day)
+        const status = getMempoolDayStatus(
+          mempool.landedCount,
+          flashbotsLandedCount,
+        )
+        const counts = {
+          day,
           duneLandedCount: mempool.landedCount,
-          flashbotsLandedCount: flashbotsLandedCount ?? null,
-          keptCount: mempool.keptCount,
-        },
-        tipLevelWaits: mempool.tipLevelWaits,
-        tierWaits: mempool.tierWaits,
-      })
-      if (status === 'complete') {
-        this.logger.info('Saved mempool day', counts)
-      } else {
-        this.logger.warn('Saved incomplete mempool day', { ...counts, status })
-      }
-      return day + UnixTime.DAY
-    })
+          flashbotsLandedCount,
+        }
+        if (status !== 'complete' && !settled) return wait(counts)
+
+        // A missing day has no rows on Dune, so its waits are empty
+        await this.$.db.gasFeesMempool.replaceDay({
+          day: {
+            timestamp: day,
+            status,
+            duneLandedCount: mempool.landedCount,
+            flashbotsLandedCount: flashbotsLandedCount ?? null,
+            keptCount: mempool.keptCount,
+          },
+          tipLevelWaits: mempool.tipLevelWaits,
+          tierWaits: mempool.tierWaits,
+        })
+        if (status === 'complete') {
+          this.logger.info('Saved mempool day', counts)
+        } else {
+          this.logger.warn('Saved incomplete mempool day', {
+            ...counts,
+            status,
+          })
+        }
+        return day + UnixTime.DAY
+      },
+      settlesAt(day),
+    )
   }
 
   private async readDay(day: UnixTime): Promise<MempoolDay> {
     const previousDay = UnixTime(day - UnixTime.DAY)
     const [hourlyTips, previous, blocks] = await Promise.all([
-      // Some transactions landing on the day were first seen the day before
-      getHourlyTips(this.$.db, previousDay, day),
+      // Some transactions landing on the day were first seen the day before,
+      // and a few up to 4 seconds after their block, in the hour after the day
+      getHourlyTips(this.$.db, previousDay, UnixTime(day + UnixTime.DAY)),
       getDayBlocks(this.$.blockFinder, previousDay),
       getDayBlocks(this.$.blockFinder, day),
     ])

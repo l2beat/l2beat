@@ -48,7 +48,8 @@ const TIER_BAND = '1.26'
  * The day's kept mempool transactions as an additive histogram, in the three
  * kinds of row of ROW_KIND: per tip level and wait bucket; per wait bucket,
  * for those tipping 1× to 1.26× a tier of our estimator in the hour they were
- * first seen; and the day's totals.
+ * first seen; and the day's totals. Only tips within TIP_LEVELS have a level
+ * row, so those rows hold fewer transactions than the totals' kept.
  *
  * Dune bills the result by its bytes. So the tier counts are one array, null
  * on the other rows, `landed` is only on the totals, and counts are 4 bytes:

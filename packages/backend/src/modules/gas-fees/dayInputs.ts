@@ -7,30 +7,37 @@ export async function getDayBlocks(
   finder: BlockFinder,
   day: UnixTime,
 ): Promise<{ firstBlock: number; lastBlock: number }> {
-  const [before, last] = await Promise.all([
+  const dayEnd = UnixTime(day + UnixTime.DAY)
+  const [before, last, later] = await Promise.all([
     finder.getBlockNumberAtOrBefore(day),
-    finder.getBlockNumberAtOrBefore(UnixTime(day + UnixTime.DAY)),
+    finder.getBlockNumberAtOrBefore(dayEnd),
+    finder.getBlockNumberAtOrBefore(UnixTime(dayEnd + UnixTime.HOUR)),
   ])
+  // Asked for a time past its newest block, the finder answers with that block:
+  // a day cut short would then pass for a whole one
+  if (later === last) {
+    throw new Error('Block finder has no block past the day', {
+      cause: { day, lastBlock: last },
+    })
+  }
   return { firstBlock: before + 1, lastBlock: last }
 }
 
 /**
- * Our hourly tips from `from` to the end of `day`. The indexers that read them
- * wait for the tip indexer, so a missing hour of `day` is a bug, not a delay.
+ * Our hourly tips from the hour `from` to the hour `to`, both included. The
+ * indexers that read them wait for the tip indexer, which starts a day before
+ * their first day, so a missing hour is a bug, not a delay.
  */
 export async function getHourlyTips(
   db: Database,
   from: UnixTime,
-  day: UnixTime,
+  to: UnixTime,
 ): Promise<GasFeesTipHourlyRecord[]> {
-  const tips = await db.gasFeesTipHourly.getInRange(
-    from,
-    UnixTime(day + UnixTime.DAY - UnixTime.HOUR),
-  )
-  const ofDay = tips.filter((tip) => tip.timestamp >= day)
-  if (ofDay.length !== 24) {
+  const tips = await db.gasFeesTipHourly.getInRange(from, to)
+  const hours = (to - from) / UnixTime.HOUR + 1
+  if (tips.length !== hours) {
     throw new Error('Hourly tips missing', {
-      cause: { day, hours: ofDay.length },
+      cause: { from, to, hours: tips.length },
     })
   }
   return tips
