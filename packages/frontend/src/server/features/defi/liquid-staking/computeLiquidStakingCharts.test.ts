@@ -142,6 +142,39 @@ describe(computeCostOfExitChart.name, () => {
     expect(completed.costOfExit[0]?.estimated).toEqual([])
   })
 
+  it('times a replaced queue apart, so its unpaid requests do not hold up the new one', () => {
+    // Two requests have been left unpaid in the queue the protocol replaced.
+    const retired = {
+      retiredLastRequestId: 10,
+      retiredLastFinalizedRequestId: 8,
+    }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', DAY_31, 1, {
+          ...retired,
+          lastRequestId: 0,
+          lastFinalizedRequestId: 0,
+        }),
+        snapshot('stakewise', DAY_31 + HOUR, 1, {
+          ...retired,
+          lastRequestId: 2,
+          lastFinalizedRequestId: 0,
+        }),
+        snapshot('stakewise', DAY_31 + 3 * HOUR, 1, {
+          ...retired,
+          lastRequestId: 2,
+          lastFinalizedRequestId: 2,
+        }),
+      ],
+    )
+    expect(present(charts.costOfExit[0]?.projects.stakewise)).toBeCloseTo(
+      2 / 24,
+      1e-12,
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual([])
+  })
+
   it('takes the market when it is cheaper than the queue', () => {
     const charts = compute(
       ['wbeth'],
@@ -361,6 +394,8 @@ function snapshot(
     exchangeRate: BigInt(Math.round(rate * 1e9)) * 10n ** 9n,
     lastRequestId: null,
     lastFinalizedRequestId: null,
+    retiredLastRequestId: null,
+    retiredLastFinalizedRequestId: null,
     instantExitEth: null,
     instantExitFeeBps: null,
     lockTime: null,

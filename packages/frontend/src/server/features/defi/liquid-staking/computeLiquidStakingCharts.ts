@@ -160,7 +160,17 @@ class ExitCostSeries {
     }
     const lockTimes = new Map(snapshots.map((s) => [s.timestamp, s.lockTime]))
     this.queueWaits = averageWaitByDay(
-      getQueueWaits(snapshots),
+      [
+        ...getQueueWaits(snapshots),
+        // A queue the protocol replaced pays its requests apart from the new one's.
+        ...getQueueWaits(
+          snapshots.map((s) => ({
+            timestamp: s.timestamp,
+            lastRequestId: s.retiredLastRequestId,
+            lastFinalizedRequestId: s.retiredLastFinalizedRequestId,
+          })),
+        ),
+      ],
       // An unwrapped wBETH request also waits out its lock.
       (timestamp) => lockTimes.get(timestamp) ?? 0,
     )

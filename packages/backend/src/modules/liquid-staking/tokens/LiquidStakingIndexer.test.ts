@@ -68,6 +68,8 @@ describe(LiquidStakingIndexer.name, () => {
       exchangeRate: 11n,
       lastRequestId: 23,
       lastFinalizedRequestId: 22,
+      retiredLastRequestId: null,
+      retiredLastFinalizedRequestId: null,
       instantExitEth: null,
       instantExitFeeBps: null,
       lockTime: 22,
