@@ -4,8 +4,9 @@ import type { ChartRange } from '~/utils/range/range'
 
 /**
  * Moves the whole range back so it ends at the pin. Shifting both ends, not
- * just clamping the end, keeps a "7D" chart seven days long. The start moves
- * by whole days, so it stays on the generated axis at every resolution.
+ * just clamping the end, keeps a "7D" chart seven days long and a single
+ * picked day one day long. The start lands on the nearest day boundary, so it
+ * stays on the generated axis at every resolution.
  */
 export function pinTvsRange(
   range: ChartRange,
@@ -14,7 +15,9 @@ export function pinTvsRange(
   if (pin === undefined || range[1] <= pin) {
     return range
   }
-  const shift =
-    UnixTime.toStartOf(range[1], 'day') - UnixTime.toStartOf(pin, 'day')
-  return [range[0] === null ? null : range[0] - shift, pin]
+  if (range[0] === null) {
+    return [null, pin]
+  }
+  const shiftedStart = pin - (range[1] - range[0])
+  return [UnixTime.toStartOf(shiftedStart + 12 * UnixTime.HOUR, 'day'), pin]
 }

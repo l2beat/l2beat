@@ -25,6 +25,11 @@ describe(pinTvsRange.name, () => {
     expect(pinTvsRange([start, end], noon)).toEqual([pin - 7 * DAY, noon])
   })
 
+  it('keeps a single picked day one day long', () => {
+    const range: [number, number] = [pin + DAY, pin + 2 * DAY - 1]
+    expect(pinTvsRange(range, pin)).toEqual([pin - DAY, pin])
+  })
+
   it('keeps an open start for the max range', () => {
     expect(pinTvsRange([null, pin + 3 * DAY], pin)).toEqual([null, pin])
   })
