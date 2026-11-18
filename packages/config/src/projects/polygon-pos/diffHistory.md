@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x6b7a0a2eea054e38a0a5bfc61b3911847e15af05
+
+# Diff at Wed, 18 Nov 2026 07:53:17 GMT:
+
+- id: da9c368f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbc55068ccad9f575bea8fb65c3a08d2983b37f3 block: 1794320161
+- current timestamp: 1794986377
+
+## Description
+
+PolygonMultisig2, which maps new tokens in the RootChainManager, swapped two signers and added one. The threshold is unchanged, now 4 of 13.
+
+## Watched changes
+
+```diff
+    contract PolygonMultisig2 (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xfB948CB3fE208fd067d36768B2bACd5dCF886066"
+      values.$members.4:
+-        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
++        "eth:0x5F050BECf0746E4E95C4dB3254eA0E9a56268C0d"
+      values.$members.7:
+-        "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6"
++        "eth:0xb20d2bA1C74744a0Df7852f62BF802AbC8e4d91E"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
 Generated with discovered.json: 0x49a3b25e66fa11a28b631b577ea581fed2e83546
 
 # Diff at Tue, 10 Nov 2026 14:29:54 GMT:

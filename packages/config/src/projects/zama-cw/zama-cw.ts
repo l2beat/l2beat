@@ -54,6 +54,13 @@ const WRAPPER_NAMES = [
   'ConfidentialRoxcUSDCWrapper',
   'ConfidentialRoxUSDCyWrapper',
   'ConfidentialPAPYWrapper',
+  'ConfidentialYzPRVTWrapper',
+  'ConfidentialSatcUSDCWrapper',
+  'ConfidentialEEARNWrapper',
+  'ConfidentialPPLUSWrapper',
+  'ConfidentialNvHOMEWrapper',
+  'ConfidentialNOPALWrapper',
+  'ConfidentialRe7coUSDCWrapper',
 ]
 
 const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {

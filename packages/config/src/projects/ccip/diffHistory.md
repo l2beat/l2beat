@@ -1,3 +1,553 @@
+Generated with discovered.json: 0x28eed21c939e8eb936606251b5b4c5050372d62a
+
+# Diff at Wed, 18 Nov 2026 07:53:10 GMT:
+
+- id: 1acd6b8f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbc55068ccad9f575bea8fb65c3a08d2983b37f3 block: 1793874667
+- current timestamp: 1794986308
+
+## Description
+
+- RMN: the RMN owner (RMNTimelock) uncursed 10 chains: soneium, worldchain, unichain, ink, optimism, bob, mode, celo, hemi and xlayer. Their v1.5 CommitStores report isUnpausedAndNotCursed true again. The RMN_CurseBypasserMultisig cursed core through the zero-delay RMN_CurseTimelock, which halts all CCIP paths between Ethereum and core. 17 chains are cursed now.
+- New ApeChain USDC lane on the siloed lock/release pool with its own ApechainUSDCERC20LockBox. The ARMTimelock handed the lockbox ownership to ApeChain_GnosisSafe (4 of 7), which also owns the ApeOFTAdapter of APE. It is the first lockbox owned outside Chainlink's timelocks: this Safe can authorize callers that withdraw the lane's entire USDC backing. The pool is the only authorized caller today.
+- NeoxUSDCERC20LockBox ownership moved from the deployer EOA to the ARMTimelock, like the other lockboxes.
+- Signer 0x70f498A0 was removed from ARM_Multisig1/3/4 and RMN_Multisig1/2/3. All group quorums are unchanged.
+- CCIPHome removed the chain configs of mind, memento, corn and everclear.
+- The ReUSDTokenPool owner Safe made itself the pool's rateLimitAdmin.
+
+## Watched changes
+
+```diff
+    contract CommitStore (eth:0x01346721418045A6c07b71052e452eF8615e9084) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    EOA (eth:0x062f05CD6c835677B05a8658A351969476861316) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
+    }
+```
+
+```diff
+    contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
+    +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.13:
+-        "soneium"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.14:
+-        "worldchain"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.15:
+-        "unichain"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.16:
+-        "ink"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.17:
+-        "optimism"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.20:
+-        "bob"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.21:
+-        "mode"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.22:
+-        "celo"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.23:
+-        "hemi"
++++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
+      values.cursedSubjects.25:
+-        "xlayer"
++        "core"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.13:
+-        "0x0000000000000000ad8bef0a6a427394"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.14:
+-        "0x00000000000000001c7109b456eeb787"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.15:
+-        "0x00000000000000001ab1ae3f9229c5ff"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.16:
+-        "0x00000000000000003008ab337d299820"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.17:
+-        "0x000000000000000033d343f77863cab8"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.20:
+-        "0x0000000000000000356b6aeaf3268280"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.21:
+-        "0x000000000000000064d029850f1a0971"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.22:
+-        "0x000000000000000012ae20986b1a2a06"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.23:
+-        "0x0000000000000000190a345336d54069"
++++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
+      values.getCursedSubjects.25:
+-        "0x000000000000000029dbbd42639f1296"
++        "0x000000000000000010ff318e95c104a1"
+    }
+```
+
+```diff
+    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 8 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17"
++        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16"
+      values.config.summaryGroups:
+-        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17"
++        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16"
+      values.config.quorumSummary:
+-        "At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
++        "At least 8 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16]."
+      values.config.allMembers.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group21.members.7:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        69
++        68
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 8 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]."
++        "At least 8 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17"
++        "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17"
++        "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-16, parent=19, signers=16"
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
+    }
+```
+
+```diff
+    contract NeoxUSDCERC20LockBox (eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D) [ccip/ERC20LockBox] {
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+      values.owner:
+-        "eth:0x062f05CD6c835677B05a8658A351969476861316"
++        "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"
+    }
+```
+
+```diff
+    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
+    +++ description: Role based timelock used to administer CCIP contracts.
+      directlyReceivedPermissions.28:
++        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x4B50Cd4637a8EA94729811201A699f4800ee3282) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x6fe6F73F7Cd11E34b6908cdC080683690229d0A4) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x700b6adcCfAa4c66638b1AD36BDeFE2038794E02) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract CCIPHome (eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40) [ccip/CCIPHome] {
+    +++ description: CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.
+      values.getNumChainConfigurations:
+-        60
++        56
+    }
+```
+
+```diff
+    contract RMN_Multisig1 (eth:0x79bC82F3931A7d017719146A822e4AD8152b157e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.summaryGroups:
+-        "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.quorumSummary:
+-        "At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
++        "At least 4 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7]."
+      values.config.allMembers.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group2.members.7:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        40
++        39
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 4 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
++        "At least 4 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-16, parent=0, signers=16 | Group 3: 2-of-7, parent=0, signers=7"
+    }
+```
+
+```diff
+    contract RMN_Multisig2 (eth:0x806659842cFeEE3CBEF35F8ad2eA42460574b413) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
+      values.config.summaryGroups:
+-        "Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++        "Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
+      values.config.quorumSummary:
+-        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
++        "At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
+      values.config.allMembers.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group1.members.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        69
++        68
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
++        "At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++        "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
++        "Group 1: 2-of-39, parent=0, signers=39 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2"
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x83F3DA5aa2C7534d694B0acde7624573c830250D) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RMN_Multisig3 (eth:0x8C00Cc7cC37396e88BbFe66371341a59D1b5771F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 5 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 5 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17"
++        "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16"
+      values.config.summaryGroups:
+-        "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17"
++        "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16"
+      values.config.quorumSummary:
+-        "At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
++        "At least 5 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16]."
+      values.config.allMembers.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group4.members.7:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        40
++        39
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 5 of 40 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]."
++        "At least 5 of 39 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17"
++        "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17"
++        "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-16, parent=2, signers=16"
+    }
+```
+
+```diff
+    contract Safe (eth:0x8eec10616802Ef639CA55c98ac856553fAdEfBaD) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465","description":"change this pool's inbound and outbound rate limits.","role":".rateLimitAdmin"}
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x913A2AC13907F29EF2346E21368214B9b3dDc04B) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract CommitStore (eth:0x95deB0c4bB9168202d50E874865f9A1842b82D64) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ARM_Multisig3 (eth:0xAD97C0270a243270136E40278155C12ce7C7F87B) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
+      values.config.summaryGroups:
+-        "Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
+      values.config.quorumSummary:
+-        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
++        "At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
+      values.config.allMembers.36:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group1.members.14:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        69
++        68
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 2 of 69 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
++        "At least 2 of 68 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
++        "Group 1: 4-of-32, parent=0, signers=32 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2"
+    }
+```
+
+```diff
+    contract CommitStore (eth:0xc46890D248a389A40725dbd9fa5e13548B56Ad8d) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        true
++        false
+    }
+```
+
+```diff
+    contract CommitStore (eth:0xd2428F8C62fBfEA4b44a703CF11e02D7B0a6Cd99) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 41 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      description:
+-        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++        "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 41 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree."
++++ description: Flat union of every signer address across all groups. Wired through so the frontend lists this contract as a Multisig and renders participants the same way Gnosis Safes do. The tree-quorum semantics are encoded in the description, not in this flat list.
+      values.$members.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.summaryGroups:
+-        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
+      values.config.quorumSummary:
+-        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++        "At least 4 of 41 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
+      values.config.allMembers.18:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
+      values.config.signerGroups.group2.members.7:
+-        "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6"
++++ description: Total number of distinct signer addresses across all groups. Combined with minSigs it reads as a flat M-of-N only when the root has no sub-groups; see quorumSummary for the actual rule.
+      values.memberCount:
+-        42
++        41
++++ description: Human-readable quorum rule: a flat M-of-N when the root has no sub-groups, otherwise the tree-quorum minimum with the root line and the per-group breakdown. Interpolated into the entry description.
+      values.quorumSummary:
+-        "At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]."
++        "At least 4 of 41 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]."
++++ description: One-line readable form of the full tree-quorum, e.g. "Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-14, ...". Exposed as a top-level field so it can be interpolated into the entry's description.
+      values.summary:
+-        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
++++ description: The per-sub-group lines of the tree summary, joined with ' | '. Empty when the root has no sub-groups. Hidden behind the [click for per-group breakdown] collapsible in the entry description.
+      values.summaryGroups:
+-        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
++        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7"
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract CommitStore (eth:0xD9d3d90D729F50794741Da7a2d54d8B12dC3Da72) [transporter/CommitStoreV1] {
+    +++ description: Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.
+      values.isUnpausedAndNotCursed:
+-        false
++        true
+    }
+```
+
+```diff
+    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
+    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. At least 4 of 42 signers must sign, and the signatures must also satisfy every group quorum on the path to the root. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
+    }
+```
+
+```diff
+    contract SiloedUSDCTokenPool (eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D) [ccip/SiloedUSDCTokenPool] {
+    +++ description: CCIP 2.0 USDC lock/release pool. Each configured remote chain has a separate USDC lockbox, and authorized callers move liquidity into or out of that chain's lockbox. It also supports a staged migration of a lane from lock/release liquidity to canonical Circle CCTP.
++++ description: Distinct USDC custody lockbox selected for each lock/release route.
+      values.getAllLockBoxConfigs.2:
++        {"remoteChainSelector":"apechain","lockBox":"eth:0xa53446395B1dF7C1E0166433C716bC97179e955c"}
++++ description: Remote chains currently configured on this child pool.
+      values.getSupportedChains.2:
++        "apechain"
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xa53446395B1dF7C1E0166433C716bC97179e955c","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
+    }
+```
+
+```diff
+    contract ReUSDTokenPool (eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465) [ccip/BurnWithFromMintTokenPool] {
+    +++ description: CCIP 2.0 burn/mint pool for tokens whose issuer supports burning from the pool and minting to recipients. It enforces configured routes, RMN status, finality, rate limits, and fees, and can use AdvancedPoolHooks for additional checks or verifier requirements.
+      values.getDynamicConfig.rateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8eec10616802Ef639CA55c98ac856553fAdEfBaD"
+      values.rateLimitAdmin:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8eec10616802Ef639CA55c98ac856553fAdEfBaD"
+    }
+```
+
+```diff
+    contract USDCTokenPoolProxy (eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D) [ccip/USDCTokenPoolProxy] {
+    +++ description: USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.
+      values.lockOrBurnMechanisms.apechain:
++        "LOCK_RELEASE"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ApeChain_GnosisSafe (eth:0x4296AD3Ac6Af854FAB874326f20F981952b06beB) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ApechainUSDCERC20LockBox (eth:0xa53446395B1dF7C1E0166433C716bC97179e955c) [ccip/ERC20LockBox]
+    +++ description: ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.
+```
+
+## Source code changes
+
+```diff
+.../ccip/.flat/ApeChain_GnosisSafe/GnosisSafe.sol  | 1026 +++++++++++++++++++
+ .../ApeChain_GnosisSafe/GnosisSafeProxy.p.sol      |   38 +
+ .../ccip/.flat/ApechainUSDCERC20LockBox.sol        | 1082 ++++++++++++++++++++
+ 3 files changed, 2146 insertions(+)
+```
+
 Generated with discovered.json: 0xd3c7419a21f1a8a44e8a9d280506db276940c6f8
 
 # Diff at Thu, 05 Nov 2026 10:33:43 GMT:

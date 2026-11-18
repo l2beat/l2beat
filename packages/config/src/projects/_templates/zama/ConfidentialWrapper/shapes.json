@@ -4,5 +4,17 @@
     "address": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
     "chain": "ethereum",
     "blockNumber": 25846585
+  },
+  "ConfidentialWrapper_kmsContext.sol": {
+    "hash": "0x9ea13813b41fc6c5e21834cf26f32c339f7fe67c27fa8e7252e2d74da08c31ed",
+    "address": "eth:0xc5FE47D6C6fED00b8407a97C3B76E6758586ECEA",
+    "chain": "ethereum",
+    "blockNumber": 26440389
+  },
+  "ConfidentialHooklessWrapper.sol": {
+    "hash": "0x3e94a352fafbc24b1270629f611b3b5f2be3ce7024e55b17332eb0d6b76a95f5",
+    "address": "eth:0x84B425c6A3089c5f47B62c85F2EcdC48De1751B8",
+    "chain": "ethereum",
+    "blockNumber": 26440389
   }
 }

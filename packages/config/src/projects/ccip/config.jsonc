@@ -155,6 +155,10 @@
     "eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b": "PharosUSDCERC20LockBox",
     "eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D": "NeoxUSDCERC20LockBox",
     "eth:0x6DbdADFe07db919cC6CC34f976FaB102c855D054": "GravityUSDCERC20LockBox",
+    "eth:0xa53446395B1dF7C1E0166433C716bC97179e955c": "ApechainUSDCERC20LockBox",
+    // Owner of ApechainUSDCERC20LockBox, outside Chainlink's timelocks. It also owns ApeOFTAdapter
+    // eth:0x5182FEdE730b31a9CF7f49C5781214B4a99F2370, the LayerZero adapter of APE to ApeChain.
+    "eth:0x4296AD3Ac6Af854FAB874326f20F981952b06beB": "ApeChain_GnosisSafe",
     "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": "CCIPHome",
     "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83": "CapabilitiesRegistry",
     "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5": "EthereumOffRamp_v1_6",
