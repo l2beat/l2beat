@@ -1,6 +1,6 @@
 # ETHBEAT design rules
 
-Rules for any agent or person building or changing ETHBEAT's UI (`packages/frontend`). Each rule comes from a correction by the design owner. The rules are fixed: they win over suggestions from reviewers and design councils, so put them in a council's brief as constraints. The reason is under each rule. A reason marked *inferred* hasn't been confirmed yet.
+Rules for any agent or person building or changing ETHBEAT's UI in this package. Each rule comes from a correction by the design owner. The rules are fixed: they win over suggestions from reviewers and design councils, so put them in a council's brief as constraints. The reason is under each rule. A reason marked *inferred* hasn't been confirmed yet.
 
 ## Color
 
