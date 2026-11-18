@@ -29,7 +29,7 @@ const instantWorkerPool = mockObject<WorkerPool>({
 
     for (const task of tasks) {
       try {
-        const result = await task.job()
+        const result = await task.job(new AbortController().signal)
         results.push({
           identity: task.identity,
           result,
@@ -278,7 +278,7 @@ describe(UpdateMonitor.name, () => {
       const slowWorkerPool = mockObject<WorkerPool>({
         runInPool: mockFn(async (tasks) => {
           for (const task of tasks) {
-            await task.job()
+            await task.job(new AbortController().signal)
             time.tick(60_000)
           }
           return { results: [], errors: [], timedOut: false }
@@ -366,6 +366,102 @@ describe(UpdateMonitor.name, () => {
     })
   })
 
+  describe(UpdateMonitor.prototype.updateProject.name, () => {
+    function setup(abortController: AbortController) {
+      // The discovery itself is not cancellable, so the abort lands while
+      // it runs and has to be noticed before the first write.
+      // The previous discovery differs, so there is a diff to notify about.
+      const discoveryRunner = mockObject<DiscoveryRunner>({
+        run: mockFn(async (_: ConfigRegistry, timestamp: number) => {
+          abortController.abort(new Error('Task timeout'))
+          const entries =
+            timestamp === mockProject.timestamp
+              ? COMMITTED
+              : DISCOVERY_RESULT.entries
+          return {
+            discovery: { ...DISCOVERY_RESULT, entries },
+            flatSources: {},
+          }
+        }),
+      })
+      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
+        findLatest: async () => undefined,
+        upsert: async () => undefined,
+      })
+      const flatSources = mockObject<Database['flatSources']>({
+        upsert: async () => undefined,
+        get: async () => undefined,
+      })
+      const cache = mockObject<DiscoveryOutputCache>({
+        set: () => undefined,
+      })
+      const updateMonitor = new UpdateMonitor(
+        discoveryRunner,
+        updateNotifier,
+        updateDiffer,
+        mockObject<ConfigReader>({
+          readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
+          readAllDiscoveredProjects: () => [PROJECT_A],
+          readConfig: mockFn((name: string) => mockConfig(name)),
+        }),
+        mockObject<Database>({
+          updateMonitor: updateMonitorRepository,
+          flatSources,
+        }),
+        mockObject<Clock>(),
+        cache,
+        Logger.SILENT,
+        false,
+        instantWorkerPool,
+      )
+      return {
+        updateMonitor,
+        discoveryRunner,
+        updateMonitorRepository,
+        flatSources,
+        cache,
+      }
+    }
+
+    it('writes nothing once its signal is aborted', async () => {
+      const abortController = new AbortController()
+      const mocks = setup(abortController)
+
+      await expect(
+        mocks.updateMonitor.updateProject(
+          mocks.discoveryRunner,
+          PROJECT_A,
+          0,
+          1_000,
+          abortController.signal,
+        ),
+      ).toBeRejectedWith('Task timeout')
+
+      expect(mocks.cache.set).not.toHaveBeenCalled()
+      expect(updateNotifier.handleUpdate).not.toHaveBeenCalled()
+      expect(mocks.updateMonitorRepository.upsert).not.toHaveBeenCalled()
+      expect(mocks.flatSources.upsert).not.toHaveBeenCalled()
+    })
+
+    // Control for the test above: the same setup writes when not aborted.
+    it('writes when its signal is not aborted', async () => {
+      const mocks = setup(new AbortController())
+
+      await mocks.updateMonitor.updateProject(
+        mocks.discoveryRunner,
+        PROJECT_A,
+        0,
+        1_000,
+        new AbortController().signal,
+      )
+
+      expect(mocks.cache.set).toHaveBeenCalledTimes(1)
+      expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
+      expect(mocks.updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
+      expect(mocks.flatSources.upsert).toHaveBeenCalledTimes(1)
+    })
+  })
+
   describe(UpdateMonitor.prototype.getPreviousDiscovery.name, () => {
     it('gets committed file', async () => {
       const discoveryA = { ...mockProject, entries: COMMITTED }
@@ -406,6 +502,7 @@ describe(UpdateMonitor.name, () => {
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         mockConfig(PROJECT_A),
+        new AbortController().signal,
       )
 
       // calls repository (and gets undefined)
@@ -456,6 +553,7 @@ describe(UpdateMonitor.name, () => {
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         mockConfig(PROJECT_A),
+        new AbortController().signal,
       )
 
       // calls repository
@@ -516,6 +614,7 @@ describe(UpdateMonitor.name, () => {
           name: PROJECT_A,
           initialAddresses: [ChainSpecificAddress.ZERO(chain)],
         }),
+        new AbortController().signal,
       )
 
       expect(result).toEqual(committed)
@@ -566,6 +665,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         mockConfig(PROJECT_A),
+        new AbortController().signal,
       )
 
       expect(discoveryRunner.run).toHaveBeenCalledTimes(1)

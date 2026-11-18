@@ -80,7 +80,7 @@ export class SignatureService implements ISignatureService {
       return known
     }
 
-    const { results } = await promisesWithTimeout(
+    const { results, succeeded } = await promisesWithTimeout(
       [
         this.sourcifyClient.lookup(selector),
         this.fourByteClient.lookup(selector),
@@ -93,7 +93,11 @@ export class SignatureService implements ISignatureService {
       .flatMap((r) => r ?? [])
       .filter((v, i, a) => a.indexOf(v) === i)
       .filter((v) => toFunctionSelector(v) === selector)
-    this.known.set(selector, filtered)
+    // A timed out or failed lookup says nothing about the selector, so
+    // caching it would hide the signature until the process restarts.
+    if (succeeded.every((x) => x)) {
+      this.known.set(selector, filtered)
+    }
     return filtered
   }
 
@@ -112,21 +116,24 @@ async function promisesWithTimeout<T>(
   logger: Logger,
 ) {
   const results: (T | undefined)[] = new Array(promises.length).fill(undefined)
-  const completed: boolean[] = new Array(promises.length).fill(false)
+  const succeeded: boolean[] = new Array(promises.length).fill(false)
 
   const racePromises = promises.map(async (promise, index) => {
     try {
       const result = await promise
       results[index] = result
-      completed[index] = true
+      succeeded[index] = true
     } catch (error) {
       logger.error(error)
-      completed[index] = true
     }
   })
 
-  const timeout = new Promise((resolve) => setTimeout(resolve, timeoutMs))
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const timeout = new Promise<void>((resolve) => {
+    timer = setTimeout(resolve, timeoutMs)
+  })
   await Promise.race([Promise.all(racePromises), timeout])
+  clearTimeout(timer)
 
-  return { results, completed }
+  return { results, succeeded }
 }
