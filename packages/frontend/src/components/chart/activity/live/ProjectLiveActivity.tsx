@@ -654,11 +654,22 @@ function UsualBar({
   const high = Math.max(max, value)
   const at = (v: number) =>
     `${high > low ? ((v - low) / (high - low)) * 100 : 50}%`
+  const span = (a: number, b: number) => ({
+    left: at(Math.min(a, b)),
+    width: `calc(${at(Math.max(a, b))} - ${at(Math.min(a, b))})`,
+  })
+  // a line under it all, so the rate sits on it outside the range too, and
+  // the rate's way from the median in the series' colour
   return (
     <div className="relative mx-1 h-2" aria-hidden>
+      <div className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-px bg-divider" />
       <div
-        className="-translate-y-1/2 absolute top-1/2 h-0.5 rounded-full bg-secondary/50"
-        style={{ left: at(min), width: `calc(${at(max)} - ${at(min)})` }}
+        className="-translate-y-1/2 absolute top-1/2 h-1 rounded-full bg-secondary/40"
+        style={span(min, max)}
+      />
+      <div
+        className="-translate-y-1/2 absolute top-1/2 h-0.5"
+        style={{ ...span(median, value), backgroundColor: color }}
       />
       <div
         className="absolute inset-y-0 w-px bg-secondary"
