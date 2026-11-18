@@ -20,7 +20,7 @@ describe(pinTvsRange.name, () => {
   it('shifts a later range to end at the pin, keeping its length in days', () => {
     const end = pin + DAY + 5 * UnixTime.HOUR
     const start = UnixTime.toStartOf(end, 'day') - 7 * DAY
-    expect(pinTvsRange([start, end], pin)).toEqual([pin - 8 * DAY, pin])
+    expect(pinTvsRange([start, end], pin)).toEqual([pin - 7 * DAY, pin])
   })
 
   it('keeps an open start for the max range', () => {
