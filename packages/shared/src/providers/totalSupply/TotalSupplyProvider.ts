@@ -28,9 +28,14 @@ export class TotalSupplyProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (!r.success) {
-              throw new Error(
-                `Failed to fetch totalSupply of ${tokens[i]} at block ${blockNumber}`,
-              )
+              throw new Error('Failed to fetch totalSupply', {
+                cause: {
+                  token: tokens[i],
+                  blockNumber,
+                  chain,
+                  returnData: r.data.toString(),
+                },
+              })
             }
             if (r.data.length === 0) {
               // token not deployed at this block
