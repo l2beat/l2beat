@@ -241,6 +241,7 @@ interface QueueWait {
   /** The snapshot that first counted the requests. */
   timestamp: number
   requests: number
+  /** Infinite when unknown. */
   hours: number
   estimated: boolean
 }
@@ -297,8 +298,8 @@ export function getQueueWaits(
 
 /**
  * Requests still queued finalize in order at the pace of the last
- * PACE_WINDOW_DAYS. With no pace to go by, each has waited at least until
- * the last snapshot.
+ * PACE_WINDOW_DAYS. A queue that finalized nothing in them gives no pace, and
+ * the time waited so far is only a lower bound, so the wait is unknown.
  */
 function estimateQueuedWaits(
   snapshots: Pick<
@@ -322,7 +323,8 @@ function estimateQueuedWaits(
   return queued.map(({ timestamp, from, to }) => {
     // The portion's requests are from + 1 to to; the middle one stands for all.
     const ahead = Math.max(0, (from + 1 + to) / 2 - lastFinalized)
-    const hoursLeft = finalizedPerHour > 0 ? ahead / finalizedPerHour : 0
+    const hoursLeft =
+      finalizedPerHour > 0 ? ahead / finalizedPerHour : Number.POSITIVE_INFINITY
     return {
       timestamp,
       requests: to - from,
@@ -335,7 +337,8 @@ function estimateQueuedWaits(
 /**
  * The request-weighted wait of each day's requests, in days. Requests made in
  * the hour before a snapshot belong to that hour, so midnight closes a day.
- * `minimumWait` is the wait, in seconds, of every request at a snapshot.
+ * `minimumWait` is the wait, in seconds, of every request at a snapshot. A day
+ * with a request of unknown wait has no average.
  */
 function averageWaitByDay(
   waits: QueueWait[],
@@ -362,10 +365,12 @@ function averageWaitByDay(
     totals.set(day, total)
   }
   return new Map(
-    [...totals].map(([day, t]) => [
-      day,
-      { days: t.hours / t.requests / 24, estimated: t.estimated },
-    ]),
+    [...totals]
+      .filter(([, t]) => Number.isFinite(t.hours))
+      .map(([day, t]) => [
+        day,
+        { days: t.hours / t.requests / 24, estimated: t.estimated },
+      ]),
   )
 }
 

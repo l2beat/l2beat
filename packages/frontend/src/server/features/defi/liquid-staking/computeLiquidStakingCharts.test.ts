@@ -183,6 +183,36 @@ describe(computeCostOfExitChart.name, () => {
     expect(present(charts.costOfExit[0]?.projects.wbeth)).toEqual(40)
   })
 
+  it('takes the market while a queue that pays nothing leaves the wait unknown', () => {
+    const quoted = {
+      marketExitEth: (100_899n * ETH) / 1000n,
+      marketExitValueEth: 101n * ETH,
+    }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', START + DAY, 1.0),
+        snapshot('stakewise', DAY_31, 1.01, {
+          ...quoted,
+          lastRequestId: 5,
+          lastFinalizedRequestId: 5,
+        }),
+        // Requested an hour ago, in a queue that has paid nothing lately.
+        snapshot('stakewise', DAY_31 + HOUR, 1.01, {
+          ...quoted,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 5,
+        }),
+      ],
+    )
+    // The hour waited so far would undercut the sale's 3 days.
+    expect(present(charts.costOfExit[0]?.projects.stakewise)).toBeCloseTo(
+      (0.001 * 365) / (0.01 * (365 / 30)),
+      1e-9,
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual([])
+  })
+
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
     const at = (instantExitEth: bigint) =>
       compute(
@@ -268,14 +298,21 @@ describe(getQueueWaits.name, () => {
     ])
   })
 
-  it('counts the wait so far when nothing has finalized lately', () => {
+  it('leaves the wait unknown when nothing has finalized lately', () => {
     expect(
       getQueueWaits([
         { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
         { timestamp: HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
         { timestamp: 3 * HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
       ]),
-    ).toEqual([{ timestamp: HOUR, requests: 1, hours: 2, estimated: true }])
+    ).toEqual([
+      {
+        timestamp: HOUR,
+        requests: 1,
+        hours: Number.POSITIVE_INFINITY,
+        estimated: true,
+      },
+    ])
   })
 })
 
