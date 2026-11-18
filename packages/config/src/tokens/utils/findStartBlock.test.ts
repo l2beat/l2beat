@@ -14,7 +14,7 @@ describe(findFirstBlockWithTotalSupply.name, () => {
   const LATEST_BLOCK = 38000000
 
   const SUPPLY = `0x${'00'.repeat(31)}2a`
-  const reverted = { reverted: true } as const
+  const reverted = { reverted: true, reason: 'execution reverted' } as const
   const returns = (data: string) => ({ reverted: false, data }) as const
 
   const find = (rpc: EthRpcClient) =>
