@@ -1,5 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ProjectLiveActivity } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
+import type {
+  UsualHour,
+  UsualRange,
+} from '~/server/features/layer2s/activity/live/liveWindow'
 
 /** Gas has no history, so only the live view has it */
 export type LiveMetric = ActivityMetric | 'gas'
@@ -90,4 +95,56 @@ export function getWindowStats(
     blocksPerMinute: (sum((b) => b.blocks) / seconds) * 60,
     gasPerSecond: sum((b) => b.gas) / seconds,
   }
+}
+
+/** Each step with the usual range of the hour it is in, null without one, as for gas */
+export function withUsual<T extends { timestamp: number }>(
+  steps: T[],
+  usual: UsualHour[],
+  metric: LiveMetric,
+) {
+  const byHour = new Map<number, UsualRange>(
+    metric === 'gas' ? [] : usual.map((u) => [u.hour, u[metric]]),
+  )
+  return steps.map((step) => {
+    const range = byHour.get(
+      Math.floor(step.timestamp / UnixTime.HOUR) * UnixTime.HOUR,
+    )
+    return {
+      ...step,
+      usualMin: range?.min ?? null,
+      usualMedian: range?.median ?? null,
+      usualMax: range?.max ?? null,
+    }
+  })
+}
+
+/** The usual rate over the window: each hour's median, by how much of the window it covers */
+export function getUsualRate(
+  usual: UsualHour[],
+  metric: ActivityMetric,
+  [from, to]: [number, number],
+) {
+  let total = 0
+  let covered = 0
+  for (const u of usual) {
+    const seconds =
+      Math.min(to, u.hour + UnixTime.HOUR) - Math.max(from, u.hour)
+    if (seconds <= 0) continue
+    total += u[metric].median * seconds
+    covered += seconds
+  }
+  return covered > 0 ? total / covered : undefined
+}
+
+/** The value drawn at `timestamp`: of the last step starting at or before it */
+export function valueAt(
+  steps: { timestamp: number; value: number | null }[],
+  timestamp: number,
+) {
+  for (let i = steps.length - 1; i >= 0; i--) {
+    const step = steps[i]
+    if (step && step.timestamp <= timestamp) return step.value
+  }
+  return null
 }

@@ -89,23 +89,55 @@ describe(getBlockSeconds.name, () => {
 describe(getUsualRates.name, () => {
   const HOUR = T + 13 * UnixTime.HOUR
 
-  it('averages the same hour of the earlier days', () => {
+  it('takes the median and range of the same hour on the earlier days', () => {
+    // Methodology: one busy day, which would pull an average up
     const result = getUsualRates(
       [
-        record(HOUR - 2 * UnixTime.DAY, 3600, 7200),
+        record(HOUR - 3 * UnixTime.DAY, 3600, 7200),
+        record(HOUR - 2 * UnixTime.DAY, 7200, null),
         record(HOUR - 2 * UnixTime.DAY + UnixTime.HOUR, 999_999, null),
-        record(HOUR - UnixTime.DAY, 10_800, null),
+        record(HOUR - UnixTime.DAY, 36_000, null),
       ],
+      HOUR,
       HOUR,
     )
 
-    expect(result).toEqual({ tps: 2, uops: 2.5 })
+    expect(result).toEqual([
+      {
+        hour: HOUR,
+        tps: { median: 2, min: 1, max: 10 },
+        uops: { median: 2, min: 2, max: 10 },
+      },
+    ])
   })
 
-  it('has none without that hour', () => {
-    expect(
-      getUsualRates([record(HOUR - UnixTime.HOUR, 3600, null)], HOUR),
-    ).toEqual(undefined)
+  it('averages the middle two of an even number of days', () => {
+    const [usual] = getUsualRates(
+      [
+        record(HOUR - 2 * UnixTime.DAY, 3600, null),
+        record(HOUR - UnixTime.DAY, 10_800, null),
+      ],
+      HOUR,
+      HOUR,
+    )
+
+    expect(usual?.tps.median).toEqual(2)
+  })
+
+  it('has every hour the window is in, but none without a day of it', () => {
+    const result = getUsualRates(
+      [
+        record(HOUR - UnixTime.DAY, 3600, null),
+        record(HOUR - UnixTime.DAY + 2 * UnixTime.HOUR, 7200, null),
+      ],
+      HOUR,
+      HOUR + 2 * UnixTime.HOUR,
+    )
+
+    expect(result.map((u) => [u.hour, u.tps.median])).toEqual([
+      [HOUR, 1],
+      [HOUR + 2 * UnixTime.HOUR, 2],
+    ])
   })
 })
 

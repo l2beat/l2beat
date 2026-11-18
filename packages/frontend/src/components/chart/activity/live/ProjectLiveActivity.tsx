@@ -24,7 +24,6 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RollingNumber } from '~/pages/blobs/components/live-blobs/liveMotion'
 import { HOME_TEXT } from '~/pages/home/homeStyles'
-import type { ProjectLiveActivity as ProjectLiveActivityData } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import {
   DEFAULT_LIVE_RANGE,
   isLiveFresh,
@@ -38,13 +37,17 @@ import { formatRange, parseTimestamp } from '~/utils/dates'
 import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { getChartType } from '../utils/getChartType'
-import { glideCharts } from './glideCharts'
+import { glideCharts, placeHead } from './glideCharts'
+import { LiveDot } from './LiveDot'
 import { LiveOverview } from './LiveOverview'
 import {
+  getUsualRate,
   getWindowStats,
   type LiveMetric,
   toBuckets,
   toSteps,
+  valueAt,
+  withUsual,
 } from './liveSteps'
 import { useLivePlayhead } from './useLivePlayhead'
 
@@ -58,6 +61,8 @@ const TICK_SECONDS: Record<LiveRange, number> = {
 const formatBlocks = (value: number) => formatNumber(value, 1)
 const formatGas = (value: number) => formatNumber(value, 1)
 const formatGasTick = (value: number) => formatNumber(value, 0)
+/** The chart's own, kept here to place the head on its plot */
+const CHART_MARGIN = { top: 20, right: 1, bottom: 25, left: 0 }
 
 /**
  * The chain's blocks of the last hours, laid out as the history: a window of
@@ -125,12 +130,25 @@ export function ProjectLiveActivity({
   // following the newest block, the window scrolls with the clock: drawn
   // every 1/300 of it, about 2.5 pixels, and slid along in between
   const charts = useRef<HTMLDivElement>(null)
+  const head = useRef<HTMLDivElement>(null)
   const redrawEvery = LIVE_RANGES[range] / 300
   const playhead = useLivePlayhead(
     live && data?.newest !== undefined ? data.detail.to + 1 : undefined,
     dataUpdatedAt,
     redrawEvery,
-    (seconds) => glideCharts(charts.current, seconds, LIVE_RANGES[range]),
+    // the head reads the layout, so before the charts slide
+    (seconds) => {
+      placeHead(
+        head.current,
+        charts.current,
+        rows && playhead !== undefined
+          ? valueAt(rows, playhead + seconds)
+          : null,
+        top,
+        CHART_MARGIN,
+      )
+      glideCharts(charts.current, seconds, LIVE_RANGES[range])
+    },
     holding,
   )
   // drawn past the right edge too, for what slides in before the next drawing
@@ -149,10 +167,16 @@ export function ProjectLiveActivity({
   const rows =
     buckets &&
     domain &&
-    toSteps(buckets, bucket, [domain[0], domain[1] + lookahead])
+    withUsual(
+      toSteps(buckets, bucket, [domain[0], domain[1] + lookahead]),
+      data?.usual ?? [],
+      metric,
+    )
   const top = useSteadyTop(
     rows && rows.length > 0
-      ? Math.max(...rows.map((row) => row.value ?? 0))
+      ? Math.max(
+          ...rows.map((row) => Math.max(row.value ?? 0, row.usualMax ?? 0)),
+        )
       : undefined,
   )
   const color =
@@ -191,7 +215,7 @@ export function ProjectLiveActivity({
   const clampTo = (end: number | undefined, range: LiveRange) => {
     if (end === undefined || newest === undefined) return undefined
     const clamped = Math.max(
-      newest - LIVE_BUFFER_SECONDS + LIVE_RANGES[range],
+      getBufferFrom(newest, data?.oldest, range) + LIVE_RANGES[range],
       end,
     )
     return clamped >= newest - LIVE_RANGES[range] / 20 ? undefined : clamped
@@ -221,6 +245,7 @@ export function ProjectLiveActivity({
       </ChartControlsWrapper>
       <div
         ref={charts}
+        className="relative"
         onPointerEnter={() => {
           hovered.current = true
           hold()
@@ -241,7 +266,25 @@ export function ProjectLiveActivity({
           >
             <TimeSeriesChart
               data={rows ?? []}
-              series={[{ key: 'value', ...tinted(color) }]}
+              series={[
+                {
+                  key: 'usual',
+                  value: (row) => row.usualMax,
+                  value0: (row) => row.usualMin,
+                  fill: 'var(--secondary)',
+                  fillOpacity: 0.15,
+                  activeDot: false,
+                },
+                {
+                  key: 'usualMedian',
+                  value: (row) => row.usualMedian,
+                  stroke: 'var(--secondary)',
+                  strokeWidth: 1,
+                  strokeDasharray: '3 3',
+                  activeDot: false,
+                },
+                { key: 'value', ...tinted(color) },
+              ]}
               ariaLabel="Live activity"
               xAxis={xAxis}
               yAxis={{
@@ -251,12 +294,24 @@ export function ProjectLiveActivity({
                 tickCount: 3,
                 domain: top === undefined ? undefined : [0, top],
               }}
+              margin={CHART_MARGIN}
               renderTooltip={(row) => (
                 <LiveTooltip row={row} bucket={bucket} metric={metric} />
               )}
             />
           </ChartContainer>
         </div>
+        {playhead !== undefined && (
+          <div
+            ref={head}
+            className="pointer-events-none invisible absolute top-0 left-0 transition-transform duration-150 motion-reduce:transition-none"
+          >
+            <LiveDot
+              color={color}
+              className="-translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
+        )}
         {metric !== 'gas' && (
           <div className="mb-2">
             <ActivityRatioChart
@@ -273,11 +328,14 @@ export function ProjectLiveActivity({
       {newest !== undefined && data && domain && (
         <div className="mb-4 flex flex-col gap-1">
           <span className={HOME_TEXT.meta}>
-            Last 4 hours, a bar a minute. Press or drag to look back
+            {data.oldest !== undefined && isFilling(newest, data.oldest)
+              ? `Since ${formatTick(data.oldest)}`
+              : 'Last 4 hours'}
+            , a bar a minute. Press or drag to look back
           </span>
           <LiveOverview
             points={data.overview}
-            from={newest - LIVE_BUFFER_SECONDS}
+            from={getBufferFrom(newest, data.oldest, range)}
             to={newest}
             window={domain}
             windowText={
@@ -311,7 +369,11 @@ export function ProjectLiveActivity({
         ))}
       </RadioGroup>
       <LiveStats
-        data={data}
+        usual={
+          metric !== 'gas' && data && domain
+            ? getUsualRate(data.usual, metric, domain)
+            : undefined
+        }
         metric={metric}
         stats={buckets && domain && getWindowStats(buckets, bucket, domain)}
         window={live ? range : domain}
@@ -331,13 +393,14 @@ const RANGE_LABEL: Record<LiveRange, string> = {
 
 /** The window on screen in figures, against the same hour over the past week */
 function LiveStats({
-  data,
+  usual,
   metric,
   stats,
   window,
   isLoading,
 }: {
-  data: ProjectLiveActivityData | undefined
+  /** Per second, over the window, on the days of the past week */
+  usual: number | undefined
   metric: LiveMetric
   stats: ReturnType<typeof getWindowStats>
   /** The range following the newest block, or the window looked back to */
@@ -381,12 +444,11 @@ function LiveStats({
     )
   }
 
-  const usual = data?.usual?.[metric]
   return (
     <ChartStats className={STATS_CLASS}>
       <ChartStatsItem
         label={`${metric === 'uops' ? 'UOPS' : 'TPS'}, ${span}`}
-        tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second over the window shown, with a percentage change compared to the same hour on the days of the past week.`}
+        tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second over the window shown, with a percentage change compared to the median of the same hours on the days of the past week.`}
         isLoading={isLoading}
       >
         {stats && (
@@ -422,11 +484,18 @@ function LiveTooltip({
   bucket,
   metric,
 }: {
-  row: { timestamp: number; value: number | null; blocks: number }
+  row: {
+    timestamp: number
+    value: number | null
+    blocks: number
+    usualMin: number | null
+    usualMedian: number | null
+    usualMax: number | null
+  }
   bucket: number
   metric: LiveMetric
 }) {
-  const { value, blocks } = row
+  const { value, blocks, usualMin, usualMedian, usualMax } = row
   return (
     <ChartTooltipWrapper>
       <div className="flex flex-col gap-1">
@@ -451,11 +520,38 @@ function LiveTooltip({
                       : `${formatInteger(Math.round(value * bucket))} ${metric === 'uops' ? 'operations' : 'transactions'}`
                   } in ${formatInteger(blocks)} ${blocks === 1 ? 'block' : 'blocks'}`}
             </div>
+            {usualMedian !== null && usualMin !== null && usualMax !== null && (
+              <div className="text-secondary text-xs tabular-nums">
+                Usually {formatActivityCount(usualMedian)} (
+                {formatActivityCount(usualMin)}–{formatActivityCount(usualMax)})
+                at this hour
+              </div>
+            )}
           </>
         )}
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+/**
+ * Where the stored blocks start: the buffer's start, or while it fills, as
+ * after a chain is first followed, its oldest block. At least a range back
+ */
+function getBufferFrom(
+  newest: number,
+  oldest: number | undefined,
+  range: LiveRange,
+) {
+  return Math.min(
+    newest - LIVE_RANGES[range],
+    Math.max(newest - LIVE_BUFFER_SECONDS, oldest ?? newest),
+  )
+}
+
+/** Holding clearly less than the buffer, which the cleaner trims to just under it */
+function isFilling(newest: number, oldest: number) {
+  return newest - oldest < LIVE_BUFFER_SECONDS - 15 * UnixTime.MINUTE
 }
 
 /** Buckets are counted from the epoch, so any time in one gives its start */

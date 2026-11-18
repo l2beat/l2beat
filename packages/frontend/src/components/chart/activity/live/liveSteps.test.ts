@@ -1,9 +1,14 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { UsualHour } from '~/server/features/layer2s/activity/live/liveWindow'
 import {
+  getUsualRate,
   getWindowStats,
   type LiveBucket,
   toBuckets,
   toSteps,
+  valueAt,
+  withUsual,
 } from './liveSteps'
 
 describe(toSteps.name, () => {
@@ -88,3 +93,57 @@ describe(getWindowStats.name, () => {
     ).toEqual(undefined)
   })
 })
+
+describe(withUsual.name, () => {
+  it('gives each step the usual range of the hour it starts in', () => {
+    const steps = withUsual(
+      [{ timestamp: 3599.999 }, { timestamp: 3600 }, { timestamp: 7200 }],
+      [usualHour(3600, 2)],
+      'tps',
+    )
+
+    expect(steps.map((s) => s.usualMedian)).toEqual([null, 2, null])
+  })
+})
+
+describe(getUsualRate.name, () => {
+  it('weighs each hour by how much of the window it covers', () => {
+    // Methodology: a quarter of the window in the first hour
+    const rate = getUsualRate(
+      [usualHour(0, 4), usualHour(3600, 8)],
+      'tps',
+      [2700, 6300],
+    )
+
+    expect(rate).toEqual(7)
+  })
+
+  it('has none without a usual hour in the window', () => {
+    expect(getUsualRate([usualHour(0, 4)], 'tps', [3600, 4500])).toEqual(
+      undefined,
+    )
+  })
+})
+
+describe(valueAt.name, () => {
+  const steps = [
+    { timestamp: 0, value: 1 },
+    { timestamp: 11.999, value: 1 },
+    { timestamp: 12, value: 2 },
+    { timestamp: 23.999, value: 2 },
+  ]
+
+  it('reads the step a time is in', () => {
+    expect(valueAt(steps, 11.9995)).toEqual(1)
+    expect(valueAt(steps, 12.5)).toEqual(2)
+  })
+
+  it('has nothing before the first step', () => {
+    expect(valueAt(steps, -1)).toEqual(null)
+  })
+})
+
+function usualHour(hour: number, median: number): UsualHour {
+  const range = { median, min: median, max: median }
+  return { hour: UnixTime(hour), tps: range, uops: range }
+}
