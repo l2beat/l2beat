@@ -151,10 +151,6 @@ export const sp1turbo: BaseProject = {
         sinceTimestamp: UnixTime(1753882500),
       },
       {
-        projectId: ProjectId('facet'),
-        sinceTimestamp: UnixTime(1751407200),
-      },
-      {
         projectId: ProjectId('ethscriptions'),
         sinceTimestamp: UnixTime(1767735587),
       },
@@ -195,6 +191,10 @@ export const sp1turbo: BaseProject = {
         untilTimestamp: UnixTime(1780559831),
       },
       // archived projects
+      {
+        projectId: ProjectId('facet'),
+        sinceTimestamp: UnixTime(1751407200),
+      },
       {
         projectId: ProjectId('gpt'),
         sinceTimestamp: UnixTime(1753882500),
