@@ -120,6 +120,7 @@ export const privacyPoolsV2: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-10-20')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(SINCE_TIMESTAMP),
   statuses: {
     yellowWarning:
       'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set.',
