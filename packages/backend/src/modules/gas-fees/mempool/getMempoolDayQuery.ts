@@ -138,6 +138,8 @@ j as (
 c as (
   select seen_ms, tip, tip_wei,
     case
+      -- None on the day checked. Without this it would count as kept, in the longest wait bucket
+      when delay_ms is null then '0 no_delay'
       when delay_ms < -4000 then '1 seen_late'
       when next_number is null then '2 no_next_block'
       when receiver = '${BOT}' then '3 bot'
