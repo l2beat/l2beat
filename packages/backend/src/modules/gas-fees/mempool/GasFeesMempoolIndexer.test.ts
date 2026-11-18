@@ -163,13 +163,12 @@ describe(GasFeesMempoolIndexer.name, () => {
 
 describe(getMempoolDayStatus.name, () => {
   it('is complete with 99% of the Flashbots count', () => {
-    expect(getMempoolDayStatus(990, 1000, false)).toEqual('complete')
-    expect(getMempoolDayStatus(989, 1000, false)).toEqual(undefined)
+    expect(getMempoolDayStatus(990, 1000)).toEqual('complete')
+    expect(getMempoolDayStatus(989, 1000)).toEqual('partial')
   })
 
-  it('is partial or missing once settled', () => {
-    expect(getMempoolDayStatus(500, 1000, true)).toEqual('partial')
-    expect(getMempoolDayStatus(500, undefined, true)).toEqual('partial')
-    expect(getMempoolDayStatus(0, 1000, true)).toEqual('missing')
+  it('is partial without a Flashbots count, and missing without rows', () => {
+    expect(getMempoolDayStatus(500, undefined)).toEqual('partial')
+    expect(getMempoolDayStatus(0, 1000)).toEqual('missing')
   })
 })

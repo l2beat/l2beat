@@ -52,6 +52,13 @@ describe(getMempoolDayQuery.name, () => {
     )
   })
 
+  it('says which kind each row is, for the reader', () => {
+    expect(sql).toInclude(
+      'cast(grouping(tip_from_wei, bucket) as tinyint) as kind',
+    )
+    expect(sql).toInclude('having grouping(tip_from_wei, bucket) = 3')
+  })
+
   it('puts round tips at the start of a level', () => {
     expect(sql).toInclude('when tip_wei < 1050000000 then 1000000000')
   })

@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { gweiToWei } from '../units'
 
 export interface TipPayersDayQueryInput {
   /** Start of the UTC day */
@@ -6,7 +7,7 @@ export interface TipPayersDayQueryInput {
   firstBlock: number
   lastBlock: number
   /** The day's mean fast tip, the cap for tips at the fast tip */
-  fastTipWei: bigint
+  fastTipGwei: number
 }
 
 const FORWARDER = '0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc'
@@ -58,7 +59,7 @@ checked as (
 x as (
   select tip_wei,
     cast(tip_wei as double) * gas_used / 1e18 as tip_eth,
-    cast(least(tip_wei, ${input.fastTipWei}) as double) * gas_used / 1e18 as at_fast_tip_eth,
+    cast(least(tip_wei, ${gweiToWei(input.fastTipGwei)}) as double) * gas_used / 1e18 as at_fast_tip_eth,
     -- A builder paying itself in its own block is recognised by sender: the block's fee recipient
     tip_wei < ${ORDINARY_BELOW_WEI}
       and "from" <> miner

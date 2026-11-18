@@ -7,14 +7,15 @@ describe(toMempoolDay.name, () => {
 
   it('splits the rows into level waits, tier waits and totals', () => {
     const result = toMempoolDay(day, [
-      row({ tip_from_wei: 1e9, bucket: 3, kept: 5 }),
+      row({ kind: 0, tip_from_wei: 1e9, bucket: 3, kept: 5 }),
       // Two fast transactions, one of them within 5 blocks; none in the other tiers
       row({
+        kind: 2,
         bucket: 241,
         kept: 7,
         tier_counts: [0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1],
       }),
-      row({ landed: 1000, kept: 460 }),
+      row({ kind: 3, landed: 1000, kept: 460 }),
     ])
 
     expect(result.landedCount).toEqual(1000)
@@ -52,23 +53,25 @@ describe(toMempoolDay.name, () => {
   it('fails on tier counts of another length', () => {
     expect(() =>
       toMempoolDay(day, [
-        row({ bucket: 1, tier_counts: [1, 1, 1, 1] }),
-        row({ landed: 0 }),
+        row({ kind: 2, bucket: 1, tier_counts: [1, 1, 1, 1] }),
+        row({ kind: 3, landed: 0 }),
       ]),
-    ).toThrow('Mempool tier counts malformed')
+    ).toThrow('Mempool row malformed')
   })
 
   it('fails on a tip level it does not know', () => {
     expect(() =>
       toMempoolDay(day, [
-        row({ tip_from_wei: 123, bucket: 1 }),
-        row({ landed: 0 }),
+        row({ kind: 0, tip_from_wei: 123, bucket: 1 }),
+        row({ kind: 3, landed: 0 }),
       ]),
     ).toThrow('Mempool row malformed')
   })
 })
 
-function row(values: Partial<MempoolRow>): MempoolRow {
+function row(
+  values: Partial<MempoolRow> & Pick<MempoolRow, 'kind'>,
+): MempoolRow {
   return {
     tip_from_wei: null,
     bucket: null,

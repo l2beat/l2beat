@@ -7,17 +7,16 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { getDayBlocks, getHourlyTips } from '../dayInputs'
-import { duneRetryStrategy, nextDays, UnfinishedDay } from '../days'
+import { DuneDayWait, isSettled, nextDays } from '../days'
 import type { BlockFinder } from '../types'
 import type { MempoolDayQueryInput } from './getMempoolDayQuery'
 import type { MempoolDay } from './readMempoolDay'
 
 /** Bump it when a fix changes what past days store: every day is read again, 0.1 to 0.35 Dune credits each */
 const STORED_DATA_VERSION = '1'
-/** Dune has a day within a day; until this long after it ends, a thin day is read again */
-const SETTLE_SECONDS = 3 * UnixTime.DAY
 /** The share of Flashbots' landed transactions Dune must have for a complete day */
 const COMPLETE_SHARE = 0.99
+
 interface GasFeesMempoolIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
   firstDay: UnixTime
@@ -34,87 +33,86 @@ interface GasFeesMempoolIndexerDeps
  * after the end of the last stored day.
  */
 export class GasFeesMempoolIndexer extends ManagedChildIndexer {
-  private readonly unfinished = new UnfinishedDay(
-    'Mempool day incomplete on Dune',
-  )
+  private readonly waits: DuneDayWait
 
   constructor(
     private readonly $: GasFeesMempoolIndexerDeps,
     logger: Logger,
   ) {
+    const waits = new DuneDayWait('Mempool day incomplete on Dune')
     super(
       {
         ...$,
         name: INDEXER_NAMES.GAS_FEES_MEMPOOL,
         minHeight: $.firstDay + UnixTime.DAY,
         configHash: `${STORED_DATA_VERSION}:${$.firstDay}`,
-        updateRetryStrategy: duneRetryStrategy(),
+        updateRetryStrategy: waits.retryStrategy,
       },
       logger,
     )
+    this.waits = waits
   }
 
   override async update(from: number, to: number): Promise<number> {
     const day = nextDays(this.$.firstDay, from, to)[0]
     if (day === undefined) return to
-
     const now = this.$.now?.() ?? UnixTime.now()
-    this.unfinished.throwIfRecent(day, now)
 
+    return await this.waits.run(day, now, async (wait) => {
+      const settled = isSettled(day, now)
+      // Read before Dune, which is billed: without Flashbots' count the day can't be shown complete
+      const flashbotsLandedCount = await this.$.readFlashbotsLandedCount(day)
+      if (flashbotsLandedCount === undefined && !settled) {
+        return wait({ day, flashbotsLandedCount })
+      }
+
+      const mempool = await this.readDay(day)
+      const status = getMempoolDayStatus(
+        mempool.landedCount,
+        flashbotsLandedCount,
+      )
+      const counts = {
+        day,
+        duneLandedCount: mempool.landedCount,
+        flashbotsLandedCount,
+      }
+      if (status !== 'complete' && !settled) return wait(counts)
+
+      // A missing day has no rows on Dune, so its waits are empty
+      await this.$.db.gasFeesMempool.replaceDay({
+        day: {
+          timestamp: day,
+          status,
+          duneLandedCount: mempool.landedCount,
+          flashbotsLandedCount: flashbotsLandedCount ?? null,
+          keptCount: mempool.keptCount,
+        },
+        tipLevelWaits: mempool.tipLevelWaits,
+        tierWaits: mempool.tierWaits,
+      })
+      if (status === 'complete') {
+        this.logger.info('Saved mempool day', counts)
+      } else {
+        this.logger.warn('Saved incomplete mempool day', { ...counts, status })
+      }
+      return day + UnixTime.DAY
+    })
+  }
+
+  private async readDay(day: UnixTime): Promise<MempoolDay> {
     const previousDay = UnixTime(day - UnixTime.DAY)
-    // Flashbots' count comes before the Dune read, which is billed: if it fails, the retry has paid for nothing
-    const [hourlyTips, previous, blocks, flashbotsLandedCount] =
-      await Promise.all([
-        // Some transactions landing on the day were first seen the day before
-        getHourlyTips(this.$.db, previousDay, day),
-        getDayBlocks(this.$.blockFinder, previousDay),
-        getDayBlocks(this.$.blockFinder, day),
-        this.$.readFlashbotsLandedCount(day),
-      ])
-    const settled = now >= day + UnixTime.DAY + SETTLE_SECONDS
-    if (flashbotsLandedCount === undefined && !settled) {
-      // Without Flashbots' count the day can't be complete, so the Dune read would be paid for nothing
-      return this.unfinished.fail(day, now, { day, flashbotsLandedCount })
-    }
-    const mempool = await this.$.readMempoolDay({
+    const [hourlyTips, previous, blocks] = await Promise.all([
+      // Some transactions landing on the day were first seen the day before
+      getHourlyTips(this.$.db, previousDay, day),
+      getDayBlocks(this.$.blockFinder, previousDay),
+      getDayBlocks(this.$.blockFinder, day),
+    ])
+    return await this.$.readMempoolDay({
       day,
       previousDayFirstBlock: previous.firstBlock,
       ...blocks,
       hourlyTips,
     })
-    const status = getMempoolDayStatus(
-      mempool.landedCount,
-      flashbotsLandedCount,
-      settled,
-    )
-    const counts = {
-      day,
-      duneLandedCount: mempool.landedCount,
-      flashbotsLandedCount,
-    }
-    if (status === undefined) {
-      return this.unfinished.fail(day, now, counts)
-    }
-    this.unfinished.clear()
-
-    // A missing day has no rows on Dune, so its waits are empty
-    await this.$.db.gasFeesMempool.replaceDay({
-      day: {
-        timestamp: day,
-        status,
-        duneLandedCount: mempool.landedCount,
-        flashbotsLandedCount: flashbotsLandedCount ?? null,
-        keptCount: mempool.keptCount,
-      },
-      tipLevelWaits: mempool.tipLevelWaits,
-      tierWaits: mempool.tierWaits,
-    })
-    if (status === 'complete') {
-      this.logger.info('Saved mempool day', counts)
-    } else {
-      this.logger.warn('Saved incomplete mempool day', { ...counts, status })
-    }
-    return day + UnixTime.DAY
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -125,22 +123,14 @@ export class GasFeesMempoolIndexer extends ManagedChildIndexer {
   }
 }
 
-/**
- * undefined while Dune may still be loading a thin day. Once settled, a day
- * Dune never got is stored as missing, so the indexer moves on.
- */
+/** What Dune has of the day, against Flashbots' count of it when there is one */
 export function getMempoolDayStatus(
   duneLandedCount: number,
   flashbotsLandedCount: number | undefined,
-  settled: boolean,
-): GasFeesMempoolDayStatus | undefined {
-  if (
-    flashbotsLandedCount !== undefined &&
-    duneLandedCount > 0 &&
+): GasFeesMempoolDayStatus {
+  if (duneLandedCount === 0) return 'missing'
+  return flashbotsLandedCount !== undefined &&
     duneLandedCount >= COMPLETE_SHARE * flashbotsLandedCount
-  ) {
-    return 'complete'
-  }
-  if (!settled) return undefined
-  return duneLandedCount === 0 ? 'missing' : 'partial'
+    ? 'complete'
+    : 'partial'
 }

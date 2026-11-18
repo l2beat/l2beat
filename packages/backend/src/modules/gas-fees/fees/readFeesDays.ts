@@ -40,8 +40,6 @@ export interface FeesDay {
   day: UnixTime
   /** The chains Dune has the whole day of */
   records: GasFeesDailyRecord[]
-  /** Chains required on the day that Dune doesn't have the whole day of: still loading, or with a hole */
-  missing: string[]
 }
 
 /**
@@ -78,27 +76,45 @@ export function joinFeesDays(
   blocks: BlocksRow[],
 ): FeesDay[] {
   const feesByKey = new Map(fees.map((r) => [`${r.blockchain}:${r.day}`, r]))
-  const blocksByChain = new Map<string, BlocksRow[]>()
-  for (const row of blocks) {
-    const rows = blocksByChain.get(row.blockchain) ?? []
-    rows.push(row)
-    blocksByChain.set(row.blockchain, rows)
-  }
+  const blocksByKey = withNeighbours(blocks)
   const days: FeesDay[] = []
   for (let day = fromDay; day <= toDay; day += UnixTime.DAY) {
-    const result: FeesDay = { day, records: [], missing: [] }
-    const date = UnixTime.toYYYYMMDD(day)
-    for (const chain of chains) {
-      const fee = feesByKey.get(`${chain.dune}:${date}`)
-      const record =
-        fee && toWholeDay(chain, fee, blocksByChain.get(chain.dune) ?? [])
-      if (record) {
-        result.records.push({ ...record, timestamp: day })
-      } else if (day >= chain.requiredFrom) {
-        result.missing.push(chain.id)
-      }
-    }
-    days.push(result)
+    const key = (chain: GasFeesChain) =>
+      `${chain.dune}:${UnixTime.toYYYYMMDD(day)}`
+    const records = chains.flatMap((chain) => {
+      const fee = feesByKey.get(key(chain))
+      const block = blocksByKey.get(key(chain))
+      const record = fee && block && toWholeDay(chain, fee, block)
+      return record ? [{ ...record, timestamp: day }] : []
+    })
+    days.push({ day, records })
+  }
+  return days
+}
+
+interface BlocksDay {
+  row: BlocksRow
+  /** The nearest days of the chain that have blocks, as a halted chain has days without */
+  earlier: BlocksRow | undefined
+  later: BlocksRow | undefined
+}
+
+function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
+  const byChain = new Map<string, BlocksRow[]>()
+  for (const row of blocks) {
+    byChain.set(row.blockchain, [...(byChain.get(row.blockchain) ?? []), row])
+  }
+  const days = new Map<string, BlocksDay>()
+  for (const rows of byChain.values()) {
+    // YYYY-MM-DD sorts as dates do
+    rows.sort((a, b) => a.day.localeCompare(b.day))
+    rows.forEach((row, i) => {
+      days.set(`${row.blockchain}:${row.day}`, {
+        row,
+        earlier: rows[i - 1],
+        later: rows[i + 1],
+      })
+    })
   }
   return days
 }
@@ -109,10 +125,9 @@ export function joinFeesDays(
  * one. That takes all of:
  * - no block is missing within the day;
  * - a later day has blocks, and its first follows the day's last, so the blocks
- *   table has the day to its end. The nearest later day, as a halted chain has
- *   days without blocks;
- * - the day's first block follows the last of the nearest earlier day read, if
- *   any. Unchecked, a hole across midnight would be stored on the day after it;
+ *   table has the day to its end;
+ * - the day's first block follows the last of the earlier day read, if any.
+ *   Unchecked, a hole across midnight would be stored on the day after it;
  * - the fee rows come from every block that had transactions, so the fee table
  *   has loaded all the blocks table has.
  *
@@ -122,26 +137,18 @@ export function joinFeesDays(
 function toWholeDay(
   chain: GasFeesChain,
   fee: FeesRow,
-  blocks: BlocksRow[],
+  { row, earlier, later }: BlocksDay,
 ): Omit<GasFeesDailyRecord, 'timestamp'> | undefined {
-  const block = blocks.find((row) => row.day === fee.day)
-  const later = earliest(blocks.filter((row) => row.day > fee.day))
-  const earlier = latest(blocks.filter((row) => row.day < fee.day))
-  if (
-    !block ||
-    block.gas_used === null ||
-    block.blocks_with_txs === null ||
-    !later
-  ) {
+  if (row.gas_used === null || row.blocks_with_txs === null || !later) {
     return undefined
   }
   const whole =
-    fee.fee_blocks === block.blocks_with_txs &&
+    fee.fee_blocks === row.blocks_with_txs &&
     // On the days checked every block of a chain read from transactions had one
-    (!chain.gasFromTransactions || block.blocks_with_txs === block.blocks) &&
-    block.last_block - block.first_block + 1 === block.blocks &&
-    later.first_block === block.last_block + 1 &&
-    (!earlier || earlier.last_block + 1 === block.first_block)
+    (!chain.gasFromTransactions || row.blocks_with_txs === row.blocks) &&
+    row.last_block - row.first_block + 1 === row.blocks &&
+    later.first_block === row.last_block + 1 &&
+    (!earlier || earlier.last_block + 1 === row.first_block)
   if (!whole) return undefined
   return {
     chain: chain.id,
@@ -150,23 +157,8 @@ function toWholeDay(
     totalFeeUsd: fee.total_fee_usd,
     l1FeeNative: fee.l1_fee,
     blobFeeNative: fee.blob_fee,
-    baseFeeNative: block.base_fee,
-    gasUsed: block.gas_used,
+    baseFeeNative: row.base_fee,
+    gasUsed: row.gas_used,
     medianFeeUsd: fee.median_fee_usd,
   }
-}
-
-/** YYYY-MM-DD sorts as dates do */
-function earliest(rows: BlocksRow[]): BlocksRow | undefined {
-  return rows.reduce<BlocksRow | undefined>(
-    (min, row) => (min && min.day < row.day ? min : row),
-    undefined,
-  )
-}
-
-function latest(rows: BlocksRow[]): BlocksRow | undefined {
-  return rows.reduce<BlocksRow | undefined>(
-    (max, row) => (max && max.day > row.day ? max : row),
-    undefined,
-  )
 }

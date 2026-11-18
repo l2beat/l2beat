@@ -83,6 +83,7 @@ export type {
 export type {
   GasFeesTipGroup,
   GasFeesTipPayersDailyRecord,
+  GasFeesTipPayersStats,
 } from './repositories/GasFeesTipPayersDailyRepository'
 export type {
   GasFeesWallet,

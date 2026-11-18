@@ -1,3 +1,4 @@
+import type { GasFeesTipPayersStats } from '@l2beat/database'
 import type { DuneQueryService } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
 import {
@@ -22,7 +23,21 @@ const TipPayersRow = v.object({
   non_ordinary_tip_eth: v.number(),
   unknown_count: v.number(),
 })
-export type TipPayersDay = v.infer<typeof TipPayersRow>
+export type TipPayersRow = v.infer<typeof TipPayersRow>
+
+/** The day's figures before pricing: ethUsd and the fast tip come from our hourly tips */
+export type TipPayersFigures = Omit<
+  GasFeesTipPayersStats,
+  'ethUsd' | 'fastTipGwei'
+>
+
+export interface TipPayersDay {
+  /** Whether Dune has every block of the day and all of each block's transactions */
+  whole: boolean
+  /** What that check found */
+  check: { blocks: number; incompleteBlocks: number; unknownCount: number }
+  figures: TipPayersFigures
+}
 
 export async function readTipPayersDay(
   dune: TipPayersDune,
@@ -37,17 +52,33 @@ export async function readTipPayersDay(
   if (rows.length !== 1 || row === undefined) {
     throw new Error('Tip payers day malformed', { cause: { day: input.day } })
   }
-  return row
+  return toTipPayersDay(row, input)
 }
 
-/** Whether Dune has every block of the day and all of each block's transactions */
-export function isWholeTipPayersDay(
-  day: TipPayersDay,
+export function toTipPayersDay(
+  row: TipPayersRow,
   input: Pick<TipPayersDayQueryInput, 'firstBlock' | 'lastBlock'>,
-): boolean {
-  return (
-    day.blocks === input.lastBlock - input.firstBlock + 1 &&
-    day.incomplete_blocks === 0 &&
-    day.unknown_count === 0
-  )
+): TipPayersDay {
+  return {
+    whole:
+      row.blocks === input.lastBlock - input.firstBlock + 1 &&
+      row.incomplete_blocks === 0 &&
+      row.unknown_count === 0,
+    check: {
+      blocks: row.blocks,
+      incompleteBlocks: row.incomplete_blocks,
+      unknownCount: row.unknown_count,
+    },
+    figures: {
+      low: { txCount: row.low_count, tipEth: row.low_tip_eth },
+      middle: { txCount: row.middle_count, tipEth: row.middle_tip_eth },
+      high: { txCount: row.high_count, tipEth: row.high_tip_eth },
+      roundTipTxCount: row.round_tip_count,
+      atFastTipEth: row.at_fast_tip_eth,
+      nonOrdinary: {
+        txCount: row.non_ordinary_count,
+        tipEth: row.non_ordinary_tip_eth,
+      },
+    },
+  }
 }

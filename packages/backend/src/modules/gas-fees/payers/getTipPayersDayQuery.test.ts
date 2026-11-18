@@ -7,7 +7,7 @@ describe(getTipPayersDayQuery.name, () => {
     day: UnixTime.fromDate(new Date('2026-11-10T00:00:00Z')),
     firstBlock: 7_300,
     lastBlock: 14_500,
-    fastTipWei: 99_000_000n,
+    fastTipGwei: 0.099,
   })
 
   it('reads only the day, by partition and by block', () => {

@@ -17,29 +17,24 @@ describe(GasFeesTipPayersIndexer.name, () => {
   const day = UnixTime.fromDate(new Date('2026-11-10T00:00:00Z'))
   const next = UnixTime(day + UnixTime.DAY)
 
-  it("prices the day's tips at the mean of our hourly ETH/USD reads", async () => {
+  it("stores a whole day with the day's mean price and fast tip", async () => {
     const { indexer, payers, readTipPayersDay } = createIndexer(TIPS)
 
     expect(await indexer.update(next, day + 3 * UnixTime.DAY)).toEqual(next)
-    expect(readTipPayersDay.calls[0]?.args[0].fastTipWei).toEqual(500_000_000n)
+    expect(readTipPayersDay.calls[0]?.args[0].fastTipGwei).toEqual(0.5)
     expect(payers.upsert).toHaveBeenOnlyCalledWith({
       timestamp: day,
+      status: 'complete',
       ethUsd: 4000,
       fastTipGwei: 0.5,
-      low: { txCount: 600, tipEth: 1, tipUsd: 4000 },
-      middle: { txCount: 300, tipEth: 2, tipUsd: 8000 },
-      high: { txCount: 100, tipEth: 3, tipUsd: 12000 },
-      roundTipTxCount: 50,
-      atFastTipEth: 0.5,
-      atFastTipUsd: 2000,
-      nonOrdinary: { txCount: 10, tipEth: 4, tipUsd: 16000 },
+      ...TIPS.figures,
     })
   })
 
-  it('fails on a day Dune is missing blocks of, reading it again after 6 hours at most', async () => {
+  it('waits for a day Dune is missing blocks of, reading it again after 6 hours at most', async () => {
     let now = next
     const { indexer, payers, readTipPayersDay } = createIndexer(
-      { ...TIPS, incomplete_blocks: 3 },
+      { ...TIPS, whole: false },
       () => now,
     )
 
@@ -53,20 +48,16 @@ describe(GasFeesTipPayersIndexer.name, () => {
     expect(payers.upsert).not.toHaveBeenCalled()
   })
 
-  it('leaves out a day incomplete 3 days after it ends, on the second read, and moves on', async () => {
-    let now = UnixTime(next + 3 * UnixTime.DAY)
-    const { indexer, payers, readTipPayersDay } = createIndexer(
-      { ...TIPS, incomplete_blocks: 3 },
-      () => now,
+  it('stores a day still incomplete 3 days after it ends as missing, and moves on', async () => {
+    const { indexer, payers } = createIndexer({ ...TIPS, whole: false }, () =>
+      UnixTime(next + 3 * UnixTime.DAY),
     )
 
-    await expect(indexer.update(next, next)).toBeRejectedWith(
-      'Tip payers day incomplete on Dune',
-    )
-    now = UnixTime(now + 6 * UnixTime.HOUR)
     expect(await indexer.update(next, next)).toEqual(next)
-    expect(readTipPayersDay).toHaveBeenCalledTimes(2)
-    expect(payers.upsert).not.toHaveBeenCalled()
+    expect(payers.upsert).toHaveBeenOnlyCalledWith({
+      timestamp: day,
+      status: 'missing',
+    })
   })
 
   it('starts at its first day when the hourly tips lower it below', async () => {
@@ -119,18 +110,14 @@ describe(GasFeesTipPayersIndexer.name, () => {
 })
 
 const TIPS: TipPayersDay = {
-  // A block a second, as block numbers stand in for timestamps
-  blocks: UnixTime.DAY,
-  incomplete_blocks: 0,
-  low_count: 600,
-  low_tip_eth: 1,
-  middle_count: 300,
-  middle_tip_eth: 2,
-  high_count: 100,
-  high_tip_eth: 3,
-  round_tip_count: 50,
-  at_fast_tip_eth: 0.5,
-  non_ordinary_count: 10,
-  non_ordinary_tip_eth: 4,
-  unknown_count: 0,
+  whole: true,
+  check: { blocks: UnixTime.DAY, incompleteBlocks: 0, unknownCount: 0 },
+  figures: {
+    low: { txCount: 600, tipEth: 1 },
+    middle: { txCount: 300, tipEth: 2 },
+    high: { txCount: 100, tipEth: 3 },
+    roundTipTxCount: 50,
+    atFastTipEth: 0.5,
+    nonOrdinary: { txCount: 10, tipEth: 4 },
+  },
 }

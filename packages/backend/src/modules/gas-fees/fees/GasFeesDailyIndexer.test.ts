@@ -30,10 +30,7 @@ describe(GasFeesDailyIndexer.name, () => {
   })
 
   it('stores a day without a late chain and moves on', async () => {
-    const { indexer, daily } = createIndexer([
-      feesDay(day(0), ['abstract']),
-      feesDay(day(1)),
-    ])
+    const { indexer, daily } = createIndexer([feesDay(day(0)), feesDay(day(1))])
 
     expect(await indexer.update(day(1), day(9))).toEqual(day(2))
     expect(daily.upsertMany.calls[0]?.args[0]).toHaveLength(2)
@@ -42,15 +39,13 @@ describe(GasFeesDailyIndexer.name, () => {
   it('stops at a day no chain has yet, and fails when it is the first', async () => {
     const { indexer, daily, readFeesDays } = createIndexer([
       feesDay(day(0)),
-      { day: day(1), records: [], missing: ['ethereum', 'abstract'] },
+      { day: day(1), records: [] },
     ])
 
     expect(await indexer.update(day(1), day(9))).toEqual(day(1))
     expect(daily.upsertMany.calls[0]?.args[0]).toHaveLength(1)
 
-    readFeesDays.resolvesToOnce([
-      { day: day(1), records: [], missing: ['ethereum', 'abstract'] },
-    ])
+    readFeesDays.resolvesToOnce([{ day: day(1), records: [] }])
     await expect(indexer.update(day(2), day(9))).toBeRejectedWith(
       'Gas fees day not on Dune yet',
     )
@@ -74,7 +69,7 @@ describe(GasFeesDailyIndexer.name, () => {
     })
     readFeesDays.resolvesToOnce([feesDay(day(2))])
     readFeesDays.resolvesToOnce([
-      { day: day(1), records: [record(day(1), 'abstract')], missing: [] },
+      { day: day(1), records: [record(day(1), 'abstract')] },
     ])
 
     await indexer.update(day(3), day(9))
@@ -117,7 +112,7 @@ describe(GasFeesDailyIndexer.name, () => {
     })
     readFeesDays.resolvesToOnce([feesDay(day(8))])
     readFeesDays.resolvesToOnce([
-      { day: day(7), records: [record(day(7), 'abstract')], missing: [] },
+      { day: day(7), records: [record(day(7), 'abstract')] },
     ])
     readFeesDays.rejectsWithOnce(new Error('Dune error'))
 
@@ -234,6 +229,6 @@ function record(timestamp: UnixTime, chain: string): GasFeesDailyRecord {
   }
 }
 
-function feesDay(day: UnixTime, missing: string[] = []): FeesDay {
-  return { day, missing, records: [record(day, 'ethereum')] }
+function feesDay(day: UnixTime): FeesDay {
+  return { day, records: [record(day, 'ethereum')] }
 }

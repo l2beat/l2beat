@@ -4,6 +4,7 @@ import type { IRpcClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../tools/TimeLoop'
 import { type FetchText, fetchText } from '../fetchText'
+import { readBlockTips } from './readBlockTips'
 import {
   AMBIRE_BLOCKS,
   AMBIRE_PERCENTILES,
@@ -117,13 +118,15 @@ export class WalletTipsLoop extends TimeLoop {
 
   private async computeAmbire(): Promise<WalletTip[]> {
     const head = await this.$.rpc.getLatestBlockNumber()
-    const [history, nodeTip] = await Promise.all([
-      this.$.rpc.getFeeHistory(AMBIRE_BLOCKS, head, AMBIRE_PERCENTILES),
+    const [rewards, nodeTip] = await Promise.all([
+      readBlockTips(
+        this.$.rpc,
+        head - AMBIRE_BLOCKS + 1,
+        head,
+        AMBIRE_PERCENTILES,
+      ),
       this.$.rpc.getMaxPriorityFeePerGas(),
     ])
-    const rewards = (history.reward ?? []).map((row) =>
-      row.map((wei) => Number(wei) / 1e9),
-    )
     return computeAmbire(rewards, Number(nodeTip) / 1e9)
   }
 }

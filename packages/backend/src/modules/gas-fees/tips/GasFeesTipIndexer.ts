@@ -8,7 +8,7 @@ import {
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import type { BlockFinder } from '../types'
-import { estimateTips, HISTORY_BLOCKS } from './estimateTips'
+import { BLOCK_PERCENTILES, estimateTips, HISTORY_BLOCKS } from './estimateTips'
 import {
   type BlockTimestampRpc,
   findLastBlocksBefore,
@@ -72,7 +72,12 @@ export class GasFeesTipIndexer extends ManagedChildIndexer {
     if (!first || !last) return to
 
     const firstBlock = first.blockNumber - HISTORY_BLOCKS + 1
-    const blockTips = readBlockTips(this.$.rpc, firstBlock, last.blockNumber)
+    const blockTips = readBlockTips(
+      this.$.rpc,
+      firstBlock,
+      last.blockNumber,
+      BLOCK_PERCENTILES,
+    )
     const records: GasFeesTipHourlyRecord[] = await Promise.all(
       points.map(async ({ timestamp, blockNumber }) => {
         const [tips, ethUsd] = await Promise.all([

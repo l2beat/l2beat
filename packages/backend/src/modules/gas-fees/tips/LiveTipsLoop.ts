@@ -3,7 +3,7 @@ import type { Database } from '@l2beat/database'
 import type { IRpcClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../tools/TimeLoop'
-import { estimateTips, HISTORY_BLOCKS } from './estimateTips'
+import { BLOCK_PERCENTILES, estimateTips, HISTORY_BLOCKS } from './estimateTips'
 import { type FeeHistoryRpc, readBlockTips } from './readBlockTips'
 import { type EthUsdRpc, readEthUsd } from './readEthUsd'
 
@@ -49,7 +49,7 @@ export class LiveTipsLoop extends TimeLoop {
       }
     }
     const [tips, ethUsd] = await Promise.all([
-      readBlockTips(this.$.rpc, missingFrom, head),
+      readBlockTips(this.$.rpc, missingFrom, head, BLOCK_PERCENTILES),
       readEthUsd(this.$.rpc, head),
     ])
     tips.forEach((row, i) => this.blockTips.set(missingFrom + i, row))

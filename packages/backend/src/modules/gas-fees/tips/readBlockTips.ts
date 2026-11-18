@@ -1,5 +1,4 @@
 import type { IRpcClient } from '@l2beat/shared'
-import { BLOCK_PERCENTILES } from './estimateTips'
 
 export type FeeHistoryRpc = Pick<IRpcClient, 'getFeeHistory'>
 
@@ -7,13 +6,15 @@ export type FeeHistoryRpc = Pick<IRpcClient, 'getFeeHistory'>
 const MAX_BLOCKS_PER_CALL = 1024
 
 /**
- * Each block's tips at BLOCK_PERCENTILES, gwei, for blocks `from` to `to`, both
- * included, oldest first.
+ * Each block's tips at `percentiles`, gwei, for blocks `from` to `to`, both
+ * included, oldest first. Fails on a block without a tip at every percentile:
+ * read as 0, a missing tip would give a plausible wrong estimate.
  */
 export async function readBlockTips(
   rpc: FeeHistoryRpc,
   from: number,
   to: number,
+  percentiles: number[],
 ): Promise<number[][]> {
   const calls: { newest: number; count: number }[] = []
   for (let newest = to; newest >= from; newest -= MAX_BLOCKS_PER_CALL) {
@@ -24,7 +25,7 @@ export async function readBlockTips(
   }
   const histories = await Promise.all(
     calls.map(({ newest, count }) =>
-      rpc.getFeeHistory(count, newest, BLOCK_PERCENTILES),
+      rpc.getFeeHistory(count, newest, percentiles),
     ),
   )
   const tips: number[][] = []
@@ -33,7 +34,8 @@ export async function readBlockTips(
     if (
       !call ||
       history.oldestBlock !== call.newest - call.count + 1 ||
-      history.reward?.length !== call.count
+      history.reward?.length !== call.count ||
+      history.reward.some((row) => row.length !== percentiles.length)
     ) {
       throw new Error('Fee history malformed', {
         cause: { call, oldestBlock: history.oldestBlock },

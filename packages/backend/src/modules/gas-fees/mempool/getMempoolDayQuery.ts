@@ -20,19 +20,35 @@ export interface MempoolDayQueryInput {
 
 const BEACON_GENESIS = 1606824023
 const BOT = '0xbdb3ba9ffe392549e1f8658dd2630c141fdf47b6'
+/** The kinds of row the query returns, as grouping(tip_from_wei, bucket) numbers them */
+export const ROW_KIND = {
+  /** Per tip level and wait bucket */
+  level: 0,
+  /** Per wait bucket, with tier_counts */
+  tier: 2,
+  /** The day's totals, with landed */
+  total: 3,
+} as const
+
 /**
- * What tier_counts holds for each tier of GAS_FEES_TIERS, in order: its
- * transactions, then those that landed within this many blocks
+ * What tier_counts holds for each tier of GAS_FEES_TIERS, in this order: its
+ * transactions, then those that landed within so many blocks. The query
+ * writes the array from this list and the reader finds a count in it by name.
  */
-export const TIER_COUNT_BLOCKS = [undefined, 1, 2, 5] as const
+export const TIER_COUNTS = [
+  { field: 'txCount', withinBlocks: undefined },
+  { field: 'nextBlockCount', withinBlocks: 1 },
+  { field: 'within2BlocksCount', withinBlocks: 2 },
+  { field: 'within5BlocksCount', withinBlocks: 5 },
+] as const
 /** "1× to 1.26× what it said", one histogram bar wide */
 const TIER_BAND = '1.26'
 
 /**
- * The day's kept mempool transactions as an additive histogram, in three kinds
- * of row: per tip level and wait bucket; per wait bucket, with tier_counts,
+ * The day's kept mempool transactions as an additive histogram, in the three
+ * kinds of row of ROW_KIND: per tip level and wait bucket; per wait bucket,
  * for those tipping 1× to 1.26× a tier of our estimator in the hour they were
- * first seen; and the day's totals, with landed and neither level nor bucket.
+ * first seen; and the day's totals.
  *
  * Dune bills the result by its bytes. So the tier counts are one array, null
  * on the other rows, `landed` is only on the totals, and counts are 4 bytes:
@@ -67,11 +83,13 @@ export function getMempoolDayQuery(input: MempoolDayQueryInput): string {
     )
     .join(',\n    ')
   const tierCounts = GAS_FEES_TIERS.flatMap((tier) =>
-    TIER_COUNT_BLOCKS.map((blocks) => {
-      const within = blocks === undefined ? '' : ` and blocks <= ${blocks}`
+    TIER_COUNTS.map(({ withinBlocks }) => {
+      const within =
+        withinBlocks === undefined ? '' : ` and blocks <= ${withinBlocks}`
       return `    cast(count_if(is_kept and in_${tier}${within}) as integer)`
     }),
   ).join(',\n')
+  const kind = 'grouping(tip_from_wei, bucket)'
   const inTier = (tier: string) =>
     // At the estimate counts, so a tier that says a tip of 0 is graded on the transactions tipping 0
     `coalesce(c.tip_wei = e.${tier}_wei or (c.tip_wei > e.${tier}_wei and c.tip_wei < e.${tier}_wei * ${TIER_BAND}), false) as in_${tier}`
@@ -152,19 +170,20 @@ k as (
   left join e on e.hour_ms = c.seen_ms - c.seen_ms % 3600000
 )
 select
+  cast(${kind} as tinyint) as kind,
   tip_from_wei,
   cast(bucket as smallint) as bucket,
-  if(grouping(tip_from_wei, bucket) = 3, cast(count(*) as integer)) as landed,
+  if(${kind} = ${ROW_KIND.total}, cast(count(*) as integer)) as landed,
   cast(count_if(is_kept) as integer) as kept,
   cast(count_if(is_kept and blocks <= 1) as integer) as next_block,
   coalesce(sum(if(is_kept, tip)), 0) as tip_sum_gwei,
-  if(grouping(tip_from_wei, bucket) = 2, array[
+  if(${kind} = ${ROW_KIND.tier}, array[
 ${tierCounts}
   ]) as tier_counts
 from k
 group by grouping sets ((tip_from_wei, bucket), (bucket), ())
-having grouping(tip_from_wei, bucket) = 3
-  or (count_if(is_kept) > 0 and (grouping(tip_from_wei, bucket) = 2 or tip_from_wei is not null))
-order by 1, 2
+having ${kind} = ${ROW_KIND.total}
+  or (count_if(is_kept) > 0 and (${kind} = ${ROW_KIND.tier} or tip_from_wei is not null))
+order by 1, 2, 3
 `
 }
