@@ -10,6 +10,12 @@ const MARGIN_SECONDS = 1
 const CATCH_UP = 1.5
 /** Behind by more, as after a hidden tab, the window jumps instead */
 const JUMP_SECONDS = 60
+/**
+ * Drawings the charts are drawn past their right edge, for what slides in
+ * before the next drawing. They never slide further: after a stalled frame
+ * they wait for the drawing instead of leaving a gap at the edge
+ */
+export const LOOKAHEAD_DRAWINGS = 2
 
 /**
  * Where a window that scrolls with the clock ends, instead of jumping with
@@ -98,7 +104,11 @@ export function useLivePlayhead(
         requested.current = next
         setPlayhead(next)
       }
-      if (drawn.current !== undefined) glide.current(next - drawn.current)
+      if (drawn.current !== undefined) {
+        glide.current(
+          Math.min(next - drawn.current, LOOKAHEAD_DRAWINGS * redrawEvery),
+        )
+      }
       frame = requestAnimationFrame(step)
     }
     step()
