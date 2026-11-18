@@ -92,6 +92,32 @@ describe(DuneDayWait.name, () => {
     })
   })
 
+  it('reads again from a given time, whatever the gap', async () => {
+    const waits = new DuneDayWait('Not on Dune yet')
+    const readAgainAt = UnixTime(day + 2 * UnixTime.HOUR)
+    let reads = 0
+    const read = (now: number) =>
+      waits
+        .run(
+          day,
+          UnixTime(now),
+          async (wait) => {
+            reads++
+            return wait({ day })
+          },
+          readAgainAt,
+        )
+        .catch(() => {})
+
+    await read(day)
+    await read(day + UnixTime.HOUR)
+    await read(readAgainAt)
+    // Past that time the 6 hour gap holds again
+    await read(readAgainAt + UnixTime.HOUR)
+
+    expect(reads).toEqual(2)
+  })
+
   it('forgets the wait once the day is read', async () => {
     const waits = new DuneDayWait('Not on Dune yet')
     await waits.run(day, day, async (wait) => wait({ day })).catch(() => {})

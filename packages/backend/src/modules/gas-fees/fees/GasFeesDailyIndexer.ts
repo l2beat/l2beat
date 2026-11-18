@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, GasFeesDailyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
@@ -12,6 +12,9 @@ import {
   type ChainDay,
   getDueFrom,
   getMissingChainDays,
+  isAnyChainExpected,
+  type LateRead,
+  pickChainDays,
   planLateReads,
 } from './lateDays'
 import type { FeesDay } from './readFeesDays'
@@ -76,8 +79,12 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
 
     return await this.waits.run(first, now, async (wait) => {
       const read = await this.$.readFeesDays(this.$.chains, first, last)
-      // A day no chain has all of is one Dune is still loading
-      const unloaded = read.findIndex((day) => day.records.length === 0)
+      // A day no chain has all of is one Dune is still loading, unless none is expected on it yet
+      const unloaded = read.findIndex(
+        (day) =>
+          day.records.length === 0 &&
+          isAnyChainExpected(this.$.chains, day.day),
+      )
       const loaded = unloaded === -1 ? read : read.slice(0, unloaded)
       const records = loaded.flatMap((day) => day.records)
       await this.$.db.gasFeesDaily.upsertMany(records)
@@ -131,18 +138,41 @@ export class GasFeesDailyIndexer extends ManagedChildIndexer {
       if (reads.length === 0) return
       this.lateReadAt = now
       for (const read of reads) {
-        const days = await this.$.readFeesDays(read.chains, read.from, read.to)
-        const records = days.flatMap((day) => day.records)
-        // Stored before the next read, so that its failure doesn't lose these
-        await this.$.db.gasFeesDaily.upsertMany(records)
-        stored.push(...records)
+        stored.push(...(await this.readLate(read, late)))
       }
       this.logger.info('Filled late gas fees chain days', {
         late: late.length,
         stillLate: getMissingChainDays(chains, from, to, stored).length,
       })
     } catch (error) {
-      this.logger.error('Late gas fees chains read failed', { error })
+      this.logger.error('Late gas fees chains check failed', { error })
+    }
+  }
+
+  /**
+   * Stores what one late read fills. Each read fails on its own, so one Dune
+   * keeps refusing doesn't stop the next, nor lose what the last one stored.
+   */
+  private async readLate(
+    read: LateRead,
+    late: ChainDay[],
+  ): Promise<GasFeesDailyRecord[]> {
+    try {
+      const days = await this.$.readFeesDays(read.chains, read.from, read.to)
+      // Only the late chain-days: the read also covers stored ones, which stay as they are
+      const records = pickChainDays(
+        days.flatMap((day) => day.records),
+        late,
+      )
+      await this.$.db.gasFeesDaily.upsertMany(records)
+      return records
+    } catch (error) {
+      this.logger.error('Late gas fees chains read failed', {
+        error,
+        from: read.from,
+        to: read.to,
+      })
+      return []
     }
   }
 

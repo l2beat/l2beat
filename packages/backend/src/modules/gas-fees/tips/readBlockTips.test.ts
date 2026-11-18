@@ -31,6 +31,27 @@ describe(readBlockTips.name, () => {
     ).toBeRejectedWith('Fee history malformed')
   })
 
+  it('asks again for the older blocks a node left out', async () => {
+    // A node that returns at most 300 blocks a call, the newest of those asked for
+    const getFeeHistory = mockFn(
+      async (count: number, newest: number): Promise<EVMFeeHistory> => {
+        const returned = Math.min(count, 300)
+        return history(newest - returned + 1, returned)
+      },
+    )
+
+    const tips = await readBlockTips({ getFeeHistory }, 1, 700, [10, 25])
+
+    expect(getFeeHistory.calls.map((c) => c.args.slice(0, 2))).toEqual([
+      [700, 700],
+      [400, 400],
+      [100, 100],
+    ])
+    expect(tips.map((row) => row[0])).toEqual(
+      Array.from({ length: 700 }, (_, i) => (i + 1) / 1e9),
+    )
+  })
+
   it('fails on a block without a tip at every percentile', async () => {
     const getFeeHistory = mockFn().resolvesTo(history(1, 10))
 
