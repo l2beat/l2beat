@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xe6d9edc597a7c8d8381cbe72382ea5ef90a82240
+
+# Diff at Wed, 18 Nov 2026 08:06:37 GMT:
+
+- id: e53c19d6
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1794569384
+- current timestamp: 1794569384
+
+## Description
+
+Ossification: the emergency stop and the verifier of RISC Zero route 0x8b38038c count from the block time of the transaction that added the route (0x5005dff6…), 3.4 hours earlier than recorded.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794569384 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).
+      critical.sinceTimestamp:
+-        1793127383
++        1793115083
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.
+      critical.sinceTimestamp:
+-        1793127383
++        1793115083
+    }
+```
+
 Generated with discovered.json: 0x5abc09b8b6253539f43f8b5441dc9fcbbb450787
 
 # Diff at Fri, 13 Nov 2026 13:04:13 GMT:

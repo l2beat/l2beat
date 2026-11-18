@@ -1,3 +1,232 @@
+Generated with discovered.json: 0xbdedd278430ddf132e6cfa83c86216f7c4ce2813
+
+# Diff at Wed, 18 Nov 2026 08:06:43 GMT:
+
+- id: 0f90cb70
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1794568091
+- current timestamp: 1794986224
+
+## Description
+
+Seven confidential wrappers were registered through ZamaGovMultisigB and ZamaGovCore: cyzPRVT (Yuzu vault share), csatcUSDC and cre7coUSDC (Morpho Vault V2 shares), ceEARN and cPPLUS (Ember vault shares), cnvHOME (Nuva token) and cnOPAL (Nest BoringVault share). ZamaGovCore owns and can upgrade all of them, as with the existing wrappers. None has a denylist selector, an observer or a pauser. Each underlying is controlled by its own issuer or curator, outside Zama governance.
+
+Six run a new ConfidentialWrapper implementation. The wrapper logic is unchanged, it is compiled against newer FHE and OpenZeppelin libraries: https://disco.l2beat.com/diff/eth:0x35E980f5Fe42BBA64C1ed0332AADACb98faBDDaD/eth:0xc5FE47D6C6fED00b8407a97C3B76E6758586ECEA
+
+cnOPAL runs ConfidentialHooklessWrapper, the same code with the ERC-1363 wrap hook closed. The BoringVault can be made to call any target, so a hook call from it proves no transfer and would mint unbacked cnOPAL: https://disco.l2beat.com/diff/eth:0xc5FE47D6C6fED00b8407a97C3B76E6758586ECEA/eth:0x84B425c6A3089c5f47B62c85F2EcdC48De1751B8
+
+The EOA that deployed the wrappers (eth:0x8384b2C6D263ceB756A88FE342D9Fd9adCD43cC7) also deployed and owns 22 vault batchers for them, 16 of them unpaused. The Yuzu, Ember, Nuva and Nest variants are new code. The existing batchers are owned by ZamaDeFiGovCore.
+
+## Watched changes
+
+```diff
+    contract ZamaGovCore (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.20:
++        {"permission":"interact","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.31:
++        {"permission":"interact","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.33:
++        {"permission":"interact","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.43:
++        {"permission":"interact","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.46:
++        {"permission":"interact","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner"}
+      directlyReceivedPermissions.50:
++        {"permission":"upgrade","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","role":"admin"}
+      directlyReceivedPermissions.56:
++        {"permission":"upgrade","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","role":"admin"}
+      directlyReceivedPermissions.67:
++        {"permission":"upgrade","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","role":"admin"}
+      directlyReceivedPermissions.75:
++        {"permission":"upgrade","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","role":"admin"}
+      directlyReceivedPermissions.77:
++        {"permission":"upgrade","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","role":"admin"}
+      directlyReceivedPermissions.87:
++        {"permission":"upgrade","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","role":"admin"}
+      directlyReceivedPermissions.90:
++        {"permission":"upgrade","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","role":"admin"}
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.52:
++        {"permission":"upgrade","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.58:
++        {"permission":"upgrade","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.69:
++        {"permission":"upgrade","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.77:
++        {"permission":"upgrade","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.79:
++        {"permission":"upgrade","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.89:
++        {"permission":"upgrade","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.92:
++        {"permission":"upgrade","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","description":"block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.52:
++        {"permission":"upgrade","from":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.58:
++        {"permission":"upgrade","from":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.69:
++        {"permission":"upgrade","from":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.77:
++        {"permission":"upgrade","from":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.79:
++        {"permission":"upgrade","from":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.89:
++        {"permission":"upgrade","from":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.92:
++        {"permission":"upgrade","from":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract ConfidentialTokenWrappersRegistry (eth:0xeb5015fF021DB115aCe010f23F55C2591059bBA0) [zama/ConfidentialTokenWrappersRegistry] {
+    +++ description: Registry for Zama confidential token wrappers.
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.26:
++        "eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.27:
++        "eth:0x724E28b71C689B005fC245E047487a892c68bDB2"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.28:
++        "eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.29:
++        "eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.30:
++        "eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.31:
++        "eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf"
++++ description: Confidential wrappers the registry lists as valid.
+      values.confidentialTokens.32:
++        "eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0"
+      values.getTokenConfidentialTokenPairs.26:
++        {"tokenAddress":"eth:0xC15bBF1Ad6129859628d06115a64581006EC62aC","confidentialTokenAddress":"eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E","isValid":true}
+      values.getTokenConfidentialTokenPairs.27:
++        {"tokenAddress":"eth:0x7F876BF31089A8D13ccF8F1158Ef7bFecA2dDF94","confidentialTokenAddress":"eth:0x724E28b71C689B005fC245E047487a892c68bDB2","isValid":true}
+      values.getTokenConfidentialTokenPairs.28:
++        {"tokenAddress":"eth:0x9be9294722f8AAd37b11a9792Be2C782182caFA2","confidentialTokenAddress":"eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5","isValid":true}
+      values.getTokenConfidentialTokenPairs.29:
++        {"tokenAddress":"eth:0xbc5d3722376d44f3bC316C6EA61C9Bd553Be8CBe","confidentialTokenAddress":"eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C","isValid":true}
+      values.getTokenConfidentialTokenPairs.30:
++        {"tokenAddress":"eth:0xdC1C0534109e2dB74fE800c84096547541607859","confidentialTokenAddress":"eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E","isValid":true}
+      values.getTokenConfidentialTokenPairs.31:
++        {"tokenAddress":"eth:0x119Dd7dAFf816f29D7eE47596ae5E4bdC4299165","confidentialTokenAddress":"eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf","isValid":true}
+      values.getTokenConfidentialTokenPairs.32:
++        {"tokenAddress":"eth:0x181E5738D593CE29CcDC91bC562D45da3c480796","confidentialTokenAddress":"eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0","isValid":true}
+      values.getTokenConfidentialTokenPairsLength:
+-        26
++        33
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialYzPRVTWrapper (eth:0x4Ee9f7127989cACE1929217190C098b7499e8d4E) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialSatcUSDCWrapper (eth:0x724E28b71C689B005fC245E047487a892c68bDB2) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialPPLUSWrapper (eth:0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialNOPALWrapper (eth:0xBf8E1DBD6564dccCCB81A23438a92794E129ECFf) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialEEARNWrapper (eth:0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialRe7coUSDCWrapper (eth:0xeFA9c986810E848aB3284dE7D19884E3096CC0E0) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialNvHOMEWrapper (eth:0xFcAbd11434e98cEDB57e4B3416189f600A509E2E) [zama/ConfidentialWrapper]
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+```
+
+## Source code changes
+
+```diff
+.../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ConfidentialEEARNWrapper/ERC1967Proxy.p.sol    |   612 +
+ .../ConfidentialHooklessWrapper.sol                | 16503 +++++++++++++++++++
+ .../ConfidentialNOPALWrapper/ERC1967Proxy.p.sol    |   612 +
+ .../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ConfidentialNvHOMEWrapper/ERC1967Proxy.p.sol   |   612 +
+ .../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ConfidentialPPLUSWrapper/ERC1967Proxy.p.sol    |   612 +
+ .../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |   612 +
+ .../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ConfidentialSatcUSDCWrapper/ERC1967Proxy.p.sol |   612 +
+ .../ConfidentialWrapper.sol                        | 16481 ++++++++++++++++++
+ .../ConfidentialYzPRVTWrapper/ERC1967Proxy.p.sol   |   612 +
+ 14 files changed, 119673 insertions(+)
+```
+
 Generated with discovered.json: 0xa973615d964b963bd4ad7f8c4dfc26c0c2041bc6
 
 # Diff at Fri, 13 Nov 2026 13:04:21 GMT:

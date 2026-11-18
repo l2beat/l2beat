@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xe18a8726d592d3b39efd10699aad9256f2e5d33d
+
+# Diff at Wed, 18 Nov 2026 08:06:29 GMT:
+
+- id: d055335e
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1791789506
+- current timestamp: 1794986370
+
+## Description
+
+The Eclipse Multisig lowered the withdrawal delay (`fraudWindowDuration`) of the CanonicalBridgeV3 from 7 days to 1 day, the minimum the contract allows. A withdrawal authorized from now on can be claimed by its recipient after 1 day. The multisig is the only party that can cancel a withdrawal, so it now has 1 day instead of 7 to stop one wrongly authorized by the EOA that shares the withdraw authority role.
+
+## Watched changes
+
+```diff
+    contract CanonicalBridgeV3 (eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a) [eclipse/CanonicalBridge] {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
++++ description: Seconds between the authorization of a withdrawal and the time its recipient can claim it. The contract enforces a minimum of 1 day. The withdraw canceller can delete an authorized withdrawal until it is claimed.
+      values.fraudWindowDuration:
+-        604800
++        86400
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1791789506 (main branch discovery), not current.
+
+```diff
+    contract CanonicalBridgeV3 (eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a) [eclipse/CanonicalBridge] {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      fieldMeta:
++        {"fraudWindowDuration":{"description":"Seconds between the authorization of a withdrawal and the time its recipient can claim it. The contract enforces a minimum of 1 day. The withdraw canceller can delete an authorized withdrawal until it is claimed."}}
+    }
+```
+
 Generated with discovered.json: 0xf6831e4a86983cd731547e910b66f78d64cd7c58
 
 # Diff at Mon, 12 Oct 2026 07:19:47 GMT:

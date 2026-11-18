@@ -84,6 +84,7 @@ export const umbra: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-07-31')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,

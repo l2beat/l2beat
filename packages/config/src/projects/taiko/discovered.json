@@ -1881,7 +1881,7 @@
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).",
       "critical": {
-        "sinceTimestamp": 1793127383,
+        "sinceTimestamp": 1793115083,
         "untilTimestamp": 1794362951
       },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
@@ -1911,7 +1911,7 @@
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.",
       "critical": {
-        "sinceTimestamp": 1793127383,
+        "sinceTimestamp": 1793115083,
         "untilTimestamp": 1794362951
       },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",

@@ -175,6 +175,25 @@
     },
     {
       "mode": "auto",
+      "id": "zama-cw-eEARN",
+      "priceId": "usd-coin",
+      "symbol": "eEARN",
+      "name": "Ember Earn",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9be9294722f8AAd37b11a9792Be2C782182caFA2",
+        "chain": "ethereum",
+        "escrowAddress": "0xCB3435eB17c3E78c79DF5896462fb85DFe640cd5",
+        "decimals": 6,
+        "sinceTimestamp": 1794583115
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zama-cw-fAUSDe",
       "priceId": "agora-dollar",
       "symbol": "fAUSDe",
@@ -270,6 +289,44 @@
     },
     {
       "mode": "auto",
+      "id": "zama-cw-PPLUS",
+      "priceId": "usd-coin",
+      "symbol": "PPLUS",
+      "name": "Bitwise Premium+",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbc5d3722376d44f3bC316C6EA61C9Bd553Be8CBe",
+        "chain": "ethereum",
+        "escrowAddress": "0xa7B2F4C31e71E4cD95e457EcbBaF4F7710AE3D2C",
+        "decimals": 6,
+        "sinceTimestamp": 1794583139
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-re7coUSDC",
+      "priceId": "usd-coin",
+      "symbol": "re7coUSDC",
+      "name": "Re7 Confidential Ondo USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x181E5738D593CE29CcDC91bC562D45da3c480796",
+        "chain": "ethereum",
+        "escrowAddress": "0xeFA9c986810E848aB3284dE7D19884E3096CC0E0",
+        "decimals": 18,
+        "sinceTimestamp": 1794583211
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zama-cw-roxcUSDC",
       "priceId": "usd-coin",
       "symbol": "roxcUSDC",
@@ -301,6 +358,25 @@
         "escrowAddress": "0x4FCCF8046FB7FB7AB76321BD39C27453e396B88f",
         "decimals": 18,
         "sinceTimestamp": 1789154375
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-satcUSDC",
+      "priceId": "usd-coin",
+      "symbol": "satcUSDC",
+      "name": "Saturn Confidential Tokenized Equity Vault",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7F876BF31089A8D13ccF8F1158Ef7bFecA2dDF94",
+        "chain": "ethereum",
+        "escrowAddress": "0x724E28b71C689B005fC245E047487a892c68bDB2",
+        "decimals": 18,
+        "sinceTimestamp": 1794583079
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -455,6 +531,25 @@
         "sinceTimestamp": 1772116091
       },
       "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zama-cw-yzPRVT",
+      "priceId": "usd-coin",
+      "symbol": "yzPRVT",
+      "name": "Yuzu Confidential Yield",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC15bBF1Ad6129859628d06115a64581006EC62aC",
+        "chain": "ethereum",
+        "escrowAddress": "0x4Ee9f7127989cACE1929217190C098b7499e8d4E",
+        "decimals": 18,
+        "sinceTimestamp": 1794583055
+      },
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
