@@ -43,8 +43,11 @@ const NEIGHBOUR_DAYS = 30
  * included, with the blocks to check a day against: their count and range from
  * the blocks table. The range is read for NEIGHBOUR_DAYS either side too.
  *
- * The base fee is what transactions paid, so not on the gas of those that pay
- * nothing: an OP Stack chain's deposits use gas, 40% of Mantle's, for free.
+ * The base fee is the block's, on the gas of the transactions that paid:
+ * - not what they paid per gas, which holds their tips too. Arbitrum has taken
+ *   tips since September 2026, and they are 40% of what its transactions pay;
+ * - not on the gas of those that pay nothing: an OP Stack chain's deposits use
+ *   gas, 40% of Mantle's, for free.
  */
 export function getBlocksQuery(
   chains: GasFeesChain[],
@@ -54,48 +57,14 @@ export function getBlocksQuery(
   const neighboursFrom = UnixTime(fromDay - NEIGHBOUR_DAYS * UnixTime.DAY)
   const neighboursTo = UnixTime(toDay + NEIGHBOUR_DAYS * UnixTime.DAY)
   return chains
-    .map((chain) =>
-      chain.gasFromTransactions
-        ? // Its tips are ignored, so a transaction pays the base fee on all its gas, the gas charged for L1 data included
-          `
-select
-  '${chain.dune}' as blockchain,
-  b.day,
-  t.base_fee,
-  t.gas_used,
-  cast(0 as double) as free_gas,
-  t.tx_blocks,
-  b.blocks,
-  b.first_block,
-  b.last_block
-from (
-  select
-    cast(date as varchar) as day,
-    count(*) as blocks,
-    min(number) as first_block,
-    max(number) as last_block
-  from ${chain.dune}.blocks
-  where ${dateRange('date', neighboursFrom, neighboursTo)}
-  group by 1
-) as b
-left join (
-  select
-    cast(block_date as varchar) as day,
-    sum(cast(effective_gas_price as double) * cast(gas_used as double)) / 1e18 as base_fee,
-    sum(cast(gas_used as double)) as gas_used,
-    count(distinct block_number) as tx_blocks
-  from ${chain.dune}.transactions
-  where ${dateRange('block_date', fromDay, toDay)}
-  group by 1
-) as t on t.day = b.day`
-        : `
+    .map(
+      (chain) => `
 select
   '${chain.dune}' as blockchain,
   cast(b.date as varchar) as day,
   sum(cast(b.base_fee_per_gas as double) * (b.gas_used - coalesce(f.gas_used, 0))) / 1e18 as base_fee,
   sum(cast(b.gas_used as double)) as gas_used,
   sum(cast(coalesce(f.gas_used, 0) as double)) as free_gas,
-  cast(null as bigint) as tx_blocks,
   count(*) as blocks,
   min(b.number) as first_block,
   max(b.number) as last_block

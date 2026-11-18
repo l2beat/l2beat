@@ -985,10 +985,10 @@ model GasFeesDaily {
   l1FeeNative    Float
   /// The part of the fees paid for blobs, gas token. Ethereum only.
   blobFeeNative  Float
-  /// Base fee per gas times the gas of the transactions that paid a fee, gas token. From the chain's blocks (on Arbitrum, its transactions), as gas.fees books all of a legacy transaction's fee as base fee. null where the chain had no base fee (Ethereum before London).
+  /// Base fee per gas times the gas of the transactions that paid a fee, gas token. From the chain's blocks, as gas.fees books all of a legacy transaction's fee as base fee. null where the chain had no base fee (Ethereum before London).
   /// On Arbitrum a transaction's gas includes the gas it is charged for posting data to Ethereum, so there this already contains l1FeeNative: don't add the two.
   baseFeeNative  Float?
-  /// Gas used by the day's transactions that paid a fee: an OP Stack chain's deposits use gas for free and are left out. From the chain's blocks (on Arbitrum, its transactions, as its blocks undercount).
+  /// Gas used by the day's transactions that paid a fee: an OP Stack chain's deposits use gas for free and are left out. From the chain's blocks.
   gasUsed        Float
   /// Median fee per transaction in USD, approximate (Dune's approx_percentile). null when Dune has no price.
   medianFeeUsd   Float?

@@ -213,17 +213,6 @@ describe(joinFeesDays.name, () => {
 
       expect(stored(cut)).toEqual([0, 1, 1])
     })
-
-    it('refuses a day of a chain read from transactions when a block has none', () => {
-      const fromTransactions = { ...zksync, gasFromTransactions: true as const }
-      const all = whole.map((row) => ({ ...row, tx_blocks: 100 }))
-      const short = all.map((row) =>
-        row.day === '2026-10-02' ? { ...row, tx_blocks: 99 } : row,
-      )
-
-      expect(stored(all, fromTransactions)).toEqual([1, 1, 1])
-      expect(stored(short, fromTransactions)).toEqual([1, 0, 1])
-    })
   })
 })
 
@@ -356,7 +345,6 @@ function blocks(
     base_fee: 0.5,
     gas_used: 1e9,
     free_gas: 0,
-    tx_blocks: null,
     blocks: 100,
     first_block: first,
     last_block: first + 99,
