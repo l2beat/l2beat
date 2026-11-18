@@ -5287,6 +5287,7 @@
       "symbol": "alETH",
       "address": "0x3e29d3a9316dab217754d13b28646b76607c5f04",
       "coingeckoId": "alchemix-eth",
+      "deploymentTimestamp": 1663113600,
       "category": "ether",
       "source": "external",
       "supply": "totalSupply",
