@@ -2,21 +2,21 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import type { ProjectNavigationSection } from '~/components/projects/navigation/types'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { StickyMobileSectionNavigation } from '~/components/section-navigation/StickyMobileSectionNavigation'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { AuditsProjectDetails } from '~/server/features/audits/types'
 import { AuditReportsList } from './components/AuditReportsList'
+import { AuditsDiffSection } from './components/AuditsDiffSection'
 import { AuditsDisclaimer } from './components/AuditsDisclaimer'
 import { AuditsProjectSummary } from './components/AuditsProjectSummary'
 import { AuditsTimelineSection } from './components/AuditsTimelineSection'
-import { ContractCoverageList } from './components/ContractCoverageList'
 
 interface Props extends AppLayoutProps {
   details: AuditsProjectDetails
@@ -29,10 +29,18 @@ const SECTIONS = [
   { id: 'audit-diff', title: 'Diff from audits' },
 ] as const
 
-const navigationSections: ProjectNavigationSection[] = [
-  { id: 'summary', title: 'Summary' },
-  ...SECTIONS,
-]
+const SCOPED_REPORTS_TITLE = 'Audit reports and their scope'
+
+function navigationSections(scoped: boolean): ProjectNavigationSection[] {
+  return [
+    { id: 'summary', title: 'Summary' },
+    ...SECTIONS.map((section) =>
+      scoped && section.id === 'audit-reports'
+        ? { ...section, title: SCOPED_REPORTS_TITLE }
+        : section,
+    ),
+  ]
+}
 
 export function AuditsProjectPage({ details, queryState, ...props }: Props) {
   const project = {
@@ -48,7 +56,9 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
             className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
             data-project-page
           >
-            <StickyMobileSectionNavigation sections={navigationSections} />
+            <StickyMobileSectionNavigation
+              sections={navigationSections(details.scope !== undefined)}
+            />
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
@@ -67,6 +77,11 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                       )
                     }
                   />
+                  {details.discoUiHref && (
+                    <div className="mb-3 flex">
+                      <DiscoUiLink href={details.discoUiHref} />
+                    </div>
+                  )}
                 </div>
 
                 <div className="row-start-2 w-full">
@@ -76,11 +91,11 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     className="border-divider max-md:rounded-none max-md:border-b max-md:pt-0"
                   >
                     <AuditsProjectSummary
+                      scope={details.scope}
                       coverage={details.coverage}
                       contracts={details.contracts}
                       verifiers={details.verifiers}
                       fullyCoveredContracts={details.fullyCoveredContracts}
-                      discoUiHref={details.discoUiHref}
                     />
                   </PrimaryCard>
                   <ProjectSection
@@ -92,12 +107,15 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                   </ProjectSection>
                   <ProjectSection
                     id={SECTIONS[1].id}
-                    title={SECTIONS[1].title}
+                    title={
+                      details.scope ? SCOPED_REPORTS_TITLE : SECTIONS[1].title
+                    }
                     sectionOrder="2"
                   >
                     <AuditReportsList
                       reports={details.reports}
                       stackCollectionName={details.stackCollectionName}
+                      scope={details.scope?.reports}
                     />
                   </ProjectSection>
                   <ProjectSection
@@ -106,9 +124,10 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                     sectionOrder="3"
                   >
                     <AuditsDisclaimer className="mb-4" />
-                    <ContractCoverageList
+                    <AuditsDiffSection
                       slug={details.slug}
                       contracts={details.contractEntries}
+                      scope={details.scope}
                     />
                   </ProjectSection>
                 </div>
@@ -121,12 +140,11 @@ export function AuditsProjectPage({ details, queryState, ...props }: Props) {
                       isUnderReview: false,
                       icon: details.icon,
                     }}
-                    sections={navigationSections}
+                    sections={navigationSections(details.scope !== undefined)}
                   />
                 </div>
               </div>
             </div>
-            <ScrollToTopButton />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

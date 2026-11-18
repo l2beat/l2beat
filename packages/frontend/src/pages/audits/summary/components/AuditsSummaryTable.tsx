@@ -8,10 +8,7 @@ import {
 import { useState } from 'react'
 import { LineCoverageTooltipContent } from '~/components/audits/AuditCoverageBar'
 import { AuditsCoverageSparkline } from '~/components/audits/AuditsCoverageSparkline'
-import {
-  formatShare,
-  UNCOUNTED_UNITS_NOTE,
-} from '~/components/audits/auditStatus'
+import { formatShare } from '~/components/audits/auditStatus'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
@@ -32,6 +29,13 @@ import {
 } from '~/server/features/audits/countFullyCoveredContracts'
 import type { AuditsSummaryEntry } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
+
+/**
+ * The table counts as the project pages' strict reading does. Every project
+ * on the dashboard has a scope, which is what makes that reading available.
+ */
+const STRICT_READING_NOTE =
+  'Strict reading: only code that an audit report explicitly includes counts as audited; the project page also gives the relaxed reading. Interfaces are not counted.'
 
 const columnHelper = createColumnHelper<AuditsSummaryEntry>()
 
@@ -114,7 +118,7 @@ const columns = [
     },
     sortDescFirst: true,
     meta: {
-      tooltip: `Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${UNCOUNTED_UNITS_NOTE}`,
+      tooltip: `Share of the critical contracts whose whole deployed source, every unit of every file, is identical to audited code. Contracts without verified source count as not covered. ${STRICT_READING_NOTE}`,
     },
   }),
   columnHelper.accessor(linesCoveredShare, {
@@ -135,14 +139,14 @@ const columns = [
             </TwoRowCell>
           </TooltipTrigger>
           <TooltipContent>
-            <LineCoverageTooltipContent lines={lines} />
+            <LineCoverageTooltipContent lines={lines} countsVendor />
           </TooltipContent>
         </Tooltip>
       )
     },
     sortDescFirst: true,
     meta: {
-      tooltip: `Share of deployed lines identical to audited code, across the critical contracts. ${UNCOUNTED_UNITS_NOTE}`,
+      tooltip: `Share of deployed lines identical to audited code, across the critical contracts. ${STRICT_READING_NOTE}`,
     },
   }),
 ]

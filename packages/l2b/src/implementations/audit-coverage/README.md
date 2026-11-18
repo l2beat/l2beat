@@ -14,6 +14,8 @@ By default both files are read from `main` of `github.com/sergeyshemyakov/audit-
 
 How the frontend reads the output, the deployed code and the audited code is described in [FRONTEND.md](FRONTEND.md).
 
+What each report names and what it only implies, and the coverage under the strict and the relaxed reading, are a separate prototype: `l2b audit-scope <project>`, described in [`docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md`](../../../../../docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md).
+
 Run it anywhere in the repository after discovery. Deployed sources come from discovery's provider, so they are read from the discovery cache and only fetched from the explorer when missing.
 
 ## Inputs

@@ -18,7 +18,10 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { AuditsContractEntry } from '~/server/features/audits/types'
+import type {
+  AuditReading,
+  AuditsContractEntry,
+} from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
 import { AuditedUnitsLine } from './AuditedUnitsLine'
 import { UnitRow } from './UnitRow'
@@ -26,6 +29,8 @@ import { UnitRow } from './UnitRow'
 interface Props {
   slug: string
   contracts: AuditsContractEntry[]
+  /** How the reports are read; only for projects with a scope. */
+  reading?: AuditReading
 }
 
 /**
@@ -38,7 +43,7 @@ function anchorOf(contract: AuditsContractEntry): string {
   return contractAnchorId(contract.chain, contract.shortAddress)
 }
 
-export function ContractCoverageList({ slug, contracts }: Props) {
+export function ContractCoverageList({ slug, contracts, reading }: Props) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState<Set<string>>(() => new Set())
   const needle = search.trim().toLowerCase()
@@ -203,6 +208,7 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                       <TooltipContent>
                         <LineCoverageTooltipContent
                           lines={contract.coverage.lines}
+                          countsVendor={reading !== undefined}
                         />
                       </TooltipContent>
                     </Tooltip>
@@ -261,7 +267,12 @@ export function ContractCoverageList({ slug, contracts }: Props) {
                           </div>
                         )}
                         {rows.map((unit) => (
-                          <UnitRow key={unit.id} slug={slug} unit={unit} />
+                          <UnitRow
+                            key={unit.id}
+                            slug={slug}
+                            unit={unit}
+                            reading={reading}
+                          />
                         ))}
                         <AuditedUnitsLine units={audited} />
                       </div>

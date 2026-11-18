@@ -7,6 +7,7 @@ import {
 } from './countFullyCoveredContracts'
 import { reportOrigin } from './coverage/coverageReports'
 import { buildProjectCoverage } from './coverage/projectCoverage'
+import { coverageUnderReading } from './coverage/scopeReading'
 import { getAuditsCoverageHistory } from './getAuditsCoverageHistory'
 import { getAuditsProjectReports } from './getAuditsProjectReports'
 import { getAuditsProjects } from './getAuditsProjects'
@@ -26,10 +27,18 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
   const now = UnixTime.now()
 
   const entries = projects.map((project): AuditsSummaryEntry => {
+    // The table shows the strict reading where a project has a scope: only
+    // code an audit report explicitly includes counts, as on the project
+    // page. See
+    // docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md.
+    const strict =
+      project.auditScope &&
+      coverageUnderReading(project.auditCoverage, project.auditScope, 'strict')
     const model = buildProjectCoverage(
-      project.auditCoverage,
+      strict?.coverage ?? project.auditCoverage,
       project.id,
       project.scalingInfo?.stacks,
+      strict && { impliedBy: strict.impliedBy },
     )
     const matchedOwn = [...model.matched].filter(
       (id) =>
@@ -70,8 +79,10 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       discoveryTimestamp: model.coverage.discoveredAt,
       timeline: toAuditsSummaryTimeline(timeline),
       coverageHistory: toSummaryCoverageHistory(
+        // The history was generated before the readings existed and keeps
+        // the base one, so its last point can differ from the columns.
         getAuditsCoverageHistory(
-          model.coverage,
+          project.auditCoverage,
           project.id,
           model.stackCollection,
         ),

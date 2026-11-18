@@ -46,6 +46,8 @@ export function buildProjectCoverage(
   coverage: ProjectAuditCoverage,
   projectId: string,
   stacks: ProjectScalingStack[] | undefined,
+  /** Set for the strict and relaxed readings, see scopeReading. */
+  reading?: { impliedBy: Map<string, string[]> },
 ): ProjectCoverage {
   const { selection, addresses, verifiers } = selectContracts(coverage)
   const stackCollection = stackCollectionOf(stacks, coverage)
@@ -79,7 +81,13 @@ export function buildProjectCoverage(
               removed: groupLines(unit.removed ?? []),
             }
           : undefined,
-      notCounted: notCountedReason(unit, coverage, projectId),
+      notCounted: notCountedReason(
+        unit,
+        coverage,
+        projectId,
+        reading !== undefined,
+      ),
+      impliedBy: reading?.impliedBy.get(unitId)?.map(toRef),
     }
   }
 

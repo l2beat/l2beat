@@ -15,16 +15,6 @@ export function AuditsTimelineSection({ timeline }: Props) {
   const interval = timeline.auditInterval
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-paragraph-15 md:text-paragraph-16">
-        When the project's audit reports were published, against the code
-        changes of its critical contracts as tracked by ossification. State
-        changes of those contracts alter no deployed code and are left out. For
-        a project built on a stack, the stack's audits that matched its deployed
-        code count as its own. Code changed after the latest audit is only
-        covered where it stayed identical to an audited version.
-        {timeline.coverageHistory !== undefined &&
-          ' The chart below shows how many lines of the critical contracts no audit covered at each moment, counting only the audits published by then and the code deployed then.'}
-      </p>
       <ChartStats className="lg:grid-cols-4">
         <ChartStatsItem
           label="Latest audit"

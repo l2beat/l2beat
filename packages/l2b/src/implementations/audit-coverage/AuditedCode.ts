@@ -18,6 +18,12 @@ export interface AuditedCode {
   lines: LineIndex
   libraries: Set<string>
   unparsed: string[]
+  /**
+   * Objects holding code no report names, added by withImpliedUnits for the
+   * relaxed reading. Absent in the strict reading. See
+   * docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md.
+   */
+  implied?: Set<string>
 }
 
 export interface AuditedDeclaration {
@@ -384,5 +390,78 @@ export function auditedCodeAt(
     lines: buildLineIndex(declarations),
     libraries: code.libraries,
     unparsed: code.unparsed,
+  }
+}
+
+/** A unit a report is silent about but that its named code depends on. */
+export interface ImpliedCode {
+  /** An id of its own: the file's other units are not implied with it. */
+  object: string
+  name: string
+  /** The whole file the unit is declared in. */
+  source: string
+  occurrence: Occurrence
+}
+
+/**
+ * The audited code plus units that reports only imply. Each implied unit is
+ * an object of its own holding that one declaration, so a report implying one
+ * unit of a file is not evidence for the file's other units.
+ */
+export function withImpliedUnits(
+  code: AuditedCode,
+  implied: ImpliedCode[],
+): AuditedCode {
+  const declarations = code.declarations.map((declaration) => ({
+    ...declaration,
+    objects: [...declaration.objects],
+  }))
+  const byKey = new Map(
+    declarations.map((d) => [JSON.stringify([d.body, d.aliases]), d]),
+  )
+  const declarationsByObject = new Map(code.declarationsByObject)
+  const occurrences = new Map(code.occurrences)
+  const objects = new Set<string>()
+  const splits = new Map<string, SplitSource | undefined>()
+  for (const unit of implied) {
+    if (!splits.has(unit.source)) {
+      splits.set(unit.source, trySplitSource(unit.source))
+    }
+    const split = splits.get(unit.source)
+    const declaration = split?.declarations.get(unit.name)
+    if (split === undefined || declaration === undefined) continue
+    occurrences.set(unit.object, [
+      ...(occurrences.get(unit.object) ?? []),
+      unit.occurrence,
+    ])
+    if (objects.has(unit.object)) continue
+    objects.add(unit.object)
+    declarationsByObject.set(unit.object, new Map([[unit.name, declaration]]))
+    const aliases = aliasesUsedBy(declaration.body, split.aliases)
+    const key = JSON.stringify([declaration.body, aliases])
+    const existing = byKey.get(key)
+    if (existing !== undefined) {
+      existing.objects.push(unit.object)
+      continue
+    }
+    const added = {
+      name: unit.name,
+      kind: declaration.kind,
+      body: declaration.body,
+      aliases,
+      objects: [unit.object],
+    }
+    byKey.set(key, added)
+    declarations.push(added)
+  }
+  return {
+    declarations,
+    declarationsByObject,
+    occurrences,
+    byName: groupByName(declarations),
+    lines: buildLineIndex(declarations),
+    libraries: code.libraries,
+    unparsed: code.unparsed,
+    implied: objects,
   }
 }

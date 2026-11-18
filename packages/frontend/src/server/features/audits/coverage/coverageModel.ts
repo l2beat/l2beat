@@ -100,14 +100,18 @@ function isLibraryAudit(
  * scope them. Vendor code (OpenZeppelin, Solady, ...) that differs from its
  * audited library version is usually a version bump or a local tweak of a
  * widely reviewed library, so it would mostly add noise to the differing side.
+ * The strict and relaxed readings count it (`countVendor`): there the relaxed
+ * reading is the only place where doubt is resolved in the project's favour.
  */
 export function notCountedReason(
   unit: CoverageUnit,
   coverage: ProjectAuditCoverage,
   projectId: string,
+  countVendor = false,
 ): AuditNotCountedReason | undefined {
   if (unit.kind === 'interface') return 'interface'
   if (
+    !countVendor &&
     unit.status === 'differs' &&
     auditedByLibrariesOnly(unit, coverage, projectId)
   ) {

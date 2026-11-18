@@ -666,6 +666,11 @@
 @theme inline {
   --color-not-counted: var(--not-counted);
   --color-not-counted-ink: var(--not-counted-ink);
+  --color-scope-named: var(--scope-named);
+  --color-scope-named-ink: var(--scope-named-ink);
+  --color-scope-named-on: var(--scope-named-on);
+  --color-scope-external: var(--scope-external);
+  --color-scope-external-ink: var(--scope-external-ink);
   --color-crop-good: var(--crop-good);
   --color-crop-good-ink: var(--crop-good-ink);
   --color-crop-warning: var(--crop-warning);
@@ -1332,6 +1337,40 @@ html:active-view-transition-type(pin) {
 .dark {
   --not-counted: #ff9b45;
   --not-counted-ink: #ffb26e;
+}
+
+/*
+ * Audit scope graph: units a report names, included (filled) or excluded
+ * (outlined). A teal that leans blue, to stay apart from the green of
+ * "identical to audited". Own code the report is silent about uses
+ * --not-counted, external code it is silent about --scope-external.
+ */
+
+:root {
+  --scope-named: #0f766e;
+  --scope-named-ink: #0b5f58;
+  /* Text on a filled --scope-named. */
+  --scope-named-on: #ffffff;
+  /* Code from outside the audited repository that the report is silent about. */
+  --scope-external: #7e41cc;
+  --scope-external-ink: #5b2a9d;
+}
+
+.dark {
+  --scope-named: #2ec4b6;
+  --scope-named-ink: #6fdcd0;
+  --scope-named-on: #0d0c0c;
+  --scope-external: #a98bf0;
+  --scope-external-ink: #c9b6f7;
+}
+
+/* Named in the report, but reviewed only in part. */
+@utility bg-scope-named-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklab, var(--scope-named) 30%, transparent) 0 3px,
+    color-mix(in oklab, var(--scope-named) 8%, transparent) 3px 7px
+  );
 }
 
 /* Thin diagonal hatching that fades out to the right, so the row's text stays readable. */

@@ -29,6 +29,13 @@ export type AuditStatusCounts = Record<AuditUnitStatus, number>
  */
 export type AuditNotCountedReason = 'interface' | 'vendor'
 
+/**
+ * How audit reports are read. Strict: only code a report explicitly includes
+ * is audited. Relaxed: code the named code depends on is audited too. See
+ * docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md.
+ */
+export type AuditReading = 'strict' | 'relaxed'
+
 /** Unit and line counts of the counted units, see AuditNotCountedReason. */
 export interface AuditCoverageNumbers {
   units: AuditStatusCounts
@@ -178,6 +185,11 @@ export interface AuditsUnitEntry {
   changedLines?: { added: number; removed: number }
   /** Set when the unit is shown but left out of every count. */
   notCounted?: AuditNotCountedReason
+  /**
+   * Relaxed reading only: reports that never name the matched code and only
+   * imply it, as a dependency of code they do name.
+   */
+  impliedBy?: AuditsUnitReportRef[]
 }
 
 export interface AuditsSourceEntry {
@@ -272,6 +284,69 @@ export interface AuditsProjectTimeline {
   coverageHistory?: AuditsCoverageHistory
 }
 
+/** The numbers and contract entries of one reading. */
+export interface AuditsReadingDetails {
+  fullyCoveredContracts: number
+  coverage: AuditCoverageNumbers
+  uniqueUnits: AuditStatusCounts
+  contractEntries: AuditsContractEntry[]
+}
+
+export type AuditsScopeState =
+  | 'included'
+  | 'excluded'
+  | 'not-mentioned'
+  | 'unavailable'
+
+export interface AuditsScopeNode {
+  name: string
+  kind: 'contract' | 'abstract' | 'library' | 'function'
+  path: string
+  state: AuditsScopeState
+  /** Reviewed as a diff or for selected functions only. */
+  partial?: true
+  /** The state comes from a general statement about dependencies. */
+  generic?: true
+  external?: { package: string; version?: string }
+  /** The file at the audited commit; own code only. */
+  url?: string
+}
+
+export interface AuditsScopeShare {
+  named: number
+  total: number
+}
+
+/** The dependency graph of what a report names at one audited commit. */
+export interface AuditsScopeSnapshot {
+  repository: string
+  commit: string
+  url: string
+  nodes: AuditsScopeNode[]
+  /**
+   * `[from, to, kind]` with node indexes: from depends on to, as its base
+   * contract or as code it calls, links or refers to.
+   */
+  edges: [number, number, 'inherits' | 'uses'][]
+  /** Interfaces reached but not drawn. */
+  interfaces: number
+  explicitness: { own: AuditsScopeShare; external: AuditsScopeShare }
+}
+
+export interface AuditsReportScope {
+  status: 'graph' | 'partial' | 'unpinned' | 'unreviewed' | 'no-solidity'
+  unlisted?: 'not-mentioned' | 'excluded'
+  snapshots: AuditsScopeSnapshot[]
+}
+
+/** Only for projects with an audit-scope.json. */
+export interface AuditsProjectScope {
+  strict: AuditsReadingDetails
+  relaxed: AuditsReadingDetails
+  /** By report id, the project's own reports. */
+  reports: Record<string, AuditsReportScope>
+}
+
 export interface AuditsProjectDetails {
   slug: string
   projectId: string
@@ -299,6 +374,7 @@ export interface AuditsProjectDetails {
   projectHref?: string
   discoUiHref?: string
   timeline: AuditsProjectTimeline
+  scope?: AuditsProjectScope
 }
 
 export interface AuditsDiffLine {

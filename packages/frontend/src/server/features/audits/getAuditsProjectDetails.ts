@@ -10,6 +10,7 @@ import {
   reportUrl,
 } from './coverage/coverageReports'
 import { buildProjectCoverage } from './coverage/projectCoverage'
+import { coverageUnderReading } from './coverage/scopeReading'
 import { getAuditsCoverageHistory } from './getAuditsCoverageHistory'
 import { getAuditsProjectReports } from './getAuditsProjectReports'
 import { getAuditsProject } from './getAuditsProjects'
@@ -18,8 +19,11 @@ import {
   getAuditsProjectTimeline,
 } from './getAuditsProjectTimeline'
 import type {
+  AuditReading,
   AuditsOtherReport,
   AuditsProjectDetails,
+  AuditsProjectScope,
+  AuditsReadingDetails,
   AuditsReportEntry,
 } from './types'
 
@@ -122,6 +126,58 @@ export async function getAuditsProjectDetails(
       ? `https://disco.l2beat.com/ui/p/${project.id}`
       : undefined,
     timeline,
+    scope: getScope(project),
+  }
+}
+
+type AuditsProject = NonNullable<Awaited<ReturnType<typeof getAuditsProject>>>
+
+/** The strict and relaxed readings and the scope graph of each own report. */
+function getScope(project: AuditsProject): AuditsProjectScope | undefined {
+  const scope = project.auditScope
+  if (scope === undefined) return undefined
+  const read = (reading: AuditReading): AuditsReadingDetails => {
+    const { coverage, impliedBy } = coverageUnderReading(
+      project.auditCoverage,
+      scope,
+      reading,
+    )
+    const model = buildProjectCoverage(
+      coverage,
+      project.id,
+      project.scalingInfo?.stacks,
+      { impliedBy },
+    )
+    return {
+      fullyCoveredContracts: countFullyCoveredContracts(model.contracts),
+      coverage: { units: model.summary.units, lines: model.summary.lines },
+      uniqueUnits: model.summary.uniqueUnits,
+      contractEntries: model.contracts,
+    }
+  }
+  return {
+    strict: read('strict'),
+    relaxed: read('relaxed'),
+    reports: Object.fromEntries(
+      Object.entries(scope.reports).map(([id, report]) => [
+        id,
+        {
+          status: report.status,
+          unlisted: report.unlisted,
+          snapshots: report.snapshots.map((snapshot) => ({
+            ...snapshot,
+            url: `https://github.com/${snapshot.repository}/tree/${snapshot.commit}`,
+            nodes: snapshot.nodes.map((node) => ({
+              ...node,
+              url:
+                node.external === undefined && node.state !== 'unavailable'
+                  ? `https://github.com/${snapshot.repository}/blob/${snapshot.commit}/${node.path}`
+                  : undefined,
+            })),
+          })),
+        },
+      ]),
+    ),
   }
 }
 

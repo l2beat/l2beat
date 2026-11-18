@@ -19,6 +19,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../common/reasonsForBeingOther'
 import { resolveGarden } from '../crops/resolveCrops'
 import { loadAuditCoverage } from '../discovery/loadAuditCoverage'
+import { loadAuditScope } from '../discovery/loadAuditScope'
 import { loadDiscoveryUpdates } from '../discovery/loadDiscoveryUpdates'
 import type {
   Layer2TxConfig,
@@ -79,6 +80,7 @@ function buildProjects(): BaseProject[] {
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
     .map(withAuditCoverage)
+    .map(withAuditScope)
     .map(withGarden)
     .map(withVersions)
     .map(withPrivacyScalingProjects)
@@ -87,6 +89,11 @@ function buildProjects(): BaseProject[] {
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
   const discoveryUpdates = loadDiscoveryUpdates(project.id)
   return discoveryUpdates ? { ...project, discoveryUpdates } : project
+}
+
+function withAuditScope(project: BaseProject): BaseProject {
+  const auditScope = loadAuditScope(project.id)
+  return auditScope ? { ...project, auditScope } : project
 }
 
 function withAuditCoverage(project: BaseProject): BaseProject {

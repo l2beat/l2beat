@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type {
+  AuditReading,
   AuditReportOrigin,
   AuditsUnitEntry,
 } from '~/server/features/audits/types'
@@ -61,9 +62,11 @@ function DisabledAction({ label, reason }: { label: string; reason: string }) {
 export function UnitRow({
   slug,
   unit,
+  reading,
 }: {
   slug: string
   unit: AuditsUnitEntry
+  reading?: AuditReading
 }) {
   const [view, setView] = useState<View>(undefined)
   const meta = AUDIT_STATUS_META[unit.status]
@@ -146,6 +149,7 @@ export function UnitRow({
             {match?.auditedName && (
               <span className="text-secondary"> · as {match.auditedName}</span>
             )}
+            {unit.impliedBy && <ImpliedBadge reports={unit.impliedBy} />}
           </span>
         </span>
         <span className="min-w-0 truncate text-secondary max-md:col-span-2">
@@ -269,7 +273,44 @@ export function UnitRow({
           )}
         </span>
       </div>
-      {view && <UnitDetails slug={slug} unit={unit} view={view} />}
+      {view && (
+        <UnitDetails slug={slug} unit={unit} view={view} reading={reading} />
+      )}
     </div>
+  )
+}
+
+/**
+ * Marks a unit whose audited code no report names: the reports only imply it,
+ * as a dependency of code they do name. Relaxed reading only.
+ */
+export function ImpliedBadge({
+  reports,
+}: {
+  reports: NonNullable<AuditsUnitEntry['impliedBy']>
+}) {
+  const first = reports[0]
+  if (!first) return null
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="ml-1.5 inline-flex cursor-default items-center rounded-full bg-not-counted/10 px-1.5 py-px font-semibold text-[10px] text-not-counted-ink leading-[14px] ring-1 ring-not-counted/40 ring-inset">
+          implied by {first.auditor}
+          {reports.length > 1 && ` +${reports.length - 1}`}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[360px] space-y-1">
+        <div>
+          No audit report names this code. It counts as audited in the relaxed
+          reading because code these reports do name depends on it:
+        </div>
+        {reports.map((report) => (
+          <div key={report.id}>
+            {report.title}{' '}
+            <span className="text-secondary">({report.auditor})</span>
+          </div>
+        ))}
+      </TooltipContent>
+    </Tooltip>
   )
 }

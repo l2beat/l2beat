@@ -3,6 +3,7 @@ import { fetchAuditedBlob } from './coverage/auditedBlobs'
 import { auditedFileUrl } from './coverage/coverageReports'
 import { getDeployedFlat } from './coverage/deployedFlatSources'
 import { renderUnitDiff, toHunks } from './coverage/renderUnitDiff'
+import { coverageUnderReading } from './coverage/scopeReading'
 import { getAuditsProject } from './getAuditsProjects'
 import type { AuditsUnitDetails } from './types'
 
@@ -11,6 +12,8 @@ export const AuditsUnitDetailsParams = v.object({
   /** sha256 of the deployed flat source. */
   flat: v.string(),
   unitId: v.string(),
+  /** How the reports are read; only for projects with a scope. */
+  reading: v.enum(['strict', 'relaxed']).optional(),
 })
 export type AuditsUnitDetailsParams = v.infer<typeof AuditsUnitDetailsParams>
 
@@ -24,7 +27,12 @@ export async function getAuditsUnitDetails(
 ): Promise<AuditsUnitDetails | undefined> {
   const project = await getAuditsProject(params.slug)
   if (!project) return undefined
-  const coverage = project.auditCoverage
+  const scope = project.auditScope
+  const read =
+    scope !== undefined && params.reading !== undefined
+      ? coverageUnderReading(project.auditCoverage, scope, params.reading)
+      : undefined
+  const coverage = read?.coverage ?? project.auditCoverage
   const placed = coverage.flats[params.flat]?.find(
     ([id]) => id === params.unitId,
   )
@@ -49,7 +57,14 @@ export async function getAuditsUnitDetails(
   details.audited = { url: auditedFileUrl(file), startLine: auditedStart }
   if (unit.status !== 'differs') return details
 
-  const blob = await fetchAuditedBlob(coverage.dataset.repository, file.blob)
+  // Code a report only implies is not in the dataset: it is read from the
+  // repository it was audited in, unformatted.
+  const blob = await fetchAuditedBlob(
+    read?.upstream.has(unit.audited.object)
+      ? file.repository
+      : coverage.dataset.repository,
+    file.blob,
+  )
   const auditedLines = blob.split('\n').slice(auditedStart - 1, auditedEnd)
   const lines = renderUnitDiff(
     deployedLines,

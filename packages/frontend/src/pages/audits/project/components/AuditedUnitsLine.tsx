@@ -4,6 +4,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { AuditsUnitEntry } from '~/server/features/audits/types'
+import { cn } from '~/utils/cn'
 
 /**
  * The units of a source that are identical to audited code, as a single
@@ -46,7 +47,12 @@ function AuditedUnitName({ unit }: { unit: AuditsUnitEntry }) {
           href={match.report.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:underline"
+          className={cn(
+            'hover:underline',
+            unit.impliedBy
+              ? 'text-not-counted-ink underline decoration-dashed underline-offset-2'
+              : 'text-primary',
+          )}
         >
           {unit.name}
         </a>
@@ -66,6 +72,12 @@ function AuditedUnitName({ unit }: { unit: AuditsUnitEntry }) {
             </span>
           </div>
         ))}
+        {unit.impliedBy && (
+          <div className="text-not-counted-ink">
+            Implied: no report names this code, the code they name depends on
+            it.
+          </div>
+        )}
         <div className="text-secondary">
           {unit.notCounted === 'interface' && "Interface, doesn't count. "}
           {match.auditedName && `Audited as ${match.auditedName}. `}

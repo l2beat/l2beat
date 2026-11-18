@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import type { AuditsUnitEntry } from '~/server/features/audits/types'
+import type {
+  AuditReading,
+  AuditsUnitEntry,
+} from '~/server/features/audits/types'
 import { useTRPC } from '~/trpc/React'
 import { UnitDiffView } from './UnitDiffView'
 import { UnitSourceView } from './UnitSourceView'
@@ -9,10 +12,12 @@ export function UnitDetails({
   slug,
   unit,
   view,
+  reading,
 }: {
   slug: string
   unit: AuditsUnitEntry
   view: 'source' | 'diff'
+  reading?: AuditReading
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
@@ -20,6 +25,7 @@ export function UnitDetails({
       slug,
       flat: unit.flat,
       unitId: unit.unitId,
+      reading,
     }),
   )
 
@@ -63,8 +69,10 @@ export function UnitDetails({
             </a>{' '}
             ({unit.match.report.title}) to the deployed unit. Removed lines are
             audited code missing onchain, added lines are deployed code that was
-            not audited. Audited line numbers refer to the dataset's formatted
-            copy of the file.
+            not audited.{' '}
+            {unit.impliedBy
+              ? 'No report names this audited file: it is implied, and read from its own repository.'
+              : "Audited line numbers refer to the dataset's formatted copy of the file."}
           </div>
           <UnitDiffView diff={data.diff} />
         </>

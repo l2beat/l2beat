@@ -55,6 +55,13 @@ export const AUDIT_STATUS_META: Record<
 export const UNCOUNTED_UNITS_NOTE =
   'Interfaces, and vendor library code that differs from its audited version, are listed and diffed but not counted.'
 
+/**
+ * The same under the strict and relaxed readings, where differing vendor code
+ * counts like any other differing code.
+ */
+export const UNCOUNTED_INTERFACES_NOTE =
+  'Interfaces are listed and diffed but not counted.'
+
 export function totalUnits(counts: AuditStatusCounts): number {
   return AUDIT_STATUS_ORDER.reduce((sum, s) => sum + counts[s], 0)
 }

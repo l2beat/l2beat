@@ -8,6 +8,7 @@ export const AUDITS_PROJECT_FIELDS = [
   'discoveryInfo',
   'defiInfo',
   'privacyInfo',
+  'auditScope',
 ] as const
 
 /** Every project with a committed audit-coverage.json. */

@@ -4,6 +4,7 @@ import {
   AUDIT_STATUS_ORDER,
   formatShare,
   totalUnits,
+  UNCOUNTED_INTERFACES_NOTE,
   UNCOUNTED_UNITS_NOTE,
 } from '~/components/audits/auditStatus'
 import { Breakdown } from '~/components/breakdown/Breakdown'
@@ -93,8 +94,11 @@ export function UnitStatusBarTooltipContent({
 
 export function LineCoverageTooltipContent({
   lines,
+  countsVendor = false,
 }: {
   lines: AuditCoverageNumbers['lines']
+  /** Set under the strict and relaxed readings, see UNCOUNTED_INTERFACES_NOTE. */
+  countsVendor?: boolean
 }) {
   return (
     <div className="space-y-1">
@@ -128,7 +132,7 @@ export function LineCoverageTooltipContent({
       <p className="max-w-[280px] pt-1 text-secondary text-xs">
         Not covered lines are all lines of units without audited source plus the
         lines added in units that differ from their audited version.{' '}
-        {UNCOUNTED_UNITS_NOTE}
+        {countsVendor ? UNCOUNTED_INTERFACES_NOTE : UNCOUNTED_UNITS_NOTE}
       </p>
     </div>
   )
