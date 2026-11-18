@@ -9,7 +9,7 @@ Generated with discovered.json: 0x15d614604346cd84a4f78a659c24453985ee97dd
 
 ## Description
 
-Emergency upgrade of Lighter contract to stop ~$5M of hacked funds in the exit queue (https://disco.ethbeat.org/diff/eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f/eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f).
+Emergency upgrade of Lighter contract to stop ~$5M of hacked funds in the exit queue (https://disco.ethbeat.org/diff/eth:0x9b4FDAE9f4490e3bBdC1eAF3C06b48172AC0f94f/eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f). Adds a hardcoded blacklist (with one address currently) and a hardcoded withdrawal redirection for the hacker account.
 
 Also, upgraded governance so upgrades clear pause state: https://disco.ethbeat.org/diff/eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43/eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80.
 
