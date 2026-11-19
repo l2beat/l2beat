@@ -215,9 +215,9 @@ export const rocketpool: BaseProject = {
     risks: {
       minting: {
         value: 'Permissionless',
-        secondLine: 'instant · pausable',
+        secondLine: 'ungated queue',
         sentiment: 'good',
-        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}, minted at once. The ETH then waits for node operators in a queue that serves ${value('RocketDAOProtocolSettingsDeposit', 'getExpressQueueRate')} express entries for each standard one. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
+        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
       },
       operators: {
         value: 'Permissionless',
