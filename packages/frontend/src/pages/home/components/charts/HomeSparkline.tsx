@@ -270,6 +270,9 @@ const ACTIVE_DOT_RADIUS = 3.5
 /** The high and low labels sit outside the plot, in margins this tall. */
 const LABEL_HEIGHT = 18
 
+/** A shorter chart leaves the labels out: its plot would be a sliver. */
+const MIN_LABELED_HEIGHT = 80
+
 /** Between a label and its hairline. */
 const LABEL_GAP = 5
 
@@ -292,16 +295,17 @@ function getDefinition(
   formatLabel: (value: number) => string,
 ) {
   // Built per size: the line's inset is in pixels, the domain in values.
-  return defineChart(({ height }) =>
-    getSpec(data, formatLabel, height - 2 * LABEL_HEIGHT),
-  )
+  return defineChart(({ height }) => getSpec(data, formatLabel, height))
 }
 
 function getSpec(
   data: SparklinePoint[],
   formatLabel: (value: number) => string,
-  plotHeight: number,
+  height: number,
 ) {
+  // A chart too short for them keeps the hairlines; the tooltip has values.
+  const labelHeight = height >= MIN_LABELED_HEIGHT ? LABEL_HEIGHT : 0
+  const plotHeight = height - 2 * labelHeight
   const { domain, range } = getSparklineScale(data, {
     plotHeight,
     inset: LINE_INSET,
@@ -362,7 +366,7 @@ function getSpec(
       // The high above the right end of its line, the low below the left
       // end of its, in opposite corners of the plot. Placed by the
       // baseline: a cap height under the gap for the low label.
-      ...(range
+      ...(range && labelHeight > 0
         ? [
             decorative(
               text([{ x: xDomain[1], y: domain[1] }], {
@@ -412,7 +416,7 @@ function getSpec(
       y: { scale: scaleLinear().domain(domain), axis: false },
     },
     // Room above and below the plot for the high and low labels.
-    margin: { top: LABEL_HEIGHT, right: 0, bottom: LABEL_HEIGHT, left: 0 },
+    margin: { top: labelHeight, right: 0, bottom: labelHeight, left: 0 },
     // The chart's own hover host is replaced by the scrub area above it.
     focus: false,
     pointer: false,

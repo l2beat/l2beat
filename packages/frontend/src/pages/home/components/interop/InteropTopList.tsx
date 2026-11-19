@@ -42,7 +42,7 @@ export function InteropTopList({
     >
       {/* A header row like the ranked tables': the title over the names, the
           value's header over its column. */}
-      <div className="flex items-baseline justify-between gap-4">
+      <div className="flex interop-list-short:hidden items-baseline justify-between gap-4">
         <h3 className={HOME_TEXT.sectionTitle}>{title}</h3>
         <span className={HOME_TEXT.label}>Volume</span>
       </div>
@@ -50,7 +50,7 @@ export function InteropTopList({
           whole rows as fit. */}
       <ol
         className={cn(
-          'interop-stacked:home-fill-rows interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
+          'interop-stacked:home-fill-rows interop-list-short:hidden interop-stacked:min-h-0 interop-stacked:flex-1 interop-stacked:basis-0 interop-stacked:overflow-hidden',
           HOME_ROW_LINES_CLASS,
         )}
       >
