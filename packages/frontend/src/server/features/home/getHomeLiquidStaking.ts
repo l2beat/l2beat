@@ -81,10 +81,9 @@ async function getEthStakedKpi(range: ChartRange): Promise<HomeKpi> {
     return EMPTY_HOME_KPI
   }
   const valueByDay = new Map(records.map((r) => [r.timestamp, r.value]))
-  const chart = generateTimestamps(
-    [first.timestamp, last.timestamp],
-    'day',
-  ).map(
+  // Up to the range's end, like the other home charts: a stale stake ends
+  // short of the right edge instead of drawing its last day as today's.
+  const chart = generateTimestamps([first.timestamp, to], 'day').map(
     (timestamp): HomeSeriesPoint => [
       timestamp,
       valueByDay.get(timestamp) ?? null,
