@@ -323,11 +323,23 @@ export class ChainHeadIndexer extends RootIndexer {
       if (hash === tip.hash) forkedAt = tip
       else remembered.pop()
     }
+    /** The oldest stored block the chain no longer has */
+    let replaced = stored.at(remembered.length)
     if (forkedAt === undefined && stored.length > 0) {
-      remembered = await this.findOlderOnChain(stored[0].number)
+      const older = await this.findOlderOnChain(stored[0].number)
+      remembered = older.onChain
       forkedAt = remembered.at(-1)
+      replaced = older.replaced ?? stored[0]
     }
     const tip = stored.at(-1)
+    if (forkedAt !== undefined && replaced === undefined) {
+      // the stored tip is still on the chain: the child came from another fork
+      this.logger.info('Next block is from a different fork', {
+        tip: forkedAt.number,
+      })
+      return { height: forkedAt.number, stored: 0, again: false }
+    }
+    if (replaced !== undefined) await this.confirmFork(forkedAt, replaced)
 
     // forgotten only once deleted, so a failed delete is tried again next tick
     if (forkedAt === undefined || tip === undefined) {
@@ -338,19 +350,11 @@ export class ChainHeadIndexer extends RootIndexer {
       this.forget([])
       return { height: 0, stored: 0, again: true }
     }
-    const replaced = tip.number - forkedAt.number
-    if (replaced === 0) {
-      // the stored tip is still on the chain: the child came from another fork
-      this.logger.info('Next block is from a different fork', {
-        tip: forkedAt.number,
-      })
-      return { height: forkedAt.number, stored: 0, again: false }
-    }
 
     await this.$.db.chainBlock.deleteAfter(this.$.chain, forkedAt.number)
     this.logger.info('Deleted reorged blocks', {
       after: forkedAt.number,
-      replaced,
+      replaced: tip.number - forkedAt.number,
     })
     this.forget(remembered)
     return { height: forkedAt.number, stored: 0, again: true }
@@ -358,11 +362,14 @@ export class ChainHeadIndexer extends RootIndexer {
 
   /**
    * The stored blocks below the number that the chain still has, the newest
-   * of them last. Found by halving, as a block on the chain has every block
-   * before it on the chain too: a reorg of an hour of blocks takes a dozen
-   * questions, where dropping them all would leave the readers with nothing
+   * of them last, and the first one it no longer has. Found by halving, as a
+   * block on the chain has every block before it on the chain too: a reorg of
+   * an hour of blocks takes a dozen questions, where dropping them all would
+   * leave the readers with nothing
    */
-  private async findOlderOnChain(before: number): Promise<Remembered[]> {
+  private async findOlderOnChain(
+    before: number,
+  ): Promise<{ onChain: Remembered[]; replaced: Remembered | undefined }> {
     const older = await this.$.db.chainBlock.getByNumberRange(
       this.$.chain,
       0,
@@ -376,24 +383,32 @@ export class ChainHeadIndexer extends RootIndexer {
       if (hash === older[middle].hash) onChain = middle + 1
       else replaced = middle
     }
-    // Asked again before anything is deleted: nodes that disagree with each
-    // other could have steered the search past blocks the chain still has
-    const [fork, next] = [older.at(onChain - 1), older.at(onChain)]
+    return {
+      onChain: older.slice(0, onChain).slice(-REMEMBERED_BLOCKS),
+      replaced: older.at(onChain),
+    }
+  }
+
+  /**
+   * Asks again where the chain forked before anything is deleted. The search
+   * asked about one block at a time, and nodes that disagree with each other
+   * could have steered it past blocks the chain still has
+   */
+  private async confirmFork(
+    fork: Remembered | undefined,
+    replaced: Remembered,
+  ) {
     const stillOn =
-      onChain === 0 ||
-      (fork && (await this.$.source.getBlockHash(fork.number)) === fork.hash)
+      fork === undefined ||
+      (await this.$.source.getBlockHash(fork.number)) === fork.hash
     const stillOff =
-      next === undefined ||
-      (await this.$.source.getBlockHash(next.number)) !== next.hash
+      (await this.$.source.getBlockHash(replaced.number)) !== replaced.hash
     if (!stillOn || !stillOff) {
       throw new Error(
         'Source disagreed with itself about where the chain forked',
-        {
-          cause: { chain: this.$.chain, fork: fork?.number },
-        },
+        { cause: { chain: this.$.chain, fork: fork?.number } },
       )
     }
-    return older.slice(0, onChain).slice(-REMEMBERED_BLOCKS)
   }
 
   private forget(remembered: Remembered[]) {

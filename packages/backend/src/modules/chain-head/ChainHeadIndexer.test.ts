@@ -229,7 +229,7 @@ describe(ChainHeadIndexer.name, () => {
       })
       expect(store.numbers()).toEqual(range(100, 150))
       // every remembered block, then the older ones by halving
-      expect(chain.getBlockHash.calls.length).toBeLessThan(64 + 10)
+      expect(chain.getBlockHash.calls.length).toBeLessThan(64 + 12)
 
       expect(await indexer.follow()).toEqual({
         height: 249,
@@ -257,6 +257,26 @@ describe(ChainHeadIndexer.name, () => {
 
       expect((await indexer.follow()).height).toEqual(149)
       expect(store.numbers()).toEqual(range(100, 150))
+    })
+
+    it('deletes nothing either when it is a shallow fork the source disagrees with itself about', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      const indexer = head(chain, store)
+      chain.reorg(100, 101)
+      // the chain still has block 99, but one node says otherwise
+      chain.answerHashFromForkOnce(99)
+
+      await expect(indexer.follow()).toBeRejectedWith(
+        'Source disagreed with itself about where the chain forked',
+      )
+      expect(store.hashes()).toEqual(['0x98', '0x99', '0x100'])
+
+      expect((await indexer.follow()).height).toEqual(99)
     })
 
     it('drops to 0 and restarts at the latest block after a reorg past every stored block', async () => {
