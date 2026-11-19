@@ -278,7 +278,7 @@ describe(RpcClientCompat.name, () => {
       )
 
       await expect(() => client.getBlockTimestamps([1])).toBeRejectedWith(
-        'Invalid response: expected block number 1, got 2',
+        'Unexpected block number',
       )
     })
   })

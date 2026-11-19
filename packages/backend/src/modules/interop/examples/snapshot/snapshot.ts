@@ -17,7 +17,7 @@ import {
   toRetryOptions,
   withRetries,
 } from '@l2beat/shared'
-import { assert, type Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
   buildLogsSnapshotKey,
   buildSnapshotKey,
@@ -138,10 +138,11 @@ export class RpcSnapshotClient extends RpcClientCompat {
     const result = new Map<number, number>()
     for (const blockNumber of blockNumbers) {
       const block = await this.getBlock(blockNumber, false)
-      assert(
-        block.number === blockNumber,
-        `Invalid response: expected block number ${blockNumber}, got ${block.number}`,
-      )
+      if (block.number !== blockNumber) {
+        throw new Error('Unexpected block number', {
+          cause: { expected: blockNumber, got: block.number },
+        })
+      }
       result.set(blockNumber, block.timestamp)
     }
     return result
