@@ -17,12 +17,9 @@ export interface LiveActivityBlockRecord {
 /** The blocks of one hour of a project's chain, summed */
 export interface LiveActivityHourRecord {
   timestamp: UnixTime
-  blocks: number
   count: number
-  /** The transaction count of blocks with no user operations counted */
+  /** User operations, or transactions for blocks without them counted */
   uopsCount: number
-  firstNumber: number
-  lastNumber: number
   lastTimestamp: UnixTime
 }
 
@@ -99,8 +96,11 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  /** The project's blocks above the number, oldest hour first */
-  async getHoursAfter(
+  /**
+   * The project's blocks above the number, oldest hour first. None unless
+   * they run on from it unbroken, as hours missing blocks would undercount
+   */
+  async getContiguousHoursAfter(
     projectId: ProjectId,
     number: number,
   ): Promise<LiveActivityHourRecord[]> {
@@ -126,13 +126,17 @@ export class LiveActivityBlockRepository extends BaseRepository {
       GROUP BY 1
       ORDER BY 1
     `.execute(this.db)
+    const blocks = rows.reduce((sum, row) => sum + Number(row.blocks), 0)
+    if (
+      rows[0]?.firstNumber !== number + 1 ||
+      blocks !== (rows.at(-1)?.lastNumber ?? number) - number
+    ) {
+      return []
+    }
     return rows.map((row) => ({
       timestamp: UnixTime.fromDate(row.timestamp),
-      blocks: Number(row.blocks),
       count: Number(row.count),
       uopsCount: Number(row.uopsCount),
-      firstNumber: row.firstNumber,
-      lastNumber: row.lastNumber,
       lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
     }))
   }

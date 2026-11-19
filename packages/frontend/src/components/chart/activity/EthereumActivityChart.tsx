@@ -1,5 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -10,15 +10,14 @@ import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import {
-  capTimeRange,
-  getActivityPeriodSeconds,
-} from './utils/getActivityPeriodSeconds'
+  type ActivityChartCounts,
+  useActivityChartPoints,
+} from './useActivityChartPoints'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -47,37 +46,8 @@ export function EthereumActivityChart({
 
   const type = getChartType(category)
 
-  const liveUntil = chart?.liveUntil
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => {
-        const seconds = getActivityPeriodSeconds(timestamp, 'day', liveUntil)
-        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-        return {
-          timestamp,
-          ethereum: ethereumMetric !== null ? ethereumMetric / seconds : null,
-        }
-      }),
-    [chart?.data, metric, liveUntil],
-  )
-
-  const ratioData = useMemo(() => {
-    return chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => ({
-      timestamp,
-      ratio:
-        ethereumTx !== null && ethereumUops !== null
-          ? ethereumTx === 0
-            ? 1
-            : ethereumUops / ethereumTx
-          : null,
-    }))
-  }, [chart?.data])
-
-  // a period under way reaches only as far as its newest block
-  const timeRange = capTimeRange(
-    getChartTimeRangeFromData(chartData, { bucket: 'day' }),
-    liveUntil,
-  )
+  const { chartData, ratioData, timeRange, formatPeriod } =
+    useActivityChartPoints(chart, toCounts, 'day', metric)
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
@@ -95,19 +65,19 @@ export function EthereumActivityChart({
           scale={scale}
           metric={metric}
           isLoading={isLoading}
-          syncedUntil={liveUntil ?? chart?.syncedUntil}
+          syncedUntil={chart?.syncedUntil}
           type={type}
           project={project}
           tickCount={4}
-          liveUntil={liveUntil}
+          liveUntil={chart?.liveUntil}
         />
       </div>
       <div className="mb-2">
         <ActivityRatioChart
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
-          syncedUntil={liveUntil ?? chart?.syncedUntil}
-          liveUntil={liveUntil}
+          syncedUntil={chart?.syncedUntil}
+          formatPeriod={formatPeriod}
           isLoading={isLoading}
         />
       </div>
@@ -130,4 +100,12 @@ export function EthereumActivityChart({
       />
     </div>
   )
+}
+
+function toCounts([timestamp, tx, uops]: [
+  number,
+  number | null,
+  number | null,
+]): ActivityChartCounts {
+  return { timestamp, ethereum: { tx, uops } }
 }
