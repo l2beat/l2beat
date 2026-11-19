@@ -261,7 +261,7 @@ export const rocketpool: BaseProject = {
         value: `Oracle DAO (${oracleQuorum}/${oracleSetSize})`,
         secondLine: `${upgradePathDays}d · council veto`,
         sentiment: 'warning',
-        description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. Neither is a floor: the oracle DAO can cut its voting delay with no veto, and RPL governance can shorten the veto window to 1 day. The vault and token contracts cannot be upgraded.`,
+        description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
       },
     },
   },
