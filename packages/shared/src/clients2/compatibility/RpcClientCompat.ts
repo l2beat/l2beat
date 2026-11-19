@@ -202,10 +202,11 @@ export class RpcClientCompat implements IRpcClient {
       const expectedBlockNumber = blockNumbers[index]
       assert(expectedBlockNumber !== undefined)
       const block = toEVMBlock(expectedBlockNumber, rpcBlock)
-      assert(
-        block.number === expectedBlockNumber,
-        `Invalid response: expected block number ${expectedBlockNumber}, got ${block.number}`,
-      )
+      if (block.number !== expectedBlockNumber) {
+        throw new Error('Unexpected block number', {
+          cause: { expected: expectedBlockNumber, got: block.number },
+        })
+      }
       result.set(expectedBlockNumber, block.timestamp)
     }
     return result
