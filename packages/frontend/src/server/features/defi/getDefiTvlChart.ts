@@ -26,11 +26,17 @@ export const DefiTvlChartParams = v.object({
 export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
+  // ETH's price goes last, so a page loaded before it was added still reads
+  // the other values at their places.
   chart: [
     timestamp: number,
     valueUsd: number | null,
-    ethStakedUsd?: number | null,
-    stakedEthShare?: number | null,
+    /** Null unless `withEthStaked`. */
+    ethStakedUsd: number | null,
+    /** Null unless `withEthStaked`. */
+    stakedEthShare: number | null,
+    /** Divides the USD values to show them in ETH. */
+    ethPrice: number | null,
   ][]
   resolution: ChartResolution
   syncedUntil: number | undefined
@@ -41,37 +47,46 @@ export async function getDefiTvlChart(
   params: DefiTvlChartParams,
 ): Promise<DefiTvlChartResponse> {
   const response = await getTvlChart(params)
-  if (!params.withEthStaked) return response
-
   const timestamps = response.chart.map(([timestamp]) => timestamp)
-  const project = await ps.getProject({
-    id: ProjectId(params.projectId),
-    select: ['liquidStaking'],
-  })
-  const [ethStaked, ethPrices, tvlEth] = await Promise.all([
-    getEthStakedAt(timestamps),
+  const [ethPrices, ethStaked, tvlEth] = await Promise.all([
     getEthPricesAt(timestamps),
-    project ? getTvlInEthAt(project, timestamps) : [],
+    params.withEthStaked ? getEthStakedAt(timestamps) : undefined,
+    params.withEthStaked ? getProjectTvlInEthAt(params, timestamps) : undefined,
   ])
   return {
     ...response,
     chart: response.chart.map(([timestamp, valueUsd], i) => {
+      const price = ethPrices[i] ?? null
+      if (!ethStaked || !tvlEth) return [timestamp, valueUsd, null, null, price]
       const stake = ethStaked[i]
-      const price = ethPrices[i]
       const tvl = tvlEth[i]
       return [
         timestamp,
         valueUsd,
         stake != null && price != null ? stake * price : null,
         stake && tvl != null ? tvl / stake : null,
+        price,
       ]
     }),
   }
 }
 
+async function getProjectTvlInEthAt(
+  params: DefiTvlChartParams,
+  timestamps: number[],
+): Promise<(number | null)[]> {
+  const project = await ps.getProject({
+    id: ProjectId(params.projectId),
+    select: ['liquidStaking'],
+  })
+  return project ? getTvlInEthAt(project, timestamps) : []
+}
+
+type TvlChart = [timestamp: number, valueUsd: number | null][]
+
 async function getTvlChart(
   params: DefiTvlChartParams,
-): Promise<DefiTvlChartResponse> {
+): Promise<Omit<DefiTvlChartResponse, 'chart'> & { chart: TvlChart }> {
   const projectId = ProjectId(params.projectId)
   const project = await ps.getProject({
     id: projectId,
@@ -112,7 +127,7 @@ async function getTvlChart(
     )
   ).filter((record) => record.chainCount === tvl.chains.length)
   const latest = records.at(-1)
-  const chart: DefiTvlChartResponse['chart'] = records.map((record) => [
+  const chart: TvlChart = records.map((record) => [
     record.timestamp,
     record.valueUsd,
   ])
