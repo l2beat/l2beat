@@ -18,7 +18,7 @@ import { GasFeesTipIndexer } from './tips/GasFeesTipIndexer'
 import { LiveTipsLoop } from './tips/LiveTipsLoop'
 import { WalletTipsLoop } from './tips/WalletTipsLoop'
 
-/** gas.fees trails by an hour or two. A chain that trails by more is filled in later */
+/** Dune's tables trail by an hour or two. A chain that trails by more is filled in later */
 const FEES_DELAY_SECONDS = 3 * UnixTime.HOUR
 /** The mempool table has a day by noon the day after */
 const MEMPOOL_DELAY_SECONDS = 18 * UnixTime.HOUR

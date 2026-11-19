@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { GasFeesChain } from './chains'
+import { FEE_RULES } from './feeRules'
 import {
   getMissingChainDays,
   isAnyChainExpected,
@@ -9,8 +10,9 @@ import {
 } from './lateDays'
 
 const day = (n: number) => UnixTime(n * UnixTime.DAY)
-const a: GasFeesChain = { id: 'a', dune: 'a', requiredFrom: day(0) }
-const b: GasFeesChain = { id: 'b', dune: 'b', requiredFrom: day(2) }
+const fees = FEE_RULES.gasTimesPrice
+const a: GasFeesChain = { id: 'a', dune: 'a', fees, requiredFrom: day(0) }
+const b: GasFeesChain = { id: 'b', dune: 'b', fees, requiredFrom: day(2) }
 
 describe(getMissingChainDays.name, () => {
   it("lists the chain-days not stored, from each chain's first required day", () => {
