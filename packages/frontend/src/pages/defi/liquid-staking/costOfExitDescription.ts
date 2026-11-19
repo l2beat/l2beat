@@ -8,7 +8,8 @@ export interface CostOfExitDescription {
 }
 
 const INTRO = 'Days of staking yield it costs to exit 1 ETH'
-const ESTIMATE_NOTE = '~ marks a value that can still change.'
+const ESTIMATE_NOTE =
+  "~ marks an estimate: requests still in the queue are timed at the last 7 days' pace."
 
 /** Each ends "by the cheapest route: …". */
 const QUEUE = 'waiting in the queue, which earns nothing'

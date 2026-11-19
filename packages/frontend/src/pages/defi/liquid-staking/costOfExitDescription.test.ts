@@ -18,14 +18,14 @@ describe(getCostOfExitDescription.name, () => {
     })
 
     expect(tooltip).toEqual(
-      'Days of staking yield it costs to exit 1 ETH, by the cheaper route: waiting in the queue, which earns nothing, or the market discount. ~ marks a value that can still change.',
+      "Days of staking yield it costs to exit 1 ETH, by the cheaper route: waiting in the queue, which earns nothing, or the market discount. ~ marks an estimate: requests still in the queue are timed at the last 7 days' pace.",
     )
     expect(chart).toEqual(tooltip)
   })
 
   it('names every route on the comparison page', () => {
     expect(ALL_ROUTES_COST_OF_EXIT.tooltip).toEqual(
-      "Days of staking yield it costs to exit 1 ETH, by the cheapest route: waiting in the queue, which earns nothing, an instant exit's fee, or the market discount. ~ marks a value that can still change.",
+      "Days of staking yield it costs to exit 1 ETH, by the cheapest route: waiting in the queue, which earns nothing, an instant exit's fee, or the market discount. ~ marks an estimate: requests still in the queue are timed at the last 7 days' pace.",
     )
     expect(ALL_ROUTES_COST_OF_EXIT.chart).toEqual(
       ALL_ROUTES_COST_OF_EXIT.tooltip,
