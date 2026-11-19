@@ -54,7 +54,6 @@ export const facet: ScalingProject = {
   id: ProjectId('facet'),
   capability: 'universal',
   addedAt: UnixTime(1735889012), // 2025-01-03T01:36:52Z
-  archivedAt: UnixTime(1794514187), // 2026-11-12T20:09:47Z, L1 block 26401162 — bridge shutdown snapshot; the chain keeps producing blocks but no bridge to Ethereum remains active
   badges: [
     BADGES.Other.BasedSequencing,
     BADGES.DA.EthereumCalldata,
@@ -113,7 +112,7 @@ export const facet: ScalingProject = {
     name: 'Facet',
     slug: 'facet',
     headerWarning:
-      'Facet [shut down its bridges](https://github.com/0xFacet/facet-bridge-claims) on November 12, 2026. Bridged ETH was paid out to holders by the Facet Multisig and bridged Ethscriptions are claimed on Ethereum. No bridge between Facet and Ethereum remains active.',
+      'Facet [shut down its only bridge](https://github.com/0xFacet/facet-bridge-claims) on November 12, 2026. Bridged ETH was paid out to holders. The L2 itself remains live.',
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by burning ETH on L1.',
     purposes: ['Universal'],
@@ -160,7 +159,7 @@ export const facet: ScalingProject = {
           ],
         },
         description:
-          'Fast external ETH bridge, shut down on 2026-11-12: deposits and withdrawals are disabled and its ETH was paid out to holders by the Facet Multisig.',
+          'Fast external ETH bridge, shut down on 2026-11-12: deposits and withdrawals are disabled and its ETH was paid out to holders by the Facet Multisig, which renounced its admin roles on 2026-11-18.',
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
@@ -175,7 +174,9 @@ export const facet: ScalingProject = {
             },
           ],
         },
-        description: 'L1ETHLockbox (deprecated).',
+        description:
+          'Deprecated L1ETHLockbox, disabled on 2026-11-18: implementation and admin set to zero, holds no funds.',
+        untilTimestamp: UnixTime(1795042019), // 2026-11-18T22:46:59Z
       }),
     ],
     trackedTxs: [
@@ -360,7 +361,7 @@ export const facet: ScalingProject = {
       {
         name: 'No canonical bridge',
         description:
-          "Facet's `Rollup` contract publishes L2 state roots but is not paired with a canonical bridge escrow. Anyone can deploy a bridge that reads the `Rollup`'s anchor state root to bridge arbitrary tokens; each bridge has its own L2 counterpart, so the same L1 token bridged through different bridges results in different L2 representations. Trust assumptions (operator role, upgradeability, withdrawal logic) are bridge-specific and do not propagate from the `Rollup`. The risk analysis on this page covers the `Rollup` and its proof system only; any bridge built on top must be assessed separately. No bridge is active today. Facet shut down its bridges on 2026-11-12: the `FacetEtherBridgeV6` fast ETH bridge, whose withdrawals were signed by a permissioned EOA and did not depend on the `Rollup` state, is locked and its ETH was paid out to holders by the Facet Multisig from an offchain payout list. The legacy `L1Bridge` is immutably bound to `RollupDeprecated`, which no longer receives state-root proposals.",
+          "Facet's `Rollup` contract publishes L2 state roots but is not paired with a canonical bridge escrow. Anyone can deploy a bridge that reads the `Rollup`'s anchor state root to bridge arbitrary tokens; each bridge has its own L2 counterpart, so the same L1 token bridged through different bridges results in different L2 representations. Trust assumptions (operator role, upgradeability, withdrawal logic) are bridge-specific and do not propagate from the `Rollup`. The risk analysis on this page covers the `Rollup` and its proof system only; any bridge built on top must be assessed separately. No bridge is active today. Facet shut down its bridges on 2026-11-12: the `FacetEtherBridgeV6` fast ETH bridge, whose withdrawals were signed by a permissioned EOA and did not depend on the `Rollup` state, is locked and its ETH was paid out to holders by the Facet Multisig from an offchain payout list. The Multisig renounced the bridge's admin and upgrade admin on 2026-11-18, so it can no longer be unlocked or upgraded. The legacy `L1Bridge` is immutably bound to `RollupDeprecated`, which no longer receives state-root proposals.",
         risks: [],
         references: [
           {
@@ -435,7 +436,6 @@ export const facet: ScalingProject = {
     chainId: 1027303,
     gasTokens: ['FCT'],
     explorerUrl: 'https://explorer.facet.org',
-    untilTimestamp: UnixTime(1794514187), // 2026-11-12T20:09:47Z
     apis: [
       {
         type: 'rpc',
