@@ -216,9 +216,9 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
 /**
  * In the table the change has a column of its own, empty when there is none,
  * so amounts and the dash share a right edge. A phone row has no room for
- * that column, and a line under the amount would push the plants down, so a
- * smaller change goes left of the amount and every amount keeps the row's
- * right edge.
+ * that column, so its change hangs under the amount, in the gap above the
+ * plants: every amount keeps the row's right edge, and the row keeps its
+ * height.
  */
 function MetricCell({
   metric,
@@ -231,36 +231,26 @@ function MetricCell({
     <div
       className={cn(
         'inline-grid items-baseline gap-x-1 gap-y-px text-right',
-        compact ? 'grid-cols-[auto_auto]' : 'grid-cols-[auto_3.5rem]',
+        compact ? 'relative grid-cols-[auto]' : 'grid-cols-[auto_3.5rem]',
       )}
     >
       {metric ? (
         <>
-          <span
-            className={cn(
-              'font-medium text-label-value-13 text-primary',
-              compact && 'col-span-2',
-            )}
-          >
+          <span className="font-medium text-label-value-13 text-primary">
             {metric.label}
           </span>
-          <span
-            className={cn(
-              'row-start-2 font-semibold text-base text-primary tabular-nums',
-              compact && 'col-start-2',
-            )}
-          >
+          <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
             {metric.kind === 'usd'
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
           {compact ? (
             metric.change !== undefined && (
-              <span className="col-start-1 row-start-2">
+              <span className="-mt-1 absolute top-full right-0 leading-none">
                 <PercentChange
                   value={metric.change}
                   period="7D"
-                  textClassName="text-2xs"
+                  textClassName="text-2xs leading-none"
                 />
               </span>
             )
@@ -282,14 +272,7 @@ function MetricCell({
           <span aria-hidden className="text-label-value-13">
             &nbsp;
           </span>
-          <span
-            className={cn(
-              'row-start-2 text-secondary',
-              compact && 'col-start-2',
-            )}
-          >
-            &mdash;
-          </span>
+          <span className="row-start-2 text-secondary">&mdash;</span>
         </>
       )}
     </div>
