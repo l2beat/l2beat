@@ -86,6 +86,7 @@ export abstract class ClientCore {
       throw new Error(validationInfo.message ?? 'Response validation failed')
     }
 
+    this.rateLimiter.answered(start)
     return response
   }
 

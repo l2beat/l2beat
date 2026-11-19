@@ -10,7 +10,7 @@ export interface RateLimiterOptions {
   callsPerMinute: number
   /**
    * Share of the rate given up when the provider refuses a call, at most
-   * once a minute, only once a call has got through since the last step,
+   * once a minute, only once a call sent after the last step was answered,
    * and down to a tenth of `callsPerMinute`. The rate stays down until the
    * process restarts: it never climbs back by itself, so a limiter that
    * has settled no longer draws refusals. Zero, the default, keeps the
@@ -81,11 +81,11 @@ export class RateLimiter {
   private readonly onStepDown?: (step: RateLimiterStepDown) => void
   private steppedDownAt = Number.NEGATIVE_INFINITY
   /**
-   * Whether a call has succeeded since the last step. A provider that
-   * locks an address out refuses every call for minutes, whatever the
-   * rate, so until one gets through more refusals say nothing new.
+   * A provider that locks an address out refuses every call for minutes,
+   * whatever the rate. Until it answers a call sent after the last step,
+   * more refusals say nothing new about the rate.
    */
-  private gotThrough = true
+  private answeredCallSentAt = 0
   private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
@@ -125,15 +125,23 @@ export class RateLimiter {
       return
     }
     this.steppedDownAt = Date.now()
-    this.gotThrough = false
     this.effective = to
     this.onStepDown?.({ from, to, atFloor: to === floor })
+  }
+
+  /**
+   * Reports that the provider answered a call sent at `sentAt`. A promise
+   * that resolves is not enough to go by: a batch the provider turned away
+   * for its size resolves too.
+   */
+  answered(sentAt: number): void {
+    this.answeredCallSentAt = Math.max(this.answeredCallSentAt, sentAt)
   }
 
   private mayStepDown(): boolean {
     return (
       this.stepDownOnThrottle !== 0 &&
-      this.gotThrough &&
+      this.answeredCallSentAt > this.steppedDownAt &&
       Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
     )
   }
@@ -241,10 +249,7 @@ export class RateLimiter {
     this.inFlightMax = Math.max(this.inFlightMax, this.inFlight)
 
     item()
-      .then((res) => {
-        this.gotThrough = true
-        item.resolve(res)
-      })
+      .then((res) => item.resolve(res))
       .catch((err) => item.reject(err))
       .finally(() => {
         this.inFlight--

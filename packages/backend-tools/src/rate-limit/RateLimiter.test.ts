@@ -194,7 +194,7 @@ describe(RateLimiter.name, () => {
     // The rate a limiter settles at is the number a person would otherwise
     // have to guess for the config. A burst of calls refused together is
     // one event, so it must lower the rate once, not once per call.
-    it('lowers the rate by its step at most once a minute', async () => {
+    it('lowers the rate by its step at most once a minute', () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
@@ -207,8 +207,8 @@ describe(RateLimiter.name, () => {
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
-        await rateLimiter.call(() => 'got through')
         clock.tick(59_000)
+        rateLimiter.answered(Date.now())
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
@@ -224,31 +224,29 @@ describe(RateLimiter.name, () => {
     // Some providers lock an address out for minutes after one refusal and
     // refuse every call meanwhile, whatever the rate. Counting those would
     // settle the limiter far below the limit. Five refused minutes pass
-    // here, then one call gets through and the next refusal counts again.
-    it('waits for a call to get through before stepping down again', async () => {
+    // here, and a slow call sent before the lockout is answered during it:
+    // neither shows the provider takes the lowered rate. A call sent after
+    // the step does, so the next refusal counts again.
+    it('waits for an answer to a call sent after the step before the next one', () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
         stepDownOnThrottle: 0.1,
       })
-      const refusedCall = () =>
-        rateLimiter
-          .call(() => {
-            throw new Error('refused')
-          })
-          .catch(() => {})
 
       try {
+        const sentBeforeTheStep = Date.now()
+        clock.tick(1)
         rateLimiter.throttled()
         for (let minute = 0; minute < 5; minute++) {
           clock.tick(60_000)
-          await refusedCall()
           rateLimiter.throttled()
         }
+        rateLimiter.answered(sentBeforeTheStep)
+        rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
-        clock.tick(60_000)
-        await rateLimiter.call(() => 'got through')
+        rateLimiter.answered(Date.now())
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
       } finally {
@@ -282,8 +280,8 @@ describe(RateLimiter.name, () => {
     // A 429 is not always about the rate. Refusals that never stop must
     // not grind a client down to nothing, and whoever reads the rate has to
     // be told it stopped at the floor and not at a limit. Ten refused
-    // minutes, each after a call that got through: 1000, 500, 250, 125, 100.
-    it('stops stepping down at a tenth of the configured rate, and says so', async () => {
+    // minutes, each after an answered call: 1000, 500, 250, 125, 100.
+    it('stops stepping down at a tenth of the configured rate, and says so', () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const steps: RateLimiterStepDown[] = []
       const rateLimiter = new RateLimiter({
@@ -296,7 +294,7 @@ describe(RateLimiter.name, () => {
         for (let i = 0; i < 10; i++) {
           rateLimiter.throttled()
           clock.tick(60_000)
-          await rateLimiter.call(() => 'got through')
+          rateLimiter.answered(Date.now())
         }
 
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(100)

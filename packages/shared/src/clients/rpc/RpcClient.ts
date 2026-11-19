@@ -547,6 +547,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         cause: { body: text },
       })
     }
+    this.rateLimiter.answered(start)
     return body
   }
 
