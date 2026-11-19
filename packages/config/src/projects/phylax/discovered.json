@@ -1,6 +1,6 @@
 {
   "name": "phylax",
-  "timestamp": 1794851290,
+  "timestamp": 1795100733,
   "configHash": "0x6c2830260bc1e2ab12e530316cf4d03ebe36a224b8eec750c39e94f1c824d53e",
   "entries": [
     {
@@ -93,7 +93,7 @@
           "eth:0x8DcC88963187E193EAfa860e1f6917D239FAF95e": "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1D3B68C4d56E3BfFF7c41E0eF6BFE5128462a680": "eth:0x0000000000000000000000000000000000000000",
           "eth:0x18554EEE2c4598905eDab1C6525d11EB085B34Dc": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
-          "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66": "eth:0x3A24d388d214514800eDCD34571516848e088285",
           "eth:0xBBA9c82D9dC4b73f2a93c40A39B1A54564FcE86f": "eth:0x0000000000000000000000000000000000000000",
           "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8"
         },
@@ -105,10 +105,12 @@
           "eth:0x1D3B68C4d56E3BfFF7c41E0eF6BFE5128462a680": [],
           "eth:0x8DcC88963187E193EAfa860e1f6917D239FAF95e": [],
           "eth:0x18554EEE2c4598905eDab1C6525d11EB085B34Dc": [
-            "0x5cff8c00339ab7ea0d8eddee1b288d26673bf0c2dcecd268abd4db1594c5116b"
+            "0x5c052863a39f6926be64ad81a7004c1d7965e1b30886c1e76079818f061f14a6"
           ],
           "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66": [
-            "0x34da9f95dcd5079c3c8a3a29c00068fdd47b9087d7533396d3f571eaa655d0ed"
+            "0x309beab5d93b3a9e1c3b13638cc2bf0e707bc49217c04b47c8018e83b43fb860",
+            "0xf0817bbf150cc02426bef365387c67ba35c8146407db2b42bf7f8c4e233ece01",
+            "0xfab44d5e3cf33773708f0da795a6ab75c367da8c766a633f2176681acebf22b2"
           ],
           "eth:0xBBA9c82D9dC4b73f2a93c40A39B1A54564FcE86f": [],
           "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0": []
@@ -125,7 +127,8 @@
         "registrationAllowlist": [
           "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8",
           "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
-          "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071"
+          "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+          "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
         ],
         "whitelistEnabled": true
       },
@@ -209,6 +212,22 @@
           {
             "assertionAdopter": "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0",
             "admin": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8"
+          },
+          {
+            "assertionAdopter": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
           }
         ],
         "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
@@ -276,6 +295,11 @@
       }
     },
     {
+      "address": "eth:0x26587a64014361F4be5b8C307265ed1342583083",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
       "type": "EOA",
       "proxyType": "EOA"
@@ -318,6 +342,40 @@
       "address": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x3A24d388d214514800eDCD34571516848e088285",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+      "sinceTimestamp": 1794932075,
+      "sinceBlock": 26435891,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+          "eth:0x26587a64014361F4be5b8C307265ed1342583083",
+          "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x32827f4e7692e5ced5036f110e4850269ae4d832265146b96bbfcf87f0632a70",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 2,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x3A24d388d214514800eDCD34571516848e088285": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
     },
     {
       "address": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
@@ -432,6 +490,11 @@
       }
     },
     {
+      "address": "eth:0x78471170bE963A8e503AB2ee00826C9385034064",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AdminVerifierAlwaysApprove",
       "address": "eth:0x90792771aeA614983f1AD851De764276D0D9D279",
       "type": "Contract",
@@ -529,14 +592,15 @@
         "$immutable": false,
         "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
         "$members": [
+          "eth:0x78471170bE963A8e503AB2ee00826C9385034064",
           "eth:0xD4f639806483B68BddF1a338C9d4Fa188e01241c",
           "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"
         ],
-        "$threshold": 1,
+        "$threshold": 2,
         "domainSeparator": "0xf439180bb5f0dee69efb6c8f3a85bad56e2f1f6716583a5896efa39c3553b2cf",
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 17,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 28,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -903,7 +967,7 @@
         "builders": ["eth:0x0a03D5B6bAb06F3dCeac6B313e23117EADc1d17f"],
         "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
         "guardians": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
-        "lastCredibleBlock": 26391533,
+        "lastCredibleBlock": 26448820,
         "MAX_TIMELOCK_DELAY": 31536000,
         "MIN_TIMELOCK_DELAY": 259200,
         "minTimelockDelayFormatted": "3d",
@@ -1480,6 +1544,9 @@
       "function transferOwnership(address newOwner) payable",
       "function verifyAdmin(address assertionAdopter, address requester, bytes) view returns (bool)",
       "function whitelist(address assertionAdopter) view returns (address admin)"
+    ],
+    "eth:0x3A24d388d214514800eDCD34571516848e088285": [
+      "constructor(address _singleton)"
     ],
     "eth:0x5d8070789035f77624153CbF7d4cdCecfd520c5A": [
       "error InvalidProof()",
@@ -2105,8 +2172,8 @@
     "phylax/StateOracle": "0x12b0ad377e91a6c2840ddeef791229df2697206aca4555b42fb5a447b628bd3b",
     "phylax/StateOracle_singleDAVerifier": "0xc2880dacf692aac8cb84761ab851f88c15ae036fb9d4b0c79af0a93d3f42d969"
   },
-  "usedBlockNumbers": { "ethereum": 26429182 },
-  "permissionsConfigHash": "0x09c51d692a136fc5ea1dbdffb5859ecfdf70f290b24ca5da5a88a79833c5c479",
+  "usedBlockNumbers": { "ethereum": 26449909 },
+  "permissionsConfigHash": "0xeec68eb30029a85444350c698daf36bb73c8ab50c0a50ebd711e365876d34c45",
   "permissions": {
     "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
       "directlyReceivedPermissions": [
@@ -2159,6 +2226,15 @@
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
           "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
+          "via": [
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
         },
         {
@@ -2179,80 +2255,21 @@
         }
       ]
     },
-    "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221": {
+    "eth:0x26587a64014361F4be5b8C307265ed1342583083": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add or remove accounts on the registration allowlist.",
-          "role": ".operators",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
           "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
           ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
-          "role": ".governance",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the guardian role.",
-          "role": ".guardianAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the operator role.",
-          "role": ".operatorAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "remove any adopter's assertions and revoke any adopter's manager.",
-          "role": ".guardians",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
-          "role": ".whitelistAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "grant or revoke the admin and whitelist admin roles.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
+        }
+      ]
+    },
+    "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221": {
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E",
@@ -2309,34 +2326,6 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "delay": 259200,
-          "description": "add or remove builders and change the timelock delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "cancel scheduled builder and delay changes.",
-          "role": ".guardians",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "grant or revoke the admin and guardian roles.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
           "description": "add or remove accounts on the registration allowlist.",
           "role": ".operators"
@@ -2385,15 +2374,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E" },
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
           "role": "admin",
           "via": [
@@ -2436,6 +2416,16 @@
           "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
           "description": "become the manager of any adopter without one.",
           "role": ".superAdmins"
+        }
+      ]
+    },
+    "eth:0x3A24d388d214514800eDCD34571516848e088285": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
         }
       ]
     },
@@ -2488,6 +2478,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
+          "via": [
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
           "description": "add or remove the assertions of the adopters it manages and transfer that role.",
           "role": ".adopterManagers"
@@ -2503,120 +2502,6 @@
           "role": ".defaultAdminAC"
         }
       ]
-    },
-    "eth:0xD4f639806483B68BddF1a338C9d4Fa188e01241c": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add or remove accounts on the registration allowlist.",
-          "role": ".operators",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
-          "role": ".governance",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the guardian role.",
-          "role": ".guardianAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "grant or revoke the operator role.",
-          "role": ".operatorAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "description": "remove any adopter's assertions and revoke any adopter's manager.",
-          "role": ".guardians",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
-          "role": ".whitelistAdmins",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
-          "description": "grant or revoke the admin and whitelist admin roles.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "delay": 259200,
-          "description": "add or remove builders and change the timelock delay.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "cancel scheduled builder and delay changes.",
-          "role": ".guardians",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
-          "description": "grant or revoke the admin and guardian roles.",
-          "role": ".defaultAdmin",
-          "via": [
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E" },
-            { "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934" }
-          ]
-        }
-      ],
-      "eoaWithUpgradePermissions": true
     },
     "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE": {
       "directlyReceivedPermissions": [
@@ -2638,12 +2523,7 @@
       ]
     },
     "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E",
-          "role": ".owner"
-        },
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
@@ -2710,6 +2590,21 @@
           "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
           "description": "grant or revoke the admin and guardian roles.",
           "role": ".defaultAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E",
+          "role": ".owner"
         }
       ]
     },
