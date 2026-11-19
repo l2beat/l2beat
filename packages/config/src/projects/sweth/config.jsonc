@@ -5,8 +5,6 @@
   "maxAddresses": 80,
   "initialAddresses": [
     "eth:0xf951E335afb289353dc249e82926178EaC7DEd78", // swETH
-    "eth:0x48C11b86807627AF70a34662D4865cF854251663", // swEXIT
-    "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71", // RepricingOracle
     "eth:0x5c6392a69dc11f254457716c682f70e4b2ed7b05" // SwETHProxyOFT
   ],
   "names": {

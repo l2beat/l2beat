@@ -1,7 +1,7 @@
 {
   "name": "sweth",
   "timestamp": 1794917357,
-  "configHash": "0x5b0fea505f93eb4d8e9bf338af5dcf691d16f65c76aa530179bc3189321172ae",
+  "configHash": "0x2926fee368b44298b6b91f4c33cbc21c1fdcc8837e8a2c961a00db8c259e52d0",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -224,7 +224,7 @@
         "0xd1ac20cfceffd23f917ae0820b420cfafbf05cf926504f5e04c0f8904cbcc015"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
+      "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request); while its whitelist is on, only whitelisted addresses can request (whitelist enabled: false). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
       "ignoreInWatchMode": [
         "exitingETH",
         "getLastTokenIdCreated",
@@ -313,7 +313,7 @@
         "0xe1aee07a066d242a7c10695b689acbfb3a37c03408bdcf0dcd4ea11057b078d1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central role and pause registry for one staking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits false, bot functions false, operator functions false, withdrawals false.",
+      "description": "Central role and pause registry for one staking system. Its token, exit queue, deposit manager, operator registry and oracle check roles here and resolve each other's and the treasury's addresses through it. Paused now: deposits false, bot functions false, operator functions false, withdrawals false.",
       "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
       "sinceTimestamp": 1681287215,
       "sinceBlock": 17030667,

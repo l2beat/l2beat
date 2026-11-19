@@ -169,7 +169,7 @@ export const sweth: BaseProject = {
         value: 'Oracle-gated',
         secondLine: 'in reports · pausable',
         sentiment: 'warning',
-        description: `Holders queue in swEXIT and are paid in order when a rate report processes the queue, at the lower of the rate at request and at processing. Nothing sets a deadline. Any single signer of the ${pauserSafe} pauser multisig can pause requests and claims, and only the ${adminSafe} multisig can lift the pause.`,
+        description: `Holders queue in swEXIT. A rate report processes requests in order, and each holder then claims ETH at the lower of the rate at request and at processing. Nothing sets a deadline. Any single signer of the ${pauserSafe} pauser multisig can pause requests and claims, and only the ${adminSafe} multisig can lift the pause.`,
       },
       upgrades: {
         value: `${adminSafe} Safe`,

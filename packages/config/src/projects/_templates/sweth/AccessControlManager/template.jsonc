@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AccessControlManager",
   "category": "gov",
-  "description": "Central role and pause registry for one staking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits {{coreMethodsPaused}}, bot functions {{botMethodsPaused}}, operator functions {{operatorMethodsPaused}}, withdrawals {{withdrawalsPaused}}.",
+  "description": "Central role and pause registry for one staking system. Its token, exit queue, deposit manager, operator registry and oracle check roles here and resolve each other's and the treasury's addresses through it. Paused now: deposits {{coreMethodsPaused}}, bot functions {{botMethodsPaused}}, operator functions {{operatorMethodsPaused}}, withdrawals {{withdrawalsPaused}}.",
   "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "PLATFORM_ADMIN"],
   "fields": {
     "accessControl": {

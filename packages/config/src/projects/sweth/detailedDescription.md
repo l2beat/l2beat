@@ -2,7 +2,7 @@
 
 ### Deposits and staking
 
-Anyone can deposit ETH and receive {{swETH}} at the current rate; the ETH is forwarded in the same call to the deposit manager. Swell's bot role, held by {{bot}}, decides when that ETH is staked and with which providers; each provider's keys are used in the order it registered them. Keys come from a registry of {{swOperators}} staking providers chosen by Swell; providers post no bond, so slashing losses fall on all holders. Each new stake reverts if another deposit changed the beacon deposit root after the bot read it, and ETH reserved for queued exits is never staked. Validators withdraw to the deposit manager.
+While deposits are not paused and the whitelist is off, anyone can deposit ETH and receive {{swETH}} at the current rate; the ETH is forwarded in the same call to the deposit manager. Swell's bot role, held by {{bot}}, decides when that ETH is staked and with which providers; each provider's keys are used in the order it registered them. Keys come from a registry of {{swOperators}} staking providers chosen by Swell; providers post no bond, so slashing losses fall on all holders. Each new stake reverts if another deposit changed the beacon deposit root after the bot read it, and ETH reserved for queued exits is never staked. Validators withdraw to the deposit manager.
 
 ![Swell deposits](/images/architecture/sweth-deposits.png#center)
 

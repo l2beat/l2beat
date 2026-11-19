@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x52623471ecf3924d4740b94866b1ae3a3c5b2ae6
+Generated with discovered.json: 0x975349f23a5673a215cc0bea88f37d0c66fb757b
 
-# Diff at Tue, 17 Nov 2026 22:01:27 GMT:
+# Diff at Thu, 19 Nov 2026 17:19:56 GMT:
 
 - id: 5bf27dc9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -45,7 +45,7 @@ Initial discovery of Swell's swETH liquid staking: the token, its exit queue, de
 ```diff
 +   Status: CREATED
     contract swEXIT (eth:0x48C11b86807627AF70a34662D4865cF854251663) [sweth/ExitQueue]
-    +++ description: Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.
+    +++ description: Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request); while its whitelist is on, only whitelisted addresses can request (whitelist enabled: false). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.
 ```
 
 ```diff
@@ -57,7 +57,7 @@ Initial discovery of Swell's swETH liquid staking: the token, its exit queue, de
 ```diff
 +   Status: CREATED
     contract AccessControlManager (eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC) [sweth/AccessControlManager]
-    +++ description: Central role and pause registry for one staking system. Every contract of the system checks roles here and resolves the token, exit queue, deposit manager, operator registry and treasury addresses through it. Paused now: deposits false, bot functions false, operator functions false, withdrawals false.
+    +++ description: Central role and pause registry for one staking system. Its token, exit queue, deposit manager, operator registry and oracle check roles here and resolve each other's and the treasury's addresses through it. Paused now: deposits false, bot functions false, operator functions false, withdrawals false.
 ```
 
 ```diff
