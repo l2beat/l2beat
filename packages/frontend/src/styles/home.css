@@ -63,10 +63,22 @@
    becomes a row, the figure beside a wider, shorter sparkline. In the page's
    three columns (`home-wide`), where only Ethereum is that narrow, the two
    tiles go one under the other instead (`kpi-column`), down beside the
-   domains' rankings. */
+   domains' rankings. Ethereum with liquid staking (`kpis-rows`) has a ranking
+   of its own to keep level with theirs, so its KPIs stay rows there, with
+   shorter sparklines (`kpi-compact`). */
 @custom-variant kpi-rows {
   @container home (width < 1560px) {
     @container kpis (width < 496px) {
+      @slot;
+    }
+  }
+  @container kpis-rows (width < 496px) {
+    @slot;
+  }
+}
+@custom-variant kpi-compact {
+  @container home (width >= 1560px) {
+    @container kpis-rows (width < 496px) {
       @slot;
     }
   }

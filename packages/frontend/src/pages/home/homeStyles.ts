@@ -54,9 +54,12 @@ export const HOME_BANNER_TITLE_CLASS =
 
 /**
  * Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs
- * match; shorter where the KPIs stack as rows and each chart is wide.
+ * match; shorter where the KPIs stack as rows and each chart is wide, and
+ * as tall as the figure and its label beside it where three of them share
+ * the domains' KPI row (`kpi-compact`), too short for the high and low
+ * labels (see `HomeSparkline`).
  */
-export const HOME_CHART_HEIGHT_CLASS = 'h-28 kpi-rows:h-24'
+export const HOME_CHART_HEIGHT_CLASS = 'h-28 kpi-rows:h-24 kpi-compact:h-13'
 
 /** Every list and ranking row on the page, so they all match. */
 export const HOME_ROW_CLASS = 'h-10'
