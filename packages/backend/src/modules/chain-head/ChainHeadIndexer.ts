@@ -133,6 +133,7 @@ export class ChainHeadIndexer extends RootIndexer {
       const [block] = await this.$.source.getBlocks(latest, latest)
       assert(block, 'Latest block missing from the response')
       await this.store([block])
+      await this.confirm(block.number)
       return { height: block.number, stored: 1, again: false }
     }
     // a node behind the load balancer answering for an older head
@@ -144,6 +145,7 @@ export class ChainHeadIndexer extends RootIndexer {
       // would show it, but on a quiet chain that can be many minutes away
       const hash = await this.$.source.getBlockHash(tip.number)
       if (hash !== tip.hash) return await this.unwind(remembered)
+      await this.confirm(tip.number)
       return { height: tip.number, stored: 0, again: false }
     }
 
@@ -169,6 +171,7 @@ export class ChainHeadIndexer extends RootIndexer {
     }
 
     await this.store(blocks)
+    if (to === latest) await this.confirm(to)
     return { height: to, stored: blocks.length, again: to < latest }
   }
 
@@ -208,6 +211,19 @@ export class ChainHeadIndexer extends RootIndexer {
       }
     }
     return blocks
+  }
+
+  /**
+   * The source has no block newer than the stored ones. Written down for
+   * whoever shows what is read here: a chain can go minutes without a block,
+   * so the age of the newest one does not say how fresh the stored blocks are
+   */
+  private async confirm(number: number) {
+    await this.$.db.chainHead.upsert({
+      chain: this.$.chain,
+      number,
+      confirmedAt: UnixTime.now(),
+    })
   }
 
   private async store(blocks: EVMBlockWithTransactions[]) {

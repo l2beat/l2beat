@@ -38,6 +38,7 @@ export {
 } from './repositories/AppStateRepository'
 export type { BlobRecord } from './repositories/BlobsRepository'
 export type { ChainBlockRecord } from './repositories/ChainBlockRepository'
+export type { ChainHeadRecord } from './repositories/ChainHeadRepository'
 export type {
   ChainApi,
   ChainRecord,

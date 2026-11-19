@@ -155,6 +155,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
     }
     const db = mockObject<Database>({
       chainBlock: chainBlocks.repository,
+      chainHead: chainBlocks.headRepository,
       liveActivityBlock: live.repository,
       indexerState: mockObject<Database['indexerState']>({
         findByIndexerId: async (indexerId) => {

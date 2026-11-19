@@ -264,6 +264,37 @@ describe(ChainHeadIndexer.name, () => {
       expect(store.hashes()).toEqual(['0x99'])
     })
 
+    it('records the time whenever the source has no block newer than the stored ones', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [chain.block(98)])
+      const indexer = head(chain, store, 1)
+
+      // behind: block 99 stored, block 100 waiting
+      await indexer.follow()
+      expect(store.confirmed).toEqual(undefined)
+
+      await indexer.follow()
+      expect(store.confirmed).toEqual({
+        chain: CHAIN,
+        number: 100,
+        confirmedAt: NOW,
+      })
+
+      time.setSystemTime((NOW + 30) * 1000)
+      await indexer.follow()
+      expect(store.confirmed?.confirmedAt).toEqual(NOW + 30)
+    })
+
+    it('records nothing when a node that is behind answers', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [chain.block(100)])
+      chain.lagOnce(2)
+
+      await head(chain, store).follow()
+
+      expect(store.confirmed).toEqual(undefined)
+    })
+
     it('holds its height when a node behind the load balancer answers for an older head', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [chain.block(100)])

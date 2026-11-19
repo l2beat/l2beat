@@ -79,6 +79,17 @@ model ChainBlock {
   @@index([timestamp])
 }
 
+/// What each chain head last heard from its source. A chain can go minutes
+/// without a block, so how fresh its stored blocks are shows in
+/// `confirmedAt`, not in the age of the newest one
+model ChainHead {
+  chain       String   @id @db.VarChar(64)
+  /// The newest stored block
+  number      Int
+  /// When the source last had no block newer than the stored ones
+  confirmedAt DateTime @db.Timestamp(6)
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)

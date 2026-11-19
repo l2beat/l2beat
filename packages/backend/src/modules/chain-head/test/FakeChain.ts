@@ -1,4 +1,8 @@
-import type { ChainBlockRecord, Database } from '@l2beat/database'
+import type {
+  ChainBlockRecord,
+  ChainHeadRecord,
+  Database,
+} from '@l2beat/database'
 import {
   type EVMBlockWithTransactions,
   NotFoundOnRpcError,
@@ -117,7 +121,17 @@ export class FakeChainBlocks {
     deleteBefore: async (_, timestamp) =>
       this.keep((r) => r.timestamp >= timestamp),
   })
-  readonly db = mockDatabase({ chainBlock: this.repository })
+  /** What the head last wrote of its source having nothing newer */
+  confirmed: ChainHeadRecord | undefined
+  readonly headRepository = mockObject<Database['chainHead']>({
+    upsert: async (record) => {
+      this.confirmed = record
+    },
+  })
+  readonly db = mockDatabase({
+    chainBlock: this.repository,
+    chainHead: this.headRepository,
+  })
 
   constructor(chain: string, blocks: EVMBlockWithTransactions[] = []) {
     this.rows = blocks.map((block) => ({
