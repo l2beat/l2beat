@@ -8,6 +8,20 @@
  * start overwrites what it already stored for them. Every other hour stays as
  * fetched, because CoinGecko's history is not reliable enough to replace all
  * of a coin's stored data with it.
+ *
+ * Before adding an entry:
+ * - It needs evidence, checkable without us, that CoinGecko's value is wrong.
+ *   The same bar applies whoever proposes it and whichever way it moves TVS.
+ * - Take the new value from CoinGecko's own data where that is sound (its
+ *   later history, or the hours on both sides), otherwise from another
+ *   market source, and name the source in `reason`.
+ * - CoinGecko's public history reaches back one year, so links to it stop
+ *   working. Also give a source that keeps its history, such as an exchange.
+ * - List every hour that needs the value. An hour with no stored price of its
+ *   own is calculated from the latest older one, and is corrected only if it
+ *   is listed too.
+ * - Removing an entry does not bring back what CoinGecko reported. The stored
+ *   value stays until that hour is fetched again.
  */
 export interface CoingeckoCorrection {
   coingeckoId: string

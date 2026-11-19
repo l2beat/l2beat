@@ -23,9 +23,8 @@ const syncOptimizer = new SyncOptimizer(
   }),
 )
 
-// Runs against Postgres because the behavior depends on it: prices are stored
-// as 32-bit floats, supplies as 80-digit decimals, and the overwrite and the
-// recomputation have to land in one transaction.
+// Runs against Postgres because the behavior depends on it: prices and token
+// values are stored as 32-bit floats and supplies as 80-digit decimals.
 describeDatabase(overwriteCorrectedHours.name, (db) => {
   beforeEach(async () => {
     await db.tvsPrice.deleteAll()
@@ -159,7 +158,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
   // After a deploy that changes a token, its stored values still carry the
   // old configuration id until the indexer wipes them, and the amount the new
   // configuration needs is not stored yet. Recomputing such a value would
-  // throw and stop the backend from starting, on every restart.
+  // fail and alert on every restart.
   it('leaves token values stored under an older configuration of the token', async () => {
     const token = tokenWith({
       type: 'totalSupply',
@@ -190,23 +189,40 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 15450, 1545]])
   })
 
-  // A run that stored the corrected price but failed before recomputing the
-  // token value must not keep the price: the next run would find it correct
-  // and never recompute. It must not throw either, because it runs before
-  // the indexers start and they may be the ones to fetch what it is missing.
-  // Makes the recomputation fail by leaving out the amount, then adds it and
-  // runs again.
-  it('keeps nothing from a run that fails, reports it, and repeats it on the next run', async () => {
-    const token = tokenWith({
+  // On the first run in production one token may lack an input the others
+  // have. Two tokens share the corrected price and one has no stored amount:
+  // the other still has to get its new value, the failure has to alert
+  // without throwing, because this runs before the indexers start, and the
+  // run after the amount arrives has to finish the job although the price
+  // already matches by then.
+  it('recomputes the other tokens when one fails, alerts, and finishes on the next run', async () => {
+    const failing = tokenWith({
       type: 'totalSupply',
       address: EthereumAddress.ZERO,
       chain: 'ethereum',
       decimals: 0,
       sinceTimestamp: UnixTime(0),
     })
-    const { config, amount } = configFor(token)
-    await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
-    const { logger, error } = recordingLogger()
+    const healthy = tokenWith(
+      {
+        type: 'totalSupply',
+        address: EthereumAddress('0x' + '1'.repeat(40)),
+        chain: 'ethereum',
+        decimals: 0,
+        sinceTimestamp: UnixTime(0),
+      },
+      'project-OTHER',
+    )
+    const { config, price, amounts } = configFor(failing, healthy)
+    const [failingAmount, healthyAmount] = amounts
+    await storePrice(db, price.id, WRONG_HOUR, 1545)
+    await db.tvsAmount.upsertMany([
+      { configurationId: healthyAmount.id, timestamp: WRONG_HOUR, amount: 10n },
+    ])
+    for (const token of [failing, healthy]) {
+      await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
+    }
+    const { logger, critical } = recordingLogger()
     const run = () =>
       overwriteCorrectedHours(
         [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
@@ -217,23 +233,23 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       )
 
     await run()
-    expect(await storedPrices(db)).toEqual([])
-    expect(error).toHaveBeenCalledTimes(1)
+    expect(await storedValueOf(db, healthy)).toEqual(21190)
+    expect(await storedValueOf(db, failing)).toEqual(15450)
+    expect(critical).toHaveBeenCalledTimes(1)
 
     await db.tvsAmount.upsertMany([
-      { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },
+      { configurationId: failingAmount.id, timestamp: WRONG_HOUR, amount: 10n },
     ])
     await run()
-    expect(await storedPrices(db)).toEqual([[WRONG_HOUR, 2119]])
-    expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 21190, 2119]])
-    expect(error).toHaveBeenCalledTimes(1)
+    expect(await storedValueOf(db, failing)).toEqual(21190)
+    expect(critical).toHaveBeenCalledTimes(1)
   })
 
-  // The overwrite runs on every backend start. Postgres keeps a price as a
-  // 32-bit float and returns 63996.68 for the value below, so comparing the
-  // two at full precision would find a difference on every start and rewrite
-  // the data forever. A token value changed by hand between two runs shows
-  // whether the second one wrote.
+  // The overwrite runs on every backend start. Postgres keeps prices and
+  // token values as 32-bit floats and returns 63996.68 for the price below,
+  // so comparing at full precision would find a difference on every start
+  // and rewrite the data forever. The log line it writes when it changed
+  // something shows whether the second run did.
   it('writes nothing once the stored data matches the corrections', async () => {
     const token = tokenWith({
       type: 'totalSupply',
@@ -253,43 +269,77 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
         { at: '2026-05-31T00:00:00Z', value: 63996.6812345 },
       ]),
     ]
+    const { logger, info } = recordingLogger()
 
     await overwriteCorrectedHours(
       corrections,
       config,
       syncOptimizer,
       db,
-      Logger.SILENT,
+      logger,
     )
-    await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 1 })
+    expect(info).toHaveBeenOnlyCalledWith(
+      'Overwrote stored data with CoinGecko corrections',
+      { prices: 1, supplies: 0, tokenValues: 1 },
+    )
+
     await overwriteCorrectedHours(
       corrections,
+      config,
+      syncOptimizer,
+      db,
+      logger,
+    )
+    expect(info).toHaveBeenCalledTimes(1)
+  })
+
+  // A token value can be saved from the old price after the price itself was
+  // corrected, for example by an instance still running during a deploy.
+  // Stores the corrected price next to a value calculated from the old one:
+  // nothing is left to overwrite, and the value still has to change.
+  it('recomputes a token value that is wrong although its price already matches', async () => {
+    const token = tokenWith({
+      type: 'totalSupply',
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
+      decimals: 0,
+      sinceTimestamp: UnixTime(0),
+    })
+    const { config, price, amount } = configFor(token)
+    await storePrice(db, price.id, WRONG_HOUR, 2119)
+    await db.tvsAmount.upsertMany([
+      { configurationId: amount.id, timestamp: WRONG_HOUR, amount: 10n },
+    ])
+    await storeTokenValue(db, token, WRONG_HOUR, { amount: 10, value: 15450 })
+
+    await overwriteCorrectedHours(
+      [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
       config,
       syncOptimizer,
       db,
       Logger.SILENT,
     )
 
-    const [[, value]] = await storedTokenValues(db)
-    expect(value).toEqual(1)
+    expect(await storedTokenValues(db)).toEqual([[WRONG_HOUR, 21190, 2119]])
   })
 })
 
 function recordingLogger() {
-  const error = mockFn().returns(undefined)
+  const info = mockFn().returns(undefined)
+  const critical = mockFn().returns(undefined)
   const logger: Logger = mockObject<Logger>({
     for: () => logger,
-    info: () => {},
+    info,
     warn: () => {},
-    error,
+    critical,
   })
-  return { logger, error }
+  return { logger, info, critical }
 }
 
-function tokenWith(amount: TvsToken['amount']): TvsToken {
+function tokenWith(amount: TvsToken['amount'], id = 'project-COIN'): TvsToken {
   return {
     mode: 'auto',
-    id: TokenId('project-COIN'),
+    id: TokenId(id),
     priceId: 'coin',
     symbol: 'COIN',
     name: 'Coin',
@@ -300,11 +350,11 @@ function tokenWith(amount: TvsToken['amount']): TvsToken {
   }
 }
 
-function configFor(token: TvsToken) {
-  const { prices, amounts } = extractPricesAndAmounts([token])
+function configFor(...tokens: TvsToken[]) {
+  const { prices, amounts } = extractPricesAndAmounts(tokens)
   const project = {
     projectId: 'project',
-    tokens: [token],
+    tokens,
     amountSources: [],
     storeEscrowValues: false,
   }
@@ -312,6 +362,7 @@ function configFor(token: TvsToken) {
     config: { prices, amounts, projects: [project] },
     price: prices[0],
     amount: amounts[0],
+    amounts,
   }
 }
 
@@ -373,4 +424,9 @@ async function storedTokenValues(db: Database) {
   return records
     .sort((a, b) => a.timestamp - b.timestamp)
     .map((r) => [r.timestamp, r.value, r.priceUsd])
+}
+
+async function storedValueOf(db: Database, token: TvsToken) {
+  const records = await db.tvsTokenValue.getAll()
+  return records.find((r) => r.tokenId === token.id)?.value
 }
