@@ -968,29 +968,29 @@ model AppState {
   updatedBy String   @db.VarChar(255)
 }
 
-/// One UTC day of fees on one chain, from Dune's gas.fees and the chain's blocks.
+/// One UTC day of fees on one chain, computed from the chain's transactions and blocks on Dune.
 /// Raw sums, so per-transaction and per-gas figures are derived when read.
 model GasFeesDaily {
   /// Start of the day.
   timestamp      DateTime @db.Timestamp(6)
   /// The gas fees page's chain id: ethereum, arbitrum, base, optimism, zksync2, linea, scroll, unichain, ink, abstract, taiko, mantle.
   chain          String   @db.VarChar(32)
-  /// Transactions that paid a fee; system transactions pay none and are left out.
+  /// Transactions that paid a fee; system transactions (an OP Stack chain's deposits, Taiko's anchors) pay none and are left out.
   txCount        Int
   /// Fees paid, in the chain's gas token (ETH, MNT on Mantle).
   totalFeeNative Float
-  /// Fees paid in USD, at Dune's price for each transaction; those it has no price for are left out. null when it has none.
+  /// Fees paid in USD, each transaction at Dune's price of the gas token for its hour. Never null: a day with a fee Dune has no price for is not stored.
   totalFeeUsd    Float?
-  /// The part of the fees paid for posting data to Ethereum, gas token. 0 where gas.fees has no l1_fee (Ethereum, Linea, ZKsync).
+  /// The part of the fees paid for posting data to Ethereum, gas token. 0 where the chain reports none (Ethereum, Linea, ZKsync Era, Abstract, Taiko).
   l1FeeNative    Float
   /// The part of the fees paid for blobs, gas token. Ethereum only.
   blobFeeNative  Float
-  /// Base fee per gas times the gas of the transactions that paid a fee, gas token. From the chain's blocks, as gas.fees books all of a legacy transaction's fee as base fee. null where the chain had no base fee (Ethereum before London).
-  /// On Arbitrum a transaction's gas includes the gas it is charged for posting data to Ethereum, so there this already contains l1FeeNative: don't add the two.
+  /// Each block's base fee per gas times the gas of its transactions that paid a fee, gas token. null where the chain had no base fee (Ethereum before London).
+  /// On Arbitrum, and on Mantle until 22 April 2026, a transaction's gas includes the gas it is charged for posting data to Ethereum, so there this already contains l1FeeNative: don't add the two.
   baseFeeNative  Float?
-  /// Gas used by the day's transactions that paid a fee: an OP Stack chain's deposits use gas for free and are left out. From the chain's blocks.
+  /// Gas used by the day's transactions that paid a fee: those that use gas for free are left out.
   gasUsed        Float
-  /// Median fee per transaction in USD, approximate (Dune's approx_percentile). null when Dune has no price.
+  /// Median fee in USD of the transactions that paid one, approximate (Dune's approx_percentile). null when none did.
   medianFeeUsd   Float?
 
   @@id([chain, timestamp])
