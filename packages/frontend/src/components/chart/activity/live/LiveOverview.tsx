@@ -5,9 +5,10 @@ import {
   useRef,
   useState,
 } from 'react'
-import type { LiveActivityPoint } from '~/server/features/layer2s/activity/live/liveRanges'
+import type { ProjectLiveWindow } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import { cn } from '~/utils/cn'
-import { type LiveMetric, METRIC_INDEX } from './liveSteps'
+import { countOf, type LiveMetric } from './liveSteps'
+import { clampTo } from './liveView'
 
 const HEIGHT = 40
 /** Keys let go closer together than this move the window once, after the last */
@@ -22,15 +23,14 @@ const MOVE_KEYS = [
 ]
 
 /**
- * The whole buffer, a bar a minute, with the window the chart below shows.
+ * The whole buffer, a bar a bucket, with the window the chart below shows.
  * Pressing or dragging on it, or the arrow keys, move the window. While they
  * go on only the strip's window moves, and the chart reads where it ends once
  * they stop, rather than every window passed on the way
  */
 export function LiveOverview({
-  points,
-  from,
-  to,
+  overview,
+  buffer,
   window,
   windowText,
   length,
@@ -39,10 +39,9 @@ export function LiveOverview({
   onSeeking,
   className,
 }: {
-  points: LiveActivityPoint[]
+  overview: ProjectLiveWindow['overview']
   /** The buffer's edges */
-  from: number
-  to: number
+  buffer: { from: number; to: number }
   /** The edges of the window shown below */
   window: [number, number]
   /** What the range picked spans, which a move reads */
@@ -69,16 +68,18 @@ export function LiveOverview({
   const target = useRef<number | undefined>(undefined)
   const keys = useRef(new Set<string>())
   const [seekTo, setSeekTo] = useState<number>()
+  const { from, to } = buffer
   const span = to - from
-  const lowest = Math.min(from + length, to)
-  const end =
-    seekTo === undefined
-      ? window[1]
-      : Math.min(to, Math.max(from + length, seekTo))
+  /** Where a window asked to end at `end` will, as it is read */
+  const clamp = (end: number) => clampTo(end, buffer, length) ?? to
+  const end = seekTo === undefined ? window[1] : clamp(seekTo)
   // while moved, as it will be read, which a range just picked may not be yet
   const [shownFrom, shownTo] =
     seekTo === undefined ? window : [end - length, end]
-  const busiest = Math.max(1, ...points.map((p) => metricOf(p, metric)))
+  const busiest = Math.max(
+    1,
+    ...overview.buckets.map((b) => countOf(b, metric)),
+  )
   // the window and the first bar start on their buckets, so can before `from`
   const xOf = (t: number) =>
     Math.min(100, Math.max(0, ((t - from) / span) * 100))
@@ -148,9 +149,9 @@ export function LiveOverview({
       tabIndex={0}
       aria-label="Look back through the last hours"
       // a window longer than what is stored can't move
-      aria-valuemin={lowest}
+      aria-valuemin={Math.min(from + length, to)}
       aria-valuemax={to}
-      aria-valuenow={Math.round(Math.min(to, Math.max(lowest, end)))}
+      aria-valuenow={Math.round(clamp(end))}
       aria-valuetext={windowText}
       onKeyDown={onKeyDown}
       onKeyUp={onKeyUp}
@@ -169,14 +170,14 @@ export function LiveOverview({
       onPointerCancel={() => release(false)}
       onLostPointerCapture={() => release(true)}
     >
-      {points.map((point) => {
-        const height = (metricOf(point, metric) / busiest) * (HEIGHT - 2)
+      {overview.buckets.map((bucket) => {
+        const height = (countOf(bucket, metric) / busiest) * (HEIGHT - 2)
         return (
           <rect
-            key={point[0]}
-            x={xOf(point[0])}
+            key={bucket.timestamp}
+            x={xOf(bucket.timestamp)}
             y={HEIGHT - height}
-            width={(60 / span) * 100 * 0.8}
+            width={(overview.bucket / span) * 100 * 0.8}
             height={height}
             className="fill-secondary opacity-40"
           />
@@ -193,8 +194,4 @@ export function LiveOverview({
       />
     </svg>
   )
-}
-
-function metricOf(point: LiveActivityPoint, metric: LiveMetric) {
-  return point[METRIC_INDEX[metric]]
 }

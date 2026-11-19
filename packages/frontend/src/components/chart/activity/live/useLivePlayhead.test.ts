@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { advancePlayhead } from './useLivePlayhead'
+import {
+  advancePlayhead,
+  getPlayheadTarget,
+  shouldRedraw,
+} from './useLivePlayhead'
 
 describe(advancePlayhead.name, () => {
   it('catches up with the target at most half again as fast as the clock', () => {
@@ -22,5 +26,30 @@ describe(advancePlayhead.name, () => {
     expect(advancePlayhead({ playhead: 100, at: 50 }, 300, 300, 52)).toEqual(
       300,
     )
+  })
+})
+
+describe(getPlayheadTarget.name, () => {
+  it('trails the clock by the longest lag lately and a second', () => {
+    expect(getPlayheadTarget(1005, 1010, [4, 7, 5])).toEqual(1002)
+  })
+
+  it('does not pass where the data ends', () => {
+    expect(getPlayheadTarget(1000, 1010, [2])).toEqual(1000)
+  })
+})
+
+describe(shouldRedraw.name, () => {
+  it('draws the first window', () => {
+    expect(shouldRedraw(undefined, 100, 3)).toEqual(true)
+  })
+
+  it('draws again once the window has moved far enough', () => {
+    expect(shouldRedraw(100, 102.9, 3)).toEqual(false)
+    expect(shouldRedraw(100, 103, 3)).toEqual(true)
+  })
+
+  it('draws again when the window moves back', () => {
+    expect(shouldRedraw(100, 99.5, 3)).toEqual(true)
   })
 })

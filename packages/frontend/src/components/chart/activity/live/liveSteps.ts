@@ -1,6 +1,7 @@
+import type { LiveActivityBucketRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import type { ProjectLiveActivity } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
+import type { ProjectLiveWindow } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import type {
   UsualHour,
   UsualRange,
@@ -9,11 +10,11 @@ import type {
 /** Gas has no history, so only the live view has it */
 export type LiveMetric = ActivityMetric | 'gas'
 
-/** Where each metric's count is in a point */
-export const METRIC_INDEX = { tps: 1, uops: 2, gas: 4 } as const
-
-/** Seconds between a step's end and the next one's start */
-const STEP_GAP = 0.001
+/** A bucket's total of the metric */
+export function countOf(record: LiveActivityBucketRecord, metric: LiveMetric) {
+  if (metric === 'tps') return record.count
+  return metric === 'uops' ? record.uopsCount : record.gasUsed
+}
 
 export interface LiveBucket {
   start: number
@@ -29,49 +30,82 @@ export interface LiveBucket {
  * stored block
  */
 export function toBuckets(
-  detail: ProjectLiveActivity['detail'],
+  { readFrom, to, bucket }: ProjectLiveWindow['window'],
+  records: LiveActivityBucketRecord[],
   metric: LiveMetric,
   oldest: number | undefined,
 ) {
-  const { readFrom, to, bucket, points } = detail
-  const byTime = new Map(points.map((p) => [p[0], p]))
+  const byTime = new Map<number, LiveActivityBucketRecord>(
+    records.map((r) => [r.timestamp, r]),
+  )
   const buckets: LiveBucket[] = []
-  for (let start = readFrom; start <= to; start += bucket) {
-    const point = byTime.get(start)
-    const count = point ? point[METRIC_INDEX[metric]] : 0
+  for (let start: number = readFrom; start < to; start += bucket) {
+    const record = byTime.get(start)
     buckets.push({
       start,
-      ratio: point ? (point[1] === 0 ? 1 : point[2] / point[1]) : null,
+      ratio: record
+        ? record.count === 0
+          ? 1
+          : record.uopsCount / record.count
+        : null,
       value:
-        !point && (oldest === undefined || start < oldest)
+        !record && (oldest === undefined || start < oldest)
           ? null
-          : count / bucket,
-      blocks: point?.[3] ?? 0,
-      gas: point?.[4] ?? 0,
+          : (record ? countOf(record, metric) : 0) / bucket,
+      blocks: record?.blocks ?? 0,
+      gas: record?.gasUsed ?? 0,
     })
   }
   return buckets
 }
 
 /**
- * Each bucket in the window as a flat step from its start to its end, the
- * ones on its edges cut there, as the chart does not clip. A step ends a
- * hair before the next starts, so the row nearest the pointer is always one
- * of the bucket under it
+ * A row at the start of each bucket the window is in, for a curve that holds
+ * a row's value up to the next one. The buckets on its edges are whole, as
+ * the chart clips them
  */
 export function toSteps(
   buckets: LiveBucket[],
   bucket: number,
   [from, to]: [number, number],
 ) {
-  return buckets.flatMap(({ start, value, ratio, blocks }) => {
-    const end = start + bucket
-    if (end <= from || start >= to) return []
-    return [
-      { timestamp: Math.max(start, from), value, ratio, blocks },
-      { timestamp: Math.min(end, to) - STEP_GAP, value, ratio, blocks },
-    ]
+  return buckets
+    .filter(({ start }) => start + bucket > from && start < to)
+    .map(({ start, value, ratio, blocks }) => ({
+      timestamp: start,
+      value,
+      ratio,
+      blocks,
+    }))
+}
+
+const DRAWN = ['value', 'ratio', 'usualMin', 'usualMedian', 'usualMax'] as const
+
+/**
+ * A step is drawn only up to a next row with a value, so one before a row
+ * without, or the last, would not be. Each gets a row closing it where it
+ * ends: at the end, the last row again a bucket later, and before a row
+ * without a value, that row with the value the step had
+ */
+export function closeSteps<
+  T extends { timestamp: number } & Record<
+    (typeof DRAWN)[number],
+    number | null
+  >,
+>(steps: T[], bucket: number): T[] {
+  const last = steps.at(-1)
+  if (!last) return steps
+  const closed = steps.flatMap((step, i) => {
+    const previous = steps[i - 1]
+    const ending = DRAWN.filter(
+      (key) => previous && previous[key] !== null && step[key] === null,
+    )
+    if (!previous || ending.length === 0) return [step]
+    const closing = { ...step }
+    for (const key of ending) closing[key] = previous[key]
+    return [closing, step]
   })
+  return [...closed, { ...last, timestamp: last.timestamp + bucket }]
 }
 
 /**

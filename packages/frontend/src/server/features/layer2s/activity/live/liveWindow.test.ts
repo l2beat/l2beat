@@ -4,6 +4,7 @@ import { expect } from 'earl'
 import {
   getBlockSeconds,
   getLastMinuteRates,
+  getLiveBuffer,
   getLiveWindow,
   getUsualRates,
 } from './liveWindow'
@@ -11,50 +12,88 @@ import {
 // A multiple of every bucket below
 const T = UnixTime(1_800_000_000)
 
+describe(getLiveBuffer.name, () => {
+  it('spans what is kept, from a whole minute', () => {
+    expect(getLiveBuffer(T + 70, T - 5 * UnixTime.HOUR)).toEqual({
+      from: T - 4 * UnixTime.HOUR + 60,
+      to: T + 70,
+      filling: false,
+    })
+  })
+
+  it('starts at the oldest block while filling', () => {
+    expect(getLiveBuffer(T + 70, T - UnixTime.HOUR + 5)).toEqual({
+      from: T - UnixTime.HOUR,
+      to: T + 70,
+      filling: true,
+    })
+  })
+
+  it('is not filling when just under what is kept', () => {
+    // Methodology: the cleaner has just run and the newest block trails it
+    expect(
+      getLiveBuffer(T, T - 4 * UnixTime.HOUR + 10 * UnixTime.MINUTE).filling,
+    ).toEqual(false)
+  })
+
+  it('is at least a minute long', () => {
+    expect(getLiveBuffer(T + 70, T + 65).from).toEqual(T + 10)
+    expect(getLiveBuffer(T + 70, undefined).from).toEqual(T + 10)
+  })
+})
+
 describe(getLiveWindow.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T + 4 }
+
   it('ends with the last bucket the newest block is past', () => {
-    expect(getLiveWindow('15m', T + 4, 2)).toEqual({
+    expect(getLiveWindow('15m', buffer, 2)).toEqual({
+      range: '15m',
       from: T - 900,
-      to: T - 1,
+      to: T,
       bucket: 6,
       readFrom: T - 960,
     })
   })
 
   it('stretches the bucket to whole blocks', () => {
-    expect(getLiveWindow('5m', T + 4, 12).bucket).toEqual(12)
-    expect(getLiveWindow('1h', T + 4, 12).bucket).toEqual(24)
-    expect(getLiveWindow('5m', T + 4, 0).bucket).toEqual(2)
+    expect(getLiveWindow('5m', buffer, 12).bucket).toEqual(12)
+    expect(getLiveWindow('1h', buffer, 12).bucket).toEqual(24)
+    expect(getLiveWindow('5m', buffer, 0).bucket).toEqual(2)
   })
 
   it('keeps ten buckets in the window whatever the gap between blocks', () => {
     // Methodology: a stale block stored hours before a new one
-    const window = getLiveWindow('5m', T + 4, 3 * UnixTime.HOUR)
+    const window = getLiveWindow('5m', buffer, 3 * UnixTime.HOUR)
 
     expect(window.bucket).toEqual(30)
-    expect((window.to + 1 - window.from) / window.bucket).toEqual(10)
+    expect((window.to - window.from) / window.bucket).toEqual(10)
   })
 
   it('spans the whole range, read from a bucket before it', () => {
-    const window = getLiveWindow('5m', T + 4, 7)
+    const window = getLiveWindow('5m', buffer, 7)
 
     expect(window.bucket).toEqual(7)
-    expect(window.to + 1 - window.from).toEqual(300)
+    expect(window.to - window.from).toEqual(300)
     expect(window.readFrom % 7).toEqual(0)
     expect(window.readFrom <= window.from - 60).toEqual(true)
   })
 
   it('ends where looked back to, but not past the newest block', () => {
-    expect(getLiveWindow('15m', T + 4, 2, T - 3600 + 5).to).toEqual(
-      T - 3600 - 1,
-    )
-    expect(getLiveWindow('15m', T + 4, 2, T + 600).to).toEqual(T - 1)
+    expect(getLiveWindow('15m', buffer, 2, T - 3600 + 5).to).toEqual(T - 3600)
+    expect(getLiveWindow('15m', buffer, 2, T + 600).to).toEqual(T)
   })
 
-  it('stays within the buffer as the newest block moves on', () => {
-    const window = getLiveWindow('15m', T, 2, T - 5 * UnixTime.HOUR)
+  it('starts no earlier than the buffer', () => {
+    const window = getLiveWindow('15m', buffer, 2, T - 5 * UnixTime.HOUR)
 
-    expect(window.from).toEqual(T - 4 * UnixTime.HOUR)
+    expect(window.from).toEqual(buffer.from)
+  })
+
+  it('ends at the newest block while the buffer is shorter than the range', () => {
+    const filling = { from: T - 600, to: T + 4 }
+
+    expect(getLiveWindow('1h', filling, 2).to).toEqual(T)
+    expect(getLiveWindow('1h', filling, 2, T - 300).to).toEqual(T)
   })
 })
 

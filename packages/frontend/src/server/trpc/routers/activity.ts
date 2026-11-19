@@ -16,8 +16,10 @@ import {
 } from '~/server/features/layer2s/activity/getEthereumActivityChart'
 import { getRecategorisedActivityChart } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import {
-  getProjectLiveActivity,
-  ProjectLiveActivityParams,
+  getProjectLiveStatus,
+  getProjectLiveWindow,
+  ProjectLiveStatusParams,
+  ProjectLiveWindowParams,
 } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import { ActivityProjectFilter } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import {
@@ -67,7 +69,10 @@ export const activityRouter = router({
       }),
     )
     .query(({ input }) => getActivityChartStats(input.filter)),
-  liveProject: liveActivityProcedure
-    .input(ProjectLiveActivityParams)
-    .query(({ input }) => getProjectLiveActivity(input)),
+  liveStatus: liveActivityProcedure
+    .input(ProjectLiveStatusParams)
+    .query(({ input }) => getProjectLiveStatus(input.projectId)),
+  liveWindow: liveActivityProcedure
+    .input(ProjectLiveWindowParams)
+    .query(({ input }) => getProjectLiveWindow(input)),
 })

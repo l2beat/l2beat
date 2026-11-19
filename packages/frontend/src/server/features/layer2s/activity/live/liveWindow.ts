@@ -1,42 +1,80 @@
-import type { HourlyActivityRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import {
-  LIVE_BUCKET_SECONDS,
+  type HourlyActivityRecord,
   LIVE_BUFFER_SECONDS,
-  LIVE_RANGES,
-  type LiveRange,
-} from './liveRanges'
+} from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
+import { getLiveBucketSeconds, LIVE_RANGES, type LiveRange } from './liveRanges'
 
 /** Seconds per bucket the rate right now is taken from, a minute's divisor */
 export const LAST_MINUTE_BUCKET = 10
+
+/** Seconds per bar of the overview of the whole buffer */
+export const OVERVIEW_BUCKET_SECONDS = UnixTime.MINUTE
 
 /** Read before the window, so a window scrolling between reads keeps its left edge */
 const LEAD_SECONDS = UnixTime.MINUTE
 
 /**
- * The range ending at `to`, or at the newest block, within the buffer. A
+ * How much less than the buffer a full one may hold. Above the 10 minutes
+ * between the runs of the backend's cleaner, which trims it
+ */
+const FILLING_MARGIN_SECONDS = 15 * UnixTime.MINUTE
+
+/** Where the stored blocks start and end, so where a window may */
+export interface LiveBuffer {
+  from: UnixTime
+  to: UnixTime
+  /** Holding clearly less than it keeps, as after a chain is first followed */
+  filling: boolean
+}
+
+/**
+ * From the buffer's start, or while it fills, the oldest block, to the newest
+ * one. It starts on a bar of the overview, and at least one back
+ */
+export function getLiveBuffer(
+  newest: UnixTime,
+  oldest: UnixTime | undefined,
+): LiveBuffer {
+  const start = Math.max(newest - LIVE_BUFFER_SECONDS, oldest ?? newest)
+  return {
+    from: Math.min(
+      newest - OVERVIEW_BUCKET_SECONDS,
+      start - (start % OVERVIEW_BUCKET_SECONDS),
+    ),
+    to: newest,
+    filling:
+      oldest !== undefined &&
+      newest - oldest < LIVE_BUFFER_SECONDS - FILLING_MARGIN_SECONDS,
+  }
+}
+
+/**
+ * The range ending before `to`, or at the newest block, within the buffer. A
  * bucket spans a whole number of blocks, so a chain with a fixed block time
  * has as many in each instead of alternating, and only buckets the newest
  * block is past are in, so the live edge does not dip
  */
 export function getLiveWindow(
   range: LiveRange,
-  newest: UnixTime,
+  buffer: Pick<LiveBuffer, 'from' | 'to'>,
   blockSeconds: number,
   to?: UnixTime,
 ) {
+  const { seconds } = LIVE_RANGES[range]
   // a sparse sample, as a stale block beside a new one, can't empty the window
-  const block = Math.min(Math.max(1, blockSeconds), LIVE_RANGES[range] / 10)
-  const bucket = Math.ceil(LIVE_BUCKET_SECONDS[range] / block) * block
-  const oldestEnd = newest - LIVE_BUFFER_SECONDS + LIVE_RANGES[range]
+  const block = Math.min(Math.max(1, blockSeconds), seconds / 10)
+  const bucket = Math.ceil(getLiveBucketSeconds(range) / block) * block
   const end =
-    Math.floor(Math.min(Math.max(to ?? newest, oldestEnd), newest) / bucket) *
-    bucket
-  const from = end - LIVE_RANGES[range]
+    Math.floor(
+      Math.min(Math.max(to ?? buffer.to, buffer.from + seconds), buffer.to) /
+        bucket,
+    ) * bucket
+  const from = end - seconds
   const readFrom =
     Math.floor(from / bucket) * bucket -
     Math.ceil(LEAD_SECONDS / bucket) * bucket
-  return { from, to: end - 1, bucket, readFrom }
+  return { range, from, to: end, bucket, readFrom }
 }
 
 /**
