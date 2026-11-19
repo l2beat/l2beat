@@ -32,7 +32,7 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type {
-  PrivacyChainView,
+  PrivacyDeployments,
   PrivacyProjectDetails,
 } from '../getPrivacyProjectDetails'
 import type { PrivacyRelayerStat } from '../types'
@@ -88,13 +88,10 @@ export interface ProjectPrivacyEntry {
     relayerStat?: PrivacyRelayerStat
   }
   /**
-   * Set when the project is shown one tracked chain at a time: the stats, the
-   * risks and the sections that name the chain are then the selected chain's.
+   * Set when the project has several deployments: the stats are then of all
+   * of them, the risks and the sections that name a chain of `research`.
    */
-  chainView?: Pick<
-    PrivacyChainView,
-    'chains' | 'selected' | 'allChainsValueLockedUsd'
-  >
+  deployments?: PrivacyDeployments
   archivedAt?: UnixTime
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -185,12 +182,13 @@ export async function getPrivacyProjectEntry(
   // point only at sections this page renders.
   const adversariesSectionIndex = sections.length
 
-  // Sections about one chain name it in their header.
-  const selected = details.chainView?.selected
-  const chain: SectionChain | undefined = selected && {
-    id: selected.id,
-    name: selected.name,
-    iconUrl: selected.iconUrl,
+  // Research sections of a project with several deployments name the one
+  // they are about. The metrics are of all of them.
+  const research = details.deployments?.research
+  const chain: SectionChain | undefined = research && {
+    id: research.id,
+    name: research.name,
+    iconUrl: research.iconUrl,
   }
 
   const chartProject = {
@@ -199,6 +197,19 @@ export async function getPrivacyProjectEntry(
     shortName: details.shortName,
     iconUrl: icon,
   }
+
+  // Metric sections of a project with several deployments are of all of
+  // them, and each can be narrowed to one chain.
+  const deploymentChains = details.deployments?.chains
+  const toFilterOption = (c: {
+    id: string
+    name: string
+    iconUrl: string
+  }) => ({
+    id: c.id,
+    name: c.name,
+    iconUrl: c.iconUrl,
+  })
 
   if (details.hasTvl) {
     const valueSection = {
@@ -209,10 +220,18 @@ export async function getPrivacyProjectEntry(
       milestones: details.milestones,
     } as const
     sections.push(
-      chain
+      deploymentChains
         ? {
             type: 'PrivacyValueLockedSection',
-            props: { ...valueSection, chain },
+            props: {
+              ...valueSection,
+              chains: deploymentChains.map((c) => ({
+                ...toFilterOption(c),
+                disabledReason: c.valueLocked
+                  ? undefined
+                  : 'Value locked is not tracked on this chain yet',
+              })),
+            },
           }
         : {
             type: 'TvsValueSection',
@@ -245,7 +264,9 @@ export async function getPrivacyProjectEntry(
         defaultRange: defaultChartRange,
         project: chartProject,
         milestones: details.milestones,
-        chain,
+        chains: deploymentChains
+          ?.filter((c) => c.bucketCount > 0)
+          .map(toFilterOption),
       },
     })
 
@@ -256,7 +277,9 @@ export async function getPrivacyProjectEntry(
         title: 'Assets Breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
-        chain,
+        chains: deploymentChains
+          ?.filter((c) => c.assets.length > 0)
+          .map((c) => ({ ...toFilterOption(c), assets: c.assets })),
       },
     })
   }
@@ -381,16 +404,11 @@ export async function getPrivacyProjectEntry(
     },
   })
 
-  // A chain's value comes from its own history, the project's from its TVS.
-  const value = details.chainView
-    ? {
-        usd: details.chainView.totalValueLockedUsd,
-        change7d: details.chainView.totalValueLockedChange7d,
-      }
-    : {
-        usd: tvs.projects[details.id]?.breakdown.total,
-        change7d: tvs.projects[details.id]?.change.total,
-      }
+  // All chains', from the project's TVS, like the home page and the table.
+  const value = {
+    usd: tvs.projects[details.id]?.breakdown.total,
+    change7d: tvs.projects[details.id]?.change.total,
+  }
 
   return {
     id: details.id,
@@ -425,13 +443,7 @@ export async function getPrivacyProjectEntry(
       deposits: details.summary.deposits,
       relayerStat: details.summary.relayerStat,
     },
-    chainView: details.chainView && {
-      chains: details.chainView.chains,
-      selected: details.chainView.selected,
-      allChainsValueLockedUsd: details.hasTvl
-        ? details.chainView.allChainsValueLockedUsd
-        : undefined,
-    },
+    deployments: details.deployments,
     archivedAt: details.archivedAt,
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

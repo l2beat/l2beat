@@ -14,21 +14,21 @@ export interface PrivacyProjectPage<T> {
 }
 
 /**
- * The pages of a privacy project. A project with buckets or assessments on
- * several tracked chains has a page per chain, in `trackedOn` order: its
- * first chain at the project's own URL, the others under it. Any other
- * project has the one page it always had.
+ * The pages of a privacy project. Its metrics are always of all its chains,
+ * its risk research of one deployment. The project's URL shows the research
+ * of its reference deployment, the first tracked chain. A chain that is
+ * researched on its own (`chainAssessments`) also gets a page, under it.
  */
 export function getPrivacyProjectPages<
   T extends { slug: string; privacyInfo: ProjectPrivacyInfo },
 >(project: T): PrivacyProjectPage<T>[] {
   const path = getPrivacyProjectPath(project.slug)
-  const chains = getPageChains(project.privacyInfo)
-  if (chains.length < 2) {
+  const researched = getPrivacyResearchedChains(project.privacyInfo)
+  if (researched.length < 2) {
     return [{ project, path }]
   }
-  return chains.map((chain, i) => ({
-    project: getPrivacyProjectOnChain(project, chain),
+  return researched.map((chain, i) => ({
+    project: getPrivacyProjectResearchedOn(project, chain),
     chain,
     path: i === 0 ? path : `${path}/${chain}`,
   }))
@@ -39,11 +39,13 @@ export function getPrivacyProjectPath(slug: string) {
 }
 
 /**
- * Chains with buckets or with their own assessment. Once there are several,
- * or a chain is assessed on its own, the first tracked chain is one of them
- * too: the project's URL shows it and the project's own assessment rates it.
+ * The chains the project is deployed on as separate deployments: those with
+ * buckets or with research of their own, in `trackedOn` order. Once there are
+ * several, the first tracked chain is one of them: it is the reference
+ * deployment, which the project's own assessment rates. With fewer than two
+ * the project is shown as a single deployment.
  */
-function getPageChains(
+export function getPrivacyDeploymentChains(
   privacyInfo: Pick<
     ProjectPrivacyInfo,
     'trackedOn' | 'tokens' | 'chainAssessments'
@@ -66,13 +68,24 @@ function getPageChains(
   )
 }
 
+/** The reference deployment, then the deployments researched on their own. */
+export function getPrivacyResearchedChains(
+  privacyInfo: Pick<
+    ProjectPrivacyInfo,
+    'trackedOn' | 'tokens' | 'chainAssessments'
+  >,
+): string[] {
+  return getPrivacyDeploymentChains(privacyInfo).filter(
+    (chain, i) =>
+      i === 0 || privacyInfo.chainAssessments?.[chain] !== undefined,
+  )
+}
+
 /**
- * The project as it is tracked and rated on one tracked chain: only the
- * buckets there, and that chain's assessment. A chain's own assessment
- * replaces the project's as a whole. A chain without one shares the
- * project's, except a key registry, which counts for its own chain only.
+ * The project as it is rated on one deployment: that chain's assessment, or
+ * the project's own when the chain has none. Its buckets stay all chains'.
  */
-export function getPrivacyProjectOnChain<
+export function getPrivacyProjectResearchedOn<
   T extends { privacyInfo: ProjectPrivacyInfo },
 >(project: T, chain: string): T {
   const { chainAssessments, ...privacyInfo } = project.privacyInfo
@@ -95,7 +108,23 @@ export function getPrivacyProjectOnChain<
       riskSummary: assessment.riskSummary,
       upgradesAndGovernance: assessment.upgradesAndGovernance,
       anonymitySet: assessment.anonymitySet,
-      tokens: privacyInfo.tokens.flatMap((token) => {
+    },
+  }
+}
+
+/**
+ * The project as it is tracked and rated on one chain: its assessment there,
+ * and only its buckets there. Anonymity sets never combine across chains.
+ */
+export function getPrivacyProjectOnChain<
+  T extends { privacyInfo: ProjectPrivacyInfo },
+>(project: T, chain: string): T {
+  const researched = getPrivacyProjectResearchedOn(project, chain)
+  return {
+    ...researched,
+    privacyInfo: {
+      ...researched.privacyInfo,
+      tokens: researched.privacyInfo.tokens.flatMap((token) => {
         const buckets = token.buckets.filter(
           (bucket) => getPrivacyBucketAddress(bucket.address).chain === chain,
         )
@@ -103,6 +132,19 @@ export function getPrivacyProjectOnChain<
       }),
     },
   }
+}
+
+/**
+ * The project as its anonymity set is measured: on its reference deployment
+ * when it has several, since anonymity sets never combine across chains.
+ */
+export function getPrivacyAnonymitySetProject<
+  T extends { privacyInfo: ProjectPrivacyInfo },
+>(project: T): T {
+  const [reference, ...others] = getPrivacyDeploymentChains(project.privacyInfo)
+  return reference !== undefined && others.length > 0
+    ? getPrivacyProjectOnChain(project, reference)
+    : project
 }
 
 function isKeyRegistryElsewhere(

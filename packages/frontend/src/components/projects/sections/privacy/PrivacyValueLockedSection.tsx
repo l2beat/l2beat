@@ -1,56 +1,133 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { PrivacyFlowsChartRangeControls } from '~/pages/privacy/project/components/PrivacyFlowsChartRangeControls'
 import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
-import type { SectionChain } from '../SectionChainBadge'
 import { TvsValueSectionChart } from '../tvs/TvsValueSectionChart'
 import type { ProjectSectionProps } from '../types'
+import {
+  PrivacyChainFilter,
+  type PrivacyChainFilterOption,
+} from './PrivacyChainFilter'
 
 export interface PrivacyValueLockedSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
-  /** The chain of the page, whose value the chart shows. */
-  chain: SectionChain
+  /** The project's deployments, any of which the chart can be narrowed to. */
+  chains: PrivacyChainFilterOption[]
 }
 
-/** Value locked on one chain of a project that has a page per tracked chain. */
+/**
+ * Value locked in a project deployed on several chains: of all of them, or
+ * of the one picked.
+ */
 export function PrivacyValueLockedSection({
   defaultRange,
   project,
   milestones,
-  chain,
+  chains,
   ...projectSectionProps
 }: PrivacyValueLockedSectionProps) {
-  const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
+  const [chain, setChain] = useState<string>()
+  const chart = {
+    project,
+    milestones,
+    range,
+    rangeControls: (
+      <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
+    ),
+  }
+
+  return (
+    <ProjectSection {...projectSectionProps}>
+      <PrivacyChainFilter
+        name="privacyValueLockedChain"
+        chains={chains}
+        value={chain}
+        onChange={setChain}
+        className="mb-4"
+      />
+      {chain === undefined ? (
+        <AllChainsChart {...chart} />
+      ) : (
+        <ChainChart {...chart} chain={chain} />
+      )}
+    </ProjectSection>
+  )
+}
+
+interface ChartProps {
+  project: ChartProject
+  milestones: Milestone[]
+  range: ChartRange
+  rangeControls: ReactNode
+}
+
+/** The project's TVS, the same value as the summary and the home page. */
+function AllChainsChart({
+  project,
+  milestones,
+  range,
+  rangeControls,
+}: ChartProps) {
+  const trpc = useTRPC()
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.tvs.chartByProjects,
+    { projectIds: [project.id], range },
+  )
+  const chartData = useMemo(
+    () =>
+      data?.chart.map(([timestamp, valuesByProject]) => ({
+        timestamp,
+        value: valuesByProject[project.id] ?? null,
+      })),
+    [data, project.id],
+  )
+  return (
+    <TvsValueSectionChart
+      data={chartData}
+      syncedUntil={data?.syncedUntil}
+      isLoading={isLoading}
+      isPlaceholderData={isPlaceholderData}
+      shownRange={shownInput.range}
+      rangeControls={rangeControls}
+      project={project}
+      milestones={milestones}
+    />
+  )
+}
+
+function ChainChart({
+  project,
+  milestones,
+  range,
+  rangeControls,
+  chain,
+}: ChartProps & { chain: string }) {
+  const trpc = useTRPC()
   const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.privacy.valueLockedChart,
-    { projectId: project.id, range, chain: chain.id },
+    { projectId: project.id, range, chain },
   )
   const chartData = useMemo(
     () => data?.chart.map(([timestamp, value]) => ({ timestamp, value })),
     [data],
   )
-
   return (
-    <ProjectSection {...projectSectionProps} chain={chain}>
-      <TvsValueSectionChart
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        isLoading={isLoading}
-        isPlaceholderData={isPlaceholderData}
-        shownRange={shownInput.range}
-        rangeControls={
-          <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
-        }
-        project={project}
-        milestones={milestones}
-      />
-    </ProjectSection>
+    <TvsValueSectionChart
+      data={chartData}
+      syncedUntil={data?.syncedUntil}
+      isLoading={isLoading}
+      isPlaceholderData={isPlaceholderData}
+      shownRange={shownInput.range}
+      rangeControls={rangeControls}
+      project={project}
+      milestones={milestones}
+    />
   )
 }

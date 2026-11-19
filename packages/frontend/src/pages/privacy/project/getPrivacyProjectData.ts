@@ -116,10 +116,11 @@ async function loadPrivacyProjectPage(
   }
 
   const projectEntry = await getPrivacyProjectEntry(details, helpers)
-  // A chain's page is named after it, the project's own page is not.
+  // A page of another deployment's research is named after its chain, the
+  // project's own page is not.
   const name =
-    chain && projectEntry.chainView
-      ? `${details.name} on ${projectEntry.chainView.selected.name}`
+    chain && projectEntry.deployments
+      ? `${details.name} on ${projectEntry.deployments.research.name}`
       : details.name
 
   return {

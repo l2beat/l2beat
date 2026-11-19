@@ -14,11 +14,17 @@ import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
+import {
+  PrivacyChainFilter,
+  type PrivacyChainFilterOption,
+} from './PrivacyChainFilter'
 
 export interface PrivacyFlowsSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
   milestones: Milestone[]
+  /** For a project deployed on several chains: those the flows can be narrowed to. */
+  chains?: PrivacyChainFilterOption[]
 }
 
 type FlowsMetric = 'count' | 'value'
@@ -27,9 +33,11 @@ export function PrivacyFlowsSection({
   defaultRange,
   project,
   milestones,
+  chains,
   ...projectSectionProps
 }: PrivacyFlowsSectionProps) {
   const trpc = useTRPC()
+  const [chain, setChain] = useState<string>()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const [metric, setMetric] = useState<FlowsMetric>('count')
   const [scale, setScale] = useState<ChartScale>('linear')
@@ -38,7 +46,7 @@ export function PrivacyFlowsSection({
     {
       projectIds: [project.id],
       range,
-      chain: projectSectionProps.chain?.id,
+      chain,
     },
   )
   const resolution = rangeToResolution(shownInput.range)
@@ -54,6 +62,15 @@ export function PrivacyFlowsSection({
 
   return (
     <ProjectSection {...projectSectionProps}>
+      {chains && (
+        <PrivacyChainFilter
+          name="privacyFlowsChain"
+          chains={chains}
+          value={chain}
+          onChange={setChain}
+          className="mb-4"
+        />
+      )}
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange
           isPlaceholderData={isPlaceholderData}

@@ -26,6 +26,7 @@ import {
 } from '../referenceAppUi'
 import {
   PRIVACY_PROJECT_STATS_COPY as COPY,
+  getPrivacyValueLockedCoverage,
   RELAYER_STAT_COPY,
 } from './components/privacyProjectStatsCopy'
 
@@ -113,30 +114,55 @@ function getFacts(entry: ProjectPrivacyEntry) {
       label: 'Attributes',
       value: entry.attributes.map((attribute) => attribute.label).join(', '),
     },
-    entry.referenceApp && {
-      label: REFERENCE_APP.title,
-      value: formatReferenceApp(entry.referenceApp),
-    },
   ])
 }
 
-/** For a project with a page per chain: which one this is, and where the others are. */
-function getChainFacts({ chainView, hasTvl }: ProjectPrivacyEntry) {
-  if (!chainView) return []
+/**
+ * For a project deployed on several chains: what the metrics add up, and
+ * which deployment the risks are of, as the HTML captions say.
+ */
+function getChainFacts({ deployments, hasTvl }: ProjectPrivacyEntry) {
+  if (!deployments) return []
+  const { chains, research } = deployments
+  const coverage = hasTvl ? getPrivacyValueLockedCoverage(chains) : undefined
+  const others = chains.filter(
+    (chain) =>
+      chain.id !== research.id && chain.research !== 'none' && chain.href,
+  )
   return compact([
-    { label: 'Chain on this page', value: chainView.selected.name },
-    hasTvl &&
-      chainView.allChainsValueLockedUsd !== undefined && {
-        label: `Value locked on ${chainView.chains.length} chains`,
-        value: formatUsd(chainView.allChainsValueLockedUsd),
-      },
     {
-      label: 'Pages of other chains',
-      value: chainView.chains
-        .filter((chain) => chain.id !== chainView.selected.id)
+      label: 'Metrics',
+      value: compact([
+        `All ${chains.length} tracked chains combined`,
+        coverage && `value locked ${coverage}`,
+      ]).join(', '),
+    },
+    {
+      label: 'Risk research',
+      value: `${research.name} deployment${research.research === 'reference' ? ' (reference)' : ''}`,
+    },
+    others.length > 0 && {
+      label: 'Research of other deployments',
+      value: others
         .map((chain) => `[${chain.name}](${PRODUCTION_ORIGIN}${chain.href}.md)`)
         .join(', '),
     },
+    // The HTML narrows the metrics to a chain with a switch; here each
+    // chain's are listed.
+    ...chains.map((chain) => ({
+      label: `On ${chain.name}`,
+      value: compact([
+        hasTvl &&
+          `${COPY.totalValueLocked} ${chain.valueLocked ? formatValueWithChange(chain.valueLocked.usd, chain.valueLocked.change7d) : 'not tracked'}`,
+        chain.bucketCount > 0 &&
+          `${COPY.deposits30d} ${formatCount(chain.deposits.last30d)}`,
+        chain.bucketCount > 0 &&
+          `${COPY.depositsTotal} ${formatCount(chain.deposits.total)}`,
+        chain.research === 'none'
+          ? 'tracked only, not researched'
+          : 'researched',
+      ]).join(', '),
+    })),
   ])
 }
 
@@ -150,11 +176,20 @@ function formatReferenceApp(app: PrivacyReferenceApp) {
 /** The text of the badges the HTML shows in place of the value. */
 function formatTotalValueLocked({ summary, hasTvl }: ProjectPrivacyEntry) {
   if (!hasTvl) return 'N/A'
-  if (summary.totalValueLockedUsd === undefined) return NO_DATA
+  return formatValueWithChange(
+    summary.totalValueLockedUsd,
+    summary.totalValueLockedChange7d,
+  )
+}
+
+function formatValueWithChange(
+  usd: number | undefined,
+  change7d: number | undefined,
+) {
+  if (usd === undefined) return NO_DATA
   return compact([
-    formatUsd(summary.totalValueLockedUsd),
-    summary.totalValueLockedChange7d !== undefined &&
-      `(${formatChange(summary.totalValueLockedChange7d, '7D')})`,
+    formatUsd(usd),
+    change7d !== undefined && `(${formatChange(change7d, '7D')})`,
   ]).join(' ')
 }
 
@@ -171,8 +206,13 @@ function notTrackedFact(copy: { title: string; description: string }) {
  * summary has no other place for it.
  */
 function getRiskProfile(entry: ProjectPrivacyEntry): RosetteValue[] {
-  return [
+  return compact([
     privacyRisk(getPrivacyAdversariesSummary(entry.sections)),
+    // The privacy grade is of this app, as the HTML shows it beside the grade.
+    entry.referenceApp && {
+      name: REFERENCE_APP.title,
+      value: formatReferenceApp(entry.referenceApp),
+    },
     explainedRisk('Trusted setup', entry.trustedSetup),
     explainedRisk(
       'Exit window',
@@ -180,7 +220,7 @@ function getRiskProfile(entry: ProjectPrivacyEntry): RosetteValue[] {
       describeWalkawayTest(entry.exitWindow.walkawayTest),
     ),
     explainedRisk('Reproducibility', entry.reproducibility),
-  ]
+  ])
 }
 
 function explainedRisk(

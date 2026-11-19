@@ -15,6 +15,7 @@ import {
   TrustedSetupRiskDot,
 } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
+import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
 import {
@@ -25,6 +26,7 @@ import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyProjectRosette } from '../../rosette/PrivacyProjectRosette'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 import { MOBILE_SUMMARY_ROWS } from './PrivacyProjectStats'
+import { PrivacyReferenceAppStat } from './PrivacyReferenceAppStat'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
@@ -34,6 +36,11 @@ interface Props {
   href: string
   isUnderReview: boolean
   reproducibility: PrivacySummaryValue
+  /**
+   * The app the privacy assessment was made with, and the link to the section
+   * that explains the choice. Its grade holds for this app only.
+   */
+  referenceApp?: { app: PrivacyReferenceApp; href: string }
   className?: string
 }
 
@@ -44,12 +51,14 @@ export function PrivacyProjectRiskProfile({
   href,
   isUnderReview,
   reproducibility,
+  referenceApp,
   className,
 }: Props) {
   return (
     <div
       className={cn(
-        'grid md:grid-cols-4 md:gap-4',
+        'grid md:gap-4',
+        referenceApp ? 'md:grid-cols-5' : 'md:grid-cols-4',
         MOBILE_SUMMARY_ROWS,
         className,
       )}
@@ -65,6 +74,7 @@ export function PrivacyProjectRiskProfile({
           />
         }
       />
+      {referenceApp && <PrivacyReferenceAppStat {...referenceApp} />}
       <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."

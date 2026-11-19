@@ -28,7 +28,6 @@ import {
   assertUnreachable,
   ChainSpecificAddress,
   UnixTime,
-  unique,
 } from '@l2beat/shared-pure'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { SectionChain } from '~/components/projects/sections/SectionChainBadge'
@@ -62,9 +61,14 @@ import {
   getPrivacyBucketTvls,
   getPrivacySingleEscrowBucketTvls,
 } from './utils/getPrivacyBucketTvls'
-import { getPrivacyProjectPages } from './utils/getPrivacyProjectPages'
+import {
+  getPrivacyDeploymentChains,
+  getPrivacyProjectOnChain,
+  getPrivacyProjectPages,
+} from './utils/getPrivacyProjectPages'
 import { getScalingProjectItems } from './utils/getPrivacyScalingLinks'
 import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
+import { mergeTokensBySymbol } from './utils/mergeTokensBySymbol'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -107,14 +111,14 @@ export interface PrivacyProjectDetails {
   milestones: Milestone[]
   trackedOn: ProjectIconListItem[]
   scalingProjects: ProjectIconListItem[]
-  /** Of the shown chain when there is a `chainView`, of the project otherwise. */
+  /** Of all chains. */
   assets: PrivacyAsset[]
   summary: PrivacyStatsSummary
   /**
-   * Set when the project is shown one tracked chain at a time. The stats,
-   * the assessment, the contracts and the permissions are then that chain's.
+   * Set when the project has several deployments. Its metrics are then of
+   * all of them, its research of the one in `research`.
    */
-  chainView?: PrivacyChainView
+  deployments?: PrivacyDeployments
 }
 
 export interface PrivacyStatsSummary {
@@ -133,20 +137,32 @@ export interface PrivacyStatsSummary {
   relayerStat?: PrivacyRelayerStat
 }
 
-/** A chain of a project that has a page per tracked chain, with that page. */
-export interface PrivacyChainTab extends SectionChain {
-  href: string
+/** The deployments of a project deployed on several chains. */
+export interface PrivacyDeployments {
+  /** In `trackedOn` order: the reference deployment first. */
+  chains: PrivacyDeployment[]
+  /** The deployment whose risk research the page shows. */
+  research: PrivacyDeployment
 }
 
-export interface PrivacyChainView {
-  /** In tab order, which is the project's `trackedOn` order. */
-  chains: PrivacyChainTab[]
-  selected: PrivacyChainTab
-  /** Value locked on the selected chain. */
-  totalValueLockedUsd: number | undefined
-  totalValueLockedChange7d: number | undefined
-  /** The sum of the chains, so their values add up to it. */
-  allChainsValueLockedUsd: number | undefined
+export interface PrivacyDeployment extends SectionChain {
+  /**
+   * `reference`: rated by the project's own research, shown at its URL.
+   * `own`: researched apart, on a page of its own. `none`: only tracked.
+   */
+  research: 'reference' | 'own' | 'none'
+  /** The page with its research, unless it has none. */
+  href?: string
+  /** Undefined when its value locked is not tracked. */
+  valueLocked?: {
+    /** Undefined when its value is not current. */
+    usd: number | undefined
+    change7d: number | undefined
+  }
+  bucketCount: number
+  deposits: PrivacyStatsSummary['deposits']
+  /** The assets with buckets on the chain, valued by those buckets. */
+  assets: PrivacyAsset[]
 }
 
 /**
@@ -169,20 +185,20 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const { trackedOn, chainProjects } = await getTrackedOn(project)
+  const { trackedOn } = await getTrackedOn(project)
   const tokens = project.privacyInfo.tokens
   const pages = getPrivacyProjectPages(project)
   const page = pages.find((p) => p.chain === chain) ?? pages[0]
   assert(page, 'Privacy project without a page')
-  // On a chain's page: its buckets, its key registry and its assessment.
+  // The research shown: the page's chain's, or the project's own.
   const shown = page.project
-  const tabs = pages.flatMap((p): PrivacyChainTab[] => {
-    const item = trackedOn.find((c) => c.id === p.chain)
-    return item
-      ? [{ id: item.id, name: item.name, iconUrl: item.iconUrl, href: p.path }]
-      : []
-  })
-  const selected = tabs.find((tab) => tab.id === page.chain)
+  const deploymentChains = getPrivacyDeploymentChains(project.privacyInfo)
+  const isMultiDeployment = deploymentChains.length > 1
+  const researchChain =
+    page.chain ?? (isMultiDeployment ? deploymentChains[0] : undefined)
+  const valueChains = deploymentChains.filter((c) =>
+    hasPrivacyValueLocked(project.tvsConfig, c),
+  )
 
   const [
     { totals, daily30d, tokenValues, bucketTvls },
@@ -192,20 +208,11 @@ export async function getPrivacyProjectDetails(
     chainValues,
   ] = await Promise.all([
     getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-    getRelayerStat(
-      project,
-      UnixTime(now - 30 * UnixTime.DAY),
-      now,
-      selected && { id: selected.id, chainProjects },
-    ),
+    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
     getScalingProjects(project),
     getProjectOssification(project),
-    selected
-      ? getPrivacyChainValues(
-          project.id,
-          project.tvsConfig ?? [],
-          tabs.map((tab) => tab.id),
-        )
+    isMultiDeployment && valueChains.length > 0
+      ? getPrivacyChainValues(project.id, project.tvsConfig ?? [], valueChains)
       : undefined,
   ])
 
@@ -271,9 +278,21 @@ export async function getPrivacyProjectDetails(
     bucketTvls,
   }
 
-  let stats: ReturnType<typeof buildPrivacyStats>
-  let chainView: PrivacyChainView | undefined
-  if (selected) {
+  const stats = buildPrivacyStats(
+    isMultiDeployment
+      ? mergeTokensBySymbol(
+          tokens,
+          new Map(trackedOn.map((chain) => [chain.id, chain.name])),
+        )
+      : tokens,
+    statsContext,
+    (token) => tvlBySymbol.get(token.token.symbol) ?? null,
+  )
+
+  let deployments: PrivacyDeployments | undefined
+  if (isMultiDeployment) {
+    // A token held in one escrow is valued as a whole; one held in several,
+    // by the escrow values the backend stores for it.
     const chainBucketTvls = new Map([
       ...getPrivacySingleEscrowBucketTvls(
         tokens,
@@ -282,35 +301,41 @@ export async function getPrivacyProjectDetails(
       ),
       ...bucketTvls,
     ])
-    // An asset's value on one chain is what its buckets there hold.
-    stats = buildPrivacyStats(
-      shown.privacyInfo.tokens,
-      { ...statsContext, bucketTvls: chainBucketTvls },
-      (token) =>
-        sumAll(token.buckets.map((bucket) => chainBucketTvls.get(bucket.id))) ??
-        null,
-    )
-    const value = chainValues?.get(selected.id)
-    chainView = {
-      chains: tabs,
-      selected,
-      totalValueLockedUsd: value?.value,
-      totalValueLockedChange7d: value?.change7d,
-      allChainsValueLockedUsd: sumAll(
-        tabs.map((tab) => chainValues?.get(tab.id)?.value),
-      ),
-    }
-  } else {
-    stats = buildPrivacyStats(
-      tokens,
-      statsContext,
-      (token) => tvlBySymbol.get(token.token.symbol) ?? null,
-    )
+    const chains = deploymentChains.flatMap((chainId, i) => {
+      const item = trackedOn.find((c) => c.id === chainId)
+      if (!item) return []
+      const chainStats = buildPrivacyStats(
+        getPrivacyProjectOnChain(project, chainId).privacyInfo.tokens,
+        { ...statsContext, bucketTvls: chainBucketTvls },
+        (token) =>
+          sumAll(
+            token.buckets.map((bucket) => chainBucketTvls.get(bucket.id)),
+          ) ?? null,
+      )
+      const chainPage = pages.find((p) => p.chain === chainId)
+      const value = chainValues?.get(chainId)
+      const deployment: PrivacyDeployment = {
+        id: item.id,
+        name: item.name,
+        iconUrl: item.iconUrl,
+        research: i === 0 ? 'reference' : chainPage ? 'own' : 'none',
+        href: chainPage?.path ?? (i === 0 ? page.path : undefined),
+        valueLocked: valueChains.includes(chainId)
+          ? { usd: value?.value, change7d: value?.change7d }
+          : undefined,
+        bucketCount: chainStats.summary.bucketCount,
+        deposits: chainStats.summary.deposits,
+        assets: chainStats.assets,
+      }
+      return [deployment]
+    })
+    const research = chains.find((c) => c.id === researchChain)
+    deployments = research && { chains, research }
   }
 
-  // A chain's page lists what is deployed there, and on chains with no page.
-  const otherPageChains = new Set(
-    tabs.flatMap((tab) => (tab.id === selected?.id ? [] : [tab.id])),
+  // Contracts and permissions are research, so they are of its deployment.
+  const otherDeploymentChains = new Set(
+    deploymentChains.filter((c) => c !== researchChain),
   )
 
   return {
@@ -322,12 +347,13 @@ export async function getPrivacyProjectDetails(
     archivedAt: project.archivedAt,
     display: project.display,
     contracts:
-      project.contracts && withoutChains(project.contracts, otherPageChains),
+      project.contracts &&
+      withoutChains(project.contracts, otherDeploymentChains),
     permissions:
       project.permissions &&
       Object.fromEntries(
         Object.entries(project.permissions).filter(
-          ([permissionsChain]) => !otherPageChains.has(permissionsChain),
+          ([permissionsChain]) => !otherDeploymentChains.has(permissionsChain),
         ),
       ),
     discoveryUpdates: project.discoveryUpdates,
@@ -342,8 +368,11 @@ export async function getPrivacyProjectDetails(
     adversaries: shown.privacyInfo.adversaries,
     referenceApp: project.privacyInfo.referenceApp,
     reproducibility: project.privacyInfo.reproducibility,
-    anonymitySetType: getPrivacyAnonymitySetType(shown),
-    hasTvl: hasPrivacyValueLocked(project.tvsConfig, selected?.id),
+    // Anonymity sets never combine across chains: the researched one's.
+    anonymitySetType: getPrivacyAnonymitySetType(
+      researchChain ? getPrivacyProjectOnChain(shown, researchChain) : shown,
+    ),
+    hasTvl: hasPrivacyValueLocked(project.tvsConfig, undefined),
     detailedDescription:
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
@@ -360,7 +389,7 @@ export async function getPrivacyProjectDetails(
       ...stats.summary,
       relayerStat,
     },
-    chainView,
+    deployments,
   }
 }
 
@@ -524,28 +553,6 @@ function sumAll(values: (number | undefined)[]): number | undefined {
   return values.length === 0 ? undefined : sum
 }
 
-function getRelayerChains(
-  project: PrivacyProject,
-  chainProjects: { chainConfig: { name: string; chainId?: number } }[],
-): string[] {
-  const tracking = project.privacyInfo.relayerTracking
-  if (!tracking) return []
-  switch (tracking.type) {
-    case 'onchainEvents':
-      return unique(
-        tracking.sources.map((source) =>
-          ChainSpecificAddress.longChain(source.address),
-        ),
-      )
-    case 'railgunWaku':
-      return chainProjects.flatMap((p) =>
-        p.chainConfig.chainId === tracking.chainId ? [p.chainConfig.name] : [],
-      )
-    default:
-      assertUnreachable(tracking)
-  }
-}
-
 async function getTrackedOn(project: PrivacyProject) {
   const chainProjects = await ps.getProjects({
     select: ['chainConfig'],
@@ -575,30 +582,15 @@ async function getScalingProjects(
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
 
-/**
- * @param chain Counts the relayers on this chain only, for a project shown
- *   one chain at a time.
- */
 async function getRelayerStat(
   project: PrivacyProject,
   from: UnixTime,
   to: UnixTime,
-  chain?: {
-    id: string
-    chainProjects: Parameters<typeof getRelayerChains>[1]
-  },
 ): Promise<PrivacyRelayerStat | undefined> {
   const tracking = project.privacyInfo.relayerTracking
   if (!tracking) {
     return undefined
   }
-  if (
-    chain &&
-    !getRelayerChains(project, chain.chainProjects).includes(chain.id)
-  ) {
-    return undefined
-  }
-
   if (env.MOCK) {
     switch (tracking.type) {
       case 'onchainEvents':
@@ -622,7 +614,6 @@ async function getRelayerStat(
         project.id,
         from,
         to,
-        chain?.id,
       )
       return { kind: 'activeRelayers', value: count }
     }

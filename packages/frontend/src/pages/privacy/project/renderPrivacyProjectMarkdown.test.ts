@@ -40,42 +40,62 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '- Active Relayers 30D: 7',
       '- Tracked on: Ethereum, BNB Smart Chain',
       '- Attributes: ZK, Fixed amounts',
-      '- Reference app: Classic app (most private of 2 checked)',
       'Tornado Cash is a non-custodial mixer.',
     )
   })
 
-  it('says which chain the page is about and links the other chains', () => {
+  it('says what the metrics add up and which deployment the risks are of', () => {
+    const deposits = { total: 9_000, last7d: 100, change7d: 0, last30d: 500 }
     const ethereum = {
       id: 'ethereum',
       name: 'Ethereum',
       iconUrl: '/icons/ethereum.png',
+      research: 'reference' as const,
       href: '/privacy/projects/tornado-cash',
+      valueLocked: { usd: 400_000_000, change7d: 0.1 },
+      bucketCount: 2,
+      deposits,
+      assets: [],
     }
     const summary = getSection(
       renderPrivacyProjectMarkdown({
         ...ENTRY,
-        chainView: {
+        deployments: {
           chains: [
             ethereum,
             {
               id: 'bsc',
               name: 'BNB Smart Chain',
               iconUrl: '/icons/bsc.png',
+              research: 'own',
               href: '/privacy/projects/tornado-cash/bsc',
+              bucketCount: 1,
+              deposits,
+              assets: [],
+            },
+            {
+              id: 'arbitrum',
+              name: 'Arbitrum One',
+              iconUrl: '/icons/arbitrum.png',
+              research: 'none',
+              valueLocked: { usd: 1_000, change7d: undefined },
+              bucketCount: 1,
+              deposits,
+              assets: [],
             },
           ],
-          selected: ethereum,
-          allChainsValueLockedUsd: 500_000_000,
+          research: ethereum,
         },
       }),
       'Summary',
     )
 
     expect(summary).toInclude(
-      '- Chain on this page: Ethereum',
-      '- Value locked on 2 chains: $500.00 M',
-      '- Pages of other chains: [BNB Smart Chain](https://ethbeat.org/privacy/projects/tornado-cash/bsc.md)',
+      '- Metrics: All 3 tracked chains combined, value locked on Ethereum and Arbitrum One only',
+      '- Risk research: Ethereum deployment (reference)',
+      '- Research of other deployments: [BNB Smart Chain](https://ethbeat.org/privacy/projects/tornado-cash/bsc.md)',
+      '- On Ethereum: Total Value Locked $400.00 M (+10.0% compared to seven days ago), Deposits 30D 500, Deposits Total 9.00 K, researched',
+      '- On BNB Smart Chain: Total Value Locked not tracked, Deposits 30D 500, Deposits Total 9.00 K, researched',
     )
   })
 
@@ -142,6 +162,16 @@ describe(renderPrivacyProjectMarkdown.name, () => {
 
     expect(summary).toMatchRegex(
       /^\n\*\*Warning:\*\* [^\n]*under review[^\n]*\n\n\*\*Warning:\*\* The relayer list is curated\./,
+    )
+  })
+
+  it('gives the reference app among the risks, since the privacy grade is of it', () => {
+    const summary = getSection(renderPrivacyProjectMarkdown(ENTRY), 'Summary')
+    const [facts = '', risks = ''] = summary.split('### Risks')
+
+    expect(facts).not.toInclude('Reference app')
+    expect(risks).toInclude(
+      '- Reference app: Classic app (most private of 2 checked)',
     )
   })
 

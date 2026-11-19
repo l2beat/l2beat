@@ -73,7 +73,7 @@ export async function getHomePrivacyData(
   const previousFrom = getPreviousRangeStart(range)
 
   const [entries, tvlChart, flowsChart] = await Promise.all([
-    getPrivacySummaryEntries(projects, 'project'),
+    getPrivacySummaryEntries(projects),
     getTvsChartByProjects({ projectIds: tvlProjectIds, range }),
     getPrivacyFlowsChart({
       projectIds: flowProjectIds,

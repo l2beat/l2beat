@@ -34,3 +34,21 @@ export const RELAYER_STAT_COPY: Record<
       'The average number of unique relayers seen advertising their services in daily network observations over the past 30 days.',
   },
 }
+
+/**
+ * Which chains the value locked covers, when not all of them: then the sum is
+ * of those only. Undefined when every chain's value is tracked.
+ */
+export function getPrivacyValueLockedCoverage(
+  chains: { name: string; valueLocked?: unknown }[],
+): string | undefined {
+  const tracked = chains.filter((chain) => chain.valueLocked !== undefined)
+  if (tracked.length === chains.length) return undefined
+  if (tracked.length === 0) return 'not tracked on any chain'
+  const names = tracked.map((chain) => chain.name)
+  const list =
+    names.length === 1
+      ? names[0]
+      : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`
+  return `on ${list} only`
+}

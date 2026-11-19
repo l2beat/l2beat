@@ -27,7 +27,10 @@ import {
   HOLDING_DURATIONS,
   loadAnonymitySetCharts,
 } from './anonymity-set/loadAnonymitySetCharts'
-import { getPrivacyProjectOnChain } from './utils/getPrivacyProjectPages'
+import {
+  getPrivacyAnonymitySetProject,
+  getPrivacyProjectOnChain,
+} from './utils/getPrivacyProjectPages'
 
 export const PrivacyAnonymitySetChartParams = v.object({
   projectId: v.string(),
@@ -62,7 +65,7 @@ export async function getPrivacyAnonymitySetChart(
   if (!tracked) return emptyResponse()
   const project =
     params.chain === undefined
-      ? tracked
+      ? getPrivacyAnonymitySetProject(tracked)
       : getPrivacyProjectOnChain(tracked, params.chain)
 
   const series = getPrivacyAnonymitySetSeries(project)
