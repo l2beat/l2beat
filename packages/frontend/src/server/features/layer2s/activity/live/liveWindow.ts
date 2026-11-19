@@ -3,16 +3,30 @@ import {
   LIVE_BUFFER_SECONDS,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { getLiveBucketSeconds, LIVE_RANGES, type LiveRange } from './liveRanges'
+import {
+  getLiveBucketSeconds,
+  LIVE_JUMP_SECONDS,
+  LIVE_RANGES,
+  type LiveRange,
+} from '~/utils/range/liveRanges'
 
-/** Seconds per bucket the rate right now is taken from, a minute's divisor */
-export const LAST_MINUTE_BUCKET = 10
+/** The minute the rate right now is taken over starts on a multiple of it */
+const LAST_MINUTE_STEP = 10
 
 /** Seconds per bar of the overview of the whole buffer */
 export const OVERVIEW_BUCKET_SECONDS = UnixTime.MINUTE
 
-/** Read before the window, so a window scrolling between reads keeps its left edge */
-const LEAD_SECONDS = UnixTime.MINUTE
+/** Read before the window, so one trailing its data on screen keeps its left edge */
+export const LEAD_SECONDS = LIVE_JUMP_SECONDS
+
+/**
+ * Whether the chain's newest stored block is recent enough to show as live.
+ * An older one means its blocks are no longer followed, or the follower is
+ * stuck. Longer than the head of chains the RPC proxy syncs from Envio lags
+ */
+export function isLiveFresh(newest: UnixTime | undefined, now: UnixTime) {
+  return newest !== undefined && newest >= now - 30 * UnixTime.MINUTE
+}
 
 /**
  * How much less than the buffer a full one may hold. Above the 10 minutes
@@ -78,32 +92,26 @@ export function getLiveWindow(
 }
 
 /**
- * Per second, over the minute up to the newest block: its bucket and the five
- * before it, counted up to that block. What every view calls "now"
+ * Per second, over the minute up to the newest block, which starts on a
+ * multiple of `LAST_MINUTE_STEP`. What the history view shows as "now"
  *
- * @param buckets Of `LAST_MINUTE_BUCKET` seconds, from the epoch
+ * @param getBuckets The blocks between two times, both included, summed
  */
-export function getLastMinuteRates(
-  buckets: { timestamp: UnixTime; count: number; uopsCount: number }[],
+export async function getLastMinuteRates(
   newest: UnixTime,
+  getBuckets: (
+    from: UnixTime,
+    to: UnixTime,
+  ) => Promise<{ count: number; uopsCount: number }[]>,
 ) {
-  const start = getLastMinuteStart(newest)
-  const inMinute = buckets.filter((b) => b.timestamp >= start)
+  const start =
+    newest - (newest % LAST_MINUTE_STEP) - UnixTime.MINUTE + LAST_MINUTE_STEP
+  const buckets = await getBuckets(start, newest)
   const seconds = newest - start + 1
   return {
-    tps: inMinute.reduce((sum, b) => sum + b.count, 0) / seconds,
-    uops: inMinute.reduce((sum, b) => sum + b.uopsCount, 0) / seconds,
+    tps: buckets.reduce((sum, b) => sum + b.count, 0) / seconds,
+    uops: buckets.reduce((sum, b) => sum + b.uopsCount, 0) / seconds,
   }
-}
-
-/** Where the minute `getLastMinuteRates` takes starts */
-export function getLastMinuteStart(newest: UnixTime) {
-  return (
-    newest -
-    (newest % LAST_MINUTE_BUCKET) -
-    UnixTime.MINUTE +
-    LAST_MINUTE_BUCKET
-  )
 }
 
 /**

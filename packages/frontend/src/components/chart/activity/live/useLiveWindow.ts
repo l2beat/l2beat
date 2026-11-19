@@ -1,33 +1,41 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
+import { useTRPC } from '~/trpc/React'
+import { formatRange } from '~/utils/dates'
 import {
+  DEFAULT_LIVE_RANGE,
+  getLiveBucketSeconds,
   LIVE_RANGES,
   type LiveRange,
-} from '~/server/features/layer2s/activity/live/liveRanges'
-import { useTRPC } from '~/trpc/React'
+} from '~/utils/range/liveRanges'
+import { clampTo } from './liveView'
 import { LOOKAHEAD_DRAWINGS, useLivePlayhead } from './useLivePlayhead'
 
 /**
- * The window read for the range, and where it is on screen: following the
- * newest block it scrolls with the clock, and while the charts are hovered
- * it holds still on the data it was drawn from
+ * The live view's window: the range picked, where it ends, the data read for
+ * it and where that is on screen. Following the newest block it scrolls with
+ * the clock, while the charts are hovered it holds still on the data it was
+ * drawn from, and while it is moved on the overview it stays as read until
+ * the move stops
  */
 export function useLiveWindow({
   projectId,
-  range,
-  to,
-  hovered,
   onGlide,
 }: {
   projectId: string
-  range: LiveRange
-  /** Where the window ends, undefined while following the newest block */
-  to: number | undefined
-  hovered: boolean
   /** Seconds the window has moved past what is drawn, each frame */
   onGlide: (seconds: number) => void
 }) {
   const trpc = useTRPC()
+  const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
+  /** Where the window ends, undefined while following the newest block */
+  const [to, setTo] = useState<number>()
+  /** Where the overview's window is moved to, before that is read */
+  const [seekTo, setSeekTo] = useState<number>()
+  const [hovered, setHovered] = useState(false)
+  const still = usePrefersReducedMotion()
+
   const refetchInterval = (to === undefined ? 5 : 30) * 1000
   const query = useQuery({
     ...trpc.activity.liveWindow.queryOptions({ projectId, range, to }),
@@ -49,30 +57,41 @@ export function useLiveWindow({
   // a new range's placeholder is drawn as the range it was read for, rather
   // than squeezed into the new one, until the new range's data comes
   const shown = data?.window.range ?? range
-  const { seconds } = LIVE_RANGES[shown]
   // drawn every 1/300 of the window, about 2.5 pixels, and slid in between
-  const redrawEvery = seconds / 300
+  const redrawEvery = LIVE_RANGES[shown].seconds / 300
   const playhead = useLivePlayhead({
-    dataEnd:
-      to === undefined && data?.buffer !== undefined
-        ? data.window.to
-        : undefined,
+    dataEnd: to === undefined ? data?.window.to : undefined,
     readAtMs: dataUpdatedAt,
     redrawEvery,
     onGlide,
     held: holding,
+    still,
   })
   const domain: [number, number] | undefined = data
     ? playhead !== undefined
-      ? [playhead - seconds, playhead]
+      ? [playhead - LIVE_RANGES[shown].seconds, playhead]
       : [data.window.from, data.window.to]
     : undefined
+
+  const { seconds } = LIVE_RANGES[range]
+  const buffer = data?.buffer
+  const seeking = seekTo !== undefined && buffer !== undefined
+  // where the window is asked to end, undefined at the newest block: a move
+  // on the overview as it will be read
+  const end = seeking ? clampTo(seekTo, buffer, seconds) : to
+  const selection: [number, number] | undefined = seeking
+    ? [(end ?? buffer.to) - seconds, end ?? buffer.to]
+    : // as asked for while that is read, not as it was
+      to !== undefined && isPlaceholderData
+      ? [to - seconds, to]
+      : domain
 
   return {
     data,
     isLoading,
     isPlaceholderData,
     isError,
+    range,
     /** The range the data is for */
     shown,
     domain,
@@ -80,6 +99,34 @@ export function useLiveWindow({
     scrolling: playhead !== undefined,
     /** Seconds drawn past the domain, for what slides in before the next drawing */
     lookahead: playhead === undefined ? 0 : LOOKAHEAD_DRAWINGS * redrawEvery,
+    /** Whether the window ends at the newest block and stays there */
+    following: to === undefined,
+    /** Whether the charts show something else than was asked for */
+    stale: isPlaceholderData || seekTo !== undefined,
+    /** The window on the overview: as asked for, before the charts have it */
+    selection,
+    /** The same, as a screen reader says it */
+    selectionText:
+      end === undefined || !selection
+        ? 'Live'
+        : formatRange(selection[0], selection[1], { seconds: true }),
+    setHovered,
+    setRange: (next: LiveRange) => {
+      setRange(next)
+      setTo(clampTo(to, buffer, LIVE_RANGES[next].seconds))
+    },
+    follow: () => setTo(undefined),
+    seek: setSeekTo,
+    moveTo: (end: number) => {
+      // on a bucket, so moves within one share a read. The range's own until
+      // it is read: a move rounded to another range's would be read again
+      // once rounded to this one's
+      const bucket =
+        data?.window.range === range
+          ? data.window.bucket
+          : getLiveBucketSeconds(range)
+      setTo(clampTo(end - (end % bucket), buffer, seconds))
+    },
   }
 }
 

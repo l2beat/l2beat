@@ -1,5 +1,5 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
-import { formatNumber, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { type Ref, useImperativeHandle, useLayoutEffect, useRef } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
@@ -18,10 +18,10 @@ import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { getChartType } from '../utils/getChartType'
 import { LiveTooltip } from './LiveTooltip'
+import { hasHistory, LIVE_METRICS, type LiveMetric } from './liveMetrics'
 import {
   closeSteps,
   type LiveBucket,
-  type LiveMetric,
   toSteps,
   valueAt,
   withDashAnchor,
@@ -29,7 +29,11 @@ import {
 } from './liveSteps'
 import { formatBucket, formatTick, ticksOf } from './liveView'
 
-const formatGasTick = (value: number) => formatNumber(value, 0)
+const USUAL_MEDIAN = {
+  label: 'Usual at this hour',
+  color: 'var(--secondary)',
+  indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+} satisfies ChartMeta[string]
 
 export interface LiveChartHandle {
   /** Shows the charts as `seconds` after what they were drawn for */
@@ -37,7 +41,7 @@ export interface LiveChartHandle {
 }
 
 /**
- * The window's buckets as steps, against the past week's range at each hour,
+ * The window's buckets as steps, against the past days' range at each hour,
  * with the ratio of the two counts under it. A dot marks where the line of a
  * window scrolling with the clock meets the right edge
  */
@@ -95,11 +99,10 @@ export function LiveChart({
       bucket,
     )
   const top = useSteadyTop(
-    rows && rows.length > 0
-      ? Math.max(
-          ...rows.map((row) => Math.max(row.value ?? 0, row.usualMax ?? 0)),
-        )
-      : undefined,
+    rows &&
+      Math.max(
+        ...rows.map((row) => Math.max(row.value ?? 0, row.usualMax ?? 0)),
+      ),
   )
   const color =
     project.id === ProjectId.ETHEREUM
@@ -111,6 +114,7 @@ export function LiveChart({
       color,
       indicatorType: { shape: 'line' },
     },
+    usualMedian: hasHistory(metric) ? USUAL_MEDIAN : undefined,
   }
   const xAxis = domain && {
     ticks: ticksOf(domain[0], domain[1] + lookahead, tick),
@@ -156,7 +160,7 @@ export function LiveChart({
                 key: 'usual',
                 value: (row) => row.usualMax,
                 value0: (row) => row.usualMin,
-                fill: 'var(--secondary)',
+                fill: USUAL_MEDIAN.color,
                 fillOpacity: 0.15,
                 curve: 'stepAfter',
                 activeDot: false,
@@ -164,9 +168,9 @@ export function LiveChart({
               {
                 key: 'usualMedian',
                 value: (row) => row.usualMedian,
-                stroke: 'var(--secondary)',
+                stroke: USUAL_MEDIAN.color,
                 strokeWidth: 1,
-                strokeDasharray: '3 3',
+                strokeDasharray: USUAL_MEDIAN.indicatorType.strokeDasharray,
                 curve: 'stepAfter',
                 activeDot: false,
               },
@@ -175,10 +179,7 @@ export function LiveChart({
             ariaLabel="Live activity"
             xAxis={xAxis}
             yAxis={{
-              ...(metric === 'gas'
-                ? { format: formatGasTick, unit: ' gas/s' }
-                : { unit: metric === 'tps' ? ' TPS' : ' UOPS' }),
-              tickCount: 3,
+              ...LIVE_METRICS[metric].axis,
               domain: top === undefined ? undefined : [0, top],
             }}
             // none on the right, so the line meets the dot at the edge
@@ -208,7 +209,7 @@ export function LiveChart({
           )}
         </ChartContainer>
       </div>
-      {metric !== 'gas' && (
+      {hasHistory(metric) && (
         <div className="mb-2">
           <ActivityRatioChart
             data={rows}
@@ -252,15 +253,15 @@ function placeDot(
 }
 
 /**
- * Holds the axis' top while the values fit well under it, so the chart does
- * not rescale on every read
+ * Holds the axis' top, the chart's own for the values, while they fit well
+ * under it, so the chart does not rescale on every read
  */
 function useSteadyTop(max: number | undefined) {
   const committed = useRef<number | undefined>(undefined)
   const held = committed.current
   const top =
     max !== undefined && (held === undefined || max > held || max < held * 0.4)
-      ? getYAxisTicks([0, max], { tickCount: 3 }, 1).domain[1]
+      ? getYAxisTicks([0, max], {}, 1).domain[1]
       : held
   useLayoutEffect(() => {
     committed.current = top

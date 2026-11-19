@@ -162,6 +162,8 @@ describe(getWindowStats.name, () => {
       from: 24,
       to: 60,
       rate: 3,
+      blocks: 6,
+      gas: 720,
       blocksPerMinute: 10,
       gasPerSecond: 20,
     })

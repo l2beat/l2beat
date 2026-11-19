@@ -1,27 +1,23 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
+import { formatTimestamp } from '~/utils/dates'
 import {
-  DEFAULT_LIVE_RANGE,
-  getLiveBucketSeconds,
+  LIVE_BUFFER_RANGE,
   LIVE_RANGE_KEYS,
   LIVE_RANGES,
-  type LiveRange,
-} from '~/server/features/layer2s/activity/live/liveRanges'
-import { formatRange } from '~/utils/dates'
+} from '~/utils/range/liveRanges'
 import { LiveChart, type LiveChartHandle } from './LiveChart'
 import { LiveOverview } from './LiveOverview'
+import { LiveState } from './LiveState'
 import { LiveStats } from './LiveStats'
-import {
-  getUsualRate,
-  getWindowStats,
-  type LiveMetric,
-  toBuckets,
-} from './liveSteps'
-import { clampTo, formatTick } from './liveView'
+import { hasHistory, type LiveMetric } from './liveMetrics'
+import { getUsualRate, getWindowStats, toBuckets } from './liveSteps'
 import { useLiveWindow } from './useLiveWindow'
 
 /**
@@ -34,78 +30,63 @@ export function ProjectLiveActivity({
   category,
   metric,
   setMetric,
-  to,
-  setTo,
   oldest,
+  stateSlot,
 }: {
   project: ChartProject
   category: ProjectScalingCategory | undefined
   metric: LiveMetric
   setMetric: (metric: LiveMetric) => void
-  /** Where the window ends, undefined while following the newest block */
-  to: number | undefined
-  setTo: (to: number | undefined) => void
   /** Of the oldest stored block, before which nothing is known */
   oldest: number | undefined
+  /** Where it shows whether it follows the newest block, beside the view's switch */
+  stateSlot: HTMLElement | null
 }) {
-  const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
-  // while the window is moved on the overview, before it is read
-  const [seeking, setSeeking] = useState(false)
-  const [hovered, setHovered] = useState(false)
   const chart = useRef<LiveChartHandle>(null)
-  const {
-    data,
-    isLoading,
-    isPlaceholderData,
-    isError,
-    shown,
-    domain,
-    scrolling,
-    lookahead,
-  } = useLiveWindow({
+  const live = useLiveWindow({
     projectId: project.id,
-    range,
-    to,
-    hovered,
     onGlide: (seconds) => chart.current?.glide(seconds),
   })
+  const { data, domain, range, selection } = live
   const buckets = useMemo(
     () => data && toBuckets(data.window, data.buckets, metric, oldest),
     [data, metric, oldest],
   )
+  const state =
+    stateSlot &&
+    createPortal(
+      <LiveState following={live.following} onFollow={live.follow} />,
+      stateSlot,
+    )
 
-  if (!data && isError) {
+  if (!data && live.isError) {
     return (
-      <p className="py-12 text-center text-secondary">
-        Live activity can't be read right now.
-      </p>
+      <>
+        {state}
+        <p className="py-12 text-center text-secondary">
+          Live activity can't be read right now.
+        </p>
+      </>
     )
   }
 
-  const live = to === undefined
-  const { seconds } = LIVE_RANGES[range]
   const bucket = data?.window.bucket ?? 1
   const stats = buckets && domain && getWindowStats(buckets, bucket, domain)
-  // the range's own until it is read: a move rounded to another range's
-  // would be read again once rounded to this one's
-  const readBucket =
-    data?.window.range === range ? bucket : getLiveBucketSeconds(range)
 
   return (
     <div className="flex flex-col">
+      {state}
       <ChartControlsWrapper>
         <ProjectChartTimeRange
           timeRange={domain}
-          isPlaceholderData={isPlaceholderData}
+          isPlaceholderData={live.isPlaceholderData}
         />
         <RadioGroup
           name="liveActivityRange"
           value={range}
           onValueChange={(value) => {
             const next = LIVE_RANGE_KEYS.find((key) => key === value)
-            if (!next) return
-            setRange(next)
-            setTo(clampTo(to, data?.buffer, LIVE_RANGES[next].seconds))
+            if (next) live.setRange(next)
           }}
         >
           {LIVE_RANGE_KEYS.map((value) => (
@@ -124,73 +105,51 @@ export function ProjectLiveActivity({
         bucket={bucket}
         usual={data?.usual ?? []}
         domain={domain}
-        lookahead={lookahead}
-        tick={LIVE_RANGES[shown].tick}
-        head={scrolling && !seeking && !isPlaceholderData}
-        isLoading={isLoading}
-        isPlaceholderData={isPlaceholderData || seeking}
-        onHover={setHovered}
+        lookahead={live.lookahead}
+        tick={LIVE_RANGES[live.shown].tick}
+        head={live.scrolling && !live.stale}
+        isLoading={live.isLoading}
+        isPlaceholderData={live.stale}
+        onHover={live.setHovered}
       />
-      {data?.buffer && domain && (
+      {data && selection && (
         <div className="mb-4 flex flex-col gap-1">
           <span className="font-normal text-label-value-13 text-secondary">
             {data.buffer.filling
-              ? `Since ${formatTick(data.buffer.from)}`
-              : 'Last 4 hours'}
+              ? `Since ${formatTimestamp(data.buffer.from, { mode: 'time' })}`
+              : `Last ${LIVE_RANGES[LIVE_BUFFER_RANGE].label}`}
             , a bar a minute. Press or drag to look back
           </span>
           <LiveOverview
             overview={data.overview}
             buffer={data.buffer}
-            // where it was asked to end while that is read, not where it was
-            window={
-              to !== undefined && isPlaceholderData
-                ? [to - seconds, to]
-                : domain
-            }
-            windowText={
-              live
-                ? 'Live'
-                : formatRange(domain[0], domain[1], { seconds: true })
-            }
-            length={seconds}
+            selection={selection}
+            selectionText={live.selectionText}
+            length={LIVE_RANGES[range].seconds}
             metric={metric}
-            // on a bucket, so moves within one share a read
-            onMove={(end) =>
-              setTo(clampTo(end - (end % readBucket), data.buffer, seconds))
-            }
-            onSeeking={setSeeking}
+            onSeek={live.seek}
+            onMove={live.moveTo}
           />
         </div>
       )}
-      <RadioGroup
-        name="liveActivityMetric"
+      <ActivityMetricControls
         value={metric}
-        onValueChange={(value) => setMetric(value as LiveMetric)}
-        variant="highlighted"
+        onValueChange={setMetric}
         className="self-start"
       >
-        {(['uops', 'tps', 'gas'] as const).map((value) => (
-          <RadioGroupItem
-            key={value}
-            value={value}
-            className="h-full px-[6px] text-sm uppercase"
-          >
-            {value}
-          </RadioGroupItem>
-        ))}
-      </RadioGroup>
+        <RadioGroupItem value="gas">GAS</RadioGroupItem>
+      </ActivityMetricControls>
       <LiveStats
         usual={
-          metric !== 'gas' && data && stats
+          hasHistory(metric) && data && stats
             ? // over the buckets the rate is
               getUsualRate(data.usual, metric, [stats.from, stats.to])
             : undefined
         }
         metric={metric}
         stats={stats}
-        window={live ? shown : domain}
-        isLoading={isLoading}
+        span={live.following ? live.shown : domain}
+        isLoading={live.isLoading}
       />
     </div>
   )
