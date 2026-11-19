@@ -162,13 +162,13 @@ export const cbeth: BaseProject = {
         value: 'Coinbase only',
         secondLine: 'no onchain deposit',
         sentiment: 'bad',
-        description: `There is no deposit function. Coinbase keys mint ${symbol} through a rate-limited relay, with no ETH attached, against balances on its exchange.`,
+        description: `There is no deposit function. Coinbase keys mint ${symbol}, with no ETH attached, against balances on its exchange, through a rate-limited relay or any minter the master minter authorizes.`,
       },
       operators: {
         value: 'Coinbase',
         secondLine: 'no bond',
         sentiment: 'bad',
-        description: `No contract tracks validators, balances or slashing. Whether losses pass to ${symbol} holders is Coinbase's policy, not code.`,
+        description: `No contract tracks its validators, their balances or slashing. Whether losses pass to ${symbol} holders is Coinbase's policy, not code.`,
       },
       backing: {
         value: 'Coinbase-held',
