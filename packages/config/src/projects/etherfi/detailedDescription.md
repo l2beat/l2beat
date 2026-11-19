@@ -14,4 +14,4 @@ eETH is a staking aggregator rather than a single validator set. ETH deposits fu
 
 ### Who holds the keys
 
-Upgrades and every role grant sit behind a {{upgradeDelay}} timelock. A shorter {{operatingDelay}} timelock tunes parameters within fixed ceilings and registers validator spawners, the accounts that register validator keys, so a newly whitelisted operator can only run validators after that delay. Whitelisting and removing operators, pausing and blacklisting take effect without delay.
+Upgrades and every role grant sit behind a {{upgradeDelay}} timelock. A shorter {{operatingDelay}} timelock tunes parameters mostly without bounds and registers validator spawners, the accounts that register validator keys, so a newly whitelisted operator can only run validators after that delay. Whitelisting and removing operators, pausing and blacklisting take effect without delay.
