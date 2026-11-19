@@ -218,7 +218,8 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
  * so amounts and the dash share a right edge. A phone row has no room for
  * that column, so its change hangs under the amount, in the gap above the
  * plants: every amount keeps the row's right edge, and the row keeps its
- * height.
+ * height. Below 400px the plants reach the right edge (`PHONE_PLANTS_CLASS`),
+ * so there is no gap and the change is left out.
  */
 function MetricCell({
   metric,
@@ -246,7 +247,7 @@ function MetricCell({
           </span>
           {compact ? (
             metric.change !== undefined && (
-              <span className="-mt-1 absolute top-full right-0 leading-none">
+              <span className="-mt-1 absolute top-full right-0 leading-none max-[400px]:hidden">
                 <PercentChange
                   value={metric.change}
                   period="7D"
