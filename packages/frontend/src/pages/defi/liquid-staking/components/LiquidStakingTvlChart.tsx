@@ -1,4 +1,5 @@
-import { formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
@@ -28,6 +29,7 @@ import {
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
+import type { EthSupply } from '~/server/features/defi/liquid-staking/getEthSupply'
 import type { LiquidStakingTvlPoint } from '~/server/features/defi/liquid-staking/getLiquidStakingTvlChart'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -93,7 +95,9 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
 
+  const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
   const ethStaked = getLatestEthStaked(data, unit)
+  const ethStakedEth = getLatestEthStaked(data, 'eth')
 
   const chartSeries: ChartSeries<string, TvlRow>[] = [
     ...projectSeries.map((series) => ({
@@ -129,7 +133,16 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
         value={
           ethStaked !== undefined ? formatCurrency(ethStaked, unit) : undefined
         }
-        valueLabel="total ETH staked"
+        valueLabel={
+          <>
+            {/* Shorter on phones, so the figure, label and pill fit one line. */}
+            <span className="max-sm:hidden">total ETH staked</span>
+            <span className="sm:hidden">ETH staked</span>
+            {ethSupply && ethStakedEth !== undefined && (
+              <SupplyShare staked={ethStakedEth} supply={ethSupply} />
+            )}
+          </>
+        }
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         meta={
@@ -192,6 +205,34 @@ function getLatestEthStaked(
   return unit === 'usd'
     ? latest.ethStaked * (latest.ethPrice ?? 0)
     : latest.ethStaked
+}
+
+/** E.g. "· 27.1% of ETH supply", with where the supply comes from. */
+function SupplyShare({
+  staked,
+  supply,
+}: {
+  staked: number
+  supply: EthSupply
+}) {
+  return (
+    <Tooltip>
+      {/* A pill, so the share reads as a second figure, not as a label. */}
+      <TooltipTrigger className="ml-2 inline-flex items-baseline gap-1 whitespace-nowrap rounded-full bg-surface-secondary px-2.5 py-1">
+        <span className="font-semibold text-label-value-16 text-primary tabular-nums">
+          {formatPercent(staked / supply.value)}
+        </span>
+        <span className="font-medium text-label-value-13 text-secondary">
+          of <span className="max-sm:hidden">ETH </span>supply
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>
+        The balance of all active validators as a share of all ETH in existence:{' '}
+        {formatNumber(supply.value)} ETH according to CoinGecko, as of{' '}
+        {formatTimestamp(supply.timestamp, { mode: 'datetime' })}.
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 function CustomTooltip({
