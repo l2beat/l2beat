@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
-ARG NPM_VERSION="^11.21.2"
 
 FROM node:24.22.3-slim AS base
 ENV PNPM_HOME="/pnpm"
@@ -39,10 +38,10 @@ RUN rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --offline
 
 FROM node:24.22.3-slim AS release
-ARG NPM_VERSION
 
-# Patch the package manager bundled in Node separately from workspace dependencies.
-RUN npm install --global npm@${NPM_VERSION} && npm cache clean --force
+# The release command runs Node directly; package managers are build-time tools.
+# Drop npm and its bundled dependencies without fetching floating updates.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 
 # Refresh available distro patches, install curl for healthcheck, and create non-root user
 RUN apt-get update && \
