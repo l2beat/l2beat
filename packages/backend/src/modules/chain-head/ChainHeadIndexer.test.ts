@@ -375,6 +375,43 @@ describe(ChainHeadIndexer.name, () => {
       expect(store.numbers()).toEqual([100])
     })
 
+    it('drops to the fork when the chain went over to a shorter one', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      const indexer = head(chain, store)
+      // block 99 was replaced, and nothing has been built on it yet
+      chain.reorg(99, 99)
+
+      expect(await indexer.follow()).toEqual({
+        height: 98,
+        stored: 0,
+        again: true,
+      })
+      expect(store.hashes()).toEqual(['0x98'])
+
+      expect((await indexer.follow()).height).toEqual(99)
+      expect(store.hashes()).toEqual(['0x98', '0x99-1'])
+    })
+
+    it('holds its height when a node that is behind answers, and is on the same chain', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      chain.lagOnce(1)
+
+      const followed = await head(chain, store).follow()
+
+      expect(followed).toEqual({ height: 100, stored: 0, again: false })
+      expect(store.numbers()).toEqual([98, 99, 100])
+    })
+
     it('waits for a block the answering node has not got yet', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [chain.block(100)])

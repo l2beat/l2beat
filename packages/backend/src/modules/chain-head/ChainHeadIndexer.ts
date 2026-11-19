@@ -168,8 +168,15 @@ export class ChainHeadIndexer extends RootIndexer {
       await this.confirm(block.number)
       return { height: block.number, stored: 1, again: false }
     }
-    // a node behind the load balancer answering for an older head
     if (latest < tip.number) {
+      // Mostly a node behind the load balancer answering for an older head.
+      // But the chain may have gone over to a shorter fork, and then the
+      // stored block at the height it names is not the one the source has
+      const at = remembered.find((block) => block.number === latest)
+      const forked =
+        at !== undefined &&
+        (await this.$.source.getBlockHash(latest)) !== at.hash
+      if (forked) return await this.unwind(remembered, latest)
       return { height: tip.number, stored: 0, again: false }
     }
     if (latest === tip.number) {
@@ -332,12 +339,20 @@ export class ChainHeadIndexer extends RootIndexer {
    * the stored blocks the chain no longer has, so that the next tick fetches
    * what replaced them
    */
-  private async unwind(stored: Remembered[]): Promise<Followed> {
+  private async unwind(
+    stored: Remembered[],
+    /** The newest block the source has, when that is below the stored tip */
+    latest = Number.POSITIVE_INFINITY,
+  ): Promise<Followed> {
     let remembered = [...stored]
     let forkedAt: Remembered | undefined
     while (remembered.length > 0 && forkedAt === undefined) {
       const tip = remembered[remembered.length - 1]
-      const hash = await this.$.source.getBlockHash(tip.number)
+      // a block above the source's newest is not on its chain, without asking
+      const hash =
+        tip.number > latest
+          ? undefined
+          : await this.$.source.getBlockHash(tip.number)
       if (hash === tip.hash) forkedAt = tip
       else remembered.pop()
     }
@@ -357,7 +372,9 @@ export class ChainHeadIndexer extends RootIndexer {
       })
       return { height: forkedAt.number, stored: 0, again: false }
     }
-    if (replaced !== undefined) await this.confirmFork(forkedAt, replaced)
+    if (replaced !== undefined && replaced.number <= latest) {
+      await this.confirmFork(forkedAt, replaced)
+    }
 
     // forgotten only once deleted, so a failed delete is tried again next tick
     if (forkedAt === undefined || tip === undefined) {
