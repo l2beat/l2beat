@@ -8,6 +8,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityProjectChartStats } from '~/server/features/layer2s/activity/buildActivityProjectChartStats'
 import { formatTimestamp } from '~/utils/dates'
+import { getUopsRatio } from './utils/getRatioChartData'
 
 interface Props {
   stats: ActivityProjectChartStats | undefined
@@ -137,5 +138,5 @@ function getPastDayRatio(stats: ActivityProjectChartStats | undefined) {
   ) {
     return undefined
   }
-  return txs === 0 ? 1 : uops / txs
+  return getUopsRatio(uops, txs)
 }
