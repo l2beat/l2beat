@@ -28,17 +28,24 @@ export const LOOKAHEAD_DRAWINGS = 2
  * frame, how far the window has moved past what is drawn. Held, the window
  * is drawn where it is and stops, as hovering reads the drawing's positions,
  * and then catches up
- *
- * @param dataEnd Where the data read ends, in seconds. Undefined stops it
- * @param readAt When the data was read, in milliseconds
  */
-export function useLivePlayhead(
-  dataEnd: number | undefined,
-  readAt: number,
-  redrawEvery: number,
-  onGlide: (seconds: number) => void,
-  held: boolean,
-): number | undefined {
+export function useLivePlayhead({
+  dataEnd,
+  readAtMs,
+  redrawEvery,
+  onGlide,
+  held,
+}: {
+  /** Where the data read ends, in seconds. Undefined stops the window */
+  dataEnd: number | undefined
+  /** When the data was read */
+  readAtMs: number
+  /** Seconds the window moves between drawings */
+  redrawEvery: number
+  /** Seconds the window has moved past what is drawn */
+  onGlide: (seconds: number) => void
+  held: boolean
+}): number | undefined {
   const [playhead, setPlayhead] = useState<number>()
   const lags = useRef<number[]>([])
   const last = useRef<{ playhead: number; at: number } | undefined>(undefined)
@@ -51,13 +58,13 @@ export function useLivePlayhead(
 
   useEffect(() => {
     if (dataEnd === undefined) return
-    const lag = readAt / 1000 - dataEnd
+    const lag = readAtMs / 1000 - dataEnd
     // the first read may have come just after a batch, so a batch is added
     lags.current =
       lags.current.length === 0
         ? [lag + STORE_SECONDS]
         : [...lags.current, lag].slice(-LAG_SAMPLES)
-  }, [dataEnd, readAt])
+  }, [dataEnd, readAtMs])
 
   // after every drawing and before it is painted, as one may also redraw
   // the charts' elements without their offset
@@ -90,17 +97,14 @@ export function useLivePlayhead(
         frame = requestAnimationFrame(step)
         return
       }
-      const target = Math.min(
+      const next = advancePlayhead(
+        last.current,
+        getPlayheadTarget(dataEnd, now, lags.current),
         dataEnd,
-        now - Math.max(...lags.current) - MARGIN_SECONDS,
+        now,
       )
-      const next = advancePlayhead(last.current, target, dataEnd, now)
       last.current = { playhead: next, at: now }
-      if (
-        requested.current === undefined ||
-        next - requested.current >= redrawEvery ||
-        next < requested.current
-      ) {
+      if (shouldRedraw(requested.current, next, redrawEvery)) {
         requested.current = next
         setPlayhead(next)
       }
@@ -116,6 +120,36 @@ export function useLivePlayhead(
   }, [dataEnd, redrawEvery])
 
   return playhead
+}
+
+/**
+ * Where the window heads: as far behind the clock as the reads lately were
+ * behind their data, and a margin, but not past the data
+ *
+ * @param lags Seconds from each read's data end to when it was read
+ */
+export function getPlayheadTarget(
+  dataEnd: number,
+  now: number,
+  lags: number[],
+) {
+  return Math.min(dataEnd, now - Math.max(...lags) - MARGIN_SECONDS)
+}
+
+/**
+ * Whether a window now ending at `next` is drawn again: first, once it has
+ * moved `redrawEvery` seconds past the drawing asked for last, or moved back
+ */
+export function shouldRedraw(
+  requested: number | undefined,
+  next: number,
+  redrawEvery: number,
+) {
+  return (
+    requested === undefined ||
+    next - requested >= redrawEvery ||
+    next < requested
+  )
 }
 
 /**

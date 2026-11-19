@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { UsualHour } from '~/server/features/layer2s/activity/live/liveWindow'
 import {
+  closeSteps,
   getUsualRate,
   getWindowStats,
   type LiveBucket,
@@ -20,21 +21,59 @@ describe(toSteps.name, () => {
     { start: 36, value: 4, ratio: 1, blocks: 1, gas: 0 },
   ]
 
-  it('cuts the buckets on the edges at the window', () => {
+  it('has a row at the start of each bucket the window is in', () => {
     // Methodology: the window starts and ends inside buckets, as one
     // scrolling with the clock does
     const steps = toSteps(buckets, 12, [17, 29.5])
 
-    expect(steps.map((s) => s.timestamp)).toEqual([17, 23.999, 24, 29.499])
-    expect(steps.map((s) => s.value)).toEqual([2, 2, 3, 3])
+    expect(steps).toEqual([
+      { timestamp: 12, value: 2, ratio: 1, blocks: 1 },
+      { timestamp: 24, value: 3, ratio: 1, blocks: 1 },
+    ])
   })
 
-  it('draws every bucket from its start to just before the next', () => {
-    const steps = toSteps(buckets, 12, [0, 48])
-
-    expect(steps.map((s) => s.timestamp)).toEqual([
-      0, 11.999, 12, 23.999, 24, 35.999, 36, 47.999,
+  it('leaves out the buckets that only touch the window', () => {
+    expect(toSteps(buckets, 12, [12, 36]).map((s) => s.timestamp)).toEqual([
+      12, 24,
     ])
+  })
+})
+
+describe(closeSteps.name, () => {
+  const none = { usualMin: null, usualMedian: null, usualMax: null }
+
+  it('ends the last step a bucket after it starts', () => {
+    const steps = [
+      { timestamp: 0, value: 1, ratio: 1, ...none },
+      { timestamp: 12, value: 2, ratio: 1, ...none },
+    ]
+
+    expect(closeSteps(steps, 12)).toEqual([
+      ...steps,
+      { timestamp: 24, value: 2, ratio: 1, ...none },
+    ])
+  })
+
+  it('ends a step before a row without a value where that row starts', () => {
+    // Methodology: a bucket without blocks has a rate of zero but no ratio
+    const steps = [
+      { timestamp: 0, value: 1, ratio: 1.5, ...none },
+      { timestamp: 12, value: 0, ratio: null, ...none },
+      { timestamp: 24, value: 2, ratio: 1, ...none },
+    ]
+
+    expect(closeSteps(steps, 12).map((s) => [s.timestamp, s.ratio])).toEqual([
+      [0, 1.5],
+      [12, 1.5],
+      [12, null],
+      [24, 1],
+      [36, 1],
+    ])
+    expect(closeSteps(steps, 12).map((s) => s.value)).toEqual([1, 0, 0, 2, 2])
+  })
+
+  it('has nothing to close without steps', () => {
+    expect(closeSteps([], 12)).toEqual([])
   })
 })
 
@@ -42,15 +81,28 @@ describe(toBuckets.name, () => {
   it('has every bucket, empty ones at zero and none before the oldest block', () => {
     const buckets = toBuckets(
       {
-        from: 24,
-        to: 47,
+        range: '5m',
+        from: UnixTime(24),
+        to: UnixTime(48),
         bucket: 12,
-        readFrom: 0,
-        points: [
-          [12, 24, 36, 2, 300],
-          [36, 12, 12, 1, 100],
-        ],
+        readFrom: UnixTime(0),
       },
+      [
+        {
+          timestamp: UnixTime(12),
+          count: 24,
+          uopsCount: 36,
+          blocks: 2,
+          gasUsed: 300,
+        },
+        {
+          timestamp: UnixTime(36),
+          count: 12,
+          uopsCount: 12,
+          blocks: 1,
+          gasUsed: 100,
+        },
+      ],
       'uops',
       12,
     )
@@ -61,6 +113,31 @@ describe(toBuckets.name, () => {
       { start: 24, value: 0, ratio: null, blocks: 0, gas: 0 },
       { start: 36, value: 1, ratio: 1, blocks: 1, gas: 100 },
     ])
+  })
+
+  it('takes the count of the metric picked', () => {
+    const [bucket] = toBuckets(
+      {
+        range: '5m',
+        from: UnixTime(0),
+        to: UnixTime(12),
+        bucket: 12,
+        readFrom: UnixTime(0),
+      },
+      [
+        {
+          timestamp: UnixTime(0),
+          count: 24,
+          uopsCount: 36,
+          blocks: 2,
+          gasUsed: 300,
+        },
+      ],
+      'gas',
+      0,
+    )
+
+    expect(bucket?.value).toEqual(25)
   })
 })
 
@@ -104,7 +181,7 @@ describe(getWindowStats.name, () => {
 describe(withUsual.name, () => {
   it('gives each step the usual range of the hour it starts in', () => {
     const steps = withUsual(
-      [{ timestamp: 3599.999 }, { timestamp: 3600 }, { timestamp: 7200 }],
+      [{ timestamp: 3594 }, { timestamp: 3600 }, { timestamp: 7200 }],
       [usualHour(3600, 2)],
       'tps',
     )
@@ -141,14 +218,15 @@ describe(getUsualRate.name, () => {
 describe(valueAt.name, () => {
   const steps = [
     { timestamp: 0, value: 1 },
-    { timestamp: 11.999, value: 1 },
+    { timestamp: 12, value: 1 },
     { timestamp: 12, value: 2 },
-    { timestamp: 23.999, value: 2 },
+    { timestamp: 24, value: 2 },
   ]
 
   it('reads the step a time is in', () => {
-    expect(valueAt(steps, 11.9995)).toEqual(1)
-    expect(valueAt(steps, 12.5)).toEqual(2)
+    expect(valueAt(steps, 11.5)).toEqual(1)
+    expect(valueAt(steps, 12)).toEqual(2)
+    expect(valueAt(steps, 30)).toEqual(2)
   })
 
   it('has nothing before the first step', () => {

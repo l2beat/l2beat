@@ -1,5 +1,6 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { EthereumActivityChart } from '~/components/chart/activity/EthereumActivityChart'
 import { LiveNow } from '~/components/chart/activity/live/LiveNow'
@@ -17,6 +18,8 @@ import {
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { InfoIcon } from '~/icons/Info'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { DEFAULT_LIVE_RANGE } from '~/server/features/layer2s/activity/live/liveRanges'
+import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
 import { ProjectSection } from './ProjectSection'
@@ -29,10 +32,11 @@ export interface ActivitySectionProps extends ProjectSectionProps {
   category?: ProjectScalingCategory
   defaultRange: ChartRange
   dataSource: string | undefined
-  /** Counted block by block, so the backend can store its blocks as they come */
-  hasLive: boolean
-  /** Whether its blocks are stored as they come, so Live has something to show */
-  liveAvailable: boolean
+  /**
+   * Whether its blocks are stored as they come, so Live has something to
+   * show. Undefined for a chain that has no live view
+   */
+  live: 'available' | 'unavailable' | undefined
 }
 
 export function ActivitySection({
@@ -41,18 +45,23 @@ export function ActivitySection({
   category,
   defaultRange,
   dataSource,
-  hasLive,
-  liveAvailable: liveAvailableOnLoad,
+  live,
   ...sectionProps
 }: ActivitySectionProps) {
   // in the URL, so a link can open the section on Live
   const [viewParam, setViewParam] = useQueryParam('activity', 'history', {
     replaceState: true,
   })
-  // kept up to date by the live reads, so Live goes and comes back with the blocks
-  const [liveAvailable, setLiveAvailable] = useState(liveAvailableOnLoad)
-  const view =
-    hasLive && liveAvailable && viewParam === 'live' ? 'live' : 'history'
+  const trpc = useTRPC()
+  const queryClient = useQueryClient()
+  // read on, so Live goes and comes back with the blocks
+  const { data: status } = useQuery({
+    ...trpc.activity.liveStatus.queryOptions({ projectId: project.id }),
+    enabled: live !== undefined,
+    refetchInterval: 10_000,
+  })
+  const liveAvailable = status ? status.available : live === 'available'
+  const view = liveAvailable && viewParam === 'live' ? 'live' : 'history'
   const [metric, setMetric] = useState<LiveMetric>('uops')
   // gas has no history
   const historyMetric: ActivityMetric = metric === 'gas' ? 'uops' : metric
@@ -62,11 +71,26 @@ export function ActivitySection({
     setViewParam(next)
     setLiveTo(undefined)
   }
+  // so Live opens on what it shows first
+  const prefetchLive = () => {
+    if (view === 'live' || !liveAvailable) return
+    void queryClient.prefetchQuery({
+      ...trpc.activity.liveWindow.queryOptions({
+        projectId: project.id,
+        range: DEFAULT_LIVE_RANGE,
+      }),
+      staleTime: 5_000,
+    })
+  }
   return (
     <ProjectSection {...sectionProps}>
       {dataSource && <ChartDataSourceInfo dataSource={dataSource} />}
-      {hasLive && (
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+      {live !== undefined && (
+        <div
+          className="mb-4 flex flex-wrap items-center justify-between gap-2"
+          onPointerEnter={prefetchLive}
+          onFocus={prefetchLive}
+        >
           <RadioGroup
             name="activityView"
             value={view}
@@ -97,12 +121,13 @@ export function ActivitySection({
             )}
           </RadioGroup>
           {view === 'history' ? (
-            <LiveNow
-              project={project}
-              metric={historyMetric}
-              onOpen={() => openView('live')}
-              onAvailable={setLiveAvailable}
-            />
+            status?.now && (
+              <LiveNow
+                now={status.now}
+                metric={historyMetric}
+                onOpen={() => openView('live')}
+              />
+            )
           ) : (
             <LiveState
               following={liveTo === undefined}
@@ -119,7 +144,7 @@ export function ActivitySection({
           setMetric={setMetric}
           to={liveTo}
           setTo={setLiveTo}
-          onAvailable={setLiveAvailable}
+          oldest={status?.oldest}
         />
       ) : project.id === ProjectId.ETHEREUM ? (
         <EthereumActivityChart

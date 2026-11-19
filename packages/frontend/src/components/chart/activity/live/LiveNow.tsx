@@ -1,47 +1,19 @@
-import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
-import type { ChartProject } from '~/components/core/chart/ChartContext'
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { RollingNumber } from '~/components/RollingNumber'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import {
-  DEFAULT_LIVE_RANGE,
-  isLiveFresh,
-} from '~/server/features/layer2s/activity/live/liveRanges'
-import { useTRPC } from '~/trpc/React'
 
-/**
- * The chain's rate right now, leading to the live view. It reads what the
- * live view opens on, so the view has it at hand
- */
+/** The chain's rate right now, leading to the live view */
 export function LiveNow({
-  project,
+  now,
   metric,
   onOpen,
-  onAvailable,
 }: {
-  project: ChartProject
+  /** Per second, over the last minute */
+  now: Record<ActivityMetric, number>
   metric: ActivityMetric
   onOpen: () => void
-  /** Told whether the chain's blocks are stored as they come */
-  onAvailable: (available: boolean) => void
 }) {
-  const trpc = useTRPC()
-  const { data } = useQuery({
-    ...trpc.activity.liveProject.queryOptions({
-      projectId: project.id,
-      range: DEFAULT_LIVE_RANGE,
-    }),
-    refetchInterval: 10_000,
-  })
-  const available = data && isLiveFresh(data.newest, UnixTime.now())
-  useEffect(() => {
-    if (available !== undefined) onAvailable(available)
-  }, [available, onAvailable])
-  const now = data?.now
-  if (!now) return null
-
   return (
     <button
       type="button"
