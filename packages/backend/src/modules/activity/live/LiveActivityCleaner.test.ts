@@ -1,12 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import { type Database, LIVE_BUFFER_SECONDS } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
-import {
-  LIVE_BLOCKS_KEPT_FOR,
-  LiveActivityCleaner,
-} from './LiveActivityCleaner'
+import { LiveActivityCleaner } from './LiveActivityCleaner'
 
 describe(LiveActivityCleaner.name, () => {
   it('deletes the blocks older than they are kept for', async () => {
@@ -22,7 +19,7 @@ describe(LiveActivityCleaner.name, () => {
     await cleaner.run()
 
     const [cutoff] = repository.deleteBefore.calls[0]?.args ?? []
-    expect(cutoff).toBeGreaterThanOrEqual(before - LIVE_BLOCKS_KEPT_FOR)
-    expect(cutoff).toBeLessThanOrEqual(UnixTime.now() - LIVE_BLOCKS_KEPT_FOR)
+    expect(cutoff).toBeGreaterThanOrEqual(before - LIVE_BUFFER_SECONDS)
+    expect(cutoff).toBeLessThanOrEqual(UnixTime.now() - LIVE_BUFFER_SECONDS)
   })
 })
