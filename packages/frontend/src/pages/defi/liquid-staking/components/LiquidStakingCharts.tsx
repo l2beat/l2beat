@@ -190,7 +190,7 @@ export function YieldChart({
     title: 'Rate-implied yield',
     description: [
       YIELD_METRIC.tooltip,
-      'Network average: what all active validators earned over the same days, before any fees.',
+      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days.',
       'The shaded area is the ETH staked.',
     ].join(' '),
     timeRange: getChartTimeRangeFromData(chartData),
