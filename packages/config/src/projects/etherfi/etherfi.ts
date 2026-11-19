@@ -216,7 +216,7 @@ export const etherfi: BaseProject = {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. The stake is not restaked in EigenLayer: only withdrawals queued in the last 14 days can still be slashed there.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Validators withdraw through EigenLayer pods, so the stake can be restaked there, where operator slashing can cut principal.`,
       },
       backing: {
         value: 'EigenPods, stETH',
