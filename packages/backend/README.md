@@ -145,7 +145,7 @@ FEATURES=*,!interop.relay
   60
 - `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
 - `<CHAIN>_RPC_MAX_BATCH_SIZE` - Optional. The RPC's limit of calls per batch request, bigger batches are split. A batch it still rejects throws. Unset, batches of 50 shrink for 5 minutes when the RPC rejects them.
-- `RPC_STEP_DOWN_ON_THROTTLE` - Optional, off by default. When `true`, an RPC client that is refused a call for its rate (HTTP 429) lowers its own rate by a tenth, at most once a minute and down to a tenth of `<CHAIN>_RPC_CALLS_PER_MINUTE`. The rate stays down until the process restarts and never climbs back by itself. `Http metrics` logs it as `effectiveCallsPerMinute`: once it has settled, that is the value to put in `callsPerMinute`.
+- `RPC_STEP_DOWN_ON_THROTTLE` - Optional, off by default. When `true`, an RPC client that is refused a call for its rate (HTTP 429) lowers its own rate by a tenth, at most once a minute and down to a tenth of `<CHAIN>_RPC_CALLS_PER_MINUTE`. The rate stays down until the process restarts and never climbs back by itself. `Http metrics` logs it as `effectiveCallsPerMinute`: once it has settled, that is the value to put in `callsPerMinute`. It has no effect with `NEW_CLIENTS_ENABLED=true`: the newer RPC clients do not step down.
 
 You can also append the feature name to the environment variables if you'd like a specific feature
 to use a different endpoint. For example:
