@@ -215,9 +215,9 @@ export const rocketpool: BaseProject = {
     risks: {
       minting: {
         value: 'Permissionless',
-        secondLine: 'ungated queue',
+        secondLine: 'ungated FIFO queue',
         sentiment: 'good',
-        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
+        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators in order. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
       },
       operators: {
         value: 'Permissionless',
