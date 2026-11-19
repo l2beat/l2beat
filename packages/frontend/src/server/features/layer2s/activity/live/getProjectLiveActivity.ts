@@ -44,8 +44,6 @@ export interface ProjectLiveStatus {
   available: boolean
   /** Of the newest stored block. Undefined while there is none */
   newest: UnixTime | undefined
-  /** Of the oldest stored block, before which nothing is known */
-  oldest: UnixTime | undefined
   /** Per second, over the minute up to the newest block, while it is recent */
   now: { tps: number; uops: number } | undefined
 }
@@ -63,6 +61,8 @@ export interface ProjectLiveWindow {
   }
   /** Those with blocks */
   buckets: LiveActivityBucketRecord[]
+  /** Of the oldest stored block, before which nothing is known */
+  oldest: UnixTime | undefined
   /** The hours the window is in, as they were on the days before */
   usual: UsualHour[]
   /** The whole buffer, in longer buckets */
@@ -103,7 +103,6 @@ async function readProjectLiveStatus(
   const none = {
     available: false,
     newest: undefined,
-    oldest: undefined,
     now: undefined,
   }
   if (env.MOCK) return none
@@ -113,15 +112,12 @@ async function readProjectLiveStatus(
   if (newest === undefined) return none
 
   const available = isLiveFresh(newest, UnixTime.now())
-  const [oldest, now] = await Promise.all([
-    db.liveActivityBlock.getOldestTimestamp(id),
-    available
-      ? getLastMinuteRates(newest, (from, to) =>
-          db.liveActivityBlock.getProjectBuckets(id, from, to, UnixTime.MINUTE),
-        )
-      : undefined,
-  ])
-  return { available, newest, oldest, now }
+  const now = available
+    ? await getLastMinuteRates(newest, (from, to) =>
+        db.liveActivityBlock.getProjectBuckets(id, from, to, UnixTime.MINUTE),
+      )
+    : undefined
+  return { available, newest, now }
 }
 
 async function readProjectLiveWindow({
@@ -168,6 +164,7 @@ async function readProjectLiveWindow({
   return {
     window,
     buckets,
+    oldest,
     usual: getUsualRates(hours, firstHour, lastHour),
     overview: { bucket: OVERVIEW_BUCKET_SECONDS, buckets: overview },
     buffer,

@@ -138,7 +138,9 @@ export function withDashAnchor(
   steps: ReturnType<typeof toSteps>,
   from: number,
 ) {
-  const hour = Math.floor((from - 1) / UnixTime.HOUR) * UnixTime.HOUR
+  // before the first step too, which can start before the window
+  const start = Math.min(from, steps[0]?.timestamp ?? from)
+  const hour = Math.floor((start - 1) / UnixTime.HOUR) * UnixTime.HOUR
   return [{ timestamp: hour, value: null, ratio: null, blocks: 0 }, ...steps]
 }
 
