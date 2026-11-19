@@ -124,11 +124,7 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           isLoading={isLoading}
           syncedUntil={data?.syncedUntil}
           formatPeriod={(timestamp) =>
-            formatActivityPeriod(
-              timestamp,
-              data?.resolution ?? 'day',
-              undefined,
-            )
+            formatActivityPeriod(timestamp, data?.resolution ?? 'day')
           }
         />
       </div>

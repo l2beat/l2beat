@@ -82,7 +82,6 @@ export function ProjectActivityChart({
           project={project}
           tickCount={4}
           resolution={resolution}
-          liveUntil={chart?.liveUntil}
         />
       </div>
       <div className="mb-2">

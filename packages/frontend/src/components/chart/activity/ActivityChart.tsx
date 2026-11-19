@@ -4,6 +4,7 @@ import {
   formatActivityCount,
   formatInteger,
   ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
@@ -29,7 +30,7 @@ import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import type { ChartScale } from '../types'
-import { formatActivityPeriod, getActivityPeriod } from './utils/activityPeriod'
+import { formatActivityPeriod } from './utils/activityPeriod'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
@@ -37,6 +38,8 @@ type SeriesKey = 'ethereum' | 'projects'
 
 interface ActivityChartDataPoint {
   timestamp: number
+  /** Where a period still under way ends so far */
+  periodEnd?: number
   projects?: number | null
   ethereum: number | null
 }
@@ -53,8 +56,6 @@ interface Props {
   project: ChartProject
   tickCount?: number
   resolution?: ActivityResolution
-  /** Of the newest stored block, when the last point is a period under way */
-  liveUntil?: number
 }
 
 export function ActivityChart({
@@ -69,7 +70,6 @@ export function ActivityChart({
   project,
   tickCount,
   resolution = 'day',
-  liveUntil,
 }: Props) {
   const chartMeta = useMemo(
     () => ({
@@ -153,7 +153,6 @@ export function ActivityChart({
             keys={keys}
             metric={metric}
             resolution={resolution}
-            liveUntil={liveUntil}
           />
         )}
       />
@@ -162,7 +161,7 @@ export function ActivityChart({
 }
 
 export function ActivityCustomTooltip<
-  T extends { timestamp: number },
+  T extends { timestamp: number; periodEnd?: number },
   K extends string,
 >({
   row,
@@ -170,7 +169,6 @@ export function ActivityCustomTooltip<
   metric,
   skipNull,
   resolution = 'day',
-  liveUntil,
 }: {
   row: T
   keys: K[]
@@ -178,17 +176,16 @@ export function ActivityCustomTooltip<
   /** Leave out series without a value, instead of showing "No data". */
   skipNull?: boolean
   resolution?: ActivityResolution
-  liveUntil?: number
 }) {
   const timestamp = row.timestamp
-  const { seconds } = getActivityPeriod(timestamp, resolution, liveUntil)
+  const end = row.periodEnd ?? timestamp + UnixTime.periodToSeconds(resolution)
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatActivityPeriod(timestamp, resolution, liveUntil)}
+          {formatActivityPeriod(timestamp, resolution, end)}
         </ChartTooltipTitle>
         <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
@@ -212,7 +209,7 @@ export function ActivityCustomTooltip<
             <ChartTooltipRow key={entry.name} name={entry.name}>
               <ChartTooltipValue
                 value={entry.value}
-                format={(value) => formatInteger(value * seconds)}
+                format={(value) => formatInteger(value * (end - timestamp))}
                 className="tabular-nums"
               />
             </ChartTooltipRow>

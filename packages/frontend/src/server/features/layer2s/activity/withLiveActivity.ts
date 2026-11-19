@@ -29,7 +29,7 @@ interface Counts {
 }
 
 interface Live {
-  /** Where the chart ends: its newest stored block, when it reaches it */
+  /** The newest stored block, when the chart reaches it */
   syncedUntil: UnixTime
   /**
    * Of a single project's newest stored block, when the chart reaches past
@@ -89,13 +89,12 @@ async function appendLive<T extends ChartRow>(
   projectId: ProjectId | undefined,
   toRow: ToRow<T>,
 ): Promise<{ data: T[] } & Live> {
-  const last = withoutUnsummed(chart.data).at(-1)
+  const now = UnixTime.now()
   if (
     env.MOCK ||
     !env.CLIENT_SIDE_LIVE_ACTIVITY ||
     !projectId ||
-    !last ||
-    !endsToday(range)
+    !endsToday(range, now)
   ) {
     return {
       data: chart.data,
@@ -103,13 +102,14 @@ async function appendLive<T extends ChartRow>(
       liveUntil: undefined,
     }
   }
-  const recent = await getRecentHours(
+  const hours = await getChainHours(
     [...new Set([projectId, ProjectId.ETHEREUM])],
-    last[0] + UnixTime.periodToSeconds(resolution),
+    (stored) => getRecentStart(chart.data, stored.get(projectId), resolution),
+    now,
   )
   const { data, liveUntil } = appendRecentPoints(
     chart.data,
-    recent,
+    hours,
     projectId,
     resolution,
     toRow,
@@ -117,90 +117,86 @@ async function appendLive<T extends ChartRow>(
   return { data, syncedUntil: liveUntil ?? chart.syncedUntil, liveUntil }
 }
 
-export interface RecentHours {
-  /** By the hour's start: what activity summed, and the stored blocks it has not yet */
-  hours: Map<UnixTime, Counts>
-  /** Of the newest stored block */
-  until: UnixTime
+/** A chain's hours: what activity summed, and its stored blocks after them */
+export interface ChainHours {
+  summed: HourlyActivityRecord[]
+  stored: LiveActivityHourRecord[]
 }
 
 /**
- * Each project's hours from `since` up to its newest stored block. Activity
- * sums a batch and moves past it in one transaction, so all is read in one
- * snapshot, or a batch could count twice or not at all. None at all when the
- * read fails, as charts do well without them
+ * Each chain's stored blocks after the ones activity summed, and its summed
+ * hours from where they start. Activity sums a batch and moves past it in
+ * one transaction, so all is read in one snapshot, or a batch could count
+ * twice or not at all. None when the read fails, as charts do well without
  */
-async function getRecentHours(
+async function getChainHours(
   projectIds: ProjectId[],
-  since: UnixTime,
-): Promise<Map<ProjectId, RecentHours>> {
+  startOf: (
+    stored: Map<ProjectId, LiveActivityHourRecord[]>,
+  ) => UnixTime | undefined,
+  now: UnixTime,
+): Promise<Map<ProjectId, ChainHours>> {
+  const db = getDb()
   try {
-    return await readRecentHours(projectIds, since)
+    return await db.transaction(async () => {
+      const syncMetadata = await db.syncMetadata.getByFeatureAndIds(
+        'activity',
+        projectIds,
+      )
+      const stored = new Map(
+        await Promise.all(
+          syncMetadata.flatMap(({ id, blockSyncedUntil }) =>
+            blockSyncedUntil === null
+              ? []
+              : [
+                  db.liveActivityBlock
+                    .getContiguousHoursAfter(ProjectId(id), blockSyncedUntil)
+                    .then((hours) => [ProjectId(id), hours] as const),
+                ],
+          ),
+        ),
+      )
+      const since = startOf(stored)
+      if (since === undefined) return new Map()
+      const summed = groupBy(
+        await db.hourlyActivity.getByProjectsAndTimeRange(projectIds, [
+          since,
+          now,
+        ]),
+        (r) => r.projectId,
+      )
+      return new Map(
+        [...stored].map(([id, hours]) => [
+          id,
+          { summed: summed[id] ?? [], stored: hours },
+        ]),
+      )
+    }, 'repeatable read')
   } catch (error) {
-    getLogger().for('getRecentHours').warn('Recent activity unreadable', {
+    getLogger().for('getChainHours').warn('Recent activity unreadable', {
       error,
     })
     return new Map()
   }
 }
 
-function readRecentHours(
-  projectIds: ProjectId[],
-  since: UnixTime,
-): Promise<Map<ProjectId, RecentHours>> {
-  const db = getDb()
-  return db.transaction(async () => {
-    const [syncMetadata, summed] = await Promise.all([
-      db.syncMetadata.getByFeatureAndIds('activity', projectIds),
-      db.hourlyActivity.getByProjectsAndTimeRange(projectIds, [
-        since,
-        UnixTime.now(),
-      ]),
-    ])
-    const summedByProject = groupBy(summed, (r) => r.projectId)
-    const recent = await Promise.all(
-      syncMetadata.map(async ({ id, blockSyncedUntil }) => {
-        if (blockSyncedUntil === null) return undefined
-        const projectId = ProjectId(id)
-        const stored = await db.liveActivityBlock.getContiguousHoursAfter(
-          projectId,
-          blockSyncedUntil,
-        )
-        const hours = toRecentHours(
-          summedByProject[projectId] ?? [],
-          stored,
-          since,
-        )
-        return hours && ([projectId, hours] as const)
-      }),
-    )
-    return new Map(recent.filter((r) => r !== undefined))
-  }, 'repeatable read')
-}
-
 /**
- * A project's hours from `since`, summed and stored. None without stored
- * blocks, as they don't run on from the summed ones
+ * Where a chart's recent periods start: after its last summed one, or at the
+ * one with the first block activity has not summed, as it summed only part
+ * of that period while it catches up, though the chart counts it as whole
  */
-export function toRecentHours(
-  summed: HourlyActivityRecord[],
-  stored: LiveActivityHourRecord[],
-  since: UnixTime,
-): RecentHours | undefined {
-  const last = stored.at(-1)
-  if (!last) return undefined
-  const hours = new Map<UnixTime, Counts>()
-  const add = (timestamp: UnixTime, count: number, uopsCount: number) => {
-    if (timestamp < since) return
-    const hour = hours.get(timestamp) ?? { count: 0, uopsCount: 0 }
-    hours.set(timestamp, {
-      count: hour.count + count,
-      uopsCount: hour.uopsCount + uopsCount,
-    })
-  }
-  for (const r of summed) add(r.timestamp, r.count, r.uopsCount ?? r.count)
-  for (const h of stored) add(h.timestamp, h.count, h.uopsCount)
-  return { hours, until: last.lastTimestamp }
+export function getRecentStart(
+  data: ChartRow[],
+  stored: LiveActivityHourRecord[] | undefined,
+  resolution: ActivityResolution,
+): UnixTime | undefined {
+  const last = withoutUnsummed(data).at(-1)
+  const first = stored?.[0]
+  if (!last || !first) return undefined
+  return Math.min(
+    last[0] + UnixTime.periodToSeconds(resolution),
+    UnixTime.toStartOf(first.timestamp, resolution),
+  )
 }
 
 type ToRow<T> = (
@@ -210,68 +206,72 @@ type ToRow<T> = (
 ) => T
 
 /**
- * A chart with the project's periods after its last summed one, up to the
+ * A chart with the project's periods from where recent ones start up to its
  * newest block, and Ethereum's beside the periods whole for both: the period
  * under way is spread over the project's seconds so far, which are not
- * Ethereum's. The hours are read from the period after the last summed one
+ * Ethereum's
  */
 export function appendRecentPoints<T extends ChartRow>(
   data: T[],
-  recent: Map<ProjectId, RecentHours>,
+  hours: Map<ProjectId, ChainHours>,
   projectId: ProjectId,
   resolution: ActivityResolution,
   toRow: ToRow<T>,
 ): { data: T[]; liveUntil: UnixTime | undefined } {
-  const own = recent.get(projectId)
-  const summed = withoutUnsummed(data)
-  const after = summed.at(-1)?.[0]
-  if (!own || after === undefined) return { data, liveUntil: undefined }
-  const appended = toRecentPoints(own, resolution, after)
+  const own = hours.get(projectId)
+  const since = getRecentStart(data, own?.stored, resolution)
+  const until = own?.stored.at(-1)?.lastTimestamp
+  if (!own || since === undefined || until === undefined) {
+    return { data, liveUntil: undefined }
+  }
+  const appended = toRecentPoints(own, since, until, resolution)
   if (appended.length === 0) return { data, liveUntil: undefined }
-  const ethereum = recent.get(ProjectId.ETHEREUM)
+  const ethereum = hours.get(ProjectId.ETHEREUM)
+  const ethereumUntil = ethereum?.stored.at(-1)?.lastTimestamp
   const step = UnixTime.periodToSeconds(resolution)
   const beside = new Map(
-    ethereum
-      ? toRecentPoints(ethereum, resolution, after)
-          .filter(
-            (p) => p.timestamp + step <= Math.min(own.until, ethereum.until),
-          )
+    ethereum && ethereumUntil !== undefined
+      ? toRecentPoints(ethereum, since, ethereumUntil, resolution)
+          .filter((p) => p.timestamp + step <= Math.min(until, ethereumUntil))
           .map((p) => [p.timestamp, p])
       : [],
   )
   return {
     data: [
-      ...summed,
+      ...data.filter((row) => row[0] < since),
       ...appended.map((p) => toRow(p.timestamp, p, beside.get(p.timestamp))),
     ],
-    liveUntil: own.until,
+    liveUntil: until,
   }
 }
 
 /**
- * Each period after `after` up to the newest block. The stored blocks run on
+ * Each period from `since` up to the newest block. The stored blocks run on
  * from the summed ones unbroken, so a period with neither had no blocks
  */
 function toRecentPoints(
-  recent: RecentHours,
+  { summed, stored }: ChainHours,
+  since: UnixTime,
+  until: UnixTime,
   resolution: ActivityResolution,
-  after: UnixTime,
 ): (Counts & { timestamp: UnixTime })[] {
   const periods = new Map<UnixTime, Counts>()
-  for (const [hour, { count, uopsCount }] of recent.hours) {
+  const add = (hour: UnixTime, count: number, uopsCount: number) => {
     const period = UnixTime.toStartOf(hour, resolution)
-    if (period <= after) continue
+    if (period < since) return
     const sum = periods.get(period) ?? { count: 0, uopsCount: 0 }
     periods.set(period, {
       count: sum.count + count,
       uopsCount: sum.uopsCount + uopsCount,
     })
   }
-  const newest = UnixTime.toStartOf(recent.until, resolution)
+  for (const r of summed) add(r.timestamp, r.count, r.uopsCount ?? r.count)
+  for (const h of stored) add(h.timestamp, h.count, h.uopsCount)
+  const newest = UnixTime.toStartOf(until, resolution)
   const step = UnixTime.periodToSeconds(resolution)
   const points: (Counts & { timestamp: UnixTime })[] = []
-  for (let p = after + step; p <= newest; p += step) {
-    if (p === newest && recent.until - p < MIN_ELAPSED[resolution]) break
+  for (let p = since; p <= newest; p += step) {
+    if (p === newest && until - p < MIN_ELAPSED[resolution]) break
     points.push({
       timestamp: p,
       ...(periods.get(p) ?? { count: 0, uopsCount: 0 }),

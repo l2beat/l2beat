@@ -14,7 +14,6 @@ export interface LiveActivityBlockRecord {
   gasUsed: number
 }
 
-/** The blocks of one hour of a project's chain, summed */
 export interface LiveActivityHourRecord {
   timestamp: UnixTime
   count: number

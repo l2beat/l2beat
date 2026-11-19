@@ -1,26 +1,40 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { capTimeRange, getActivityPeriod } from './activityPeriod'
+import {
+  capTimeRange,
+  formatActivityPeriod,
+  getActivityPeriodEnd,
+} from './activityPeriod'
 
-describe(getActivityPeriod.name, () => {
-  const HOUR_START = UnixTime.toStartOf(UnixTime(1_800_000_000), 'hour')
+const HOUR_START = UnixTime.toStartOf(UnixTime(1_800_000_000), 'hour')
 
-  it('spreads a whole period over all its seconds', () => {
-    expect(getActivityPeriod(HOUR_START, 'hour', undefined)).toEqual({
-      seconds: 3600,
-      underWay: false,
-    })
-    expect(getActivityPeriod(HOUR_START, 'hour', HOUR_START + 7200)).toEqual({
-      seconds: 3600,
-      underWay: false,
-    })
+describe(getActivityPeriodEnd.name, () => {
+  it('ends a whole period after all its seconds', () => {
+    expect(getActivityPeriodEnd(HOUR_START, 'hour', undefined)).toEqual(
+      HOUR_START + 3600,
+    )
+    expect(getActivityPeriodEnd(HOUR_START, 'hour', HOUR_START + 7200)).toEqual(
+      HOUR_START + 3600,
+    )
   })
 
-  it('spreads a period under way up to the newest block', () => {
-    expect(getActivityPeriod(HOUR_START, 'hour', HOUR_START + 899)).toEqual({
-      seconds: 900,
-      underWay: true,
-    })
+  it('ends a period under way with the newest block', () => {
+    expect(getActivityPeriodEnd(HOUR_START, 'hour', HOUR_START + 899)).toEqual(
+      HOUR_START + 900,
+    )
+  })
+})
+
+describe(formatActivityPeriod.name, () => {
+  it('says a period under way is so far', () => {
+    expect(
+      formatActivityPeriod(HOUR_START, 'hour', HOUR_START + 900).endsWith(
+        ' so far',
+      ),
+    ).toEqual(true)
+    expect(
+      formatActivityPeriod(HOUR_START, 'hour').endsWith(' so far'),
+    ).toEqual(false)
   })
 })
 
