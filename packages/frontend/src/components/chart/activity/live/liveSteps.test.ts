@@ -258,9 +258,9 @@ describe(withDashAnchor.name, () => {
   })
 
   it('stays before a first step starting before the window', () => {
-    // Methodology: a 96 s bucket from 3552 holds the window's start, 3700
+    // Methodology: a 96 s bucket from 3552 holds the window's start, 3620
     const first = { ...step, timestamp: 3552 }
 
-    expect(withDashAnchor([first], 3700)[0]?.timestamp).toEqual(0)
+    expect(withDashAnchor([first], 3620)[0]?.timestamp).toEqual(0)
   })
 })
