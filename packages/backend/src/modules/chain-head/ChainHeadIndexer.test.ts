@@ -146,6 +146,31 @@ describe(ChainHeadIndexer.name, () => {
       ])
     })
 
+    it('drops to the fork when a block of the same height replaced its tip', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      const indexer = head(chain, store)
+      chain.reorg(100)
+
+      expect(await indexer.follow()).toEqual({
+        height: 99,
+        stored: 0,
+        again: true,
+      })
+      expect(store.hashes()).toEqual(['0x98', '0x99'])
+
+      expect(await indexer.follow()).toEqual({
+        height: 100,
+        stored: 1,
+        again: false,
+      })
+      expect(store.hashes()).toEqual(['0x98', '0x99', '0x100-1'])
+    })
+
     it('keeps its blocks when a node serves the next block from another fork', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [chain.block(100)])

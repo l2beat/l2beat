@@ -75,6 +75,7 @@ export class ChainHeadIndexer extends RootIndexer {
   private cleanedAt = 0
   private timer: ReturnType<typeof setTimeout> | undefined
   private keepFor: number
+  private batchSize: number
 
   constructor(
     private readonly $: ChainHeadIndexerDependencies,
@@ -84,11 +85,17 @@ export class ChainHeadIndexer extends RootIndexer {
       tickRetryStrategy: getHeadRetryStrategy(),
     })
     this.keepFor = $.keepFor
+    this.batchSize = $.batchSize
   }
 
   /** Blocks are kept for as long as the reader that looks furthest back needs, in seconds */
   keepAtLeast(seconds: number) {
     this.keepFor = Math.max(this.keepFor, seconds)
+  }
+
+  /** Blocks are fetched in batches no larger than the most careful reader asks for */
+  fetchAtMost(blocks: number) {
+    this.batchSize = Math.min(this.batchSize, blocks)
   }
 
   override initialize() {
@@ -128,13 +135,20 @@ export class ChainHeadIndexer extends RootIndexer {
       await this.store([block])
       return { height: block.number, stored: 1, again: false }
     }
-    // also a node behind the load balancer answering for an older head
-    if (latest <= tip.number) {
+    // a node behind the load balancer answering for an older head
+    if (latest < tip.number) {
+      return { height: tip.number, stored: 0, again: false }
+    }
+    if (latest === tip.number) {
+      // A block of the same height may have replaced the tip. The next block
+      // would show it, but on a quiet chain that can be many minutes away
+      const hash = await this.$.source.getBlockHash(tip.number)
+      if (hash !== tip.hash) return await this.unwind(remembered)
       return { height: tip.number, stored: 0, again: false }
     }
 
     const from = tip.number + 1
-    const to = Math.min(from + this.$.batchSize - 1, latest)
+    const to = Math.min(from + this.batchSize - 1, latest)
     let blocks: EVMBlockWithTransactions[]
     try {
       blocks = await this.$.source.getBlocks(from, to)
@@ -215,7 +229,7 @@ export class ChainHeadIndexer extends RootIndexer {
       })),
     ].slice(-REMEMBERED_BLOCKS)
     for (const block of blocks) this.fetched.set(block.number, block)
-    const kept = Math.max(2 * this.$.batchSize, REMEMBERED_BLOCKS)
+    const kept = Math.max(2 * this.batchSize, REMEMBERED_BLOCKS)
     for (const number of this.fetched.keys()) {
       if (this.fetched.size <= kept) break
       this.fetched.delete(number)

@@ -22,8 +22,9 @@ export class ChainHeads {
 
   /**
    * Undefined for a chain with no RPC to follow. The head keeps its blocks
-   * for as long as the reader that looks furthest back asks. The batch size
-   * of whoever asks first holds for the chain
+   * for as long as the reader that looks furthest back asks, and fetches them
+   * in batches of the smallest size a reader asks for: a reader that limits
+   * what its chain's RPC is asked at once is not overruled by another
    */
   get(
     chain: string,
@@ -32,6 +33,7 @@ export class ChainHeads {
     const existing = this.heads.get(chain)
     if (existing) {
       existing.keepAtLeast(reader.keepFor)
+      existing.fetchAtMost(reader.batchSize)
       return existing
     }
 
