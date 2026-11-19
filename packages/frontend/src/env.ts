@@ -87,6 +87,8 @@ const SERVER_CONFIG = {
     .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
+  // CoinGecko, for ETH's total supply; the free API works without it
+  COINGECKO_API_KEY: z.string().optional(),
   ES_BUFFER_ALERT_BYTES: z
     .unknown()
     .transform((v) => Number(v))
@@ -154,6 +156,7 @@ function getRawEnv(): Record<
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
+    COINGECKO_API_KEY: process.env.COINGECKO_API_KEY,
     ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,

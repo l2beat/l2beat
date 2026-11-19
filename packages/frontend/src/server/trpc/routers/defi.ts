@@ -2,6 +2,7 @@ import {
   DefiTvlChartParams,
   getDefiTvlChart,
 } from '~/server/features/defi/getDefiTvlChart'
+import { getEthSupply } from '~/server/features/defi/liquid-staking/getEthSupply'
 import {
   getLiquidStakingCostOfExitChart,
   getLiquidStakingYieldChart,
@@ -23,6 +24,7 @@ export const defiRouter = router({
   liquidStakingCostOfExitChart: procedure
     .input(LiquidStakingChartsParams)
     .query(({ input }) => getLiquidStakingCostOfExitChart(input)),
+  ethSupply: procedure.query(() => getEthSupply()),
   liquidStakingTvlChart: procedure
     .input(LiquidStakingTvlChartParams)
     .query(({ input }) => getLiquidStakingTvlChart(input)),
