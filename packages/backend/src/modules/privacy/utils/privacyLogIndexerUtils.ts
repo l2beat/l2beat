@@ -1,6 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider, IRpcClient, LogsProvider } from '@l2beat/shared'
+import type {
+  BlockProvider,
+  IRpcClient,
+  LogsProvider,
+  LogsTopicFilter,
+} from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -49,19 +54,8 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     deps.to,
   )
 
-  // eth_getLogs ORs the values at a topic position, so configurations that
-  // filter the same positions share a query and logs are matched by topics.
-  const groups = await Promise.all(
-    groupByTopicPositions(configurations).map(async (group) => {
-      const { addresses, events } = buildPrivacyLogFilter(group)
-      const logs = await deps.logsProvider.getLogs(
-        blockFrom,
-        blockTo,
-        addresses,
-        [events, ...mergeTopics(group)],
-      )
-      return { configurations: group, logs }
-    }),
+  const groups = await queryPrivacyLogs(configurations, (addresses, topics) =>
+    deps.logsProvider.getLogs(blockFrom, blockTo, addresses, topics),
   )
 
   const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
@@ -69,23 +63,66 @@ export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
     deps.blockProvider,
     deps.logger,
   )
+  return groups.flatMap((group) =>
+    matchPrivacyLogs(group.configurations, group.logs, blockTimestampLookup),
+  )
+}
+
+/**
+ * eth_getLogs ORs the values at a topic position, so configurations that
+ * filter the same positions share a query and logs are matched by topics.
+ */
+export function queryPrivacyLogs<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+  getLogs: (addresses: string[], topics: LogsTopicFilter) => Promise<Log[]>,
+): Promise<{ configurations: Configuration<T>[]; logs: Log[] }[]> {
+  return Promise.all(
+    groupPrivacyLogFilters(configurations).map(async (group) => ({
+      configurations: group.configurations,
+      logs: await getLogs(group.addresses, group.topics),
+    })),
+  )
+}
+
+/** The `eth_getLogs` filters that find the logs of the configurations, each with the configurations it is for */
+export function groupPrivacyLogFilters<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+): {
+  configurations: Configuration<T>[]
+  addresses: string[]
+  topics: LogsTopicFilter
+}[] {
+  return groupByTopicPositions(configurations).map((group) => {
+    const { addresses, events } = buildPrivacyLogFilter(group)
+    return {
+      configurations: group,
+      addresses,
+      topics: [events, ...mergeTopics(group)],
+    }
+  })
+}
+
+/** Pairs each log with the configurations whose address, event and topics it has */
+export function matchPrivacyLogs<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+  logs: Log[],
+  blockTimestamps: Map<number, UnixTime>,
+): PrivacyLogMatch<T>[] {
+  const configMap = buildPrivacyLogConfigMap(configurations)
   const matches: PrivacyLogMatch<T>[] = []
 
-  for (const group of groups) {
-    const configMap = buildPrivacyLogConfigMap(group.configurations)
-    for (const log of group.logs) {
-      const key = getPrivacyLogKey(log)
-      const matching = (configMap.get(key) ?? []).filter((configuration) =>
-        hasTopics(log, configuration.properties.topics),
-      )
-      if (matching.length === 0) continue
+  for (const log of logs) {
+    const key = getPrivacyLogKey(log)
+    const matching = (configMap.get(key) ?? []).filter((configuration) =>
+      hasTopics(log, configuration.properties.topics),
+    )
+    if (matching.length === 0) continue
 
-      const timestamp = blockTimestampLookup.get(log.blockNumber)
-      assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
+    const timestamp = blockTimestamps.get(log.blockNumber)
+    assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
 
-      for (const configuration of matching) {
-        matches.push({ log, timestamp, configuration })
-      }
+    for (const configuration of matching) {
+      matches.push({ log, timestamp, configuration })
     }
   }
 
@@ -106,8 +143,9 @@ export async function extractPrivacyLogMatches<
     match: PrivacyLogMatch<T>,
     context: PrivacyRpcContext,
   ) => Promise<R | undefined>,
+  receipts = new ReceiptLogCache(rpc),
 ): Promise<R[]> {
-  const context = { rpc, receipts: new ReceiptLogCache(rpc) }
+  const context = { rpc, receipts }
   const results: R[] = []
   for (const batch of chunk(matches, EXTRACTION_BATCH_SIZE)) {
     const extracted = await Promise.all(
@@ -151,7 +189,8 @@ function hasTopics(log: Log, topics: PrivacyLogTopicFilter = []): boolean {
   )
 }
 
-async function resolvePrivacyBlockRange(
+/** The blocks whose logs an update of these hours reads, both ends included */
+export async function resolvePrivacyBlockRange(
   repository: Database['privacyBlockTimestamp'],
   chain: string,
   from: number,

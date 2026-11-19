@@ -29,4 +29,5 @@ export const INDEXER_NAMES = {
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
   LIVE_BLOBS: 'live_blobs_indexer',
   LIVE_ACTIVITY: 'live_activity',
+  LIVE_PRIVACY_FLOW: 'live_privacy_flow',
 }

@@ -2,12 +2,14 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { ChainBlockRecord, Database } from '@l2beat/database'
 import {
   type EVMBlockWithTransactions,
+  type LogsTopicFilter,
   NotFoundOnRpcError,
 } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import range from 'lodash/range'
 import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetrics'
+import { HeadLogs, type LogNeed } from './HeadLogs'
 
 /** Shorter than most chains take for a few blocks */
 const INTERVAL_MS = 10_000
@@ -31,7 +33,27 @@ export interface HeadSource {
   /** The same blocks without their transactions */
   getHeaders(from: number, to: number): Promise<Header[]>
   getBlockHash(number: number): Promise<string>
+  /**
+   * The logs of the block with this hash. Fails when the answering node does
+   * not have the block: asked for by number, a node that is behind answers
+   * with no logs, which reads the same as a block that has none
+   */
+  getLogs(
+    blockHash: string,
+    addresses: string[],
+    topics: LogsTopicFilter,
+  ): Promise<Log[]>
+  /** The logs of the blocks with the numbers, both ends included, whatever their hashes */
+  getLogsInRange(
+    from: number,
+    to: number,
+    addresses: string[],
+    topics: LogsTopicFilter,
+  ): Promise<Log[]>
 }
+
+/** A log of a stored block, with the block's timestamp */
+export type HeadLog = Log & { blockTimestamp: UnixTime }
 
 export interface ChainHeadIndexerDependencies {
   chain: string
@@ -82,6 +104,7 @@ export class ChainHeadIndexer extends RootIndexer {
   private cleanedAt = 0
   private timer: ReturnType<typeof setTimeout> | undefined
   private keepFor: number
+  private readonly logs: HeadLogs
   private batchSize: number
   private fullBlocks = false
 
@@ -93,6 +116,11 @@ export class ChainHeadIndexer extends RootIndexer {
       tickRetryStrategy: Indexer.getLiveRetryStrategy(),
     })
     this.keepFor = $.keepFor
+    this.logs = new HeadLogs({
+      chain: $.chain,
+      source: $.source,
+      logger: this.logger,
+    })
     this.batchSize = $.batchSize
   }
 
@@ -274,6 +302,44 @@ export class ChainHeadIndexer extends RootIndexer {
     return this.fullBlocks
       ? this.$.source.getBlocks(from, to)
       : this.$.source.getHeaders(from, to)
+  }
+
+  /**
+   * Says which logs a reader will read, and returns how it reads them: the
+   * logs of the blocks it is given, in the order of the chain. To be called
+   * before the head starts.
+   *
+   * The blocks are to be ones the head has stored, as a reader gets them
+   * from `ChainBlock`. Their logs are asked for under the hashes given, so
+   * a reader that then checks those same blocks are still the head's has
+   * rows of the chain the head follows. Readers share requests, see
+   * `HeadLogs`
+   */
+  readLogs(need: LogNeed): (blocks: ChainBlockRecord[]) => Promise<HeadLog[]> {
+    const read = this.logs.need(need)
+    return async (blocks) => {
+      const logs = await withCoreFeatureRpcMetricsContext(
+        'chainHead',
+        { chain: this.$.chain, mode: 'read' },
+        () => read(blocks),
+      )
+      return blocks.flatMap((block, i) =>
+        logs[i].map((log) => ({
+          ...log,
+          blockNumber: block.number,
+          blockTimestamp: block.timestamp,
+        })),
+      )
+    }
+  }
+
+  /**
+   * Goes up when what readers were told before can no longer be relied on,
+   * as when a chain's logs blooms prove wrong: blocks may have been skipped
+   * that had logs. A reader that sees it change derives everything again
+   */
+  get readEpoch(): number {
+    return this.logs.epoch
   }
 
   private async store(blocks: (Header | EVMBlockWithTransactions)[]) {

@@ -275,6 +275,68 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.getLogsByBlockHash.name, () => {
+    const blockHash = `0x${'ab'.repeat(32)}`
+
+    it('asks for the logs of the block with that hash', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: [
+            {
+              address: '0xaddress',
+              topics: ['0xtopic'],
+              blockNumber: '0x64',
+              blockHash,
+              transactionHash: '0xtx',
+              data: '0xdata',
+              logIndex: '0x1',
+            },
+          ],
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getLogsByBlockHash(
+        blockHash,
+        ['0xaddress'],
+        ['0xtopic'],
+      )
+
+      expect(result).toEqual([
+        {
+          address: '0xaddress',
+          topics: ['0xtopic'],
+          blockNumber: 100,
+          blockHash,
+          transactionHash: '0xtx',
+          data: '0xdata',
+          logIndex: 1,
+        },
+      ])
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [{ address: ['0xaddress'], topics: ['0xtopic'], blockHash }],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+
+    it('fails when the node does not have the block', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          error: { code: -32000, message: 'unknown block' },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      await expect(rpc.getLogsByBlockHash(blockHash)).toBeRejectedWith(
+        'unknown block',
+      )
+    })
+  })
+
   describe(RpcClient.prototype.getLogs.name, () => {
     it('fetches logs from rpc and parses response', async () => {
       const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]

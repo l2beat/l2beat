@@ -305,6 +305,33 @@ export class RpcClient extends ClientCore implements IRpcClient {
     return logsResponse.data.result
   }
 
+  /**
+   * The logs of one block, named by its hash. Unlike a range of block
+   * numbers, it fails for a block the node does not have and cannot answer
+   * with the logs of another block at that number
+   */
+  async getLogsByBlockHash(
+    blockHash: string,
+    addresses?: string[],
+    topics?: LogsTopicFilter,
+  ): Promise<EVMLog[]> {
+    const method = 'eth_getLogs'
+    const response = await this.query(method, [
+      { address: addresses ?? [], topics: topics ?? [], blockHash },
+    ])
+
+    const logsResponse = EVMLogsResponse.safeParse(response)
+    if (!logsResponse.success) {
+      this.$.logger.warn('Invalid response', {
+        method,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing', { cause: { blockHash } })
+    }
+
+    return logsResponse.data.result
+  }
+
   async getFeeHistory(
     blockCount: number,
     newestBlock: number,

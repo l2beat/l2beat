@@ -60,6 +60,24 @@ describeDatabase(ChainBlockRepository.name, (db) => {
     })
   })
 
+  describe(ChainBlockRepository.prototype.findOldestSince.name, () => {
+    it("returns the chain's oldest block at or after the timestamp", async () => {
+      await repository.upsertMany([
+        block('base', 1),
+        block('base', 2),
+        block('base', 3),
+        block('ethereum', 2),
+      ])
+
+      expect(await repository.findOldestSince('base', START + 2)).toEqual(
+        block('base', 2),
+      )
+      expect(await repository.findOldestSince('base', START + 4)).toEqual(
+        undefined,
+      )
+    })
+  })
+
   describe(ChainBlockRepository.prototype.deleteAfter.name, () => {
     it("deletes the chain's blocks above the number", async () => {
       await repository.upsertMany([

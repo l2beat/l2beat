@@ -71,6 +71,22 @@ export class ChainBlockRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /** The chain's oldest block at or after the timestamp */
+  async findOldestSince(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<ChainBlockRecord | undefined> {
+    const row = await this.db
+      .selectFrom('ChainBlock')
+      .selectAll()
+      .where('chain', '=', chain)
+      .where('timestamp', '>=', UnixTime.toDate(timestamp))
+      .orderBy('number')
+      .limit(1)
+      .executeTakeFirst()
+    return row && toRecord(row)
+  }
+
   async deleteAfter(chain: string, number: number): Promise<number> {
     const result = await this.db
       .deleteFrom('ChainBlock')
