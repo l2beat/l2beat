@@ -6,7 +6,6 @@ import type { ChartUnit } from '~/components/chart/types'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
-import type { ChartRangeOptionValue } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
@@ -21,7 +20,6 @@ import {
 } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
 import {
   Tooltip,
   TooltipContent,
@@ -34,7 +32,6 @@ import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
-import { formatStakedEthShare } from '../liquidStakingMetrics'
 import type { LiquidStakingChartSeries } from './LiquidStakingLineChart'
 import { OTHERS_KEY, type TvlRow, toRow } from './liquidStakingTvlRows'
 
@@ -50,21 +47,16 @@ const DESCRIPTION = [
 interface Props {
   projectSeries: LiquidStakingChartSeries[]
   range: ChartRange
-  rangeOptions: readonly { value: ChartRangeOptionValue }[]
 }
 
 /**
  * The ETH staked network-wide, split into the liquid staking protocols and
  * everyone else, stacked over time.
  */
-export function LiquidStakingTvlChart({
-  projectSeries,
-  range,
-  rangeOptions,
-}: Props) {
+export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
   const trpc = useTRPC()
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+  const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingTvlChart,
     { range },
   )
@@ -118,9 +110,6 @@ export function LiquidStakingTvlChart({
     },
   ]
 
-  const stats = getStats(chartData, projectKeys)
-  const rangeLabel = getRangeLabel(shownInput.range, rangeOptions)
-
   return (
     <PrimaryCard>
       <ChartCardHeader
@@ -134,15 +123,6 @@ export function LiquidStakingTvlChart({
           </Tooltip>
         }
         accessory={<TvsChartUnitControls unit={unit} setUnit={setUnit} />}
-        value={stats && formatCurrency(stats.total, unit)}
-        valueLabel={
-          stats?.share !== undefined
-            ? formatStakedEthShare(stats.share)
-            : undefined
-        }
-        change={rangeLabel !== undefined ? stats?.change : undefined}
-        rangeLabel={rangeLabel}
-        isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         meta={
           <ChartTimeRange
@@ -189,39 +169,6 @@ export function LiquidStakingTvlChart({
       </div>
     </PrimaryCard>
   )
-}
-
-/** The protocols' latest total, its share of the stake and its change over the range. */
-function getStats(rows: TvlRow[] | undefined, projectKeys: string[]) {
-  const totals = (rows ?? []).flatMap((row) => {
-    const values = projectKeys.map((key) => row[key] ?? null)
-    if (values.some((value) => value === null)) return []
-    const total = values.reduce<number>((sum, value) => sum + (value ?? 0), 0)
-    const others = row[OTHERS_KEY] ?? null
-    return [
-      { total, share: others != null ? total / (total + others) : undefined },
-    ]
-  })
-  const first = totals.at(0)
-  const last = totals.at(-1)
-  if (!first || !last) return undefined
-  return {
-    total: last.total,
-    share: last.share,
-    change: first.total > 0 ? last.total / first.total - 1 : undefined,
-  }
-}
-
-/** Written after the change, e.g. "1y"; max has no start to compare against. */
-function getRangeLabel(
-  range: ChartRange,
-  options: readonly { value: ChartRangeOptionValue }[],
-): string | undefined {
-  const option = rangeToOption(
-    range,
-    options.map((o) => o.value),
-  )
-  return option === 'max' || option === 'custom' ? undefined : option
 }
 
 function CustomTooltip({

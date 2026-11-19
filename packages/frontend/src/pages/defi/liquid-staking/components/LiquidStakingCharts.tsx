@@ -74,11 +74,9 @@ export function LiquidStakingCharts({
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
 
   return (
-    // On phones the range bar drives two stacked cards, so it heads them
-    // instead of trailing the second one. It comes first in the document so
-    // focus order matches the phone layout.
+    // The range bar drives every chart below it, so it heads them.
     <div className="flex flex-col">
-      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:order-last md:mt-4 md:mb-0">
+      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:mt-4">
         <ChartRangeControls
           name="liquid-staking"
           value={range}
@@ -86,13 +84,9 @@ export function LiquidStakingCharts({
           options={LIQUID_STAKING_RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
-      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
+      <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 lg:grid-cols-2">
         <div className="lg:col-span-2">
-          <LiquidStakingTvlChart
-            projectSeries={projectSeries}
-            range={range}
-            rangeOptions={LIQUID_STAKING_RANGE_OPTIONS}
-          />
+          <LiquidStakingTvlChart projectSeries={projectSeries} range={range} />
         </div>
         <YieldChart
           projectSeries={projectSeries}
