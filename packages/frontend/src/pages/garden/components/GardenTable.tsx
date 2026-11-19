@@ -35,11 +35,10 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
           <TableRow key={entry.slug} highlightId={undefined}>
             <TableCell className="whitespace-nowrap max-md:py-3 max-md:pr-0">
               {/* On phones the row stacks, so all four plants show without a sideways scroll. */}
-              {/* Top-aligned, so a change's extra line under the amount does not push the name down. */}
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <ProjectCell entry={entry} />
                 <div className="md:hidden">
-                  <MetricCell metric={entry.metric} stacked />
+                  <MetricCell metric={entry.metric} compact />
                 </div>
               </div>
               <EvaluatedCrops
@@ -217,43 +216,62 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
 /**
  * In the table the change has a column of its own, empty when there is none,
  * so amounts and the dash share a right edge. A phone row has no room for
- * that column, so its change goes on a line under the amount, which keeps
- * every row's amount on the same right edge.
+ * that column, and a line under the amount would push the plants down, so a
+ * smaller change goes left of the amount and every amount keeps the row's
+ * right edge.
  */
 function MetricCell({
   metric,
-  stacked = false,
+  compact = false,
 }: {
   metric: GardenEntry['metric']
-  stacked?: boolean
+  compact?: boolean
 }) {
   return (
     <div
       className={cn(
         'inline-grid items-baseline gap-x-1 gap-y-px text-right',
-        stacked ? 'grid-cols-[auto]' : 'grid-cols-[auto_3.5rem]',
+        compact ? 'grid-cols-[auto_auto]' : 'grid-cols-[auto_3.5rem]',
       )}
     >
       {metric ? (
         <>
-          <span className="font-medium text-label-value-13 text-primary">
+          <span
+            className={cn(
+              'font-medium text-label-value-13 text-primary',
+              compact && 'col-span-2',
+            )}
+          >
             {metric.label}
           </span>
-          <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
+          <span
+            className={cn(
+              'row-start-2 font-semibold text-base text-primary tabular-nums',
+              compact && 'col-start-2',
+            )}
+          >
             {metric.kind === 'usd'
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
-          {stacked ? (
+          {compact ? (
             metric.change !== undefined && (
-              <span className="row-start-3">
-                <ChangeOverWeek change={metric.change} />
+              <span className="col-start-1 row-start-2">
+                <PercentChange
+                  value={metric.change}
+                  period="7D"
+                  textClassName="text-2xs"
+                />
               </span>
             )
           ) : (
             <span className="row-start-2 text-left">
               {metric.change !== undefined && (
-                <ChangeOverWeek change={metric.change} />
+                <PercentChange
+                  value={metric.change}
+                  period="7D"
+                  textClassName="text-xs"
+                />
               )}
             </span>
           )}
@@ -264,13 +282,16 @@ function MetricCell({
           <span aria-hidden className="text-label-value-13">
             &nbsp;
           </span>
-          <span className="row-start-2 text-secondary">&mdash;</span>
+          <span
+            className={cn(
+              'row-start-2 text-secondary',
+              compact && 'col-start-2',
+            )}
+          >
+            &mdash;
+          </span>
         </>
       )}
     </div>
   )
-}
-
-function ChangeOverWeek({ change }: { change: number }) {
-  return <PercentChange value={change} period="7D" textClassName="text-xs" />
 }
