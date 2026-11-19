@@ -201,7 +201,33 @@ describe(ChainHeadIndexer.name, () => {
       expect(store.numbers()).toEqual([100])
     })
 
-    it('drops to 0 and restarts at the latest block after a reorg past every remembered block', async () => {
+    it('finds the fork among the older stored blocks after a reorg past the remembered ones', async () => {
+      const chain = new FakeChain(300, GENESIS)
+      const store = new FakeChainBlocks(
+        CHAIN,
+        range(100, 301).map((number) => chain.block(number)),
+      )
+      const indexer = head(chain, store)
+      chain.reorg(150, 305)
+
+      expect(await indexer.follow()).toEqual({
+        height: 149,
+        stored: 0,
+        again: true,
+      })
+      expect(store.numbers()).toEqual(range(100, 150))
+      // every remembered block, then the older ones by halving
+      expect(chain.getBlockHash.calls.length).toBeLessThan(64 + 10)
+
+      expect(await indexer.follow()).toEqual({
+        height: 249,
+        stored: 100,
+        again: true,
+      })
+      expect(store.hashes().slice(49, 51)).toEqual(['0x149', '0x150-1'])
+    })
+
+    it('drops to 0 and restarts at the latest block after a reorg past every stored block', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [
         chain.block(99),

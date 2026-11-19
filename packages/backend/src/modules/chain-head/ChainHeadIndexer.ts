@@ -13,7 +13,7 @@ import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetr
 const INTERVAL_MS = 10_000
 /** Each tick in a row that stores no block waits one more interval, up to a minute */
 const MAX_IDLE_TICKS = 5
-/** Stored blocks remembered to find where a reorg forked off */
+/** Stored blocks remembered to find where a reorg forked off without reading the table */
 export const REMEMBERED_BLOCKS = 64
 /** How long a failing source is left alone at most before it is asked again */
 const MAX_RETRY_MS = 60_000
@@ -58,7 +58,7 @@ interface Followed {
  * When the chain moves off the stored blocks, the height drops to the newest
  * one still on it, and the children are invalidated down to there. A child
  * has to delete what it derived above the height it is invalidated to. When
- * no remembered block is on the chain, the height drops to 0.
+ * no stored block is on the chain, the height drops to 0.
  *
  * After an outage longer than the blocks are kept, the head picks up at the
  * latest block. A child's `update(from, to)` then spans blocks the head never
@@ -267,11 +267,11 @@ export class ChainHeadIndexer extends RootIndexer {
 
   /**
    * The next block is not the child of the stored tip. Forgets and deletes
-   * the stored blocks the chain no longer has, newest first, so that the next
-   * tick fetches what replaced them
+   * the stored blocks the chain no longer has, so that the next tick fetches
+   * what replaced them
    */
   private async unwind(stored: Remembered[]): Promise<Followed> {
-    const remembered = [...stored]
+    let remembered = [...stored]
     let forkedAt: Remembered | undefined
     while (remembered.length > 0 && forkedAt === undefined) {
       const tip = remembered[remembered.length - 1]
@@ -279,17 +279,22 @@ export class ChainHeadIndexer extends RootIndexer {
       if (hash === tip.hash) forkedAt = tip
       else remembered.pop()
     }
-    const replaced = stored.length - remembered.length
+    if (forkedAt === undefined && stored.length > 0) {
+      remembered = await this.findOlderOnChain(stored[0].number)
+      forkedAt = remembered.at(-1)
+    }
+    const tip = stored.at(-1)
 
     // forgotten only once deleted, so a failed delete is tried again next tick
-    if (forkedAt === undefined) {
+    if (forkedAt === undefined || tip === undefined) {
       await this.$.db.chainBlock.deleteByChain(this.$.chain)
-      this.logger.warn('Reorg deeper than the remembered blocks, restarting', {
-        replaced,
+      this.logger.warn('Reorg deeper than the stored blocks, restarting', {
+        tip: tip?.number,
       })
       this.forget([])
       return { height: 0, stored: 0, again: true }
     }
+    const replaced = tip.number - forkedAt.number
     if (replaced === 0) {
       // the stored tip is still on the chain: the child came from another fork
       this.logger.info('Next block is from a different fork', {
@@ -305,6 +310,29 @@ export class ChainHeadIndexer extends RootIndexer {
     })
     this.forget(remembered)
     return { height: forkedAt.number, stored: 0, again: true }
+  }
+
+  /**
+   * The stored blocks below the number that the chain still has, the newest
+   * of them last. Found by halving, as a block on the chain has every block
+   * before it on the chain too: a reorg of an hour of blocks takes a dozen
+   * questions, where dropping them all would leave the readers with nothing
+   */
+  private async findOlderOnChain(before: number): Promise<Remembered[]> {
+    const older = await this.$.db.chainBlock.getByNumberRange(
+      this.$.chain,
+      0,
+      before - 1,
+    )
+    let onChain = 0
+    let replaced = older.length
+    while (onChain < replaced) {
+      const middle = Math.floor((onChain + replaced) / 2)
+      const hash = await this.$.source.getBlockHash(older[middle].number)
+      if (hash === older[middle].hash) onChain = middle + 1
+      else replaced = middle
+    }
+    return older.slice(0, onChain).slice(-REMEMBERED_BLOCKS)
   }
 
   private forget(remembered: Remembered[]) {
