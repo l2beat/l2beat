@@ -22,6 +22,16 @@ describe(retry.name, () => {
     expect(fn).toHaveBeenCalledTimes(10)
   })
 
+  it('stops at an error it should not retry', async () => {
+    const fn = mockFn().rejectsWith(new Error('final'))
+    await retry(fn, {
+      initialTimeoutMs: 1,
+      maxAttempts: 10,
+      shouldRetry: (error) => (error as Error).message !== 'final',
+    }).catch(() => 0)
+    expect(fn).toHaveBeenCalledTimes(1)
+  })
+
   it('sleeps for correct times', async () => {
     const fn = mockFn().rejectsWith(new Error('oops'))
     const _setTimeout = globalThis.setTimeout

@@ -36,8 +36,6 @@ import {
 import { Http } from '../Http'
 import { withRetries } from '../retries'
 
-const BLOCK_TIMESTAMP_BATCH_SIZE = 25
-
 export interface Receipt {
   blockHash?: string
   gasUsed?: bigint
@@ -146,6 +144,8 @@ export class RpcClientCompat implements IRpcClient {
       maxAttempts: retryOptions.maxRetries,
       maxTimeoutMs: retryOptions.maxRetryDelayMs,
       logger,
+      // Callers at the head poll for a block the RPC has not got yet
+      shouldRetry: (error) => !(error instanceof NotFoundOnRpcError),
     })
     return wrapped
   }
@@ -196,32 +196,20 @@ export class RpcClientCompat implements IRpcClient {
   async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, number>> {
+    const blocks = await this.ethRpcClient.getBlocksByNumber(
+      blockNumbers.map(BigInt),
+    )
     const result = new Map<number, number>()
-
-    for (
-      let start = 0;
-      start < blockNumbers.length;
-      start += BLOCK_TIMESTAMP_BATCH_SIZE
-    ) {
-      const batch = blockNumbers.slice(
-        start,
-        start + BLOCK_TIMESTAMP_BATCH_SIZE,
+    for (const [index, rpcBlock] of blocks.entries()) {
+      const expectedBlockNumber = blockNumbers[index]
+      assert(expectedBlockNumber !== undefined)
+      const block = toEVMBlock(expectedBlockNumber, rpcBlock)
+      assert(
+        block.number === expectedBlockNumber,
+        `Invalid response: expected block number ${expectedBlockNumber}, got ${block.number}`,
       )
-      const blocks = await Promise.all(
-        batch.map((blockNumber) => this.getBlock(blockNumber, false)),
-      )
-
-      for (const [index, block] of blocks.entries()) {
-        const expectedBlockNumber = batch[index]
-        assert(expectedBlockNumber !== undefined)
-        assert(
-          block.number === expectedBlockNumber,
-          `Invalid response: expected block number ${expectedBlockNumber}, got ${block.number}`,
-        )
-        result.set(expectedBlockNumber, block.timestamp)
-      }
+      result.set(expectedBlockNumber, block.timestamp)
     }
-
     return result
   }
 
