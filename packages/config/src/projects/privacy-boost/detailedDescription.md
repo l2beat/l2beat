@@ -27,7 +27,7 @@ Apps integrate the Privacy Boost SDK, whose core is closed source. The operator'
 
 ### Compliance
 
-Auditors appointed by the admin multisig can query the TEE's Audit API for the balance and history of any address, without the user's consent. The AuditGateway lists {{auditorCount}} auditors today. The TEE is meant to record each access on that contract, but with its code unpublished this is unverifiable.
+Auditors appointed by the admin multisig can query the TEE's Audit API for the balance and history of any address, without the user's consent. The AuditGateway lists {{auditorCount}} auditors. The TEE is meant to record each access on that contract, but with its code unpublished this is unverifiable.
 
 ### Fees
 

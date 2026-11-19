@@ -99,7 +99,7 @@ describe(InteropSyncersManager.name, () => {
             Logger.SILENT,
             mockAggregator(),
           ),
-      ).toThrow('Missing configuration for chain ethereum')
+      ).toThrow('Missing configuration for chain')
     })
 
     it('throws when rpc config is missing for an enabled chain', () => {
@@ -115,7 +115,7 @@ describe(InteropSyncersManager.name, () => {
             Logger.SILENT,
             mockAggregator(),
           ),
-      ).toThrow('Missing RPC config for chain ethereum')
+      ).toThrow('Missing RPC config for chain')
     })
   })
 

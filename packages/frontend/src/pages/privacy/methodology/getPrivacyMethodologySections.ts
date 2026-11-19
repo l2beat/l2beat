@@ -48,7 +48,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers.`,
+      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers. They assess technology, not whether using a project is legal where the user lives.`,
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,

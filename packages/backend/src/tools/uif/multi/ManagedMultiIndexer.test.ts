@@ -40,7 +40,7 @@ describe(ManagedMultiIndexer.name, () => {
       new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
       expect(() => {
         new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
-      }).toThrow('Indexer id same-name is duplicated!')
+      }).toThrow('Indexer id is duplicated')
     })
 
     it('throws on duplicate configuration ids', () => {
@@ -60,7 +60,7 @@ describe(ManagedMultiIndexer.name, () => {
           },
           Logger.SILENT,
         )
-      }).toThrow('Configuration id a is duplicated in other-name')
+      }).toThrow('Configuration id is duplicated')
     })
   })
 

@@ -1064,6 +1064,12 @@ html:active-view-transition-type(pin) {
   --garden-moon: #f1ecd2;
   --garden-sky: #eaf4e6;
   --garden-sprout: #7fae6a;
+  /* The backdrops' bottom layers, far then near. Translucent, so they tint
+     whatever lies behind them; PageBackdrop stacks them again as the ground. */
+  --garden-hill-far: color-mix(in srgb, #dcead3 70%, transparent);
+  --garden-hill-near: color-mix(in srgb, var(--garden-border) 70%, transparent);
+  --plot-soil-far: color-mix(in srgb, #e7dcc6 70%, transparent);
+  --plot-soil-near: color-mix(in srgb, #d8c9ac 70%, transparent);
 }
 
 .dark {
@@ -1087,6 +1093,9 @@ html:active-view-transition-type(pin) {
   --garden-moon: #e9e4c8;
   --garden-sky: #0e1830;
   --garden-sprout: #3f6b3a;
+  --garden-hill-far: color-mix(in srgb, #1b2415 70%, transparent);
+  --plot-soil-far: color-mix(in srgb, #241f16 75%, transparent);
+  --plot-soil-near: color-mix(in srgb, #2a251b 75%, transparent);
 }
 
 /* The mandate page's signature: the line runs in, then the heart beats once. */

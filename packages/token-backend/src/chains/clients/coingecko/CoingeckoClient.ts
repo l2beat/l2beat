@@ -47,9 +47,9 @@ export class CoingeckoClient {
     const response = await this.fetch(url)
 
     if (!response.ok) {
-      throw new Error(
-        `CoinGecko API error: ${response.status} ${response.statusText}`,
-      )
+      throw new Error('CoinGecko API request failed', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const data = await response.json()
@@ -91,9 +91,9 @@ export class CoingeckoClient {
     const response = await this.fetch(url)
 
     if (!response.ok) {
-      throw new Error(
-        `CoinGecko API error: ${response.status} ${response.statusText}`,
-      )
+      throw new Error('CoinGecko API request failed', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const data = await response.json()
@@ -121,9 +121,9 @@ export class CoingeckoClient {
     const response = await this.fetch(url)
 
     if (!response.ok) {
-      throw new Error(
-        `CoinGecko API error: ${response.status} ${response.statusText}`,
-      )
+      throw new Error('CoinGecko API request failed', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const data = await response.json()

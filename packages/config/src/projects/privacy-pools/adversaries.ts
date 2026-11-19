@@ -7,7 +7,7 @@ import {
 // v1.privacypools.com serves main 8b3fbf0 (v2.17.0 and a Next.js bump), whose
 // diff from this pin touches no network code.
 const WEBSITE =
-  'https://github.com/0xbow-io/privacy-pools-website/blob/7df411128f7a18a61a77f7a0371bf0b857969e2a/src/'
+  'https://github.com/0xbow-io/privacy-pools-website/blob/8b3fbf0ce8cf00fbb7461df218dbea3b71a84c76/src/'
 // v1.2.1, the circuits behind the verified verifiers.
 const CIRCUITS =
   'https://github.com/0xbow-io/privacy-pools-core/blob/a80836a47451e662f127af17e11430ffa976c234/packages/circuits/circuits/'
@@ -58,7 +58,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The website works in Tor Browser and scans every pool whole, matching notes locally without revealing the user's deposits to third parties.",
       exposureContinued:
-        "Cloaked Relay receives amount, asset and recipient with the first quote. The website confirms a relayed withdrawal from bulk reads of new blocks, so no request names its hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
+        "Cloaked Relay receives amount, asset and recipient with the first quote. The website's receipt check names no withdrawal hash. 0xbow's Google Analytics runs without a consent prompt and records the hash of any explorer link the user opens. On a quiet pool, the RPC can time a wallet sign-in against the withdrawal the same session waits for.",
       sources: [
         {
           title: 'Sign-in with a recovery phrase needs no wallet',
@@ -116,7 +116,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
         },
         {
           title: 'Wallet-signature seed derivation',
-          url: WEBSITE + 'utils/walletSeed.ts#L40-L73',
+          url: WEBSITE + 'utils/walletSeed.ts#L40-L80',
         },
         {
           title: 'Random recovery phrase option',

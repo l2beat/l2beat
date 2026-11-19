@@ -221,11 +221,27 @@ export const tornadoCash: BaseProject = {
       type: 'incident',
     },
     {
+      title: 'Developer convicted in the Netherlands',
+      url: 'https://uitspraken.rechtspraak.nl/details?id=ECLI:NL:RBOBR:2024:2069',
+      date: '2024-05-14T00:00:00Z',
+      description:
+        'A Dutch court convicts a developer of habitual money laundering and imposes 64 months in prison.',
+      type: 'general',
+    },
+    {
       title: 'Removed from the OFAC sanctions list',
       url: 'https://home.treasury.gov/news/press-releases/sb0057',
       date: '2025-03-21T00:00:00Z',
       description:
         "OFAC removes Tornado Cash and the pools' addresses from its sanctions list.",
+      type: 'general',
+    },
+    {
+      title: 'Developer convicted in the US',
+      url: 'https://www.justice.gov/usao-sdny/pr/founder-tornado-cash-crypto-mixing-service-convicted-knowingly-transmitting-criminal',
+      date: '2025-08-06T00:00:00Z',
+      description:
+        'A US jury convicts a developer of conspiracy to run an unlicensed money transmitting business.',
       type: 'general',
     },
   ],
@@ -301,7 +317,7 @@ export const tornadoCash: BaseProject = {
           name: 'Tornado CLI',
           icon: 'tornado-cash',
           finding:
-            "With Tor on, its fee checks still reach the RPC directly, so the RPC sees the user's IP next to each deposit and withdrawal.",
+            "With Tor on, its fee checks reach the RPC directly, so the RPC sees the user's IP next to each deposit and withdrawal.",
           fix: 'Send the fee checks through the Tor proxy like every other request.',
           source:
             'https://github.com/tornado-dao/tornado-cli/blob/662dc0ea769bc72a785c29faa0269c866d34757f/cli.js#L1726',
@@ -330,7 +346,7 @@ export const tornadoCash: BaseProject = {
       sentiment: 'good',
       orderHint: Number.MAX_SAFE_INTEGER,
       description:
-        'The core Tornado Cash contracts are immutable and have no admin upgrade path, so users can always withdraw with a valid note and proof.',
+        'The core Tornado Cash contracts are immutable, so users can always withdraw with a valid note and proof.',
       walkawayTest: { passed: true },
     },
     reproducibility: {

@@ -137,9 +137,16 @@ describe(CoingeckoClient.name, () => {
     )
     const client = new CoingeckoClient({ callsPerMinute: 100_000 })
 
-    await expect(client.getCoinDataById('usd-coin')).toBeRejectedWith(
-      'CoinGecko API error: 429 Too Many Requests',
-    )
+    const error = await client
+      .getCoinDataById('usd-coin')
+      .catch((e: unknown) => e)
+
+    expect(error).toBeA(Error)
+    expect((error as Error).message).toEqual('CoinGecko API request failed')
+    expect((error as Error).cause).toEqual({
+      status: 429,
+      statusText: 'Too Many Requests',
+    })
   })
 
   it('rejects a non-positive rate limit', () => {

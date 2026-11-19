@@ -259,7 +259,7 @@ export const privacyPoolsV2: BaseProject = {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The ASP service is closed.',
+        "Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys, and the website's release bundle byte for byte. The ASP service is closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

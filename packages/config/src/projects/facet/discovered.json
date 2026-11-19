@@ -1,7 +1,7 @@
 {
   "name": "facet",
-  "timestamp": 1780407005,
-  "configHash": "0xd3f25051ceca451b1d57333ca1c0b572c2fa3b157fcc5772f94dd4ae521be0df",
+  "timestamp": 1795007625,
+  "configHash": "0xf137041221e5076cafcf3f7ea3ce175725e7cc3f9cae76c5b846b70e0d96a1ea",
   "entries": [
     {
       "name": "Inbox",
@@ -13,34 +13,44 @@
       "name": "FastExternalBridge",
       "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
       "type": "Contract",
-      "template": "facet/FacetEtherBridge",
+      "template": "facet/FacetEtherBridgeShutdown",
       "sourceHashes": [
         "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5",
-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
+        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
+      "description": "Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function.",
       "deployerAddress": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
       "sinceTimestamp": 1734701579,
       "sinceBlock": 21444055,
       "values": {
-        "$admin": "eth:0x0000000000000000000000000000000000000000",
-        "$implementation": "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE",
+        "$admin": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "$implementation": "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Facet Ether Bridge",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
+        "depositsClosed": true,
+        "getAdmin": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "isLocked": true
+      },
+      "fieldMeta": {
+        "getAdmin": {
+          "severity": "HIGH",
+          "description": "Admin of the bridge logic, set in contract storage separately from the upgrade admin."
+        },
+        "depositsClosed": {
+          "description": "Whether deposits are refused (also true once the bridge is locked)."
+        },
+        "isLocked": {
+          "description": "Whether withdrawals and deposits are disabled. Only an upgrade can unlock the bridge."
+        },
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Upgrade admin of the proxy, read from Solady's ERC1967Factory."
         }
       },
       "implementationNames": {
         "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
-        "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
+        "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570": "FacetEtherBridgeV6Shutdown"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
@@ -66,15 +76,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 3829060,
-        "anchorProposalId": 59,
-        "anchorRoot": "0x24652ac280fdf6eab6f0ba68a8da7163bae727773da815a3864e724de5d21c7e",
+        "anchorL2BlockNumber": 5045860,
+        "anchorProposalId": 735,
+        "anchorRoot": "0x78670d3adb350e9bf1d78914144e6ea1b18bfeb5c85e634d575b09529a5dcae3",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 88,
+        "getProposalsLength": 764,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1778518859,
@@ -222,9 +232,9 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 3730060,
-        "anchorProposalId": 1145,
-        "anchorRoot": "0xe9f4196acbe64b5e248a305ca94fa62b5b9bd21f252e491fac3777948d6c15d8",
+        "anchorL2BlockNumber": 3731860,
+        "anchorProposalId": 1146,
+        "anchorRoot": "0x81d753aaee498fc44046c83e10fd4660dd6501687884184f24426cfa7e518e9a",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
@@ -421,7 +431,7 @@
           "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 342,
+        "nonce": 365,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -510,7 +520,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619933",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619934",
         "version": "1.1.0"
       },
       "implementationNames": {
@@ -629,6 +639,47 @@
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570": [
+      "constructor()",
+      "error BatchAlreadyPaid(uint256 batchIndex)",
+      "error DepositsClosed()",
+      "error EmptyBatch()",
+      "error FeatureDisabled()",
+      "error InvalidAmount()",
+      "error InvalidInitialization()",
+      "error LengthMismatch()",
+      "error NotFactory()",
+      "error NotInitializing()",
+      "error NotStrictlyIncreasing()",
+      "error Reentrancy()",
+      "error ZeroAddress()",
+      "error ZeroAdminAddress()",
+      "error ZeroAmount()",
+      "event BatchDisbursed(uint256 indexed batchIndex, uint256 count, uint256 totalAmount, address firstAddress, address lastAddress)",
+      "event DepositsClosedEvent()",
+      "event Initialized(uint64 version)",
+      "event Locked()",
+      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
+      "function adminWithdrawFCT(address recipient, uint256 amount)",
+      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function closeDeposits()",
+      "function deposit() payable",
+      "function depositsClosed() view returns (bool)",
+      "function disburse(uint256 batchIndex, address[] addresses, uint256[] amounts)",
+      "function donateETH() payable",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getAdmin() view returns (address)",
+      "function getDumbContract() pure returns (address)",
+      "function getLastDisbursedAddress() view returns (address)",
+      "function getSigner() view returns (address)",
+      "function initialize()",
+      "function isBatchPaid(uint256 batchIndex) view returns (bool)",
+      "function isLocked() view returns (bool)",
+      "function lock()",
+      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
+      "function setAdmin(address admin)",
+      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
     ],
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": [
       "function facetProxyAddress() view returns (address)",
@@ -777,30 +828,6 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)",
       "function whitelistedProposer(address) view returns (bool)"
-    ],
-    "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": [
-      "constructor()",
-      "error FeatureDisabled()",
-      "error InvalidAmount()",
-      "error InvalidInitialization()",
-      "error NotFactory()",
-      "error NotInitializing()",
-      "error ZeroAdminAddress()",
-      "event Initialized(uint64 version)",
-      "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
-      "function adminWithdraw(address recipient, uint256 amount)",
-      "function adminWithdrawFCT(address recipient, uint256 amount)",
-      "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
-      "function deposit() payable",
-      "function donateETH() payable",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getAdmin() view returns (address)",
-      "function getDumbContract() pure returns (address)",
-      "function getSigner() view returns (address)",
-      "function initialize()",
-      "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
-      "function setAdmin(address admin)",
-      "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
     ],
     "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": [
       "constructor(address initialOwner)",
@@ -999,7 +1026,7 @@
     ]
   },
   "usedTemplates": {
-    "facet/FacetEtherBridge": "0xe29f5262256de7e9ec78abe7c54cf5f6f24680b6d137c20633dbbb2d4f48b27f",
+    "facet/FacetEtherBridgeShutdown": "0x9c898c5df82c784af2062fdf93e721b33218db2ad56d20194f491161ca494b19",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L1ETHBridge": "0x4c33368a5efb144b32a82830a1e74856e1473a12ef297ba64108415a1fd77ff7",
@@ -1011,8 +1038,8 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0xc99f1584e6cc2a69c3aa47c6510215a360d90219f6a13baaf2c5f078e8a8330c",
+  "usedBlockNumbers": { "ethereum": 26442170, "facet": 5096923 },
+  "permissionsConfigHash": "0x9da45e27a30d8076a79051a8d4f0d56277639cd3e5b697b70a9ebc896141dac7",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [
@@ -1043,6 +1070,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "description": "send any ETH held by the bridge to addresses and amounts of its choice in payout batches, transfer the bridge's FCT on Facet, mark withdrawals as completed, close deposits, lock the bridge and change the admin.",
+          "role": ".getAdmin"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
           "description": "can set the whitelisted proposers.",
           "role": ".owner"
@@ -1052,6 +1085,12 @@
           "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
           "description": "can set the whitelisted proposers.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "description": "upgrade the bridge implementation, which can reopen deposits or withdrawals and change how ETH held by the bridge can be moved.",
+          "role": ".$admin"
         }
       ]
     }

@@ -176,21 +176,12 @@ export const zkapi: BaseProject = {
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
       delivery: { type: 'hosted' },
-      // build.json of the served build HW2ERHD3 names oa-chat 6c604614, and
-      // 420 served files match it. The landing and sign-in pages and the
-      // Fathom loader come from a private repository, so the app counts as
-      // closed. Sources pin 6c604614.
-      build: 'HW2ERHD3',
-      checked: '2026-11-11',
+      // build.json of the served build SZD7DK34 names oa-chat a20f2e04. The
+      // landing and sign-in pages and the Fathom loader come from a private
+      // repository, so the app counts as closed. Sources pin a20f2e04.
+      build: 'SZD7DK34',
+      checked: '2026-11-18',
       checkedApps: [
-        {
-          name: 'zkapi-clientd',
-          finding:
-            "Sends the note id to the operator's indexer before each request, so the operator can tie requests to their deposit by timing.",
-          fix: "Fetch the whole note tree, as OA Chat does, instead of one note's path.",
-          source:
-            'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/indexer.rs#L71-L80',
-        },
         {
           name: 'openzk.app',
           icon: 'openzk-app',

@@ -184,13 +184,14 @@ export class RelayIndexer extends ManagedChildIndexer {
       // An API that hands back a cursor it already returned, or a cursor with
       // nothing behind it, would otherwise keep this loop running forever.
       if (res.continuation && seenCursors.has(res.continuation)) {
-        throw new Error(
-          `Relay API returned a repeated continuation cursor for window ${from}-${to}`,
-        )
+        throw new Error('Relay API returned a repeated continuation cursor', {
+          cause: { from, to, continuation: res.continuation },
+        })
       }
       if (res.requests.length === 0 && res.continuation) {
         throw new Error(
-          `Relay API returned a continuation cursor without requests for window ${from}-${to}`,
+          'Relay API returned a continuation cursor without requests',
+          { cause: { from, to, continuation: res.continuation } },
         )
       }
 

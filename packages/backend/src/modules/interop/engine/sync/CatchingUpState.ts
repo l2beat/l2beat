@@ -353,9 +353,9 @@ export class CatchingUpState implements TimeloopState {
   private increaseLogRangeDivider() {
     const current = this.syncer.logRangeDivider ?? 0
     if (current >= MAX_LOG_RANGE_DIVIDER) {
-      throw new Error(
-        `Log range divider exceeded max of ${MAX_LOG_RANGE_DIVIDER}`,
-      )
+      throw new Error('Log range divider exceeded max', {
+        cause: { max: MAX_LOG_RANGE_DIVIDER },
+      })
     }
     this.syncer.logRangeDivider = current + 1
   }

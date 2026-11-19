@@ -36,7 +36,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.18.0"
   },
   "devDependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -48,6 +48,6 @@
     "cheerio": "^1.0.0-rc.11",
     "diff": "^7.0.0",
     "dotenv": "^16.4.5",
-    "tsx": "^4.9.3"
+    "tsx": "^4.23.0"
   }
 }

@@ -299,7 +299,9 @@ function calculateBreakdown(
         tvsBreakdown.source.native.tokens.push(token)
         break
       default:
-        throw new Error(`Unknown source ${tokenConfig.source}`)
+        throw new Error('Unknown token source', {
+          cause: { source: tokenConfig.source },
+        })
     }
 
     switch (tokenConfig.category) {
@@ -322,7 +324,9 @@ function calculateBreakdown(
         tvsBreakdown.category.rwaRestricted += token.valueForProject
         break
       default:
-        throw new Error(`Unknown source ${tokenConfig.source}`)
+        throw new Error('Unknown token source', {
+          cause: { source: tokenConfig.source },
+        })
     }
 
     if (tokenConfig.isAssociated) {
