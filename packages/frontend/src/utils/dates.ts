@@ -62,6 +62,7 @@ function toNiceDate(day: string, month?: string, year?: string) {
     : `${dayNumber} ${monthName}`
 }
 
+/** `seconds` adds them to the times of a range within a day; days show none */
 export function formatRange(
   from: number,
   to: number,
