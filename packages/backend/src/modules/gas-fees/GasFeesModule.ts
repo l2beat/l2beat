@@ -12,7 +12,7 @@ import { GasFeesTipIndexer } from './tips/GasFeesTipIndexer'
 import { LiveTipsLoop } from './tips/LiveTipsLoop'
 import { WalletTipsLoop } from './tips/WalletTipsLoop'
 
-/** gas.fees trails by an hour or two. A chain that trails by more is filled in later */
+/** Dune's tables trail by an hour or two. A chain that trails by more is filled in later */
 const FEES_DELAY_SECONDS = 3 * UnixTime.HOUR
 /**
  * The service gives up after 2 minutes by default, queueing included, without stopping the run on Dune:

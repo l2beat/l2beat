@@ -6,6 +6,7 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { GasFeesChain } from './chains'
+import { FEE_RULES } from './feeRules'
 import { GasFeesDailyIndexer } from './GasFeesDailyIndexer'
 import type { FeesDay } from './readFeesDays'
 
@@ -269,11 +270,13 @@ describe(GasFeesDailyIndexer.name, () => {
   const ETHEREUM: GasFeesChain = {
     id: 'ethereum',
     dune: 'ethereum',
+    fees: FEE_RULES.ethereum,
     requiredFrom: firstDay,
   }
   const ABSTRACT: GasFeesChain = {
     id: 'abstract',
     dune: 'abstract',
+    fees: FEE_RULES.zkStack,
     requiredFrom: firstDay,
   }
   const CHAINS = [ETHEREUM, ABSTRACT]

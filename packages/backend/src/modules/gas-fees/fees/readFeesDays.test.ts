@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { GasFeesChain } from './chains'
+import { FEE_RULES } from './feeRules'
 import { type BlocksRow, type FeesRow, joinFeesDays } from './readFeesDays'
 
 describe(joinFeesDays.name, () => {
@@ -8,6 +9,7 @@ describe(joinFeesDays.name, () => {
   const zksync: GasFeesChain = {
     id: 'zksync2',
     dune: 'zksync',
+    fees: FEE_RULES.zkStack,
     requiredFrom: day,
   }
   const chains: GasFeesChain[] = [
@@ -15,6 +17,7 @@ describe(joinFeesDays.name, () => {
     {
       id: 'new',
       dune: 'new',
+      fees: FEE_RULES.gasTimesPrice,
       requiredFrom: UnixTime(day + UnixTime.DAY),
     },
   ]
@@ -55,11 +58,8 @@ describe(joinFeesDays.name, () => {
       chains,
       day,
       day,
-      [fees('zksync', '2026-10-01')],
-      [
-        blocks('zksync', '2026-10-01', { free_gas: 4e8 }),
-        blocks('zksync', '2026-10-02'),
-      ],
+      [{ ...fees('zksync', '2026-10-01'), free_gas: 4e8 }],
+      [blocks('zksync', '2026-10-01'), blocks('zksync', '2026-10-02')],
     )
 
     expect(days[0]?.records[0]?.gasUsed).toEqual(6e8)
@@ -97,18 +97,18 @@ describe(joinFeesDays.name, () => {
       expect(stored(whole)).toEqual([1, 1, 1])
     })
 
-    it('refuses a day whose fee rows used less gas than its blocks', () => {
+    it('refuses a day whose transactions used less gas than its blocks', () => {
       expect(stored(withDay('2026-10-02', { gas_used: 1e9 + 21_000 }))).toEqual(
         [1, 0, 1],
       )
     })
 
-    it('refuses a day whose fees Dune could not convert', () => {
+    it('refuses a day with fees Dune has no price for', () => {
       const days = joinFeesDays(
         [zksync],
         day,
         day,
-        [{ ...fees('zksync', '2026-10-01'), total_fee: null }],
+        [{ ...fees('zksync', '2026-10-01'), unpriced: 3 }],
         whole,
       )
 
@@ -228,11 +228,12 @@ describe('joinFeesDays on what Dune had', () => {
       d.records.map((r) => r.chain),
     )
 
-  it('Taiko, June 2026: a halt from the 22nd to the 30th, and fee rows missing on the 22nd', () => {
+  it('Taiko, June 2026: a halt from the 22nd to the 30th', () => {
     // Block counts, ranges and gas as read from Dune in November 2026
     const taiko: GasFeesChain = {
       id: 'taiko',
       dune: 'taiko',
+      fees: FEE_RULES.taiko,
       requiredFrom: date('2024-06-01'),
     }
     const blockRows = (
@@ -259,8 +260,7 @@ describe('joinFeesDays on what Dune had', () => {
       [
         ['2026-06-20', 4_386_826_736],
         ['2026-06-21', 3_907_623_841],
-        // gas.fees has 2,842 of the day's 4,549 transactions
-        ['2026-06-22', 302_778_838],
+        ['2026-06-22', 480_112_545],
         ['2026-06-30', 5_008_752_320],
       ] as const
     ).map(([day, gas]) => ({ ...fees('taiko', day), gas_used: gas }))
@@ -270,8 +270,7 @@ describe('joinFeesDays on what Dune had', () => {
     ).toEqual([
       ['taiko'],
       ['taiko'],
-      // The 22nd is short of fee rows
-      [],
+      ['taiko'],
       // No blocks from the 23rd to the 29th: days without transactions
       ...Array.from({ length: 7 }, () => ['taiko']),
       // The day it resumed joins the 22nd across the halt
@@ -284,6 +283,7 @@ describe('joinFeesDays on what Dune had', () => {
     const chains: GasFeesChain[] = ['ethereum', 'abstract'].map((id) => ({
       id,
       dune: id,
+      fees: FEE_RULES.gasTimesPrice,
       requiredFrom: date('2025-01-27'),
     }))
     const day = (chain: string, day: string, first: number, count: number) => ({
@@ -328,7 +328,10 @@ function fees(blockchain: string, day: string): FeesRow {
     l1_fee: 0.1,
     blob_fee: 0,
     median_fee_usd: null,
+    unpriced: 0,
     gas_used: 1e9,
+    free_gas: 0,
+    base_fee: 0.5,
   }
 }
 
@@ -342,9 +345,7 @@ function blocks(
   return {
     blockchain,
     day,
-    base_fee: 0.5,
     gas_used: 1e9,
-    free_gas: 0,
     blocks: 100,
     first_block: first,
     last_block: first + 99,

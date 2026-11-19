@@ -1,13 +1,14 @@
 import type { Env } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { FEE_RULES_CHECKED_FROM } from '../../modules/gas-fees/fees/feeRules'
 import type { GasFeesConfig } from '../../modules/gas-fees/types'
 
 const FIRST_HISTORY_DAY = '2021-08-08'
 
 export function getGasFeesConfig(env: Env): GasFeesConfig {
   const daysPerQuery = env.integer('GAS_FEES_FEES_DAYS_PER_QUERY', 10)
-  // With none the indexer would move on without reading a day. A day costs up
-  // to 0.5 Dune credits and a query is capped at 10, so 20 days is the most
+  // With none the indexer would move on without reading a day. A day costs
+  // about 0.35 Dune credits and a query is capped at 10, so 20 days is the most
   if (
     !Number.isInteger(daysPerQuery) ||
     daysPerQuery < 1 ||
@@ -27,11 +28,19 @@ export function getGasFeesConfig(env: Env): GasFeesConfig {
       cause: { historyFirstDay },
     })
   }
+  const feesFirstDay = toDay(
+    env.string('GAS_FEES_FEES_FIRST_DAY', FEE_RULES_CHECKED_FROM),
+  )
+  // The chains' fee rules change with their upgrades, and were checked from this day on
+  if (feesFirstDay < toDay(FEE_RULES_CHECKED_FROM)) {
+    throw new Error('Gas fees start before the fee rules were checked', {
+      cause: { feesFirstDay },
+    })
+  }
   return {
     fees: {
-      // A day costs 0.3 to 0.5 Dune credits, so the history back to 2020 (750 to 1,250) is opted into
-      firstDay: toDay(env.string('GAS_FEES_FEES_FIRST_DAY', '2025-11-01')),
-      // At most about 5 Dune credits a query, under the 10-credit cap
+      firstDay: feesFirstDay,
+      // About 3.5 Dune credits a query, under the 10-credit cap
       daysPerQuery,
     },
     // A rolling year for the page, with a margin

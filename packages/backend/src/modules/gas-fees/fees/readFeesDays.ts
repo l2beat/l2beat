@@ -10,19 +10,26 @@ export type FeesDune = Pick<DuneQueryService, 'query'>
 const FeesRow = v.object({
   blockchain: v.string(),
   day: v.string(),
+  /** Transactions that paid a fee */
   tx_count: v.number(),
-  /** Null when Dune has no price to convert a chain's fees with */
-  total_fee: v.union([v.number(), v.null()]),
-  total_fee_usd: v.union([v.number(), v.null()]),
+  total_fee: v.number(),
+  total_fee_usd: v.number(),
   l1_fee: v.number(),
   blob_fee: v.number(),
+  /** Null when no transaction paid a fee */
   median_fee_usd: v.union([v.number(), v.null()]),
-  /** Gas used by the day's fee rows */
+  /** Transactions that paid a fee in an hour Dune has no price for */
+  unpriced: v.number(),
+  /** Gas used by the day's transactions */
   gas_used: v.number(),
+  /** Gas of the transactions that paid nothing, part of gas_used */
+  free_gas: v.number(),
+  /** Null where the chain's blocks have no base fee */
+  base_fee: v.union([v.number(), v.null()]),
 })
 export type FeesRow = v.infer<typeof FeesRow>
 
-/** A chain's day without fee rows: no transaction paid a fee on it */
+/** A chain's day without transactions */
 const NO_FEES: Omit<FeesRow, 'blockchain' | 'day'> = {
   tx_count: 0,
   total_fee: 0,
@@ -30,17 +37,16 @@ const NO_FEES: Omit<FeesRow, 'blockchain' | 'day'> = {
   l1_fee: 0,
   blob_fee: 0,
   median_fee_usd: null,
+  unpriced: 0,
   gas_used: 0,
+  free_gas: 0,
+  base_fee: 0,
 }
 
 const BlocksRow = v.object({
   blockchain: v.string(),
   day: v.string(),
-  /** Null where the chain's blocks have no base fee */
-  base_fee: v.union([v.number(), v.null()]),
   gas_used: v.union([v.number(), v.null()]),
-  /** Gas of the transactions that paid nothing, part of gas_used */
-  free_gas: v.number(),
   /** From the chain's blocks table */
   blocks: v.number(),
   first_block: v.number(),
@@ -134,9 +140,7 @@ function withNeighbours(blocks: BlocksRow[]): Map<string, BlocksDay> {
           row: {
             blockchain: row.blockchain,
             day,
-            base_fee: 0,
             gas_used: 0,
-            free_gas: 0,
             blocks: 0,
             first_block: row.last_block + 1,
             last_block: row.last_block,
@@ -175,25 +179,25 @@ function daysBetween(from: string, to: string | undefined): string[] {
  * - the day's first block follows the last of the earlier day read. Unchecked,
  *   a hole across midnight would be stored on the day after it. With no earlier
  *   day within the days read, the day has to start the chain;
- * - the fee rows used as much gas as the day's blocks did, so the fee table has
- *   every transaction. Counting blocks is not enough: Dune had Abstract's
- *   19 June 2026 with 7 of 245,226 transactions missing.
+ * - the transactions used as much gas as the day's blocks did, so none is
+ *   missing from its table, which Dune loads apart from the blocks;
+ * - Dune has a price for every hour a fee was paid in. Without, the day's USD
+ *   figures would be short by those fees.
  *
  * A hole at a day's edge keeps both days out: which of them lost the blocks can't be told.
  * A day the chain made no blocks on passes as a day without transactions, and
  * is stored as one: left out, it would be read again for a month.
  * On the year checked, the block checks held on every day of all 12 chains, and
- * the gas of 249 of the 252 chain-days sampled matched.
+ * the gas matched on all 252 chain-days sampled.
  */
 function toWholeDay(
   chain: GasFeesChain,
   fee: typeof NO_FEES,
   { row, earlier, later }: BlocksDay,
 ): Omit<GasFeesDailyRecord, 'timestamp'> | undefined {
-  if (row.gas_used === null || fee.total_fee === null || !later) {
-    return undefined
-  }
+  if (row.gas_used === null || !later) return undefined
   const whole =
+    fee.unpriced === 0 &&
     // Sums of whole numbers far below 2^53, so exact as doubles
     fee.gas_used === row.gas_used &&
     row.last_block - row.first_block + 1 === row.blocks &&
@@ -209,9 +213,9 @@ function toWholeDay(
     totalFeeUsd: fee.total_fee_usd,
     l1FeeNative: fee.l1_fee,
     blobFeeNative: fee.blob_fee,
-    baseFeeNative: row.base_fee,
+    baseFeeNative: fee.base_fee,
     // Of the transactions that paid, as the fees are
-    gasUsed: row.gas_used - row.free_gas,
+    gasUsed: fee.gas_used - fee.free_gas,
     medianFeeUsd: fee.median_fee_usd,
   }
 }

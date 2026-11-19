@@ -19,7 +19,7 @@ import {
 } from './lateDays'
 import type { FeesDay } from './readFeesDays'
 
-/** Bump it when a fix changes what past days store: every day is read again, 0.3 to 0.5 Dune credits each */
+/** Bump it when a fix changes what past days store: every day is read again, about 0.35 Dune credits each */
 const STORED_DATA_VERSION = '1'
 /**
  * Every read is billed, so late chains are read at most this often. Once synced
