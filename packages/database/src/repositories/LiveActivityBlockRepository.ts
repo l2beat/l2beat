@@ -14,6 +14,13 @@ export interface LiveActivityBlockRecord {
   gasUsed: number
 }
 
+/**
+ * How long a project's blocks are kept. Activity sums an hour an hour after it
+ * ends, so it reads blocks up to two hours old. The rest leaves it time to
+ * catch up before it fetches them itself
+ */
+export const LIVE_BUFFER_SECONDS = 4 * UnixTime.HOUR
+
 /** A project's blocks of one bucket of seconds, summed */
 export interface LiveActivityBucketRecord {
   /** Of the bucket's first second */

@@ -123,6 +123,7 @@ export type {
   LiveActivityBucketRecord,
   LiveActivityHourRecord,
 } from './repositories/LiveActivityBlockRepository'
+export { LIVE_BUFFER_SECONDS } from './repositories/LiveActivityBlockRepository'
 export type {
   LiveBlobBatchRecord,
   LiveBucketRecord,
