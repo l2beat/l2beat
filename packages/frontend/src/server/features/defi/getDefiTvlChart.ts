@@ -26,13 +26,17 @@ export const DefiTvlChartParams = v.object({
 export type DefiTvlChartParams = v.infer<typeof DefiTvlChartParams>
 
 export interface DefiTvlChartResponse {
+  // ETH's price goes last, so a page loaded before it was added still reads
+  // the other values at their places.
   chart: [
     timestamp: number,
     valueUsd: number | null,
+    /** Null unless `withEthStaked`. */
+    ethStakedUsd: number | null,
+    /** Null unless `withEthStaked`. */
+    stakedEthShare: number | null,
     /** Divides the USD values to show them in ETH. */
     ethPrice: number | null,
-    ethStakedUsd?: number | null,
-    stakedEthShare?: number | null,
   ][]
   resolution: ChartResolution
   syncedUntil: number | undefined
@@ -53,15 +57,15 @@ export async function getDefiTvlChart(
     ...response,
     chart: response.chart.map(([timestamp, valueUsd], i) => {
       const price = ethPrices[i] ?? null
-      if (!ethStaked || !tvlEth) return [timestamp, valueUsd, price]
+      if (!ethStaked || !tvlEth) return [timestamp, valueUsd, null, null, price]
       const stake = ethStaked[i]
       const tvl = tvlEth[i]
       return [
         timestamp,
         valueUsd,
-        price,
         stake != null && price != null ? stake * price : null,
         stake && tvl != null ? tvl / stake : null,
+        price,
       ]
     }),
   }
