@@ -31,10 +31,10 @@ import {
   TooltipHeader,
   TooltipRow,
 } from '~/components/core/tooltip/TooltipParts'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { PercentChange } from '~/components/PercentChange'
+import { RollingNumber } from '~/components/RollingNumber'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { RollingNumber } from '~/pages/blobs/components/live-blobs/liveMotion'
-import { HOME_TEXT } from '~/pages/home/homeStyles'
 import {
   DEFAULT_LIVE_RANGE,
   isLiveFresh,
@@ -49,7 +49,6 @@ import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { getChartType } from '../utils/getChartType'
 import { glideCharts, placeHead } from './glideCharts'
-import { LiveDot } from './LiveDot'
 import { LiveOverview } from './LiveOverview'
 import {
   getUsualRate,
@@ -338,9 +337,9 @@ export function ProjectLiveActivity({
             ref={head}
             className="pointer-events-none invisible absolute top-0 left-0"
           >
-            <LiveDot
+            <LiveIndicator
               color={color}
-              className="-translate-x-1/2 -translate-y-1/2"
+              className="-translate-x-1/2 -translate-y-1/2 ml-0 shrink-0"
             />
           </div>
         )}
@@ -359,7 +358,7 @@ export function ProjectLiveActivity({
       </div>
       {newest !== undefined && data && domain && (
         <div className="mb-4 flex flex-col gap-1">
-          <span className={HOME_TEXT.meta}>
+          <span className="font-normal text-label-value-13 text-secondary">
             {data.oldest !== undefined && isFilling(newest, data.oldest)
               ? `Since ${formatTick(data.oldest)}`
               : 'Last 4 hours'}

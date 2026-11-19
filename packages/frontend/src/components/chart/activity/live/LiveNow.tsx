@@ -2,14 +2,14 @@ import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
-import { RollingNumber } from '~/pages/blobs/components/live-blobs/liveMotion'
+import { LiveIndicator } from '~/components/LiveIndicator'
+import { RollingNumber } from '~/components/RollingNumber'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import {
   DEFAULT_LIVE_RANGE,
   isLiveFresh,
 } from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
-import { LiveDot } from './LiveDot'
 
 /**
  * The chain's rate right now, leading to the live view. It reads what the
@@ -48,7 +48,7 @@ export function LiveNow({
       onClick={onOpen}
       className="group flex items-center gap-2 text-sm"
     >
-      <LiveDot />
+      <LiveIndicator color="var(--brand)" className="ml-0 shrink-0" />
       <RollingNumber
         value={now[metric]}
         format={formatActivityCount}
