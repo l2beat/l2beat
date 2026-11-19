@@ -83,7 +83,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'universal-btc',
     field: 'price',
     reason:
-      "The other way round from the entry above. For 00:00 UTC on 18 days between 2026-05-29 and 2026-06-17 the uniBTC price we fetched at the time is within 2.3% of BTC, and CoinGecko's history now has it 5% to 23% above BTC. Nothing we store for those hours is wrong, so this changes nothing we publish. The values below are the stored ones, listed so that fetching those hours again does not replace them with CoinGecko's.",
+      "The other way round from the entry above. For 00:00 UTC on 18 days between 2026-05-29 and 2026-06-17 the uniBTC price we fetched at the time is within 2.3% of BTC, and CoinGecko's history now has it 4.8% to 23% above BTC. Nothing we store for those hours is wrong, so this changes nothing we publish. The values below are the stored ones, listed so that fetching those hours again does not replace them with CoinGecko's.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1774483200&to=1781654400',
       'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1774483200000&endTime=1785369600000',
