@@ -68,7 +68,9 @@ interface Props {
  */
 export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
   const trpc = useTRPC()
-  const [unit, setUnit] = useState<ChartUnit>('usd')
+  // ETH by default: the stake is counted in ETH, and USD mostly moves with
+  // ETH's price.
+  const [unit, setUnit] = useState<ChartUnit>('eth')
   const [showSupply, setShowSupply] = useState(false)
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingTvlChart,
