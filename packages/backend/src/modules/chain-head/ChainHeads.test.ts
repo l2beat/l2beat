@@ -6,7 +6,7 @@ import { mockDatabase } from '../../test/database'
 import { ChainHeads } from './ChainHeads'
 import { FakeChain, FakeChainBlocks } from './test/FakeChain'
 
-const READER = { batchSize: 100, keepFor: 4 * UnixTime.HOUR }
+const READER = { batchSize: 100, keepFor: 4 * UnixTime.HOUR, fullBlocks: true }
 
 describe(ChainHeads.name, () => {
   describe(ChainHeads.prototype.get.name, () => {

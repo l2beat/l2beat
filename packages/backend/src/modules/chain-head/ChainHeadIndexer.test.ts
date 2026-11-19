@@ -63,6 +63,18 @@ describe(ChainHeadIndexer.name, () => {
       expect(store.numbers()).toEqual(range(90, 101))
     })
 
+    it('fetches headers only while no reader reads whole blocks', async () => {
+      const chain = new FakeChain(102, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [chain.block(100)])
+
+      const followed = await headOfHeaders(chain, store).follow()
+
+      expect(followed).toEqual({ height: 102, stored: 2, again: false })
+      expect(store.hashes()).toEqual(['0x100', '0x101', '0x102'])
+      expect(chain.getHeaders).toHaveBeenOnlyCalledWith(101, 102)
+      expect(chain.getBlocks).not.toHaveBeenCalled()
+    })
+
     it('fetches only the blocks it has not stored yet', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN)
@@ -225,6 +237,26 @@ describe(ChainHeadIndexer.name, () => {
         again: true,
       })
       expect(store.hashes().slice(49, 51)).toEqual(['0x149', '0x150-1'])
+    })
+
+    it('deletes nothing when the source disagrees with itself about where the chain forked', async () => {
+      const chain = new FakeChain(300, GENESIS)
+      const store = new FakeChainBlocks(
+        CHAIN,
+        range(100, 301).map((number) => chain.block(number)),
+      )
+      const indexer = head(chain, store)
+      chain.reorg(150, 305)
+      // the chain still has block 149, but one node says otherwise
+      chain.answerHashFromForkOnce(149)
+
+      await expect(indexer.follow()).toBeRejectedWith(
+        'Source disagreed with itself about where the chain forked',
+      )
+      expect(store.numbers()).toEqual(range(100, 301))
+
+      expect((await indexer.follow()).height).toEqual(149)
+      expect(store.numbers()).toEqual(range(100, 150))
     })
 
     it('drops to 0 and restarts at the latest block after a reorg past every stored block', async () => {
@@ -499,7 +531,18 @@ class TestedChainHeadIndexer extends ChainHeadIndexer {
   protected override requestTick() {}
 }
 
+/** A head with a reader of whole blocks, as live activity is */
 function head(chain: FakeChain, store: FakeChainBlocks, batchSize = 100) {
+  const indexer = headOfHeaders(chain, store, batchSize)
+  indexer.fetchFullBlocks()
+  return indexer
+}
+
+function headOfHeaders(
+  chain: FakeChain,
+  store: FakeChainBlocks,
+  batchSize = 100,
+) {
   return new TestedChainHeadIndexer(
     { chain: CHAIN, source: chain, db: store.db, batchSize, keepFor: KEEP_FOR },
     Logger.SILENT,

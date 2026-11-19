@@ -28,6 +28,8 @@ export interface HeadSource {
   getLatestBlockNumber(): Promise<number>
   /** Both ends included, oldest first */
   getBlocks(from: number, to: number): Promise<EVMBlockWithTransactions[]>
+  /** The same blocks without their transactions */
+  getHeaders(from: number, to: number): Promise<Header[]>
   getBlockHash(number: number): Promise<string>
 }
 
@@ -41,6 +43,11 @@ export interface ChainHeadIndexerDependencies {
 }
 
 type Remembered = Pick<ChainBlockRecord, 'number' | 'hash' | 'timestamp'>
+/** What the head stores of a block */
+export type Header = Pick<
+  EVMBlockWithTransactions,
+  'number' | 'hash' | 'parentHash' | 'timestamp'
+>
 
 interface Followed {
   height: number
@@ -76,6 +83,7 @@ export class ChainHeadIndexer extends RootIndexer {
   private timer: ReturnType<typeof setTimeout> | undefined
   private keepFor: number
   private batchSize: number
+  private fullBlocks = false
 
   constructor(
     private readonly $: ChainHeadIndexerDependencies,
@@ -91,6 +99,14 @@ export class ChainHeadIndexer extends RootIndexer {
   /** Blocks are kept for as long as the reader that looks furthest back needs, in seconds */
   keepAtLeast(seconds: number) {
     this.keepFor = Math.max(this.keepFor, seconds)
+  }
+
+  /**
+   * A reader reads blocks with their transactions, so the head fetches them
+   * whole and hands them on. Without one it fetches headers only
+   */
+  fetchFullBlocks() {
+    this.fullBlocks = true
   }
 
   /** Blocks are fetched in batches no larger than the most careful reader asks for */
@@ -130,7 +146,7 @@ export class ChainHeadIndexer extends RootIndexer {
     const tip = remembered.at(-1)
 
     if (tip === undefined) {
-      const [block] = await this.$.source.getBlocks(latest, latest)
+      const [block] = await this.fetch(latest, latest)
       assert(block, 'Latest block missing from the response')
       await this.store([block])
       await this.confirm(block.number)
@@ -151,9 +167,9 @@ export class ChainHeadIndexer extends RootIndexer {
 
     const from = tip.number + 1
     const to = Math.min(from + this.batchSize - 1, latest)
-    let blocks: EVMBlockWithTransactions[]
+    let blocks: (Header | EVMBlockWithTransactions)[]
     try {
-      blocks = await this.$.source.getBlocks(from, to)
+      blocks = await this.fetch(from, to)
     } catch (error) {
       // the source named a block its node behind the load balancer has not got yet
       if (!(error instanceof NotFoundOnRpcError)) throw error
@@ -226,7 +242,16 @@ export class ChainHeadIndexer extends RootIndexer {
     })
   }
 
-  private async store(blocks: EVMBlockWithTransactions[]) {
+  private fetch(
+    from: number,
+    to: number,
+  ): Promise<(Header | EVMBlockWithTransactions)[]> {
+    return this.fullBlocks
+      ? this.$.source.getBlocks(from, to)
+      : this.$.source.getHeaders(from, to)
+  }
+
+  private async store(blocks: (Header | EVMBlockWithTransactions)[]) {
     await this.$.db.chainBlock.upsertMany(
       blocks.map((block) => ({
         chain: this.$.chain,
@@ -244,7 +269,10 @@ export class ChainHeadIndexer extends RootIndexer {
         timestamp,
       })),
     ].slice(-REMEMBERED_BLOCKS)
-    for (const block of blocks) this.fetched.set(block.number, block)
+    // held only once stored: a block from another fork is never handed on
+    for (const block of blocks) {
+      if ('transactions' in block) this.fetched.set(block.number, block)
+    }
     const kept = Math.max(2 * this.batchSize, REMEMBERED_BLOCKS)
     for (const number of this.fetched.keys()) {
       if (this.fetched.size <= kept) break
@@ -348,6 +376,23 @@ export class ChainHeadIndexer extends RootIndexer {
       if (hash === older[middle].hash) onChain = middle + 1
       else replaced = middle
     }
+    // Asked again before anything is deleted: nodes that disagree with each
+    // other could have steered the search past blocks the chain still has
+    const [fork, next] = [older.at(onChain - 1), older.at(onChain)]
+    const stillOn =
+      onChain === 0 ||
+      (fork && (await this.$.source.getBlockHash(fork.number)) === fork.hash)
+    const stillOff =
+      next === undefined ||
+      (await this.$.source.getBlockHash(next.number)) !== next.hash
+    if (!stillOn || !stillOff) {
+      throw new Error(
+        'Source disagreed with itself about where the chain forked',
+        {
+          cause: { chain: this.$.chain, fork: fork?.number },
+        },
+      )
+    }
     return older.slice(0, onChain).slice(-REMEMBERED_BLOCKS)
   }
 
@@ -389,7 +434,7 @@ export function getHeadRetryStrategy() {
   })
 }
 
-function isLinked(blocks: EVMBlockWithTransactions[]): boolean {
+function isLinked(blocks: Header[]): boolean {
   for (let i = 1; i < blocks.length; i++) {
     if (blocks[i].parentHash !== blocks[i - 1].hash) return false
   }

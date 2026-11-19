@@ -37,6 +37,24 @@ describe(RpcHeadSource.name, () => {
     })
   })
 
+  describe(RpcHeadSource.prototype.getHeaders.name, () => {
+    it('asks for the blocks without their transactions, oldest first', async () => {
+      const rpc = mockObject<IRpcClient>({
+        getBlock: mockFn(async (number: number | 'latest') =>
+          block(number as number),
+        ),
+      })
+
+      const headers = await new RpcHeadSource(rpc).getHeaders(10, 11)
+
+      expect(headers.map((header) => header.number)).toEqual([10, 11])
+      expect(rpc.getBlock.calls.map((call) => call.args as unknown[])).toEqual([
+        [10, false],
+        [11, false],
+      ])
+    })
+  })
+
   describe(RpcHeadSource.prototype.getBlockHash.name, () => {
     it("reads the hash from the block's header", async () => {
       const rpc = mockObject<IRpcClient>({

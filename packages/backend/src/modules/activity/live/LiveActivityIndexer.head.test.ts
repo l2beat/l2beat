@@ -182,6 +182,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
       },
       Logger.SILENT,
     )
+    head.fetchFullBlocks()
     const indexer = new LiveActivityIndexer(
       {
         projectId: PROJECT,

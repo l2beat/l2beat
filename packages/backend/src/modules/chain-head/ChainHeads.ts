@@ -24,16 +24,23 @@ export class ChainHeads {
    * Undefined for a chain with no RPC to follow. The head keeps its blocks
    * for as long as the reader that looks furthest back asks, and fetches them
    * in batches of the smallest size a reader asks for: a reader that limits
-   * what its chain's RPC is asked at once is not overruled by another
+   * what its chain's RPC is asked at once is not overruled by another. It
+   * fetches headers only, unless a reader reads whole blocks
    */
   get(
     chain: string,
-    reader: { batchSize: number; keepFor: number },
+    reader: {
+      batchSize: number
+      keepFor: number
+      /** The reader reads blocks with their transactions */
+      fullBlocks?: boolean
+    },
   ): ChainHeadIndexer | undefined {
     const existing = this.heads.get(chain)
     if (existing) {
       existing.keepAtLeast(reader.keepFor)
       existing.fetchAtMost(reader.batchSize)
+      if (reader.fullBlocks) existing.fetchFullBlocks()
       return existing
     }
 
@@ -50,6 +57,7 @@ export class ChainHeads {
       },
       this.$.logger.tag({ feature: 'chainHead', module: 'chainHead' }),
     )
+    if (reader.fullBlocks) head.fetchFullBlocks()
     this.heads.set(chain, head)
     return head
   }

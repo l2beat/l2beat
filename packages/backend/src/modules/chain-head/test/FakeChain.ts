@@ -24,6 +24,7 @@ export class FakeChain implements HeadSource {
   private lagging = 0
   private readonly notServedOnce = new Set<number>()
   private readonly forkedOnce = new Set<number>()
+  private readonly hashForkedOnce = new Set<number>()
 
   constructor(
     public latest: number,
@@ -41,7 +42,14 @@ export class FakeChain implements HeadSource {
     range(from, to + 1).map((number) => this.serve(number)),
   )
 
-  getBlockHash = mockFn(async (number: number) => this.hashOf(number))
+  getHeaders = mockFn(async (from: number, to: number) =>
+    range(from, to + 1).map((number) => this.serve(number)),
+  )
+
+  getBlockHash = mockFn(async (number: number) => {
+    const hash = this.hashOf(number)
+    return this.hashForkedOnce.delete(number) ? `${hash}-fork` : hash
+  })
 
   mine(count = 1) {
     this.latest += count
@@ -66,6 +74,11 @@ export class FakeChain implements HeadSource {
   /** The block is served once by a node on another fork */
   serveFromForkOnce(number: number) {
     this.forkedOnce.add(number)
+  }
+
+  /** The block's hash is answered once by a node on another fork */
+  answerHashFromForkOnce(number: number) {
+    this.hashForkedOnce.add(number)
   }
 
   block(number: number): EVMBlockWithTransactions {

@@ -160,7 +160,7 @@ function expectReaderAgrees(reader: Reader, store: FakeChainBlocks) {
 }
 
 function newHead(chain: FakeChain, store: FakeChainBlocks) {
-  return new ChainHeadIndexer(
+  const head = new ChainHeadIndexer(
     {
       chain: CHAIN,
       source: chain,
@@ -170,6 +170,8 @@ function newHead(chain: FakeChain, store: FakeChainBlocks) {
     },
     Logger.SILENT,
   )
+  head.fetchFullBlocks()
+  return head
 }
 
 function mulberry32(seed: number) {

@@ -82,6 +82,7 @@ export function initActivityModule({
           chainHeads.get(project.chainName, {
             batchSize,
             keepFor: LIVE_BLOCKS_KEPT_FOR,
+            fullBlocks: true,
           })
         const uopsAnalyzer = providers.uops.getUopsAnalyzer(project.chainName)
         const liveIndexer =
