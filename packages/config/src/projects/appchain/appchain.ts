@@ -1,7 +1,6 @@
 import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
-import { ESPRESSO_CAS } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
@@ -46,7 +45,28 @@ export const appchain: ScalingProject = orbitStackL2({
     },
   },
   nonTemplateTechnology: {
-    sequencing: ESPRESSO_CAS,
+    sequencing: {
+      name: 'Espresso CAS certificates',
+      description:
+        "The sequencer provides regular pre-confirmations, and the Chain Adjacent Service (CAS) publishes its blocks to the Espresso Network. Before a batch is posted, CAS checks it against the blocks finalized by the Espresso Network and signs a certificate over the batch's message range, Espresso block and DA certificate. CAS runs inside a Trusted Execution Environment (TEE). Its signing key is registered permissionlessly with a ZK-proven attestation of an approved enclave image, checked by the NitroEnclaveVerifier. The SequencerInbox contract on the host chain verifies the certificate through the EspressoTEEVerifier for every non-empty batch from a batch poster and reverts unless the signer's enclave hash is still approved. A batch can also carry such a signer's signature over the full batch data instead. Empty batches need no certificate and can include pending delayed messages. The rollup owner can remove the certificate requirement or replace the verifier with any contract.",
+      references: [
+        {
+          title: 'Chain Adjacent Service',
+          url: 'https://github.com/EspressoSystems/chain-adjacent-service',
+        },
+      ],
+      risks: [
+        // Liveness attack, but there is forced inclusion to bypass it
+        {
+          category: 'Withdrawals can be delayed if',
+          text: 'the EspressoTEEVerifier owner disables the CAS enclave hash or replaces the verifier contracts, so that CAS certificates no longer verify.',
+        },
+        {
+          category: 'Withdrawals can be delayed if',
+          text: 'CAS stops issuing certificates, for example during an Espresso Network outage.',
+        },
+      ],
+    },
   },
   chainConfig: {
     name: 'appchain',

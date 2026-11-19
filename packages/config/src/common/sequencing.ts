@@ -22,25 +22,3 @@ export const ESPRESSO: ProjectTechnologyChoice = {
     },
   ],
 }
-
-export const ESPRESSO_CAS: ProjectTechnologyChoice = {
-  name: 'Espresso CAS certificates',
-  description: readMarkdown('common/sequencing/espresso-cas.md'),
-  references: [
-    {
-      url: 'https://github.com/EspressoSystems/chain-adjacent-service',
-      title: 'Chain Adjacent Service',
-    },
-  ],
-  risks: [
-    // Liveness attack, but there is forced inclusion to bypass it
-    {
-      category: 'Withdrawals can be delayed if',
-      text: 'the EspressoTEEVerifier owner disables the CAS enclave hash or replaces the verifier contracts, so that CAS certificates no longer verify.',
-    },
-    {
-      category: 'Withdrawals can be delayed if',
-      text: 'CAS stops issuing certificates, for example during an Espresso Network outage.',
-    },
-  ],
-}

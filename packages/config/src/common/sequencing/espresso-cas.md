@@ -1,5 +1,0 @@
-Integration with Espresso sequencing.
-The sequencer provides regular pre-confirmations, and the Chain Adjacent Service (CAS) publishes its blocks to the Espresso Network.
-Before a batch is posted, CAS checks it against the blocks finalized by the Espresso Network and signs a certificate over the batch's message range, Espresso block and DA certificate. CAS runs inside a Trusted Execution Environment (TEE). Its signing key is registered permissionlessly with a ZK-proven attestation of an approved enclave image, checked by the NitroEnclaveVerifier.
-The SequencerInbox contract on the host chain verifies the certificate through the EspressoTEEVerifier for every non-empty batch from a batch poster and reverts unless the signer's enclave hash is still approved. A batch can also carry such a signer's signature over the full batch data instead. Empty batches need no certificate and can include pending delayed messages.
-The rollup owner can remove the certificate requirement or replace the verifier with any contract.
