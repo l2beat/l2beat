@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
+import { readRateLimit } from '../clients/http/rateLimitHeaders'
 
 interface Deps {
   maxRetries: number
@@ -41,6 +42,9 @@ export class RetryHandler {
         attempt: attempt,
         delay,
         error: error instanceof Error ? error.message : error,
+        // A refusal that a retry recovers from is logged nowhere else, and
+        // this is where the provider says what its limit is
+        rateLimit: readRateLimit(error),
         url: metadata?.url,
         init: metadata?.init,
       })
