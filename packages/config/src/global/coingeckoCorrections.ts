@@ -43,7 +43,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     reason:
       "For 00:00 UTC on 22 days between 2026-03-27 and 2026-07-29 we stored a uniBTC price 7% to 51% above BTC, on seven of them the same $93,147. CoinGecko's history now has a price within 3% of BTC for each of those hours, so the values we fetched live were wrong. The values below are the ones CoinGecko reports now.",
     evidence: [
-      'Until this correction, the uniBTC value we published for BOB at each of those hours, divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB, gave the stored price. That value also subtracts the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf, under 0.002 BTC at those hours.',
+      'Until this correction, the stored price at each of those hours could be read from what we published: the uniBTC value for BOB, plus the value of the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf that it subtracts (under 0.002 BTC at those hours), divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB.',
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1774483200&to=1781654400',
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1781654400&to=1785369600',
       'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1774483200000&endTime=1785369600000',
@@ -77,7 +77,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'stakewise-v3-oseth',
     field: 'price',
     reason:
-      "CoinGecko reports osETH at $1,545 from 2026-05-30 22:00 to 2026-05-31 01:00 UTC, and at $2,125 before and $2,128 after. ETH stayed between $2,022 and $2,034 through those hours and DefiLlama has osETH at $2,119 at 00:00, so the 27% drop is a feed error. We store one point a day that far back, so only 00:00 needs a value, and it is DefiLlama's.",
+      "CoinGecko reports osETH at $1,545 from 2026-05-30 22:00 to 2026-05-31 01:00 UTC, and at $2,125 before and $2,128 after. ETH stayed between $2,022 and $2,034 through those hours and DefiLlama has osETH at $2,119 at 00:00, so the 27% drop is a feed error. We store one point a day that far back, so only 00:00 needs a value. CoinGecko's nearest sound hours are five hours apart, so the value is DefiLlama's.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/stakewise-v3-oseth/market_chart/range?vs_currency=usd&from=1780164000&to=1780207200',
       'https://coins.llama.fi/prices/historical/1780185600/ethereum:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38',
