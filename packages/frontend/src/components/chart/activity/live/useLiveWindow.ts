@@ -9,7 +9,7 @@ import {
   LIVE_RANGES,
   type LiveRange,
 } from '~/utils/range/liveRanges'
-import { clampTo } from './liveView'
+import { clampTo, getMoveEnd } from './liveView'
 import { LOOKAHEAD_DRAWINGS, useLivePlayhead } from './useLivePlayhead'
 
 /**
@@ -118,14 +118,13 @@ export function useLiveWindow({
     follow: () => setTo(undefined),
     seek: setSeekTo,
     moveTo: (end: number) => {
-      // on a bucket, so moves within one share a read. The range's own until
-      // it is read: a move rounded to another range's would be read again
-      // once rounded to this one's
+      // the range's own bucket until it is read: a move rounded to another
+      // range's would be read again once rounded to this one's
       const bucket =
         data?.window.range === range
           ? data.window.bucket
           : getLiveBucketSeconds(range)
-      setTo(clampTo(end - (end % bucket), buffer, seconds))
+      setTo(getMoveEnd(end, buffer, seconds, bucket))
     },
   }
 }

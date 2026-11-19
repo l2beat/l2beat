@@ -127,6 +127,7 @@ export function LiveOverview({
         if (!dragging.current) stop(true)
       }}
       onPointerDown={(event) => {
+        clearTimeout(settle.current)
         dragging.current = true
         event.currentTarget.setPointerCapture(event.pointerId)
         pointTo(event)

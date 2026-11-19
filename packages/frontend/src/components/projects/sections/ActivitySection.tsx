@@ -137,7 +137,6 @@ export function ActivitySection({
           category={category}
           metric={metric}
           setMetric={setMetric}
-          oldest={status?.oldest}
           stateSlot={liveStateSlot}
         />
       ) : project.id === ProjectId.ETHEREUM ? (

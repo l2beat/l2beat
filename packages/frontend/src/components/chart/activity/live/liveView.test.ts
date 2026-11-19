@@ -4,11 +4,28 @@ import {
   clampTo,
   formatBucket,
   getKeyEnd,
+  getMoveEnd,
   isMoveKey,
   ticksOf,
 } from './liveView'
 
 const T = UnixTime(1_800_000_000)
+
+describe(getMoveEnd.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
+
+  it('follows the newest block when the overview shows it does', () => {
+    // Methodology: 14 s behind on 5M is within its 15 s, but rounded to a
+    // 12 s bucket first it would be 24 s behind
+    expect(getMoveEnd(T - 14, buffer, 300, 12)).toEqual(undefined)
+  })
+
+  it('ends a window looked back on on a bucket', () => {
+    expect(getMoveEnd(T - 100, buffer, 300, 12)).toEqual(
+      T - 100 - ((T - 100) % 12),
+    )
+  })
+})
 
 describe(clampTo.name, () => {
   const buffer = { from: T - 4 * UnixTime.HOUR, to: T }

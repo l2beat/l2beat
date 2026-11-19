@@ -30,15 +30,12 @@ export function ProjectLiveActivity({
   category,
   metric,
   setMetric,
-  oldest,
   stateSlot,
 }: {
   project: ChartProject
   category: ProjectScalingCategory | undefined
   metric: LiveMetric
   setMetric: (metric: LiveMetric) => void
-  /** Of the oldest stored block, before which nothing is known */
-  oldest: number | undefined
   /** Where it shows whether it follows the newest block, beside the view's switch */
   stateSlot: HTMLElement | null
 }) {
@@ -49,8 +46,8 @@ export function ProjectLiveActivity({
   })
   const { data, domain, range, selection } = live
   const buckets = useMemo(
-    () => data && toBuckets(data.window, data.buckets, metric, oldest),
-    [data, metric, oldest],
+    () => data && toBuckets(data.window, data.buckets, metric, data.oldest),
+    [data, metric],
   )
   const state =
     stateSlot &&

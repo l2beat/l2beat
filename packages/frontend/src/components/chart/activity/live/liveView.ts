@@ -27,6 +27,23 @@ export function clampTo(
   return clamped >= buffer.to - seconds * FOLLOW_WITHIN ? undefined : clamped
 }
 
+/**
+ * Where a window moved to `end` ends once read: clamped as the overview shows
+ * it, so following the newest block is decided before rounding, then on a
+ * bucket, so moves within one share a read
+ */
+export function getMoveEnd(
+  end: number,
+  buffer: Edges | undefined,
+  seconds: number,
+  bucket: number,
+) {
+  const clamped = clampTo(end, buffer, seconds)
+  return clamped === undefined
+    ? undefined
+    : clampTo(clamped - (clamped % bucket), buffer, seconds)
+}
+
 const back = (end: number, _: Edges, seconds: number) =>
   end - seconds * KEY_STEP
 const forward = (end: number, _: Edges, seconds: number) =>
