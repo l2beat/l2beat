@@ -95,11 +95,12 @@ export abstract class ClientCore {
     url: string,
     init: FetchInit,
   ): Promise<json> {
+    const sentAt = Date.now()
     try {
       return await this.deps.http.fetch(url, init)
     } catch (error) {
       if (isThrottled(error)) {
-        this.rateLimiter.throttled()
+        this.rateLimiter.throttled(sentAt)
       }
       throw error
     }

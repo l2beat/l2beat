@@ -111,11 +111,11 @@ export class RateLimiter {
   }
 
   /**
-   * Reports that the provider refused a call for the rate (HTTP 429).
-   * Does nothing unless `stepDownOnThrottle` is set.
+   * Reports that the provider refused a call sent at `sentAt` for the rate
+   * (HTTP 429). Does nothing unless `stepDownOnThrottle` is set.
    */
-  throttled(): void {
-    if (!this.mayStepDown()) {
+  throttled(sentAt: number): void {
+    if (!this.mayStepDown(sentAt)) {
       return
     }
     const from = this.effective
@@ -138,9 +138,14 @@ export class RateLimiter {
     this.answeredCallSentAt = Math.max(this.answeredCallSentAt, sentAt)
   }
 
-  private mayStepDown(): boolean {
+  /**
+   * A call sent before the last step went out at the old rate, so neither
+   * its refusal nor its answer says anything about the new one.
+   */
+  private mayStepDown(refusedCallSentAt: number): boolean {
     return (
       this.stepDownOnThrottle !== 0 &&
+      refusedCallSentAt > this.steppedDownAt &&
       this.answeredCallSentAt > this.steppedDownAt &&
       Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
     )

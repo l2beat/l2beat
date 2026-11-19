@@ -521,7 +521,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
     const start = Date.now()
     const response = await this.$.http.fetchRaw(this.$.url, init)
     if (response.status === 429) {
-      this.rateLimiter.throttled()
+      this.rateLimiter.throttled(start)
     }
     const text = await response.text()
     this.metricsAggregator.push({
@@ -547,7 +547,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
         cause: { body: text },
       })
     }
-    this.rateLimiter.answered(start)
+    if (body.some(hasResult)) {
+      this.rateLimiter.answered(start)
+    }
     return body
   }
 
@@ -606,4 +608,9 @@ function isNullResult(response: unknown): boolean {
     'result' in response &&
     response.result === null
   )
+}
+
+/** Not an error in its place: the provider served this call of the batch */
+function hasResult(item: unknown): boolean {
+  return typeof item === 'object' && item !== null && 'result' in item
 }

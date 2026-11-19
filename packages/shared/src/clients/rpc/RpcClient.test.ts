@@ -1069,6 +1069,52 @@ describe(RpcClient.name, () => {
     }
   })
 
+  // Why: a provider can also turn every call of a batch down inside a 200.
+  // Such a batch served nothing, so it must not count as an answer either.
+  it('does not take a batch with no result in it as an answer', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const refusedInside = () =>
+      jsonResponse([
+        { id: '0x1', error: { code: 429, message: 'Too many requests' } },
+        { id: '0x2', error: { code: 429, message: 'Too many requests' } },
+      ])
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(refusedInside())
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(refusedInside()),
+    })
+    const rpc = mockClient({
+      http,
+      stepDownOnThrottle: 0.1,
+      maxBatchSize: 2,
+      generateId: mockFn()
+        .returnsOnce('0x1')
+        .returnsOnce('0x2')
+        .returnsOnce('0x1')
+        .returnsOnce('0x2'),
+    })
+    const refusedThenRefusedInside = async () => {
+      const queried = rpc.batchQuery('rpc_method', [['a'], ['b']])
+      const settled = queried.catch(() => {})
+      await clock.tickAsync(1_000)
+      await settled
+    }
+
+    try {
+      await refusedThenRefusedInside()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+
+      await clock.tickAsync(60_000)
+      await refusedThenRefusedInside()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+      expect(http.fetchRaw).toHaveBeenCalledTimes(4)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   // The same minute apart, with each refused batch answered on its retry:
   // the first answer is what lets the second refusal count.
   it('tells the limiter of an answered batch, so a later refusal counts', async () => {

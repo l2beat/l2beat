@@ -186,7 +186,7 @@ describe(RateLimiter.name, () => {
     it('keeps the rate when stepping down is not asked for', () => {
       const rateLimiter = new RateLimiter({ callsPerMinute: 600 })
 
-      rateLimiter.throttled()
+      rateLimiter.throttled(Date.now())
 
       expect(rateLimiter.effectiveCallsPerMinute).toEqual(600)
     })
@@ -202,18 +202,18 @@ describe(RateLimiter.name, () => {
       })
 
       try {
-        rateLimiter.throttled()
-        rateLimiter.throttled()
-        rateLimiter.throttled()
+        rateLimiter.throttled(Date.now())
+        rateLimiter.throttled(Date.now())
+        rateLimiter.throttled(Date.now())
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
         clock.tick(59_000)
         rateLimiter.answered(Date.now())
-        rateLimiter.throttled()
+        rateLimiter.throttled(Date.now())
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
         clock.tick(1_000)
-        rateLimiter.throttled()
+        rateLimiter.throttled(Date.now())
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
         expect(rateLimiter.callsPerMinute).toEqual(1_000)
       } finally {
@@ -224,9 +224,10 @@ describe(RateLimiter.name, () => {
     // Some providers lock an address out for minutes after one refusal and
     // refuse every call meanwhile, whatever the rate. Counting those would
     // settle the limiter far below the limit. Five refused minutes pass
-    // here, and a slow call sent before the lockout is answered during it:
-    // neither shows the provider takes the lowered rate. A call sent after
-    // the step does, so the next refusal counts again.
+    // here, and a call sent in the very millisecond of the step, so
+    // perhaps before it, is answered during them: neither shows the
+    // provider takes the lowered rate. A call sent after the step does,
+    // and an older answer arriving late must not undo that.
     it('waits for an answer to a call sent after the step before the next one', () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
@@ -235,19 +236,46 @@ describe(RateLimiter.name, () => {
       })
 
       try {
-        const sentBeforeTheStep = Date.now()
-        clock.tick(1)
-        rateLimiter.throttled()
+        const sentWithTheStep = Date.now()
+        rateLimiter.throttled(Date.now())
         for (let minute = 0; minute < 5; minute++) {
           clock.tick(60_000)
-          rateLimiter.throttled()
+          rateLimiter.throttled(Date.now())
         }
-        rateLimiter.answered(sentBeforeTheStep)
-        rateLimiter.throttled()
+        rateLimiter.answered(sentWithTheStep)
+        rateLimiter.throttled(Date.now())
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
         rateLimiter.answered(Date.now())
-        rateLimiter.throttled()
+        rateLimiter.answered(sentWithTheStep)
+        rateLimiter.throttled(Date.now())
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
+      } finally {
+        clock.uninstall()
+      }
+    })
+
+    // A slow call can be refused long after it was sent. If the rate has
+    // stepped down since, that refusal is about the old rate, and the new
+    // one has not been refused yet. The call here is sent in the very
+    // millisecond of the step and refused two minutes later.
+    it('ignores a refusal of a call sent before the last step', () => {
+      const clock = FakeTimers.install({ now: 10_000 })
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: 1_000,
+        stepDownOnThrottle: 0.1,
+      })
+
+      try {
+        const sentWithTheStep = Date.now()
+        rateLimiter.throttled(Date.now())
+        clock.tick(120_000)
+        rateLimiter.answered(Date.now())
+
+        rateLimiter.throttled(sentWithTheStep)
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
+
+        rateLimiter.throttled(Date.now())
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
       } finally {
         clock.uninstall()
@@ -264,7 +292,7 @@ describe(RateLimiter.name, () => {
       const starts: number[] = []
 
       try {
-        rateLimiter.throttled()
+        rateLimiter.throttled(Date.now())
         for (let i = 0; i < 3; i++) {
           void rateLimiter.call(() => starts.push(Date.now()))
         }
@@ -292,7 +320,7 @@ describe(RateLimiter.name, () => {
 
       try {
         for (let i = 0; i < 10; i++) {
-          rateLimiter.throttled()
+          rateLimiter.throttled(Date.now())
           clock.tick(60_000)
           rateLimiter.answered(Date.now())
         }
