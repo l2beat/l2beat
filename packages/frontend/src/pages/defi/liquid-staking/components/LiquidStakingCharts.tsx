@@ -42,6 +42,7 @@ import {
   type LiquidStakingChartSeries,
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
+import { LiquidStakingTvlChart } from './LiquidStakingTvlChart'
 
 export type LiquidStakingChartProject = Pick<
   LiquidStakingEntry,
@@ -86,6 +87,13 @@ export function LiquidStakingCharts({
         />
       </ChartControlsWrapper>
       <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
+        <div className="lg:col-span-2">
+          <LiquidStakingTvlChart
+            projectSeries={projectSeries}
+            range={range}
+            rangeOptions={LIQUID_STAKING_RANGE_OPTIONS}
+          />
+        </div>
         <YieldChart
           projectSeries={projectSeries}
           range={range}

@@ -161,7 +161,11 @@ function byProject(projectIds: string[], series: number[][], index: number) {
 }
 
 /** Wanders around `mean` by up to `spread` of it, so mock lines look plausible. */
-function randomWalk(length: number, mean: number, spread: number): number[] {
+export function randomWalk(
+  length: number,
+  mean: number,
+  spread: number,
+): number[] {
   const values: number[] = []
   let value = mean
   for (let i = 0; i < length; i++) {

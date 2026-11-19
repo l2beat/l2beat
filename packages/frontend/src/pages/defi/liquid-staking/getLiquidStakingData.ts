@@ -62,8 +62,14 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
 
-  const [appLayoutProps, { entries }] = await Promise.all([
+  const [appLayoutProps, , { entries }] = await Promise.all([
     getAppLayoutProps(),
+    // Only fills the query cache, for the value locked chart.
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.defi.liquidStakingTvlChart.queryOptions({
+        range: defaultChartRange,
+      }),
+    ),
     // The chart queries also fill the query cache, so the charts hydrate
     // without a request.
     loadLiquidStakingEntries(async () => {
