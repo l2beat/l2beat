@@ -61,7 +61,9 @@ const wholeEth = (contract: string, key: string): string =>
   ).toLocaleString('en-US')
 const pooled = BigInt(value('LiquidityPool', 'getTotalPooledEther'))
 const inLp = BigInt(value('LiquidityPool', 'totalValueInLp'))
-const bufferPercent = `${(Number((inLp * 10000n) / pooled) / 100).toFixed(2)}%`
+const bufferShare = Number((inLp * 1_000_000n) / pooled) / 10_000
+// Below 0.01%, two significant digits, so a small buffer does not read as 0.00%.
+const bufferPercent = `${bufferShare < 0.01 ? bufferShare.toPrecision(2) : bufferShare.toFixed(2)}%`
 const stethSharePercent = `${(
   Number(
     (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
