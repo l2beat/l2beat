@@ -17,7 +17,7 @@ import {
   toRetryOptions,
   withRetries,
 } from '@l2beat/shared'
-import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import {
   buildLogsSnapshotKey,
   buildSnapshotKey,
@@ -135,10 +135,16 @@ export class RpcSnapshotClient extends RpcClientCompat {
   override async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, number>> {
-    const blocks = await Promise.all(
-      blockNumbers.map((blockNumber) => this.getBlock(blockNumber, false)),
-    )
-    return new Map(blocks.map((block) => [block.number, block.timestamp]))
+    const result = new Map<number, number>()
+    for (const blockNumber of blockNumbers) {
+      const block = await this.getBlock(blockNumber, false)
+      assert(
+        block.number === blockNumber,
+        `Invalid response: expected block number ${blockNumber}, got ${block.number}`,
+      )
+      result.set(blockNumber, block.timestamp)
+    }
+    return result
   }
 
   override async getTransaction(txHash: string): Promise<EVMTransaction> {
