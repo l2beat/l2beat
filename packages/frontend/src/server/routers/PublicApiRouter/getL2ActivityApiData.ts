@@ -21,7 +21,7 @@ export async function getL2ActivityApiData({
     range,
   }
 
-  const { data } = await getActivityChart(params, { live: false })
+  const { data } = await getActivityChart(params)
   const latestActivityData = data.at(-1)
 
   if (!latestActivityData) {

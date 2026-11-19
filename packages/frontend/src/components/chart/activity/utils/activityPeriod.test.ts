@@ -1,26 +1,26 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  capTimeRange,
-  getActivityPeriodSeconds,
-} from './getActivityPeriodSeconds'
+import { capTimeRange, getActivityPeriod } from './activityPeriod'
 
-describe(getActivityPeriodSeconds.name, () => {
+describe(getActivityPeriod.name, () => {
   const HOUR_START = UnixTime.toStartOf(UnixTime(1_800_000_000), 'hour')
 
   it('spreads a whole period over all its seconds', () => {
-    expect(getActivityPeriodSeconds(HOUR_START, 'hour', undefined)).toEqual(
-      3600,
-    )
-    expect(
-      getActivityPeriodSeconds(HOUR_START, 'hour', HOUR_START + 7200),
-    ).toEqual(3600)
+    expect(getActivityPeriod(HOUR_START, 'hour', undefined)).toEqual({
+      seconds: 3600,
+      underWay: false,
+    })
+    expect(getActivityPeriod(HOUR_START, 'hour', HOUR_START + 7200)).toEqual({
+      seconds: 3600,
+      underWay: false,
+    })
   })
 
   it('spreads a period under way up to the newest block', () => {
-    expect(
-      getActivityPeriodSeconds(HOUR_START, 'hour', HOUR_START + 899),
-    ).toEqual(900)
+    expect(getActivityPeriod(HOUR_START, 'hour', HOUR_START + 899)).toEqual({
+      seconds: 900,
+      underWay: true,
+    })
   })
 })
 

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
-import { rangeToResolution } from './range'
+import { endsToday, optionToRange, rangeToResolution } from './range'
 
 describe(rangeToResolution.name, () => {
   let time: InstalledClock
@@ -51,5 +51,34 @@ describe(rangeToResolution.name, () => {
     ])
 
     expect(resolution).toEqual('day')
+  })
+})
+
+describe(endsToday.name, () => {
+  let time: InstalledClock
+  const NOON = UnixTime(Date.parse('2026-04-15T12:00:00.000Z') / 1000)
+  const DAY = UnixTime.toStartOf(NOON, 'day')
+
+  afterEach(() => {
+    time.uninstall()
+  })
+
+  it('holds for the presets and a calendar range ending today', () => {
+    time = install({ now: NOON * 1000 })
+
+    expect(endsToday(optionToRange('7d'))).toEqual(true)
+    expect(endsToday([DAY - 7 * UnixTime.DAY, NOON])).toEqual(true)
+  })
+
+  it('does not for a calendar range ending an earlier day', () => {
+    time = install({ now: NOON * 1000 })
+
+    expect(endsToday([DAY - 7 * UnixTime.DAY, DAY - 1])).toEqual(false)
+  })
+
+  it('does not for the presets in the hour and a quarter after midnight', () => {
+    time = install({ now: (DAY + UnixTime.HOUR) * 1000 })
+
+    expect(endsToday(optionToRange('7d'))).toEqual(false)
   })
 })

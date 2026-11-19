@@ -12,13 +12,6 @@ import {
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import {
-  getRecentHours,
-  reachesNow,
-  runsOn,
-  toRecentPoints,
-  withoutUnsummed,
-} from './utils/recentActivity'
 
 export type EthereumActivityChartParams = v.infer<
   typeof EthereumActivityChartParams
@@ -38,8 +31,6 @@ export type EthereumActivityChartData = {
   syncWarning: string | undefined
   syncedUntil: UnixTime
   stats: ActivityProjectChartStats | undefined
-  /** Of the newest stored block, when the last point is today so far */
-  liveUntil: UnixTime | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -69,7 +60,6 @@ export async function getEthereumActivityChart(
       syncWarning: undefined,
       syncedUntil: adjustedRange[1],
       stats: undefined,
-      liveUntil: undefined,
     }
   }
 
@@ -80,13 +70,7 @@ export async function getEthereumActivityChart(
   })
 
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
-    return {
-      data: [],
-      syncWarning,
-      syncedUntil,
-      stats: undefined,
-      liveUntil: undefined,
-    }
+    return { data: [], syncWarning, syncedUntil, stats: undefined }
   }
 
   const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
@@ -119,32 +103,12 @@ export async function getEthereumActivityChart(
     activityTotals[ProjectId.ETHEREUM],
   )
 
-  const summed = withoutUnsummed(data)
-  const today = reachesNow(params.range)
-    ? await getToday(summed.at(-1))
-    : undefined
   return {
-    data: today ? [...summed, today.point] : data,
+    data,
     syncWarning,
     syncedUntil,
     stats,
-    liveUntil: today?.until,
   }
-}
-
-/** Today so far, past what activity has summed, if it summed the day before */
-async function getToday(last: EthereumActivityChartDataPoint | undefined) {
-  if (last === undefined || !env.CLIENT_SIDE_LIVE_ACTIVITY) return undefined
-  const recent = (
-    await getRecentHours(
-      [ProjectId.ETHEREUM],
-      UnixTime.toStartOf(UnixTime.now(), 'day'),
-    )
-  ).get(ProjectId.ETHEREUM)
-  const point = recent && toRecentPoints(recent, 'day', last[0])[0]
-  return point && recent && runsOn(last[0], point[0], 'day')
-    ? { point, until: recent.until }
-    : undefined
 }
 
 function getEthereumActivityChartStats(
@@ -193,6 +157,5 @@ function getMockEthereumActivityChart({
     syncWarning: undefined,
     syncedUntil: adjustedRange[1],
     stats: undefined,
-    liveUntil: undefined,
   }
 }

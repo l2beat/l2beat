@@ -4,7 +4,6 @@ import {
   formatActivityCount,
   formatInteger,
   ProjectId,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { scaleSymlog } from 'd3-scale'
 import { useMemo } from 'react'
@@ -29,9 +28,8 @@ import { tinted } from '~/components/core/chart/tint'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
-import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
-import { getActivityPeriodSeconds } from './utils/getActivityPeriodSeconds'
+import { formatActivityPeriod, getActivityPeriod } from './utils/activityPeriod'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
@@ -183,16 +181,14 @@ export function ActivityCustomTooltip<
   liveUntil?: number
 }) {
   const timestamp = row.timestamp
-  const seconds = getActivityPeriodSeconds(timestamp, resolution, liveUntil)
-  const underWay = seconds < UnixTime.periodToSeconds(resolution)
+  const { seconds } = getActivityPeriod(timestamp, resolution, liveUntil)
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatRange(timestamp, timestamp + seconds)}
-          {underWay && ' so far'}
+          {formatActivityPeriod(timestamp, resolution, liveUntil)}
         </ChartTooltipTitle>
         <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">

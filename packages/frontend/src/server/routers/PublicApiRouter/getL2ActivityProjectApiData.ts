@@ -21,15 +21,12 @@ export async function getL2ActivityProjectApiData({ slug, range }: Params) {
     } as const
   }
 
-  const { data } = await getActivityChart(
-    {
-      filter: isEthereum
-        ? { type: 'all' }
-        : { type: 'projects', projectIds: project ? [project.id] : [] },
-      range: range,
-    },
-    { live: false },
-  )
+  const { data } = await getActivityChart({
+    filter: isEthereum
+      ? { type: 'all' }
+      : { type: 'projects', projectIds: project ? [project.id] : [] },
+    range: range,
+  })
 
   const oldestProjectData = data.at(0)
   const latestProjectData = data.at(-1)
