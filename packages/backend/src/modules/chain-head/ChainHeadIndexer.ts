@@ -13,6 +13,8 @@ import { withCoreFeatureRpcMetricsContext } from '../../tools/coreFeatureRpcMetr
 const INTERVAL_MS = 10_000
 /** Each tick in a row that stores no block waits one more interval, up to a minute */
 const MAX_IDLE_TICKS = 5
+/** How many of its usual gaps between blocks a chain may go without one before it is asked less often */
+const QUIET_GAPS = 3
 /** Stored blocks remembered to find where a reorg forked off without reading the table */
 export const REMEMBERED_BLOCKS = 64
 /** How long a failing source is left alone at most before it is asked again */
@@ -129,13 +131,27 @@ export class ChainHeadIndexer extends RootIndexer {
         await this.clean()
         const followed = await this.follow()
 
+        // A chain is asked less often only once it is quiet for longer than
+        // it usually is: a tick that falls between two of Ethereum's blocks
+        // would otherwise put the next one twenty seconds away
+        const usual = Math.ceil((QUIET_GAPS * this.getUsualGap()) / INTERVAL_MS)
         this.idleTicks =
-          followed.stored > 0 ? 0 : Math.min(this.idleTicks + 1, MAX_IDLE_TICKS)
-        this.scheduleTick(
-          followed.again ? 0 : INTERVAL_MS * (this.idleTicks + 1),
-        )
+          followed.stored > 0
+            ? 0
+            : Math.min(this.idleTicks + 1, MAX_IDLE_TICKS + usual)
+        const slowed = Math.max(0, this.idleTicks - usual)
+        this.scheduleTick(followed.again ? 0 : INTERVAL_MS * (slowed + 1))
         return followed.height
       },
+    )
+  }
+
+  /** Milliseconds between the remembered blocks, on average. 0 while there are too few to tell */
+  private getUsualGap(): number {
+    const [first, last] = [this.remembered?.at(0), this.remembered?.at(-1)]
+    if (!first || !last || first.number === last.number) return 0
+    return (
+      ((last.timestamp - first.timestamp) * 1000) / (last.number - first.number)
     )
   }
 

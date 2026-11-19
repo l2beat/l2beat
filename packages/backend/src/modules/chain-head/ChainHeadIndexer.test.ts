@@ -480,6 +480,25 @@ describe(ChainHeadIndexer.name, () => {
       expect(waits).toEqual([20, 30, 40, 50, 60, 60, 60])
     })
 
+    it('keeps asking every ten seconds through the gaps a chain usually has between blocks', async () => {
+      // blocks twelve seconds apart, as Ethereum's are
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(99),
+        chain.block(100),
+      ])
+      store.rows[0].timestamp = store.rows[1].timestamp - 12
+      const indexer = head(chain, store)
+
+      const waits: number[] = []
+      for (let i = 0; i < 6; i++) {
+        await indexer.tick()
+        waits.push(secondsToNextTick(time))
+      }
+
+      expect(waits).toEqual([10, 10, 10, 10, 20, 30])
+    })
+
     it('goes back to every ten seconds once a block comes', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [chain.block(100)])
