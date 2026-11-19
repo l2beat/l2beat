@@ -77,7 +77,49 @@ describe(ClientCore.name, () => {
   })
 })
 
-function mocks(callsPerMinute?: number) {
+describe(`${ClientCore.name} when the provider refuses a call`, () => {
+  // Why: a refusal for the rate concerns every call of the client, so the
+  // limiter has to hear of it: to wait out the provider's Retry-After, to
+  // count it, and to lower its rate when asked to
+  it('tells the limiter, with the wait the provider asked for', async () => {
+    const { clientCore, http } = mocks(1_000, 0.1)
+    http.fetch.rejectsWithOnce(
+      new Error('HTTP error: 429 Too Many Requests', {
+        cause: { status: 429, rateLimit: { 'retry-after': '0.02' } },
+      }),
+    )
+    const startedAt = Date.now()
+
+    await withRpcMetricsContext({ coreFeature: 'blockSync.fetch' }, () =>
+      clientCore.fetch('https://api.test.com/data', {}),
+    )
+
+    // The retry waited for the 20 ms the provider asked for
+    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(20)
+    const stats = clientCore.rateLimiter.takeStats()
+    expect(stats.labels['blockSync.fetch']?.throttled).toEqual(1)
+    expect(stats.effectiveCallsPerMinute).toEqual(900)
+  })
+
+  it('leaves the limiter alone on any other failure', async () => {
+    const { clientCore, http } = mocks(1_000, 0.1)
+    http.fetch.rejectsWithOnce(
+      new Error('HTTP error: 503 Service Unavailable', {
+        cause: { status: 503 },
+      }),
+    )
+
+    await clientCore.fetch('https://api.test.com/data', {})
+
+    const stats = clientCore.rateLimiter.takeStats()
+    expect(
+      Object.values(stats.labels).map((label) => label.throttled),
+    ).toEqual([0])
+    expect(stats.effectiveCallsPerMinute).toEqual(1_000)
+  })
+})
+
+function mocks(callsPerMinute?: number, stepDownOnThrottle?: number) {
   const http = mockObject<HttpClient>({
     fetch: async () => ({ result: 'success' }) as json,
   })
@@ -94,6 +136,7 @@ function mocks(callsPerMinute?: number) {
   const clientCore = new TestClientCore({
     http,
     callsPerMinute: callsPerMinute ?? 100_000,
+    stepDownOnThrottle,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     sourceName: 'test',

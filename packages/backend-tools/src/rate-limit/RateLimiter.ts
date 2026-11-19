@@ -8,6 +8,20 @@ interface QueuedFunction<T> {
 
 export interface RateLimiterOptions {
   callsPerMinute: number
+  /**
+   * Share of the rate given up when the provider refuses a call, at most
+   * once a minute and down to a tenth of `callsPerMinute`. The rate stays
+   * down until the process restarts: it never climbs back by itself, so a
+   * limiter that has settled no longer draws refusals. Zero, the default,
+   * keeps the rate fixed.
+   */
+  stepDownOnThrottle?: number
+}
+
+export interface Throttling {
+  /** How long the provider asked to wait, from its `Retry-After`. */
+  retryAfterMs?: number
+  label?: string
 }
 
 export interface RateLimiterLabelStats {
@@ -21,6 +35,8 @@ export interface RateLimiterLabelStats {
   waitMsMax: number
   /** Largest queue length observed right after enqueueing a call with this label. */
   queueDepthMax: number
+  /** Calls the provider refused for the rate since the last `takeStats()`. */
+  throttled: number
 }
 
 export interface RateLimiterStats {
@@ -36,18 +52,36 @@ export interface RateLimiterStats {
   inFlightMax: number
   /** Calls waiting for dispatch at the time of the snapshot. */
   queueLength: number
+  /**
+   * The rate dispatch is paced at. Below `callsPerMinute` once refusals
+   * have stepped it down: that is the rate the provider was seen to take.
+   */
+  effectiveCallsPerMinute: number
 }
 
 export const DEFAULT_RATE_LIMITER_LABEL = 'default'
 
 const MS_PER_MINUTE = 60 * 1000
+/** A `Retry-After` longer than this is not believed: an hour would stall an indexer. */
+const MAX_PAUSE_MS = MS_PER_MINUTE
+/**
+ * A burst of calls is refused together, and each refusal reports in. One
+ * step a minute lets the lower rate show its effect before the next.
+ */
+const STEP_DOWN_INTERVAL_MS = MS_PER_MINUTE
+/** Refusals that are not about the rate must not grind a client to a halt. */
+const LOWEST_SHARE_OF_RATE = 0.1
 
 export class RateLimiter {
+  /** The configured rate, which the effective one never exceeds. */
   readonly callsPerMinute: number
   // biome-ignore lint/suspicious/noExplicitAny: generic type
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
-  private readonly minTimeElapsed: number
+  private effective: number
+  private readonly stepDownOnThrottle: number
+  private steppedDownAt = Number.NEGATIVE_INFINITY
+  private pausedUntil = 0
   private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
@@ -55,7 +89,16 @@ export class RateLimiter {
 
   constructor(options: RateLimiterOptions) {
     this.callsPerMinute = options.callsPerMinute
-    this.minTimeElapsed = MS_PER_MINUTE / options.callsPerMinute
+    this.effective = options.callsPerMinute
+    this.stepDownOnThrottle = options.stepDownOnThrottle ?? 0
+  }
+
+  get effectiveCallsPerMinute(): number {
+    return this.effective
+  }
+
+  private get minTimeElapsed(): number {
+    return MS_PER_MINUTE / this.effective
   }
 
   clear(): void {
@@ -100,6 +143,36 @@ export class RateLimiter {
     return (...args: A) => this.call(() => fn(...args))
   }
 
+  /**
+   * Reports that the provider refused a call for the rate (HTTP 429).
+   * Nothing is dispatched until its `Retry-After` has passed: calls sent
+   * meanwhile, retries among them, would be refused too and can extend a
+   * lockout. With `stepDownOnThrottle` the rate is lowered as well.
+   */
+  throttled({
+    retryAfterMs,
+    label = DEFAULT_RATE_LIMITER_LABEL,
+  }: Throttling = {}): void {
+    this.statsFor(label).throttled++
+    const now = Date.now()
+    if (retryAfterMs !== undefined && retryAfterMs > 0) {
+      this.pausedUntil = Math.max(
+        this.pausedUntil,
+        now + Math.min(retryAfterMs, MAX_PAUSE_MS),
+      )
+    }
+    if (
+      this.stepDownOnThrottle > 0 &&
+      now - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
+    ) {
+      this.steppedDownAt = now
+      this.effective = Math.max(
+        this.callsPerMinute * LOWEST_SHARE_OF_RATE,
+        this.effective * (1 - this.stepDownOnThrottle),
+      )
+    }
+  }
+
   /** Returns the statistics collected since the previous call and resets them. */
   takeStats(): RateLimiterStats {
     const labels: Record<string, RateLimiterLabelStats> = {}
@@ -113,6 +186,7 @@ export class RateLimiter {
       inFlight: this.inFlight,
       inFlightMax: this.inFlightMax,
       queueLength: this.queue.length,
+      effectiveCallsPerMinute: this.effective,
     }
     this.inFlightMax = this.inFlight
     return result
@@ -127,6 +201,7 @@ export class RateLimiter {
         waitMsTotal: 0,
         waitMsMax: 0,
         queueDepthMax: 0,
+        throttled: 0,
       }
       this.labelStats.set(label, stats)
     }
@@ -140,7 +215,7 @@ export class RateLimiter {
 
     const now = Date.now()
     const elapsedTime = now - this.lastCalled
-    if (elapsedTime < this.minTimeElapsed) {
+    if (elapsedTime < this.minTimeElapsed || now < this.pausedUntil) {
       this.scheduleNextCall()
       return
     }
@@ -177,9 +252,11 @@ export class RateLimiter {
       return
     }
 
+    const now = Date.now()
     const delay = Math.max(
       0,
-      this.minTimeElapsed - (Date.now() - this.lastCalled),
+      this.minTimeElapsed - (now - this.lastCalled),
+      this.pausedUntil - now,
     )
     this.wakeUpTimer = setTimeout(() => {
       this.wakeUpTimer = undefined

@@ -49,6 +49,13 @@ export interface Clients {
   dune: DuneClient | undefined
 }
 
+/**
+ * A tenth at a time: from a rate three times what a provider allows, about
+ * ten refused minutes bring a client under it, and the rate it settles at
+ * is within a tenth of the limit
+ */
+const RPC_STEP_DOWN_ON_THROTTLE = 0.1
+
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
   const rpcMetricsAggregator = new RpcMetricsAggregator({
@@ -69,6 +76,9 @@ export function initClients(config: Config, logger: Logger): Clients {
       : new RpcClient({
           ...options,
           http,
+          stepDownOnThrottle: config.rpcStepDownOnThrottle
+            ? RPC_STEP_DOWN_ON_THROTTLE
+            : undefined,
           rpcMetrics: rpcMetricsAggregator.createRecorder({
             rpcChain: options.chain,
             rpcClient: RpcClient.name,

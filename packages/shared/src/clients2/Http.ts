@@ -3,6 +3,7 @@ import {
   type FetchInit,
   fetchWithTimeout,
 } from '../clients/http/fetchWithTimeout'
+import { readRetryAfterMs } from '../clients/http/rateLimitHeaders'
 import { getRpcMetricsLabel } from '../clients/rpc/RpcMetricsContext'
 
 export interface HttpOptions {
@@ -86,6 +87,12 @@ export class Http {
     // We need to await text because we don't know if someone wants json or not
     // and we need to actually consume the response body not just the headers
     const body = await res.text()
+    if (res.status === 429) {
+      this.rateLimiter?.throttled({
+        retryAfterMs: readRetryAfterMs(res.headers.get('retry-after')),
+        label,
+      })
+    }
     this._trackMetrics(label, Date.now() - start, Buffer.byteLength(body))
     return {
       body,
@@ -138,11 +145,13 @@ export class Http {
               : 0,
           waitMax: wait.waitMsMax,
           queueDepthMax: wait.queueDepthMax,
+          throttled: wait.throttled,
         }),
         ...(rateLimiter &&
           limiter && {
             limiterInFlightMax: limiter.inFlightMax,
             callsPerMinute: rateLimiter.callsPerMinute,
+            effectiveCallsPerMinute: limiter.effectiveCallsPerMinute,
           }),
       })
     }

@@ -1,6 +1,7 @@
 import { redactUrl } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import { type FetchInit, fetchWithTimeout } from './fetchWithTimeout'
+import { readRateLimitHeaders } from './rateLimitHeaders'
 
 export class HttpClient {
   /**
@@ -14,10 +15,13 @@ export class HttpClient {
     if (!res.ok) {
       // Release the socket back to the pool instead of leaving it pinned
       await res.body?.cancel()
+      const rateLimit = readRateLimitHeaders(res.headers)
       throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
         cause: {
           url: redactUrl(url),
           status: res.status,
+          // What the provider says about its limit, when it says anything
+          ...(Object.keys(rateLimit).length > 0 && { rateLimit }),
         },
       })
     }

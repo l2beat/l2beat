@@ -181,6 +181,7 @@ export async function makeConfig(
       (await getPrivacyConfig(ps, env, flags, chains)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
+    rpcStepDownOnThrottle: env.boolean('RPC_STEP_DOWN_ON_THROTTLE', false),
     // Must be last
     flags: flags.getResolved(),
   }

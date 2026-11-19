@@ -42,6 +42,7 @@ describe(ClientMetricsAggregator.name, () => {
             waitMsTotal: 300,
             waitMsMax: 200,
             queueDepthMax: 4,
+            throttled: 6,
           },
           queued: {
             enqueued: 1,
@@ -49,11 +50,13 @@ describe(ClientMetricsAggregator.name, () => {
             waitMsTotal: 0,
             waitMsMax: 0,
             queueDepthMax: 5,
+            throttled: 0,
           },
         },
         inFlight: 1,
         inFlightMax: 7,
         queueLength: 1,
+        effectiveCallsPerMinute: 90,
       }),
       callsPerMinute: 120,
     })
@@ -78,8 +81,10 @@ describe(ClientMetricsAggregator.name, () => {
         waitAvg: 150,
         waitMax: 200,
         queueDepthMax: 4,
+        throttled: 6,
         limiterInFlightMax: 7,
         callsPerMinute: 120,
+        effectiveCallsPerMinute: 90,
       },
       {
         label: 'queued',
@@ -92,8 +97,10 @@ describe(ClientMetricsAggregator.name, () => {
         waitAvg: 0,
         waitMax: 0,
         queueDepthMax: 5,
+        throttled: 0,
         limiterInFlightMax: 7,
         callsPerMinute: 120,
+        effectiveCallsPerMinute: 90,
       },
     ])
     expect(rateLimiter.takeStats).toHaveBeenCalledTimes(1)

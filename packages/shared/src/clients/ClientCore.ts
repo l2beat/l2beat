@@ -4,6 +4,7 @@ import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { FetchInit } from './http/fetchWithTimeout'
 import type { HttpClient } from './http/HttpClient'
+import { readThrottling } from './http/rateLimitHeaders'
 import { getRpcMetricsLabel } from './rpc/RpcMetricsContext'
 
 export interface ClientCoreDependencies {
@@ -12,6 +13,8 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
+  /** See `RateLimiterOptions.stepDownOnThrottle`. */
+  stepDownOnThrottle?: number
 }
 
 export abstract class ClientCore {
@@ -21,7 +24,10 @@ export abstract class ClientCore {
 
   constructor(private readonly deps: ClientCoreDependencies) {
     const logger = deps.logger.for(this).tag({ source: deps.sourceName })
-    this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
+    this.rateLimiter = new RateLimiter({
+      callsPerMinute: deps.callsPerMinute,
+      stepDownOnThrottle: deps.stepDownOnThrottle,
+    })
     this.metricsAggregator = new ClientMetricsAggregator({
       logger,
       flushInterval: 30_000,
@@ -67,7 +73,7 @@ export abstract class ClientCore {
   ): Promise<json> {
     const start = Date.now()
 
-    const response = await this.deps.http.fetch(url, init)
+    const response = await this.fetchAndReportThrottling(url, init, label)
 
     const duration = Date.now() - start
     const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
@@ -81,6 +87,27 @@ export abstract class ClientCore {
     }
 
     return response
+  }
+
+  /**
+   * A refusal for the rate concerns every call of this client, not only the
+   * one that drew it, so the limiter is told before the retry handler sees
+   * the error
+   */
+  private async fetchAndReportThrottling(
+    url: string,
+    init: FetchInit,
+    label: string,
+  ): Promise<json> {
+    try {
+      return await this.deps.http.fetch(url, init)
+    } catch (error) {
+      const throttling = readThrottling(error)
+      if (throttling) {
+        this.rateLimiter.throttled({ ...throttling, label })
+      }
+      throw error
+    }
   }
 
   /** This method should return false when there are errors in the response, true otherwise */

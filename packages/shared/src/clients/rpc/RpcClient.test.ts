@@ -1008,6 +1008,41 @@ describe(RpcClient.name, () => {
     })
   })
 
+  // Why: batches go around ClientCore.fetch, so a refused batch has to
+  // report to the limiter by itself, or batching chains would never wait
+  // out a Retry-After nor be counted as throttled
+  it('tells the limiter when a batch is refused for the rate', async () => {
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(
+          new Response('Too Many Requests', {
+            status: 429,
+            headers: { 'Retry-After': '0.02' },
+          }),
+        )
+        .resolvesToOnce(
+          jsonResponse([
+            { id: '0x1', result: 'one' },
+            { id: '0x2', result: 'two' },
+          ]),
+        ),
+    })
+    const rpc = mockClient({
+      http,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+    const startedAt = Date.now()
+
+    await rpc.batchQuery('rpc_method', [['a'], ['b']])
+
+    // The retry waited for the 20 ms the provider asked for
+    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(20)
+    const throttled = Object.values(rpc.rateLimiter.takeStats().labels).map(
+      (label) => label.throttled,
+    )
+    expect(throttled).toEqual([1])
+  })
+
   describe('batches', () => {
     const REJECTIONS: Record<string, (request: RpcRequest[]) => Reply> = {
       // dRPC's free plan
