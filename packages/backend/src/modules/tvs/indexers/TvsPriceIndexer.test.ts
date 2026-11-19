@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database, TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
@@ -42,6 +43,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: configs,
           priceProvider,
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
@@ -106,6 +108,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
@@ -146,6 +149,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
           db: mockDatabase({ tvsPrice: mockObject() }),
@@ -192,6 +196,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
@@ -235,6 +240,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
           db: mockDatabase({ tvsPrice: mockObject() }),
@@ -259,6 +265,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum')],
           priceProvider: mockObject<PriceProvider>({}),
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
@@ -297,6 +304,58 @@ describe(TvsPriceIndexer.name, () => {
         },
       ])
     })
+  })
+
+  // Reproduces a wrong price reaching the database: the provider returns a
+  // bad value for an hour the corrections cover, and the saved record has to
+  // carry the corrected value.
+  it('saves the corrected price for an hour CoinGecko got wrong', async () => {
+    const correction: CoingeckoCorrection = {
+      coingeckoId: 'coin',
+      field: 'price',
+      reason: 'reason',
+      evidence: ['evidence'],
+      points: [{ at: '2026-05-31T00:00:00Z', value: 2119 }],
+    }
+    const corrected = correction.points[0]
+    const timestamp = UnixTime.fromDate(new Date(corrected.at))
+    const configs = [config('config-1', correction.coingeckoId)]
+
+    const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      upsertMany: mockFn().returnsOnce(undefined),
+    })
+    const indexer = new TvsPriceIndexer(
+      {
+        coingeckoCorrections: [correction],
+        configurations: configs,
+        priceProvider: mockObject<PriceProvider>({
+          getAdjustedTo: mockFn().returnsOnce(timestamp),
+          getUsdPriceHistoryHourly: mockFn().returnsOnce([
+            { timestamp, value: corrected.value * 10 },
+          ]),
+        }),
+        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        syncOptimizer: mockObject<SyncOptimizer>({
+          getTimestampsToSync: mockFn().returnsOnce([timestamp]),
+          shouldTimestampBeSynced: mockFn().returns(true),
+        }),
+        parents: [],
+        indexerService: mockObject<IndexerService>({}),
+      },
+      Logger.SILENT,
+    )
+
+    const save = await indexer.multiUpdate(timestamp, timestamp, configs)
+    await save()
+
+    expect(tvsPriceRepository.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        timestamp,
+        priceUsd: corrected.value,
+        priceId: correction.coingeckoId,
+      },
+    ])
   })
 
   beforeEach(() => {
