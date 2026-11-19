@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  readRateLimit,
   readRateLimitHeaders,
   readRetryAfterMs,
   readThrottling,
@@ -54,6 +55,29 @@ describe(readRetryAfterMs.name, () => {
       undefined,
     )
     expect(readRetryAfterMs(null, now)).toEqual(undefined)
+  })
+})
+
+describe(readRateLimit.name, () => {
+  it('reads the headers an HTTP error carries', () => {
+    const error = new Error('HTTP error: 429 Too Many Requests', {
+      cause: {
+        status: 429,
+        rateLimit: { 'retry-after': '5', 'x-ratelimit-limit': '200' },
+      },
+    })
+
+    expect(readRateLimit(error)).toEqual({
+      'retry-after': '5',
+      'x-ratelimit-limit': '200',
+    })
+  })
+
+  it('reads nothing from an error without them', () => {
+    expect(
+      readRateLimit(new Error('HTTP error', { cause: { status: 429 } })),
+    ).toEqual(undefined)
+    expect(readRateLimit(new Error('HTTP timeout'))).toEqual(undefined)
   })
 })
 

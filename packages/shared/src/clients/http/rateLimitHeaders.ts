@@ -55,16 +55,28 @@ export function readThrottling(
   if (!(error instanceof Error) || !isRecord(error.cause)) {
     return undefined
   }
-  const { status, rateLimit } = error.cause
-  if (status !== 429) {
+  if (error.cause.status !== 429) {
     return undefined
   }
-  const retryAfter = isRecord(rateLimit) ? rateLimit['retry-after'] : undefined
   return {
-    retryAfterMs: readRetryAfterMs(
-      typeof retryAfter === 'string' ? retryAfter : undefined,
-    ),
+    retryAfterMs: readRetryAfterMs(readRateLimit(error)?.['retry-after']),
   }
+}
+
+/** The rate-limit headers a thrown HTTP error carries in its cause, if any. */
+export function readRateLimit(error: unknown): RateLimitHeaders | undefined {
+  if (!(error instanceof Error) || !isRecord(error.cause)) {
+    return undefined
+  }
+  const { rateLimit } = error.cause
+  if (!isRecord(rateLimit)) {
+    return undefined
+  }
+  return Object.fromEntries(
+    Object.entries(rateLimit).filter(
+      (entry): entry is [string, string] => typeof entry[1] === 'string',
+    ),
+  )
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

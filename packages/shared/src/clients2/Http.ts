@@ -86,13 +86,15 @@ export class Http {
     const res = await fetchWithTimeout(url, init)
     // We need to await text because we don't know if someone wants json or not
     // and we need to actually consume the response body not just the headers
-    const body = await res.text()
+    // Before the body: while a slow one is read, queued calls would keep
+    // reaching a provider that has asked to be left alone
     if (res.status === 429) {
       this.rateLimiter?.throttled({
         retryAfterMs: readRetryAfterMs(res.headers.get('retry-after')),
         label,
       })
     }
+    const body = await res.text()
     this._trackMetrics(label, Date.now() - start, Buffer.byteLength(body))
     return {
       body,

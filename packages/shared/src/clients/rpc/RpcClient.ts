@@ -524,6 +524,15 @@ export class RpcClient extends ClientCore implements IRpcClient {
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const start = Date.now()
     const response = await this.$.http.fetchRaw(this.$.url, init)
+    const rateLimit = readRateLimitHeaders(response.headers)
+    // Before the body: while a slow one is read, queued calls would keep
+    // reaching a provider that has asked to be left alone
+    if (response.status === 429) {
+      this.rateLimiter.throttled({
+        retryAfterMs: readRetryAfterMs(rateLimit['retry-after']),
+        label,
+      })
+    }
     const text = await response.text()
     this.metricsAggregator.push({
       duration: Date.now() - start,
@@ -539,13 +548,6 @@ export class RpcClient extends ClientCore implements IRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok) {
-      const rateLimit = readRateLimitHeaders(response.headers)
-      if (response.status === 429) {
-        this.rateLimiter.throttled({
-          retryAfterMs: readRetryAfterMs(rateLimit['retry-after']),
-          label,
-        })
-      }
       throw new Error('HTTP error', {
         cause: {
           status: response.status,

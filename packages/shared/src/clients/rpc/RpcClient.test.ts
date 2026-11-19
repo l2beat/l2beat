@@ -1043,6 +1043,36 @@ describe(RpcClient.name, () => {
     expect(throttled).toEqual([1])
   })
 
+  // Why: a refusal is known from the status line. Told only after the body
+  // is read, the limiter lets queued calls through while a slow body
+  // arrives, and never hears of a refusal whose body fails to arrive
+  it('tells the limiter of a refused batch before reading its body', async () => {
+    const brokenBody = new ReadableStream({
+      pull: (controller) => controller.error(new Error('connection reset')),
+    })
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response(brokenBody, { status: 429 }))
+        .resolvesToOnce(
+          jsonResponse([
+            { id: '0x1', result: 'one' },
+            { id: '0x2', result: 'two' },
+          ]),
+        ),
+    })
+    const rpc = mockClient({
+      http,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+
+    await rpc.batchQuery('rpc_method', [['a'], ['b']])
+
+    const throttled = Object.values(rpc.rateLimiter.takeStats().labels).map(
+      (label) => label.throttled,
+    )
+    expect(throttled).toEqual([1])
+  })
+
   describe('batches', () => {
     const REJECTIONS: Record<string, (request: RpcRequest[]) => Reply> = {
       // dRPC's free plan
