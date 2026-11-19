@@ -14,11 +14,13 @@ export interface EthSupply {
 const MAX_AGE = UnixTime.HOUR
 /** After a failed request, wait this long before asking again. */
 const RETRY_AFTER = 5 * UnixTime.MINUTE
+/** The first day of the liquid staking charts. */
+const HISTORY_START = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+/** The free API serves the past 365 days only. */
+const FREE_HISTORY_DAYS = 364
 const MOCK_ETH_SUPPLY = 120_700_000
+const ETHEREUM = CoingeckoId('ethereum')
 
-let latest: { supply: EthSupply; fetchedAt: number } | undefined
-let failedAt: number | undefined
-let inFlight: Promise<EthSupply | null> | undefined
 let client: CoingeckoClient | undefined
 
 /**
@@ -26,51 +28,115 @@ let client: CoingeckoClient | undefined
  * when CoinGecko has not answered yet, so the page leaves the share out
  * instead of showing a wrong one.
  */
-export function getEthSupply(): Promise<EthSupply | null> {
+export const getEthSupply = cached('getEthSupply', async () => {
   if (env.MOCK) {
-    return Promise.resolve({
-      value: MOCK_ETH_SUPPLY,
-      timestamp: UnixTime.now(),
-    })
+    return { value: MOCK_ETH_SUPPLY, timestamp: UnixTime.now() }
   }
-  const now = UnixTime.now()
-  if (latest && now - latest.fetchedAt < MAX_AGE) {
-    return Promise.resolve(latest.supply)
+  const data = await getClient().getCoinDataById(ETHEREUM)
+  return {
+    value: data.market_data.circulating_supply,
+    timestamp: data.last_updated,
   }
-  if (failedAt !== undefined && now - failedAt < RETRY_AFTER) {
-    return Promise.resolve(latest?.supply ?? null)
-  }
-  inFlight ??= fetchEthSupply().finally(() => {
-    inFlight = undefined
+})
+
+/**
+ * ETH's total supply as each day started, oldest first: CoinGecko's market
+ * cap over its price, since it serves no supply history. Without an API key
+ * it reaches back 365 days only, and older days have no value.
+ */
+export const getEthSupplyHistory = cached(
+  'getEthSupplyHistory',
+  async (): Promise<EthSupply[]> => {
+    const to = UnixTime.now()
+    const from = env.COINGECKO_API_KEY
+      ? HISTORY_START
+      : UnixTime(Math.max(HISTORY_START, to - FREE_HISTORY_DAYS * UnixTime.DAY))
+    if (env.MOCK) return getMockHistory(from, to)
+
+    const data = await getClient().getCoinMarketChartRange(
+      ETHEREUM,
+      'usd',
+      from,
+      to,
+    )
+    return toDailySupply(data.prices, data.marketCaps)
+  },
+)
+
+type Series = { date: Date; value: number }[]
+
+/**
+ * A value per day start. Over long ranges CoinGecko gives a point at each
+ * midnight and one more at the current time; the midnight one is kept.
+ */
+export function toDailySupply(prices: Series, marketCaps: Series): EthSupply[] {
+  const byDay = new Map<number, number>()
+  prices.forEach((price, i) => {
+    const marketCap = marketCaps[i]
+    if (!marketCap || price.value <= 0 || marketCap.value <= 0) return
+    const timestamp = UnixTime.fromDate(price.date)
+    const day = UnixTime.toStartOf(timestamp, 'day')
+    if (timestamp !== day || byDay.has(day)) return
+    byDay.set(day, marketCap.value / price.value)
   })
-  return inFlight
+  return [...byDay]
+    .sort(([a], [b]) => a - b)
+    .map(([timestamp, value]) => ({ timestamp, value }))
 }
 
-async function fetchEthSupply(): Promise<EthSupply | null> {
-  try {
-    const data = await getClient().getCoinDataById(CoingeckoId('ethereum'))
-    const supply = {
-      value: data.market_data.circulating_supply,
-      timestamp: data.last_updated,
+function getMockHistory(from: number, to: number): EthSupply[] {
+  const days: EthSupply[] = []
+  for (let day = UnixTime.toStartOf(UnixTime(from), 'day'); day <= to; ) {
+    const progress = (day - HISTORY_START) / (to - HISTORY_START)
+    days.push({ timestamp: day, value: 120_000_000 + 700_000 * progress })
+    day = UnixTime(day + UnixTime.DAY)
+  }
+  return days
+}
+
+/**
+ * Keeps `fetch`'s result for MAX_AGE, shares one request between callers,
+ * and after a failure keeps the last value and waits RETRY_AFTER before
+ * asking again. Null until a request has succeeded.
+ */
+function cached<T>(name: string, fetch: () => Promise<T>) {
+  let latest: { value: T; fetchedAt: number } | undefined
+  let failedAt: number | undefined
+  let inFlight: Promise<T | null> | undefined
+
+  return function get(): Promise<T | null> {
+    const now = UnixTime.now()
+    if (latest && now - latest.fetchedAt < MAX_AGE) {
+      return Promise.resolve(latest.value)
     }
-    latest = { supply, fetchedAt: UnixTime.now() }
-    failedAt = undefined
-    return supply
-  } catch (error) {
-    failedAt = UnixTime.now()
-    getLogger().for('getEthSupply').warn('Failed to fetch ETH supply', error)
-    // An older value is still better than none.
-    return latest?.supply ?? null
+    if (failedAt !== undefined && now - failedAt < RETRY_AFTER) {
+      return Promise.resolve(latest?.value ?? null)
+    }
+    inFlight ??= fetch()
+      .then((value) => {
+        latest = { value, fetchedAt: UnixTime.now() }
+        failedAt = undefined
+        return value
+      })
+      .catch((error: unknown) => {
+        failedAt = UnixTime.now()
+        getLogger().for(name).warn('Failed to fetch from CoinGecko', error)
+        // An older value is still better than none.
+        return latest?.value ?? null
+      })
+      .finally(() => {
+        inFlight = undefined
+      })
+    return inFlight
   }
 }
 
 function getClient(): CoingeckoClient {
-  const logger = getLogger().for('CoingeckoClient')
   client ??= new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: env.COINGECKO_API_KEY,
     http: new HttpClient(),
-    logger,
+    logger: getLogger().for('CoingeckoClient'),
     callsPerMinute: env.COINGECKO_API_KEY ? 400 : 10,
     retryStrategy: 'FAST',
   })

@@ -43,4 +43,16 @@ describe(toRow.name, () => {
     const row = toRow({ ...point, ethPrice: null }, ['lido'], 'usd')
     expect(row).toEqual({ timestamp: 100, lido: null, others: null })
   })
+
+  it('adds the ETH not staked when given the supply, and none without a supply that day', () => {
+    expect(toRow(point, ['lido', 'rocketpool'], 'usd', 100).notStaked).toEqual(
+      140,
+    )
+    expect(toRow(point, ['lido', 'rocketpool'], 'eth', null).notStaked).toEqual(
+      null,
+    )
+    expect('notStaked' in toRow(point, ['lido', 'rocketpool'], 'eth')).toEqual(
+      false,
+    )
+  })
 })
