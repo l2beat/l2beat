@@ -61,7 +61,7 @@ const wholeEth = (contract: string, key: string): string =>
   ).toLocaleString('en-US')
 const pooled = BigInt(value('LiquidityPool', 'getTotalPooledEther'))
 const inLp = BigInt(value('LiquidityPool', 'totalValueInLp'))
-const bufferShare = Number((inLp * 1_000_000n) / pooled) / 10_000
+const bufferShare = (Number(inLp) / Number(pooled)) * 100
 // Below 0.01%, two significant digits, so a small buffer does not read as 0.00%.
 const bufferPercent = `${bufferShare < 0.01 ? bufferShare.toPrecision(2) : bufferShare.toFixed(2)}%`
 const stethSharePercent = `${(
@@ -216,7 +216,7 @@ export const etherfi: BaseProject = {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Validators withdraw through EigenLayer pods, so the stake can be restaked there, where operator slashing can cut principal.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Validators can withdraw through EigenLayer pods, so the stake can be restaked there, where operator slashing can cut principal.`,
       },
       backing: {
         value: 'EigenPods, stETH',
