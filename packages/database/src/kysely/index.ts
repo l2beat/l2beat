@@ -7,7 +7,7 @@ import {
   type LogEvent,
   PostgresDialect,
 } from 'kysely'
-import { DatabaseError, defaults, Pool, type PoolConfig, types } from 'pg'
+import { defaults, Pool, type PoolConfig, types } from 'pg'
 import type { DB as GeneratedDB } from './generated/types'
 
 export type KyselyLogEvent = LogEvent
@@ -18,8 +18,6 @@ types.setTypeParser(types.builtins.TIMESTAMP, (value) => new Date(value + 'Z'))
 
 export type Transaction = Omit<KyselyTransaction<DB>, 'transaction'>
 export type QueryBuilder = Omit<Kysely<DB>, 'transaction'>
-
-const MAX_SERIALIZABLE_ATTEMPTS = 3
 
 export class DatabaseClient {
   private readonly kysely: Kysely<DB>
@@ -41,6 +39,8 @@ export class DatabaseClient {
     return this.context.getStore()?.trx ?? this.kysely
   }
 
+  // Runs cb once. A failed transaction is never retried here, so a
+  // serialization failure (SQLSTATE 40001) reaches the caller.
   async transaction<T>(
     cb: () => Promise<T>,
     isolationLevel?: IsolationLevel,
@@ -62,19 +62,9 @@ export class DatabaseClient {
       isolationLevel === undefined
         ? this.kysely.transaction()
         : this.kysely.transaction().setIsolationLevel(isolationLevel)
-    for (let attempt = 1; ; attempt++) {
-      try {
-        return await tx.execute((trx) =>
-          this.context.run({ trx, isolationLevel }, cb),
-        )
-      } catch (error) {
-        const retryable =
-          isolationLevel === 'serializable' &&
-          error instanceof DatabaseError &&
-          error.code === '40001'
-        if (!retryable || attempt >= MAX_SERIALIZABLE_ATTEMPTS) throw error
-      }
-    }
+    return await tx.execute((trx) =>
+      this.context.run({ trx, isolationLevel }, cb),
+    )
   }
 
   close() {

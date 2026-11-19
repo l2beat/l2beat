@@ -90,28 +90,18 @@ describeDatabase(BaseRepository.name, (db) => {
       expect(level).toEqual('repeatable read')
     })
 
-    it('retries a serializable transaction after a serialization failure', async () => {
-      let attempts = 0
-      await db.transaction(async () => {
-        attempts++
-        await repository.insert(attempts)
-        if (attempts === 1) await raiseSerializationFailure(db)
-      }, 'serializable')
-
-      expect(attempts).toEqual(2)
-      expect(await repository.getAll()).toEqual([2])
-    })
-
-    it('does not retry a serialization failure at other levels', async () => {
+    it('does not retry after a serialization failure', async () => {
       let attempts = 0
       await expect(
         db.transaction(async () => {
           attempts++
+          await repository.insert(attempts)
           await raiseSerializationFailure(db)
-        }, 'repeatable read'),
+        }, 'serializable'),
       ).toBeRejectedWith('conflict')
 
       expect(attempts).toEqual(1)
+      expect(await repository.getAll()).toEqual([])
     })
 
     it('rejects a nested transaction that asks for another level', async () => {
