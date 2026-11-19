@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockTimestampProvider,
@@ -9,7 +9,7 @@ import type {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { OnchainAmountConfig } from '../types'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
@@ -90,6 +90,7 @@ describe(DataFormulaExecutor.name, () => {
         mockObject<StarknetTotalSupplyProvider>({}),
         mockObject<StarknetBalanceProvider>({}),
         balanceProvider,
+        [],
         Logger.SILENT,
       )
 
@@ -131,35 +132,31 @@ describe(DataFormulaExecutor.name, () => {
   // then the database, then CoinGecko, and assumes 0 when the fetch fails.
   // The cache here holds a value from before the correction and the providers
   // have no methods, so any call to CoinGecko fails: a corrected hour has to
-  // get its value from COINGECKO_CORRECTIONS alone. Uses whichever correction
-  // of the field comes first, so the tests hold as the list changes.
+  // get its value from the corrections alone.
   describe('CoinGecko corrections', () => {
     it('uses the corrected price for a listed hour over a cached one', async () => {
-      const { coingeckoId, timestamp, value } = firstCorrection('price')
       const localStorage = mockObject<LocalStorage>({
-        getPrice: mockFn().resolvesTo(value * 2),
+        getPrice: mockFn().resolvesTo(1545),
         writePrice: mockFn().resolvesTo(undefined),
       })
 
       await executorWithoutCoingecko(localStorage).execute(
-        [{ id: 'price', priceId: coingeckoId, sinceTimestamp: UnixTime(0) }],
+        [{ id: 'price', priceId: 'coin', sinceTimestamp: UnixTime(0) }],
         [],
-        timestamp,
+        LISTED_HOUR,
         false,
       )
 
       expect(localStorage.writePrice).toHaveBeenOnlyCalledWith(
         'price',
-        timestamp,
-        value,
+        LISTED_HOUR,
+        2119,
       )
     })
 
     it('uses the corrected circulating supply for a listed hour over a cached one', async () => {
-      const { coingeckoId, timestamp, value } =
-        firstCorrection('circulatingSupply')
       const localStorage = mockObject<LocalStorage>({
-        getAmount: mockFn().resolvesTo(BigInt(value) * 2n),
+        getAmount: mockFn().resolvesTo(964n),
         writeAmount: mockFn().resolvesTo(undefined),
       })
 
@@ -169,36 +166,44 @@ describe(DataFormulaExecutor.name, () => {
           {
             id: 'supply',
             type: 'circulatingSupply',
-            apiId: coingeckoId,
+            apiId: 'coin',
             decimals: 0,
             sinceTimestamp: UnixTime(0),
             address: EthereumAddress.ZERO,
             chain: 'ethereum',
           },
         ],
-        timestamp,
+        LISTED_HOUR,
         false,
       )
 
       expect(localStorage.writeAmount).toHaveBeenOnlyCalledWith(
         'supply',
-        timestamp,
-        BigInt(value),
+        LISTED_HOUR,
+        452n,
       )
     })
   })
 })
 
-function firstCorrection(field: 'price' | 'circulatingSupply') {
-  const correction = COINGECKO_CORRECTIONS.find((c) => c.field === field)
-  assert(correction, 'No correction of this field to test with')
-  const [point] = correction.points
-  return {
-    coingeckoId: correction.coingeckoId,
-    timestamp: UnixTime.fromDate(new Date(point.at)),
-    value: point.value,
-  }
-}
+const LISTED_HOUR = UnixTime.fromDate(new Date('2026-05-31T00:00:00Z'))
+
+const CORRECTIONS: CoingeckoCorrection[] = [
+  {
+    coingeckoId: 'coin',
+    field: 'price',
+    reason: 'reason',
+    evidence: ['evidence'],
+    points: [{ at: '2026-05-31T00:00:00Z', value: 2119 }],
+  },
+  {
+    coingeckoId: 'coin',
+    field: 'circulatingSupply',
+    reason: 'reason',
+    evidence: ['evidence'],
+    points: [{ at: '2026-05-31T00:00:00Z', value: 452 }],
+  },
+]
 
 function executorWithoutCoingecko(localStorage: LocalStorage) {
   return new DataFormulaExecutor(
@@ -212,6 +217,7 @@ function executorWithoutCoingecko(localStorage: LocalStorage) {
     mockObject<StarknetTotalSupplyProvider>({}),
     mockObject<StarknetBalanceProvider>({}),
     mockObject<BalanceProvider>({}),
+    CORRECTIONS,
     Logger.SILENT,
   )
 }

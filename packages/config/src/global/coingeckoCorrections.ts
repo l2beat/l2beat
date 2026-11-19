@@ -14,14 +14,20 @@
  * - It needs evidence, checkable without us, that CoinGecko's value is wrong.
  *   The same bar applies whoever proposes it and whichever way it moves TVS.
  * - Take the new value from CoinGecko's own data where that is sound (its
- *   later history, or the hours on both sides), otherwise from another
- *   market source, and name the source in `reason`.
+ *   later history, the value we fetched at the time, or the hours on both
+ *   sides), otherwise from another market source, and name the source in
+ *   `reason`.
  * - CoinGecko's public history reaches back one year, so links to it stop
  *   working. Also give a source that keeps its history, such as an exchange,
  *   or say in `reason` that there is none.
- * - List only hours where the value we store is wrong, and every one of
- *   them. An hour with no stored price or supply of its own is calculated
- *   from the latest older one, and is corrected only if it is listed too.
+ * - List every hour where CoinGecko's value is wrong: the one we stored, or
+ *   the one its history has now, which is what fetching the hour again
+ *   returns. Do not list an hour where both are right. An hour with no
+ *   stored price or supply of its own is calculated from the latest older
+ *   one, and is corrected only if it is listed too.
+ * - The list covers the hours someone compared. CoinGecko's history can be
+ *   wrong at others, so before fetching a coin's history again, compare it
+ *   with what we store.
  * - Removing an entry does not bring back what CoinGecko reported. The stored
  *   value stays until that hour is fetched again.
  */
@@ -71,6 +77,37 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
       { at: '2026-07-22T00:00:00Z', value: 65907.3 },
       { at: '2026-07-24T00:00:00Z', value: 64605.37 },
       { at: '2026-07-29T00:00:00Z', value: 63490.62 },
+    ],
+  },
+  {
+    coingeckoId: 'universal-btc',
+    field: 'price',
+    reason:
+      "The other way round from the entry above. For 00:00 UTC on 18 days between 2026-05-29 and 2026-06-17 the uniBTC price we fetched at the time is within 2.3% of BTC, and CoinGecko's history now has it 5% to 23% above BTC. Nothing we store for those hours is wrong, so this changes nothing we publish. The values below are the stored ones, listed so that fetching those hours again does not replace them with CoinGecko's.",
+    evidence: [
+      'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1774483200&to=1781654400',
+      'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1774483200000&endTime=1785369600000',
+      'The uniBTC value we publish for BOB at each of those hours, plus the value of the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf that it subtracts, divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB, gives these prices.',
+    ],
+    points: [
+      { at: '2026-05-29T00:00:00Z', value: 73040.33 },
+      { at: '2026-05-30T00:00:00Z', value: 72977.055 },
+      { at: '2026-06-01T00:00:00Z', value: 73144.14 },
+      { at: '2026-06-02T00:00:00Z', value: 71154.29 },
+      { at: '2026-06-03T00:00:00Z', value: 66398.74 },
+      { at: '2026-06-04T00:00:00Z', value: 64161.594 },
+      { at: '2026-06-05T00:00:00Z', value: 64469.047 },
+      { at: '2026-06-06T00:00:00Z', value: 60561.47 },
+      { at: '2026-06-07T00:00:00Z', value: 60595.688 },
+      { at: '2026-06-08T00:00:00Z', value: 62396.777 },
+      { at: '2026-06-09T00:00:00Z', value: 62740.3 },
+      { at: '2026-06-10T00:00:00Z', value: 61114.363 },
+      { at: '2026-06-12T00:00:00Z', value: 63507.37 },
+      { at: '2026-06-13T00:00:00Z', value: 63153.223 },
+      { at: '2026-06-14T00:00:00Z', value: 64088.715 },
+      { at: '2026-06-15T00:00:00Z', value: 64212.76 },
+      { at: '2026-06-16T00:00:00Z', value: 66548.07 },
+      { at: '2026-06-17T00:00:00Z', value: 65235.637 },
     ],
   },
   {

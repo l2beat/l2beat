@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
-import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
@@ -23,6 +23,7 @@ export interface CirculatingSupplyAmountIndexerDeps
   > {
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
+  coingeckoCorrections: CoingeckoCorrection[]
 }
 
 export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
@@ -67,7 +68,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
         configurations.map(async (configuration) => {
           try {
             const supplies = applyCoingeckoCorrections(
-              COINGECKO_CORRECTIONS,
+              this.$.coingeckoCorrections,
               'circulatingSupply',
               configuration.properties.apiId,
               await this.$.circulatingSupplyProvider.getCirculatingSupplies(

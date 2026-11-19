@@ -7,7 +7,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { describeDatabase } from '../../../test/database'
 import type { Clock } from '../../../tools/Clock'
 import { TokenValueIndexer } from '../indexers/TokenValueIndexer'
-import { extractPricesAndAmounts } from './extractPricesAndAmounts'
+import {
+  createAmountConfig,
+  extractPricesAndAmounts,
+} from './extractPricesAndAmounts'
 import { overwriteCorrectedHours } from './overwriteCorrectedHours'
 import { SyncOptimizer } from './SyncOptimizer'
 
@@ -30,6 +33,7 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
     await db.tvsPrice.deleteAll()
     await db.tvsAmount.deleteAll()
     await db.tvsTokenValue.deleteAll()
+    await db.tvsEscrowValue.deleteAll()
   })
 
   // Stores what the indexers saved before the correction existed: a wrong
@@ -291,6 +295,84 @@ describeDatabase(overwriteCorrectedHours.name, (db) => {
       logger,
     )
     expect(info).toHaveBeenCalledTimes(1)
+  })
+
+  // A privacy project also stores the value of each escrow a token sums, and
+  // its pages show those. Stores a token that sums two escrows, with escrow
+  // values calculated from the wrong price: both have to follow the token
+  // value.
+  it('recomputes the escrow values of a corrected hour', async () => {
+    const escrow = (escrowAddress: EthereumAddress) => ({
+      type: 'balanceOfEscrow' as const,
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
+      decimals: 0,
+      escrowAddress,
+      sinceTimestamp: UnixTime(0),
+    })
+    const small = escrow(EthereumAddress('0x' + '1'.repeat(40)))
+    const large = escrow(EthereumAddress('0x' + '2'.repeat(40)))
+    const token = tokenWith({
+      type: 'calculation',
+      operator: 'sum',
+      arguments: [small, large],
+    })
+    const { config, price } = configFor(token)
+    const project = { ...config.projects[0], storeEscrowValues: true }
+    const configurationId = TokenValueIndexer.idToConfigurationId(token, true)
+    await storePrice(db, price.id, WRONG_HOUR, 1545)
+    await db.tvsAmount.upsertMany([
+      {
+        configurationId: createAmountConfig(small).id,
+        timestamp: WRONG_HOUR,
+        amount: 4n,
+      },
+      {
+        configurationId: createAmountConfig(large).id,
+        timestamp: WRONG_HOUR,
+        amount: 6n,
+      },
+    ])
+    await storeTokenValue(
+      db,
+      token,
+      WRONG_HOUR,
+      { amount: 10, value: 15450 },
+      configurationId,
+    )
+    await db.tvsEscrowValue.upsertMany(
+      [
+        { ...small, amount: 4, value: 6180 },
+        { ...large, amount: 6, value: 9270 },
+      ].map(({ chain, escrowAddress, amount, value }) => ({
+        configurationId,
+        projectId: 'project',
+        tokenId: token.id,
+        timestamp: WRONG_HOUR,
+        chain,
+        escrowAddress,
+        amount,
+        value,
+      })),
+    )
+
+    await overwriteCorrectedHours(
+      [correction('price', [{ at: '2026-05-31T00:00:00Z', value: 2119 }])],
+      { ...config, projects: [project] },
+      syncOptimizer,
+      db,
+      Logger.SILENT,
+    )
+
+    const escrowValues = await db.tvsEscrowValue.getAll()
+    expect(
+      escrowValues
+        .sort((a, b) => a.value - b.value)
+        .map((r) => [r.escrowAddress, r.value]),
+    ).toEqual([
+      [small.escrowAddress, 8476],
+      [large.escrowAddress, 12714],
+    ])
   })
 
   // A token value can be saved from the old price after the price itself was

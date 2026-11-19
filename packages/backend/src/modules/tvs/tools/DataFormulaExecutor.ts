@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockProvider,
@@ -34,6 +34,7 @@ export class DataFormulaExecutor {
     private starknetTotalSupplyProvider: StarknetTotalSupplyProvider,
     private starknetBalanceProvider: StarknetBalanceProvider,
     private balanceProvider: BalanceProvider,
+    private coingeckoCorrections: CoingeckoCorrection[],
     private logger: Logger,
   ) {}
 
@@ -405,7 +406,7 @@ export class DataFormulaExecutor {
     await Promise.all(
       prices.map(async (price) => {
         const corrected = correctedValues(
-          COINGECKO_CORRECTIONS,
+          this.coingeckoCorrections,
           'price',
           price.priceId,
         ).get(timestamp)
@@ -485,7 +486,7 @@ export class DataFormulaExecutor {
       circulatingAmounts.map(async (amount) => {
         assert(amount.type === 'circulatingSupply')
         const corrected = correctedValues(
-          COINGECKO_CORRECTIONS,
+          this.coingeckoCorrections,
           'circulatingSupply',
           amount.apiId,
         ).get(timestamp)

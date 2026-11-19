@@ -32,10 +32,11 @@ import type { SyncOptimizer } from './SyncOptimizer'
  * calculated from a corrected hour's price because its own hour has none. To
  * correct such an hour, list it.
  *
- * Nothing here throws, and a token that cannot be recomputed does not stop
- * the others: this runs before the indexers start, and the data it could not
- * find may be theirs to fetch. A failure is logged as critical, which alerts,
- * and the next run tries again.
+ * Nothing here throws: this runs before the indexers start, and the data it
+ * could not find may be theirs to fetch. A token that cannot be recomputed
+ * does not stop the others. A failure while storing a price or supply ends
+ * the run, token values included. Either is logged as critical, which
+ * alerts, and the next run tries again.
  */
 export async function overwriteCorrectedHours(
   corrections: CoingeckoCorrection[],

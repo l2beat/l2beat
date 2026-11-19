@@ -1,13 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
-import {
-  assert,
-  CoingeckoId,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -48,6 +43,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: configs,
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
@@ -120,6 +116,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
@@ -164,6 +161,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: mockObject() }),
@@ -218,6 +216,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
@@ -269,6 +268,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
@@ -311,6 +311,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
           db: mockDatabase({ tvsAmount: mockObject() }),
@@ -337,6 +338,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
+          coingeckoCorrections: [],
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
@@ -386,13 +388,16 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
   })
 
   // Same reproduction as for prices: the provider returns a bad supply for an
-  // hour that COINGECKO_CORRECTIONS covers, and the saved amount has to be the
-  // corrected one. Uses whichever supply correction comes first.
+  // hour the corrections cover, and the saved amount has to be the corrected
+  // one.
   it('saves the corrected supply for an hour CoinGecko got wrong', async () => {
-    const correction = COINGECKO_CORRECTIONS.find(
-      (c) => c.field === 'circulatingSupply',
-    )
-    assert(correction, 'No supply correction to test with')
+    const correction: CoingeckoCorrection = {
+      coingeckoId: 'coin',
+      field: 'circulatingSupply',
+      reason: 'reason',
+      evidence: ['evidence'],
+      points: [{ at: '2026-05-31T00:00:00Z', value: 452 }],
+    }
     const corrected = correction.points[0]
     const timestamp = UnixTime.fromDate(new Date(corrected.at))
     const configs = [config('config-1', correction.coingeckoId, 18)]
@@ -402,6 +407,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
     })
     const indexer = new CirculatingSupplyAmountIndexer(
       {
+        coingeckoCorrections: [correction],
         configurations: configs,
         circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({
           getAdjustedTo: mockFn().returnsOnce(timestamp),
