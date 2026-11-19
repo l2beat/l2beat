@@ -158,7 +158,7 @@ export const etherfi: BaseProject = {
       discoveredDefiToken(
         discovery,
         'eETH',
-        'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+        'Rebasing receipt for pooled ETH: balances follow the oracle report.',
       ),
       discoveredDefiToken(
         discovery,
@@ -214,7 +214,7 @@ export const etherfi: BaseProject = {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. The stake is not restaked in EigenLayer: only withdrawals queued in the last 14 days can still be slashed there.`,
       },
       backing: {
         value: 'EigenPods, stETH',
@@ -238,7 +238,7 @@ export const etherfi: BaseProject = {
         value: `${upgradeThreshold}/${upgradeSigners} Safe`,
         secondLine: `${upgradeDelayDays}d · no veto`,
         sentiment: 'warning',
-        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock changes parameters, mostly without bounds: it can change the oracle committee and stop deposits and exits. Holders have no veto.`,
       },
     },
   },
