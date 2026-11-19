@@ -1,15 +1,13 @@
 import { formatNumber } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo } from 'react'
-import { previousChartDataClassName } from '~/components/core/chart/ChartPreviousData'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import type { LiquidStakingChartProject } from './LiquidStakingCharts'
 import {
   type EthChange,
@@ -21,26 +19,21 @@ import {
 
 interface Props {
   projects: LiquidStakingChartProject[]
-  range: ChartRange
 }
 
 /**
  * A sentence and the numbers behind it, beside the value locked chart. It
- * reads the chart's queries, plus a year of them for the changes (the same
- * query when the range is 1Y) and ETH's supply history, kept on the server.
+ * always reads the past year, whatever range the charts show, so it gives
+ * the latest numbers and the past year's change (the same query as the
+ * chart's when the range is 1Y), plus ETH's supply, kept on the server.
  */
-export function LiquidStakingSummaryCard({ projects, range }: Props) {
+export function LiquidStakingSummaryCard({ projects }: Props) {
   const trpc = useTRPC()
-  const { data, isPlaceholderData } = useChartQuery(
-    trpc.defi.liquidStakingTvlChart,
-    { range },
-  )
-  const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
-  // The changes always cover the past year, whatever the range.
   const yearRange = useMemo(() => optionToRange('1y'), [])
-  const { data: yearData } = useChartQuery(trpc.defi.liquidStakingTvlChart, {
+  const { data } = useChartQuery(trpc.defi.liquidStakingTvlChart, {
     range: yearRange,
   })
+  const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
   const { data: supplyHistory } = useQuery(
     trpc.defi.ethSupplyHistory.queryOptions(),
   )
@@ -55,10 +48,7 @@ export function LiquidStakingSummaryCard({ projects, range }: Props) {
       ),
     [data, projects, ethSupply],
   )
-  const stakeChange = useMemo(
-    () => yearData && getStakeChange(yearData),
-    [yearData],
-  )
+  const stakeChange = useMemo(() => data && getStakeChange(data), [data])
   const supplyChange = useMemo(
     () => supplyHistory && getSupplyChange(supplyHistory),
     [supplyHistory],
@@ -80,12 +70,7 @@ export function LiquidStakingSummaryCard({ projects, range }: Props) {
           <Skeleton className="h-6 w-3/5" />
         </div>
       ) : (
-        <div
-          className={cn(
-            'flex flex-1 flex-col',
-            isPlaceholderData && previousChartDataClassName,
-          )}
-        >
+        <div className="flex flex-1 flex-col">
           {/* The headline, then the detail behind it, a size down. */}
           <p className="text-pretty font-semibold text-heading-24 text-primary leading-tight">
             {summary.supplyShare !== undefined &&
