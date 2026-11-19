@@ -153,6 +153,7 @@ export class FakeChainBlocks {
       hash: block.hash,
       parentHash: block.parentHash,
       timestamp: block.timestamp,
+      logsBloom: block.logsBloom,
     }))
   }
 

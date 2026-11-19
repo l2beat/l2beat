@@ -75,6 +75,23 @@ describe(ChainHeadIndexer.name, () => {
       expect(chain.getBlocks).not.toHaveBeenCalled()
     })
 
+    it("stores each block's logs bloom, except where it is of the logs of other blocks", async () => {
+      const chain = new FakeChain(102, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [chain.block(100)])
+      chain.getBlocks.resolvesToOnce([
+        { ...chain.block(101), logsBloom: '0xbloom' },
+        // as on a chain that executes blocks after it has ordered them
+        { ...chain.block(102), logsBloom: '0xbloom', settledHeight: 100 },
+      ])
+
+      await head(chain, store).follow()
+
+      expect(store.rows.slice(1).map((row) => row.logsBloom)).toEqual([
+        '0xbloom',
+        null,
+      ])
+    })
+
     it('fetches only the blocks it has not stored yet', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN)

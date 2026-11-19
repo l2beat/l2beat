@@ -48,7 +48,7 @@ type Remembered = Pick<ChainBlockRecord, 'number' | 'hash' | 'timestamp'>
 /** What the head stores of a block */
 export type Header = Pick<
   EVMBlockWithTransactions,
-  'number' | 'hash' | 'parentHash' | 'timestamp'
+  'number' | 'hash' | 'parentHash' | 'timestamp' | 'logsBloom' | 'settledHeight'
 >
 
 interface Followed {
@@ -275,6 +275,8 @@ export class ChainHeadIndexer extends RootIndexer {
         hash: block.hash,
         parentHash: block.parentHash,
         timestamp: block.timestamp,
+        // with a settled height the bloom is of other blocks' logs
+        logsBloom: block.settledHeight === undefined ? block.logsBloom : null,
       })),
     )
     this.remembered = [

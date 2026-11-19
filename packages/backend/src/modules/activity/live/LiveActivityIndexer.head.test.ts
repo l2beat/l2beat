@@ -89,6 +89,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
           hash: block.hash,
           parentHash: block.parentHash,
           timestamp: block.timestamp,
+          logsBloom: block.logsBloom,
         }),
       )
       live.rows = [before, replaced].map((block) => ({
@@ -97,6 +98,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
         hash: block.hash,
         parentHash: block.parentHash,
         timestamp: block.timestamp,
+        logsBloom: block.logsBloom,
         count: 0,
         uopsCount: null,
         gasUsed: block.gasUsed,
@@ -119,6 +121,7 @@ describe(`${LiveActivityIndexer.name} under the chain head`, () => {
         hash: block.hash,
         parentHash: block.parentHash,
         timestamp: block.timestamp,
+        logsBloom: block.logsBloom,
         count: 0,
         uopsCount: null,
         gasUsed: block.gasUsed,

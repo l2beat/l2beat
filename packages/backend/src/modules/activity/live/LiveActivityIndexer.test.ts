@@ -293,6 +293,7 @@ class FakeStore {
             hash,
             parentHash: '0x',
             timestamp: GENESIS + number,
+            logsBloom: null,
           })),
     }),
     indexerState: mockObject<Database['indexerState']>({
