@@ -180,11 +180,17 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort:
         'Whoever breaks elliptic-curve cryptography recovers the key of each wallet that signed in and sent a transaction, which opens its notes and links.',
-      exposureContinued: `${S.walletSignatureAccounts()} A Tacit address published in a name record yields its view and nullifier keys the same way, exposing its incoming notes and their spends.`,
+      exposureContinued: `${S.walletSignatureAccounts()} A Tacit address published in a name record holds the public key of the signature-derived key, which opens the account the same way.`,
       interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
+        sender: {
+          verdict: 'atRisk',
+          note: 'Private only for a user who signs in with a pasted key and whose Tacit address stays unshared.',
+        },
+        recipient: {
+          verdict: 'atRisk',
+          note: "Private only while the recipient's Tacit address stays unshared.",
+        },
+        amount: 'atRisk',
         asset: 'exposed',
         linkage: 'exposed',
       },
@@ -194,14 +200,18 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
           url: TACIT + 'dapp/identity-message.js',
         },
         {
-          title: 'Note keys tweak the address keys by an ECDH secret',
-          url: TACIT + 'dapp/btc-pool-zk.js#L126-L160',
+          title:
+            'A Tacit address holds the public key of the signature-derived key',
+          url: PAGE + '#L1479-L1485',
         },
         {
           title: 'Names publish a Tacit address in a text record',
           url: TACIT + 'docs/EVM-POOL.md#names',
         },
-        { section: 'trusted-setups' },
+        {
+          title: 'Sign-in also takes a 64-character key',
+          url: PAGE + '#L4447-L4451',
+        },
       ],
     },
   },
