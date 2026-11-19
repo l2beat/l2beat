@@ -69,7 +69,6 @@ export function EthereumActivityChart({
           type={type}
           project={project}
           tickCount={4}
-          liveUntil={chart?.liveUntil}
         />
       </div>
       <div className="mb-2">

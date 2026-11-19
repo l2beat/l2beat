@@ -5,7 +5,7 @@ import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRa
 import {
   capTimeRange,
   formatActivityPeriod,
-  getActivityPeriod,
+  getActivityPeriodEnd,
 } from './utils/activityPeriod'
 
 interface Counts {
@@ -39,13 +39,14 @@ export function useActivityChartPoints<R>(
   const chartData = useMemo(
     () =>
       counts?.map(({ timestamp, projects, ethereum }) => {
-        const { seconds } = getActivityPeriod(timestamp, resolution, liveUntil)
+        const periodEnd = getActivityPeriodEnd(timestamp, resolution, liveUntil)
         const rate = ({ tx, uops }: Counts) => {
           const count = metric === 'tps' ? tx : uops
-          return count !== null ? count / seconds : null
+          return count !== null ? count / (periodEnd - timestamp) : null
         }
         return {
           timestamp,
+          periodEnd,
           ethereum: rate(ethereum),
           ...(projects && { projects: rate(projects) }),
         }
@@ -64,14 +65,17 @@ export function useActivityChartPoints<R>(
       }),
     [counts],
   )
-  // a period under way reaches only as far as its newest block
   const timeRange = capTimeRange(
     getChartTimeRangeFromData(chartData, { bucket: resolution }),
     liveUntil,
   )
   const formatPeriod = useCallback(
     (timestamp: number) =>
-      formatActivityPeriod(timestamp, resolution, liveUntil),
+      formatActivityPeriod(
+        timestamp,
+        resolution,
+        getActivityPeriodEnd(timestamp, resolution, liveUntil),
+      ),
     [resolution, liveUntil],
   )
   return { chartData, ratioData, timeRange, formatPeriod }
