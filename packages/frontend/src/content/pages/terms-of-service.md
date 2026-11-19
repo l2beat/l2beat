@@ -1,11 +1,11 @@
 ---
-  lastUpdated: "2026-11-04"
+  lastUpdated: "2026-11-19"
 ---
 
 ## 1. General Information
 
 ### 1.1. About Us
-These Terms of Service (“Terms”) govern your access to and use of the ETHBEAT website - ethbeat.org (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland, KRS No 0000920990, under the name ETHBEAT (“ETHBEAT”).
+These Terms of Service (“Terms”) govern your access to and use of the ETHBEAT website - ethbeat.org (“the Website”), operated by L2BEAT, a limited liability company (spółka z ograniczoną odpowiedzialnością) with its registered office in Warsaw at Poznańska 16/4, 00-680 Warsaw, Poland, KRS No 0000920990, under the name L2BEAT (“L2BEAT”).
 
 ### 1.2. Acceptance of Terms
 By accessing or using the Website, you agree to be bound by these Terms and all applicable laws and regulations. If you do not agree with these Terms, you must not use the Website.
@@ -14,11 +14,11 @@ By accessing or using the Website, you agree to be bound by these Terms and all 
 ## 2. Description of Services
 
 ### 2.1. Nature of Service
-The Website provides information, analytics, and data about Layer 2 scaling solutions on the Ethereum blockchain. ETHBEAT does not execute any actions independently. The Website serves as a tool for users to access and understand information regarding various blockchain technologies. ETHBEAT does not guarantee the functionality, security, or accuracy of any third-party information accessed through the Website, nor can it ensure that such information is error-free or will work as intended.
+The Website provides information, analytics, research, and data about protocols on the Ethereum blockchain, including Layer 2 scaling solutions and privacy protocols. ETHBEAT does not execute any actions independently. The Website serves as a tool for users to access and understand information regarding various blockchain technologies. ETHBEAT does not guarantee the functionality, security, or accuracy of any third-party information accessed through the Website, nor can it ensure that such information is error-free or will work as intended.
 
 ### 2.2. Third-Party Independence
-- Layer 2 Projects: The Layer 2 solutions and projects featured on the Website are operated independently by their own operators, and ETHBEAT does not control their operations. These projects can change or cease operations, affecting the availability of information or services.
-- Smart Contracts: Any smart contracts associated with the Layer 2 projects are authored by their respective authors or organizations. ETHBEAT is not responsible for the functionality or security of these smart contracts or any other underlying systems.
+- Featured Projects: The Layer 2 solutions, privacy protocols and other projects featured on the Website are operated independently by their own operators or governed by their own communities, and ETHBEAT does not control their operations. These projects can change or cease operations, affecting the availability of information or services.
+- Smart Contracts: Any smart contracts associated with the featured projects are authored by their respective authors or organizations. ETHBEAT is not responsible for the functionality or security of these smart contracts or any other underlying systems.
 
 
 ## 3. User Responsibilities, Risks, and Disclaimers
@@ -38,7 +38,7 @@ You expressly understand and agree that ETHBEAT, its affiliates, subsidiaries, o
 3. User-generated content: This pertains to the use, disclosure, or display of any user-generated content provided through the Website.
 4. Unauthorized access: This involves unauthorized access to or alteration of your transmissions, data, or accounts.
 5. Data loss or corruption: This includes the deletion, corruption, failure to store, send, or receive your transmissions or data on or through the Website.
-6. Conduct of third parties: This refers to statements or conduct of any third party related to the Website, including but not limited to interactions with Layer 2 projects, smart contracts by their respective authors, or other third-party services.
+6. Conduct of third parties: This refers to statements or conduct of any third party related to the Website, including but not limited to interactions with featured projects, smart contracts by their respective authors, or other third-party services.
 7. Other matters related to the Website: This covers any other matter relating to your use of the Website or its functionalities.
 
 This limitation of liability shall apply to the fullest extent permitted by applicable law, regardless of the form of action, whether in contract, tort, strict liability, or otherwise. You acknowledge that the Website is provided without any warranties, and this limitation of liability is an essential part of the agreement between you and ETHBEAT.
@@ -46,8 +46,9 @@ This limitation of liability shall apply to the fullest extent permitted by appl
 ### 3.4. Prohibited Uses
 You agree that all activities and conduct in connection with your use of the Website will comply with all applicable laws, regulations, guidelines, and policies of any governmental or regulatory body. You further agree not to use the Website for any illegal or unlawful purpose, including but not limited to the following prohibited uses:
 
-- Illegal Activities: Engaging in any activity that violates applicable laws, including anti-money laundering (AML) and anti-terrorist financing laws.
+- Illegal Activities: Engaging in any activity that violates applicable laws, including anti-money laundering (AML), anti-terrorist financing and sanctions laws.
 - Unlawful Transactions: Conducting transactions involving the proceeds of illegal activities or violating any laws or regulations related to fraud, theft, or other unlawful conduct.
+- Sanctions Evasion and Concealment of Proceeds: Using the Website, including any information about privacy protocols, to evade sanctions or to conceal or disguise the origin of the proceeds of crime.
 - Privacy Violations: Engaging in activities that violate privacy laws, including the unauthorized collection, use, or disclosure of personal data.
 - Unauthorized Access: Attempting to gain unauthorized access to the Website, other users’ accounts, or any systems connected to the Website.
 - Abusive Behavior: Engaging in conduct that is abusive, harassing, or harmful to others, including spamming, phishing, or distributing malicious software.
@@ -68,20 +69,23 @@ The networks utilized by the Website rely on public/private key cryptography. Yo
 
 - Loss of Private Keys: Losing control of your private keys will result in permanent and irreversible denial of access to your digital assets on the Ethereum blockchain or any other network. If your private keys are lost or compromised, neither ETHBEAT nor any other person can retrieve or protect your digital assets. In such cases, you will not be able to transfer your digital assets or realize their value or utility.
 
+### 3.6. Privacy Protocols and Compliance with Law
+ETHBEAT reviews privacy protocols for research and educational purposes. A review, rating or description of how a protocol is used, including any usage practices that a rating assumes, is not a recommendation or endorsement to use that protocol and is not legal, tax or compliance advice. ETHBEAT does not operate, host or govern any protocol, application, frontend or relayer that it reviews, and does not receive fees from them. The legal status of privacy protocols differs between jurisdictions and changes over time, and descriptions of legal or sanctions status on the Website may be incomplete or out of date. You are solely responsible for ensuring that your use of any protocol complies with the laws that apply to you, including anti-money laundering, sanctions and tax laws.
+
 
 ## 4. Use at Your Own Risk
 Users engage with the Website entirely at their own risk. By using the Website, you acknowledge that blockchain-based services have inherent risks, including but not limited to potential software bugs, vulnerabilities, and financial loss.
 ETHBEAT disclaims all liability for any actions taken based on information or functionalities provided by the Website.
 
 
-## 5. No Financial or Investment Advice
-The information provided by the Website is for informational purposes only and does not constitute financial, investment, or other professional advice.
-You should conduct your own research and consult professional advisors as necessary before making any investment decisions.
+## 5. No Financial, Investment, Legal or Tax Advice
+The information provided by the Website is for informational purposes only and does not constitute financial, investment, legal, tax, compliance, or other professional advice.
+You should conduct your own research and consult professional advisors as necessary before making any investment decisions or deciding whether to use any protocol featured on the Website.
 
 
 ## 6. Third-Party Content and Services
-The Website interfaces with third-party platforms and may include links to external websites or services. ETHBEAT disclaims responsibility for the content, actions, or failures of these third parties.
-ETHBEAT does not endorse, guarantee, or assume responsibility for any third-party products or services, including those available through Layer 2 projects or other respective authors and organizations.
+The Website interfaces with third-party platforms and may include links to external websites or services. ETHBEAT disclaims responsibility for the content, actions, or failures of these third parties. Links to a project’s website, application, source code or onchain records are provided for research and verification purposes only and are not an invitation to use that project.
+ETHBEAT does not endorse, guarantee, or assume responsibility for any third-party products or services, including those available through featured projects or other respective authors and organizations.
 
 
 ## 7. Indemnification
