@@ -11,7 +11,7 @@ Generated with discovered.json: 0x9fad5bac66a2e7c5e2c2fb0baf1786d52026cf9f
 
 Upgrade 21 (op-contracts/v9.0.0): core L1 contracts and the shared SuperchainConfig upgraded through OPContractsManagerV2 (9.0.3).
 
-Finalizing an L2CrossDomainMessenger withdrawal now reverts if the call into the L1CrossDomainMessenger fails, so it can be retried with more gas instead of being marked finalized. On L1 relays, the L1CrossDomainMessenger reserves 135,000 gas to record the outcome (was 40,000). Anyone can delete a withdrawal proof whose dispute game lost or was blacklisted. Pause and guardian checks go through the ETHLockbox instead of the SystemConfig. The ETHLockbox keeps holding the ETH and stays the pause identifier.
+Messenger withdrawals, which include token bridge withdrawals, can no longer get stuck when relaying them on L1 runs out of gas. The L1CrossDomainMessenger keeps back 135,000 gas (was 40,000) to record whether a message succeeded or failed, which is what makes a failed message replayable. If the messenger still cannot record the outcome, OptimismPortal2 reverts the finalization so it can be retried. Anyone can delete a withdrawal proof whose dispute game lost or was blacklisted. Pause and guardian checks go through the ETHLockbox instead of the SystemConfig, and the ETHLockbox keeps holding the ETH.
 
 The respected game is still the SuperFaultDisputeGame. Its absolute prestate moves from kona-client v1.7.0 to v1.9.0. Games created before the upgrade keep the old prestate and remain valid for withdrawals.
 

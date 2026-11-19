@@ -2679,8 +2679,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df.md',
     ),
   },
-  // CANNON_KONA interop prestate set by Upgrade 21 (OPCM 9.0.3). Reproduced via
-  // kona Docker build, tag kona-client/v1.9.0 (commit 1286a886).
+  // SUPER_CANNON_KONA (game type 9) prestate set by Upgrade 21 (OPCM 9.0.3).
+  // Reproduced via kona Docker build, tag kona-client/v1.9.0 (commit 1286a886).
   '0x03e5a54835d39c1d83b198314473e1f111c3539c04f65c3e8a9b8ccebe3737c9': {
     title: 'OP Kona interop absolute prestate v1.9.0 (cannon64-kona-interop)',
     description:
