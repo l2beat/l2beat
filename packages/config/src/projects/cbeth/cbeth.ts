@@ -185,7 +185,7 @@ export const cbeth: BaseProject = {
           value: `The cap is about ${rateCapMultiple} the current rate, so it does not bind.`,
           sentiment: 'bad',
         },
-        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. No contract uses the rate.`,
+        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. Aave prices ${symbol} collateral at this rate and caps only rises, so a cut lets liquidators take that collateral for almost nothing.`,
       },
       exit: {
         value: 'Coinbase only',
@@ -212,7 +212,7 @@ export const cbeth: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'the proxy admin upgrades the token to malicious code, or a minting key mints unbacked supply.',
+        text: `the proxy admin upgrades the token to malicious code, a minting key mints unbacked supply, or the rate key or the oracle owner cuts the exchange rate, letting liquidators take the ${symbol} that backs Aave loans.`,
         isCritical: true,
       },
       {
