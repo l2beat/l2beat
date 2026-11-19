@@ -240,7 +240,7 @@ export const etherfi: BaseProject = {
         value: `${upgradeThreshold}/${upgradeSigners} Safe`,
         secondLine: `${upgradeDelayDays}d · no veto`,
         sentiment: 'warning',
-        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock changes parameters, mostly without bounds: it can change the oracle committee and stop deposits and exits. Holders have no veto.`,
+        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock changes parameters: it can change the oracle committee and stop deposits and exits. Holders have no veto.`,
       },
     },
   },
