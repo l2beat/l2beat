@@ -131,6 +131,16 @@ export class RpcSnapshotClient extends RpcClientCompat {
     return block
   }
 
+  // RpcReplay answers this from the recorded blocks
+  override async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const blocks = await Promise.all(
+      blockNumbers.map((blockNumber) => this.getBlock(blockNumber, false)),
+    )
+    return new Map(blocks.map((block) => [block.number, block.timestamp]))
+  }
+
   override async getTransaction(txHash: string): Promise<EVMTransaction> {
     const key = this.buildSnapshotKey(['transaction', txHash])
 

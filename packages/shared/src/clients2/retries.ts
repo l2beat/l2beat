@@ -5,6 +5,7 @@ export interface RetryOptions {
   maxAttempts: number
   maxTimeoutMs?: number
   logger?: Logger
+  shouldRetry?: (error: unknown) => boolean
 }
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
@@ -23,7 +24,10 @@ export async function retry<T>(
       }
       return await callback()
     } catch (error) {
-      if (attempt >= options.maxAttempts) {
+      if (
+        attempt >= options.maxAttempts ||
+        options.shouldRetry?.(error) === false
+      ) {
         throw error
       }
       options.logger?.warn('Retrying', { attempt, error })

@@ -87,6 +87,37 @@ describe(EthRpcClient.name, () => {
     ])
   })
 
+  it('asks for block headers in one batch and answers in the asked order', async () => {
+    const http = new MockHttp()
+    let id = 0
+    const client = new EthRpcClient(http, 'https://rpc.url', () => ++id)
+    http.queueResponse(
+      200,
+      JSON.stringify([
+        { jsonrpc: '2.0', id: 2, result: null },
+        { jsonrpc: '2.0', id: 1, result: header(0x10) },
+      ]),
+    )
+
+    const blocks = await client.getBlocksByNumber([0x10n, 0x11n])
+
+    expect(blocks.map((b) => b?.number ?? null)).toEqual([0x10n, null])
+    expect(JSON.parse(http.lastFetch?.init.body as string)).toEqual([
+      {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'eth_getBlockByNumber',
+        params: ['0x10', false],
+      },
+      {
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'eth_getBlockByNumber',
+        params: ['0x11', false],
+      },
+    ])
+  })
+
   it('refuses a batch with an error for any of its calls', async () => {
     const http = new MockHttp()
     let id = 0
@@ -693,5 +724,24 @@ function receipt(transactionHash: string) {
     logsBloom: `0x${'0'.repeat(512)}`,
     type: '0x3',
     status: '0x1',
+  }
+}
+
+function header(number: number) {
+  return {
+    hash: `0x${'ab'.repeat(32)}`,
+    parentHash: `0x${'cd'.repeat(32)}`,
+    number: `0x${number.toString(16)}`,
+    timestamp: '0x64',
+    gasUsed: '0x0',
+    gasLimit: '0x0',
+    size: '0x0',
+    logsBloom: `0x${'00'.repeat(256)}`,
+    transactionsRoot: `0x${'00'.repeat(32)}`,
+    stateRoot: `0x${'00'.repeat(32)}`,
+    receiptsRoot: `0x${'00'.repeat(32)}`,
+    miner: `0x${'00'.repeat(20)}`,
+    extraData: '0x',
+    transactions: [],
   }
 }
