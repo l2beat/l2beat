@@ -212,7 +212,7 @@ export const cbeth: BaseProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the proxy admin upgrades the token to malicious code, a minting key mints unbacked supply, or the rate key or the oracle owner cuts the exchange rate, letting liquidators take the ${symbol} that backs loans in lending markets that price it at that rate.`,
+        text: 'the proxy admin upgrades the token to malicious code, or a minting key mints unbacked supply.',
         isCritical: true,
       },
       {
