@@ -13,9 +13,12 @@ Every date and time on the site is in UTC and uses one format. Build each one wi
 | Chart snapshot | `3 Jun 2026` or `3 Jun 2026, 14:00 UTC` | `formatSnapshotTimestamp(ts, resolution)` |
 | Range | `30 Jun — 2 Jul 2026` | `formatRange(from, to)` |
 | Range within a day | `3 Jun 2026, 01:00 — 02:00 UTC` | `formatRange(from, to)` |
+| Range to the second | `3 Jun 2026, 01:00:00 — 01:00:24 UTC` | `formatRange(from, to, { seconds: true })` |
 | Chart axis ticks | `3 Jun`, `Jun ‘26`, `2026` | `getTimeTicks` |
 
 - Clock times are 24-hour and end with `UTC`.
+- `seconds` is for ranges shorter than a minute or so. A range of days shows dates alone, so it changes nothing there.
+- The live activity chart's axis ticks are bare times (`14:00`): its caption and tooltips carry the `UTC`.
 - Name other zones by offset (`UTC+2`, `UTC-4`). An abbreviation like `CET` or `IST` can mean several zones.
 - `<UtcDateTime>` adds the visitor's local time as a hover title after hydration. Use it for every exact moment rendered in React.
 
