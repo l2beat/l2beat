@@ -43,6 +43,12 @@ class TestRepository extends BaseRepository {
   }
 }
 
+async function raiseSerializationFailure(db: Database) {
+  await sql`DO $$ BEGIN RAISE EXCEPTION 'conflict' USING ERRCODE = '40001'; END $$`.execute(
+    db.activity['client'].db,
+  )
+}
+
 function createTestRepository(db: Database) {
   const pgDb = db.activity['client']
   return new TestRepository(pgDb)
@@ -82,6 +88,36 @@ describeDatabase(BaseRepository.name, (db) => {
       }, 'repeatable read')
 
       expect(level).toEqual('repeatable read')
+    })
+
+    it('retries a serializable transaction after a serialization failure', async () => {
+      let attempts = 0
+      await db.transaction(async () => {
+        attempts++
+        await repository.insert(attempts)
+        if (attempts === 1) await raiseSerializationFailure(db)
+      }, 'serializable')
+
+      expect(attempts).toEqual(2)
+      expect(await repository.getAll()).toEqual([2])
+    })
+
+    it('does not retry a serialization failure at other levels', async () => {
+      let attempts = 0
+      await expect(
+        db.transaction(async () => {
+          attempts++
+          await raiseSerializationFailure(db)
+        }, 'repeatable read'),
+      ).toBeRejectedWith('conflict')
+
+      expect(attempts).toEqual(1)
+    })
+
+    it('rejects a nested transaction that asks for another level', async () => {
+      await expect(
+        db.transaction(() => db.transaction(async () => {}, 'serializable')),
+      ).toBeRejectedWith('Nested transaction asks for another isolation level')
     })
 
     it('rollbacks inside a transaction', async () => {

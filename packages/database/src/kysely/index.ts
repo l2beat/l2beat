@@ -7,7 +7,7 @@ import {
   type LogEvent,
   PostgresDialect,
 } from 'kysely'
-import { defaults, Pool, type PoolConfig, types } from 'pg'
+import { DatabaseError, defaults, Pool, type PoolConfig, types } from 'pg'
 import type { DB as GeneratedDB } from './generated/types'
 
 export type KyselyLogEvent = LogEvent
@@ -19,9 +19,14 @@ types.setTypeParser(types.builtins.TIMESTAMP, (value) => new Date(value + 'Z'))
 export type Transaction = Omit<KyselyTransaction<DB>, 'transaction'>
 export type QueryBuilder = Omit<Kysely<DB>, 'transaction'>
 
+const MAX_SERIALIZABLE_ATTEMPTS = 3
+
 export class DatabaseClient {
   private readonly kysely: Kysely<DB>
-  private context = new AsyncLocalStorage<Transaction>()
+  private context = new AsyncLocalStorage<{
+    trx: Transaction
+    isolationLevel?: IsolationLevel
+  }>()
 
   constructor({ log, ...config }: PoolConfig & { log?: LogConfig }) {
     this.kysely = new Kysely<DB>({
@@ -33,16 +38,23 @@ export class DatabaseClient {
   }
 
   get db(): QueryBuilder {
-    const transaction = this.context.getStore()
-    return transaction ?? this.kysely
+    return this.context.getStore()?.trx ?? this.kysely
   }
 
-  transaction<T>(
+  async transaction<T>(
     cb: () => Promise<T>,
     isolationLevel?: IsolationLevel,
   ): Promise<T> {
-    if (this.db.isTransaction) {
-      // TODO: consider checking for isolation levels in the future
+    const outer = this.context.getStore()
+    if (outer) {
+      if (
+        isolationLevel !== undefined &&
+        isolationLevel !== outer.isolationLevel
+      ) {
+        throw new Error('Nested transaction asks for another isolation level', {
+          cause: { outer: outer.isolationLevel, nested: isolationLevel },
+        })
+      }
       return cb()
     }
     // setIsolationLevel returns a new builder, leaving the one it is called on
@@ -50,7 +62,19 @@ export class DatabaseClient {
       isolationLevel === undefined
         ? this.kysely.transaction()
         : this.kysely.transaction().setIsolationLevel(isolationLevel)
-    return tx.execute((trx) => this.context.run(trx, cb))
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await tx.execute((trx) =>
+          this.context.run({ trx, isolationLevel }, cb),
+        )
+      } catch (error) {
+        const retryable =
+          isolationLevel === 'serializable' &&
+          error instanceof DatabaseError &&
+          error.code === '40001'
+        if (!retryable || attempt >= MAX_SERIALIZABLE_ATTEMPTS) throw error
+      }
+    }
   }
 
   close() {
