@@ -1,6 +1,6 @@
 {
   "name": "katana",
-  "timestamp": 1794567784,
+  "timestamp": 1794986113,
   "configHash": "0x885f978781bdd02b57d74dc791e9b2704321d8c631e128c4eb9c6dfd0e7a4549",
   "entries": [
     {
@@ -114,12 +114,12 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 47821615,
-        "latestOutputIndex": 11983,
+        "latestBlockNumber": 48241304,
+        "latestOutputIndex": 12183,
         "MAX_AGGCHAIN_SIGNERS": 255,
         "networkName": "katana",
-        "nextBlockNumber": 47821616,
-        "nextOutputIndex": 11984,
+        "nextBlockNumber": 48241305,
+        "nextOutputIndex": 12184,
         "optimisticMode": false,
         "optimisticModeManager": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "pendingAdmin": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
@@ -331,7 +331,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 3397,
+        "nonce": 3398,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -528,40 +528,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
-      "type": "EOA",
-      "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0x876a24e12d1595ba43f838917743b4ea108e3957c4df5ec812cf3348b156d941",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
-      }
-    },
-    {
-      "address": "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OptimismPortal2",
       "address": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
       "type": "Contract",
@@ -717,8 +683,6 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21",
-          "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
           "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
           "eth:0xFA58659F64a393A6E1A548ABc70Ad2CfE1e8f9Cb"
         ],
@@ -726,8 +690,8 @@
         "domainSeparator": "0xea6ba5f688ae1d624380528587c86ae988712e8745a1700ff52c9e4db29c8726",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 347,
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 349,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -850,10 +814,10 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 11683909022,
+        "stakedAssets": 12102822718,
         "symbol": "vbWBTC",
-        "totalAssets": 11683909022,
-        "totalSupply": 11683909022,
+        "totalAssets": 12102822718,
+        "totalSupply": 12102822718,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
         "yield": 0,
@@ -940,7 +904,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "113509454288980415"
+          "difference": "60367268694200335"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -964,15 +928,15 @@
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
-        "reservedAssets": "646146072126811264982",
-        "reservePercentage": "235431033596772532",
-        "stakedAssets": "2098491225272437605163",
+        "reservedAssets": "647136685487101912882",
+        "reservePercentage": "235664442264571455",
+        "stakedAssets": "2098932707447782138301",
         "symbol": "vbETH",
-        "totalAssets": "2744637297399248870145",
-        "totalSupply": "2744523787944959889730",
+        "totalAssets": "2746069392934884051183",
+        "totalSupply": "2746009025666189850848",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "113509454288980415",
+        "yield": "60367268694200335",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -1254,42 +1218,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Safe",
-      "address": "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50",
-      "sinceTimestamp": 1754624963,
-      "sinceBlock": 23093762,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x23CDc4Bc7713A1a8cb2adBbb5BdfCd135F74Bd50",
-          "eth:0xeA54bCaD99a8Cdd385c903236149Da9585B89ed3",
-          "eth:0x64512f695BFf25FD1bCD0F88EbC45Af144f374CA",
-          "eth:0xe969B418F3F5EF9E2E96d05C05Cc1e14f111aE8b"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x0dd31852d3318972d61876e032e2fae216e05157c5b883b98568b7dd22fb083e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 350,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
       "address": "eth:0x4082A1D91A353b16e112FbE36b55d222bF417919",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1546,7 +1474,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 709780377 },
+        "backingDifference": { "positive": true, "difference": 585985014 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1571,13 +1499,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 7281730524087,
+        "stakedAssets": 7528796980290,
         "symbol": "vbUSDC",
-        "totalAssets": 7281730524087,
-        "totalSupply": 7281020743710,
+        "totalAssets": 7528796980290,
+        "totalSupply": 7528210995276,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 709780377,
+        "yield": 585985014,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1636,11 +1564,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x64512f695BFf25FD1bCD0F88EbC45Af144f374CA",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Katana yieldRecipient Mulsitig",
       "address": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
       "type": "Contract",
@@ -1663,14 +1586,14 @@
           "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277",
           "eth:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac",
           "eth:0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62",
-          "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
+          "eth:0x73D8846324B30477EA3Ac055589e40F39DE497F8"
         ],
         "$threshold": 2,
         "domainSeparator": "0x8c638b7731828e488739b87af5111a636a5ac204b246e63bda300de362cc436a",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 113,
+        "nonce": 119,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1768,7 +1691,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 159160920 },
+        "backingDifference": { "positive": true, "difference": 259485257 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1793,13 +1716,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 2374652704934,
+        "stakedAssets": 2377336424419,
         "symbol": "vbUSDT",
-        "totalAssets": 2374652704934,
-        "totalSupply": 2374493544014,
+        "totalAssets": 2377336424419,
+        "totalSupply": 2377076939162,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 159160920,
+        "yield": 259485257,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1883,7 +1806,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 340,
+        "nonce": 343,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2826,16 +2749,6 @@
       ]
     },
     {
-      "address": "eth:0xe969B418F3F5EF9E2E96d05C05Cc1e14f111aE8b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xeA54bCaD99a8Cdd385c903236149Da9585B89ed3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AddressManager",
       "address": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
       "type": "Contract",
@@ -3029,6 +2942,11 @@
       }
     },
     {
+      "address": "katana:0x21a2Db679b4e9f6183E3143cc7Dcfef955b400a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AgglayerBridgeL2",
       "address": "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
@@ -3077,19 +2995,19 @@
         "$upgradeCount": 4,
         "bridgeLib": "katana:0xb30C032b183525de7427f04e79F45Cd19866E124",
         "bridgeManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "claimedGlobalIndexHashChain": "0xb375f5f95b9866e74f91b77cadfcb7623e97f73327243b75c71aeb20a91e9b00",
-        "depositCount": 23876,
+        "claimedGlobalIndexHashChain": "0x1d3a51ca08392567588433a04c3a1c79255192217555be007fd9dd5801dae903",
+        "depositCount": 23917,
         "emergencyBridgePauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "emergencyBridgeUnpauser": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "gasTokenAddress": "katana:0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
-        "getRoot": "0x93f0287a4f5f0f7a5862aa177bc8636afa145f0af32cf18df42dd3abab7fabb3",
+        "getRoot": "0x95aba4ff52cb9f7722147d670f83d758caea912f22871f8c0e7b7b0c7453a982",
         "getWrappedTokenBridgeImplementation": "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c",
         "globalExitRootManager": "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
         "isEmergencyState": false,
-        "lastUpdatedDepositCount": 23876,
+        "lastUpdatedDepositCount": 23917,
         "networkID": 20,
         "pendingEmergencyBridgePauser": "katana:0x0000000000000000000000000000000000000000",
         "pendingEmergencyBridgeUnpauser": "katana:0x0000000000000000000000000000000000000000",
@@ -3249,7 +3167,7 @@
         "$upgradeCount": 3,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 4618518,
+        "blobBaseFee": 5840937,
         "blobBaseFeeScalar": 801949,
         "decimals": 6,
         "DECIMALS": 6,
@@ -3258,7 +3176,7 @@
         "isFjord": true,
         "isIsthmus": true,
         "isJovian": true,
-        "l1BaseFee": 80527867,
+        "l1BaseFee": 110090481,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -3530,10 +3448,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 80527867,
+        "basefee": 110090481,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000001ffda89c755f6d4af069897d77ccabb580fd412a",
-        "blobBaseFee": 4618518,
+        "blobBaseFee": 5840937,
         "blobBaseFeeScalar": 801949,
         "daFootprintGasScalar": 400,
         "DEPOSITOR_ACCOUNT": "katana:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -3543,17 +3461,17 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x501b4fd10f62be380a854ef65a0d649ef34cbd3c113dfbdea497fa3704cc00e8",
+        "hash": "0xc421694137ab68af4cb31d5707926937066b33234bb1a5f2c2f7f7a3fc4f748e",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 26405612,
+        "number": 26440374,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 600000,
         "proxyAdmin": "katana:0x4200000000000000000000000000000000000018",
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
-        "sequenceNumber": 4,
-        "timestamp": 1794567719,
+        "sequenceNumber": 11,
+        "timestamp": 1794986039,
         "version": "1.9.0"
       },
       "implementationNames": {
@@ -3830,7 +3748,7 @@
         "proxyAdminOwner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "recipient": "katana:0x4200000000000000000000000000000000000019",
         "RECIPIENT": "katana:0x4200000000000000000000000000000000000019",
-        "totalProcessed": "100722476326011706780",
+        "totalProcessed": "110679430137471706780",
         "version": "1.1.1",
         "WITHDRAWAL_NETWORK": 1,
         "withdrawalNetwork": 1
@@ -4002,7 +3920,7 @@
         "getChainId": 747474,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4040,8 +3958,8 @@
         "GER_SOVEREIGN_VERSION": "al-v0.3.0",
         "globalExitRootRemover": "katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "globalExitRootUpdater": "katana:0x3138BBdAeAd339d34F084445192B2be9dd4B9f27",
-        "insertedGERHashChain": "0x527b9bc1178b63fcceed9f25334b89c614b543a4caa9c6edff36e0ea88a46309",
-        "lastRollupExitRoot": "0x93f0287a4f5f0f7a5862aa177bc8636afa145f0af32cf18df42dd3abab7fabb3",
+        "insertedGERHashChain": "0xd1ed90a755cb8c825743eaad24b312c61f8f6f5730b6a812ab53b7e986e9c6ab",
+        "lastRollupExitRoot": "0x95aba4ff52cb9f7722147d670f83d758caea912f22871f8c0e7b7b0c7453a982",
         "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
         "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
         "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -4241,6 +4159,7 @@
         "$immutable": false,
         "$implementation": "katana:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
+          "katana:0x21a2Db679b4e9f6183E3143cc7Dcfef955b400a6",
           "katana:0x6f8CC67A7F6c61E4047aC4870583899CC1fBD08a",
           "katana:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b",
           "katana:0xA697656ac37ee1f59A8a5318F61601B4C208960D",
@@ -4251,8 +4170,8 @@
         "domainSeparator": "0x2e47e755eb2d5e5818411b9cb88994e18af8181e6b240bcf785793206e2ffb10",
         "getChainId": 747474,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 55,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 56,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -4638,9 +4557,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x3e86A8bcAF0A96DD16Ec8160532DA13b2C0f6e21": [
-      "constructor(address _singleton)"
-    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -4851,58 +4767,6 @@
       "function systemConfig() view returns (address)",
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
-    ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
     ],
     "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756": [
       "constructor(address _singleton)"
@@ -7070,8 +6934,8 @@
     "polygon-cdk/L2Timelock": "0xabef12a0b5dfe935a21e07c0e869f49752b4e127836e2001215b9f0b2c24a5e7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "usedBlockNumbers": { "ethereum": 26405617, "katana": 47824973 },
-  "permissionsConfigHash": "0x624c3352aae581238f620af451c803bbd081d134bb4817cb8121c5756852e183",
+  "usedBlockNumbers": { "ethereum": 26440380, "katana": 48243302 },
+  "permissionsConfigHash": "0x9c1d794ae9ec15bb4ac233b29f1970ade4d621346f6477378b65fd06ca750105",
   "modelledAgainst": {
     "shared-polygon-cdk": "0xe9304873e93dfe13b5bffa1058853e7cf85f6a7b0a8666193059e58f9208571b"
   },

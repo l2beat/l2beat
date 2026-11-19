@@ -52,7 +52,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
     return shiftedTo
   }
 
-  async fetchPrices(
+  private async fetchPrices(
     from: UnixTime,
     to: UnixTime,
   ): Promise<L2CostPriceRecord[]> {

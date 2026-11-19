@@ -11,7 +11,6 @@ describe(FeatureFlags.name, () => {
       ['foo', 'foo.bar', true],
       ['foo', 'bar', false],
       ['foo,bar', 'bar.baz', true],
-      ['foo,bar', 'bar.baz', true],
       ['*', 'foo', true],
       ['*,!foo', 'foo', false],
       ['foo,!foo.*,foo.bar', 'foo', true],

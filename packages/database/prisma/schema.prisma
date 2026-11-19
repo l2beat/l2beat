@@ -326,25 +326,28 @@ model DefiTvl {
 
 /// Hourly onchain state of a liquid staking token; the exit columns are set only for the protocols they apply to.
 model LiquidStakingSnapshot {
-  configurationId        String   @db.Char(12)
-  projectId              String   @db.VarChar(255)
-  timestamp              DateTime @db.Timestamp(6)
-  blockNumber            Int
+  configurationId               String   @db.Char(12)
+  projectId                     String   @db.VarChar(255)
+  timestamp                     DateTime @db.Timestamp(6)
+  blockNumber                   Int
   /// ETH per token, 18 decimals; for Lido per share, i.e. per wstETH.
-  exchangeRate           Decimal  @db.Decimal(80, 0)
+  exchangeRate                  Decimal  @db.Decimal(80, 0)
   /// Withdrawal queue counters (Lido, ether.fi), or the unwrap request and allocation counters (wBETH).
-  lastRequestId          Int?
-  lastFinalizedRequestId Int?
+  lastRequestId                 Int?
+  lastFinalizedRequestId        Int?
+  /// The same counters of a queue the protocol has replaced (StakeWise). It still holds requests, paid apart from the new queue's.
+  retiredLastRequestId          Int?
+  retiredLastFinalizedRequestId Int?
   /// ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei.
-  instantExitEth         Decimal? @db.Decimal(80, 0)
+  instantExitEth                Decimal? @db.Decimal(80, 0)
   /// The instant exit's fee, basis points.
-  instantExitFeeBps      Int?
+  instantExitFeeBps             Int?
   /// Lock on an onchain redemption (wBETH), seconds.
-  lockTime               Int?
+  lockTime                      Int?
   /// ETH the best onchain pool pays for 1 token, wei; null without a quote.
-  marketExitEth          Decimal? @db.Decimal(80, 0)
+  marketExitEth                 Decimal? @db.Decimal(80, 0)
   /// What that token is worth at the protocol's rate, wei.
-  marketExitValueEth     Decimal? @db.Decimal(80, 0)
+  marketExitValueEth            Decimal? @db.Decimal(80, 0)
 
   @@id([configurationId, timestamp])
   @@index([projectId, timestamp])

@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x318568c4d17e1d19f863d7f9380ef89f40f50302
+
+# Diff at Wed, 18 Nov 2026 10:15:44 GMT:
+
+- id: 0001eb45
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794825975
+- current timestamp: 1794996848
+
+## Description
+
+One security council member upgraded its Safe to v1.5.0.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x69462a81ba94D64c404575f1899a464F123497A2) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "Safe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.3.0"
++        "1.5.0"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../Safe}/GnosisSafeProxy.p.sol                    |    0
+ .../projects/shared-zk-stack/.flat/Safe/Safe.sol   | 1797 ++++++++++++++++++++
+ 3 files changed, 1797 insertions(+), 1026 deletions(-)
+```
+
 Generated with discovered.json: 0x036de1d5b384befe1db8baaf7bbfc1713eb9afb1
 
 # Diff at Mon, 16 Nov 2026 12:44:29 GMT:

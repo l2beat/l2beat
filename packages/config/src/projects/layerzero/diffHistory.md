@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xe47dbada3894444b51a8fe2d676b820d7bbb11fa
+
+# Diff at Wed, 18 Nov 2026 08:06:32 GMT:
+
+- id: 765346ac
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1794568200
+- current timestamp: 1794986363
+
+## Description
+
+The rsETH OFT adapter moved its ownership and its endpoint delegate in one [transaction](https://etherscan.io/tx/0x8d1ba241520ee255cfec426158b1036a642a347cab1af6205ce634a23bf952c7), from a 3 of 6 Safe to the 6 of 11 Safe eth:0xb3696a817D01C8623E66D156B6798291fa10a46d. Four of the eleven signers were already signers of the old Safe. The new Safe alone can now change the peers, message libraries and DVN configs of the adapter, which decide who can release the escrowed rsETH. The configs themselves are unchanged.
+
+## Watched changes
+
+```diff
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c) [layerzero/EndpointV2] {
+    +++ description: Part of the LayerZero messaging protocol. OApp owners or their delegates can configure custom verification- (message libraries) and execution settings here.
++++ description: The address delegated by the rsETH OFT adapter to configure its LayerZero endpoint settings.
+      values.rsETHAdapterDelegate:
+-        "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1"
++        "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d"
+    }
+```
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
+      values.owner:
+-        "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1"
++        "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xb3696a817D01C8623E66D156B6798291fa10a46d) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9fa3add5e6f5aef18590fd77ce035f8210eabdfa
 
 # Diff at Fri, 13 Nov 2026 13:04:04 GMT:

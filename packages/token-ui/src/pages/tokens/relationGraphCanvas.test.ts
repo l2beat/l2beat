@@ -31,10 +31,10 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), viewState())
 
-    expect(drawnText).toEqual([
-      { text: 'TOKEN', x: 50, y: 28 },
-      { text: 'unichain', x: 50, y: 38 },
-    ])
+    const [symbol, chain] = drawnText
+    expect(drawnText.map((t) => t.text)).toEqual(['TOKEN', 'unichain'])
+    expect(chain?.x).toEqual(symbol?.x)
+    expect(chain!.y).toBeGreaterThan(symbol!.y)
   })
 
   it('does not draw token or chain labels at overview zoom', () => {

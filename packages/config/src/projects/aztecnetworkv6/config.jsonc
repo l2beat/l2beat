@@ -4,6 +4,11 @@
   "import": ["../globalConfig.jsonc"],
   // v6 stack, pinned to the v6 Rollup. The governance contracts all versions
   // share are in shared-aztec.
+  // Ossification perimeter: the Rollup and the contracts it executes. The
+  // governance contracts in shared-aztec stay outside. The Rollup is immutable.
+  // Its owner tunes rewards, fees and validator entry within fixed bounds and
+  // can replace the Slasher: even a malicious Slasher can neither halt the
+  // chain nor finalize invalid state, because the EscapeHatch is immutable.
   "initialAddresses": ["eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f"],
   "overrides": {
     // SlasherDeploymentExtLib of the v6 Rollup, only called by its constructor

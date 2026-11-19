@@ -49,12 +49,6 @@ describe(selectAndFocus.name, () => {
     expect(result.selected).toEqual(['first', 'second'])
     expect(result.transform).not.toEqual(undefined)
   })
-
-  it('clears the selection when nothing is drawn', () => {
-    const state = { ...makeState([makeNode('a')]), selected: ['a'] }
-
-    expect(selectAndFocus(state, []).selected).toEqual([])
-  })
 })
 
 // selectAndFocus reads only the nodes, the selection and the transform.

@@ -86,7 +86,8 @@ export class InteropSyncersManager {
       }
       if (resyncablePlugins.length !== cluster.plugins.length) {
         throw new Error(
-          `Cluster of plugins '${cluster.name} contains mix of non- and resyncable plugins. They must all be the same kind.`,
+          'Cluster of plugins contains mix of non- and resyncable plugins, they must all be the same kind',
+          { cause: { cluster: cluster.name } },
         )
       }
 
@@ -95,7 +96,9 @@ export class InteropSyncersManager {
       for (const chain of enabledChains) {
         const chainConfig = chainConfigs.find((c) => c.name === chain)
         if (!chainConfig) {
-          throw new Error(`Missing configuration for chain ${chain}`)
+          throw new Error('Missing configuration for chain', {
+            cause: { chain },
+          })
         }
 
         const eventSyncer = new InteropEventSyncer(
@@ -299,7 +302,9 @@ export class InteropSyncersManager {
     if (!client) {
       const rpcConfig = chainConfig.blockApis.find((a) => a.type === 'rpc')
       if (!rpcConfig || rpcConfig.type !== 'rpc') {
-        throw new Error(`Missing RPC config for chain ${chainConfig.name}`)
+        throw new Error('Missing RPC config for chain', {
+          cause: { chain: chainConfig.name },
+        })
       }
 
       const rpcLogger = this.logger

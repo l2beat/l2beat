@@ -11,8 +11,10 @@ describe(buildAddressToNameMap.name, () => {
     expect(
       buildAddressToNameMap([contract(ADDRESS, 'Diamond'), eoa(OTHER)]),
     ).toEqual({
-      [ADDRESS.toLowerCase()]: id(ADDRESS),
-      [OTHER.toLowerCase()]: id(OTHER),
+      'eth:0x0000000000000000000000000000000000000123':
+        'eth_0x0000000000000000000000000000000000000123',
+      'eth:0x0000000000000000000000000000000000000456':
+        'eth_0x0000000000000000000000000000000000000456',
     })
   })
 
@@ -23,7 +25,8 @@ describe(buildAddressToNameMap.name, () => {
         contract(ADDRESS, 'ProxyAdmin'),
       ]),
     ).toEqual({
-      [ADDRESS.toLowerCase()]: id(ADDRESS),
+      'eth:0x0000000000000000000000000000000000000123':
+        'eth_0x0000000000000000000000000000000000000123',
     })
   })
 
@@ -36,14 +39,11 @@ describe(buildAddressToNameMap.name, () => {
         contract(ADDRESS, 'SharedModuleName'),
       ]),
     ).toEqual({
-      [ADDRESS.toLowerCase()]: id(ADDRESS),
+      'eth:0x0000000000000000000000000000000000000123':
+        'eth_0x0000000000000000000000000000000000000123',
     })
   })
 })
-
-function id(address: ChainSpecificAddress): string {
-  return address.toLowerCase().replaceAll(':', '_')
-}
 
 function contract(
   address: ChainSpecificAddress,

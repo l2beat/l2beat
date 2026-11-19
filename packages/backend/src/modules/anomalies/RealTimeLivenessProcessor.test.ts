@@ -22,57 +22,6 @@ import type { AnomalyNotifier } from './AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
 describe(RealTimeLivenessProcessor.name, () => {
-  describe(RealTimeLivenessProcessor.prototype.start.name, () => {
-    it('should init processor', async () => {
-      const trackedTxsConfig = createMockTrackedTxsConfig(
-        ProjectId('project-id'),
-        [],
-      )
-      const processor = new RealTimeLivenessProcessor(
-        trackedTxsConfig,
-        Logger.SILENT,
-        mockDatabase(),
-        mockObject<AnomalyNotifier>(),
-      )
-
-      const mockDeleteForArchivedProjects = mockFn().resolvesTo(undefined)
-      processor.deleteForArchivedProjects = mockDeleteForArchivedProjects
-
-      await processor.start()
-
-      expect(mockDeleteForArchivedProjects).toHaveBeenCalled()
-    })
-  })
-
-  describe(RealTimeLivenessProcessor.prototype.processBlock.name, () => {
-    it('should match liveness txs and detect anomalies', async () => {
-      const block = mockObject<Block>({
-        number: 123,
-        timestamp: UnixTime.now(),
-        transactions: [],
-      })
-
-      const config = createMockTrackedTxsConfig(ProjectId('project-id'), [])
-      const processor = new RealTimeLivenessProcessor(
-        config,
-        Logger.SILENT,
-        mockDatabase(),
-        mockObject<AnomalyNotifier>(),
-      )
-
-      const mockMatchLivenessTransactions = mockFn().resolvesTo(undefined)
-      processor.matchLivenessTransactions = mockMatchLivenessTransactions
-
-      const mockCheckForAnomalies = mockFn().resolvesTo(undefined)
-      processor.checkForAnomalies = mockCheckForAnomalies
-
-      await processor.processBlock(block, [])
-
-      expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block, [])
-      expect(mockCheckForAnomalies).toHaveBeenCalledWith(block)
-    })
-  })
-
   describe(
     RealTimeLivenessProcessor.prototype.matchLivenessTransactions.name,
     () => {
@@ -398,12 +347,16 @@ describe(RealTimeLivenessProcessor.name, () => {
   )
 
   describe(RealTimeLivenessProcessor.prototype.checkForAnomalies.name, () => {
-    it('should detect new anomaly', async () => {
+    it('detects a new anomaly when processing a block', async () => {
       const projectId = ProjectId('project-id')
       const configurationId1 = 'tracked-tx-1'
       const configurationId2 = 'tracked-tx-2'
+      const provenConfigurationId = 'tracked-tx-3'
       const subtype = 'stateUpdates'
-      const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
+      const blockTimestamp = UnixTime.now()
+      const lastTxTimestamp = blockTimestamp - 5 * UnixTime.HOUR
+      const from = EthereumAddress.random()
+      const to = EthereumAddress.random()
 
       const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
         getLatestStats: mockFn().resolvesTo([
@@ -433,7 +386,14 @@ describe(RealTimeLivenessProcessor.name, () => {
             blockNumber: 123,
             timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
+          {
+            configurationId: provenConfigurationId,
+            txHash: '0xabc',
+            blockNumber: 123,
+            timestamp: blockTimestamp,
+          },
         ] as RealTimeLivenessRecord[]),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const realTimeAnomaliesRepository = mockObject<
@@ -469,6 +429,18 @@ describe(RealTimeLivenessProcessor.name, () => {
             to: EthereumAddress.random(),
           },
         },
+        {
+          type: 'liveness' as const,
+          id: provenConfigurationId,
+          projectId,
+          subtype: 'proofSubmissions' as const,
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer' as const,
+            from,
+            to,
+          },
+        },
       ]
 
       const config = createMockTrackedTxsConfig(projectId, configurations)
@@ -490,17 +462,27 @@ describe(RealTimeLivenessProcessor.name, () => {
 
       const block = mockObject<Block>({
         number: 123,
-        timestamp: UnixTime.now(),
-        transactions: [],
+        timestamp: blockTimestamp,
+        transactions: [{ hash: '0xabc', from, to, data: '0x' }],
       })
 
-      await processor.checkForAnomalies(block)
+      await processor.processBlock(block, [])
 
-      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
+      expect(realTimeLivenessRepository.upsertMany).toHaveBeenOnlyCalledWith([
+        {
+          timestamp: block.timestamp,
+          blockNumber: 123,
+          txHash: '0xabc',
+          configurationId: provenConfigurationId,
+        },
+      ])
       expect(
         realTimeLivenessRepository.getLatestRecords,
-      ).toHaveBeenOnlyCalledWith([configurationId1, configurationId2])
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
+      ).toHaveBeenOnlyCalledWith([
+        configurationId1,
+        configurationId2,
+        provenConfigurationId,
+      ])
 
       expect(realTimeAnomaliesRepository.upsertMany).toHaveBeenCalledWith([
         {
@@ -675,10 +657,6 @@ describe(RealTimeLivenessProcessor.name, () => {
 
       await processor.checkForAnomalies(block)
 
-      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
-      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
-
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
       expect(mockNotifier.anomalyOngoing).toHaveBeenCalled()
     })
@@ -802,10 +780,6 @@ describe(RealTimeLivenessProcessor.name, () => {
       })
 
       await processor.checkForAnomalies(block)
-
-      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
-      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).toHaveBeenCalledWith([
         {
@@ -974,10 +948,6 @@ describe(RealTimeLivenessProcessor.name, () => {
 
       await processor.checkForAnomalies(block)
 
-      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
-      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
-
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
       expect(mockNotifier.anomalyDetected).not.toHaveBeenCalled()
       expect(mockNotifier.anomalyOngoing).not.toHaveBeenCalled()
@@ -1134,43 +1104,34 @@ describe(RealTimeLivenessProcessor.name, () => {
     })
   })
 
-  describe(
-    RealTimeLivenessProcessor.prototype.deleteForArchivedProjects.name,
-    () => {
-      it('deletes anomalies for archived projects', async () => {
-        const projectId = 'project-id'
-        const config = createMockTrackedTxsConfig(
-          ProjectId(projectId),
-          [],
-          true,
-        )
+  describe(RealTimeLivenessProcessor.prototype.start.name, () => {
+    it('deletes anomalies for archived projects', async () => {
+      const projectId = 'project-id'
+      const config = createMockTrackedTxsConfig(ProjectId(projectId), [], true)
 
-        const realTimeAnomaliesRepository = mockObject<
-          Database['realTimeAnomalies']
-        >({
-          getProjectIds: mockFn().resolvesTo([projectId]),
-          deleteByProjectId: mockFn().resolvesTo(undefined),
-        })
-
-        const processor = new RealTimeLivenessProcessor(
-          config,
-          Logger.SILENT,
-          mockDatabase({
-            realTimeAnomalies: realTimeAnomaliesRepository,
-          }),
-          mockObject<AnomalyNotifier>(),
-        )
-
-        await processor.deleteForArchivedProjects()
-
-        expect(realTimeAnomaliesRepository.getProjectIds).toHaveBeenCalled()
-
-        expect(
-          realTimeAnomaliesRepository.deleteByProjectId,
-        ).toHaveBeenCalledWith([projectId])
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getProjectIds: mockFn().resolvesTo([projectId]),
+        deleteByProjectId: mockFn().resolvesTo(undefined),
       })
-    },
-  )
+
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+        mockObject<AnomalyNotifier>(),
+      )
+
+      await processor.start()
+
+      expect(
+        realTimeAnomaliesRepository.deleteByProjectId,
+      ).toHaveBeenCalledWith([projectId])
+    })
+  })
 })
 
 function createMockTrackedTxsConfig(

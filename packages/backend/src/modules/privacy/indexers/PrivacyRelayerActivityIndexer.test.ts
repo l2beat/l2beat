@@ -232,14 +232,6 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       ).toEqual('0a13c1d85c91')
     })
 
-    it('is deterministic for the same input', () => {
-      const properties = relayerProperties()
-
-      expect(
-        PrivacyRelayerActivityIndexer.idToConfigurationId(properties),
-      ).toEqual(PrivacyRelayerActivityIndexer.idToConfigurationId(properties))
-    })
-
     it('differs by extractor', () => {
       const properties = relayerProperties()
 

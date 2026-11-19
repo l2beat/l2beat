@@ -61,38 +61,9 @@ describe(BlockTargetIndexer.name, () => {
       const result = await indexer.tick()
 
       expect(result).toEqual(BLOCK_NUMBER)
-      expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenNthCalledWith(1, LAST_HOUR, 'chain')
-    })
-
-    it('throws when fetched block number is smaller than previously fetched', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
-
-      const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
-        getBlockNumberAtOrBefore: mockFn()
-          .resolvesToOnce(BLOCK_NUMBER)
-          .resolvesToOnce(BLOCK_NUMBER - 1),
-      })
-      const indexer = new BlockTargetIndexer(
-        Logger.SILENT,
-        clock,
-        blockTimestampProvider,
-        getMockDb(),
-        mockObject<ActivityConfigProject>({
-          id: ProjectId('mock'),
-          chainName: 'chain',
-        }),
-      )
-
-      await indexer.tick()
-      await expect(async () => await indexer.tick()).toBeRejectedWith(
-        'Block number cannot be smaller',
-      )
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

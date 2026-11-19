@@ -17,7 +17,7 @@ interface ExitRoute {
 const INTRO =
   'How many days of staking yield a holder gives up to exit about 1 ETH'
 const ESTIMATE_NOTE =
-  "~ marks an estimate: requests still queued are timed at the last 7 days' pace."
+  "~ marks a value that can still change while requests are queued: their wait is estimated at the last 7 days' pace."
 const MARKET_NOTE =
   "The discount is the day's median of hourly quotes for selling 1 token on the deepest pools, on days they could fill the sale for most hours."
 const INSTANT_NOTE =
@@ -44,7 +44,7 @@ export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
     ALL_ROUTES_TOOLTIP,
     MARKET_NOTE,
     INSTANT_NOTE,
-    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
+    'wBETH unwraps wait for Binance to allocate ETH, and for the operator-set lock time as it stands when they are claimed. ~ also marks an unwrap still inside the lock.',
   ].join(' '),
 }
 
@@ -103,7 +103,7 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         routes: [{ phrase: 'unwrapping, which earns nothing while it waits' }],
         queued: true,
         notes: [
-          'Unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
+          'Unwraps wait for Binance to allocate ETH, and for the operator-set lock time as it stands when they are claimed. ~ also marks an unwrap still inside the lock.',
         ],
       }
     case 'cbeth':

@@ -1,6 +1,6 @@
 {
   "name": "grvt",
-  "timestamp": 1794568877,
+  "timestamp": 1794996355,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
@@ -164,7 +164,7 @@
         "positionBreakdown": [
           {
             "token": "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
-            "amount": "1897112440350685907659843",
+            "amount": "1694625595350685907659843",
             "kind": 0
           },
           {
@@ -197,8 +197,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 18707883420268,
-        "totalExposureStrict": 18707883420268,
+        "totalExposure": 18485469248806,
+        "totalExposureStrict": 18485469248806,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -454,7 +454,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 93,
+        "nonce": 94,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -842,19 +842,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49638181,
+            "amount": 49660172,
             "kind": 0
           }
         ],
-        "totalExposure": 49638181,
-        "totalExposureStrict": 49638181,
+        "totalExposure": 49660172,
+        "totalExposureStrict": 49660172,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49638181
+        "withdrawableExposure": 49660172
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -1054,8 +1054,8 @@
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 10933870261628,
-        "totalExposureStrict": 10933870261628,
+        "totalExposure": 10940541745766,
+        "totalExposureStrict": 10940541745766,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1065,7 +1065,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 10933870261628
+        "withdrawableExposure": 10940541745766
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1190,12 +1190,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 58,
+        "executedCount": 59,
         "minDelay": 0,
         "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 58,
+        "scheduledTransparentCount": 59,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1408,8 +1408,8 @@
             },
             {
               "idle": 0,
-              "strategy": 49685270,
-              "total": 49685270,
+              "strategy": 49707282,
+              "total": 49707282,
               "skippedStrategies": 0
             },
             {
@@ -1428,8 +1428,8 @@
             { "idle": 0, "strategy": 0, "total": 0, "skippedStrategies": 0 },
             {
               "idle": 0,
-              "strategy": "3038261117982385079838515",
-              "total": "3038261117982385079838515",
+              "strategy": "2835774272982385079838515",
+              "total": "2835774272982385079838515",
               "skippedStrategies": 0
             }
           ]
@@ -2039,7 +2039,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 5278,
+        "getFirstUnprocessedPriorityTx": 5321,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -2047,8 +2047,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
-        "getPriorityTreeRoot": "0xe9a53dc21b09eef705d6db6077de06b7c32fbf9dfee64ba614f5607028893461",
+        "getPriorityQueueSize": 15,
+        "getPriorityTreeRoot": "0x5099c13b2fce1e12f0be7d6be4651d57eb9f7f99d810dde8aff92f5cc08d164f",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -2056,13 +2056,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 131675,
-        "getTotalBatchesExecuted": 131633,
-        "getTotalBatchesVerified": 131665,
-        "getTotalBlocksCommitted": 131675,
-        "getTotalBlocksExecuted": 131633,
-        "getTotalBlocksVerified": 131665,
-        "getTotalPriorityTxs": 5280,
+        "getTotalBatchesCommitted": 133352,
+        "getTotalBatchesExecuted": 133310,
+        "getTotalBatchesVerified": 133335,
+        "getTotalBlocksCommitted": 133352,
+        "getTotalBlocksExecuted": 133310,
+        "getTotalBlocksVerified": 133335,
+        "getTotalPriorityTxs": 5336,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -2282,8 +2282,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 1317060949100,
-        "totalExposureStrict": 1317060949100,
+        "totalExposure": 1317717733062,
+        "totalExposureStrict": 1317717733062,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -3930,7 +3930,7 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26405708 },
+  "usedBlockNumbers": { "ethereum": 26441232 },
   "permissionsConfigHash": "0x64815b98e48f24a0f4f7db4a8c6f4b29dc3d5d843ade5684f745cba03787ef25",
   "modelledAgainst": {
     "shared-zk-stack": "0x80404a6ca1d69bd1fea0595d0a9f17b6210f4a54ffe33b4bad208e7eca37d732"

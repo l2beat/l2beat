@@ -1,7 +1,6 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -13,7 +12,6 @@ import {
 } from '~/components/core/tooltip/TooltipParts'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { WarningBar } from '~/components/WarningBar'
-import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { DurationCell } from '~/pages/layer2s/liveness/components/table/DurationCell'
 import type { LivenessDataPoint } from '~/server/features/layer2s/liveness/types'
@@ -25,12 +23,6 @@ export function LivenessIntervalCell(props: {
   entry: L2LivenessTableEntry
   dataType: TrackedTxsConfigSubtype
 }) {
-  const isClient = useIsClient()
-
-  if (!isClient) {
-    return <Skeleton className="h-6 w-[100px]" />
-  }
-
   const data = props.entry.data?.[props.dataType]
   const durationInSeconds = data?.averageInSeconds
   const isSynced = props.entry.data?.isSynced

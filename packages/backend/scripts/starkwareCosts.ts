@@ -412,7 +412,9 @@ async function fetchRpcBatchWith429Backoff(
     }
 
     if (res.status !== 429 || retries >= ETH_RPC_MAX_429_RETRIES) {
-      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: res.status, statusText: res.statusText },
+      })
     }
 
     retries += 1
@@ -507,9 +509,9 @@ function getDateRange(
     : UnixTime.toYYYYMMDD(UnixTime.toStartOf(UnixTime.now(), 'day'))
 
   if (startDate > endDate) {
-    throw new Error(
-      `Start date must be <= end date, got ${startDate}..${endDate}`,
-    )
+    throw new Error('Start date must be <= end date', {
+      cause: { startDate, endDate },
+    })
   }
 
   return [startDate, endDate]
@@ -530,18 +532,18 @@ function normalizeDateInput(input: string): string {
     return iso
   }
 
-  throw new Error(
-    `Invalid date "${input}". Expected YYYY-MM-DD or DD-MM-YYYY format.`,
-  )
+  throw new Error('Invalid date, expected YYYY-MM-DD or DD-MM-YYYY format', {
+    cause: { input },
+  })
 }
 
 function validateIsoDate(date: string) {
   const parsed = new Date(`${date}T00:00:00.000Z`)
   if (Number.isNaN(parsed.getTime())) {
-    throw new Error(`Invalid date: ${date}`)
+    throw new Error('Invalid date', { cause: { date } })
   }
   if (parsed.toISOString().slice(0, 10) !== date) {
-    throw new Error(`Invalid date: ${date}`)
+    throw new Error('Invalid date', { cause: { date } })
   }
 }
 

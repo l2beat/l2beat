@@ -229,6 +229,30 @@
       "transaction": "0x037f60045f4304460e2b0d5d4f3d8b223200d220212e2399db1ce0f77a19b77b",
       "updateId": "560b3731",
       "reason": "Registered Denim as upgrade 13 (activation 2026-11-05 18:00 UTC) and raised the minimum node version from v1.4.2 to v1.5.1 in the same Base Governance Multisig transaction that swapped the AggregateVerifier."
+    },
+    {
+      "timestamp": 1793806327,
+      "type": "code",
+      "contract": "base:0x4200000000000000000000000000000000000007",
+      "transaction": "0x376ad9d1263dc516fc05d0db60e77b6741af3aec2a7f2e2537612fef93a70174",
+      "updateId": "560b3731",
+      "reason": "Denim upgrade: the aliased Base ProxyAdmin owner upgraded the L2CrossDomainMessenger predeploy through the L2 ProxyAdmin in a deposit transaction. This first recorded upgrade replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1793806327,
+      "type": "code",
+      "contract": "base:0x4200000000000000000000000000000000000010",
+      "transaction": "0xce2139adf0f68a73cb55b58b228d196dcee374347f60a9b6e771f2e54536b600",
+      "updateId": "560b3731",
+      "reason": "Denim upgrade: the aliased Base ProxyAdmin owner upgraded the L2StandardBridge predeploy through the L2 ProxyAdmin in a deposit transaction. This first recorded upgrade replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1793806327,
+      "type": "code",
+      "contract": "base:0x4200000000000000000000000000000000000016",
+      "transaction": "0xeeb1233f11885e9c521ca60edd4bc6e82e212e37e1b484df08a053ffbb4ae950",
+      "updateId": "560b3731",
+      "reason": "Denim upgrade: the aliased Base ProxyAdmin owner upgraded the L2ToL1MessagePasser predeploy through the L2 ProxyAdmin in a deposit transaction. This first recorded upgrade replaced an implementation that was already initialized at genesis (reviewed: a real code change, not an initialization)."
     }
   ]
 }

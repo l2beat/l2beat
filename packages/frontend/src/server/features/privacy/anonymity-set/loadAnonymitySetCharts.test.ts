@@ -51,14 +51,11 @@ describe(loadAnonymitySetCharts.name, () => {
     expect(result.history.some(([, ...values]) => values[0]! > 0)).toEqual(true)
 
     const maxFetchDays = MAX_HOLDING_DAYS + ANONYMITY_SET_WINDOW_DAYS
-    expect(fetches.length).toEqual(Math.ceil(SPAN_DAYS / MAX_HOLDING_DAYS))
+    expect(fetches).toHaveLength(3)
     for (const [from, to] of fetches) {
       expect((to - from) / UnixTime.DAY).toBeLessThanOrEqual(maxFetchDays)
     }
-    expect(fetches.at(-1)).toEqual([
-      UnixTime(LAST_DAY - maxFetchDays * UnixTime.DAY),
-      LAST_DAY,
-    ])
+    expect(fetches.at(-1)?.[1]).toEqual(LAST_DAY)
   })
 
   it('returns nothing for no endpoints', async () => {

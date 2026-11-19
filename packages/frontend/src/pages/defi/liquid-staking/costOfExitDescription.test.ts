@@ -15,7 +15,7 @@ describe(getCostOfExitDescription.name, () => {
     })
 
     expect(tooltip).toEqual(
-      "How many days of staking yield a holder gives up to exit about 1 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; or selling on the best onchain pool, for its discount. ~ marks an estimate: requests still queued are timed at the last 7 days' pace.",
+      "How many days of staking yield a holder gives up to exit about 1 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; or selling on the best onchain pool, for its discount. ~ marks a value that can still change while requests are queued: their wait is estimated at the last 7 days' pace.",
     )
     expect(chart).not.toInclude('instant', 'wBETH')
   })

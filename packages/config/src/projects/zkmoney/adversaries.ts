@@ -137,7 +137,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureShort:
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims inside.',
       exposureContinued:
-        "The portal admits only enclaves whose attestation it verifies onchain and approved enclave images are immutable. The sUSDS portal's approved image is unpublished, as is its source. Aztec Labs' default Aztec node, like Alchemy under its key, sees an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+        "The portal admits only enclaves whose attestation it verifies onchain and approved enclave images are immutable. The sUSDS portal's approved image is unpublished, as is its source. Aztec Labs' default Aztec node, like Alchemy under its key, sees an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs, derives each deposit address paid through a name, so it knows the recipient.",
       interior: {
         ...INTERIOR,
         sender: {
