@@ -185,7 +185,7 @@ async function getChainHours(
  * one with the first block activity has not summed, as it summed only part
  * of that period while it catches up, though the chart counts it as whole
  */
-export function getRecentStart(
+function getRecentStart(
   data: ChartRow[],
   stored: LiveActivityHourRecord[] | undefined,
   resolution: ActivityResolution,
