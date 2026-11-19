@@ -70,6 +70,10 @@ model ChainBlock {
   hash       String   @db.VarChar(66)
   parentHash String   @db.VarChar(66)
   timestamp  DateTime @db.Timestamp(6)
+  /// The bloom filter of the block's logs, which tells without asking that a
+  /// block has no log of an address or topic. Null where the chain's bloom
+  /// is not of the block's own logs
+  logsBloom  String?
 
   @@id([chain, number])
   @@index([timestamp])

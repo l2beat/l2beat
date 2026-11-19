@@ -5,6 +5,7 @@ CREATE TABLE "ChainBlock" (
     "hash" VARCHAR(66) NOT NULL,
     "parentHash" VARCHAR(66) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
+    "logsBloom" TEXT,
 
     CONSTRAINT "ChainBlock_pkey" PRIMARY KEY ("chain","number")
 );

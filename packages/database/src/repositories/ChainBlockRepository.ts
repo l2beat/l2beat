@@ -9,6 +9,8 @@ export interface ChainBlockRecord {
   hash: string
   parentHash: string
   timestamp: UnixTime
+  /** Null where the chain's bloom is not of the block's own logs */
+  logsBloom: string | null
 }
 
 function toRecord(row: Selectable<ChainBlock>): ChainBlockRecord {
@@ -32,6 +34,7 @@ export class ChainBlockRepository extends BaseRepository {
             hash: eb.ref('excluded.hash'),
             parentHash: eb.ref('excluded.parentHash'),
             timestamp: eb.ref('excluded.timestamp'),
+            logsBloom: eb.ref('excluded.logsBloom'),
           })),
         )
         .execute()

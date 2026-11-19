@@ -114,6 +114,7 @@ describeDatabase(ChainBlockRepository.name, (db) => {
       hash: `0x${number}`,
       parentHash: `0x${number - 1}`,
       timestamp: START + number,
+      logsBloom: `0xbloom${number}`,
     }
   }
 })
