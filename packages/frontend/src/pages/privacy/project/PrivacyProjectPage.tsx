@@ -1,6 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { useEffect } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
@@ -30,7 +29,6 @@ import {
   getPrivacyAdversaryRosetteValues,
   PRIVACY_ADVERSARIES_SECTION_ID,
 } from '../adversaries/privacyAdversaryUi'
-import { getLegacyAdviceHash } from '../adviceUi'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import {
   MOBILE_SUMMARY_ROWS,
@@ -57,14 +55,6 @@ export function PrivacyProjectPage({
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
   const adversaries = getPrivacyAdversariesSummary(entry.sections)
-
-  // Old links point at #stay-private and #stay-private-N. A fragment never
-  // reaches the server, so the page sends them on. Here, not in the section,
-  // since sections hydrate only near the viewport.
-  useEffect(() => {
-    const hash = getLegacyAdviceHash(window.location.hash)
-    if (hash) window.location.replace(hash)
-  }, [])
 
   return (
     <AppLayout {...props}>

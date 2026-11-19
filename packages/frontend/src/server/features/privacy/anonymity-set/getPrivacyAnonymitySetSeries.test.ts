@@ -13,7 +13,7 @@ import {
 } from './getPrivacyAnonymitySetSeries'
 
 const WAIT_STEP =
-  'A random wait of up to 30 days, drawn rather than picked by hand.'
+  'Wait for a randomized duration of time up to 30 days. Do not rely on human judgement to pick a random number.'
 
 describe(getPrivacyAnonymitySetSeries.name, () => {
   it('formats amounts for tokens with zero decimals', () => {
@@ -45,9 +45,9 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
         description:
           'Number of unique depositors in the 200 TOKEN bucket during the last 30 complete UTC days.',
         steps: [
-          'A deposit into the 200 TOKEN Project pool on Ethereum.',
+          'Deposit into the 200 TOKEN Project pool on Ethereum.',
           WAIT_STEP,
-          'A withdrawal to an unlinkable address.',
+          'Withdraw to an unlinkable address.',
         ],
       }),
     )
@@ -64,9 +64,9 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
         description:
           'Number of unique depositors who deposited at least 0.1 TOKEN during the last 30 complete UTC days.',
         steps: [
-          'A deposit into Project on Ethereum.',
+          'Deposit into Project on Ethereum.',
           WAIT_STEP,
-          'A withdrawal of at most 0.1 TOKEN to an unlinkable address, not exactly the deposited amount.',
+          'Withdraw at most 0.1 TOKEN to an unlinkable address, and not exactly your deposit amount.',
         ],
       }),
     )
@@ -102,9 +102,9 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
         description:
           'Unique addresses that registered stealth keys in the last 30 complete UTC days.',
         steps: [
-          'Keys registered for Registry onchain.',
+          'Register keys for Registry onchain.',
           WAIT_STEP,
-          'A stealth address transfer received.',
+          'Receive a stealth address transfer.',
         ],
         minimumAmount: '0',
         sinceTimestamp: UnixTime(1000),
@@ -126,7 +126,7 @@ describe(getPrivacyAnonymitySetSeries.name, () => {
     const [series] = getPrivacyAnonymitySetSeries(project)
 
     expect(series?.label).toEqual('≥5000 TOKEN')
-    expect(series?.steps[0]).toEqual('A deposit into Project on Starknet.')
+    expect(series?.steps[0]).toEqual('Deposit into Project on Starknet.')
     expect(series?.configurationId).toEqual(
       createPrivacyAnonymitySetConfigurationId({
         projectId: 'project',

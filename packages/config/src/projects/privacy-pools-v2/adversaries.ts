@@ -1,5 +1,5 @@
 import {
-  USAGE_FLOW_SNIPPETS as A,
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
   toolLink,
@@ -223,7 +223,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       ],
     },
   },
-  usageFlow: [
+  advice: [
     {
       name: 'Load',
       text: `Install ${toolLink('ipfsDesktop')} and use Import CAR on \`site.car\` from the [v1.6.0 release](${REFERENCE_APP.url}). Open the app at \`http://localhost:8080/ipfs/${REFERENCE_APP.delivery.pin.cid}\`. A [rebuild](${REFERENCE_APP.delivery.rebuild}) from the reviewed source gives the same CID.`,
@@ -238,12 +238,12 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: 'Assumes deposits into ppETH or ppUSDC, the pools with the most depositors.',
+      text: 'Deposit into ppETH or ppUSDC, the pools with the most depositors.',
       against: ['chainAnalyst'],
     },
     {
       name: 'Pay',
-      text: 'Assumes a reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label.',
+      text: 'Reshield into another asset before paying someone who should not learn the deposit, since the reshield deposits the funds again under a new label.',
       against: ['chainAnalyst'],
     },
     {
@@ -254,18 +254,18 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
     },
     {
       name: 'Check',
-      text: "Assumes the list named by the ASPRegistry's latest root is opened on IPFS before withdrawing, and a withdrawal only if it holds many deposits.",
+      text: "Before withdrawing, find the ASPRegistry's latest root and open the list it names on IPFS. Withdraw only if the list holds many deposits.",
       against: ['privilegedInsider'],
       outside: true,
     },
     {
       name: 'Withdraw',
-      text: `Assumes sign-in with the account key in a private window instead of with a wallet, and withdrawals of common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
+      text: `Sign in with the account key in a private window instead of with a wallet, and withdraw common amounts rather than everything at once. ${A.relayer('relayer')} ${A.freshAddress}`,
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
     {
       name: 'Ragequit',
-      text: 'Assumes a ragequit only of notes the user deposited and never spent from.',
+      text: 'Ragequit only notes you deposited and never spent from.',
       against: ['publicObserver'],
     },
   ],

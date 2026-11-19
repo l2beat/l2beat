@@ -1,5 +1,5 @@
 import {
-  USAGE_FLOW_SNIPPETS as A,
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   toolLink,
 } from '../../common/privacyAdversaries'
@@ -40,8 +40,8 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
     text: 'Hides senders, amounts and the link between deposits and withdrawals inside the ledger. Names, deposits and withdrawals are public.',
   },
   cells: {
-    // Green rests on a usage flow step the wallet never surfaces: the first sponsored
-    // transaction after registration is a deposit. Revisit if that step stops
+    // Green rests on advice the wallet never surfaces: make the first sponsored
+    // transaction after registration a deposit. Revisit if hidden advice stops
     // earning a colour. Wallet fix to propose: an empty subscribe right after
     // registration, the SDK's subscribe[registration,authorize_intents].
     publicObserver: {
@@ -201,21 +201,21 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  usageFlow: [
+  advice: [
     {
       name: 'Set up',
-      text: `Assumes Desktop runs on a system that sends all traffic through Tor and blocks UDP, such as ${toolLink('torSystems', 'Whonix')}. The user's own ${toolLink('aztecNode')} and ${toolLink('ethereumNode')} are set in the endpoint settings.`,
+      text: `Run Desktop on a system that sends all traffic through Tor and blocks UDP, such as ${toolLink('torSystems', 'Whonix')}. Set your own ${toolLink('aztecNode')} and ${toolLink('ethereumNode')} in the endpoint settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },
     {
       name: 'Register',
-      text: 'Assumes the name is claimed from a wallet without a public link to the user, and the first transaction after registration is a deposit from that wallet.',
+      text: 'Claim your name from a wallet without a public link to you, then make the first transaction after registration a deposit from that wallet.',
       against: ['publicObserver'],
     },
     {
       name: 'Deposit',
-      text: 'Assumes each deposit address is funded once and left to be swept. Outside payers get a deposit address the wallet created, and funds stay out of savings.',
+      text: 'Fund each deposit address once and let it be swept. Give outside payers a deposit address your wallet created, and keep funds out of savings.',
       against: ['publicObserver', 'chainAnalyst', 'privilegedInsider'],
     },
     {

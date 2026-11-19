@@ -1,5 +1,5 @@
 import {
-  USAGE_FLOW_SNIPPETS as A,
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
   PRIVACY_ADVERSARY_SNIPPETS as S,
 } from '../../common/privacyAdversaries'
@@ -170,7 +170,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       ],
     },
   },
-  usageFlow: [
+  advice: [
     {
       name: 'Set up',
       text: A.ipHidingRoute('Cake'),
@@ -179,17 +179,17 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
     },
     {
       name: 'Deposit',
-      text: `Assumes an exchange from the user's Ethereum wallet into XMR. ${A.commonAmounts}`,
+      text: `Exchange from your Ethereum wallet into XMR. ${A.commonAmounts}`,
       against: ['chainAnalyst'],
     },
     {
       name: 'Wait',
-      text: 'Assumes the XMR is held for days, and the exit happens at a different time of day than the deposit.',
+      text: 'Hold the XMR for days, and exit at a different time of day than you deposited.',
       against: ['chainAnalyst'],
     },
     {
       name: 'Exit',
-      text: "Assumes the route is reconnected, and the deposit wallet's seed is backed up and the wallet deleted from Cake. The XMR is then exchanged into a new Ethereum wallet made with Create New Recovery Phrase, a fresh address with its own seed.",
+      text: "Reconnect the route. Back up the deposit wallet's seed and delete the wallet from Cake. Then exchange the XMR into a new Ethereum wallet made with Create New Recovery Phrase, a fresh address with its own seed.",
       against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
     },
   ],

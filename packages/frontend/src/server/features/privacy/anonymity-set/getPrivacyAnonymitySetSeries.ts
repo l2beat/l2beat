@@ -28,7 +28,7 @@ export interface PrivacyAnonymitySetSeries {
   headlineLabel?: string
   /** What the value counts, for the summary table tooltip. */
   description: string
-  /** The flow that mixing with this set assumes, for the summary table tooltip. */
+  /** How to mix with this set, for the summary table tooltip. */
   steps: string[]
   minimumAmount: string
   sinceTimestamp: number
@@ -44,7 +44,7 @@ type DepositSource = Extract<
   { type: 'deposits' }
 >
 
-const WAIT_STEP = `A random wait of up to ${ANONYMITY_SET_WINDOW_DAYS} days, drawn rather than picked by hand.`
+const WAIT_STEP = `Wait for a randomized duration of time up to ${ANONYMITY_SET_WINDOW_DAYS} days. Do not rely on human judgement to pick a random number.`
 
 export function getPrivacyAnonymitySetSeries(
   project: PrivacyAnonymitySetProject,
@@ -97,9 +97,9 @@ function getKeyRegistrationsSeries(
     // Only the Recipient table has key-registration sets, so the cell repeats its header.
     description: ANONYMITY_SET_TOOLTIPS['key-registrations'],
     steps: [
-      `Keys registered for ${projectName} onchain.`,
+      `Register keys for ${projectName} onchain.`,
       WAIT_STEP,
-      'A stealth address transfer received.',
+      'Receive a stealth address transfer.',
     ],
     // Registrations carry amount 0, so this counts every registrant.
     minimumAmount: '0',
@@ -129,9 +129,9 @@ function getDepositSeries(
         headlineLabel: label,
         description: `Number of unique depositors in the ${label} bucket during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
         steps: [
-          `A deposit into the ${label} ${projectName} pool on ${chainName}.`,
+          `Deposit into the ${label} ${projectName} pool on ${chainName}.`,
           WAIT_STEP,
-          'A withdrawal to an unlinkable address.',
+          'Withdraw to an unlinkable address.',
         ],
         minimumAmount,
       }
@@ -146,9 +146,9 @@ function getDepositSeries(
       headlineLabel: label,
       description: `Number of unique depositors who deposited at least ${amount} ${symbol} during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
       steps: [
-        `A deposit into ${projectName} on ${chainName}.`,
+        `Deposit into ${projectName} on ${chainName}.`,
         WAIT_STEP,
-        `A withdrawal of at most ${amount} ${symbol} to an unlinkable address, not exactly the deposited amount.`,
+        `Withdraw at most ${amount} ${symbol} to an unlinkable address, and not exactly your deposit amount.`,
       ],
       minimumAmount,
     }

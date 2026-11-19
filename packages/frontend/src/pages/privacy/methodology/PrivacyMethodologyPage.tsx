@@ -34,8 +34,8 @@ export function PrivacyMethodologyPage({
       <Section>{sections.categories}</Section>
       <CategoryMachinesFigure data={figures} />
       <Section>{sections.columns}</Section>
-      {/* Not part of the framework: the assumptions project steps share. */}
-      <Section>{sections.usageFlow}</Section>
+      {/* Not part of the framework: the habits project steps link. */}
+      <Section>{sections.advice}</Section>
     </PublicationLayout>
   )
 }

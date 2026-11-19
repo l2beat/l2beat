@@ -68,7 +68,7 @@ export function createLegacyPathsRouter() {
     res.redirect(301, '/layer2s/summary')
   })
 
-  // Merged into the methodology's Reviewed usage flow section (formerly How to stay private).
+  // Merged into the methodology's How to stay private section.
   router.get('/publications/privacy-best-practices', (_, res) => {
     res.redirect(301, PRIVACY_ADVICE_HREF)
   })

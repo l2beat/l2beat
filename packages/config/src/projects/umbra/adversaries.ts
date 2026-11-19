@@ -1,8 +1,8 @@
 import {
-  USAGE_FLOW_SNIPPETS as A,
+  ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
   toolLink,
-  usageFlowLink,
 } from '../../common/privacyAdversaries'
 
 // app.umbra.cash serves this commit and shows it in its footer.
@@ -143,21 +143,21 @@ export function umbraAdversaries(registrants: number) {
         ],
       },
     },
-    usageFlow: [
+    advice: [
       {
         name: 'Set up',
-        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic through an ${usageFlowLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
+        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },
       {
         name: 'Register',
-        text: 'Assumes registration long before anyone pays the user.',
+        text: 'Register long before anyone pays you.',
         against: ['chainAnalyst'],
       },
       {
         name: 'Withdraw',
-        text: "Assumes each payment is withdrawn to its own fresh address that is not registered and has no public link to the user. Token withdrawals go through the relayer, so no wallet of the user's pays gas for the receiving address.",
+        text: 'Withdraw each payment to its own fresh address that is not registered and has no public link to you. For tokens, use the relayer, so no wallet of yours pays gas for the receiving address.',
         against: ['publicObserver', 'chainAnalyst'],
       },
     ],

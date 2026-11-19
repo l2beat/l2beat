@@ -222,28 +222,25 @@ export function definePrivacyAdversaries(
         config.fieldDescriptions?.[id] ?? PRIVACY_FIELDS[id].description,
     })),
     cells,
-    usageFlow: config.usageFlow,
+    advice: config.advice,
   }
 }
 
-/** The methodology publication. Its Reviewed usage flow section explains the assumptions steps share. */
+/** The methodology publication. Its How to stay private section explains the habits steps follow. */
 export const PRIVACY_METHODOLOGY_URL = '/publications/privacy-methodology'
 
 /**
  * Anchors in the methodology, rendered by the frontend. Steps link only the
- * list of routes and the tool entries: the project page links the Reviewed
- * usage flow section once.
+ * list of routes and the tool entries: the project page links the How to stay
+ * private section once.
  */
-export const USAGE_FLOW_ANCHORS = {
+export const ADVICE_ANCHORS = {
   routes: 'routes',
 } as const
 
 /** A markdown link into the methodology, for a step's IP-hiding route. */
-export function usageFlowLink(
-  text: string,
-  anchor: keyof typeof USAGE_FLOW_ANCHORS,
-) {
-  return `[${text}](${PRIVACY_METHODOLOGY_URL}#${USAGE_FLOW_ANCHORS[anchor]})`
+export function adviceLink(text: string, anchor: keyof typeof ADVICE_ANCHORS) {
+  return `[${text}](${PRIVACY_METHODOLOGY_URL}#${ADVICE_ANCHORS[anchor]})`
 }
 /**
  * Markdown link from a step to a tool's methodology entry, which holds its
@@ -255,35 +252,28 @@ export function toolLink(id: PrivacyToolId, text?: string) {
   return `[${text ?? tool.names[0]}](${PRIVACY_METHODOLOGY_URL}#${tool.anchor})`
 }
 
-/**
- * Sentences for `usageFlow` steps. Steps describe the setup the ratings assume,
- * not instructions: each sentence says what we assume, in the third person.
- */
-export const USAGE_FLOW_SNIPPETS = {
+/** Imperative sentences for `advice` steps. */
+export const ADVICE_SNIPPETS = {
   /** Pools. `relayer` is the project's word for it. */
   relayer: (relayer: string) =>
-    `Assumes the exit goes through a ${relayer}, so no wallet of the user's pays gas for the receiving address.`,
-  largestPool: 'Assumes deposits into the pool with the most depositors.',
-  commonAmounts:
-    'Assumes common amounts are moved rather than everything at once.',
-  /**
-   * Set `randomWait` on its step, so the page draws the time. The range is
-   * the anonymity set's window (ANONYMITY_SET_WINDOW_DAYS in the frontend).
-   */
-  wait: 'Assumes a random wait of 0–30 days before withdrawal, after many other users have withdrawn.',
+    `Use a ${relayer} for the exit, so no wallet of yours pays gas for the receiving address.`,
+  largestPool: 'Use the pool with the most depositors.',
+  commonAmounts: 'Move common amounts rather than everything at once.',
+  /** Set `randomWait` on its step, so the page draws the time. */
+  wait: 'Wait a random time before exiting, and exit only after many others have moved funds in and out.',
   freshAddress:
-    'Assumes each exit goes to a new address, spent from with a separate wallet.',
+    'Send each exit to a fresh address and spend from it with a separate wallet.',
   /** Hosted web apps that work in Tor Browser. */
-  torBrowser: `Assumes the app is opened in ${toolLink('torBrowser')}.`,
+  torBrowser: `Open the app in ${toolLink('torBrowser')}.`,
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
-    `Assumes ${app} runs with all traffic through an ${usageFlowLink('IP-hiding route', 'routes')}.`,
+    `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'routes')}.`,
   /** Open clients served from a hosted frontend. */
   localBuild:
-    'Assumes the app is built from the reviewed source and run locally instead of the hosted website.',
+    'Build the app from the reviewed source and run it locally instead of the hosted website.',
   /** Account keys a wallet signature would derive. `alternative` is the app's own option, e.g. "from a recovery phrase". */
   notWalletSignature: (alternative: string) =>
-    `Assumes the account is created ${alternative}, not from a wallet signature.`,
+    `Create your account ${alternative}, not from a wallet signature.`,
 } as const
 
 export const PRIVACY_ADVERSARY_SNIPPETS = {

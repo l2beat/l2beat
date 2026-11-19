@@ -107,7 +107,7 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
             <div className="flex flex-col gap-2 text-primary">
               <div className="flex flex-col gap-1">
                 <span className="font-medium">
-                  Mixing with {displayValue} users assumes:
+                  How to reach an anonymity set of {displayValue}:
                 </span>
                 <ol className="ml-4 list-decimal space-y-1">
                   {series.steps.map((step) => (
@@ -117,8 +117,7 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
               </div>
               <p className="border-purple-450/30 border-t pt-2">
                 Network, browser and RPC choices matter too. Each project page
-                describes the setup its ratings assume under Reviewed usage
-                flow.
+                gives its advice under How to stay private.
               </p>
             </div>
           }

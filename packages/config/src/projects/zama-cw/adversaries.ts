@@ -1,5 +1,5 @@
 import {
-  USAGE_FLOW_SNIPPETS as A,
+  ADVICE_SNIPPETS as A,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
@@ -182,20 +182,20 @@ export function zamaCwAdversaries(
         ],
       },
     },
-    usageFlow: [
+    advice: [
       {
         name: 'Set up',
-        text: 'Assumes the analytics prompt is rejected, so Google Analytics and Sentry receive nothing.',
+        text: 'Reject the analytics prompt, so Google Analytics and Sentry receive nothing.',
         against: ['networkObserver'],
       },
       {
         name: 'Pay',
-        text: 'Assumes payments are made and received inside the confidential token, since wraps and unwraps show their amounts. Frequent transfers, even of zero amounts, keep the balance from matching the wraps, and amounts that must stay hidden are not swapped.',
+        text: 'Pay and get paid inside the confidential token, since wraps and unwraps show their amounts. Transfer often, even zero amounts, so your balance stops matching your wraps. Skip swaps for amounts that must stay hidden.',
         against: ['publicObserver', 'chainAnalyst', 'networkObserver'],
       },
       {
         name: 'Unwrap',
-        text: `Assumes only what is needed is unwrapped, and only after a while. ${A.commonAmounts}`,
+        text: `Unwrap only what you need and only after a while. ${A.commonAmounts}`,
         against: ['publicObserver', 'chainAnalyst'],
       },
     ],

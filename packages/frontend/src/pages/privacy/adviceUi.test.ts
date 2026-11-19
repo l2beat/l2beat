@@ -1,9 +1,8 @@
-import type { PrivacyAdversary, PrivacyUsageFlowStep } from '@l2beat/config'
+import type { PrivacyAdversary, PrivacyAdviceStep } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   formatWait,
   getAdviceStepId,
-  getLegacyAdviceHash,
   getStepsAgainst,
   getUncoveredAdversaries,
 } from './adviceUi'
@@ -12,7 +11,7 @@ const ADVERSARIES = (
   ['publicObserver', 'chainAnalyst', 'privilegedInsider'] as const
 ).map((id) => ({ id, label: id }) as PrivacyAdversary)
 
-const STEPS: PrivacyUsageFlowStep[] = [
+const STEPS: PrivacyAdviceStep[] = [
   { name: 'Set up', text: 'a', against: ['chainAnalyst'] },
   { name: 'Exit', text: 'b', against: ['publicObserver', 'chainAnalyst'] },
 ]
@@ -59,14 +58,7 @@ describe('adviceUi', () => {
   })
 
   it('numbers step anchors from one, like the list', () => {
-    expect(getAdviceStepId(0)).toEqual('usage-flow-1')
-  })
-
-  it('sends old How to stay private links to the usage flow', () => {
-    expect(getLegacyAdviceHash('#stay-private')).toEqual('#usage-flow')
-    expect(getLegacyAdviceHash('#stay-private-3')).toEqual('#usage-flow-3')
-    expect(getLegacyAdviceHash('#stay-privates')).toEqual(undefined)
-    expect(getLegacyAdviceHash('#privacy-adversaries')).toEqual(undefined)
+    expect(getAdviceStepId(0)).toEqual('stay-private-1')
   })
 
   describe(formatWait.name, () => {

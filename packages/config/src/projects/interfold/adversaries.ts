@@ -121,10 +121,10 @@ export function interfoldAdversaries(
         ],
       },
     },
-    usageFlow: [
+    advice: [
       {
         name: 'Vote',
-        text: "Assumes the random weight stays on, which blurs the voter's exact voting power in the totals.",
+        text: 'Keep the random weight on, which blurs your exact voting power in the totals.',
         against: ['chainAnalyst'],
       },
     ],

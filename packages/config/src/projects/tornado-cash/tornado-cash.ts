@@ -190,6 +190,14 @@ export const tornadoCash: BaseProject = {
       type: 'general',
     },
     {
+      title: 'Added to the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/jy0916',
+      date: '2022-08-08T00:00:00Z',
+      description:
+        "OFAC adds Tornado Cash and the pools' addresses to its sanctions list.",
+      type: 'incident',
+    },
+    {
       // Proposal 20, executed 2023-05-20 (tx 0x3274b609…), gave the attacker
       // 1.2M fake votes. Proposal 21, executed 2023-05-28 (tx 0xaac00510…),
       // reverted it. The pools were not affected.
@@ -211,6 +219,30 @@ export const tornadoCash: BaseProject = {
       description:
         'The app pinned by proposal 44 sends deposit notes to an outside server until proposal 52.',
       type: 'incident',
+    },
+    {
+      title: 'Developer convicted in the Netherlands',
+      url: 'https://uitspraken.rechtspraak.nl/details?id=ECLI:NL:RBOBR:2024:2069',
+      date: '2024-05-14T00:00:00Z',
+      description:
+        'A Dutch court convicts a developer of habitual money laundering and imposes 64 months in prison.',
+      type: 'general',
+    },
+    {
+      title: 'Removed from the OFAC sanctions list',
+      url: 'https://home.treasury.gov/news/press-releases/sb0057',
+      date: '2025-03-21T00:00:00Z',
+      description:
+        "OFAC removes Tornado Cash and the pools' addresses from its sanctions list.",
+      type: 'general',
+    },
+    {
+      title: 'Developer convicted in the US',
+      url: 'https://www.justice.gov/usao-sdny/pr/founder-tornado-cash-crypto-mixing-service-convicted-knowingly-transmitting-criminal',
+      date: '2025-08-06T00:00:00Z',
+      description:
+        'A US jury convicts a developer of conspiracy to run an unlicensed money transmitting business.',
+      type: 'general',
     },
   ],
   escrows: BUCKETS.map((bucket) => ({

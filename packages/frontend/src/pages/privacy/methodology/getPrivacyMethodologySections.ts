@@ -24,7 +24,6 @@ import {
   PRIVACY_ADVICE_ANCHOR,
   PRIVACY_ADVICE_TITLE,
   PRIVACY_IP_HIDING_ROUTES_ANCHOR,
-  PRIVACY_LEGACY_ADVICE_ANCHOR,
   PRIVACY_REFERENCE_APP_ANCHOR,
   PRIVACY_ROUTES_ANCHOR,
 } from './paths'
@@ -49,7 +48,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers.`,
+      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers. They assess technology, not whether using a project is legal where the user lives.`,
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
@@ -78,7 +77,7 @@ export function getPrivacyMethodologySections() {
     // A raw heading, since markdown headings render without an id to link.
     ipHidingRoutes: joinBlocks([
       `<h2 id="${PRIVACY_IP_HIDING_ROUTES_ANCHOR}">IP-hiding routes</h2>`,
-      "An IP-hiding route hides the user's IP from the services an app calls. Our steps name one where an app needs it. Its entry sees the user's IP, and its exit sees the destination. We list a route when it passes three checks:",
+      "An IP-hiding route hides the user's IP from the services an app calls. Our advice names one where an app needs it. Its entry sees the user's IP, and its exit sees the destination. We list a route when it passes three checks:",
       bulletList([
         "It carries all of the app's traffic, and the exit gets no identifier that links connections.",
         'One operator or hosting company holds both the entry and the exit of at most 1% of connections, at every location we test.',
@@ -89,30 +88,29 @@ export function getPrivacyMethodologySections() {
     ]),
 
     // A raw heading, since markdown headings render without an id to link.
-    // Project pages link the section once, the assumptions carry no anchors.
-    usageFlow: joinBlocks([
-      // An empty alias keeps links to the former How to stay private landing here.
-      `<span id="${PRIVACY_LEGACY_ADVICE_ANCHOR}"></span><h2 id="${PRIVACY_ADVICE_ANCHOR}">${PRIVACY_ADVICE_TITLE}</h2>`,
-      'Each project page describes, as steps in the order of use, the technical setup of a careful user that our ratings assume with the reference app. It records what we reviewed and is not a recommendation to use any protocol. Most steps share the assumptions below.',
+    // Project pages link the section once, the habits carry no anchors.
+    advice: joinBlocks([
+      `<h2 id="${PRIVACY_ADVICE_ANCHOR}">${PRIVACY_ADVICE_TITLE}</h2>`,
+      'Each project page gives our advice as steps that keep the privacy promise with the reference app, in the order the user takes them. Most steps follow the habits below.',
       heading(3, 'Fresh address'),
-      'The exit goes to an address with no history and no public link to the user, a new one for every exit.',
+      'Exit to an address with no history and no public link to you, and use a new one for every exit.',
       heading(3, 'Separate wallet'),
-      "The fresh address sits in a different wallet app, created from its own seed. A wallet app can send every address it holds to its servers, and look up the next addresses of its seed. Spending from the fresh address later shows that app's fingerprint, so a common app on default settings blends in best.",
+      "Keep the fresh address in a different wallet app, created from its own seed. A wallet app can send every address it holds to its servers, and look up the next addresses of its seed. Spending from the fresh address later shows that app's fingerprint, so a common app on default settings blends in best.",
       heading(3, 'Relayers'),
-      "A relayer submits the exit and takes its fee from the withdrawn funds. The receiving address then needs no gas from a wallet the user owns. Gas the user pays shows their wallet's fingerprint, such as its fee habits, even from a fresh address.",
+      "A relayer submits the exit and takes its fee from the withdrawn funds. The receiving address then needs no gas from a wallet you own. Gas you pay yourself shows your wallet's fingerprint, such as its fee habits, even from a fresh address.",
       heading(3, 'Timing and amounts'),
-      `A withdrawal right after its deposit is the easiest pair to guess, and a fixed wait is detected by an analyst. The steps assume a wait drawn at random between 0 and ${ANONYMITY_SET_WINDOW_DAYS} days, the window our anonymity set counts, so every depositor of that window is an equal candidate. On a quiet pool no wait helps, so they assume the exit comes only after many others have moved funds in and out. They also assume common amounts rather than the exact sum deposited, in the pool with the most depositors.`,
+      `A withdrawal right after its deposit is the easiest pair to guess, and a fixed wait is detected by an analyst. Draw the wait at random between 0 and ${ANONYMITY_SET_WINDOW_DAYS} days, the window our anonymity set counts. Every depositor of that window is then an equal candidate. On a quiet pool no wait helps, so exit only after many others have moved funds in and out. Move common amounts rather than the exact sum you deposited. Use the pool with the most depositors.`,
       heading(3, 'Sessions'),
-      "Each step is assumed to run in its own network session, so no service ties the steps by IP, cookie or login. Tor Browser's New Identity starts one. With an IP-hiding route covering all traffic, reconnecting it and opening the app in a private window, which starts without cookies or stored site data, starts one for a new exit. An app that loads every wallet it holds ties them in one session, so the deposit wallet is assumed removed before the exit.",
+      "Give each step its own network session, so no service ties the steps by IP, cookie or login. Tor Browser's New Identity starts one. With an ip-hiding route covering all traffic, reconnect it for a new exit and open the app in a private window, which starts without cookies or stored site data. An app that loads every wallet it holds ties them in one session, so remove the deposit wallet before the exit.",
       heading(3, 'Wallet in Tor Browser'),
-      "Tor Browser ships no wallet. A wallet extension installed in it, like MetaMask, sends all its traffic through Tor and keeps its accounts across restarts. Every site can see that a wallet is installed, which sets this browser apart from other Tor Browsers. The steps assume it holds only the account a step needs, since the wallet's servers see every account it holds. A phone wallet joined through WalletConnect is the alternative, but it shows the phone's IP to the WalletConnect relay and to the wallet's own RPC, unless the phone runs a route too.",
+      "Tor Browser ships no wallet. A wallet extension installed in it, like MetaMask, sends all its traffic through Tor and keeps its accounts across restarts. Every site can see that a wallet is installed, which sets this browser apart from other Tor Browsers. Keep only the account a step needs in it, since the wallet's servers see every account it holds. A phone wallet joined through WalletConnect is the alternative, but it shows the phone's IP to the WalletConnect relay and to the wallet's own RPC, unless the phone runs a route too.",
       heading(3, 'Own node'),
-      `An app that reads the chain through a hosted service tells it which addresses or notes the user holds. A local [Ethereum node](#${PRIVACY_TOOLS.ethereumNode.anchor}) answers those reads without a third party. A transaction it sends shows its IP to the node's peers, so the steps assume transactions go through an IP-hiding route, or the node runs behind one. The node is set as the endpoint in the app, and in the depositing wallet where a step says so.`,
+      `An app that reads the chain through a hosted service tells it which addresses or notes you hold. A local [Ethereum node](#${PRIVACY_TOOLS.ethereumNode.anchor}) answers those reads without a third party. A transaction it sends shows its IP to the node's peers, so send transactions through an IP-hiding route, or run the node behind one. Set the node as the endpoint in the app, and in the depositing wallet if advised.`,
       heading(3, 'App delivery'),
-      `A hosted website can serve different code at any time, to one user alone. An onchain name, like an ENS record, serves whatever its owner or governance points it to. The steps assume the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) is loaded by the hash or contract address they name. For an IPFS hash, that means the user's own IPFS node, since a public gateway can serve other code. [IPFS Desktop](#${PRIVACY_TOOLS.ipfsDesktop.anchor}) serves it at http://localhost:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
+      `A hosted website can serve different code at any time, to you alone. An onchain name, like an ENS record, serves whatever its owner or governance points it to. Load the [reviewed release](#${PRIVACY_REFERENCE_APP_ANCHOR}) by the hash or contract address the steps name. For an IPFS hash, use your own IPFS node, since a public gateway can serve other code. [IPFS Desktop](#${PRIVACY_TOOLS.ipfsDesktop.anchor}) serves it at http://localhost:8080/ipfs/ followed by the hash. Where the build reproduces, building it from the reviewed source we point at gives the same release without IPFS.`,
       // A raw heading, since markdown headings render without an id to link.
       `<h3 id="${PRIVACY_ROUTES_ANCHOR}">Routes</h3>`,
-      `These routes pass the [IP-hiding route checks](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) and are decentralised, listed by the effort they take. Our steps name the lightest one that works with the app: Tor Browser for a website, and a route that carries all traffic for a native app.`,
+      `These routes pass the [IP-hiding route checks](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) and are decentralised, listed by the effort they take. Our steps name the lightest one that works with the app. Use Tor Browser for a website, and a route that carries all traffic for a native app.`,
       toolList('route'),
       heading(3, 'Tools'),
       'Our steps link every outside app they name to its entry, here or among the routes above. Each entry has the official download and why we chose the app.',
