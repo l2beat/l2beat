@@ -59,6 +59,7 @@ export class LiveActivityIndexer extends ManagedChildIndexer {
         minHeight: 0,
         updateRetryStrategy: Indexer.getLiveRetryStrategy(),
         invalidateRetryStrategy: Indexer.getLiveRetryStrategy(),
+        updateMayInvalidate: true,
       },
       logger,
     )

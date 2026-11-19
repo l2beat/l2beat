@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
-import { Indexer } from './Indexer'
+import { Indexer, type IndexerOptions } from './Indexer'
 import { ChildIndexer } from './indexers/ChildIndexer'
 import { RootIndexer } from './indexers/RootIndexer'
 import type { RetryStrategy } from './Retries'
@@ -258,9 +258,11 @@ describe(Indexer.name, () => {
   })
 
   describe('update that returns a height below the one it started from', () => {
+    const MAY_INVALIDATE = { updateMayInvalidate: true }
+
     it('invalidates down to it, then updates from there', async () => {
       const parent = new TestRootIndexer(200)
-      const child = new TestChildIndexer([parent], 100)
+      const child = new TestChildIndexer([parent], 100, '', MAY_INVALIDATE)
 
       await parent.start()
       await child.start()
@@ -283,7 +285,7 @@ describe(Indexer.name, () => {
 
     it('invalidates its own children down to it as well', async () => {
       const parent = new TestRootIndexer(200)
-      const middle = new TestChildIndexer([parent], 100)
+      const middle = new TestChildIndexer([parent], 100, '', MAY_INVALIDATE)
       const child = new TestChildIndexer([middle], 100)
 
       await parent.start()
@@ -299,9 +301,23 @@ describe(Indexer.name, () => {
       expect(middle.invalidateTo).toEqual(80)
     })
 
-    it('fails for good when the update neither syncs nor invalidates', async () => {
+    it('fails for good, and invalidates nothing, when the indexer was not set up to invalidate itself', async () => {
       const parent = new TestRootIndexer(200)
       const child = new TestChildIndexer([parent], 100)
+
+      await parent.start()
+      await child.start()
+      await child.finishInvalidate(100)
+
+      await child.finishUpdate(80)
+
+      expect(child.getState().status).toEqual('errored')
+      expect(child.safeHeight).toEqual(100)
+    })
+
+    it('fails for good when the update neither syncs nor invalidates', async () => {
+      const parent = new TestRootIndexer(200)
+      const child = new TestChildIndexer([parent], 100, '', MAY_INVALIDATE)
 
       await parent.start()
       await child.start()
@@ -445,12 +461,9 @@ class TestChildIndexer extends ChildIndexer {
     parents: Indexer[],
     testSafeHeight: number,
     name?: string,
-    retryStrategy?: {
-      invalidateRetryStrategy?: RetryStrategy
-      updateRetryStrategy?: RetryStrategy
-    },
+    options?: IndexerOptions,
   ) {
-    super(Logger.SILENT.tag({ tag: name }), parents, retryStrategy ?? {})
+    super(Logger.SILENT.tag({ tag: name }), parents, options ?? {})
     this.testSafeHeight = testSafeHeight
 
     const oldDispatch = Reflect.get(this, 'dispatch')

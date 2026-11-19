@@ -19,6 +19,13 @@ export interface IndexerOptions {
   tickRetryStrategy?: RetryStrategy
   updateRetryStrategy?: RetryStrategy
   invalidateRetryStrategy?: RetryStrategy
+  /**
+   * Lets `update` return a height below the one it started from, to say that
+   * what the indexer synced above it is wrong. Without it such a height
+   * stops the indexer for good, as a height computed wrong would otherwise
+   * delete what was synced
+   */
+  updateMayInvalidate?: boolean
 }
 
 export abstract class Indexer {
@@ -136,10 +143,10 @@ export abstract class Indexer {
    * @returns The height that the indexer has synced up to. Returning
    * `from` means that the indexer has synced a single data point. Returning
    * a value greater than `from` means that the indexer has synced up
-   * to that height. Returning a value less than `from - 1` says that what
-   * was synced above it is wrong, and will trigger invalidation down to the
-   * returned value. Returning `from - 1`, which neither syncs nor invalidates
-   * anything, or a value greater than `to` is not permitted.
+   * to that height. Returning `from - 1`, which syncs nothing, or a value
+   * greater than `to` is not permitted. A value less than `from - 1` is
+   * permitted only with the `updateMayInvalidate` option: it says that what
+   * was synced above it is wrong, and triggers invalidation down to it.
    */
   abstract update(from: number, to: number): Promise<number>
 
@@ -175,6 +182,7 @@ export abstract class Indexer {
   private readonly tickRetryStrategy: RetryStrategy
   private readonly updateRetryStrategy: RetryStrategy
   private readonly invalidateRetryStrategy: RetryStrategy
+  private readonly updateMayInvalidate: boolean
 
   constructor(
     protected logger: Logger,
@@ -196,6 +204,7 @@ export abstract class Indexer {
       options?.updateRetryStrategy ?? Indexer.getDefaultRetryStrategy()
     this.invalidateRetryStrategy =
       options?.invalidateRetryStrategy ?? Indexer.getDefaultRetryStrategy()
+    this.updateMayInvalidate = options?.updateMayInvalidate ?? false
   }
 
   get safeHeight(): number {
@@ -292,7 +301,12 @@ export abstract class Indexer {
     this.logger.info('Updating', { from, to: effect.targetHeight })
     try {
       const newHeight = await this.update(from, effect.targetHeight)
-      if (newHeight === from - 1 || newHeight > effect.targetHeight) {
+      const invalidates = newHeight < from - 1
+      if (
+        newHeight === from - 1 ||
+        newHeight > effect.targetHeight ||
+        (invalidates && !this.updateMayInvalidate)
+      ) {
         this.logger.critical('Update returned invalid height', {
           from,
           to: effect.targetHeight,
