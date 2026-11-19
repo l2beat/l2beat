@@ -2,6 +2,7 @@ import { formatActivityCount } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { RollingNumber } from '~/components/RollingNumber'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { LIVE_METRICS } from './liveMetrics'
 
 /** The chain's rate right now, leading to the live view */
 export function LiveNow({
@@ -27,7 +28,7 @@ export function LiveNow({
         className="font-bold"
       />
       <span className="text-secondary group-hover:text-primary group-hover:underline">
-        {metric === 'uops' ? 'UOPS' : 'TPS'} now
+        {LIVE_METRICS[metric].rate} now
       </span>
     </button>
   )

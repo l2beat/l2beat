@@ -6,15 +6,8 @@ import type {
   UsualHour,
   UsualRange,
 } from '~/server/features/layer2s/activity/live/liveWindow'
-
-/** Gas has no history, so only the live view has it */
-export type LiveMetric = ActivityMetric | 'gas'
-
-/** A bucket's total of the metric */
-export function countOf(record: LiveActivityBucketRecord, metric: LiveMetric) {
-  if (metric === 'tps') return record.count
-  return metric === 'uops' ? record.uopsCount : record.gasUsed
-}
+import { getUopsRatio } from '../utils/getRatioChartData'
+import { hasHistory, LIVE_METRICS, type LiveMetric } from './liveMetrics'
 
 export interface LiveBucket {
   start: number
@@ -43,15 +36,11 @@ export function toBuckets(
     const record = byTime.get(start)
     buckets.push({
       start,
-      ratio: record
-        ? record.count === 0
-          ? 1
-          : record.uopsCount / record.count
-        : null,
+      ratio: record ? getUopsRatio(record.uopsCount, record.count) : null,
       value:
         !record && (oldest === undefined || start < oldest)
           ? null
-          : (record ? countOf(record, metric) : 0) / bucket,
+          : (record ? LIVE_METRICS[metric].count(record) : 0) / bucket,
       blocks: record?.blocks ?? 0,
       gas: record?.gasUsed ?? 0,
     })
@@ -109,8 +98,8 @@ export function closeSteps<
 }
 
 /**
- * Per second, over the buckets wholly in the window, but none before the
- * oldest stored block: what the figures under the charts show
+ * The buckets wholly in the window, but none before the oldest stored block,
+ * in total and per second: what the figures under the charts show
  */
 export function getWindowStats(
   buckets: LiveBucket[],
@@ -120,17 +109,23 @@ export function getWindowStats(
   const inWindow = buckets.filter(
     (b) => b.value !== null && b.start >= from && b.start + bucket <= to,
   )
-  if (inWindow.length === 0) return undefined
+  const first = inWindow[0]
+  const last = inWindow.at(-1)
+  if (!first || !last) return undefined
   const seconds = inWindow.length * bucket
   const sum = (get: (b: LiveBucket) => number) =>
     inWindow.reduce((total, b) => total + get(b), 0)
+  const blocks = sum((b) => b.blocks)
+  const gas = sum((b) => b.gas)
   return {
     /** Where the buckets the figures come from start and end */
-    from: inWindow[0]?.start ?? from,
-    to: (inWindow.at(-1)?.start ?? to - bucket) + bucket,
+    from: first.start,
+    to: last.start + bucket,
     rate: sum((b) => b.value ?? 0) / inWindow.length,
-    blocksPerMinute: (sum((b) => b.blocks) / seconds) * 60,
-    gasPerSecond: sum((b) => b.gas) / seconds,
+    blocks,
+    gas,
+    blocksPerMinute: (blocks / seconds) * 60,
+    gasPerSecond: gas / seconds,
   }
 }
 
@@ -154,7 +149,7 @@ export function withUsual<T extends { timestamp: number }>(
   metric: LiveMetric,
 ) {
   const byHour = new Map<number, UsualRange>(
-    metric === 'gas' ? [] : usual.map((u) => [u.hour, u[metric]]),
+    hasHistory(metric) ? usual.map((u) => [u.hour, u[metric]]) : [],
   )
   return steps.map((step) => {
     const range = byHour.get(
@@ -171,7 +166,7 @@ export function withUsual<T extends { timestamp: number }>(
 
 /**
  * The usual rate over the window: each hour's median, by how much of the
- * window it covers. None unless the past week has every hour of it
+ * window it covers. None unless the past days have every hour of it
  */
 export function getUsualRate(
   usual: UsualHour[],
@@ -187,10 +182,15 @@ export function getUsualRate(
     total += u[metric].median * seconds
     covered += seconds
   }
-  // a rate measured over more than the past week has hours for compares
-  // with nothing
+  // a rate measured over more than the usual hours cover compares with
+  // nothing
   return covered > 0 && covered >= to - from ? total / covered : undefined
 }
+
+/** A row of the main chart, as its tooltip gets it */
+export type LiveRow = ReturnType<
+  typeof withUsual<ReturnType<typeof toSteps>[number]>
+>[number]
 
 /** The value drawn at `timestamp`: of the last step starting at or before it */
 export function valueAt(

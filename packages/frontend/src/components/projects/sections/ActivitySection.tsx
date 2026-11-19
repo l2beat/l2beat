@@ -4,8 +4,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { EthereumActivityChart } from '~/components/chart/activity/EthereumActivityChart'
 import { LiveNow } from '~/components/chart/activity/live/LiveNow'
-import { LiveState } from '~/components/chart/activity/live/LiveState'
-import type { LiveMetric } from '~/components/chart/activity/live/liveSteps'
+import {
+  hasHistory,
+  type LiveMetric,
+} from '~/components/chart/activity/live/liveMetrics'
 import { ProjectLiveActivity } from '~/components/chart/activity/live/ProjectLiveActivity'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
@@ -18,8 +20,8 @@ import {
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { InfoIcon } from '~/icons/Info'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import { DEFAULT_LIVE_RANGE } from '~/server/features/layer2s/activity/live/liveRanges'
 import { useTRPC } from '~/trpc/React'
+import { DEFAULT_LIVE_RANGE } from '~/utils/range/liveRanges'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
 import { ProjectSection } from './ProjectSection'
@@ -63,14 +65,10 @@ export function ActivitySection({
   const liveAvailable = status ? status.available : live === 'available'
   const view = liveAvailable && viewParam === 'live' ? 'live' : 'history'
   const [metric, setMetric] = useState<LiveMetric>('uops')
-  // gas has no history
-  const historyMetric: ActivityMetric = metric === 'gas' ? 'uops' : metric
-  /** Where the live window ends, undefined while following the newest block */
-  const [liveTo, setLiveTo] = useState<number>()
-  const openView = (next: 'history' | 'live') => {
-    setViewParam(next)
-    setLiveTo(undefined)
-  }
+  const historyMetric: ActivityMetric = hasHistory(metric) ? metric : 'uops'
+  // the live view shows there whether it follows the newest block: the
+  // switch stays where it is, so keeps its focus between the views
+  const [liveStateSlot, setLiveStateSlot] = useState<HTMLElement | null>(null)
   // so Live opens on what it shows first
   const prefetchLive = () => {
     if (view === 'live' || !liveAvailable) return
@@ -94,7 +92,7 @@ export function ActivitySection({
           <RadioGroup
             name="activityView"
             value={view}
-            onValueChange={(value) => openView(value as 'history' | 'live')}
+            onValueChange={setViewParam}
           >
             <RadioGroupItem value="history">History</RadioGroupItem>
             {liveAvailable ? (
@@ -125,14 +123,11 @@ export function ActivitySection({
               <LiveNow
                 now={status.now}
                 metric={historyMetric}
-                onOpen={() => openView('live')}
+                onOpen={() => setViewParam('live')}
               />
             )
           ) : (
-            <LiveState
-              following={liveTo === undefined}
-              onFollow={() => setLiveTo(undefined)}
-            />
+            <div ref={setLiveStateSlot} />
           )}
         </div>
       )}
@@ -142,9 +137,8 @@ export function ActivitySection({
           category={category}
           metric={metric}
           setMetric={setMetric}
-          to={liveTo}
-          setTo={setLiveTo}
           oldest={status?.oldest}
+          stateSlot={liveStateSlot}
         />
       ) : project.id === ProjectId.ETHEREUM ? (
         <EthereumActivityChart

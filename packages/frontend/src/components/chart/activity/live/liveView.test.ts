@@ -1,6 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { clampTo, formatBucket, ticksOf } from './liveView'
+import {
+  clampTo,
+  formatBucket,
+  getKeyEnd,
+  isMoveKey,
+  ticksOf,
+} from './liveView'
 
 const T = UnixTime(1_800_000_000)
 
@@ -30,6 +36,36 @@ describe(clampTo.name, () => {
   it('follows the newest block without an end or a buffer', () => {
     expect(clampTo(undefined, buffer, 900)).toEqual(undefined)
     expect(clampTo(T - 300, undefined, 900)).toEqual(undefined)
+  })
+})
+
+describe(getKeyEnd.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
+
+  it('steps a tenth of the window back and forward', () => {
+    expect(getKeyEnd('ArrowLeft', T - 1800, buffer, 900)).toEqual(T - 1890)
+    expect(getKeyEnd('ArrowDown', T - 1800, buffer, 900)).toEqual(T - 1890)
+    expect(getKeyEnd('ArrowRight', T - 1800, buffer, 900)).toEqual(T - 1710)
+    expect(getKeyEnd('ArrowUp', T - 1800, buffer, 900)).toEqual(T - 1710)
+  })
+
+  it('goes to the first window and to the newest block', () => {
+    expect(getKeyEnd('Home', T - 1800, buffer, 900)).toEqual(buffer.from + 900)
+    expect(getKeyEnd('End', T - 1800, buffer, 900)).toEqual(T)
+  })
+
+  it('stops following the newest block with one step back', () => {
+    for (const seconds of [300, 900, 3600]) {
+      const end = getKeyEnd('ArrowLeft', T, buffer, seconds)
+
+      expect(clampTo(end, buffer, seconds)).toEqual(end)
+    }
+  })
+
+  it('moves nothing for other keys', () => {
+    expect(getKeyEnd('Tab', T, buffer, 900)).toEqual(undefined)
+    expect(isMoveKey('Tab')).toEqual(false)
+    expect(isMoveKey('Home')).toEqual(true)
   })
 })
 

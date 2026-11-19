@@ -1,16 +1,30 @@
 import type { HourlyActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn } from 'earl'
 import {
   getBlockSeconds,
   getLastMinuteRates,
   getLiveBuffer,
   getLiveWindow,
   getUsualRates,
+  isLiveFresh,
+  LEAD_SECONDS,
 } from './liveWindow'
 
 // A multiple of every bucket below
 const T = UnixTime(1_800_000_000)
+
+describe(isLiveFresh.name, () => {
+  it('is fresh while the newest block is at most half an hour old', () => {
+    expect(isLiveFresh(T - 29 * UnixTime.MINUTE, T)).toEqual(true)
+    expect(isLiveFresh(T - 30 * UnixTime.MINUTE, T)).toEqual(true)
+  })
+
+  it('is not once the newest block is older, or there is none', () => {
+    expect(isLiveFresh(T - 31 * UnixTime.MINUTE, T)).toEqual(false)
+    expect(isLiveFresh(undefined, T)).toEqual(false)
+  })
+})
 
 describe(getLiveBuffer.name, () => {
   it('spans what is kept, from a whole minute', () => {
@@ -51,7 +65,8 @@ describe(getLiveWindow.name, () => {
       from: T - 900,
       to: T,
       bucket: 6,
-      readFrom: T - 960,
+      // the lead is a multiple of the bucket
+      readFrom: T - 900 - LEAD_SECONDS,
     })
   })
 
@@ -75,7 +90,7 @@ describe(getLiveWindow.name, () => {
     expect(window.bucket).toEqual(7)
     expect(window.to - window.from).toEqual(300)
     expect(window.readFrom % 7).toEqual(0)
-    expect(window.readFrom <= window.from - 60).toEqual(true)
+    expect(window.readFrom <= window.from - LEAD_SECONDS).toEqual(true)
   })
 
   it('ends where looked back to, but not past the newest block', () => {
@@ -98,20 +113,19 @@ describe(getLiveWindow.name, () => {
 })
 
 describe(getLastMinuteRates.name, () => {
-  it('takes the rate over the minute up to the newest block', () => {
-    // Methodology: the newest block is 5 s into its bucket, so the minute
-    // spans the five buckets before it and 6 s of its own: 56 s
+  it('takes the rate over the minute up to the newest block', async () => {
+    // Methodology: the newest block is 5 s into a tenth second, so the minute
+    // spans the 50 s before that and 6 s after: 56 s
     const M = UnixTime.MINUTE
-    const result = getLastMinuteRates(
-      [
-        { timestamp: T + 8 * M + 50, count: 1000, uopsCount: 1000 },
-        { timestamp: T + 9 * M + 10, count: 280, uopsCount: 336 },
-        { timestamp: T + 9 * M + 50, count: 280, uopsCount: 280 },
-      ],
-      T + 9 * M + 55,
-    )
+    const getBuckets = mockFn().resolvesTo([
+      { count: 280, uopsCount: 336 },
+      { count: 280, uopsCount: 280 },
+    ])
+
+    const result = await getLastMinuteRates(T + 9 * M + 55, getBuckets)
 
     expect(result).toEqual({ tps: 10, uops: 11 })
+    expect(getBuckets).toHaveBeenOnlyCalledWith(T + 9 * M, T + 9 * M + 55)
   })
 })
 

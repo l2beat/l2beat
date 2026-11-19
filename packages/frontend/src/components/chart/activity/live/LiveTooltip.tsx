@@ -1,21 +1,19 @@
-import { formatActivityCount, formatInteger } from '@l2beat/shared-pure'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { formatInteger } from '@l2beat/shared-pure'
 import {
+  ChartTooltipNote,
   ChartTooltipRow,
   ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import {
-  TooltipHeader,
-  TooltipRow,
-} from '~/components/core/tooltip/TooltipParts'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PercentChange } from '~/components/PercentChange'
-import type { LiveMetric } from './liveSteps'
-import { formatBucket, formatGas } from './liveView'
+import { LIVE_METRICS, type LiveMetric } from './liveMetrics'
+import type { LiveRow } from './liveSteps'
+import { formatBucket } from './liveView'
 
 /**
- * Laid out as the history's: the bucket's rate, with the past week's at this
+ * Laid out as the history's: the bucket's rate, with the past days' at this
  * hour under it, then the total it comes from
  */
 export function LiveTooltip({
@@ -24,20 +22,18 @@ export function LiveTooltip({
   metric,
   color,
 }: {
-  row: {
-    timestamp: number
-    value: number | null
-    blocks: number
-    usualMin: number | null
-    usualMedian: number | null
-    usualMax: number | null
-  }
+  row: LiveRow
   bucket: number
   metric: LiveMetric
   color: string
 }) {
   const { value, blocks, usualMin, usualMedian, usualMax } = row
-  const format = metric === 'gas' ? formatGas : formatRate
+  const {
+    rate,
+    total,
+    formatBucketRate: format,
+    formatTotal,
+  } = LIVE_METRICS[metric]
   return (
     <ChartTooltipWrapper>
       <div className="flex w-48 flex-col sm:w-64">
@@ -48,7 +44,7 @@ export function LiveTooltip({
           <span className="text-secondary">No blocks stored yet</span>
         ) : (
           <>
-            <TooltipHeader label={RATE_LABEL[metric]} />
+            <TooltipHeader label={rate} />
             <div className="mt-2 flex flex-col gap-2">
               <ChartTooltipRow name="value">
                 <span className="flex items-baseline gap-1">
@@ -69,27 +65,18 @@ export function LiveTooltip({
                 usualMedian !== null &&
                 usualMax !== null && (
                   <>
-                    <TooltipRow
-                      indicator={
-                        <ChartDataIndicator
-                          type={{ shape: 'line', strokeDasharray: '3 3' }}
-                          backgroundColor="var(--secondary)"
-                        />
-                      }
-                      label="Usual at this hour"
-                      labelClassName="w-20 sm:w-fit"
-                    >
+                    <ChartTooltipRow name="usualMedian">
                       <span className="flex items-baseline gap-1">
                         <ChartTooltipValue
                           value={usualMedian}
                           format={format}
                           className="tabular-nums"
                         />
-                        <span className={SECONDARY_VALUE}>
+                        <ChartTooltipNote className={NOTE_CLASS}>
                           ({format(usualMin)}–{format(usualMax)})
-                        </span>
+                        </ChartTooltipNote>
                       </span>
-                    </TooltipRow>
+                    </ChartTooltipRow>
                     <UsualBar
                       value={value}
                       min={usualMin}
@@ -100,23 +87,19 @@ export function LiveTooltip({
                   </>
                 )}
             </div>
-            <TooltipHeader className="mt-3" label={TOTAL_LABEL[metric]} />
+            <TooltipHeader className="mt-3" label={total} />
             <div className="mt-2 flex flex-col gap-2">
               <ChartTooltipRow name="value">
                 <span className="flex items-baseline gap-1">
                   <ChartTooltipValue
                     value={value * bucket}
-                    format={(total) =>
-                      metric === 'gas'
-                        ? formatGas(total)
-                        : formatInteger(Math.round(total))
-                    }
+                    format={formatTotal}
                     className="tabular-nums"
                   />
-                  <span className={SECONDARY_VALUE}>
+                  <ChartTooltipNote className={NOTE_CLASS}>
                     ({formatInteger(blocks)} {blocks === 1 ? 'block' : 'blocks'}
                     )
-                  </span>
+                  </ChartTooltipNote>
                 </span>
               </ChartTooltipRow>
             </div>
@@ -127,23 +110,9 @@ export function LiveTooltip({
   )
 }
 
-const RATE_LABEL: Record<LiveMetric, string> = {
-  uops: 'UOPS',
-  tps: 'TPS',
-  gas: 'Gas per second',
-}
-const TOTAL_LABEL: Record<LiveMetric, string> = {
-  uops: 'Operations count',
-  tps: 'Transactions count',
-  gas: 'Gas used',
-}
-/** As stacked charts' tooltips put a share after a value */
-const SECONDARY_VALUE =
-  'whitespace-nowrap font-medium text-label-value-13 text-secondary tabular-nums sm:text-label-value-15'
-const formatRate = (value: number) =>
-  formatActivityCount(value, { decimals: value < 100 ? 1 : 0 })
+const NOTE_CLASS = 'whitespace-nowrap tabular-nums'
 
-/** The rate on the past week's range at this hour, low to high, with the median a tick on it */
+/** The rate on the past days' range at this hour, low to high, with the median a tick on it */
 function UsualBar({
   value,
   min,

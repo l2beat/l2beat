@@ -4,31 +4,28 @@ import {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { TRPCError } from '@trpc/server'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getLogger } from '~/server/utils/logger'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import {
-  getLiveBucketSeconds,
-  isLiveFresh,
   LIVE_RANGE_KEYS,
-  LIVE_RANGES,
+  LIVE_USUAL_DAYS,
   type LiveRange,
-} from './liveRanges'
+} from '~/utils/range/liveRanges'
 import {
   getBlockSeconds,
   getLastMinuteRates,
-  getLastMinuteStart,
   getLiveBuffer,
   getLiveWindow,
   getUsualRates,
-  LAST_MINUTE_BUCKET,
+  isLiveFresh,
   type LiveBuffer,
   OVERVIEW_BUCKET_SECONDS,
   type UsualHour,
 } from './liveWindow'
 
-const USUAL_DAYS = 7
 /** Newest blocks the block time is taken from */
 const SLOT_SAMPLE = 30
 
@@ -66,12 +63,11 @@ export interface ProjectLiveWindow {
   }
   /** Those with blocks */
   buckets: LiveActivityBucketRecord[]
-  /** The hours the window is in, as they were on the days of the last week */
+  /** The hours the window is in, as they were on the days before */
   usual: UsualHour[]
   /** The whole buffer, in longer buckets */
   overview: { bucket: number; buckets: LiveActivityBucketRecord[] }
-  /** Undefined while no block is stored */
-  buffer: LiveBuffer | undefined
+  buffer: LiveBuffer
 }
 
 const cache = new FrontendInMemoryCache('getProjectLiveActivity')
@@ -117,23 +113,15 @@ async function readProjectLiveStatus(
   if (newest === undefined) return none
 
   const available = isLiveFresh(newest, UnixTime.now())
-  const [oldest, lastMinute] = await Promise.all([
+  const [oldest, now] = await Promise.all([
     db.liveActivityBlock.getOldestTimestamp(id),
     available
-      ? db.liveActivityBlock.getProjectBuckets(
-          id,
-          getLastMinuteStart(newest),
-          newest,
-          LAST_MINUTE_BUCKET,
+      ? getLastMinuteRates(newest, (from, to) =>
+          db.liveActivityBlock.getProjectBuckets(id, from, to, UnixTime.MINUTE),
         )
       : undefined,
   ])
-  return {
-    available,
-    newest,
-    oldest,
-    now: lastMinute && getLastMinuteRates(lastMinute, newest),
-  }
+  return { available, newest, oldest, now }
 }
 
 async function readProjectLiveWindow({
@@ -141,7 +129,9 @@ async function readProjectLiveWindow({
   range,
   to,
 }: ProjectLiveWindowParams): Promise<ProjectLiveWindow> {
-  if (env.MOCK) return emptyWindow(range)
+  // not found without stored blocks: the status says so first, and the
+  // client leaves the live view on it
+  if (env.MOCK) throw new TRPCError({ code: 'NOT_FOUND' })
   const db = getDb()
   const id = ProjectId(projectId)
   const [latest, oldest] = await Promise.all([
@@ -149,7 +139,7 @@ async function readProjectLiveWindow({
     db.liveActivityBlock.getOldestTimestamp(id),
   ])
   const newest = latest.at(-1)?.timestamp
-  if (newest === undefined) return emptyWindow(range)
+  if (newest === undefined) throw new TRPCError({ code: 'NOT_FOUND' })
 
   const buffer = getLiveBuffer(newest, oldest)
   const window = getLiveWindow(
@@ -165,7 +155,7 @@ async function readProjectLiveWindow({
     getOverview(id, newest - (newest % OVERVIEW_BUCKET_SECONDS)),
     db.hourlyActivity.getByProjectsAndTimeRange(
       [id],
-      [firstHour - USUAL_DAYS * UnixTime.DAY, lastHour - UnixTime.DAY],
+      [firstHour - LIVE_USUAL_DAYS * UnixTime.DAY, lastHour - UnixTime.DAY],
     ),
     db.liveActivityBlock.getProjectBuckets(
       id,
@@ -224,24 +214,5 @@ export async function getLiveAvailability(
       error,
     })
     return 'unavailable'
-  }
-}
-
-/** Without stored blocks, as in mock mode */
-function emptyWindow(range: LiveRange): ProjectLiveWindow {
-  const now = UnixTime.now()
-  const from = now - LIVE_RANGES[range].seconds
-  return {
-    window: {
-      range,
-      from,
-      to: now,
-      bucket: getLiveBucketSeconds(range),
-      readFrom: from,
-    },
-    buckets: [],
-    usual: [],
-    overview: { bucket: OVERVIEW_BUCKET_SECONDS, buckets: [] },
-    buffer: undefined,
   }
 }

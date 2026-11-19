@@ -1,14 +1,16 @@
 import { expect } from 'earl'
+import { LIVE_JUMP_SECONDS } from '~/utils/range/liveRanges'
 import {
   advancePlayhead,
+  CATCH_UP,
   getPlayheadTarget,
   shouldRedraw,
 } from './useLivePlayhead'
 
 describe(advancePlayhead.name, () => {
-  it('catches up with the target at most half again as fast as the clock', () => {
+  it('catches up with the target no faster than allowed', () => {
     expect(advancePlayhead({ playhead: 100, at: 50 }, 110, 120, 52)).toEqual(
-      103,
+      100 + 2 * CATCH_UP,
     )
   })
 
@@ -23,9 +25,14 @@ describe(advancePlayhead.name, () => {
   })
 
   it('jumps when far behind', () => {
-    expect(advancePlayhead({ playhead: 100, at: 50 }, 300, 300, 52)).toEqual(
-      300,
-    )
+    const target = 100 + LIVE_JUMP_SECONDS + 1
+
+    expect(
+      advancePlayhead({ playhead: 100, at: 50 }, target, target, 52),
+    ).toEqual(target)
+    expect(
+      advancePlayhead({ playhead: 100, at: 50 }, target - 1, target, 52),
+    ).toEqual(100 + 2 * CATCH_UP)
   })
 })
 

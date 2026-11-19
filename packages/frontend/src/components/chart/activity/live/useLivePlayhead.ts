@@ -1,15 +1,17 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { LIVE_JUMP_SECONDS } from '~/utils/range/liveRanges'
 
-/** Reads whose lag the delay covers, about 40 s of them */
+/** The latest reads whose longest lag the window stays behind the clock by */
 const LAG_SAMPLES = 8
-/** About how often the backend stores new blocks */
+/**
+ * How often the backend stores new blocks: `HeadFollower`'s interval, which
+ * the client's bundle can't import
+ */
 const STORE_SECONDS = 10
 /** Kept between the window's end and the data's */
 const MARGIN_SECONDS = 1
 /** How much faster than the clock the window may catch up */
-const CATCH_UP = 1.5
-/** Behind by more, as after a hidden tab, the window jumps instead */
-const JUMP_SECONDS = 60
+export const CATCH_UP = 1.5
 /**
  * Drawings the charts are drawn past their right edge, for what slides in
  * before the next drawing. They never slide further: after a stalled frame
@@ -27,7 +29,7 @@ export const LOOKAHEAD_DRAWINGS = 2
  * again only every `redrawEvery` seconds, and in between `onGlide` gets, each
  * frame, how far the window has moved past what is drawn. Held, the window
  * is drawn where it is and stops, as hovering reads the drawing's positions,
- * and then catches up
+ * and then catches up. Still, it moves only with each drawing
  */
 export function useLivePlayhead({
   dataEnd,
@@ -35,6 +37,7 @@ export function useLivePlayhead({
   redrawEvery,
   onGlide,
   held,
+  still,
 }: {
   /** Where the data read ends, in seconds. Undefined stops the window */
   dataEnd: number | undefined
@@ -45,6 +48,8 @@ export function useLivePlayhead({
   /** Seconds the window has moved past what is drawn */
   onGlide: (seconds: number) => void
   held: boolean
+  /** For a visitor who prefers reduced motion */
+  still: boolean
 }): number | undefined {
   const [playhead, setPlayhead] = useState<number>()
   const lags = useRef<number[]>([])
@@ -55,6 +60,8 @@ export function useLivePlayhead({
   glide.current = onGlide
   const hold = useRef(held)
   hold.current = held
+  const stay = useRef(still)
+  stay.current = still
 
   useEffect(() => {
     if (dataEnd === undefined) return
@@ -71,7 +78,7 @@ export function useLivePlayhead({
   useLayoutEffect(() => {
     drawn.current = playhead
     glide.current(
-      playhead === undefined || last.current === undefined
+      playhead === undefined || last.current === undefined || stay.current
         ? 0
         : last.current.playhead - playhead,
     )
@@ -108,7 +115,7 @@ export function useLivePlayhead({
         requested.current = next
         setPlayhead(next)
       }
-      if (drawn.current !== undefined) {
+      if (drawn.current !== undefined && !stay.current) {
         glide.current(
           Math.min(next - drawn.current, LOOKAHEAD_DRAWINGS * redrawEvery),
         )
@@ -154,7 +161,8 @@ export function shouldRedraw(
 
 /**
  * Where the window ends next: on toward `target`, at most `CATCH_UP` times as
- * fast as the clock, and not back for a later target, unless far behind. But
+ * fast as the clock, and not back for a later target, or there at once when
+ * more than `LIVE_JUMP_SECONDS` behind. But
  * never past the data: a longer range's data ends on its longer bucket, so
  * switching to one can end it before where the window had got to
  */
@@ -165,7 +173,7 @@ export function advancePlayhead(
   now: number,
 ) {
   const next =
-    previous === undefined || target - previous.playhead > JUMP_SECONDS
+    previous === undefined || target - previous.playhead > LIVE_JUMP_SECONDS
       ? target
       : Math.max(
           previous.playhead,
