@@ -112,9 +112,9 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
     await clientCore.fetch('https://api.test.com/data', {})
 
     const stats = clientCore.rateLimiter.takeStats()
-    expect(
-      Object.values(stats.labels).map((label) => label.throttled),
-    ).toEqual([0])
+    expect(Object.values(stats.labels).map((label) => label.throttled)).toEqual(
+      [0],
+    )
     expect(stats.effectiveCallsPerMinute).toEqual(1_000)
   })
 })
