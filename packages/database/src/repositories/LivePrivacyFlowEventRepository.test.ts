@@ -52,6 +52,25 @@ describeDatabase(LivePrivacyFlowEventRepository.name, (db) => {
   )
 
   describe(
+    LivePrivacyFlowEventRepository.prototype.getByProjectIds.name,
+    () => {
+      it('returns the flows of the projects on every chain, oldest first', async () => {
+        const other = { ...flow('ethereum', 2), projectId: 'other' }
+        await repository.upsertMany([
+          flow('ethereum', 3),
+          flow('base', 1),
+          other,
+        ])
+
+        expect(
+          await repository.getByProjectIds([flow('base', 1).projectId]),
+        ).toEqual([flow('base', 1), flow('ethereum', 3)])
+        expect(await repository.getByProjectIds([])).toEqual([])
+      })
+    },
+  )
+
+  describe(
     LivePrivacyFlowEventRepository.prototype.deleteByChainAfter.name,
     () => {
       it("deletes the chain's flows above the block", async () => {

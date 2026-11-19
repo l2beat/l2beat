@@ -87,6 +87,23 @@ export class LivePrivacyFlowEventRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /** Every flow kept of the projects, oldest first */
+  async getByProjectIds(
+    projectIds: string[],
+  ): Promise<LivePrivacyFlowEventRecord[]> {
+    if (projectIds.length === 0) return []
+    const rows = await this.db
+      .selectFrom('LivePrivacyFlowEvent')
+      .selectAll()
+      .where('projectId', 'in', projectIds)
+      .orderBy('timestamp')
+      .orderBy('blockNumber')
+      .orderBy('logIndex')
+      .orderBy('configurationId')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async deleteByChainAfter(
     chain: string,
     blockNumber: number,

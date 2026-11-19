@@ -97,6 +97,25 @@ export class PrivacyFlowEventRepository extends BaseRepository {
     return rows.length
   }
 
+  /** The flows of the projects from the timestamp on, oldest first */
+  async getByProjectIdsSince(
+    projectIds: string[],
+    since: UnixTime,
+  ): Promise<PrivacyFlowEventRecord[]> {
+    if (projectIds.length === 0) return []
+    const rows = await this.db
+      .selectFrom('PrivacyFlowEvent')
+      .selectAll()
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .orderBy('timestamp')
+      .orderBy('blockNumber')
+      .orderBy('logIndex')
+      .orderBy('configurationId')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   /**
    * Sums the flows of each bucket per period, aligned to UTC: days start at
    * midnight and six-hour periods at 00:00, 06:00, 12:00 and 18:00.
