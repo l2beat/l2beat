@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
+import { Checkbox } from '~/components/core/Checkbox'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
@@ -36,15 +37,24 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { LiquidStakingChartSeries } from './LiquidStakingLineChart'
-import { OTHERS_KEY, type TvlRow, toRow } from './liquidStakingTvlRows'
+import {
+  NOT_STAKED_KEY,
+  OTHERS_KEY,
+  type TvlRow,
+  toRow,
+} from './liquidStakingTvlRows'
 
 const OTHERS_COLOR = 'color-mix(in oklab, var(--secondary) 28%, transparent)'
 const OTHERS_STROKE = 'var(--secondary)'
+// Fainter than Others, so the staked layers stand out inside the supply.
+const NOT_STAKED_COLOR =
+  'color-mix(in oklab, var(--secondary) 10%, transparent)'
 
 const DESCRIPTION = [
   "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. The layers add up to the balance of all active Ethereum validators: Others is the rest, staked solo, through exchanges or through protocols not listed here.",
   "USD values are that ETH at the day's ETH price, so they can differ slightly from the TVL in the table, which prices the tokens themselves.",
   'A protocol also holds ETH not yet staked, or exited but not yet withdrawn, so Others can read slightly low. Days on which a protocol has no data show no Others.',
+  "With the total supply shown, Not staked is the rest of all ETH in existence. CoinGecko serves no supply history, so a day's supply is its market cap over its price; without an API key it reaches back 365 days.",
 ].join(' ')
 
 interface Props {
@@ -59,6 +69,7 @@ interface Props {
 export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
   const trpc = useTRPC()
   const [unit, setUnit] = useState<ChartUnit>('usd')
+  const [showSupply, setShowSupply] = useState(false)
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingTvlChart,
     { range },
@@ -68,13 +79,32 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
     () => projectSeries.map((series) => series.key),
     [projectSeries],
   )
+  // Asked for only once the supply is shown.
+  const { data: supplyHistory } = useQuery({
+    ...trpc.defi.ethSupplyHistory.queryOptions(),
+    enabled: showSupply,
+  })
+  const supplyByDay = useMemo(
+    () =>
+      new Map(supplyHistory?.map((day) => [day.timestamp, day.value]) ?? []),
+    [supplyHistory],
+  )
   const chartData = useMemo(
-    () => data?.map((point) => toRow(point, projectKeys, unit)),
-    [data, projectKeys, unit],
+    () =>
+      data?.map((point) =>
+        toRow(
+          point,
+          projectKeys,
+          unit,
+          showSupply ? (supplyByDay.get(point.timestamp) ?? null) : undefined,
+        ),
+      ),
+    [data, projectKeys, unit, showSupply, supplyByDay],
   )
 
   // Protocols in the table's order, the biggest at the bottom, and Others
-  // on top, so its upper edge traces the total stake.
+  // on top, so its upper edge traces the total stake. Not staked, when
+  // shown, tops the stack at the total supply.
   const chartMeta = useMemo<ChartMeta>(() => {
     const meta: ChartMeta = {}
     for (const series of projectSeries) {
@@ -89,11 +119,27 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
       color: OTHERS_COLOR,
       indicatorType: { shape: 'square' },
     }
+    if (showSupply) {
+      meta[NOT_STAKED_KEY] = {
+        label: 'Not staked',
+        color: NOT_STAKED_COLOR,
+        indicatorType: { shape: 'square' },
+      }
+    }
     return meta
-  }, [projectSeries])
+  }, [projectSeries, showSupply])
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
+
+  // The legend keeps the keys it started with, so the layer is selected
+  // with the box, and dropped with it so "Hide all" still counts right.
+  const onShowSupplyChange = (checked: boolean) => {
+    setShowSupply(checked)
+    if (checked !== dataKeys.includes(NOT_STAKED_KEY)) {
+      toggleDataKey(NOT_STAKED_KEY)
+    }
+  }
 
   const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
   const ethStaked = getLatestEthStaked(data, unit)
@@ -115,6 +161,18 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
       stack: true,
       activeDot: true,
     },
+    ...(showSupply
+      ? [
+          {
+            key: NOT_STAKED_KEY,
+            fill: NOT_STAKED_COLOR,
+            stroke: OTHERS_STROKE,
+            strokeWidth: 1,
+            stack: true,
+            activeDot: true,
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -129,7 +187,21 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
             <TooltipContent>{DESCRIPTION}</TooltipContent>
           </Tooltip>
         }
-        accessory={<TvsChartUnitControls unit={unit} setUnit={setUnit} />}
+        accessory={
+          <>
+            <Checkbox
+              name="showEthSupply"
+              checked={showSupply}
+              onCheckedChange={(checked) =>
+                onShowSupplyChange(checked === true)
+              }
+            >
+              <span className="max-sm:hidden">Show ETH total supply</span>
+              <span className="sm:hidden">ETH supply</span>
+            </Checkbox>
+            <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+          </>
+        }
         value={
           ethStaked !== undefined ? formatCurrency(ethStaked, unit) : undefined
         }
@@ -249,14 +321,24 @@ function CustomTooltip({
   if (entries.length === 0) return null
 
   const protocols = entries
-    .filter((entry) => entry.name !== OTHERS_KEY)
+    .filter(
+      (entry) => entry.name !== OTHERS_KEY && entry.name !== NOT_STAKED_KEY,
+    )
     .sort((a, b) => b.value - a.value)
   const others = entries.find((entry) => entry.name === OTHERS_KEY)
-  // Shares are of the whole stake, so they need every layer, hidden or not.
-  const allValues = Object.entries(row).filter(([key]) => key !== 'timestamp')
-  const staked = allValues.every(([, value]) => value != null)
-    ? allValues.reduce((sum, [, value]) => sum + (value ?? 0), 0)
+  const notStaked = entries.find((entry) => entry.name === NOT_STAKED_KEY)
+  // Shares are of the whole stake, so they need every staked layer, hidden
+  // or not; Not staked is a share of the supply.
+  const stakedValues = Object.entries(row).filter(
+    ([key]) => key !== 'timestamp' && key !== NOT_STAKED_KEY,
+  )
+  const staked = stakedValues.every(([, value]) => value != null)
+    ? stakedValues.reduce((sum, [, value]) => sum + (value ?? 0), 0)
     : undefined
+  const supply =
+    staked !== undefined && row[NOT_STAKED_KEY] != null
+      ? staked + row[NOT_STAKED_KEY]
+      : undefined
 
   return (
     <ChartTooltipWrapper>
@@ -277,7 +359,7 @@ function CustomTooltip({
               key={entry.name}
               name={entry.name}
               value={entry.value}
-              staked={staked}
+              total={staked}
               unit={unit}
             />
           ))}
@@ -286,9 +368,25 @@ function CustomTooltip({
               <TooltipRow
                 name={others.name}
                 value={others.value}
-                staked={staked}
+                total={staked}
                 unit={unit}
               />
+            </div>
+          )}
+          {notStaked && (
+            <div className="flex flex-col gap-2 border-divider border-t pt-2">
+              <TooltipRow
+                name={notStaked.name}
+                value={notStaked.value}
+                total={supply}
+                unit={unit}
+              />
+              {supply !== undefined && (
+                <div className="flex justify-between font-medium text-label-value-13 text-secondary tabular-nums">
+                  <span>ETH supply</span>
+                  <span>{formatCurrency(supply, unit)}</span>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -300,12 +398,13 @@ function CustomTooltip({
 function TooltipRow({
   name,
   value,
-  staked,
+  total,
   unit,
 }: {
   name: string
   value: number
-  staked: number | undefined
+  /** What the value is a share of. */
+  total: number | undefined
   unit: ChartUnit
 }) {
   return (
@@ -314,9 +413,9 @@ function TooltipRow({
         <span className="font-medium text-label-value-15 text-primary tabular-nums">
           {formatCurrency(value, unit)}
         </span>
-        {staked !== undefined && staked > 0 && (
+        {total !== undefined && total > 0 && (
           <span className="font-medium text-label-value-13 text-secondary tabular-nums">
-            {formatPercent(value / staked)}
+            {formatPercent(value / total)}
           </span>
         )}
       </span>
