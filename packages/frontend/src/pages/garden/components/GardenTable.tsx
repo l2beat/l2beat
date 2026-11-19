@@ -214,15 +214,17 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
 }
 
 /**
- * The change hangs under the amount, out of the flow, so every amount shares
- * the right edge and a row with a change is laid out like one without: on
- * phones it sits in the gap above the plants instead of pushing them down.
+ * The change hangs under the amount on a row of no height, so every amount
+ * shares the right edge and a row with a change is as tall as one without:
+ * on phones it sits in the gap above the plants instead of pushing them down.
+ * Being in the grid, it still widens the cell when it is wider than the
+ * amount, so it cannot run into the project name.
  * Below 400px the plants reach the right edge (`PHONE_PLANTS_CLASS`), so
  * there is no gap and the change is left out.
  */
 function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
   return (
-    <div className="relative inline-grid items-baseline gap-y-px text-right">
+    <div className="inline-grid items-baseline gap-y-px text-right">
       {metric ? (
         <>
           <span className="font-medium text-label-value-13 text-primary">
@@ -234,7 +236,7 @@ function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
               : formatInteger(metric.value)}
           </span>
           {metric.change !== undefined && (
-            <span className="-mt-1 absolute top-full right-0 leading-none max-[400px]:hidden">
+            <span className="-translate-y-1 h-0 leading-none max-[400px]:hidden">
               <PercentChange
                 value={metric.change}
                 period="7D"
