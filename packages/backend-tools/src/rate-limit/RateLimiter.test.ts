@@ -179,48 +179,6 @@ describe(RateLimiter.name, () => {
   })
 
   describe(RateLimiter.prototype.throttled.name, () => {
-    // A provider that refuses a call says how long to stay away. Calls
-    // sent before that, retries among them, are refused too and can
-    // extend the lockout. Queued calls must wait it out, then go on at
-    // the usual pace.
-    it('dispatches nothing until the Retry-After has passed', async () => {
-      const clock = FakeTimers.install({ now: 10_000 })
-      // one call every 100 ms
-      const rateLimiter = new RateLimiter({ callsPerMinute: 600 })
-      const starts: number[] = []
-
-      try {
-        for (let i = 0; i < 4; i++) {
-          void rateLimiter.call(() => starts.push(Date.now()))
-        }
-        await clock.tickAsync(100)
-        rateLimiter.throttled({ retryAfterMs: 5_000 })
-        await clock.tickAsync(10_000)
-
-        expect(starts).toEqual([10_000, 10_100, 15_100, 15_200])
-      } finally {
-        rateLimiter.clear()
-        clock.uninstall()
-      }
-    })
-
-    it('does not believe a Retry-After longer than a minute', async () => {
-      const clock = FakeTimers.install({ now: 10_000 })
-      const rateLimiter = new RateLimiter({ callsPerMinute: 600 })
-      const starts: number[] = []
-
-      try {
-        rateLimiter.throttled({ retryAfterMs: 3_600_000 })
-        void rateLimiter.call(() => starts.push(Date.now()))
-        await clock.tickAsync(120_000)
-
-        expect(starts).toEqual([70_000])
-      } finally {
-        rateLimiter.clear()
-        clock.uninstall()
-      }
-    })
-
     it('keeps the rate when stepping down is not asked for', () => {
       const rateLimiter = new RateLimiter({ callsPerMinute: 600 })
 
@@ -301,27 +259,6 @@ describe(RateLimiter.name, () => {
         clock.uninstall()
       }
     })
-
-    it('counts refusals per label and reports the rate it paces at', () => {
-      const clock = FakeTimers.install({ now: 10_000 })
-      const rateLimiter = new RateLimiter({
-        callsPerMinute: 1_000,
-        stepDownOnThrottle: 0.1,
-      })
-
-      try {
-        rateLimiter.throttled({ label: 'a' })
-        rateLimiter.throttled({ label: 'a' })
-        rateLimiter.throttled()
-
-        const stats = rateLimiter.takeStats()
-        expect(stats.labels.a?.throttled).toEqual(2)
-        expect(stats.labels[DEFAULT_RATE_LIMITER_LABEL]?.throttled).toEqual(1)
-        expect(stats.effectiveCallsPerMinute).toEqual(900)
-      } finally {
-        clock.uninstall()
-      }
-    })
   })
 
   describe(RateLimiter.prototype.takeStats.name, () => {
@@ -356,7 +293,6 @@ describe(RateLimiter.name, () => {
           waitMsMax: 2_000,
           // the first call was dispatched immediately, so at most two waited
           queueDepthMax: 2,
-          throttled: 0,
         },
         b: {
           enqueued: 1,
@@ -364,7 +300,6 @@ describe(RateLimiter.name, () => {
           waitMsTotal: 3_000,
           waitMsMax: 3_000,
           queueDepthMax: 3,
-          throttled: 0,
         },
       })
     })

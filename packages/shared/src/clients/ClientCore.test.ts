@@ -78,29 +78,19 @@ describe(ClientCore.name, () => {
 })
 
 describe(`${ClientCore.name} when the provider refuses a call`, () => {
-  // Why: a refusal for the rate concerns every call of the client, so the
-  // limiter has to hear of it: to wait out the provider's Retry-After, to
-  // count it, and to lower its rate when asked to
-  it('tells the limiter, with the wait the provider asked for', async () => {
-    // Calls are paced under a millisecond apart, so only the pause can
-    // account for the wait
-    const { clientCore, http } = mocks(100_000, 0.1)
+  // Why: the limiter can only settle on a rate the provider takes if it
+  // hears of every refusal, and of nothing else
+  it('tells the limiter, which steps its rate down when asked to', async () => {
+    const { clientCore, http } = mocks(1_000, 0.1)
     http.fetch.rejectsWithOnce(
       new Error('HTTP error: 429 Too Many Requests', {
-        cause: { status: 429, rateLimit: { 'retry-after': '0.05' } },
+        cause: { status: 429 },
       }),
     )
-    const startedAt = Date.now()
 
-    await withRpcMetricsContext({ coreFeature: 'blockSync.fetch' }, () =>
-      clientCore.fetch('https://api.test.com/data', {}),
-    )
+    await clientCore.fetch('https://api.test.com/data', {})
 
-    // The retry waited for the 50 ms the provider asked for
-    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(45)
-    const stats = clientCore.rateLimiter.takeStats()
-    expect(stats.labels['blockSync.fetch']?.throttled).toEqual(1)
-    expect(stats.effectiveCallsPerMinute).toEqual(90_000)
+    expect(clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(900)
   })
 
   it('leaves the limiter alone on any other failure', async () => {
@@ -113,11 +103,7 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
 
     await clientCore.fetch('https://api.test.com/data', {})
 
-    const stats = clientCore.rateLimiter.takeStats()
-    expect(Object.values(stats.labels).map((label) => label.throttled)).toEqual(
-      [0],
-    )
-    expect(stats.effectiveCallsPerMinute).toEqual(1_000)
+    expect(clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(1_000)
   })
 })
 

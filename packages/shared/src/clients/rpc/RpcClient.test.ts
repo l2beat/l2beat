@@ -1009,17 +1009,11 @@ describe(RpcClient.name, () => {
   })
 
   // Why: batches go around ClientCore.fetch, so a refused batch has to
-  // report to the limiter by itself, or batching chains would never wait
-  // out a Retry-After nor be counted as throttled
+  // report to the limiter by itself
   it('tells the limiter when a batch is refused for the rate', async () => {
     const http = mockObject<HttpClient>({
       fetchRaw: mockFn<HttpClient['fetchRaw']>()
-        .resolvesToOnce(
-          new Response('Too Many Requests', {
-            status: 429,
-            headers: { 'Retry-After': '0.02' },
-          }),
-        )
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
         .resolvesToOnce(
           jsonResponse([
             { id: '0x1', result: 'one' },
@@ -1029,48 +1023,13 @@ describe(RpcClient.name, () => {
     })
     const rpc = mockClient({
       http,
-      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
-    })
-    const startedAt = Date.now()
-
-    await rpc.batchQuery('rpc_method', [['a'], ['b']])
-
-    // The retry waited for the 20 ms the provider asked for
-    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(20)
-    const throttled = Object.values(rpc.rateLimiter.takeStats().labels).map(
-      (label) => label.throttled,
-    )
-    expect(throttled).toEqual([1])
-  })
-
-  // Why: a refusal is known from the status line. Told only after the body
-  // is read, the limiter lets queued calls through while a slow body
-  // arrives, and never hears of a refusal whose body fails to arrive
-  it('tells the limiter of a refused batch before reading its body', async () => {
-    const brokenBody = new ReadableStream({
-      pull: (controller) => controller.error(new Error('connection reset')),
-    })
-    const http = mockObject<HttpClient>({
-      fetchRaw: mockFn<HttpClient['fetchRaw']>()
-        .resolvesToOnce(new Response(brokenBody, { status: 429 }))
-        .resolvesToOnce(
-          jsonResponse([
-            { id: '0x1', result: 'one' },
-            { id: '0x2', result: 'two' },
-          ]),
-        ),
-    })
-    const rpc = mockClient({
-      http,
+      stepDownOnThrottle: 0.1,
       generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
     })
 
     await rpc.batchQuery('rpc_method', [['a'], ['b']])
 
-    const throttled = Object.values(rpc.rateLimiter.takeStats().labels).map(
-      (label) => label.throttled,
-    )
-    expect(throttled).toEqual([1])
+    expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
   })
 
   describe('batches', () => {
@@ -1272,6 +1231,7 @@ function mockClient(deps: {
   url?: string
   generateId?: () => string
   maxBatchSize?: number
+  stepDownOnThrottle?: number
 }) {
   return new RpcClient({
     chain: 'chain',
@@ -1283,6 +1243,7 @@ function mockClient(deps: {
     generateId: deps.generateId,
     rpcMetrics: deps.rpcMetrics,
     maxBatchSize: deps.maxBatchSize,
+    stepDownOnThrottle: deps.stepDownOnThrottle,
   })
 }
 

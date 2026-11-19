@@ -21,48 +21,6 @@ export function readRateLimitHeaders(headers: Headers): RateLimitHeaders {
   return found
 }
 
-/**
- * How long a `Retry-After` asks to wait: a number of seconds, or an HTTP
- * date. Undefined when the header is absent or says neither.
- */
-export function readRetryAfterMs(
-  value: string | null | undefined,
-  now = Date.now(),
-): number | undefined {
-  if (value === null || value === undefined) {
-    return undefined
-  }
-  if (/^\d+(\.\d+)?$/.test(value.trim())) {
-    return Number(value) * 1000
-  }
-  // `Date.parse` takes loose forms and ignores what trails a date
-  const date = HTTP_DATE.test(value.trim()) ? Date.parse(value) : Number.NaN
-  return Number.isNaN(date) ? undefined : Math.max(0, date - now)
-}
-
-/** `Thu, 19 Nov 2026 10:31:00 GMT`, the form RFC 9110 has servers send */
-const HTTP_DATE =
-  /^[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} GMT$/
-
-/**
- * What a thrown HTTP error says about a refusal for the rate: how long to
- * wait when the provider said, an empty object when it did not, and
- * undefined when the error is not a 429 at all.
- */
-export function readThrottling(
-  error: unknown,
-): { retryAfterMs?: number } | undefined {
-  if (!(error instanceof Error) || !isRecord(error.cause)) {
-    return undefined
-  }
-  if (error.cause.status !== 429) {
-    return undefined
-  }
-  return {
-    retryAfterMs: readRetryAfterMs(readRateLimit(error)?.['retry-after']),
-  }
-}
-
 /** The rate-limit headers a thrown HTTP error carries in its cause, if any. */
 export function readRateLimit(error: unknown): RateLimitHeaders | undefined {
   if (!(error instanceof Error) || !isRecord(error.cause)) {
