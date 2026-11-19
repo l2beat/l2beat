@@ -1,5 +1,6 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { discoveredDefiToken } from '../../templates/defiTokens'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
@@ -120,6 +121,13 @@ export const sweth: BaseProject = {
   defiInfo: {
     category: 'Liquid Staking',
     tvl: { source: 'l2beat' },
+    tokens: [
+      discoveredDefiToken(
+        discovery,
+        'swETH',
+        `Appreciating token for ETH staked through Swell. Reports from ${bot} set the rate.`,
+      ),
+    ],
   },
   liquidStaking: {
     contracts: {
