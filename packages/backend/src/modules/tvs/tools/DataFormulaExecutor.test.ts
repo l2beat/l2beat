@@ -127,41 +127,64 @@ describe(DataFormulaExecutor.name, () => {
     })
   })
 
-  // `tvs:execute` fetches historical prices and supplies itself, past the
-  // indexers, and assumes 0 when a fetch fails. The providers here have no
-  // methods, so any call to CoinGecko fails: a corrected hour has to get its
-  // value from COINGECKO_CORRECTIONS alone. Uses whichever correction of the
-  // field comes first, so the tests hold as the list changes.
+  // `tvs:execute` takes a historical price or supply from its local cache,
+  // then the database, then CoinGecko, and assumes 0 when the fetch fails.
+  // The cache here holds a value from before the correction and the providers
+  // have no methods, so any call to CoinGecko fails: a corrected hour has to
+  // get its value from COINGECKO_CORRECTIONS alone. Uses whichever correction
+  // of the field comes first, so the tests hold as the list changes.
   describe('CoinGecko corrections', () => {
-    it('uses the corrected price for a listed hour without asking CoinGecko', async () => {
+    it('uses the corrected price for a listed hour over a cached one', async () => {
       const { coingeckoId, timestamp, value } = firstCorrection('price')
+      const localStorage = mockObject<LocalStorage>({
+        getPrice: mockFn().resolvesTo(value * 2),
+        writePrice: mockFn().resolvesTo(undefined),
+      })
 
-      const price = await executorWithoutCoingecko().fetchPrice(
-        { id: 'price', priceId: coingeckoId, sinceTimestamp: UnixTime(0) },
+      await executorWithoutCoingecko(localStorage).execute(
+        [{ id: 'price', priceId: coingeckoId, sinceTimestamp: UnixTime(0) }],
+        [],
         timestamp,
+        false,
       )
 
-      expect(price).toEqual(value)
+      expect(localStorage.writePrice).toHaveBeenOnlyCalledWith(
+        'price',
+        timestamp,
+        value,
+      )
     })
 
-    it('uses the corrected circulating supply for a listed hour without asking CoinGecko', async () => {
+    it('uses the corrected circulating supply for a listed hour over a cached one', async () => {
       const { coingeckoId, timestamp, value } =
         firstCorrection('circulatingSupply')
+      const localStorage = mockObject<LocalStorage>({
+        getAmount: mockFn().resolvesTo(BigInt(value) * 2n),
+        writeAmount: mockFn().resolvesTo(undefined),
+      })
 
-      const supply = await executorWithoutCoingecko().fetchCirculatingSupply(
-        {
-          id: 'supply',
-          type: 'circulatingSupply',
-          apiId: coingeckoId,
-          decimals: 0,
-          sinceTimestamp: UnixTime(0),
-          address: EthereumAddress.ZERO,
-          chain: 'ethereum',
-        },
+      await executorWithoutCoingecko(localStorage).execute(
+        [],
+        [
+          {
+            id: 'supply',
+            type: 'circulatingSupply',
+            apiId: coingeckoId,
+            decimals: 0,
+            sinceTimestamp: UnixTime(0),
+            address: EthereumAddress.ZERO,
+            chain: 'ethereum',
+          },
+        ],
         timestamp,
+        false,
       )
 
-      expect(supply).toEqual(BigInt(value))
+      expect(localStorage.writeAmount).toHaveBeenOnlyCalledWith(
+        'supply',
+        timestamp,
+        BigInt(value),
+      )
     })
   })
 })
@@ -177,9 +200,9 @@ function firstCorrection(field: 'price' | 'circulatingSupply') {
   }
 }
 
-function executorWithoutCoingecko() {
+function executorWithoutCoingecko(localStorage: LocalStorage) {
   return new DataFormulaExecutor(
-    mockObject<LocalStorage>({}),
+    localStorage,
     undefined,
     mockObject<PriceProvider>({}),
     mockObject<CirculatingSupplyProvider>({}),

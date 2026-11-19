@@ -5,9 +5,10 @@
  * evidence a reader needs to check it.
  *
  * The backend uses these values whenever it fetches the listed hours, and on
- * start overwrites what it already stored for them. Every other hour stays as
- * fetched, because CoinGecko's history is not reliable enough to replace all
- * of a coin's stored data with it.
+ * start overwrites what it already stored for them. A listed hour we no
+ * longer keep, such as 03:00 on a day older than 100 days, gets no row. Every
+ * other hour stays as fetched, because CoinGecko's history is not reliable
+ * enough to replace all of a coin's stored data with it.
  *
  * Before adding an entry:
  * - It needs evidence, checkable without us, that CoinGecko's value is wrong.
@@ -16,10 +17,11 @@
  *   later history, or the hours on both sides), otherwise from another
  *   market source, and name the source in `reason`.
  * - CoinGecko's public history reaches back one year, so links to it stop
- *   working. Also give a source that keeps its history, such as an exchange.
- * - List every hour that needs the value. An hour with no stored price of its
- *   own is calculated from the latest older one, and is corrected only if it
- *   is listed too.
+ *   working. Also give a source that keeps its history, such as an exchange,
+ *   or say in `reason` that there is none.
+ * - List only hours where the value we store is wrong, and every one of
+ *   them. An hour with no stored price or supply of its own is calculated
+ *   from the latest older one, and is corrected only if it is listed too.
  * - Removing an entry does not bring back what CoinGecko reported. The stored
  *   value stays until that hour is fetched again.
  */
@@ -41,7 +43,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     reason:
       "For 00:00 UTC on 22 days between 2026-03-27 and 2026-07-29 we stored a uniBTC price 7% to 51% above BTC, on seven of them the same $93,147. CoinGecko's history now has a price within 3% of BTC for each of those hours, so the values we fetched live were wrong. The values below are the ones CoinGecko reports now.",
     evidence: [
-      'totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB at each of those hours, divided into the uniBTC value we published for BOB, gives the stored price',
+      'Until this correction, the uniBTC value we published for BOB at each of those hours, divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB, gave the stored price. That value also subtracts the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf, under 0.002 BTC at those hours.',
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1774483200&to=1781654400',
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1781654400&to=1785369600',
       'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1774483200000&endTime=1785369600000',
@@ -87,7 +89,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'geodnet',
     field: 'circulatingSupply',
     reason:
-      "CoinGecko's market cap for GEOD doubles for the single hour 2026-06-27 00:00 UTC while its price stays at $0.197, which makes the circulating supply (market cap / price) 964M for that hour and 452M in the hours on both sides. The value below is the one from those neighboring hours.",
+      "CoinGecko's market cap for GEOD doubles for the single hour 2026-06-27 00:00 UTC while its price stays at $0.197, which makes the circulating supply (market cap / price) 964M for that hour and 452M in the hours on both sides. The value below is the one from those neighboring hours. No other public source we found reports GEOD's circulating supply by the hour, and its total supply onchain is 1,000M, above both values, so once CoinGecko's public history no longer reaches this hour the value rests on this record.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/geodnet/market_chart/range?vs_currency=usd&from=1782432000&to=1782604800',
       'https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=GEOD_USDT&interval=1h&from=1782432000&to=1782604800',
@@ -98,7 +100,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'nakamoto-games',
     field: 'price',
     reason:
-      "From 2026-01-10 to 2026-03-27 CoinGecko reports NAKA at 1.5 to 4.7 times the price it traded at on KuCoin and Gate, apart from a few days when it matches them. Before and after that window all three agree within 1%. The values below are KuCoin's daily opens at 00:00 UTC, which Gate's match within 1.3%.",
+      "From 2026-01-10 to 2026-03-27 CoinGecko reports NAKA at 1.5 to 4.7 times the price it traded at on KuCoin and Gate. On five days in that window (01-18, 02-10, 02-11, 03-12, 03-21) it matches them within 0.2%, so those are not listed. Before and after the window all three agree within 1%. The values below are KuCoin's daily opens at 00:00 UTC, which Gate's match within 1.3%.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/nakamoto-games/market_chart/range?vs_currency=usd&from=1767916800&to=1774742400',
       'https://api.kucoin.com/api/v1/market/candles?type=1day&symbol=NAKA-USDT&startAt=1767916800&endAt=1774742400',
@@ -113,7 +115,6 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
       { at: '2026-01-15T00:00:00Z', value: 0.0978 },
       { at: '2026-01-16T00:00:00Z', value: 0.0928 },
       { at: '2026-01-17T00:00:00Z', value: 0.0961 },
-      { at: '2026-01-18T00:00:00Z', value: 0.1167 },
       { at: '2026-01-19T00:00:00Z', value: 0.1063 },
       { at: '2026-01-20T00:00:00Z', value: 0.129 },
       { at: '2026-01-21T00:00:00Z', value: 0.1202 },
@@ -136,8 +137,6 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
       { at: '2026-02-07T00:00:00Z', value: 0.0767 },
       { at: '2026-02-08T00:00:00Z', value: 0.0727 },
       { at: '2026-02-09T00:00:00Z', value: 0.0737 },
-      { at: '2026-02-10T00:00:00Z', value: 0.0688 },
-      { at: '2026-02-11T00:00:00Z', value: 0.0701 },
       { at: '2026-02-12T00:00:00Z', value: 0.0693 },
       { at: '2026-02-13T00:00:00Z', value: 0.0684 },
       { at: '2026-02-14T00:00:00Z', value: 0.0738 },
@@ -166,7 +165,6 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
       { at: '2026-03-09T00:00:00Z', value: 0.0593 },
       { at: '2026-03-10T00:00:00Z', value: 0.0603 },
       { at: '2026-03-11T00:00:00Z', value: 0.0603 },
-      { at: '2026-03-12T00:00:00Z', value: 0.0594 },
       { at: '2026-03-13T00:00:00Z', value: 0.0599 },
       { at: '2026-03-14T00:00:00Z', value: 0.0596 },
       { at: '2026-03-15T00:00:00Z', value: 0.0595 },
@@ -175,7 +173,6 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
       { at: '2026-03-18T00:00:00Z', value: 0.065 },
       { at: '2026-03-19T00:00:00Z', value: 0.0622 },
       { at: '2026-03-20T00:00:00Z', value: 0.0608 },
-      { at: '2026-03-21T00:00:00Z', value: 0.0605 },
       { at: '2026-03-22T00:00:00Z', value: 0.0597 },
       { at: '2026-03-23T00:00:00Z', value: 0.0581 },
       { at: '2026-03-24T00:00:00Z', value: 0.0591 },

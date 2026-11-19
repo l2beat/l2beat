@@ -404,6 +404,17 @@ export class DataFormulaExecutor {
 
     await Promise.all(
       prices.map(async (price) => {
+        const corrected = correctedValues(
+          COINGECKO_CORRECTIONS,
+          'price',
+          price.priceId,
+        ).get(timestamp)
+        if (corrected !== undefined) {
+          // the cache and the DB may hold the value from before the correction
+          await this.localStorage.writePrice(price.id, timestamp, corrected)
+          return
+        }
+
         const cachedValue = await this.localStorage.getPrice(
           price.id,
           timestamp,
@@ -472,6 +483,22 @@ export class DataFormulaExecutor {
 
     await Promise.all(
       circulatingAmounts.map(async (amount) => {
+        assert(amount.type === 'circulatingSupply')
+        const corrected = correctedValues(
+          COINGECKO_CORRECTIONS,
+          'circulatingSupply',
+          amount.apiId,
+        ).get(timestamp)
+        if (corrected !== undefined) {
+          // the cache and the DB may hold the value from before the correction
+          await this.localStorage.writeAmount(
+            amount.id,
+            timestamp,
+            BigInt(corrected * 10 ** amount.decimals),
+          )
+          return
+        }
+
         const cachedValue = await this.localStorage.getAmount(
           amount.id,
           timestamp,
@@ -521,15 +548,6 @@ export class DataFormulaExecutor {
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
-    const corrected = correctedValues(
-      COINGECKO_CORRECTIONS,
-      'price',
-      config.priceId,
-    ).get(timestamp)
-    if (corrected !== undefined) {
-      return corrected
-    }
-
     try {
       this.logger.debug(`Fetching price for ${config.priceId}`)
       const response = await this.priceProvider.getUsdPriceHistoryHourly(
@@ -552,15 +570,6 @@ export class DataFormulaExecutor {
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
   ): Promise<bigint> {
-    const corrected = correctedValues(
-      COINGECKO_CORRECTIONS,
-      'circulatingSupply',
-      config.apiId,
-    ).get(timestamp)
-    if (corrected !== undefined) {
-      return BigInt(corrected * 10 ** config.decimals)
-    }
-
     this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
