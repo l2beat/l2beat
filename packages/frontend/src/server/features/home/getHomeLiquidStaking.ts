@@ -92,9 +92,11 @@ async function getEthStakedKpi(range: ChartRange): Promise<HomeKpi> {
   )
   // A stake older than the indexer's usual lag shows as missing, not as today's.
   const isFresh = UnixTime.now() - last.timestamp <= MAX_STAKE_AGE
+  // The change is labelled with the range, so a shorter history has none.
+  const coversRange = first.timestamp - from <= MAX_STAKE_AGE
   return {
     chart: toWeeklySparkline(chart, { perDay: false }),
     value: isFresh ? getLatestValue(chart) : undefined,
-    change: isFresh ? computeSeriesChange(chart) : undefined,
+    change: isFresh && coversRange ? computeSeriesChange(chart) : undefined,
   }
 }
