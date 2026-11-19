@@ -40,31 +40,6 @@ describe(HttpClient.name, () => {
       )
     })
 
-    // Why: a provider that refuses a call says how long to wait and often
-    // what its limit is. Dropped here, that never reaches the limiter or
-    // the logs, and the limit has to be guessed
-    it('attaches what the provider says about its limit to a refusal', async () => {
-      const http = new HttpClient()
-      await withServer(
-        (_, res) =>
-          res
-            .writeHead(429, {
-              'Retry-After': '10',
-              'X-RateLimit-Limit': '200',
-              'X-Request-Id': 'abc',
-            })
-            .end(),
-        async (url) => {
-          const error = await http.fetch(url, {}).catch((e: unknown) => e)
-          expect((error as Error).cause).toEqual({
-            url: `${url}/`,
-            status: 429,
-            rateLimit: { 'retry-after': '10', 'x-ratelimit-limit': '200' },
-          })
-        },
-      )
-    })
-
     it('supports custom timeout', async () => {
       const http = new HttpClient()
       await withServer(

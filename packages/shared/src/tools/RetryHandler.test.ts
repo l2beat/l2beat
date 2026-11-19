@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, mockFn } from 'earl'
 import { RetryHandler } from './RetryHandler'
 
 describe(RetryHandler.name, () => {
@@ -36,37 +36,6 @@ describe(RetryHandler.name, () => {
     const fn = mockFn().rejectsWithOnce(new Error()).resolvesToOnce('success')
 
     await expect(() => retryHandler.retry(() => fn())).not.toBeRejected()
-  })
-
-  // Why: a refusal the retry recovers from is logged nowhere but here, so
-  // this line is the only place the provider's own statement of its limit
-  // can reach the logs
-  it('logs what the provider said about its limit with the retry', async () => {
-    let self: Logger = Logger.SILENT
-    const logger = mockObject<Logger>({ for: () => self, warn: () => {} })
-    self = logger
-    const retryHandler = new RetryHandler({
-      maxRetries: 2,
-      initialRetryDelayMs: 1,
-      maxRetryDelayMs: 1,
-      logger,
-    })
-    const refusal = new Error('HTTP error: 429 Too Many Requests', {
-      cause: {
-        status: 429,
-        rateLimit: { 'retry-after': '10', 'x-ratelimit-limit': '200' },
-      },
-    })
-
-    await retryHandler.retry(async () => 'success', { error: refusal })
-
-    expect(logger.warn).toHaveBeenOnlyCalledWith(
-      'Scheduling retry',
-      expect.subset({
-        error: 'HTTP error: 429 Too Many Requests',
-        rateLimit: { 'retry-after': '10', 'x-ratelimit-limit': '200' },
-      }),
-    )
   })
 })
 

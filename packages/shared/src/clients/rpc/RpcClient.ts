@@ -9,7 +9,6 @@ import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
-import { readRateLimitHeaders } from '../http/rateLimitHeaders'
 import type { BlockHeader, LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
@@ -539,13 +538,8 @@ export class RpcClient extends ClientCore implements IRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok) {
-      const rateLimit = readRateLimitHeaders(response.headers)
       throw new Error('HTTP error', {
-        cause: {
-          status: response.status,
-          statusText: response.statusText,
-          ...(Object.keys(rateLimit).length > 0 && { rateLimit }),
-        },
+        cause: { status: response.status, statusText: response.statusText },
       })
     }
     if (!Array.isArray(body)) {
