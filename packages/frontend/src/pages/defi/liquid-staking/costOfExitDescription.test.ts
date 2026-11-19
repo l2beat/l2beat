@@ -41,7 +41,11 @@ describe(getCostOfExitDescription.name, () => {
     expect(tooltip).toInclude(
       'by its only route: unwrapping, which earns nothing while it waits.',
     )
-    expect(chart).toInclude('Binance', 'Its pools are too thin to quote.')
+    expect(chart).toInclude(
+      'Binance',
+      '~ also marks an unwrap still inside the lock.',
+      'Its pools are too thin to quote.',
+    )
   })
 
   it('has no estimate note without a queue', () => {

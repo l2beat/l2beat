@@ -74,6 +74,7 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         queued: true,
         notes: [
           'Unwraps wait for Binance to allocate ETH and for its lock time.',
+          '~ also marks an unwrap still inside the lock.',
         ],
       }
     case 'cbeth':
