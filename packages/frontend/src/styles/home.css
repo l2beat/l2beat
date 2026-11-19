@@ -65,7 +65,9 @@
    tiles go one under the other instead (`kpi-column`), down beside the
    domains' rankings. Ethereum with liquid staking (`kpis-rows`) has a ranking
    of its own to keep level with theirs, so its KPIs stay rows there, with
-   shorter sparklines (`kpi-compact`). */
+   shorter sparklines (`kpi-compact`). They are compact from lg too, where the
+   card shares a column with the recent cards beside Interop: three full rows
+   would make that column the taller one. */
 @custom-variant kpi-rows {
   @container home (width < 1560px) {
     @container kpis (width < 496px) {
@@ -77,7 +79,7 @@
   }
 }
 @custom-variant kpi-compact {
-  @container home (width >= 1560px) {
+  @media (width >= 64rem) {
     @container kpis-rows (width < 496px) {
       @slot;
     }
@@ -109,6 +111,15 @@
     @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
       @slot;
     }
+  }
+}
+
+/* Interop's top tokens, stacked under its protocols (InteropTopList): too
+   short for the gap above it (20px), its header (15px + 8px) and two rows,
+   it shows nothing. */
+@custom-variant interop-list-short {
+  @container interop-list (height < 123px) {
+    @slot;
   }
 }
 

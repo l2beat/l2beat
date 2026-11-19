@@ -123,7 +123,7 @@ function KpisWithLiquidStaking({
       <div
         className={cn(
           HOME_KPI_GRID_CLASS,
-          'home-wide:row-span-2 home-wide:grid-cols-1 home-wide:grid-rows-subgrid',
+          'home-wide:row-span-2 home-wide:grid-cols-1 home-wide:grid-rows-subgrid kpi-compact:gap-y-3',
         )}
       >
         <div className="home-wide:@container/kpis-rows home-wide:grid contents home-wide:grid-cols-[minmax(9.5rem,auto)_minmax(0,1fr)] home-wide:gap-x-4 home-wide:gap-y-3">
@@ -148,7 +148,7 @@ function KpisWithLiquidStaking({
           />
         </div>
         {/* 24px above it like the domains' rankings. */}
-        <div className="kpi-rows:col-span-2 home-wide:mt-1 min-w-0">
+        <div className="kpi-rows:col-span-2 home-wide:mt-1 kpi-compact:mt-3 min-w-0">
           <HomeRankedTable
             title={
               <a
