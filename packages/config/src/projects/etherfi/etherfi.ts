@@ -226,7 +226,7 @@ export const etherfi: BaseProject = {
         value: `${oracleQuorum} of ${oracleMembers}`,
         secondLine: `~${formatSeconds(reportPeriodSeconds)} · ≤${maxPositiveRebase}`,
         sentiment: 'warning',
-        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} without a report, anyone can finalize queued withdrawals in order, as far as the pool's ETH covers them, but the rate does not change.`,
       },
       exit: {
         value: 'Oracle-gated',
