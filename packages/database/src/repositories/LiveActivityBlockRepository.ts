@@ -96,7 +96,6 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord).reverse()
   }
 
-  /** Of the project's oldest stored block */
   async getOldestTimestamp(
     projectId: ProjectId,
   ): Promise<UnixTime | undefined> {

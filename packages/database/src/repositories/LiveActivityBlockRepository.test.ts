@@ -92,13 +92,14 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
   )
 
   describe(LiveActivityBlockRepository.prototype.getProjectBuckets.name, () => {
-    it("sums the project's blocks in the range per bucket", async () => {
+    it("sums the project's blocks in the range, its ends included, per bucket", async () => {
       const minute = UnixTime.toStartOf(START, 'hour')
       await repository.upsertMany([
         { ...block('a', 1), timestamp: minute + 5 },
         { ...block('a', 2), timestamp: minute + 50, uopsCount: null },
         { ...block('a', 3), timestamp: minute + 70 },
-        { ...block('a', 4), timestamp: minute + 200 },
+        { ...block('a', 4), timestamp: minute + 120 },
+        { ...block('a', 6), timestamp: minute + 121 },
         { ...block('b', 5), timestamp: minute + 10 },
       ])
 
@@ -123,6 +124,13 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
           count: 30,
           uopsCount: 33,
           gasUsed: 3_000_000,
+        },
+        {
+          timestamp: minute + 120,
+          blocks: 1,
+          count: 40,
+          uopsCount: 44,
+          gasUsed: 4_000_000,
         },
       ])
     })
