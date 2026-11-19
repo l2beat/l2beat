@@ -112,6 +112,7 @@ model ChainHeadCursor {
 /// has looked and deleted the row
 model LiveCheck {
   feature   String   @db.VarChar(64)
+  /// For a feature that is compared per project, as activity is, the project's id
   chain     String   @db.VarChar(64)
   /// The hours compared, both ends as the hourly indexer takes them
   from      DateTime @db.Timestamp(6)
