@@ -28,6 +28,7 @@ import {
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
+import type { LiquidStakingTvlPoint } from '~/server/features/defi/liquid-staking/getLiquidStakingTvlChart'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
@@ -92,6 +93,8 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
 
+  const ethStaked = getLatestEthStaked(data, unit)
+
   const chartSeries: ChartSeries<string, TvlRow>[] = [
     ...projectSeries.map((series) => ({
       key: series.key,
@@ -123,6 +126,11 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
           </Tooltip>
         }
         accessory={<TvsChartUnitControls unit={unit} setUnit={setUnit} />}
+        value={
+          ethStaked !== undefined ? formatCurrency(ethStaked, unit) : undefined
+        }
+        valueLabel="total ETH staked"
+        isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         meta={
           <ChartTimeRange
@@ -169,6 +177,21 @@ export function LiquidStakingTvlChart({ projectSeries, range }: Props) {
       </div>
     </PrimaryCard>
   )
+}
+
+/** The latest ETH staked network-wide, in the chosen unit. */
+function getLatestEthStaked(
+  points: LiquidStakingTvlPoint[] | undefined,
+  unit: ChartUnit,
+): number | undefined {
+  const latest = points?.findLast(
+    (point) =>
+      point.ethStaked != null && (unit === 'eth' || point.ethPrice != null),
+  )
+  if (latest?.ethStaked == null) return undefined
+  return unit === 'usd'
+    ? latest.ethStaked * (latest.ethPrice ?? 0)
+    : latest.ethStaked
 }
 
 function CustomTooltip({
