@@ -60,6 +60,7 @@ describe(buildLiquidStakingSummary.name, () => {
     )
 
     expect(summary.totalValueLockedUsd).toEqual(30_000_000_000)
+    expect(summary.totalValueLockedEth).toEqual(8_000_000)
     expect(summary.stakedEthShare).toEqual({
       value: 0.25,
       timestamp: yesterday,
