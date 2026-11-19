@@ -9,9 +9,9 @@ Generated with discovered.json: 0xd790ac3f62331a819e1be74b20e2d9a7f924c97a
 
 ## Description
 
-SequencerInbox upgraded: the standard Arbitrum batch functions, which reverted before, now accept batches that start with an Espresso CAS certificate, a signature by a TEE key registered in the EspressoTEEVerifier. Empty batches need no certificate. The Espresso batch functions that take the TEE signature as an extra argument remain. Batch poster rotated. The first batch since the upgrade carries an AnyTrust DAC certificate (`sequencerVersion` 0x00 -> 0x88).
+SequencerInbox upgraded: batches are now signed by Espresso's Chain Adjacent Service (CAS), a separate service running in a TEE that checks each batch against the blocks finalized on Espresso. Before, the batch poster itself had to run in a TEE and sign every batch. The signature goes in front of the batch data, posted through the standard Arbitrum batch functions, which reverted before. Empty batches now need no signature. Batch poster rotated. The first batch since the upgrade carries an AnyTrust DAC certificate (`sequencerVersion` 0x00 -> 0x88).
 
-New EspressoTEEVerifier and EspressoNitroTEEVerifier, with one registered enclave hash (Espresso CAS image). The verifier and its ProxyAdmin are owned by a 2/2 SafeL2 of Caldera Multisig 3 and the Safe that owned the previous verifier. The NitroEnclaveVerifier is unchanged.
+New EspressoTEEVerifier and EspressoNitroTEEVerifier, with one registered enclave hash, the CAS image's. The verifier and its ProxyAdmin are owned by a 2/2 SafeL2 of Caldera Multisig 3 and the Safe that owned the previous verifier. The NitroEnclaveVerifier is unchanged.
 
 All 23 contracts are templatized.
 
