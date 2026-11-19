@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HinkalWrapper",
+  "description": "Forwards a deposit without a proof to the pool after paying a fee to a recipient the caller names.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the pool address deposits are forwarded to."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Hinkal",
+  "critical": true,
+  "category": "core",
+  "description": "Shielded pool and escrow. Holds all deposited tokens, keeps the commitment tree and the spent nullifiers, and settles deposits, withdrawals, transfers and calls to registered external actions after checking a Groth16 proof.",
+  "ignoreMethods": [
+    "buildVerifierId",
+    "externalActionMap",
+    "hash2",
+    "hash4",
+    "logarithm2",
+    "nullifiers",
+    "rootHashExists",
+    "roots",
+    "tree",
+    "verifierMap"
+  ],
+  "ignoreInWatchMode": ["getRootHash", "m_index"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register and remove the verifier contracts that check every proof."
+        }
+      ]
+    },
+    "hinkalHelper": {
+      "severity": "HIGH",
+      "description": "Checks each transaction's calldata and relayer, and builds the public inputs its proof is verified against."
+    },
+    "accessControl": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x47ddd44be4e69e3bb12e0b1ae411c5e2264c8a03557812e6728682c3b1a4a9dd": "HINKAL_HELPER_MANAGER"
+        }
+      }
+    },
+    "helperManager": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x47ddd44be4e69e3bb12e0b1ae411c5e2264c8a03557812e6728682c3b1a4a9dd": "HINKAL_HELPER_MANAGER"
+        },
+        "pickRoleMembers": "HINKAL_HELPER_MANAGER"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the HinkalHelper contract."
+        }
+      ]
+    },
+    "defaultAdmin": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register, replace and remove external action contracts, and grant or revoke this role."
+        }
+      ]
+    },
+    "verifiers": {
+      "severity": "HIGH",
+      "description": "Verifier contract per verifier id. The id is the hash of a circuit's dimensions (tokens, inputs, outputs) and an external action id.",
+      "handler": {
+        "type": "event",
+        "select": ["verifierAddress"],
+        "set": { "event": "VerifierRegistered" },
+        "groupBy": "verifierId"
+      }
+    },
+    "emporium": {
+      "severity": "HIGH",
+      "description": "External action registered under the id of 'Emporium'.",
+      "handler": {
+        "type": "call",
+        "method": "externalActionMap",
+        "args": [
+          "411979838688692913531178225124666116127680458585887674740791562486722276266"
+        ]
+      }
+    },
+    "lifiExternalAction": {
+      "severity": "HIGH",
+      "description": "External action registered under the id of 'Lifi'.",
+      "handler": {
+        "type": "call",
+        "method": "externalActionMap",
+        "args": [
+          "10026689658807089592696157518906879930533768443024619118129355301502772572126"
+        ]
+      }
+    },
+    "depositOnChainUtxosExternalAction": {
+      "severity": "HIGH",
+      "description": "External action registered under the id of 'DepositOnChainUtxos'.",
+      "handler": {
+        "type": "call",
+        "method": "externalActionMap",
+        "args": [
+          "2302065852081193700657183726787784803988219152031392063433685382206382474213"
+        ]
+      }
+    }
+  }
+}

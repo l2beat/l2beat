@@ -1,0 +1,60 @@
+{
+  "events": [
+    {
+      "timestamp": 1784828327,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0xb3e512f990aa1ce7e34c6f22cf90eae90cfc44cc9f16cd0115ebd73a95321eea",
+      "reason": "Hinkal: the owner EOA 0x0a0e05b6 registered verifier contracts in five registerVerifiers transactions of blocks 25596974-25596985, starting with this one. This predates the initial discovery, so no diffHistory entry records it."
+    },
+    {
+      "timestamp": 1785390767,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0x09474bdd4c1124d3adf45504cc9e3556f2dabab1761eddd056af641c1ccae28d",
+      "reason": "Hinkal: the owner EOA 0xBdc77a0c registered verifiers for a newly registered external action (registerVerifiers, block 25643698)."
+    },
+    {
+      "timestamp": 1787037719,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0xf13bfd9d19aa178afa4deb8be7f4f8f55ed0651ebee30673d8572403196d582b",
+      "reason": "Hinkal: the owner EOA registered verifiers for the DepositOnChainUtxos external action, registered in block 25780443 (registerVerifiers, block 25780450)."
+    },
+    {
+      "timestamp": 1787299667,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0x7f76c1ef462505bd383916bbcba9b442f9c8ee19ba0500f61d0f6139139639d7",
+      "reason": "Hinkal: the HinkalHelper was replaced (0x62Af1392 to 0x5f912cBB) in this transaction, and the v4 verifier set was registered in four registerVerifiers transactions of blocks 25802226-25802526."
+    },
+    {
+      "timestamp": 1787642243,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0x3edad43af4d9d5e3d18e116ecacd5e43ae94e7a9403465d75bb11467b942fdaa",
+      "reason": "Hinkal: ownership moved from the EOA 0xBdc77a0c to the HinkalTimelockController (2/3 Safe, 180 s delay at the time), which accepted it in this transaction. The admin role followed in blocks 25830564-25834174."
+    },
+    {
+      "timestamp": 1789061087,
+      "type": "state",
+      "contract": "eth:0xF04310839973454155d9886a4023451F8D3Db7D0",
+      "transaction": "0x406f2509ce69313639c2c11b4a12f716d010bc13e400f0bd935055c4034f5681",
+      "reason": "HinkalTimelockController: minimum delay raised from 180 s to 6 h (updateDelay)."
+    },
+    {
+      "timestamp": 1789061663,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0xf165d41d8fa5b4bd3e3fef1749c3b504dce68a9cf65a0afa78760ae797124d26",
+      "reason": "Hinkal: HINKAL_HELPER_MANAGER, the role that replaces the HinkalHelper, moved from the EOA 0xBdc77a0c to the HinkalTimelockController (granted in this transaction, EOA renounced in block 25948719)."
+    },
+    {
+      "timestamp": 1795066739,
+      "type": "state",
+      "contract": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+      "transaction": "0xcb85b356a79912fecc25e6e77e7eac51bc7a70e0d8a1690c246334fd89269e36",
+      "reason": "Hinkal: the HinkalHelper was replaced (0x5f912cBB to 0x65BA6e27, unverified) through the timelock."
+    }
+  ]
+}

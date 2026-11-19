@@ -1,0 +1,157 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hinkal",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+    "eth:0xB24043ebDC72ddC1923ec749cFBDFbEfF3FC82f6",
+    "eth:0x6998fE93f3a3AbDb31df1922EB91BC282F42aa1d",
+    "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd"
+  ],
+  "names": {
+    "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": "HinkalHelper",
+    "eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9": "Poseidon2",
+    "eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026": "Poseidon4",
+    "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1": "Emporium",
+    "eth:0x729A813606F1f85849768A8d26E02707aAA26EA5": "EmporiumProxyAdmin",
+    "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": "DepositOnChainUtxosExternalAction",
+    "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": "ReceiveVaultFactory",
+    "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": "HinkalFactory",
+    "eth:0x4d28b33517aB72e7e2f728FF6527F8256CceD7fB": "Hinkal Multisig",
+    "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21": "LegacyVerifier1x2x1",
+    "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b": "LegacyVerifier1x6x1",
+    "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702": "LegacyVerifier2x2x1",
+    "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76": "LegacyVerifier2x6x1",
+    "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee": "LegacyVerifier3x2x1",
+    "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C": "LegacyVerifier3x6x1"
+  },
+  "overrides": {
+    "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": {
+      "critical": true,
+      "category": "core",
+      "description": "Checks each pool transaction's calldata and relayer, builds the public inputs its proof is verified against, and stores the relayer allowlist.",
+      "fields": {
+        "owner": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "add and remove relayers."
+            }
+          ]
+        },
+        "relayers": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function getRelayStore() view returns (address[])",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "submit pool transactions for users and collect the fee each transaction sets."
+            }
+          ]
+        },
+        "hinkalAddress": {
+          "handler": {
+            "type": "call",
+            "method": "function hinkalAddress() view returns (address)",
+            "args": []
+          }
+        }
+      }
+    },
+    "eth:0xF04310839973454155d9886a4023451F8D3Db7D0": {
+      "critical": true
+    },
+    "eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9": {
+      "description": "Poseidon hash of two inputs, used for the nodes of the commitment tree."
+    },
+    "eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026": {
+      "description": "Poseidon hash of four inputs, used for the commitments of notes created onchain."
+    },
+    "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1": {
+      "category": "core",
+      "description": "External action of the pool that runs a batch of signed calls, by itself or through the HinkalWallet, and returns the resulting tokens to the pool as new notes.",
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the allowed recipients and the helper contract the Emporium checks relayers with."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0x729A813606F1f85849768A8d26E02707aAA26EA5": {
+      "description": "Admin contract of the Emporium proxy."
+    },
+    "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": {
+      "description": "External action of the pool that turns tokens spent from private notes into new notes for the stealth addresses the transaction names.",
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the allowed recipients of the DepositOnChainUtxosExternalAction."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": {
+      "description": "Factory of the deposit addresses that receive public transfers for a private account."
+    },
+    "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": {
+      "description": "Deployed the pool from bytecode kept in its storage.",
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          }
+        }
+      }
+    },
+    "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C": {
+      "description": "Verifier registered only under external action ids that have no action contract."
+    },
+    "eth:0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE": {
+      "ignoreDiscovery": true
+    }
+  }
+}
