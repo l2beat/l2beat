@@ -83,11 +83,11 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'universal-btc',
     field: 'price',
     reason:
-      "The other way round from the entry above. For 00:00 UTC on 18 days between 2026-05-29 and 2026-06-17 the uniBTC price we fetched at the time is within 2.3% of BTC, and CoinGecko's history now has it 4.8% to 23% above BTC. Nothing we store for those hours is wrong, so this changes nothing we publish. The values below are the stored ones, listed so that fetching those hours again does not replace them with CoinGecko's.",
+      "The other way round from the entry above. For 00:00 UTC on 18 days between 2026-05-29 and 2026-06-17 the uniBTC price we fetched at the time is within 2.4% of BTC, and CoinGecko's history now has it 4.8% to 23% above BTC. Nothing we store for those hours is wrong, so this changes nothing we publish. The values below are the stored ones, listed so that fetching those hours again does not replace them with CoinGecko's.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/universal-btc/market_chart/range?vs_currency=usd&from=1774483200&to=1781654400',
       'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&startTime=1774483200000&endTime=1785369600000',
-      'The uniBTC value we publish for BOB at each of those hours, plus the value of the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf that it subtracts, divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB, gives these prices.',
+      'The uniBTC value we publish for BOB at each of those hours, plus the value of the FBTC and WBTC held by 0x2ac98DB41Cbd3172CB7B8FD8A8Ab3b91cFe45dCf that it subtracts, divided by totalSupply() of 0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894 on BOB, gives these prices up to the rounding of the published value. The exact decimals are the stored price rows.',
     ],
     points: [
       { at: '2026-05-29T00:00:00Z', value: 73040.33 },
