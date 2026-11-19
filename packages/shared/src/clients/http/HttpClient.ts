@@ -17,6 +17,7 @@ export class HttpClient {
       throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
         cause: {
           url: redactUrl(url),
+          status: res.status,
         },
       })
     }

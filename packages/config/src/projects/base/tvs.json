@@ -2574,7 +2574,7 @@
         "type": "circulatingSupply",
         "apiId": "hunter-biden-s-laptop-3",
         "decimals": 18,
-        "sinceTimestamp": 1788912000,
+        "sinceTimestamp": 1788962400,
         "address": "0xB095274743941e953c746F9C228DA9c18Bb6ec29",
         "chain": "base"
       },

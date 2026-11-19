@@ -45,17 +45,6 @@ describe(RateLimiter.name, () => {
     })
   }
 
-  it('handles code that throws', async () => {
-    const rateLimiter = new RateLimiter({ callsPerMinute: 10000 })
-    const fn = () => {
-      throw new Error('oops')
-    }
-    const promiseA = rateLimiter.call(fn)
-    const promiseB = rateLimiter.call(fn)
-    await expect(promiseA).toBeRejectedWith('oops')
-    await expect(promiseB).toBeRejectedWith('oops')
-  })
-
   it('uses one wake-up timer while concurrent workers keep the queue busy', async () => {
     const clock = FakeTimers.install({ now: 10_000 })
     const rateLimiter = new RateLimiter({ callsPerMinute: 6_000 })

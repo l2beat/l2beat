@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xbbc027e61a33b8a41d1b2e8974eeb0dbf5bf147e
+
+# Diff at Wed, 18 Nov 2026 10:07:16 GMT:
+
+- id: 7ca4067f
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794568877
+- current timestamp: 1794996355
+
+## Description
+
+L1 -> L2 govrenance trx, including two L2 diamond upgrades. https://tools.ethbeat.org/decoder?hash=0x76ce649ee2bf44494c9a8bada7a0a35fdf7354662f8bee7af41e558ad3208afc
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        58
++        59
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        58
++        59
+    }
+```
+
 Generated with discovered.json: 0xf61ab263ca3d9c86619dcb28fcb91c2843757805
 
 # Diff at Mon, 16 Nov 2026 12:37:52 GMT:

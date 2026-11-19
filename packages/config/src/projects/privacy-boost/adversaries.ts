@@ -129,8 +129,7 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort:
         "Whoever breaks elliptic-curve cryptography decrypts every note, since each one also wraps its key to the enclave's long-lived public key.",
-      exposureContinued:
-        'That one key opens the entire history, deposits included.',
+      exposureContinued: 'That one key opens the entire history.',
       interior: {
         sender: 'exposed',
         recipient: 'exposed',

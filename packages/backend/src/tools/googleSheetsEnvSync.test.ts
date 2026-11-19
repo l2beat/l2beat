@@ -67,7 +67,7 @@ describe('googleSheetsEnvSync', () => {
           ['ETHEREUM_RPC_URL', 'https://rpc-1.example'],
           ['ETHEREUM_RPC_URL', 'https://rpc-2.example'],
         ]),
-      ).toThrow('Duplicate env variable name: ETHEREUM_RPC_URL')
+      ).toThrow('Duplicate env variable name')
     })
 
     it('fails on rows with more than two columns', () => {
@@ -81,7 +81,7 @@ describe('googleSheetsEnvSync', () => {
     it('fails on invalid env names', () => {
       expect(() =>
         parseGoogleSheetRows([['ETHEREUM RPC URL', 'https://rpc.example']]),
-      ).toThrow('Invalid env variable name: ETHEREUM RPC URL')
+      ).toThrow('Invalid env variable name')
     })
 
     it('rejects values containing single quotes', () => {
@@ -89,7 +89,7 @@ describe('googleSheetsEnvSync', () => {
         parseGoogleSheetRows([
           ['ETHEREUM_RPC_URL', "https://rpc.example?key=it's-not-ok"],
         ]),
-      ).toThrow('Values must not contain single quotes: ETHEREUM_RPC_URL')
+      ).toThrow('Values must not contain single quotes')
     })
 
     it('rejects multiline values', () => {
@@ -97,7 +97,7 @@ describe('googleSheetsEnvSync', () => {
         parseGoogleSheetRows([
           ['ETHEREUM_RPC_URL', 'https://rpc.example\nX=1'],
         ]),
-      ).toThrow('Multiline values are not supported: ETHEREUM_RPC_URL')
+      ).toThrow('Multiline values are not supported')
     })
 
     it('rejects the variables that configure the sync itself', () => {
@@ -106,7 +106,7 @@ describe('googleSheetsEnvSync', () => {
           ['GOOGLE_SHEETS_ENV_URL', 'https://docs.google.com/spreadsheets/d/x'],
         ]),
       ).toThrow(
-        'GOOGLE_SHEETS_ENV_URL configures env:sync itself and must stay local, remove it from the sheet',
+        'Key configures env:sync itself and must stay local, remove it from the sheet',
       )
     })
   })
@@ -327,7 +327,7 @@ describe('googleSheetsEnvSync', () => {
           [{ key: 'A', value: "it's" }],
           SYNCED_AT,
         ),
-      ).toThrow('Values must not contain single quotes: A')
+      ).toThrow('Values must not contain single quotes')
     })
   })
 })

@@ -26,7 +26,9 @@ function toAbstractToken(
 ): AbstractTokenRecord {
   const match = /^(.*?):(.*?)\.(.*)$/.exec(fileEntry.id)
   if (!match) {
-    throw new Error(`Invalid abstract token id: ${fileEntry.id}`)
+    throw new Error('Invalid abstract token id', {
+      cause: { id: fileEntry.id },
+    })
   }
   const [_all, id, issuer, symbol] = match
   return {
@@ -50,7 +52,9 @@ function toDeployedToken(
 ): DeployedTokenRecord {
   const match = /^(.*?)\+(.*?) .*$/.exec(fileEntry.id)
   if (!match) {
-    throw new Error(`Invalid abstract token id: ${fileEntry.id}`)
+    throw new Error('Invalid deployed token id', {
+      cause: { id: fileEntry.id },
+    })
   }
   const [_all, chain, address] = match
   const assignedAbstractTokenId = deployedToAbstract[fileEntry.id]
@@ -76,8 +80,16 @@ async function importTransformed(db: TokenDatabase) {
     for (const deployedId of entry.deployedTokens) {
       const existingAbstract = deployedToAbstract[deployedId]
       if (existingAbstract) {
-        throw new Error(`DeployedToken ${deployedId} is already assigned to
-        ${existingAbstract} but now tries to be assigned to ${record.id}`)
+        throw new Error(
+          'DeployedToken is already assigned to another abstract token',
+          {
+            cause: {
+              deployedId,
+              existingAbstractTokenId: existingAbstract,
+              newAbstractTokenId: record.id,
+            },
+          },
+        )
       }
       deployedToAbstract[deployedId] = record.id
     }

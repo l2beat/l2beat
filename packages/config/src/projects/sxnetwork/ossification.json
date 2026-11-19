@@ -17,7 +17,7 @@
       "reason": "SequencerInbox: DAC keyset changed (dacKeyset; InvalidateKeyset 0x93dc1c065c25c17737b556a379a2375453a388429158e7e525c626d4a879c21e 0x)."
     },
     {
-      "timestamp": 1791378851,
+      "timestamp": 1791377315,
       "type": "state",
       "contract": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
       "updateId": "da86a7d5",

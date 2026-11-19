@@ -319,7 +319,9 @@ export class GasZipConfigPlugin
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const json = GasZipApiResponse.parse(await response.json())

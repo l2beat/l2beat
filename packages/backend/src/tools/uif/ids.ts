@@ -3,14 +3,16 @@ const CONFIG_IDS = new Set<string>()
 
 export function assertUniqueIndexerId(id: string) {
   if (INDEXER_IDS.has(id)) {
-    throw new Error(`Indexer id ${id} is duplicated!`)
+    throw new Error('Indexer id is duplicated', { cause: { id } })
   }
   INDEXER_IDS.add(id)
 }
 
 export function assertUniqueConfigId(id: string, indexerId: string) {
   if (CONFIG_IDS.has(id)) {
-    throw new Error(`Configuration id ${id} is duplicated in ${indexerId}`)
+    throw new Error('Configuration id is duplicated', {
+      cause: { id, indexerId },
+    })
   }
   CONFIG_IDS.add(id)
 }

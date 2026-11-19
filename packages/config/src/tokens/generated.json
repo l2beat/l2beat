@@ -900,6 +900,20 @@
       "supply": "zero"
     },
     {
+      "name": "Bitwise Premium+",
+      "coingeckoId": "usd-coin",
+      "address": "0xbc5d3722376d44f3bC316C6EA61C9Bd553Be8CBe",
+      "symbol": "PPLUS",
+      "decimals": 6,
+      "deploymentTimestamp": 1784301479,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Blur",
       "coingeckoId": "blur",
       "address": "0x5283D291DBCF85356A21bA090E6db59121208b44",
@@ -1946,6 +1960,20 @@
       "coingeckoListingTimestamp": 1670630400,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/28445/large/0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f.png?1696527441",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Ember Earn",
+      "coingeckoId": "usd-coin",
+      "address": "0x9be9294722f8AAd37b11a9792Be2C782182caFA2",
+      "symbol": "eEARN",
+      "decimals": 6,
+      "deploymentTimestamp": 1771548227,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5241,6 +5269,20 @@
       "supply": "zero"
     },
     {
+      "name": "Re7 Confidential Ondo USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x181E5738D593CE29CcDC91bC562D45da3c480796",
+      "symbol": "re7coUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1794490427,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Reef.finance",
       "coingeckoId": "reef",
       "address": "0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf",
@@ -5488,6 +5530,20 @@
       "coingeckoListingTimestamp": 1597363200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Saturn Confidential Tokenized Equity Vault",
+      "coingeckoId": "usd-coin",
+      "address": "0x7F876BF31089A8D13ccF8F1158Ef7bFecA2dDF94",
+      "symbol": "satcUSDC",
+      "decimals": 18,
+      "deploymentTimestamp": 1794471971,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -7468,6 +7524,20 @@
       "supply": "zero"
     },
     {
+      "name": "Yuzu Confidential Yield",
+      "coingeckoId": "usd-coin",
+      "address": "0xC15bBF1Ad6129859628d06115a64581006EC62aC",
+      "symbol": "yzPRVT",
+      "decimals": 18,
+      "deploymentTimestamp": 1794388439,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Zama",
       "coingeckoId": "zama",
       "address": "0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
@@ -7571,7 +7641,7 @@
       "address": "0x3E29D3A9316dAB217754d13b28646B76607c5f04",
       "symbol": "alETH",
       "decimals": 18,
-      "deploymentTimestamp": 1653955741,
+      "deploymentTimestamp": 1663113600,
       "coingeckoListingTimestamp": 1623542400,
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16271/large/aleth.png?1696515869",
@@ -15151,7 +15221,7 @@
       "address": "0xB095274743941e953c746F9C228DA9c18Bb6ec29",
       "symbol": "LAPTOP",
       "decimals": 18,
-      "deploymentTimestamp": 1777317433,
+      "deploymentTimestamp": 1788962400,
       "coingeckoListingTimestamp": 1788912000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/102176837/large/Laptop_Logo.png?1788875459",

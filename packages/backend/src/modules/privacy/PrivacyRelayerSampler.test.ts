@@ -317,12 +317,11 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   describe(PrivacyRelayerSampler.idToConfigurationId.name, () => {
-    it('is deterministic for the same input', () => {
-      const properties = sampleProperties()
-
-      expect(PrivacyRelayerSampler.idToConfigurationId(properties)).toEqual(
-        PrivacyRelayerSampler.idToConfigurationId(properties),
-      )
+    // A changed id wipes and re-syncs the configuration's data.
+    it('keeps the existing id', () => {
+      expect(
+        PrivacyRelayerSampler.idToConfigurationId(sampleProperties()),
+      ).toEqual('a5d405b38d98')
     })
 
     it('differs by chain id', () => {

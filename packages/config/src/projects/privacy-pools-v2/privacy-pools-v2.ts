@@ -120,6 +120,7 @@ export const privacyPoolsV2: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-10-20')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(SINCE_TIMESTAMP),
   statuses: {
     yellowWarning:
       'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set.',
@@ -258,7 +259,7 @@ export const privacyPoolsV2: BaseProject = {
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The ASP service is closed.',
+        "Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys, and the website's release bundle byte for byte. The ASP service is closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,

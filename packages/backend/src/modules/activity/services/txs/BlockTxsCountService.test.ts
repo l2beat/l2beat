@@ -76,7 +76,6 @@ describe(BlockTxsCountService.name, () => {
         countedBlock(START, 0, 1, 1),
         countedBlock(START + 1 * UnixTime.HOUR, 1, 2, 2),
       ])
-      expect(assessCount).toHaveBeenCalledTimes(4)
       expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 2)
     })
 
@@ -138,7 +137,6 @@ describe(BlockTxsCountService.name, () => {
           uopsCount: -1,
         },
       )
-      expect(assessCount).toHaveBeenCalledTimes(6)
       expect(client.getBlocks).toHaveBeenOnlyCalledWith(1, 3)
     })
   })

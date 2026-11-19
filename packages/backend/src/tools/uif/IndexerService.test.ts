@@ -26,27 +26,6 @@ describe(IndexerService.name, () => {
     )
   })
 
-  it(IndexerService.prototype.getIndexerState.name, async () => {
-    const configHash = '0x123456'
-    const indexerStateRepository = mockObject<Database['indexerState']>({
-      findByIndexerId: async () => mock({ configHash }),
-    })
-
-    const indexerService = new IndexerService(
-      mockDatabase({
-        indexerState: indexerStateRepository,
-        indexerConfiguration: mockObject(),
-      }),
-    )
-
-    const result = await indexerService.getIndexerState('indexer')
-
-    expect(result).toEqual(mock({ configHash }))
-    expect(indexerStateRepository.findByIndexerId).toHaveBeenOnlyCalledWith(
-      'indexer',
-    )
-  })
-
   it(IndexerService.prototype.setSafeHeight.name, async () => {
     const indexerStateRepository = mockObject<Database['indexerState']>({
       updateSafeHeight: async () => 1,
@@ -141,55 +120,6 @@ describe(IndexerService.name, () => {
         },
       ],
     )
-  })
-
-  it(IndexerService.prototype.getSavedConfigurations.name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      getConfigurationsWithoutIndexerId: async () => [
-        {
-          id: 'a',
-          currentHeight: null,
-          minHeight: 0,
-          maxHeight: null,
-          properties: JSON.stringify({ a: 1 }),
-        },
-        {
-          id: 'b',
-          currentHeight: null,
-          minHeight: 0,
-          maxHeight: null,
-          properties: JSON.stringify({ b: 1 }),
-        },
-      ],
-    })
-
-    const indexerService = new IndexerService(
-      mockDatabase({
-        indexerState: mockObject(),
-        indexerConfiguration: indexerConfigurationsRepository,
-      }),
-    )
-
-    const result = await indexerService.getSavedConfigurations('indexer')
-
-    expect(result).toEqualUnsorted([
-      {
-        id: 'a',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ a: 1 }),
-      },
-      {
-        id: 'b',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ b: 1 }),
-      },
-    ])
   })
 
   it(

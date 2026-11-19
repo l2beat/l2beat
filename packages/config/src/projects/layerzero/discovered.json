@@ -1,6 +1,6 @@
 {
   "name": "layerzero",
-  "timestamp": 1794568200,
+  "timestamp": 1794986363,
   "configHash": "0x258ec085fcb663d7b53079495ad633fdbccd688b7d2a5c155e45d4dee9b1f408",
   "entries": [
     {
@@ -81,7 +81,7 @@
         "nativeToken": "eth:0x0000000000000000000000000000000000000000",
         "NIL_PAYLOAD_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
         "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
-        "rsETHAdapterDelegate": "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
+        "rsETHAdapterDelegate": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
         "rsETHReceiveLibraryFromUnichain": {
           "lib": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
           "isDefault": false
@@ -132,6 +132,16 @@
     },
     {
       "address": "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x33307eFcFB13FA15d5DcDA4CF6AdADF298175544",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -209,7 +219,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x601767c4ba4134cc2E906ea7cf25EaB845152A7C",
+      "address": "eth:0x61f45F63e06aa0DAE039BcFDa2c4Aab017441Ee7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -225,6 +235,11 @@
     },
     {
       "address": "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x746d6a9f789999799AE7f5d62Aa70422F86826b6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -266,7 +281,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
+      "address": "eth:0x7Da5A697980E53Ecc137c0f7E96F4Cb656130098",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -293,7 +308,7 @@
         "oApp": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
+        "owner": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
         "peerUnichain": "unichain:0x0000000000000000000000000000000000000000",
         "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -401,6 +416,49 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GnosisSafe",
+      "address": "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
+      "sinceTimestamp": 1715005223,
+      "sinceBlock": 19811600,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xa85B57bD7433dCC4679d638b87d80F155A689Fc1",
+          "eth:0xf6715D31589672eA1Adc2fE9aab31bD161F8ec03",
+          "eth:0x51C59785639CCa31c09D0833749e76A5D945C9F3",
+          "eth:0xd4C9d49bBda1F074ba8363bfc5D72Fd2a9dFC77F",
+          "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080",
+          "eth:0x33307eFcFB13FA15d5DcDA4CF6AdADF298175544",
+          "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306",
+          "eth:0xFCc1C98F887C93C38Deb5e38A6Fb820AD3fB9DFD",
+          "eth:0x61f45F63e06aa0DAE039BcFDa2c4Aab017441Ee7",
+          "eth:0x7Da5A697980E53Ecc137c0f7E96F4Cb656130098",
+          "eth:0x746d6a9f789999799AE7f5d62Aa70422F86826b6"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0x0655f07c5e4870059d3d504f319f9b29efce350208a163197b093c66abf5f8f2",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 11 (55%)",
+        "nonce": 172,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306",
       "type": "EOA",
       "proxyType": "EOA"
@@ -485,7 +543,7 @@
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 650,
+        "nonce": 655,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -544,45 +602,12 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "GnosisSafe",
-      "address": "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
-      "sinceTimestamp": 1702240463,
-      "sinceBlock": 18758223,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0xFCc1C98F887C93C38Deb5e38A6Fb820AD3fB9DFD",
-          "eth:0x51C59785639CCa31c09D0833749e76A5D945C9F3",
-          "eth:0x601767c4ba4134cc2E906ea7cf25EaB845152A7C",
-          "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306",
-          "eth:0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
-          "eth:0xa85B57bD7433dCC4679d638b87d80F155A689Fc1"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x63a1df7cea9fc1539c1595e77275eeb69de03e00e38ce4077b8dbb4fb05ae90c",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 2084,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
+      "address": "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "address": "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
+      "address": "eth:0xd4C9d49bBda1F074ba8363bfc5D72Fd2a9dFC77F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -593,6 +618,11 @@
     },
     {
       "address": "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xf6715D31589672eA1Adc2fE9aab31bD161F8ec03",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1176,6 +1206,9 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": [
+      "constructor(address _singleton)"
+    ],
     "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
@@ -1328,9 +1361,6 @@
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -1393,8 +1423,8 @@
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
-  "usedBlockNumbers": { "ethereum": 26405652 },
-  "permissionsConfigHash": "0x3e51790455cea86b1c302c85062c846d06691e38b0dff086f5aaea8bb708e772",
+  "usedBlockNumbers": { "ethereum": 26440401 },
+  "permissionsConfigHash": "0x1d8ca8402aac4504d7a6e14d4e2cd9f1566a595a7656826cbae9419fc88eff94",
   "permissions": {
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
       "receivedPermissions": [
@@ -1485,22 +1515,6 @@
         }
       ]
     },
-    "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
-          "description": "manage all settings of the LZ crosschain security stack for the respective OApp: change libraries, DVN configs etc.",
-          "role": ".rsETHAdapterDelegate"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
-          "description": "can configure the OFT adapter, including LayerZero peer and delegate settings.",
-          "role": ".owner"
-        }
-      ]
-    },
     "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": {
       "directlyReceivedPermissions": [
         {
@@ -1539,6 +1553,22 @@
           "from": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
           "description": "verify rsETH OFT messages sent from Unichain through LayerZero.",
           "role": ".getUlnConfig"
+        }
+      ]
+    },
+    "eth:0xb3696a817D01C8623E66D156B6798291fa10a46d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+          "description": "manage all settings of the LZ crosschain security stack for the respective OApp: change libraries, DVN configs etc.",
+          "role": ".rsETHAdapterDelegate"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
+          "description": "can configure the OFT adapter, including LayerZero peer and delegate settings.",
+          "role": ".owner"
         }
       ]
     }

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function.",
+  "category": "bridge-external",
+  "ignoreMethods": [
+    // the hardcoded signer only authorizes withdraw(), which is disabled once the bridge is locked
+    "getSigner",
+    // a Facet L2 contract, read here as an Ethereum address
+    "getDumbContract",
+    // payout cursor: the last paid holder address
+    "getLastDisbursedAddress",
+    // mapping by batch index, probing it only yields indices 0-4 and an error
+    "isBatchPaid",
+    "eip712Domain"
+  ],
+  "fields": {
+    "getAdmin": {
+      "description": "Admin of the bridge logic, set in contract storage separately from the upgrade admin.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "send any ETH held by the bridge to addresses and amounts of its choice in payout batches, transfer the bridge's FCT on Facet, mark withdrawals as completed, close deposits, lock the bridge and change the admin."
+        }
+      ]
+    },
+    "depositsClosed": {
+      "description": "Whether deposits are refused (also true once the bridge is locked)."
+    },
+    "isLocked": {
+      "description": "Whether withdrawals and deposits are disabled. Only an upgrade can unlock the bridge."
+    }
+  }
+}

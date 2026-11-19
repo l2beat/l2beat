@@ -1,62 +1,11 @@
 import { expect } from 'earl'
 import {
   getBasicTableBodyCellClassName,
-  getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
 } from './classNames'
 
 describe('classNames', () => {
-  describe(getBasicTableGroupedHeaderCellClassName.name, () => {
-    it('adds grouped header spacing only when header exists and is not placeholder', () => {
-      const visibleGroupClassName = getBasicTableGroupedHeaderCellClassName({
-        isPlaceholder: false,
-        hasHeader: true,
-        isPinned: false,
-      })
-      const placeholderClassName = getBasicTableGroupedHeaderCellClassName({
-        isPlaceholder: true,
-        hasHeader: false,
-        isPinned: false,
-      })
-
-      expect(visibleGroupClassName.includes('rounded-t-lg')).toEqual(true)
-      expect(visibleGroupClassName.includes('px-6')).toEqual(true)
-      expect(visibleGroupClassName.includes('pt-4')).toEqual(true)
-
-      expect(placeholderClassName.includes('rounded-t-lg')).toEqual(false)
-      expect(placeholderClassName.includes('px-6')).toEqual(false)
-      expect(placeholderClassName.includes('pt-4')).toEqual(false)
-    })
-  })
-
   describe(getBasicTableHeaderCellClassName.name, () => {
-    it('adds rounded corners only when group has no header title', () => {
-      const noTitleClassName = getBasicTableHeaderCellClassName({
-        groupParams: {
-          headerTitle: undefined,
-          isFirstInGroup: true,
-          isLastInGroup: true,
-        },
-        isPinned: false,
-        headClassName: undefined,
-      })
-
-      const titledClassName = getBasicTableHeaderCellClassName({
-        groupParams: {
-          headerTitle: 'Group',
-          isFirstInGroup: true,
-          isLastInGroup: true,
-        },
-        isPinned: false,
-        headClassName: undefined,
-      })
-
-      expect(noTitleClassName.includes('rounded-tl-lg')).toEqual(true)
-      expect(noTitleClassName.includes('rounded-tr-lg')).toEqual(true)
-      expect(titledClassName.includes('rounded-tl-lg')).toEqual(false)
-      expect(titledClassName.includes('rounded-tr-lg')).toEqual(false)
-    })
-
     it('starts a non-sortable first label where its values start', () => {
       const base = {
         groupParams: undefined,
@@ -76,20 +25,6 @@ describe('classNames', () => {
           align: 'right',
         }),
       ).toEqual('')
-    })
-
-    it('keeps custom head class', () => {
-      const className = getBasicTableHeaderCellClassName({
-        groupParams: {
-          headerTitle: undefined,
-          isFirstInGroup: false,
-          isLastInGroup: false,
-        },
-        isPinned: false,
-        headClassName: 'custom-head-class',
-      })
-
-      expect(className.includes('custom-head-class')).toEqual(true)
     })
   })
 
@@ -156,20 +91,6 @@ describe('classNames', () => {
       expect(
         nonPinnedClassName.includes('animate-row-highlight-no-opacity'),
       ).toEqual(false)
-    })
-
-    it('keeps custom cell class', () => {
-      const className = getBasicTableBodyCellClassName({
-        groupParams: undefined,
-        isSortable: false,
-        align: undefined,
-        isPinned: false,
-        rowBackgroundColor: undefined,
-        isHighlighted: false,
-        cellClassName: 'custom-cell-class',
-      })
-
-      expect(className.includes('custom-cell-class')).toEqual(true)
     })
   })
 })

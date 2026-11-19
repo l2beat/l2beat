@@ -1,6 +1,4 @@
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { Skeleton } from '~/components/core/Skeleton'
-import { useIsClient } from '~/hooks/useIsClient'
 import type { LivenessTimeRange } from '~/server/features/layer2s/liveness/types'
 
 interface Props {
@@ -14,12 +12,6 @@ export function LivenessTimeRangeControls({
   setTimeRange,
   className,
 }: Props) {
-  const isClient = useIsClient()
-
-  if (!isClient) {
-    return <Skeleton className="h-8 w-[156px]" />
-  }
-
   return (
     <RadioGroup
       name="livenessTimeRange"

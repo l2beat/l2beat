@@ -11,6 +11,62 @@ overrides:
   'form-data@^2': 2.5.4
   'form-data@^4': 4.0.4
 
+  # Security floors based on SBOM reports, scoped to compatible lines.
+  # Advisory details: https://github.com/advisories/<GHSA-ID>.
+  # Remove a floor when upstream parents require a patched minimum themselves:
+  # regenerate the lockfile without it, check every resolved copy, and rescan
+  # rebuilt images. A parent range merely allowing the fix is not sufficient.
+
+  # Infinite loop: GHSA-378v-28hj-76wf (both maintained major lines).
+  'bn.js@^4': '^4.12.3'
+  'bn.js@^5': '^5.2.3'
+  # Compressed-body DoS: GHSA-27r3-jxmh-p828.
+  'body-parser@^2': '^2.4.0'
+  # Expansion DoS: GHSA-q2hr-2g5m-vwhr; includes earlier recursion fixes.
+  'brace-expansion@^1': '^1.1.21'
+  'brace-expansion@^2': '^2.1.7'
+  # Patch-parser DoS: GHSA-73rr-hh4g-fpgx.
+  'diff@^5': '^5.2.2'
+  # ECDSA key extraction: GHSA-vjh7-7g9h-fjfh.
+  'elliptic@^6': '^6.6.1'
+  # Keep the inspected Go 1.26.5 binary (e.g. GO-2024-3105 fixed), alongside
+  # the tsx upgrade that fixes GHSA-67mh-4wv8-2f99.
+  'esbuild@^0.28': '^0.28.2'
+  # ZIP64 infinite loop: GHSA-px8p-9vwx-vf98.
+  'fflate@^0.7': '^0.7.5'
+  # Redirect credential leak: GHSA-mrwp-f3q8-3g9p.
+  'follow-redirects@^1': '^1.16.2'
+  # Merge-key CPU DoS: GHSA-2883-xcg3-v3hh (3.x and 4.x backports).
+  'js-yaml@^3': '^3.15.2'
+  'js-yaml@^4': '^4.3.2'
+  # mailto validator DoS: GHSA-v245-v573-v5vm.
+  'linkify-it@^5': '^5.0.2'
+  # Template code injection: GHSA-r5fr-rjxr-66jc.
+  'lodash@^4': '^4.18.0'
+  # Response header manipulation: GHSA-76c9-3jph-rj3q.
+  'on-headers@^1': '^1.1.0'
+  # Route-pattern DoS: GHSA-27v5-c462-wpq7 and GHSA-j3q9-mxjg-w52f.
+  'path-to-regexp@^8': '^8.4.0'
+  # Trusted-proxy IP spoofing: GHSA-jqcg-44mw-7w3h.
+  'proxy-addr@^2': '^2.0.8'
+  # Comma-array serialization DoS: GHSA-6pq8-jhm2-2vcw; includes parser fixes.
+  'qs@^6': '^6.16.1'
+  # Indexed source-map DoS: GHSA-68fv-2mgg-jv7q.
+  'source-map-js@^1': '^1.2.2'
+  # Path traversal: GHSA-ph9p-34f9-6g65.
+  'tmp@^0.2': '^0.2.6'
+  # TLS validation: GHSA-2m5v-pch6-74hx; DoS: GHSA-xjj6-f33q-929c,
+  # GHSA-4qv8-2p9j-2685, GHSA-9fm3-97px-rjf6, GHSA-qrxm-fqhp-jwvm.
+  'undici@^6': '^6.29.1'
+  # Buffer bounds: GHSA-w5hq-g745-h8pq.
+  'uuid@^11': '^11.1.1'
+  # Fragment-buffer DoS: GHSA-96hv-2xvq-fx4p (7.x and 8.x backports).
+  # Scope ws 7 to ethers: a generic override would narrow isows' wildcard peer.
+  '@ethersproject/providers>ws': '^7.5.11'
+  'ws@^8': '^8.21.0'
+  # Nested-collection stack overflow: GHSA-48c2-rrv3-qjmp.
+  'yaml@^2': '^2.8.3'
+
 # pnpm >=10 blocks dependency lifecycle scripts unless explicitly allowed.
 allowBuilds:
   '@prisma/engines': true

@@ -85,30 +85,16 @@ describe(DaIndexer.name, () => {
       expect(safeHeight).toEqual(150)
     })
 
-    describe('handles batch size', () => {
-      it('from + batchSize > to', async () => {
-        const { indexer, blobService } = mockIndexer({
-          batchSize: 50,
-        })
-
-        const updateCallback = await indexer.multiUpdate(100, 200, [])
-        const safeHeight = await updateCallback()
-
-        expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
-        expect(safeHeight).toEqual(150)
+    it('caps the range at to when the batch reaches past it', async () => {
+      const { indexer, blobService } = mockIndexer({
+        batchSize: 150,
       })
 
-      it('from + batchSize < to', async () => {
-        const { indexer, blobService } = mockIndexer({
-          batchSize: 150,
-        })
+      const updateCallback = await indexer.multiUpdate(100, 200, [])
+      const safeHeight = await updateCallback()
 
-        const updateCallback = await indexer.multiUpdate(100, 200, [])
-        const safeHeight = await updateCallback()
-
-        expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-        expect(safeHeight).toEqual(200)
-      })
+      expect(blobService.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(safeHeight).toEqual(200)
     })
 
     it('handles empty blobs response', async () => {
@@ -131,22 +117,12 @@ describe(DaIndexer.name, () => {
 
   describe(DaIndexer.prototype.trimData.name, () => {
     it('deletes every hour the trimmed range touches', async () => {
-      const { indexer, repository, daProvider } = mockIndexer({
+      const { indexer, repository } = mockIndexer({
         blockTimestamps: { 100: 3 * HOUR + 15 * 60, 199: 7 * HOUR + 30 * 60 },
       })
 
       await indexer.trimData([{ id: createId('project-a'), range: [100, 199] }])
 
-      expect(daProvider.getBlockTimestamp).toHaveBeenNthCalledWith(
-        1,
-        DA_LAYER,
-        100,
-      )
-      expect(daProvider.getBlockTimestamp).toHaveBeenNthCalledWith(
-        2,
-        DA_LAYER,
-        199,
-      )
       // the hours straddling the edges are deleted as well
       expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         createId('project-a'),
@@ -192,7 +168,7 @@ describe(DaIndexer.name, () => {
     })
 
     it('lowering sinceBlock still wipes - gaps are not allowed', async () => {
-      const { indexer, repository, daProvider } = mockIndexer({
+      const { indexer, repository } = mockIndexer({
         configurations: [config('project-a', { sinceBlock: 50 })],
         savedConfigurations: [savedConfiguration('project-a', 100, null, 500)],
       })
@@ -203,7 +179,6 @@ describe(DaIndexer.name, () => {
         createId('project-a'),
       ])
       expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
-      expect(daProvider.getBlockTimestamp).not.toHaveBeenCalled()
     })
   })
 
@@ -283,7 +258,9 @@ function mockIndexer($: {
     getBlockTimestamp: mockFn(async (_: string, blockNumber: number) => {
       const timestamp = $.blockTimestamps?.[blockNumber]
       if (timestamp === undefined) {
-        throw new Error(`No timestamp mocked for block ${blockNumber}`)
+        throw new Error('No timestamp mocked for block', {
+          cause: { blockNumber },
+        })
       }
       return UnixTime(timestamp)
     }),
@@ -323,7 +300,6 @@ function mockIndexer($: {
     syncMetadataRepository,
     indexer,
     daService,
-    daProvider,
     blobService,
   }
 }

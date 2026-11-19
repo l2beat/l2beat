@@ -327,7 +327,7 @@ export const payy: ScalingProject = {
       url: 'https://github.com/polybase/payy/security/advisories/GHSA-fhxc-63vg-9gwr',
       date: '2026-06-10T00:00:00Z',
       description:
-        'An aggregation circuit bug allowed forged burn messages, was patched by the team.',
+        'An aggregation circuit bug allowed forged burn messages. The team patched it.',
       type: 'incident',
     },
     {

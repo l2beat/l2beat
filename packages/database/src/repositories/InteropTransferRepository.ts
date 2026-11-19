@@ -558,34 +558,30 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getValueMismatchTransfers(
-    valueDifferencePercentThreshold: number,
-    options: {
-      minimumSideValueUsdThreshold?: number
-      timeRange?: InteropTransferTimeRange
-    } = {},
-  ): Promise<InteropSuspiciousTransferRecord[]> {
-    const minimumSideValueUsdThreshold =
-      options.minimumSideValueUsdThreshold ?? 0
+  async getValueMismatchTransfers(options: {
+    minimumLargerSideValueUsd: number
+    minimumValueRatio: number
+    timeRange?: InteropTransferTimeRange
+  }): Promise<InteropSuspiciousTransferRecord[]> {
     assert(
-      valueDifferencePercentThreshold > 0,
-      'valueDifferencePercentThreshold must be a positive number',
+      options.minimumLargerSideValueUsd > 0,
+      'minimumLargerSideValueUsd must be a positive number',
     )
     assert(
-      minimumSideValueUsdThreshold >= 0,
-      'minimumSideValueUsdThreshold must be a non-negative number',
+      options.minimumValueRatio >= 1,
+      'minimumValueRatio must be at least 1',
     )
 
     const maxSideValueUsd = sql<number>`
       GREATEST(ABS("srcValueUsd"::numeric), ABS("dstValueUsd"::numeric))
     `
-    const absoluteValueDifferenceUsd = sql<number>`
-      ABS("srcValueUsd"::numeric - "dstValueUsd"::numeric)
+    const minSideValueUsd = sql<number>`
+      LEAST(ABS("srcValueUsd"::numeric), ABS("dstValueUsd"::numeric))
     `
     const valueDifferencePercent = sql<number>`
       CASE
         WHEN ${maxSideValueUsd} = 0 THEN 0
-        ELSE (${absoluteValueDifferenceUsd} / ${maxSideValueUsd}) * 100
+        ELSE ((${maxSideValueUsd} - ${minSideValueUsd}) / ${maxSideValueUsd}) * 100
       END
     `
 
@@ -595,13 +591,11 @@ export class InteropTransferRepository extends BaseRepository {
       .select(valueDifferencePercent.as('valueDifferencePercent'))
       .where('srcValueUsd', 'is not', null)
       .where('dstValueUsd', 'is not', null)
-      .where(sql<boolean>`ABS("srcValueUsd") > ${minimumSideValueUsdThreshold}`)
-      .where(sql<boolean>`ABS("dstValueUsd") > ${minimumSideValueUsdThreshold}`)
       .where(
-        sql<boolean>`
-          ${maxSideValueUsd} > 0
-          AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
-        `,
+        sql<boolean>`${maxSideValueUsd} >= ${options.minimumLargerSideValueUsd}`,
+      )
+      .where(
+        sql<boolean>`${minSideValueUsd} * ${options.minimumValueRatio} <= ${maxSideValueUsd}`,
       )
 
     if (options.timeRange !== undefined) {

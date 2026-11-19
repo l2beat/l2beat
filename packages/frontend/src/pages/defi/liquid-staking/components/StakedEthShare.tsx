@@ -11,7 +11,7 @@ import {
   STAKED_ETH_SHARE_TOOLTIP,
 } from '../liquidStakingMetrics'
 
-/** The line under a TVL, e.g. "(24.1% of staked ETH)". */
+/** The line under a TVL, e.g. "24.1% of staked ETH". */
 export function StakedEthShare({
   share,
   className,
@@ -28,7 +28,7 @@ export function StakedEthShare({
         disabledOnTouch={disabledOnTouch}
         className={cn('whitespace-nowrap text-secondary', className)}
       >
-        ({formatStakedEthShare(share.value)})
+        {formatStakedEthShare(share.value)}
       </TooltipTrigger>
       <TooltipContent>
         {STAKED_ETH_SHARE_TOOLTIP} ETH staked as of{' '}
