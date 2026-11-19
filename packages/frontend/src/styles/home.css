@@ -115,10 +115,11 @@
 }
 
 /* Interop's top tokens, stacked under its protocols (InteropTopList): too
-   short for the gap above it (20px), its header (15px + 8px) and two rows,
-   it shows nothing. */
+   short for its header (15px + 8px) and two rows, it shows nothing. The
+   query reads the content box, so the gap above it, its top padding, is
+   not counted. */
 @custom-variant interop-list-short {
-  @container interop-list (height < 123px) {
+  @container interop-list (height < 103px) {
     @slot;
   }
 }
