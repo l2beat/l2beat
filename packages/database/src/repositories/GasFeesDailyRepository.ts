@@ -11,8 +11,8 @@ export interface GasFeesDailyRecord {
   chain: string
   txCount: number
   totalFeeNative: number
-  /** Never null: a day with a fee Dune has no price for is not stored */
-  totalFeeUsd: number | null
+  /** A day with a fee Dune has no price for is not stored */
+  totalFeeUsd: number
   l1FeeNative: number
   blobFeeNative: number
   /** Each block's base fee per gas times the gas of its transactions that paid. null where the chain had no base fee. On Arbitrum, and on Mantle until 22 April 2026, it already contains l1FeeNative */
