@@ -76,8 +76,9 @@ const upgradeVetoSeconds = discovery.getContractValue<number>(
 )
 const voteDelay = formatSeconds(voteDelaySeconds, { fullUnit: true })
 const upgradeVetoWindow = formatSeconds(upgradeVetoSeconds, { fullUnit: true })
-// Vote delay plus the post-vote veto window: the shortest path from an
-// upgrade proposal to its execution, excluding the vote itself.
+// Vote delay plus the post-vote veto window: today's path from an upgrade
+// proposal to its execution, excluding the vote itself. Both are settings, so
+// it is not a floor.
 const upgradePathDays = (voteDelaySeconds + upgradeVetoSeconds) / 86400
 const oracleQuorum = membersNeeded('RocketDAONodeTrusted')
 const maxRethDelta = percent(
@@ -214,9 +215,9 @@ export const rocketpool: BaseProject = {
     risks: {
       minting: {
         value: 'Permissionless',
-        secondLine: 'ungated FIFO queue',
+        secondLine: 'instant · pausable',
         sentiment: 'good',
-        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}. Deposits go to queued validators in order. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
+        description: `Anyone can deposit ETH (minimum ${value('RocketDepositPool', 'minimumDeposit')} ETH, ${percent('RocketDAOProtocolSettingsDeposit', 'getDepositFee')} fee) for ${rethSymbol}, minted at once. The ETH then waits for node operators in a queue that serves ${value('RocketDAOProtocolSettingsDeposit', 'getExpressQueueRate')} express entries for each standard one. The ${councilSeatThreshold} security council or RPL governance can switch deposits off.`,
       },
       operators: {
         value: 'Permissionless',
@@ -246,7 +247,7 @@ export const rocketpool: BaseProject = {
         description: `${oracleQuorum} of ${oracleSetSize} oracle DAO members report the rate ${balanceCadence}, moving it at most ${maxRethDelta} per report. If they stop, the last rate stays in force. The security council can switch reporting off.`,
       },
       exit: {
-        value: 'Burn anytime',
+        value: 'Burn from buffer',
         secondLine: 'instant · no pause',
         sentiment: 'good',
         warning: {
@@ -258,9 +259,9 @@ export const rocketpool: BaseProject = {
       },
       upgrades: {
         value: `Oracle DAO (${oracleQuorum}/${oracleSetSize})`,
-        secondLine: `≥${upgradePathDays}d · council veto`,
+        secondLine: `${upgradePathDays}d · council veto`,
         sentiment: 'warning',
-        description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. The vault and token contracts cannot be upgraded.`,
+        description: `Only the oracle DAO (${oracleQuorum}-of-${oracleSetSize} majority) can change the code: ${voteDelay} before voting, then ${upgradeVetoWindow} in which the ${councilSeatThreshold} security council can veto. Neither is a floor: the oracle DAO can cut its voting delay with no veto, and RPL governance can shorten the veto window to 1 day. The vault and token contracts cannot be upgraded.`,
       },
     },
   },
