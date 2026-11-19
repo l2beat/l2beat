@@ -979,8 +979,8 @@ model GasFeesDaily {
   txCount        Int
   /// Fees paid, in the chain's gas token (ETH, MNT on Mantle).
   totalFeeNative Float
-  /// Fees paid in USD, each transaction at Dune's price of the gas token for its hour. Never null: a day with a fee Dune has no price for is not stored.
-  totalFeeUsd    Float?
+  /// Fees paid in USD, each transaction at Dune's price of the gas token for its hour. A day with a fee Dune has no price for is not stored.
+  totalFeeUsd    Float
   /// The part of the fees paid for posting data to Ethereum, gas token. 0 where the chain reports none (Ethereum, Linea, ZKsync Era, Abstract, Taiko).
   l1FeeNative    Float
   /// The part of the fees paid for blobs, gas token. Ethereum only.
