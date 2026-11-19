@@ -4,7 +4,7 @@ CREATE TABLE "GasFeesDaily" (
     "chain" VARCHAR(32) NOT NULL,
     "txCount" INTEGER NOT NULL,
     "totalFeeNative" DOUBLE PRECISION NOT NULL,
-    "totalFeeUsd" DOUBLE PRECISION,
+    "totalFeeUsd" DOUBLE PRECISION NOT NULL,
     "l1FeeNative" DOUBLE PRECISION NOT NULL,
     "blobFeeNative" DOUBLE PRECISION NOT NULL,
     "baseFeeNative" DOUBLE PRECISION,

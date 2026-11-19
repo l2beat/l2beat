@@ -17,8 +17,8 @@ describeDatabase(GasFeesDailyRepository.name, (db) => {
     await repository.upsertMany([record('ethereum', 1), record('base', 1)])
     const updated = {
       ...record('ethereum', 1),
-      totalFeeUsd: null,
       baseFeeNative: null,
+      medianFeeUsd: null,
     }
     await repository.upsertMany([updated, record('ethereum', 2)])
 
