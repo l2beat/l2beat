@@ -77,7 +77,7 @@ export const COINGECKO_CORRECTIONS: CoingeckoCorrection[] = [
     coingeckoId: 'stakewise-v3-oseth',
     field: 'price',
     reason:
-      "CoinGecko reports osETH at $1,545 from 2026-05-30 22:00 to 2026-05-31 01:00 UTC, and at $2,125 before and $2,128 after. ETH stayed between $2,022 and $2,034 through those hours and DefiLlama has osETH at $2,119 at 00:00, so the 27% drop is a feed error. We store one point a day that far back, so only 00:00 needs a value. CoinGecko's nearest sound hours are five hours apart, so the value is DefiLlama's.",
+      "CoinGecko reports osETH at $1,545 from 2026-05-30 22:00 to 2026-05-31 01:00 UTC, and at $2,125 before and $2,128 after. ETH stayed between $2,022 and $2,034 through those hours and DefiLlama has osETH at $2,119 at 00:00, so the 27% drop is a feed error. We store one point a day that far back, so only 00:00 needs a value. CoinGecko's nearest sound points, 20:00 and 02:00, are six hours apart, so the value is DefiLlama's.",
     evidence: [
       'https://api.coingecko.com/api/v3/coins/stakewise-v3-oseth/market_chart/range?vs_currency=usd&from=1780164000&to=1780207200',
       'https://coins.llama.fi/prices/historical/1780185600/ethereum:0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38',
