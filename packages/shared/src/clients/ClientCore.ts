@@ -26,6 +26,7 @@ export abstract class ClientCore {
     this.rateLimiter = new RateLimiter({
       callsPerMinute: deps.callsPerMinute,
       stepDownOnThrottle: deps.stepDownOnThrottle,
+      onStepDown: (step) => logger.warn('Rate stepped down', step),
     })
     this.metricsAggregator = new ClientMetricsAggregator({
       logger,

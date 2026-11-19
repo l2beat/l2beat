@@ -10,12 +10,25 @@ export interface RateLimiterOptions {
   callsPerMinute: number
   /**
    * Share of the rate given up when the provider refuses a call, at most
-   * once a minute and down to a tenth of `callsPerMinute`. The rate stays
-   * down until the process restarts: it never climbs back by itself, so a
-   * limiter that has settled no longer draws refusals. Zero, the default,
-   * keeps the rate fixed.
+   * once a minute, only once a call has got through since the last step,
+   * and down to a tenth of `callsPerMinute`. The rate stays down until the
+   * process restarts: it never climbs back by itself, so a limiter that
+   * has settled no longer draws refusals. Zero, the default, keeps the
+   * rate fixed.
    */
   stepDownOnThrottle?: number
+  /**
+   * Called on every step. A rate that never moved was never tested, so the
+   * steps, not the rate alone, say whether it was found.
+   */
+  onStepDown?: (step: RateLimiterStepDown) => void
+}
+
+export interface RateLimiterStepDown {
+  from: number
+  to: number
+  /** At the floor the refusals are not about the rate, or not only. */
+  atFloor: boolean
 }
 
 export interface RateLimiterLabelStats {
@@ -65,7 +78,14 @@ export class RateLimiter {
   private lastCalled = 0
   private effective: number
   private readonly stepDownOnThrottle: number
+  private readonly onStepDown?: (step: RateLimiterStepDown) => void
   private steppedDownAt = Number.NEGATIVE_INFINITY
+  /**
+   * Whether a call has succeeded since the last step. A provider that
+   * locks an address out refuses every call for minutes, whatever the
+   * rate, so until one gets through more refusals say nothing new.
+   */
+  private gotThrough = true
   private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
@@ -75,6 +95,7 @@ export class RateLimiter {
     this.callsPerMinute = options.callsPerMinute
     this.effective = options.callsPerMinute
     this.stepDownOnThrottle = options.stepDownOnThrottle ?? 0
+    this.onStepDown = options.onStepDown
   }
 
   /**
@@ -94,17 +115,26 @@ export class RateLimiter {
    * Does nothing unless `stepDownOnThrottle` is set.
    */
   throttled(): void {
-    const now = Date.now()
-    if (
-      this.stepDownOnThrottle === 0 ||
-      now - this.steppedDownAt < STEP_DOWN_INTERVAL_MS
-    ) {
+    if (!this.mayStepDown()) {
       return
     }
-    this.steppedDownAt = now
-    this.effective = Math.max(
-      this.callsPerMinute * LOWEST_SHARE_OF_RATE,
-      this.effective * (1 - this.stepDownOnThrottle),
+    const from = this.effective
+    const floor = this.callsPerMinute * LOWEST_SHARE_OF_RATE
+    const to = Math.max(floor, from * (1 - this.stepDownOnThrottle))
+    if (to === from) {
+      return
+    }
+    this.steppedDownAt = Date.now()
+    this.gotThrough = false
+    this.effective = to
+    this.onStepDown?.({ from, to, atFloor: to === floor })
+  }
+
+  private mayStepDown(): boolean {
+    return (
+      this.stepDownOnThrottle !== 0 &&
+      this.gotThrough &&
+      Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
     )
   }
 
@@ -211,7 +241,10 @@ export class RateLimiter {
     this.inFlightMax = Math.max(this.inFlightMax, this.inFlight)
 
     item()
-      .then((res) => item.resolve(res))
+      .then((res) => {
+        this.gotThrough = true
+        item.resolve(res)
+      })
       .catch((err) => item.reject(err))
       .finally(() => {
         this.inFlight--

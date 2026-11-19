@@ -1,7 +1,11 @@
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 
-import { DEFAULT_RATE_LIMITER_LABEL, RateLimiter } from './RateLimiter'
+import {
+  DEFAULT_RATE_LIMITER_LABEL,
+  RateLimiter,
+  type RateLimiterStepDown,
+} from './RateLimiter'
 
 describe(RateLimiter.name, () => {
   const cases = [
@@ -190,7 +194,7 @@ describe(RateLimiter.name, () => {
     // The rate a limiter settles at is the number a person would otherwise
     // have to guess for the config. A burst of calls refused together is
     // one event, so it must lower the rate once, not once per call.
-    it('lowers the rate by its step at most once a minute', () => {
+    it('lowers the rate by its step at most once a minute', async () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
@@ -203,6 +207,7 @@ describe(RateLimiter.name, () => {
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
 
+        await rateLimiter.call(() => 'got through')
         clock.tick(59_000)
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
@@ -211,6 +216,41 @@ describe(RateLimiter.name, () => {
         rateLimiter.throttled()
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
         expect(rateLimiter.callsPerMinute).toEqual(1_000)
+      } finally {
+        clock.uninstall()
+      }
+    })
+
+    // Some providers lock an address out for minutes after one refusal and
+    // refuse every call meanwhile, whatever the rate. Counting those would
+    // settle the limiter far below the limit. Five refused minutes pass
+    // here, then one call gets through and the next refusal counts again.
+    it('waits for a call to get through before stepping down again', async () => {
+      const clock = FakeTimers.install({ now: 10_000 })
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: 1_000,
+        stepDownOnThrottle: 0.1,
+      })
+      const refusedCall = () =>
+        rateLimiter
+          .call(() => {
+            throw new Error('refused')
+          })
+          .catch(() => {})
+
+      try {
+        rateLimiter.throttled()
+        for (let minute = 0; minute < 5; minute++) {
+          clock.tick(60_000)
+          await refusedCall()
+          rateLimiter.throttled()
+        }
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
+
+        clock.tick(60_000)
+        await rateLimiter.call(() => 'got through')
+        rateLimiter.throttled()
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(810)
       } finally {
         clock.uninstall()
       }
@@ -240,21 +280,32 @@ describe(RateLimiter.name, () => {
     })
 
     // A 429 is not always about the rate. Refusals that never stop must
-    // not grind a client down to nothing.
-    it('stops stepping down at a tenth of the configured rate', () => {
+    // not grind a client down to nothing, and whoever reads the rate has to
+    // be told it stopped at the floor and not at a limit. Ten refused
+    // minutes, each after a call that got through: 1000, 500, 250, 125, 100.
+    it('stops stepping down at a tenth of the configured rate, and says so', async () => {
       const clock = FakeTimers.install({ now: 10_000 })
+      const steps: RateLimiterStepDown[] = []
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
         stepDownOnThrottle: 0.5,
+        onStepDown: (step) => steps.push(step),
       })
 
       try {
         for (let i = 0; i < 10; i++) {
           rateLimiter.throttled()
           clock.tick(60_000)
+          await rateLimiter.call(() => 'got through')
         }
 
         expect(rateLimiter.effectiveCallsPerMinute).toEqual(100)
+        expect(steps).toEqual([
+          { from: 1_000, to: 500, atFloor: false },
+          { from: 500, to: 250, atFloor: false },
+          { from: 250, to: 125, atFloor: false },
+          { from: 125, to: 100, atFloor: true },
+        ])
       } finally {
         clock.uninstall()
       }

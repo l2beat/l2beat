@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { type LogEntry, Logger } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { ClientCore } from './ClientCore'
@@ -93,6 +93,28 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
     expect(clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(900)
   })
 
+  // Why: the rate alone cannot tell a limit that was found from a rate
+  // that never moved, and metrics skip a client that went quiet. The log
+  // is collected through a real logger's transport.
+  it('logs each step the rate takes', async () => {
+    const logged: LogEntry[] = []
+    const logger = new Logger({
+      level: 'WARN',
+      transports: [{ log: (entry) => logged.push(entry), flush: () => {} }],
+    })
+    const { clientCore, http } = mocks(1_000, 0.1, logger)
+    http.fetch.rejectsWithOnce(
+      new Error('HTTP error', { cause: { status: 429 } }),
+    )
+
+    await clientCore.fetch('https://api.test.com/data', {})
+
+    const steps = logged.filter((e) => e.message === 'Rate stepped down')
+    expect(steps.map((e) => e.parameters)).toEqual([
+      expect.subset({ from: 1_000, to: 900, atFloor: false }),
+    ])
+  })
+
   it('leaves the limiter alone on any other failure', async () => {
     const { clientCore, http } = mocks(1_000, 0.1)
     http.fetch.rejectsWithOnce(
@@ -107,7 +129,11 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
   })
 })
 
-function mocks(callsPerMinute?: number, stepDownOnThrottle?: number) {
+function mocks(
+  callsPerMinute?: number,
+  stepDownOnThrottle?: number,
+  logger: Logger = Logger.SILENT,
+) {
   const http = mockObject<HttpClient>({
     fetch: async () => ({ result: 'success' }) as json,
   })
@@ -126,7 +152,7 @@ function mocks(callsPerMinute?: number, stepDownOnThrottle?: number) {
     callsPerMinute: callsPerMinute ?? 100_000,
     stepDownOnThrottle,
     retryStrategy: 'TEST',
-    logger: Logger.SILENT,
+    logger,
     sourceName: 'test',
   })
 
