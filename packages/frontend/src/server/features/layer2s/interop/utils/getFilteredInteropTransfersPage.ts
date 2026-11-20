@@ -5,7 +5,6 @@ import type {
   InteropProtocolTransfersCursor,
   InteropTransfersSort,
 } from '../types'
-import { getTransferValueUsd } from './getTransferValueUsd'
 import { transferTouchesChain } from './transferTouchesChain'
 
 interface TransfersPage {
@@ -113,6 +112,7 @@ function toTransferCursor(
   return {
     timestamp: transfer.timestamp,
     transferId: transfer.transferId,
-    valueUsd: getTransferValueUsd(transfer),
+    // The value the database sorts by: coalesce(srcValueUsd, dstValueUsd).
+    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
   }
 }

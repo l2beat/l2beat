@@ -1201,12 +1201,14 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         beforeEach(async () => {
           await repository.insertMany([
             valued('a', 60, 0.1, 5_000),
+            // b and c share a value and a timestamp, as d and f share the
+            // lack of a value and a timestamp: only transferId orders them.
             valued('b', 50, 29_639.52, undefined),
             // Only the destination is priced.
-            valued('c', 40, undefined, 29_639.52),
+            valued('c', 50, undefined, 29_639.52),
             valued('d', 30, undefined, undefined),
             valued('e', 20, 680.83, 1),
-            valued('f', 10, undefined, undefined),
+            valued('f', 30, undefined, undefined),
             valued('g', 5, 0, undefined),
           ])
         })
@@ -1243,11 +1245,11 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         }[] = [
           {
             sort: { by: 'timestamp', desc: true },
-            expected: ['g', 'f', 'e', 'd', 'c', 'b', 'a'],
+            expected: ['g', 'e', 'f', 'd', 'c', 'b', 'a'],
           },
           {
             sort: { by: 'timestamp', desc: false },
-            expected: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+            expected: ['a', 'b', 'c', 'd', 'f', 'e', 'g'],
           },
           {
             // Equal values newest first, unpriced transfers last.

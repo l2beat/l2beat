@@ -20,7 +20,6 @@ import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getCarriedFrom } from './utils/getCarriedFrom'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
-import { getTransferValueUsd } from './utils/getTransferValueUsd'
 import {
   INTEROP_CHAIN_DETAILS,
   type InteropChainDetails,
@@ -146,7 +145,7 @@ export function toInteropProtocolTransferDetailsItem(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
     ),
-    valueUsd: getTransferValueUsd(transfer),
+    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,
