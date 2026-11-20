@@ -56,18 +56,29 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     )
   }
 
+  const hasLinks = props.values.some((value) => !!value.href)
+  const rosette = (
+    <PizzaRosetteIcon
+      values={props.values}
+      isUnderReview={isUnderReview}
+      background={props.background}
+      className={parameters.rosetteClassName}
+    />
+  )
+
   return (
     <RosetteTooltipContextProvider>
       <Tooltip>
         <div className={cn('relative p-12 pb-7', props.className)}>
-          <TooltipTrigger aria-label="Risk summary">
-            <PizzaRosetteIcon
-              values={props.values}
-              isUnderReview={isUnderReview}
-              background={props.background}
-              className={parameters.rosetteClassName}
-            />
-          </TooltipTrigger>
+          {hasLinks ? (
+            // Slice links sit inside the SVG, so the trigger renders a non-button
+            // wrapper instead of nesting <a> elements inside a <button>.
+            <TooltipTrigger asChild>
+              <div>{rosette}</div>
+            </TooltipTrigger>
+          ) : (
+            <TooltipTrigger aria-label="Risk summary">{rosette}</TooltipTrigger>
+          )}
           <PizzaRosetteLabels
             values={props.values}
             containerSize={parameters.containerSize}
