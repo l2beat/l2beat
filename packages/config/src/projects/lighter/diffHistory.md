@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xc45aaf6fa4bc8e20396b65bcf09285ccd9f82ed7
+
+# Diff at Fri, 20 Nov 2026 12:26:42 GMT:
+
+- id: a6fcf65e
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1795005121
+- current timestamp: 1795177526
+
+## Description
+
+Rotated lighter ms member.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA (eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A)
+    +++ description: None
+```
+
+```diff
+    contract Lighter Multisig (eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045) [GnosisSafe] {
+    +++ description: None
+      values.$members.6:
+-        "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A"
++        "eth:0x6e889Ad7803F9Bd2537710250D046675E9Ea2D79"
+    }
+```
+
 Generated with discovered.json: 0x15d614604346cd84a4f78a659c24453985ee97dd
 
 # Diff at Wed, 18 Nov 2026 13:02:31 GMT:

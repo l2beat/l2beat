@@ -39,18 +39,6 @@ const scMainThreshold = discovery.getContractValue<number>(
   'SecurityCouncil',
   'EIP1271_THRESHOLD',
 )
-const guardiansMemberCount = discovery.getContractValue<string[]>(
-  'Guardians',
-  '$members',
-).length
-const guardiansMainThreshold = discovery.getContractValue<number>(
-  'Guardians',
-  'EIP1271_THRESHOLD',
-)
-const guardiansExtendThreshold = discovery.getContractValue<number>(
-  'Guardians',
-  'EXTEND_LEGAL_VETO_THRESHOLD',
-)
 const zkFoundationStats = discovery.getMultisigStats('ZK Foundation Multisig')
 const zkFoundationEraStats = discovery.getMultisigStats(
   'ZK Foundation Era Multisig',
@@ -130,7 +118,7 @@ const fastestNormalUpgradeD = Math.round(
     upgradeDelayPeriodS) /
     86400,
 )
-const guardianFallbackUpgradeD = Math.round(
+const zkFoundationFallbackUpgradeD = Math.round(
   (protVotingDelayS +
     protVotingPeriodS +
     legalVetoStandardS +
@@ -237,14 +225,8 @@ export const zksync2: ScalingProject = zkStackL2({
       'Members public': `**Mapped** — ${scMemberCount} representatives of different orgs + signer addresses [published in Schedule 3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council).`,
       Charter:
         '[ZKsync Governance Procedures, Schedules 2–3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council) + bylaws of the ZKsync Security Council entity.',
-      'Can bypass DAO?': `**Freeze yes, upgrade no (alone)** — can unilaterally and immideately freeze the protocol: ${formatSeconds(softFreezeS)} soft freeze (${scSoftFreezeThreshold}/${scMemberCount}) or ${formatSeconds(hardFreezeS)} hard freeze (${scHardFreezeThreshold}/${scMemberCount}). Upgrades require approvals from ${guardiansMainThreshold}/${guardiansMemberCount} Guardians and ${zkFoundationStats} ZK Foundation Multisig.`,
-      'DAO can override SC?': `**Partially** — the Token Assembly can pass a Protocol Governor proposal replacing SC members, but it needs SC approval (${scApprovalThreshold}/${scMemberCount}) or ${guardiansMainThreshold}/${guardiansMemberCount} Guardians as fallback. No unconditional tokenholder path.`,
-    },
-    guardians: {
-      Composition: `**${guardiansMainThreshold}/${guardiansMemberCount}** for vetoes and approvals, no fixed terms. Addresses and names of individuals that take Guardian role are [published in Schedule 4](https://docs.zknation.io/zksync-governance-procedures/schedule-4-zksync-guardians).`,
-      Powers: `**Veto + fallback approval + emergency co-sign.** The onchain veto that cancels Token/GovOps proposals during voting delay or vote is no longer held by the Guardians: it moved to the ${zkFoundationEraStats} ZK Foundation Era Multisig on ZKsync Era. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} legal veto period; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
-      'Self-protection':
-        '**Yes** — Guardian membership is changed via Protocol Governor proposal, but Guardians may explicitly veto proposals affecting the Guardian body itself (Schedule 4 §5.2). Token holders have no unconditional onchain removal path.',
+      'Can bypass DAO?': `**Freeze yes, upgrade no (alone)** — can unilaterally and immideately freeze the protocol: ${formatSeconds(softFreezeS)} soft freeze (${scSoftFreezeThreshold}/${scMemberCount}) or ${formatSeconds(hardFreezeS)} hard freeze (${scHardFreezeThreshold}/${scMemberCount}). Emergency upgrades also require the ${zkFoundationStats} ZK Foundation Multisig.`,
+      'DAO can override SC?': `**Partially** — the Token Assembly can pass a Protocol Governor proposal replacing SC members, but it needs SC approval (${scApprovalThreshold}/${scMemberCount}) or the ${zkFoundationStats} ZK Foundation Multisig as fallback. No unconditional tokenholder path.`,
     },
     upgrades: {
       'Normal upgrade path': {
@@ -259,11 +241,11 @@ export const zksync2: ScalingProject = zkStackL2({
           },
           { description: 'L2→L1 message to the ProtocolUpgradeHandler' },
           {
-            description: `${formatSeconds(legalVetoStandardS)} Guardian offchain-veto window (extendable to ${formatSeconds(legalVetoExtendedS)} by ${guardiansExtendThreshold}/${guardiansMemberCount})`,
+            description: `${formatSeconds(legalVetoStandardS)} offchain-veto window (extendable to ${formatSeconds(legalVetoExtendedS)} by the ${zkFoundationStats} ZK Foundation Multisig)`,
             isWait: true,
           },
           {
-            description: `≤${formatSeconds(upgradeWaitOrExpireS)} risk review, which SC approval (${scApprovalThreshold}/${scMemberCount}) short-circuits`,
+            description: `≤${formatSeconds(upgradeWaitOrExpireS)} risk review, which SC approval (${scApprovalThreshold}/${scMemberCount}) short-circuits; ZK Foundation Multisig approval only takes effect after it`,
             isWait: true,
           },
           {
@@ -272,9 +254,9 @@ export const zksync2: ScalingProject = zkStackL2({
           },
           { description: 'Permissionless execution on Ethereum' },
         ],
-        note: `Fastest ≈ **${fastestNormalUpgradeD} days** from submission; Guardian-fallback path ≈ **${guardianFallbackUpgradeD} days**.`,
+        note: `Fastest ≈ **${fastestNormalUpgradeD} days** from submission; ZK Foundation fallback path ≈ **${zkFoundationFallbackUpgradeD} days**.`,
       },
-      'Emergency upgrade path': `**${scMainThreshold}/${scMemberCount} SC + ${guardiansMainThreshold}/${guardiansMemberCount} Guardians + ${zkFoundationStats} ZKsync Foundation, instant**.`,
+      'Emergency upgrade path': `**${scMainThreshold}/${scMemberCount} SC + ${zkFoundationStats} ZK Foundation Multisig, instant**.`,
       'Exit window': `**~${exitWindowD} days** after the vote closes when the SC approves promptly (${formatSeconds(legalVetoStandardS)} veto window + ${formatSeconds(upgradeDelayPeriodS)} timelock). **0** for emergency upgrades.`,
       'Token Program path': {
         steps: [
@@ -295,7 +277,7 @@ export const zksync2: ScalingProject = zkStackL2({
           },
           { description: 'Permissionless execution on Era' },
         ],
-        note: `Grants or modifies capped ZK minting/burning rights. Total ≈ **${tppWallClockD} days**.`,
+        note: `Grants or modifies capped ZK minting/burning rights. Total ≈ **${tppWallClockD} days**. The ${zkFoundationEraStats} ZK Foundation Era Multisig can cancel Token and GovOps proposals before and during the vote.`,
       },
       'GovOps path': `GAPs via GovOps Governor: same ${formatSeconds(tokenVotingDelayS)} + ${formatSeconds(tokenVotingPeriodS)} + ${formatSeconds(tokenTlDelayS)} schedule, but advisory only, implementation is left to the proposer or named parties.`,
     },
@@ -873,6 +855,14 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Guardians dissolved',
+      url: 'https://www.tally.xyz/gov/zksync/proposal/50493255232415902362620838873379866057752952721482013941205421986273471752436?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',
+      date: '2026-11-20T00:00:00Z',
+      description:
+        'ZIP-19 removes the Guardians, the ZK Foundation Multisig takes over their upgrade roles.',
+      type: 'general',
+    },
     {
       title: 'V29 Interop Messaging Upgrade',
       url: 'https://www.tally.xyz/gov/zksync/proposal/40562439712311128665286075271414168289029475306445402072499591795343687723101?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f',

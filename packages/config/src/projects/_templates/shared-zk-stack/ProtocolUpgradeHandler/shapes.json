@@ -14,5 +14,11 @@
     "address": "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811",
     "chain": "ethereum",
     "blockNumber": 26327178
+  },
+  "ProtocolUpgradeHandler_ZIP19.sol": {
+    "hash": "0xac99f73391e8d8423a346e6ae9fd96045e039113d173e2996496a6c9b51c4504",
+    "address": "eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE",
+    "chain": "ethereum",
+    "blockNumber": 26456281
   }
 }
