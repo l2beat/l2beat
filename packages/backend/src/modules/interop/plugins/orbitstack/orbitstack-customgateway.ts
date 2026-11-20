@@ -1,4 +1,4 @@
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
@@ -9,6 +9,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from '../types'
 import {
   L2ToL1Tx,
@@ -59,7 +60,7 @@ const WithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   amount: bigint
   gatewayKey: string
 }>('orbitstack-customgateway.L2ToL1TxWithdrawalInitiated', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 const parseWithdrawalInitiated = createEventParser(
