@@ -105,7 +105,7 @@ export function getPrivacyAdversaryRosetteValues(
   adversaries: PrivacyAdversariesSummary,
 ): RosetteValue[] {
   return adversaries.cells.map((cell) =>
-    toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
+    toPrivacyRosetteValue(cell.id, cell.label, cell.sentiment, cell.reason),
   )
 }
 
@@ -115,6 +115,7 @@ export function getPrivacyAdversarySectionRosetteValue(
   cell: PrivacyAdversaryCell,
 ): RosetteValue {
   return toPrivacyRosetteValue(
+    adversary.id,
     adversary.label,
     cell.sentiment,
     `${adversary.description} Examples: ${adversary.examples}`,
@@ -122,6 +123,7 @@ export function getPrivacyAdversarySectionRosetteValue(
 }
 
 function toPrivacyRosetteValue(
+  id: PrivacyAdversaryId,
   name: string,
   sentiment: PrivacyAdversarySentiment,
   description: string,
@@ -131,12 +133,13 @@ function toPrivacyRosetteValue(
     value: PRIVACY_ADVERSARY_VERDICT[sentiment],
     sentiment,
     description,
+    href: `#${getPrivacyAdversaryBlockId(id)}`,
   }
 }
 
 export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
 
-/** Anchor of one adversary's block on the project page, which advice steps link. */
+/** Anchor of one adversary's block on the project page, which rosette slices and advice steps link. */
 export function getPrivacyAdversaryBlockId(id: PrivacyAdversaryId): string {
   return `${PRIVACY_ADVERSARIES_SECTION_ID}-${kebabCase(id)}`
 }
