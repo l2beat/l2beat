@@ -9,9 +9,9 @@ export interface BlockHashSource {
 }
 
 /**
- * Reads the blocks the head follower stored, counted already, and fetches only
- * the ones it has not: before it started, after a reorg it gave up on, or
- * once they are cleaned up. Stored counts keep the adjustment of when they
+ * Reads the blocks the live indexer stored, counted already, and fetches only
+ * the ones it has not: before it started, after a reorg past every block the
+ * chain head remembered, or once they are cleaned up. Stored counts keep the adjustment of when they
  * were stored, so recounting a project also means deleting its stored blocks
  */
 export class StoredBlockSource implements ActivityBlockSource {
@@ -40,7 +40,7 @@ export class StoredBlockSource implements ActivityBlockSource {
       onChain.map((block) => block.number),
     )
     if (missing.length > 0) {
-      this.logger.info('Fetching blocks the head follower did not store', {
+      this.logger.info('Fetching blocks the live indexer did not store', {
         from,
         to,
         stored: stored.length,
@@ -63,8 +63,8 @@ export class StoredBlockSource implements ActivityBlockSource {
   }
 
   /**
-   * A reorg while the follower was down can leave stored blocks the chain no
-   * longer has, and the follower finds them only on its next run. Each block
+   * A reorg while the chain head was down can leave stored blocks the chain no
+   * longer has, and the head finds them only on its next tick. Each block
    * was stored as the child of the one before, so a run of them is still on
    * the chain when its newest block is. A run that cannot be checked is
    * fetched, as the fallback may reach other RPCs

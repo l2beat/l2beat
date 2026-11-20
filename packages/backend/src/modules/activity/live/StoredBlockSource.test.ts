@@ -56,7 +56,7 @@ describe(StoredBlockSource.name, () => {
       expect(fallback.getBlocks).toHaveBeenOnlyCalledWith(1, 2)
     })
 
-    it('fetches stored blocks a reorg replaced while the follower was down', async () => {
+    it('fetches stored blocks a reorg replaced while the chain head was down', async () => {
       // Methodology: blocks 1-3 were stored, then a reorg replaced 3, and so
       // 1 and 2 too as far as the stored run can tell
       const fallback = mockFallback()
