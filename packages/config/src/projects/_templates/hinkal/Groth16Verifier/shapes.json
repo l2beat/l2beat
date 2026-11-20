@@ -1,0 +1,92 @@
+{
+  "mainEVMCircuit1x2x1v4.sol": {
+    "hash": "0x2ffcfb47633d526e1eb25479c87644881100318555a609dab66a0d8296136642",
+    "address": "eth:0x2cd65aC8E4bF2Ac3d21fDb0b9330CF6233b1Ca4d",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit2x2x2v4.sol": {
+    "hash": "0x668081896b4f1ec0ef20912a04266861457f05d667d70cab17d7e2993133ddaa",
+    "address": "eth:0x54828b631Df9F0D804b1A316d8cEBcF1773b4484",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit2x6x1v4.sol": {
+    "hash": "0xc1352a4cf89154dc54a80c236dc8896093678b1be38aab2429b2dbeeac1fe2af",
+    "address": "eth:0x637b83147535231a4488d472490226dF69AB0408",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit2x2x1v4.sol": {
+    "hash": "0x929a53bb279dac1dde96a953f7fcf1dda89b62d6a7255605ad92d11ac4aee0ad",
+    "address": "eth:0x64489e6F9C2b0767d7b57CD4c896EcAa4E98eA61",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit1x2x2v4.sol": {
+    "hash": "0xf4ed8e0ab462f3878c03a1a8bb35b3b16aee405e5470f39a252a07246667f479",
+    "address": "eth:0x6Fc16639da7bd937E283eE8d460D4DbB57fBAB79",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit1x6x1v4.sol": {
+    "hash": "0x06c8a1ff11e387ee18123f0282d2f11af9773ff7009e0bface5529b4f00a36cd",
+    "address": "eth:0x7DEDDE9C37c81a6d30D3934933b73B8E42DeB14D",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit5x2x1v4.sol": {
+    "hash": "0x27a4df08dd4ec470411cdeaf08c46634e0de071a2d75b6aae02096c715434532",
+    "address": "eth:0x843cA657cE751A0B5aD601deC214953e9E7E155F",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit5x6x1v4.sol": {
+    "hash": "0xc2255e9e3e5de94b0acf975ad655129e3a155c5743941163d960498842ae9e5c",
+    "address": "eth:0x846D2B3b5cc5B6AA94a0b4ca9814EA2a353570a9",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit4x6x1v4.sol": {
+    "hash": "0x3e69b069768bd616e6790accc4000e7c41a1ccc215fadf0c5cdc2d24143d3912",
+    "address": "eth:0xA8d3E41A1531dC002B51F00afdC6FAFe7BD5cAB7",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuitMin0v4.sol": {
+    "hash": "0xff43947da777fd5168fd77816c8cad705b84904b0be82cf51bec8fd886ba47fb",
+    "address": "eth:0xb1c3C21f4DCc7d95B3D514f4Fd5A70C89016dE8c",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit1x6x2v4.sol": {
+    "hash": "0xfee01728fb4f7e1498847999c1a6bf75c035dc37948507210ae8d0fd575dd456",
+    "address": "eth:0xc0291cCc4e8E86C88106B4ABb194812C7191fc4A",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit2x6x2v4.sol": {
+    "hash": "0xb5cc68c23a8fa5f63b3a0d528b03402abfaaab18398bb4f55dc7b8a4324be141",
+    "address": "eth:0xC3681c62468784b49BbdACe3bF5E50ED1b0163b0",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit3x2x1v4.sol": {
+    "hash": "0xd60e9618748afe121bb359756a643bdfb1f6764b6e3d731e7830badf9af14a82",
+    "address": "eth:0xCE6A76b544d7CcbD2dD5F649479304866810541E",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit3x6x1v4.sol": {
+    "hash": "0xdeba6f94ccceaacb68b925350648c45c9cd0227b55b792b23b4dc0085e2313b0",
+    "address": "eth:0xdC93693a1Cd128b15094514EFe3C35F413D841a8",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "mainEVMCircuit4x2x1v4.sol": {
+    "hash": "0x8174c3d11aada391df6fae25bb5f88943a109436e159c49ee878966597959614",
+    "address": "eth:0xE8405c68A5c0aFF32128FDe91a2f059D7fF4DC89",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  }
+}

@@ -28,6 +28,7 @@ import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
+import { hinkal } from '../projects/hinkal/hinkal'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { interfold } from '../projects/interfold/interfold'
@@ -157,6 +158,7 @@ export const refactored: BaseProject[] = [
   // privacy
   cloaked,
   fluidkey,
+  hinkal,
   privacyPools,
   privacyPoolsV2,
   railgun,

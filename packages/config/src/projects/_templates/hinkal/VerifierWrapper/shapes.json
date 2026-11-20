@@ -1,0 +1,92 @@
+{
+  "VerifierEVM4x6x1v4.sol": {
+    "hash": "0xebb20aa181e1d796feb60812f2b5bbe8700645fb698145d7f244bae6a7f8ac1b",
+    "address": "eth:0x272738a20d8EC72C3b6CA88f2CDE9FDc09f66634",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM2x2x2v4.sol": {
+    "hash": "0x616329b2b4c9decb92bf534408e69ede0999f2ba818164512a74f79e681f74db",
+    "address": "eth:0x27b498B9D7c97CD26501551CB20b1535B0dFE0A8",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM2x6x2v4.sol": {
+    "hash": "0xf9e0bdb2200736fb482e848c8a0f16b041685ffc1bbf2f1f56fabb7208cd4684",
+    "address": "eth:0x30c17EbC851203bc3d756C3afAB2D0a3d98138cC",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM2x2x1v4.sol": {
+    "hash": "0x8b790069e3fd575532e69326d79df597f374576564856ce0dbe437b86caf0aca",
+    "address": "eth:0x3ad4aA1cf04a6f36f98fFCCc2CE63B2736b01C69",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM4x2x1v4.sol": {
+    "hash": "0xcb60284dbd680939d9ac552318d76d5f2f6831ac2d2d3d247ae662a466725948",
+    "address": "eth:0x5A9411e5F21e6c970773Ff708f931EE2cd12bE43",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVMMin0v4.sol": {
+    "hash": "0x777f9314febadf648777522a263bc73ff66e51b69e061651020f60cd1ea4d1d3",
+    "address": "eth:0x7a8Ff2a17bA07854e9A4f557f5A58426b680C510",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM3x2x1v4.sol": {
+    "hash": "0xd182dc28fbcbe5283a188d337fc22694aebcb74e82e8ed6a1e5e64be8e2fbef5",
+    "address": "eth:0x7b5dF2116a6835Ae5F151E5528d86C5426f854d5",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM1x6x2v4.sol": {
+    "hash": "0x0c2a88a17067666bbb6ead9801ea0de61ee17c0b5073b9fdb762e4089fa1d744",
+    "address": "eth:0x7B723617244a925c6fC723CF8d705Db2dc3654f6",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM1x2x1v4.sol": {
+    "hash": "0x4821dd148e002e7a462f79e32a04f76c9542667d074adff34a9a74a23c006511",
+    "address": "eth:0x8c16D510bD236479bc4a61819599338bebe26c36",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM5x2x1v4.sol": {
+    "hash": "0x84eb4bad62a241df67b584f679c32b54223d913dcdbe705c292ccbcd49d34050",
+    "address": "eth:0x9A2eEedfcc80Ef0B398cb20Ed6B7c4bE183C7Bd1",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM5x6x1v4.sol": {
+    "hash": "0xa0729d26cd2078d8d78cf7d05ecb5b93b44e81f15e375885b2b33c41b86cf9d2",
+    "address": "eth:0xA02c9A53A8B1B45d0AD949e4E904749A6D33A7b3",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM2x6x1v4.sol": {
+    "hash": "0xf09a3f700c110448ae007cbce919aceeb11fa837f3301d4d0bb9e78da1e6f465",
+    "address": "eth:0xa1c4DEf5f62469ea9059305112E4D07b66a8e4a3",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM1x2x2v4.sol": {
+    "hash": "0x2fc1f0794d6cce775acebb2245e23521a17d4bd37bc817933b37d57fc9c064de",
+    "address": "eth:0xd7d9eBEDb36C80265B83FC69A83134C90352a091",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM3x6x1v4.sol": {
+    "hash": "0x365f33eec4911e94938fac456a25bbc7ebb3b0b69a443f787648993845df5574",
+    "address": "eth:0xE38b4cb3B37268e1B2f423B7af03125233bA5fAB",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  },
+  "VerifierEVM1x6x1v4.sol": {
+    "hash": "0x3f7e2b5b68904913e432a4b83c16cedbbdd574eaea3cae268914cfdf988882f6",
+    "address": "eth:0xE64C0Ee4fB95621203151bEf3c9e58737CdBC126",
+    "chain": "ethereum",
+    "blockNumber": 26450258
+  }
+}

@@ -1,0 +1,3 @@
+Hinkal's {{multisig}} multisig acts through a timelock with a {{upgradeDelay}} delay. The pool is immutable, but the timelock registers its verifiers and replaces the HinkalHelper, which builds the public inputs every proof is checked against. Either change can release every deposit. The timelock also sets the relayer allowlist, registers external actions and upgrades the Emporium.
+
+One EOA upgrades the ReceiveVaultFactory behind deposit addresses without delay. It also sets the allowed recipients of the LI.FI and deposit actions. The HinkalFactory, the contract that deployed the pool, also holds the role that registers external actions.

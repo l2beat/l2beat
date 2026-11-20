@@ -297,4 +297,24 @@ export const TRUSTED_SETUPS = {
       'Circuit-specific trusted setup for the Groth16 transact circuit over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions from 120 keys, and one is tied to a public account, so the number of independent participants is unknown. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/TacitPay.md'),
   },
+  Hinkal: {
+    id: 'Hinkal',
+    name: 'Hinkal circuit setups',
+    risk: 'red',
+    contributionCount: 1,
+    phases: {
+      phase1: {
+        unit: 'contributions',
+        description: 'The Powers of Tau file is not specified.',
+      },
+      phase2: {
+        count: 1,
+        unit: 'contributions',
+        description: 'Per circuit, as recorded in its proving key.',
+      },
+    },
+    shortDescription:
+      'Circuit-specific trusted setups for the 15 Groth16 circuits of the Hinkal pool over BN254. Each proving key records one phase 2 contribution, and no ceremony record is published. Whoever made a contribution can forge proofs for its circuit unless they destroyed its secret.',
+    longDescription: readMarkdown('common/trustedSetups/Hinkal.md'),
+  },
 } as const satisfies Record<string, TrustedSetup>

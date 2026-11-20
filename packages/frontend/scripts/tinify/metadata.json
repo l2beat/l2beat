@@ -1631,5 +1631,8 @@
   "static/icons/derivev3.png": "5f92f086afad4f89a19ff955627c6bc8",
   "static/meta-images/layer2s/projects/derivev3/opengraph-image.png": "d07aa59a7c4e19a0073a80680f7fd089",
   "static/meta-images/publications/on-builder-enforced-security.png": "686b1dc52f64e84271f7e55d94dc231b",
-  "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e"
+  "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e",
+  "static/icons/hinkal.png": "e03631fbc2a18705d30243a77fa8ee44",
+  "static/meta-images/privacy/projects/hinkal/opengraph-image.png": "7d6f0161b39e4e79676521371b114144",
+  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "9dc8cc1109d92955c7234bc6e83ade2f"
 }

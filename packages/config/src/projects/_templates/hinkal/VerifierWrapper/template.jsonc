@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "Checks the number of public inputs and forwards the proof to the Groth16 verifier of one circuit size."
+}

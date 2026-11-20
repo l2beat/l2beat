@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LifiExternalAction",
+  "description": "External action of the pool for swaps and bridges. Receives tokens spent from private notes, calls the LI.FI router with them and returns the output to the pool or pays it to an allowed recipient.",
+  "ignoreRelatives": ["hinkalHelper", "router"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the allowed recipients of swap outputs and the helper contract that computes the fee."
+        }
+      ]
+    },
+    "hinkalHelper": {
+      "description": "Helper contract whose fee formula is applied to swap outputs."
+    }
+  }
+}

@@ -34,5 +34,11 @@
     "address": "eth:0x4e29715b7Ca2569678027c01627D936235eA36De",
     "chain": "ethereum",
     "blockNumber": 26326688
+  },
+  "HinkalTimelockController.sol": {
+    "hash": "0x1823deb9a6d86ce03cb4b563fa31b394525031e20643e24b69da8c8704dc3d79",
+    "address": "eth:0xF04310839973454155d9886a4023451F8D3Db7D0",
+    "chain": "ethereum",
+    "blockNumber": 26450258
   }
 }
