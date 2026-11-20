@@ -20,6 +20,10 @@ export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
 const columnHelper = createColumnHelper<TransferRow>()
 
+/**
+ * Timestamp and Value are sortable, and their ids are the server's sort keys.
+ * Pair with `useTransfersSorting`: the table must not sort these itself.
+ */
 export function getTransferColumns(
   selectedChains?: InteropSelection,
   {
@@ -32,7 +36,7 @@ export function getTransferColumns(
   const columns = [
     columnHelper.accessor('timestamp', {
       header: 'Timestamp',
-      enableSorting: false,
+      sortDescFirst: true,
       cell: (ctx) => (
         <StackedUtcDateTime timestamp={ctx.row.original.timestamp} />
       ),
@@ -88,7 +92,7 @@ export function getTransferColumns(
     }),
     columnHelper.accessor('valueUsd', {
       header: 'Value',
-      enableSorting: false,
+      sortDescFirst: true,
       cell: (ctx) => {
         const { valueUsd } = ctx.row.original
         if (valueUsd === undefined) return EM_DASH
