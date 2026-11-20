@@ -12,7 +12,7 @@ describe(getLiquidStakingSummary.name, () => {
     timestamp: number,
     ethStaked: number | null,
     projects: Record<string, number | null>,
-  ) => ({ timestamp, ethStaked, ethPrice: 1, projects })
+  ) => ({ timestamp, ethStaked, ethPrice: timestamp / 100, projects })
 
   it('reads the latest stake and its shares in ETH', () => {
     const summary = getLiquidStakingSummary(
@@ -27,7 +27,8 @@ describe(getLiquidStakingSummary.name, () => {
     expect(summary).toEqual({
       timestamp: 200,
       ethStaked: 50,
-      ethPrice: 1,
+      ethPrice: 2,
+      sharesEthPrice: 2,
       ethSupply: 200,
       supplyShare: 0.25,
       liquid: { eth: 25, share: 0.5 },
@@ -56,6 +57,8 @@ describe(getLiquidStakingSummary.name, () => {
     )
 
     expect(summary?.supplyShare).toEqual(0.25)
+    expect(summary?.ethPrice).toEqual(2)
+    expect(summary?.sharesEthPrice).toEqual(1)
     expect(summary?.supplySplit).toEqual({
       liquid: { eth: 10, share: 0.05 },
       others: { eth: 30, share: 0.15 },
