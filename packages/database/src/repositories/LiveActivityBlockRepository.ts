@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { LiveActivityBlock } from '../kysely/generated/types'
 
@@ -12,6 +12,14 @@ export interface LiveActivityBlockRecord {
   count: number
   uopsCount: number | null
   gasUsed: number
+}
+
+export interface LiveActivityHourRecord {
+  timestamp: UnixTime
+  count: number
+  /** User operations, or transactions for blocks without them counted */
+  uopsCount: number
+  lastTimestamp: UnixTime
 }
 
 function toRecord(row: Selectable<LiveActivityBlock>): LiveActivityBlockRecord {
@@ -85,6 +93,51 @@ export class LiveActivityBlockRepository extends BaseRepository {
       .orderBy('number')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /**
+   * The project's blocks above the number, oldest hour first. None unless
+   * they run on from it unbroken, as hours missing blocks would undercount
+   */
+  async getContiguousHoursAfter(
+    projectId: ProjectId,
+    number: number,
+  ): Promise<LiveActivityHourRecord[]> {
+    const { rows } = await sql<{
+      timestamp: Date
+      blocks: string
+      count: string
+      uopsCount: string
+      firstNumber: number
+      lastNumber: number
+      lastTimestamp: Date
+    }>`
+      SELECT
+        date_trunc('hour', "timestamp") AS "timestamp",
+        count(*) AS "blocks",
+        sum("count") AS "count",
+        sum(coalesce("uopsCount", "count")) AS "uopsCount",
+        min("number") AS "firstNumber",
+        max("number") AS "lastNumber",
+        max("timestamp") AS "lastTimestamp"
+      FROM "LiveActivityBlock"
+      WHERE "projectId" = ${projectId.toString()} AND "number" > ${number}
+      GROUP BY 1
+      ORDER BY 1
+    `.execute(this.db)
+    const blocks = rows.reduce((sum, row) => sum + Number(row.blocks), 0)
+    if (
+      rows[0]?.firstNumber !== number + 1 ||
+      blocks !== (rows.at(-1)?.lastNumber ?? number) - number
+    ) {
+      return []
+    }
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
+    }))
   }
 
   async deleteByProjectAfter(

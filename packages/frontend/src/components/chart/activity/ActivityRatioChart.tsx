@@ -1,4 +1,4 @@
-import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -9,8 +9,6 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
-import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
@@ -20,9 +18,10 @@ interface ActivityRatioChartDataPoint {
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
-  resolution?: ActivityResolution
   isLoading: boolean
   isPlaceholderData: boolean
+  /** The period a point covers, as its tooltip's title */
+  formatPeriod: (timestamp: number) => string
 }
 
 export function ActivityRatioChart({
@@ -30,7 +29,7 @@ export function ActivityRatioChart({
   isLoading,
   isPlaceholderData,
   syncedUntil,
-  resolution = 'day',
+  formatPeriod,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -67,7 +66,7 @@ export function ActivityRatioChart({
         }}
         syncedUntil={syncedUntil}
         renderTooltip={(row) => (
-          <ActivityCustomTooltip row={row} resolution={resolution} />
+          <ActivityCustomTooltip row={row} formatPeriod={formatPeriod} />
         )}
       />
     </ChartContainer>
@@ -76,21 +75,16 @@ export function ActivityRatioChart({
 
 function ActivityCustomTooltip({
   row,
-  resolution,
+  formatPeriod,
 }: {
   row: ActivityRatioChartDataPoint
-  resolution: ActivityResolution
+  formatPeriod: (timestamp: number) => string
 }) {
-  const timestamp = row.timestamp
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatRange(
-            timestamp,
-            timestamp + UnixTime.periodToSeconds(resolution),
-          )}
+          {formatPeriod(row.timestamp)}
         </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">

@@ -29,8 +29,8 @@ import { tinted } from '~/components/core/chart/tint'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
-import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
+import { formatActivityPeriod } from './utils/activityPeriod'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
@@ -38,6 +38,8 @@ type SeriesKey = 'ethereum' | 'projects'
 
 interface ActivityChartDataPoint {
   timestamp: number
+  /** Where a period still under way ends so far */
+  periodEnd?: number
   projects?: number | null
   ethereum: number | null
 }
@@ -159,7 +161,7 @@ export function ActivityChart({
 }
 
 export function ActivityCustomTooltip<
-  T extends { timestamp: number },
+  T extends { timestamp: number; periodEnd?: number },
   K extends string,
 >({
   row,
@@ -176,14 +178,14 @@ export function ActivityCustomTooltip<
   resolution?: ActivityResolution
 }) {
   const timestamp = row.timestamp
-  const resolutionSeconds = UnixTime.periodToSeconds(resolution)
+  const end = row.periodEnd ?? timestamp + UnixTime.periodToSeconds(resolution)
   const payload = getTooltipEntries(row, keys, { skipNull })
 
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatRange(timestamp, timestamp + resolutionSeconds)}
+          {formatActivityPeriod(timestamp, resolution, end)}
         </ChartTooltipTitle>
         <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
@@ -207,7 +209,7 @@ export function ActivityCustomTooltip<
             <ChartTooltipRow key={entry.name} name={entry.name}>
               <ChartTooltipValue
                 value={entry.value}
-                format={(value) => formatInteger(value * resolutionSeconds)}
+                format={(value) => formatInteger(value * (end - timestamp))}
                 className="tabular-nums"
               />
             </ChartTooltipRow>

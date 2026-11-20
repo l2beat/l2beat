@@ -1,6 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -11,11 +10,14 @@ import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import {
+  type ActivityChartCounts,
+  useActivityChartPoints,
+} from './useActivityChartPoints'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -44,32 +46,8 @@ export function EthereumActivityChart({
 
   const type = getChartType(category)
 
-  const chartData = useMemo(
-    () =>
-      chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => {
-        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-        return {
-          timestamp,
-          ethereum:
-            ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
-        }
-      }),
-    [chart?.data, metric],
-  )
-
-  const ratioData = useMemo(() => {
-    return chart?.data.map(([timestamp, ethereumTx, ethereumUops]) => ({
-      timestamp,
-      ratio:
-        ethereumTx !== null && ethereumUops !== null
-          ? ethereumTx === 0
-            ? 1
-            : ethereumUops / ethereumTx
-          : null,
-    }))
-  }, [chart?.data])
-
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
+  const { chartData, ratioData, timeRange, formatPeriod } =
+    useActivityChartPoints(chart, toCounts, 'day', metric)
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
@@ -98,6 +76,7 @@ export function EthereumActivityChart({
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
+          formatPeriod={formatPeriod}
           isLoading={isLoading}
         />
       </div>
@@ -120,4 +99,12 @@ export function EthereumActivityChart({
       />
     </div>
   )
+}
+
+function toCounts([timestamp, tx, uops]: [
+  number,
+  number | null,
+  number | null,
+]): ActivityChartCounts {
+  return { timestamp, ethereum: { tx, uops } }
 }
