@@ -17,6 +17,11 @@ export interface CoveredUnit {
   first: number
   unit: Unit
   auditedFile?: { object: string; file: Omit<AuditedFile, 'blob'> }
+  /**
+   * Reports that only imply the matched code, see
+   * docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md.
+   */
+  impliedBy?: string[]
 }
 
 const UNIT_ID_LENGTH = 12
@@ -55,7 +60,7 @@ function toUnit(
   declaration: Declaration,
   match: Match | undefined,
   code: AuditedCode,
-): Pick<CoveredUnit, 'unit' | 'auditedFile'> {
+): Pick<CoveredUnit, 'unit' | 'auditedFile' | 'impliedBy'> {
   const { lines } = declaration
   const unit: Unit = {
     name,
@@ -81,7 +86,11 @@ function toUnit(
     unit.audited.name = candidate.name
   }
   unit.reports = reportsOf(candidate.objects, code)
-  const findings = findingsOf(candidate.objects, code)
+  // Findings are located in named files; implied copies carry none.
+  const named = candidate.objects.filter((o) => !code.implied?.has(o))
+  const namedReports = new Set(reportsOf(named, code))
+  const impliedBy = unit.reports.filter((report) => !namedReports.has(report))
+  const findings = findingsOf(named, code)
   if (findings !== undefined) {
     unit.findings = findings
   }
@@ -97,6 +106,7 @@ function toUnit(
       object: occurrence.object,
       file: { repository, commit, path },
     },
+    ...(impliedBy.length > 0 ? { impliedBy } : {}),
   }
 }
 

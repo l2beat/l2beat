@@ -1,0 +1,770 @@
+{
+  "schema_version": "0.1.0",
+  "project": "uniswapv2",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
+  },
+  "reports": {
+    "dapp-org-uniswap-v2-2020-05": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "Uniswap/v2-core",
+          "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+          "nodes": [
+            {
+              "name": "UniswapV2ERC20",
+              "kind": "contract",
+              "path": "contracts/UniswapV2ERC20.sol",
+              "state": "included"
+            },
+            {
+              "name": "UniswapV2Factory",
+              "kind": "contract",
+              "path": "contracts/UniswapV2Factory.sol",
+              "state": "included"
+            },
+            {
+              "name": "UniswapV2Pair",
+              "kind": "contract",
+              "path": "contracts/UniswapV2Pair.sol",
+              "state": "included"
+            },
+            {
+              "name": "Math",
+              "kind": "library",
+              "path": "contracts/libraries/Math.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/libraries/SafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "UQ112x112",
+              "kind": "library",
+              "path": "contracts/libraries/UQ112x112.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 4, "uses"],
+            [1, 2, "uses"],
+            [2, 0, "inherits"],
+            [2, 4, "uses"],
+            [2, 5, "uses"],
+            [2, 3, "uses"]
+          ],
+          "interfaces": 5,
+          "explicitness": {
+            "own": { "named": 6, "total": 6 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    }
+  },
+  "reportInfo": {
+    "abdk-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "ABDK Consulting Smart Contract Audit: Uniswap V3",
+      "auditor": "ABDK Consulting",
+      "date": "2021-03-23",
+      "document": "uniswapv3/reports/audit-2.pdf"
+    },
+    "dapp-org-uniswap-v2-2020-05": {
+      "collections": ["uniswapv2"],
+      "title": "Uniswap V2 Audit Report",
+      "auditor": "dapp.org",
+      "date": "2020-04-30",
+      "document": "uniswapv2/reports/dapp.org - Uniswap V2 Audit Report.html"
+    },
+    "openzeppelin-compound-alpha-governance-2020-02": {
+      "collections": ["compound"],
+      "title": "Compound Alpha Governance System Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2020-02-25",
+      "document": "compound/reports/OpenZeppelin - Compound Alpha Governance System Audit.html"
+    },
+    "openzeppelin-compound-governor-bravo-2021-02": {
+      "collections": ["compound"],
+      "title": "Compound Governor Bravo Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2021-02-12",
+      "document": "compound/reports/OpenZeppelin - Compound Governor Bravo Audit.html"
+    },
+    "openzeppelin-compound-timelock-2019-10": {
+      "collections": ["compound"],
+      "title": "Compound Finance - Timelock Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2019-10-23",
+      "document": "compound/reports/OpenZeppelin - Compound Timelock Audit.html"
+    },
+    "solmate-v6__audits__v6-Fixed-Point-Solutions": {
+      "collections": ["_libs/solmate"],
+      "title": "solmate Smart Contract Library Assessment",
+      "auditor": "Fixed Point Solutions, LLC",
+      "date": "2021-12-31",
+      "document": "_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
+    },
+    "trail-of-bits-celo-l2-2024-12-19": {
+      "collections": ["celo"],
+      "title": "cLabs Celo L2 Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2024-12-19",
+      "document": "celo/reports/Trail of Bits - Celo L2.pdf"
+    },
+    "trailofbits-compound-governance-2020-02": {
+      "collections": ["compound"],
+      "title": "Compound Governance Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2020-02-28",
+      "document": "compound/reports/Trail of Bits - Compound Governance.pdf"
+    },
+    "trailofbits-uniswap-v3-core-2021-03": {
+      "collections": ["uniswapv3"],
+      "title": "Uniswap V3 Core Security Assessment",
+      "auditor": "Trail of Bits",
+      "date": "2021-03-12",
+      "document": "uniswapv3/reports/audit.pdf"
+    },
+    "verilog-celo-monorepo-prs-9798-10159-2023-03": {
+      "collections": ["celo"],
+      "title": "Celo Monorepo Report (PR Audit #9798-#10159)",
+      "auditor": "Verilog Solutions",
+      "date": "2023-03-09",
+      "document": "celo/reports/Verilog - Celo Monorepo PRs 9798-10159.js"
+    }
+  },
+  "collections": {
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
+    "uniswapv2": { "name": "Uniswap V2", "kind": "project" },
+    "compound": { "name": "Compound", "kind": "project" },
+    "_libs/solmate": { "name": "Solmate", "kind": "library" },
+    "celo": { "name": "Celo", "kind": "project" }
+  },
+  "auditedFiles": {
+    "0a8da8e69260": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IWETH.sol",
+      "blob": "0a8da8e69260936480af9d197dd093a36f3e8545"
+    },
+    "161ab62324e5": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Factory.sol",
+      "blob": "161ab62324e50c0767cd2541a582edfb4982dd13"
+    },
+    "1aefb612aefb": {
+      "repository": "compound-finance/compound-protocol",
+      "commit": "55729b31b85220ab42e26d7b6db0ff6c0eb0dd23",
+      "path": "contracts/Timelock.sol",
+      "blob": "1aefb612aefb837c0e25d4b6198e66d00a7d1bd4"
+    },
+    "1f419229f028": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
+      "blob": "1f419229f028733e0b921efee4438ce67f265008"
+    },
+    "3b77ba02ba7b": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "a3f69611180ee008cffd4048ce9137271bfe1a83",
+      "path": "contracts/Governance/GovernorBravoDelegator.sol",
+      "blob": "3b77ba02ba7ba9dd38d830d37cddb7fe448a2b74"
+    },
+    "4180878e9cc1": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "413fce0c4e3b97f80465000354ef8f4091c2de81",
+      "path": "contracts/Governance/GovernorBravoInterfaces.sol",
+      "blob": "4180878e9cc17f4954183cdf441a59d28221ad8d"
+    },
+    "45ff1763897f": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/UniswapV2ERC20.sol",
+      "blob": "45ff1763897fc57896070a806fefcf7ddb11b39a"
+    },
+    "545b136a90f1": {
+      "repository": "Arr00-Blurr/compound-protocol",
+      "commit": "149849ddc9528b5675ab5937a2abd4f0b8995e68",
+      "path": "contracts/Governance/GovernorBravoDelegate.sol",
+      "blob": "545b136a90f166189b797a93283d1efbbe6f4915"
+    },
+    "5f9c76532cd9": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/libraries/SafeMath.sol",
+      "blob": "5f9c76532cd919f7a6217f790ffc7686af998041"
+    },
+    "73e366d021d0": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/libraries/UQ112x112.sol",
+      "blob": "73e366d021d04753ccfc2cac7632b556e5e4ca4a"
+    },
+    "7c655b3cf914": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2ERC20.sol",
+      "blob": "7c655b3cf9146d4f25221e2cc82cd0d5c0a69027"
+    },
+    "7c781dbafd08": {
+      "repository": "Uniswap/v3-core",
+      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "path": "contracts/interfaces/IERC20Minimal.sol",
+      "blob": "7c781dbafd0895434bbc9e31cc8b2db1bb6318d1"
+    },
+    "80d6a937b1fa": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/UniswapV2Pair.sol",
+      "blob": "80d6a937b1fa4073bf8baeadbd74073d8981a532"
+    },
+    "9f14b7120df0": {
+      "repository": "celo-org/celo-monorepo",
+      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Callee.sol",
+      "blob": "9f14b7120df040b275eee3b2fb5d5c266d669cde"
+    },
+    "a61d24e44aa7": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/UniswapV2Factory.sol",
+      "blob": "a61d24e44aa7d62ce224f771bf9e21e3f1b68027"
+    },
+    "ada374a3dd10": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/libraries/Math.sol",
+      "blob": "ada374a3dd1003c369c0d8a1c88218eb8d0211d1"
+    },
+    "c31e4d7a3d99": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IERC20.sol",
+      "blob": "c31e4d7a3d994968a226d7dd05cbcddcada33209"
+    },
+    "fa4488edf9a3": {
+      "repository": "Rari-Capital/solmate",
+      "commit": "134f10afd9c996cee217aec6274839f56c742eac",
+      "path": "src/utils/SafeTransferLib.sol",
+      "blob": "fa4488edf9a35ab5612090e4e63efc8c79e05795"
+    }
+  },
+  "units": {
+    "338dd97e6505": {
+      "strict": {
+        "name": "IUniswapV2Pair",
+        "kind": "interface",
+        "lines": 50,
+        "status": "identical",
+        "audited": { "object": "1f419229f028", "lines": [3, 55] },
+        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+      }
+    },
+    "3382aa985d0a": {
+      "strict": {
+        "name": "IUniswapV2ERC20",
+        "kind": "interface",
+        "lines": 21,
+        "status": "identical",
+        "audited": { "object": "7c655b3cf914", "lines": [3, 26] },
+        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+      }
+    },
+    "87d0c9824d32": {
+      "strict": {
+        "name": "SafeMath",
+        "kind": "library",
+        "lines": 13,
+        "status": "identical",
+        "audited": { "object": "5f9c76532cd9", "lines": [5, 17] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "64454eef3b18": {
+      "strict": {
+        "name": "UniswapV2ERC20",
+        "kind": "contract",
+        "lines": 89,
+        "status": "identical",
+        "audited": { "object": "45ff1763897f", "lines": [6, 96] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "2836258e55f3": {
+      "strict": {
+        "name": "UQ112x112",
+        "kind": "library",
+        "lines": 13,
+        "status": "identical",
+        "audited": { "object": "73e366d021d0", "lines": [8, 20] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "226b7c9a3ccc": {
+      "strict": {
+        "name": "IUniswapV2Factory",
+        "kind": "interface",
+        "lines": 15,
+        "status": "identical",
+        "audited": { "object": "161ab62324e5", "lines": [3, 17] },
+        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+      }
+    },
+    "5a22afd309d6": {
+      "strict": {
+        "name": "Math",
+        "kind": "library",
+        "lines": 19,
+        "status": "identical",
+        "audited": { "object": "ada374a3dd10", "lines": [5, 23] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "69fd716f32d7": {
+      "strict": {
+        "name": "IERC20",
+        "kind": "interface",
+        "lines": 15,
+        "status": "identical",
+        "audited": { "object": "c31e4d7a3d99", "lines": [3, 17] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "7085aaf4732b": {
+      "strict": {
+        "name": "IUniswapV2Callee",
+        "kind": "interface",
+        "lines": 3,
+        "status": "identical",
+        "audited": { "object": "9f14b7120df0", "lines": [3, 5] },
+        "reports": [
+          "dapp-org-uniswap-v2-2020-05",
+          "trail-of-bits-celo-l2-2024-12-19",
+          "verilog-celo-monorepo-prs-9798-10159-2023-03"
+        ]
+      }
+    },
+    "da40d0634b58": {
+      "strict": {
+        "name": "UniswapV2Pair",
+        "kind": "contract",
+        "lines": 191,
+        "status": "identical",
+        "audited": { "object": "80d6a937b1fa", "lines": [13, 221] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "05cbf499d954": {
+      "strict": {
+        "name": "ERC20",
+        "kind": "interface",
+        "lines": 4,
+        "status": "none"
+      }
+    },
+    "34d45d344638": {
+      "strict": {
+        "name": "IResourceManager",
+        "kind": "interface",
+        "lines": 28,
+        "status": "none"
+      }
+    },
+    "e70ddd29b335": {
+      "strict": {
+        "name": "INonce",
+        "kind": "interface",
+        "lines": 7,
+        "status": "none"
+      }
+    },
+    "3496e84b22cc": {
+      "strict": {
+        "name": "greaterThan",
+        "kind": "function",
+        "lines": 3,
+        "status": "none"
+      }
+    },
+    "38890f868cc8": {
+      "strict": {
+        "name": "lessThan",
+        "kind": "function",
+        "lines": 3,
+        "status": "none"
+      }
+    },
+    "b7db2c7e9a9c": {
+      "strict": {
+        "name": "greaterThanOrEqualTo",
+        "kind": "function",
+        "lines": 3,
+        "status": "none"
+      }
+    },
+    "6385a366db1d": {
+      "strict": {
+        "name": "equals",
+        "kind": "function",
+        "lines": 3,
+        "status": "none"
+      }
+    },
+    "ae9aec7381bc": {
+      "strict": {
+        "name": "CustomRevert",
+        "kind": "library",
+        "lines": 112,
+        "status": "none"
+      }
+    },
+    "1620362836e5": {
+      "strict": {
+        "name": "IERC20Minimal",
+        "kind": "interface",
+        "lines": 43,
+        "status": "identical",
+        "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+        "reports": [
+          "abdk-uniswap-v3-core-2021-03",
+          "trailofbits-uniswap-v3-core-2021-03"
+        ]
+      }
+    },
+    "d868cebabdae": {
+      "strict": {
+        "name": "CurrencyLibrary",
+        "kind": "library",
+        "lines": 90,
+        "status": "none"
+      }
+    },
+    "0c300b137a11": {
+      "strict": {
+        "name": "ITokenJar",
+        "kind": "interface",
+        "lines": 16,
+        "status": "none"
+      }
+    },
+    "e0512e2dd648": {
+      "strict": {
+        "name": "IReleaser",
+        "kind": "interface",
+        "lines": 16,
+        "status": "none"
+      }
+    },
+    "085378ba2edf": {
+      "strict": {
+        "name": "Owned",
+        "kind": "abstract",
+        "lines": 39,
+        "status": "none"
+      }
+    },
+    "c2daa67da28d": {
+      "strict": {
+        "name": "ResourceManager",
+        "kind": "abstract",
+        "lines": 38,
+        "status": "none"
+      }
+    },
+    "acdbeb9b9b53": {
+      "strict": {
+        "name": "Nonce",
+        "kind": "abstract",
+        "lines": 19,
+        "status": "none"
+      }
+    },
+    "4c32fa5ed2a3": {
+      "strict": {
+        "name": "SafeTransferLib",
+        "kind": "library",
+        "lines": 116,
+        "status": "differs",
+        "audited": { "object": "fa4488edf9a3", "lines": [8, 131] },
+        "reports": ["solmate-v6__audits__v6-Fixed-Point-Solutions"],
+        "added": [
+          [6, 6],
+          [11, 11],
+          [14, 14],
+          [27, 27],
+          [35, 35],
+          [39, 48],
+          [51, 51],
+          [59, 59],
+          [67, 67],
+          [70, 79],
+          [82, 82],
+          [90, 90],
+          [98, 98],
+          [101, 110],
+          [113, 113]
+        ],
+        "removed": [
+          [6, 6, 6],
+          [11, 10, 10],
+          [14, 13, 13],
+          [27, 21, 21],
+          [31, 24, 26],
+          [35, 31, 31],
+          [39, 35, 37],
+          [51, 40, 40],
+          [59, 44, 44],
+          [63, 47, 49],
+          [67, 54, 54],
+          [70, 57, 59],
+          [82, 62, 62],
+          [90, 66, 66],
+          [94, 69, 71],
+          [98, 76, 76],
+          [101, 79, 81],
+          [113, 84, 84],
+          [115, 86, 122]
+        ],
+        "covered": 92
+      }
+    },
+    "1600ba6ede63": {
+      "strict": {
+        "name": "ExchangeReleaser",
+        "kind": "abstract",
+        "lines": 39,
+        "status": "none"
+      }
+    },
+    "3a1ef8b63ef1": {
+      "strict": {
+        "name": "Firepit",
+        "kind": "contract",
+        "lines": 5,
+        "status": "none"
+      }
+    },
+    "3f9d0d854d9c": {
+      "strict": {
+        "name": "SafeMath",
+        "kind": "library",
+        "lines": 168,
+        "status": "none"
+      }
+    },
+    "db167b498ad1": {
+      "strict": {
+        "name": "Timelock",
+        "kind": "contract",
+        "lines": 107,
+        "status": "identical",
+        "audited": { "object": "1aefb612aefb", "lines": [5, 128] },
+        "reports": [
+          "openzeppelin-compound-timelock-2019-10",
+          "trailofbits-compound-governance-2020-02"
+        ]
+      }
+    },
+    "855689973a11": {
+      "strict": {
+        "name": "Uni",
+        "kind": "contract",
+        "lines": 390,
+        "status": "none"
+      }
+    },
+    "752560edce43": {
+      "strict": {
+        "name": "GovernorBravoDelegatorStorage",
+        "kind": "contract",
+        "lines": 10,
+        "status": "identical",
+        "audited": { "object": "4180878e9cc1", "lines": [54, 63] },
+        "reports": ["openzeppelin-compound-governor-bravo-2021-02"]
+      }
+    },
+    "1a7a08a41f9f": {
+      "strict": {
+        "name": "GovernorBravoEvents",
+        "kind": "contract",
+        "lines": 39,
+        "status": "identical",
+        "audited": { "object": "4180878e9cc1", "lines": [4, 52] },
+        "reports": ["openzeppelin-compound-governor-bravo-2021-02"]
+      }
+    },
+    "0f2a047e34f1": {
+      "strict": {
+        "name": "GovernorBravoDelegator",
+        "kind": "contract",
+        "lines": 74,
+        "status": "differs",
+        "audited": { "object": "3b77ba02ba7b", "lines": [6, 80] },
+        "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+        "added": [[3, 3], [15, 15], [32, 32]],
+        "removed": [[3, 3, 3], [15, 18, 18]],
+        "covered": 71
+      }
+    },
+    "87c8ad0dab2a": {
+      "strict": {
+        "name": "TimelockInterface",
+        "kind": "interface",
+        "lines": 9,
+        "status": "identical",
+        "audited": { "object": "4180878e9cc1", "lines": [155, 181] },
+        "reports": [
+          "openzeppelin-compound-alpha-governance-2020-02",
+          "openzeppelin-compound-governor-bravo-2021-02",
+          "trailofbits-compound-governance-2020-02"
+        ],
+        "findings": {
+          "openzeppelin-compound-alpha-governance-2020-02": ["H01"]
+        }
+      }
+    },
+    "d880642aaa86": {
+      "strict": {
+        "name": "UniInterface",
+        "kind": "interface",
+        "lines": 3,
+        "status": "none"
+      }
+    },
+    "efdedd2ccbb6": {
+      "strict": {
+        "name": "GovernorBravoDelegateStorageV1",
+        "kind": "contract",
+        "lines": 101,
+        "status": "differs",
+        "audited": { "object": "4180878e9cc1", "lines": [71, 153] },
+        "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+        "added": [[19, 21]],
+        "removed": [[19, 18, 20]],
+        "covered": 100
+      }
+    },
+    "c09741b22c51": {
+      "strict": {
+        "name": "GovernorBravoDelegate",
+        "kind": "contract",
+        "lines": 382,
+        "status": "differs",
+        "audited": { "object": "545b136a90f1", "lines": [6, 389] },
+        "reports": ["openzeppelin-compound-governor-bravo-2021-02"],
+        "added": [
+          [3, 3],
+          [6, 21],
+          [24, 24],
+          [43, 44],
+          [46, 51],
+          [53, 53],
+          [71, 71],
+          [153, 153],
+          [255, 255],
+          [278, 278],
+          [291, 291],
+          [303, 303],
+          [305, 305],
+          [307, 307],
+          [317, 317]
+        ],
+        "removed": [
+          [3, 2, 2],
+          [6, 5, 5],
+          [24, 8, 8],
+          [43, 20, 26],
+          [53, 29, 29],
+          [71, 44, 47],
+          [153, 147, 151],
+          [255, 251, 251],
+          [303, 297, 297],
+          [305, 299, 302],
+          [307, 304, 304],
+          [317, 314, 314],
+          [320, 317, 317]
+        ],
+        "covered": 357
+      }
+    },
+    "41f6c409ac3a": {
+      "strict": {
+        "name": "UniswapV2Factory",
+        "kind": "contract",
+        "lines": 44,
+        "status": "identical",
+        "audited": { "object": "a61d24e44aa7", "lines": [6, 49] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
+      }
+    },
+    "9f509bc47fa3": {
+      "strict": {
+        "name": "IUniswapV2Router01",
+        "kind": "interface",
+        "lines": 93,
+        "status": "none"
+      }
+    },
+    "213d6a7a00c8": {
+      "strict": {
+        "name": "IUniswapV2Router02",
+        "kind": "interface",
+        "lines": 40,
+        "status": "none"
+      }
+    },
+    "efa961f61c32": {
+      "strict": {
+        "name": "UniswapV2Library",
+        "kind": "library",
+        "lines": 76,
+        "status": "none"
+      }
+    },
+    "abf60476f654": {
+      "strict": {
+        "name": "TransferHelper",
+        "kind": "library",
+        "lines": 24,
+        "status": "none"
+      }
+    },
+    "0d461ecceaf0": {
+      "strict": {
+        "name": "IWETH",
+        "kind": "interface",
+        "lines": 5,
+        "status": "identical",
+        "audited": { "object": "0a8da8e69260", "lines": [3, 7] },
+        "reports": [
+          "trail-of-bits-celo-l2-2024-12-19",
+          "verilog-celo-monorepo-prs-9798-10159-2023-03"
+        ]
+      }
+    },
+    "0b2f577b18e5": {
+      "strict": {
+        "name": "UniswapV2Router02",
+        "kind": "contract",
+        "lines": 435,
+        "status": "none"
+      }
+    },
+    "b1b74e1f9c50": {
+      "strict": {
+        "name": "TokenJar",
+        "kind": "contract",
+        "lines": 33,
+        "status": "none"
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import type {
   PrivacyCategory,
   PrivacyExitWindow,
   PrivacySummaryValue,
+  ProjectAuditCoverage,
   ProjectContracts,
   ProjectDiscoveryUpdate,
   ProjectDisplay,
@@ -69,6 +70,7 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   discoveryUpdates?: ProjectDiscoveryUpdate[]
   ossification?: ProjectOssificationView
+  auditCoverage?: ProjectAuditCoverage
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
   garden?: ProjectGarden
@@ -298,6 +300,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     discoveryUpdates: project.discoveryUpdates,
     ossification,
+    auditCoverage: project.auditCoverage,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
     garden: project.garden,

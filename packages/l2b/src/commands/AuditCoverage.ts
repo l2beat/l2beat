@@ -1,20 +1,40 @@
+import { ProjectService } from '@l2beat/config'
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { asciiProgressBar, assert, formatJson } from '@l2beat/shared-pure'
+import { measureOssification } from '@l2beat/shared'
+import {
+  asciiProgressBar,
+  assert,
+  formatJson,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { command, option, optional, positional, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  option,
+  optional,
+  positional,
+  string,
+} from 'cmd-ts'
 import { writeFileSync } from 'fs'
 import path from 'path'
 import type { AuditCoverage as Coverage } from '../implementations/audit-coverage/AuditCoverage'
 import { buildAuditedCode } from '../implementations/audit-coverage/AuditedCode'
 import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
 import { parseAuditObjects } from '../implementations/audit-coverage/AuditObjects'
-import { auditCoverageOfProject } from '../implementations/audit-coverage/auditCoverageOfProject'
+import {
+  type AuditCoverageHistoryOptions,
+  auditCoverageOfProject,
+} from '../implementations/audit-coverage/auditCoverageOfProject'
 import {
   type AuditDatasetFiles,
   fetchAuditDataset,
   readAuditDataset,
 } from '../implementations/audit-coverage/auditDataset'
 import { deployedSourceFromDiscovery } from '../implementations/audit-coverage/deployedSource'
+import { getVerifierAddresses } from '../implementations/audit-coverage/verifiers'
 import { createCliLogger } from '../implementations/common/CliLogger'
 import { File, HttpUrl } from './types'
 
@@ -52,6 +72,12 @@ export const AuditCoverage = command({
       short: 'o',
       description: 'defaults to audit-coverage.json in the project directory',
     }),
+    history: flag({
+      type: boolean,
+      long: 'history',
+      description:
+        'also cover the perimeter at every point of its history, from the launch known to the built packages/config',
+    }),
   },
   handler: async (args) => {
     const cli = createCliLogger({ output: process.stdout, quiet: false })
@@ -71,6 +97,23 @@ export const AuditCoverage = command({
     }
 
     const covering = cli.status()
+    const verifiers = await getVerifierAddresses()
+    const launch = args.history ? await getLaunch(args.project) : undefined
+    const warnings: string[] = []
+    const history: AuditCoverageHistoryOptions | undefined = args.history
+      ? {
+          launch: launch?.timestamp,
+          log: {
+            progress: (point, count, status) =>
+              covering.update(progress(point, count, status)),
+            warn: (message) => warnings.push(message),
+            done: (stats) =>
+              cli.log(
+                `History: ${stats.retained} of ${stats.points} points retained, ${stats.covered} flats covered, ${stats.reused} reused, ${stats.fetched} sources read`,
+              ),
+          },
+        }
+      : undefined
     const coverage = await auditCoverageOfProject(
       args.project,
       {
@@ -78,12 +121,22 @@ export const AuditCoverage = command({
         objects,
         code,
         dataset: { repository: dataset.repository, commit: dataset.commit },
+        verifiers,
       },
       deployedSourceFromDiscovery(),
       (address, covered, count) =>
         covering.update(progress(covered, count, `Covering ${address}`)),
+      history,
     )
     covering.done(summary(coverage))
+    for (const warning of warnings) {
+      cli.log(chalk.yellow(`Warning: ${warning}`))
+    }
+    if (coverage.history !== undefined && launch !== undefined) {
+      for (const line of alignment(coverage.history, launch.criticalChanges)) {
+        cli.log(chalk.yellow(line))
+      }
+    }
     const output =
       args.output ??
       path.join(
@@ -138,7 +191,66 @@ function summary(coverage: Coverage): string {
       }
     }
   }
-  const contracts = Object.keys(coverage.contracts).length
+  const contracts = Object.values(coverage.contracts)
+  const verifiers = contracts.filter((c) => c.verifier).length
   const percent = lines === 0 ? 0 : (100 * covered) / lines
-  return `${contracts} contracts, ${percent.toFixed(1)}% of ${lines} lines in distinct flat sources match audited code`
+  return `${contracts.length} contracts (${verifiers} verifiers), ${percent.toFixed(1)}% of ${lines} lines in distinct flat sources match audited code`
+}
+
+/**
+ * Where the timeline's launch marker sits, as the frontend's getAuditsLaunch
+ * finds it, and the critical code changes ossification counts, for the
+ * alignment report. Needs packages/config built.
+ */
+async function getLaunch(
+  project: string,
+): Promise<{ timestamp: number; criticalChanges: number[] } | undefined> {
+  const config = await new ProjectService().getProject({
+    id: ProjectId(project),
+    optional: ['ossificationHistory', 'chainConfig'],
+  })
+  if (config === undefined) return undefined
+  const timestamp =
+    config.ossificationHistory?.observedSince ??
+    config.chainConfig?.sinceTimestamp
+  if (timestamp === undefined) return undefined
+  const history = config.ossificationHistory
+  const criticalChanges =
+    history === undefined
+      ? []
+      : measureOssification(
+          {
+            ...history,
+            changes: history.changes.filter((c) => c.type === 'code'),
+          },
+          UnixTime.now(),
+        ).criticalChanges
+  return { timestamp, criticalChanges }
+}
+
+const ALIGNMENT_WINDOW = UnixTime.DAY
+
+/**
+ * The code points of the history next to ossification's critical code
+ * changes: the two come from different sources, see the spec, and the
+ * differences are what the evaluation looks at.
+ */
+function alignment(
+  history: NonNullable<Coverage['history']>,
+  criticalChanges: number[],
+): string[] {
+  const codePoints = history.points
+    .filter((point) => (point.changes ?? []).length > 0)
+    .map((point) => point.timestamp)
+  const near = (a: number, bs: number[]) =>
+    bs.some((b) => Math.abs(a - b) <= ALIGNMENT_WINDOW)
+  const iso = (t: number) => new Date(t * 1000).toISOString()
+  return [
+    ...criticalChanges
+      .filter((change) => !near(change, codePoints))
+      .map((change) => `Critical change at ${iso(change)} has no code point`),
+    ...codePoints
+      .filter((point) => !near(point, criticalChanges))
+      .map((point) => `Code point at ${iso(point)} has no critical change`),
+  ]
 }
