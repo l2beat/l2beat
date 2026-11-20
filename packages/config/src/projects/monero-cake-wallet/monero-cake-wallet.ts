@@ -1,9 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { moneroCakeWalletAdversaries } from './adversaries'
+import { moneroCakeWalletRiskSummary } from './riskSummary'
 
 export const moneroCakeWallet: BaseProject = {
   id: ProjectId('monero-cake-wallet'),
@@ -123,9 +128,7 @@ export const moneroCakeWallet: BaseProject = {
         'Each Monero spend hides among the 16 members of its ring, and each self-transfer multiplies the candidates by about 30.',
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'Funds in transit sit with the swap service, which can steal them.',
       walkawayTest: {
@@ -135,8 +138,7 @@ export const moneroCakeWallet: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'Cake Wallet and Monero are open source, but Cake states that its release builds do not reproduce from that source. The swap services run closed systems.',
     },
@@ -146,7 +148,7 @@ export const moneroCakeWallet: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: moneroCakeWalletAdversaries,
-    riskSummary: readProjectMarkdown('monero-cake-wallet', 'riskSummary'),
+    riskSummary: moneroCakeWalletRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'monero-cake-wallet',

@@ -66,12 +66,14 @@ export const privacyBoostAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title: 'Address behind 2,638 of 2,677 WETH deposits (2026-10-30)',
+          title: 'Address behind 2,638 of 2,677 WETH deposits',
+          checked: '2026-10-30',
           url: 'https://basescan.org/address/0xf977237b7d978dde922ee4909619740c73d8a49b',
         },
         {
           title:
-            'Pool transfers: 54 other depositors since 2026-09-02, 25 in WETH and 26 in USDC (2026-10-30)',
+            'Pool transfers: 54 other depositors since 2026-09-02, 25 in WETH and 26 in USDC',
+          checked: '2026-10-30',
           url: 'https://basescan.org/address/0x71A0fD3C76E3E937d8275A3cb6a467b70123bD40#tokentxns',
         },
       ],

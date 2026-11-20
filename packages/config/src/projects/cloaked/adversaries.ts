@@ -12,7 +12,7 @@ const PRIVACY = DOCS + 'privacy'
 export const cloakedAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'recipient',
-    text: `Hides which account a receiving address belongs to. ${S.stealthPromiseTail}`,
+    text: 'Hides which account a receiving address belongs to. The payer knows the address it was given; sender, asset, amount and where the funds go next are public.',
   },
   cells: {
     publicObserver: {
@@ -83,7 +83,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     privilegedInsider: {
       sentiment: 'bad',
-      exposureShort: S.operatorViewingKey('Cloaked'),
+      exposureShort:
+        "Cloaked holds the viewing key, so it can regenerate every address and tie its activity to the user's account.",
       exposureContinued:
         "It also serves the closed-source app that handles the user's keys. Its relay submits both sides of every Incognito round trip through Privacy Pools and keeps the association.",
       sources: [
@@ -99,7 +100,8 @@ export const cloakedAdversaries = definePrivacyAdversaries({
     },
     futureAdversary: {
       sentiment: 'good',
-      exposureShort: S.noAnnouncement,
+      exposureShort:
+        'No announcement is published, so address derivations cannot be replayed from the chain alone.',
       exposureContinued: `${S.walletSignatureAccounts('plus a four-digit PIN')} Passkey secrets do not follow from breaking the passkey.`,
       sources: [
         {

@@ -18,7 +18,7 @@ export function fluidkeyAdversaries(accounts: number) {
   return definePrivacyAdversaries({
     promise: {
       protects: 'recipient',
-      text: `Hides which account a receiving Safe belongs to. ${S.stealthPromiseTail}`,
+      text: 'Hides which account a receiving Safe belongs to. The payer knows the address it was given; sender, asset, amount and where the funds go next are public.',
     },
     cells: {
       publicObserver: {
@@ -85,7 +85,8 @@ export function fluidkeyAdversaries(accounts: number) {
           "Without Tor, the proxy can also pass it the user's IP. A payer who looks up the user's name gives their RPC the name and the new Safe. A Google, Apple, email or Farcaster login hands the identity to Privy, whose code then creates the signature the user's keys come from.",
         sources: [
           {
-            title: 'Served app, build entrypoint-4e96d22b (checked 2026-11-11)',
+            title: 'Served app, build entrypoint-4e96d22b',
+            checked: '2026-11-11',
             url: 'https://app.fluidkey.com',
           },
           {
@@ -101,7 +102,8 @@ export function fluidkeyAdversaries(accounts: number) {
       },
       privilegedInsider: {
         sentiment: 'bad',
-        exposureShort: S.operatorViewingKey('Fluidkey'),
+        exposureShort:
+          "Fluidkey holds the viewing key, so it can regenerate every address and tie its activity to the user's account.",
         exposureContinued:
           "Its closed-source app handles the user's keys. Bank transfers add the user's verified identity, and Hide Trail shows the user's route to Houdini and two exchanges.",
         sources: [
@@ -121,7 +123,8 @@ export function fluidkeyAdversaries(accounts: number) {
       },
       futureAdversary: {
         sentiment: 'good',
-        exposureShort: S.noAnnouncement,
+        exposureShort:
+          'No announcement is published, so address derivations cannot be replayed from the chain alone.',
         exposureContinued: S.walletSignatureAccounts('plus a four-digit PIN'),
         sources: [
           {

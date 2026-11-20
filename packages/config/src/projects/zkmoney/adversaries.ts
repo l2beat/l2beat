@@ -11,8 +11,9 @@ import type { PrivacyExposureMap } from '../../types'
 const ZKMONEY_REPO =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/00e54087526d6d89f1755958eb027e077184cd9a/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
+// aztec-packages v5.2.0
 const HANDSHAKE_REGISTRY =
-  'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96'
+  'https://github.com/AztecProtocol/aztec-packages/blob/49a592109ec4f18d79212b43d621891aaf36f7b6/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: {

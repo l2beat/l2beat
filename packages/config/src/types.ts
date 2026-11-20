@@ -1227,7 +1227,8 @@ export interface ProjectPrivacyInfo {
    * ProjectZkCatalogInfo.quantumResistant
    */
   quantumResistant?: true
-  riskSummary?: string
+  /** Author with definePrivacyRisks. */
+  riskSummary?: PrivacyRisk[]
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1446,6 +1447,24 @@ export interface PrivacySummaryValue extends TableReadyValue {
   description: string
 }
 
+export type PrivacyRiskCategory =
+  | 'Funds can be stolen if'
+  | 'Funds can be lost if'
+  | 'Funds can be frozen if'
+  | 'Use can be stopped if'
+  | 'Privacy can be lost if'
+
+export interface PrivacyRisk {
+  category: PrivacyRiskCategory
+  /**
+   * Completes the category into one sentence of at most 25 words. Markdown,
+   * which may link a section of the project page.
+   */
+  text: string
+  /** The adversary cells that explain the risk. The page links them. */
+  see?: PrivacyAdversaryId[]
+}
+
 export interface PrivacyAttribute {
   id: string
   label: string
@@ -1483,7 +1502,7 @@ export type PrivacyAdversaryId =
 export interface PrivacyAdversary {
   id: PrivacyAdversaryId
   label: string
-  /** What this adversary can observe or do. */
+  /** What this adversary can observe or do, as a sentence that completes the label. */
   description: string
   /** Real-world actors that hold (at least) this capability. */
   examples: string
@@ -1581,7 +1600,15 @@ export interface PrivacyAdversaryAssessment {
  * validated against the project's contracts in tests.
  */
 export type PrivacySource =
-  | { title: string; url: string }
+  | {
+      title: string
+      url: string
+      /**
+       * The day we last read a page that can change, like docs, a policy or
+       * a served app. A link pinned to a commit needs none.
+       */
+      checked?: string
+    }
   | { contract: string; title?: string }
   | {
       section:
