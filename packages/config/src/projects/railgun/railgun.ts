@@ -10,6 +10,10 @@ import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -23,6 +27,7 @@ import {
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { railgunAdversaries } from './adversaries'
+import { railgunRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -324,15 +329,12 @@ export const railgun: BaseProject = {
       sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
     },
     exitWindow: {
-      value: formatSeconds(executionStartOffset),
-      sentiment: 'warning',
-      orderHint: executionStartOffset,
+      ...PRIVACY_EXIT_WINDOW.delay(executionStartOffset),
       description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before execution, so users can unshield before a change they reject.`,
       walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
@@ -345,7 +347,7 @@ export const railgun: BaseProject = {
     adversaries: railgunAdversaries(
       formatSeconds(executionStartOffset, { fullUnit: true }),
     ),
-    riskSummary: readProjectMarkdown('railgun', 'riskSummary', {
+    riskSummary: railgunRiskSummary({
       executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
     upgradesAndGovernance: {

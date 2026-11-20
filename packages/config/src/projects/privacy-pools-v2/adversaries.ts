@@ -77,12 +77,13 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
             MONOREPO + 'packages/circuits/circuits/templates/Transact.circom',
         },
         {
-          title:
-            'Relayed transfers pay the fee as a public output (checked 2026-10-30)',
+          title: 'Relayed transfers pay the fee as a public output',
+          checked: '2026-10-30',
           url: DOCS + 'operations/transfer',
         },
         {
-          title: 'Ragequit publishes the label and owner (checked 2026-10-30)',
+          title: 'Ragequit publishes the label and owner',
+          checked: '2026-10-30',
           url: DOCS + 'operations/ragequit',
         },
       ],
@@ -114,8 +115,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'Each root update links its list on IPFS',
         },
         {
-          title:
-            'Share counts encode the exchange rate at deposit (checked 2026-10-30)',
+          title: 'Share counts encode the exchange rate at deposit',
+          checked: '2026-10-30',
           url: DOCS + 'concepts/yield-shares',
         },
         {
@@ -184,8 +185,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'transact: only the latest ASP root is accepted',
         },
         {
-          title:
-            'What the relayer receives, the IP included (checked 2026-10-30)',
+          title: 'What the relayer receives, the IP included',
+          checked: '2026-10-30',
           url: DOCS + 'introduction/threat-model',
         },
       ],

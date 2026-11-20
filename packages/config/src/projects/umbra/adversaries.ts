@@ -1,5 +1,4 @@
 import {
-  ADVICE_SNIPPETS as A,
   adviceLink,
   definePrivacyAdversaries,
   toolLink,
@@ -146,7 +145,7 @@ export function umbraAdversaries(registrants: number) {
     advice: [
       {
         name: 'Set up',
-        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
+        text: `Build the app from the reviewed source and run it locally instead of the hosted website. Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },

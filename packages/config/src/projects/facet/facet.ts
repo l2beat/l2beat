@@ -134,14 +134,7 @@ export const facet: ScalingProject = {
           'eth:0x4e2eba30a786c0643699b92234d74a71e958c08e',
         ),
         tokens: ['ETH'],
-        source: 'external',
-        bridgedUsing: {
-          bridges: [
-            {
-              name: 'Facet legacy L1Bridge.',
-            },
-          ],
-        },
+        source: 'canonical',
         description:
           'Legacy ETH bridge built on top of the deprecated Rollup contract (eth:0x686E7d01…).',
       }),
@@ -160,6 +153,7 @@ export const facet: ScalingProject = {
         },
         description:
           'Fast external ETH bridge, shut down on 2026-11-12: deposits and withdrawals are disabled and its ETH was paid out to holders by the Facet Multisig, which renounced its admin roles on 2026-11-18.',
+        isHistorical: true,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(
@@ -177,6 +171,7 @@ export const facet: ScalingProject = {
         description:
           'Deprecated L1ETHLockbox, disabled on 2026-11-18: implementation and admin set to zero, holds no funds.',
         untilTimestamp: UnixTime(1795042019), // 2026-11-18T22:46:59Z
+        isHistorical: true,
       }),
     ],
     trackedTxs: [
