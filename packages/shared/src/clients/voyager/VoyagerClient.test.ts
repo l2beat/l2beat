@@ -29,6 +29,7 @@ describe(VoyagerClient.name, () => {
       expect(http.fetch).toHaveBeenCalledWith(
         'https://api.voyager.online/beta/daily-stats?metrics=user_operations_count&timerange=max',
         { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
+        expect.a(Function),
       )
     })
 
@@ -80,6 +81,7 @@ describe(VoyagerClient.name, () => {
       expect(http.fetch).toHaveBeenCalledWith(
         'https://api.voyager.online/beta/daily-stats?metrics=transactions_count&timerange=max',
         { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
+        expect.a(Function),
       )
     })
 
@@ -112,6 +114,7 @@ describe(VoyagerClient.name, () => {
       expect(http.fetch).toHaveBeenCalledWith(
         'https://api.voyager.online/beta/test-endpoint?param1=value1&param2=value2',
         { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
+        expect.a(Function),
       )
     })
 
@@ -126,6 +129,7 @@ describe(VoyagerClient.name, () => {
       expect(http.fetch).toHaveBeenCalledWith(
         'https://api.voyager.online/beta/test-endpoint',
         { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
+        expect.a(Function),
       )
     })
 
@@ -142,6 +146,7 @@ describe(VoyagerClient.name, () => {
       expect(http.fetch).toHaveBeenCalledWith(
         'https://api.voyager.online/beta/test-endpoint?key=value+with+spaces',
         { timeout: 10_000, headers: { 'x-api-key': 'test-api-key' } },
+        expect.a(Function),
       )
     })
   })

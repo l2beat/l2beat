@@ -65,6 +65,20 @@ describe(HttpClient.name, () => {
       )
     })
 
+    it('shows the headers of a successful response', async () => {
+      const http = new HttpClient()
+      const seen: string[] = []
+      await withServer(
+        (_, res) =>
+          res.writeHead(200, { 'X-RateLimit-Limit': '200' }).end('{}'),
+        (url) =>
+          http.fetch(url, {}, (headers) =>
+            seen.push(headers.get('x-ratelimit-limit') ?? ''),
+          ),
+      )
+      expect(seen).toEqual(['200'])
+    })
+
     it('supports custom timeout', async () => {
       const http = new HttpClient()
       await withServer(

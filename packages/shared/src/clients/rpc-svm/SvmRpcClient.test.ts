@@ -133,18 +133,22 @@ describe(SvmRpcClient.name, () => {
       const result = await client.query('rpc_method', ['a', 1, true])
 
       expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
-        body: JSON.stringify({
-          method: 'rpc_method',
-          params: ['a', 1, true],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-        timeout: 5000,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL',
+        {
+          body: JSON.stringify({
+            method: 'rpc_method',
+            params: ['a', 1, true],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          timeout: 5000,
+        },
+        expect.a(Function),
+      )
     })
   })
 

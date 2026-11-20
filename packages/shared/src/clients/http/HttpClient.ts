@@ -8,8 +8,14 @@ export class HttpClient {
    * Sends request to the provided url with init params.
    * Use this method only when you expect server to return valid JSON.
    * Default timeout is 10_000ms
+   * @param onHeaders sees the headers of a successful response, where some
+   * providers state their rate limit
    */
-  async fetch(url: string, init: FetchInit): Promise<json> {
+  async fetch(
+    url: string,
+    init: FetchInit,
+    onHeaders?: (headers: Headers) => void,
+  ): Promise<json> {
     const res = await this.fetchRaw(url, init)
 
     if (!res.ok) {
@@ -26,6 +32,7 @@ export class HttpClient {
       })
     }
 
+    onHeaders?.(res.headers)
     return (await res.json()) as json
   }
 

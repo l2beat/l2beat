@@ -123,19 +123,23 @@ describe(FuelClient.name, () => {
       const result = await client.query(query, variables)
 
       expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            query,
+            variables,
+          }),
+          redirect: 'follow',
+          timeout: 10_000,
         },
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+        expect.a(Function),
+      )
     })
   })
 

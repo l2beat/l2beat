@@ -1,10 +1,18 @@
+import type { Logger } from '@l2beat/backend-tools'
+
 /**
- * The headers a provider states its limit in. Logged with a refusal, they
- * say how long to wait and often what the limit is, which no amount of
- * counting our own calls shows.
+ * The headers a provider states its limit in. They say how long to wait
+ * and often what the limit is, which no amount of counting our own calls
+ * shows.
  */
 const RATE_LIMIT_HEADER =
-  /^(retry-after|(x-)?rate-?limit-(limit|remaining|reset|policy))$/i
+  /^(retry-after|(x-)?rate-?limit-(limit|remaining|reset|policy|window|duration)(-[a-z0-9]+)?|x-rpc-limit-(quota|count|method))$/i
+/**
+ * The subset that states the limit itself, not how much of it is left. It
+ * stays the same from call to call, so a change in it is worth a log line.
+ */
+const STATED_LIMIT_HEADER =
+  /^((x-)?rate-?limit-(limit|policy|window|duration)(-[a-z0-9]+)?|x-rpc-limit-quota)$/i
 /** The provider writes these values and they end up in our logs. */
 const MAX_VALUE_LENGTH = 64
 
@@ -35,6 +43,39 @@ export function readRateLimit(error: unknown): RateLimitHeaders | undefined {
       (entry): entry is [string, string] => typeof entry[1] === 'string',
     ),
   )
+}
+
+/**
+ * Logs the limit a provider states on its responses, once and again when it
+ * changes. Some providers state it on every answer, so we learn the limit
+ * before the first refusal, next to the rate we configured.
+ */
+export class StatedRateLimitLog {
+  private lastLogged: string | undefined
+
+  constructor(
+    private readonly logger: Logger,
+    private readonly callsPerMinute: number,
+  ) {}
+
+  observe(headers: Headers): void {
+    const rateLimit = readRateLimitHeaders(headers)
+    const stated = Object.entries(rateLimit).filter(([name]) =>
+      STATED_LIMIT_HEADER.test(name),
+    )
+    if (stated.length === 0) {
+      return
+    }
+    const key = JSON.stringify(stated)
+    if (key === this.lastLogged) {
+      return
+    }
+    this.lastLogged = key
+    this.logger.info('Provider states its rate limit', {
+      rateLimit,
+      callsPerMinute: this.callsPerMinute,
+    })
+  }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

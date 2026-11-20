@@ -36,6 +36,7 @@ describe(StarkexClient.name, () => {
           body: JSON.stringify(body),
           timeout: expect.a(Number),
         },
+        expect.a(Function),
       )
     })
 

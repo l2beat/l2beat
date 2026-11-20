@@ -498,24 +498,28 @@ describe(RpcClient.name, () => {
       expect(result).toEqual(Bytes.fromHex('0x123abc'))
       expect(http.fetch).toHaveBeenCalledTimes(1)
 
-      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
-        body: JSON.stringify({
-          method: 'eth_call',
-          params: [
-            {
-              to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-              input: '0x70a08231',
-            },
-            'latest',
-          ],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenCalledWith(
+        'API_URL',
+        {
+          body: JSON.stringify({
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+                input: '0x70a08231',
+              },
+              'latest',
+            ],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
 
     it('handles numeric block numbers', async () => {
@@ -532,24 +536,28 @@ describe(RpcClient.name, () => {
         12345678,
       )
 
-      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
-        body: JSON.stringify({
-          method: 'eth_call',
-          params: [
-            {
-              to: '0x1234567890123456789012345678901234567890',
-              input: '0x',
-            },
-            '0xbc614e',
-          ],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenCalledWith(
+        'API_URL',
+        {
+          body: JSON.stringify({
+            method: 'eth_call',
+            params: [
+              {
+                to: '0x1234567890123456789012345678901234567890',
+                input: '0x',
+              },
+              '0xbc614e',
+            ],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
 
     it('includes from address if provided', async () => {
@@ -566,24 +574,28 @@ describe(RpcClient.name, () => {
         'latest',
       )
 
-      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
-        body: JSON.stringify({
-          method: 'eth_call',
-          params: [
-            {
-              to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-              input: '0x123456',
-            },
-            'latest',
-          ],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenCalledWith(
+        'API_URL',
+        {
+          body: JSON.stringify({
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+                input: '0x123456',
+              },
+              'latest',
+            ],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
 
     it('handles empty response', async () => {
@@ -898,18 +910,22 @@ describe(RpcClient.name, () => {
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
       expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
-        body: JSON.stringify({
-          method: 'rpc_method',
-          params: ['a', 1, true],
-          id: 'unique-id',
-          jsonrpc: '2.0',
-        }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL',
+        {
+          body: JSON.stringify({
+            method: 'rpc_method',
+            params: ['a', 1, true],
+            id: 'unique-id',
+            jsonrpc: '2.0',
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
 
     it('records rpc metrics for single queries', async () => {

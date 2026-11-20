@@ -18,9 +18,13 @@ describe(ClientCore.name, () => {
       })
 
       expect(response).toEqual({ result: 'success' })
-      expect(http.fetch).toHaveBeenOnlyCalledWith('https://api.test.com/data', {
-        timeout: 1,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'https://api.test.com/data',
+        {
+          timeout: 1,
+        },
+        expect.a(Function),
+      )
     })
 
     it('Retries on error', async () => {

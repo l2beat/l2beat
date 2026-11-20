@@ -14,18 +14,22 @@ describe(AztecRpcClient.name, () => {
       const result = await client.getLatestBlockNumber()
 
       expect(result).toEqual(123)
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'aztec_getBlockNumber',
-          params: [],
-          id: 'unique-id',
-        }),
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'RPC_URL',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'aztec_getBlockNumber',
+            params: [],
+            id: 'unique-id',
+          }),
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
   })
 
@@ -59,18 +63,22 @@ describe(AztecRpcClient.name, () => {
 
       await client.getBlocks(100, 50)
 
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'aztec_getBlocks',
-          params: [100, 50, { includeTransactions: true }],
-          id: 'unique-id',
-        }),
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'RPC_URL',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'aztec_getBlocks',
+            params: [100, 50, { includeTransactions: true }],
+            id: 'unique-id',
+          }),
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
   })
 
@@ -91,18 +99,22 @@ describe(AztecRpcClient.name, () => {
       const result = await client.getBlockHeaders(100, 1)
 
       expect(result).toEqual([{ number: 100, timestamp: 1234567890 }])
-      expect(http.fetch).toHaveBeenOnlyCalledWith('RPC_URL', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'aztec_getBlocks',
-          params: [100, 1, { includeTransactions: false }],
-          id: 'unique-id',
-        }),
-        redirect: 'follow',
-        timeout: 10_000,
-      })
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'RPC_URL',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'aztec_getBlocks',
+            params: [100, 1, { includeTransactions: false }],
+            id: 'unique-id',
+          }),
+          redirect: 'follow',
+          timeout: 10_000,
+        },
+        expect.a(Function),
+      )
     })
   })
 

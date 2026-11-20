@@ -4,6 +4,7 @@ import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { FetchInit } from './http/fetchWithTimeout'
 import type { HttpClient } from './http/HttpClient'
+import { StatedRateLimitLog } from './http/rateLimitHeaders'
 import { getRpcMetricsLabel } from './rpc/RpcMetricsContext'
 
 export interface ClientCoreDependencies {
@@ -18,6 +19,7 @@ export abstract class ClientCore {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
   metricsAggregator: ClientMetricsAggregator
+  statedRateLimit: StatedRateLimitLog
 
   constructor(private readonly deps: ClientCoreDependencies) {
     const logger = deps.logger.for(this).tag({ source: deps.sourceName })
@@ -27,6 +29,8 @@ export abstract class ClientCore {
       flushInterval: 30_000,
       rateLimiter: this.rateLimiter,
     })
+
+    this.statedRateLimit = new StatedRateLimitLog(logger, deps.callsPerMinute)
 
     this.retryHandler = RetryHandler.create(
       deps.retryStrategy,
@@ -67,7 +71,9 @@ export abstract class ClientCore {
   ): Promise<json> {
     const start = Date.now()
 
-    const response = await this.deps.http.fetch(url, init)
+    const response = await this.deps.http.fetch(url, init, (headers) =>
+      this.statedRateLimit.observe(headers),
+    )
 
     const duration = Date.now() - start
     const size = Buffer.byteLength(JSON.stringify(response), 'utf8')

@@ -545,6 +545,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
         },
       })
     }
+    this.statedRateLimit.observe(response.headers)
     if (!Array.isArray(body)) {
       throw new Error('Batch not answered with an array', {
         cause: { body: text },

@@ -210,19 +210,23 @@ describe(StarknetClient.name, () => {
       const result = await client.query(method, params)
 
       expect(result).toEqual('data-returned-from-api')
-      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
-        method: 'POST',
-        headers: {
-          ['Content-Type']: 'application/json',
+      expect(http.fetch).toHaveBeenOnlyCalledWith(
+        'API_URL',
+        {
+          method: 'POST',
+          headers: {
+            ['Content-Type']: 'application/json',
+          },
+          timeout: 30_000,
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method,
+            params,
+            id: '1',
+          }),
         },
-        timeout: 30_000,
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method,
-          params,
-          id: '1',
-        }),
-      })
+        expect.a(Function),
+      )
     })
   })
 
