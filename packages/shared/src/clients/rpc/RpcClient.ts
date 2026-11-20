@@ -521,6 +521,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const start = Date.now()
     const response = await this.$.http.fetchRaw(this.$.url, init)
+    if (response.status === 429) {
+      this.rateLimiter.throttled(start)
+    }
     const text = await response.text()
     this.metricsAggregator.push({
       duration: Date.now() - start,
@@ -549,6 +552,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
       throw new Error('Batch not answered with an array', {
         cause: { body: text },
       })
+    }
+    if (body.some(hasResult)) {
+      this.rateLimiter.answered(start)
     }
     return body
   }
@@ -608,4 +614,9 @@ function isNullResult(response: unknown): boolean {
     'result' in response &&
     response.result === null
   )
+}
+
+/** Not an error in its place: the provider served this call of the batch */
+function hasResult(item: unknown): boolean {
+  return typeof item === 'object' && item !== null && 'result' in item
 }
