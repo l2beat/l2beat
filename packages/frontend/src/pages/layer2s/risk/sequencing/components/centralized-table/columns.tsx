@@ -7,11 +7,12 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
 import type { L2RiskCentralizedSequencingEntry } from '~/server/features/layer2s/risks/sequencing/getL2RiskSequencingEntries'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 
 const columnHelper = createColumnHelper<L2RiskCentralizedSequencingEntry>()
 
 function getSequencingHref(entry: L2RiskCentralizedSequencingEntry) {
-  return `/layer2s/projects/${entry.slug}#sequencing`
+  return `${getProjectPath(entry.slug)}#sequencing`
 }
 
 export const l2CentralizedSequencingColumns = [

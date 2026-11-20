@@ -32,13 +32,13 @@ const SECTIONS: {
   category: OssificationEntry['category']
   heading: string
 }[] = [
-  { category: 'Layer 2', heading: 'Layer 2s (/layer2s/projects/{slug})' },
-  { category: 'Layer 3', heading: 'Layer 3s (/layer2s/projects/{slug})' },
+  { category: 'Layer 2', heading: 'Layer 2s (/projects/{slug})' },
+  { category: 'Layer 3', heading: 'Layer 3s (/projects/{slug})' },
   {
     category: 'Privacy',
-    heading: 'Privacy protocols (/privacy/projects/{slug})',
+    heading: 'Privacy protocols (/projects/{slug})',
   },
-  { category: 'DeFi', heading: 'DeFi protocols (/defi/projects/{slug})' },
+  { category: 'DeFi', heading: 'DeFi protocols (/projects/{slug})' },
 ]
 
 /** Every entry has a page while the ossification page is on, which is when this is served. */

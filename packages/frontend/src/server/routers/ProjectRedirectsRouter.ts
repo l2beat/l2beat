@@ -63,6 +63,8 @@ export function createProjectRedirectsRouter() {
         optional: ['scalingInfo', 'interopConfig'],
       })
       // A scaling project with a canonical bridge shows its flows on its page.
+      // Links to a protocol name this URL, not the page, so that the bridge
+      // opens there with its flows selected.
       if (project?.scalingInfo && project.interopConfig) {
         redirectToProjectPage(req, res, getProjectPath(project.slug), {
           addQuery: { protocols: project.id },

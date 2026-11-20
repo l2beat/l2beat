@@ -63,7 +63,7 @@ const SAMPLE: ExampleProject = {
   slug: 'uniswap-v3',
   name: 'Uniswap V3',
   garden: {
-    path: '/layer2s/projects/uniswap-v3',
+    path: '/projects/uniswap-v3',
     verdicts: { good: LISTED, warning: LISTED, bad: LISTED, unscored: LISTED },
   },
   // Unchanged for years by `generatedAt`, so the score is in the top band.
@@ -119,7 +119,7 @@ describe(buildIntegrateExamples.name, () => {
           id: 'uniswapv3',
           slug: 'uniswap-v3',
           name: 'Uniswap V3',
-          href: 'https://ethbeat.org/layer2s/projects/uniswap-v3',
+          href: 'https://ethbeat.org/projects/uniswap-v3',
           contractName: 'UniswapV3Factory',
           crops: {
             censorshipResistance: { sentiment: 'good', status: 'reviewed' },

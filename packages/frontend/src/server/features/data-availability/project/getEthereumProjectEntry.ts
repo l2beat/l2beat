@@ -9,6 +9,7 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -87,7 +88,7 @@ export async function getEthereumProjectEntry(
     .map((x) => ({
       ...x,
       icon: manifest.getUrl(`/icons/${x.slug}.png`),
-      url: `/layer2s/projects/${x.slug}`,
+      url: getProjectPath(x.slug),
     }))
 
   const latestThroughput = ethereum.daLayer.throughput
