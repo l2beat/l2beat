@@ -101,11 +101,14 @@ export function LiquidStakingTvlChart({
   )
   // Always keeps the summary rail on the latest numbers and 1Y stake change,
   // sharing the SSR-prefetched query when the chart is on 1Y.
-  const { data: yearData } = useChartQuery(trpc.defi.liquidStakingTvlChart, {
-    range: defaultRange,
-  })
-  const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
-  const { data: supplyHistory } = useQuery(
+  const { data: yearData, isLoading: isYearLoading } = useChartQuery(
+    trpc.defi.liquidStakingTvlChart,
+    { range: defaultRange },
+  )
+  const { data: ethSupply, isLoading: isSupplyLoading } = useQuery(
+    trpc.defi.ethSupply.queryOptions(),
+  )
+  const { data: supplyHistory, isLoading: isSupplyHistoryLoading } = useQuery(
     trpc.defi.ethSupplyHistory.queryOptions(),
   )
 
@@ -121,18 +124,19 @@ export function LiquidStakingTvlChart({
       new Map(supplyHistory?.map((day) => [day.timestamp, day.value]) ?? []),
     [supplyHistory],
   )
-  const chartData = useMemo(
-    () =>
-      data?.map((point) =>
-        toRow(
-          point,
-          projectKeys,
-          unit,
-          showSupply ? (supplyByDay.get(point.timestamp) ?? null) : undefined,
-        ),
+  const chartData = useMemo(() => {
+    const rows = data?.map((point) =>
+      toRow(
+        point,
+        projectKeys,
+        unit,
+        showSupply ? (supplyByDay.get(point.timestamp) ?? null) : undefined,
       ),
-    [data, projectKeys, unit, showSupply, supplyByDay],
-  )
+    )
+    // No row with a value (USD with no prices) gets the no-data state, not
+    // empty axes.
+    return rows?.some(hasValue) ? rows : rows && []
+  }, [data, projectKeys, unit, showSupply, supplyByDay])
 
   // Protocols in the table's order, the biggest at the bottom, and Others on
   // top when shown, so its upper edge traces total stake. Not staked tops the
@@ -237,13 +241,24 @@ export function LiquidStakingTvlChart({
   const largestName =
     largestProject && (largestProject.shortName ?? largestProject.name)
 
-  // The chart's headline follows the scope: the top of the stack it shows.
+  // The chart's headline is the top of the stack it shows on the range's
+  // last day, so a custom range that ends in the past reads that day.
+  const rangeSummary = useMemo(
+    () => data && getLiquidStakingSummary(data, projectKeys, undefined),
+    [data, projectKeys],
+  )
+  const rangeSupply =
+    rangeSummary &&
+    (supplyByDay.get(rangeSummary.timestamp) ??
+      (rangeSummary.timestamp === summary?.timestamp
+        ? ethSupply?.value
+        : undefined))
   const chartHeadlineEth =
     scope === 'supply'
-      ? summary?.ethSupply
+      ? rangeSupply
       : scope === 'liquid'
-        ? summary?.liquid?.eth
-        : summary?.ethStaked
+        ? rangeSummary?.liquid?.eth
+        : rangeSummary?.ethStaked
   const chartHeadlineLabel =
     scope === 'supply'
       ? 'total ETH supply'
@@ -252,17 +267,19 @@ export function LiquidStakingTvlChart({
         : 'total ETH staked'
   const chartHeadlineValue = formatInUnit(
     chartHeadlineEth,
-    summary?.ethPrice,
+    rangeSummary?.ethPrice,
     unit,
   )
   const chartHeadlineLoading =
-    yearData === undefined || (scope === 'supply' && ethSupply === undefined)
+    isLoading ||
+    (scope === 'supply' && (isSupplyLoading || isSupplyHistoryLoading))
 
   return (
     <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
       <EditorialBanner
         projectsCount={projects.length}
         summary={summary}
+        isLoading={isYearLoading}
         ethSupply={ethSupply ?? undefined}
         largestName={largestName}
         stakeChange={stakeChange}
@@ -296,7 +313,10 @@ export function LiquidStakingTvlChart({
                   Value locked over time
                 </h2>
                 <Tooltip>
-                  <TooltipTrigger className="translate-y-px text-secondary">
+                  <TooltipTrigger
+                    className="translate-y-px text-secondary"
+                    aria-label="About the value locked chart"
+                  >
                     <InfoIcon className="size-3.5" />
                   </TooltipTrigger>
                   <TooltipContent>{DESCRIPTION}</TooltipContent>
@@ -349,7 +369,7 @@ export function LiquidStakingTvlChart({
               meta={chartMeta}
               isLoading={isLoading}
               isPlaceholderData={isPlaceholderData}
-              className="h-[220px] min-h-[220px] md:h-[268px] md:min-h-[268px] lg:h-full lg:min-h-0"
+              className="h-[220px] min-h-[220px] md:h-[268px] md:min-h-[268px] lg:h-full lg:min-h-0 2xl:h-full 2xl:min-h-0"
               interactiveLegend={{
                 dataKeys,
                 onItemClick: toggleDataKey,
@@ -384,6 +404,7 @@ export function LiquidStakingTvlChart({
 function EditorialBanner({
   projectsCount,
   summary,
+  isLoading,
   ethSupply,
   largestName,
   stakeChange,
@@ -391,6 +412,7 @@ function EditorialBanner({
 }: {
   projectsCount: number
   summary: LiquidStakingSummaryStats | undefined
+  isLoading: boolean
   ethSupply: EthSupply | undefined
   largestName: string | undefined
   stakeChange: EthChange | undefined
@@ -399,10 +421,14 @@ function EditorialBanner({
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-divider border-b px-4 py-4 md:px-6 md:py-5">
       {summary === undefined ? (
-        <div className="flex flex-1 flex-col gap-2">
-          <Skeleton className="h-7 w-96 max-w-full" />
-          <Skeleton className="h-4 w-80 max-w-full" />
-        </div>
+        isLoading ? (
+          <div className="flex flex-1 flex-col gap-2">
+            <Skeleton className="h-7 w-96 max-w-full" />
+            <Skeleton className="h-4 w-80 max-w-full" />
+          </div>
+        ) : (
+          <NoDataBadge size="regular" />
+        )
       ) : (
         <>
           <div className="min-w-0 flex-1">
@@ -934,5 +960,11 @@ function TooltipRow({
         )}
       </span>
     </ChartTooltipRow>
+  )
+}
+
+function hasValue(row: TvlRow): boolean {
+  return Object.entries(row).some(
+    ([key, value]) => key !== 'timestamp' && value !== null,
   )
 }
