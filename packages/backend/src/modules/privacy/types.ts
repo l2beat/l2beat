@@ -25,6 +25,8 @@ export interface PrivacyConfig {
   priceConfigs: PrivacyPriceIndexerConfig[]
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
+  /** Chains whose flows are also stored block by block, at the chain's head: those with `live.privacy.<chain>` on */
+  liveChains: string[]
 }
 
 /**

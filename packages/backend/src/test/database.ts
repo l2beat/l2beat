@@ -44,6 +44,9 @@ export function mockDatabase(overrides: Partial<Database> = {}) {
     transaction: async (fun) => {
       return await fun()
     },
+    snapshot: async (fun) => {
+      return await fun()
+    },
     ...overrides,
   })
 }
