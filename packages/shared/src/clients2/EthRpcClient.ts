@@ -181,6 +181,17 @@ export class EthRpcClient {
       : BlockResponse.parse(data)
   }
 
+  /** Without transactions, in batch requests, in the order of `blocks` */
+  async getBlocksByNumber(
+    blocks: BlockParameter[],
+  ): Promise<(RpcBlock | null)[]> {
+    const data = await this.rawBatchCall(
+      'eth_getBlockByNumber',
+      blocks.map((block) => [encodeBlock(block), false]),
+    )
+    return data.map((item) => BlockResponse.parse(item))
+  }
+
   async getBlockByHash(
     hash: string,
     includeTransactions: false,

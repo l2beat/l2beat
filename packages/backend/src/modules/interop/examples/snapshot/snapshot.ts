@@ -131,6 +131,23 @@ export class RpcSnapshotClient extends RpcClientCompat {
     return block
   }
 
+  // RpcReplay answers this from the recorded blocks
+  override async getBlockTimestamps(
+    blockNumbers: number[],
+  ): Promise<Map<number, number>> {
+    const result = new Map<number, number>()
+    for (const blockNumber of blockNumbers) {
+      const block = await this.getBlock(blockNumber, false)
+      if (block.number !== blockNumber) {
+        throw new Error('Unexpected block number', {
+          cause: { expected: blockNumber, got: block.number },
+        })
+      }
+      result.set(blockNumber, block.timestamp)
+    }
+    return result
+  }
+
   override async getTransaction(txHash: string): Promise<EVMTransaction> {
     const key = this.buildSnapshotKey(['transaction', txHash])
 
