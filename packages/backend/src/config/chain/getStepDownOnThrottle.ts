@@ -12,9 +12,12 @@ export function getStepDownOnThrottle(
   const share = Number(value)
   // A share of 1 or more would take the rate straight to its floor
   if (value.trim() === '' || !(share >= 0 && share < 1)) {
-    throw new Error('Step down on throttle must be a number from 0 to below 1', {
-      cause: { key, value },
-    })
+    throw new Error(
+      'Step down on throttle must be a number from 0 to below 1',
+      {
+        cause: { key, value },
+      },
+    )
   }
   return share
 }
