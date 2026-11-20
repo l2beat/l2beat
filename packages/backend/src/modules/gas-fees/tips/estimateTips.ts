@@ -1,5 +1,7 @@
 import type { GasFeesTier } from '@l2beat/database'
 
+export const GAS_FEES_TIERS: GasFeesTier[] = ['slow', 'medium', 'fast']
+
 /**
  * Each tier beats `share` of the last `blocks` blocks' tips at `blockPercentile`, and is at least the
  * tier below. Slow's share comes from its target: with 5 chances and a 1.7% chance of arriving too late

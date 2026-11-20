@@ -8,12 +8,22 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { GAS_FEES_CHAINS } from './fees/chains'
 import { GasFeesDailyIndexer } from './fees/GasFeesDailyIndexer'
 import { readFeesDays } from './fees/readFeesDays'
+import { fetchText } from './fetchText'
+import { GasFeesMempoolIndexer } from './mempool/GasFeesMempoolIndexer'
+import { readFlashbotsLandedCount } from './mempool/readFlashbotsSummary'
+import { readMempoolDay } from './mempool/readMempoolDay'
+import { GasFeesTipPayersIndexer } from './payers/GasFeesTipPayersIndexer'
+import { readTipPayersDay } from './payers/readTipPayersDay'
 import { GasFeesTipIndexer } from './tips/GasFeesTipIndexer'
 import { LiveTipsLoop } from './tips/LiveTipsLoop'
 import { WalletTipsLoop } from './tips/WalletTipsLoop'
 
 /** Dune's tables trail by an hour or two. A chain that trails by more is filled in later */
 const FEES_DELAY_SECONDS = 3 * UnixTime.HOUR
+/** The mempool table has a day by noon the day after */
+const MEMPOOL_DELAY_SECONDS = 18 * UnixTime.HOUR
+/** Ethereum's raw tables trail by minutes */
+const TIP_PAYERS_DELAY_SECONDS = 3 * UnixTime.HOUR
 /**
  * The service gives up after 2 minutes by default, queueing included, without stopping the run on Dune:
  * a query slower than that would be billed and thrown away on every retry
@@ -56,6 +66,8 @@ export function createGasFeesModule({
       new Clock(config.clock.minBlockTimestamp, delaySeconds),
     )
   const feesDays = dailyIndexer(FEES_DELAY_SECONDS)
+  const mempoolDays = dailyIndexer(MEMPOOL_DELAY_SECONDS)
+  const tipPayersDays = dailyIndexer(TIP_PAYERS_DELAY_SECONDS)
   const hours = new HourlyIndexer(logger, clock)
 
   const feesIndexer = new GasFeesDailyIndexer(
@@ -83,6 +95,30 @@ export function createGasFeesModule({
     },
     logger,
   )
+  const mempoolIndexer = new GasFeesMempoolIndexer(
+    {
+      parents: [mempoolDays, tipIndexer],
+      indexerService,
+      firstDay: historyFirstDay,
+      db,
+      blockFinder,
+      readMempoolDay: (input) => readMempoolDay(dune, input),
+      readFlashbotsLandedCount: (day) =>
+        readFlashbotsLandedCount(fetchText, day),
+    },
+    logger,
+  )
+  const tipPayersIndexer = new GasFeesTipPayersIndexer(
+    {
+      parents: [tipPayersDays, tipIndexer],
+      indexerService,
+      firstDay: historyFirstDay,
+      db,
+      blockFinder,
+      readTipPayersDay: (input) => readTipPayersDay(dune, input),
+    },
+    logger,
+  )
   const liveTipsLoop = new LiveTipsLoop(
     { db, rpc, intervalMs: LIVE_TIPS_INTERVAL_MS },
     logger,
@@ -97,7 +133,16 @@ export function createGasFeesModule({
 
   return {
     start: async () => {
-      for (const indexer of [feesDays, hours, feesIndexer, tipIndexer]) {
+      for (const indexer of [
+        feesDays,
+        mempoolDays,
+        tipPayersDays,
+        hours,
+        feesIndexer,
+        tipIndexer,
+        mempoolIndexer,
+        tipPayersIndexer,
+      ]) {
         await indexer.start()
       }
       liveTipsLoop.start()
