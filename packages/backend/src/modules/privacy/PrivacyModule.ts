@@ -1,8 +1,10 @@
+import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
+import { createIndexerId, INDEXER_NAMES } from '../../tools/uif/indexerIdentity'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyAnonymitySetIndexer } from './indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
@@ -11,6 +13,12 @@ import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyAnonymitySetIndexer } from './indexers/StarknetPrivacyAnonymitySetIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
+import { LivePrivacyFlowCheck } from './live/LivePrivacyFlowCheck'
+import {
+  LIVE_PRIVACY_FLOWS_BATCH_SIZE,
+  LIVE_PRIVACY_FLOWS_KEPT_FOR,
+  LivePrivacyFlowIndexer,
+} from './live/LivePrivacyFlowIndexer'
 import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
 import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
 import type {
@@ -28,6 +36,7 @@ export function createPrivacyModule({
   db,
   providers,
   clock,
+  chainHeads,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.privacy) {
     logger.info('PrivacyModule disabled')
@@ -37,6 +46,9 @@ export function createPrivacyModule({
   logger = logger.tag({ feature: 'privacy', module: 'privacy' })
   const indexerService = new IndexerService(db)
   const indexers: Indexer[] = []
+  const privacyChains = config.privacy.chains
+  const liveFlowIndexers: LivePrivacyFlowIndexer[] = []
+  const followedChains: string[] = []
 
   const bucketIds = getPrivacyBucketIds([
     ...config.privacy.flowConfigs,
@@ -190,19 +202,41 @@ export function createPrivacyModule({
 
     if (flowConfigs.length > 0) {
       assert(priceIndexer, 'Privacy flow configs require a price indexer')
+      const chain = blockTimestampConfig.chain
+      const rpcClient = providers.clients.getRpcClient(chain)
+      // undefined also for a chain with no RPC to follow
+      const chainHead = config.privacy.liveChains.includes(chain)
+        ? chainHeads.get(chain, {
+            batchSize: LIVE_PRIVACY_FLOWS_BATCH_SIZE,
+            keepFor: LIVE_PRIVACY_FLOWS_KEPT_FOR,
+          })
+        : undefined
+      if (chainHead) {
+        followedChains.push(chain)
+        liveFlowIndexers.push(
+          new LivePrivacyFlowIndexer(
+            {
+              chain,
+              head: chainHead,
+              configurations: flowConfigs,
+              rpcClient,
+              indexerService,
+              db,
+            },
+            logger,
+          ),
+        )
+      }
+
       indexers.push(
         new PrivacyFlowIndexer(
           {
-            chain: blockTimestampConfig.chain,
+            chain,
             parents: [priceIndexer, blockTimestampIndexer],
             indexerService,
             blockProvider,
-            logsProvider: providers.logs.getLogsProvider(
-              blockTimestampConfig.chain,
-            ),
-            rpcClient: providers.clients.getRpcClient(
-              blockTimestampConfig.chain,
-            ),
+            logsProvider: providers.logs.getLogsProvider(chain),
+            rpcClient,
             configurations: flowConfigs.map((flowConfig) => ({
               id: flowConfig.id,
               minHeight: flowConfig.sinceTimestamp,
@@ -210,6 +244,8 @@ export function createPrivacyModule({
               properties: flowConfig,
             })),
             db,
+            liveCheck:
+              chainHead && new LivePrivacyFlowCheck({ chain, db }, logger),
           },
           logger,
         ),
@@ -322,6 +358,7 @@ export function createPrivacyModule({
     relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
+    liveChains: followedChains.length,
   })
 
   const hasOnchainIndexers = priceIndexer !== undefined || indexers.length > 0
@@ -330,15 +367,39 @@ export function createPrivacyModule({
     start: async () => {
       logger = logger.for('PrivacyModule')
       logger.info('Starting...')
+      await dropLiveFlowsOfOtherChains(db, privacyChains, followedChains)
       if (hasOnchainIndexers) {
         await hourlyIndexer.start()
         await dailyIndexer.start()
         await priceIndexer?.start()
-        for (const indexer of indexers) {
+        for (const indexer of [...indexers, ...liveFlowIndexers]) {
           await indexer.start()
         }
       }
       sampler?.start()
     },
   }
+}
+
+/**
+ * A chain that is no longer followed at its head keeps no flows of its
+ * newest blocks and no promise of them: nothing would delete them as they
+ * age, or as the chain replaces their blocks
+ */
+async function dropLiveFlowsOfOtherChains(
+  db: Database,
+  chains: string[],
+  followedChains: string[],
+) {
+  // together: a cursor left behind its rows would promise flows that are gone
+  await db.transaction(async () => {
+    await db.chainHeadCursor.deleteByIndexerIds(
+      chains
+        .filter((chain) => !followedChains.includes(chain))
+        .map((chain) =>
+          createIndexerId(INDEXER_NAMES.LIVE_PRIVACY_FLOW, chain),
+        ),
+    )
+    await db.livePrivacyFlowEvent.deleteOfOtherChains(followedChains)
+  })
 }

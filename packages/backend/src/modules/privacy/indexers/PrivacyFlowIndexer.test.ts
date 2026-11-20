@@ -8,6 +8,7 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
+import type { LivePrivacyFlowCheck } from '../live/LivePrivacyFlowCheck'
 import type { PrivacyFlowIndexerConfig, PrivacyLogTopicFilter } from '../types'
 import { ERC20_TRANSFER_TOPIC, erc20Interface } from '../utils/erc20'
 import { PrivacyFlowIndexer } from './PrivacyFlowIndexer'
@@ -86,6 +87,9 @@ describe(PrivacyFlowIndexer.name, () => {
       const syncMetadataRepo = mockObject<Database['syncMetadata']>({
         updateSyncedUntil: mockFn().resolvesTo(undefined),
       })
+      const liveCheck = mockObject<LivePrivacyFlowCheck>({
+        run: mockFn().resolvesTo(undefined),
+      })
 
       const indexer = new PrivacyFlowIndexer(
         {
@@ -102,11 +106,14 @@ describe(PrivacyFlowIndexer.name, () => {
           }),
           parents: [],
           indexerService: mockObject<IndexerService>({}),
+          liveCheck,
         },
         Logger.SILENT,
       )
 
       const updateFn = await indexer.multiUpdate(from, to, configs)
+      // outside the transaction the flows are saved in
+      expect(liveCheck.run).toHaveBeenCalledTimes(1)
       const safeHeight = await updateFn()
 
       expect(logsProvider.getLogs).toHaveBeenOnlyCalledWith(
@@ -117,6 +124,14 @@ describe(PrivacyFlowIndexer.name, () => {
       )
 
       expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
+
+      // the flows it stores, to compare with the ones stored block by block
+      expect(liveCheck.run).toHaveBeenOnlyCalledWith(
+        ['config-1'],
+        from,
+        to,
+        privacyFlowEventRepo.upsertMany.calls[0].args[0],
+      )
 
       expect(privacyFlowEventRepo.upsertMany).toHaveBeenOnlyCalledWith([
         {

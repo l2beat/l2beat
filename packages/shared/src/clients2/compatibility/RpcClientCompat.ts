@@ -94,6 +94,12 @@ export interface IRpcClient extends BlockClient, LogsClient {
     addresses?: string[],
     topics?: LogsTopicFilter,
   ): Promise<EVMLog[]>
+  /** The logs of one block. Fails for a block the node does not have */
+  getLogsByBlockHash(
+    blockHash: string,
+    addresses?: string[],
+    topics?: LogsTopicFilter,
+  ): Promise<EVMLog[]>
   getFeeHistory(
     blockCount: number,
     newestBlock: number,
@@ -302,6 +308,19 @@ export class RpcClientCompat implements IRpcClient {
       }
       throw e
     }
+  }
+
+  async getLogsByBlockHash(
+    blockHash: string,
+    addresses?: string[],
+    topics?: LogsTopicFilter,
+  ): Promise<EVMLog[]> {
+    const logs = await this.ethRpcClient.getLogs({
+      blockHash,
+      address: addresses as EthereumAddress[] | undefined,
+      topics,
+    })
+    return logs.map(toEVMLog)
   }
 
   async getFeeHistory(
