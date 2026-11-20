@@ -267,7 +267,7 @@ export function LiquidStakingTvlChart({
         : 'total ETH staked'
   const chartHeadlineValue = formatInUnit(
     chartHeadlineEth,
-    rangeSummary?.ethPrice,
+    scope === 'liquid' ? rangeSummary?.sharesEthPrice : rangeSummary?.ethPrice,
     unit,
   )
   const chartHeadlineLoading =
@@ -565,7 +565,7 @@ function SummaryRail({
   const split = summary?.supplySplit
 
   const toUnit = (eth: number | undefined) =>
-    formatInUnit(eth, summary?.ethPrice, unit)
+    formatInUnit(eth, summary?.sharesEthPrice, unit)
   const liquidColors = projects
     .slice(0, 3)
     .map((p) => colorByProject.get(p.id) ?? 'var(--brand)')

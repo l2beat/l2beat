@@ -23,6 +23,11 @@ export interface LiquidStakingSummaryStats {
   ethStaked: number
   /** ETH's USD price on the latest day, when known. */
   ethPrice?: number
+  /**
+   * ETH's USD price on the day the shares (`liquid`, `others`, `byProject`,
+   * `supplySplit`) are from, when known; it can be older than `ethPrice`.
+   */
+  sharesEthPrice?: number
   /** The supply the stake is a share of, when it is known. */
   ethSupply?: number
   /** The stake as a share of all ETH, when the supply is known. */
@@ -85,6 +90,7 @@ export function getLiquidStakingSummary(
     timestamp: latest.timestamp,
     ethStaked: latest.ethStaked,
     ethPrice: latest.ethPrice ?? undefined,
+    sharesEthPrice: complete?.ethPrice ?? undefined,
     ethSupply,
     supplyShare: ethSupply ? latest.ethStaked / ethSupply : undefined,
     liquid:
