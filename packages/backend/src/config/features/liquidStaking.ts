@@ -23,6 +23,12 @@ export async function getLiquidStakingConfig(
                 tracking.marketQuotes,
               ),
               projectId: id,
+              sinceTimestamp: UnixTime(
+                Math.max(
+                  SINCE_TIMESTAMP,
+                  tracking.sinceTimestamp ?? SINCE_TIMESTAMP,
+                ),
+              ),
               contracts: tracking.contracts,
               marketQuotes: tracking.marketQuotes,
             },

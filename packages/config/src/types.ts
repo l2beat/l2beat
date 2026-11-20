@@ -1118,6 +1118,11 @@ export interface ProjectLiquidStakingTracking {
    * market exit. A pool that doesn't exist yet gives no quote.
    */
   marketQuotes: ProjectLiquidStakingMarketQuote[]
+  /**
+   * The first hour to read, for contracts deployed after the start of 2024.
+   * Reads before a contract exists fail, and the indexer retries them forever.
+   */
+  sinceTimestamp?: UnixTime
 }
 
 export interface ProjectLiquidStakingRisks {

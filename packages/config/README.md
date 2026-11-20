@@ -49,6 +49,8 @@ Add `src/projects/<id>/<id>.ts` with `liquidStakingListing` from `src/templates/
 - Yield: `tracking.contracts` of type `rate`, with the view that returns the ETH one token is worth.
 - Cost of exit: `tracking.marketQuotes`, the pools that sell the token for ETH or WETH.
 
+If the contracts were deployed after the start of 2024, set `tracking.sinceTimestamp` to an hour after the deployment, or the indexer gets stuck reading a contract that doesn't exist yet.
+
 To review it later, replace the template with a full project and add `liquidStaking.risks`.
 
 ### Tests dependencies
