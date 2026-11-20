@@ -63,10 +63,11 @@ export interface Config {
   readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
   /**
-   * Lets an RPC client lower its own rate when the provider refuses calls
-   * for it, and log the rate it settles at. See `RateLimiter`.
+   * The share of its rate an RPC client gives up each time the provider
+   * refuses calls for it, logging the rate it settles at. Unset, the rate
+   * stays fixed. See `RateLimiter`.
    */
-  readonly rpcStepDownOnThrottle: boolean
+  readonly rpcStepDownOnThrottle: number | undefined
 
   readonly backoffice: BackofficeFeatureConfig | false
 

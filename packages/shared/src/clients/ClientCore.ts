@@ -12,7 +12,7 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
-  /** See `RateLimiterOptions.stepDownOnThrottle`. */
+  /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
   stepDownOnThrottle?: number
 }
 
@@ -25,8 +25,12 @@ export abstract class ClientCore {
     const logger = deps.logger.for(this).tag({ source: deps.sourceName })
     this.rateLimiter = new RateLimiter({
       callsPerMinute: deps.callsPerMinute,
-      stepDownOnThrottle: deps.stepDownOnThrottle,
-      onStepDown: (step) => logger.warn('Rate stepped down', step),
+      stepDownOnThrottle: deps.stepDownOnThrottle
+        ? {
+            share: deps.stepDownOnThrottle,
+            onStep: (step) => logger.warn('Rate stepped down', step),
+          }
+        : undefined,
     })
     this.metricsAggregator = new ClientMetricsAggregator({
       logger,

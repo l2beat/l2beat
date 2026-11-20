@@ -198,7 +198,7 @@ describe(RateLimiter.name, () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
-        stepDownOnThrottle: 0.1,
+        stepDownOnThrottle: { share: 0.1 },
       })
 
       try {
@@ -232,7 +232,7 @@ describe(RateLimiter.name, () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
-        stepDownOnThrottle: 0.1,
+        stepDownOnThrottle: { share: 0.1 },
       })
 
       try {
@@ -263,7 +263,7 @@ describe(RateLimiter.name, () => {
       const clock = FakeTimers.install({ now: 10_000 })
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
-        stepDownOnThrottle: 0.1,
+        stepDownOnThrottle: { share: 0.1 },
       })
 
       try {
@@ -287,7 +287,7 @@ describe(RateLimiter.name, () => {
       // one call every 100 ms, then every 200 ms
       const rateLimiter = new RateLimiter({
         callsPerMinute: 600,
-        stepDownOnThrottle: 0.5,
+        stepDownOnThrottle: { share: 0.5 },
       })
       const starts: number[] = []
 
@@ -314,8 +314,10 @@ describe(RateLimiter.name, () => {
       const steps: RateLimiterStepDown[] = []
       const rateLimiter = new RateLimiter({
         callsPerMinute: 1_000,
-        stepDownOnThrottle: 0.5,
-        onStepDown: (step) => steps.push(step),
+        stepDownOnThrottle: {
+          share: 0.5,
+          onStep: (step) => steps.push(step),
+        },
       })
 
       try {

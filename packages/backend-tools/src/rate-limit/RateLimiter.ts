@@ -9,19 +9,24 @@ interface QueuedFunction<T> {
 export interface RateLimiterOptions {
   callsPerMinute: number
   /**
-   * Share of the rate given up when the provider refuses a call, at most
-   * once a minute, only once a call sent after the last step was answered,
-   * and down to a tenth of `callsPerMinute`. The rate stays down until the
-   * process restarts: it never climbs back by itself, so a limiter that
-   * has settled no longer draws refusals. Zero, the default, keeps the
-   * rate fixed.
+   * Lowers the rate when the provider refuses a call. The rate stays down
+   * until the process restarts: it never climbs back by itself, so a
+   * limiter that has settled no longer draws refusals. Unset, the default,
+   * keeps the rate fixed.
    */
-  stepDownOnThrottle?: number
-  /**
-   * Called on every step. A rate that never moved was never tested, so the
-   * steps, not the rate alone, say whether it was found.
-   */
-  onStepDown?: (step: RateLimiterStepDown) => void
+  stepDownOnThrottle?: {
+    /**
+     * Share of the rate given up per step. A step is taken at most once a
+     * minute, only once a call sent after the last step was answered, and
+     * down to a tenth of `callsPerMinute`.
+     */
+    share: number
+    /**
+     * Called on every step. A rate that never moved was never tested, so
+     * the steps, not the rate alone, say whether it was found.
+     */
+    onStep?: (step: RateLimiterStepDown) => void
+  }
 }
 
 export interface RateLimiterStepDown {
@@ -77,8 +82,7 @@ export class RateLimiter {
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
   private effective: number
-  private readonly stepDownOnThrottle: number
-  private readonly onStepDown?: (step: RateLimiterStepDown) => void
+  private readonly stepDownOnThrottle: RateLimiterOptions['stepDownOnThrottle']
   private steppedDownAt = Number.NEGATIVE_INFINITY
   /**
    * A provider that locks an address out refuses every call for minutes,
@@ -94,8 +98,7 @@ export class RateLimiter {
   constructor(options: RateLimiterOptions) {
     this.callsPerMinute = options.callsPerMinute
     this.effective = options.callsPerMinute
-    this.stepDownOnThrottle = options.stepDownOnThrottle ?? 0
-    this.onStepDown = options.onStepDown
+    this.stepDownOnThrottle = options.stepDownOnThrottle
   }
 
   /**
@@ -115,18 +118,19 @@ export class RateLimiter {
    * (HTTP 429). Does nothing unless `stepDownOnThrottle` is set.
    */
   throttled(sentAt: number): void {
-    if (!this.mayStepDown(sentAt)) {
+    const stepDown = this.stepDownOnThrottle
+    if (!stepDown || !this.mayStepDown(sentAt)) {
       return
     }
     const from = this.effective
     const floor = this.callsPerMinute * LOWEST_SHARE_OF_RATE
-    const to = Math.max(floor, from * (1 - this.stepDownOnThrottle))
+    const to = Math.max(floor, from * (1 - stepDown.share))
     if (to === from) {
       return
     }
     this.steppedDownAt = Date.now()
     this.effective = to
-    this.onStepDown?.({ from, to, atFloor: to === floor })
+    stepDown.onStep?.({ from, to, atFloor: to === floor })
   }
 
   /**
@@ -144,7 +148,6 @@ export class RateLimiter {
    */
   private mayStepDown(refusedCallSentAt: number): boolean {
     return (
-      this.stepDownOnThrottle !== 0 &&
       refusedCallSentAt > this.steppedDownAt &&
       this.answeredCallSentAt > this.steppedDownAt &&
       Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
