@@ -16,6 +16,7 @@ import {
   getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
+import { useTransfersSorting } from '~/pages/interop/components/table/transfer-count-cell/useTransfersSorting'
 import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -36,6 +37,7 @@ export function InteropTransfersTableView({
   isSnapshotLoading?: boolean
 }) {
   const trpc = useTRPC()
+  const { sort, sorting, tableOptions } = useTransfersSorting()
 
   const {
     data: transfersData,
@@ -51,6 +53,7 @@ export function InteropTransfersTableView({
         scope,
         snapshotTimestamp: snapshotTimestamp ?? 0,
         limit: TRANSFERS_PER_PAGE,
+        sort,
       },
       {
         enabled:
@@ -84,7 +87,13 @@ export function InteropTransfersTableView({
     pageIndex: 0,
     pageSize: TRANSFERS_PER_PAGE,
   })
-  const selectionKey = JSON.stringify({ from, to, scope, snapshotTimestamp })
+  const selectionKey = JSON.stringify({
+    from,
+    to,
+    scope,
+    snapshotTimestamp,
+    sort,
+  })
   const [prevSelectionKey, setPrevSelectionKey] = useState(selectionKey)
   if (prevSelectionKey !== selectionKey) {
     setPrevSelectionKey(selectionKey)
@@ -99,7 +108,8 @@ export function InteropTransfersTableView({
     autoResetPageIndex: false,
     manualFiltering: true,
     pageCount,
-    state: { pagination },
+    ...tableOptions,
+    state: { pagination, sorting },
     onPaginationChange: setPagination,
   })
 

@@ -105,6 +105,7 @@ export {
   type InteropTransferFinancialsStats,
   type InteropTransferPluginVolumeRecord,
   type InteropTransferRecord,
+  type InteropTransferSort,
   type InteropTransferSupplyChangeRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,

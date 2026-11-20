@@ -20,6 +20,7 @@ import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getCarriedFrom } from './utils/getCarriedFrom'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
+import { getTransferValueUsd } from './utils/getTransferValueUsd'
 import {
   INTEROP_CHAIN_DETAILS,
   type InteropChainDetails,
@@ -35,6 +36,7 @@ export async function getInteropProtocolTransfers({
   tokenId,
   snapshotTimestamp,
   limit,
+  sort,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   const empty: InteropProtocolTransfersResponse = {
@@ -45,7 +47,7 @@ export async function getInteropProtocolTransfers({
   if (from.length === 0 || to.length === 0) return empty
 
   if (env.MOCK) {
-    return getMockInteropTransfers({ from, to })
+    return getMockInteropTransfers({ from, to, sort })
   }
 
   const ids =
@@ -87,6 +89,7 @@ export async function getInteropProtocolTransfers({
     pluginIds,
     matcher,
     limit,
+    sort,
     cursor,
   })
   const tokensDetailsMap = await buildTokensDetailsMap(
@@ -143,7 +146,7 @@ export function toInteropProtocolTransferDetailsItem(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
     ),
-    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    valueUsd: getTransferValueUsd(transfer),
     bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,

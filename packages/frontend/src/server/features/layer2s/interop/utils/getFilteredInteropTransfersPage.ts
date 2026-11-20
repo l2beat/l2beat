@@ -1,7 +1,11 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import type { InteropProtocolTransfersCursor } from '../types'
+import type {
+  InteropProtocolTransfersCursor,
+  InteropTransfersSort,
+} from '../types'
+import { getTransferValueUsd } from './getTransferValueUsd'
 import { transferTouchesChain } from './transferTouchesChain'
 
 interface TransfersPage {
@@ -22,6 +26,7 @@ export async function getFilteredInteropTransfersPage({
   pluginIds,
   matcher,
   limit,
+  sort,
   cursor,
 }: {
   tokenId?: string
@@ -32,6 +37,7 @@ export async function getFilteredInteropTransfersPage({
   pluginIds: string[]
   matcher: (transfer: InteropTransferRecord) => boolean
   limit: number | undefined
+  sort: InteropTransfersSort | undefined
   cursor: InteropProtocolTransfersCursor | undefined
 }): Promise<TransfersPage> {
   const db = getDb()
@@ -46,10 +52,12 @@ export async function getFilteredInteropTransfersPage({
       sourceChains,
       destinationChains,
       abstractTokenId: tokenId,
+      sort: sort && { by: sort.id, desc: sort.desc },
       cursor: dbCursor
         ? {
             timestamp: UnixTime(dbCursor.timestamp),
             transferId: dbCursor.transferId,
+            valueUsd: dbCursor.valueUsd,
           }
         : undefined,
       limit: RAW_BATCH_SIZE,
@@ -100,10 +108,11 @@ function getPageSize(limit: number | undefined): number {
 }
 
 function toTransferCursor(
-  transfer: Pick<InteropTransferRecord, 'timestamp' | 'transferId'>,
+  transfer: InteropTransferRecord,
 ): InteropProtocolTransfersCursor {
   return {
     timestamp: transfer.timestamp,
     transferId: transfer.transferId,
+    valueUsd: getTransferValueUsd(transfer),
   }
 }

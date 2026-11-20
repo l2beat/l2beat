@@ -338,6 +338,21 @@ export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
 export interface InteropTransferCursor {
   timestamp: UnixTime
   transferId: string
+  /**
+   * The value of the row the cursor points at. Read only when the page is
+   * sorted by value, where `undefined` means that row has no value.
+   */
+  valueUsd?: number
+}
+
+/**
+ * `valueUsd` is the source value, or the destination value when the source
+ * has none. Transfers with neither come last in both directions, and equal
+ * values are ordered newest first.
+ */
+export interface InteropTransferSort {
+  by: 'timestamp' | 'valueUsd'
+  desc: boolean
 }
 
 export class InteropTransferRepository extends BaseRepository {
@@ -653,6 +668,9 @@ export class InteropTransferRepository extends BaseRepository {
     sourceChains: string[]
     destinationChains: string[]
     abstractTokenId?: string
+    /** Newest first when omitted. */
+    sort?: InteropTransferSort
+    /** The last row of the previous page, read under the same `sort`. */
     cursor?: InteropTransferCursor
     limit: number
   }): Promise<InteropTransferRecord[]> {
@@ -686,21 +704,69 @@ export class InteropTransferRepository extends BaseRepository {
       )
     }
 
+    const sort = options.sort ?? { by: 'timestamp', desc: true }
     const cursor = options.cursor
+
+    if (sort.by === 'timestamp') {
+      if (cursor) {
+        const cursorDate = UnixTime.toDate(cursor.timestamp)
+        const op = sort.desc ? '<' : '>'
+        query = query.where((eb) =>
+          eb.or([
+            eb('timestamp', op, cursorDate),
+            eb.and([
+              eb('timestamp', '=', cursorDate),
+              eb('transferId', op, cursor.transferId),
+            ]),
+          ]),
+        )
+      }
+
+      const direction = sort.desc ? 'desc' : 'asc'
+      const rows = await query
+        .orderBy('timestamp', direction)
+        .orderBy('transferId', direction)
+        .limit(options.limit)
+        .execute()
+
+      return rows.map(toRecord)
+    }
+
+    const valueUsd = sql<number | null>`coalesce("srcValueUsd", "dstValueUsd")`
+
     if (cursor) {
       const cursorDate = UnixTime.toDate(cursor.timestamp)
-      query = query.where((eb) =>
+      // The rest of the rows that share the cursor's value (or its lack).
+      const olderThanCursor = (eb: ExpressionBuilder<DB, 'InteropTransfer'>) =>
         eb.or([
           eb('timestamp', '<', cursorDate),
           eb.and([
             eb('timestamp', '=', cursorDate),
             eb('transferId', '<', cursor.transferId),
           ]),
-        ]),
-      )
+        ])
+
+      const cursorValueUsd = cursor.valueUsd
+      if (cursorValueUsd === undefined) {
+        query = query.where((eb) =>
+          eb.and([eb(valueUsd, 'is', null), olderThanCursor(eb)]),
+        )
+      } else {
+        // Compared as `real`, the column's type: as a double the value read
+        // from a row would not equal that row's own value.
+        const cursorValue = sql<number>`${cursorValueUsd}::real`
+        query = query.where((eb) =>
+          eb.or([
+            eb(valueUsd, sort.desc ? '<' : '>', cursorValue),
+            eb.and([eb(valueUsd, '=', cursorValue), olderThanCursor(eb)]),
+            eb(valueUsd, 'is', null),
+          ]),
+        )
+      }
     }
 
     const rows = await query
+      .orderBy(valueUsd, sort.desc ? sql`desc nulls last` : sql`asc nulls last`)
       .orderBy('timestamp', 'desc')
       .orderBy('transferId', 'desc')
       .limit(options.limit)

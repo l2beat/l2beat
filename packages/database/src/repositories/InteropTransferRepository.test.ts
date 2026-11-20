@@ -5,8 +5,10 @@ import type { InteropTransfer } from '../kysely/generated/types'
 import { describeDatabase } from '../test/database'
 import {
   hasAnyInteropTransferFinancialsFilter,
+  type InteropTransferCursor,
   type InteropTransferRecord,
   InteropTransferRepository,
+  type InteropTransferSort,
   type InteropTransferUpdate,
   toRecord,
   toRow,
@@ -1172,6 +1174,105 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         })
 
         expect(result.map((x) => x.transferId)).toEqual(['msg1'])
+      })
+
+      describe('sorting', () => {
+        // Values chosen so that reading them back as doubles would not
+        // compare equal to the stored `real`.
+        const valued = (
+          transferId: string,
+          secondsAgo: number,
+          srcValueUsd: number | undefined,
+          dstValueUsd: number | undefined,
+        ): InteropTransferRecord => ({
+          ...transfer(
+            'plugin1',
+            transferId,
+            'deposit',
+            snapshotTimestamp - secondsAgo,
+            'ethereum',
+            'arbitrum',
+            10,
+          ),
+          srcValueUsd,
+          dstValueUsd,
+        })
+
+        beforeEach(async () => {
+          await repository.insertMany([
+            valued('a', 60, 0.1, 5_000),
+            valued('b', 50, 29_639.52, undefined),
+            // Only the destination is priced.
+            valued('c', 40, undefined, 29_639.52),
+            valued('d', 30, undefined, undefined),
+            valued('e', 20, 680.83, 1),
+            valued('f', 10, undefined, undefined),
+            valued('g', 5, 0, undefined),
+          ])
+        })
+
+        /** Reads every row one page at a time, as the frontend does. */
+        async function readAll(sort: InteropTransferSort, limit: number) {
+          const ids: string[] = []
+          let cursor: InteropTransferCursor | undefined
+          for (let page = 0; page < 20; page++) {
+            const rows = await repository.getProjectTransfersPage({
+              snapshotTimestamp,
+              sourceChains: ['ethereum'],
+              destinationChains: ['arbitrum'],
+              plugins: ['plugin1'],
+              sort,
+              cursor,
+              limit,
+            })
+            const last = rows.at(-1)
+            if (!last) break
+            ids.push(...rows.map((x) => x.transferId))
+            cursor = {
+              timestamp: last.timestamp,
+              transferId: last.transferId,
+              valueUsd: last.srcValueUsd ?? last.dstValueUsd,
+            }
+          }
+          return ids
+        }
+
+        const cases: {
+          sort: InteropTransferSort
+          expected: string[]
+        }[] = [
+          {
+            sort: { by: 'timestamp', desc: true },
+            expected: ['g', 'f', 'e', 'd', 'c', 'b', 'a'],
+          },
+          {
+            sort: { by: 'timestamp', desc: false },
+            expected: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+          },
+          {
+            // Equal values newest first, unpriced transfers last.
+            sort: { by: 'valueUsd', desc: true },
+            expected: ['c', 'b', 'e', 'a', 'g', 'f', 'd'],
+          },
+          {
+            sort: { by: 'valueUsd', desc: false },
+            expected: ['g', 'a', 'e', 'c', 'b', 'f', 'd'],
+          },
+        ]
+
+        for (const { sort, expected } of cases) {
+          const name = `${sort.by} ${sort.desc ? 'desc' : 'asc'}`
+
+          it(`orders by ${name}`, async () => {
+            expect(await readAll(sort, 100)).toEqual(expected)
+          })
+
+          for (const limit of [1, 2, 3]) {
+            it(`pages by ${name}, ${limit} at a time, without gaps or repeats`, async () => {
+              expect(await readAll(sort, limit)).toEqual(expected)
+            })
+          }
+        }
       })
 
       it('filters by abstract token id on either side', async () => {
