@@ -21,12 +21,18 @@ export interface LiquidStakingSummaryStats {
   timestamp: number
   /** ETH held by all active validators. */
   ethStaked: number
+  /** ETH's USD price on the latest day, when known. */
+  ethPrice?: number
   /** The supply the stake is a share of, when it is known. */
   ethSupply?: number
   /** The stake as a share of all ETH, when the supply is known. */
   supplyShare?: number
   /** The listed protocols' ETH, as a share of the stake. */
   liquid?: EthShare
+  /** ETH staked outside the listed protocols, as a share of the stake. */
+  others?: EthShare
+  /** Each listed protocol's latest ETH and share of the stake, largest first. */
+  byProject?: (EthShare & { id: string })[]
   /** The protocol with the most ETH, as a share of the stake. */
   largest?: EthShare & { id: string }
 }
@@ -59,16 +65,26 @@ export function getLiquidStakingSummary(
           .sort((a, b) => b.eth - a.eth)
       : undefined
   const liquidEth = byProject?.reduce((sum, { eth }) => sum + eth, 0)
+  const othersEth =
+    liquidEth !== undefined && completeStake != null
+      ? completeStake - liquidEth
+      : undefined
 
   return {
     timestamp: latest.timestamp,
     ethStaked: latest.ethStaked,
+    ethPrice: latest.ethPrice ?? undefined,
     ethSupply,
     supplyShare: ethSupply ? latest.ethStaked / ethSupply : undefined,
     liquid:
       liquidEth !== undefined && completeStake
         ? { eth: liquidEth, share: liquidEth / completeStake }
         : undefined,
+    others:
+      othersEth !== undefined && othersEth >= 0 && completeStake
+        ? { eth: othersEth, share: othersEth / completeStake }
+        : undefined,
+    byProject,
     largest: byProject?.[0],
   }
 }

@@ -42,7 +42,6 @@ import {
   type LiquidStakingChartSeries,
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
-import { LiquidStakingSummaryCard } from './LiquidStakingSummaryCard'
 import { LiquidStakingTvlChart } from './LiquidStakingTvlChart'
 
 export type LiquidStakingChartProject = Pick<
@@ -86,10 +85,12 @@ export function LiquidStakingCharts({
         />
       </ChartControlsWrapper>
       <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 lg:grid-cols-2">
-        {/* The summary leads, and shares its row with value locked, so all
-          three charts are as wide. */}
-        <LiquidStakingSummaryCard projects={projects} range={defaultRange} />
-        <LiquidStakingTvlChart projectSeries={projectSeries} range={range} />
+        <LiquidStakingTvlChart
+          projects={projects}
+          projectSeries={projectSeries}
+          range={range}
+          defaultRange={defaultRange}
+        />
         <YieldChart
           projectSeries={projectSeries}
           range={range}

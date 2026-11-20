@@ -27,9 +27,15 @@ describe(getLiquidStakingSummary.name, () => {
     expect(summary).toEqual({
       timestamp: 200,
       ethStaked: 50,
+      ethPrice: 1,
       ethSupply: 200,
       supplyShare: 0.25,
       liquid: { eth: 25, share: 0.5 },
+      others: { eth: 25, share: 0.5 },
+      byProject: [
+        { id: 'lido', eth: 15, share: 0.3 },
+        { id: 'rocketpool', eth: 10, share: 0.2 },
+      ],
       largest: { id: 'lido', eth: 15, share: 0.3 },
     })
   })
