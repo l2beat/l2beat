@@ -2,6 +2,7 @@ import type { Project, ProjectDiscoveryUpdate } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 
 const RECENT_CHANGES_WINDOW = 7 * UnixTime.DAY
@@ -77,16 +78,9 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
 function getProjectUpdatesHref(
   project: Project<never, 'scalingInfo' | 'interopConfig' | 'privacyInfo'>,
 ): string | undefined {
-  if (project.scalingInfo) {
-    return `/layer2s/projects/${project.slug}`
-  }
-  if (project.interopConfig) {
-    return `/interop/protocols/${project.slug}`
-  }
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  return undefined
+  return project.scalingInfo || project.interopConfig || project.privacyInfo
+    ? getProjectPath(project.slug)
+    : undefined
 }
 
 function projectTvs(

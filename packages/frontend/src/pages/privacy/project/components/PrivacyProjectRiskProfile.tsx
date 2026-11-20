@@ -3,6 +3,7 @@ import type {
   PrivacySummaryValue,
   PrivacyWalkawayTest,
 } from '@l2beat/config'
+import type { ReactNode } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -34,6 +35,8 @@ interface Props {
   href: string
   isUnderReview: boolean
   reproducibility: PrivacySummaryValue
+  /** More about the trusted setup, under its value. */
+  trustedSetupDetails?: ReactNode
   className?: string
 }
 
@@ -44,6 +47,7 @@ export function PrivacyProjectRiskProfile({
   href,
   isUnderReview,
   reproducibility,
+  trustedSetupDetails,
   className,
 }: Props) {
   return (
@@ -54,26 +58,23 @@ export function PrivacyProjectRiskProfile({
         className,
       )}
     >
-      <ProjectSummaryStat
-        title={PRIVACY_ASSESSMENT.title}
-        tooltip={PRIVACY_ASSESSMENT.tooltip}
-        value={
-          <PrivacyProjectRosette
-            adversaries={adversaries}
-            href={href}
-            isUnderReview={isUnderReview}
-          />
-        }
+      <PrivacyAssessmentStat
+        adversaries={adversaries}
+        href={href}
+        isUnderReview={isUnderReview}
       />
       <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."
         value={
-          <RiskValue
-            value={trustedSetup}
-            risk={trustedSetup.risk}
-            dotOnly={trustedSetup.label === undefined}
-          />
+          <span className="flex flex-col gap-2 max-md:items-end">
+            <RiskValue
+              value={trustedSetup}
+              risk={trustedSetup.risk}
+              dotOnly={trustedSetup.label === undefined}
+            />
+            {trustedSetupDetails}
+          </span>
         }
       />
       <ProjectSummaryStat
@@ -98,6 +99,27 @@ export function PrivacyProjectRiskProfile({
         }
       />
     </div>
+  )
+}
+
+/** The privacy level, with a small rosette of the adversaries. */
+export function PrivacyAssessmentStat({
+  adversaries,
+  href,
+  isUnderReview,
+}: Pick<Props, 'adversaries' | 'href' | 'isUnderReview'>) {
+  return (
+    <ProjectSummaryStat
+      title={PRIVACY_ASSESSMENT.title}
+      tooltip={PRIVACY_ASSESSMENT.tooltip}
+      value={
+        <PrivacyProjectRosette
+          adversaries={adversaries}
+          href={href}
+          isUnderReview={isUnderReview}
+        />
+      }
+    />
   )
 }
 

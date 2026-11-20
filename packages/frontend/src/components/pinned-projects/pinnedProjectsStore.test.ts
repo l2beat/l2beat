@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { type SavedProject, withVisit } from './pinnedProjectsStore'
+import {
+  parsePinnedProjects,
+  type SavedProject,
+  withVisit,
+} from './pinnedProjectsStore'
 
 // withVisit is the whole of what a page visit does to the stored lists, so
 // it is tested on plain values, without localStorage.
@@ -48,6 +52,37 @@ describe(withVisit.name, () => {
     )
 
     expect(after.pinned).toEqual([renamed])
+  })
+})
+
+describe(parsePinnedProjects.name, () => {
+  it('moves projects saved under their old section path to /projects', () => {
+    const saved = (href: string) => ({ ...project('a'), href })
+    const stored = {
+      pinned: [
+        saved('/layer2s/projects/arbitrum'),
+        saved('/privacy/projects/tornado-cash'),
+        saved('/zk-catalog/tornado-cash'),
+        saved('/interop/tokens/usdc'),
+      ],
+      recent: [
+        saved('/defi/projects/lido'),
+        saved('/interop/protocols/across'),
+      ],
+    }
+
+    const parsed = parsePinnedProjects(JSON.stringify(stored))
+
+    // Tornado Cash was saved from two sections: one page, one entry.
+    expect(parsed.pinned.map((p) => p.href)).toEqual([
+      '/projects/arbitrum',
+      '/projects/tornado-cash',
+      '/interop/tokens/usdc',
+    ])
+    expect(parsed.recent.map((p) => p.href)).toEqual([
+      '/projects/lido',
+      '/projects/across',
+    ])
   })
 })
 

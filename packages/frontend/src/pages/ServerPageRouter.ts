@@ -9,12 +9,10 @@ import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
-import { createChainProjectRouter } from './chain/ChainProjectRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDefiRouter } from './defi/DefiRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
-import { createEthereumProjectRouter } from './ethereum/EthereumProjectRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -29,6 +27,7 @@ import { createNewNameRouter } from './new-name/NewNameRouter'
 import { NotFoundHandler } from './not-found/NotFoundHandler'
 import { createOssificationRouter } from './ossification/OssificationRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
+import { createProjectRouter } from './project/ProjectRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
@@ -61,9 +60,7 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
-    createEthereumProjectRouter,
-    // After Ethereum's router: it owns /projects/ethereum.
-    createChainProjectRouter,
+    createProjectRouter,
     createBlobsRouter,
     createZkCatalogRouter,
     createGovernanceRouter,

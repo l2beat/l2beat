@@ -10,7 +10,6 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
-import type { ProjectWithPageMetadata } from './getProjectUrl'
 
 function plainDeploymentAddress(
   address: EthereumAddress | string,
@@ -23,7 +22,7 @@ function plainDeploymentAddress(
 export async function getVerifiersSection(
   verifierHashes: ProjectZkCatalogInfo['verifierHashes'],
   contractUtils: ContractUtils,
-  allProjects: ProjectWithPageMetadata[],
+  allProjects: Project<never, 'daBridge' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps | 'variant'>> {
   const projects = await ps.getProjects({

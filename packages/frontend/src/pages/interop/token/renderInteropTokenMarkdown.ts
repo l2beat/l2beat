@@ -10,7 +10,6 @@ import {
   formatTopPath,
   formatTransferCount,
   interopChainName,
-  interopProtocolUrl,
   renderTopRoutes,
 } from '~/server/markdown/interopMarkdown'
 import { renderProtocolsTable } from '~/server/markdown/interopTokenMarkdown'
@@ -23,6 +22,7 @@ import {
 import { renderProjectMarkdown } from '~/server/markdown/renderProjectMarkdown'
 import type { SectionBodyOverrides } from '~/server/markdown/renderProjectSection'
 import { htmlPagePointer } from '~/server/markdown/renderSectionParts'
+import { getProjectPath } from '~/utils/project/getProjectPath'
 import { getInteropTokenPagePath } from '../utils/getInteropTokenUrl'
 import {
   getInteropTokenNotices,
@@ -117,7 +117,7 @@ function formatTopProtocol({
     volume && `volume ${formatUsd(volume.value)}`,
     formatTransferCount(transfers.value),
   ])
-  return `${link(name, interopProtocolUrl(slug))} (${stats.join(', ')})`
+  return `${link(name, getProjectPath(slug))} (${stats.join(', ')})`
 }
 
 /**
