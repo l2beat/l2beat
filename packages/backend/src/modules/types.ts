@@ -6,6 +6,7 @@ import type { AnyTRPCRouter } from '@trpc/server'
 import type { Config } from '../config'
 import type { Providers } from '../providers/Providers'
 import type { Clock } from '../tools/Clock'
+import type { ChainHeads } from './chain-head/ChainHeads'
 
 export interface TrpcContribution<
   N extends string = string,
@@ -28,6 +29,7 @@ export interface ModuleDependencies {
   providers: Providers
   db: Database
   blockProcessors: BlockProcessor[]
+  chainHeads: ChainHeads
 }
 
 export interface BlockProcessor {
