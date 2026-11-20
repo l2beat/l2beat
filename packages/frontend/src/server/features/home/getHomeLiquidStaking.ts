@@ -16,6 +16,7 @@ import {
 } from './homeSeries'
 
 const TOP_PROTOCOLS_COUNT = 5
+const LIQUID_STAKING_PATH = '/defi/liquid-staking'
 
 export interface HomeLiquidStaking {
   /** ETH staked network-wide; the figure is the latest day's. */
@@ -52,7 +53,8 @@ export async function getHomeLiquidStaking(
     protocols: overview.entries.slice(0, TOP_PROTOCOLS_COUNT).map((entry) => ({
       id: entry.id,
       name: entry.shortName ?? entry.name,
-      href: entry.href,
+      // An unreviewed protocol is only a row of the liquid staking page.
+      href: entry.href ?? LIQUID_STAKING_PATH,
       iconUrl: entry.icon,
       stakedEthShare: entry.stakedEthShare?.value,
       yield: entry.yield?.value,

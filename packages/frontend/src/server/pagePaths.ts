@@ -101,10 +101,8 @@ async function getDynamicPages(): Promise<Page[]> {
     ps.getProjects({ where: ['privacyInfo'], whereNot: ['archivedAt'] }),
     env.CLIENT_SIDE_DEFI_ENABLED
       ? ps
-          .getProjects({ select: ['defiInfo'] })
-          .then((projects) =>
-            projects.filter((p) => isListedDefiProject(p.defiInfo)),
-          )
+          .getProjects({ select: ['defiInfo'], optional: ['liquidStaking'] })
+          .then((projects) => projects.filter(isListedDefiProject))
       : Promise.resolve([]),
     // Protocols that are also scaling projects redirect to the scaling page.
     ps.getProjects({ where: ['interopConfig'], whereNot: ['scalingInfo'] }),

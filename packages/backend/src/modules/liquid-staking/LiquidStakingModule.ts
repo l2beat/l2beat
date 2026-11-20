@@ -50,7 +50,7 @@ export function createLiquidStakingModule({
           configurations: [
             {
               id: project.configurationId,
-              minHeight: sinceTimestamp,
+              minHeight: project.sinceTimestamp,
               maxHeight: null,
               properties: project,
             },

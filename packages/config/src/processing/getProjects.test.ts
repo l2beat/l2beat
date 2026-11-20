@@ -14,6 +14,7 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { expect } from 'earl'
+import { utils } from 'ethers'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
 import {
@@ -60,13 +61,15 @@ describe('getProjects', () => {
     expect(problems).toEqual([])
   })
 
-  it('every project has statuses and display (except ecosystems and interop protocols)', () => {
+  it('every project has statuses and display (except ecosystems, interop protocols and unreviewed liquid staking)', () => {
     const ecosystemIds = new Set(ecosystems.map((e) => e.id))
     const missing = projects
       .filter(
         (p) =>
           !(
-            (ecosystemIds.has(p.id) || p.interopConfig) &&
+            (ecosystemIds.has(p.id) ||
+              p.interopConfig ||
+              (p.liquidStaking && !p.liquidStaking.risks)) &&
             (!p.statuses || !p.display)
           ),
       )
@@ -374,6 +377,27 @@ describe('getProjects', () => {
       )
       .map((p) => p.id)
     expect(mismatched).toEqual([])
+  })
+
+  it('every liquid staking rate method is a view returning one uint256', () => {
+    const problems = projects.flatMap((p) => {
+      const contracts = p.liquidStaking?.tracking?.contracts
+      if (contracts?.type !== 'rate') return []
+      // As the indexer parses it.
+      const fragments = Object.values(
+        new utils.Interface([contracts.rate.method]).functions,
+      )
+      const fragment = fragments[0]
+      if (fragments.length !== 1 || !fragment) return [p.id]
+      const inputs = fragment.inputs.map((input) => input.type)
+      const outputs = fragment.outputs?.map((output) => output.type)
+      const isValid =
+        fragment.stateMutability === 'view' &&
+        (inputs.length === 0 || inputs.join() === 'uint256') &&
+        outputs?.join() === 'uint256'
+      return isValid ? [] : [p.id]
+    })
+    expect(problems).toEqual([])
   })
 
   it('every DeFi TVL source is complete', () => {
