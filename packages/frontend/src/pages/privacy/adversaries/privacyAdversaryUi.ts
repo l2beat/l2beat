@@ -8,7 +8,6 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import kebabCase from 'lodash/kebabCase'
-import upperFirst from 'lodash/upperFirst'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
@@ -112,7 +111,10 @@ export function getPrivacyAdversaryRosetteValues(
 
 /** Who the adversary is: the framework's sentence, capitalized to stand alone, and examples. */
 export function getPrivacyAdversaryWho(adversary: PrivacyAdversary): string {
-  return `${upperFirst(adversary.description)} Examples: ${adversary.examples}`
+  const { description, examples } = adversary
+  // Not lodash/upperFirst: here it would add a JS chunk to every project page.
+  const sentence = description.charAt(0).toUpperCase() + description.slice(1)
+  return `${sentence} Examples: ${examples}`
 }
 
 /** A slice of the project page rosette, explaining who the adversary is. */
