@@ -192,7 +192,7 @@ export const zcashNearIntents: BaseProject = {
       cost: {
         loses: 'funds',
         detail:
-          'The operator [holds apart](https://docs.near-intents.org/security-compliance/withdrawals-to-exchanges) funds that fail its screening. A user it refuses on the way back keeps their shielded ZEC and can sell it elsewhere.',
+          'The operator [holds apart](https://docs.near-intents.org/security-compliance/withdrawals-to-exchanges) funds that fail its screening. A user refused at the quote keeps their shielded ZEC and can sell it elsewhere.',
       },
       disclosure:
         'the operator, which can attribute any payout to the account that started it',

@@ -1474,8 +1474,10 @@ export interface PrivacyRisk {
 
 /**
  * The hardest layer at which someone can refuse a user, whether or not a
- * check uses that power, from the one no user gets around to none at all. It places a project between compliance and
- * censorship resistance.
+ * check uses that power, from the one no user gets around to none at all. It
+ * places a project between compliance and censorship resistance. A service
+ * the released app replaces from its own settings, such as one relayer among
+ * several or the user's own wallet, holds no such power.
  */
 export type PrivacyComplianceLayer =
   /** The contracts enforce it, so no client or relayer skips it. */

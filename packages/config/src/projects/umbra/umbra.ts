@@ -168,9 +168,10 @@ export const umbra: BaseProject = {
     ),
     compliance: {
       tradeoff:
-        "Only the app screens, so a local build or a direct contract call passes. Every payment's sender is public, so its origin needs no proof.",
-      enforcedBy: 'app',
-      enforcedByNote: 'which a local build or a direct contract call skips',
+        "Only the app's SDK screens, so a direct contract call or a build without the check passes. Every payment's sender is public, so its origin needs no proof.",
+      enforcedBy: 'relayer',
+      enforcedByNote:
+        "ScopeLift's closed relayer for token withdrawals, together with the app. A direct contract call skips both",
       check: {
         rules: 'public',
         detail:
@@ -180,7 +181,7 @@ export const umbra: BaseProject = {
       cost: {
         loses: 'access',
         detail:
-          "A refused user keeps the keys. The app's advanced mode shows each stealth address's private key, which any wallet can use.",
+          "A refused user keeps the keys, which the app's advanced mode shows for any wallet to use. A user whose own wallet is listed cannot connect and needs a build without the check.",
       },
       disclosure:
         "ScopeLift, whose hosted app receives the user's wallet address on every scan",

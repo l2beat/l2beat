@@ -261,7 +261,7 @@ export const zkapi: BaseProject = {
     adversaries: zkApiAdversaries,
     compliance: {
       tradeoff:
-        'The operator issues every API key and clears every cooperative withdrawal, so it can refuse a user. No compliance check is known to use this power, the vault checks no list.',
+        'The operator issues every API key, clears every cooperative withdrawal and can cancel an escape it holds a request proof against. No compliance check is known to use this power, the vault checks no list.',
       enforcedBy: 'operator',
       enforcedByNote:
         'Open Anonymity, which issues every API key and clears every cooperative withdrawal',
@@ -269,11 +269,11 @@ export const zkapi: BaseProject = {
         rules: 'none',
         detail: 'No compliance check is known that uses this power.',
       },
-      when: 'everyUse',
+      when: 'anytime',
       cost: {
-        loses: 'access',
+        loses: 'funds',
         detail:
-          'A refused user can only escape, after the challenge period and while the vault is unpaused.',
+          'A refused user can only escape, which needs an unpaused vault and their latest signed balance. The operator can cancel an escape with a request proof it holds for that balance.',
       },
       disclosure:
         'OpenRouter and the model provider, which read prompts and responses',
