@@ -59,6 +59,7 @@ model LiveActivityBlock {
 
   @@id([projectId, number])
   @@index([timestamp])
+  @@index([projectId, timestamp])
 }
 
 model AggregatedL2Cost {
