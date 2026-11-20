@@ -7,7 +7,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { optionToRange } from '~/utils/range/range'
+import type { ChartRange } from '~/utils/range/range'
 import type { LiquidStakingChartProject } from './LiquidStakingCharts'
 import {
   type EthChange,
@@ -19,19 +19,20 @@ import {
 
 interface Props {
   projects: LiquidStakingChartProject[]
+  /** Fixed 1Y range prefetched on SSR, independent of the chart range bar. */
+  range: ChartRange
 }
 
 /**
  * A sentence and the numbers behind it, beside the value locked chart. It
  * always reads the past year, whatever range the charts show, so it gives
- * the latest numbers and the past year's change (the same query as the
- * chart's when the range is 1Y), plus ETH's supply, kept on the server.
+ * the latest numbers and the past year's change (sharing the SSR-prefetched
+ * 1Y query), plus ETH's supply, kept on the server.
  */
-export function LiquidStakingSummaryCard({ projects }: Props) {
+export function LiquidStakingSummaryCard({ projects, range }: Props) {
   const trpc = useTRPC()
-  const yearRange = useMemo(() => optionToRange('1y'), [])
   const { data } = useChartQuery(trpc.defi.liquidStakingTvlChart, {
-    range: yearRange,
+    range,
   })
   const { data: ethSupply } = useQuery(trpc.defi.ethSupply.queryOptions())
   const { data: supplyHistory } = useQuery(

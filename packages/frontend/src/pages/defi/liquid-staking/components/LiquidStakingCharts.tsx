@@ -88,7 +88,7 @@ export function LiquidStakingCharts({
       <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 lg:grid-cols-2">
         {/* The summary leads, and shares its row with value locked, so all
           three charts are as wide. */}
-        <LiquidStakingSummaryCard projects={projects} />
+        <LiquidStakingSummaryCard projects={projects} range={defaultRange} />
         <LiquidStakingTvlChart projectSeries={projectSeries} range={range} />
         <YieldChart
           projectSeries={projectSeries}
