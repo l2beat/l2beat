@@ -109,6 +109,14 @@ export function getPrivacyAdversaryRosetteValues(
   )
 }
 
+/** Who the adversary is: the framework's sentence, capitalized to stand alone, and examples. */
+export function getPrivacyAdversaryWho(adversary: PrivacyAdversary): string {
+  const { description, examples } = adversary
+  // Not lodash/upperFirst: here it would add a JS chunk to every project page.
+  const sentence = description.charAt(0).toUpperCase() + description.slice(1)
+  return `${sentence} Examples: ${examples}`
+}
+
 /** A slice of the project page rosette, explaining who the adversary is. */
 export function getPrivacyAdversarySectionRosetteValue(
   adversary: PrivacyAdversary,
@@ -117,7 +125,7 @@ export function getPrivacyAdversarySectionRosetteValue(
   return toPrivacyRosetteValue(
     adversary.label,
     cell.sentiment,
-    `${adversary.description} Examples: ${adversary.examples}`,
+    getPrivacyAdversaryWho(adversary),
   )
 }
 

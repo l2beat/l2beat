@@ -23,7 +23,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Facet legacy L1Bridge"
+            "name": "Facet legacy L1Bridge."
           }
         ]
       }
@@ -56,6 +56,33 @@
     },
     {
       "mode": "auto",
+      "id": "facet-ETH-3",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+        "decimals": 18,
+        "sinceTimestamp": 1733855519,
+        "untilTimestamp": 1795042019
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Facet deprecated bridge"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "facet-WETH",
       "priceId": "weth",
       "symbol": "WETH",
@@ -67,7 +94,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
         "decimals": 18,
-        "sinceTimestamp": 1733855519
+        "sinceTimestamp": 1733855519,
+        "untilTimestamp": 1795042019
       },
       "category": "ether",
       "source": "external",

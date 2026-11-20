@@ -39,7 +39,7 @@ There is a handy script for it: `pnpm tokens:verify`
 
 ### How to review a privacy project?
 
-Follow the [privacy review checklist](README.privacy.md).
+Follow the [privacy adversaries framework](https://forum.ethbeat.org/t/privacy-adversaries-framework/455). The site publishes it at `/publications/privacy-methodology`.
 
 ### Tests dependencies
 

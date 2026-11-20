@@ -117,8 +117,8 @@ export function zamaCwAdversaries(
         },
         sources: [
           {
-            title:
-              'Served app, deployment dpl_8nxK5TFwZggVq61MJ5AzJorbdsYe (checked 2026-11-11)',
+            title: 'Served app, deployment dpl_8nxK5TFwZggVq61MJ5AzJorbdsYe',
+            checked: '2026-11-11',
             url: 'https://app.zama.org',
           },
           {

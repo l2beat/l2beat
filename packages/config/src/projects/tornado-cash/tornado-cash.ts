@@ -11,6 +11,10 @@ import { utils } from 'ethers'
 import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -21,6 +25,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { RECIPE, tornadoCashAdversaries } from './adversaries'
+import { tornadoCashRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('tornado-cash')
 
@@ -342,22 +347,19 @@ export const tornadoCash: BaseProject = {
       })),
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         'The core Tornado Cash contracts are immutable, so users can always withdraw with a valid note and proof.',
       walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The circuits, contracts, app and relayer are open source. Each app release names its commit and a build recipe for its IPFS hash, and rebuilding the current release reproduces it.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
-    riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary', {
+    riskSummary: tornadoCashRiskSummary({
       upgradeDelay,
     }),
     upgradesAndGovernance: {

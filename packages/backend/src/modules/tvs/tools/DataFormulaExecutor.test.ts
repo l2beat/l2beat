@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockTimestampProvider,
@@ -89,6 +90,7 @@ describe(DataFormulaExecutor.name, () => {
         mockObject<StarknetTotalSupplyProvider>({}),
         mockObject<StarknetBalanceProvider>({}),
         balanceProvider,
+        [],
         Logger.SILENT,
       )
 
@@ -125,4 +127,97 @@ describe(DataFormulaExecutor.name, () => {
       ])
     })
   })
+
+  // `tvs:execute` takes a historical price or supply from its local cache,
+  // then the database, then CoinGecko, and assumes 0 when the fetch fails.
+  // The cache here holds a value from before the correction and the providers
+  // have no methods, so any call to CoinGecko fails: a corrected hour has to
+  // get its value from the corrections alone.
+  describe('CoinGecko corrections', () => {
+    it('uses the corrected price for a listed hour over a cached one', async () => {
+      const localStorage = mockObject<LocalStorage>({
+        getPrice: mockFn().resolvesTo(1545),
+        writePrice: mockFn().resolvesTo(undefined),
+      })
+
+      await executorWithoutCoingecko(localStorage).execute(
+        [{ id: 'price', priceId: 'coin', sinceTimestamp: UnixTime(0) }],
+        [],
+        LISTED_HOUR,
+        false,
+      )
+
+      expect(localStorage.writePrice).toHaveBeenOnlyCalledWith(
+        'price',
+        LISTED_HOUR,
+        2119,
+      )
+    })
+
+    it('uses the corrected circulating supply for a listed hour over a cached one', async () => {
+      const localStorage = mockObject<LocalStorage>({
+        getAmount: mockFn().resolvesTo(964n),
+        writeAmount: mockFn().resolvesTo(undefined),
+      })
+
+      await executorWithoutCoingecko(localStorage).execute(
+        [],
+        [
+          {
+            id: 'supply',
+            type: 'circulatingSupply',
+            apiId: 'coin',
+            decimals: 0,
+            sinceTimestamp: UnixTime(0),
+            address: EthereumAddress.ZERO,
+            chain: 'ethereum',
+          },
+        ],
+        LISTED_HOUR,
+        false,
+      )
+
+      expect(localStorage.writeAmount).toHaveBeenOnlyCalledWith(
+        'supply',
+        LISTED_HOUR,
+        452n,
+      )
+    })
+  })
 })
+
+const LISTED_HOUR = UnixTime.fromDate(new Date('2026-05-31T00:00:00Z'))
+
+const CORRECTIONS: CoingeckoCorrection[] = [
+  {
+    coingeckoId: 'coin',
+    field: 'price',
+    reason: 'reason',
+    evidence: ['evidence'],
+    points: [{ at: '2026-05-31T00:00:00Z', value: 2119 }],
+  },
+  {
+    coingeckoId: 'coin',
+    field: 'circulatingSupply',
+    reason: 'reason',
+    evidence: ['evidence'],
+    points: [{ at: '2026-05-31T00:00:00Z', value: 452 }],
+  },
+]
+
+function executorWithoutCoingecko(localStorage: LocalStorage) {
+  return new DataFormulaExecutor(
+    localStorage,
+    undefined,
+    mockObject<PriceProvider>({}),
+    mockObject<CirculatingSupplyProvider>({}),
+    new Map(),
+    mockObject<BlockTimestampProvider>({}),
+    mockObject<TotalSupplyProvider>({}),
+    mockObject<StarknetTotalSupplyProvider>({}),
+    mockObject<StarknetBalanceProvider>({}),
+    mockObject<BalanceProvider>({}),
+    CORRECTIONS,
+    Logger.SILENT,
+  )
+}

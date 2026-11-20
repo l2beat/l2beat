@@ -1,7 +1,10 @@
 import type { ProjectLiquidStaking } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getCostOfExitDescription } from './costOfExitDescription'
+import {
+  ALL_ROUTES_COST_OF_EXIT,
+  getCostOfExitDescription,
+} from './costOfExitDescription'
 
 describe(getCostOfExitDescription.name, () => {
   it('names only the queue and selling for Lido', () => {
@@ -15,9 +18,18 @@ describe(getCostOfExitDescription.name, () => {
     })
 
     expect(tooltip).toEqual(
-      "How many days of staking yield a holder gives up to exit about 1 ETH, by the cheapest route: the protocol's withdrawal queue, which earns nothing while it waits; or selling on the best onchain pool, for its discount. ~ marks a value that can still change while requests are queued: their wait is estimated at the last 7 days' pace.",
+      "Days of staking yield it costs to exit 1 ETH, by the cheaper route: waiting in the queue, which earns nothing, or the market discount. ~ marks an estimate: requests still in the queue are timed at the last 7 days' pace.",
     )
-    expect(chart).not.toInclude('instant', 'wBETH')
+    expect(chart).toEqual(tooltip)
+  })
+
+  it('names every route on the comparison page', () => {
+    expect(ALL_ROUTES_COST_OF_EXIT.tooltip).toEqual(
+      "Days of staking yield it costs to exit 1 ETH, by the cheapest route: waiting in the queue, which earns nothing, an instant exit's fee, or the market discount. ~ marks an estimate: requests still in the queue are timed at the last 7 days' pace.",
+    )
+    expect(ALL_ROUTES_COST_OF_EXIT.chart).toEqual(
+      ALL_ROUTES_COST_OF_EXIT.tooltip,
+    )
   })
 
   it('names one route as the only one, with why selling is not counted', () => {
@@ -29,7 +41,11 @@ describe(getCostOfExitDescription.name, () => {
     expect(tooltip).toInclude(
       'by its only route: unwrapping, which earns nothing while it waits.',
     )
-    expect(chart).toInclude('Binance', 'Its pools are too thin to quote.')
+    expect(chart).toInclude(
+      'Binance',
+      '~ also marks an unwrap still inside the lock.',
+      'Its pools are too thin to quote.',
+    )
   })
 
   it('has no estimate note without a queue', () => {

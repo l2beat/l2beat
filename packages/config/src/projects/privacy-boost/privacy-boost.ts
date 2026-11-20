@@ -8,6 +8,10 @@ import {
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -18,6 +22,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { privacyBoostAdversaries } from './adversaries'
+import { privacyBoostRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
@@ -377,9 +382,7 @@ export const privacyBoost: BaseProject = {
     runsOn: [ProjectId('ink'), ProjectId('optimism'), ProjectId('soneium')],
     anonymitySet: { type: 'too-small' },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The admin multisig upgrades the pool and both registries instantly through their ProxyAdmins.',
       walkawayTest: {
@@ -389,8 +392,7 @@ export const privacyBoost: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The circuits and the trusted setup transcripts are published, and every deployed verification key reproduces from them. The source code of the TEE and of the SDK's compiled core is unpublished.",
     },
@@ -402,7 +404,7 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyBoostAdversaries,
-    riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
+    riskSummary: privacyBoostRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
         adminMultisigStats,

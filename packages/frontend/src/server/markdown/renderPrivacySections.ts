@@ -14,6 +14,7 @@ import {
   getExposure,
   getExposureNote,
   getPrivacyAdversaryDescription,
+  getPrivacyAdversaryWho,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
@@ -140,7 +141,7 @@ function renderAdversary(
   return joinBlocks([
     heading(level, adversary.label),
     withSentiment(cell.value, cell.sentiment),
-    `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
+    `**Who:** ${getPrivacyAdversaryWho(adversary)}`,
     getPrivacyAdversaryDescription(cell),
     cell.interior
       ? baseline?.interior

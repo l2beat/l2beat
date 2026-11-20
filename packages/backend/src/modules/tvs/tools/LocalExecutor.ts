@@ -1,6 +1,7 @@
 import { type Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainBasicApi, ChainConfig, ProjectService } from '@l2beat/config'
 import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import { createDatabase } from '@l2beat/database'
 import {
   BalanceProvider,
@@ -122,6 +123,7 @@ export class LocalExecutor {
       starknetTotalSupplyProvider,
       starknetBalanceProvider,
       balanceProvider,
+      COINGECKO_CORRECTIONS,
       this.logger,
     )
   }

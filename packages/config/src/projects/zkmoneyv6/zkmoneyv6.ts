@@ -11,6 +11,10 @@ import { utils } from 'ethers'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -23,6 +27,7 @@ import type {
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyV6Adversaries } from './adversaries'
+import { zkMoneyV6RiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkmoneyv6')
 
@@ -449,9 +454,7 @@ export const zkmoneyv6: BaseProject = {
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description: 'The escrow and the approved enclave image are immutable.',
       walkawayTest: {
         passed: false,
@@ -460,8 +463,7 @@ export const zkmoneyv6: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The Ethereum contracts, the wallet, the enclave and the circuit sources are public. The refund and resolver verifiers, the L2 contracts, the approved enclave image and the Desktop app reproduce from them. The resolver and account services are unpublished. The hosted wallet runs a build absent from the public source.',
     },
@@ -472,7 +474,7 @@ export const zkmoneyv6: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyV6Adversaries,
-    riskSummary: readProjectMarkdown('zkmoneyv6', 'riskSummary'),
+    riskSummary: zkMoneyV6RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoneyv6',

@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord, TvsEscrowValueRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -85,45 +85,15 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
       timestamps,
     )
 
-    const tvs = await this.$.valueService.calculate(
+    const { records, escrowRecords } = await calculateTokenValueRecords(
+      this.$.valueService,
       {
         projectId: this.$.project,
         tokens: configurations.map((c) => c.properties),
+        storeEscrowValues: this.$.storeEscrowValues,
       },
       timestamps,
     )
-
-    const configurationIds = new Map<string, string>(
-      configurations.map((c) => [
-        c.properties.id,
-        TokenValueIndexer.idToConfigurationId(
-          c.properties,
-          this.$.storeEscrowValues,
-        ),
-      ]),
-    )
-    const toConfigurationId = (tokenId: string) => {
-      const configurationId = configurationIds.get(tokenId)
-      assert(configurationId, `${tokenId}: no token found`)
-      return configurationId
-    }
-
-    const records: TokenValueRecord[] = tvs.map((t) => ({
-      ...t,
-      configurationId: toConfigurationId(t.tokenId),
-    }))
-
-    const escrowRecords: TvsEscrowValueRecord[] = this.$.storeEscrowValues
-      ? (
-          await this.$.valueService.calculateEscrowValues(
-            {
-              projectId: this.$.project,
-              tokens: configurations.map((c) => c.properties),
-            },
-            timestamps,
-          )
-        ).map((e) => ({ ...e, configurationId: toConfigurationId(e.tokenId) }))
-      : []
 
     return async () => {
       const syncedUntil = timestamps[timestamps.length - 1]
@@ -203,5 +173,47 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
       ...prices.map((p) => createPriceConfigId(p.id)),
       ...(hasEscrowValues ? ['escrowValues'] : []),
     ])
+  }
+}
+
+export async function calculateTokenValueRecords(
+  valueService: ValueService,
+  project: {
+    projectId: string
+    tokens: TvsToken[]
+    storeEscrowValues: boolean
+  },
+  timestamps: UnixTime[],
+): Promise<{
+  records: TokenValueRecord[]
+  escrowRecords: TvsEscrowValueRecord[]
+}> {
+  const configurationIds = new Map<string, string>(
+    project.tokens.map((token) => [
+      token.id,
+      TokenValueIndexer.idToConfigurationId(token, project.storeEscrowValues),
+    ]),
+  )
+  const toConfigurationId = (tokenId: string) => {
+    const configurationId = configurationIds.get(tokenId)
+    assert(configurationId, `${tokenId}: no token found`)
+    return configurationId
+  }
+
+  const config = { projectId: project.projectId, tokens: project.tokens }
+  const tvs = await valueService.calculate(config, timestamps)
+  const escrowValues = project.storeEscrowValues
+    ? await valueService.calculateEscrowValues(config, timestamps)
+    : []
+
+  return {
+    records: tvs.map((t) => ({
+      ...t,
+      configurationId: toConfigurationId(t.tokenId),
+    })),
+    escrowRecords: escrowValues.map((e) => ({
+      ...e,
+      configurationId: toConfigurationId(e.tokenId),
+    })),
   }
 }
