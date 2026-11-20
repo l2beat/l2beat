@@ -18,11 +18,16 @@ import {
 import { BADGES } from '../../common/badges'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { payyAdversaries } from './adversaries'
+import { payyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('payy')
 const archivedAt = UnixTime(1790244000) // 2026-09-24T10:00:00Z, first full hour after the last settlement, network halted since
@@ -273,9 +278,7 @@ export const payy: ScalingProject = {
     tokens: [],
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The PayyMultisig can instantly upgrade the RollupV1 contract, replace ZK verifiers and directly overwrite the state root, so users have no time to exit before a malicious change takes effect.',
       walkawayTest: {
@@ -285,8 +288,7 @@ export const payy: ScalingProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The Payy app is closed source. The contracts, circuits and node are published without a license and can be built locally. Transaction data is not posted anywhere public, so the state cannot be rebuilt independently.',
     },
@@ -296,7 +298,7 @@ export const payy: ScalingProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: payyAdversaries,
-    riskSummary: readProjectMarkdown('payy', 'riskSummary'),
+    riskSummary: payyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('payy', 'upgradesAndGovernance', {
         multisigStats: discovery.getMultisigStats('PayyMultisig'),

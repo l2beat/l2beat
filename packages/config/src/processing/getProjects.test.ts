@@ -18,6 +18,8 @@ import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
 import {
   ADVICE_SNIPPETS,
+  PRIVACY_ADVERSARIES,
+  PRIVACY_ADVERSARY_ORDER,
   PRIVACY_METHODOLOGY_URL,
 } from '../common/privacyAdversaries'
 import { PRIVACY_TOOLS, type PrivacyTool } from '../common/privacyTools'
@@ -634,22 +636,8 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
-    // Risk summaries share one layout, so readers can compare projects item by item.
-    it('every risk summary follows the shared layout', () => {
-      const headings = [
-        'Funds can be stolen if',
-        'Funds can be lost if',
-        'Funds can be frozen if',
-        'Use can be stopped if',
-        'Privacy can be lost if',
-      ]
-      const cellNames: Record<string, string> = {
-        publicObserver: 'public observer',
-        chainAnalyst: 'chain analyst',
-        networkObserver: 'network observer',
-        privilegedInsider: 'privileged insider',
-        futureAdversary: 'future adversary',
-      }
+    // Readers compare projects item by item, and a cell that is not green needs its reason here.
+    it('every risk summary item is one short sentence and covers the cells', () => {
       const sections = [
         'upgrades-and-governance',
         'trusted-setups',
@@ -659,56 +647,42 @@ describe('getProjects', () => {
       ]
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
-        const summary = privacyInfo.riskSummary
-        if (!summary) continue
+        if (!privacyInfo.riskSummary) continue
+        const risks = privacyInfo.riskSummary.flatMap((group) => group.risks)
 
-        const found = [...summary.matchAll(/^## (.+)$/gm)].map((m) => m[1])
-        const order = found.map((heading) => headings.indexOf(heading))
-        if (order.some((i, k) => i === -1 || (k > 0 && i <= order[k - 1]))) {
-          problems.push(`${project.id}: headings ${found.join(' > ')}`)
-        }
-        if (/^## .*\n[ \t]*\n/m.test(summary)) {
-          problems.push(`${project.id}: blank line after a heading`)
-        }
-
-        const pointed = new Set<string>()
-        for (const [, item] of summary.matchAll(/^\d+\. (.+)$/gm)) {
-          if (!item.endsWith('.')) {
-            problems.push(`${project.id}: no final dot: ${item}`)
+        for (const { text, see } of risks) {
+          if (!text.endsWith('.')) {
+            problems.push(`${project.id}: no final dot: ${text}`)
           }
-          const words = item
-            .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+          // The page adds the cell names, which count like the words before them.
+          const pointer = (see ?? []).map((id) => PRIVACY_ADVERSARIES[id].label)
+          const words = [text.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')]
+            .concat(pointer.length > 0 ? ['see', pointer.join(' and ')] : [])
+            .join(' ')
             .split(/\s+/).length
           if (words > 25) {
-            problems.push(`${project.id}: ${words} words: ${item}`)
+            problems.push(`${project.id}: ${words} words: ${text}`)
           }
-          const see = item.match(/\(see (.+)\)\.$/)?.[1]
-          if (!see) continue
-          const link = see.match(/^\[[^\]]+\]\(#([a-z-]+)\)$/)
-          if (link) {
-            if (!sections.includes(link[1])) {
-              problems.push(`${project.id}: link to missing section ${see}`)
-            }
-            continue
+          if (see && (see.length === 0 || new Set(see).size < see.length)) {
+            problems.push(`${project.id}: empty or repeated cells: ${text}`)
           }
-          for (const name of see.split(' and ')) {
-            if (!Object.values(cellNames).includes(name)) {
-              problems.push(`${project.id}: unknown pointer ${name}`)
+          for (const [, id] of text.matchAll(/\]\(#([^)]*)\)/g)) {
+            if (!sections.includes(id)) {
+              problems.push(`${project.id}: link to missing section ${id}`)
             }
-            pointed.add(name)
           }
         }
 
-        for (const [id, cell] of Object.entries(
-          privacyInfo.adversaries?.cells ?? {},
-        )) {
-          if (cell.sentiment !== 'good' && !pointed.has(cellNames[id])) {
-            problems.push(`${project.id}: no item points at ${cellNames[id]}`)
+        const pointed = new Set(risks.flatMap((risk) => risk.see ?? []))
+        for (const id of PRIVACY_ADVERSARY_ORDER) {
+          const cell = privacyInfo.adversaries?.cells[id]
+          if (cell && cell.sentiment !== 'good' && !pointed.has(id)) {
+            problems.push(`${project.id}: no item points at ${id}`)
           }
         }
         if (
           (project.zkCatalogInfo?.trustedSetups?.length ?? 0) > 0 &&
-          !summary.includes('](#trusted-setups)')
+          !risks.some((risk) => risk.text.includes('](#trusted-setups)'))
         ) {
           problems.push(`${project.id}: trusted setup not linked`)
         }
@@ -730,16 +704,37 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // Round-trip, since Date.parse rolls 2026-02-30 over to March.
+    const isDay = (value: string) => {
+      const time = Date.parse(value)
+      return (
+        !Number.isNaN(time) &&
+        new Date(time).toISOString().slice(0, 10) === value
+      )
+    }
+
+    // The page prints the date after the title, so a title carries none.
+    it('every source keeps its check date in the checked field', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const cells = Object.entries(privacyInfo.adversaries?.cells ?? {})
+        for (const [adversaryId, cell] of cells) {
+          for (const source of cell.sources ?? []) {
+            if (!('url' in source)) continue
+            if (source.checked !== undefined && !isDay(source.checked)) {
+              problems.push(`${project.id} ${adversaryId}: ${source.checked}`)
+            }
+            if (/\(.*\d{4}-\d{2}-\d{2}\)$/.test(source.title)) {
+              problems.push(`${project.id} ${adversaryId}: ${source.title}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // The page prints these dates and hashes as they are.
     it('every reference app has valid dates and a full commit hash', () => {
-      // Round-trip, since Date.parse rolls 2026-02-30 over to March.
-      const isDay = (value: string) => {
-        const time = Date.parse(value)
-        return (
-          !Number.isNaN(time) &&
-          new Date(time).toISOString().slice(0, 10) === value
-        )
-      }
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
         const app = privacyInfo.referenceApp

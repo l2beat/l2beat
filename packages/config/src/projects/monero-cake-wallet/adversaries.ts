@@ -6,7 +6,9 @@ import {
 
 const CAKE =
   'https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/'
-const MONERO = 'https://github.com/monero-project/monero/blob/v0.18.5.1/'
+// v0.18.5.1
+const MONERO =
+  'https://github.com/monero-project/monero/blob/4f92268d7c16741cfb41e5bbe2aa46cc260a9ea5/'
 
 export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
   promise: {

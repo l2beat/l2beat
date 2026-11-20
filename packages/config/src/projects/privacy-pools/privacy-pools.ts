@@ -9,6 +9,10 @@ import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -19,6 +23,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { privacyPoolsAdversaries } from './adversaries'
+import { privacyPoolsRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-pools')
 
@@ -231,9 +236,7 @@ export const privacyPools: BaseProject = {
       ],
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         'The depositing address can always ragequit its funds from the immutable pools, without the Entrypoint or the ASP. A ragequit is public.',
       walkawayTest: {
@@ -243,14 +246,13 @@ export const privacyPools: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The contracts, circuits, SDK, relayer and website are open source and build locally. The ASP service is closed.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
-    riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
+    riskSummary: privacyPoolsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
         multisigStats,

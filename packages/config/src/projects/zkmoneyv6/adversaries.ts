@@ -12,8 +12,12 @@ import type { PrivacyExposureMap } from '../../types'
 const ZKMONEY_REPO =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/516d90660400aee97166376ba69c5b61ce82a7e4/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
+// v6.0.0
+const AZTEC_NODE =
+  'https://github.com/aztec-labs-eng/aztec-node/blob/d2e67c1d938f06a6476dd7d4bd01e73771923dd1/'
 const HANDSHAKE_REGISTRY =
-  'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
+  AZTEC_NODE +
+  'noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -188,7 +192,9 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       sources: [
         {
           title: "Messages are encrypted to the recipient's address",
-          url: 'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/aztec-nr/aztec/src/messages/encryption/aes128.nr#L235-L266',
+          url:
+            AZTEC_NODE +
+            'noir-projects/aztec-nr/aztec/src/messages/encryption/aes128.nr#L235-L266',
         },
         {
           contract: 'AccountMetadataRegistry',
