@@ -1,6 +1,7 @@
 import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
@@ -254,6 +255,8 @@ export function LiquidStakingTvlChart({
     summary?.ethPrice,
     unit,
   )
+  const chartHeadlineLoading =
+    yearData === undefined || (scope === 'supply' && ethSupply === undefined)
 
   return (
     <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
@@ -304,8 +307,10 @@ export function LiquidStakingTvlChart({
                   <span className="font-bold text-heading-28 text-primary tabular-nums leading-tight tracking-[-0.025em]">
                     {chartHeadlineValue}
                   </span>
-                ) : (
+                ) : chartHeadlineLoading ? (
                   <Skeleton className="h-7 w-32" />
+                ) : (
+                  <NoDataBadge size="regular" />
                 )}
                 <span className="font-medium text-label-value-13 text-secondary">
                   {chartHeadlineLabel}
@@ -531,18 +536,7 @@ function SummaryRail({
     [summary],
   )
 
-  const liquidOfSupply =
-    summary?.liquid && summary.ethSupply
-      ? summary.liquid.eth / summary.ethSupply
-      : undefined
-  const othersOfSupply =
-    summary?.others && summary.ethSupply
-      ? summary.others.eth / summary.ethSupply
-      : undefined
-  const unstakedOfSupply =
-    summary?.supplyShare !== undefined
-      ? Math.max(0, 1 - summary.supplyShare)
-      : undefined
+  const split = summary?.supplySplit
 
   const toUnit = (eth: number | undefined) =>
     formatInUnit(eth, summary?.ethPrice, unit)
@@ -556,85 +550,79 @@ function SummaryRail({
 
   return (
     <div className="flex min-w-0 flex-col gap-4 border-divider p-4 max-lg:order-last max-lg:border-t md:px-6 md:py-5 lg:border-r">
-      {liquidOfSupply !== undefined &&
-        othersOfSupply !== undefined &&
-        unstakedOfSupply !== undefined && (
-          <div>
-            <div className="mb-2 font-semibold text-[11px] text-secondary uppercase leading-none tracking-[0.06em]">
-              ETH supply share
-            </div>
-            <div
-              className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-surface-secondary"
-              role="img"
-              aria-label={`ETH supply breakdown: ${formatPercent(liquidOfSupply)} liquid staking, ${formatPercent(othersOfSupply)} other staked, ${formatPercent(unstakedOfSupply)} unstaked`}
-            >
-              {projects.map((project) => {
-                const entry = shareByProject.get(project.id)
-                if (!entry || !summary?.ethSupply) return null
-                const width = (entry.eth / summary.ethSupply) * 100
-                if (width <= 0) return null
-                return (
-                  <div
-                    key={project.id}
-                    className="h-full"
-                    style={{
-                      width: `${width}%`,
-                      backgroundColor:
-                        colorByProject.get(project.id) ?? 'var(--secondary)',
-                    }}
-                  />
-                )
-              })}
-              <div
-                className="h-full"
-                style={{
-                  width: `${othersOfSupply * 100}%`,
-                  backgroundColor:
-                    'color-mix(in oklab, var(--secondary) 50%, transparent)',
-                }}
-              />
-            </div>
-            <div className="mt-2 flex flex-col gap-0.5">
-              <SupplyRow
-                swatch={
-                  <span
-                    className="size-2 shrink-0 rounded-[2px]"
-                    style={{ background: liquidSwatch }}
-                  />
-                }
-                label="Liquid staking"
-                value={toUnit(summary?.liquid?.eth)}
-                share={formatPercent(liquidOfSupply)}
-              />
-              <SupplyRow
-                swatch={
-                  <span
-                    className="size-2 shrink-0 rounded-[2px]"
-                    style={{
-                      backgroundColor:
-                        'color-mix(in oklab, var(--secondary) 50%, transparent)',
-                    }}
-                  />
-                }
-                label="Other staked"
-                value={toUnit(summary?.others?.eth)}
-                share={formatPercent(othersOfSupply)}
-              />
-              <SupplyRow
-                swatch={
-                  <span className="size-2 shrink-0 rounded-[2px] bg-surface-secondary" />
-                }
-                label="Unstaked"
-                value={toUnit(
-                  summary?.ethSupply !== undefined
-                    ? Math.max(0, summary.ethSupply - summary.ethStaked)
-                    : undefined,
-                )}
-                share={formatPercent(unstakedOfSupply)}
-              />
-            </div>
+      {split && (
+        <div>
+          <div className="mb-2 font-semibold text-[11px] text-secondary uppercase leading-none tracking-[0.06em]">
+            ETH supply share
           </div>
-        )}
+          <div
+            className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-surface-secondary"
+            role="img"
+            aria-label={`ETH supply breakdown: ${formatPercent(split.liquid.share)} liquid staking, ${formatPercent(split.others.share)} other staked, ${formatPercent(split.unstaked.share)} unstaked`}
+          >
+            {projects.map((project) => {
+              const entry = shareByProject.get(project.id)
+              if (!entry || !summary?.ethSupply) return null
+              const width = (entry.eth / summary.ethSupply) * 100
+              if (width <= 0) return null
+              return (
+                <div
+                  key={project.id}
+                  className="h-full"
+                  style={{
+                    width: `${width}%`,
+                    backgroundColor:
+                      colorByProject.get(project.id) ?? 'var(--secondary)',
+                  }}
+                />
+              )
+            })}
+            <div
+              className="h-full"
+              style={{
+                width: `${split.others.share * 100}%`,
+                backgroundColor:
+                  'color-mix(in oklab, var(--secondary) 50%, transparent)',
+              }}
+            />
+          </div>
+          <div className="mt-2 flex flex-col gap-0.5">
+            <SupplyRow
+              swatch={
+                <span
+                  className="size-2 shrink-0 rounded-[2px]"
+                  style={{ background: liquidSwatch }}
+                />
+              }
+              label="Liquid staking"
+              value={toUnit(split.liquid.eth)}
+              share={formatPercent(split.liquid.share)}
+            />
+            <SupplyRow
+              swatch={
+                <span
+                  className="size-2 shrink-0 rounded-[2px]"
+                  style={{
+                    backgroundColor:
+                      'color-mix(in oklab, var(--secondary) 50%, transparent)',
+                  }}
+                />
+              }
+              label="Other staked"
+              value={toUnit(split.others.eth)}
+              share={formatPercent(split.others.share)}
+            />
+            <SupplyRow
+              swatch={
+                <span className="size-2 shrink-0 rounded-[2px] bg-surface-secondary" />
+              }
+              label="Unstaked"
+              value={toUnit(split.unstaked.eth)}
+              share={formatPercent(split.unstaked.share)}
+            />
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col border-divider border-t pt-3 lg:flex-1">
         <div className="mb-2 flex items-center justify-between gap-2">
@@ -803,10 +791,11 @@ function formatInUnit(
   unit: ChartUnit,
 ): string | undefined {
   if (eth === undefined) return undefined
-  if (unit === 'usd' && ethPrice !== undefined) {
-    return formatCurrency(eth * ethPrice, 'usd')
-  }
-  return formatCurrency(eth, 'eth')
+  if (unit === 'eth') return formatCurrency(eth, 'eth')
+  // No price, no USD: an ETH amount here would read as the wrong unit.
+  return ethPrice !== undefined
+    ? formatCurrency(eth * ethPrice, 'usd')
+    : undefined
 }
 
 function formatSigned(value: number, format: (abs: number) => string) {
