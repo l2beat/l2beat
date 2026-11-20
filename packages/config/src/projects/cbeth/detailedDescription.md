@@ -8,7 +8,7 @@ There is no onchain deposit. According to Coinbase, users wrap the staked-ETH ba
 
 ### Exchange rate
 
-A Coinbase key reports the ETH-per-{{symbol}} rate through a limiter that currently allows a cumulative move of {{rateCapEth}} ETH per {{symbol}} over {{rateCapInterval}}, about {{rateCapMultiple}} the current rate, so the limit does not bind in practice. No contract uses the rate. It is only published. Coinbase can replace the oracle at any time.
+A Coinbase key reports the ETH-per-{{symbol}} rate through a limiter that currently allows a cumulative move of {{rateCapEth}} ETH per {{symbol}} over {{rateCapInterval}}, about {{rateCapMultiple}} the current rate, so the limit does not bind in practice. Lending markets can price {{symbol}} collateral at this rate. Coinbase can replace the oracle at any time.
 
 ### Redeeming
 
