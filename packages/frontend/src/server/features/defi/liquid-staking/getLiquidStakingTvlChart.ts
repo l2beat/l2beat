@@ -18,7 +18,11 @@ export type LiquidStakingTvlChartParams = v.infer<
   typeof LiquidStakingTvlChartParams
 >
 
-/** The TVS and staking indexers both start here. */
+/**
+ * The staking indexer starts here; MAX trims leading days until every protocol
+ * and ETH staked have data (e.g. ether.fi's TVS starts on 2024-02-07 at its
+ * first CoinGecko price), so the chart never leads with days missing Others.
+ */
 const FIRST_DAY = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
 
 export interface LiquidStakingTvlPoint {
@@ -54,7 +58,7 @@ export async function getLiquidStakingTvlChart(
     ...projects.map((project) => getTvlInEthAt(project, days)),
   ])
 
-  return days.map((timestamp, i) => ({
+  const points = days.map((timestamp, i) => ({
     timestamp,
     projects: Object.fromEntries(
       projects.map((project, j) => [project.id, tvlByProject[j]?.[i] ?? null]),
@@ -62,6 +66,30 @@ export async function getLiquidStakingTvlChart(
     ethStaked: ethStaked[i] ?? null,
     ethPrice: ethPrices[i] ?? null,
   }))
+
+  return params.range[0] === null
+    ? trimLeadingIncomplete(
+        points,
+        projects.map((project) => project.id),
+      )
+    : points
+}
+
+/**
+ * Drops leading days until the first day with both ETH staked and every
+ * protocol's TVL. Keeps all points when no day is complete so the chart still
+ * renders the protocols that have data.
+ */
+export function trimLeadingIncomplete(
+  points: LiquidStakingTvlPoint[],
+  projectIds: string[],
+): LiquidStakingTvlPoint[] {
+  const firstComplete = points.findIndex(
+    (point) =>
+      point.ethStaked != null &&
+      projectIds.every((id) => point.projects[id] != null),
+  )
+  return firstComplete > 0 ? points.slice(firstComplete) : points
 }
 
 /** Shares that fall with each project, so the mock stack looks like the real one. */

@@ -36,11 +36,12 @@ export function toRow(
   const othersEth =
     complete && point.ethStaked != null ? point.ethStaked - protocolsEth : null
   // Below zero the inputs disagree, so there is no value to show.
-  row[OTHERS_KEY] =
-    othersEth != null && othersEth >= 0 ? convert(othersEth) : null
+  const hasOthers = othersEth != null && othersEth >= 0
+  row[OTHERS_KEY] = hasOthers ? convert(othersEth) : null
   if (ethSupply !== undefined) {
+    // Only stack Not staked when Others completes the staked layers below it.
     const notStakedEth =
-      ethSupply != null && point.ethStaked != null
+      hasOthers && ethSupply != null && point.ethStaked != null
         ? ethSupply - point.ethStaked
         : null
     row[NOT_STAKED_KEY] =
