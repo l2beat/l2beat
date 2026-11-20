@@ -2679,6 +2679,19 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df.md',
     ),
   },
+  // SUPER_CANNON_KONA (game type 9) prestate set by Upgrade 21 (OPCM 9.0.3).
+  // Reproduced via kona Docker build, tag kona-client/v1.9.0 (commit 1286a886).
+  '0x03e5a54835d39c1d83b198314473e1f111c3539c04f65c3e8a9b8ccebe3737c9': {
+    title: 'OP Kona interop absolute prestate v1.9.0 (cannon64-kona-interop)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client, in the interop variant run by the super fault dispute game (respected game type 9).',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/kona-client/v1.9.0/rust/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x03e5a54835d39c1d83b198314473e1f111c3539c04f65c3e8a9b8ccebe3737c9.md',
+    ),
+  },
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {
     title: 'OP Kona absolute prestate v1.6.0-rc.2 (cannon64)',
     description:
