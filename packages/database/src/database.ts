@@ -12,6 +12,9 @@ import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
+import { ChainBlockRepository } from './repositories/ChainBlockRepository'
+import { ChainHeadCursorRepository } from './repositories/ChainHeadCursorRepository'
+import { ChainHeadRepository } from './repositories/ChainHeadRepository'
 import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
@@ -37,7 +40,9 @@ import { LiquidStakingSnapshotRepository } from './repositories/LiquidStakingSna
 import { LiveActivityBlockRepository } from './repositories/LiveActivityBlockRepository'
 import { LiveBlobBatchRepository } from './repositories/LiveBlobBatchRepository'
 import { LiveBlockRepository } from './repositories/LiveBlockRepository'
+import { LiveCheckRepository } from './repositories/LiveCheckRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
+import { LivePrivacyFlowEventRepository } from './repositories/LivePrivacyFlowEventRepository'
 import { NotificationsRepository } from './repositories/NotificationsRepository'
 import { PrivacyAnonymitySetEventRepository } from './repositories/PrivacyAnonymitySetEventRepository'
 import { PrivacyBlockTimestampRepository } from './repositories/PrivacyBlockTimestampRepository'
@@ -69,13 +74,22 @@ export function createDatabase(
 
   return {
     transaction: db.transaction.bind(db),
+    snapshot: db.snapshot.bind(db),
     close: db.close.bind(db),
     url: config.connectionString,
+
+    // #region Chain head
+    chainBlock: new ChainBlockRepository(db),
+    chainHead: new ChainHeadRepository(db),
+    chainHeadCursor: new ChainHeadCursorRepository(db),
+    // #endregion
 
     // #region Activity
     activity: new ActivityRepository(db),
     hourlyActivity: new HourlyActivityRepository(db),
     liveActivityBlock: new LiveActivityBlockRepository(db),
+    liveCheck: new LiveCheckRepository(db),
+    livePrivacyFlowEvent: new LivePrivacyFlowEventRepository(db),
     // #endregion
 
     // #region Interop

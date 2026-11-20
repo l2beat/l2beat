@@ -84,6 +84,25 @@ describeDatabase(BaseRepository.name, (db) => {
       expect(results).toEqual([])
     })
 
+    it('reads one snapshot of the database throughout `snapshot`', async () => {
+      let commit = () => {}
+      const asked = new Promise<void>((resolve) => {
+        commit = resolve
+      })
+      // started out here, so it writes on a connection of its own
+      const written = asked.then(() => repository.insert(1))
+
+      const seen = await db.snapshot(async () => {
+        const before = await repository.getAll()
+        commit()
+        await written
+        return [before, await repository.getAll()]
+      })
+
+      expect(seen).toEqual([[], []])
+      expect(await repository.getAll()).toEqual([1])
+    })
+
     it('runs multiple transactions in parallel', async () => {
       await Promise.allSettled([
         db.transaction(async () => {
