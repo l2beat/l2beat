@@ -35,6 +35,17 @@ export interface LiquidStakingSummaryStats {
   byProject?: (EthShare & { id: string })[]
   /** The protocol with the most ETH, as a share of the stake. */
   largest?: EthShare & { id: string }
+  /**
+   * All ETH as liquid staking, other staked and unstaked, as shares of the
+   * supply. From the same day as `liquid` and `others`, so the three add up.
+   */
+  supplySplit?: SupplySplit
+}
+
+export interface SupplySplit {
+  liquid: EthShare
+  others: EthShare
+  unstaked: EthShare
 }
 
 /**
@@ -86,6 +97,24 @@ export function getLiquidStakingSummary(
         : undefined,
     byProject,
     largest: byProject?.[0],
+    supplySplit: splitSupply(ethSupply, liquidEth, othersEth),
+  }
+}
+
+function splitSupply(
+  ethSupply: number | undefined,
+  liquidEth: number | undefined,
+  othersEth: number | undefined,
+): SupplySplit | undefined {
+  if (!ethSupply || liquidEth === undefined || othersEth === undefined) {
+    return undefined
+  }
+  if (othersEth < 0) return undefined
+  const ofSupply = (eth: number) => ({ eth, share: eth / ethSupply })
+  return {
+    liquid: ofSupply(liquidEth),
+    others: ofSupply(othersEth),
+    unstaked: ofSupply(Math.max(0, ethSupply - liquidEth - othersEth)),
   }
 }
 

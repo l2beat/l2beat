@@ -37,6 +37,29 @@ describe(getLiquidStakingSummary.name, () => {
         { id: 'rocketpool', eth: 10, share: 0.2 },
       ],
       largest: { id: 'lido', eth: 15, share: 0.3 },
+      supplySplit: {
+        liquid: { eth: 25, share: 0.125 },
+        others: { eth: 25, share: 0.125 },
+        unstaked: { eth: 150, share: 0.75 },
+      },
+    })
+  })
+
+  it('splits the supply on the same day as the shares, so the parts add up', () => {
+    const summary = getLiquidStakingSummary(
+      [
+        point(100, 40, { lido: 8, rocketpool: 2 }),
+        point(200, 50, { lido: 10, rocketpool: null }),
+      ],
+      ['lido', 'rocketpool'],
+      200,
+    )
+
+    expect(summary?.supplyShare).toEqual(0.25)
+    expect(summary?.supplySplit).toEqual({
+      liquid: { eth: 10, share: 0.05 },
+      others: { eth: 30, share: 0.15 },
+      unstaked: { eth: 160, share: 0.8 },
     })
   })
 
