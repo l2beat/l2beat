@@ -9,12 +9,6 @@ interface BlockBasedApi {
   timeout?: number
   /** Calls per HTTP request, the RPC rejects bigger batches */
   maxBatchSize?: number
-  /**
-   * The share of its rate the client gives up when the provider refuses
-   * calls for it, logging the rate it settles at. Unset, the rate stays
-   * fixed. See `RateLimiter`. Not read for starknet.
-   */
-  stepDownOnThrottle?: number
   multicallV3?: {
     address: EthereumAddress
     sinceBlock: number

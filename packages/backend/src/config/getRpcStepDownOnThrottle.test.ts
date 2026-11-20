@@ -1,13 +1,10 @@
 import { Env } from '@l2beat/backend-tools'
 import { expect } from 'earl'
-import { getStepDownOnThrottle } from './getStepDownOnThrottle'
+import { getRpcStepDownOnThrottle } from './getRpcStepDownOnThrottle'
 
-describe(getStepDownOnThrottle.name, () => {
+describe(getRpcStepDownOnThrottle.name, () => {
   const read = (value?: string) =>
-    getStepDownOnThrottle(
-      new Env({ SHAPE_RPC_STEP_DOWN_ON_THROTTLE: value }),
-      'SHAPE_RPC_STEP_DOWN_ON_THROTTLE',
-    )
+    getRpcStepDownOnThrottle(new Env({ RPC_STEP_DOWN_ON_THROTTLE: value }))
 
   it('leaves the rate fixed when the variable is not set', () => {
     expect(read()).toEqual(undefined)
@@ -22,7 +19,7 @@ describe(getStepDownOnThrottle.name, () => {
   for (const value of ['true', '1', '-0.1', '']) {
     it(`rejects ${JSON.stringify(value)}`, () => {
       expect(() => read(value)).toThrow(
-        'Step down on throttle must be a number from 0 to below 1',
+        'RPC_STEP_DOWN_ON_THROTTLE must be a number from 0 to below 1',
       )
     })
   }

@@ -63,13 +63,13 @@ export function initClients(config: Config, logger: Logger): Clients {
     multicallClient?: MulticallV3Client
     timeout?: number
     maxBatchSize?: number
-    stepDownOnThrottle?: number
   }): IRpcClient {
     return config.newClientsEnabled
       ? RpcClientCompat.create({ ...options, http, rpcMetricsAggregator })
       : new RpcClient({
           ...options,
           http,
+          stepDownOnThrottle: config.rpcStepDownOnThrottle,
           rpcMetrics: rpcMetricsAggregator.createRecorder({
             rpcChain: options.chain,
             rpcClient: RpcClient.name,
@@ -125,7 +125,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             multicallClient,
             timeout: blockApi.timeout,
             maxBatchSize: blockApi.maxBatchSize,
-            stepDownOnThrottle: blockApi.stepDownOnThrottle,
           })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
@@ -155,7 +154,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             url: blockApi.url,
             http,
             callsPerMinute: blockApi.callsPerMinute,
-            stepDownOnThrottle: blockApi.stepDownOnThrottle,
+            stepDownOnThrottle: config.rpcStepDownOnThrottle,
             retryStrategy: blockApi.retryStrategy,
             logger: chainLogger,
           })
