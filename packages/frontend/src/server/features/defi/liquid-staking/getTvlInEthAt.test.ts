@@ -1,5 +1,5 @@
 import { ProjectService } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { computeTvlInEth, getTvlToken } from './getTvlInEthAt'
 
@@ -60,6 +60,34 @@ describe(computeTvlInEth.name, () => {
 })
 
 describe(getTvlToken.name, () => {
+  it("is a rate-tracked protocol's configured token, and none untracked", () => {
+    const address = ChainSpecificAddress(
+      'eth:0x0000000000000000000000000000000000000001',
+    )
+    expect(
+      getTvlToken({
+        id: ProjectId('xeth'),
+        liquidStaking: {
+          tracking: {
+            contracts: {
+              type: 'rate',
+              token: address,
+              symbol: 'xETH',
+              rate: {
+                address,
+                method: 'function getRate() view returns (uint256)',
+              },
+            },
+            marketQuotes: [],
+          },
+        },
+      }),
+    ).toEqual({ id: 'xeth-xETH', rebasing: false })
+    expect(getTvlToken({ id: ProjectId('xeth'), liquidStaking: {} })).toEqual(
+      undefined,
+    )
+  })
+
   it("is the only token each liquid staking project's TVL counts", async () => {
     const projects = await new ProjectService().getProjects({
       select: ['liquidStaking'],
@@ -67,8 +95,11 @@ describe(getTvlToken.name, () => {
     })
 
     for (const project of projects) {
-      expect(project.tvsConfig?.map((token) => token.id.toString())).toEqual([
-        getTvlToken(project).id,
+      const token = getTvlToken(project)
+      // Untracked, or with TVL from DeFiLlama.
+      if (!token || !project.tvsConfig) continue
+      expect(project.tvsConfig.map((token) => token.id.toString())).toEqual([
+        token.id,
       ])
     }
   })

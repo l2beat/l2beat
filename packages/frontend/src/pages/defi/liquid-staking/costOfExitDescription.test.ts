@@ -1,4 +1,4 @@
-import type { ProjectLiquidStaking } from '@l2beat/config'
+import type { ProjectLiquidStakingMarketQuote } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getCostOfExitDescription } from './costOfExitDescription'
@@ -32,6 +32,26 @@ describe(getCostOfExitDescription.name, () => {
     expect(chart).toInclude('Binance', 'Its pools are too thin to quote.')
   })
 
+  it('counts only selling for a protocol read by its rate alone', () => {
+    const { tooltip, chart } = getCostOfExitDescription({
+      contracts: {
+        type: 'rate',
+        token: ADDRESS,
+        symbol: 'xETH',
+        rate: {
+          address: ADDRESS,
+          method: 'function getRate() view returns (uint256)',
+        },
+      },
+      marketQuotes: [POOL],
+    })
+
+    expect(tooltip).toInclude(
+      'by its only route: selling on the best onchain pool, for its discount.',
+    )
+    expect(chart).toInclude("The protocol's own exit is not read.")
+  })
+
   it('has no estimate note without a queue', () => {
     const { tooltip } = getCostOfExitDescription({
       contracts: { type: 'cbeth', cbETH: ADDRESS },
@@ -45,7 +65,7 @@ describe(getCostOfExitDescription.name, () => {
 const ADDRESS = ChainSpecificAddress(
   'eth:0x0000000000000000000000000000000000000001',
 )
-const POOL: ProjectLiquidStaking['marketQuotes'][number] = {
+const POOL: ProjectLiquidStakingMarketQuote = {
   type: 'curve',
   pool: ADDRESS,
   i: 1,

@@ -72,11 +72,16 @@ export function formatMetricDate(
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
 
-/** On a project's page, the cost of exit names only the routes it has. */
+/**
+ * On a project's page, the cost of exit names only the routes it has. An
+ * untracked one has no routes to name.
+ */
 export function getProjectMetrics(
-  costOfExit: CostOfExitDescription,
+  costOfExit: CostOfExitDescription | undefined,
 ): LiquidStakingMetric[] {
-  return [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+  return costOfExit
+    ? [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+    : LIQUID_STAKING_METRICS
 }
 
 export const ETH_STAKED_TITLE = 'ETH staked'

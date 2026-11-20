@@ -14,6 +14,7 @@ describe('opengraph images', () => {
         'interopConfig',
         'privacyInfo',
         'defiInfo',
+        'liquidStaking',
       ],
     })
 

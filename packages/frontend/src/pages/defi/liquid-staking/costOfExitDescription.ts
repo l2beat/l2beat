@@ -1,4 +1,4 @@
-import type { ProjectLiquidStaking } from '@l2beat/config'
+import type { ProjectLiquidStakingTracking } from '@l2beat/config'
 
 export interface CostOfExitDescription {
   /** What the value measures, by the routes counted. */
@@ -50,14 +50,12 @@ export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
 
 /** The cost of exit of one protocol, naming only the routes it has. */
 export function getCostOfExitDescription(
-  liquidStaking: Pick<ProjectLiquidStaking, 'contracts' | 'marketQuotes'>,
+  tracking: ProjectLiquidStakingTracking,
 ): CostOfExitDescription {
-  const market = liquidStaking.marketQuotes.length > 0 ? [MARKET] : []
+  const market = tracking.marketQuotes.length > 0 ? [MARKET] : []
   const noMarketNote =
     market.length === 0 ? ['Its pools are too thin to quote.'] : []
-  const { routes, queued, notes } = getProtocolRoutes(
-    liquidStaking.contracts.type,
-  )
+  const { routes, queued, notes } = getProtocolRoutes(tracking.contracts.type)
   const all = [...routes, ...market]
 
   const tooltip = [describeRoutes(all), queued ? ESTIMATE_NOTE : undefined]
@@ -76,7 +74,9 @@ export function getCostOfExitDescription(
  * The routes the indexer reads for each protocol type, apart from selling,
  * which depends on the pools quoted.
  */
-function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
+function getProtocolRoutes(
+  type: ProjectLiquidStakingTracking['contracts']['type'],
+): {
   routes: ExitRoute[]
   /** Its queue wait can be an estimate. */
   queued: boolean
@@ -119,6 +119,12 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         ],
         queued: true,
         notes: [],
+      }
+    case 'rate':
+      return {
+        routes: [],
+        queued: false,
+        notes: ["The protocol's own exit is not read."],
       }
   }
 }

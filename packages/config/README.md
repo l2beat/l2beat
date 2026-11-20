@@ -41,6 +41,16 @@ There is a handy script for it: `pnpm tokens:verify`
 
 Follow the [privacy review checklist](README.privacy.md).
 
+### How to list a liquid staking protocol before reviewing it?
+
+Add `src/projects/<id>/<id>.ts` with `liquidStakingListing` from `src/templates/liquidStakingListing.ts`, list it in `src/processing/refactored.ts`, and add `packages/frontend/static/icons/<id>.png`. The protocol gets a row on `/defi/liquid-staking` with "Not reviewed" in place of the risks, and no project page. Track as much as you can:
+
+- TVL: `tvl: { source: 'l2beat' }` with a `tvs.json` next to the project file, or `source: 'defillama'` with the protocol's slug.
+- Yield: `tracking.contracts` of type `rate`, with the view that returns the ETH one token is worth.
+- Cost of exit: `tracking.marketQuotes`, the pools that sell the token for ETH or WETH.
+
+To review it later, replace the template with a full project and add `liquidStaking.risks`.
+
 ### Tests dependencies
 
 In some tests rpc calls to ethereum network are performed through Alchemy. In order to remove default mainnet url flakiness out of the equation it is possible to use a dedicated key through `CONFIG_ALCHEMY_API_KEY` environment variable (`.env` file is supported).

@@ -2,6 +2,7 @@ import type { ProjectDefiToken } from '@l2beat/config'
 import type { AbstractTokenRecord } from '@l2beat/database'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { manifest } from '~/utils/Manifest'
+import { isUnreviewedLiquidStaking } from '../isListedDefiProject'
 import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
@@ -21,9 +22,12 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   name: string
   shortName?: string
   icon: string
-  href: string
-  description: string
+  /** Only reviewed protocols have a project page. */
+  href?: string
+  description?: string
   isUnderReview: boolean
+  /** Whether the yield and the cost of exit are tracked, so it has chart lines. */
+  isTracked: boolean
   tokens: LiquidStakingToken[]
 }
 
@@ -77,9 +81,12 @@ function getEntries(
         name: project.name,
         shortName: project.shortName,
         icon: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/defi/projects/${project.slug}`,
-        description: project.display.description,
-        isUnderReview: !!project.statuses.reviewStatus,
+        href: isUnreviewedLiquidStaking(project)
+          ? undefined
+          : `/defi/projects/${project.slug}`,
+        description: project.display?.description,
+        isUnderReview: !!project.statuses?.reviewStatus,
+        isTracked: project.liquidStaking.tracking !== undefined,
         tokens: (project.defiInfo.tokens ?? []).map((token) => {
           const abstractToken = findAbstractToken(token)
           return {

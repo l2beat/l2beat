@@ -81,6 +81,7 @@ type SearchIndexProjectKey =
   | 'zkCatalogInfo'
   | 'privacyInfo'
   | 'defiInfo'
+  | 'liquidStaking'
   | 'garden'
   | 'ossificationHistory'
   | 'aliases'
@@ -93,6 +94,7 @@ export const SEARCH_INDEX_PROJECT_KEYS: SearchIndexProjectKey[] = [
   'zkCatalogInfo',
   'privacyInfo',
   'defiInfo',
+  'liquidStaking',
   'garden',
   'ossificationHistory',
   'aliases',
@@ -175,7 +177,7 @@ function isSearchableDefiProject(
   cropsAttested: ReadonlySet<string>,
 ): boolean {
   if (!project.defiInfo) return false
-  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project.defiInfo)) {
+  if (env.CLIENT_SIDE_DEFI_ENABLED && isListedDefiProject(project)) {
     return true
   }
   return (
