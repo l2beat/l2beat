@@ -397,6 +397,36 @@ describe(ChainHeadIndexer.name, () => {
       expect(store.hashes()).toEqual(['0x98', '0x99-1'])
     })
 
+    it('finds the fork of a shorter chain among the older stored blocks too', async () => {
+      const chain = new FakeChain(300, GENESIS)
+      const store = new FakeChainBlocks(
+        CHAIN,
+        range(100, 301).map((number) => chain.block(number)),
+      )
+      const indexer = head(chain, store)
+      // the chain now ends at block 200, below every block the head remembers
+      chain.reorg(150, 200)
+
+      expect((await indexer.follow()).height).toEqual(149)
+      expect(store.numbers()).toEqual(range(100, 150))
+    })
+
+    it('deletes nothing when a node that is behind first answers from another fork, then for the stored block', async () => {
+      const chain = new FakeChain(100, GENESIS)
+      const store = new FakeChainBlocks(CHAIN, [
+        chain.block(98),
+        chain.block(99),
+        chain.block(100),
+      ])
+      chain.lagOnce(1)
+      chain.answerHashFromForkOnce(99)
+
+      const followed = await head(chain, store).follow()
+
+      expect(followed).toEqual({ height: 100, stored: 0, again: false })
+      expect(store.numbers()).toEqual([98, 99, 100])
+    })
+
     it('holds its height when a node that is behind answers, and is on the same chain', async () => {
       const chain = new FakeChain(100, GENESIS)
       const store = new FakeChainBlocks(CHAIN, [

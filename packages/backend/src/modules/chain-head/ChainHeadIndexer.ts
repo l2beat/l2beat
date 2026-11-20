@@ -172,7 +172,11 @@ export class ChainHeadIndexer extends RootIndexer {
       // Mostly a node behind the load balancer answering for an older head.
       // But the chain may have gone over to a shorter fork, and then the
       // stored block at the height it names is not the one the source has
-      const at = remembered.find((block) => block.number === latest)
+      const [at] = await this.$.db.chainBlock.getByNumberRange(
+        this.$.chain,
+        latest,
+        latest,
+      )
       const forked =
         at !== undefined &&
         (await this.$.source.getBlockHash(latest)) !== at.hash
@@ -358,8 +362,16 @@ export class ChainHeadIndexer extends RootIndexer {
     }
     /** The oldest stored block the chain no longer has */
     let replaced = stored.at(remembered.length)
+    if (forkedAt !== undefined && forkedAt.number >= latest) {
+      // asked again, the source has the stored block at its newest height
+      // after all: it is behind, and the blocks above are not to be deleted
+      const tip = stored[stored.length - 1]
+      return { height: tip.number, stored: 0, again: false }
+    }
     if (forkedAt === undefined && stored.length > 0) {
-      const older = await this.findOlderOnChain(stored[0].number)
+      const older = await this.findOlderOnChain(
+        Math.min(stored[0].number, latest + 1),
+      )
       remembered = older.onChain
       forkedAt = remembered.at(-1)
       replaced = older.replaced ?? stored[0]
