@@ -1,22 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "critical": true,
-  "description": "A custom contract allowing a 3/3 of {{SECURITY_COUNCIL}}, {{ZK_FOUNDATION_SAFE}} and {{GUARDIANS}} to `executeEmergencyUpgrade()` via the {{PROTOCOL_UPGRADE_HANDLER}}.",
+  "description": "A custom contract allowing a 2/2 of {{SECURITY_COUNCIL}} and {{ZK_FOUNDATION_SAFE}} to `executeEmergencyUpgrade()` via the {{PROTOCOL_UPGRADE_HANDLER}}.",
   "category": "gov",
   "fields": {
-    "GUARDIANS": {
-      "permissions": [
-        {
-          "type": "interact",
-          "description": "one of its 3/3 signers."
-        }
-      ]
-    },
     "SECURITY_COUNCIL": {
       "permissions": [
         {
           "type": "interact",
-          "description": "one of its 3/3 signers."
+          "description": "one of its 2/2 signers."
         }
       ]
     },
@@ -24,7 +16,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "one of its 3/3 signers."
+          "description": "one of its 2/2 signers."
         }
       ]
     }
