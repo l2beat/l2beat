@@ -52,6 +52,24 @@ export class DatabaseClient {
     return tx.execute((trx) => this.context.run(trx, cb))
   }
 
+  /**
+   * Runs the callback in a transaction that reads one snapshot of the
+   * database throughout, as of its first query (repeatable read). Inside
+   * another transaction it runs in that one, as `transaction` does.
+   *
+   * `transaction` takes an isolation level but does not apply it: it drops
+   * the builder that `setIsolationLevel` returns. Callers pass levels to it
+   * all the same, and making it honour them would change what their
+   * transactions do
+   */
+  snapshot<T>(cb: () => Promise<T>): Promise<T> {
+    if (this.db.isTransaction) return cb()
+    return this.kysely
+      .transaction()
+      .setIsolationLevel('repeatable read')
+      .execute((trx) => this.context.run(trx, cb))
+  }
+
   close() {
     return this.kysely.destroy()
   }

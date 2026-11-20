@@ -407,6 +407,29 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
     },
   )
 
+  describe(
+    PrivacyFlowEventRepository.prototype.getByProjectIdsSince.name,
+    () => {
+      it('returns the flows of the projects from the timestamp on, oldest first', async () => {
+        const [before, at, after] = [
+          flowEvent('project-a', START - 1, 1, 'deposit', 1, 1n),
+          flowEvent('project-a', START, 2, 'deposit', 1, 1n),
+          flowEvent('project-a', START + 5, 3, 'withdrawal', 1, 1n),
+        ]
+        await repository.upsertMany([
+          after,
+          before,
+          at,
+          flowEvent('project-b', START + 1, 4, 'deposit', 1, 1n),
+        ])
+
+        expect(
+          await repository.getByProjectIdsSince(['project-a'], START),
+        ).toEqual([at, after])
+      })
+    },
+  )
+
   describe(PrivacyFlowEventRepository.prototype.deleteAll.name, () => {
     it('deletes all rows', async () => {
       await repository.upsertMany([
