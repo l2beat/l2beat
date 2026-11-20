@@ -54,6 +54,10 @@
       // OPContractsManager 8.0.1
       "ignoreDiscovery": true
     },
+    "eth:0x2d91e6F2bcF6CD1df90E1FAF9714E18705EA331f": {
+      // OPContractsManager 9.0.3
+      "ignoreDiscovery": true
+    },
     "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
       // OPContractsManagerStandardValidator
       "ignoreDiscovery": true

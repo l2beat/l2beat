@@ -9,5 +9,11 @@
     "address": "eth:0x8F40Cc98D694AB986F026C5383A181FCc9B6B281",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "AnchorStateRegistry_v4_0_0": {
+    "hash": "0x7197656ab0e2deaeee836e2a501e55ae1822f623a5467bd7dde5c8aeeecff5bc",
+    "address": "eth:0x2b27299C577d4720100e2735b652444DcEa652D0",
+    "chain": "ethereum",
+    "blockNumber": 26430859
   }
 }

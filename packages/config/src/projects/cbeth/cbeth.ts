@@ -164,13 +164,13 @@ export const cbeth: BaseProject = {
         value: 'Coinbase only',
         secondLine: 'no onchain deposit',
         sentiment: 'bad',
-        description: `There is no deposit function. Coinbase keys mint ${symbol} through a rate-limited relay, with no ETH attached, against balances on its exchange.`,
+        description: `There is no deposit function. Coinbase keys mint ${symbol}, with no ETH attached, against balances on its exchange, through a rate-limited relay or any minter the master minter authorizes.`,
       },
       operators: {
         value: 'Coinbase',
         secondLine: 'no bond',
         sentiment: 'bad',
-        description: `No contract tracks validators, balances or slashing. Whether losses pass to ${symbol} holders is Coinbase's policy, not code.`,
+        description: `No contract tracks its validators, their balances or slashing. Whether losses pass to ${symbol} holders is Coinbase's policy, not code.`,
       },
       backing: {
         value: 'Coinbase-held',
@@ -187,7 +187,7 @@ export const cbeth: BaseProject = {
           value: `The cap is about ${rateCapMultiple} the current rate, so it does not bind.`,
           sentiment: 'bad',
         },
-        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. No contract uses the rate.`,
+        description: `One Coinbase key writes the rate, capped at ${rateCapPercent} of one ETH over ${rateCapInterval}. The owner can replace the oracle at once. Lending markets can price ${symbol} collateral at this rate.`,
       },
       exit: {
         value: 'Coinbase only',
