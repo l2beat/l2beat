@@ -4,6 +4,7 @@ import type { RetryHandlerVariant } from '@l2beat/shared'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
+import { getStepDownOnThrottle } from './getStepDownOnThrottle'
 import type { IndexerApi } from './IndexerApi'
 
 const DEFAULT_CALLS_PER_MINUTE = 60
@@ -63,6 +64,10 @@ export async function getChainConfig(
             maxBatchSize: env.optionalInteger(
               Env.key(chain, 'RPC_MAX_BATCH_SIZE'),
             ),
+            stepDownOnThrottle: getStepDownOnThrottle(
+              env,
+              Env.key(chain, 'RPC_STEP_DOWN_ON_THROTTLE'),
+            ),
             multicallV3: multicallV3
               ? {
                   address: multicallV3.address,
@@ -86,6 +91,10 @@ export async function getChainConfig(
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             ),
             retryStrategy: 'RELIABLE',
+            stepDownOnThrottle: getStepDownOnThrottle(
+              env,
+              Env.key(chain, 'API_STEP_DOWN_ON_THROTTLE'),
+            ),
           })
           break
         case 'starkex': {

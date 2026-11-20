@@ -62,12 +62,6 @@ export interface Config {
   readonly interop: InteropFeatureConfig | false
   readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
-  /**
-   * The share of its rate an RPC client gives up each time the provider
-   * refuses calls for it, logging the rate it settles at. Unset, the rate
-   * stays fixed. See `RateLimiter`.
-   */
-  readonly rpcStepDownOnThrottle: number | undefined
 
   readonly backoffice: BackofficeFeatureConfig | false
 

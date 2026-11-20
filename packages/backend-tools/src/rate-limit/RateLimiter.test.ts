@@ -282,6 +282,35 @@ describe(RateLimiter.name, () => {
       }
     })
 
+    // Providers send the odd 429 that is not about the rate: production
+    // logs show chains with a few dozen a day, hours apart. One of those
+    // among calls that were answered must not cost a step, or a limiter
+    // left running settles far below a limit it never met. Here one call
+    // in 100 is refused, then 5 more: 6 of 105 is over a twentieth.
+    it('keeps the rate when only a stray call is refused', () => {
+      const clock = FakeTimers.install({ now: 10_000 })
+      const rateLimiter = new RateLimiter({
+        callsPerMinute: 1_000,
+        stepDownOnThrottle: { share: 0.1 },
+      })
+
+      try {
+        for (let i = 0; i < 99; i++) {
+          rateLimiter.answered(Date.now())
+        }
+        clock.tick(60_000)
+        rateLimiter.throttled(Date.now())
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(1_000)
+
+        for (let i = 0; i < 5; i++) {
+          rateLimiter.throttled(Date.now())
+        }
+        expect(rateLimiter.effectiveCallsPerMinute).toEqual(900)
+      } finally {
+        clock.uninstall()
+      }
+    })
+
     it('paces calls at the lowered rate', async () => {
       const clock = FakeTimers.install({ now: 10_000 })
       // one call every 100 ms, then every 200 ms

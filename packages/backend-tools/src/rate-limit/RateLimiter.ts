@@ -17,8 +17,9 @@ export interface RateLimiterOptions {
   stepDownOnThrottle?: {
     /**
      * Share of the rate given up per step. A step is taken at most once a
-     * minute, only once a call sent after the last step was answered, and
-     * down to a tenth of `callsPerMinute`.
+     * minute, only once a call sent after the last step was answered, only
+     * when at least a twentieth of the calls sent since then were refused,
+     * and down to a tenth of `callsPerMinute`.
      */
     share: number
     /**
@@ -74,6 +75,12 @@ const MS_PER_MINUTE = 60 * 1000
 const STEP_DOWN_INTERVAL_MS = MS_PER_MINUTE
 /** Refusals that are not about the rate must not grind a client to a halt. */
 const LOWEST_SHARE_OF_RATE = 0.1
+/**
+ * Providers also send the odd 429 that is not about the rate. Only when
+ * this share of the calls sent since the last step was refused is the
+ * rate taken to be too high.
+ */
+const REFUSED_SHARE_TO_STEP_DOWN = 0.05
 
 export class RateLimiter {
   /** The configured rate, which the effective one never exceeds. */
@@ -90,6 +97,9 @@ export class RateLimiter {
    * more refusals say nothing new about the rate.
    */
   private answeredCallSentAt = 0
+  /** Calls sent since the last step that the provider answered or refused */
+  private answeredSinceStep = 0
+  private refusedSinceStep = 0
   private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
@@ -119,7 +129,13 @@ export class RateLimiter {
    */
   throttled(sentAt: number): void {
     const stepDown = this.stepDownOnThrottle
-    if (!stepDown || !this.mayStepDown(sentAt)) {
+    if (!stepDown) {
+      return
+    }
+    if (sentAt > this.steppedDownAt) {
+      this.refusedSinceStep++
+    }
+    if (!this.mayStepDown(sentAt)) {
       return
     }
     const from = this.effective
@@ -129,6 +145,8 @@ export class RateLimiter {
       return
     }
     this.steppedDownAt = Date.now()
+    this.answeredSinceStep = 0
+    this.refusedSinceStep = 0
     this.effective = to
     stepDown.onStep?.({ from, to, atFloor: to === floor })
   }
@@ -140,6 +158,9 @@ export class RateLimiter {
    */
   answered(sentAt: number): void {
     this.answeredCallSentAt = Math.max(this.answeredCallSentAt, sentAt)
+    if (sentAt > this.steppedDownAt) {
+      this.answeredSinceStep++
+    }
   }
 
   /**
@@ -150,7 +171,10 @@ export class RateLimiter {
     return (
       refusedCallSentAt > this.steppedDownAt &&
       this.answeredCallSentAt > this.steppedDownAt &&
-      Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS
+      Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS &&
+      this.refusedSinceStep >=
+        REFUSED_SHARE_TO_STEP_DOWN *
+          (this.refusedSinceStep + this.answeredSinceStep)
     )
   }
 
