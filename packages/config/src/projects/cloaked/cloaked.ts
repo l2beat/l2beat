@@ -122,22 +122,24 @@ export const cloaked: BaseProject = {
     compliance: {
       tradeoff:
         "Cloaked's servers quote and submit every send, so Cloaked can refuse a user. The only declared check is on the user's IP address, and a refused user keeps the keys.",
-      enforcedBy: 'operator',
-      enforcedByNote: 'Cloaked, whose servers quote and submit every send',
-      check: {
-        rules: 'closed',
+      gatekeeper: {
+        type: 'operator',
+        detail: 'Cloaked, whose servers quote and submit every send',
+      },
+      rules: {
+        type: 'closed',
         detail:
           "Cloaked checks the user's IP address for sanctions and geographic limits. Whether it also screens addresses is not public.",
       },
-      when: 'everyUse',
-      cost: {
-        loses: 'access',
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
         detail:
           'A refused user exports their keys with the open recovery tool and moves the funds from any wallet.',
       },
-      disclosure: "Cloaked, whose key shows all of a user's addresses",
+      dataAccess: "Cloaked, whose key shows all of a user's addresses",
       cleanOrigin: {
-        tool: 'public',
+        type: 'public',
         detail:
           "Each payment's sender is public at the address that received it.",
       },

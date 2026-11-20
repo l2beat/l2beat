@@ -1474,12 +1474,11 @@ export interface PrivacyRisk {
 
 /**
  * The hardest layer at which someone can refuse a user, whether or not a
- * check uses that power, from the one no user gets around to none at all. It
- * places a project between compliance and censorship resistance. A service
- * the released app replaces from its own settings, such as one relayer among
- * several or the user's own wallet, holds no such power.
+ * check uses that power. A service the released app replaces from its own
+ * settings, such as one relayer among several or the user's own wallet, holds
+ * no such power.
  */
-export type PrivacyComplianceLayer =
+export type PrivacyComplianceGatekeeper =
   /** The contracts enforce it, so no client or relayer skips it. */
   | 'contract'
   /** A party every ordinary use passes through. Only an exit goes around it. */
@@ -1489,14 +1488,6 @@ export type PrivacyComplianceLayer =
   /** The app enforces it, and another client skips it. */
   | 'app'
   | 'none'
-
-export type PrivacyComplianceTiming =
-  /** Decided once and final. An accepted user stays accepted. */
-  | 'entry'
-  /** The decision can change over funds that are already inside. */
-  | 'anytime'
-  /** Checked per action, through a service the funds do not sit in. */
-  | 'everyUse'
 
 /**
  * The check that actually runs, apart from the power to refuse. A power
@@ -1509,12 +1500,20 @@ export type PrivacyComplianceRules =
   | 'closed'
   | 'none'
 
+export type PrivacyComplianceTiming =
+  /** Decided once and final. An accepted user stays accepted. */
+  | 'entry'
+  /** The decision can change over funds that are already inside. */
+  | 'anytime'
+  /** Checked per action, through a service the funds do not sit in. */
+  | 'everyUse'
+
 /** What a refusal takes from a user, mildest first. */
-export type PrivacyComplianceCost = 'access' | 'privacy' | 'funds'
+export type PrivacyComplianceConsequence = 'access' | 'privacy' | 'funds'
 
 /** How a user shows where funds came from, least revealing first. */
 export type PrivacyCleanOriginTool =
-  /** A proof against a list. `detail` and the prose name whose list it is and what the proof costs. */
+  /** A proof against a list. */
   | 'proof'
   /** Disclosure of one payment. */
   | 'payment'
@@ -1524,27 +1523,31 @@ export type PrivacyCleanOriginTool =
   | 'public'
   | 'none'
 
+/**
+ * The Compliance section of a privacy project. The page shows `tradeoff`,
+ * then three parts: Enforcement (gatekeeper, rules, timing, consequence),
+ * Access to private data and Proof of clean origin. Each fact is a `type`
+ * from a shared list plus a `detail` in the project's own words.
+ */
 export interface PrivacyCompliance {
-  /** The design in two sentences at most: what the project chose, then what that costs the user. Not a summary of the facts below. */
+  /** At most two sentences: what the design chose, then what that costs the user. */
   tradeoff: string
-  enforcedBy: PrivacyComplianceLayer
-  /** Completes the layer with one clause that names who holds the power. */
-  enforcedByNote?: string
-  /** `detail` says in full sentences who checks what against what. */
-  check: { rules: PrivacyComplianceRules; detail: string }
-  when?: PrivacyComplianceTiming
-  /** One sentence where the timing needs it, e.g. what later steps still do. */
-  whenNote?: string
-  /** `detail` says in full sentences what the refused user is left with. */
-  cost?: { loses: PrivacyComplianceCost; detail: string }
-  /** Who can disclose a user's data without them, as a noun phrase. Absent means nobody. */
-  disclosure?: string
-  /** Absent where no funds move. */
-  cleanOrigin?: { tool: PrivacyCleanOriginTool; detail: string }
+  /** `detail` is a clause that names who holds the power. */
+  gatekeeper: { type: PrivacyComplianceGatekeeper; detail?: string }
+  /** `detail` says who checks what against what. */
+  rules: { type: PrivacyComplianceRules; detail: string }
+  /** When the decision is made. Absent without a gatekeeper. */
+  timing?: { type: PrivacyComplianceTiming; detail?: string }
+  /** `detail` says what a refused user is left with. Absent without a gatekeeper. */
+  consequence?: { type: PrivacyComplianceConsequence; detail: string }
+  /** Who can read a user's private data without them, as a noun phrase. Absent means nobody. */
+  dataAccess?: string
+  /** `detail` names whose list or key it is and what using it reveals. Absent where no funds move. */
+  cleanOrigin?: { type: PrivacyCleanOriginTool; detail: string }
   /**
-   * Markdown that extends the facts, under the headings "Enforcement",
-   * "Access to private data" and "Proof of clean origin". The page puts the facts first under
-   * each heading, so a heading without prose can be left out.
+   * Markdown that extends the facts, under the headings of
+   * PRIVACY_COMPLIANCE_HEADINGS. The page puts each part's facts above its
+   * prose, so a heading without prose is left out.
    */
   content: string
 }

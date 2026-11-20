@@ -1,24 +1,22 @@
 import type {
   PrivacyCleanOriginTool,
-  PrivacyComplianceCost,
-  PrivacyComplianceLayer,
+  PrivacyComplianceConsequence,
+  PrivacyComplianceGatekeeper,
   PrivacyComplianceRules,
   PrivacyComplianceTiming,
 } from '../types'
 
-/** The layers, hardest to get around first. */
-export const PRIVACY_COMPLIANCE_LAYERS = {
+// What the Compliance section prints for each fact type.
+
+/** Hardest to get around first. */
+export const PRIVACY_COMPLIANCE_GATEKEEPERS = {
   contract: 'the contracts',
   operator: 'the operator',
   relayer: 'relayers',
   app: 'the app',
   none: 'nobody',
-} as const satisfies Record<PrivacyComplianceLayer, string>
+} as const satisfies Record<PrivacyComplianceGatekeeper, string>
 
-/**
- * Public when anyone can look up beforehand whether an address passes.
- * Closed when only the gatekeeper's answer tells.
- */
 export const PRIVACY_COMPLIANCE_RULES = {
   public: 'public',
   closed: 'closed',
@@ -31,14 +29,14 @@ export const PRIVACY_COMPLIANCE_TIMINGS = {
   everyUse: 'at each use',
 } as const satisfies Record<PrivacyComplianceTiming, string>
 
-/** What a refusal takes, mildest first. */
-export const PRIVACY_COMPLIANCE_COSTS = {
+/** Mildest first. */
+export const PRIVACY_COMPLIANCE_CONSEQUENCES = {
   access: 'loss of access',
   privacy: 'loss of privacy',
   funds: 'frozen funds',
-} as const satisfies Record<PrivacyComplianceCost, string>
+} as const satisfies Record<PrivacyComplianceConsequence, string>
 
-/** The tools, least revealing first. A label names the tool, the detail names its price. */
+/** Least revealing first. */
 export const PRIVACY_CLEAN_ORIGIN_TOOLS = {
   proof: 'a proof against a list',
   payment: 'disclosure of one payment',
@@ -47,7 +45,7 @@ export const PRIVACY_CLEAN_ORIGIN_TOOLS = {
   none: 'none',
 } as const satisfies Record<PrivacyCleanOriginTool, string>
 
-/** The section's three parts. The page puts each part's facts under its heading, above the prose. */
+/** The section's three parts, in page order. */
 export const PRIVACY_COMPLIANCE_HEADINGS = [
   'Enforcement',
   'Access to private data',

@@ -362,13 +362,13 @@ export const tornadoCash: BaseProject = {
     compliance: {
       tradeoff:
         "The immutable pools keep nobody out. A withdrawal can therefore come from any deposit, flagged ones included, and the app's report disproves that only by naming its deposit.",
-      enforcedBy: 'none',
-      check: {
-        rules: 'none',
+      gatekeeper: { type: 'none' },
+      rules: {
+        type: 'none',
         detail: 'The immutable pools and the app check no list.',
       },
       cleanOrigin: {
-        tool: 'payment',
+        type: 'payment',
         detail:
           "The app's report links one withdrawal to its deposit, for whoever the user gives it to.",
       },

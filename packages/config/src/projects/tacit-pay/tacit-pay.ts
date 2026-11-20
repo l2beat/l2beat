@@ -264,13 +264,13 @@ export const tacitPay: BaseProject = {
     compliance: {
       tradeoff:
         'Nothing is checked, and the contracts have no owner. A withdrawal can come from any deposit, and no tool lets a user show which one is theirs.',
-      enforcedBy: 'none',
-      check: {
-        rules: 'none',
+      gatekeeper: { type: 'none' },
+      rules: {
+        type: 'none',
         detail: 'The ownerless contracts, the app and the relay check no list.',
       },
       cleanOrigin: {
-        tool: 'none',
+        type: 'none',
         detail:
           'The app has no report that ties a withdrawal to its deposit and no proof against a list.',
       },

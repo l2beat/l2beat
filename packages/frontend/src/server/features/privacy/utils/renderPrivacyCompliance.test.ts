@@ -5,13 +5,17 @@ describe(renderPrivacyCompliance.name, () => {
   it('opens each part with its facts and continues with its prose', () => {
     const markdown = renderPrivacyCompliance({
       tradeoff: 'Relayers screen recipients.',
-      enforcedBy: 'relayer',
-      enforcedByNote: 'while the contracts enforce no list',
-      check: { rules: 'closed', detail: 'Recipients, by each relayer.' },
-      when: 'entry',
-      whenNote: 'Later sends carry the proof.',
-      cost: { loses: 'access', detail: 'The user submits it themselves.' },
-      cleanOrigin: { tool: 'proof', detail: 'Every spend carries one.' },
+      gatekeeper: {
+        type: 'relayer',
+        detail: 'while the contracts enforce no list',
+      },
+      rules: { type: 'closed', detail: 'Each relayer checks recipients.' },
+      timing: { type: 'entry', detail: 'Later sends carry the proof.' },
+      consequence: {
+        type: 'access',
+        detail: 'The user submits it themselves.',
+      },
+      cleanOrigin: { type: 'proof', detail: 'Every spend carries one.' },
       content:
         '### Enforcement\n\nRelayers check a list.\n\n### Proof of clean origin\n\nAnyone can verify it.',
     })
@@ -23,7 +27,7 @@ describe(renderPrivacyCompliance.name, () => {
         '### Enforcement',
         '',
         '- **Gatekeeper:** relayers, while the contracts enforce no list.',
-        '- **Rules:** closed. Recipients, by each relayer.',
+        '- **Rules:** closed. Each relayer checks recipients.',
         '- **Timing:** once at entry, then final. Later sends carry the proof.',
         '- **Consequence:** loss of access. The user submits it themselves.',
         '',
@@ -45,9 +49,9 @@ describe(renderPrivacyCompliance.name, () => {
   it('leaves out what a project without a gatekeeper or funds has no answer to', () => {
     const markdown = renderPrivacyCompliance({
       tradeoff: 'Nothing is checked.',
-      enforcedBy: 'none',
-      check: { rules: 'none', detail: 'The contracts check no list.' },
-      disclosure: 'the committee, which can decrypt every ballot',
+      gatekeeper: { type: 'none' },
+      rules: { type: 'none', detail: 'The contracts check no list.' },
+      dataAccess: 'the committee, which can decrypt every ballot',
       content: '',
     })
 

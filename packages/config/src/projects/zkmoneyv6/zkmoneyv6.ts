@@ -477,24 +477,26 @@ export const zkmoneyv6: BaseProject = {
     compliance: {
       tradeoff:
         'Aztec Labs screens in its wallet, relayer and name resolver, the contracts enforce no list. A user with their own tooling passes, and each withdrawal recipient is named to Predicate beforehand.',
-      enforcedBy: 'relayer',
-      enforcedByNote:
-        'together with the wallet and the name resolver, all run by Aztec Labs',
-      check: {
-        rules: 'closed',
+      gatekeeper: {
+        type: 'relayer',
+        detail:
+          'together with the wallet and the name resolver, all run by Aztec Labs',
+      },
+      rules: {
+        type: 'closed',
         detail:
           "Aztec Labs checks withdrawal recipients and deposit funders against OFAC's list and a Predicate policy. The policy is not published.",
       },
-      when: 'everyUse',
-      cost: {
-        loses: 'access',
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
         detail:
           "The user must submit a refused withdrawal themselves. A payment the resolver blocks needs the recipient's own tooling to find, and a signature from their Ethereum account.",
       },
-      disclosure:
+      dataAccess:
         'Aztec Labs, whose name resolver knows the recipient of every payment sent to a name',
       cleanOrigin: {
-        tool: 'none',
+        type: 'none',
         detail:
           'Names, deposits and withdrawals are public. No proof covers what happens between them.',
       },

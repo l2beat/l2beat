@@ -169,24 +169,26 @@ export const umbra: BaseProject = {
     compliance: {
       tradeoff:
         "Only the app's SDK screens, so a direct contract call or a build without the check passes. Every payment's sender is public, so its origin needs no proof.",
-      enforcedBy: 'relayer',
-      enforcedByNote:
-        "ScopeLift's closed relayer for token withdrawals, together with the app. A direct contract call skips both",
-      check: {
-        rules: 'public',
+      gatekeeper: {
+        type: 'relayer',
+        detail:
+          "ScopeLift's closed relayer for token withdrawals, together with the app. A direct contract call skips both",
+      },
+      rules: {
+        type: 'public',
         detail:
           "The app refuses a wallet, payee or withdrawal address on ScopeLift's list or Chainalysis's sanctions oracle. Both lists are public.",
       },
-      when: 'everyUse',
-      cost: {
-        loses: 'access',
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
         detail:
           "A refused user keeps the keys, which the app's advanced mode shows for any wallet to use. A user whose own wallet is listed cannot connect and needs a build without the check.",
       },
-      disclosure:
+      dataAccess:
         "ScopeLift, whose hosted app receives the user's wallet address on every scan",
       cleanOrigin: {
-        tool: 'public',
+        type: 'public',
         detail: "A payment's sender, token and amount are public.",
       },
       content: readProjectMarkdown('umbra', 'compliance'),

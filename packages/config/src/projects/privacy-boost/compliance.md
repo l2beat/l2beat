@@ -4,7 +4,7 @@ The contracts screen nothing. The operator's [SDK](https://www.npmjs.com/package
 
 ### Access to private data
 
-The terms let Sunnyside Labs use a viewing key for compliance and lawful requests. An auditor can query the enclave's Audit API for any address's balance and history, without the user's consent. The AuditGateway lists {{auditors}}. The admin multisig appoints auditors [without delay](#upgrades-and-governance). Nothing onchain ties a query to the access record the enclave is meant to write to the AuditGateway.
+The terms let Sunnyside Labs use a viewing key for compliance and lawful requests. An auditor can query the enclave's Audit API for any address's balance and history, without the user's consent. The AuditGateway lists {{auditorCount}} auditors. The admin multisig appoints auditors [without delay](#upgrades-and-governance). Nothing onchain ties a query to the access record the enclave is meant to write to the AuditGateway.
 
 ### Proof of clean origin
 

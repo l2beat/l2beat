@@ -716,13 +716,17 @@ describe('getProjects', () => {
         if (headings.join() !== expected.join()) {
           problems.push(`${project.id}: headings ${headings.join(', ')}`)
         }
-        const gated = compliance.enforcedBy !== 'none'
-        const answered = [compliance.when, compliance.cost]
-        if (answered.some((answer) => (answer !== undefined) !== gated)) {
-          problems.push(`${project.id}: layer and facts disagree`)
+        const hasGatekeeper = compliance.gatekeeper.type !== 'none'
+        const gatekeeperFacts = [compliance.timing, compliance.consequence]
+        if (
+          gatekeeperFacts.some((fact) => (fact !== undefined) !== hasGatekeeper)
+        ) {
+          problems.push(
+            `${project.id}: timing and consequence go with a gatekeeper`,
+          )
         }
-        if (!gated && compliance.check.rules !== 'none') {
-          problems.push(`${project.id}: a check without a power to refuse`)
+        if (!hasGatekeeper && compliance.rules.type !== 'none') {
+          problems.push(`${project.id}: rules without a gatekeeper`)
         }
         const sentences = compliance.tradeoff.split(/(?<=[.!?])\s+/)
         if (

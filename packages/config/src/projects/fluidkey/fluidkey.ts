@@ -106,22 +106,24 @@ export const fluidkey: BaseProject = {
     compliance: {
       tradeoff:
         'Fluidkey submits every send, so it can refuse a user. No check on onchain payments is known, and a refused user keeps the Safes.',
-      enforcedBy: 'operator',
-      enforcedByNote: 'Fluidkey, which submits every send',
-      check: {
-        rules: 'none',
+      gatekeeper: {
+        type: 'operator',
+        detail: 'Fluidkey, which submits every send',
+      },
+      rules: {
+        type: 'none',
         detail:
           'No check on onchain payments is known. Bank transfers need identity verification by Noah.',
       },
-      when: 'everyUse',
-      cost: {
-        loses: 'access',
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
         detail:
           'A refused user withdraws from their Safes with the open recovery app, without Fluidkey.',
       },
-      disclosure: "Fluidkey, whose key shows all of a user's addresses",
+      dataAccess: "Fluidkey, whose key shows all of a user's addresses",
       cleanOrigin: {
-        tool: 'public',
+        type: 'public',
         detail: "Each payment's sender is public at the Safe that received it.",
       },
       content: readProjectMarkdown('fluidkey', 'compliance'),
