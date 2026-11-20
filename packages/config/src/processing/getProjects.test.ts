@@ -724,9 +724,14 @@ describe('getProjects', () => {
         if (!gated && compliance.check.rules !== 'none') {
           problems.push(`${project.id}: a check without a power to refuse`)
         }
-        const short = compliance.short
-        if (/[.!?]\s/.test(short) || short.split(/\s+/).length > 25) {
-          problems.push(`${project.id}: short is not one sentence of 25 words`)
+        const sentences = compliance.tradeoff.split(/(?<=[.!?])\s+/)
+        if (
+          sentences.length > 2 ||
+          sentences.some((sentence) => sentence.split(/\s+/).length > 25)
+        ) {
+          problems.push(
+            `${project.id}: tradeoff exceeds two sentences of 25 words`,
+          )
         }
       }
       expect(problems).toEqual([])

@@ -1523,8 +1523,8 @@ export type PrivacyCleanOriginTool =
   | 'none'
 
 export interface PrivacyCompliance {
-  /** One sentence of at most 25 words, shown alone: who can refuse a user and what stands out. */
-  short: string
+  /** The design in two sentences at most: what the project chose, then what that costs the user. Not a summary of the facts below. */
+  tradeoff: string
   enforcedBy: PrivacyComplianceLayer
   /** Completes the layer with one clause that names who holds the power. */
   enforcedByNote?: string

@@ -360,7 +360,8 @@ export const tornadoCash: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
     compliance: {
-      short: 'Nothing is checked, proving a clean origin is left to the user.',
+      tradeoff:
+        "The immutable pools keep nobody out. A withdrawal can therefore come from any deposit, flagged ones included, and the app's report disproves that only by naming its deposit.",
       enforcedBy: 'none',
       check: {
         rules: 'none',

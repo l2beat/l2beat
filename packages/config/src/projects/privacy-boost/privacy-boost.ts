@@ -408,8 +408,8 @@ export const privacyBoost: BaseProject = {
     ],
     adversaries: privacyBoostAdversaries,
     compliance: {
-      short:
-        'Sunnyside Labs screens deposits and transfers offchain, its enclave holds a key to every note.',
+      tradeoff:
+        'All compliance runs offchain at Sunnyside Labs, whose enclave holds every transfer in plaintext. The pool hides users from the public, not from the operator that screens them.',
       enforcedBy: 'operator',
       enforcedByNote:
         'Sunnyside Labs, whose relay settles every deposit and whose enclave proves every spend',

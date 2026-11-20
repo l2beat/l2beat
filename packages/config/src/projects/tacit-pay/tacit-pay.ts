@@ -262,7 +262,8 @@ export const tacitPay: BaseProject = {
     ],
     adversaries: tacitPayAdversaries,
     compliance: {
-      short: 'Nothing is checked, no tool proves a clean origin.',
+      tradeoff:
+        'Nothing is checked, and the contracts have no owner. A withdrawal can come from any deposit, and no tool lets a user show which one is theirs.',
       enforcedBy: 'none',
       check: {
         rules: 'none',

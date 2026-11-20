@@ -440,8 +440,8 @@ export const zamaCw: BaseProject = {
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
     compliance: {
-      short:
-        "Each token's owner can freeze any user's balance at any time, five tokens also apply their issuer's denylist.",
+      tradeoff:
+        'Addresses stay public, so each token screens senders and recipients like a public token does. Its owner can also freeze any balance at any time and appoint an observer that reads every amount.',
       enforcedBy: 'contract',
       enforcedByNote: 'on every wrap, transfer and unwrap',
       check: {

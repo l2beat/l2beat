@@ -178,8 +178,8 @@ export const zcashNearIntents: BaseProject = {
     ],
     adversaries: zcashNearIntentsAdversaries,
     compliance: {
-      short:
-        "The NEAR Intents operator screens every swap and can hold funds, shielded ZEC in the user's wallet is out of its reach.",
+      tradeoff:
+        "Compliance sits at both ends of the route, where one operator runs the swaps and screens every quote. Zcash's shielded pool in between checks nothing, and the operator can hold funds only while a swap is in transit.",
       enforcedBy: 'operator',
       enforcedByNote:
         'Intents Technology Ltd., which runs NEAR Intents and the Ethereum side of both swaps',

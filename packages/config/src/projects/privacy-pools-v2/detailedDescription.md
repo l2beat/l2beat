@@ -8,7 +8,7 @@ A note is a private record of value in one asset, owned by an Ethereum address a
 
 ### Labels
 
-Each deposit gets a label, a private ID that only the depositor and the ASP can tie to the deposit. Every note created from the deposit's funds carries the same label, including notes paid to others, so each recipient learns it. Notes from different deposits never merge. Each private spend proves that its notes' labels are on the ASP's latest list. Anyone who knows a label can hash it, find the list update that first approved it and look at the deposits made just before.
+Labels let the ASP's approval follow a deposit's funds through every transfer. Each deposit gets a label, a private ID that only the depositor and the ASP can tie to the deposit. Every note created from the deposit's funds carries the same label, including notes paid to others, so each recipient learns it. Notes from different deposits never merge. Each private spend proves that its notes' labels are on the ASP's latest list. Anyone who knows a label can hash it, find the list update that first approved it and look at the deposits made just before.
 
 ### Flow
 

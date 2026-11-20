@@ -475,8 +475,8 @@ export const zkmoneyv6: BaseProject = {
     ],
     adversaries: zkMoneyV6Adversaries,
     compliance: {
-      short:
-        'Aztec Labs screens addresses in its wallet, relayer and name resolver, the contracts enforce no list.',
+      tradeoff:
+        'Aztec Labs screens in its wallet, relayer and name resolver, the contracts enforce no list. A user with their own tooling passes, and each withdrawal recipient is named to Predicate beforehand.',
       enforcedBy: 'relayer',
       enforcedByNote:
         'together with the wallet and the name resolver, all run by Aztec Labs',

@@ -167,8 +167,8 @@ export const umbra: BaseProject = {
       ),
     ),
     compliance: {
-      short:
-        'Only the app screens, so a local build or a direct contract call passes.',
+      tradeoff:
+        "Only the app screens, so a local build or a direct contract call passes. Every payment's sender is public, so its origin needs no proof.",
       enforcedBy: 'app',
       enforcedByNote: 'which a local build or a direct contract call skips',
       check: {

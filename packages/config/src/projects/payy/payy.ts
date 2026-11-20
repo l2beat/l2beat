@@ -299,7 +299,8 @@ export const payy: ScalingProject = {
     ],
     adversaries: payyAdversaries,
     compliance: {
-      short: 'Payy can refuse any transaction, no exit works without it.',
+      tradeoff:
+        'Payy runs the only validator, so it can refuse any transaction and no exit works without it. The only known check is identity verification for the card and the fiat ramps.',
       enforcedBy: 'operator',
       enforcedByNote: 'Payy, which runs the only validator',
       check: {

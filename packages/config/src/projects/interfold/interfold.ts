@@ -217,7 +217,8 @@ export const interfold: BaseProject = {
       minimumCommittee.members,
     ),
     compliance: {
-      short: 'No funds move and no list decides who votes.',
+      tradeoff:
+        "Interfold's server must sign every ballot, so it can refuse a voter. No funds move and no list decides who votes.",
       enforcedBy: 'operator',
       enforcedByNote: 'Interfold, whose CRISP server must sign every ballot',
       check: {

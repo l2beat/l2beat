@@ -260,8 +260,8 @@ export const zkapi: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
     compliance: {
-      short:
-        'The vault checks no list, the operator can refuse keys and withdrawals.',
+      tradeoff:
+        'The operator issues every API key and clears every cooperative withdrawal, so it can refuse a user. No compliance check is known to use this power, the vault checks no list.',
       enforcedBy: 'operator',
       enforcedByNote:
         'Open Anonymity, which issues every API key and clears every cooperative withdrawal',

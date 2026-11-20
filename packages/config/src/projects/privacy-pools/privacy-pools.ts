@@ -253,8 +253,8 @@ export const privacyPools: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
     compliance: {
-      short:
-        '0xbow must approve every deposit and can withdraw the approval until the funds have left.',
+      tradeoff:
+        '0xbow must approve every deposit and can withdraw the approval until the funds have left. Funds never change hands inside the pool, so a removal costs only the depositor a public exit.',
       enforcedBy: 'contract',
       enforcedByNote: 'on every private withdrawal',
       check: {

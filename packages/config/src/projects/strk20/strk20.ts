@@ -231,8 +231,8 @@ export const strk20: BaseProject = {
     ],
     adversaries: strk20Adversaries,
     compliance: {
-      short:
-        'Deposits from an address need a screening signature, the holder of one auditor key can read every user.',
+      tradeoff:
+        "Deposits from an address need a screening signature, five helper contracts are exempt. One auditor key opens every user's whole history to its holder, with no trace of its use.",
       enforcedBy: 'contract',
       enforcedByNote:
         'for deposits from an address, with five helper contracts exempt',

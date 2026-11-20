@@ -348,8 +348,8 @@ export const railgun: BaseProject = {
       formatSeconds(executionStartOffset, { fullUnit: true }),
     ),
     compliance: {
-      short:
-        'Wallets and broadcasters turn away shields that a list provider blocks, the contracts enforce no list.',
+      tradeoff:
+        "Wallets and broadcasters enforce a list provider's one-time decision on each shield, the contracts enforce no list. No funds can be frozen later, and a flag raised after acceptance has no effect.",
       enforcedBy: 'relayer',
       enforcedByNote: 'together with wallets. The contracts enforce no list',
       check: {

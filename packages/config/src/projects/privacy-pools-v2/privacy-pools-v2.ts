@@ -271,8 +271,8 @@ export const privacyPoolsV2: BaseProject = {
     ],
     adversaries: privacyPoolsV2Adversaries,
     compliance: {
-      short:
-        '0xbow must approve every deposit and can withdraw the approval at any time, forcing a public exit on the user and everyone they paid.',
+      tradeoff:
+        "0xbow can withdraw a deposit's approval at any time, also after its funds were paid on. To make that work, every note carries its deposit's label, which each payee learns and can often trace.",
       enforcedBy: 'contract',
       enforcedByNote: 'on every private spend',
       check: {

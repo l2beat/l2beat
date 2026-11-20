@@ -4,7 +4,7 @@ import { renderPrivacyCompliance } from './renderPrivacyCompliance'
 describe(renderPrivacyCompliance.name, () => {
   it('opens each part with its facts and continues with its prose', () => {
     const markdown = renderPrivacyCompliance({
-      short: 'Relayers screen recipients.',
+      tradeoff: 'Relayers screen recipients.',
       enforcedBy: 'relayer',
       enforcedByNote: 'while the contracts enforce no list',
       check: { rules: 'closed', detail: 'Recipients, by each relayer.' },
@@ -44,7 +44,7 @@ describe(renderPrivacyCompliance.name, () => {
 
   it('leaves out what a project without a gatekeeper or funds has no answer to', () => {
     const markdown = renderPrivacyCompliance({
-      short: 'Nothing is checked.',
+      tradeoff: 'Nothing is checked.',
       enforcedBy: 'none',
       check: { rules: 'none', detail: 'The contracts check no list.' },
       disclosure: 'the committee, which can decrypt every ballot',

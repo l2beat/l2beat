@@ -13,7 +13,7 @@ import { bulletList, heading, joinBlocks } from '~/server/markdown/markdown'
 type Part = (typeof PRIVACY_COMPLIANCE_HEADINGS)[number]
 
 /**
- * The compliance section as markdown: the one-sentence summary, then three
+ * The compliance section as markdown: the design tradeoff, then three
  * parts every project shares, so that pages compare part by part. Each part
  * opens with its typed facts, and config's prose for it follows.
  */
@@ -46,7 +46,7 @@ export function renderPrivacyCompliance(compliance: PrivacyCompliance): string {
     joinBlocks([heading(3, title), facts, prose.get(title) ?? ''])
 
   return joinBlocks([
-    compliance.short,
+    compliance.tradeoff,
     part(
       'Enforcement',
       bulletList(

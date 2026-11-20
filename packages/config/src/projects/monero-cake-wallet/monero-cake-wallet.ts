@@ -149,8 +149,8 @@ export const moneroCakeWallet: BaseProject = {
     ],
     adversaries: moneroCakeWalletAdversaries,
     compliance: {
-      short:
-        'Each swap service screens on its own and can hold a deposit until the user identifies themselves.',
+      tradeoff:
+        'Compliance sits at the swap services on both ends of the route, Monero and the wallet check nothing. A service can hold a deposit until the user identifies themselves.',
       enforcedBy: 'operator',
       enforcedByNote: "meaning each swap service while it holds a swap's funds",
       check: {

@@ -104,8 +104,8 @@ export const fluidkey: BaseProject = {
       },
     ],
     compliance: {
-      short:
-        "Fluidkey can refuse to submit a user's sends, the user keeps the Safes.",
+      tradeoff:
+        'Fluidkey submits every send, so it can refuse a user. No check on onchain payments is known, and a refused user keeps the Safes.',
       enforcedBy: 'operator',
       enforcedByNote: 'Fluidkey, which submits every send',
       check: {

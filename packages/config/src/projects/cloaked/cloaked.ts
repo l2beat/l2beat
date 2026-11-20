@@ -120,8 +120,8 @@ export const cloaked: BaseProject = {
     ],
     adversaries: cloakedAdversaries,
     compliance: {
-      short:
-        'Cloaked can refuse to serve a user by IP address or account, the user keeps the keys.',
+      tradeoff:
+        "Cloaked's servers quote and submit every send, so Cloaked can refuse a user. The only declared check is on the user's IP address, and a refused user keeps the keys.",
       enforcedBy: 'operator',
       enforcedByNote: 'Cloaked, whose servers quote and submit every send',
       check: {
