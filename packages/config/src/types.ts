@@ -1501,9 +1501,9 @@ export type PrivacyComplianceTiming =
  * without a check is a design choice that compliance does not explain.
  */
 export type PrivacyComplianceRules =
-  /** The rule can be read in code or onchain. */
+  /** Anyone can look up beforehand whether an address passes. */
   | 'public'
-  /** A check runs or is declared, and its rules are not public. */
+  /** A check runs or is declared, and only the gatekeeper's answer tells. */
   | 'closed'
   | 'none'
 
@@ -1512,10 +1512,11 @@ export type PrivacyComplianceCost = 'access' | 'privacy' | 'funds'
 
 /** How a user shows where funds came from, least revealing first. */
 export type PrivacyCleanOriginTool =
-  /** A proof against a list that reveals nothing else. */
+  /** A proof against a list. `detail` and the prose name whose list it is and what the proof costs. */
   | 'proof'
+  /** Disclosure of one payment. */
   | 'payment'
-  /** One key that opens everything. */
+  /** A viewing key for the whole history. */
   | 'key'
   /** The origin is public without any tool. */
   | 'public'
@@ -1527,7 +1528,7 @@ export interface PrivacyCompliance {
   enforcedBy: PrivacyComplianceLayer
   /** Completes the layer with one clause that names who holds the power. */
   enforcedByNote?: string
-  /** `detail` says what is checked against what, and who decides. */
+  /** `detail` says in full sentences who checks what against what. */
   check: { rules: PrivacyComplianceRules; detail: string }
   when?: PrivacyComplianceTiming
   /** One sentence where the timing needs it, e.g. what later steps still do. */
@@ -1539,8 +1540,8 @@ export interface PrivacyCompliance {
   /** Absent where no funds move. */
   cleanOrigin?: { tool: PrivacyCleanOriginTool; detail: string }
   /**
-   * Markdown that extends the facts, under the headings "Enforcement", "Data
-   * access" and "Proof of clean origin". The page puts the facts first under
+   * Markdown that extends the facts, under the headings "Enforcement",
+   * "Access to private data" and "Proof of clean origin". The page puts the facts first under
    * each heading, so a heading without prose can be left out.
    */
   content: string

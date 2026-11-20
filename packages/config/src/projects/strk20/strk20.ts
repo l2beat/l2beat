@@ -237,22 +237,22 @@ export const strk20: BaseProject = {
       enforcedByNote:
         'for deposits from an address, with five helper contracts exempt',
       check: {
-        rules: 'public',
+        rules: 'closed',
         detail:
-          "The depositing address, against Elliptic's data with thresholds in public code. The holder of the screener key signs, and the governance multisig sets that key.",
+          "A screening service checks the depositing address against Elliptic's data. Its thresholds are public code, its own deny list and its running build are not.",
       },
       when: 'entry',
       cost: {
         loses: 'access',
         detail:
-          "A refused deposit never starts, and the tokens stay in the user's public account.",
+          "A refused deposit never starts. The tokens stay in the user's public account.",
       },
       disclosure:
         "the holder of the auditor key, which opens every user's whole history",
       cleanOrigin: {
         tool: 'key',
         detail:
-          "The viewing key opens the user's whole history, past and future, and cannot be rotated.",
+          "It opens the user's past and future activity and cannot be rotated.",
       },
       content: readProjectMarkdown('strk20', 'compliance'),
     },

@@ -355,7 +355,7 @@ export const railgun: BaseProject = {
       check: {
         rules: 'closed',
         detail:
-          "Each shielding address, by the list provider that a wallet and its broadcasters require. The list node's code is public, what the default list's provider runs is not.",
+          "The list provider that a wallet and its broadcasters require judges each shielding address. What the default list's provider runs is not public.",
       },
       when: 'entry',
       whenNote:

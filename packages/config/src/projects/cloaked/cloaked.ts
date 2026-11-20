@@ -126,7 +126,8 @@ export const cloaked: BaseProject = {
       enforcedByNote: 'Cloaked, whose servers quote and submit every send',
       check: {
         rules: 'closed',
-        detail: "The user's IP address, for sanctions and geographic limits.",
+        detail:
+          "Cloaked checks the user's IP address for sanctions and geographic limits. Whether it also screens addresses is not public.",
       },
       when: 'everyUse',
       cost: {

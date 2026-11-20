@@ -409,27 +409,35 @@ export const privacyBoost: BaseProject = {
     adversaries: privacyBoostAdversaries,
     compliance: {
       short:
-        'The operator screens deposits and transfers offchain, auditors appointed by the admin multisig can read any user.',
+        'Sunnyside Labs screens deposits and transfers offchain, its enclave holds a key to every note.',
       enforcedBy: 'operator',
       enforcedByNote:
         'Sunnyside Labs, whose relay settles every deposit and whose enclave proves every spend',
       check: {
         rules: 'closed',
         detail:
-          'Deposits and transfers, by rules Sunnyside Labs does not publish.',
+          'Sunnyside Labs screens deposits and transfers by rules it does not publish.',
       },
       when: 'anytime',
       cost: {
         loses: 'privacy',
         detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. A refused spend leaves by forced withdrawal after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}, in public.`,
       },
-      disclosure: `auditors that the admin multisig appoints, of which the AuditGateway lists ${auditorCount === 0 ? 'none' : auditorCount}`,
+      disclosure:
+        'Sunnyside Labs, whose enclave holds a key to every note, and any auditor the admin multisig appoints',
       cleanOrigin: {
         tool: 'none',
         detail:
           "The wallet exports the account's activity as an unsigned CSV file.",
       },
-      content: readProjectMarkdown('privacy-boost', 'compliance'),
+      content: readProjectMarkdown('privacy-boost', 'compliance', {
+        auditors:
+          auditorCount === 0
+            ? 'no auditor'
+            : auditorCount === 1
+              ? '1 auditor'
+              : `${auditorCount} auditors`,
+      }),
     },
     riskSummary: privacyBoostRiskSummary,
     upgradesAndGovernance: {

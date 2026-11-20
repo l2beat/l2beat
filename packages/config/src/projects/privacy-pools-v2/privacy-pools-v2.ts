@@ -277,18 +277,20 @@ export const privacyPoolsV2: BaseProject = {
       enforcedByNote: 'on every private spend',
       check: {
         rules: 'closed',
-        detail: "Each depositing address, by 0xbow's ASP under its own policy.",
+        detail:
+          "0xbow's ASP judges each depositing address by criteria it does not publish.",
       },
       when: 'anytime',
       cost: {
         loses: 'privacy',
         detail:
-          'A frozen note leaves only by ragequit, which names its owner to everyone the same deposit ever paid.',
+          'A frozen note leaves only by ragequit, which publishes its owner, amount and label.',
       },
+      disclosure: "0xbow's ASP, which can tie every label to its deposit",
       cleanOrigin: {
         tool: 'proof',
         detail:
-          "Every private spend proves that its funds descend from deposits on 0xbow's list.",
+          "Every private spend proves that its notes' labels are on 0xbow's latest list.",
       },
       content: readProjectMarkdown('privacy-pools-v2', 'compliance'),
     },

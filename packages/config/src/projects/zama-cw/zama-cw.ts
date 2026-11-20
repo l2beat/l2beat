@@ -447,7 +447,7 @@ export const zamaCw: BaseProject = {
       check: {
         rules: 'public',
         detail:
-          "Sender and recipient of every action, against each token's onchain block list and five issuers' denylists. A Zama governance multisig sets each block list.",
+          "Each token checks sender and recipient against its onchain block list, which its owner edits freely. Five tokens also check their issuer's denylist.",
       },
       when: 'anytime',
       cost: {
@@ -456,7 +456,7 @@ export const zamaCw: BaseProject = {
           'A blocked balance can be neither sent nor unwrapped until the block is lifted. No function seizes it.',
       },
       disclosure:
-        "observers that a token's owner can appoint, of which no token has one, and ConfidentialSwap's compliance address",
+        "ConfidentialSwap's compliance address, and any observer a token's owner appoints",
       cleanOrigin: {
         tool: 'public',
         detail: 'Wraps, unwraps and who pays whom are public.',

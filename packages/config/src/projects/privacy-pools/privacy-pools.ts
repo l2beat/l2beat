@@ -259,7 +259,8 @@ export const privacyPools: BaseProject = {
       enforcedByNote: 'on every private withdrawal',
       check: {
         rules: 'closed',
-        detail: "Each depositing address, by 0xbow's ASP under its own policy.",
+        detail:
+          "0xbow's ASP judges each depositing address by criteria it does not publish.",
       },
       when: 'anytime',
       cost: {

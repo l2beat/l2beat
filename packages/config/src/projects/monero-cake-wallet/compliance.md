@@ -1,8 +1,8 @@
 ### Enforcement
 
-Each swap service screens a swap by its own rules. ChangeNOW [documents](https://changenow.io/faq/kyc-aml) an automated risk system that can hold an exchange and ask for identity verification. Monero checks nothing, and the wallet screens nobody. The user picks a service for each swap from the list Cake Labs ships, and can pick another for the next. The services are closed. Their rules show only in what each one publishes.
+ChangeNOW [documents](https://changenow.io/faq/kyc-aml) an automated risk system that can hold an exchange and ask for identity verification. Monero checks nothing, and the wallet screens nobody. The user picks a service for each swap from the list Cake Labs ships, and can pick another for the next. The services are closed.
 
-### Data access
+### Access to private data
 
 A held swap turns into an identity check, so the service then knows who moved those funds.
 

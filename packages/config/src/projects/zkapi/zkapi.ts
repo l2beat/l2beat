@@ -275,6 +275,8 @@ export const zkapi: BaseProject = {
         detail:
           'A refused user can only escape, after the challenge period and while the vault is unpaused.',
       },
+      disclosure:
+        'OpenRouter and the model provider, which read prompts and responses',
       cleanOrigin: {
         tool: 'public',
         detail:

@@ -55,7 +55,7 @@ export function renderPrivacyCompliance(compliance: PrivacyCompliance): string {
         ),
       ),
     ),
-    part('Data access', lead(compliance.disclosure ?? 'nobody')),
+    part('Access to private data', lead(compliance.disclosure ?? 'nobody')),
     cleanOrigin
       ? part(
           'Proof of clean origin',

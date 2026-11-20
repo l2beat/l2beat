@@ -174,7 +174,7 @@ export const umbra: BaseProject = {
       check: {
         rules: 'public',
         detail:
-          "Wallet, payee and withdrawal address, against ScopeLift's list in the open SDK and Chainalysis's onchain oracle.",
+          "The app refuses a wallet, payee or withdrawal address on ScopeLift's list or Chainalysis's sanctions oracle. Both lists are public.",
       },
       when: 'everyUse',
       cost: {
@@ -183,7 +183,7 @@ export const umbra: BaseProject = {
           "A refused user keeps the keys. The app's advanced mode shows each stealth address's private key, which any wallet can use.",
       },
       disclosure:
-        "ScopeLift, which the hosted app shows the user's wallet on every scan",
+        "ScopeLift, whose hosted app receives the user's wallet address on every scan",
       cleanOrigin: {
         tool: 'public',
         detail: "A payment's sender, token and amount are public.",

@@ -15,6 +15,10 @@ export const PRIVACY_COMPLIANCE_LAYERS = {
   none: 'nobody',
 } as const satisfies Record<PrivacyComplianceLayer, string>
 
+/**
+ * Public when anyone can look up beforehand whether an address passes.
+ * Closed when only the gatekeeper's answer tells.
+ */
 export const PRIVACY_COMPLIANCE_RULES = {
   public: 'public',
   closed: 'closed',
@@ -31,14 +35,14 @@ export const PRIVACY_COMPLIANCE_TIMINGS = {
 export const PRIVACY_COMPLIANCE_COSTS = {
   access: 'loss of access',
   privacy: 'loss of privacy',
-  funds: 'loss of funds, for as long as it lasts',
+  funds: 'frozen funds',
 } as const satisfies Record<PrivacyComplianceCost, string>
 
-/** The tools, least revealing first. */
+/** The tools, least revealing first. A label names the tool, the detail names its price. */
 export const PRIVACY_CLEAN_ORIGIN_TOOLS = {
-  proof: 'a proof that reveals nothing else',
-  payment: 'per-payment disclosure',
-  key: 'one key that opens everything',
+  proof: 'a proof against a list',
+  payment: 'disclosure of one payment',
+  key: 'a viewing key for the whole history',
   public: 'not needed, the origin is public',
   none: 'none',
 } as const satisfies Record<PrivacyCleanOriginTool, string>
@@ -46,6 +50,6 @@ export const PRIVACY_CLEAN_ORIGIN_TOOLS = {
 /** The section's three parts. The page puts each part's facts under its heading, above the prose. */
 export const PRIVACY_COMPLIANCE_HEADINGS = [
   'Enforcement',
-  'Data access',
+  'Access to private data',
   'Proof of clean origin',
 ] as const

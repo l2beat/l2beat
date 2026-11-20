@@ -186,7 +186,7 @@ export const zcashNearIntents: BaseProject = {
       check: {
         rules: 'closed',
         detail:
-          'The addresses in every swap quote, against the data of five named vendors.',
+          "The operator screens the addresses in every swap quote against its own AML database and four vendors' data. No published rule says which match blocks a swap.",
       },
       when: 'everyUse',
       cost: {
@@ -197,9 +197,9 @@ export const zcashNearIntents: BaseProject = {
       disclosure:
         'the operator, which can attribute any payout to the account that started it',
       cleanOrigin: {
-        tool: 'none',
+        tool: 'key',
         detail:
-          'Both swaps are public on NEAR, and only the user can connect them across the shielded pool.',
+          "Vizor exports a full viewing key, which shows the account's incoming and outgoing transactions.",
       },
       content: readProjectMarkdown('zcash-near-intents', 'compliance'),
     },

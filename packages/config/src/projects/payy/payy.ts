@@ -305,7 +305,7 @@ export const payy: ScalingProject = {
       check: {
         rules: 'closed',
         detail:
-          'Identity, for the card and the fiat ramps only. No check on transfers between users is known.',
+          'Payy verifies identity for the card and the fiat ramps. No check on transfers between users is known.',
       },
       when: 'anytime',
       cost: {

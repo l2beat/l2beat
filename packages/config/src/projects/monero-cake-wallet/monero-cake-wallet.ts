@@ -152,12 +152,11 @@ export const moneroCakeWallet: BaseProject = {
       short:
         'Each swap service screens on its own and can hold a deposit until the user identifies themselves.',
       enforcedBy: 'operator',
-      enforcedByNote:
-        'here the swap service that holds the funds during a swap',
+      enforcedByNote: "meaning each swap service while it holds a swap's funds",
       check: {
         rules: 'closed',
         detail:
-          'Whatever each swap service screens, which only its own policy describes.',
+          'Each swap service screens by its own rules, which only its own policy describes.',
       },
       when: 'everyUse',
       cost: {
