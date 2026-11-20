@@ -647,8 +647,8 @@ describe('getProjects', () => {
       ]
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
-        const risks = privacyInfo.riskSummary
-        if (!risks) continue
+        if (!privacyInfo.riskSummary) continue
+        const risks = privacyInfo.riskSummary.flatMap((group) => group.risks)
 
         for (const { text, see } of risks) {
           if (!text.endsWith('.')) {

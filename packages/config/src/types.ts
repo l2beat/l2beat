@@ -1228,7 +1228,7 @@ export interface ProjectPrivacyInfo {
    */
   quantumResistant?: true
   /** Author with definePrivacyRisks. */
-  riskSummary?: PrivacyRisk[]
+  riskSummary?: PrivacyRiskGroup[]
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1454,8 +1454,13 @@ export type PrivacyRiskCategory =
   | 'Use can be stopped if'
   | 'Privacy can be lost if'
 
-export interface PrivacyRisk {
+/** The risks under one heading of the risk summary, in page order. */
+export interface PrivacyRiskGroup {
   category: PrivacyRiskCategory
+  risks: PrivacyRisk[]
+}
+
+export interface PrivacyRisk {
   /**
    * Completes the category into one sentence of at most 25 words. Markdown,
    * which may link a section of the project page.

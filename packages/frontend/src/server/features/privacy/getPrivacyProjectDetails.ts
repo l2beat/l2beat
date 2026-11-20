@@ -3,7 +3,7 @@ import type {
   PrivacyAttribute,
   PrivacyCategory,
   PrivacyExitWindow,
-  PrivacyRisk,
+  PrivacyRiskGroup,
   PrivacySummaryValue,
   ProjectContracts,
   ProjectDiscoveryUpdate,
@@ -84,7 +84,7 @@ export interface PrivacyProjectDetails {
   anonymitySetType: PrivacyAnonymitySetType | undefined
   hasTvl: boolean
   detailedDescription?: string
-  riskSummary?: PrivacyRisk[]
+  riskSummary?: PrivacyRiskGroup[]
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
   milestones: Milestone[]

@@ -1,12 +1,10 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import type { PrivacyExitWindow, PrivacySummaryValue } from '../types'
 
 type ExitWindowValue = Pick<
   PrivacyExitWindow,
   'value' | 'sentiment' | 'orderHint'
 >
-
-const DAY = 86_400
 
 /** A delay is green from the first and red under the second. The methodology prints both. */
 export const PRIVACY_EXIT_WINDOW_DAYS = { green: 30, yellow: 7 } as const
@@ -25,9 +23,9 @@ export const PRIVACY_EXIT_WINDOW = {
   delay: (seconds: number): ExitWindowValue => ({
     value: formatSeconds(seconds),
     sentiment:
-      seconds >= PRIVACY_EXIT_WINDOW_DAYS.green * DAY
+      seconds >= PRIVACY_EXIT_WINDOW_DAYS.green * UnixTime.DAY
         ? 'good'
-        : seconds >= PRIVACY_EXIT_WINDOW_DAYS.yellow * DAY
+        : seconds >= PRIVACY_EXIT_WINDOW_DAYS.yellow * UnixTime.DAY
           ? 'warning'
           : 'bad',
     orderHint: seconds,
