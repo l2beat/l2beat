@@ -6,7 +6,10 @@ import { expect } from 'earl'
 import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
   getPrivacyAdversariesTableValue,
+  getPrivacyAdversaryBlockId,
   getPrivacyAdversaryDescription,
+  getPrivacyAdversaryRosetteValues,
+  getPrivacyAdversarySectionRosetteValue,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -96,5 +99,41 @@ describe(getPrivacyAdversaryDescription.name, () => {
         exposureShort: 'The relayer sees your IP.',
       }),
     ).toEqual('The relayer sees your IP.')
+  })
+})
+
+describe(getPrivacyAdversaryRosetteValues.name, () => {
+  it('links each slice to its adversary block in the privacy section', () => {
+    const values = getPrivacyAdversaryRosetteValues(
+      summary('good', 'warning', 'good', 'bad', 'bad'),
+    )
+
+    expect(values.map((v) => v.href)).toEqual(
+      IDS.map((id) => `#${getPrivacyAdversaryBlockId(id)}`),
+    )
+    expect(values[0]?.href).toEqual('#privacy-adversaries-public-observer')
+    expect(values[4]?.href).toEqual('#privacy-adversaries-future-adversary')
+  })
+})
+
+describe(getPrivacyAdversarySectionRosetteValue.name, () => {
+  it('links the slice to its adversary block', () => {
+    const value = getPrivacyAdversarySectionRosetteValue(
+      {
+        id: 'networkObserver',
+        label: 'Network observer',
+        description: 'Watches network traffic.',
+        examples: 'ISPs, RPC providers.',
+      },
+      {
+        id: 'networkObserver',
+        value: 'Link private',
+        sentiment: 'good',
+        exposureShort: 'Hidden behind a relayer.',
+        alsoExposed: [],
+      },
+    )
+
+    expect(value.href).toEqual('#privacy-adversaries-network-observer')
   })
 })
