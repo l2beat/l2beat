@@ -1158,6 +1158,33 @@ describe(RpcClient.name, () => {
     }
   })
 
+  // Why: batches go around HttpClient.fetch, so a refused batch has to
+  // keep the provider's headers by itself
+  it('keeps what the provider says about its limit on a refused batch', async () => {
+    const http = mockObject<HttpClient>({
+      fetchRaw: async () =>
+        new Response('Too Many Requests', {
+          status: 429,
+          statusText: 'Too Many Requests',
+          headers: { 'Retry-After': '7' },
+        }),
+    })
+    const rpc = mockClient({
+      http,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+
+    const error = await rpc
+      .batchQuery('rpc_method', [['a'], ['b']])
+      .catch((error) => error)
+
+    expect(error.cause).toEqual({
+      status: 429,
+      statusText: 'Too Many Requests',
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+
   describe('batches', () => {
     const REJECTIONS: Record<string, (request: RpcRequest[]) => Reply> = {
       // dRPC's free plan

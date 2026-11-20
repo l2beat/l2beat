@@ -98,7 +98,7 @@ export function LiquidStakingTable({
   return (
     <div className="mt-4">
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} dense />
     </div>
   )
 }

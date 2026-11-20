@@ -73,7 +73,8 @@ export function HomeRankedTable<T extends HomeRankedTableRow>({
   rows,
   columns,
 }: {
-  title: string
+  /** Text, or a link to the full list. */
+  title: ReactNode
   rows: T[]
   /** Columns after the rank and the name. */
   columns: HomeRankedTableColumn<T>[]

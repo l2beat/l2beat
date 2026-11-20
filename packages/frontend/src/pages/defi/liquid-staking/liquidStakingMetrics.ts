@@ -37,8 +37,7 @@ export interface LiquidStakingMetric {
 export const YIELD_METRIC: LiquidStakingMetric = {
   key: 'yield',
   title: 'Yield',
-  tooltip:
-    "What a holder earned, net of protocol fees: the annualised change of the token's exchange rate over the previous 30 days.",
+  tooltip: 'Annualised return over the last 30 days, net of protocol fees.',
   format: formatYield,
   dailyBuckets: false,
 }
