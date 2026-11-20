@@ -439,6 +439,32 @@ export const zamaCw: BaseProject = {
       },
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
+    compliance: {
+      tradeoff:
+        'Addresses stay public, so each token screens senders and recipients like a public token does. Its owner can also freeze any balance at any time and appoint an observer that reads every amount.',
+      gatekeeper: {
+        type: 'contract',
+        detail: 'on every wrap, transfer and unwrap',
+      },
+      rules: {
+        type: 'public',
+        detail:
+          "Each token checks sender and recipient against its onchain block list, which its owner edits freely. Five tokens also check their issuer's denylist.",
+      },
+      timing: { type: 'anytime' },
+      consequence: {
+        type: 'funds',
+        detail:
+          'A blocked balance can be neither sent nor unwrapped until the block is lifted. No function seizes it.',
+      },
+      dataAccess:
+        "ConfidentialSwap's compliance address, and any observer a token's owner appoints",
+      cleanOrigin: {
+        type: 'public',
+        detail: 'Wraps, unwraps and who pays whom are public.',
+      },
+      content: readProjectMarkdown('zama-cw', 'compliance'),
+    },
     riskSummary: zamaCwRiskSummary({
       kmsSignerCount,
       kmsKeyThreshold,

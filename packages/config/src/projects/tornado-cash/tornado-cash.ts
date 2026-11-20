@@ -359,6 +359,21 @@ export const tornadoCash: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
+    compliance: {
+      tradeoff:
+        "The immutable pools keep nobody out. A withdrawal can therefore come from any deposit, flagged ones included, and the app's report disproves that only by naming its deposit.",
+      gatekeeper: { type: 'none' },
+      rules: {
+        type: 'none',
+        detail: 'The immutable pools and the app check no list.',
+      },
+      cleanOrigin: {
+        type: 'payment',
+        detail:
+          "The app's report links one withdrawal to its deposit, for whoever the user gives it to.",
+      },
+      content: readProjectMarkdown('tornado-cash', 'compliance'),
+    },
     riskSummary: tornadoCashRiskSummary({
       upgradeDelay,
     }),

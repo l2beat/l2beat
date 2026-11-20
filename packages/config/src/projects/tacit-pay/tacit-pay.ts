@@ -261,6 +261,21 @@ export const tacitPay: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: tacitPayAdversaries,
+    compliance: {
+      tradeoff:
+        'Nothing is checked, and the contracts have no owner. A withdrawal can come from any deposit, and no tool lets a user show which one is theirs.',
+      gatekeeper: { type: 'none' },
+      rules: {
+        type: 'none',
+        detail: 'The ownerless contracts, the app and the relay check no list.',
+      },
+      cleanOrigin: {
+        type: 'none',
+        detail:
+          'The app has no report that ties a withdrawal to its deposit and no proof against a list.',
+      },
+      content: readProjectMarkdown('tacit-pay', 'compliance'),
+    },
     riskSummary: tacitPayRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),
