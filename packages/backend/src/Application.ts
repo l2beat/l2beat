@@ -12,6 +12,7 @@ import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
 import { createDefiTvlModule } from './modules/defi-tvl/DefiTvlModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
+import { createGasFeesModule } from './modules/gas-fees/GasFeesModule'
 import { createInteropModule } from './modules/interop/engine/InteropModule'
 import { createLiquidStakingModule } from './modules/liquid-staking/LiquidStakingModule'
 import { createPrivacyModule } from './modules/privacy/PrivacyModule'
@@ -82,6 +83,7 @@ export class Application {
       initTvsModule(deps),
       createDefiTvlModule(deps),
       createLiquidStakingModule(deps),
+      createGasFeesModule(deps),
       createPrivacyModule(deps),
       createDaBeatModule(deps),
       createCropAttestationsModule(deps),

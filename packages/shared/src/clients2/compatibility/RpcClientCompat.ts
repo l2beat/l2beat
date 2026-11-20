@@ -99,6 +99,8 @@ export interface IRpcClient extends BlockClient, LogsClient {
     newestBlock: number,
     rewardPercentiles: number[],
   ): Promise<EVMFeeHistory>
+  /** What the node suggests as a tip (eth_maxPriorityFeePerGas), wei */
+  getMaxPriorityFeePerGas(): Promise<bigint>
   call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
@@ -315,6 +317,10 @@ export class RpcClientCompat implements IRpcClient {
       rewardPercentiles,
     )
     return { ...feeHistory, oldestBlock: Number(feeHistory.oldestBlock) }
+  }
+
+  async getMaxPriorityFeePerGas(): Promise<bigint> {
+    return await this.ethRpcClient.getMaxPriorityFeePerGas()
   }
 
   async call(

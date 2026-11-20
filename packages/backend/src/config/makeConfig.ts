@@ -9,6 +9,7 @@ import { getBackofficeConfig } from './features/backoffice'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getDefiTvlConfig } from './features/defiTvl'
+import { getGasFeesConfig } from './features/gasFees'
 import { getInteropFeatureConfig } from './features/interop'
 import { getLiquidStakingConfig } from './features/liquidStaking'
 import { getPrivacyConfig } from './features/privacy'
@@ -127,6 +128,7 @@ export async function makeConfig(
     liquidStaking:
       flags.isEnabled('liquid-staking') &&
       (await getLiquidStakingConfig(ps, flags)),
+    gasFees: flags.isEnabled('gas-fees') && getGasFeesConfig(env),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') && (await getTrackedTxsConfig(ps, flags)),
 
