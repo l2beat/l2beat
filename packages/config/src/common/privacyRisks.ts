@@ -5,15 +5,15 @@ import type {
 } from '../types'
 
 /** The risk summary's headings, in the order the page lists them. */
-const PRIVACY_RISK_CATEGORIES = [
-  ['stolen', 'Funds can be stolen if'],
-  ['lost', 'Funds can be lost if'],
-  ['frozen', 'Funds can be frozen if'],
-  ['stopped', 'Use can be stopped if'],
-  ['privacy', 'Privacy can be lost if'],
-] as const satisfies [string, PrivacyRiskCategory][]
+export const PRIVACY_RISK_CATEGORIES = {
+  stolen: 'Funds can be stolen if',
+  lost: 'Funds can be lost if',
+  frozen: 'Funds can be frozen if',
+  stopped: 'Use can be stopped if',
+  privacy: 'Privacy can be lost if',
+} as const satisfies Record<string, PrivacyRiskCategory>
 
-type PrivacyRiskKey = (typeof PRIVACY_RISK_CATEGORIES)[number][0]
+type PrivacyRiskKey = keyof typeof PRIVACY_RISK_CATEGORIES
 
 /** A sentence alone, or with the adversary cells that explain it. */
 type PrivacyRiskItem = string | { text: string; see: PrivacyAdversaryId[] }
@@ -22,8 +22,8 @@ type PrivacyRiskItem = string | { text: string; see: PrivacyAdversaryId[] }
 export function definePrivacyRisks(
   risks: Partial<Record<PrivacyRiskKey, PrivacyRiskItem[]>>,
 ): PrivacyRiskGroup[] {
-  return PRIVACY_RISK_CATEGORIES.flatMap(([key, category]) => {
-    const items = risks[key] ?? []
+  return Object.entries(PRIVACY_RISK_CATEGORIES).flatMap(([key, category]) => {
+    const items = risks[key as PrivacyRiskKey] ?? []
     if (items.length === 0) return []
     return {
       category,
