@@ -34,10 +34,6 @@ The [KMS operators](https://docs.zama.org/protocol/protocol-apps/addresses/mainn
 
 [Artifact, Blockscape, Luganodes, P2P and Zama](https://github.com/zama-ai/protocol-registry/blob/944485d168957ae5857e675281eec0329c7fb9ff/mainnet.md#operator-staking) run the coprocessors, which compute on ciphertexts and check every encrypted input. Ethereum accepts an input signed by {{coprocessorThreshold}} of {{coprocessorSignerCount}} of them, so they are trusted for validity. Zama stores all ciphertexts in a [public bucket](https://coprocessor-1.mainnet.zama.org/). The Zama Gateway, an L3 on Arbitrum, relays decryption requests and publishes who reads which balance and when.
 
-### Compliance
-
-Each token's owner, controlled by the multisigs, can block users and check them against the underlying token's denylist, as cUSDC does with USDC's blacklist. It can also appoint a pauser that halts the token, and observers that decrypt all of its balances and amounts. No token has a pauser or an observer. ConfidentialSwap has its own compliance address, set at deployment. Issuers of underlying tokens like USDC can freeze a token's whole escrow.
-
 ### Fees
 
 Users pay Ethereum gas. The Gateway charges {{inputPrice}} ZAMA per encrypted input and {{decryptionPrice}} ZAMA per decryption, paid by the relayer.

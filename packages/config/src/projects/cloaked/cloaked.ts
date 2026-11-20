@@ -119,6 +119,29 @@ export const cloaked: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: cloakedAdversaries,
+    compliance: {
+      short:
+        'Cloaked can refuse to serve a user by IP address or account, the user keeps the keys.',
+      enforcedBy: 'operator',
+      enforcedByNote: 'Cloaked, whose servers quote and submit every send',
+      check: {
+        rules: 'closed',
+        detail: "The user's IP address, for sanctions and geographic limits.",
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail:
+          'A refused user exports their keys with the open recovery tool and moves the funds from any wallet.',
+      },
+      disclosure: "Cloaked, whose key shows all of a user's addresses",
+      cleanOrigin: {
+        tool: 'public',
+        detail:
+          "Each payment's sender is public at the address that received it.",
+      },
+      content: readProjectMarkdown('cloaked', 'compliance'),
+    },
     riskSummary: cloakedRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),

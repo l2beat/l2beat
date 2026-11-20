@@ -148,6 +148,31 @@ export const moneroCakeWallet: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: moneroCakeWalletAdversaries,
+    compliance: {
+      short:
+        'Each swap service screens on its own and can hold a deposit until the user identifies themselves.',
+      enforcedBy: 'operator',
+      enforcedByNote:
+        'here the swap service that holds the funds during a swap',
+      check: {
+        rules: 'closed',
+        detail:
+          'Whatever each swap service screens, which only its own policy describes.',
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'funds',
+        detail:
+          "A service that holds a deposit keeps it until the user passes its checks or it refunds. XMR that reached the wallet is out of every service's reach.",
+      },
+      disclosure: 'each swap service, for the swaps it handled',
+      cleanOrigin: {
+        tool: 'payment',
+        detail:
+          'The wallet shows a transaction key per payment and a private view key for all incoming ones.',
+      },
+      content: readProjectMarkdown('monero-cake-wallet', 'compliance'),
+    },
     riskSummary: moneroCakeWalletRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

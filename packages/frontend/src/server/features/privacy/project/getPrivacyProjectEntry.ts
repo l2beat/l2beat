@@ -44,6 +44,7 @@ import {
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { renderPrivacyCompliance } from '../utils/renderPrivacyCompliance'
 import { renderPrivacyRiskSummary } from '../utils/renderPrivacyRiskSummary'
 import { resolvePrivacySources } from '../utils/resolvePrivacySources'
 
@@ -175,6 +176,19 @@ export async function getPrivacyProjectEntry(
   // Filled in once every other section exists, so that its source links can
   // point only at sections this page renders.
   const adversariesSectionIndex = sections.length
+
+  // Sits right after the advice, which is spliced in before it below.
+  if (details.compliance) {
+    sections.push({
+      type: 'MarkdownSection',
+      sideNavTitle: 'Compliance',
+      props: {
+        id: 'compliance',
+        title: 'Compliance',
+        content: renderPrivacyCompliance(details.compliance),
+      },
+    })
+  }
 
   const chartProject = {
     id: details.id,

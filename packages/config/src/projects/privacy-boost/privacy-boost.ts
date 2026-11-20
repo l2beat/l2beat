@@ -38,6 +38,13 @@ const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
 const forcedWithdrawalDelay =
   discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') /
   BASE_BLOCKS_PER_SECOND
+const cancelDelay =
+  discovery.getContractValue<number>('PrivacyBoost', 'cancelDelay') /
+  BASE_BLOCKS_PER_SECOND
+const auditorCount = discovery.getContractValue<string[]>(
+  'AuditGateway',
+  'getAllAuditors',
+).length
 const epochAuthStaleness =
   discovery.getContractValue<number>(
     'PrivacyBoost',
@@ -184,10 +191,6 @@ export const privacyBoost: BaseProject = {
         withdrawFee: formatBasisPoints(withdrawFeeBps),
         portalSweepFee: formatBasisPoints(portalSweepFeeBps),
         maxForcedInputs: String(maxForcedInputs),
-        auditorCount: discovery.getContractValue<string[]>(
-          'AuditGateway',
-          'getAllAuditors',
-        ).length,
       },
     ),
     links: {
@@ -404,6 +407,30 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyBoostAdversaries,
+    compliance: {
+      short:
+        'The operator screens deposits and transfers offchain, auditors appointed by the admin multisig can read any user.',
+      enforcedBy: 'operator',
+      enforcedByNote:
+        'Sunnyside Labs, whose relay settles every deposit and whose enclave proves every spend',
+      check: {
+        rules: 'closed',
+        detail:
+          'Deposits and transfers, by rules Sunnyside Labs does not publish.',
+      },
+      when: 'anytime',
+      cost: {
+        loses: 'privacy',
+        detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. A refused spend leaves by forced withdrawal after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}, in public.`,
+      },
+      disclosure: `auditors that the admin multisig appoints, of which the AuditGateway lists ${auditorCount === 0 ? 'none' : auditorCount}`,
+      cleanOrigin: {
+        tool: 'none',
+        detail:
+          "The wallet exports the account's activity as an unsigned CSV file.",
+      },
+      content: readProjectMarkdown('privacy-boost', 'compliance'),
+    },
     riskSummary: privacyBoostRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {

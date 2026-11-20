@@ -166,6 +166,30 @@ export const umbra: BaseProject = {
         'registeredAddresses',
       ),
     ),
+    compliance: {
+      short:
+        'Only the app screens, so a local build or a direct contract call passes.',
+      enforcedBy: 'app',
+      enforcedByNote: 'which a local build or a direct contract call skips',
+      check: {
+        rules: 'public',
+        detail:
+          "Wallet, payee and withdrawal address, against ScopeLift's list in the open SDK and Chainalysis's onchain oracle.",
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail:
+          "A refused user keeps the keys. The app's advanced mode shows each stealth address's private key, which any wallet can use.",
+      },
+      disclosure:
+        "ScopeLift, which the hosted app shows the user's wallet on every scan",
+      cleanOrigin: {
+        tool: 'public',
+        detail: "A payment's sender, token and amount are public.",
+      },
+      content: readProjectMarkdown('umbra', 'compliance'),
+    },
     riskSummary: umbraRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),

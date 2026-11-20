@@ -270,6 +270,28 @@ export const privacyPoolsV2: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyPoolsV2Adversaries,
+    compliance: {
+      short:
+        '0xbow must approve every deposit and can withdraw the approval at any time, forcing a public exit on the user and everyone they paid.',
+      enforcedBy: 'contract',
+      enforcedByNote: 'on every private spend',
+      check: {
+        rules: 'closed',
+        detail: "Each depositing address, by 0xbow's ASP under its own policy.",
+      },
+      when: 'anytime',
+      cost: {
+        loses: 'privacy',
+        detail:
+          'A frozen note leaves only by ragequit, which names its owner to everyone the same deposit ever paid.',
+      },
+      cleanOrigin: {
+        tool: 'proof',
+        detail:
+          "Every private spend proves that its funds descend from deposits on 0xbow's list.",
+      },
+      content: readProjectMarkdown('privacy-pools-v2', 'compliance'),
+    },
     riskSummary: privacyPoolsV2RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

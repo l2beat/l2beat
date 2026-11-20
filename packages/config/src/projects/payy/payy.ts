@@ -298,6 +298,29 @@ export const payy: ScalingProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: payyAdversaries,
+    compliance: {
+      short: 'Payy can refuse any transaction, no exit works without it.',
+      enforcedBy: 'operator',
+      enforcedByNote: 'Payy, which runs the only validator',
+      check: {
+        rules: 'closed',
+        detail:
+          'Identity, for the card and the fiat ramps only. No check on transfers between users is known.',
+      },
+      when: 'anytime',
+      cost: {
+        loses: 'funds',
+        detail: 'A user Payy refuses can neither transfer nor withdraw.',
+      },
+      disclosure:
+        "Payy, whose backend keeps each wallet's KYC record and the owner of every note the app reports",
+      cleanOrigin: {
+        tool: 'public',
+        detail:
+          'Which notes fund which is public, so every withdrawal traces back to its deposits.',
+      },
+      content: readProjectMarkdown('payy', 'compliance'),
+    },
     riskSummary: payyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('payy', 'upgradesAndGovernance', {

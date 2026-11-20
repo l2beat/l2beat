@@ -359,6 +359,20 @@ export const tornadoCash: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     adversaries: tornadoCashAdversaries(upgradeDelay, REBUILT_APP_CID),
+    compliance: {
+      short: 'Nothing is checked, proving a clean origin is left to the user.',
+      enforcedBy: 'none',
+      check: {
+        rules: 'none',
+        detail: 'The immutable pools and the app check no list.',
+      },
+      cleanOrigin: {
+        tool: 'payment',
+        detail:
+          "The app's report links one withdrawal to its deposit, for whoever the user gives it to.",
+      },
+      content: readProjectMarkdown('tornado-cash', 'compliance'),
+    },
     riskSummary: tornadoCashRiskSummary({
       upgradeDelay,
     }),

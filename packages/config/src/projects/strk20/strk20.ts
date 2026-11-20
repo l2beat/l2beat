@@ -230,6 +230,32 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: strk20Adversaries,
+    compliance: {
+      short:
+        'Deposits from an address need a screening signature, the holder of one auditor key can read every user.',
+      enforcedBy: 'contract',
+      enforcedByNote:
+        'for deposits from an address, with five helper contracts exempt',
+      check: {
+        rules: 'public',
+        detail:
+          "The depositing address, against Elliptic's data with thresholds in public code. The holder of the screener key signs, and the governance multisig sets that key.",
+      },
+      when: 'entry',
+      cost: {
+        loses: 'access',
+        detail:
+          "A refused deposit never starts, and the tokens stay in the user's public account.",
+      },
+      disclosure:
+        "the holder of the auditor key, which opens every user's whole history",
+      cleanOrigin: {
+        tool: 'key',
+        detail:
+          "The viewing key opens the user's whole history, past and future, and cannot be rotated.",
+      },
+      content: readProjectMarkdown('strk20', 'compliance'),
+    },
     riskSummary: strk20RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),

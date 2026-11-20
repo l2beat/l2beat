@@ -25,10 +25,6 @@ The app sends its traffic over built-in Tor, each sensitive call on its own circ
 
 The app swaps through [CoW Protocol](https://docs.cow.fi/). Each swap uses a fresh swap account as its adapter. A broadcaster submits the account's EIP-7702 delegation to RelayAdapt7702. The account signs a CoW order, which the app sends over a separate Tor circuit. The order carries the signed unshield, so its nullifiers are public before it fills. At settlement the account unshields, trades and shields the proceeds back, or CoW pays them to an address the user names. [Across or NEAR Intents](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/bridge/mod.rs#L1-L11) can deliver them on another chain instead. The account ties the setup to the swap, and an unfilled order to the later spend of its notes.
 
-### Compliance
-
-Screening happens offchain. A [PPoI](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence) proves that a note descends only from shields a list provider accepted. The default list screens shields with Chainalysis's sanctions API. Broadcasters on Ethereum require a PPoI, and a transaction the user submits directly skips the check.
-
 ### Fees
 
 Shields pay a protocol fee of {{shieldFee}} and unshields {{unshieldFee}}, both to the Railgun Treasury. The NFT fee is {{nftFee}}. Broadcasters charge their own fee per transaction.

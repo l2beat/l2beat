@@ -177,6 +177,32 @@ export const zcashNearIntents: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zcashNearIntentsAdversaries,
+    compliance: {
+      short:
+        "The NEAR Intents operator screens every swap and can hold funds, shielded ZEC in the user's wallet is out of its reach.",
+      enforcedBy: 'operator',
+      enforcedByNote:
+        'Intents Technology Ltd., which runs NEAR Intents and the Ethereum side of both swaps',
+      check: {
+        rules: 'closed',
+        detail:
+          'The addresses in every swap quote, against the data of five named vendors.',
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'funds',
+        detail:
+          'The operator [holds apart](https://docs.near-intents.org/security-compliance/withdrawals-to-exchanges) funds that fail its screening. A user it refuses on the way back keeps their shielded ZEC and can sell it elsewhere.',
+      },
+      disclosure:
+        'the operator, which can attribute any payout to the account that started it',
+      cleanOrigin: {
+        tool: 'none',
+        detail:
+          'Both swaps are public on NEAR, and only the user can connect them across the shielded pool.',
+      },
+      content: readProjectMarkdown('zcash-near-intents', 'compliance'),
+    },
     riskSummary: zcashNearIntentsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

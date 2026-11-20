@@ -103,6 +103,29 @@ export const fluidkey: BaseProject = {
         description: 'Interop with DeFi vaults through stealth Safes.',
       },
     ],
+    compliance: {
+      short:
+        "Fluidkey can refuse to submit a user's sends, the user keeps the Safes.",
+      enforcedBy: 'operator',
+      enforcedByNote: 'Fluidkey, which submits every send',
+      check: {
+        rules: 'none',
+        detail:
+          'No check on onchain payments is known. Bank transfers need identity verification by Noah.',
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail:
+          'A refused user withdraws from their Safes with the open recovery app, without Fluidkey.',
+      },
+      disclosure: "Fluidkey, whose key shows all of a user's addresses",
+      cleanOrigin: {
+        tool: 'public',
+        detail: "Each payment's sender is public at the Safe that received it.",
+      },
+      content: readProjectMarkdown('fluidkey', 'compliance'),
+    },
     riskSummary: fluidkeyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),

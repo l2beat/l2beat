@@ -22,7 +22,7 @@ export const privacyBoostRiskSummary = definePrivacyRisks({
       see: ['privilegedInsider'],
     },
     {
-      text: 'a user exits through a forced withdrawal.',
+      text: 'the operator refuses a spend, by its screening or by stopping, which leaves only a public forced withdrawal.',
       see: ['publicObserver'],
     },
     {

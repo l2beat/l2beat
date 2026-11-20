@@ -216,6 +216,23 @@ export const interfold: BaseProject = {
       minimumCommittee.decryptionThreshold,
       minimumCommittee.members,
     ),
+    compliance: {
+      short: 'No funds move and no list decides who votes.',
+      enforcedBy: 'operator',
+      enforcedByNote: 'Interfold, whose CRISP server must sign every ballot',
+      check: {
+        rules: 'none',
+        detail:
+          "No check on voters is known. The server signs to attest that a ballot's data is available.",
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail: 'A voter the server refuses cannot vote in that round.',
+      },
+      disclosure: `any ${voteCommittee.decryptionThreshold} of the ${voteCommittee.members} ciphernodes drawn for a vote, who can decrypt its ballots`,
+      content: readProjectMarkdown('interfold', 'compliance'),
+    },
     riskSummary: interfoldRiskSummary({
       committeeMembers: voteCommittee.members,
       decryptionThreshold: voteCommittee.decryptionThreshold,

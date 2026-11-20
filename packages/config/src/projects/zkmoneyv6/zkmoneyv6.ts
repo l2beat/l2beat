@@ -474,6 +474,32 @@ export const zkmoneyv6: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyV6Adversaries,
+    compliance: {
+      short:
+        'Aztec Labs screens addresses in its wallet, relayer and name resolver, the contracts enforce no list.',
+      enforcedBy: 'relayer',
+      enforcedByNote:
+        'together with the wallet and the name resolver, all run by Aztec Labs',
+      check: {
+        rules: 'public',
+        detail:
+          "Withdrawal recipients and deposit funders, by Aztec Labs against OFAC's list in public code and a closed Predicate policy.",
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail:
+          "The user must submit a refused withdrawal themselves. A payment the resolver blocks needs the recipient's own tooling to find, and a signature from their Ethereum account.",
+      },
+      disclosure:
+        'nobody outside the attested enclave, which reads the operations it handles',
+      cleanOrigin: {
+        tool: 'none',
+        detail:
+          'Names, deposits and withdrawals are public, and no proof covers what happens between them.',
+      },
+      content: readProjectMarkdown('zkmoneyv6', 'compliance'),
+    },
     riskSummary: zkMoneyV6RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

@@ -40,11 +40,6 @@ For ENS lookups, the resolver operator derives each deposit address from a secre
 
 **Refund.** If Aztec Network governance changes its canonical rollup, anyone can freeze the portal, see [upgrades and governance](#upgrades-and-governance). Refunds then publish note or deposit amounts on Ethereum and use proofs without zero knowledge.
 
-### Compliance
-The assessed wallet sends Ethereum addresses to Predicate through zk.money for screening. Funding a deposit SIPA directly sends none. The relayer screens token movements against OFAC and optionally Predicate, and self-submitted sweeps and withdrawals skip it.
-
-The name resolver screens deposit addresses and funders against OFAC before notifying the recipient on L2. A blocked payment leaves funds at an address unknown to the wallet. Recovery requires the recipient's own tooling to re-derive it and authorization from their L1 account. Screening happens only in these offchain services.
-
 ### Fees and limits
 A DAI sweep pays {{depositFee}}, or {{registrationSweepFee}} when claiming a name. Registration costs {{registrationFee}} by default, including its sweep fee.
 

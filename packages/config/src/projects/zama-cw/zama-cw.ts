@@ -439,6 +439,30 @@ export const zamaCw: BaseProject = {
       },
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
+    compliance: {
+      short:
+        "Each token's owner can freeze any user's balance at any time, five tokens also apply their issuer's denylist.",
+      enforcedBy: 'contract',
+      enforcedByNote: 'on every wrap, transfer and unwrap',
+      check: {
+        rules: 'public',
+        detail:
+          "Sender and recipient of every action, against each token's onchain block list and five issuers' denylists. A Zama governance multisig sets each block list.",
+      },
+      when: 'anytime',
+      cost: {
+        loses: 'funds',
+        detail:
+          'A blocked balance can be neither sent nor unwrapped until the block is lifted. No function seizes it.',
+      },
+      disclosure:
+        "observers that a token's owner can appoint, of which no token has one, and ConfidentialSwap's compliance address",
+      cleanOrigin: {
+        tool: 'public',
+        detail: 'Wraps, unwraps and who pays whom are public.',
+      },
+      content: readProjectMarkdown('zama-cw', 'compliance'),
+    },
     riskSummary: zamaCwRiskSummary({
       kmsSignerCount,
       kmsKeyThreshold,

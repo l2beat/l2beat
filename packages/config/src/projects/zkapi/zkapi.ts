@@ -259,6 +259,29 @@ export const zkapi: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
+    compliance: {
+      short:
+        'The vault checks no list, the operator can refuse keys and withdrawals.',
+      enforcedBy: 'operator',
+      enforcedByNote:
+        'Open Anonymity, which issues every API key and clears every cooperative withdrawal',
+      check: {
+        rules: 'none',
+        detail: 'No compliance check is known that uses this power.',
+      },
+      when: 'everyUse',
+      cost: {
+        loses: 'access',
+        detail:
+          'A refused user can only escape, after the challenge period and while the vault is unpaused.',
+      },
+      cleanOrigin: {
+        tool: 'public',
+        detail:
+          'Every withdrawal publishes its note id, which names the deposit.',
+      },
+      content: readProjectMarkdown('zkapi', 'compliance'),
+    },
     riskSummary: zkApiRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),

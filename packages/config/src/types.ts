@@ -1229,6 +1229,8 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   /** Author with definePrivacyRisks. */
   riskSummary?: PrivacyRiskGroup[]
+  /** Who checks users or funds, what it costs and how to prove a clean origin. */
+  compliance?: PrivacyCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1470,6 +1472,80 @@ export interface PrivacyRisk {
   see?: PrivacyAdversaryId[]
 }
 
+/**
+ * The hardest layer at which someone can refuse a user, whether or not a
+ * check uses that power, from the one no user gets around to none at all. It places a project between compliance and
+ * censorship resistance.
+ */
+export type PrivacyComplianceLayer =
+  /** The contracts enforce it, so no client or relayer skips it. */
+  | 'contract'
+  /** A party every ordinary use passes through. Only an exit goes around it. */
+  | 'operator'
+  /** Relayers and wallets enforce it, and the contracts do not. */
+  | 'relayer'
+  /** The app enforces it, and another client skips it. */
+  | 'app'
+  | 'none'
+
+export type PrivacyComplianceTiming =
+  /** Decided once and final. An accepted user stays accepted. */
+  | 'entry'
+  /** The decision can change over funds that are already inside. */
+  | 'anytime'
+  /** Checked per action, through a service the funds do not sit in. */
+  | 'everyUse'
+
+/**
+ * The check that actually runs, apart from the power to refuse. A power
+ * without a check is a design choice that compliance does not explain.
+ */
+export type PrivacyComplianceRules =
+  /** The rule can be read in code or onchain. */
+  | 'public'
+  /** A check runs or is declared, and its rules are not public. */
+  | 'closed'
+  | 'none'
+
+/** What a refusal takes from a user, mildest first. */
+export type PrivacyComplianceCost = 'access' | 'privacy' | 'funds'
+
+/** How a user shows where funds came from, least revealing first. */
+export type PrivacyCleanOriginTool =
+  /** A proof against a list that reveals nothing else. */
+  | 'proof'
+  | 'payment'
+  /** One key that opens everything. */
+  | 'key'
+  /** The origin is public without any tool. */
+  | 'public'
+  | 'none'
+
+export interface PrivacyCompliance {
+  /** One sentence of at most 25 words, shown alone: who can refuse a user and what stands out. */
+  short: string
+  enforcedBy: PrivacyComplianceLayer
+  /** Completes the layer with one clause that names who holds the power. */
+  enforcedByNote?: string
+  /** `detail` says what is checked against what, and who decides. */
+  check: { rules: PrivacyComplianceRules; detail: string }
+  when?: PrivacyComplianceTiming
+  /** One sentence where the timing needs it, e.g. what later steps still do. */
+  whenNote?: string
+  /** `detail` says in full sentences what the refused user is left with. */
+  cost?: { loses: PrivacyComplianceCost; detail: string }
+  /** Who can disclose a user's data without them, as a noun phrase. Absent means nobody. */
+  disclosure?: string
+  /** Absent where no funds move. */
+  cleanOrigin?: { tool: PrivacyCleanOriginTool; detail: string }
+  /**
+   * Markdown that extends the facts, under the headings "Enforcement", "Data
+   * access" and "Proof of clean origin". The page puts the facts first under
+   * each heading, so a heading without prose can be left out.
+   */
+  content: string
+}
+
 export interface PrivacyAttribute {
   id: string
   label: string
@@ -1621,6 +1697,7 @@ export type PrivacySource =
         | 'verifiers'
         | 'trusted-setups'
         | 'upgrades-and-governance'
+        | 'compliance'
       title?: string
     }
 

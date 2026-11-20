@@ -252,6 +252,28 @@ export const privacyPools: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
+    compliance: {
+      short:
+        '0xbow must approve every deposit and can withdraw the approval until the funds have left.',
+      enforcedBy: 'contract',
+      enforcedByNote: 'on every private withdrawal',
+      check: {
+        rules: 'closed',
+        detail: "Each depositing address, by 0xbow's ASP under its own policy.",
+      },
+      when: 'anytime',
+      cost: {
+        loses: 'privacy',
+        detail:
+          'A deposit off the list leaves only by ragequit, in public and back to the depositing address.',
+      },
+      cleanOrigin: {
+        tool: 'proof',
+        detail:
+          "Every private withdrawal proves that it comes from a deposit on 0xbow's list.",
+      },
+      content: readProjectMarkdown('privacy-pools', 'compliance'),
+    },
     riskSummary: privacyPoolsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {

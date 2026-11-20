@@ -24,10 +24,6 @@ With auto-earn on, Fluidkey deposits incoming tokens into yield vaults without r
 
 Fluidkey computes a score for each account, partly from its balance. When the user claims it in the app, a token on Base that cannot be transferred goes to a separate stealth address of their account. That address holds nothing else, but it shows publicly that someone uses Fluidkey.
 
-### Compliance
-
-Bank transfers through Noah need identity verification. Hide Trail, an optional route for more privacy, sends funds through Houdini and two exchanges, which see the route and can hold the funds.
-
 ### Fees
 
 Sends are free for 20 transactions a day on every chain but Ethereum, where gas is paid in ETH or a supported token. Auto-earn is free, except for USDC on Base in the Yield profile, where a Morpho fee wrapper takes 1% APY. Bank transfers pay no volume fee up to 3,000 USD a month, or 20,000 USD from a score of 10,000. Beyond that the volume fee is 0.10% to 0.30%, depending on the average balance. SWIFT and Fedwire transfers also cost 25 USD each, with one or more free a month from a 50,000 USD average balance, per the [docs](https://docs.fluidkey.com/readme/bank).

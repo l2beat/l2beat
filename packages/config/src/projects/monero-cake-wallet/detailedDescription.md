@@ -28,10 +28,6 @@ An EVM wallet in Cake has one address. It is sent as refund address on entry, an
 
 Each service sees its whole leg. The entry service always knows the output it paid, because it created it. The exit service receives the Monero transaction and sees its rings. A party holding both legs therefore finds its payout output in the rings behind the exit. If all of the XMR is paid back, the received amount also matches the payout minus the public fee. Self-transfers in between only widen the search, by about 30 times per transaction. The swap screen lets the user pick a different exchange for each leg. Cake Labs holds no user funds, and the app talks to each service directly.
 
-### Compliance
-
-Services can freeze a deposit automatically and hold it for identity and compliance checks, as [ChangeNOW documents](https://changenow.io/faq/kyc-aml).
-
 ### Fees
 
 Cake ships its API keys, and for some providers a markup, as build secrets, so its share of the fee is set outside the source.

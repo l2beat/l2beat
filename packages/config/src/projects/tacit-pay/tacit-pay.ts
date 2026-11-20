@@ -261,6 +261,20 @@ export const tacitPay: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: tacitPayAdversaries,
+    compliance: {
+      short: 'Nothing is checked, no tool proves a clean origin.',
+      enforcedBy: 'none',
+      check: {
+        rules: 'none',
+        detail: 'The ownerless contracts, the app and the relay check no list.',
+      },
+      cleanOrigin: {
+        tool: 'none',
+        detail:
+          'The app has no report that ties a withdrawal to its deposit and no proof against a list.',
+      },
+      content: readProjectMarkdown('tacit-pay', 'compliance'),
+    },
     riskSummary: tacitPayRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),

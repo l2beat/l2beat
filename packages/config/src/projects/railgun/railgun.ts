@@ -347,6 +347,31 @@ export const railgun: BaseProject = {
     adversaries: railgunAdversaries(
       formatSeconds(executionStartOffset, { fullUnit: true }),
     ),
+    compliance: {
+      short:
+        'Wallets and broadcasters turn away shields that a list provider blocks, the contracts enforce no list.',
+      enforcedBy: 'relayer',
+      enforcedByNote: 'together with wallets. The contracts enforce no list',
+      check: {
+        rules: 'closed',
+        detail:
+          "Each shielding address, by the list provider that a wallet and its broadcasters require. The list node's code is public, what the default list's provider runs is not.",
+      },
+      when: 'entry',
+      whenNote:
+        'Broadcasters then verify the proof of that decision on every transaction.',
+      cost: {
+        loses: 'access',
+        detail:
+          'RailOxide [refunds a blocked shield](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/desktop/private_tx.rs#L427-L470) to the address that shielded it, in public.',
+      },
+      cleanOrigin: {
+        tool: 'proof',
+        detail:
+          'Every transaction a broadcaster submits carries a PPoI, a proof that its funds descend only from accepted shields.',
+      },
+      content: readProjectMarkdown('railgun', 'compliance'),
+    },
     riskSummary: railgunRiskSummary({
       executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),

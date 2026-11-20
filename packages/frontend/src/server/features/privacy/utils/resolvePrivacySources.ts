@@ -17,6 +17,7 @@ const SOURCE_SECTION_ID: Record<PrivacySectionSource['section'], SectionId> = {
   verifiers: 'verifiers',
   'trusted-setups': 'trusted-setups',
   'upgrades-and-governance': 'upgrades-and-governance',
+  compliance: 'compliance',
 }
 
 /**
