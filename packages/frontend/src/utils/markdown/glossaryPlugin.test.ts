@@ -173,7 +173,7 @@ describe(glossaryPlugin.name, () => {
     const output = md.render(input, { glossaryDescriptionIdPrefix: 'md1' })
     expect(output).toInclude('aria-describedby="md1-glossary-blob"')
     expect(output).toInclude(
-      '</a><span id="md1-glossary-blob" class="sr-only">Blob &lt;b&gt; description</span>',
+      '</a><span id="md1-glossary-blob" class="sr-only select-none">Blob &lt;b&gt; description</span>',
     )
   })
 
