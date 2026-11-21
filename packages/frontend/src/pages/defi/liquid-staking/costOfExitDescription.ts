@@ -89,6 +89,8 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
         queued: true,
         notes: [],
       }
+    case 'sweth':
+      return { routes: [QUEUE], queued: true, notes: [] }
   }
 }
 

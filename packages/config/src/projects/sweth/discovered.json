@@ -1,0 +1,1630 @@
+{
+  "name": "sweth",
+  "timestamp": 1794917357,
+  "configHash": "0x2926fee368b44298b6b91f4c33cbc21c1fdcc8837e8a2c961a00db8c259e52d0",
+  "entries": [
+    {
+      "address": "eth:0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DepositContract",
+      "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+      "type": "Contract",
+      "template": "global/DepositContract",
+      "sourceHashes": [
+        "0x64e29339363d55b4dc7d88beeb0bf9d0c5f577c7bf1218f08d527708f60e5ded"
+      ],
+      "proxyType": "immutable",
+      "description": "Ethereum Beacon Chain deposit contract.",
+      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
+      "deployerAddress": "eth:0xb20a608c624Ca5003905aA834De7156C68b2E1d0",
+      "sinceTimestamp": 1602667372,
+      "sinceBlock": 11052984,
+      "values": {
+        "$immutable": true,
+        "get_deposit_count": "0x1888270000000000",
+        "get_deposit_root": "0x970d2f041e8ddb0518639b717ae03336436acc3dbe1e29223bda385a83b4b114"
+      },
+      "implementationNames": {
+        "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
+      }
+    },
+    {
+      "address": "eth:0x1fB72AA21FBA9045F5798Bd0c4452F0C2A474FF5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Swell Multisig",
+      "address": "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x441eC70Ca587Dd0d180023F2C8e9471d03be4983",
+      "sinceTimestamp": 1657096688,
+      "sinceBlock": 15087904,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0x900bB9F13EE4Fc5D45c9ff85e0263a99557e8b00",
+          "eth:0x48Be81E54d8b49eDb6182123c10dC4A7c40F449C",
+          "eth:0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072",
+          "eth:0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
+          "eth:0xb7f6C2088F2c2B0C8fb40ff64a231D333FBC9e19",
+          "eth:0xe75f3f38679335F6e1787d25059fD3E07B70F27d",
+          "eth:0x1fB72AA21FBA9045F5798Bd0c4452F0C2A474FF5"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x7ef947a4d0f9db951b663aca329bc6fdd6e078a18fd7d4bc7e89a1c40b0c5724",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 482,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1681287203,
+      "sinceBlock": 17030666,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "RepricingOracle",
+      "address": "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+      "type": "Contract",
+      "template": "sweth/RepricingOracle",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xc14167a282503a8ff59b3743854cb02a1b7a703af85fb1271f1ddf0febb54108"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entry point for the bot's balance reports. A report must be recent (at most 150 blocks old) and its new rate within 10000000000000000 (1e18 = 100%) of a reference rate computed from the same report's balances and on-chain supply, so the reported validator balances themselves are not verified on-chain. The external proof-of-reserves feed is eth:0x0000000000000000000000000000000000000000 (zero address = disabled). A falling rate pauses the whole system. Each report also processes the exit queue up to a request chosen by the bot.",
+      "ignoreInWatchMode": ["lastRepriceSnapshot"],
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1693786151,
+      "sinceBlock": 18059443,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0x3334C0D1FdcD972A6Dd1Cc0D79E9A602805A25F7",
+        "$pastUpgrades": [
+          [
+            "2023-09-04T00:09:11.000Z",
+            "0x42c3b66f66c51ce39123574dad7c004977880444e0bf01b3271e23cf5f711c26",
+            ["eth:0x85BeFD4c29Ab88d16903516e7E283a1c1c25d47a"]
+          ],
+          [
+            "2024-03-05T03:34:11.000Z",
+            "0x05439f531104653c12cfb7190e8fbe05dfddc279f3c8b304081af3c9cbbbfc80",
+            ["eth:0x3334C0D1FdcD972A6Dd1Cc0D79E9A602805A25F7"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "AccessControlManager": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+        "ExternalV3ReservesPoROracle": "eth:0x0000000000000000000000000000000000000000",
+        "lastRepriceSnapshot": {
+          "meta": {
+            "blockNumber": 26403498,
+            "blockOfLastSnapshot": 26376721,
+            "slot": 15643188,
+            "timestamp": 1794542293
+          },
+          "state": {
+            "totalETHDeposited": "290864992031217838586122",
+            "swETHTotalSupply": "9634901109300606952052",
+            "balances": {
+              "executionLayer": "263154859371864185038",
+              "consensusLayerV3Validators": "10944624925099000000000",
+              "consensusLayerV2Validators": "32003627215000000000",
+              "transitioning": 0
+            }
+          },
+          "rewardsPayableForFees": "2617488702889244780",
+          "withdrawState": {
+            "totalETHExited": "288226138406633717150261",
+            "exitingETH": "304619386791867155252"
+          }
+        },
+        "maximumReferencePriceDiffPercentage": "10000000000000000",
+        "maximumRepriceBlockAtSnapshotStaleness": 150,
+        "maximumRepriceV3ReservesExternalPoRDiffPercentage": "100000000000000000",
+        "maximumRoundDataStalenessTime": 172800
+      },
+      "fieldMeta": {
+        "ExternalV3ReservesPoROracle": { "severity": "HIGH" },
+        "maximumReferencePriceDiffPercentage": { "severity": "MEDIUM" }
+      },
+      "implementationNames": {
+        "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71": "TransparentUpgradeableProxy",
+        "eth:0x3334C0D1FdcD972A6Dd1Cc0D79E9A602805A25F7": "RepricingOracle"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "NodeOperatorRegistry",
+      "address": "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d",
+      "type": "Contract",
+      "template": "sweth/NodeOperatorRegistry",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xea2c9fb3ed8fb7c3e4ad1b78c74ab0addedda122148e4db3209194c7c5823bf8"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of node operators and their validator keys (8 operators). The platform admin adds, disables and edits operators; each operator registers keys from its controlling address, and keys are used in order when the bot funds validators. Operators post no bond, so slashing losses fall on all token holders. Deposit signatures are not checked on-chain.",
+      "ignoreInWatchMode": ["numPendingValidators", "getPoRAddressListLength"],
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1681287923,
+      "sinceBlock": 17030726,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0xEA6c9A14B96777a448687272bf0e6F6D9Ce0e68a",
+        "$pastUpgrades": [
+          [
+            "2023-04-12T08:25:23.000Z",
+            "0xe6619f04d04163592d087962c163a07cfef2ab328f20f028e49f03a546224e38",
+            ["eth:0x97d8Dd4D99fE2A70A00dfef0C2d8D1c062b5BEAF"]
+          ],
+          [
+            "2024-03-05T03:34:11.000Z",
+            "0x05439f531104653c12cfb7190e8fbe05dfddc279f3c8b304081af3c9cbbbfc80",
+            ["eth:0xEA6c9A14B96777a448687272bf0e6F6D9Ce0e68a"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "AccessControlManager": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+        "getPoRAddressListLength": 342,
+        "numOperators": 8,
+        "numPendingValidators": 1397
+      },
+      "implementationNames": {
+        "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d": "TransparentUpgradeableProxy",
+        "eth:0xEA6c9A14B96777a448687272bf0e6F6D9Ce0e68a": "NodeOperatorRegistry"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x48Be81E54d8b49eDb6182123c10dC4A7c40F449C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "swEXIT",
+      "address": "eth:0x48C11b86807627AF70a34662D4865cF854251663",
+      "type": "Contract",
+      "template": "sweth/ExitQueue",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xd1ac20cfceffd23f917ae0820b420cfafbf05cf926504f5e04c0f8904cbcc015"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request); while its whitelist is on, only whitelisted addresses can request (whitelist enabled: false). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
+      "ignoreInWatchMode": [
+        "exitingETH",
+        "getLastTokenIdCreated",
+        "getLastTokenIdProcessed",
+        "totalETHExited",
+        "totalSupply"
+      ],
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1709104739,
+      "sinceBlock": 19324498,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0x02454D649054276e3ED8B9f17F8D5F49aC6C8F78",
+        "$pastUpgrades": [
+          [
+            "2024-02-28T07:18:59.000Z",
+            "0x57f295990ea05415353717687b3e7b56c0bd320ca2d5bed7d943e11547a35e6e",
+            ["eth:0x02454D649054276e3ED8B9f17F8D5F49aC6C8F78"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "AccessControlManager": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+        "baseURI": "https://v3-lst.svc.swellnetwork.io/api/swexit/sweth/metadata/",
+        "exitingETH": "426322190014634598223",
+        "getLastTokenIdCreated": 32925,
+        "getLastTokenIdProcessed": 32907,
+        "name": "swEXIT",
+        "symbol": "swEXIT",
+        "totalETHExited": "288477705928067153559485",
+        "totalSupply": 1003,
+        "whitelistEnabled": false,
+        "withdrawRequestMaximum": "500",
+        "withdrawRequestMinimum": "0.005"
+      },
+      "fieldMeta": {
+        "withdrawRequestMaximum": { "severity": "MEDIUM" },
+        "withdrawRequestMinimum": { "severity": "LOW" },
+        "whitelistEnabled": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0x48C11b86807627AF70a34662D4865cF854251663": "TransparentUpgradeableProxy",
+        "eth:0x02454D649054276e3ED8B9f17F8D5F49aC6C8F78": "swEXIT"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "SwETHProxyOFT",
+      "address": "eth:0x5C6392A69dc11f254457716c682F70e4B2ed7B05",
+      "type": "Contract",
+      "template": "sweth/ProxyOFT",
+      "sourceHashes": [
+        "0x6d76fce27dd746791cda41975f30eae1c1adb3c1c69325af78bd983b00fe93bc"
+      ],
+      "proxyType": "immutable",
+      "description": "LayerZero v1 proxy OFT. It locks the token on Ethereum when it is sent to another chain and releases it when it comes back; tokens on other chains are backed only by this lockbox. Its owner sets the trusted remote contracts and LayerZero configuration.",
+      "ignoreInWatchMode": ["circulatingSupply"],
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1693399607,
+      "sinceBlock": 18027506,
+      "values": {
+        "$immutable": true,
+        "circulatingSupply": "9244763010732476986978",
+        "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
+        "lzEndpoint": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "NO_EXTRA_GAS": 0,
+        "owner": "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
+        "precrime": "eth:0x0000000000000000000000000000000000000000",
+        "PT_SEND": 0,
+        "token": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78",
+        "useCustomAdapterParams": true
+      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0x5C6392A69dc11f254457716c682F70e4B2ed7B05": "SwETHProxyOFT"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "name": "AccessControlManager",
+      "address": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+      "type": "Contract",
+      "template": "sweth/AccessControlManager",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xe1aee07a066d242a7c10695b689acbfb3a37c03408bdcf0dcd4ea11057b078d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Central role and pause registry for one staking system. Its token, exit queue, deposit manager, operator registry and oracle check roles here and resolve each other's and the treasury's addresses through it. Paused now: deposits false, bot functions false, operator functions false, withdrawals false.",
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1681287215,
+      "sinceBlock": 17030667,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0xBB7B99C2BE525C0A6B719344F89A4255ef593E64",
+        "$pastUpgrades": [
+          [
+            "2023-04-12T08:13:35.000Z",
+            "0x23f722b8f2e8b94ce58a1e0f860f92bbcae2174da210a14691fd4f3ccedfdab0",
+            ["eth:0xbc011A12Da28e8F0f528d9eE5E7039E22F91cf18"]
+          ],
+          [
+            "2024-03-05T03:34:11.000Z",
+            "0x05439f531104653c12cfb7190e8fbe05dfddc279f3c8b304081af3c9cbbbfc80",
+            ["eth:0xBB7B99C2BE525C0A6B719344F89A4255ef593E64"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b"]
+          },
+          "PLATFORM_ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b"]
+          },
+          "BOT": {
+            "adminRole": "PLATFORM_ADMIN",
+            "members": [
+              "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+              "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90"
+            ]
+          },
+          "PAUSER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+              "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7"
+            ]
+          },
+          "DELETE_ACTIVE_VALIDATORS": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+              "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC"
+            ]
+          },
+          "REPRICER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71"]
+          },
+          "PROCESS_WITHDRAWALS": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71"]
+          },
+          "UNPAUSER": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90"]
+          }
+        },
+        "botAC": [
+          "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+          "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90"
+        ],
+        "botMethodsPaused": false,
+        "coreMethodsPaused": false,
+        "defaultAdminAC": ["eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b"],
+        "deleteActiveValidatorsAC": [
+          "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+          "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC"
+        ],
+        "DepositManager": "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39",
+        "NodeOperatorRegistry": "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d",
+        "operatorMethodsPaused": false,
+        "pauserAC": [
+          "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+          "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7"
+        ],
+        "platformAdminAC": ["eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b"],
+        "SwellTreasury": "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D",
+        "swETH": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78",
+        "swEXIT": "eth:0x48C11b86807627AF70a34662D4865cF854251663",
+        "unpauserAC": ["eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90"],
+        "withdrawalsPaused": false
+      },
+      "fieldMeta": {
+        "defaultAdminAC": { "severity": "HIGH" },
+        "platformAdminAC": { "severity": "HIGH" },
+        "botAC": { "severity": "HIGH" },
+        "pauserAC": { "severity": "HIGH" },
+        "unpauserAC": { "severity": "MEDIUM" },
+        "deleteActiveValidatorsAC": { "severity": "LOW" }
+      },
+      "implementationNames": {
+        "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC": "TransparentUpgradeableProxy",
+        "eth:0xBB7B99C2BE525C0A6B719344F89A4255ef593E64": "AccessControlManager"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Swell Pauser Multisig",
+      "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x284C633962F2386590E934c4fBD2D3EafA0944A3",
+      "sinceTimestamp": 1708924031,
+      "sinceBlock": 19309552,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xb7f6C2088F2c2B0C8fb40ff64a231D333FBC9e19",
+          "eth:0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072",
+          "eth:0x1fB72AA21FBA9045F5798Bd0c4452F0C2A474FF5",
+          "eth:0xe75f3f38679335F6e1787d25059fD3E07B70F27d",
+          "eth:0xd08b294dBD8Bc760c57AbdEC26515Da626511B40"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x13134d18974531e3e932e2a20fd1f298e5736934edcfd85da1fa485fe28d4aeb",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 5 (20%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "eth:0x900bB9F13EE4Fc5D45c9ff85e0263a99557e8b00",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Swell Operations Multisig",
+      "address": "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x284C633962F2386590E934c4fBD2D3EafA0944A3",
+      "sinceTimestamp": 1712267711,
+      "sinceBlock": 19585208,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "eth:0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072",
+          "eth:0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
+          "eth:0x1fB72AA21FBA9045F5798Bd0c4452F0C2A474FF5",
+          "eth:0x900bB9F13EE4Fc5D45c9ff85e0263a99557e8b00",
+          "eth:0xb7f6C2088F2c2B0C8fb40ff64a231D333FBC9e19",
+          "eth:0xe75f3f38679335F6e1787d25059fD3E07B70F27d"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xa8c380693156f5e607965fb42c8a6e1a9d08e03e84a662de3c1ed70a827bb18d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 145,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "DepositManager",
+      "address": "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39",
+      "type": "Contract",
+      "template": "sweth/DepositManager",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x110280736f5ce52153ff591ecd7a0a0edb8dd13fc52021869a94d9c25105cd43"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Receives all deposited ETH and is the withdrawal credential of every validator (0x010000000000000000000000b3d9cf8e163bbc840195a97e81f8a34e295b8f39), so exited and skimmed validator ETH returns here. ETH leaves only to new validators, when the bot funds the next registered keys (the call reverts if the deposit root changed since the bot read it, and ETH reserved for queued exits stays), or to the exit queue.",
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1681288247,
+      "sinceBlock": 17030752,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0xEeE6207D514c2845394b5F4b9F12B6D155F4524B",
+        "$pastUpgrades": [
+          [
+            "2023-04-12T08:30:47.000Z",
+            "0x612473bba6d7d88ba632755e96176d10a0c1c5fccdd6792706c3bf8134ca7c52",
+            ["eth:0x38956B8Ae9603C4Ac13f553ddF6cb065538D80A7"]
+          ],
+          [
+            "2024-03-05T03:34:11.000Z",
+            "0x05439f531104653c12cfb7190e8fbe05dfddc279f3c8b304081af3c9cbbbfc80",
+            ["eth:0xEeE6207D514c2845394b5F4b9F12B6D155F4524B"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "AccessControlManager": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+        "DepositContract": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+        "getWithdrawalCredentials": "0x010000000000000000000000b3d9cf8e163bbc840195a97e81f8a34e295b8f39"
+      },
+      "implementationNames": {
+        "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39": "TransparentUpgradeableProxy",
+        "eth:0xEeE6207D514c2845394b5F4b9F12B6D155F4524B": "DepositManager"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0xb7f6C2088F2c2B0C8fb40ff64a231D333FBC9e19",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Timelock",
+      "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+      "type": "Contract",
+      "template": "sweth/Timelock",
+      "sourceHashes": [
+        "0x43aeca3d5513c5b43391523911d8ee8061fb1a83b088fdc0d3abb16e4a9659b9"
+      ],
+      "proxyType": "immutable",
+      "description": "Compound-style timelock. Its admin queues transactions that can execute after 7d and within a grace period; the delay and admin can only be changed through the timelock itself.",
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1713069851,
+      "sinceBlock": 19651473,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
+        "delay": 604800,
+        "delayFormatted": "7d",
+        "GRACE_PERIOD": 1209600,
+        "MAXIMUM_DELAY": 2592000,
+        "MINIMUM_DELAY": 172800,
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "delayFormatted": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "admin": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b": "Timelock"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe75f3f38679335F6e1787d25059fD3E07B70F27d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "FeeFlowController",
+      "address": "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D",
+      "type": "Contract",
+      "template": "sweth/FeeFlowController",
+      "sourceHashes": [
+        "0x4ec27a809704b1d66f9dea9973be03f49e4c9a233156c38dbcf80f02a044a7bf"
+      ],
+      "proxyType": "immutable",
+      "description": "Fee sink. Fee tokens collect here and are sold in repeated Dutch auctions: the buyer pays the current price in the payment token, which goes to eth:0x000000000000000000000000000000000000dEaD, and receives the whole balance. Each auction's price falls to zero over 1209600 seconds.",
+      "ignoreInWatchMode": ["getPrice", "getSlot0"],
+      "deployerAddress": "eth:0x0632B0d4b78BBF974851341B739e9c006884b139",
+      "sinceTimestamp": 1772093459,
+      "sinceBlock": 24539808,
+      "values": {
+        "$immutable": true,
+        "ABS_MAX_INIT_PRICE": "6277101735386680763835789423207666416102355444464034512895",
+        "ABS_MIN_INIT_PRICE": 1000000,
+        "epochPeriod": 1209600,
+        "getPrice": "1697698412698412698412699",
+        "getSlot0": {
+          "locked": 1,
+          "epochId": 29,
+          "initPrice": "4000000000000000000000000",
+          "startTime": 1794221135
+        },
+        "MAX_EPOCH_PERIOD": 31536000,
+        "MAX_PRICE_MULTIPLIER": "3000000000000000000",
+        "MIN_EPOCH_PERIOD": 3600,
+        "MIN_PRICE_MULTIPLIER": "1100000000000000000",
+        "minInitPrice": "4000000000000000000000000",
+        "paymentReceiver": "eth:0x000000000000000000000000000000000000dEaD",
+        "paymentToken": "eth:0x0a6E7Ba5042B38349e437ec6Db6214AEC7B35676",
+        "PRICE_MULTIPLIER_SCALE": "1000000000000000000",
+        "priceMultiplier": "2000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": "FeeFlowController"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "swETH",
+      "address": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78",
+      "type": "Contract",
+      "template": "sweth/swETH",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xa9912e30fa75e0aebd1799b3a13b12ebc143d5217100f1558254ea2d0aa26fd9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Liquid staking token. Anyone can deposit ETH unless deposits are paused or the whitelist is on (whitelist enabled: false); tokens are minted at the current rate and the ETH is forwarded to the deposit manager in the same call. The ETH value per token changes only when the oracle reprices it: each update may move it by at most 10000000000000000 (1e18 = 100%), at least 3600 seconds apart. Each reprice mints a share of the reported rewards as new tokens for node operators and the treasury.",
+      "ignoreInWatchMode": [
+        "swETHToETHRate",
+        "ethToSwETHRate",
+        "getRate",
+        "lastRepriceETHReserves",
+        "lastRepriceUNIX",
+        "totalETHDeposited",
+        "totalSupply"
+      ],
+      "deployerAddress": "eth:0x174Ae6eBFf5E678a1BeE298E1fF7dF799C7c1A08",
+      "sinceTimestamp": 1681288427,
+      "sinceBlock": 17030767,
+      "values": {
+        "$admin": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+        "$implementation": "eth:0xce95ba824ae9A4Df9B303C0bbf4D605BA2aFfbfC",
+        "$pastUpgrades": [
+          [
+            "2023-04-12T08:33:47.000Z",
+            "0x9ad7b0098fd25b445eead817e3586ef72152c9307103812f86a3b5b74d3ad828",
+            ["eth:0xA35f12E707c980f15483e6dA24E56d3cAB240a14"]
+          ],
+          [
+            "2023-04-15T02:22:35.000Z",
+            "0x402601a6cc651c1f406e1b510d9e59f6285b8a2e7fd0eda01fd8453d22cdc22a",
+            ["eth:0x2d3b4BB82Bdf0A3593bCF098B5C5b6f7570211A7"]
+          ],
+          [
+            "2023-08-08T03:10:11.000Z",
+            "0x811e305f5dba548b7cbb2813c0b7b50e922bce824bfc981844b5dd7de643b656",
+            ["eth:0xDda46bF18eeb3E06E2F12975A3A184e40581A72f"]
+          ],
+          [
+            "2024-03-05T03:34:11.000Z",
+            "0x05439f531104653c12cfb7190e8fbe05dfddc279f3c8b304081af3c9cbbbfc80",
+            ["eth:0xce95ba824ae9A4Df9B303C0bbf4D605BA2aFfbfC"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "AccessControlManager": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+        "decimals": 18,
+        "ethToSwETHRate": "881114514432055396",
+        "getRate": "1134926259436975958",
+        "lastRepriceETHReserves": "10935164024893997029786",
+        "lastRepriceUNIX": 1794543611,
+        "maximumRepriceDifferencePercentage": "10000000000000000",
+        "maximumRepriceswETHDifferencePercentage": "100000000000000000",
+        "minimumRepriceTime": 3600,
+        "name": "swETH",
+        "nodeOperatorRewardPercentage": "50000000000000000",
+        "swellTreasuryRewardPercentage": "50000000000000000",
+        "swETHToETHRate": "1134926259436975958",
+        "symbol": "swETH",
+        "totalETHDeposited": "290866594342232334428750",
+        "totalSupply": "9307649658659514622763",
+        "whitelistEnabled": false
+      },
+      "fieldMeta": {
+        "maximumRepriceDifferencePercentage": {
+          "severity": "HIGH",
+          "description": "Largest change of the exchange rate per reprice (1e18 = 100%)."
+        },
+        "minimumRepriceTime": {
+          "severity": "HIGH",
+          "description": "Minimum seconds between two reprices."
+        },
+        "maximumRepriceswETHDifferencePercentage": {
+          "severity": "MEDIUM",
+          "description": "Largest allowed difference between the supply in a report and the actual supply (1e18 = 100%)."
+        },
+        "nodeOperatorRewardPercentage": {
+          "severity": "MEDIUM",
+          "description": "Share of reported rewards minted to node operators (1e18 = 100%)."
+        },
+        "swellTreasuryRewardPercentage": {
+          "severity": "MEDIUM",
+          "description": "Share of reported rewards minted to the treasury (1e18 = 100%)."
+        },
+        "whitelistEnabled": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xf951E335afb289353dc249e82926178EaC7DEd78": "TransparentUpgradeableProxy",
+        "eth:0xce95ba824ae9A4Df9B303C0bbf4D605BA2aFfbfC": "swETH"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    }
+  ],
+  "abis": {
+    "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": [
+      "constructor()",
+      "event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index)",
+      "function deposit(bytes pubkey, bytes withdrawal_credentials, bytes signature, bytes32 deposit_data_root) payable",
+      "function get_deposit_count() view returns (bytes)",
+      "function get_deposit_root() view returns (bytes32)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)"
+    ],
+    "eth:0x02454D649054276e3ED8B9f17F8D5F49aC6C8F78": [
+      "constructor()",
+      "error AddressAlreadyInWhitelist(address _address)",
+      "error AddressMissingFromWhitelist(address _address)",
+      "error CannotBeZeroAddress()",
+      "error CannotProcessWithdrawalsForNonExistentToken()",
+      "error InvalidMethodCall()",
+      "error LastTokenIdToProcessMustBeGreaterOrEqualThanPrevious()",
+      "error NoTokensToWithdraw()",
+      "error NotInWhitelist()",
+      "error PRBMath_MulDiv18_Overflow(uint256 x, uint256 y)",
+      "error WhitelistAlreadyDisabled()",
+      "error WhitelistAlreadyEnabled()",
+      "error WithdrawRequestMaximumMustBeGreaterOrEqualToMinimum()",
+      "error WithdrawRequestMinimumMustBeLessOrEqualToMaximum()",
+      "error WithdrawRequestTooLarge(uint256 amount, uint256 limit)",
+      "error WithdrawRequestTooSmall(uint256 amount, uint256 minimum)",
+      "error WithdrawalRequestDoesNotExist()",
+      "error WithdrawalRequestFinalizationOnlyAllowedForNFTOwner()",
+      "error WithdrawalRequestNotProcessed()",
+      "error WithdrawalsPaused()",
+      "event AddedToWhitelist(address indexed _address)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event BaseURIUpdated(string oldBaseURI, string newBaseURI)",
+      "event ETHReceived(address indexed sender, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event RemovedFromWhitelist(address indexed _address)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event WhitelistDisabled()",
+      "event WhitelistEnabled()",
+      "event WithdrawRequestCreated(uint256 tokenId, uint256 amount, uint256 timestamp, uint256 indexed lastTokenIdProcessed, uint256 rateWhenCreated, address indexed owner)",
+      "event WithdrawalClaimed(address indexed owner, uint256 tokenId, uint256 exitClaimedETH)",
+      "event WithdrawalRequestMaximumUpdated(uint256 oldLimit, uint256 newLimit)",
+      "event WithdrawalRequestMinimumUpdated(uint256 oldMinimum, uint256 newMinimum)",
+      "event WithdrawalsProcessed(uint256 fromTokenId, uint256 toTokenId, uint256 processedRate, uint256 processedExitingETH, uint256 processedExitedETH)",
+      "function AccessControlManager() view returns (address)",
+      "function addToWhitelist(address _address)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function baseURI() view returns (string)",
+      "function batchAddToWhitelist(address[] _addresses)",
+      "function batchRemoveFromWhitelist(address[] _addresses)",
+      "function createWithdrawRequest(uint256 amount)",
+      "function disableWhitelist()",
+      "function enableWhitelist()",
+      "function exitingETH() view returns (uint256)",
+      "function finalizeWithdrawal(uint256 tokenId)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function getLastTokenIdCreated() view returns (uint256)",
+      "function getLastTokenIdProcessed() view returns (uint256)",
+      "function getProcessedRateForTokenId(uint256 tokenId) view returns (bool isProcessed, uint256 processedRate)",
+      "function initialize(address _accessControlManager)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function name() view returns (string)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function processWithdrawals(uint256 _lastTokenIdToProcess)",
+      "function removeFromWhitelist(address _address)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function setBaseURI(string _updatedBaseURI)",
+      "function setWithdrawRequestMaximum(uint256 _withdrawRequestMaximum)",
+      "function setWithdrawRequestMinimum(uint256 _withdrawRequestMinimum)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalETHExited() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function whitelistEnabled() view returns (bool)",
+      "function whitelistedAddresses(address) view returns (bool)",
+      "function withdrawERC20(address _token)",
+      "function withdrawRequestMaximum() view returns (uint256)",
+      "function withdrawRequestMinimum() view returns (uint256)",
+      "function withdrawalRequests(uint256) view returns (uint256 amount, uint256 lastTokenIdProcessed, uint256 rateWhenCreated)"
+    ],
+    "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x3334C0D1FdcD972A6Dd1Cc0D79E9A602805A25F7": [
+      "constructor()",
+      "error BotMethodsPaused()",
+      "error CannotBeZeroAddress()",
+      "error CannotComputeReferencePriceWithZeroSwETHSupply()",
+      "error InvalidMethodCall()",
+      "error NoTokensToWithdraw()",
+      "error PRBMath_MulDiv18_Overflow(uint256 x, uint256 y)",
+      "error PRBMath_MulDiv_Overflow(uint256 x, uint256 y, uint256 denominator)",
+      "error ProcessWithdrawalsExitingETHMustMonotonicallyIncrease()",
+      "error ProcessWithdrawalsTotalETHExitedMismatch()",
+      "error ReferencePriceDiffTooHigh(uint256 referencePriceDiff, uint256 maximumReferencePriceDiffPercentage)",
+      "error RepriceBlockAtSnapshotDidNotIncrease()",
+      "error RepriceBlockAtSnapshotIsStale(uint256 snapshotStalenessInBlocks, uint256 maximumRepriceBlockAtSnapshotStaleness)",
+      "error RepriceBlockAtSnapshotTooHigh(uint256 snapshotBlockNumber, uint256 currentBlockNumber)",
+      "error RepriceBlockOfLastSnapshotMismatch(uint256 blockOfLastSnapshotSupplied, uint256 blockOfLastSnapshotOnChain)",
+      "error RepriceV3ReservesExternalPoRDifferentialTooHigh(uint256 v3ReservesExternalPoRDiff, uint256 maximumV3ReservesExternalPoRDiff)",
+      "error RoundDataIsStale(uint256 latestRoundDataTime, uint256 secondsSinceExpiry)",
+      "event ExternalV3ReservesPoROracleAddressUpdated(address oldAddress, address newAddress)",
+      "event Initialized(uint8 version)",
+      "event MaximumReferencePriceDiffPercentageUpdated(uint256 _oldMaximumReferencePriceDiffPercentage, uint256 _newMaximumReferencePriceDiffPercentage)",
+      "event MaximumRepriceBlockAtSnapshotStalenessUpdated(uint256 _oldMaximumRepriceBlockAtSnapshotStaleness, uint256 _newMaximumRepriceBlockAtSnapshotStaleness)",
+      "event MaximumRepriceV3ReservesExternalPoRDiffPercentageUpdated(uint256 _oldMaximumRepriceV3ReservesExternalPoRDiffPercentage, uint256 _newMaximumRepriceV3ReservesExternalPoRDiffPercentage)",
+      "event MaximumRoundDataStalenessTimeUpdated(uint256 _oldMaximumRoundDataStalenessTime, uint256 _newMaximumRoundDataStalenessTime)",
+      "event ReservesRecorded(uint256 indexed blockAtSnapshot, uint256 elBalance, uint256 clV3Balance, uint256 clV2Balance, uint256 transitioningBalance, uint256 newETHReserves)",
+      "event ReservesRecordedV2(uint256 indexed blockAtSnapshot, uint256 elBalance, uint256 clV3Balance, uint256 clV2Balance, uint256 transitioningBalance, uint256 newETHReserves, uint256 reserveAssets, uint256 exitingETH)",
+      "event RewardsCalculated(uint256 indexed blockAtSnapshot, uint256 blockOfLastSnapshot, int256 reservesChange, uint256 ethDepositsChange, uint256 rewardsPayableForFees)",
+      "event RewardsCalculatedV2(uint256 indexed blockAtSnapshot, uint256 blockOfLastSnapshot, int256 reserveAssetsChange, uint256 ethDepositsChange, uint256 rewardsPayableForFees, uint256 ethExitedChange)",
+      "event SnapshotSubmitted(uint256 indexed blockNumber, uint256 slot, uint256 reportTimestamp, uint256 totalETHDeposited, uint256 swETHTotalSupply)",
+      "event SnapshotSubmittedV2(uint256 indexed blockNumber, uint256 slot, uint256 reportTimestamp, uint256 totalETHDeposited, uint256 swETHTotalSupply, uint256 totalETHExited)",
+      "function AccessControlManager() view returns (address)",
+      "function ExternalV3ReservesPoROracle() view returns (address)",
+      "function assertRepricingSnapshotValidity(tuple(tuple(uint256 blockNumber, uint256 blockOfLastSnapshot, uint256 slot, uint256 timestamp) meta, tuple(uint256 totalETHDeposited, uint256 swETHTotalSupply, tuple(uint256 executionLayer, uint256 consensusLayerV3Validators, uint256 consensusLayerV2Validators, uint256 transitioning) balances) state, uint256 rewardsPayableForFees, tuple(uint256 totalETHExited, uint256 exitingETH) withdrawState) _snapshot) view",
+      "function initialize(address _accessControlManager, address _externalV3ReservesPoROracle)",
+      "function lastRepriceSnapshot() view returns (tuple(tuple(uint256 blockNumber, uint256 blockOfLastSnapshot, uint256 slot, uint256 timestamp) meta, tuple(uint256 totalETHDeposited, uint256 swETHTotalSupply, tuple(uint256 executionLayer, uint256 consensusLayerV3Validators, uint256 consensusLayerV2Validators, uint256 transitioning) balances) state, uint256 rewardsPayableForFees, tuple(uint256 totalETHExited, uint256 exitingETH) withdrawState))",
+      "function maximumReferencePriceDiffPercentage() view returns (uint256)",
+      "function maximumRepriceBlockAtSnapshotStaleness() view returns (uint256)",
+      "function maximumRepriceV3ReservesExternalPoRDiffPercentage() view returns (uint256)",
+      "function maximumRoundDataStalenessTime() view returns (uint256)",
+      "function setExternalV3ReservesPoROracleAddress(address _newAddress)",
+      "function setMaximumReferencePriceDiffPercentage(uint256 _newMaximumReferencePriceDiffPercentage)",
+      "function setMaximumRepriceBlockAtSnapshotStaleness(uint256 _maximumRepriceBlockAtSnapshotStaleness)",
+      "function setMaximumRepriceV3ReservesExternalPoRDiffPercentage(uint256 _newMaximumRepriceV3ReservesExternalPoRDiffPercentage)",
+      "function setMaximumRoundDataStalenessTime(uint256 _newMaximumRoundDataStalenessTime)",
+      "function submitSnapshot(tuple(tuple(uint256 blockNumber, uint256 blockOfLastSnapshot, uint256 slot, uint256 timestamp) meta, tuple(uint256 totalETHDeposited, uint256 swETHTotalSupply, tuple(uint256 executionLayer, uint256 consensusLayerV3Validators, uint256 consensusLayerV2Validators, uint256 transitioning) balances) state, uint256 rewardsPayableForFees, tuple(uint256 totalETHExited, uint256 exitingETH) withdrawState) _snapshot)",
+      "function submitSnapshotV2(bytes[] activeValidatorsToDelete, tuple(tuple(uint256 blockNumber, uint256 blockOfLastSnapshot, uint256 slot, uint256 timestamp) meta, tuple(uint256 totalETHDeposited, uint256 swETHTotalSupply, tuple(uint256 executionLayer, uint256 consensusLayerV3Validators, uint256 consensusLayerV2Validators, uint256 transitioning) balances) state, uint256 rewardsPayableForFees, tuple(uint256 totalETHExited, uint256 exitingETH) withdrawState) _snapshot, uint256 lastTokenIDToProcess)",
+      "function withdrawERC20(address _token)"
+    ],
+    "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x48C11b86807627AF70a34662D4865cF854251663": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x5C6392A69dc11f254457716c682F70e4B2ed7B05": [
+      "constructor(address _layerZeroEndpoint, address _token)",
+      "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveFromChain(uint16 indexed _srcChainId, address indexed _to, uint256 _amount)",
+      "event RetryMessageSuccess(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes32 _payloadHash)",
+      "event SendToChain(uint16 indexed _dstChainId, address indexed _from, bytes _toAddress, uint256 _amount)",
+      "event SetMinDstGas(uint16 _dstChainId, uint16 _type, uint256 _minDstGas)",
+      "event SetPrecrime(address precrime)",
+      "event SetTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "event SetTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "event SetUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function DEFAULT_PAYLOAD_SIZE_LIMIT() view returns (uint256)",
+      "function NO_EXTRA_GAS() view returns (uint256)",
+      "function PT_SEND() view returns (uint16)",
+      "function circulatingSupply() view returns (uint256)",
+      "function estimateSendFee(uint16 _dstChainId, bytes _toAddress, uint256 _amount, bool _useZro, bytes _adapterParams) view returns (uint256 nativeFee, uint256 zroFee)",
+      "function failedMessages(uint16, bytes, uint64) view returns (bytes32)",
+      "function forceResumeReceive(uint16 _srcChainId, bytes _srcAddress)",
+      "function getConfig(uint16 _version, uint16 _chainId, address, uint256 _configType) view returns (bytes)",
+      "function getTrustedRemoteAddress(uint16 _remoteChainId) view returns (bytes)",
+      "function isTrustedRemote(uint16 _srcChainId, bytes _srcAddress) view returns (bool)",
+      "function lzEndpoint() view returns (address)",
+      "function lzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function minDstGasLookup(uint16, uint16) view returns (uint256)",
+      "function nonblockingLzReceive(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload)",
+      "function owner() view returns (address)",
+      "function payloadSizeLimitLookup(uint16) view returns (uint256)",
+      "function precrime() view returns (address)",
+      "function renounceOwnership()",
+      "function retryMessage(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload) payable",
+      "function sendFrom(address _from, uint16 _dstChainId, bytes _toAddress, uint256 _amount, address _refundAddress, address _zroPaymentAddress, bytes _adapterParams) payable",
+      "function setConfig(uint16 _version, uint16 _chainId, uint256 _configType, bytes _config)",
+      "function setMinDstGas(uint16 _dstChainId, uint16 _packetType, uint256 _minGas)",
+      "function setPayloadSizeLimit(uint16 _dstChainId, uint256 _size)",
+      "function setPrecrime(address _precrime)",
+      "function setReceiveVersion(uint16 _version)",
+      "function setSendVersion(uint16 _version)",
+      "function setTrustedRemote(uint16 _remoteChainId, bytes _path)",
+      "function setTrustedRemoteAddress(uint16 _remoteChainId, bytes _remoteAddress)",
+      "function setUseCustomAdapterParams(bool _useCustomAdapterParams)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function trustedRemoteLookup(uint16) view returns (bytes)",
+      "function useCustomAdapterParams() view returns (bool)"
+    ],
+    "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b": [
+      "constructor(address admin_, uint256 delay_)",
+      "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event NewAdmin(address indexed newAdmin)",
+      "event NewDelay(uint256 indexed newDelay)",
+      "event NewPendingAdmin(address indexed newPendingAdmin)",
+      "event QueueTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function GRACE_PERIOD() view returns (uint256)",
+      "function MAXIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_DELAY() view returns (uint256)",
+      "function acceptAdmin()",
+      "function admin() view returns (address)",
+      "function cancelTransaction(address target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function delay() view returns (uint256)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",
+      "function pendingAdmin() view returns (address)",
+      "function queueTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) returns (bytes32)",
+      "function queuedTransactions(bytes32) view returns (bool)",
+      "function setDelay(uint256 delay_)",
+      "function setPendingAdmin(address pendingAdmin_)"
+    ],
+    "eth:0xBB7B99C2BE525C0A6B719344F89A4255ef593E64": [
+      "constructor()",
+      "error AlreadyPaused()",
+      "error AlreadyUnpaused()",
+      "error CannotBeZeroAddress()",
+      "error NoTokensToWithdraw()",
+      "event BotMethodsPause(bool newPausedStatus)",
+      "event CoreMethodsPause(bool newPausedStatus)",
+      "event Initialized(uint8 version)",
+      "event Lockdown()",
+      "event OperatorMethodsPause(bool newPausedStatus)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event UpdatedDepositManager(address newAddress, address oldAddress)",
+      "event UpdatedNodeOperatorRegistry(address newAddress, address oldAddress)",
+      "event UpdatedSwETH(address newAddress, address oldAddress)",
+      "event UpdatedSwEXIT(address newAddress, address oldAddress)",
+      "event UpdatedSwellTreasury(address newAddress, address oldAddress)",
+      "event WithdrawalsPause(bool newPausedStatus)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DepositManager() view returns (address)",
+      "function NodeOperatorRegistry() view returns (address)",
+      "function PLATFORM_ADMIN() pure returns (bytes32)",
+      "function SwellTreasury() view returns (address)",
+      "function botMethodsPaused() view returns (bool)",
+      "function checkRole(bytes32 role, address account) view",
+      "function coreMethodsPaused() view returns (bool)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address admin, address swellTreasury) _initializeParams)",
+      "function lockdown()",
+      "function operatorMethodsPaused() view returns (bool)",
+      "function pauseBotMethods()",
+      "function pauseCoreMethods()",
+      "function pauseOperatorMethods()",
+      "function pauseWithdrawals()",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setDepositManager(address _depositManager)",
+      "function setNodeOperatorRegistry(address _NodeOperatorRegistry)",
+      "function setSwETH(address _swETH)",
+      "function setSwEXIT(address _swEXIT)",
+      "function setSwellTreasury(address _swellTreasury)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function swETH() view returns (address)",
+      "function swEXIT() view returns (address)",
+      "function unpauseBotMethods()",
+      "function unpauseCoreMethods()",
+      "function unpauseOperatorMethods()",
+      "function unpauseWithdrawals()",
+      "function withdrawERC20(address _token)",
+      "function withdrawalsPaused() view returns (bool)"
+    ],
+    "eth:0xce95ba824ae9A4Df9B303C0bbf4D605BA2aFfbfC": [
+      "constructor()",
+      "error AddressAlreadyInWhitelist(address _address)",
+      "error AddressMissingFromWhitelist(address _address)",
+      "error CannotBeZeroAddress()",
+      "error CannotBurnZeroSwETH()",
+      "error CannotReferSelf()",
+      "error CannotRepriceWithZeroSwETHSupply()",
+      "error CoreMethodsPaused()",
+      "error InvalidETHDeposit()",
+      "error InvalidMethodCall()",
+      "error InvalidPreRewardETHReserves()",
+      "error NoTokensToWithdraw()",
+      "error NotEnoughTimeElapsedForReprice(uint256 remainingTime)",
+      "error NotInWhitelist()",
+      "error PRBMath_MulDiv18_Overflow(uint256 x, uint256 y)",
+      "error PRBMath_MulDiv_Overflow(uint256 x, uint256 y, uint256 denominator)",
+      "error RepriceDifferenceTooLarge(uint256 repriceDiff, uint256 maximumRepriceDiff)",
+      "error RepriceswETHDifferenceTooLarge(uint256 repriceswETHDiff, uint256 maximumswETHRepriceDiff)",
+      "error RewardPercentageTotalOverflow()",
+      "error WhitelistAlreadyDisabled()",
+      "error WhitelistAlreadyEnabled()",
+      "event AddedToWhitelist(address indexed _address)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event ETHDepositReceived(address indexed from, uint256 amount, uint256 swETHMinted, uint256 newTotalETHDeposited, address indexed referral)",
+      "event ETHWithdrawn(address indexed to, uint256 swETHBurned, uint256 ethReturned)",
+      "event Initialized(uint8 version)",
+      "event MaximumRepriceDifferencePercentageUpdated(uint256 _oldMaximumRepriceDifferencePercentage, uint256 _newMaximumRepriceDifferencePercentage)",
+      "event MaximumRepriceswETHDifferencePercentageUpdated(uint256 _oldMaximumRepriceswETHDifferencePercentage, uint256 _newMaximumRepriceswETHDifferencePercentage)",
+      "event MinimumRepriceTimeUpdated(uint256 _oldMinimumRepriceTime, uint256 _newMinimumRepriceTime)",
+      "event NodeOperatorRewardPercentageUpdate(uint256 oldPercentage, uint256 newPercentage)",
+      "event RemovedFromWhitelist(address indexed _address)",
+      "event Reprice(uint256 newEthReserves, uint256 newSwETHToETHRate, uint256 nodeOperatorRewards, uint256 swellTreasuryRewards, uint256 totalETHDeposited)",
+      "event SwellTreasuryRewardPercentageUpdate(uint256 oldPercentage, uint256 newPercentage)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event WhitelistDisabled()",
+      "event WhitelistEnabled()",
+      "function AccessControlManager() view returns (address)",
+      "function addToWhitelist(address _address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function batchAddToWhitelist(address[] _addresses)",
+      "function batchRemoveFromWhitelist(address[] _addresses)",
+      "function burn(uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function deposit() payable",
+      "function depositWithReferral(address referral) payable",
+      "function disableWhitelist()",
+      "function enableWhitelist()",
+      "function ethToSwETHRate() view returns (uint256)",
+      "function getRate() view returns (uint256)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address _accessControlManager)",
+      "function lastRepriceETHReserves() view returns (uint256)",
+      "function lastRepriceUNIX() view returns (uint256)",
+      "function maximumRepriceDifferencePercentage() view returns (uint256)",
+      "function maximumRepriceswETHDifferencePercentage() view returns (uint256)",
+      "function minimumRepriceTime() view returns (uint256)",
+      "function name() view returns (string)",
+      "function nodeOperatorRewardPercentage() view returns (uint256)",
+      "function removeFromWhitelist(address _address)",
+      "function reprice(uint256 _preRewardETHReserves, uint256 _newETHRewards, uint256 _swETHTotalSupply)",
+      "function setMaximumRepriceDifferencePercentage(uint256 _maximumRepriceDifferencePercentage)",
+      "function setMaximumRepriceswETHDifferencePercentage(uint256 _maximumRepriceswETHDifferencePercentage)",
+      "function setMinimumRepriceTime(uint256 _minimumRepriceTime)",
+      "function setNodeOperatorRewardPercentage(uint256 _newNodeOperatorRewardPercentage)",
+      "function setSwellTreasuryRewardPercentage(uint256 _newSwellTreasuryRewardPercentage)",
+      "function swETHToETHRate() view returns (uint256)",
+      "function swellTreasuryRewardPercentage() view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function totalETHDeposited() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function whitelistEnabled() view returns (bool)",
+      "function whitelistedAddresses(address) view returns (bool)",
+      "function withdrawERC20(address _token)"
+    ],
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xEA6c9A14B96777a448687272bf0e6F6D9Ce0e68a": [
+      "constructor()",
+      "error AmountOfValidatorDetailsExceedsLimit()",
+      "error CannotAddDuplicatePubKey(bytes existingKey)",
+      "error CannotBeZeroAddress()",
+      "error CannotSetOperatorControllingAddressToSameAddress()",
+      "error CannotUpdateOperatorControllingAddressToAlreadyAssignedAddress()",
+      "error CannotUseDisabledOperator()",
+      "error InvalidArrayLengthOfZero()",
+      "error InvalidCallerToDeleteActiveValidators()",
+      "error InvalidMethodCall()",
+      "error InvalidPubKeyLength()",
+      "error InvalidPubKeySetupCaller()",
+      "error InvalidSignatureLength()",
+      "error MissingActiveValidatorDetails(bytes pubKey)",
+      "error MissingPendingValidatorDetails(bytes pubKey)",
+      "error NextOperatorPubKeyMismatch(bytes foundPubKey, bytes providedPubKey)",
+      "error NoOperatorFound(address operator)",
+      "error NoPubKeyFound(bytes pubKey)",
+      "error NoTokensToWithdraw()",
+      "error OperatorAlreadyDisabled()",
+      "error OperatorAlreadyEnabled()",
+      "error OperatorAlreadyExists(address operator)",
+      "error OperatorMethodsPaused()",
+      "error OperatorOutOfPendingKeys()",
+      "event ActivePubKeysDeleted(bytes[] pubKeys)",
+      "event Initialized(uint8 version)",
+      "event OperatorAdded(address operatorAddress, address rewardAddress)",
+      "event OperatorAddedValidatorDetails(address indexed operator, tuple(bytes pubKey, bytes signature)[] pubKeys)",
+      "event OperatorControllingAddressUpdated(address indexed oldControllingAddress, address indexed newControllingAddress)",
+      "event OperatorDisabled(address indexed operator)",
+      "event OperatorEnabled(address indexed operator)",
+      "event OperatorNameUpdated(address indexed operator, string newName, string oldName)",
+      "event OperatorRewardAddressUpdated(address indexed operator, address indexed newRewardAddress, address indexed oldRewardAddress)",
+      "event PendingPubKeysDeleted(bytes[] pubKeys)",
+      "event PubKeysUsedForValidatorSetup(bytes[] pubKeys)",
+      "function AccessControlManager() view returns (address)",
+      "function addNewValidatorDetails(tuple(bytes pubKey, bytes signature)[] _validatorDetails)",
+      "function addOperator(string _name, address _operatorAddress, address _rewardAddress)",
+      "function deleteActiveValidators(bytes[] _pubKeys)",
+      "function deletePendingValidators(bytes[] _pubKeys)",
+      "function disableOperator(address _operatorAddress)",
+      "function enableOperator(address _operatorAddress)",
+      "function getNextValidatorDetails(uint256 _numNewValidators) view returns (tuple(bytes pubKey, bytes signature)[] validatorDetails, uint256 foundValidators)",
+      "function getOperator(address _operatorAddress) view returns (tuple(bool enabled, address rewardAddress, address controllingAddress, string name, uint128 activeValidators) operator, uint128 totalValidatorDetails, uint128 operatorId)",
+      "function getOperatorForOperatorId(uint128) view returns (bool enabled, address rewardAddress, address controllingAddress, string name, uint128 activeValidators)",
+      "function getOperatorIdForAddress(address) view returns (uint128)",
+      "function getOperatorIdForPubKey(bytes) view returns (uint128)",
+      "function getOperatorsActiveValidatorDetails(address _operatorAddress) view returns (tuple(bytes pubKey, bytes signature)[] validatorDetails)",
+      "function getOperatorsPendingValidatorDetails(address _operatorAddress) view returns (tuple(bytes pubKey, bytes signature)[] validatorDetails)",
+      "function getPoRAddressList(uint256 _startIndex, uint256 _endIndex) view returns (string[])",
+      "function getPoRAddressListLength() view returns (uint256)",
+      "function getRewardDetailsForOperatorId(uint128 _operatorId) view returns (address rewardAddress, uint128 activeValidators)",
+      "function initialize(address _accessControlManager)",
+      "function numOperators() view returns (uint128)",
+      "function numPendingValidators() view returns (uint256)",
+      "function updateOperatorControllingAddress(address _operatorAddress, address _newOperatorAddress)",
+      "function updateOperatorName(address _operatorAddress, string _name)",
+      "function updateOperatorRewardAddress(address _operatorAddress, address _newRewardAddress)",
+      "function usePubKeysForValidatorSetup(bytes[] _pubKeys) returns (tuple(bytes pubKey, bytes signature)[] validatorDetails)",
+      "function withdrawERC20(address _token)"
+    ],
+    "eth:0xEeE6207D514c2845394b5F4b9F12B6D155F4524B": [
+      "constructor()",
+      "error BotMethodsPaused()",
+      "error CannotBeZeroAddress()",
+      "error InsufficientETHBalance()",
+      "error InvalidDepositDataRoot()",
+      "error InvalidMethodCall()",
+      "error NoPubKeysProvided()",
+      "error NoTokensToWithdraw()",
+      "error OnlySwEXITCanWithdrawETH()",
+      "event ETHReceived(address indexed from, uint256 amount)",
+      "event EthSent(address indexed to, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event ValidatorsSetup(bytes[] pubKeys)",
+      "function AccessControlManager() view returns (address)",
+      "function DepositContract() view returns (address)",
+      "function getWithdrawalCredentials() view returns (bytes withdrawalCredentials)",
+      "function initialize(address _accessControlManager)",
+      "function setupValidators(bytes[] _pubKeys, bytes32 _depositDataRoot)",
+      "function transferETHForWithdrawRequests(uint256 _amount)",
+      "function withdrawERC20(address _token)"
+    ],
+    "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": [
+      "constructor(uint256 initPrice, address paymentToken_, address paymentReceiver_, uint256 epochPeriod_, uint256 priceMultiplier_, uint256 minInitPrice_)",
+      "error DeadlinePassed()",
+      "error EmptyAssets()",
+      "error EpochIdMismatch()",
+      "error EpochPeriodBelowMin()",
+      "error EpochPeriodExceedsMax()",
+      "error InitPriceBelowMin()",
+      "error InitPriceExceedsMax()",
+      "error MaxPaymentTokenAmountExceeded()",
+      "error MinInitPriceBelowMin()",
+      "error MinInitPriceExceedsAbsMaxInitPrice()",
+      "error PaymentReceiverIsThis()",
+      "error PriceMultiplierBelowMin()",
+      "error PriceMultiplierExceedsMax()",
+      "error Reentrancy()",
+      "event Buy(address indexed buyer, address indexed assetsReceiver, uint256 paymentAmount)",
+      "function ABS_MAX_INIT_PRICE() view returns (uint256)",
+      "function ABS_MIN_INIT_PRICE() view returns (uint256)",
+      "function MAX_EPOCH_PERIOD() view returns (uint256)",
+      "function MAX_PRICE_MULTIPLIER() view returns (uint256)",
+      "function MIN_EPOCH_PERIOD() view returns (uint256)",
+      "function MIN_PRICE_MULTIPLIER() view returns (uint256)",
+      "function PRICE_MULTIPLIER_SCALE() view returns (uint256)",
+      "function buy(address[] assets, address assetsReceiver, uint256 epochId, uint256 deadline, uint256 maxPaymentTokenAmount) returns (uint256 paymentAmount)",
+      "function epochPeriod() view returns (uint256)",
+      "function getPrice() view returns (uint256)",
+      "function getSlot0() view returns (tuple(uint8 locked, uint16 epochId, uint192 initPrice, uint40 startTime))",
+      "function minInitPrice() view returns (uint256)",
+      "function paymentReceiver() view returns (address)",
+      "function paymentToken() view returns (address)",
+      "function priceMultiplier() view returns (uint256)"
+    ],
+    "eth:0xf951E335afb289353dc249e82926178EaC7DEd78": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "sweth/AccessControlManager": "0x408562bdcb31fc21e6931d8ade2f3a7d2b655c2dd19f9e2de0ace8661f3418a1",
+    "sweth/DepositManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "sweth/ExitQueue": "0x9acedcb11c0644b154ca8b05a4d2e203cd83d2969e2eeb5537846de9ba5765d8",
+    "sweth/FeeFlowController": "0xfb437da70b552ac8af529811583476c48c66a7ea3dd0867413ddf9388b104246",
+    "sweth/NodeOperatorRegistry": "0xee46d5fa604f5fbedc130ad80a6d52ddb770963be5359ac4ee68f7594512f758",
+    "sweth/ProxyOFT": "0xa5f20a59909b4e66291ba318b9f9e62e396b191bd6005c0c0c338cddacae58db",
+    "sweth/RepricingOracle": "0x26b6ef88839086a64195b8b238a3dc93e43c296f6e1b376e3d8f5abf5a2e45df",
+    "sweth/swETH": "0x4953de6ca06b4c68538e0c538f9142966a1e4055de2470dabb4b41cc56acde04",
+    "sweth/Timelock": "0x7c2f7bcdc529defadd9aa23ec93f9e053d90a74961474666e1b64019fab276c1"
+  },
+  "usedBlockNumbers": { "ethereum": 26434670 },
+  "permissionsConfigHash": "0x22267bd5fa273afbdd919d89217b3f2e2fa2c6ccaca204ae45dc646384315146",
+  "permissions": {
+    "eth:0x1fB72AA21FBA9045F5798Bd0c4452F0C2A474FF5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC",
+          "via": [
+            { "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7" }
+          ]
+        }
+      ]
+    },
+    "eth:0x20fDF47509C5eFC0e1101e3CE443691781C17F90": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5C6392A69dc11f254457716c682F70e4B2ed7B05",
+          "description": "set trusted remote contracts and LayerZero settings, which decide which messages can release the tokens locked here, with no delay.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "grant and revoke every role of the system except the bot role.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "lift any pause, with no delay.",
+          "role": ".unpauserAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "replace the token, exit queue, deposit manager, operator registry and treasury addresses that every contract resolves through this registry; set the reprice bounds, fees and withdrawal limits; enable the whitelist; grant or revoke the bot role.",
+          "role": ".platformAdminAC",
+          "via": [
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "report validator balances and rewards, which reprices the token within the token's per-update bound and mints the fee shares; process the exit queue up to any request; choose which node operators' next registered keys receive deposits and move ETH between the system's contracts.",
+          "role": ".botAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x48C11b86807627AF70a34662D4865cF854251663",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846" },
+            {
+              "address": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+              "delay": 604800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b",
+          "delay": 604800,
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x48C11b86807627AF70a34662D4865cF854251663",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb3D9cf8E163bbc840195a97E81F8A34E295B8f39",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf951E335afb289353dc249e82926178EaC7DEd78",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "remove validator records from the operator registry, which changes how operator fees are split; no ETH moves.",
+          "role": ".deleteActiveValidatorsAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "report validator balances and rewards, which reprices the token within the token's per-update bound and mints the fee shares; process the exit queue up to any request; choose which node operators' next registered keys receive deposits and move ETH between the system's contracts.",
+          "role": ".botAC"
+        }
+      ]
+    },
+    "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC"
+        }
+      ]
+    },
+    "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "remove validator records from the operator registry, which changes how operator fees are split; no ETH moves.",
+          "role": ".deleteActiveValidatorsAC"
+        }
+      ]
+    },
+    "eth:0xF14E35C4F1E51BF7Ed930813eCD2e2dA1fc86072": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC",
+          "via": [
+            { "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7" }
+          ]
+        }
+      ]
+    },
+    "eth:0xb7f6C2088F2c2B0C8fb40ff64a231D333FBC9e19": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC",
+          "via": [
+            { "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7" }
+          ]
+        }
+      ]
+    },
+    "eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x25EAf579cA2255fAA5463c635eec28697b5b8846",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "grant and revoke every role of the system except the bot role.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "replace the token, exit queue, deposit manager, operator registry and treasury addresses that every contract resolves through this registry; set the reprice bounds, fees and withdrawal limits; enable the whitelist; grant or revoke the bot role.",
+          "role": ".platformAdminAC"
+        }
+      ]
+    },
+    "eth:0xd08b294dBD8Bc760c57AbdEC26515Da626511B40": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC",
+          "via": [
+            { "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7" }
+          ]
+        }
+      ]
+    },
+    "eth:0xe75f3f38679335F6e1787d25059fD3E07B70F27d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x625087d72c762254a72CB22cC2ECa40da6b95EAC",
+          "description": "pause deposits, bot functions, operator functions and withdrawals, including claims of processed exit requests, with no delay.",
+          "role": ".pauserAC",
+          "via": [
+            { "address": "eth:0x6ad7cFCDA2CE9d9B9d310dEcB4bc16f200d3DfD7" }
+          ]
+        }
+      ]
+    }
+  }
+}

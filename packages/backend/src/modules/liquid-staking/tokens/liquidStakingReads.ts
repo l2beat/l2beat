@@ -8,6 +8,7 @@ import { getEtherFiReads } from './protocols/etherfi'
 import { getLidoReads } from './protocols/lido'
 import { getRocketPoolReads } from './protocols/rocketpool'
 import { getStakeWiseReads } from './protocols/stakewise'
+import { getSwethReads } from './protocols/sweth'
 import type { LiquidStakingState, ProtocolReads } from './protocols/types'
 import { getWbethReads } from './protocols/wbeth'
 
@@ -104,5 +105,7 @@ function getProtocolReads(
       return getCbethReads(contracts)
     case 'stakewise':
       return getStakeWiseReads(contracts, blockNumber)
+    case 'sweth':
+      return getSwethReads(contracts, blockNumber)
   }
 }

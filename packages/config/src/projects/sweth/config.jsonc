@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "sweth",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 80,
+  "initialAddresses": [
+    "eth:0xf951E335afb289353dc249e82926178EaC7DEd78", // swETH
+    "eth:0x5c6392a69dc11f254457716c682f70e4b2ed7b05" // SwETHProxyOFT
+  ],
+  "names": {
+    "eth:0x20fdf47509c5efc0e1101e3ce443691781c17f90": "Swell Multisig",
+    "eth:0x6ad7cfcda2ce9d9b9d310decb4bc16f200d3dfd7": "Swell Pauser Multisig",
+    "eth:0x9522FFF064bCb2f319c330A72ee57195775168bC": "Swell Operations Multisig"
+  },
+  // The fee auction's payment token (SWELL) is not part of the LST.
+  "overrides": {
+    "eth:0xf17b581496bc2669ce0931FAcAA1ADe35029E85D": {
+      "ignoreRelatives": ["paymentToken"]
+    }
+  }
+}

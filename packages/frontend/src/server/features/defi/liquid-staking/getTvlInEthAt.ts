@@ -61,6 +61,7 @@ export const TVL_TOKENS: Record<
   cbeth: { symbol: 'cbETH', rebasing: false },
   wbeth: { symbol: 'wBETH', rebasing: false },
   stakewise: { symbol: 'osETH', rebasing: false },
+  sweth: { symbol: 'swETH', rebasing: false },
 }
 
 export interface TvlToken {
