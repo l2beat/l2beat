@@ -1,6 +1,6 @@
 import { assert, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readdirSync, readFileSync } from 'fs'
 import path from 'path'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import type { DiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
@@ -12,7 +12,7 @@ export const WATCHED_FILE = 'watched.json'
 
 export interface WatchLocation {
   name: string
-  kind: 'project'
+  kind: 'project' | 'global'
   path: string
 }
 
@@ -48,11 +48,22 @@ export class WatchReader {
   private readonly locations: Map<string, WatchLocation>
 
   constructor(
-    paths: Pick<DiscoveryPaths, 'discovery'>,
+    paths: Pick<DiscoveryPaths, 'discovery' | 'watches'>,
     private readonly templates: Record<string, WatchTemplate>,
   ) {
+    const configReader = new ConfigReader(paths.discovery)
+    const projectPaths = configReader.enumerateProjectDirectories()
+    const projectNames = new Set(projectPaths.map((p) => path.basename(p)))
     this.locations = new Map()
-    for (const location of findProjectWatches(paths.discovery)) {
+    for (const location of findProjectWatches(configReader, projectPaths)) {
+      this.locations.set(location.name, location)
+    }
+    for (const location of findGlobalWatches(paths.watches)) {
+      assert(
+        !projectNames.has(location.name),
+        'Global watch named like a project',
+        { name: location.name },
+      )
       this.locations.set(location.name, location)
     }
   }
@@ -122,12 +133,14 @@ export function readWatchedFile(file: string): Watched | undefined {
   if (!existsSync(file)) {
     return undefined
   }
-  const parsed = WatchedFile.safeValidate(
-    JSON.parse(readFileSync(file, 'utf-8')),
-  )
+  return parseWatched(readFileSync(file, 'utf-8'))
+}
+
+export function parseWatched(text: string): Watched {
+  const parsed = WatchedFile.safeValidate(JSON.parse(text))
   if (!parsed.success) {
     throw new Error('Invalid watched.json', {
-      cause: { file, message: parsed.message },
+      cause: { message: parsed.message },
     })
   }
   return {
@@ -136,10 +149,12 @@ export function readWatchedFile(file: string): Watched | undefined {
   }
 }
 
-function findProjectWatches(projectsPath: string): WatchLocation[] {
-  const configReader = new ConfigReader(projectsPath)
+function findProjectWatches(
+  configReader: ConfigReader,
+  projectPaths: string[],
+): WatchLocation[] {
   const locations: WatchLocation[] = []
-  for (const projectPath of configReader.enumerateProjectDirectories()) {
+  for (const projectPath of projectPaths) {
     if (!existsSync(path.join(projectPath, WATCH_CONFIG_FILE))) {
       continue
     }
@@ -153,6 +168,26 @@ function findProjectWatches(projectsPath: string): WatchLocation[] {
       continue
     }
     locations.push({ name, kind: 'project', path: projectPath })
+  }
+  return locations
+}
+
+function findGlobalWatches(watchesPath: string): WatchLocation[] {
+  if (!existsSync(watchesPath)) {
+    return []
+  }
+  const locations: WatchLocation[] = []
+  for (const entry of readdirSync(watchesPath, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith('_')) {
+      continue
+    }
+    const watchPath = path.join(watchesPath, entry.name)
+    assert(
+      existsSync(path.join(watchPath, WATCH_CONFIG_FILE)),
+      'Global watch without watch.jsonc',
+      { name: entry.name },
+    )
+    locations.push({ name: entry.name, kind: 'global', path: watchPath })
   }
   return locations
 }

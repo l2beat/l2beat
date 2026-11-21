@@ -162,6 +162,7 @@ export { countPendingItems, stripPendingItems } from './watch/pendingItems'
 export { runWatch } from './watch/runWatch'
 export { WATCH_TEMPLATES } from './watch/templates'
 export {
+  parseWatched,
   readWatchedFile,
   WATCH_CONFIG_FILE,
   WATCHED_FILE,

@@ -44,20 +44,47 @@ describe(WatchReader.name, () => {
       '/projects/invalid/watch.jsonc': watchJsonc({
         a: { template: 'page', params: { url: 1 } },
       }),
+      '/watches/ossification/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/watches/_drafts/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
     })
   })
 
   afterEach(() => mockFs.restore())
 
-  const reader = () => new WatchReader({ discovery: '/projects' }, TEMPLATES)
+  const PATHS = { discovery: '/projects', watches: '/watches' }
+  const reader = () => new WatchReader(PATHS, TEMPLATES)
 
-  it('lists project watches, skipping archived and _ directories', () => {
+  it('lists project and global watches, skipping archived and _ directories', () => {
     expect(reader().readAllWatches()).toEqual([
       { name: 'alpha', kind: 'project', path: '/projects/alpha' },
       { name: 'invalid', kind: 'project', path: '/projects/invalid' },
       { name: 'near', kind: 'project', path: '/projects/near' },
+      { name: 'ossification', kind: 'global', path: '/watches/ossification' },
       { name: 'unknown', kind: 'project', path: '/projects/unknown' },
     ])
+  })
+
+  it('works without a global watches directory', () => {
+    const projectsOnly = { discovery: '/projects', watches: '/missing' }
+    const names = new WatchReader(projectsOnly, TEMPLATES)
+      .readAllWatches()
+      .map((location) => location.name)
+    expect(names).toEqual(['alpha', 'invalid', 'near', 'unknown'])
+  })
+
+  it('rejects a global watch named like a project directory', () => {
+    mockFs({
+      '/projects/beta/config.jsonc': configJsonc('beta'),
+      '/watches/beta/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+    })
+    expect(reader).toThrow('Global watch named like a project')
+  })
+
+  it('resolves a global watch by name like a project watch', () => {
+    expect(reader().getWatchPath('ossification')).toEqual(
+      '/watches/ossification',
+    )
+    expect(reader().readWatchConfig('ossification').watches.length).toEqual(1)
   })
 
   it('parses watch.jsonc sorted by key with validated params', () => {

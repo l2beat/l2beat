@@ -1,0 +1,20 @@
+{
+  "watches": {
+    "dataset": {
+      "template": "ossificationLeads",
+      "params": {
+        // Switch to { "knownUrl": "https://l2beat.github.io/ossification-dataset/known.json" }
+        // once the dataset publishes known.json; the watched value stays the same.
+        "dataset": {
+          "tarballUrl": "https://codeload.github.com/l2beat/ossification-dataset/tar.gz/refs/heads/main"
+        },
+        "defiHackLabs": {
+          "repository": "SunWeb3Sec/DeFiHackLabs",
+          "branch": "main",
+          "pathPrefix": "src/test/",
+          "sinceMonth": "2026-01"
+        }
+      }
+    }
+  }
+}
