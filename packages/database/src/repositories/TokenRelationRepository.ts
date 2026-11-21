@@ -186,6 +186,19 @@ function toRoute(
   }
 }
 
+function routeKey(
+  row: Pick<Selectable<TokenRelation>, (typeof ROUTE_COLUMNS)[number]>,
+): string {
+  return [
+    row.tokenAChain,
+    row.tokenAAddress,
+    row.tokenBChain,
+    row.tokenBAddress,
+    row.plugin,
+    row.bridgeType,
+  ].join(':')
+}
+
 // Keeps each query's composite-key tuple list small enough to avoid
 // overflowing both the Kysely query compiler and the Postgres parser stack.
 const BATCH_SIZE = 1000
@@ -325,6 +338,52 @@ export class TokenRelationRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  /**
+   * Routes mentioning any of the tokens, on either endpoint. One indexed
+   * lookup per endpoint side instead of `getRelationsFor` once per token, so
+   * a holder's hundreds of tokens cost two queries per batch.
+   */
+  async getRoutesForTokens(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<TokenRelationRoute[]> {
+    const rows: Pick<
+      Selectable<TokenRelation>,
+      (typeof ROUTE_COLUMNS)[number]
+    >[] = []
+
+    await this.batch(tokens, BATCH_SIZE, async (batch) => {
+      const keys = batch.map((token) => ({
+        chain: token.chain,
+        address: token.address.toLowerCase(),
+      }))
+      rows.push(
+        ...(await this.db
+          .selectFrom('TokenRelation')
+          .select(ROUTE_COLUMNS)
+          .where((eb) =>
+            eb.or([
+              eb(
+                eb.refTuple('tokenAChain', 'tokenAAddress'),
+                'in',
+                keys.map((key) => eb.tuple(key.chain, key.address)),
+              ),
+              eb(
+                eb.refTuple('tokenBChain', 'tokenBAddress'),
+                'in',
+                keys.map((key) => eb.tuple(key.chain, key.address)),
+              ),
+            ]),
+          )
+          .execute()),
+      )
+    })
+
+    // A route joining two tokens of one batch matches both sides once, but a
+    // route joining tokens of two batches comes back from each of them.
+    const unique = new Map(rows.map((row) => [routeKey(row), row]))
+    return [...unique.values()].map(toRoute)
   }
 
   /**

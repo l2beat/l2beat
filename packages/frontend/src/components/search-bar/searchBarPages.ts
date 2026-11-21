@@ -114,6 +114,16 @@ export const searchBarPages = withIndex([
         },
       ]
     : []),
+  ...(env.CLIENT_SIDE_INSIGHT_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Insight',
+          tags: ['pages', 'insight', 'wallet', 'address', 'holdings', 'tokens'],
+          href: '/insight',
+        },
+      ]
+    : []),
   ...(env.CLIENT_SIDE_BLOBS_PAGE
     ? [
         {

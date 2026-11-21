@@ -5,6 +5,7 @@ import { BlobsIcon } from '~/icons/pages/Blobs'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { CropsIcon } from '~/icons/pages/Crops'
 import { HomeIcon } from '~/icons/pages/Home'
+import { InsightIcon } from '~/icons/pages/Insight'
 import { L2Icon } from '~/icons/pages/L2'
 import { LiquidStakingIcon } from '~/icons/pages/LiquidStaking'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
@@ -202,6 +203,19 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/tokens',
     icon: (
       <TokensIcon
+        className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
+        aria-hidden
+      />
+    ),
+  },
+  env.CLIENT_SIDE_INSIGHT_PAGE && {
+    type: 'single',
+    section: 'more',
+    title: 'Insight',
+    match: 'insight',
+    href: '/insight',
+    icon: (
+      <InsightIcon
         className="transition-colors duration-300 group-data-[active=true]:stroke-nav-active"
         aria-hidden
       />

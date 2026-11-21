@@ -20,6 +20,7 @@ import { createGardenRouter } from './garden/GardenRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
+import { createInsightRouter } from './insight/InsightRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createL2Router } from './layer2s/L2Router'
 import { createMandateRouter } from './mandate/MandateRouter'
@@ -61,6 +62,7 @@ export function createServerPageRouter(
     createL2Router,
     createInteropRouter,
     createTokensRouter,
+    createInsightRouter,
     createEthereumProjectRouter,
     // After Ethereum's router: it owns /projects/ethereum.
     createChainProjectRouter,

@@ -3,6 +3,7 @@ import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { defiRouter } from './routers/defi'
+import { insightRouter } from './routers/insight'
 import { interopRouter } from './routers/interop'
 import { livenessRouter } from './routers/liveness'
 import { privacyRouter } from './routers/privacy'
@@ -22,6 +23,7 @@ export const appRouter = router({
   tvs: tvsRouter,
   da: daRouter,
   defi: defiRouter,
+  insight: insightRouter,
   liveness: livenessRouter,
   projects: projectsRouter,
   searchBar: searchBarRouter,
