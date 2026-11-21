@@ -1,16 +1,6 @@
-// Address format following ERC-3770
-// https://eips.ethereum.org/EIPS/eip-3770
-// Format: "shortName:address"
-// Semantics:
-// - shortName is mandatory and MUST be a valid chain short name from https://github.com/ethereum-lists/chains
-// - address is mandatory and MUST be a ERC-55 compatible hexadecimal address
-// WARNING: currently shortName is not verified against the list of chains
-
 import { validateAddress } from '@mradomski/tinyerc55'
 import { EthereumAddress } from './EthereumAddress.js'
 
-// NOTE(radomski): This is a little stupid. Ideally we would have a centralized
-// list of all chains with their short names. But currently I don't know how to achieve that.
 const SHORT_TO_LONG_CHAIN_NAMES = {
   eth: 'ethereum',
   abstract: 'abstract',
@@ -93,8 +83,6 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
   return parsed
 }
 
-// The chain name is checked first because it is far cheaper than the ERC-55
-// checksum, and callers reject non-addresses in bulk.
 ChainSpecificAddress.tryParse = function tryParse(
   value: string,
 ): ChainSpecificAddress | undefined {

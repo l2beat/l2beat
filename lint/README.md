@@ -10,6 +10,14 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 
 The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too.
 
+## Comments
+
+Code comments are banned, for the reasons in [ADR 1](../docs/adr/0001-decisions-live-in-adrs-not-comments.md). Grit cannot see comments, so this rule is a script, `noComments.mts`, which reads them with the oxc parser that ships in `rolldown`. It runs as `pnpm lint:comments` in the Typecheck job of CI.
+
+It is a ratchet. `noComments.baseline.json` holds how many comments each file had when the rule landed, and the check fails when a file has more. When you delete comments, run `pnpm lint:comments --update` to lower the baseline, or the check fails until you do. `--update` never raises a count. `pnpm lint:comments --list <path>` prints every comment under a path. Comments that tools read, such as `biome-ignore` and `@ts-expect-error`, do not count.
+
+To clear a package, run the `/delete-comment` skill (`.agents/skills/delete-comment`).
+
 ## Adding a rule
 
 1. Write `lint/<ruleName>.grit`. Make the message say what to write instead and why.

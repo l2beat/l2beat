@@ -171,6 +171,9 @@ importers:
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
+      rolldown:
+        specifier: 1.2.18
+        version: 1.2.18
       tsx:
         specifier: ^4.23.0
         version: 4.23.15

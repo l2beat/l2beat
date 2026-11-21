@@ -8049,7 +8049,6 @@ describe('disasmEVM EIP-8024', () => {
     )
   })
 
-  // Test vectors from the EIP-8024 spec
   it('decodes a disallowed immediate as the next instruction', () => {
     const bytecode = Bytes.fromHex('0xe6605be75be852')
 

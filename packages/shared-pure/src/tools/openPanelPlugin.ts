@@ -1,8 +1,3 @@
-// Minimal subset of Vite's Plugin / HtmlTagDescriptor types.
-// We type-define them locally to avoid pulling Vite as a dependency.
-// They are structurally compatible with the real Vite types
-// so consumers can pass the returned plugin into vite's `plugins: []`.
-
 interface HtmlTagDescriptor {
   tag: string
   attrs?: Record<string, string | boolean>

@@ -2,8 +2,6 @@ const YEAR_3000_TIMESTAMP = Math.floor(
   new Date('3000-01-01T00:00:00.000Z').getTime() / 1000,
 )
 
-// Note: This could've been a branded type, but then using it would be very cumbersome
-// Because it's not branded it's less about safety and more about utilities for working with time
 export type UnixTime = number
 export type UnixTimePeriod = 'day' | 'hour' | 'minute' | 'six hours'
 

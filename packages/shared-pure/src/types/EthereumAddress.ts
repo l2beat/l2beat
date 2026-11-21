@@ -15,8 +15,6 @@ export function EthereumAddress(value: string): EthereumAddress {
   return parsed
 }
 
-// For callers that ask "is this an address?" about values that are usually not
-// one. Throwing that answer makes the common path pay for a stack capture.
 EthereumAddress.tryParse = function tryParse(
   value: string,
 ): EthereumAddress | undefined {

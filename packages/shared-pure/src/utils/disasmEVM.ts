@@ -1,6 +1,5 @@
 import type { Bytes } from '../types/Bytes.js'
 
-// Reference: https://www.evm.codes/
 const OPCODES: Record<number, string> = {
   0x00: 'STOP',
   0x01: 'ADD',
@@ -88,7 +87,6 @@ const OPCODES: Record<number, string> = {
   0xff: 'SELFDESTRUCT',
 }
 
-// PUSH1-PUSH32 (0x60-0x7f), DUP1-DUP16 (0x80-0x8f), SWAP1-SWAP16 (0x90-0x9f), LOG0-LOG4 (0xa0-0xa4)
 for (let i = 0; i < 32; i++) OPCODES[0x60 + i] = `PUSH${i + 1}`
 for (let i = 0; i < 16; i++) OPCODES[0x80 + i] = `DUP${i + 1}`
 for (let i = 0; i < 16; i++) OPCODES[0x90 + i] = `SWAP${i + 1}`
@@ -98,7 +96,7 @@ export interface Instruction {
   offset: number
   opcode: number
   mnemonic: string
-  immediate?: string // hex string for PUSH1-32, DUPN, SWAPN and EXCHANGE
+  immediate?: string
 }
 
 export function disasmEVM(bytecode: Bytes): Instruction[] {
@@ -143,7 +141,6 @@ function getMnemonic(code: Buffer, offset: number): string {
 
 function getImmediateLength(code: Buffer, offset: number): number {
   const opcode = code[offset]
-  // PUSH1 (0x60) through PUSH32 (0x7f)
   if (opcode >= 0x60 && opcode <= 0x7f) {
     return opcode - 0x5f
   }
@@ -156,15 +153,10 @@ function getImmediateLength(code: Buffer, offset: number): number {
   return 0
 }
 
-// EIP-8024: DUPN (0xe6), SWAPN (0xe7), EXCHANGE (0xe8)
 function isEIP8024Opcode(opcode: number): boolean {
   return opcode >= 0xe6 && opcode <= 0xe8
 }
 
-// JUMPDEST analysis does not skip EIP-8024 immediates, so the spec forbids
-// JUMPDEST and PUSH1-32 there (EXCHANGE's range starts lower, at 0x52). Such
-// a byte starts the next instruction, which keeps the disassembly aligned
-// with JUMPDEST analysis.
 function hasDisallowedImmediate(code: Buffer, offset: number): boolean {
   const opcode = code[offset]
   if (!isEIP8024Opcode(opcode)) {

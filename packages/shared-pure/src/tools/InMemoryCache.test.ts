@@ -80,7 +80,6 @@ describe(InMemoryCache.name, () => {
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
         const fallback = mockFn().resolvesTo('fresh')
 
-        // First call should return stale data and trigger revalidation
         const result1 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
           fallback,
@@ -89,17 +88,15 @@ describe(InMemoryCache.name, () => {
         expect(result1).toEqual('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
-        // Wait for background revalidation to complete
         await new Promise((resolve) => setTimeout(resolve, 10))
 
-        // Second call should return fresh data
         const result2 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
           fallback,
         )
 
         expect(result2).toEqual('fresh')
-        expect(fallback).toHaveBeenCalledTimes(1) // Still only called once
+        expect(fallback).toHaveBeenCalledTimes(1)
       })
 
       it('should not serve stale data if beyond stale-while-revalidate window', async () => {
@@ -143,10 +140,8 @@ describe(InMemoryCache.name, () => {
         expect(result3).toEqual('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
-        // Wait for background revalidation
         await new Promise((resolve) => setTimeout(resolve, 10))
 
-        // Next request should get fresh data
         const result4 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
           fallback,
@@ -160,7 +155,6 @@ describe(InMemoryCache.name, () => {
         const now = UnixTime.now()
         const cache = new InMemoryCache({})
 
-        // Populate cache with entries that have known maxLifetime
         cache._set(['fresh'], {
           result: 'fresh',
           timestamp: now,
@@ -184,7 +178,6 @@ describe(InMemoryCache.name, () => {
         expect(cache._get(['expired1'])).not.toEqual(undefined)
         expect(cache._get(['expired2'])).not.toEqual(undefined)
 
-        // Trigger a get — sweep should remove expired entries
         await cache.get({ key: ['other'], ttl: 1000 }, async () => 'result')
 
         expect(cache._get(['fresh'])).not.toEqual(undefined)
@@ -205,7 +198,6 @@ describe(InMemoryCache.name, () => {
         cache._set(['key'], { result: 'stale', timestamp: now - 2000 })
         const fallback = mockFn().rejectsWith(new Error('Revalidation failed'))
 
-        // First call should return stale data and trigger revalidation
         const result1 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
           fallback,
@@ -214,7 +206,6 @@ describe(InMemoryCache.name, () => {
         expect(result1).toEqual('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
-        // Wait for background revalidation to fail
         await new Promise((resolve) => setTimeout(resolve, 10))
 
         expect(logger.warn).toHaveBeenCalledTimes(1)
@@ -226,7 +217,6 @@ describe(InMemoryCache.name, () => {
           'Revalidation failed',
         )
 
-        // Next request should still get stale data since revalidation failed
         const result2 = await cache.get(
           { key: ['key'], ttl: 1000, staleWhileRevalidate: 5000 },
           fallback,
@@ -310,8 +300,6 @@ describe(InMemoryCache.name, () => {
 
       it('should reject a key part that is not a string', async () => {
         const cache = new InMemoryCache({})
-        // Express hands an array to `?tab[]=a&tab[]=b`, which the declared
-        // type forbids but cannot prevent.
         const tampered = ['a', 'b'] as unknown as string
 
         await expect(

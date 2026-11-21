@@ -15,7 +15,7 @@ describe(slidingWindow.name, () => {
     })
 
     it('should handle multibyte characters correctly', () => {
-      const input = '😀😁😂😃😄😅😆' // Unicode emojis
+      const input = '😀😁😂😃😄😅😆'
       const result = slidingWindow(Array.from(input), 3, 1)
       expect(result).toEqual([
         ['😀', '😁', '😂'],
@@ -72,7 +72,7 @@ describe(slidingWindow.name, () => {
     it('should reset and return slices from the beginning', () => {
       const arr = 'abcdefg'.split('')
       const result1 = slidingWindow(arr, 3, 3)
-      const result2 = slidingWindow(arr, 3, 3) // Reset by calling the function again
+      const result2 = slidingWindow(arr, 3, 3)
 
       expect(result1).toEqual([['a', 'b', 'c'], ['d', 'e', 'f'], ['g']])
 

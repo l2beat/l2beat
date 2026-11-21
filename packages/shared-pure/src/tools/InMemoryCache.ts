@@ -2,7 +2,6 @@ import { UnixTime } from '../types/UnixTime.js'
 
 const PROMISE_TIMEOUT = 30
 
-// Not a digit, so it can never be read as the length prefix of a string part.
 const ABSENT_KEY_PART = '-'
 
 type Logger = {
@@ -61,13 +60,11 @@ export class InMemoryCache {
 
     this.sweep(now)
 
-    // If we have a result and it's not expired, return it immediately
     if (result && result.timestamp + options.ttl > now) {
       this.logger?.info('Cache hit', { key })
       return result.result as T
     }
 
-    // If we have stale data and staleWhileRevalidate is enabled
     if (
       result &&
       options.staleWhileRevalidate &&
@@ -78,7 +75,6 @@ export class InMemoryCache {
       return result.result as T
     }
 
-    // If no valid data exists, wait for fresh data
     const existingPromise = this.inFlight.get(key)
     if (
       existingPromise &&
@@ -132,7 +128,6 @@ export class InMemoryCache {
     try {
       this.store(key, await promise, options, startedAt)
     } catch (error) {
-      // If revalidation fails, we keep the stale data
       this.logger?.warn('Cache revalidation failed', {
         key,
         error,
@@ -156,10 +151,6 @@ export class InMemoryCache {
       }
     }
 
-    // A fallback that outlived promiseTimeout may settle after a newer one
-    // for the same key. Its data is older, so it must not replace what the
-    // newer fallback stored. It is still worth keeping when nothing newer
-    // made it into the cache, e.g. because the newer fallback failed.
     const existing = this.cache.get(key)
     if (existing && existing.timestamp >= startedAt) {
       return false
@@ -174,8 +165,6 @@ export class InMemoryCache {
   }
 
   private sweep(now: number) {
-    // Timestamps are whole seconds, so a second sweep within the same second
-    // cannot find anything the first one did not.
     if (now === this.lastSweptAt) {
       return
     }
@@ -199,11 +188,6 @@ export class InMemoryCache {
     this.cache.set(this.getKey(key), value)
   }
 
-  // Length-prefixed so that no combination of key parts can produce the same
-  // string as a different combination. A length prefix only delimits the part
-  // it precedes if the part really is a string, so a part that is not one is
-  // rejected here instead of being folded into an ambiguous key. Key parts
-  // often come from HTTP request parameters, which TypeScript cannot check.
   private getKey(key: (string | null | undefined)[]) {
     let encoded = ''
     for (const part of key) {

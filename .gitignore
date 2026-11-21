@@ -7,8 +7,11 @@ yarn-error.log
 
 # AI stuff
 .codex
-.claude
-.agents
+# Repo skills live in .agents/skills, linked from .claude/skills.
+.claude/*
+!.claude/skills/
+.agents/*
+!.agents/skills/
 AGENTS.local.md
 .ocx
 .opencode

@@ -11,9 +11,9 @@ export type ShouldRetry = (
 
 interface ExponentialBackOffOpts {
   stepMs: number
-  maxAttempts: number // use Infinity for indefinite retries
-  maxDistanceMs: number // use Infinity for unlimited distance
-  notifyAfterAttempts: number // use Infinity to avoid notifications
+  maxAttempts: number
+  maxDistanceMs: number
+  notifyAfterAttempts: number
 }
 
 export function exponentialBackOff(opts: ExponentialBackOffOpts): ShouldRetry {
@@ -33,7 +33,7 @@ export function exponentialBackOff(opts: ExponentialBackOffOpts): ShouldRetry {
     if (attempts === maxAttempts) {
       return {
         shouldStop: true,
-        notify: false, // no need to notify, the error after stop will be sent
+        notify: false,
       }
     }
 
