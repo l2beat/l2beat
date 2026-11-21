@@ -24,7 +24,7 @@ interface Props {
   /** Drawn smaller after the figure, e.g. "UOPS". */
   unit?: string
   /** Meta after the figure, e.g. "past day". */
-  valueLabel?: string
+  valueLabel?: ReactNode
   /** Ratio over the chart's range, e.g. 0.12 for +12%. Hidden unless finite. */
   change?: number
   /** Written after the change, e.g. "1y". */
