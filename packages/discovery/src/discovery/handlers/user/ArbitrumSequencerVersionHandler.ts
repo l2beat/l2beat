@@ -16,9 +16,15 @@ export type ArbitrumSequencerVersionDefinition = v.infer<
 >
 export const ArbitrumSequencerVersionDefinition = v.strictObject({
   type: v.literal('arbitrumSequencerVersion'),
+  // Also read batches delivered with the SeparateBatchEvent data location,
+  // whose data the SequencerInbox emits in a SequencerBatchData event (e.g.
+  // Espresso batches with a CAS certificate, which the event carries without
+  // the certificate).
+  includeSeparateBatchEvent: v.boolean().optional(),
 })
 
 const DATA_LOCATION_IN_TX = 0
+const DATA_LOCATION_SEPARATE_BATCH_EVENT = 1
 const DATA_LOCATION_IN_BLOBS = 3
 
 const addSequencerBatchV1 =
@@ -32,6 +38,7 @@ const addSequencerBatchEspresso =
 
 const abi = new utils.Interface([
   'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64, uint64, uint64, uint64) timeBounds, uint8 dataLocation)',
+  'event SequencerBatchData(uint256 indexed batchSequenceNumber, bytes data)',
   `function ${addSequencerBatchV1}`,
   `function ${addSequencerBatchV2}`,
   `function ${addSequencerBatchV3}`,
@@ -76,10 +83,17 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     assert(decoded.name === 'SequencerBatchDelivered', 'Unexpected event name')
     const isInTx = decoded.args.dataLocation === DATA_LOCATION_IN_TX
     const isInBlobs = decoded.args.dataLocation === DATA_LOCATION_IN_BLOBS
-    assert(isInTx || isInBlobs, 'Unexpected data location')
+    const isInEvent = this.readsSeparateBatchEvent(decoded.args.dataLocation)
+    assert(isInTx || isInBlobs || isInEvent, 'Unexpected data location')
 
     let versionByte: string | undefined
-    if (isInTx) {
+    if (isInEvent) {
+      versionByte = await this.getVersionByteFromBatchDataEvent(
+        provider,
+        address,
+        lastEvent,
+      )
+    } else if (isInTx) {
       const decodedFunction = this.decodeCalldata(tx.data)
       versionByte = Bytes.fromHex(decodedFunction[1] as string)
         .slice(0, 1)
@@ -213,12 +227,57 @@ export class ArbitrumSequencerVersionHandler implements Handler {
 
         const isInTx = decoded.args.dataLocation === DATA_LOCATION_IN_TX
         const isInBlobs = decoded.args.dataLocation === DATA_LOCATION_IN_BLOBS
-        if (isInTx || isInBlobs) {
+        const isInEvent = this.readsSeparateBatchEvent(
+          decoded.args.dataLocation,
+        )
+        if (isInTx || isInBlobs || isInEvent) {
           return last
         }
       }
     }
 
     return undefined
+  }
+
+  readsSeparateBatchEvent(dataLocation: number): boolean {
+    return (
+      this.definition.includeSeparateBatchEvent === true &&
+      dataLocation === DATA_LOCATION_SEPARATE_BATCH_EVENT
+    )
+  }
+
+  async getVersionByteFromBatchDataEvent(
+    provider: IProvider,
+    address: ChainSpecificAddress,
+    deliveredEvent: providers.Log,
+  ): Promise<string> {
+    const rawAddress = ChainSpecificAddress.address(address)
+    const batchTopic = deliveredEvent.topics[1]
+    assert(batchTopic !== undefined, 'Batch sequence number is expected')
+    const blockNumber = deliveredEvent.blockNumber
+    const logs = await provider.raw(
+      `arbitrum_sequencer_batch_data.${rawAddress}.${blockNumber}.${batchTopic}`,
+      async ({ eventProvider }, logger) => {
+        return await rpcWithRetries(
+          async () => {
+            return await eventProvider.getLogs({
+              address: rawAddress.toString(),
+              topics: [abi.getEventTopic('SequencerBatchData'), batchTopic],
+              fromBlock: blockNumber,
+              toBlock: blockNumber,
+            })
+          },
+          logger,
+          `getLogs SequencerBatchData ${rawAddress.toString()} ${blockNumber}`,
+        )
+      },
+    )
+
+    const log = logs.find(
+      (l) => l.transactionHash === deliveredEvent.transactionHash,
+    )
+    assert(log !== undefined, 'No SequencerBatchData event found')
+    const data = abi.parseLog(log).args.data as string
+    return Bytes.fromHex(data).slice(0, 1).toString()
   }
 }
