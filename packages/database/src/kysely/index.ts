@@ -21,7 +21,10 @@ export type QueryBuilder = Omit<Kysely<DB>, 'transaction'>
 
 export class DatabaseClient {
   private readonly kysely: Kysely<DB>
-  private context = new AsyncLocalStorage<Transaction>()
+  private context = new AsyncLocalStorage<{
+    trx: Transaction
+    isolationLevel?: IsolationLevel
+  }>()
 
   constructor({ log, ...config }: PoolConfig & { log?: LogConfig }) {
     this.kysely = new Kysely<DB>({
@@ -33,23 +36,35 @@ export class DatabaseClient {
   }
 
   get db(): QueryBuilder {
-    const transaction = this.context.getStore()
-    return transaction ?? this.kysely
+    return this.context.getStore()?.trx ?? this.kysely
   }
 
-  transaction<T>(
+  // Runs cb once. A failed transaction is never retried here, so a
+  // serialization failure (SQLSTATE 40001) reaches the caller.
+  async transaction<T>(
     cb: () => Promise<T>,
     isolationLevel?: IsolationLevel,
   ): Promise<T> {
-    if (this.db.isTransaction) {
-      // TODO: consider checking for isolation levels in the future
+    const outer = this.context.getStore()
+    if (outer) {
+      if (
+        isolationLevel !== undefined &&
+        isolationLevel !== outer.isolationLevel
+      ) {
+        throw new Error('Nested transaction asks for another isolation level', {
+          cause: { outer: outer.isolationLevel, nested: isolationLevel },
+        })
+      }
       return cb()
     }
-    const tx = this.kysely.transaction()
-    if (isolationLevel !== undefined) {
-      tx.setIsolationLevel(isolationLevel)
-    }
-    return tx.execute((trx) => this.context.run(trx, cb))
+    // setIsolationLevel returns a new builder, leaving the one it is called on
+    const tx =
+      isolationLevel === undefined
+        ? this.kysely.transaction()
+        : this.kysely.transaction().setIsolationLevel(isolationLevel)
+    return await tx.execute((trx) =>
+      this.context.run({ trx, isolationLevel }, cb),
+    )
   }
 
   close() {
