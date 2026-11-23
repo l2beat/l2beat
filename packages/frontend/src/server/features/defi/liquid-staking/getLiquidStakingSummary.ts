@@ -16,7 +16,8 @@ import {
 import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
 
 export interface LiquidStakingSummary {
-  risks: ProjectLiquidStakingRisks
+  /** Absent until research reviews the protocol. */
+  risks?: ProjectLiquidStakingRisks
   totalValueLockedUsd?: number
   /** The TVL in ETH at the protocol's rate, as a fraction of the ETH staked network-wide. */
   stakedEthShare?: LiquidStakingStakedEthShare
@@ -24,8 +25,11 @@ export interface LiquidStakingSummary {
   costOfExit?: LiquidStakingLatestValue
 }
 
+/** Only reviewed protocols have a project page. */
 export interface ProjectLiquidStakingSummary extends LiquidStakingSummary {
-  costOfExitDescription: CostOfExitDescription
+  risks: ProjectLiquidStakingRisks
+  /** Absent when the yield and the cost of exit aren't tracked. */
+  costOfExitDescription?: CostOfExitDescription
 }
 
 export interface LiquidStakingLatestValue {
@@ -65,6 +69,7 @@ export function getLatestValuesRange(): ChartRange {
 /** The project's row of the liquid staking page, with the latest chart values. */
 export async function getLiquidStakingSummary(
   project: LiquidStakingTvlProject,
+  risks: ProjectLiquidStakingRisks,
 ): Promise<ProjectLiquidStakingSummary> {
   const [tvlByProject, charts] = await Promise.all([
     getLiquidStakingTvl([project]),
@@ -73,14 +78,16 @@ export async function getLiquidStakingSummary(
       projectId: project.id,
     }),
   ])
+  const { tracking } = project.liquidStaking
   return {
     ...buildLiquidStakingSummary(
       project.id,
-      project.liquidStaking.risks,
+      risks,
       tvlByProject.get(project.id),
       charts,
     ),
-    costOfExitDescription: getCostOfExitDescription(project.liquidStaking),
+    risks,
+    costOfExitDescription: tracking && getCostOfExitDescription(tracking),
   }
 }
 
@@ -112,12 +119,12 @@ export async function getLiquidStakingTvl(
 /** A project's risks and TVL, with its latest values from the charts. */
 export function buildLiquidStakingSummary(
   projectId: string,
-  risks: ProjectLiquidStakingRisks,
+  risks: ProjectLiquidStakingRisks | undefined,
   tvl: LiquidStakingTvl | undefined,
   charts: LiquidStakingCharts,
 ): LiquidStakingSummary {
   return {
-    risks,
+    ...(risks && { risks }),
     totalValueLockedUsd: tvl?.valueUsd,
     stakedEthShare: tvl && getStakedEthShare(tvl, charts.yield),
     yield: getLatestValue(charts.yield, projectId, () => false),

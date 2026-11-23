@@ -136,6 +136,7 @@ async function getProjectIds(
 ): Promise<string[]> {
   const projects = await getLiquidStakingProjects()
   return projects
+    .filter((project) => project.liquidStaking.tracking !== undefined)
     .map((project) => project.id)
     .filter((id) => params.projectId === undefined || id === params.projectId)
 }
