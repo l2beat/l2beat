@@ -4,6 +4,7 @@ import type {
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { ActivityResolution } from './utils/getActivityResolution'
 import { appendRecentPoints, type ChainHours } from './withLiveActivity'
 
 const DAY = UnixTime.toStartOf(UnixTime(1_800_000_000), 'day')
@@ -28,7 +29,7 @@ describe(appendRecentPoints.name, () => {
       [ProjectId.ETHEREUM, ethereumHours(ethereumUntil)],
     ])
 
-  it("adds the project's recent hours, with Ethereum's beside the whole ones", () => {
+  it("adds the project's recent hours, with Ethereum's beside them up to its own newest block", () => {
     // Methodology: the project reaches 14:20, Ethereum 14:10. Hour 13 is
     // whole for both, hour 14 is under way for both
     const result = append(
@@ -40,13 +41,23 @@ describe(appendRecentPoints.name, () => {
       data: [
         [DAY + 12 * H, 1, 2, 3, 4],
         [DAY + 13 * H, 10, 5, 12, 6],
-        [DAY + 14 * H, 20, null, 22, null],
+        [DAY + 14 * H, 20, 7, 22, 8],
       ],
       liveUntil: DAY + 14 * H + 1200,
+      ethereumLiveUntil: DAY + 14 * H + 600,
     })
   })
 
-  it("leaves out Ethereum's whole hour when it is the project's under way", () => {
+  it("leaves out Ethereum's hour under way for less than 10 minutes", () => {
+    const result = append(
+      [[DAY + 12 * H, 1, 2, 3, 4]],
+      hoursOf(DAY + 14 * H + 1200, DAY + 14 * H + 300),
+    )
+
+    expect(result.data.at(-1)).toEqual([DAY + 14 * H, 20, null, 22, null])
+  })
+
+  it("has Ethereum's whole hour beside the project's under way", () => {
     // The project reaches 13:40 and Ethereum 14:10, so hour 13 is whole for
     // Ethereum only
     const result = append(
@@ -63,7 +74,7 @@ describe(appendRecentPoints.name, () => {
       ]),
     )
 
-    expect(result.data.at(-1)).toEqual([DAY + 13 * H, 10, null, 12, null])
+    expect(result.data.at(-1)).toEqual([DAY + 13 * H, 10, 5, 12, 6])
   })
 
   it('rebuilds the hour activity summed only part of', () => {
@@ -108,7 +119,7 @@ describe(appendRecentPoints.name, () => {
     expect(result.data).toEqual([
       [DAY + 12 * H, 1, 2, 3, 4],
       [DAY + 13 * H, 10, 5, 12, 6],
-      [DAY + 14 * H, 20, null, 22, null],
+      [DAY + 14 * H, 20, 7, 22, 8],
     ])
   })
 
@@ -172,22 +183,59 @@ describe(appendRecentPoints.name, () => {
     ])
   })
 
+  it("keeps Ethereum's newest block off the summed periods before recent ones", () => {
+    // Methodology: the project's recent days start today, and Ethereum's
+    // stored blocks end at 23:30 yesterday, a day activity has summed
+    const result = append(
+      [[DAY - UnixTime.DAY, 1000, 500, 1000, 500]],
+      new Map([
+        [
+          PROJECT,
+          { summed: [], stored: [stored(DAY, 3600, 4000, DAY + 2 * H)] },
+        ],
+        [
+          ProjectId.ETHEREUM,
+          { summed: [], stored: [stored(DAY - H, 300, 300, DAY - 1800)] },
+        ],
+      ]),
+      'day',
+    )
+
+    expect(result).toEqual({
+      data: [
+        [DAY - UnixTime.DAY, 1000, 500, 1000, 500],
+        [DAY, 3600, null, 4000, null],
+      ],
+      liveUntil: DAY + 2 * H,
+      ethereumLiveUntil: undefined,
+    })
+  })
+
   it('leaves the chart as it is without stored blocks of the project', () => {
     const data: Row[] = [[DAY + 12 * H, 1, 2, 3, 4]]
+    const unchanged = {
+      data,
+      liveUntil: undefined,
+      ethereumLiveUntil: undefined,
+    }
 
-    expect(append(data, new Map())).toEqual({ data, liveUntil: undefined })
+    expect(append(data, new Map())).toEqual(unchanged)
     expect(
       append(data, new Map([[PROJECT, { summed: [], stored: [] }]])),
-    ).toEqual({ data, liveUntil: undefined })
+    ).toEqual(unchanged)
   })
 })
 
-function append(data: Row[], hours: Map<ProjectId, ChainHours>) {
+function append(
+  data: Row[],
+  hours: Map<ProjectId, ChainHours>,
+  resolution: ActivityResolution = 'hour',
+) {
   return appendRecentPoints(
     data,
     hours,
     PROJECT,
-    'hour',
+    resolution,
     (t, own, ethereum) => [
       t,
       own.count,

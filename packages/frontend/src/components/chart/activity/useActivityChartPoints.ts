@@ -21,17 +21,24 @@ export interface ActivityChartCounts {
 }
 
 /**
- * A chart's rows as rates of the metric, a period under way spread over its
- * seconds so far, with the UOPS/TPS ratio of the project, or of Ethereum on
- * its own chart, and the range and period titles they span
+ * A chart's rows as rates of the metric, each chain's period under way spread
+ * over its own seconds so far, with the UOPS/TPS ratio of the project, or of
+ * Ethereum on its own chart, and the range and period titles they span
  */
 export function useActivityChartPoints<R>(
-  chart: { data: R[]; liveUntil: number | undefined } | undefined,
+  chart:
+    | {
+        data: R[]
+        liveUntil: number | undefined
+        ethereumLiveUntil: number | undefined
+      }
+    | undefined,
   toCounts: (row: R) => ActivityChartCounts,
   resolution: ActivityResolution,
   metric: ActivityMetric,
 ) {
   const liveUntil = chart?.liveUntil
+  const ethereumLiveUntil = chart?.ethereumLiveUntil
   const counts = useMemo(
     () => chart?.data.map(toCounts),
     [chart?.data, toCounts],
@@ -40,18 +47,21 @@ export function useActivityChartPoints<R>(
     () =>
       counts?.map(({ timestamp, projects, ethereum }) => {
         const periodEnd = getActivityPeriodEnd(timestamp, resolution, liveUntil)
-        const rate = ({ tx, uops }: Counts) => {
+        const rate = ({ tx, uops }: Counts, end: number) => {
           const count = metric === 'tps' ? tx : uops
-          return count !== null ? count / (periodEnd - timestamp) : null
+          return count !== null ? count / (end - timestamp) : null
         }
         return {
           timestamp,
           periodEnd,
-          ethereum: rate(ethereum),
-          ...(projects && { projects: rate(projects) }),
+          ethereum: rate(
+            ethereum,
+            getActivityPeriodEnd(timestamp, resolution, ethereumLiveUntil),
+          ),
+          ...(projects && { projects: rate(projects, periodEnd) }),
         }
       }),
-    [counts, resolution, liveUntil, metric],
+    [counts, resolution, liveUntil, ethereumLiveUntil, metric],
   )
   const ratioData = useMemo(
     () =>

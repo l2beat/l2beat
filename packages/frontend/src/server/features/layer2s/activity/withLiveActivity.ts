@@ -36,12 +36,17 @@ interface Live {
    * what activity has summed. A last point after it is a period under way
    */
   liveUntil: UnixTime | undefined
+  /**
+   * Of Ethereum's newest stored block, when its line beside the project's
+   * reaches it. Its last point after it is a period under way
+   */
+  ethereumLiveUntil: UnixTime | undefined
 }
 
 /**
  * A project's own chart up to its newest stored block, past what activity
- * has summed, with Ethereum's beside the periods whole for both. Charts of
- * many projects end where all are summed, as some have no blocks stored
+ * has summed, with Ethereum's beside it up to Ethereum's newest block. Charts
+ * of many projects end where all are summed, as some have no blocks stored
  */
 export async function withLiveActivity(
   chart: ActivityChartData,
@@ -100,6 +105,7 @@ async function appendLive<T extends ChartRow>(
       data: chart.data,
       syncedUntil: chart.syncedUntil,
       liveUntil: undefined,
+      ethereumLiveUntil: undefined,
     }
   }
   const hours = await getChainHours(
@@ -107,14 +113,19 @@ async function appendLive<T extends ChartRow>(
     (stored) => getRecentStart(chart.data, stored.get(projectId), resolution),
     now,
   )
-  const { data, liveUntil } = appendRecentPoints(
+  const { data, liveUntil, ethereumLiveUntil } = appendRecentPoints(
     chart.data,
     hours,
     projectId,
     resolution,
     toRow,
   )
-  return { data, syncedUntil: liveUntil ?? chart.syncedUntil, liveUntil }
+  return {
+    data,
+    syncedUntil: liveUntil ?? chart.syncedUntil,
+    liveUntil,
+    ethereumLiveUntil,
+  }
 }
 
 /** A chain's hours: what activity summed, and its stored blocks after them */
@@ -207,9 +218,8 @@ type ToRow<T> = (
 
 /**
  * A chart with the project's periods from where recent ones start up to its
- * newest block, and Ethereum's beside the periods whole for both: the period
- * under way is spread over the project's seconds so far, which are not
- * Ethereum's
+ * newest block, and Ethereum's beside them up to Ethereum's newest block.
+ * Each chain's period under way is spread over its own seconds so far
  */
 export function appendRecentPoints<T extends ChartRow>(
   data: T[],
@@ -217,23 +227,22 @@ export function appendRecentPoints<T extends ChartRow>(
   projectId: ProjectId,
   resolution: ActivityResolution,
   toRow: ToRow<T>,
-): { data: T[]; liveUntil: UnixTime | undefined } {
+): Pick<Live, 'liveUntil' | 'ethereumLiveUntil'> & { data: T[] } {
+  const unchanged = { data, liveUntil: undefined, ethereumLiveUntil: undefined }
   const own = hours.get(projectId)
   const since = getRecentStart(data, own?.stored, resolution)
   const until = own?.stored.at(-1)?.lastTimestamp
-  if (!own || since === undefined || until === undefined) {
-    return { data, liveUntil: undefined }
-  }
+  if (!own || since === undefined || until === undefined) return unchanged
   const appended = toRecentPoints(own, since, until, resolution)
-  if (appended.length === 0) return { data, liveUntil: undefined }
+  if (appended.length === 0) return unchanged
   const ethereum = hours.get(ProjectId.ETHEREUM)
   const ethereumUntil = ethereum?.stored.at(-1)?.lastTimestamp
-  const step = UnixTime.periodToSeconds(resolution)
   const beside = new Map(
     ethereum && ethereumUntil !== undefined
-      ? toRecentPoints(ethereum, since, ethereumUntil, resolution)
-          .filter((p) => p.timestamp + step <= Math.min(until, ethereumUntil))
-          .map((p) => [p.timestamp, p])
+      ? toRecentPoints(ethereum, since, ethereumUntil, resolution).map((p) => [
+          p.timestamp,
+          p,
+        ])
       : [],
   )
   return {
@@ -242,6 +251,10 @@ export function appendRecentPoints<T extends ChartRow>(
       ...appended.map((p) => toRow(p.timestamp, p, beside.get(p.timestamp))),
     ],
     liveUntil: until,
+    ethereumLiveUntil:
+      ethereumUntil !== undefined && ethereumUntil >= since
+        ? ethereumUntil
+        : undefined,
   }
 }
 
