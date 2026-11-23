@@ -236,6 +236,14 @@
       "transaction": "0x73591482b487de3657af697203d4d66a2d61418920e0d0db1c0ee36a3909eb2a",
       "updateId": "45c9bef9",
       "reason": "Selected a new active OP Succinct proof configuration (OpSuccinctConfigSelected)."
+    },
+    {
+      "timestamp": 1795109183,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "transaction": "0x317f62907be90cdff25d416753f660141812028df5bf9996839e7dab41410cef",
+      "updateId": "d0ab99a0",
+      "reason": "Selected the OP Succinct v3.14.3 proof configuration with new aggregation and range vkeys (OpSuccinctConfigSelected)."
     }
   ],
   "ignoredTransactions": [

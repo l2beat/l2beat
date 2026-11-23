@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x08012ff352376aff6d7eb30f7eb7101fcc480008
+
+# Diff at Mon, 23 Nov 2026 13:15:12 GMT:
+
+- id: c0266254
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794986363
+- current timestamp: 1795438904
+
+## Description
+
+The LayerZero Multisig (OneSig) swapped two signers, 0x0cb72C1F and 0xe67DB04d out, 0x67898c44 and 0xF215c747 in. It stays 5 of 9.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.0:
+-        "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47"
++        "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23"
+      values.$members.4:
+-        "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
++        "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
+      values.$members.7:
+-        "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35"
++        "eth:0x67898c4420E25E83c90dC247cF20aa27AFb9B53A"
+      values.$members.8:
+-        "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23"
++        "eth:0xF215c7478359A9150261Ca877d9094A17e5d4AAE"
+    }
+```
+
 Generated with discovered.json: 0xe47dbada3894444b51a8fe2d676b820d7bbb11fa
 
 # Diff at Wed, 18 Nov 2026 08:06:32 GMT:

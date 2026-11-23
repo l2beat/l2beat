@@ -18,7 +18,7 @@
     "eth:0xfb4e1e518E5F7F8903233e639662110F31Db0BDC", // public token voting plugin
     "eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2", // public proposal condition
     "eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E", // voting-power adapter used by TokenVoting
-    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // listed-member executor of VotingEscrowGovCore
+    "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C", // multisig plugin of VotingEscrowGovCore
     "eth:0xde423A95f7955CcA8848e0eDCA773F6A2FBA2d76", // membership condition on its public proposal grant
     "eth:0xc19635aD8De0a0D6430025fC5ed212CA8216bab3", // Interfold Protocol Proposal (IPP) staged proposal processor
     "eth:0x4c9D0A2B8E5917c480bdF3E42F1b1c9365EF2115", // IPP proposal-creation condition (currently no rules)

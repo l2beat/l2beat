@@ -1,3 +1,103 @@
+Generated with discovered.json: 0xb530149ba1d67e4479fefc99e3fbbd9c4667d7bd
+
+# Diff at Mon, 23 Nov 2026 13:15:10 GMT:
+
+- id: e379f656
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1793371512
+- current timestamp: 1795438893
+
+## Description
+
+InterfoldSafeB, through the Admin plugin and InterfoldGovCore, revoked the EXECUTE permission of VotingEscrowMultisig on VotingEscrowGovCore. The 1/1 EOA eth:0x455e3DEFBC6b48D9127CF6acC609F5cEa87cA759 behind that plugin can no longer upgrade VotingEscrow, which holds locked FOLD, or administer the rest of the voting-escrow stack.
+
+InterfoldGovCore is the only remaining executor. The voting-escrow stack therefore has the same instant upgrade path as the protocol: the Interfold multisigs (3/5 each, same signers).
+
+## Watched changes
+
+```diff
+    EOA (eth:0x455e3DEFBC6b48D9127CF6acC609F5cEa87cA759) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change cooldowns and exit fees and upgrade the voting-escrow exit queue.","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin settings.","role":".multisigSettingsAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change multisig plugin target execution configuration.","role":".multisigTargetConfigAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change transfer whitelist settings and upgrade the voting-lock NFT.","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting epochs and upgrade the voting-escrow Clock.","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"change voting-power curve parameters and upgrade the Curve implementation.","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.8:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"complete queued voting-escrow withdrawals.","role":".exitQueueWithdrawers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".daoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"grant and revoke permissions in this contract.","role":".veDaoRootHolders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"manage gauge metadata and the voting-power update hook.","role":".gaugeAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.12:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause and unpause voting-escrow operations.","role":".votingEscrowPausers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.13:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation.","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.14:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow.","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"sweep unaccounted tokens and NFTs from VotingEscrow.","role":".votingEscrowSweepers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.16:
+-        {"permission":"interact","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"update delegated voting power through the escrow voting adapter.","role":".delegationTokenManagers","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.17:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"upgrade this contract's implementation.","role":".daoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.18:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".clockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.19:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".curveAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.20:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".exitQueueAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.21:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".gaugeUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.22:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".lockAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.23:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".veDaoUpgraders","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.24:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votesAdapterAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      receivedPermissions.25:
+-        {"permission":"upgrade","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","role":".votingEscrowAdmins","via":[{"address":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"},{"address":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"}]}
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract VotingEscrowGovCore (eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
++++ description: Active Aragon grants reconstructed from Granted and Revoked events. The permissionId, target contract (where), grantee (who), and optional condition are preserved.
++++ severity: HIGH
+      values.$activePermissions.6:
+-        {"permissionId":"0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d","where":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","who":"eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C","condition":"eth:0x0000000000000000000000000000000000000002"}
++++ description: Current grantees of EXECUTE_PERMISSION on this contract, reconstructed from grant and revoke events.
++++ severity: HIGH
+      values.daoExecutors.0:
+-        "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"
++++ description: Current grantees of EXECUTE_PERMISSION on this contract.
+      values.veDaoExecutors.0:
+-        "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C"
+    }
+```
+
+```diff
+    contract VotingEscrowMultisig (eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      directlyReceivedPermissions.0:
+-        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.","role":".veDaoExecutors"}
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B","description":"execute arbitrary calls from this contract.","role":".daoExecutors"}
+    }
+```
+
 Generated with discovered.json: 0x6da3c3cadff2854b9a60bcf453edcd418e05e888
 
 # Diff at Fri, 30 Oct 2026 14:46:36 GMT:
