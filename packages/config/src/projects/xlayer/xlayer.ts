@@ -316,8 +316,8 @@ export const xlayer: ScalingProject = agglayer({
     apis: [
       {
         type: 'rpc',
-        url: 'https://rpc.xlayer.tech',
-        callsPerMinute: 2400,
+        url: 'https://xlayerrpc.okx.com',
+        callsPerMinute: 960,
       },
     ],
   },
