@@ -27,10 +27,11 @@ export function discoveryOf(name: string): DiscoveryOutput {
 }
 
 // A project can count an escrow that another project discovers, such as the
-// zk.money portals in Aztec v6, so escrow checks accept any discovery.
+// zk.money portals in Aztec v6, so escrow checks accept a contract from any
+// discovery.
 const discoveredAddresses = new Set(
   [...discoveries.values()].flatMap((d) =>
-    d.entries.filter((e) => e.type !== 'Reference').map((e) => e.address),
+    d.entries.filter((e) => e.type === 'Contract').map((e) => e.address),
   ),
 )
 
