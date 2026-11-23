@@ -4,11 +4,9 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
-import { blobCostUsd, formatBlobCost } from '~/utils/blobCost'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { readableColor } from '~/utils/color'
-import { formatGwei } from '~/utils/formatGwei'
 import {
   BLOB_KIB,
   describeWindow,
@@ -70,11 +68,6 @@ export function LiveStats({
   )
   const shares = useShares(totals)
   const ready = postedWindow !== undefined && postedWindow.slots > 0
-  // the newest block's: a batch in the next pays this
-  const blobBaseFee = data?.blocks.find(
-    (b) => b.status === 'proposed',
-  )?.blobBaseFee
-  const ethPriceUsd = postedWindow?.ethPriceUsd
   const projects = shares.filter((share) => share.id !== UNKNOWN_ID).length
 
   return (
@@ -119,25 +112,6 @@ export function LiveStats({
             ) : (
               // narrow as the number it stands for, or the note wraps on a phone
               <NumberSkeleton sizedAs="00" />
-            )}
-          </Stat>
-          <Stat
-            label="Blob cost"
-            note={ethPriceUsd === undefined ? 'gwei' : 'per blob'}
-          >
-            {ready && blobBaseFee !== undefined ? (
-              blobBaseFee === null ? (
-                '–'
-              ) : ethPriceUsd === undefined ? (
-                <RollingNumber value={blobBaseFee} format={formatGwei} />
-              ) : (
-                <RollingNumber
-                  value={blobCostUsd(blobBaseFee, ethPriceUsd)}
-                  format={formatBlobCost}
-                />
-              )
-            ) : (
-              <NumberSkeleton sizedAs="$0.000" />
             )}
           </Stat>
         </dl>

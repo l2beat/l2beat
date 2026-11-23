@@ -16,6 +16,7 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
+import { BlobCost } from '../BlobCost'
 import { useChainClock } from '../chainClock'
 import { useImages } from '../hooks'
 import { LivePulse } from '../LivePulse'
@@ -206,6 +207,16 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
           // fades in where the skeleton was, rather than swapping for it
           className="absolute inset-0 size-full starting:opacity-0 transition-opacity duration-300 ease-out"
         />
+        {layout && (
+          // level with the bay's caption, at the belt's free left end
+          <BlobCost
+            blocks={chainBlocks}
+            ethPriceUsd={ethPriceUsd}
+            hidden={look.view !== undefined}
+            className="pointer-events-none absolute left-0"
+            style={{ top: layout.bayCaptionY - NEXT_BLOCK_ABOVE_BASELINE }}
+          />
+        )}
         {layout && !layout.compact && (
           // level with the bay's caption, at the belt's free right end
           <NextBlock
