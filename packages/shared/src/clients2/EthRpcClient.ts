@@ -308,7 +308,7 @@ export class EthRpcClient {
         return BATCH_REJECTED
       }
       const parsed = v.array(JsonRpcResponse).safeValidate(data)
-      if (!parsed.success) {
+      if (!response.ok || !parsed.success) {
         throw new Error(
           `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
           { cause: httpCause(response) },
@@ -370,14 +370,19 @@ export class EthRpcClient {
         )
       }
       const envelope = parsed.data
-      if (!('error' in envelope)) {
-        this.http.answered(response.sentAt)
-      }
       if ('error' in envelope) {
         throw new Error(
           `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+          response.ok ? undefined : { cause: httpCause(response) },
         )
       }
+      if (!response.ok) {
+        throw new Error(
+          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+          { cause: httpCause(response) },
+        )
+      }
+      this.http.answered(response.sentAt)
       if (envelope.id !== id) {
         throw new Error('RPC call failed. ID mismatch.')
       }

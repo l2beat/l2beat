@@ -727,6 +727,59 @@ describe(`${EthRpcClient.name} rate limit`, () => {
     }
   })
 
+  // Why: a refusal can carry a JSON-RPC error too, and must keep the headers
+  // and not count as an answer, as with RpcClient
+  for (const [name, body] of Object.entries({
+    'an error': {
+      jsonrpc: '2.0',
+      id: 1,
+      error: { code: -32005, message: 'Rate limited' },
+    },
+    'a result': { jsonrpc: '2.0', id: 1, result: '0x1' },
+  })) {
+    it(`fails a refusal that carries ${name}, keeping its headers`, async () => {
+      const node = new LimitedNode([
+        makeHttpResponse(
+          429,
+          JSON.stringify(body),
+          new Headers({ 'Retry-After': '7' }),
+        ),
+      ])
+      const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+      const error = await client.getBlockNumber().catch((e: Error) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).cause).toEqual({
+        status: 429,
+        rateLimit: { 'retry-after': '7' },
+      })
+    })
+  }
+
+  it('keeps what the provider says about its limit on a refused batch', async () => {
+    const node = new LimitedNode([
+      makeHttpResponse(
+        429,
+        JSON.stringify([
+          rpcError(1, 'Rate limited'),
+          rpcError(2, 'Rate limited'),
+        ]),
+        new Headers({ 'Retry-After': '7' }),
+      ),
+    ])
+    const client = batchingClient(node)
+
+    const error = await client
+      .getTransactionReceipts([HASH_A, HASH_B])
+      .catch((e: Error) => e)
+
+    expect((error as Error).cause).toEqual({
+      status: 429,
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+
   it('keeps what the provider says about its limit on a refusal', async () => {
     const node = new LimitedNode([
       makeHttpResponse(
