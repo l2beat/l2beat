@@ -1,0 +1,157 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Hinkal",
+  "critical": true,
+  "category": "core",
+  "description": "Main Hinkal contract and escrow of all shielded funds. It accepts deposits, verifies Groth16 proofs of private transfers and withdrawals, keeps the commitment Merkle tree and spent nullifiers, and routes funds to registered external actions (swaps and other DeFi calls) on behalf of shielded users.",
+  "ignoreMethods": [
+    "externalActionMap",
+    "getRootHash",
+    "logarithm2",
+    "m_index",
+    "nullifiers",
+    "roots",
+    "tree",
+    "verifierMap"
+  ],
+  "ignoreInWatchMode": ["getRootHash", "m_index"],
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "description": "Owner that registers and removes the zk proof verifiers. Ownership moves in two steps and cannot be renounced.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register, replace or remove the Groth16 verifiers that every private transaction is checked against."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "description": "Proposed new owner that still has to accept ownership.",
+      "severity": "MEDIUM"
+    },
+    "hinkalHelper": {
+      "description": "Helper contract that validates relayers, access tokens and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "verifiers": {
+      "description": "Verifier contract for each verifierId, rebuilt from VerifierRegistered and VerifierRemoved events. The verifierId hashes the transaction dimensions (tokens, nullifiers, outputs) and the external action ID.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "event",
+        "select": "verifierAddress",
+        "groupBy": "verifierId",
+        "set": { "event": "VerifierRegistered" }
+      }
+    },
+    "removedVerifierIds": {
+      "description": "verifierIds whose verifier was removed. A removed ID stays listed in verifiers with its last address but no longer verifies proofs, unless registered again later.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "verifierId",
+        "add": { "event": "VerifierRemoved" },
+        "remove": { "event": "VerifierRegistered" }
+      }
+    },
+    // ExternalActionRegistered does not emit the ID, so the IDs ever passed to
+    // registerExternalAction are listed here from its calldata. An ID is
+    // uint(keccak256(name)) % CIRCOM_P. When externalActionRegistrations shows
+    // a new address, add its ID.
+    "externalActionIds": {
+      "description": "Every externalActionId registered so far, taken from registerExternalAction calldata.",
+      "handler": {
+        "type": "hardcoded",
+        "value": [
+          "0x00e92c1d8427da778b1b48ac0584f31828115605867b85098f912544c3eb2baa", // Emporium
+          "0x089773364248ffe4a5e8f6ee840c8be459ee4935110ba0d145f2a7c28ca64982", // Uniswap
+          "0x231494729b043f6a9966f717390620d8aff7acdbe746ffef8a2f430c8124da25", // Odos
+          "0x2ab0b866d21ac9b7200cb612980a6bede5fc41279d81375c7fe2efd9fa4d9073", // OneInch
+          "0x162ae7bd88e973ad984146534c902b875ee6b7d329586ca9ce335288570fefde", // Lifi
+          "0x0516ec502da3218e5f396ac5cb0b29055018773f4a92d2cb13db8e2ecc5103e5" // unknown name
+        ]
+      }
+    },
+    "externalActions": {
+      "description": "External action contract currently registered for each ID in externalActionIds, in the same order (zero address: cleared). Shielded funds are sent to the registered contract, which runs the action and returns the output tokens.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "array",
+        "method": "externalActionMap",
+        "indices": "{{ externalActionIds }}"
+      }
+    },
+    "externalActionRegistrations": {
+      "description": "Every address passed to registerExternalAction, including replaced and cleared registrations, from ExternalActionRegistered events.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "externalActionAddress",
+        "add": { "event": "ExternalActionRegistered" },
+        "ignoreRelative": true
+      }
+    },
+    "accessControl": {
+      "description": "Role membership of the Hinkal contract.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x47ddd44be4e69e3bb12e0b1ae411c5e2264c8a03557812e6728682c3b1a4a9dd": "HINKAL_HELPER_MANAGER"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "description": "Addresses with DEFAULT_ADMIN_ROLE.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x47ddd44be4e69e3bb12e0b1ae411c5e2264c8a03557812e6728682c3b1a4a9dd": "HINKAL_HELPER_MANAGER"
+        },
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register or replace the external action contract for any externalActionId, which receives shielded funds during external transactions."
+        },
+        {
+          "type": "interact",
+          "description": "grant and revoke DEFAULT_ADMIN_ROLE."
+        }
+      ]
+    },
+    "helperManagers": {
+      "description": "Addresses with HINKAL_HELPER_MANAGER, which is its own admin role.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x47ddd44be4e69e3bb12e0b1ae411c5e2264c8a03557812e6728682c3b1a4a9dd": "HINKAL_HELPER_MANAGER"
+        },
+        "pickRoleMembers": "HINKAL_HELPER_MANAGER"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the HinkalHelper, which validates every transaction and builds the public inputs of its proof."
+        },
+        {
+          "type": "interact",
+          "description": "grant and revoke HINKAL_HELPER_MANAGER."
+        }
+      ]
+    }
+  }
+}

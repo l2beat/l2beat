@@ -1,0 +1,13 @@
+The Hinkal contract verifies ZK proofs for 15 Hinkal circuits, one Groth16 verifier contract per circuit, each reached through a `VerifierEVM*v4` adapter that the Hinkal contract selects by transaction dimensions. This regeneration attests that the verification keys in the 15 onchain `mainEVMCircuit*v4` verifiers correspond to circuits published in the Hinkal repo and to the proving keys that the Hinkal app downloads.
+
+Generally, to regenerate all Hinkal verification keys, the following has to be done:
+
+1. Checkout the `main` branch of the [Hinkal-Contracts-Circuits repo](https://github.com/Hinkal-Protocol/Hinkal-Contracts-Circuits) (commit hash `61b6839aa80fc0c33bfdcde0323753c83cb2ce67`). The repo has no `component main` files, so generate them: `MainEVMCircuit(tokenCount, inputCount, outputCount, 25)` for the 14 sizes in the verifier names (`mainEVMCircuit<tokens>x<inputs>x<outputs>v4`) and `MainEVMCircuitMin()`, with the public inputs that the contract fills (`rootHashHinkal, signedMessageHash, erc20TokenAddresses, amountChanges, inNullifiers, outTimeStamp, outCommitments, calldataHash, H0Ax, H0Ay`, or `outTimeStamp, calldataHash` for the Min circuit).
+2. Download the 15 proving keys from `https://wallet-prodv12.hinkal.io/verifiers-v4/mainEVMCircuit<size>_final-4.zkey`, the URLs that the `@hinkal/common` package uses. They contain circuit information and Groth16 phase 2 trusted setup information.
+3. Build circom v2.2.3 (the version in the published witness generators) and compile circuit sources into `.r1cs` binaries, with `circomlib` v2.0.5 from npm.
+4. Download the Hermez phase 1 trusted setup files `powersOfTau28_hez_final_{09,18,19,20,21}.ptau`, check their hashes against the snarkjs README, and use them to verify that all published prover keys correspond to the compiled circuits. Use a file one power above the key's domain size: for domains above 2^14, snarkjs computes the circuit hash differently when the file has exactly the domain's power. This step will implicitly check the integrity of phase 2 contributions.
+5. Generate all 15 verification keys from all prover keys, and make sure that they are identical to the ones in the onchain smart contracts.
+
+Each proving key contains a single phase 2 contribution, see the Hinkal trusted setup description.
+
+Helper scripts that implement the flow above and more detailed explanations could be found in this [script .zip archive](https://trusted-setup-hosting.ethbeat.org/privacy/hinkal/verification_hinkal.zip). This .zip must be extracted next to a `Hinkal-Contracts-Circuits` checkout on commit `61b6839aa80fc0c33bfdcde0323753c83cb2ce67` before the execution.

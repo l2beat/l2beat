@@ -1,0 +1,343 @@
+Generated with discovered.json: 0x7c50791b5c85ea9c12f94c51a682dacc33b16f51
+
+# Diff at Fri, 20 Nov 2026 11:32:48 GMT:
+
+- id: dc4f3a79
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- current timestamp: 1795173590
+
+## Description
+
+Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifiers, external actions, wrapper and wallet, and the 6h timelock with its Safe.
+
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM2x2x1 (eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM2x2x1.
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM2x6x1 (eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76) [N/A]
+    +++ description: Unverified verifier adapter for 2x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonHasher4 (eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026) [N/A]
+    +++ description: Unverified Poseidon hash contract with four inputs, used to hash onchain commitments.
+```
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM3x6x1 (eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM3x6x1.
+```
+
+```diff
++   Status: CREATED
+    contract HinkalDeployer (eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c) [N/A]
+    +++ description: Unverified one-time deployer of the Hinkal contract. It still holds DEFAULT_ADMIN_ROLE on Hinkal from the deployment, but its code has no function that could use the role, and it cannot deploy again.
+```
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM3x2x1 (eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM3x2x1.
+```
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM1x6x1 (eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM1x6x1.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM4x6x1v4 (eth:0x272738a20d8EC72C3b6CA88f2CDE9FDc09f66634) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM2x2x2v4 (eth:0x27b498B9D7c97CD26501551CB20b1535B0dFE0A8) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit1x2x1v4 (eth:0x2cd65aC8E4bF2Ac3d21fDb0b9330CF6233b1Ca4d) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM2x6x2v4 (eth:0x30c17EbC851203bc3d756C3afAB2D0a3d98138cC) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM2x2x1v4 (eth:0x3ad4aA1cf04a6f36f98fFCCc2CE63B2736b01C69) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM1x2x1 (eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21) [N/A]
+    +++ description: Unverified verifier adapter for 1x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x4d28b33517aB72e7e2f728FF6527F8256CceD7fB) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit2x2x2v4 (eth:0x54828b631Df9F0D804b1A316d8cEBcF1773b4484) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM4x2x1v4 (eth:0x5A9411e5F21e6c970773Ff708f931EE2cd12bE43) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit2x6x1v4 (eth:0x637b83147535231a4488d472490226dF69AB0408) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit2x2x1v4 (eth:0x64489e6F9C2b0767d7b57CD4c896EcAa4E98eA61) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract HinkalHelper (eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607) [N/A]
+    +++ description: Unverified helper of the Hinkal contract. Its verified predecessor checks that the relayer is whitelisted and is tx.origin, checks calldata integrity and transaction dimensions, and builds the public inputs of the proof from the transaction data.
+```
+
+```diff
++   Status: CREATED
+    contract HinkalWrapper (eth:0x6998fE93f3a3AbDb31df1922EB91BC282F42aa1d) [hinkal/HinkalWrapper]
+    +++ description: Periphery contract for proofless deposits into Hinkal. It takes the deposit fee in ETH or a token, pulls the deposited tokens from the user and forwards them to the configured Hinkal contract.
+```
+
+```diff
++   Status: CREATED
+    contract ExternalAction_6D9e (eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d) [N/A]
+    +++ description: Unverified Hinkal external action registered under an ID whose name is not known. Shielded funds are sent to it during external transactions that use this ID.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit1x2x2v4 (eth:0x6Fc16639da7bd937E283eE8d460D4DbB57fBAB79) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0x729A813606F1f85849768A8d26E02707aAA26EA5) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Emporium (eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1) [N/A]
+    +++ description: Upgradeable Hinkal external action with an unverified implementation. Its verified predecessor runs a batch of arbitrary calls with shielded funds, optionally through a user's HinkalWallet, pays the relayer and returns the resulting token balances to Hinkal.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVMMin0v4 (eth:0x7a8Ff2a17bA07854e9A4f557f5A58426b680C510) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM1x6x1 (eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b) [N/A]
+    +++ description: Unverified verifier adapter for 1x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM3x6x1 (eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C) [N/A]
+    +++ description: Unverified verifier adapter for 3x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM3x2x1v4 (eth:0x7b5dF2116a6835Ae5F151E5528d86C5426f854d5) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM1x6x2v4 (eth:0x7B723617244a925c6fC723CF8d705Db2dc3654f6) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract Hinkal (eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4) [hinkal/Hinkal]
+    +++ description: Main Hinkal contract and escrow of all shielded funds. It accepts deposits, verifies Groth16 proofs of private transfers and withdrawals, keeps the commitment Merkle tree and spent nullifiers, and routes funds to registered external actions (swaps and other DeFi calls) on behalf of shielded users.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit1x6x1v4 (eth:0x7DEDDE9C37c81a6d30D3934933b73B8E42DeB14D) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM2x6x1 (eth:0x8391788640Bc7002A97ab218C899D6567C3114E7) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM2x6x1.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit5x2x1v4 (eth:0x843cA657cE751A0B5aD601deC214953e9E7E155F) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit5x6x1v4 (eth:0x846D2B3b5cc5B6AA94a0b4ca9814EA2a353570a9) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM1x2x1v4 (eth:0x8c16D510bD236479bc4a61819599338bebe26c36) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM5x2x1v4 (eth:0x9A2eEedfcc80Ef0B398cb20Ed6B7c4bE183C7Bd1) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM5x6x1v4 (eth:0xA02c9A53A8B1B45d0AD949e4E904749A6D33A7b3) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM2x6x1v4 (eth:0xa1c4DEf5f62469ea9059305112E4D07b66a8e4a3) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract SwapGroth16VerifierEVM1x2x1 (eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5) [N/A]
+    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM1x2x1.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit4x6x1v4 (eth:0xA8d3E41A1531dC002B51F00afdC6FAFe7BD5cAB7) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonHasher2 (eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9) [N/A]
+    +++ description: Unverified Poseidon hash contract with two inputs, used to build the commitment Merkle tree.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuitMin0v4 (eth:0xb1c3C21f4DCc7d95B3D514f4Fd5A70C89016dE8c) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract HinkalWallet (eth:0xB24043ebDC72ddC1923ec749cFBDFbEfF3FC82f6) [hinkal/HinkalWallet]
+    +++ description: Immutable smart account that only the Emporium can call. It executes arbitrary calls and pays relayers on behalf of shielded users, and accepts ERC-1271 signatures only from itself.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit1x6x2v4 (eth:0xc0291cCc4e8E86C88106B4ABb194812C7191fc4A) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit2x6x2v4 (eth:0xC3681c62468784b49BbdACe3bF5E50ED1b0163b0) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit3x2x1v4 (eth:0xCE6A76b544d7CcbD2dD5F649479304866810541E) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM1x2x2v4 (eth:0xd7d9eBEDb36C80265B83FC69A83134C90352a091) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit3x6x1v4 (eth:0xdC93693a1Cd128b15094514EFe3C35F413D841a8) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM3x6x1v4 (eth:0xE38b4cb3B37268e1B2f423B7af03125233bA5fAB) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract VerifierEVM1x6x1v4 (eth:0xE64C0Ee4fB95621203151bEf3c9e58737CdBC126) [hinkal/VerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
+```
+
+```diff
++   Status: CREATED
+    contract mainEVMCircuit4x2x1v4 (eth:0xE8405c68A5c0aFF32128FDe91a2f059D7fF4DC89) [hinkal/Groth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM2x2x1 (eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702) [N/A]
+    +++ description: Unverified verifier adapter for 2x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xF04310839973454155d9886a4023451F8D3Db7D0) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 6h.
+```
+
+```diff
++   Status: CREATED
+    contract SwapVerifierEVM3x2x1 (eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee) [N/A]
+    +++ description: Unverified verifier adapter for 3x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+```
+
+```diff
++   Status: CREATED
+    contract LifiExternalAction (eth:0xfF0b792E9833B8aFb8BDE1f6695717e1A87968A3) [hinkal/LifiExternalAction]
+    +++ description: Hinkal external action that swaps shielded funds through the LI.FI router with caller-supplied calldata and returns the output token to Hinkal, paying the relayer from the output.
+```

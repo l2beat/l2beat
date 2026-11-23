@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HinkalWallet",
+  "description": "Immutable smart account that only the Emporium can call. It executes arbitrary calls and pays relayers on behalf of shielded users, and accepts ERC-1271 signatures only from itself."
+}

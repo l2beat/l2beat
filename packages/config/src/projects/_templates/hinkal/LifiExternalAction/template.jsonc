@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LifiExternalAction",
+  "description": "Hinkal external action that swaps shielded funds through the LI.FI router with caller-supplied calldata and returns the output token to Hinkal, paying the relayer from the output.",
+  "ignoreRelatives": ["router", "hinkalHelper"],
+  "fields": {
+    "router": {
+      "description": "LI.FI router that executes the swap calldata.",
+      "type": "EXTERNAL"
+    },
+    "hinkalHelper": {
+      "description": "Helper used only for its pure calculateRelayFee function to compute the Hinkal fee taken from the swap output. The owner can change it."
+    },
+    "owner": {
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the helper that computes the fee taken from swap outputs, and add addresses allowed to call runAction."
+        }
+      ]
+    }
+  }
+}

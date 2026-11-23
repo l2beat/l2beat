@@ -1,0 +1,3 @@
+The Hinkal contract holds all shielded funds and cannot be upgraded. A {{multisigStats}} Safe can replace its verifiers, its HinkalHelper, which checks every transaction, and its external actions through a TimelockController with a {{timelockDelay}} delay. A malicious verifier or helper can drain the pool or reject every transaction. The same timelock upgrades the Emporium, which can then move the funds of every public account delegated to the HinkalWallet.
+
+One of the Safe's signers controls the HinkalWrapper, the LI.FI action and the receive vault factory without delay. It can redirect deposits made through the wrapper, cut a swap's output to the minimum the user signed, and upgrade the factory, which controls the funds waiting in vaults.
