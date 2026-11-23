@@ -36,6 +36,8 @@ export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 type SeriesKey = 'ethereum' | 'projects'
 
+const HIDDEN_ON_PROJECT_PAGES = ['ethereum'] as const
+
 interface ActivityChartDataPoint {
   timestamp: number
   projects?: number | null
@@ -98,7 +100,12 @@ export function ActivityChart({
     [project.id, project.name, project.shortName, type],
   ) satisfies ChartMeta
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  // Ethereum's line dwarfs most projects' and reads as the project's own, so
+  // it starts hidden on project pages. The legend turns it back on.
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    project.id === ProjectId.ETHEREUM ? undefined : HIDDEN_ON_PROJECT_PAGES,
+  )
 
   const series: ChartSeries<SeriesKey, ActivityChartDataPoint>[] = [
     {
