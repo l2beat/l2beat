@@ -111,6 +111,8 @@ export function useLiveWindow({
       end === undefined || !selection
         ? 'Live'
         : formatRange(selection[0], selection[1], { seconds: true }),
+    /** Whether the overview's window is off the newest block, or being moved off it */
+    lookingBack: end !== undefined,
     setHovered,
     setRange: (next: LiveRange) => {
       setRange(next)

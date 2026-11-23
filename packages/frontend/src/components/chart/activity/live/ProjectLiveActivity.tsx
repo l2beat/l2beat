@@ -1,4 +1,5 @@
 import type { ProjectScalingCategory } from '@l2beat/config'
+import { formatSeconds } from '@l2beat/shared-pure'
 import { useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
@@ -6,7 +7,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
-import { formatTimestamp } from '~/utils/dates'
+import { formatTimestamp, parseTimestamp } from '~/utils/dates'
 import {
   LIVE_BUFFER_RANGE,
   LIVE_RANGE_KEYS,
@@ -110,13 +111,7 @@ export function ProjectLiveActivity({
         onHover={live.setHovered}
       />
       {data && selection && (
-        <div className="mb-4 flex flex-col gap-1">
-          <span className="font-normal text-label-value-13 text-secondary">
-            {data.buffer.filling
-              ? `Since ${formatTimestamp(data.buffer.from, { mode: 'time' })}`
-              : `Last ${LIVE_RANGES[LIVE_BUFFER_RANGE].label}`}
-            , a bar a minute. Press or drag to look back
-          </span>
+        <div className="mb-4">
           <LiveOverview
             overview={data.overview}
             buffer={data.buffer}
@@ -127,6 +122,41 @@ export function ProjectLiveActivity({
             onSeek={live.seek}
             onMove={live.moveTo}
           />
+          <div className="mt-1 grid grid-cols-[1fr_auto_1fr] items-center gap-4 font-medium text-label-value-12 text-secondary">
+            <span className="whitespace-nowrap">
+              {data.buffer.filling
+                ? formatTimestamp(data.buffer.from, { mode: 'time' })
+                : `${LIVE_RANGES[LIVE_BUFFER_RANGE].label} ago`}
+            </span>
+            {live.lookingBack ? (
+              <span className="text-center">
+                <span className="text-primary tabular-nums">
+                  {formatTime(selection[1])}
+                </span>
+                <span className="max-md:hidden">
+                  {' '}
+                  · {formatAgo(data.buffer.to - selection[1])}
+                </span>
+              </span>
+            ) : (
+              <span className="min-w-0 truncate text-center max-md:hidden">
+                A bar a minute. Press or drag to look back
+              </span>
+            )}
+            {live.following ? (
+              <span className="col-start-3 justify-self-end whitespace-nowrap">
+                Now
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={live.follow}
+                className="col-start-3 justify-self-end whitespace-nowrap font-medium text-brand-deep underline-offset-[0.3em] hover:underline"
+              >
+                Back to live
+              </button>
+            )}
+          </div>
         </div>
       )}
       <ActivityMetricControls
@@ -150,4 +180,14 @@ export function ProjectLiveActivity({
       />
     </div>
   )
+}
+
+function formatTime(timestamp: number) {
+  const { time, seconds } = parseTimestamp(timestamp)
+  return `${time}:${seconds} UTC`
+}
+
+/** Past a minute in whole minutes, as the seconds would change on every move */
+function formatAgo(seconds: number) {
+  return `${formatSeconds(seconds < 60 ? seconds : Math.floor(seconds / 60) * 60)} ago`
 }
