@@ -160,6 +160,21 @@ const CASES: Case[] = [
     run: (c) => c.getLogs(100, 200),
   },
   {
+    name: 'logs over the limit, refused with HTTP 429',
+    answer: (_, i) =>
+      i === 0
+        ? {
+            status: 429,
+            body: JSON.stringify({
+              jsonrpc: '2.0',
+              id: 1,
+              error: { code: -32005, message: 'Log response size exceeded' },
+            }),
+          }
+        : { result: [log(150)] },
+    run: (c) => c.getLogs(100, 200),
+  },
+  {
     name: 'fee history without rewards',
     answer: () => ({ result: feeHistory() }),
     run: (c) => c.getFeeHistory(2, 100, []),
@@ -291,7 +306,8 @@ describe('RpcClient and RpcClientCompat parity', () => {
       const old = await runOn(testCase, createOld)
       const compat = await runOn(testCase, createCompat)
 
-      expect(compat.calls).toEqual(old.calls)
+      // A split range is asked for in parallel, in no set order
+      expect(compat.calls).toEqualUnsorted(old.calls)
       expect(compat.requests).toEqual(old.requests)
       if (testCase.fails) {
         expect(old.error).not.toEqual(undefined)

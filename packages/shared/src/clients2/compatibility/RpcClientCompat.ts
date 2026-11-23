@@ -152,7 +152,7 @@ export class RpcClientCompat implements IRpcClient {
         // Callers at the head poll for a block the RPC has not got yet
         !(error instanceof NotFoundOnRpcError) &&
         // getLogs has already split what a split could fix
-        !(error instanceof Error && isLimitExceededError(error)),
+        !isLimitAnswer(error),
     })
     return wrapped
   }
@@ -295,12 +295,7 @@ export class RpcClientCompat implements IRpcClient {
         address: rpcAddress(log.address),
       }))
     } catch (e) {
-      if (
-        from < to &&
-        e instanceof Error &&
-        e.message.startsWith('RPC call failed') &&
-        isLimitExceededError(e)
-      ) {
+      if (from < to && isLimitAnswer(e)) {
         const midpoint = Math.floor((from + to) / 2)
         const results = await Promise.all([
           this.getLogs(from, midpoint, addresses, topics),
@@ -373,6 +368,23 @@ export class RpcClientCompat implements IRpcClient {
     )
     return batchedResults.flat()
   }
+}
+
+/**
+ * The RPC answered that the range holds too many logs. Sent with an HTTP
+ * error status it is a refusal like any other, which RpcClient retried.
+ */
+function isLimitAnswer(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    error.message.startsWith('RPC call failed') &&
+    isLimitExceededError(error) &&
+    !(
+      typeof error.cause === 'object' &&
+      error.cause !== null &&
+      'status' in error.cause
+    )
+  )
 }
 
 /**
