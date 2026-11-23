@@ -5,9 +5,13 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
   LiquidStakingCostOfExitPoint,
-  LiquidStakingTvlPoint,
   LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
+import {
+  isComplete,
+  type TvlBreakdown,
+  toBreakdown,
+} from './liquidStakingTvlBreakdown'
 
 /** Yields and the network line are measured over this many days. */
 export const YIELD_WINDOW_DAYS = 30
@@ -47,9 +51,8 @@ export interface YieldChartInputs {
 export interface TvlChartInputs {
   /** The chart's days, oldest first. */
   days: UnixTime[]
-  projectIds: string[]
-  /** By project, in the order of `projectIds`: its TVL in ETH on each day. */
-  tvlByProject: (number | null)[][]
+  /** By project id, its TVL in ETH on each day. */
+  tvlByProject: Map<string, (number | null)[]>
   /** Daily, oldest first. */
   network: EthereumStakingDailyRecord[]
   /** ETH's supply, by day. */
@@ -101,40 +104,30 @@ export function computeYieldChart(
   })
 }
 
-export function computeTvlChart(
-  inputs: TvlChartInputs,
-): LiquidStakingTvlPoint[] {
+export function computeTvlChart(inputs: TvlChartInputs): TvlBreakdown[] {
   const network = new NetworkSeries(inputs.network)
-  return inputs.days.map((day, i) => ({
-    timestamp: day,
-    projects: Object.fromEntries(
-      inputs.projectIds.map((id, j) => [
-        id,
-        inputs.tvlByProject[j]?.[i] ?? null,
-      ]),
-    ),
-    ethStaked: network.ethStakedAt(day),
-    ethSupply: inputs.ethSupplies.get(day) ?? null,
-    ethPrice: inputs.ethPrices.get(day) ?? null,
-  }))
+  return inputs.days.map((day, i) =>
+    toBreakdown({
+      timestamp: day,
+      projects: Object.fromEntries(
+        [...inputs.tvlByProject].map(([id, tvl]) => [id, tvl[i] ?? null]),
+      ),
+      staked: network.ethStakedAt(day),
+      supply: inputs.ethSupplies.get(day) ?? null,
+      ethPrice: inputs.ethPrices.get(day) ?? null,
+    }),
+  )
 }
 
 /**
- * Drops leading days until the first with ETH staked and every protocol's
- * TVL, so MAX never leads with days missing Others (ether.fi's TVS starts on
- * 2024-02-07, at its first CoinGecko price). Keeps all points when no day is
- * complete, so the protocols that have data still show.
+ * Drops leading days until the first complete one, so MAX never leads with
+ * days missing Others (ether.fi's TVS starts on 2024-02-07, at its first
+ * CoinGecko price). Keeps all days when none is complete, so the protocols
+ * that have data still show.
  */
-export function trimLeadingIncomplete(
-  points: LiquidStakingTvlPoint[],
-  projectIds: string[],
-): LiquidStakingTvlPoint[] {
-  const firstComplete = points.findIndex(
-    (point) =>
-      point.ethStaked !== null &&
-      projectIds.every((id) => point.projects[id] != null),
-  )
-  return firstComplete > 0 ? points.slice(firstComplete) : points
+export function trimLeadingIncomplete(days: TvlBreakdown[]): TvlBreakdown[] {
+  const firstComplete = days.findIndex(isComplete)
+  return firstComplete > 0 ? days.slice(firstComplete) : days
 }
 
 export function computeCostOfExitChart(

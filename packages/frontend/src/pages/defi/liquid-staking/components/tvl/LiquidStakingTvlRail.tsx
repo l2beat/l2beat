@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { ChartUnit } from '~/components/chart/types'
-import type { TvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import type { CompleteTvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import type { LiquidStakingChartSeries } from '../LiquidStakingLineChart'
@@ -30,7 +31,7 @@ export function LiquidStakingTvlRail({
 }: {
   projectSeries: LiquidStakingChartSeries[]
   /** In ETH. */
-  latest: TvlBreakdown | undefined
+  latest: CompleteTvlBreakdown | undefined
   unit: ChartUnit
   visibleKeys: string[]
   showAllSelected: boolean
@@ -46,13 +47,13 @@ export function LiquidStakingTvlRail({
 
   return (
     <div className="flex min-w-0 flex-col gap-4 border-divider p-4 max-lg:order-last max-lg:border-t md:px-6 md:py-5 lg:border-r">
-      {latest?.supply && latest.notStaked !== null && inChosenUnit && (
+      {latest?.supply && latest.notStaked !== null && (
         <div>
           <Heading>ETH supply share</Heading>
           <div
             className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-surface-secondary"
             role="img"
-            aria-label={`ETH supply breakdown: ${formatShare(latest.liquid, latest.supply)} liquid staking, ${formatShare(latest.others, latest.supply)} other staked, ${formatShare(latest.notStaked, latest.supply)} unstaked`}
+            aria-label={`ETH supply breakdown: ${formatShare(latest.liquid, latest.supply)} liquid staking, ${formatShare(latest.others, latest.supply)} others, ${formatShare(latest.notStaked, latest.supply)} not staked`}
           >
             {projectSeries.map((series) => (
               <Segment
@@ -70,21 +71,21 @@ export function LiquidStakingTvlRail({
             <ShareRow
               swatch={<Swatch style={{ background: liquidSwatch }} />}
               label="Liquid staking"
-              value={formatAmount(inChosenUnit.liquid, unit)}
+              value={formatAmount(inChosenUnit?.liquid, unit)}
               share={formatShare(latest.liquid, latest.supply)}
             />
             <ShareRow
               swatch={
                 <Swatch style={{ backgroundColor: OTHER_STAKED_COLOR }} />
               }
-              label="Other staked"
-              value={formatAmount(inChosenUnit.others, unit)}
+              label="Others"
+              value={formatAmount(inChosenUnit?.others, unit)}
               share={formatShare(latest.others, latest.supply)}
             />
             <ShareRow
               swatch={<Swatch className="bg-surface-secondary" />}
-              label="Unstaked"
-              value={formatAmount(inChosenUnit.notStaked, unit)}
+              label="Not staked"
+              value={formatAmount(inChosenUnit?.notStaked, unit)}
               share={formatShare(latest.notStaked, latest.supply)}
             />
           </div>
@@ -99,7 +100,7 @@ export function LiquidStakingTvlRail({
             onClick={onToggleAll}
             className="cursor-pointer font-medium text-[11px] text-secondary leading-none transition-colors hover:text-primary"
           >
-            {showAllSelected ? 'Hide all' : 'Show all'}
+            {showAllSelected ? 'Hide protocols' : 'Show protocols'}
           </button>
         </div>
 
@@ -212,10 +213,12 @@ function ShareRow({
         </span>
       </span>
       <span className="flex shrink-0 items-baseline gap-2 whitespace-nowrap tabular-nums">
-        {value !== undefined && (
+        {value !== undefined ? (
           <span className="font-semibold text-label-value-13 text-primary">
             {value}
           </span>
+        ) : (
+          <NoDataBadge />
         )}
         {share !== undefined && (
           <span className="min-w-[38px] text-right font-medium text-label-value-12 text-secondary">

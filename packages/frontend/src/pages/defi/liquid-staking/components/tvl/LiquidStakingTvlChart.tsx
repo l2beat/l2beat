@@ -23,12 +23,12 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
 import { InfoIcon } from '~/icons/Info'
-import {
-  type LiquidStakingTvlSummary,
-  type TvlBreakdown,
-  toBreakdown,
+import type {
+  LiquidStakingTvlSummary,
+  TvlBreakdown,
 } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { useTRPC } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import type { LiquidStakingChartProject } from '../LiquidStakingCharts'
 import type { LiquidStakingChartSeries } from '../LiquidStakingLineChart'
@@ -36,19 +36,20 @@ import { LiquidStakingTvlBanner } from './LiquidStakingTvlBanner'
 import { LiquidStakingTvlRail } from './LiquidStakingTvlRail'
 import { LiquidStakingTvlTooltip } from './LiquidStakingTvlTooltip'
 import {
-  getLayers,
+  getProtocolLayers,
   getToggledScope,
   inUnit,
-  SCOPE_TOTALS,
+  stackOnKnown,
   type TvlLayer,
   type TvlScope,
+  VIEWS,
 } from './liquidStakingTvlLayers'
 
 const DESCRIPTION = [
   "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. In Staked view, the layers add up to the balance of all active Ethereum validators: Others is the rest, staked solo, through exchanges or through protocols not listed here.",
   "USD values are that ETH at the day's ETH price, so they can differ slightly from the TVL in the table, which prices the tokens themselves.",
   'A protocol also holds ETH not yet staked, or exited but not yet withdrawn, so Others can read slightly low. Days on which a protocol has no data show no Others.',
-  "In vs. Supply view, Not staked is the rest of all ETH in existence. A day's supply is CoinGecko's market cap over its price.",
+  "In vs. Supply view, Not staked is the rest of ETH's supply, which is CoinGecko's market cap over its price. Above a protocol without data for a day, the stack shows nothing that day.",
 ].join(' ')
 
 /**
@@ -80,44 +81,51 @@ export function LiquidStakingTvlChart({
     { range },
   )
 
-  const layers = useMemo(
-    () => getLayers(projectSeries, scope),
-    [projectSeries, scope],
+  const view = VIEWS[scope]
+  const protocolLayers = useMemo(
+    () => getProtocolLayers(projectSeries),
+    [projectSeries],
   )
-  const breakdowns = useMemo(() => {
-    const projectIds = projectSeries.map((series) => series.key)
-    return data?.map((point) => toBreakdown(point, projectIds))
-  }, [data, projectSeries])
+  const layers = useMemo(
+    () => [...protocolLayers, ...view.layers],
+    [protocolLayers, view],
+  )
   const chartData = useMemo(() => {
-    if (!breakdowns) return undefined
-    const rows = breakdowns.map((breakdown) => inUnit(breakdown, unit))
+    if (!data) return undefined
+    const rows = data.map((day) => inUnit(day, unit))
     // No row with a value (USD with no prices) gets the no-data state, not
     // empty axes.
     const hasValue = rows.some((row) =>
       layers.some((layer) => layer.value(row) !== null),
     )
     return hasValue ? rows : []
-  }, [breakdowns, unit, layers])
+  }, [data, unit, layers])
 
   // Only the protocols are toggled one by one; Others and Not staked come
   // with the view.
-  const protocolMeta = useMemo(
-    () => toMeta(getLayers(projectSeries, 'liquid')),
-    [projectSeries],
-  )
+  const protocolMeta = useMemo(() => toMeta(protocolLayers), [protocolLayers])
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(protocolMeta)
   const chartMeta = useMemo(() => toMeta(layers), [layers])
-  const visibleKeys = layers
-    .map((layer) => layer.key)
-    .filter((key) => !(key in protocolMeta) || dataKeys.includes(key))
+  const visibleKeys = useMemo(
+    () =>
+      layers
+        .map((layer) => layer.key)
+        .filter((key) => !(key in protocolMeta) || dataKeys.includes(key)),
+    [layers, protocolMeta, dataKeys],
+  )
+  const drawnLayers = useMemo(
+    () =>
+      stackOnKnown(layers.filter((layer) => visibleKeys.includes(layer.key))),
+    [layers, visibleKeys],
+  )
   const onToggleKey = (key: string) => {
     const nextScope = getToggledScope(scope, key)
     if (nextScope) setScope(nextScope)
     else toggleDataKey(key)
   }
 
-  const chartSeries: ChartSeries<string, TvlBreakdown>[] = layers.map(
+  const chartSeries: ChartSeries<string, TvlBreakdown>[] = drawnLayers.map(
     (layer) => ({
       key: layer.key,
       value: layer.value,
@@ -130,12 +138,14 @@ export function LiquidStakingTvlChart({
     }),
   )
 
-  // The top of the stack on the range's last day with it, so a custom range
-  // that ends in the past reads that day.
-  const total = SCOPE_TOTALS[scope]
-  const headline = chartData
-    ?.map((row) => total.value(row))
-    .findLast((value) => value !== null)
+  // The view's total on the range's last day with it, dated when that is not
+  // the range's last day.
+  const headlineRow = chartData?.findLast((row) => view.total(row) !== null)
+  const headline = headlineRow && view.total(headlineRow)
+  const headlineDate =
+    headlineRow && headlineRow !== chartData?.at(-1)
+      ? ` on ${formatTimestamp(headlineRow.timestamp, { mode: 'date' })}`
+      : ''
 
   return (
     <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
@@ -180,7 +190,8 @@ export function LiquidStakingTvlChart({
                   <NoDataBadge size="regular" />
                 )}
                 <span className="font-medium text-label-value-13 text-secondary">
-                  {total.label}
+                  {view.totalLabel}
+                  {headlineDate}
                 </span>
               </div>
               <ChartTimeRange
@@ -231,10 +242,10 @@ export function LiquidStakingTvlChart({
                   format: (value) => formatCurrency(value, unit),
                   tickCount: 3,
                 }}
-                renderTooltip={(row, keys) => (
+                renderTooltip={(row) => (
                   <LiquidStakingTvlTooltip
                     row={row}
-                    visibleKeys={keys}
+                    layers={drawnLayers}
                     unit={unit}
                     scope={scope}
                   />

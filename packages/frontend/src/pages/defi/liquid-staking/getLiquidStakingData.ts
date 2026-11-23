@@ -92,10 +92,7 @@ async function getCachedData() {
   return {
     appLayoutProps,
     entries,
-    tvlSummary: getLiquidStakingTvlSummary(
-      tvlChart,
-      entries.filter((entry) => entry.isTracked).map((entry) => entry.id),
-    ),
+    tvlSummary: getLiquidStakingTvlSummary(tvlChart),
     defaultChartRange,
     queryState: helpers.dehydrate(),
   }

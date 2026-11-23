@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { LiquidStakingTvlPoint } from './getLiquidStakingCharts'
 
 /**
  * A day of the value locked chart, split up. Amounts are in ETH (or another
@@ -24,27 +23,42 @@ export interface TvlBreakdown {
   ethPrice: number | null
 }
 
+/** A day with the stake and every protocol, so the stake splits up fully. */
+export interface CompleteTvlBreakdown extends TvlBreakdown {
+  projects: Record<string, number>
+  liquid: number
+  others: number
+  staked: number
+}
+
+/** The day's parts, from what was read for it. */
 export function toBreakdown(
-  point: LiquidStakingTvlPoint,
-  projectIds: string[],
+  day: Pick<
+    TvlBreakdown,
+    'timestamp' | 'projects' | 'staked' | 'supply' | 'ethPrice'
+  >,
 ): TvlBreakdown {
-  const projects: Record<string, number | null> = {}
   let liquid: number | null = 0
-  for (const id of projectIds) {
-    const value = point.projects[id] ?? null
-    projects[id] = value
+  for (const value of Object.values(day.projects)) {
     liquid = liquid !== null && value !== null ? liquid + value : null
   }
   return {
-    timestamp: point.timestamp,
-    projects,
+    ...day,
     liquid,
-    others: difference(point.ethStaked, liquid),
-    staked: point.ethStaked,
-    notStaked: difference(point.ethSupply, point.ethStaked),
-    supply: point.ethSupply,
-    ethPrice: point.ethPrice,
+    others: difference(day.staked, liquid),
+    notStaked: difference(day.supply, day.staked),
   }
+}
+
+export function isComplete(
+  breakdown: TvlBreakdown,
+): breakdown is CompleteTvlBreakdown {
+  return (
+    breakdown.liquid !== null &&
+    breakdown.others !== null &&
+    breakdown.staked !== null &&
+    breakdown.staked > 0
+  )
 }
 
 function difference(total: number | null, part: number | null) {
@@ -61,28 +75,30 @@ export interface EthChange {
 
 /** The numbers beside the value locked chart. */
 export interface LiquidStakingTvlSummary {
-  /**
-   * The latest day with the stake and every protocol, so its parts add up;
-   * the supply can still be missing.
-   */
-  latest: TvlBreakdown
-  /** Over the year to the latest stake. */
+  /** The latest complete day, so its parts add up; the supply can be missing. */
+  latest: CompleteTvlBreakdown
+  /** Over the year to `latest`. */
   stakeChange?: EthChange
-  /** Over the year to the latest supply. */
+  /** Over the year to `latest`; none when `latest` has no supply. */
   supplyChange?: EthChange
 }
 
 export function getLiquidStakingTvlSummary(
-  points: LiquidStakingTvlPoint[],
-  projectIds: string[],
+  breakdowns: TvlBreakdown[],
 ): LiquidStakingTvlSummary | undefined {
-  const breakdowns = points.map((point) => toBreakdown(point, projectIds))
-  const latest = breakdowns.findLast((breakdown) => breakdown.others !== null)
+  const latest = breakdowns.findLast(isComplete)
   if (!latest) return undefined
+  // Up to the same day, so the whole summary is as of one date.
+  const upToLatest = breakdowns.filter(
+    (breakdown) => breakdown.timestamp <= latest.timestamp,
+  )
   return {
     latest,
-    stakeChange: getYearChange(breakdowns, (b) => b.staked),
-    supplyChange: getYearChange(breakdowns, (b) => b.supply),
+    stakeChange: getYearChange(upToLatest, (b) => b.staked),
+    supplyChange:
+      latest.supply !== null
+        ? getYearChange(upToLatest, (b) => b.supply)
+        : undefined,
   }
 }
 

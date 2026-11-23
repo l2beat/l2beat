@@ -13,36 +13,38 @@ import { shareOf } from './liquidStakingTvlFormat'
 import {
   NOT_STAKED_KEY,
   OTHERS_KEY,
+  type TvlLayer,
   type TvlScope,
 } from './liquidStakingTvlLayers'
 
 /**
- * The day's visible layers. Protocol shares are of the stake, or of the
+ * The day's layers as drawn. Protocol shares are of the stake, or of the
  * protocols together in Liquid only view, to match the total above them.
  */
 export function LiquidStakingTvlTooltip({
   row,
-  visibleKeys,
+  layers,
   unit,
   scope,
 }: {
   /** In the chosen unit. */
   row: TvlBreakdown
-  visibleKeys: string[]
+  /** The layers the chart draws. */
+  layers: TvlLayer[]
   unit: ChartUnit
   scope: TvlScope
 }) {
-  const protocols = visibleKeys
-    .flatMap((key) => {
-      const value = row.projects[key]
-      return value != null ? [{ key, value }] : []
-    })
+  const drawn = layers.flatMap((layer) => {
+    const value = layer.value(row)
+    return value !== null ? [{ key: layer.key, value }] : []
+  })
+  if (drawn.length === 0) return null
+  const protocols = drawn
+    .filter(({ key }) => key !== OTHERS_KEY && key !== NOT_STAKED_KEY)
     .sort((a, b) => b.value - a.value)
-  const others = visibleKeys.includes(OTHERS_KEY) ? row.others : null
-  const notStaked = visibleKeys.includes(NOT_STAKED_KEY) ? row.notStaked : null
-  if (protocols.length === 0 && others === null && notStaked === null) {
-    return null
-  }
+  const others = drawn.find(({ key }) => key === OTHERS_KEY)?.value ?? null
+  const notStaked =
+    drawn.find(({ key }) => key === NOT_STAKED_KEY)?.value ?? null
 
   const total = scope === 'liquid' ? row.liquid : row.staked
   return (

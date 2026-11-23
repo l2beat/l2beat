@@ -13,7 +13,8 @@ import {
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
 import { getLiquidStakingProjects } from './getLiquidStakingProjects'
-import { getTvlInEthAt } from './getTvlInEthAt'
+import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
+import { type TvlBreakdown, toBreakdown } from './liquidStakingTvlBreakdown'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -57,15 +58,6 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
   ethStaked: number | null
   /** The same, at that day's ETH price. */
   ethStakedUsd: number | null
-}
-
-export interface LiquidStakingTvlPoint extends LiquidStakingChartPoint {
-  /** ETH staked network-wide, as the day started. */
-  ethStaked: number | null
-  /** ETH in existence, as the day started. */
-  ethSupply: number | null
-  /** ETH's USD price, as TVS valued it then. */
-  ethPrice: number | null
 }
 
 export async function getLiquidStakingCharts(
@@ -118,47 +110,76 @@ export async function getLiquidStakingYieldChart(
 }
 
 /**
- * Each protocol's TVL in ETH at its own rate, beside the ETH staked and ETH's
- * supply, so the page can show what the protocols do not hold.
+ * Each day split into the protocols' TVL in ETH at their own rates, the rest
+ * of the stake and the rest of the supply, each as the day started.
  */
 export async function getLiquidStakingTvlChart(
   params: LiquidStakingChartsParams,
-): Promise<LiquidStakingTvlPoint[]> {
+): Promise<TvlBreakdown[]> {
   const projects = await getProjects(params)
   const projectIds = projects.map((project) => project.id)
-  const { days, from, to } = getDays(params, 'started')
+  // A day's stake is indexed once the day ends, so the chart stops at the
+  // last ended day whatever the range's end. Starts with the yield chart, so
+  // the page's charts share their days.
+  const lastEnded = getLastChartDay(UnixTime.now(), 'ended')
+  const range = getDays(params, 'started')
+  // A range that ends before the first day has none.
+  if (range.to < range.from) return []
+  const days = range.days.filter((day) => day <= lastEnded)
+  const from = range.from
+  const to = days.at(-1) ?? from
   if (env.MOCK) {
     const tvl = projects.map((_, i) =>
       randomWalk(days.length, 9_000_000 / 2 ** i, 0.15),
     )
     const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
     const ethPrice = randomWalk(days.length, 3_000, 0.3)
-    return days.map((timestamp, i) => ({
-      timestamp,
-      projects: byProject(projectIds, tvl, i),
-      ethStaked: ethStaked[i] ?? null,
-      ethSupply: 120_000_000 + i * 1_000,
-      ethPrice: ethPrice[i] ?? null,
-    }))
+    return days.map((timestamp, i) =>
+      toBreakdown({
+        timestamp,
+        projects: byProject(projectIds, tvl, i),
+        staked: ethStaked[i] ?? null,
+        supply: 120_000_000 + i * 1_000,
+        ethPrice: ethPrice[i] ?? null,
+      }),
+    )
   }
   const db = getDb()
-  const [network, ethSupplies, ethPrices, ...tvlByProject] = await Promise.all([
+  const [network, ethSupplies, ethPrices, tvlByProject] = await Promise.all([
     db.ethereumStakingDaily.getInRange(from, to),
     db.ethereumSupplyDaily.getInRange(from, to),
     db.tvsPrice.getPricesInRangeByPriceId('ethereum', from, to),
-    ...projects.map((project) => getTvlInEthAt(project, days)),
+    Promise.all(
+      projects.map(
+        async (project) =>
+          [project.id, await getTvlSince(project, days)] as const,
+      ),
+    ),
   ])
   const points = computeTvlChart({
     days,
-    projectIds,
-    tvlByProject,
+    tvlByProject: new Map(tvlByProject),
     network,
     ethSupplies: new Map(ethSupplies.map((s) => [s.timestamp, s.supply])),
     ethPrices: new Map(ethPrices.map((p) => [p.timestamp, p.priceUsd])),
   })
-  return params.range[0] === null
-    ? trimLeadingIncomplete(points, projectIds)
-    : points
+  return params.range[0] === null ? trimLeadingIncomplete(points) : points
+}
+
+/**
+ * Zero where it has no value before the contracts the indexer reads were
+ * deployed, so a protocol that launched later doesn't leave the days before it
+ * without Others.
+ */
+async function getTvlSince(
+  project: TvlInEthProject,
+  days: UnixTime[],
+): Promise<(number | null)[]> {
+  const tvl = await getTvlInEthAt(project, days)
+  const since = project.liquidStaking.tracking?.sinceTimestamp
+  return since === undefined
+    ? tvl
+    : tvl.map((value, i) => ((days[i] ?? 0) < since ? (value ?? 0) : value))
 }
 
 /** In days of yield, by the cheapest route. */

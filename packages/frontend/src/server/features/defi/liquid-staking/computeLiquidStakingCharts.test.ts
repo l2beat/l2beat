@@ -12,7 +12,7 @@ import {
   getQueueWaits,
   trimLeadingIncomplete,
 } from './computeLiquidStakingCharts'
-import type { LiquidStakingTvlPoint } from './getLiquidStakingCharts'
+import { toBreakdown } from './liquidStakingTvlBreakdown'
 
 const DAY = UnixTime.DAY
 const HOUR = UnixTime.HOUR
@@ -78,68 +78,60 @@ describe(computeTvlChart.name, () => {
   it("takes each day's own stake, supply and price, leaving the days without one empty", () => {
     const points = computeTvlChart({
       days: [UnixTime(START), UnixTime(START + DAY)],
-      projectIds: ['lido', 'rocketpool'],
-      tvlByProject: [
-        [9, 10],
-        [1, null],
-      ],
+      tvlByProject: new Map([
+        ['lido', [9, 10]],
+        ['rocketpool', [1, null]],
+      ]),
       network: [day(START, 31_000n)],
       ethSupplies: new Map([[START + DAY, 120_000_000]]),
       ethPrices: new Map([[START, 3_000]]),
     })
 
     expect(points).toEqual([
-      {
+      toBreakdown({
         timestamp: START,
         projects: { lido: 9, rocketpool: 1 },
-        ethStaked: 30_000,
-        ethSupply: null,
+        staked: 30_000,
+        supply: null,
         ethPrice: 3_000,
-      },
-      {
+      }),
+      toBreakdown({
         timestamp: UnixTime(START + DAY),
         projects: { lido: 10, rocketpool: null },
-        ethStaked: null,
-        ethSupply: 120_000_000,
+        staked: null,
+        supply: 120_000_000,
         ethPrice: null,
-      },
+      }),
     ])
   })
 })
 
 describe(trimLeadingIncomplete.name, () => {
-  const point = (
+  const day = (
     timestamp: number,
-    ethStaked: number | null,
+    staked: number | null,
     projects: Record<string, number | null>,
-  ): LiquidStakingTvlPoint => ({
-    timestamp,
-    projects,
-    ethStaked,
-    ethSupply: null,
-    ethPrice: null,
-  })
+  ) =>
+    toBreakdown({ timestamp, projects, staked, supply: null, ethPrice: null })
 
   it('drops leading days missing a protocol or ETH staked', () => {
-    const points = [
-      point(1, 100, { lido: 30, etherfi: null }),
-      point(2, null, { lido: 30, etherfi: 10 }),
-      point(3, 100, { lido: 30, etherfi: 10 }),
-      point(4, 105, { lido: 31, etherfi: null }),
+    const days = [
+      day(1, 100, { lido: 30, etherfi: null }),
+      day(2, null, { lido: 30, etherfi: 10 }),
+      day(3, 100, { lido: 30, etherfi: 10 }),
+      day(4, 105, { lido: 31, etherfi: null }),
     ]
 
-    expect(trimLeadingIncomplete(points, ['lido', 'etherfi'])).toEqual(
-      points.slice(2),
-    )
+    expect(trimLeadingIncomplete(days)).toEqual(days.slice(2))
   })
 
-  it('keeps all points when no day is complete', () => {
-    const points = [
-      point(1, 100, { lido: 30, etherfi: null }),
-      point(2, 105, { lido: 31, etherfi: null }),
+  it('keeps all days when none is complete', () => {
+    const days = [
+      day(1, 100, { lido: 30, etherfi: null }),
+      day(2, 105, { lido: 31, etherfi: null }),
     ]
 
-    expect(trimLeadingIncomplete(points, ['lido', 'etherfi'])).toEqual(points)
+    expect(trimLeadingIncomplete(days)).toEqual(days)
   })
 })
 

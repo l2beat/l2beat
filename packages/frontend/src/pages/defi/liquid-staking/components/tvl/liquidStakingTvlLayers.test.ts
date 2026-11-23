@@ -1,11 +1,13 @@
 import { expect } from 'earl'
 import type { TvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import {
-  getLayers,
+  getProtocolLayers,
   getToggledScope,
   inUnit,
   NOT_STAKED_KEY,
   OTHERS_KEY,
+  stackOnKnown,
+  VIEWS,
 } from './liquidStakingTvlLayers'
 
 const breakdown: TvlBreakdown = {
@@ -18,21 +20,28 @@ const breakdown: TvlBreakdown = {
   supply: 100,
   ethPrice: 2,
 }
-const series = [{ key: 'lido', label: 'Lido', color: 'red' }]
+describe(stackOnKnown.name, () => {
+  const layers = stackOnKnown([
+    ...getProtocolLayers([
+      { key: 'lido', label: 'Lido', color: 'red' },
+      { key: 'rocketpool', label: 'Rocket Pool', color: 'blue' },
+    ]),
+    ...VIEWS.supply.layers,
+  ])
+  const values = (row: TvlBreakdown) => layers.map((layer) => layer.value(row))
 
-describe(getLayers.name, () => {
-  it('stacks Others in Staked view, and the ETH not staked on top in vs. Supply view', () => {
-    const keys = (scope: 'staked' | 'supply' | 'liquid') =>
-      getLayers(series, scope).map((layer) => layer.key)
-    expect(keys('liquid')).toEqual(['lido'])
-    expect(keys('staked')).toEqual(['lido', OTHERS_KEY])
-    expect(keys('supply')).toEqual(['lido', OTHERS_KEY, NOT_STAKED_KEY])
+  it('leaves out every layer above a missing one, which has no base', () => {
+    expect(values(breakdown)).toEqual([9, null, null, null])
   })
 
-  it('leaves the ETH not staked out above an incomplete stack', () => {
-    const notStaked = getLayers(series, 'supply').at(-1)
-    expect(notStaked?.value(breakdown)).toEqual(null)
-    expect(notStaked?.value({ ...breakdown, others: 20 })).toEqual(70)
+  it('draws every layer of a complete day', () => {
+    expect(
+      values({
+        ...breakdown,
+        projects: { lido: 9, rocketpool: 1 },
+        others: 20,
+      }),
+    ).toEqual([9, 1, 20, 70])
   })
 })
 

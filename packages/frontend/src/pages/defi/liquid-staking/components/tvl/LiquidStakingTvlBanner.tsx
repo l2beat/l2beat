@@ -1,4 +1,5 @@
 import { formatNumber } from '@l2beat/shared-pure'
+import maxBy from 'lodash/maxBy'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   Tooltip,
@@ -33,6 +34,10 @@ export function LiquidStakingTvlBanner({
       {summary ? (
         <>
           <div className="min-w-0 flex-1">
+            <div className="mb-1 font-medium text-label-value-12 text-secondary">
+              As of{' '}
+              {formatTimestamp(summary.latest.timestamp, { mode: 'date' })}
+            </div>
             <StakeSentence summary={summary} />
             <LiquidSentence projects={projects} summary={summary} />
           </div>
@@ -58,9 +63,9 @@ export function LiquidStakingTvlBanner({
 }
 
 function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
-  const { staked, supply, timestamp } = summary.latest
-  if (staked === null) return null
-  const supplyShare = shareOf(staked, supply)
+  const { staked, supply, notStaked, timestamp } = summary.latest
+  // A supply below the stake disagrees with it, so it gives no share.
+  const supplyShare = notStaked !== null ? shareOf(staked, supply) : undefined
   return (
     <p className="text-pretty font-semibold text-heading-20 text-primary tabular-nums leading-tight tracking-[-0.02em] md:text-heading-24">
       {supplyShare !== undefined && supply !== null ? (
@@ -70,9 +75,9 @@ function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
               {formatPercent(supplyShare)}
             </TooltipTrigger>
             <TooltipContent>
-              The balance of all active validators as a share of all ETH in
-              existence, {formatNumber(supply)} ETH according to CoinGecko, as
-              of {formatTimestamp(timestamp, { mode: 'datetime' })}.
+              The balance of all active validators as a share of ETH's supply,{' '}
+              {formatNumber(supply)} ETH: CoinGecko's market cap over its price,
+              at the start of {formatTimestamp(timestamp, { mode: 'date' })}.
             </TooltipContent>
           </Tooltip>{' '}
           of all ETH is staked:{' '}
@@ -101,18 +106,9 @@ function LiquidSentence({
   projects: LiquidStakingChartProject[]
   summary: LiquidStakingTvlSummary
 }) {
-  const { liquid, staked } = summary.latest
-  if (liquid === null || !staked) return null
-
-  const largest = projects
-    .map((project) => ({ project, eth: summary.latest.projects[project.id] }))
-    .reduce<{ project: LiquidStakingChartProject; eth: number } | undefined>(
-      (max, { project, eth }) =>
-        eth != null && (max === undefined || eth > max.eth)
-          ? { project, eth }
-          : max,
-      undefined,
-    )
+  const { liquid, staked, projects: ethByProject } = summary.latest
+  const largest = maxBy(projects, (project) => ethByProject[project.id])
+  const largestEth = largest && ethByProject[largest.id]
   return (
     <p className="mt-1.5 text-pretty font-medium text-paragraph-14 text-secondary tabular-nums">
       The {projects.length} liquid staking protocols hold{' '}
@@ -120,14 +116,14 @@ function LiquidSentence({
         {formatPercent(liquid / staked)}
       </strong>{' '}
       ({formatEthStaked(liquid)})
-      {largest && (
+      {largest && largestEth !== undefined && (
         <>
           , led by{' '}
           <strong className="font-semibold text-primary">
-            {largest.project.shortName ?? largest.project.name}
+            {largest.shortName ?? largest.name}
           </strong>{' '}
-          at {formatPercent(largest.eth / staked)} (
-          {formatEthStaked(largest.eth)})
+          at {formatPercent(largestEth / staked)} ({formatEthStaked(largestEth)}
+          )
         </>
       )}
       .
