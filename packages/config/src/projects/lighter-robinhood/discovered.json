@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1794829276,
+  "timestamp": 1795177545,
   "configHash": "0xb264d2ca45a0b8e07c7a0c06d051c1de6464150b3d52c1ed62145fc348063919",
   "entries": [
     {
@@ -214,7 +214,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 36,
+        "nonce": 40,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -330,8 +330,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 201483,
-        "committedPriorityRequestCount": 206738,
+        "committedBatchesCount": 208365,
+        "committedPriorityRequestCount": 214073,
         "createdMarkets": [
           "ETH",
           "BTC",
@@ -430,21 +430,23 @@
           "ENA",
           "PUMP",
           "XPL",
-          "WLD"
+          "WLD",
+          "ANT",
+          "ANT/USDG"
         ],
         "desertMode": false,
         "desertVerifier": "robinhood:0x93c83bdA3A45241729Ce150C1e3677bA7389c0D0",
-        "executedBatchesCount": 201478,
-        "executedOnChainBatchesCount": 64092,
-        "executedPriorityRequestCount": 206733,
+        "executedBatchesCount": 208359,
+        "executedOnChainBatchesCount": 67740,
+        "executedPriorityRequestCount": 214060,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x998ecf039Eb110b72F5F6C1Ea31C2fA41a458FAA",
         "governance": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
         "insuranceFundOperator": "robinhood:0x51aa1F735ee60FF7f3EBF81c9c20C373Bddd0435",
-        "lastAccountIndex": 55498,
-        "lastVerifiedEndBlockNumber": 64966516,
-        "lastVerifiedStateRoot": "0xe6a91ca3a09ce121260ffeceb9dbf97a2b60e914f6010687afd9ab753e384fc5",
-        "lastVerifiedValidiumRoot": "0x1d0fcae4808ae25e9ea069b21368efe8baf6bb2b5d755dc3367ca495160e0e91",
+        "lastAccountIndex": 55864,
+        "lastVerifiedEndBlockNumber": 69889266,
+        "lastVerifiedStateRoot": "0xac6e5529c65b5655f97ec790a2f3ad40c7016103da82a7638ececd5276e57da0",
+        "lastVerifiedValidiumRoot": "0x24c28ecafa00b4c90e09fea4eeb892eb2b2cd55b89650ddbf895546094b4f425",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -468,8 +470,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 6,
-        "pendingOnChainBatchesCount": 5,
+        "openPriorityRequestCount": 14,
+        "pendingOnChainBatchesCount": 4,
         "PRIORITY_EXPIRATION": 1209600,
         "QUOTE_ASSET_INDEX": 3,
         "registeredAssets": [
@@ -584,14 +586,18 @@
           {
             "assetIndex": 29,
             "tokenAddress": "robinhood:0x39dBED3a2bd333467115dE45665cC57F813C4571"
+          },
+          {
+            "assetIndex": 30,
+            "tokenAddress": "robinhood:0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373"
           }
         ],
-        "stateRoot": "0xe6a91ca3a09ce121260ffeceb9dbf97a2b60e914f6010687afd9ab753e384fc5",
+        "stateRoot": "0xbb3e7f2e3c67a7a90a4d622eecf0267b72f4e90da309aea97bf46969bdf81861",
         "stateRootUpgradeVerifier": "robinhood:0x0000000000000000000000000000000000000000",
         "treasury": "robinhood:0x7F21cE90Bc7566ADB84130997070782c4628b15E",
-        "validiumRoot": "0x1d0fcae4808ae25e9ea069b21368efe8baf6bb2b5d755dc3367ca495160e0e91",
-        "verifiedBatchesCount": 201478,
-        "verifiedPriorityRequestCount": 206733,
+        "validiumRoot": "0x65f5498f464a2cb76950f1fdb1989bd8c2784d7144a362e7b41ef89c3b768a62",
+        "verifiedBatchesCount": 208360,
+        "verifiedPriorityRequestCount": 214062,
         "verifier": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
       },
       "fieldMeta": {
@@ -1205,7 +1211,7 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpotQuoteAsset": "0x42d391212d98aa324723c3786b3559f6bd6cdaac8142294ab23776e35a0438a4"
   },
-  "usedBlockNumbers": { "robinhood": 115733610 },
+  "usedBlockNumbers": { "robinhood": 119047923 },
   "permissionsConfigHash": "0x96265481630af53d5842131822e903fb866cbd3f2b627c664f1d215640ed4165",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {

@@ -1,6 +1,6 @@
 There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade management contract ProtocolUpgradeHandler.
-The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or {{scApprovalThreshold}} SecurityCouncil participants.
-The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
+The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by {{scApprovalThreshold}} SecurityCouncil participants or the ZkFoundationMultisig.
+The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 2/2 Multisig between the SecurityCouncil and the ZkFoundationMultisig.
 ## Standard path
 ### On ZKsync Era
 Delegates can start new proposals by reaching a threshold of {{protocolStartProposalThresholdM}}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract. Proposals are voted on in the [ZKsync governance portal](https://vote.zknation.io/dao).
@@ -9,20 +9,20 @@ A proposal is only successful if it reaches both quorum ({{protocolQuorumM}}M ZK
 In the successful case, it can be queued in the {{protTlMinDelayS}} timelock which forwards it via the Gateway to Ethereum as an L2->L1 log.
 ### On Ethereum
 After the execution of the proposal-containing batch ({{executionDelay}} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the {{legalVetoStandardS}} 'legal veto period'.
-This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of {{guardiansExtendThreshold}} Guardians can extend the veto period to {{legalVetoExtendedS}}.
+This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of the ZkFoundationMultisig and SecurityCouncil. The ZkFoundationMultisig ({{zkFoundationStats}}) can extend the veto period to {{legalVetoExtendedS}}.
 After this a proposal enters a *waiting* state of {{upgradeWaitOrExpireS}}, from which it can be immediately approved (cancelling the delay) by {{scApprovalThreshold}} participants of the SecurityCouncil.
-For the unlikely case that the Security Council does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
+For the unlikely case that the Security Council does not approve here, the ZkFoundationMultisig can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
 A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will expire if not approved within the waiting period. An approved proposal now enters the *pendingExecution* state for a final delay of {{upgradeDelayPeriodS}} and can then be executed.
 ### Other governance tracks
 There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
 2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.
 The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
-Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
+Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the ZK Foundation Era Multisig (same signers as the ZkFoundationMultisig) can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
-SecurityCouncil ({{scThresholdString}}), Guardians ({{guardiansThresholdString}}) and ZkFoundationMultisig ({{zkFoundationStats}}) form a de-facto 3/3 Multisig
+SecurityCouncil ({{scThresholdString}}) and ZkFoundationMultisig ({{zkFoundationStats}}) form a de-facto 2/2 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
 ## Upgrade Delays
-The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is {{upgradeDelayWithScApprovalS}} or {{upgradeDelayWithScApprovalExtendedLegalVotingS}} (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and {{upgradeDelayNoScS}} for the path in which the SecurityCouncil is not approving the proposal.
+The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is {{upgradeDelayWithScApprovalS}} or {{upgradeDelayWithScApprovalExtendedLegalVotingS}} (depending on the ZkFoundationMultisig extending the LegalVetoPeriod) for Standard, 0 for Emergency and {{upgradeDelayNoScS}} for the path in which the SecurityCouncil is not approving the proposal.
 ## Freezing
 The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current ChainTypeManager.
 Either for a softFreeze of {{softFreezeS}} or a hardFreeze of {{hardFreezeS}}.

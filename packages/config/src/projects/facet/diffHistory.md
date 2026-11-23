@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xa82a78ec86eac3ee4def640b8e9a061c1b203a57
+
+# Diff at Fri, 20 Nov 2026 13:39:03 GMT:
+
+- id: ea449017
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1795086039
+- current timestamp: 1795177510
+
+## Description
+
+Facet admins dennounced some more permissions. Disabled immutable contracts removed from the FE.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x615452db5467849689E98a8C5C242A96cF768a94) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","description":"Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.","role":".whitelistedProposers"}
+    }
+```
+
+```diff
+    contract RollupDeprecated (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      values.owner:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.whitelistedProposers.0:
+-        "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","description":"can set the whitelisted proposers.","role":".owner"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1795086039 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) [facet/FacetEtherBridgeShutdown] {
+    +++ description: Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function.
+      sourceHashes.0:
+-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
++        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "FacetEtherBridgeV6"
++        "FacetEtherBridgeV6Shutdown"
+      category.name:
+-        "External Bridges"
++        "Spam"
+      category.priority:
+-        1
++        -1
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xf8785b342cbc1296c01aa7e9a869ee0fbedc38f4
 
 # Diff at Thu, 19 Nov 2026 11:01:42 GMT:

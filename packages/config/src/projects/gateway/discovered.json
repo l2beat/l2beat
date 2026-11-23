@@ -1462,7 +1462,7 @@
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
   "permissionsConfigHash": "0x8494c49a96fe7a7e343c6ab3791de23f84398049157bb81cbff389b4ace1fe72",
   "modelledAgainst": {
-    "shared-zk-stack": "0x80404a6ca1d69bd1fea0595d0a9f17b6210f4a54ffe33b4bad208e7eca37d732"
+    "shared-zk-stack": "0x3fb496558cb38b611ac21921ee3033ba85c0b8722d97b61cf76cc89852c2a763"
   },
   "permissions": {
     "eth:0x14F19299476664665eDa17DBb7dA7e62E3253aa8": {
@@ -1497,8 +1497,8 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
-          "description": "one of its 3/3 signers.",
+          "from": "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1",
+          "description": "one of its 2/2 signers.",
           "role": ".SECURITY_COUNCIL"
         },
         {
@@ -1540,145 +1540,7 @@
         }
       ]
     },
-    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
-          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
-          "role": ".admin",
-          "via": [
-            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
-          "role": ".admin",
-          "via": [
-            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "description": "manage filter lists.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
-          "role": ".getAdmin",
-          "via": [
-            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
-          "role": ".admin",
-          "via": [
-            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" },
-            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b" },
-            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B" },
-            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
-          "role": ".owner"
-        }
-      ]
-    },
-    "eth:0x5540DE94485dB078025318428F813C5d88215823": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
-          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
-          "role": ".getTransactionFilterer"
-        }
-      ]
-    },
-    "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": {
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "role": "admin"
-        }
-      ]
-    },
-    "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
-          "role": ".validatorVTL"
-        }
-      ]
-    },
-    "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
-          "description": "one of its 3/3 signers.",
-          "role": ".GUARDIANS"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "description": "extend the legal veto period, approve a protocol upgrade.",
-          "role": ".guardians"
-        }
-      ]
-    },
-    "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C": {
+    "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1950,6 +1812,128 @@
         }
       ]
     },
+    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1adF137F59949c9081157D5de1e002D1C992071F",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin",
+          "via": [
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
+          "role": ".admin",
+          "via": [
+            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "description": "manage filter lists.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers and, from v31 while Priority Mode is not allowed, pause all new L1 --> L2 transactions including deposits (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
+          "role": ".admin",
+          "via": [
+            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" },
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBfaa733261500101996A10A231794263567d52ab",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe5f57E8791281920C1E1FFBb0Bd70e3Bd4c18a4b" },
+            { "address": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B" },
+            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x5540DE94485dB078025318428F813C5d88215823": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
+          "role": ".getTransactionFilterer"
+        }
+      ]
+    },
+    "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x7d95f0B9D3383D58E39a75a67760aA2153D355A2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
+          "role": ".validatorVTL"
+        }
+      ]
+    },
     "eth:0x933dEA2C4241B1537fDD6da277eA62841B490172": {
       "directlyReceivedPermissions": [
         {
@@ -2170,9 +2154,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C",
-          "description": "one of its 3/3 signers.",
+          "from": "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1",
+          "description": "one of its 2/2 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "extend the legal veto period, approve a protocol upgrade (executable only after the full waiting period).",
+          "role": ".zkFoundation"
         },
         {
           "permission": "interact",

@@ -4,6 +4,7 @@ import type { Project } from '@l2beat/config'
 import type { OpengraphKit } from '~/components/opengraph-image/heartbeat/render'
 import { renderOpengraphPng } from '~/components/opengraph-image/heartbeat/render'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
+import { isUnreviewedLiquidStaking } from '~/server/features/defi/isListedDefiProject'
 import { ps } from '~/server/projects'
 import { writeIfMissing } from './writeIfMissing'
 
@@ -17,6 +18,7 @@ export async function generateProjectOgImages(kit: OpengraphKit) {
       'interopConfig',
       'privacyInfo',
       'defiInfo',
+      'liquidStaking',
     ],
   })
 
@@ -92,6 +94,7 @@ export function getOpengraphProjectTypes(
     | 'interopConfig'
     | 'privacyInfo'
     | 'defiInfo'
+    | 'liquidStaking'
   >,
 ) {
   const types: ('layer2s' | 'zk-catalog' | 'interop' | 'privacy' | 'defi')[] =
@@ -108,7 +111,7 @@ export function getOpengraphProjectTypes(
   if (project.privacyInfo) {
     types.push('privacy')
   }
-  if (project.defiInfo) {
+  if (project.defiInfo && !isUnreviewedLiquidStaking(project)) {
     types.push('defi')
   }
   return types

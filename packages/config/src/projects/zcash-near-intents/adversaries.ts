@@ -151,8 +151,8 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title:
-            '1Click terms: IP and wallet data, screening, custody (2026-10-30)',
+          title: '1Click terms: IP and wallet data, screening, custody',
+          checked: '2026-10-30',
           url: DOCS + 'security-compliance/terms-of-service',
         },
         {

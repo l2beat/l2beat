@@ -28,6 +28,11 @@ export interface AggregatedClientMetric {
   limiterInFlightMax?: number
   /** Configured budget of the limiter; `count / callsPerMinute` over a minute is utilisation. */
   callsPerMinute?: number
+  /**
+   * The rate the limiter paces at. Below `callsPerMinute` once refusals
+   * have stepped it down: the rate the provider was seen to take.
+   */
+  effectiveCallsPerMinute?: number
 }
 
 export interface ClientMetricsAggregatorOptions
@@ -89,6 +94,8 @@ export class ClientMetricsAggregator extends MetricsAggregator<ClientMetric> {
       if (limiter && this.options.rateLimiter) {
         entry.limiterInFlightMax = limiter.inFlightMax
         entry.callsPerMinute = this.options.rateLimiter.callsPerMinute
+        entry.effectiveCallsPerMinute =
+          this.options.rateLimiter.effectiveCallsPerMinute
       }
     }
     return result

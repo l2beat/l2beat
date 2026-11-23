@@ -13,16 +13,28 @@ export async function getLiquidStakingConfig(
 ): Promise<LiquidStakingConfig | false> {
   const projects = (await ps.getProjects({ select: ['liquidStaking'] }))
     .filter((project) => flags.isEnabled('liquid-staking', project.id))
-    .map((project) => ({
-      configurationId: getLiquidStakingConfigurationId(
-        project.id,
-        project.liquidStaking.contracts,
-        project.liquidStaking.marketQuotes,
-      ),
-      projectId: project.id,
-      contracts: project.liquidStaking.contracts,
-      marketQuotes: project.liquidStaking.marketQuotes,
-    }))
+    .flatMap(({ id, liquidStaking: { tracking } }) =>
+      tracking
+        ? [
+            {
+              configurationId: getLiquidStakingConfigurationId(
+                id,
+                tracking.contracts,
+                tracking.marketQuotes,
+              ),
+              projectId: id,
+              sinceTimestamp: UnixTime(
+                Math.max(
+                  SINCE_TIMESTAMP,
+                  tracking.sinceTimestamp ?? SINCE_TIMESTAMP,
+                ),
+              ),
+              contracts: tracking.contracts,
+              marketQuotes: tracking.marketQuotes,
+            },
+          ]
+        : [],
+    )
 
   if (projects.length === 0) return false
 

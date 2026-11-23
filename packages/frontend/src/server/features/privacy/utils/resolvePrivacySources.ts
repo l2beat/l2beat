@@ -22,7 +22,8 @@ const SOURCE_SECTION_ID: Record<PrivacySectionSource['section'], SectionId> = {
 /**
  * Turns contract and section sources into url sources pointing at anchors on
  * this page. Section sources are dropped when the page does not render that
- * section, so that no link is dead.
+ * section, so that no link is dead. A url source gets the day it was last
+ * checked after its title.
  */
 export function resolvePrivacySources(
   adversaries: ProjectPrivacyAdversaries,
@@ -30,7 +31,10 @@ export function resolvePrivacySources(
 ): ProjectPrivacyAdversaries {
   const titles = new Map(sections.map((s) => [s.props.id, s.props.title]))
   const resolve = (source: PrivacySource): PrivacySource[] => {
-    if ('url' in source) return [source]
+    if ('url' in source) {
+      const { title, url, checked } = source
+      return [{ url, title: checked ? `${title} (checked ${checked})` : title }]
+    }
     if ('contract' in source) {
       const { contract, title = contract } = source
       return [{ title, url: `#${contract}` }]

@@ -22,6 +22,7 @@ import {
   PrivacyWalkawayTestTooltipContent,
 } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PRIVACY_COLUMN_DESCRIPTIONS } from '../../privacySummaryColumns'
 import { PrivacyProjectRosette } from '../../rosette/PrivacyProjectRosette'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 import { MOBILE_SUMMARY_ROWS } from './PrivacyProjectStats'
@@ -67,7 +68,7 @@ export function PrivacyProjectRiskProfile({
       />
       <ProjectSummaryStat
         title="Trusted setup"
-        tooltip="Trusted setup used by the project's proving system and its risk."
+        tooltip={PRIVACY_COLUMN_DESCRIPTIONS.trustedSetup}
         value={
           <RiskValue
             value={trustedSetup}
@@ -78,7 +79,7 @@ export function PrivacyProjectRiskProfile({
       />
       <ProjectSummaryStat
         title="Exit window"
-        tooltip="Time users have to withdraw before a malicious upgrade can take effect."
+        tooltip={PRIVACY_COLUMN_DESCRIPTIONS.exitWindow}
         value={
           <RiskValue
             value={exitWindow}
@@ -89,7 +90,7 @@ export function PrivacyProjectRiskProfile({
       />
       <ProjectSummaryStat
         title="Reproducibility"
-        tooltip="Whether all source code needed to audit the protocol and participate in it is published and can be used locally."
+        tooltip={PRIVACY_COLUMN_DESCRIPTIONS.reproducibility}
         value={
           <RiskValue
             value={reproducibility}

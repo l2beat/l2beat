@@ -9,6 +9,10 @@ import {
 import { utils } from 'ethers'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -17,6 +21,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkApiAdversaries } from './adversaries'
+import { zkApiRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkapi')
 const vault = discovery.getContract('ZkApiVault')
@@ -239,9 +244,7 @@ export const zkapi: BaseProject = {
       },
     ],
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description: `The owner can immediately pause cooperative closes and the start of escapes. An already pending escape can be finalized after ${values.challengePeriod}, including during a pause. An active note becomes sweepable after its deposit expiry.`,
       walkawayTest: {
         passed: false,
@@ -250,14 +253,13 @@ export const zkapi: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The browser app and the local daemon have public source and build instructions. The hosted app adds a private layer for its sign-in pages and analytics, so it does not rebuild from that source. The verifier enclave's attested image rebuilds from public source. The daemon releases and the stations remain unreproduced.",
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
-    riskSummary: readProjectMarkdown('zkapi', 'riskSummary'),
+    riskSummary: zkApiRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
     },

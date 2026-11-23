@@ -2,6 +2,7 @@ import {
   PRIVACY_ADVERSARIES,
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
+import { PRIVACY_EXIT_WINDOW_DAYS } from '@l2beat/config/build/common/privacySummaryValues'
 import {
   PRIVACY_TOOLS,
   type PrivacyTool,
@@ -27,7 +28,6 @@ import {
   PRIVACY_REFERENCE_APP_ANCHOR,
   PRIVACY_ROUTES_ANCHOR,
 } from './paths'
-import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
 export type PrivacyMethodologySections = ReturnType<
   typeof getPrivacyMethodologySections
@@ -64,7 +64,7 @@ export function getPrivacyMethodologySections() {
       bulletList(
         PRIVACY_ADVERSARY_ORDER.map(
           (id) =>
-            `**${PRIVACY_ADVERSARIES[id].label}**: ${FRAMEWORK_ADVERSARY_TEXT[id]}`,
+            `**${PRIVACY_ADVERSARIES[id].label}**: ${PRIVACY_ADVERSARIES[id].description}`,
         ),
       ),
       'A third party ties requests to one user by content, session or timing. Content is what a request names, like an account or a hash. Session is what requests share, like an IP, a Tor circuit, a fingerprint or a login. Timing narrows the candidates to users active at the same moment. The network observer is green only when no third party ties both sides of the promised field by content or session. Timing must leave many candidates.',
@@ -149,7 +149,7 @@ export function getPrivacyMethodologySections() {
       bulletList([
         `**Anonymity set**: For link privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS.deposits)} For recipient privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS['key-registrations'])}`,
         `**Trusted setup**: ${COLUMNS.trustedSetup} Risks follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}.`,
-        `**Exit window**: ${COLUMNS.exitWindow}`,
+        `**Exit window**: ${COLUMNS.exitWindow} A delay is green from ${PRIVACY_EXIT_WINDOW_DAYS.green} days and red under ${PRIVACY_EXIT_WINDOW_DAYS.yellow}.`,
         `**Walkaway test**: ${COLUMNS.walkawayTest}`,
         `**Reproducibility**: ${COLUMNS.reproducibility}`,
       ]),

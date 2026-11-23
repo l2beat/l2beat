@@ -59,6 +59,14 @@ export const risc0: BaseProject = {
         'risc0-zkvm 2.3.2 and 3.0.3 fix a bug letting a malicious host write anywhere in guest memory.',
       type: 'incident',
     },
+    {
+      title: 'Groth16 claim substitution vulnerability',
+      url: 'https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2',
+      date: '2026-11-11T00:00:00Z',
+      description:
+        'risc0-zkvm 3.1.0 fixes a bug that let one valid Groth16 receipt prove any claim.',
+      type: 'incident',
+    },
   ],
   zkCatalogInfo: {
     creator: 'RISC Zero',
@@ -70,7 +78,7 @@ export const risc0: BaseProject = {
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
-        ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.Arithmetization.R1CS,
         // ZK_CATALOG_TAGS.PCS.KZG,
@@ -78,6 +86,11 @@ export const risc0: BaseProject = {
     },
     proofSystemInfo: readProjectMarkdown('risc0', 'proofSystemInfo'),
     trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
+        ...TRUSTED_SETUPS.Risc0Groth16_v3_1_0,
+      },
+      // 2024 setup of the verifiers up to v3.0.0, all estopped after GHSA-mm6c-35cm-g4x2
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         ...TRUSTED_SETUPS.Risc0,
@@ -91,6 +104,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('bob'),
         sinceTimestamp: UnixTime(1752703200),
+        untilTimestamp: UnixTime(1789547003), // 2026-09-16 respected game type back to PermissionedDisputeGame
       },
       {
         projectId: ProjectId('megaeth'),
@@ -99,6 +113,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('soon'),
         sinceTimestamp: UnixTime(1765180787),
+        untilTimestamp: UnixTime(1785292451), // 2026-07-29 OptimismPortal reads the permissioned L2OutputOracle
       },
       {
         projectId: ProjectId('base'),
@@ -108,6 +123,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('roninnetwork'),
         sinceTimestamp: UnixTime(1780557929), // Kailua KailuaTreasury deployed (not yet active)
+        untilTimestamp: UnixTime(1788777107), // 2026-09-07 respected game type back to PermissionedDisputeGame
       },
     ],
     verifierHashes: [
@@ -122,13 +138,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
             ),
-            overrideUsedIn: [
-              ProjectId('taiko'),
-              ProjectId('bob'),
-              ProjectId('megaeth'),
-              ProjectId('soon'),
-              ProjectId('roninnetwork'),
-            ],
+            // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -151,11 +162,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
-            overrideUsedIn: [
-              ProjectId('bob'),
-              ProjectId('taiko'),
-              ProjectId('roninnetwork'),
-            ],
+            // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+            overrideUsedIn: [],
           },
           // {
           //   address: ChainSpecificAddress.fromLong(
@@ -182,7 +190,7 @@ export const risc0: BaseProject = {
       {
         hash: '0xf5904d2c6c6ecb457efb46a01d9ae0a11c666ad6c70668ce3df9b6b28604da3b',
         name: 'RiscZero v3.1.0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
@@ -195,24 +203,25 @@ export const risc0: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key and `bn254_control_id` match risc0 v3.1.0, its `control_root` matches no release. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
       },
       {
         hash: '0x88492a617f432f3c03449951b7cdaf0db75b27058a52ef935ac06c01d5d4b384',
         name: 'RiscZero v3.1.0 (control root 0xe6feef13)',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        sourceLink: 'https://github.com/risc0/risc0/tree/v3.1.0/risc0',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x8c915b5071206C6E328BC18529586c513408aB3b',
             ),
-            overrideUsedIn: [ProjectId('taiko')],
+            overrideUsedIn: [ProjectId('taiko'), ProjectId('megaeth')],
           },
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code and Groth16 verifying key equal those of the other v3.1.0 verifier, the `control_root` differs. The verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The verifying key, `control_root` and `bn254_control_id` match risc0 v3.1.0. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
       },
       {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
@@ -225,6 +234,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C',
             ),
+            // route 0x310fe598 is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -248,6 +259,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d',
             ),
+            // BOB's Kailua game is no longer respected
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'notVerified',
@@ -266,6 +279,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97',
             ),
+            // route 0x9f39696c is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -288,6 +303,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF',
             ),
+            // route 0xf536085a is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',

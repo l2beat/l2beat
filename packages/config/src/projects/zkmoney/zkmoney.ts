@@ -11,6 +11,10 @@ import { utils } from 'ethers'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -23,6 +27,7 @@ import type {
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyAdversaries } from './adversaries'
+import { zkMoneyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkmoney')
 
@@ -398,9 +403,7 @@ export const zkmoney: BaseProject = {
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description: 'The escrow and the approved enclave image are immutable.',
       walkawayTest: {
         passed: false,
@@ -411,8 +414,7 @@ export const zkmoney: BaseProject = {
     // Hosted wallet build on 2026-10-30: ea3459dc, absent from the public
     // mirror (main 8fd1984). The DAI privacy reference is Desktop v0.5.0.
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The Ethereum contracts, desktop wallet, DAI enclave and circuit sources are public. The refund and resolver verifiers match the published circuits. The complete enclave image build, resolver service and frozen-chain snapshot service are unpublished, and so are the sUSDS enclave image and its source. The hosted wallet runs a build absent from the public source. Verification instructions cover the refund and resolver circuits and the DAI and sUSDS tokens pinned by their Ethereum portals.',
     },
@@ -423,7 +425,7 @@ export const zkmoney: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyAdversaries,
-    riskSummary: readProjectMarkdown('zkmoney', 'riskSummary'),
+    riskSummary: zkMoneyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoney',

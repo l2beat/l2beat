@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9466cda64e3653ef4ec4c5c4f9c9d41def6ea9d4
+
+# Diff at Fri, 20 Nov 2026 12:27:00 GMT:
+
+- id: a702cdef
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1794829276
+- current timestamp: 1795177545
+
+## Description
+
+Registered ANT stock on Robinhood lighter.
+
+## Watched changes
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.registeredAssets.28:
++        {"assetIndex":30,"tokenAddress":"robinhood:0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373"}
+    }
+```
+
 Generated with discovered.json: 0xfcc1221ed60722f85f7324dcc9d9262ab3ed4e28
 
 # Diff at Mon, 16 Nov 2026 11:42:21 GMT:

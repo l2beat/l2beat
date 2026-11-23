@@ -111,13 +111,15 @@ export function hinkalAdversaries(upgradeDelay: string) {
         sources: [
           {
             title:
-              'Deposits since the 16 July 2026 launch, direct and through Emporium, DepositOnChainUtxos and receive vaults: 375 ETH, 225 USDC and 367 USDT from 216, 122 and 122 addresses (counted 2026-11-23)',
+              'Deposits since the 16 July 2026 launch, direct and through Emporium, DepositOnChainUtxos and receive vaults: 375 ETH, 225 USDC and 367 USDT from 216, 122 and 122 addresses',
             url: 'https://etherscan.io/address/0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4',
+            checked: '2026-11-23',
           },
           {
             title:
-              'Deposits that leave again as the same amount, or within a day less up to 3% in fees: 45% of ETH, 55% of USDC and 72% of USDT deposits, at a median delay of 24 seconds. 129, 57 and 51 addresses have a deposit left (2026-11-23)',
+              'Deposits that leave again as the same amount, or within a day less up to 3% in fees: 45% of ETH, 55% of USDC and 72% of USDT deposits, at a median delay of 24 seconds. 129, 57 and 51 addresses have a deposit left',
             url: 'https://etherscan.io/address/0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4',
+            checked: '2026-11-23',
           },
           { contract: 'HinkalHelper', title: 'Whitelisted relayers' },
         ],

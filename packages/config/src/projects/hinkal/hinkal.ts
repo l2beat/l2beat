@@ -21,6 +21,7 @@ import {
   hinkalAdversaries,
   REFERENCE_APP,
 } from './adversaries'
+import { hinkalRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('hinkal')
 
@@ -237,7 +238,8 @@ export const hinkal: BaseProject = {
     adversaries: hinkalAdversaries(
       formatSeconds(timelockDelay, { fullUnit: true }),
     ),
-    riskSummary: readProjectMarkdown('hinkal', 'riskSummary', {
+    riskSummary: hinkalRiskSummary({
+      multisigStats,
       timelockDelay: formatSeconds(timelockDelay, { fullUnit: true }),
     }),
     upgradesAndGovernance: {

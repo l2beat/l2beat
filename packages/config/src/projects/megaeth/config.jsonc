@@ -20,7 +20,7 @@
           "handler": {
             "type": "call",
             "method": "function getVerifier(bytes4 selector) view returns (address)",
-            "args": ["0x73c457ba"] // RISC Zero Groth16 verifier v3.0.0
+            "args": ["0xe71e6620"] // RISC Zero emergency stop wrapping the Groth16 verifier v3.1.0
           }
         }
       }

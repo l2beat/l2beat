@@ -102,7 +102,8 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title:
-            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded (counted 2026-11-13)',
+            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded',
+          checked: '2026-11-13',
           url: 'https://etherscan.io/address/0x000000c2A20657CE25f2Ba99737933D031AFBEE9',
         },
         {

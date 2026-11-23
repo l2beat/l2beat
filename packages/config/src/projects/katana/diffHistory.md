@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xaea37c7e036f762d50ab5531eba246bee0dda2f3
+
+# Diff at Mon, 23 Nov 2026 13:15:11 GMT:
+
+- id: d0ab99a0
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794986113
+- current timestamp: 1795438771
+
+## Description
+
+Polygon Multisig 2 selected a new OP Succinct config on AggchainFEP. Its aggregation vkey and range vkey commitment are those of [OP Succinct v3.14.3](https://github.com/succinctlabs/op-succinct/releases/tag/v3.14.3) (SP1 6.10.0, Hokulea 1.4.2), replacing v3.14.1. The rollup config hash is unchanged.
+
+The Katana Foundation Engineering/Security Multisig added one signer and swapped two, on L1 and L2. It is now 2 of 6.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x00070992a03760456403e800b0bd1a0e907a85a5c2cffca292b5994b56b5363b"
++        "0x0014f8323d9960173711ccef45d3b3aeddc7aa3fc1db9cdb978625bd5bbaf127"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x5ae13fed447a94f57d6ee8fc44cce8075ef994485121dcd27e75577d264f75b1"
++        "0x6b44a1ac3684125e6912a8025753526067d4d7524da7400141b8d61c79d1eb1d"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0x78bea7db8aa3cf21062aa42ee79556258a369e6fbe39954760f92475ba39a06c"
++        "0xe12002f39c5731b14ee7685d64fe08ed6d51153d7fba7e2133672d7df6798be8"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x0Acac1D1c7536378542ca783d7FcaF37348A378d"
+      values.$members.2:
+-        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "eth:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+      values.$members.3:
+-        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "eth:0x14E7737b48D7783d551C5cf516a6B65f309d3741"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (katana:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "katana:0x0Acac1D1c7536378542ca783d7FcaF37348A378d"
+      values.$members.2:
+-        "katana:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "katana:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+      values.$members.3:
+-        "katana:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "katana:0x14E7737b48D7783d551C5cf516a6B65f309d3741"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x0169eedc27754d1a8171741bea3eeaeda307079f
 
 # Diff at Wed, 18 Nov 2026 08:06:31 GMT:
