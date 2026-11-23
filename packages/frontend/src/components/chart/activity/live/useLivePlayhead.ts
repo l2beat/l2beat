@@ -83,14 +83,26 @@ export function useLivePlayhead({
         : [...lags.current, lag].slice(-LAG_SAMPLES)
   }, [dataEnd, readAtMs, redrawEvery])
 
+  // the state is of the drawing before, which may be of other data, as
+  // another range's
+  const read: [number, number] | undefined =
+    dataEnd === undefined || earliestEnd === undefined
+      ? undefined
+      : [earliestEnd, dataEnd]
+  const shown =
+    read && playhead !== undefined ? withinRead(playhead, read) : undefined
+
   // after every drawing and before it is painted, as one may also redraw
   // the charts' elements without their offset
   useLayoutEffect(() => {
-    drawn.current = playhead
+    drawn.current = shown
     glide.current(
-      playhead === undefined || last.current === undefined || stay.current
+      shown === undefined ||
+        read === undefined ||
+        last.current === undefined ||
+        stay.current
         ? 0
-        : last.current.playhead - playhead,
+        : withinRead(last.current.playhead, read) - shown,
     )
   })
 
@@ -140,7 +152,7 @@ export function useLivePlayhead({
     return () => cancelAnimationFrame(frame)
   }, [dataEnd, earliestEnd, redrawEvery])
 
-  return playhead
+  return shown
 }
 
 /**
