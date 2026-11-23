@@ -10,6 +10,7 @@ import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
 import { readRateLimitHeaders } from '../http/rateLimitHeaders'
+import { isRefusedForRate } from '../http/rateRefusal'
 import type { BlockHeader, LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
@@ -521,7 +522,11 @@ export class RpcClient extends ClientCore implements IRpcClient {
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const start = Date.now()
     const response = await this.$.http.fetchRaw(this.$.url, init)
-    if (response.status === 429) {
+    const refusal = {
+      status: response.status,
+      server: response.headers.get('server') ?? undefined,
+    }
+    if (isRefusedForRate(refusal, this.$.refusesRateWithCloudFront403)) {
       this.rateLimiter.throttled(start)
     }
     const text = await response.text()

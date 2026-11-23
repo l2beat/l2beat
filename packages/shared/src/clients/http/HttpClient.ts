@@ -16,12 +16,15 @@ export class HttpClient {
       // Release the socket back to the pool instead of leaving it pinned
       await res.body?.cancel()
       const rateLimit = readRateLimitHeaders(res.headers)
+      const server = res.headers.get('server')?.slice(0, 64)
       throw new Error(`HTTP error: ${res.status} ${res.statusText}`, {
         cause: {
           url: redactUrl(url),
           status: res.status,
           // What the provider says about its limit, when it says anything
           ...(Object.keys(rateLimit).length > 0 && { rateLimit }),
+          // Tells a CDN's own refusal from one the server behind it sent
+          ...(server && { server }),
         },
       })
     }

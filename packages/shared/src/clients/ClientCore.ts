@@ -4,6 +4,7 @@ import { RetryHandler, type RetryHandlerVariant } from '../tools'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { FetchInit } from './http/fetchWithTimeout'
 import type { HttpClient } from './http/HttpClient'
+import { isRefusedForRate, readRefusal } from './http/rateRefusal'
 import { getRpcMetricsLabel } from './rpc/RpcMetricsContext'
 
 export interface ClientCoreDependencies {
@@ -14,8 +15,8 @@ export interface ClientCoreDependencies {
   retryStrategy: RetryHandlerVariant
   /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
   stepDownOnThrottle?: number
-  /** The provider answers 403, not 429, when calls exceed its rate */
-  refusesRateWith403?: boolean
+  /** See `isRefusedForRate` */
+  refusesRateWithCloudFront403?: boolean
 }
 
 export abstract class ClientCore {
@@ -96,10 +97,6 @@ export abstract class ClientCore {
     return response
   }
 
-  /**
-   * A refusal for the rate is what the limiter steps down on: HTTP 429, or
-   * 403 from a provider that answers so
-   */
   private async fetchAndReportThrottling(
     url: string,
     init: FetchInit,
@@ -108,7 +105,11 @@ export abstract class ClientCore {
     try {
       return await this.deps.http.fetch(url, init)
     } catch (error) {
-      if (isThrottled(error, this.deps.refusesRateWith403)) {
+      const refusal = readRefusal(error)
+      if (
+        refusal &&
+        isRefusedForRate(refusal, this.deps.refusesRateWithCloudFront403)
+      ) {
         this.rateLimiter.throttled(sentAt)
       }
       throw error
@@ -120,15 +121,4 @@ export abstract class ClientCore {
     success: boolean
     message?: string
   }
-}
-
-function isThrottled(error: unknown, refusesRateWith403 = false): boolean {
-  if (!(error instanceof Error)) {
-    return false
-  }
-  const cause = error.cause
-  if (typeof cause !== 'object' || cause === null || !('status' in cause)) {
-    return false
-  }
-  return cause.status === 429 || (refusesRateWith403 && cause.status === 403)
 }

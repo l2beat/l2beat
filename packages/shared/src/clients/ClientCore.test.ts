@@ -150,7 +150,9 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
   // usually a block that no rate lifts, so it counts only where configured.
   it('takes a 403 as a refusal for the rate only from a provider configured so', async () => {
     const forbidden = () =>
-      new Error('HTTP error: 403 Forbidden', { cause: { status: 403 } })
+      new Error('HTTP error: 403 Forbidden', {
+        cause: { status: 403, server: 'CloudFront' },
+      })
     const flagged = mocks(1_000, 0.1, Logger.SILENT, true)
     const unflagged = mocks(1_000, 0.1)
     flagged.http.fetch.rejectsWithOnce(forbidden())
@@ -163,6 +165,22 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
     expect(unflagged.clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(
       1_000,
     )
+  })
+
+  // Why: CloudFront passes the RPC server's own errors through, and a 403
+  // from there may be a block. Only CloudFront's refusal for the rate says
+  // `Server: CloudFront`, as seen on xlayer and dbk.
+  it('does not take a 403 that CloudFront passed through as a refusal', async () => {
+    const { clientCore, http } = mocks(1_000, 0.1, Logger.SILENT, true)
+    http.fetch.rejectsWithOnce(
+      new Error('HTTP error: 403 Forbidden', {
+        cause: { status: 403, server: 'nginx' },
+      }),
+    )
+
+    await clientCore.fetch('https://api.test.com/data', {})
+
+    expect(clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(1_000)
   })
 
   it('leaves the limiter alone on any other failure', async () => {
@@ -183,7 +201,7 @@ function mocks(
   callsPerMinute?: number,
   stepDownOnThrottle?: number,
   logger: Logger = Logger.SILENT,
-  refusesRateWith403?: boolean,
+  refusesRateWithCloudFront403?: boolean,
 ) {
   const http = mockObject<HttpClient>({
     fetch: async () => ({ result: 'success' }) as json,
@@ -202,7 +220,7 @@ function mocks(
     http,
     callsPerMinute: callsPerMinute ?? 100_000,
     stepDownOnThrottle,
-    refusesRateWith403,
+    refusesRateWithCloudFront403,
     retryStrategy: 'TEST',
     logger,
     sourceName: 'test',

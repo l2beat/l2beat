@@ -35,7 +35,7 @@ export const dbk: ScalingProject = opStackL2({
         type: 'rpc',
         url: 'https://rpc.mainnet.dbkchain.io/',
         callsPerMinute: 600,
-        refusesRateWith403: true,
+        refusesRateWithCloudFront403: true,
       },
     ],
   },

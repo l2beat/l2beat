@@ -1033,6 +1033,37 @@ describe(RpcClient.name, () => {
     expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
   })
 
+  // Why: xlayer's CloudFront refuses batches with 403 as well, and they go
+  // around ClientCore.fetch, so the batch path has to tell the two kinds
+  // of 403 apart by itself
+  it('tells the limiter when CloudFront refuses a batch with 403', async () => {
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(
+          new Response('<HTML>ERROR</HTML>', {
+            status: 403,
+            headers: { Server: 'CloudFront' },
+          }),
+        )
+        .resolvesToOnce(
+          jsonResponse([
+            { id: '0x1', result: 'one' },
+            { id: '0x2', result: 'two' },
+          ]),
+        ),
+    })
+    const rpc = mockClient({
+      http,
+      stepDownOnThrottle: 0.1,
+      refusesRateWithCloudFront403: true,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+
+    await rpc.batchQuery('rpc_method', [['a'], ['b']])
+
+    expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+  })
+
   // Why: a batch turned away for its size resolves inside the limiter like
   // an answered one, but says nothing about the rate. Counted as an answer
   // it would let a provider that is locking us out take a second step.
@@ -1385,6 +1416,7 @@ function mockClient(deps: {
   generateId?: () => string
   maxBatchSize?: number
   stepDownOnThrottle?: number
+  refusesRateWithCloudFront403?: boolean
 }) {
   return new RpcClient({
     chain: 'chain',
@@ -1397,6 +1429,7 @@ function mockClient(deps: {
     rpcMetrics: deps.rpcMetrics,
     maxBatchSize: deps.maxBatchSize,
     stepDownOnThrottle: deps.stepDownOnThrottle,
+    refusesRateWithCloudFront403: deps.refusesRateWithCloudFront403,
   })
 }
 

@@ -318,7 +318,7 @@ export const xlayer: ScalingProject = agglayer({
         type: 'rpc',
         url: 'https://rpc.xlayer.tech',
         callsPerMinute: 2400,
-        refusesRateWith403: true,
+        refusesRateWithCloudFront403: true,
       },
     ],
   },

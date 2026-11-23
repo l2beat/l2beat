@@ -65,6 +65,23 @@ describe(HttpClient.name, () => {
       )
     })
 
+    // Why: CloudFront answers 403 both for its own refusal for the rate and
+    // for the server behind it; only its own says `Server: CloudFront`
+    it('attaches the Server header to a refusal', async () => {
+      const http = new HttpClient()
+      await withServer(
+        (_, res) => res.writeHead(403, { Server: 'CloudFront' }).end(),
+        async (url) => {
+          const error = await http.fetch(url, {}).catch((e: unknown) => e)
+          expect((error as Error).cause).toEqual({
+            url: `${url}/`,
+            status: 403,
+            server: 'CloudFront',
+          })
+        },
+      )
+    })
+
     it('supports custom timeout', async () => {
       const http = new HttpClient()
       await withServer(

@@ -58,8 +58,8 @@ export async function getChainConfig(
             url,
             // How a provider refuses is a property of that provider, and an
             // env url may be another one
-            refusesRateWith403:
-              url === api.url ? api.refusesRateWith403 : undefined,
+            refusesRateWithCloudFront403:
+              url === api.url ? api.refusesRateWithCloudFront403 : undefined,
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
