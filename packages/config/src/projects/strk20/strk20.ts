@@ -232,7 +232,7 @@ export const strk20: BaseProject = {
     adversaries: strk20Adversaries,
     compliance: {
       tradeoff:
-        "Deposits from an address need a screening signature, five helper contracts are exempt. One auditor key opens every user's whole history to its holder, with no trace of its use.",
+        "Each deposit needs a screening service's signature, except through five helper contracts. One auditor key opens every user's whole history to its holder, with no trace of its use.",
       gatekeeper: {
         type: 'contract',
         detail:
@@ -241,7 +241,7 @@ export const strk20: BaseProject = {
       rules: {
         type: 'closed',
         detail:
-          "A screening service checks the depositing address against Elliptic's data. Its thresholds are public code, its own deny list and its running build are not.",
+          "A screening service checks the depositing address against Elliptic's data. Its thresholds are public code, its own lists and its running build are not.",
       },
       timing: { type: 'entry' },
       consequence: {

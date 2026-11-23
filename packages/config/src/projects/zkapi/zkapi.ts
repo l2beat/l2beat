@@ -275,7 +275,7 @@ export const zkapi: BaseProject = {
       consequence: {
         type: 'funds',
         detail:
-          'A refused user can only escape, which needs an unpaused vault and their latest signed balance. The operator can cancel an escape with a request proof it holds for that balance.',
+          'A refused user can only start an escape, which needs an unpaused vault and the latest balance the operator signed. The operator can cancel it with any request made against that balance.',
       },
       dataAccess:
         'OpenRouter and the model provider, which read prompts and responses',

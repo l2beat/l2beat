@@ -349,15 +349,15 @@ export const railgun: BaseProject = {
     ),
     compliance: {
       tradeoff:
-        "Wallets and broadcasters enforce a list provider's one-time decision on each shield, the contracts enforce no list. No funds can be frozen later, and a flag raised after acceptance has no effect.",
+        'A screening service, the list provider, accepts or blocks each shield once, and wallets and broadcasters enforce that. Accepted funds cannot be frozen later, the contracts enforce no list.',
       gatekeeper: {
         type: 'relayer',
-        detail: 'together with wallets. The contracts enforce no list',
+        detail: "Railgun's broadcasters, together with wallets",
       },
       rules: {
         type: 'closed',
         detail:
-          "The list provider that a wallet and its broadcasters require judges each shielding address. What the default list's provider runs is not public.",
+          'The list provider that a wallet requires judges the address behind each shield. What the default provider runs is not public.',
       },
       timing: {
         type: 'entry',

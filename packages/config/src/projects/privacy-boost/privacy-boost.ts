@@ -409,7 +409,7 @@ export const privacyBoost: BaseProject = {
     adversaries: privacyBoostAdversaries,
     compliance: {
       tradeoff:
-        'All compliance runs offchain at Sunnyside Labs, whose enclave holds every transfer in plaintext. The pool hides users from the public, not from the operator that screens them.',
+        'All compliance runs offchain at Sunnyside Labs, whose enclave holds every transfer in plaintext. The pool hides users from the public, not from the company that screens them.',
       gatekeeper: {
         type: 'operator',
         detail:
@@ -423,7 +423,7 @@ export const privacyBoost: BaseProject = {
       timing: { type: 'anytime' },
       consequence: {
         type: 'privacy',
-        detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. A refused spend leaves by forced withdrawal after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}, in public.`,
+        detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. Refused funds inside can only be withdrawn in public, after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}.`,
       },
       dataAccess:
         'Sunnyside Labs, whose enclave holds a key to every note, and any auditor the admin multisig appoints',

@@ -272,7 +272,7 @@ export const privacyPoolsV2: BaseProject = {
     adversaries: privacyPoolsV2Adversaries,
     compliance: {
       tradeoff:
-        "0xbow can withdraw a deposit's approval at any time, also after its funds were paid on. To make that work, every note carries its deposit's label, which each payee learns and can often trace.",
+        "0xbow can revoke a deposit's approval at any time, also after its funds were paid on. For this, every payment carries the deposit's label, a private ID that each payee learns and can often trace.",
       gatekeeper: {
         type: 'contract',
         detail: 'on every private spend',
@@ -280,19 +280,19 @@ export const privacyPoolsV2: BaseProject = {
       rules: {
         type: 'closed',
         detail:
-          "0xbow's ASP judges each depositing address by criteria it does not publish.",
+          'As association set provider (ASP), 0xbow approves each deposit by criteria it does not publish, and lists the approved deposits.',
       },
       timing: { type: 'anytime' },
       consequence: {
         type: 'privacy',
         detail:
-          'A frozen note leaves only by ragequit, which publishes its owner, amount and label.',
+          "Funds from a revoked deposit, payees' included, can only be withdrawn in public to their holder's address. The published label often points to the deposit.",
       },
-      dataAccess: "0xbow's ASP, which can tie every label to its deposit",
+      dataAccess: '0xbow, which can tie every label to its deposit',
       cleanOrigin: {
         type: 'proof',
         detail:
-          "Every private spend proves that its notes' labels are on 0xbow's latest list.",
+          "Every private spend proves that its funds come from deposits on 0xbow's approved list.",
       },
       content: readProjectMarkdown('privacy-pools-v2', 'compliance'),
     },

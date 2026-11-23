@@ -262,18 +262,18 @@ export const privacyPools: BaseProject = {
       rules: {
         type: 'closed',
         detail:
-          "0xbow's ASP judges each depositing address by criteria it does not publish.",
+          'As association set provider (ASP), 0xbow approves each deposit by criteria it does not publish, and lists the approved deposits.',
       },
       timing: { type: 'anytime' },
       consequence: {
         type: 'privacy',
         detail:
-          'A deposit off the list leaves only by ragequit, in public and back to the depositing address.',
+          'A revoked deposit can only be withdrawn in public, back to the address that made it.',
       },
       cleanOrigin: {
         type: 'proof',
         detail:
-          "Every private withdrawal proves that it comes from a deposit on 0xbow's list.",
+          "Every private withdrawal proves that it comes from a deposit on 0xbow's approved list.",
       },
       content: readProjectMarkdown('privacy-pools', 'compliance'),
     },
