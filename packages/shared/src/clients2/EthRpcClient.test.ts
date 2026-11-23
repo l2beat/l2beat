@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import FakeTimers from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
@@ -637,6 +638,138 @@ for (const url of URLS) {
       })
     })
   })
+}
+
+describe(`${EthRpcClient.name} rate limit`, () => {
+  // Why: the limiter steps down on HTTP 429, so the rate a provider takes
+  // can be read off the logs (RPC_STEP_DOWN_ON_THROTTLE)
+  it('steps the rate down when the RPC refuses a call for the rate', async () => {
+    const node = new LimitedNode([
+      tooManyRequests(),
+      ok({ jsonrpc: '2.0', id: 2, result: '0x1' }),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+    await expect(client.getBlockNumber()).toBeRejected()
+    await client.getBlockNumber()
+
+    expect(node.rate).toEqual(90_000)
+  })
+
+  // Why: a provider can turn every call of a batch down inside a 200. Such a
+  // batch served nothing, so it must not let a second refusal count.
+  it('does not take a batch with no result in it as an answer', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const refusedInside = () =>
+      ok([rpcError(1, 'Too many requests'), rpcError(2, 'Too many requests')])
+    const node = new LimitedNode([
+      tooManyRequests(),
+      refusedInside(),
+      tooManyRequests(),
+      refusedInside(),
+    ])
+    const client = batchingClient(node)
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client
+          .getTransactionReceipts([HASH_A, HASH_B])
+          .catch(() => {})
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(90_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // The same minute apart, with each refusal followed by an answer: the
+  // first answer is what lets the second refusal count
+  it('tells the limiter of an answered batch, so a later refusal counts', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const answered = () =>
+      ok([
+        { jsonrpc: '2.0', id: 1, result: null },
+        { jsonrpc: '2.0', id: 2, result: null },
+      ])
+    const node = new LimitedNode([
+      tooManyRequests(),
+      answered(),
+      tooManyRequests(),
+      answered(),
+    ])
+    const client = batchingClient(node)
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client
+          .getTransactionReceipts([HASH_A, HASH_B])
+          .catch(() => {})
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(81_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  it('keeps what the provider says about its limit on a refusal', async () => {
+    const node = new LimitedNode([
+      makeHttpResponse(
+        429,
+        'Too Many Requests',
+        new Headers({ 'Retry-After': '7' }),
+      ),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+    const error = await client.getBlockNumber().catch((e: Error) => e)
+
+    expect((error as Error).cause).toEqual({
+      status: 429,
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+})
+
+/** Answers in turn, behind a limiter of 100k calls a minute that steps down */
+class LimitedNode extends Http {
+  constructor(private answers: HttpResponse[]) {
+    super({ maxCallsPerMinute: 100_000, stepDownOnThrottle: 0.1 })
+  }
+
+  get rate() {
+    return this.rateLimiter?.effectiveCallsPerMinute
+  }
+
+  protected override async _fetch(): Promise<HttpResponse> {
+    const answer = this.answers.shift()
+    if (!answer) throw new Error('No answer queued')
+    return { ...answer, sentAt: Date.now() }
+  }
+}
+
+function tooManyRequests() {
+  return makeHttpResponse(429, 'Too Many Requests')
+}
+
+function counter() {
+  let id = 0
+  return () => ++id
 }
 
 const HASH_A = `0x${'a'.repeat(64)}`

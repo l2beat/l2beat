@@ -60,6 +60,8 @@ interface Dependencies extends Omit<ClientCoreDependencies, 'sourceName'> {
   rpcMetricsAggregator?: RpcMetricsAggregator
   timeout?: number
   maxBatchSize?: number
+  /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
+  stepDownOnThrottle?: number
 }
 
 export interface IRpcClient extends BlockClient, LogsClient {
@@ -125,6 +127,7 @@ export class RpcClientCompat implements IRpcClient {
       logger,
       metricsEnabled: MetricsAggregator.metricsEnabled,
       maxCallsPerMinute: deps.callsPerMinute,
+      stepDownOnThrottle: deps.stepDownOnThrottle,
     })
     const client = new EthRpcClient(
       http,
@@ -141,11 +144,15 @@ export class RpcClientCompat implements IRpcClient {
     const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
     const wrapped = withRetries(compat, {
       initialTimeoutMs: retryOptions.initialRetryDelayMs,
-      maxAttempts: retryOptions.maxRetries,
+      // RetryHandler's maxRetries come after the first attempt
+      maxAttempts: retryOptions.maxRetries + 1,
       maxTimeoutMs: retryOptions.maxRetryDelayMs,
       logger,
-      // Callers at the head poll for a block the RPC has not got yet
-      shouldRetry: (error) => !(error instanceof NotFoundOnRpcError),
+      shouldRetry: (error) =>
+        // Callers at the head poll for a block the RPC has not got yet
+        !(error instanceof NotFoundOnRpcError) &&
+        // getLogs has already split what a split could fix
+        !(error instanceof Error && isLimitExceededError(error)),
     })
     return wrapped
   }
@@ -187,10 +194,15 @@ export class RpcClientCompat implements IRpcClient {
     includeTxs: boolean,
   ): Promise<EVMBlock | EVMBlockWithTransactions> {
     const bnParam = blockNumber === 'latest' ? 'latest' : BigInt(blockNumber)
-    const block = includeTxs
-      ? await this.ethRpcClient.getBlockByNumber(bnParam, true)
-      : await this.ethRpcClient.getBlockByNumber(bnParam, false)
-    return toEVMBlock(blockNumber, block)
+    if (!includeTxs) {
+      const header = await this.ethRpcClient.getBlockByNumber(bnParam, false)
+      return toEVMBlock(blockNumber, header)
+    }
+    const block = await this.ethRpcClient.getBlockByNumber(bnParam, true)
+    return {
+      ...toEVMBlock(blockNumber, block),
+      transactions: (block?.transactions ?? []).map(toTx),
+    }
   }
 
   async getBlockTimestamps(
@@ -217,7 +229,9 @@ export class RpcClientCompat implements IRpcClient {
   async getTransaction(txHash: string): Promise<EVMTransaction> {
     const tx = await this.ethRpcClient.getTransactionByHash(txHash)
     if (tx === null) {
-      throw new Error(`Transaction ${txHash} not found`)
+      throw new NotFoundOnRpcError('Transaction not found', {
+        cause: { txHash },
+      })
     }
     return toTx(tx)
   }
@@ -225,7 +239,7 @@ export class RpcClientCompat implements IRpcClient {
   async getTransactionReceipt(txHash: string): Promise<Receipt> {
     const receipt = await this.ethRpcClient.getTransactionReceipt(txHash)
     if (receipt === null) {
-      throw new Error(`Transaction ${txHash} not found`)
+      throw new NotFoundOnRpcError('Receipt not found', { cause: { txHash } })
     }
     return toReceipt(receipt)
   }
@@ -276,7 +290,10 @@ export class RpcClientCompat implements IRpcClient {
         address: addresses as EthereumAddress[] | undefined,
         topics,
       })
-      return logs.map(toEVMLog)
+      return logs.map((log) => ({
+        ...toEVMLog(log),
+        address: rpcAddress(log.address),
+      }))
     } catch (e) {
       if (
         from < to &&
@@ -305,7 +322,13 @@ export class RpcClientCompat implements IRpcClient {
       newestBlock,
       rewardPercentiles,
     )
-    return { ...feeHistory, oldestBlock: Number(feeHistory.oldestBlock) }
+    return {
+      baseFeePerGas: feeHistory.baseFeePerGas,
+      gasUsedRatio: feeHistory.gasUsedRatio,
+      baseFeePerBlobGas: feeHistory.baseFeePerBlobGas,
+      blobGasUsedRatio: feeHistory.blobGasUsedRatio,
+      oldestBlock: Number(feeHistory.oldestBlock),
+    }
   }
 
   async getMaxPriorityFeePerGas(): Promise<bigint> {
@@ -352,16 +375,24 @@ export class RpcClientCompat implements IRpcClient {
   }
 }
 
+/**
+ * Lowercase, as the RPC sends it and as RpcClient passed it on: callers of
+ * IRpcClient compare and store these strings as they are
+ */
+function rpcAddress(address: EthereumAddress): string {
+  return address.toLowerCase()
+}
+
 function toTx(tx: RpcTransaction): EVMTransaction {
   return {
     hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
+    from: rpcAddress(tx.from),
+    to: tx.to && rpcAddress(tx.to),
     data: tx.input,
     type: tx.type?.toString(),
     value: tx.value,
     calls: tx.calls?.map((call) => ({
-      to: call.to?.toString(),
+      to: call.to && rpcAddress(call.to),
       data: call.input ?? call.data,
       value: call.value,
     })),
@@ -386,20 +417,8 @@ export function toEVMLog(log: RpcLog): EVMLog {
 
 export function toEVMBlock(
   blockNumber: number | 'latest',
-  block: RpcBlock | null,
-): EVMBlock
-export function toEVMBlock(
-  blockNumber: number | 'latest',
-  block: RpcBlockWithTransactions | null,
-): EVMBlockWithTransactions
-export function toEVMBlock(
-  blockNumber: number | 'latest',
   block: RpcBlock | RpcBlockWithTransactions | null,
-): EVMBlock | EVMBlockWithTransactions
-export function toEVMBlock(
-  blockNumber: number | 'latest',
-  block: RpcBlock | RpcBlockWithTransactions | null,
-): EVMBlock | EVMBlockWithTransactions {
+): EVMBlock {
   if (block === null) {
     throw new NotFoundOnRpcError('Block not found', { cause: { blockNumber } })
   }
@@ -420,19 +439,13 @@ export function toEVMBlock(
   }
   // Absent only in partial headers built by tests
   if (block.miner !== undefined) {
-    base.miner = block.miner.toString()
+    base.miner = rpcAddress(block.miner)
   }
   if (block.baseFeePerGas !== undefined) {
     base.baseFeePerGas = block.baseFeePerGas
   }
   if (block.withdrawals !== undefined) {
     base.withdrawals = block.withdrawals.map((w) => ({ amount: w.amount }))
-  }
-  if (block.transactions) {
-    return {
-      ...base,
-      transactions: block.transactions.map((tx) => toTx(tx as RpcTransaction)),
-    } satisfies EVMBlockWithTransactions
   }
   return base
 }
@@ -452,7 +465,7 @@ function toReceipt(receipt: RpcReceipt): Receipt {
         `Receipt ${receipt.transactionHash} has a pending log`,
       )
       return {
-        address: log.address.toString(),
+        address: rpcAddress(log.address),
         topics: log.topics,
         data: log.data,
         logIndex: Number(log.logIndex),

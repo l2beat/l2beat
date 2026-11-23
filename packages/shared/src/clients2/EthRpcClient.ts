@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { readRateLimitHeaders } from '../clients/http/rateLimitHeaders'
 import {
   BATCH_REJECTED,
   isBatchRejected,
@@ -7,7 +8,7 @@ import {
   type RpcBatcherOptions,
 } from '../clients/rpc/RpcBatcher'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
-import type { Http } from './Http'
+import type { Http, HttpResponse } from './Http'
 
 export type BlockParameter =
   | bigint
@@ -310,7 +311,11 @@ export class EthRpcClient {
       if (!parsed.success) {
         throw new Error(
           `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+          { cause: httpCause(response) },
         )
+      }
+      if (parsed.data.some((envelope) => 'result' in envelope)) {
+        this.http.answered(response.sentAt)
       }
       const byId = new Map(
         parsed.data.map((envelope) => [envelope.id, envelope]),
@@ -361,9 +366,13 @@ export class EthRpcClient {
       if (!jsonSuccess || !parsed.success) {
         throw new Error(
           `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+          { cause: httpCause(response) },
         )
       }
       const envelope = parsed.data
+      if (!('error' in envelope)) {
+        this.http.answered(response.sentAt)
+      }
       if ('error' in envelope) {
         throw new Error(
           `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
@@ -378,6 +387,15 @@ export class EthRpcClient {
         method,
       })
     }
+  }
+}
+
+function httpCause(response: HttpResponse) {
+  const rateLimit = readRateLimitHeaders(response.headers)
+  return {
+    status: response.status,
+    // What the provider says about its limit, when it says anything
+    ...(Object.keys(rateLimit).length > 0 && { rateLimit }),
   }
 }
 
@@ -662,7 +680,8 @@ const FeeHistory = v.object({
   baseFeePerBlobGas: v.array(vQuantity),
   blobGasUsedRatio: v.array(v.number()),
   oldestBlock: vQuantity,
-  reward: v.array(v.array(vQuantity)),
+  // left out by some RPCs when no reward percentiles are asked for
+  reward: v.array(v.array(vQuantity)).optional(),
 })
 
 const JsonRpcResponse = v.union([
