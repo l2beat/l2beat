@@ -79,6 +79,8 @@ export const zcashNearIntents: BaseProject = {
           file: 'Vizor-linux-x86_64.AppImage',
           hash: 'f325fc38917fcce2c22460145980abb9231e9d732810de621fba3d247a8f782c',
         },
+        rebuild:
+          'https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/fastlane/linux/Fastfile',
       },
       version: '0.0.64',
       source: {
@@ -168,7 +170,7 @@ export const zcashNearIntents: BaseProject = {
     reproducibility: {
       ...PRIVACY_REPRODUCIBILITY.partial,
       description:
-        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's desktop releases do not claim byte-for-byte rebuilds. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
+        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's Linux release rebuilds from its tag. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,
