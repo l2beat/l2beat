@@ -61,6 +61,7 @@ export type {
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'
+export type { EthereumSupplyDailyRecord } from './repositories/EthereumSupplyDailyRepository'
 export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
