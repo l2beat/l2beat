@@ -12,7 +12,7 @@ import {
   formatLatestValue,
   formatMetricDate,
   LIQUID_STAKING_METRICS,
-  TVL_TOOLTIP,
+  TVL_WITH_ETH_TOOLTIP,
 } from '../liquidStakingMetrics'
 import { StakedEthShare } from './StakedEthShare'
 
@@ -55,7 +55,7 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: `${TVL_TOOLTIP} In brackets, the ETH the protocol's tokens stand for at its own exchange rate.`,
+        tooltip: TVL_WITH_ETH_TOOLTIP,
       },
     }),
     ...LIQUID_STAKING_METRICS.map((metric) =>

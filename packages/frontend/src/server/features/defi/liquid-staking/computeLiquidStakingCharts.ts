@@ -5,6 +5,7 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import type {
   LiquidStakingCostOfExitPoint,
+  LiquidStakingTvlPoint,
   LiquidStakingYieldPoint,
 } from './getLiquidStakingCharts'
 
@@ -39,6 +40,20 @@ export interface YieldChartInputs {
   snapshots: LiquidStakingSnapshotRecord[]
   /** Daily, oldest first, from YIELD_WINDOW_DAYS before the first day. */
   network: EthereumStakingDailyRecord[]
+  /** USD per ETH, by timestamp. */
+  ethPrices: Map<number, number>
+}
+
+export interface TvlChartInputs {
+  /** The chart's days, oldest first. */
+  days: UnixTime[]
+  projectIds: string[]
+  /** By project, in the order of `projectIds`: its TVL in ETH on each day. */
+  tvlByProject: (number | null)[][]
+  /** Daily, oldest first. */
+  network: EthereumStakingDailyRecord[]
+  /** ETH's supply, by day. */
+  ethSupplies: Map<number, number>
   /** USD per ETH, by timestamp. */
   ethPrices: Map<number, number>
 }
@@ -84,6 +99,42 @@ export function computeYieldChart(
           : null,
     }
   })
+}
+
+export function computeTvlChart(
+  inputs: TvlChartInputs,
+): LiquidStakingTvlPoint[] {
+  const network = new NetworkSeries(inputs.network)
+  return inputs.days.map((day, i) => ({
+    timestamp: day,
+    projects: Object.fromEntries(
+      inputs.projectIds.map((id, j) => [
+        id,
+        inputs.tvlByProject[j]?.[i] ?? null,
+      ]),
+    ),
+    ethStaked: network.ethStakedAt(day),
+    ethSupply: inputs.ethSupplies.get(day) ?? null,
+    ethPrice: inputs.ethPrices.get(day) ?? null,
+  }))
+}
+
+/**
+ * Drops leading days until the first with ETH staked and every protocol's
+ * TVL, so MAX never leads with days missing Others (ether.fi's TVS starts on
+ * 2024-02-07, at its first CoinGecko price). Keeps all points when no day is
+ * complete, so the protocols that have data still show.
+ */
+export function trimLeadingIncomplete(
+  points: LiquidStakingTvlPoint[],
+  projectIds: string[],
+): LiquidStakingTvlPoint[] {
+  const firstComplete = points.findIndex(
+    (point) =>
+      point.ethStaked !== null &&
+      projectIds.every((id) => point.projects[id] != null),
+  )
+  return firstComplete > 0 ? points.slice(firstComplete) : points
 }
 
 export function computeCostOfExitChart(

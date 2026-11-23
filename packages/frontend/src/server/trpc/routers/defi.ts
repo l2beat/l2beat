@@ -3,18 +3,11 @@ import {
   getDefiTvlChart,
 } from '~/server/features/defi/getDefiTvlChart'
 import {
-  getEthSupply,
-  getEthSupplyHistory,
-} from '~/server/features/defi/liquid-staking/getEthSupply'
-import {
   getLiquidStakingCostOfExitChart,
+  getLiquidStakingTvlChart,
   getLiquidStakingYieldChart,
   LiquidStakingChartsParams,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingCharts'
-import {
-  getLiquidStakingTvlChart,
-  LiquidStakingTvlChartParams,
-} from '~/server/features/defi/liquid-staking/getLiquidStakingTvlChart'
 import { procedure, router } from '../trpc'
 
 export const defiRouter = router({
@@ -27,9 +20,7 @@ export const defiRouter = router({
   liquidStakingCostOfExitChart: procedure
     .input(LiquidStakingChartsParams)
     .query(({ input }) => getLiquidStakingCostOfExitChart(input)),
-  ethSupply: procedure.query(() => getEthSupply()),
-  ethSupplyHistory: procedure.query(() => getEthSupplyHistory()),
   liquidStakingTvlChart: procedure
-    .input(LiquidStakingTvlChartParams)
+    .input(LiquidStakingChartsParams)
     .query(({ input }) => getLiquidStakingTvlChart(input)),
 })

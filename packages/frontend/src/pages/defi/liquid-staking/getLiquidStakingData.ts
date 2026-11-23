@@ -2,6 +2,7 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { LIQUID_STAKING_DESCRIPTION } from '~/consts/summaryPageDescriptions'
 import { loadLiquidStakingEntries } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import { getLiquidStakingTvlSummary } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getItemListStructuredData } from '~/ssr/head/structured-data/getItemListStructuredData'
 import type { RenderData } from '~/ssr/types'
@@ -14,7 +15,7 @@ export async function getLiquidStakingData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const { appLayoutProps, entries, defaultChartRange, queryState } =
+  const { appLayoutProps, entries, tvlSummary, defaultChartRange, queryState } =
     await cache.get(
       {
         key: ['defi', 'liquid-staking', 'data'],
@@ -50,6 +51,7 @@ export async function getLiquidStakingData(
       props: {
         ...appLayoutProps,
         entries,
+        tvlSummary,
         defaultChartRange,
         queryState,
       },
@@ -61,10 +63,9 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
 
-  const [appLayoutProps, , { entries }] = await Promise.all([
+  const [appLayoutProps, tvlChart, { entries }] = await Promise.all([
     getAppLayoutProps(),
-    // Only fills the query cache, for the value locked chart.
-    helpers.queryClient.prefetchQuery(
+    helpers.queryClient.fetchQuery(
       helpers.trpc.defi.liquidStakingTvlChart.queryOptions({
         range: defaultChartRange,
       }),
@@ -91,6 +92,10 @@ async function getCachedData() {
   return {
     appLayoutProps,
     entries,
+    tvlSummary: getLiquidStakingTvlSummary(
+      tvlChart,
+      entries.filter((entry) => entry.isTracked).map((entry) => entry.id),
+    ),
     defaultChartRange,
     queryState: helpers.dehydrate(),
   }

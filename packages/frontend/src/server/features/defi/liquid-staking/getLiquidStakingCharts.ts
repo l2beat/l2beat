@@ -6,11 +6,14 @@ import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
   computeCostOfExitChart,
+  computeTvlChart,
   computeYieldChart,
   getLastChartDay,
+  trimLeadingIncomplete,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
 import { getLiquidStakingProjects } from './getLiquidStakingProjects'
+import { getTvlInEthAt } from './getTvlInEthAt'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -54,6 +57,15 @@ export interface LiquidStakingYieldPoint extends LiquidStakingChartPoint {
   ethStaked: number | null
   /** The same, at that day's ETH price. */
   ethStakedUsd: number | null
+}
+
+export interface LiquidStakingTvlPoint extends LiquidStakingChartPoint {
+  /** ETH staked network-wide, as the day started. */
+  ethStaked: number | null
+  /** ETH in existence, as the day started. */
+  ethSupply: number | null
+  /** ETH's USD price, as TVS valued it then. */
+  ethPrice: number | null
 }
 
 export async function getLiquidStakingCharts(
@@ -105,6 +117,50 @@ export async function getLiquidStakingYieldChart(
   })
 }
 
+/**
+ * Each protocol's TVL in ETH at its own rate, beside the ETH staked and ETH's
+ * supply, so the page can show what the protocols do not hold.
+ */
+export async function getLiquidStakingTvlChart(
+  params: LiquidStakingChartsParams,
+): Promise<LiquidStakingTvlPoint[]> {
+  const projects = await getProjects(params)
+  const projectIds = projects.map((project) => project.id)
+  const { days, from, to } = getDays(params, 'started')
+  if (env.MOCK) {
+    const tvl = projects.map((_, i) =>
+      randomWalk(days.length, 9_000_000 / 2 ** i, 0.15),
+    )
+    const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
+    const ethPrice = randomWalk(days.length, 3_000, 0.3)
+    return days.map((timestamp, i) => ({
+      timestamp,
+      projects: byProject(projectIds, tvl, i),
+      ethStaked: ethStaked[i] ?? null,
+      ethSupply: 120_000_000 + i * 1_000,
+      ethPrice: ethPrice[i] ?? null,
+    }))
+  }
+  const db = getDb()
+  const [network, ethSupplies, ethPrices, ...tvlByProject] = await Promise.all([
+    db.ethereumStakingDaily.getInRange(from, to),
+    db.ethereumSupplyDaily.getInRange(from, to),
+    db.tvsPrice.getPricesInRangeByPriceId('ethereum', from, to),
+    ...projects.map((project) => getTvlInEthAt(project, days)),
+  ])
+  const points = computeTvlChart({
+    days,
+    projectIds,
+    tvlByProject,
+    network,
+    ethSupplies: new Map(ethSupplies.map((s) => [s.timestamp, s.supply])),
+    ethPrices: new Map(ethPrices.map((p) => [p.timestamp, p.priceUsd])),
+  })
+  return params.range[0] === null
+    ? trimLeadingIncomplete(points, projectIds)
+    : points
+}
+
 /** In days of yield, by the cheapest route. */
 export async function getLiquidStakingCostOfExitChart(
   params: LiquidStakingChartsParams,
@@ -134,11 +190,17 @@ export async function getLiquidStakingCostOfExitChart(
 async function getProjectIds(
   params: LiquidStakingChartsParams,
 ): Promise<string[]> {
+  return (await getProjects(params)).map((project) => project.id)
+}
+
+/** The tracked ones, as only they have chart values. */
+async function getProjects(params: LiquidStakingChartsParams) {
   const projects = await getLiquidStakingProjects()
-  return projects
-    .filter((project) => project.liquidStaking.tracking !== undefined)
-    .map((project) => project.id)
-    .filter((id) => params.projectId === undefined || id === params.projectId)
+  return projects.filter(
+    (project) =>
+      project.liquidStaking.tracking !== undefined &&
+      (params.projectId === undefined || project.id === params.projectId),
+  )
 }
 
 /**
@@ -162,11 +224,7 @@ function byProject(projectIds: string[], series: number[][], index: number) {
 }
 
 /** Wanders around `mean` by up to `spread` of it, so mock lines look plausible. */
-export function randomWalk(
-  length: number,
-  mean: number,
-  spread: number,
-): number[] {
+function randomWalk(length: number, mean: number, spread: number): number[] {
   const values: number[] = []
   let value = mean
   for (let i = 0; i < length; i++) {
