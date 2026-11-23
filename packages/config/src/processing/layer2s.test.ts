@@ -10,6 +10,7 @@ import uniq from 'lodash/uniq'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
+import { isDiscoveredAnywhere } from '../test/discovery/fixtures'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
@@ -72,7 +73,10 @@ describe('layer2s', () => {
         const discovery = new ProjectDiscovery(layer2.id.toString())
         for (const escrow of escrows) {
           const address = ChainSpecificAddress.from('eth', escrow.address)
-          if (discovery.getContractByAddress(address) === undefined) {
+          if (
+            discovery.getContractByAddress(address) === undefined &&
+            !isDiscoveredAnywhere(address)
+          ) {
             missing.push(`${layer2.id} ${address}`)
           }
         }
@@ -233,8 +237,17 @@ describe('layer2s', () => {
             ChainSpecificAddress.address(address).toString().toLowerCase(),
           ),
       )
+      const escrowsDiscoveredElsewhere = new Set(
+        layer2.config.escrows
+          .map((e) => ChainSpecificAddress.from('eth', e.address))
+          .filter(isDiscoveredAnywhere)
+          .map((a) => ChainSpecificAddress.address(a).toString().toLowerCase()),
+      )
       for (const address of referencedAddresses) {
-        if (!discoveryAddresses.has(address)) {
+        if (
+          !discoveryAddresses.has(address) &&
+          !escrowsDiscoveredElsewhere.has(address)
+        ) {
           missing.push(`${layer2.id} ${address}`)
         }
       }

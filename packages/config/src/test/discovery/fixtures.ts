@@ -4,7 +4,7 @@ import {
   type DiscoveryOutput,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 
 // Parsing every config.jsonc costs ~700ms and every discovered.json is ~34MB
 // together. Three test files assert over the same two sets and none of them
@@ -24,6 +24,18 @@ export function discoveryOf(name: string): DiscoveryOutput {
   const discovery = discoveries.get(name)
   assert(discovery !== undefined, `No discovery read for ${name}`)
   return discovery
+}
+
+// A project can count an escrow that another project discovers, such as the
+// zk.money portals in Aztec v6, so escrow checks accept any discovery.
+const discoveredAddresses = new Set(
+  [...discoveries.values()].flatMap((d) =>
+    d.entries.filter((e) => e.type !== 'Reference').map((e) => e.address),
+  ),
+)
+
+export function isDiscoveredAnywhere(address: ChainSpecificAddress): boolean {
+  return discoveredAddresses.has(address)
 }
 
 export function discoveryOrUndefined(
