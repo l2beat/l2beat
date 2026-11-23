@@ -59,6 +59,14 @@ export const risc0: BaseProject = {
         'risc0-zkvm 2.3.2 and 3.0.3 fix a bug letting a malicious host write anywhere in guest memory.',
       type: 'incident',
     },
+    {
+      title: 'Groth16 claim substitution vulnerability',
+      url: 'https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2',
+      date: '2026-11-11T00:00:00Z',
+      description:
+        'risc0-zkvm 3.1.0 fixes a bug that let one valid Groth16 receipt prove any claim.',
+      type: 'incident',
+    },
   ],
   zkCatalogInfo: {
     creator: 'RISC Zero',
@@ -80,7 +88,7 @@ export const risc0: BaseProject = {
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        ...TRUSTED_SETUPS.Risc0,
+        ...TRUSTED_SETUPS.Risc0Groth16_v3_1_0,
       },
     ],
     projectsForTvs: [
@@ -195,11 +203,12 @@ export const risc0: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key and `bn254_control_id` match risc0 v3.1.0, its `control_root` matches no release. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
       },
       {
         hash: '0x88492a617f432f3c03449951b7cdaf0db75b27058a52ef935ac06c01d5d4b384',
         name: 'RiscZero v3.1.0 (control root 0xe6feef13)',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v3.1.0/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -212,7 +221,7 @@ export const risc0: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code and Groth16 verifying key equal those of the other v3.1.0 verifier, the `control_root` differs. The verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The verifying key, `control_root` and `bn254_control_id` match risc0 v3.1.0. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
       },
       {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',

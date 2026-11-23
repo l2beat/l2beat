@@ -1,13 +1,8 @@
 {
   "name": "layerzero",
-  "timestamp": 1794986363,
+  "timestamp": 1795438904,
   "configHash": "0x258ec085fcb663d7b53079495ad633fdbccd688b7d2a5c155e45d4dee9b1f408",
   "entries": [
-    {
-      "address": "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "Executor",
       "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
@@ -220,6 +215,11 @@
     },
     {
       "address": "eth:0x61f45F63e06aa0DAE039BcFDa2c4Aab017441Ee7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x67898c4420E25E83c90dC247cF20aa27AFb9B53A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -529,21 +529,21 @@
       "values": {
         "$immutable": true,
         "$members": [
-          "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
+          "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23",
           "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
           "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
           "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
-          "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
+          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
           "eth:0xdFE4027209C795B84d39FfBfF86bf73572571BAd",
           "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552",
-          "eth:0xD144dad189f060Bf6fda615CcA60479329Dd9e35",
-          "eth:0x67D4d42CEB2144C7CB92e820CA74000910563B23"
+          "eth:0x67898c4420E25E83c90dC247cF20aa27AFb9B53A",
+          "eth:0xF215c7478359A9150261Ca877d9094A17e5d4AAE"
         ],
         "$threshold": 5,
         "executorRequired": true,
         "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
-        "nonce": 655,
+        "nonce": 656,
         "ONE_SIG_ID": 30101,
         "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
         "totalExecutors": 1,
@@ -617,7 +617,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
+      "address": "eth:0xF215c7478359A9150261Ca877d9094A17e5d4AAE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1423,8 +1423,8 @@
     "layerzero/ReceiveUln302": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "layerzero/SendUln302": "0x86b01d43b83e681bc06e5ac7c94dbda3625974b05580472da383e78f0241a49e"
   },
-  "usedBlockNumbers": { "ethereum": 26440401 },
-  "permissionsConfigHash": "0x1d8ca8402aac4504d7a6e14d4e2cd9f1566a595a7656826cbae9419fc88eff94",
+  "usedBlockNumbers": { "ethereum": 26478001 },
+  "permissionsConfigHash": "0xc6cf140b18ca91fa6ae5609999f05e0df9df78494926fcb9bf4c0ed468c9783e",
   "permissions": {
     "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": {
       "receivedPermissions": [

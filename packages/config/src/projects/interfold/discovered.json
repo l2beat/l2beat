@@ -1,6 +1,6 @@
 {
   "name": "interfold",
-  "timestamp": 1793371512,
+  "timestamp": 1795438893,
   "configHash": "0x37ca56e49b232ff7e6bf4b6ddca0cd17cacb0c66c619e384a040eb8623725b5a",
   "entries": [
     {
@@ -20,7 +20,7 @@
       "values": {
         "$immutable": true,
         "checkpoints": "eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963",
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
@@ -92,13 +92,13 @@
         ],
         "$upgradeCount": 1,
         "clock": "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166",
-        "currentEpochStart": 1792627200,
+        "currentEpochStart": 1795046400,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "enableUpdateVotingPowerHook": true,
-        "epochId": 1482,
-        "epochStart": 1793836800,
-        "epochVoteEnd": 1793371511,
-        "epochVoteStart": 1793840400,
+        "epochId": 1484,
+        "epochStart": 1796256000,
+        "epochVoteEnd": 1795647600,
+        "epochVoteStart": 1795438883,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
         "GAUGE_ADMIN_ROLE": "0xfda1ae526c1fb38407f23e8b7712f7cfacc146f3e340a04221488331e0d42014",
         "gaugeList": [],
@@ -120,7 +120,7 @@
         "SET_TARGET_CONFIG_PERMISSION_ID": "0x568cc693d84eb1901f8bcecba154cbdef23ca3cf67efc0a0b698528a06c660f7",
         "totalVotingPowerCast": 0,
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
-        "votingActive": false
+        "votingActive": true
       },
       "fieldMeta": {
         "dao": {
@@ -292,7 +292,6 @@
           "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9",
           "eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86",
           "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3",
-          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d",
           "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C",
           "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84",
           "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663",
@@ -349,21 +348,21 @@
           "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
           "eth:0xAF062fC363c3AE910ec76676346f798792bEB851",
           "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988",
-          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
           "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1",
-          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
-          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
           "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC",
           "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554",
           "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A",
           "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61",
-          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877",
           "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88",
           "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1",
           "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310",
           "eth:0xd999F7EA9173BCbFDB17c423Fd714557219f9178",
           "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5",
-          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28"
+          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28",
+          "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8",
+          "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871",
+          "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984",
+          "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E"
         ],
         "admissionPolicy": {
           "cooldownEnabled": true,
@@ -472,7 +471,7 @@
           "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "eth:0x6f9BB7e454f5B3eb2310343f0E99269dC2BB8A1d",
           "eth:0x6612341c6ba068BA0fC259EAd5254f18028B022E": "eth:0x6612341c6ba068BA0fC259EAd5254f18028B022E",
           "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "eth:0xfc662A94F4d6E7Be443b1b7381BF949865AF2685",
-          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "eth:0xe1679C04371A0341b08347EdE683D0377997c468",
+          "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "eth:0x42c8BC48B0D63AeB2E629f5Aa2Fafac7b5749e78",
           "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "eth:0xfe952CB6F4B8F4ACd5337153dA5C7c93Dc3e44e1",
           "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f",
           "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f",
@@ -485,7 +484,15 @@
           "eth:0x407C88F8d1a951da8B7889a140f6181ED88EBF8C": "eth:0x407C88F8d1a951da8B7889a140f6181ED88EBF8C",
           "eth:0xd999F7EA9173BCbFDB17c423Fd714557219f9178": "eth:0x36f57749bc80b60882b658560Dee374709ceFec4",
           "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28": "eth:0xf025B2a58fF3dE8bfd6eF7b8a0f75f3e58fDCa36",
-          "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5": "eth:0x058958350231b8B17843e6096Ad30c6ef4F25550"
+          "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5": "eth:0x058958350231b8B17843e6096Ad30c6ef4F25550",
+          "eth:0xcA4700293Bd3b48E7051116635C82546F17a61e3": "eth:0xcA4700293Bd3b48E7051116635C82546F17a61e3",
+          "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8": "eth:0xAC89b731E566AB31D21068747f0a9Dc04e4f75c8",
+          "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871": "eth:0x46c6B0C1A4f51699d4c2Af4aBc5a7b25432A097f",
+          "eth:0x8ED74C5c44DDc65667AD5764c6286dC9785Db6B0": "eth:0xe6458ad63F9109Dd90Ce9EDaeFF75ADe73A59e7a",
+          "eth:0xBbF918EEE9a061c223AeE3d640f41b904B25cfD3": "eth:0xBbF918EEE9a061c223AeE3d640f41b904B25cfD3",
+          "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984": "eth:0x2947A1eb570d21469740c8260Bd9d3788A7aaefB",
+          "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E": "eth:0x20181f5B5be0feF61A686d437dFA6520cAC0b05d",
+          "eth:0x8577fBE7bb7A2c1ca7616d50E9adE57ebebD8e79": "eth:0x8577fBE7bb7A2c1ca7616d50E9adE57ebebD8e79"
         },
         "ciphernodeBondActiveBps": 8000,
         "ciphernodeBonds": {
@@ -496,7 +503,7 @@
           "eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86": "32000000000000000000000",
           "eth:0xFeb99E2C46b9A5fDA836e6d4374A59fc61a5E221": "105000000000000000000",
           "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3": "32000000000000000000000",
-          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d": "32000000000000000000000",
+          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d": 0,
           "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C": 0,
           "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663": "32000000000000000000000",
           "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84": "32000000000000000000000",
@@ -554,23 +561,28 @@
           "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": "32000000000000000000000",
           "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": "32000000000000000000000",
           "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": "32000000000000000000000",
-          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": "32000000000000000000000",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": 0,
           "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": "32000000000000000000000",
-          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": "32000000000000000000000",
-          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "32000000000000000000000",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": 0,
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": 0,
           "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "32000000000000000000000",
           "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "32000000000000000000000",
           "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": 0,
           "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "32000000000000000000000",
           "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "32000000000000000000000",
-          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": "32000000000000000000000",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": 0,
           "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88": "32000000000000000000000",
           "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1": "32000000000000000000000",
           "eth:0x407C88F8d1a951da8B7889a140f6181ED88EBF8C": 0,
           "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310": "32000000000000000000000",
           "eth:0xd999F7EA9173BCbFDB17c423Fd714557219f9178": "32000000000000000000000",
           "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5": "32000000000000000000000",
-          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28": "32000000000000000000000"
+          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28": "32000000000000000000000",
+          "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8": "32000000000000000000000",
+          "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871": "32000000000000000000000",
+          "eth:0x8ED74C5c44DDc65667AD5764c6286dC9785Db6B0": 0,
+          "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984": "32000000000000000000000",
+          "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E": "32000000000000000000000"
         },
         "ciphernodeBondToken": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
         "committeeOwnerCapacity": 32,
@@ -583,8 +595,8 @@
         "MAX_EXIT_DELAY": 7776000,
         "MIN_EXIT_DELAY": 86400,
         "minTicketBalance": 1,
-        "numActiveOperators": 47,
-        "numRegisteredOperators": 48,
+        "numActiveOperators": 46,
+        "numRegisteredOperators": 47,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "registry": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
@@ -600,23 +612,23 @@
           "eth:0x980AaA907E51a4e3cc89b8FF8e37Aa0D55D46597": "3000000000000000000000",
           "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": "1000000000000000000000",
           "eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86": "3000000000000000000000",
-          "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3": "2000000000000000000000",
-          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d": "1000000000000000000000",
+          "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3": "8000000000000000000000",
+          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d": 0,
           "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C": 0,
           "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84": "2000000000000000000000",
-          "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663": "7000000000000000000000",
+          "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663": "2000000000000000000000",
           "eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8": "2000000000000000000000",
           "eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C": "2000000000000000000000",
           "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8": "8000000000000000000000",
-          "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190": "2000000000000000000000",
+          "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190": "8000000000000000000000",
           "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513": "8000000000000000000000",
           "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706": "1000000000000000000000",
           "eth:0x59461947EC279863138fae477C35B0c551A5c3a6": "8000000000000000000000",
           "eth:0xe603c63ee0e97DA5a833B7498C366E88B9a5EBFe": "2000000000000000000000",
           "eth:0xBB3f49DED0EdE92ba3C9247A93E925770ac68671": "8000000000000000000000",
           "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F": "8000000000000000000000",
-          "eth:0xdBEd503093A01EA08f21144114542E53594536D6": "1000000000000000000000",
-          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": "6000000000000000000000",
+          "eth:0xdBEd503093A01EA08f21144114542E53594536D6": "2000000000000000000000",
+          "eth:0x222D696D0242194457eD491b0c52aBbF9250342F": "1000000000000000000000",
           "eth:0xc6E48712E56F6E9548c54a0A983eBe992eFA26Bd": "8000000000000000000000",
           "eth:0x1fD2b3d4a9f4Aeb62877cab9dF70A5a6e976b118": "5000000000000000000000",
           "eth:0x9EC16384b956D7B2A71284711FD32d156e6b33c6": "8000000000000000000000",
@@ -659,26 +671,31 @@
           "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1": "5000000000000000000000",
           "eth:0xAF062fC363c3AE910ec76676346f798792bEB851": "5000000000000000000000",
           "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988": "5000000000000000000000",
-          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": "2000000000000000000000",
+          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": 0,
           "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1": "2000000000000000000000",
-          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": "2000000000000000000000",
-          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": "2000000000000000000000",
+          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": 0,
+          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": 0,
           "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC": "1000000000000000000000",
           "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554": "6000000000000000000000",
           "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A": "3000000000000000000000",
           "eth:0x5fDCb78cA9A1164c13428E5fC9582c8c48Dab69f": 0,
-          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "8000000000000000000000",
-          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": "8000000000000000000000",
+          "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61": "1000000000000000000000",
+          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": 0,
           "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88": "4000000000000000000000",
           "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1": "8000000000000000000000",
           "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310": "8000000000000000000000",
           "eth:0xd999F7EA9173BCbFDB17c423Fd714557219f9178": "8000000000000000000000",
           "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5": "8000000000000000000000",
-          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28": "3000000000000000000000"
+          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28": "5000000000000000000000",
+          "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8": "8000000000000000000000",
+          "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871": "8000000000000000000000",
+          "eth:0x8ED74C5c44DDc65667AD5764c6286dC9785Db6B0": 0,
+          "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984": "1000000000000000000000",
+          "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E": "1000000000000000000000"
         },
         "ticketPrice": "1000000000000000000000",
         "ticketToken": "eth:0xC0B5b49a3949eC4B520eF21BaCFE16e3695F3B5D",
-        "totalCiphernodeBondLiability": "2580184000000000000000000",
+        "totalCiphernodeBondLiability": "2676184000000000000000000",
         "unresolvedCommitteeCount": 1
       },
       "fieldMeta": {
@@ -751,11 +768,6 @@
     },
     {
       "address": "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -884,6 +896,11 @@
         "eth:0x194A489c918b74F11C6b03e12Ea26F198110f9A5": "BfvDecryptionVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
@@ -1030,11 +1047,6 @@
     },
     {
       "address": "eth:0x2358424b1E347f1FAADB7F54C5eB57eeA3A2738d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1237,11 +1249,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x2A2Df1e79ec3be51c0B050175E3D897e3911dC42",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1327,11 +1334,6 @@
     },
     {
       "address": "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1466,6 +1468,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MockE3Program",
       "address": "eth:0x4976E5E47852eFCe6851d35B95A1A2E19456F3D7",
       "type": "Contract",
@@ -1486,6 +1493,11 @@
         "eth:0x4976E5E47852eFCe6851d35B95A1A2E19456F3D7": "MockE3Program"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProtocolProposalCondition",
@@ -1626,7 +1638,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 64,
+        "nonce": 72,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1766,11 +1778,6 @@
     },
     {
       "address": "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2419,7 +2426,7 @@
       "values": {
         "$immutable": true,
         "checkpoints": "eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963",
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
@@ -2509,14 +2516,14 @@
         ],
         "$upgradeCount": 1,
         "clock": "eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166",
-        "currentExitingAmount": "1241569717915697992972605",
+        "currentExitingAmount": "6334264046833603832133211",
         "curve": "eth:0xf023390C78CF95a77A8910187d5B09BBC05F37e9",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "decimals": 18,
         "ESCROW_ADMIN_ROLE": "0x5153bc4ddea3acc82e49822cf2356cf42e16e0ba80c942840692ca4dd7db5995",
         "implementation": "eth:0x201d4c1cd48F2fC1297eEa56B14A29a039164a91",
         "ivotesAdapter": "eth:0x8f141B4D294d39e7D1530916A3eD65B3970C6FEc",
-        "lastLockId": 187,
+        "lastLockId": 226,
         "lockNFT": "eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E",
         "minDeposit": "1000000000000000000",
         "paused": false,
@@ -2525,8 +2532,8 @@
         "SPLIT_WHITELIST_ANY_ADDRESS": "eth:0x89203EDb30c2eCF12612E709afB87C85a170dA0a",
         "SWEEPER_ROLE": "0xfdecf383ad5026ade6d21db07b04781efb7ede2811d8b5fe299044cc4bb91fc9",
         "token": "eth:0xE172e9B6cfBeeB5593bDcE3f077356FDb33af904",
-        "totalLocked": "10260199666361561670936065",
-        "totalVotingPower": "9018629948445863677963460",
+        "totalLocked": "15042851538166981613048491",
+        "totalVotingPower": "8708587491333377780915280",
         "voter": "eth:0x0A32454FC578e3CAFeE86F6E03f267b25ad0bAf0"
       },
       "fieldMeta": {
@@ -2948,7 +2955,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 59,
+        "nonce": 62,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3030,7 +3037,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "DELEGATION_ADMIN_ROLE": "0xc4a19b785a540c2c44664ee81553e51ce4d2ff785f770bea0ef0e33e9fc2e896",
@@ -3340,12 +3347,6 @@
             "condition": "eth:0x0000000000000000000000000000000000000002"
           },
           {
-            "permissionId": "0xbf04b4486c9663d805744005c3da000eda93de6e3308a4a7a812eb565327b78d",
-            "where": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-            "who": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C",
-            "condition": "eth:0x0000000000000000000000000000000000000002"
-          },
-          {
             "permissionId": "0x8c433a4cd6b51969eca37f974940894297b9fcf4b282a213fea5cd8f85289c90",
             "where": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C",
             "who": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
@@ -3460,10 +3461,7 @@
         "$upgradeCount": 1,
         "clockAdmins": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
         "curveAdmins": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
-        "daoExecutors": [
-          "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C",
-          "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
-        ],
+        "daoExecutors": ["eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"],
         "daoRootHolders": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
         "daoUpgraders": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
         "daoURI": "",
@@ -3504,10 +3502,7 @@
         "SET_TRUSTED_FORWARDER_PERMISSION_ID": "0x06d294bc8cbad2e393408b20dd019a772661f60b8d633e56761157cb1ec85f8c",
         "UPGRADE_DAO_PERMISSION_ID": "0x1f53edd44352e5d15bad2b29233baa93bcd595e09457780bc7c5445bbbe751cc",
         "VALIDATE_SIGNATURE_PERMISSION_ID": "0x968c17ebf04aa1b7544168e69314cdab6b69ba813bb6080d49c0c40a65560f58",
-        "veDaoExecutors": [
-          "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C",
-          "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"
-        ],
+        "veDaoExecutors": ["eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"],
         "veDaoRootHolders": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
         "veDaoUpgraders": ["eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B"],
         "veMultisigUpgraders": [],
@@ -3871,7 +3866,7 @@
       "sinceBlock": 25786372,
       "values": {
         "$immutable": true,
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "eip712Domain": {
@@ -3885,7 +3880,7 @@
         },
         "name": "Interfold Ticket Token",
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
-        "payableBalance": "151000000000000000000000",
+        "payableBalance": "190000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "pendingRegistry": "eth:0x0000000000000000000000000000000000000000",
         "pendingRegistryActivationTime": 0,
@@ -3893,7 +3888,7 @@
         "REGISTRY_CHANGE_DELAY": 86400,
         "registryLocked": true,
         "symbol": "tFOLD",
-        "totalSupply": "214000000000000000000000",
+        "totalSupply": "215000000000000000000000",
         "underlying": "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
       },
       "fieldMeta": {
@@ -4042,6 +4037,11 @@
       "implementationNames": {
         "eth:0xC496A7ee730590D5A7669E251cbE54F5Fc339Ea8": "HonkVerifier"
       }
+    },
+    {
+      "address": "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DecryptionAggregatorVerifier",
@@ -4197,7 +4197,7 @@
         "MAX_COMMITTEE_PUBLIC_KEY_BYTES": 524288,
         "MAX_SORTITION_SUBMISSION_WINDOW": 86400,
         "MIN_SORTITION_SUBMISSION_WINDOW": 60,
-        "numCiphernodes": 48,
+        "numCiphernodes": 47,
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "pendingAccusationVoteValidity": 0,
         "pendingAccusationVoteValidityAt": 0,
@@ -4214,7 +4214,6 @@
           "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9",
           "eth:0xD81f88b9Ae6261d684f8BfEb6a642692213dAe86",
           "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3",
-          "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d",
           "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84",
           "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663",
           "eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8",
@@ -4241,23 +4240,23 @@
           "eth:0x1d4205bc727E4f3799B25d0FEAe8e45d365858b1",
           "eth:0xAF062fC363c3AE910ec76676346f798792bEB851",
           "eth:0xba7254CC6c70AE1D99aEa3ecA705E81635aaA988",
-          "eth:0x60cd23981430e4909957EA1fB214E9A21468175A",
           "eth:0x73F8511492fE99B1d3b230B1015e22db53DaA9a1",
-          "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4",
-          "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F",
           "eth:0x856F8E59dEd8386C57f48a55b007F21F89724CFC",
           "eth:0xd333232f08d6a8A4f7Cee8327476DbeDDDF20554",
           "eth:0xb8d9Bf1b6C283D29dC3dC5711C9036F6896a963A",
           "eth:0x9E2558B76c7D7CF169556A1a729C2CB0324f0E61",
-          "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877",
           "eth:0xDb78ebaB8597AF977B686E540DCe734E613Eba88",
           "eth:0x86Ab0b3C4A36cAB3037d750C850D660cE710e2a1",
           "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310",
           "eth:0xd999F7EA9173BCbFDB17c423Fd714557219f9178",
           "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5",
-          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28"
+          "eth:0x97c4CD466A0c3ff2dBa262DfE8dd796fb240fD28",
+          "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8",
+          "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871",
+          "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984",
+          "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E"
         ],
-        "root": "18905320951472340279226278635104964876604680731214560367025586292745134900796",
+        "root": "21594261018907075323824042024149102026898372947400083313066101479958231417311",
         "slashingManager": "eth:0x753109Ee36Dc65cC178875AddA30C6433e5bEEe4",
         "sortitionSubmissionWindow": 600,
         "TREE_DEPTH": 20,
@@ -4359,24 +4358,24 @@
         "$upgradeCount": 1,
         "checkpointInterval": 604800,
         "CLOCK_ADMIN_ROLE": "0x440d025ee487c9fe654894f3750aeb18132e334d52d7a9c0a3f6a5c77450a9b5",
-        "currentEpoch": 1482,
+        "currentEpoch": 1484,
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-        "elapsedInEpoch": 744311,
+        "elapsedInEpoch": 392483,
         "epochDuration": 1209600,
-        "epochNextCheckpointIn": 465289,
-        "epochNextCheckpointTs": 1793836800,
-        "epochPrevCheckpointElapsed": 139511,
-        "epochPrevCheckpointTs": 1793232000,
-        "epochStartsIn": 465289,
-        "epochStartTs": 1793836800,
-        "epochVoteEndsIn": 0,
-        "epochVoteEndTs": 1793371511,
-        "epochVoteStartsIn": 468889,
-        "epochVoteStartTs": 1793840400,
+        "epochNextCheckpointIn": 212317,
+        "epochNextCheckpointTs": 1795651200,
+        "epochPrevCheckpointElapsed": 392483,
+        "epochPrevCheckpointTs": 1795046400,
+        "epochStartsIn": 817117,
+        "epochStartTs": 1796256000,
+        "epochVoteEndsIn": 208717,
+        "epochVoteEndTs": 1795647600,
+        "epochVoteStartsIn": 0,
+        "epochVoteStartTs": 1795438883,
         "implementation": "eth:0xEC0162045B44C5506954E3A04dbbcdfe39f64f21",
         "voteDuration": 604800,
         "voteWindowBuffer": 3600,
-        "votingActive": false
+        "votingActive": true
       },
       "fieldMeta": {
         "dao": {
@@ -4589,7 +4588,7 @@
       "sinceBlock": 25786391,
       "values": {
         "$immutable": true,
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "registry": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F"
       },
@@ -4736,7 +4735,7 @@
         "CCA_END": 1783692000,
         "CCA_START": 1783346400,
         "CLAIM_SOURCE": "eth:0x687Cc38d8279dF3352b64cF3EC1fe8e033933595",
-        "clock": 1793371511,
+        "clock": 1795438883,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -4858,7 +4857,7 @@
         "CURVE_ADMIN_ROLE": "0x065385aea91ea94bccc193b44dcdc1da3bcab7e7328692e0b12cda00df64eac4",
         "dao": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
         "escrow": "eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12",
-        "globalPointLatestIndex": 102,
+        "globalPointLatestIndex": 170,
         "implementation": "eth:0x59417A78C133a6Fddf8a3b5e751378aF8d42e249",
         "maxTime": 62899200,
         "warmupPeriod": 0
@@ -5097,7 +5096,7 @@
         "LOCK_ADMIN_ROLE": "0x54e26bc44f032b9c63f050973076cd279ea75ee2dceeaee6367075804fd03838",
         "name": "Vote Escrow FOLD",
         "symbol": "veFOLD",
-        "totalSupply": 181,
+        "totalSupply": 218,
         "WHITELIST_ANY_ADDRESS": "eth:0x95A53aa925FDd6f1733830EbB7A586B33CbD4355"
       },
       "fieldMeta": {
@@ -8445,8 +8444,8 @@
     "zama/GovCore": "0xd23019ed0b17920b8f219de9ded254b4bf3befa1fdb55f092019d6c1c15ad739",
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297"
   },
-  "usedBlockNumbers": { "ethereum": 26306253 },
-  "permissionsConfigHash": "0x8b9d8a69b37df9c65b338d6fb6053dcbcd81622e31327b111030881e4d1533f1",
+  "usedBlockNumbers": { "ethereum": 26478000 },
+  "permissionsConfigHash": "0xc2a507092c406fe06da1cb4346028dcd53e923e9099cf511b74e57f3d5547d16",
   "permissions": {
     "eth:0x0a3E22cb9778A10b188eC2BF149D628ab91A76a9": {
       "receivedPermissions": [
@@ -8490,16 +8489,6 @@
         }
       ]
     },
-    "eth:0x15de07b6280ae5F5D37F6d77dF88c37875ef2877": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
-          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
-          "role": ".registeredCiphernodes"
-        }
-      ]
-    },
     "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663": {
       "receivedPermissions": [
         {
@@ -8527,6 +8516,16 @@
           "from": "eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F",
           "description": "deposit and credit ticket collateral for an operator.",
           "role": ".authorizedDistributors"
+        }
+      ]
+    },
+    "eth:0x1C650115c1a3bF726D936A6B4A4578763f6B2Eb8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
+          "role": ".registeredCiphernodes"
         }
       ]
     },
@@ -8570,16 +8569,6 @@
         }
       ]
     },
-    "eth:0x252a6c33C87C0b439671b983C3f730D2C46a5F1d": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
-          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
-          "role": ".registeredCiphernodes"
-        }
-      ]
-    },
     "eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715": {
       "receivedPermissions": [
         {
@@ -8603,16 +8592,6 @@
       ]
     },
     "eth:0x291bD021638B9aef86c6d47e29CdA1cF3804bafb": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
-          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
-          "role": ".registeredCiphernodes"
-        }
-      ]
-    },
-    "eth:0x29a540E858500fd6ee2B68EE63769b0bB0A05CF4": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -8647,16 +8626,6 @@
         }
       ]
     },
-    "eth:0x3Dedb602A8997B89685803Dff207566C9883FE0F": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
-          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
-          "role": ".registeredCiphernodes"
-        }
-      ]
-    },
     "eth:0x3b62d921EFdbc295B017fAb9Ba8a521457F037d3": {
       "receivedPermissions": [
         {
@@ -8672,26 +8641,6 @@
         {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change cooldowns and exit fees and upgrade the voting-escrow exit queue.",
-          "role": ".exitQueueAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change multisig plugin settings.",
-          "role": ".multisigSettingsAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
           "description": "change multisig plugin settings.",
           "role": ".multisigSettingsAdmins",
           "via": [
@@ -8704,223 +8653,30 @@
           "description": "change multisig plugin target execution configuration.",
           "role": ".multisigTargetConfigAdmins",
           "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change multisig plugin target execution configuration.",
-          "role": ".multisigTargetConfigAdmins",
-          "via": [
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change transfer whitelist settings and upgrade the voting-lock NFT.",
-          "role": ".lockAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change voting epochs and upgrade the voting-escrow Clock.",
-          "role": ".clockAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "change voting-power curve parameters and upgrade the Curve implementation.",
-          "role": ".curveAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "complete queued voting-escrow withdrawals.",
-          "role": ".exitQueueWithdrawers",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in this contract.",
-          "role": ".daoRootHolders",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "grant and revoke permissions in this contract.",
-          "role": ".veDaoRootHolders",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "manage gauge metadata and the voting-power update hook.",
-          "role": ".gaugeAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "pause and unpause voting-escrow operations.",
-          "role": ".votingEscrowPausers",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "pause the escrow voting-power adapter, manage delegation settings and upgrade its implementation.",
-          "role": ".votesAdapterAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "replace voting-power dependencies, change minimum deposits and split rules, and upgrade VotingEscrow.",
-          "role": ".votingEscrowAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "sweep unaccounted tokens and NFTs from VotingEscrow.",
-          "role": ".votingEscrowSweepers",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "update delegated voting power through the escrow voting adapter.",
-          "role": ".delegationTokenManagers",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "upgrade this contract's implementation.",
-          "role": ".daoUpgraders",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".clockAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".curveAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".exitQueueAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".gaugeUpgraders",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".lockAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".veDaoUpgraders",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".votesAdapterAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
-            { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "role": ".votingEscrowAdmins",
-          "via": [
-            { "address": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B" },
             { "address": "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C" }
           ]
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
+    },
+    "eth:0x492042B12c06F8bAf60557C4555ef29A5950860E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
+          "role": ".registeredCiphernodes"
+        }
+      ]
+    },
+    "eth:0x4A63207154B6d6722D2060e5103B2b82e4529984": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
+          "role": ".registeredCiphernodes"
+        }
+      ]
     },
     "eth:0x516C12B6D622A62166bDe3580628d6d23ae5b310": {
       "receivedPermissions": [
@@ -9497,16 +9253,6 @@
       ]
     },
     "eth:0x6073Be0C811884Aa8d1185C4Fe695b3f37e588C5": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
-          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
-          "role": ".registeredCiphernodes"
-        }
-      ]
-    },
-    "eth:0x60cd23981430e4909957EA1fB214E9A21468175A": {
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -11143,18 +10889,6 @@
     "eth:0xDE2C723Ada1363575c716aFB9477A777B2a2bd7C": {
       "directlyReceivedPermissions": [
         {
-          "permission": "act",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from this contract, including administration and upgrades of the voting-power stack.",
-          "role": ".veDaoExecutors"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
-          "description": "execute arbitrary calls from this contract.",
-          "role": ".daoExecutors"
-        },
-        {
           "permission": "interact",
           "from": "eth:0x9e9617418DFb9E4daD00E2D1e8f21e214901989B",
           "description": "change multisig plugin settings.",
@@ -12277,6 +12011,16 @@
           "from": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
           "description": "execute arbitrary calls from this contract.",
           "role": ".daoExecutors"
+        }
+      ]
+    },
+    "eth:0xc4A926A4B8bf90a4858971eBAb15095d32698871": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7",
+          "description": "be selected by ticket-weighted sortition into E3 committees, whose members create key shares and threshold-decrypt E3 outputs. Enough colluding members of one committee can decrypt every input of that E3.",
+          "role": ".registeredCiphernodes"
         }
       ]
     },

@@ -2,4 +2,4 @@ InterfoldSafeA ({{safeAStats}}) and InterfoldSafeB ({{safeBStats}}) have the sam
 
 Interfold Protocol Proposals on the [Interfold governance portal](https://governance.theinterfold.com) pass a CRISP vote of {{voteDuration}}, then need InterfoldSafeB's approval within {{approvalWindow}}.
 
-VotingEscrowGovCore can upgrade VotingEscrow, which holds locked FOLD. It executes whatever its multisig plugin, VotingEscrowMultisig ({{veMultisigStats}}), approves. InterfoldGovCore can also execute through it.
+VotingEscrowGovCore can upgrade VotingEscrow, which holds locked FOLD. Only InterfoldGovCore can execute through it.
