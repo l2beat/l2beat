@@ -106,7 +106,11 @@ export function useLivePlayhead({
     const step = () => {
       const now = Date.now() / 1000
       if (hold.current && last.current !== undefined) {
-        last.current = { ...last.current, at: now }
+        // a hold can begin on data read since, as for another range
+        last.current = {
+          playhead: withinRead(last.current.playhead, [earliestEnd, dataEnd]),
+          at: now,
+        }
         if (requested.current !== last.current.playhead) {
           requested.current = last.current.playhead
           setPlayhead(last.current.playhead)
@@ -180,7 +184,7 @@ export function shouldRedraw(
 export function advancePlayhead(
   previous: { playhead: number; at: number } | undefined,
   target: number,
-  [earliestEnd, dataEnd]: [number, number],
+  read: [number, number],
   now: number,
 ) {
   const next =
@@ -190,5 +194,13 @@ export function advancePlayhead(
           previous.playhead,
           Math.min(target, previous.playhead + (now - previous.at) * CATCH_UP),
         )
-  return Math.min(Math.max(next, earliestEnd), dataEnd)
+  return withinRead(next, read)
+}
+
+/** Not past the data, nor so far behind it that the window's left edge was not read */
+function withinRead(
+  playhead: number,
+  [earliestEnd, dataEnd]: [number, number],
+) {
+  return Math.min(Math.max(playhead, earliestEnd), dataEnd)
 }
