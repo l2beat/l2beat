@@ -61,6 +61,7 @@ export function useLiveWindow({
   const redrawEvery = LIVE_RANGES[shown].seconds / 300
   const playhead = useLivePlayhead({
     dataEnd: to === undefined ? data?.window.to : undefined,
+    earliestEnd: data && data.window.readFrom + LIVE_RANGES[shown].seconds,
     readAtMs: dataUpdatedAt,
     redrawEvery,
     onGlide,

@@ -33,6 +33,7 @@ export const LOOKAHEAD_DRAWINGS = 2
  */
 export function useLivePlayhead({
   dataEnd,
+  earliestEnd,
   readAtMs,
   redrawEvery,
   onGlide,
@@ -41,6 +42,8 @@ export function useLivePlayhead({
 }: {
   /** Where the data read ends, in seconds. Undefined stops the window */
   dataEnd: number | undefined
+  /** Where the window may end earliest, as its data is read only so far before it */
+  earliestEnd: number | undefined
   /** When the data was read */
   readAtMs: number
   /** Seconds the window moves between drawings */
@@ -53,6 +56,8 @@ export function useLivePlayhead({
 }): number | undefined {
   const [playhead, setPlayhead] = useState<number>()
   const lags = useRef<number[]>([])
+  /** The range the lags are of, by how often its window is drawn */
+  const lagsOf = useRef(redrawEvery)
   const last = useRef<{ playhead: number; at: number } | undefined>(undefined)
   const requested = useRef<number | undefined>(undefined)
   const drawn = useRef<number | undefined>(undefined)
@@ -65,13 +70,18 @@ export function useLivePlayhead({
 
   useEffect(() => {
     if (dataEnd === undefined) return
+    // each range's data ends on its own bucket, so its reads lag by their own
+    if (lagsOf.current !== redrawEvery) {
+      lagsOf.current = redrawEvery
+      lags.current = []
+    }
     const lag = readAtMs / 1000 - dataEnd
     // the first read may have come just after a batch, so a batch is added
     lags.current =
       lags.current.length === 0
         ? [lag + STORE_SECONDS]
         : [...lags.current, lag].slice(-LAG_SAMPLES)
-  }, [dataEnd, readAtMs])
+  }, [dataEnd, readAtMs, redrawEvery])
 
   // after every drawing and before it is painted, as one may also redraw
   // the charts' elements without their offset
@@ -85,7 +95,7 @@ export function useLivePlayhead({
   })
 
   useEffect(() => {
-    if (dataEnd === undefined) {
+    if (dataEnd === undefined || earliestEnd === undefined) {
       last.current = undefined
       requested.current = undefined
       lags.current = []
@@ -107,7 +117,7 @@ export function useLivePlayhead({
       const next = advancePlayhead(
         last.current,
         getPlayheadTarget(dataEnd, now, lags.current),
-        dataEnd,
+        [earliestEnd, dataEnd],
         now,
       )
       last.current = { playhead: next, at: now }
@@ -124,7 +134,7 @@ export function useLivePlayhead({
     }
     step()
     return () => cancelAnimationFrame(frame)
-  }, [dataEnd, redrawEvery])
+  }, [dataEnd, earliestEnd, redrawEvery])
 
   return playhead
 }
@@ -164,12 +174,13 @@ export function shouldRedraw(
  * fast as the clock, and not back for a later target, or there at once when
  * more than `LIVE_JUMP_SECONDS` behind. But
  * never past the data: a longer range's data ends on its longer bucket, so
- * switching to one can end it before where the window had got to
+ * switching to one can end it before where the window had got to. Nor so far
+ * behind it that the window's left edge was not read
  */
 export function advancePlayhead(
   previous: { playhead: number; at: number } | undefined,
   target: number,
-  dataEnd: number,
+  [earliestEnd, dataEnd]: [number, number],
   now: number,
 ) {
   const next =
@@ -179,5 +190,5 @@ export function advancePlayhead(
           previous.playhead,
           Math.min(target, previous.playhead + (now - previous.at) * CATCH_UP),
         )
-  return Math.min(next, dataEnd)
+  return Math.min(Math.max(next, earliestEnd), dataEnd)
 }

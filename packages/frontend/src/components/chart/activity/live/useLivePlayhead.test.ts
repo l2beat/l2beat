@@ -9,29 +9,41 @@ import {
 
 describe(advancePlayhead.name, () => {
   it('catches up with the target no faster than allowed', () => {
-    expect(advancePlayhead({ playhead: 100, at: 50 }, 110, 120, 52)).toEqual(
-      100 + 2 * CATCH_UP,
-    )
+    expect(
+      advancePlayhead({ playhead: 100, at: 50 }, 110, [0, 120], 52),
+    ).toEqual(100 + 2 * CATCH_UP)
   })
 
   it('does not move back for a later target', () => {
-    expect(advancePlayhead({ playhead: 100, at: 50 }, 95, 120, 52)).toEqual(100)
+    expect(
+      advancePlayhead({ playhead: 100, at: 50 }, 95, [0, 120], 52),
+    ).toEqual(100)
   })
 
   it('moves back to where the data ends', () => {
     // Methodology: a 4H window's data ends on a 96 s bucket, before where
     // the 5M window had got to
-    expect(advancePlayhead({ playhead: 100, at: 50 }, 40, 40, 52)).toEqual(40)
+    expect(advancePlayhead({ playhead: 100, at: 50 }, 40, [0, 40], 52)).toEqual(
+      40,
+    )
+  })
+
+  it('does not trail the data by more than was read before the window', () => {
+    // Methodology: after a hold, the target can be further behind the data
+    // than the 60 s the server reads before the window
+    expect(
+      advancePlayhead({ playhead: 100, at: 50 }, 100, [150, 210], 52),
+    ).toEqual(150)
   })
 
   it('jumps when far behind', () => {
     const target = 100 + LIVE_JUMP_SECONDS + 1
 
     expect(
-      advancePlayhead({ playhead: 100, at: 50 }, target, target, 52),
+      advancePlayhead({ playhead: 100, at: 50 }, target, [0, target], 52),
     ).toEqual(target)
     expect(
-      advancePlayhead({ playhead: 100, at: 50 }, target - 1, target, 52),
+      advancePlayhead({ playhead: 100, at: 50 }, target - 1, [0, target], 52),
     ).toEqual(100 + 2 * CATCH_UP)
   })
 })
