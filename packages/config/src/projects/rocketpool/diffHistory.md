@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xa0f7ce3bfee6a3b89fd65da9ca3c56858288839a
+
+# Diff at Mon, 23 Nov 2026 18:14:54 GMT:
+
+- id: 3e240d39
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@61d019c4faea98684600f451671e92cf57c548a9 block: 1793982909
+- current timestamp: 1795457619
+
+## Description
+
+RocketDAONodeTrusted: the oracle DAO kicked one member (Nimbus) with no RPL fine, 8 seats now filled.
+
+## Watched changes
+
+```diff
+    contract RocketDAONodeTrusted (eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9) [rocketpool/RocketDAONodeTrusted] {
+    +++ description: Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 8. Each seat carries one vote and a proposal passes once votes for it reach 4.08. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed.
+      description:
+-        "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 9. Each seat carries one vote and a proposal passes once votes for it reach 4.59. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed."
++        "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: 8. Each seat carries one vote and a proposal passes once votes for it reach 4.08. Membership is bonded: joining locks 1,750 collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed."
+      values.memberCount:
+-        9
++        8
++++ description: Addresses currently seated in the oracle set.
++++ severity: HIGH
+      values.members.0:
+-        "eth:0xB3A533098485bede3Cb7fA8711AF84FE0bb1e0aD"
++        "eth:0xD7F94c53691AFB5A616C6af96e7075c1FFA1D8eE"
++++ description: Addresses currently seated in the oracle set.
++++ severity: HIGH
+      values.members.8:
+-        "eth:0xD7F94c53691AFB5A616C6af96e7075c1FFA1D8eE"
+      values.quorumVotes:
+-        "4.59"
++        "4.08"
+    }
+```
+
 Generated with discovered.json: 0x739a14475752c076aeaa2443dde0867165718993
 
 # Diff at Fri, 06 Nov 2026 16:37:38 GMT:

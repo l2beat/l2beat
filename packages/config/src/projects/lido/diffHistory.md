@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf53d2a771b573ebf8eded2e316f40724e1e31aa5
+
+# Diff at Mon, 23 Nov 2026 18:15:01 GMT:
+
+- id: cfb0957d
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@61d019c4faea98684600f451671e92cf57c548a9 block: 1794868354
+- current timestamp: 1795457619
+
+## Description
+
+StakingRouter: `stakeShareLimit` of module 5 (Community Staking 0x02) raised from 1 to 50 basis points (0.01% → 0.5%) by an Easy Track motion of the CommunityStakingModuleCommittee.
+
+## Watched changes
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.getStakingModuleStateConfig.4.stakeShareLimit:
+-        1
++        50
+    }
+```
+
 Generated with discovered.json: 0x14b0aa8c3ba75910bdced9926cb04bbc8768ef71
 
 # Diff at Mon, 16 Nov 2026 22:34:01 GMT:
