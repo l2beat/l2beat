@@ -99,6 +99,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('bob'),
         sinceTimestamp: UnixTime(1752703200),
+        untilTimestamp: UnixTime(1789547003), // 2026-09-16 respected game type back to PermissionedDisputeGame
       },
       {
         projectId: ProjectId('megaeth'),
@@ -107,6 +108,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('soon'),
         sinceTimestamp: UnixTime(1765180787),
+        untilTimestamp: UnixTime(1785292451), // 2026-07-29 OptimismPortal reads the permissioned L2OutputOracle
       },
       {
         projectId: ProjectId('base'),
@@ -116,6 +118,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('roninnetwork'),
         sinceTimestamp: UnixTime(1780557929), // Kailua KailuaTreasury deployed (not yet active)
+        untilTimestamp: UnixTime(1788777107), // 2026-09-07 respected game type back to PermissionedDisputeGame
       },
     ],
     verifierHashes: [
@@ -130,13 +133,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
             ),
-            overrideUsedIn: [
-              ProjectId('taiko'),
-              ProjectId('bob'),
-              ProjectId('megaeth'),
-              ProjectId('soon'),
-              ProjectId('roninnetwork'),
-            ],
+            // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -159,11 +157,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
-            overrideUsedIn: [
-              ProjectId('bob'),
-              ProjectId('taiko'),
-              ProjectId('roninnetwork'),
-            ],
+            // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+            overrideUsedIn: [],
           },
           // {
           //   address: ChainSpecificAddress.fromLong(
@@ -216,7 +211,7 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x8c915b5071206C6E328BC18529586c513408aB3b',
             ),
-            overrideUsedIn: [ProjectId('taiko')],
+            overrideUsedIn: [ProjectId('taiko'), ProjectId('megaeth')],
           },
         ],
         verificationStatus: 'notVerified',
@@ -234,6 +229,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C',
             ),
+            // route 0x310fe598 is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -257,6 +254,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d',
             ),
+            // BOB's Kailua game is no longer respected
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'notVerified',
@@ -275,6 +274,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97',
             ),
+            // route 0x9f39696c is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
@@ -297,6 +298,8 @@ export const risc0: BaseProject = {
               'ethereum',
               '0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF',
             ),
+            // route 0xf536085a is estopped, so no project can reach it
+            overrideUsedIn: [],
           },
         ],
         verificationStatus: 'successful',
