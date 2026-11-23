@@ -472,6 +472,14 @@ export interface ChainBasicApi<T extends string> {
   url: string
   callsPerMinute?: number
   retryStrategy?: RetryHandlerVariant
+  /**
+   * This `url` answers HTTP 403, not 429, when calls exceed its rate, so an
+   * RPC client stepping down on throttling counts it as a refusal. Set it
+   * only after seeing the 403s come with load and go without it: a 403 that
+   * refuses every call is a block, which no rate lifts. Ignored when an env
+   * variable replaces the url.
+   */
+  refusesRateWith403?: boolean
 }
 
 export interface ChainExplorerApi<T extends string> {

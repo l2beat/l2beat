@@ -145,6 +145,26 @@ describe(`${ClientCore.name} when the provider refuses a call`, () => {
     }
   })
 
+  // Why: some providers sit behind a CloudFront rule that answers 403, not
+  // 429, once an address calls too fast (xlayer, dbk). A 403 elsewhere is
+  // usually a block that no rate lifts, so it counts only where configured.
+  it('takes a 403 as a refusal for the rate only from a provider configured so', async () => {
+    const forbidden = () =>
+      new Error('HTTP error: 403 Forbidden', { cause: { status: 403 } })
+    const flagged = mocks(1_000, 0.1, Logger.SILENT, true)
+    const unflagged = mocks(1_000, 0.1)
+    flagged.http.fetch.rejectsWithOnce(forbidden())
+    unflagged.http.fetch.rejectsWithOnce(forbidden())
+
+    await flagged.clientCore.fetch('https://api.test.com/data', {})
+    await unflagged.clientCore.fetch('https://api.test.com/data', {})
+
+    expect(flagged.clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(900)
+    expect(unflagged.clientCore.rateLimiter.effectiveCallsPerMinute).toEqual(
+      1_000,
+    )
+  })
+
   it('leaves the limiter alone on any other failure', async () => {
     const { clientCore, http } = mocks(1_000, 0.1)
     http.fetch.rejectsWithOnce(
@@ -163,6 +183,7 @@ function mocks(
   callsPerMinute?: number,
   stepDownOnThrottle?: number,
   logger: Logger = Logger.SILENT,
+  refusesRateWith403?: boolean,
 ) {
   const http = mockObject<HttpClient>({
     fetch: async () => ({ result: 'success' }) as json,
@@ -181,6 +202,7 @@ function mocks(
     http,
     callsPerMinute: callsPerMinute ?? 100_000,
     stepDownOnThrottle,
+    refusesRateWith403,
     retryStrategy: 'TEST',
     logger,
     sourceName: 'test',

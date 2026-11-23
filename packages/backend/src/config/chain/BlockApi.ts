@@ -9,6 +9,8 @@ interface BlockBasedApi {
   timeout?: number
   /** Calls per HTTP request, the RPC rejects bigger batches */
   maxBatchSize?: number
+  /** The RPC answers 403, not 429, when calls exceed its rate */
+  refusesRateWith403?: boolean
   multicallV3?: {
     address: EthereumAddress
     sinceBlock: number

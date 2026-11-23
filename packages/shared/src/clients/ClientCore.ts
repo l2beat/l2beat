@@ -14,6 +14,8 @@ export interface ClientCoreDependencies {
   retryStrategy: RetryHandlerVariant
   /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
   stepDownOnThrottle?: number
+  /** The provider answers 403, not 429, when calls exceed its rate */
+  refusesRateWith403?: boolean
 }
 
 export abstract class ClientCore {
@@ -94,7 +96,10 @@ export abstract class ClientCore {
     return response
   }
 
-  /** A refusal for the rate (HTTP 429) is what the limiter steps down on */
+  /**
+   * A refusal for the rate is what the limiter steps down on: HTTP 429, or
+   * 403 from a provider that answers so
+   */
   private async fetchAndReportThrottling(
     url: string,
     init: FetchInit,
@@ -103,7 +108,7 @@ export abstract class ClientCore {
     try {
       return await this.deps.http.fetch(url, init)
     } catch (error) {
-      if (isThrottled(error)) {
+      if (isThrottled(error, this.deps.refusesRateWith403)) {
         this.rateLimiter.throttled(sentAt)
       }
       throw error
@@ -117,15 +122,13 @@ export abstract class ClientCore {
   }
 }
 
-function isThrottled(error: unknown): boolean {
+function isThrottled(error: unknown, refusesRateWith403 = false): boolean {
   if (!(error instanceof Error)) {
     return false
   }
   const cause = error.cause
-  return (
-    typeof cause === 'object' &&
-    cause !== null &&
-    'status' in cause &&
-    cause.status === 429
-  )
+  if (typeof cause !== 'object' || cause === null || !('status' in cause)) {
+    return false
+  }
+  return cause.status === 429 || (refusesRateWith403 && cause.status === 403)
 }

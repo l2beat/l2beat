@@ -63,6 +63,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     multicallClient?: MulticallV3Client
     timeout?: number
     maxBatchSize?: number
+    refusesRateWith403?: boolean
   }): IRpcClient {
     return config.newClientsEnabled
       ? RpcClientCompat.create({ ...options, http, rpcMetricsAggregator })
@@ -125,6 +126,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             multicallClient,
             timeout: blockApi.timeout,
             maxBatchSize: blockApi.maxBatchSize,
+            refusesRateWith403: blockApi.refusesRateWith403,
           })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)

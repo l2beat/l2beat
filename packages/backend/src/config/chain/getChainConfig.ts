@@ -51,10 +51,15 @@ export async function getChainConfig(
         case 'sourcify':
           // TODO: not sure why we don't support this
           break
-        case 'rpc':
+        case 'rpc': {
+          const url = env.string(Env.key(chain, 'RPC_URL'), api.url)
           blockApis.push({
             type: 'rpc',
-            url: env.string(Env.key(chain, 'RPC_URL'), api.url),
+            url,
+            // How a provider refuses is a property of that provider, and an
+            // env url may be another one
+            refusesRateWith403:
+              url === api.url ? api.refusesRateWith403 : undefined,
             callsPerMinute: env.integer(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
@@ -77,6 +82,7 @@ export async function getChainConfig(
               'RELIABLE',
           })
           break
+        }
         case 'fuel':
           blockApis.push({
             type: api.type,
