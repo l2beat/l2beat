@@ -84,7 +84,7 @@ export function createLiquidStakingModule({
       indexerService,
       firstDay: sinceTimestamp,
       db,
-      circulatingSupply: providers.circulatingSupply,
+      coingecko: providers.clients.coingecko,
     },
     logger,
   )
