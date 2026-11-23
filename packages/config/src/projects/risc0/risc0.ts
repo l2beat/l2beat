@@ -78,7 +78,7 @@ export const risc0: BaseProject = {
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
-        ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.Arithmetization.R1CS,
         // ZK_CATALOG_TAGS.PCS.KZG,
@@ -87,8 +87,13 @@ export const risc0: BaseProject = {
     proofSystemInfo: readProjectMarkdown('risc0', 'proofSystemInfo'),
     trustedSetups: [
       {
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         ...TRUSTED_SETUPS.Risc0Groth16_v3_1_0,
+      },
+      // 2024 setup of the verifiers up to v3.0.0, all estopped after GHSA-mm6c-35cm-g4x2
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.Risc0,
       },
     ],
     projectsForTvs: [
@@ -185,7 +190,7 @@ export const risc0: BaseProject = {
       {
         hash: '0xf5904d2c6c6ecb457efb46a01d9ae0a11c666ad6c70668ce3df9b6b28604da3b',
         name: 'RiscZero v3.1.0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
@@ -204,7 +209,7 @@ export const risc0: BaseProject = {
         hash: '0x88492a617f432f3c03449951b7cdaf0db75b27058a52ef935ac06c01d5d4b384',
         name: 'RiscZero v3.1.0 (control root 0xe6feef13)',
         sourceLink: 'https://github.com/risc0/risc0/tree/v3.1.0/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
