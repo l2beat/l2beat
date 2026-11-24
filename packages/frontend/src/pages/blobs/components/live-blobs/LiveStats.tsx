@@ -7,6 +7,7 @@ import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/L
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { readableColor } from '~/utils/color'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import {
   BLOB_KIB,
   describeWindow,
@@ -285,7 +286,7 @@ function ShareStrip({
       {shares.map((share) => (
         <div
           key={share.id}
-          title={`${share.name} · ${formatPercent(share.share)}`}
+          title={`${share.name}${DOT_SEPARATOR}${formatPercent(share.share)}`}
           className="h-full"
           style={{
             flexGrow: share.share,
