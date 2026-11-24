@@ -1,10 +1,8 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  type ActivityChangeCategory,
-  computeActivityChangeEvents,
-} from './getActivityChangeEvents'
+import type { ChangeCategory } from '../../utils/changeEventConstants'
+import { computeActivityChangeEvents } from './getActivityChangeEvents'
 
 describe(computeActivityChangeEvents.name, () => {
   // Projects with steady daily counts for 40 days; tests bend one day (35)
@@ -12,7 +10,7 @@ describe(computeActivityChangeEvents.name, () => {
   const START = UnixTime(1_700_006_400)
   const VISIBLE_FROM = START + 30 * UnixTime.DAY
   const DAY_35 = START + 35 * UnixTime.DAY
-  const categories = new Map<string, ActivityChangeCategory>([
+  const categories = new Map<string, ChangeCategory>([
     ['a', 'rollups'],
     ['b', 'rollups'],
     ['c', 'others'],

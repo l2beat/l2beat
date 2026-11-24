@@ -11,6 +11,10 @@ import {
   RecategorisedTvsChartDataParams,
 } from '~/server/features/layer2s/tvs/getRecategorisedTvsChartData'
 import {
+  getTvsChangeEvents,
+  TvsChangeEventsParams,
+} from '~/server/features/layer2s/tvs/getTvsChangeEvents'
+import {
   getTvsChart,
   TvsChartDataParams,
 } from '~/server/features/layer2s/tvs/getTvsChartData'
@@ -40,6 +44,9 @@ export const tvsRouter = router({
   chart: procedure
     .input(TvsChartDataParams)
     .query(({ input }) => getTvsChart(input)),
+  changeEvents: procedure
+    .input(TvsChangeEventsParams)
+    .query(({ input }) => getTvsChangeEvents(input)),
   chartByProjects: procedure
     .input(TvsChartByProjectsParams)
     .query(({ input }) => getTvsChartByProjects(input)),

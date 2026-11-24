@@ -17,6 +17,10 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
+import type {
+  TvsChangeEvent,
+  TvsChangeEventsData,
+} from '~/server/features/layer2s/tvs/getTvsChangeEvents'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
@@ -24,6 +28,14 @@ import {
   type ChartResolution,
   rangeToResolution,
 } from '~/utils/range/range'
+import {
+  CHANGE_PINS_TOP_MARGIN,
+  ChangeEventsList,
+  ChangePins,
+  ChangeTooltipLine,
+  getVisibleChangeEvents,
+} from '../change-pins/ChangePins'
+import { TVS_CHANGE_FORMAT } from '../change-pins/formats'
 import type { ChartUnit } from '../types'
 
 const chartMeta = {
@@ -71,6 +83,21 @@ export function L2SummaryTvsChart({
     }),
   )
 
+  // Changes are found in whole days and in dollars.
+  const hasChangePins = unit === 'usd' && rangeToResolution(range) === 'day'
+  const { data: changeData } = useQuery({
+    ...trpc.tvs.changeEvents.queryOptions({
+      range,
+      filter: { type: 'layer2' },
+      excludeRwaRestrictedTokens: true,
+    }),
+    enabled: hasChangePins,
+  })
+  const changeEvents = useMemo(
+    () => getVisibleChangeEvents(changeData, 'usd', dataKeys),
+    [changeData, dataKeys],
+  )
+
   const chartData = useMemo(() => toChartData(data), [data])
   const stats = getStats(chartData, dataKeys)
 
@@ -103,6 +130,7 @@ export function L2SummaryTvsChart({
         <TimeSeriesChart
           data={chartData}
           ariaLabel="Value secured"
+          margin={hasChangePins ? { top: CHANGE_PINS_TOP_MARGIN } : undefined}
           series={[
             {
               key: 'rollups',
@@ -127,10 +155,32 @@ export function L2SummaryTvsChart({
               row={row}
               visibleKeys={keys}
               resolution={rangeToResolution(range)}
+              changes={
+                changeData && {
+                  events: changeEvents.filter(
+                    (e) => e.timestamp === row.timestamp,
+                  ),
+                  projects: changeData.projects,
+                }
+              }
             />
           )}
         />
+        {hasChangePins && changeData && (
+          <ChangePins
+            events={changeEvents}
+            projects={changeData.projects}
+            chartData={chartData}
+            chartMeta={chartMeta}
+            format={TVS_CHANGE_FORMAT}
+          />
+        )}
       </ChartContainer>
+      <ChangeEventsList
+        events={changeEvents}
+        projects={changeData?.projects ?? {}}
+        format={TVS_CHANGE_FORMAT}
+      />
     </div>
   )
 }
@@ -141,10 +191,15 @@ function CustomTooltip({
   row,
   visibleKeys,
   resolution,
+  changes,
 }: {
   row: ChartRow
   visibleKeys: (keyof typeof chartMeta)[]
   resolution: ChartResolution
+  changes?: {
+    events: TvsChangeEvent[]
+    projects: TvsChangeEventsData['projects']
+  }
 }) {
   const label = row.timestamp
   const payload = getTooltipEntries(row, visibleKeys)
@@ -170,14 +225,26 @@ function CustomTooltip({
           />
         )}
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => (
-            <ChartTooltipRow key={entry.name} name={entry.name} gap="gap-x-1">
-              <ChartTooltipValue
-                value={entry.value}
-                format={(value) => formatCurrency(value, 'usd')}
-              />
-            </ChartTooltipRow>
-          ))}
+          {payload.map((entry) => {
+            const event = changes?.events.find((e) => e.category === entry.name)
+            return (
+              <div key={entry.name} className="flex flex-col gap-2">
+                <ChartTooltipRow name={entry.name} gap="gap-x-1">
+                  <ChartTooltipValue
+                    value={entry.value}
+                    format={(value) => formatCurrency(value, 'usd')}
+                  />
+                </ChartTooltipRow>
+                {event && changes && (
+                  <ChangeTooltipLine
+                    event={event}
+                    projects={changes.projects}
+                    format={TVS_CHANGE_FORMAT}
+                  />
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </ChartTooltipWrapper>

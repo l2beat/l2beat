@@ -28,13 +28,14 @@ import type {
 } from '~/server/features/layer2s/activity/getActivityChangeEvents'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { formatRange } from '~/utils/dates'
-import type { ChartScale } from '../types'
 import {
-  ActivityChangePins,
-  ActivityChangeTooltipLine,
   CHANGE_PINS_TOP_MARGIN,
+  ChangePins,
+  ChangeTooltipLine,
   getVisibleChangeEvents,
-} from './ActivityChangePins'
+} from '../change-pins/ChangePins'
+import { ACTIVITY_CHANGE_FORMAT } from '../change-pins/formats'
+import type { ChartScale } from '../types'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
@@ -195,11 +196,12 @@ export function L2RecategorizedActivityChart({
         )}
       />
       {hasChangePins && changeEvents && (
-        <ActivityChangePins
+        <ChangePins
           events={events}
           projects={changeEvents.projects}
           chartData={chartData}
           chartMeta={chartMeta}
+          format={ACTIVITY_CHANGE_FORMAT}
         />
       )}
     </ChartContainer>
@@ -249,9 +251,10 @@ function CustomTooltip({
                   />
                 </ChartTooltipRow>
                 {event && changes && (
-                  <ActivityChangeTooltipLine
+                  <ChangeTooltipLine
                     event={event}
                     projects={changes.projects}
+                    format={ACTIVITY_CHANGE_FORMAT}
                   />
                 )}
               </div>
