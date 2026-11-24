@@ -58,8 +58,9 @@ export function createChangeEvent<M extends string>(
   metric: M,
   day: CategoryDay,
   robustZ: number,
+  /** The part of the change that made it notable; all of it by default. */
+  notableChange = day.observed - day.baseline,
 ): ChangeEvent<M> {
-  const change = day.observed - day.baseline
   const deltas = [...day.deltas].sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
   const rest = deltas.slice(MAX_CONTRIBUTORS)
   return {
@@ -68,7 +69,7 @@ export function createChangeEvent<M extends string>(
     metric,
     observed: day.observed,
     baseline: day.baseline,
-    score: Math.abs(change) * Math.min(Math.abs(robustZ), MAX_RANKING_Z),
+    score: Math.abs(notableChange) * Math.min(Math.abs(robustZ), MAX_RANKING_Z),
     contributors: deltas
       .slice(0, MAX_CONTRIBUTORS)
       .filter(([, delta]) => delta !== 0),

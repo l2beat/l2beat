@@ -59,6 +59,20 @@ describe(computeTvsChangeEvents.name, () => {
     expect((event?.observed ?? 0) < (event?.baseline ?? 0)).toEqual(true)
   })
 
+  it('ignores a market move that lifts every project alike', () => {
+    const rally = (base: number) => (day: number) =>
+      drift(base)(day) * (day >= 35 ? 1.1 : 1)
+    const records = [
+      ...series('a', rally(10e9)),
+      ...series('b', rally(5e9)),
+      ...series('c', rally(1e9)),
+    ]
+
+    expect(computeTvsChangeEvents(records, categories, VISIBLE_FROM)).toEqual(
+      [],
+    )
+  })
+
   it('ignores a jump that is small next to all L2 TVS', () => {
     const records = [
       ...series('a', drift(100e9)),

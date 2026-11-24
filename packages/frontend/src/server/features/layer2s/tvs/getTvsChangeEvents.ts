@@ -18,6 +18,7 @@ import {
   getRobustZ,
   MIN_HISTORY_DAYS,
   markEpisodePeaks,
+  median,
 } from '../../utils/changeEvents'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { pinTvsRange } from './utils/pinTvsRange'
@@ -37,10 +38,15 @@ export const TvsChangeEventsParams = v.object({
 export type TvsChangeEventsParams = v.infer<typeof TvsChangeEventsParams>
 
 // TVS is a balance, so a notable day is a jump: the day's change against the
-// category's usual daily changes. It must also be big for the category and
-// for all L2s, so a small category's noise doesn't fire.
+// category's usual daily changes. Prices move every project's TVS together,
+// so only the part of a change beyond the market's move counts. It must also
+// be big for the category and for all L2s, so a small category's noise
+// doesn't fire.
 const MIN_ROBUST_Z = 4
-const MIN_RELATIVE_CHANGE = 0.03
+// The change beyond the market, and the category's whole change, which the
+// pin shows: big enough to read as a jump on the chart.
+const MIN_RELATIVE_EXCESS = 0.03
+const MIN_RELATIVE_CHANGE = 0.05
 const MIN_SHARE_OF_ALL_L2 = 0.005
 
 const cache = new FrontendInMemoryCache('getTvsChangeEvents')
@@ -118,7 +124,8 @@ async function computeForFilter(
 /**
  * Compares each day's TVS with the day before, per project, so a category's
  * change splits exactly into per-project changes. A project missing either
- * day is left out of both.
+ * day is left out of both. Detection uses the change beyond the market's move
+ * that day, so a rally that lifts every project is not an event.
  */
 export function computeTvsChangeEvents(
   records: { projectId: string; timestamp: number; value: number }[],
@@ -159,20 +166,23 @@ export function computeTvsChangeEvents(
 
     for (const [category, day] of perCategory) {
       const changes = changesByCategory.get(category) ?? []
+      const { excess } = day
       const change = day.observed - day.baseline
-      const robustZ = getRobustZ(change, changes.slice(-BASELINE_DAYS))
-      changes.push(change)
+      const robustZ = getRobustZ(excess, changes.slice(-BASELINE_DAYS))
+      changes.push(excess)
       if (!isVisible || robustZ === undefined) continue
 
       const isNotable =
         Math.abs(robustZ) >= MIN_ROBUST_Z &&
-        Math.sign(robustZ) === Math.sign(change) &&
+        Math.sign(robustZ) === Math.sign(excess) &&
+        Math.abs(excess) >= MIN_RELATIVE_EXCESS * day.baseline &&
+        Math.sign(change) === Math.sign(excess) &&
         Math.abs(change) >= MIN_RELATIVE_CHANGE * day.baseline &&
-        Math.abs(change) >= MIN_SHARE_OF_ALL_L2 * allL2Baseline
+        Math.abs(excess) >= MIN_SHARE_OF_ALL_L2 * allL2Baseline
       if (!isNotable) continue
 
       candidates.push(
-        createChangeEvent(timestamp, category, 'usd', day, robustZ),
+        createChangeEvent(timestamp, category, 'usd', day, robustZ, excess),
       )
     }
   }
@@ -180,19 +190,34 @@ export function computeTvsChangeEvents(
   return markEpisodePeaks(candidates)
 }
 
+interface TvsCategoryDay extends CategoryDay {
+  /** The change beyond what the market's move that day explains. */
+  excess: number
+}
+
 function getCategoryDay(
   valuesByProject: Map<string, Map<number, number>>,
   categoryByProject: Map<string, ChangeCategory>,
   timestamp: number,
 ) {
-  const perCategory = new Map<ChangeCategory, CategoryDay>()
-
+  const perCategory = new Map<ChangeCategory, TvsCategoryDay>()
+  const days: {
+    projectId: string
+    category: ChangeCategory
+    values: Map<number, number>
+    value: number
+    previous: number
+  }[] = []
   for (const [projectId, values] of valuesByProject) {
     const category = categoryByProject.get(projectId)
     const value = values.get(timestamp)
     const previous = values.get(timestamp - UnixTime.DAY)
     if (!category || value === undefined || previous === undefined) continue
+    days.push({ projectId, category, values, value, previous })
+  }
+  const marketMove = getMarketMove(days)
 
+  for (const { projectId, category, values, value, previous } of days) {
     let history = 0
     for (let i = 1; i <= BASELINE_DAYS; i++) {
       if (values.has(timestamp - i * UnixTime.DAY)) history++
@@ -200,12 +225,24 @@ function getCategoryDay(
 
     let day = perCategory.get(category)
     if (!day) {
-      day = { observed: 0, baseline: 0, deltas: [] }
+      day = { observed: 0, baseline: 0, deltas: [], excess: 0 }
       perCategory.set(category, day)
     }
     day.observed += value
     day.baseline += previous
+    day.excess += value - previous * (1 + marketMove)
     day.deltas.push([projectId, value - previous, history < MIN_HISTORY_DAYS])
   }
   return perCategory
+}
+
+/**
+ * The market's move that day: the median project's relative change. Not
+ * weighted by TVS, so the largest project's own jump isn't the market.
+ */
+function getMarketMove(days: { value: number; previous: number }[]) {
+  const moves = days
+    .filter((d) => d.previous > 0)
+    .map((d) => d.value / d.previous - 1)
+  return moves.length === 0 ? 0 : median(moves)
 }
