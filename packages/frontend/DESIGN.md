@@ -88,5 +88,5 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
 - **A change shown with its period always reads "−5.65% / 7d": the change, then "/ period" in `text-secondary`.** Table column headers like "7D" are headings and stay as they are. Table cells give the period in a tooltip.
   Why: without the slash, "−5.65% 7d" reads as one unclear figure.
 
-- **When a list joined by " · " wraps, the separator ends the line, so no line starts with "·".** Join the separator to the item before it with a non-breaking space.
+- **When a list joined by " · " wraps, the separator ends the line, so no line starts with "·".** Use `DOT_SEPARATOR` from `~/utils/dotSeparator`, which joins the separator to the item before it with a non-breaking space. Enforced by the `dotSeparator` lint rule (`lint/README.md`); Markdown pages and meta descriptions keep a plain space.
   Why: a line that starts with "·" reads as a stray bullet.
