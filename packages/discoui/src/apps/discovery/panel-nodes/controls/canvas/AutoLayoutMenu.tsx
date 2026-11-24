@@ -22,6 +22,7 @@ type AutoLayout = (
   nodes: readonly Node[],
   freshLayout: boolean,
   visibleEdges: readonly GraphEdge[],
+  hidden?: ReadonlySet<string>,
 ) => NodeLocations
 
 export function AutoLayoutMenu() {
@@ -86,7 +87,12 @@ function applyAutoLayout(autoLayout: AutoLayout) {
       return box ? { ...node, box } : node
     })
 
-  const locations = autoLayout(nodes, freshLayout, projection.visibleEdges)
+  const locations = autoLayout(
+    nodes,
+    freshLayout,
+    projection.visibleEdges,
+    projection.hiddenNodeIds,
+  )
   if (freshLayout && autoLayout === perimeterLayout) {
     state.layout(locations, { focusPerimeter: true })
   } else if (freshLayout) {

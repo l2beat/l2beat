@@ -10,8 +10,8 @@ import { perimeterLayout } from '../utils/perimeterLayout'
 import { buildRenderGraph } from '../utils/renderGraph'
 import { reconcileCompressedRows } from '../utils/rows'
 import {
-  computeSecurityPerimeter,
   focusSecurityPerimeter,
+  getPerimeterFocusBoxes,
   isPerimeterVisibleInViewport,
 } from '../utils/securityPerimeter'
 import {
@@ -139,24 +139,28 @@ export function loadNodes(
     state.nodes.length === 0 && !hasSavedLayout
   if (shouldAutoLayoutFromScratch) {
     const hasCritical = visibleNodes.some((node) => node.isCritical)
-    const initialLayout = hasCritical ? perimeterLayout : flowLayout
+    const initialLocations = hasCritical
+      ? perimeterLayout(
+          visibleNodes,
+          true,
+          projection.visibleEdges,
+          projection.hiddenNodeIds,
+        )
+      : flowLayout(visibleNodes, true, projection.visibleEdges)
     const laidOut = {
       ...baseState,
-      ...layout(
-        baseState,
-        initialLayout(visibleNodes, true, projection.visibleEdges),
-      ),
+      ...layout(baseState, initialLocations),
     }
     const grouped = collapseAutoGroups(laidOut, autoGroups, hasCritical)
     if (!hasCritical) {
       return grouped
     }
     const graph = buildRenderGraph(grouped.nodes)
-    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden)
     return {
       ...grouped,
       transform: focusSecurityPerimeter(
-        zones,
+        focusBoxes,
         grouped.transform,
         grouped.viewportContainer,
       ),
@@ -194,11 +198,11 @@ export function loadNodes(
   })
   if (state.nodes.length === 0 && hasSavedLayout && restored.nodes) {
     const graph = buildRenderGraph(restored.nodes)
-    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden)
     if (
-      zones.length > 0 &&
+      focusBoxes.length > 0 &&
       !isPerimeterVisibleInViewport(
-        zones,
+        focusBoxes,
         state.transform,
         state.viewportContainer,
       )
@@ -206,7 +210,7 @@ export function loadNodes(
       return {
         ...restored,
         transform: focusSecurityPerimeter(
-          zones,
+          focusBoxes,
           state.transform,
           state.viewportContainer,
         ),

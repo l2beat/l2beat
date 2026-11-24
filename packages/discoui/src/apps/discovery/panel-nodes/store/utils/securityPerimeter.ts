@@ -340,8 +340,24 @@ function boxDistance(a: Box, b: Box): number {
   return Math.hypot(dx, dy)
 }
 
+export function getPerimeterFocusBoxes(
+  nodes: readonly Node[],
+  hidden: ReadonlySet<string>,
+  zones: readonly PerimeterZone[] = computeSecurityPerimeter(nodes, hidden),
+): Box[] {
+  const enclosedIds = new Set(zones.flatMap((zone) => zone.nodeIds))
+  const boxes: Box[] = zones.map((zone) => zone.box)
+  for (const node of nodes) {
+    if (hidden.has(node.id) || enclosedIds.has(node.id)) continue
+    if (getNodeCriticality(node, hidden) !== 'none') {
+      boxes.push(node.box)
+    }
+  }
+  return boxes
+}
+
 export function isPerimeterVisibleInViewport(
-  zones: readonly PerimeterZone[],
+  boxes: readonly Box[],
   transform: State['transform'],
   viewportContainer: HTMLElement | undefined,
 ): boolean {
@@ -352,11 +368,11 @@ export function isPerimeterVisibleInViewport(
     rect !== undefined && rect.height > 0
       ? rect.height
       : FALLBACK_VIEWPORT_HEIGHT
-  for (const zone of zones) {
-    const left = zone.box.x * transform.scale + transform.offsetX
-    const top = zone.box.y * transform.scale + transform.offsetY
-    const right = left + zone.box.width * transform.scale
-    const bottom = top + zone.box.height * transform.scale
+  for (const box of boxes) {
+    const left = box.x * transform.scale + transform.offsetX
+    const top = box.y * transform.scale + transform.offsetY
+    const right = left + box.width * transform.scale
+    const bottom = top + box.height * transform.scale
     if (right > 0 && left < width && bottom > 0 && top < height) {
       return true
     }
@@ -365,14 +381,14 @@ export function isPerimeterVisibleInViewport(
 }
 
 export function focusSecurityPerimeter(
-  zones: readonly PerimeterZone[],
+  boxes: readonly Box[],
   currentTransform: State['transform'],
   viewportContainer: HTMLElement | undefined,
 ): State['transform'] {
-  if (zones.length === 0) {
+  if (boxes.length === 0) {
     return currentTransform
   }
-  const target = unionBoxes(zones.map((zone) => zone.box))
+  const target = unionBoxes(boxes)
   const rect = viewportContainer?.getBoundingClientRect()
   if (rect === undefined || rect.width <= 0 || rect.height <= 0) {
     return {

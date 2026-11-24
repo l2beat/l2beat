@@ -6,8 +6,8 @@ import {
 } from '../utils/graphProjection'
 import { buildRenderGraph, containerBoxes } from '../utils/renderGraph'
 import {
-  computeSecurityPerimeter,
   focusSecurityPerimeter,
+  getPerimeterFocusBoxes,
 } from '../utils/securityPerimeter'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -107,11 +107,11 @@ export function layout(
     return updated
   }
   const graph = buildRenderGraph(updated.nodes)
-  const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+  const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden)
   return {
     ...updated,
     transform: focusSecurityPerimeter(
-      zones,
+      focusBoxes,
       state.transform,
       state.viewportContainer,
     ),

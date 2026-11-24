@@ -75,6 +75,42 @@ describe(perimeterLayout.name, () => {
     expect(minY).toEqual(300)
   })
 
+  it('classifies groups using the hidden-node set so groups with only visible critical leaves stay inside', () => {
+    const group: Node = {
+      ...makeNode('group:mixed-with-hidden', false),
+      subnodes: [
+        makeNode('eth:crit-member', true),
+        makeNode('eth:hidden-noncrit', false),
+      ],
+    }
+    const core = makeNode('eth:core', true)
+    const outside = makeNode('eth:outside', false)
+    const hidden = new Set(['eth:hidden-noncrit'])
+    const edges: GraphEdge[] = [
+      { source: 'eth:outside', target: 'eth:core', fieldName: 'a' },
+      { source: 'eth:core', target: 'eth:crit-member', fieldName: 'b' },
+    ]
+
+    const locations = perimeterLayout(
+      [outside, core, group],
+      true,
+      edges,
+      hidden,
+    )
+    const placed = [outside, core, group].map((node) => ({
+      ...node,
+      box: {
+        ...node.box,
+        x: locations[node.id]?.x ?? 0,
+        y: locations[node.id]?.y ?? 0,
+      },
+    }))
+
+    const zones = computeSecurityPerimeter(placed, hidden)
+    expect(zones.length).toEqual(1)
+    expect(zones[0]?.nodeIds).toEqual(['eth:core', 'group:mixed-with-hidden'])
+  })
+
   it('falls back cleanly when all or no nodes are critical', () => {
     const noCritical = [makeNode('eth:a', false), makeNode('eth:b', false)]
     const allCritical = [makeNode('eth:c', true), makeNode('eth:d', true)]

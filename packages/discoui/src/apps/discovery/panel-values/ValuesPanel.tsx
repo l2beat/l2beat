@@ -425,6 +425,8 @@ function OssificationStatus(props: {
             <IconShield className="size-3 shrink-0" />
             Critical
           </span>
+        ) : status === 'scheduled' ? (
+          <span className="text-coffee-300">Scheduled for perimeter</span>
         ) : (
           <span className="text-coffee-300">Retired from perimeter</span>
         )}

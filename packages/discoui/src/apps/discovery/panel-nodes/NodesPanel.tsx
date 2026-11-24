@@ -91,6 +91,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     const nodes: Node[] = []
     const autoGroups: AutoGroup[] = []
+    const nowSeconds = Math.floor(Date.now() / 1000)
     for (const chain of data.entries) {
       const isSharedModule =
         chain.project !== project && chain.project.startsWith('shared-')
@@ -114,7 +115,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
-          isCritical: isOssificationCritical(contract.critical),
+          isCritical: isOssificationCritical(contract.critical, nowSeconds),
           isReachable: contract.isReachable,
           hasTemplate: contract.template !== undefined,
           name: contract.name ?? fallback,

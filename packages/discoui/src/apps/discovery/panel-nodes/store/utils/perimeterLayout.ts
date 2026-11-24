@@ -24,6 +24,7 @@ export function perimeterLayout(
   baseNodes: readonly Node[],
   freshLayout: boolean,
   visibleEdges: readonly GraphEdge[],
+  hidden: ReadonlySet<string> = EMPTY_HIDDEN,
 ): NodeLocations {
   if (baseNodes.length === 0) {
     return {}
@@ -32,7 +33,7 @@ export function perimeterLayout(
   const inside: Node[] = []
   const outside: Node[] = []
   for (const node of baseNodes) {
-    if (getNodeCriticality(node, EMPTY_HIDDEN) === 'all') {
+    if (getNodeCriticality(node, hidden) === 'all') {
       inside.push(node)
     } else {
       outside.push(node)

@@ -1,23 +1,37 @@
 import type { ApiCriticalFlag } from '../../api/types'
 
-export type CriticalStatus = 'critical' | 'retired' | 'none'
+export type CriticalStatus = 'critical' | 'scheduled' | 'retired' | 'none'
 
 export function getCriticalStatus(
   critical: ApiCriticalFlag | undefined,
+  nowSeconds = Math.floor(Date.now() / 1000),
 ): CriticalStatus {
   if (critical === undefined) {
     return 'none'
   }
-  if (critical === true || critical.untilTimestamp === undefined) {
+  if (critical === true) {
     return 'critical'
   }
-  return 'retired'
+  if (
+    critical.untilTimestamp !== undefined &&
+    nowSeconds > critical.untilTimestamp
+  ) {
+    return 'retired'
+  }
+  if (
+    critical.sinceTimestamp !== undefined &&
+    nowSeconds < critical.sinceTimestamp
+  ) {
+    return 'scheduled'
+  }
+  return 'critical'
 }
 
 export function isOssificationCritical(
   critical: ApiCriticalFlag | undefined,
+  nowSeconds = Math.floor(Date.now() / 1000),
 ): boolean {
-  return getCriticalStatus(critical) === 'critical'
+  return getCriticalStatus(critical, nowSeconds) === 'critical'
 }
 
 export function formatCriticalDate(timestampSeconds: number): string {

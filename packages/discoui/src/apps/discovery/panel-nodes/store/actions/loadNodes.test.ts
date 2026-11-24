@@ -194,6 +194,44 @@ describe(loadNodes.name, () => {
     ).toEqual(true)
   })
 
+  it('frames a restored saved layout whose offscreen critical node has a suppressed perimeter enclosure', () => {
+    const core = makeNode('eth:core', true)
+    const blocker = makeNode('eth:blocker', false)
+    const viewport = {
+      getBoundingClientRect: () => ({ width: 540, height: 800 }),
+    } as HTMLElement
+
+    // Save both nodes overlapping at x=2000 (offscreen for a 540px panel)
+    // so computeSecurityPerimeter suppresses the zone around eth:core.
+    const savedState: State = {
+      ...makeState(viewport),
+      projectId: 'project',
+      nodes: [
+        { ...core, box: { x: 2000, y: 100, width: 200, height: 80 } },
+        { ...blocker, box: { x: 2040, y: 110, width: 120, height: 60 } },
+      ],
+    }
+    persistNodeLayout(savedState)
+
+    const reloaded = loadNodes(
+      makeState(viewport),
+      'project',
+      [core, blocker],
+      [],
+    )
+    const loadedNodes = reloaded.nodes ?? []
+    const graph = buildRenderGraph(loadedNodes)
+    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    const reloadedCore = loadedNodes.find((n) => n.id === 'eth:core')
+    const transform = reloaded.transform ?? { offsetX: 0, offsetY: 0, scale: 1 }
+
+    expect(zones).toEqual([])
+    expect(
+      reloadedCore !== undefined &&
+        intersectsViewport(reloadedCore.box, transform, 540, 800),
+    ).toEqual(true)
+  })
+
   it('fits a wide perimeter chain in a narrow panel down to MIN_ZOOM', () => {
     const chain = Array.from({ length: 12 }, (_, i) =>
       makeNode(`eth:c${i}`, true, i === 11 ? [] : [`eth:c${i + 1}`]),
@@ -213,11 +251,15 @@ describe(loadNodes.name, () => {
     const locations = perimeterLayout(chain, true, edges)
     const updated = layout(state, locations, { focusPerimeter: true })
     const transform = updated.transform ?? state.transform
-    const visibleCritical = (updated.nodes ?? []).filter((node) =>
-      intersectsViewport(node.box, transform, 540, 800),
-    )
+    const graph = buildRenderGraph(updated.nodes ?? [])
+    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
 
-    expect(visibleCritical.length).toEqual(12)
+    expect(zones.length).toEqual(1)
+    const zone = zones[0]
+    expect(
+      zone !== undefined &&
+        containsBoxInViewport(zone.box, transform, 540, 800),
+    ).toEqual(true)
   })
 
   it('restores the camera on undo/redo for Perimeter layout without rewinding pans after node-only layouts', () => {
@@ -287,6 +329,19 @@ function intersectsViewport(
   const right = left + box.width * transform.scale
   const bottom = top + box.height * transform.scale
   return right > 0 && left < width && bottom > 0 && top < height
+}
+
+function containsBoxInViewport(
+  box: Box,
+  transform: State['transform'],
+  width: number,
+  height: number,
+): boolean {
+  const left = box.x * transform.scale + transform.offsetX
+  const top = box.y * transform.scale + transform.offsetY
+  const right = left + box.width * transform.scale
+  const bottom = top + box.height * transform.scale
+  return left >= 0 && top >= 0 && right <= width && bottom <= height
 }
 
 function makeState(viewportContainer?: HTMLElement): State {

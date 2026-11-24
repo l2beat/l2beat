@@ -6,43 +6,84 @@ import {
 } from './ossification'
 
 describe('ossification helpers', () => {
+  const NOW = 1_750_000_000
+
   it('classifies undefined as none', () => {
-    expect(getCriticalStatus(undefined)).toEqual('none')
-    expect(isOssificationCritical(undefined)).toEqual(false)
+    expect(getCriticalStatus(undefined, NOW)).toEqual('none')
+    expect(isOssificationCritical(undefined, NOW)).toEqual(false)
   })
 
-  it('classifies true and open-ended windows as critical', () => {
-    expect(getCriticalStatus(true)).toEqual('critical')
-    expect(isOssificationCritical(true)).toEqual(true)
+  it('classifies true and active windows as critical', () => {
+    expect(getCriticalStatus(true, NOW)).toEqual('critical')
+    expect(isOssificationCritical(true, NOW)).toEqual(true)
 
-    expect(getCriticalStatus({ sinceTimestamp: 1_700_000_000 })).toEqual(
+    expect(getCriticalStatus({ sinceTimestamp: NOW - 100 }, NOW)).toEqual(
       'critical',
     )
-    expect(isOssificationCritical({ sinceTimestamp: 1_700_000_000 })).toEqual(
+    expect(isOssificationCritical({ sinceTimestamp: NOW - 100 }, NOW)).toEqual(
       true,
     )
+
+    expect(getCriticalStatus({ untilTimestamp: NOW + 100 }, NOW)).toEqual(
+      'critical',
+    )
+    expect(isOssificationCritical({ untilTimestamp: NOW + 100 }, NOW)).toEqual(
+      true,
+    )
+
+    expect(getCriticalStatus({ untilTimestamp: NOW }, NOW)).toEqual('critical')
+    expect(isOssificationCritical({ untilTimestamp: NOW }, NOW)).toEqual(true)
+
+    expect(
+      getCriticalStatus(
+        { sinceTimestamp: NOW - 100, untilTimestamp: NOW + 100 },
+        NOW,
+      ),
+    ).toEqual('critical')
   })
 
-  it('classifies windows with untilTimestamp as retired', () => {
-    expect(getCriticalStatus({ untilTimestamp: 1_700_000_000 })).toEqual(
+  it('classifies windows whose untilTimestamp has passed as retired', () => {
+    expect(getCriticalStatus({ untilTimestamp: NOW - 1 }, NOW)).toEqual(
       'retired',
     )
-    expect(isOssificationCritical({ untilTimestamp: 1_700_000_000 })).toEqual(
+    expect(isOssificationCritical({ untilTimestamp: NOW - 1 }, NOW)).toEqual(
       false,
     )
 
     expect(
-      getCriticalStatus({
-        sinceTimestamp: 1_600_000_000,
-        untilTimestamp: 1_700_000_000,
-      }),
+      getCriticalStatus(
+        {
+          sinceTimestamp: NOW - 100,
+          untilTimestamp: NOW - 10,
+        },
+        NOW,
+      ),
     ).toEqual('retired')
     expect(
-      isOssificationCritical({
-        sinceTimestamp: 1_600_000_000,
-        untilTimestamp: 1_700_000_000,
-      }),
+      isOssificationCritical(
+        {
+          sinceTimestamp: NOW - 100,
+          untilTimestamp: NOW - 10,
+        },
+        NOW,
+      ),
     ).toEqual(false)
+  })
+
+  it('classifies windows whose sinceTimestamp is in the future as scheduled', () => {
+    expect(getCriticalStatus({ sinceTimestamp: NOW + 1 }, NOW)).toEqual(
+      'scheduled',
+    )
+    expect(isOssificationCritical({ sinceTimestamp: NOW + 1 }, NOW)).toEqual(
+      false,
+    )
+
+    expect(
+      getCriticalStatus(
+        { sinceTimestamp: NOW + 10, untilTimestamp: NOW + 100 },
+        NOW,
+      ),
+    ).toEqual('scheduled')
   })
 
   it('formats unix seconds as UTC YYYY-MM-DD', () => {
