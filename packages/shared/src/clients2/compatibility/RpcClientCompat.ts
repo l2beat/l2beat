@@ -363,7 +363,8 @@ export class RpcClientCompat implements IRpcClient {
 function isLimitAnswer(error: unknown): boolean {
   return (
     error instanceof Error &&
-    error.message.startsWith('RPC call failed') &&
+    // A JSON-RPC error, not a body that only mentions a limit
+    error.message.startsWith('RPC call failed. RPC code') &&
     isLimitExceededError(error) &&
     !hasErrorStatus(error.cause)
   )

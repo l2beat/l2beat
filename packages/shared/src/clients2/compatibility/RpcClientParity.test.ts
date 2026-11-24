@@ -391,6 +391,33 @@ const CASES: Case[] = [
     run: (c) => c.getLogs(1, 800),
   },
   {
+    name: 'a result sent with an id of another type',
+    answer: () => ({ envelope: { jsonrpc: '2.0', result: '0x7b', id: false } }),
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'a receipt with no type, as Optimism before Bedrock answers',
+    answer: () => ({ result: { ...receipt(HASH_A), type: undefined } }),
+    run: (c) => c.getTransactionReceipt(HASH_A),
+  },
+  {
+    name: 'a receipt with an empty root, as Lightlink answers',
+    answer: () => ({ result: { ...receipt(HASH_A), root: '0x' } }),
+    run: (c) => c.getTransactionReceipt(HASH_A),
+  },
+  {
+    name: 'logs refused with a body that only mentions the limit',
+    answer: () => ({ status: 200, body: 'Log response size exceeded' }),
+    run: (c) => c.getLogs(100, 200),
+    fails: true,
+  },
+  {
+    name: 'a batch answered with a malformed member',
+    answer: () => ({ status: 200, body: '[null, null]' }),
+    run: (c) => c.getTransactionReceipts([HASH_A, HASH_B]),
+    fails: true,
+  },
+  {
     name: 'a call answered after a body that is not JSON',
     answer: (_, i) =>
       i === 0 ? { status: 200, body: '<html>busy</html>' } : { result: '0x7b' },

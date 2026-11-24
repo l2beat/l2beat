@@ -290,13 +290,15 @@ export class EthRpcClient {
     let rejected = false
 
     try {
-      const envelopes = await this.retrying(() =>
+      const data = await this.retrying(() =>
         this.fetchBatch(method, paramsList, ids),
       )
-      if (envelopes === BATCH_REJECTED) {
+      if (data === BATCH_REJECTED) {
         rejected = true
         return BATCH_REJECTED
       }
+      // Not retried, as RpcClient did not: a malformed answer stays malformed
+      const envelopes = v.array(JsonRpcResponse).parse(data)
       const byId = new Map(envelopes.map((envelope) => [envelope.id, envelope]))
       return ids.map((id) => {
         const envelope = byId.get(id)
@@ -322,7 +324,7 @@ export class EthRpcClient {
     method: string,
     paramsList: unknown[],
     ids: (string | number)[],
-  ): Promise<JsonRpcResponse[] | typeof BATCH_REJECTED> {
+  ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const response = await this.http.fetch(this.url, {
       method: 'POST',
       body: JSON.stringify(
@@ -343,17 +345,16 @@ export class EthRpcClient {
     if (isBatchRejected(response.status, data)) {
       return BATCH_REJECTED
     }
-    const parsed = v.array(JsonRpcResponse).safeValidate(data)
-    if (!response.ok || !parsed.success) {
+    if (!response.ok || !Array.isArray(data)) {
       throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${preview(response.body)}`,
+        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
         { cause: httpCause(response) },
       )
     }
-    if (parsed.data.some((envelope) => !isErrorEnvelope(envelope))) {
+    if (data.some(hasResult)) {
       this.http.answered(response.sentAt)
     }
-    return parsed.data
+    return data
   }
 
   async rawCall(method: string, params: unknown = []) {
@@ -403,7 +404,7 @@ export class EthRpcClient {
     const parsed = JsonRpcResponse.safeValidate(data)
     if (!jsonSuccess || !parsed.success) {
       throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${preview(response.body)}`,
+        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
         { cause: httpCause(response) },
       )
     }
@@ -420,7 +421,7 @@ export class EthRpcClient {
     }
     if (!response.ok) {
       throw new Error('RPC call failed. HTTP error status', {
-        cause: { ...httpCause(response), body: response.body },
+        cause: httpCause(response),
       })
     }
     this.http.answered(response.sentAt)
@@ -439,9 +440,9 @@ export class EthRpcClient {
   }
 }
 
-/** Enough of a body to read a limit message, short enough for one log line */
-function preview(body: string) {
-  return body.length > 300 ? `${body.slice(0, 300)}...` : body
+/** Not an error in its place: the provider served this call of the batch */
+function hasResult(item: unknown): boolean {
+  return typeof item === 'object' && item !== null && 'result' in item
 }
 
 function httpCause(response: HttpResponse) {
@@ -711,8 +712,10 @@ const RpcReceipt = v.passthroughObject({
   contractAddress: v.union([v.null(), vAddress]),
   logs: v.array(RpcLog),
   logsBloom: vData(256),
-  type: vQuantity,
-  root: vData(32).optional(),
+  // Missing before Bedrock on Optimism
+  type: vQuantity.optional(),
+  // `0x` on Lightlink
+  root: vData().optional(),
   status: vQuantity.optional(),
 })
 
@@ -747,7 +750,7 @@ const JsonRpcError = v.passthroughObject({
     message: v.string(),
     data: v.unknown().optional(),
   }),
-  id: v.union([v.null(), v.string(), v.number()]).optional(),
+  id: v.unknown().optional(),
 })
 type JsonRpcError = v.infer<typeof JsonRpcError>
 const JsonRpcResponse = v.union([
@@ -755,7 +758,7 @@ const JsonRpcResponse = v.union([
   v.passthroughObject({
     jsonrpc: v.literal('2.0').optional(),
     result: v.unknown(),
-    id: v.union([v.null(), v.string(), v.number()]).optional(),
+    id: v.unknown().optional(),
   }),
 ])
 type JsonRpcResponse = v.infer<typeof JsonRpcResponse>
