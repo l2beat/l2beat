@@ -9,7 +9,7 @@ Generated with discovered.json: 0xa0f7ce3bfee6a3b89fd65da9ca3c56858288839a
 
 ## Description
 
-RocketDAONodeTrusted: the oracle DAO kicked one member (Nimbus) with no RPL fine, 8 seats now filled.
+RocketDAONodeTrusted: the oracle DAO removed one member (Nimbus) with no RPL fine, 8 seats now filled.
 
 ## Watched changes
 
