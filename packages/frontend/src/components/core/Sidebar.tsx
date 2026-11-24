@@ -95,13 +95,14 @@ function Sidebar({
             screen on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
           id={MOBILE_SIDEBAR_ID}
-          // iOS Safari tints its toolbars from the overlay and swaps the tint in
-          // one frame, so a full-width sheet needs a matching overlay and no
+          // iPhone Safari tints its toolbars from the overlay and swaps the tint
+          // in one frame, so a full-width sheet needs a matching overlay and no
           // animation. The 1% see-through keeps Chrome drawing the page beneath,
           // so closing isn't delayed on Android. From `sm` the sheet is
-          // `max-w-sm`, so the page beside it stays dimmed.
-          className="z-999 w-(--sidebar-width) animate-none! border-none bg-background/99 p-0 text-primary md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
-          overlayClassName="animate-none! max-sm:bg-background/99"
+          // `max-w-sm` and the page beside it stays dimmed; iPad Safari leaves
+          // its toolbar untinted there, so the sheet slides and the dim fades.
+          className="z-999 w-(--sidebar-width) border-none bg-background/99 p-0 text-primary data-[state=closed]:duration-200 data-[state=open]:duration-300 data-[state=closed]:ease-in data-[state=open]:ease-out max-sm:animate-none! md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
+          overlayClassName="data-[state=closed]:duration-200 data-[state=open]:duration-300 max-sm:animate-none! max-sm:bg-background/99"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
