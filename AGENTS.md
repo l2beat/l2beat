@@ -22,6 +22,7 @@ Researchers, builders and the projects we assess reuse and scrutinize our work, 
 - Do not split `eth_getLogs` requests by block range in calling code. `RpcClient` halves a range itself when the RPC reports a limit, and a fixed step multiplies requests on RPCs that have no block-range limit.
 - Keep error messages static and put dynamic values in `cause`: `new Error('HTTP error', { cause: { status } })`, not `` new Error(`HTTP error: ${status}`) ``. Why: a fixed message makes Elasticsearch queries easier, since one exact match finds every occurrence.
 - Gate e2e perf ratchets on counts of the work (layouts, restyled elements, boxes, layers), and log times without a ceiling. Why: GitHub's runners come with different CPUs, so the same commit times up to 2.5× apart, in CPU time as much as wall time. More in `packages/frontend/e2e/README.md`.
+- Before building, changing or reviewing frontend UI, read `packages/frontend/DESIGN.md`: the design owner's fixed rules, which override reviewer and design-council suggestions.
 - When the same correction comes up twice, make it a lint rule and not another line here: a check is enforced, prose is not. See `lint/README.md`.
 - For discovery research (`l2b discover`, project `config.jsonc` files, templates), read `packages/config/src/projects/AGENTS.md` first.
 
