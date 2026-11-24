@@ -680,6 +680,42 @@ describe(`${EthRpcClient.name} with a retry handler`, () => {
   })
 })
 
+describe(`${EthRpcClient.name} retries`, () => {
+  // Why: the answer is matched to the calls as first sent, as in RpcClient
+  it('sends the same calls on a retry, though the caller changed them', async () => {
+    const http = new MockHttp()
+    http.queueResponse(503, 'Service Unavailable')
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x1' }),
+    )
+    const params = ['0xaa', 'latest']
+    const bodies: unknown[] = []
+    const retryHandler = mockObject<RetryHandler>({
+      retry: async (fn) => {
+        bodies.push(http.lastFetch?.init.body)
+        params[0] = '0xbb'
+        const result = await fn()
+        bodies.push(http.lastFetch?.init.body)
+        return result
+      },
+    })
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      retryHandler,
+    )
+
+    await client.rawCall('eth_getBalance', params)
+
+    expect(bodies[1]).toEqual(bodies[0])
+  })
+})
+
 describe(`${EthRpcClient.name} rate limit`, () => {
   // Why: the limiter steps down on HTTP 429, so the rate a provider takes
   // can be read off the logs (RPC_STEP_DOWN_ON_THROTTLE)
@@ -734,22 +770,64 @@ describe(`${EthRpcClient.name} rate limit`, () => {
   // first answer is what lets the second refusal count
   it('tells the limiter of an answered batch, so a later refusal counts', async () => {
     const clock = FakeTimers.install({ now: 10_000 })
-    const answered = () =>
+    // Each batch takes the next two ids
+    const answered = (firstId: number) =>
       ok([
-        { jsonrpc: '2.0', id: 1, result: null },
-        { jsonrpc: '2.0', id: 2, result: null },
+        { jsonrpc: '2.0', id: firstId, result: null },
+        { jsonrpc: '2.0', id: firstId + 1, result: null },
       ])
     const node = new LimitedNode([
       tooManyRequests(),
-      answered(),
+      answered(3),
       tooManyRequests(),
-      answered(),
+      answered(7),
     ])
     const client = batchingClient(node)
+    const outcomes: unknown[] = []
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client.getTransactionReceipts([HASH_A, HASH_B]).then(
+          (receipts) => outcomes.push(receipts),
+          () => outcomes.push('refused'),
+        )
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(81_000)
+      expect(outcomes).toEqual([
+        'refused',
+        [null, null],
+        'refused',
+        [null, null],
+      ])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // Why: a log-limit answer at 200 is served, and RpcClient's limiter took
+  // it as an answer, which lets a later refusal step the rate down again
+  it('takes a log-limit answer as an answer, so a later refusal counts', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const limit = () => ok(rpcError(null, 'Log response size exceeded'))
+    const node = new LimitedNode([
+      tooManyRequests(),
+      limit(),
+      tooManyRequests(),
+      limit(),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
     const twice = async () => {
       for (let i = 0; i < 2; i++) {
         const settled = client
-          .getTransactionReceipts([HASH_A, HASH_B])
+          .getLogs({ fromBlock: 1n, toBlock: 1n })
           .catch(() => {})
         await clock.tickAsync(1_000)
         await settled

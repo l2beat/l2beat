@@ -287,12 +287,19 @@ export class EthRpcClient {
     paramsList: unknown[],
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const ids = paramsList.map(() => this.nextId())
+    // Once, so every attempt sends the same calls, as RpcClient did
+    const body = JSON.stringify(
+      paramsList.map((params, i) => ({
+        jsonrpc: '2.0',
+        id: ids[i],
+        method,
+        params,
+      })),
+    )
     let rejected = false
 
     try {
-      const data = await this.retrying(() =>
-        this.fetchBatch(method, paramsList, ids),
-      )
+      const data = await this.retrying(() => this.fetchBatch(body))
       if (data === BATCH_REJECTED) {
         rejected = true
         return BATCH_REJECTED
@@ -321,20 +328,11 @@ export class EthRpcClient {
   }
 
   private async fetchBatch(
-    method: string,
-    paramsList: unknown[],
-    ids: (string | number)[],
+    body: string,
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const response = await this.http.fetch(this.url, {
       method: 'POST',
-      body: JSON.stringify(
-        paramsList.map((params, i) => ({
-          jsonrpc: '2.0',
-          id: ids[i],
-          method,
-          params,
-        })),
-      ),
+      body,
       headers: { 'Content-Type': 'application/json' },
       timeout: this.timeout,
     })
@@ -357,12 +355,15 @@ export class EthRpcClient {
   }
 
   async rawCall(method: string, params: unknown = []) {
-    const id = this.nextId()
+    const body = JSON.stringify({
+      jsonrpc: '2.0',
+      id: this.nextId(),
+      method,
+      params,
+    })
 
     try {
-      const envelope = await this.retrying(() =>
-        this.fetchCall(method, params, id),
-      )
+      const envelope = await this.retrying(() => this.fetchCall(body))
       if (isErrorEnvelope(envelope)) {
         throw new Error(
           `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
@@ -377,19 +378,10 @@ export class EthRpcClient {
   }
 
   /** Throws what a retry can fix, returns an answer to the call */
-  private async fetchCall(
-    method: string,
-    params: unknown,
-    id: string | number,
-  ): Promise<JsonRpcResponse> {
+  private async fetchCall(body: string): Promise<JsonRpcResponse> {
     const response = await this.http.fetch(this.url, {
       method: 'POST',
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id,
-        method,
-        params,
-      }),
+      body,
       headers: { 'Content-Type': 'application/json' },
       timeout: this.timeout,
     })
@@ -412,6 +404,8 @@ export class EthRpcClient {
     if (isErrorEnvelope(envelope) && (response.ok || !this.retryHandler)) {
       // The range holds too many logs: the caller splits it, not retries
       if (response.ok && isLimitExceededError(envelope.error)) {
+        // Served, though not with logs: RpcClient told its limiter so too
+        this.http.answered(response.sentAt)
         return envelope
       }
       throw new Error(
