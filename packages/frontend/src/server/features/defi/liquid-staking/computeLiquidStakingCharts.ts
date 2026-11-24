@@ -19,7 +19,8 @@ export const YIELD_WINDOW_DAYS = 30
 /**
  * The last day a chart shows, for a range that ends at `end`. A yield is as
  * of a midnight, so the day that has started has one. A cost of exit is a
- * whole day's average or median, so only a day that has ended has one.
+ * whole day's average or median, and a day's stake is indexed once the day
+ * ends, so only a day that has ended has those.
  */
 export function getLastChartDay(
   end: number,

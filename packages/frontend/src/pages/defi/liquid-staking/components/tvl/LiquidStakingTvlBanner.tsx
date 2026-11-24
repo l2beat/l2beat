@@ -21,7 +21,6 @@ import {
   shareOf,
 } from './liquidStakingTvlFormat'
 
-/** One sentence on the stake across the top of the card, and its yearly changes. */
 export function LiquidStakingTvlBanner({
   projects,
   summary,
@@ -63,9 +62,8 @@ export function LiquidStakingTvlBanner({
 }
 
 function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
-  const { staked, supply, notStaked, timestamp } = summary.latest
-  // A supply below the stake disagrees with it, so it gives no share.
-  const supplyShare = notStaked !== null ? shareOf(staked, supply) : undefined
+  const { staked, supply, timestamp } = summary.latest
+  const supplyShare = shareOf(staked, supply)
   return (
     <p className="text-pretty font-semibold text-heading-20 text-primary tabular-nums leading-tight tracking-[-0.02em] md:text-heading-24">
       {supplyShare !== undefined && supply !== null ? (
@@ -107,11 +105,12 @@ function LiquidSentence({
   summary: LiquidStakingTvlSummary
 }) {
   const { liquid, staked, projects: ethByProject } = summary.latest
-  const largest = maxBy(projects, (project) => ethByProject[project.id])
-  const largestEth = largest && ethByProject[largest.id]
+  const [largestId, largestEth] =
+    maxBy(Object.entries(ethByProject), ([, eth]) => eth) ?? []
+  const largest = projects.find((project) => project.id === largestId)
   return (
     <p className="mt-1.5 text-pretty font-medium text-paragraph-14 text-secondary tabular-nums">
-      The {projects.length} liquid staking protocols hold{' '}
+      The {Object.keys(ethByProject).length} liquid staking protocols hold{' '}
       <strong className="font-semibold text-primary">
         {formatPercent(liquid / staked)}
       </strong>{' '}

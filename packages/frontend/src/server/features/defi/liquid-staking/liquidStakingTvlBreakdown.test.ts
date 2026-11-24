@@ -37,11 +37,16 @@ describe(toBreakdown.name, () => {
     expect(isComplete(breakdown)).toEqual(false)
   })
 
-  it('leaves out a part that would be below zero, since its inputs disagree', () => {
+  it('leaves out a part that would be below zero, and a supply below the stake, since their inputs disagree', () => {
     const breakdown = day(1, { lido: 60 }, 50, 40)
     expect(breakdown.others).toEqual(null)
+    expect(breakdown.supply).toEqual(null)
     expect(breakdown.notStaked).toEqual(null)
     expect(isComplete(breakdown)).toEqual(false)
+  })
+
+  it('keeps a supply when the stake is unknown', () => {
+    expect(day(1, { lido: 8 }, null, 40).supply).toEqual(40)
   })
 })
 
@@ -64,6 +69,15 @@ describe(getLiquidStakingTvlSummary.name, () => {
     ])
     expect(summary?.stakeChange?.until).toEqual(UnixTime.DAY)
     expect(summary?.supplyChange?.eth).toEqual(10)
+  })
+
+  it('starts the supply change after a day whose supply is below its stake', () => {
+    const summary = getLiquidStakingTvlSummary([
+      day(0, { lido: 8 }, 40, 30),
+      day(UnixTime.DAY, { lido: 8 }, 45, 100),
+      day(2 * UnixTime.DAY, { lido: 8 }, 50, 110),
+    ])
+    expect(summary?.supplyChange?.since).toEqual(UnixTime.DAY)
   })
 
   it('has no supply change when the latest day has no supply', () => {

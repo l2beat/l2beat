@@ -1,22 +1,24 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
-import type { ChartUnit } from '~/components/chart/types'
-import type { EthChange } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import { UnixTime } from '@l2beat/shared-pure'
+import {
+  type EthChange,
+  YEAR_CHANGE_DAYS,
+} from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 
-/** Undefined when unknown, which the caller shows as such. */
-export function formatAmount(
-  value: number | null | undefined,
-  unit: ChartUnit,
-): string | undefined {
-  return value != null ? formatCurrency(value, unit) : undefined
-}
-
-/** A share, or undefined when either side is unknown. */
 export function shareOf(
   part: number | null | undefined,
   total: number | null | undefined,
 ): number | undefined {
   return part != null && total ? part / total : undefined
+}
+
+export function formatShare(
+  part: number | null | undefined,
+  total: number | null | undefined,
+): string | undefined {
+  const share = shareOf(part, total)
+  return share !== undefined ? formatPercent(share) : undefined
 }
 
 export function formatSigned(value: number, format: (abs: number) => string) {
@@ -26,11 +28,11 @@ export function formatSigned(value: number, format: (abs: number) => string) {
 
 /**
  * The period a change covers, as the site writes it after a percent change
- * ("/ 1y"); a year short by a day or two still reads as one.
+ * ("/ 1y"); a year short by a few days still reads as one.
  */
 export function formatChangePeriod(change: EthChange): string {
   const days = Math.round((change.until - change.since) / UnixTime.DAY)
-  return days >= 360 ? '1y' : `${days}d`
+  return days >= YEAR_CHANGE_DAYS - 5 ? '1y' : `${days}d`
 }
 
 export function formatChangeDates(change: EthChange): string {

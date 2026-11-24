@@ -7,20 +7,10 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { TvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
-import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { shareOf } from './liquidStakingTvlFormat'
-import {
-  NOT_STAKED_KEY,
-  OTHERS_KEY,
-  type TvlLayer,
-  type TvlScope,
-} from './liquidStakingTvlLayers'
+import { formatShare } from './liquidStakingTvlFormat'
+import { type TvlLayer, type TvlScope, VIEWS } from './liquidStakingTvlLayers'
 
-/**
- * The day's layers as drawn. Protocol shares are of the stake, or of the
- * protocols together in Liquid only view, to match the total above them.
- */
 export function LiquidStakingTvlTooltip({
   row,
   layers,
@@ -36,17 +26,17 @@ export function LiquidStakingTvlTooltip({
 }) {
   const drawn = layers.flatMap((layer) => {
     const value = layer.value(row)
-    return value !== null ? [{ key: layer.key, value }] : []
+    return value !== null ? [{ key: layer.key, role: layer.role, value }] : []
   })
   if (drawn.length === 0) return null
   const protocols = drawn
-    .filter(({ key }) => key !== OTHERS_KEY && key !== NOT_STAKED_KEY)
+    .filter(({ role }) => role === 'protocol')
     .sort((a, b) => b.value - a.value)
-  const others = drawn.find(({ key }) => key === OTHERS_KEY)?.value ?? null
-  const notStaked =
-    drawn.find(({ key }) => key === NOT_STAKED_KEY)?.value ?? null
+  const others = drawn.find(({ role }) => role === 'others')
+  const notStaked = drawn.find(({ role }) => role === 'notStaked')
 
-  const total = scope === 'liquid' ? row.liquid : row.staked
+  const base = VIEWS[scope].protocolShareOf
+  const total = base.value(row)
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[220px] flex-col [@media(min-width:600px)]:w-64">
@@ -56,7 +46,7 @@ export function LiquidStakingTvlTooltip({
         {total !== null && (
           <TooltipHeader
             className="mt-3"
-            label={scope === 'liquid' ? 'Liquid staking' : 'ETH staked'}
+            label={base.label}
             value={formatCurrency(total, unit)}
           />
         )}
@@ -64,21 +54,21 @@ export function LiquidStakingTvlTooltip({
           {protocols.map(({ key, value }) => (
             <Row key={key} name={key} value={value} total={total} unit={unit} />
           ))}
-          {others !== null && (
+          {others && (
             <div className="border-divider border-t pt-2">
               <Row
-                name={OTHERS_KEY}
-                value={others}
+                name={others.key}
+                value={others.value}
                 total={row.staked}
                 unit={unit}
               />
             </div>
           )}
-          {notStaked !== null && (
+          {notStaked && (
             <div className="flex flex-col gap-2 border-divider border-t pt-2">
               <Row
-                name={NOT_STAKED_KEY}
-                value={notStaked}
+                name={notStaked.key}
+                value={notStaked.value}
                 total={row.supply}
                 unit={unit}
               />
@@ -108,7 +98,7 @@ function Row({
   total: number | null
   unit: ChartUnit
 }) {
-  const share = shareOf(value, total)
+  const share = formatShare(value, total)
   return (
     <ChartTooltipRow name={name} gap="gap-x-3" wrapLabel={false}>
       <span className="flex items-baseline gap-1 whitespace-nowrap">
@@ -117,7 +107,7 @@ function Row({
         </span>
         {share !== undefined && (
           <span className="font-medium text-label-value-13 text-secondary tabular-nums">
-            {formatPercent(share)}
+            {share}
           </span>
         )}
       </span>

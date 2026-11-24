@@ -8,7 +8,7 @@ import { getItemListStructuredData } from '~/ssr/head/structured-data/getItemLis
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { optionToRange } from '~/utils/range/range'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 
 export async function getLiquidStakingData(
   manifest: Manifest,
@@ -62,14 +62,17 @@ export async function getLiquidStakingData(
 async function getCachedData() {
   const helpers = getSsrHelpers()
   const defaultChartRange = optionToRange('1y')
-
-  const [appLayoutProps, tvlChart, { entries }] = await Promise.all([
-    getAppLayoutProps(),
+  // The summary's changes are yearly whatever range the chart opens on; while
+  // that is 1y too, both read one query.
+  const summaryRange = optionToRange('1y')
+  const fetchTvlChart = (range: ChartRange) =>
     helpers.queryClient.fetchQuery(
-      helpers.trpc.defi.liquidStakingTvlChart.queryOptions({
-        range: defaultChartRange,
-      }),
-    ),
+      helpers.trpc.defi.liquidStakingTvlChart.queryOptions({ range }),
+    )
+
+  const [appLayoutProps, summaryTvlChart, { entries }] = await Promise.all([
+    getAppLayoutProps(),
+    fetchTvlChart(summaryRange),
     // The chart queries also fill the query cache, so the charts hydrate
     // without a request.
     loadLiquidStakingEntries(async () => {
@@ -87,12 +90,13 @@ async function getCachedData() {
       ])
       return { yield: yieldChart, costOfExit }
     }),
+    fetchTvlChart(defaultChartRange),
   ])
 
   return {
     appLayoutProps,
     entries,
-    tvlSummary: getLiquidStakingTvlSummary(tvlChart),
+    tvlSummary: getLiquidStakingTvlSummary(summaryTvlChart),
     defaultChartRange,
     queryState: helpers.dehydrate(),
   }

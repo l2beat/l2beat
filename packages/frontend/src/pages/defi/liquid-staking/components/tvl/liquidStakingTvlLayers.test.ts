@@ -2,10 +2,7 @@ import { expect } from 'earl'
 import type { TvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import {
   getProtocolLayers,
-  getToggledScope,
   inUnit,
-  NOT_STAKED_KEY,
-  OTHERS_KEY,
   stackOnKnown,
   VIEWS,
 } from './liquidStakingTvlLayers'
@@ -42,16 +39,6 @@ describe(stackOnKnown.name, () => {
         others: 20,
       }),
     ).toEqual([9, 1, 20, 70])
-  })
-})
-
-describe(getToggledScope.name, () => {
-  it('switches views with Others and Not staked, and not with a protocol', () => {
-    expect(getToggledScope('staked', OTHERS_KEY)).toEqual('liquid')
-    expect(getToggledScope('liquid', OTHERS_KEY)).toEqual('staked')
-    expect(getToggledScope('staked', NOT_STAKED_KEY)).toEqual('supply')
-    expect(getToggledScope('supply', NOT_STAKED_KEY)).toEqual('staked')
-    expect(getToggledScope('supply', 'lido')).toEqual(undefined)
   })
 })
 

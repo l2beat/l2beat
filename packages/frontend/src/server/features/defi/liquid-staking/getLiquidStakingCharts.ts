@@ -74,7 +74,7 @@ export async function getLiquidStakingCharts(
 export async function getLiquidStakingYieldChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingYieldPoint[]> {
-  const projectIds = await getProjectIds(params)
+  const projectIds = (await getProjects(params)).map((project) => project.id)
   if (env.MOCK) {
     const days = getDays(params, 'started').days
     const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
@@ -118,16 +118,8 @@ export async function getLiquidStakingTvlChart(
 ): Promise<TvlBreakdown[]> {
   const projects = await getProjects(params)
   const projectIds = projects.map((project) => project.id)
-  // A day's stake is indexed once the day ends, so the chart stops at the
-  // last ended day whatever the range's end. Starts with the yield chart, so
-  // the page's charts share their days.
-  const lastEnded = getLastChartDay(UnixTime.now(), 'ended')
-  const range = getDays(params, 'started')
-  // A range that ends before the first day has none.
-  if (range.to < range.from) return []
-  const days = range.days.filter((day) => day <= lastEnded)
-  const from = range.from
-  const to = days.at(-1) ?? from
+  // A day's stake is indexed once the day ends.
+  const { days, from, to } = getDays(params, 'ended')
   if (env.MOCK) {
     const tvl = projects.map((_, i) =>
       randomWalk(days.length, 9_000_000 / 2 ** i, 0.15),
@@ -163,6 +155,8 @@ export async function getLiquidStakingTvlChart(
     ethSupplies: new Map(ethSupplies.map((s) => [s.timestamp, s.supply])),
     ethPrices: new Map(ethPrices.map((p) => [p.timestamp, p.priceUsd])),
   })
+  // Only MAX reaches the days before every protocol has data; on a shorter
+  // range a leading gap is real and shows as such.
   return params.range[0] === null ? trimLeadingIncomplete(points) : points
 }
 
@@ -186,7 +180,7 @@ async function getTvlSince(
 export async function getLiquidStakingCostOfExitChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingCostOfExitPoint[]> {
-  const projectIds = await getProjectIds(params)
+  const projectIds = (await getProjects(params)).map((project) => project.id)
   if (env.MOCK) {
     const days = getDays(params, 'ended').days
     const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
@@ -206,12 +200,6 @@ export async function getLiquidStakingCostOfExitChart(
     UnixTime.now(),
   )
   return computeCostOfExitChart({ days, projectIds, snapshots })
-}
-
-async function getProjectIds(
-  params: LiquidStakingChartsParams,
-): Promise<string[]> {
-  return (await getProjects(params)).map((project) => project.id)
 }
 
 /** The tracked ones, as only they have chart values. */
@@ -235,7 +223,9 @@ function getDays(
   const to = getLastChartDay(params.range[1], lastDay)
   const from = UnixTime(Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY))
   const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
-  return { days: generateTimestamps([from, to], 'day'), from, to, lookback }
+  // generateTimestamps counts backwards from `from` when `to` is before it.
+  const days = to < from ? [] : generateTimestamps([from, to], 'day')
+  return { days, from, to, lookback }
 }
 
 function byProject(projectIds: string[], series: number[][], index: number) {

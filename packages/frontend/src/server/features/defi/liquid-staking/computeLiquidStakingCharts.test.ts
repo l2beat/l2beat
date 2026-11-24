@@ -87,21 +87,29 @@ describe(computeTvlChart.name, () => {
       ethPrices: new Map([[START, 3_000]]),
     })
 
-    expect(points).toEqual([
-      toBreakdown({
+    expect(
+      points.map(({ timestamp, projects, staked, supply, ethPrice }) => ({
+        timestamp,
+        projects,
+        staked,
+        supply,
+        ethPrice,
+      })),
+    ).toEqual([
+      {
         timestamp: START,
         projects: { lido: 9, rocketpool: 1 },
         staked: 30_000,
         supply: null,
         ethPrice: 3_000,
-      }),
-      toBreakdown({
+      },
+      {
         timestamp: UnixTime(START + DAY),
         projects: { lido: 10, rocketpool: null },
         staked: null,
         supply: 120_000_000,
         ethPrice: null,
-      }),
+      },
     ])
   })
 })

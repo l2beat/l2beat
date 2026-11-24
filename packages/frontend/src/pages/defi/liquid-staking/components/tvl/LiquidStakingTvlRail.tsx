@@ -1,45 +1,37 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { ChartUnit } from '~/components/chart/types'
 import type { CompleteTvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
-import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import type { LiquidStakingChartSeries } from '../LiquidStakingLineChart'
-import { formatAmount, shareOf } from './liquidStakingTvlFormat'
-import {
-  inUnit,
-  OTHERS_COLOR,
-  OTHERS_KEY,
-  OTHERS_STROKE,
-} from './liquidStakingTvlLayers'
+import { formatShare, shareOf } from './liquidStakingTvlFormat'
+import { inUnit, type TvlLayer } from './liquidStakingTvlLayers'
 
 const OTHER_STAKED_COLOR =
   'color-mix(in oklab, var(--secondary) 50%, transparent)'
 
-/**
- * The latest day split up: all ETH by whether and how it is staked, then the
- * stake by protocol, each row toggling its layer of the chart.
- */
 export function LiquidStakingTvlRail({
-  projectSeries,
+  layers,
   latest,
   unit,
   visibleKeys,
   showAllSelected,
-  onToggleKey,
+  onToggleLayer,
   onToggleAll,
 }: {
-  projectSeries: LiquidStakingChartSeries[]
+  /** The Staked view's layers, whatever the view. */
+  layers: TvlLayer[]
   /** In ETH. */
   latest: CompleteTvlBreakdown | undefined
   unit: ChartUnit
   visibleKeys: string[]
   showAllSelected: boolean
-  onToggleKey: (key: string) => void
+  onToggleLayer: (layer: TvlLayer) => void
   onToggleAll: () => void
 }) {
   const inChosenUnit = latest && inUnit(latest, unit)
-  const liquidColors = projectSeries.slice(0, 3).map((series) => series.color)
+  const protocolLayers = layers.filter((layer) => layer.role === 'protocol')
+  const liquidColors = protocolLayers.slice(0, 3).map((layer) => layer.fill)
   const liquidSwatch =
     liquidColors.length > 1
       ? `linear-gradient(135deg, ${liquidColors.join(', ')})`
@@ -47,7 +39,7 @@ export function LiquidStakingTvlRail({
 
   return (
     <div className="flex min-w-0 flex-col gap-4 border-divider p-4 max-lg:order-last max-lg:border-t md:px-6 md:py-5 lg:border-r">
-      {latest?.supply && latest.notStaked !== null && (
+      {latest && latest.supply !== null && (
         <div>
           <Heading>ETH supply share</Heading>
           <div
@@ -55,11 +47,11 @@ export function LiquidStakingTvlRail({
             role="img"
             aria-label={`ETH supply breakdown: ${formatShare(latest.liquid, latest.supply)} liquid staking, ${formatShare(latest.others, latest.supply)} others, ${formatShare(latest.notStaked, latest.supply)} not staked`}
           >
-            {projectSeries.map((series) => (
+            {protocolLayers.map((layer) => (
               <Segment
-                key={series.key}
-                share={shareOf(latest.projects[series.key], latest.supply)}
-                color={series.color}
+                key={layer.key}
+                share={shareOf(layer.value(latest), latest.supply)}
+                color={layer.fill}
               />
             ))}
             <Segment
@@ -71,7 +63,8 @@ export function LiquidStakingTvlRail({
             <ShareRow
               swatch={<Swatch style={{ background: liquidSwatch }} />}
               label="Liquid staking"
-              value={formatAmount(inChosenUnit?.liquid, unit)}
+              value={inChosenUnit?.liquid}
+              unit={unit}
               share={formatShare(latest.liquid, latest.supply)}
             />
             <ShareRow
@@ -79,13 +72,15 @@ export function LiquidStakingTvlRail({
                 <Swatch style={{ backgroundColor: OTHER_STAKED_COLOR }} />
               }
               label="Others"
-              value={formatAmount(inChosenUnit?.others, unit)}
+              value={inChosenUnit?.others}
+              unit={unit}
               share={formatShare(latest.others, latest.supply)}
             />
             <ShareRow
               swatch={<Swatch className="bg-surface-secondary" />}
               label="Not staked"
-              value={formatAmount(inChosenUnit?.notStaked, unit)}
+              value={inChosenUnit?.notStaked}
+              unit={unit}
               share={formatShare(latest.notStaked, latest.supply)}
             />
           </div>
@@ -105,33 +100,29 @@ export function LiquidStakingTvlRail({
         </div>
 
         <div className="flex flex-col gap-0.5 md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:gap-x-8">
-          {projectSeries.map((series) => (
+          {layers.map((layer) => (
             <ShareRow
-              key={series.key}
-              active={visibleKeys.includes(series.key)}
-              onClick={() => onToggleKey(series.key)}
-              swatch={<Swatch style={{ backgroundColor: series.color }} />}
-              label={series.label}
-              value={formatAmount(inChosenUnit?.projects[series.key], unit)}
-              share={formatShare(latest?.projects[series.key], latest?.staked)}
+              key={layer.key}
+              active={visibleKeys.includes(layer.key)}
+              onClick={() => onToggleLayer(layer)}
+              swatch={
+                <Swatch
+                  className={cn(
+                    layer.stroke && 'border',
+                    layer.strokeDasharray && 'border-dashed',
+                  )}
+                  style={{
+                    backgroundColor: layer.fill,
+                    borderColor: layer.stroke,
+                  }}
+                />
+              }
+              label={layer.label}
+              value={inChosenUnit && layer.value(inChosenUnit)}
+              unit={unit}
+              share={formatShare(latest && layer.value(latest), latest?.staked)}
             />
           ))}
-          <ShareRow
-            active={visibleKeys.includes(OTHERS_KEY)}
-            onClick={() => onToggleKey(OTHERS_KEY)}
-            swatch={
-              <Swatch
-                className="border border-dashed"
-                style={{
-                  backgroundColor: OTHERS_COLOR,
-                  borderColor: OTHERS_STROKE,
-                }}
-              />
-            }
-            label="Others"
-            value={formatAmount(inChosenUnit?.others, unit)}
-            share={formatShare(latest?.others, latest?.staked)}
-          />
         </div>
       </div>
     </div>
@@ -188,18 +179,19 @@ function Swatch({
   )
 }
 
-/** A label, an amount and its share; a button when it toggles a layer. */
 function ShareRow({
   swatch,
   label,
   value,
+  unit,
   share,
   active = true,
   onClick,
 }: {
   swatch: ReactNode
   label: ReactNode
-  value: string | undefined
+  value: number | null | undefined
+  unit: ChartUnit
   share: string | undefined
   active?: boolean
   onClick?: () => void
@@ -213,9 +205,9 @@ function ShareRow({
         </span>
       </span>
       <span className="flex shrink-0 items-baseline gap-2 whitespace-nowrap tabular-nums">
-        {value !== undefined ? (
+        {value != null ? (
           <span className="font-semibold text-label-value-13 text-primary">
-            {value}
+            {formatCurrency(value, unit)}
           </span>
         ) : (
           <NoDataBadge />
@@ -248,12 +240,4 @@ function ShareRow({
       {content}
     </button>
   )
-}
-
-function formatShare(
-  part: number | null | undefined,
-  total: number | null | undefined,
-): string | undefined {
-  const share = shareOf(part, total)
-  return share !== undefined ? formatPercent(share) : undefined
 }

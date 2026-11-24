@@ -37,7 +37,6 @@ import { LiquidStakingTvlRail } from './LiquidStakingTvlRail'
 import { LiquidStakingTvlTooltip } from './LiquidStakingTvlTooltip'
 import {
   getProtocolLayers,
-  getToggledScope,
   inUnit,
   stackOnKnown,
   type TvlLayer,
@@ -52,11 +51,6 @@ const DESCRIPTION = [
   "In vs. Supply view, Not staked is the rest of ETH's supply, which is CoinGecko's market cap over its price. Above a protocol without data for a day, the stack shows nothing that day.",
 ].join(' ')
 
-/**
- * Hero card: a one-sentence staking summary across the top, the ETH supply
- * share and staked breakdown on the left, and the stacked value locked chart
- * on the right.
- */
 export function LiquidStakingTvlChart({
   projects,
   projectSeries,
@@ -90,6 +84,10 @@ export function LiquidStakingTvlChart({
     () => [...protocolLayers, ...view.layers],
     [protocolLayers, view],
   )
+  const stakedLayers = useMemo(
+    () => [...protocolLayers, ...VIEWS.staked.layers],
+    [protocolLayers],
+  )
   const chartData = useMemo(() => {
     if (!data) return undefined
     const rows = data.map((day) => inUnit(day, unit))
@@ -101,8 +99,6 @@ export function LiquidStakingTvlChart({
     return hasValue ? rows : []
   }, [data, unit, layers])
 
-  // Only the protocols are toggled one by one; Others and Not staked come
-  // with the view.
   const protocolMeta = useMemo(() => toMeta(protocolLayers), [protocolLayers])
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(protocolMeta)
@@ -110,19 +106,24 @@ export function LiquidStakingTvlChart({
   const visibleKeys = useMemo(
     () =>
       layers
-        .map((layer) => layer.key)
-        .filter((key) => !(key in protocolMeta) || dataKeys.includes(key)),
-    [layers, protocolMeta, dataKeys],
+        .filter(
+          (layer) => layer.role !== 'protocol' || dataKeys.includes(layer.key),
+        )
+        .map((layer) => layer.key),
+    [layers, dataKeys],
   )
   const drawnLayers = useMemo(
     () =>
       stackOnKnown(layers.filter((layer) => visibleKeys.includes(layer.key))),
     [layers, visibleKeys],
   )
-  const onToggleKey = (key: string) => {
-    const nextScope = getToggledScope(scope, key)
-    if (nextScope) setScope(nextScope)
-    else toggleDataKey(key)
+  const onToggleLayer = (layer: TvlLayer) => {
+    if (layer.toggleScope) setScope(layer.toggleScope(scope))
+    else toggleDataKey(layer.key)
+  }
+  const onLegendClick = (key: string) => {
+    const layer = layers.find((layer) => layer.key === key)
+    if (layer) onToggleLayer(layer)
   }
 
   const chartSeries: ChartSeries<string, TvlBreakdown>[] = drawnLayers.map(
@@ -138,10 +139,8 @@ export function LiquidStakingTvlChart({
     }),
   )
 
-  // The view's total on the range's last day with it, dated when that is not
-  // the range's last day.
   const headlineRow = chartData?.findLast((row) => view.total(row) !== null)
-  const headline = headlineRow && view.total(headlineRow)
+  const headline = headlineRow ? view.total(headlineRow) : null
   const headlineDate =
     headlineRow && headlineRow !== chartData?.at(-1)
       ? ` on ${formatTimestamp(headlineRow.timestamp, { mode: 'date' })}`
@@ -153,12 +152,12 @@ export function LiquidStakingTvlChart({
 
       <div className="grid min-w-0 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">
         <LiquidStakingTvlRail
-          projectSeries={projectSeries}
+          layers={stakedLayers}
           latest={summary?.latest}
           unit={unit}
           visibleKeys={visibleKeys}
           showAllSelected={showAllSelected}
-          onToggleKey={onToggleKey}
+          onToggleLayer={onToggleLayer}
           onToggleAll={toggleAllDataKeys}
         />
 
@@ -180,7 +179,7 @@ export function LiquidStakingTvlChart({
                 </Tooltip>
               </div>
               <div className="mt-0.5 flex flex-wrap items-baseline gap-2">
-                {headline != null ? (
+                {headline !== null ? (
                   <span className="font-bold text-heading-28 text-primary tabular-nums leading-tight tracking-[-0.025em]">
                     {formatCurrency(headline, unit)}
                   </span>
@@ -207,9 +206,11 @@ export function LiquidStakingTvlChart({
                   value={scope}
                   onValueChange={(value) => setScope(value as TvlScope)}
                 >
-                  <RadioGroupItem value="staked">Staked</RadioGroupItem>
-                  <RadioGroupItem value="supply">vs. Supply</RadioGroupItem>
-                  <RadioGroupItem value="liquid">Liquid only</RadioGroupItem>
+                  {Object.entries(VIEWS).map(([value, { label }]) => (
+                    <RadioGroupItem key={value} value={value}>
+                      {label}
+                    </RadioGroupItem>
+                  ))}
                 </RadioGroup>
               ) : (
                 <Skeleton className="h-8 w-[228px]" />
@@ -230,7 +231,7 @@ export function LiquidStakingTvlChart({
               className="h-[220px] min-h-[220px] md:h-[268px] md:min-h-[268px] lg:h-full lg:min-h-0 2xl:h-full 2xl:min-h-0"
               interactiveLegend={{
                 dataKeys: visibleKeys,
-                onItemClick: onToggleKey,
+                onItemClick: onLegendClick,
                 disableOnboarding: true,
               }}
             >

@@ -17,7 +17,7 @@ export interface TvlBreakdown {
   staked: number | null
   /** The supply that is not staked. */
   notStaked: number | null
-  /** ETH in existence. */
+  /** ETH in existence; null when below the stake, which it can't be. */
   supply: number | null
   /** ETH's USD price. */
   ethPrice: number | null
@@ -42,11 +42,16 @@ export function toBreakdown(
   for (const value of Object.values(day.projects)) {
     liquid = liquid !== null && value !== null ? liquid + value : null
   }
+  const supply =
+    day.supply !== null && day.staked !== null && day.supply < day.staked
+      ? null
+      : day.supply
   return {
     ...day,
     liquid,
     others: difference(day.staked, liquid),
-    notStaked: difference(day.supply, day.staked),
+    supply,
+    notStaked: difference(supply, day.staked),
   }
 }
 
@@ -64,6 +69,9 @@ export function isComplete(
 function difference(total: number | null, part: number | null) {
   return total !== null && part !== null && total >= part ? total - part : null
 }
+
+/** How far back a yearly change looks. */
+export const YEAR_CHANGE_DAYS = 365
 
 /** A change in ETH, relative and absolute, between two days. */
 export interface EthChange {
@@ -118,7 +126,7 @@ export function getYearChange(
   })
   const latest = known.at(-1)
   if (!latest) return undefined
-  const from = latest.timestamp - 365 * UnixTime.DAY
+  const from = latest.timestamp - YEAR_CHANGE_DAYS * UnixTime.DAY
   const first = known.find((day) => day.timestamp >= from)
   if (!first || first === latest) return undefined
   return {
