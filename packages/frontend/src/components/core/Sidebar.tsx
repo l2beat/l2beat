@@ -21,6 +21,7 @@ export const MOBILE_SIDEBAR_ID = 'mobile-sidebar'
 type SidebarContextProps = {
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
+  setSheetMounted: (mounted: boolean) => void
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -45,11 +46,13 @@ function SidebarProvider({
   onOpenChange?: (open: boolean) => void
 }) {
   const [openMobile, setOpenMobile] = React.useState(false)
+  const [sheetMounted, setSheetMounted] = React.useState(false)
 
   const contextValue = React.useMemo<SidebarContextProps>(
     () => ({
       openMobile,
       setOpenMobile,
+      setSheetMounted,
     }),
     [openMobile],
   )
@@ -70,6 +73,13 @@ function SidebarProvider({
           // An attribute, not `:has()`: under `:has()`, a node inserted
           // anywhere on the page restyles all of it.
           'data-with-backdrop:relative data-with-backdrop:isolate',
+          // The open sheet sets `pointer-events: none` on <body>. Inherited, it
+          // restyles the whole page and stalls the sheet's first frames; an
+          // explicit value stops it here, and the overlay still takes the taps.
+          // Set in the commit that opens it, kept until the closing sheet
+          // unmounts. Not otherwise: dropdowns rely on the inherited value to
+          // swallow clicks outside them.
+          (openMobile || sheetMounted) && 'pointer-events-auto',
           className,
         )}
         {...props}
@@ -86,7 +96,11 @@ function Sidebar({
   ...props
 }: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
-  const { openMobile, setOpenMobile } = useSidebar()
+  const { openMobile, setOpenMobile, setSheetMounted } = useSidebar()
+  const trackSheetMounted = React.useCallback(
+    (node: HTMLDivElement | null) => setSheetMounted(node !== null),
+    [setSheetMounted],
+  )
 
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
@@ -116,7 +130,12 @@ function Sidebar({
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex size-full flex-col gap-6">{children}</div>
+          <div
+            ref={trackSheetMounted}
+            className="flex size-full flex-col gap-6"
+          >
+            {children}
+          </div>
         </SheetContent>
       </Sheet>
     )
