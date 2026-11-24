@@ -11,7 +11,11 @@ import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import {
+  EIGENDA_DA_PROVIDER,
+  getRisc0Verifiers,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('megaeth', undefined, {
   reachableEntries: {
@@ -275,13 +279,5 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
-  nonTemplateZkVerifiers: [
-    discovery.getContractValue<ChainSpecificAddress>(
-      discovery.getContractValue<ChainSpecificAddress>(
-        'RiscZeroVerifierRouter',
-        'verifier',
-      ),
-      'verifier',
-    ),
-  ],
+  nonTemplateZkVerifiers: getRisc0Verifiers(discovery),
 })

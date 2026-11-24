@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x925c3c09d91148425e245d29a6151e06778433ba
+
+# Diff at Tue, 24 Nov 2026 11:26:05 GMT:
+
+- id: b71de5f7
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a0e8d2c645ce72f78de158365893b06c7072f0d5 block: 1794568019
+- current timestamp: 1795519471
+
+## Description
+
+Started moving ownership of L1NativeTokenVault and L1Nullifier from a 3/5 Safe to the Governance contract.
+
+Owner of these contracts can freeze deposits and finalizing withdrawals.
+
+## Watched changes
+
+```diff
+    contract L1NativeTokenVault (eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065) [shared-zk-stack/L1NativeTokenVault] {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8253F33026c49A430963FE3991441c02175bda95"
+    }
+```
+
+```diff
+    contract L1Nullifier (eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea) [shared-zk-stack/L1Nullifier] {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8253F33026c49A430963FE3991441c02175bda95"
+    }
+```
+
 Generated with discovered.json: 0x3cc8c528db3c210726af68023820c6ac822a5fdc
 
 # Diff at Mon, 16 Nov 2026 07:39:58 GMT:
