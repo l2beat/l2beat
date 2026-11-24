@@ -138,7 +138,7 @@ export class RpcClientCompat implements IRpcClient {
         rpcClient: RpcClientCompat.name,
       }),
       { maxBatchSize: deps.maxBatchSize, logger },
-      RetryHandler.create(deps.retryStrategy, logger),
+      RetryHandler.create(deps.retryStrategy, logger.tag({ tag: deps.chain })),
     )
     return new RpcClientCompat(client, deps.chain, deps.multicallClient)
   }

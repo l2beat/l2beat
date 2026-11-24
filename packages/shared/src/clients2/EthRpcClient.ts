@@ -346,7 +346,7 @@ export class EthRpcClient {
     const parsed = v.array(JsonRpcResponse).safeValidate(data)
     if (!response.ok || !parsed.success) {
       throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        `RPC call failed. HTTP status: ${response.status}, body: ${preview(response.body)}`,
         { cause: httpCause(response) },
       )
     }
@@ -403,7 +403,7 @@ export class EthRpcClient {
     const parsed = JsonRpcResponse.safeValidate(data)
     if (!jsonSuccess || !parsed.success) {
       throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        `RPC call failed. HTTP status: ${response.status}, body: ${preview(response.body)}`,
         { cause: httpCause(response) },
       )
     }
@@ -424,9 +424,6 @@ export class EthRpcClient {
       })
     }
     this.http.answered(response.sentAt)
-    if (envelope.id !== id) {
-      throw new Error('RPC call failed. ID mismatch.')
-    }
     return envelope
   }
 
@@ -440,6 +437,11 @@ export class EthRpcClient {
       return await this.retryHandler.retry(attempt, { error })
     }
   }
+}
+
+/** Enough of a body to read a limit message, short enough for one log line */
+function preview(body: string) {
+  return body.length > 300 ? `${body.slice(0, 300)}...` : body
 }
 
 function httpCause(response: HttpResponse) {
@@ -736,7 +738,8 @@ const FeeHistory = v.object({
   reward: v.array(v.array(vQuantity)).optional(),
 })
 
-// `jsonrpc` is optional, as some nodes leave it out and RpcClient read them
+// `jsonrpc` and `id` are optional, as some nodes leave them out and RpcClient
+// read them
 const JsonRpcError = v.passthroughObject({
   jsonrpc: v.literal('2.0').optional(),
   error: v.passthroughObject({
@@ -744,7 +747,7 @@ const JsonRpcError = v.passthroughObject({
     message: v.string(),
     data: v.unknown().optional(),
   }),
-  id: v.union([v.null(), v.string(), v.number()]),
+  id: v.union([v.null(), v.string(), v.number()]).optional(),
 })
 type JsonRpcError = v.infer<typeof JsonRpcError>
 const JsonRpcResponse = v.union([
@@ -752,7 +755,7 @@ const JsonRpcResponse = v.union([
   v.passthroughObject({
     jsonrpc: v.literal('2.0').optional(),
     result: v.unknown(),
-    id: v.union([v.null(), v.string(), v.number()]),
+    id: v.union([v.null(), v.string(), v.number()]).optional(),
   }),
 ])
 type JsonRpcResponse = v.infer<typeof JsonRpcResponse>

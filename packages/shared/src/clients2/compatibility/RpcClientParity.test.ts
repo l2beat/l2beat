@@ -362,6 +362,35 @@ const CASES: Case[] = [
     run: (c) => c.getLogs(1, 800),
   },
   {
+    name: 'a result sent without an id',
+    answer: () => ({
+      envelope: { jsonrpc: '2.0', result: '0x7b', id: undefined },
+    }),
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'a result sent with another id',
+    answer: () => ({ envelope: { jsonrpc: '2.0', result: '0x7b', id: 'x' } }),
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'logs over a range the RPC splits, with the limit sent with a null id',
+    answer: (call) => {
+      const { fromBlock, toBlock } = call.params[0] as Record<string, string>
+      if (Number(toBlock) - Number(fromBlock) > 100) {
+        return {
+          envelope: {
+            jsonrpc: '2.0',
+            id: null,
+            error: { code: -32005, message: 'Log response size exceeded' },
+          },
+        }
+      }
+      return { result: [log(Number(fromBlock))] }
+    },
+    run: (c) => c.getLogs(1, 800),
+  },
+  {
     name: 'a call answered after a body that is not JSON',
     answer: (_, i) =>
       i === 0 ? { status: 200, body: '<html>busy</html>' } : { result: '0x7b' },
