@@ -27,7 +27,13 @@ export interface LiveBlockBucketRecord {
 }
 
 export function toRecord(row: Selectable<LiveBlock>): LiveBlockRecord {
-  return { ...row, timestamp: UnixTime.fromDate(row.timestamp) }
+  return {
+    slot: row.slot,
+    blockNumber: row.blockNumber,
+    hash: row.hash,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    blobCount: row.blobCount,
+  }
 }
 
 export function toRow(record: LiveBlockRecord): Insertable<LiveBlock> {
