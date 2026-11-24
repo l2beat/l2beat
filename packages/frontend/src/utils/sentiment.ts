@@ -16,13 +16,13 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
 }
 
 // Small glyphs next to text: yellow-200 is 1.6:1 on light cards, so warning
-// takes the warning glyph yellows of DESIGN.md.
+// takes the icon token, which is brighter than the text one.
 export function sentimentToIconFillColor(sentiment: Sentiment): string {
   switch (sentiment) {
     case 'bad':
       return 'fill-orange-600'
     case 'warning':
-      return 'fill-yellow-700 dark:fill-yellow-300'
+      return 'fill-icon-warning'
     case 'good':
       return 'fill-green-300 dark:fill-green-450'
     case 'neutral':
