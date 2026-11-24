@@ -42,9 +42,7 @@ export function renderTrustedSetups(
               `${label}: ${value}${unit ? ` ${unit}` : ''}${description ? ` (${description})` : ''}`,
           ),
         ]),
-        renderRisks(
-          setup.warning ? [{ text: setup.warning, isCritical: false }] : [],
-        ),
+        renderRisks(setup.risks),
         configMarkdown(setup.description, level + 1),
       ]),
     ),

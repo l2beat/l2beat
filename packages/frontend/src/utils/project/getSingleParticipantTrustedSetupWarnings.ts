@@ -1,10 +1,12 @@
 import type { TrustedSetup, TrustedSetupPhase } from '@l2beat/config'
 import uniqBy from 'lodash/uniqBy'
+import type { TechnologyRisk } from '~/components/projects/sections/RiskList'
 
 type SetupCounts = Pick<
   TrustedSetup,
   'participantCount' | 'contributionCount' | 'phases'
 >
+type NamedSetup = SetupCounts & Pick<TrustedSetup, 'id' | 'name'>
 
 /**
  * Who alone made a trusted setup, e.g. "phase 2 contributor", or undefined
@@ -34,18 +36,20 @@ function isSingleParticipantPhase(phase: TrustedSetupPhase | undefined) {
 }
 
 /** Shown under the setup itself, so it does not repeat the setup's name. */
-export function getSingleParticipantSectionWarning(
+export function getSingleParticipantSectionRisks(
   setup: SetupCounts,
-): string | undefined {
+): TechnologyRisk[] {
   const role = getSingleParticipantRole(setup)
-  if (!role) return undefined
-  return `Arbitrary proofs can be forged if the single ${role} retained secrets from the trusted setup ceremony.`
+  if (!role) return []
+  return [
+    nonCriticalRisk(
+      `Arbitrary proofs can be forged if the single ${role} retained secrets from the trusted setup ceremony.`,
+    ),
+  ]
 }
 
-/** Shown away from the setup (page header, prover card), so it names it. */
-export function getSingleParticipantWarnings(
-  setups: (SetupCounts & Pick<TrustedSetup, 'id' | 'name'>)[],
-): string[] {
+/** Shown away from the setup (page header, table row), so it names it. */
+export function getSingleParticipantWarnings(setups: NamedSetup[]): string[] {
   return uniqBy(setups, (setup) => setup.id).flatMap((setup) => {
     const role = getSingleParticipantRole(setup)
     if (!role) return []
@@ -53,4 +57,15 @@ export function getSingleParticipantWarnings(
       `Arbitrary proofs can be forged if one entity retained secrets from a trusted setup ceremony: ${setup.name} had a single ${role}.`,
     ]
   })
+}
+
+/** The same warnings as a risk box, for the card of a prover that uses the setups. */
+export function getSingleParticipantRisks(
+  setups: NamedSetup[],
+): TechnologyRisk[] {
+  return getSingleParticipantWarnings(setups).map(nonCriticalRisk)
+}
+
+function nonCriticalRisk(text: string): TechnologyRisk {
+  return { text, isCritical: false }
 }

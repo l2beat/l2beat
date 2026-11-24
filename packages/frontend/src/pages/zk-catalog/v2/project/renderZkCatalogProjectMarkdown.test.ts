@@ -313,6 +313,7 @@ const SECTIONS: ProjectDetailsSection[] = [
           description:
             'Run among 7 contributors.\n\n## Artifacts\n\nDownload the transcript.',
           proofSystems: [GROTH16],
+          risks: [],
         },
       ],
     },

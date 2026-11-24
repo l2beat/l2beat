@@ -50,10 +50,7 @@ export function ProverInfo({ proverInfo }: { proverInfo: ProverInfoData }) {
         variant="l2"
       />
       <RiskList
-        risks={proverInfo.trustedSetupWarnings.map((text) => ({
-          text,
-          isCritical: false,
-        }))}
+        risks={proverInfo.trustedSetupRisks}
         className="col-span-full mt-2 md:mt-2"
       />
     </div>

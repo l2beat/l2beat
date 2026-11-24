@@ -7,6 +7,7 @@ import { Markdown } from '../../../markdown/Markdown'
 import { ProjectSection } from '../ProjectSection'
 import type { StateValidationProgramHashData } from '../program-hashes/ProgramHashesSection'
 import { ProgramHashesTable } from '../program-hashes/table/ProgramHashesTable'
+import type { TechnologyRisk } from '../RiskList'
 import type { ProjectSectionProps } from '../types'
 import { Category } from './Category'
 import { ProverInfo } from './ProverInfo'
@@ -18,7 +19,7 @@ export interface ProverInfoData {
   quantumResistant?: boolean
   trustedSetups: TrustedSetupsByProofSystem
   /** One per trusted setup of this project's verifiers that rests on a single participant. */
-  trustedSetupWarnings: string[]
+  trustedSetupRisks: TechnologyRisk[]
 }
 
 export interface StateValidationSectionProps extends ProjectSectionProps {

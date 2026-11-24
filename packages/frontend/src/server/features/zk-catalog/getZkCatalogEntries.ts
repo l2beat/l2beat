@@ -39,8 +39,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   icon: string
   creator?: string
   quantumResistant?: boolean
-  /** Project page that the red warning's anchor resolves against. */
-  detailsHref: string
+  href: string
   tvs: {
     value: number
     numberOfProjects: number
@@ -95,7 +94,7 @@ function getZkCatalogEntry(
     slug: project.slug,
     backgroundColor: getRowBackgroundColor({ redWarning }),
     statuses: { ...project.statuses, redWarning },
-    detailsHref: `/zk-catalog/${project.slug}`,
+    href: `/zk-catalog/${project.slug}`,
     name: project.name,
     description: project.display.description,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),

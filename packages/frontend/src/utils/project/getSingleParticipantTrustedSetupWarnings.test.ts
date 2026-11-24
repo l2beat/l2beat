@@ -2,7 +2,7 @@ import type { TrustedSetup } from '@l2beat/config'
 import { expect } from 'earl'
 import {
   getSingleParticipantRole,
-  getSingleParticipantSectionWarning,
+  getSingleParticipantSectionRisks,
   getSingleParticipantWarnings,
 } from './getSingleParticipantTrustedSetupWarnings'
 
@@ -74,21 +74,24 @@ describe(getSingleParticipantRole.name, () => {
   })
 })
 
-describe(getSingleParticipantSectionWarning.name, () => {
+describe(getSingleParticipantSectionRisks.name, () => {
   it('describes the single contributor', () => {
     expect(
-      getSingleParticipantSectionWarning({
+      getSingleParticipantSectionRisks({
         phases: { phase2: { count: 1, unit: 'contributions' } },
       }),
-    ).toEqual(
-      'Arbitrary proofs can be forged if the single phase 2 contributor retained secrets from the trusted setup ceremony.',
-    )
+    ).toEqual([
+      {
+        text: 'Arbitrary proofs can be forged if the single phase 2 contributor retained secrets from the trusted setup ceremony.',
+        isCritical: false,
+      },
+    ])
   })
 
   it('returns nothing for a multi-party setup', () => {
-    expect(
-      getSingleParticipantSectionWarning({ participantCount: 176 }),
-    ).toEqual(undefined)
+    expect(getSingleParticipantSectionRisks({ participantCount: 176 })).toEqual(
+      [],
+    )
   })
 })
 
