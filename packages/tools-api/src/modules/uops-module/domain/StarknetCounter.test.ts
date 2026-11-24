@@ -9,7 +9,9 @@ describe(StarknetCounter.name, () => {
       const mockBlock: Block = createBlock(1)
 
       const expectedResult: CountedBlock = {
-        ...mockBlock,
+        number: mockBlock.number,
+        timestamp: mockBlock.timestamp,
+        hash: mockBlock.hash,
         transactions: [
           {
             hash: 'tx1.hash',

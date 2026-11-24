@@ -40,7 +40,9 @@ import { traverseOperationTree } from './traverseOperationTree'
 export class RpcCounter implements Counter {
   countForBlock(block: Block): CountedBlock {
     return {
-      ...block,
+      number: block.number,
+      timestamp: block.timestamp,
+      hash: block.hash,
       status: '<unknown>',
       transactions: block.transactions.map((tx: Transaction) =>
         this.mapTransaction(tx),
