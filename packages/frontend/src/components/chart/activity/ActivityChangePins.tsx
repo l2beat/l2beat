@@ -540,7 +540,7 @@ function ContributorRow({
   muted?: boolean
 }) {
   return (
-    <li className="col-span-3 grid grid-cols-subgrid items-baseline py-1 text-label-value-13">
+    <li className="col-span-3 grid grid-cols-subgrid items-baseline py-0.5 text-label-value-13">
       <div className="min-w-0">{label}</div>
       <span
         className={cn(
