@@ -77,7 +77,10 @@ export function getMockInteropTransfers({
 
   if (sort) {
     const direction = sort.desc ? -1 : 1
-    items.sort((a, b) => direction * ((a[sort.id] ?? 0) - (b[sort.id] ?? 0)))
+    // As in the database, a transfer without a value comes last either way.
+    const key = (item: InteropProtocolTransferDetailsItem) =>
+      item[sort.by] ?? -direction * Number.POSITIVE_INFINITY
+    items.sort((a, b) => direction * (key(a) - key(b)))
   }
 
   return { items, nextCursor: undefined }

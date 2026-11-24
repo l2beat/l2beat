@@ -1,4 +1,7 @@
-import type { InteropTransferRecord } from '@l2beat/database'
+import {
+  getInteropTransferValueUsd,
+  type InteropTransferRecord,
+} from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
@@ -145,7 +148,7 @@ export function toInteropProtocolTransferDetailsItem(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
     ),
-    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    valueUsd: getInteropTransferValueUsd(transfer),
     bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,

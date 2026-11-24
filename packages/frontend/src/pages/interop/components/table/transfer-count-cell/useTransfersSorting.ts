@@ -6,7 +6,7 @@ import {
 import { useMemo, useState } from 'react'
 import type { InteropTransfersSort } from '~/server/features/layer2s/interop/types'
 
-const DEFAULT_SORT: InteropTransfersSort = { id: 'timestamp', desc: true }
+const DEFAULT_SORT: InteropTransfersSort = { by: 'timestamp', desc: true }
 
 /**
  * Sorting for a transfers table. The server sorts, because the table only
@@ -20,13 +20,16 @@ export function useTransfersSorting({
   onChange?: () => void
 } = {}) {
   const [sort, setSort] = useState(DEFAULT_SORT)
-  const sorting = useMemo<SortingState>(() => [sort], [sort])
+  const sorting = useMemo<SortingState>(
+    () => [{ id: sort.by, desc: sort.desc }],
+    [sort],
+  )
 
   const onSortingChange: OnChangeFn<SortingState> = (updater) => {
     const next = functionalUpdate(updater, sorting)[0]
     setSort(
       next
-        ? { id: next.id as InteropTransfersSort['id'], desc: next.desc }
+        ? { by: next.id as InteropTransfersSort['by'], desc: next.desc }
         : DEFAULT_SORT,
     )
     onChange?.()

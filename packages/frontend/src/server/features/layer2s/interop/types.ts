@@ -192,13 +192,13 @@ export type InteropProtocolTransfersCursor = v.infer<
 export const InteropProtocolTransfersCursor = v.object({
   timestamp: v.number(),
   transferId: v.string(),
-  /** The last transfer's value; absent when it has none. Read by a value sort. */
-  valueUsd: v.number().optional(),
+  /** The last transfer's value, null when it has none. Read by a value sort. */
+  valueUsd: v.union([v.number(), v.null()]).optional(),
 })
-/** Named after the transfers table's columns. Newest first when omitted. */
+/** Newest first when omitted. */
 export type InteropTransfersSort = v.infer<typeof InteropTransfersSort>
 export const InteropTransfersSort = v.object({
-  id: v.enum(['timestamp', 'valueUsd']),
+  by: v.enum(['timestamp', 'valueUsd']),
   desc: v.boolean(),
 })
 export const InteropProtocolTransfersParams = v.object({

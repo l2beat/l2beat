@@ -1,4 +1,8 @@
-import type { InteropTransferRecord } from '@l2beat/database'
+import {
+  type InteropTransferCursor,
+  type InteropTransferRecord,
+  toInteropTransferCursor,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type {
@@ -41,7 +45,11 @@ export async function getFilteredInteropTransfersPage({
 }): Promise<TransfersPage> {
   const db = getDb()
   const items: InteropTransferRecord[] = []
-  let dbCursor = cursor
+  let dbCursor: InteropTransferCursor | undefined = cursor && {
+    timestamp: UnixTime(cursor.timestamp),
+    transferId: cursor.transferId,
+    valueUsd: cursor.valueUsd ?? null,
+  }
   const pageSize = getPageSize(limit)
 
   while (items.length < pageSize) {
@@ -51,14 +59,8 @@ export async function getFilteredInteropTransfersPage({
       sourceChains,
       destinationChains,
       abstractTokenId: tokenId,
-      sort: sort && { by: sort.id, desc: sort.desc },
-      cursor: dbCursor
-        ? {
-            timestamp: UnixTime(dbCursor.timestamp),
-            transferId: dbCursor.transferId,
-            valueUsd: dbCursor.valueUsd,
-          }
-        : undefined,
+      sort,
+      cursor: dbCursor,
       limit: RAW_BATCH_SIZE,
     })
 
@@ -67,7 +69,7 @@ export async function getFilteredInteropTransfersPage({
     }
 
     for (const [i, transfer] of transfers.entries()) {
-      dbCursor = toTransferCursor(transfer)
+      dbCursor = toInteropTransferCursor(transfer)
 
       if (!matcher(transfer) || !transferTouchesChain(transfer, anchorChain)) {
         continue
@@ -80,7 +82,7 @@ export async function getFilteredInteropTransfersPage({
           i === transfers.length - 1 && transfers.length < RAW_BATCH_SIZE
         return {
           items,
-          nextCursor: stoppedAtEnd ? undefined : toTransferCursor(transfer),
+          nextCursor: stoppedAtEnd ? undefined : dbCursor,
         }
       }
     }
@@ -104,15 +106,4 @@ function getPageSize(limit: number | undefined): number {
   }
 
   return Math.max(1, Math.min(MAX_PAGE_SIZE, pageSize))
-}
-
-function toTransferCursor(
-  transfer: InteropTransferRecord,
-): InteropProtocolTransfersCursor {
-  return {
-    timestamp: transfer.timestamp,
-    transferId: transfer.transferId,
-    // The value the database sorts by: coalesce(srcValueUsd, dstValueUsd).
-    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
-  }
 }

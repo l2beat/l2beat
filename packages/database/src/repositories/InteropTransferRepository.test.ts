@@ -10,6 +10,7 @@ import {
   InteropTransferRepository,
   type InteropTransferSort,
   type InteropTransferUpdate,
+  toInteropTransferCursor,
   toRecord,
   toRow,
 } from './InteropTransferRepository'
@@ -1132,6 +1133,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           cursor: {
             timestamp: snapshotTimestamp - 9,
             transferId: 'msg3',
+            valueUsd: null,
           },
           limit: 10,
         })
@@ -1169,6 +1171,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           cursor: {
             timestamp: snapshotTimestamp - 10,
             transferId: 'msg2',
+            valueUsd: null,
           },
           limit: 10,
         })
@@ -1230,11 +1233,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
             const last = rows.at(-1)
             if (!last) break
             ids.push(...rows.map((x) => x.transferId))
-            cursor = {
-              timestamp: last.timestamp,
-              transferId: last.transferId,
-              valueUsd: last.srcValueUsd ?? last.dstValueUsd,
-            }
+            cursor = toInteropTransferCursor(last)
           }
           return ids
         }
@@ -1258,7 +1257,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           },
           {
             sort: { by: 'valueUsd', desc: false },
-            expected: ['g', 'a', 'e', 'c', 'b', 'f', 'd'],
+            expected: ['g', 'a', 'e', 'b', 'c', 'd', 'f'],
           },
         ]
 

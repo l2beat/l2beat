@@ -21,7 +21,7 @@ export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 const columnHelper = createColumnHelper<TransferRow>()
 
 /**
- * Timestamp and Value are sortable, and their ids are the server's sort keys.
+ * Timestamp and Value are sortable, and their ids are the server's `sort.by`.
  * Pair with `useTransfersSorting`: the table must not sort these itself.
  */
 export function getTransferColumns(
