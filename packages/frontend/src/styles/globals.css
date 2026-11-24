@@ -689,14 +689,6 @@
   scrollbar-gutter: stable;
 }
 
-/* Radix's scroll lock sets this on <body> when a modal opens. Inherited, it
-   restyles every element on the page and stalls the modal's first frames.
-   Nothing reads it, so it stays on <body>. */
-@property --removed-body-scroll-bar-size {
-  syntax: "*";
-  inherits: false;
-}
-
 /* OverflowWrapper's edges: each side's fade grows from nothing when that
    side has more to scroll to, as its arrow fades in. */
 @property --overflow-fade-left {

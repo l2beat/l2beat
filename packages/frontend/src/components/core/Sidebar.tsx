@@ -1,30 +1,27 @@
+import { Drawer } from '@base-ui/react/drawer'
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '~/components/core/Sheet'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { cn } from '~/utils/cn'
 import { ScrollWithGradient } from '../ScrollWithGradient'
 import { HorizontalSeparator } from './HorizontalSeparator'
 
 const SIDEBAR_WIDTH = '15rem'
-const SIDEBAR_WIDTH_MOBILE = '100%'
 /** Lets the mobile menu buttons point `aria-controls` at the sheet. */
 export const MOBILE_SIDEBAR_ID = 'mobile-sidebar'
 
 type SidebarContextProps = {
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
-  setSheetMounted: (mounted: boolean) => void
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
+// Apart from the open state, so the menu's own contents, which only close it,
+// don't re-render each time it opens.
+const SetSidebarOpenContext = React.createContext<
+  ((open: boolean) => void) | null
+>(null)
 
 function useSidebar() {
   const context = React.useContext(SidebarContext)
@@ -33,6 +30,14 @@ function useSidebar() {
   }
 
   return context
+}
+
+function useSetSidebarOpen() {
+  const setOpen = React.useContext(SetSidebarOpenContext)
+  if (!setOpen) {
+    throw new Error('useSetSidebarOpen must be used within a SidebarProvider.')
+  }
+  return setOpen
 }
 
 function SidebarProvider({
@@ -46,46 +51,39 @@ function SidebarProvider({
   onOpenChange?: (open: boolean) => void
 }) {
   const [openMobile, setOpenMobile] = React.useState(false)
-  const [sheetMounted, setSheetMounted] = React.useState(false)
 
   const contextValue = React.useMemo<SidebarContextProps>(
     () => ({
       openMobile,
       setOpenMobile,
-      setSheetMounted,
     }),
     [openMobile],
   )
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <div
-        style={
-          {
-            '--sidebar-width': SIDEBAR_WIDTH,
-            ...style,
-          } as React.CSSProperties
-        }
-        className={cn(
-          'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
-          // A page that brings a `PageBackdrop` gets a stacking context, so the
-          // scenery stays above this background and the nav paints none of its own.
-          // An attribute, not `:has()`: under `:has()`, a node inserted
-          // anywhere on the page restyles all of it.
-          'data-with-backdrop:relative data-with-backdrop:isolate',
-          // The open sheet sets `pointer-events: none` on <body>. Inherited, it
-          // restyles the whole page and stalls the sheet's first frames; an
-          // explicit value stops it here, and the overlay still takes the taps.
-          // Set in the commit that opens it, kept until the closing sheet
-          // unmounts. Not otherwise: dropdowns rely on the inherited value to
-          // swallow clicks outside them.
-          (openMobile || sheetMounted) && 'pointer-events-auto',
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </div>
+      <SetSidebarOpenContext.Provider value={setOpenMobile}>
+        <div
+          style={
+            {
+              '--sidebar-width': SIDEBAR_WIDTH,
+              ...style,
+            } as React.CSSProperties
+          }
+          className={cn(
+            'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
+            // A page that brings a `PageBackdrop` gets a stacking context, so the
+            // scenery stays above this background and the nav paints none of its own.
+            // An attribute, not `:has()`: under `:has()`, a node inserted
+            // anywhere on the page restyles all of it.
+            'data-with-backdrop:relative data-with-backdrop:isolate',
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      </SetSidebarOpenContext.Provider>
     </SidebarContext.Provider>
   )
 }
@@ -96,48 +94,48 @@ function Sidebar({
   ...props
 }: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
-  const { openMobile, setOpenMobile, setSheetMounted } = useSidebar()
-  const trackSheetMounted = React.useCallback(
-    (node: HTMLDivElement | null) => setSheetMounted(node !== null),
-    [setSheetMounted],
-  )
+  const { openMobile, setOpenMobile } = useSidebar()
 
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        {/* From the right, next to the menu button that opens it: the whole
-            screen on phones, the desktop sidebar's width from tablets up. */}
-        <SheetContent
-          id={MOBILE_SIDEBAR_ID}
-          // iPhone Safari tints its toolbars from the overlay and swaps the tint
-          // in one frame, so a full-width sheet needs a matching overlay and no
-          // animation. The 1% see-through keeps Chrome drawing the page beneath,
-          // so closing isn't delayed on Android. From `sm` the sheet is
-          // `max-w-sm` and the page beside it stays dimmed; iPad Safari leaves
-          // its toolbar untinted there, so the sheet slides and the dim fades, on
-          // the iOS drawer curve: fast off the mark, settling softly.
-          className="z-999 w-(--sidebar-width) border-none bg-background/99 p-0 text-primary ease-[cubic-bezier(0.32,0.72,0,1)] data-[state=closed]:duration-200 data-[state=open]:duration-300 max-sm:animate-none! md:max-w-(--sidebar-width-desktop) [&>button]:hidden"
-          overlayClassName="ease-[cubic-bezier(0.32,0.72,0,1)] data-[state=closed]:duration-200 data-[state=open]:duration-300 max-sm:animate-none! max-sm:bg-background/99"
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-              '--sidebar-width-desktop': SIDEBAR_WIDTH,
-            } as React.CSSProperties
-          }
-          side="right"
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div
-            ref={trackSheetMounted}
-            className="flex size-full flex-col gap-6"
+      <Drawer.Root
+        open={openMobile}
+        onOpenChange={setOpenMobile}
+        swipeDirection="right"
+      >
+        {/* Mounted and laid out from page load (see `keepRendered`), so
+            opening only flips `data-closed` and the slide starts on the next
+            frame. Building the menu on tap, and the frames Base UI holds a
+            starting style for, made the tap feel unanswered. */}
+        <Drawer.Portal keepMounted>
+          {/* iPhone Safari tints its toolbars from the backdrop and swaps the
+              tint in one frame, so on phones the backdrop matches the sheet and
+              nothing animates. The 1% see-through keeps Chrome drawing the page
+              beneath, so closing isn't delayed on Android. From `sm` the page
+              beside the sheet stays dimmed, and iPad Safari leaves its toolbar
+              untinted, so the dim fades and the sheet slides. */}
+          <Drawer.Backdrop
+            className="fixed inset-0 z-998 bg-black/80 transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-closed:invisible data-closed:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-200 max-sm:bg-background/99 max-sm:transition-none"
+            render={keepRendered}
+          />
+          <Drawer.Viewport
+            className="fixed inset-0 z-999 flex justify-end data-closed:pointer-events-none"
+            render={keepRendered}
           >
-            {children}
-          </div>
-        </SheetContent>
-      </Sheet>
+            {/* From the right, next to the menu button that opens it: the
+                whole screen on phones, the desktop sidebar's width from
+                tablets up. */}
+            <Drawer.Popup
+              id={MOBILE_SIDEBAR_ID}
+              className="h-full w-full bg-background/99 text-primary shadow-lg outline-none transition-[transform,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] [transform:translateX(var(--drawer-swipe-movement-x))] data-closed:invisible data-ending-style:duration-200 data-swiping:duration-0 max-sm:transition-none sm:max-w-sm md:max-w-60 data-closed:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]"
+              render={keepRendered}
+            >
+              <Drawer.Title className="sr-only">Menu</Drawer.Title>
+              <div className="flex size-full flex-col gap-6">{children}</div>
+            </Drawer.Popup>
+          </Drawer.Viewport>
+        </Drawer.Portal>
+      </Drawer.Root>
     )
   }
 
@@ -158,6 +156,16 @@ function Sidebar({
       </div>
     </div>
   )
+}
+
+/**
+ * Drops the `hidden` Base UI sets on a closed, kept-mounted drawer, which
+ * Tailwind's preflight turns into an unbeatable `display: none`. The closed
+ * menu stays laid out, invisible and off-screen, so opening it only reveals it:
+ * styling, laying out and painting it on tap stalled its first frames.
+ */
+function keepRendered({ hidden: _, ...props }: React.ComponentProps<'div'>) {
+  return <div {...props} />
 }
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
@@ -356,5 +364,6 @@ export {
   SidebarGroupSubLink,
   SidebarProvider,
   SidebarSeparator,
+  useSetSidebarOpen,
   useSidebar,
 }
