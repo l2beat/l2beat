@@ -9,7 +9,6 @@ export function interfoldRiskSummary({
 }) {
   return definePrivacyRisks({
     stolen: [
-      'the VotingEscrowMultisig deploys a malicious [upgrade](#upgrades-and-governance) of VotingEscrow, which holds locked FOLD, with no delay.',
       'either Interfold multisig deploys a malicious [upgrade](#upgrades-and-governance) of VotingEscrow or BondingRegistry, which hold locked and bonded FOLD, with no delay.',
     ],
     privacy: [

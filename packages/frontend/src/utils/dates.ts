@@ -98,13 +98,17 @@ export function formatTimestamp(
 
 /**
  * A chart snapshot: "3 Jun 2026" in daily data. Finer data always shows the
- * time, midnight included, so neighboring points read alike.
+ * time, midnight included, so neighboring points read alike. Daily data can
+ * end on the latest hourly snapshot, which shows its time too.
  */
 export function formatSnapshotTimestamp(
   timestamp: number,
   resolution: ChartResolution,
 ) {
-  const mode = resolution === 'day' ? 'date' : 'datetime'
+  const mode =
+    resolution === 'day' && UnixTime.isFull(timestamp, 'day')
+      ? 'date'
+      : 'datetime'
   return formatTimestamp(timestamp, { mode })
 }
 

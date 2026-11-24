@@ -168,6 +168,7 @@ export function makeGroupNode(
     id: group.id,
     address: '',
     isInitial: false,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Group',
     name: group.name,

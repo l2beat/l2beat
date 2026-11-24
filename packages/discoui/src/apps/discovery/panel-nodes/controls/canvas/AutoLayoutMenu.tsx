@@ -7,11 +7,14 @@ import {
   type GraphEdge,
   getGraphProjection,
 } from '../../store/utils/graphProjection'
+import { perimeterLayout } from '../../store/utils/perimeterLayout'
 import { containerBoxes } from '../../store/utils/renderGraph'
+import { countCriticalLeaves } from '../../store/utils/securityPerimeter'
 import { stackAutoLayout } from '../../store/utils/stackLayout'
 import type { NodeLocations } from '../../store/utils/storage'
 import { IconControlCluster } from '../icons/IconControlCluster'
 import { IconControlFlow } from '../icons/IconControlFlow'
+import { IconControlPerimeter } from '../icons/IconControlPerimeter'
 import { IconControlStack } from '../icons/IconControlStack'
 import { ToolbarMenu } from '../ToolbarMenu'
 
@@ -19,9 +22,14 @@ type AutoLayout = (
   nodes: readonly Node[],
   freshLayout: boolean,
   visibleEdges: readonly GraphEdge[],
+  hidden?: ReadonlySet<string>,
 ) => NodeLocations
 
 export function AutoLayoutMenu() {
+  const nodes = useStore((state) => state.nodes)
+  const projection = getGraphProjection(nodes)
+  const criticalCount = countCriticalLeaves(nodes, projection.hiddenNodeIds)
+
   return (
     <ToolbarMenu
       label="Layout"
@@ -33,6 +41,18 @@ export function AutoLayoutMenu() {
             label: 'Flow',
             icon: <IconControlFlow />,
             onSelect: () => applyAutoLayout(flowLayout),
+          },
+          {
+            label: 'Perimeter',
+            icon: <IconControlPerimeter />,
+            count: criticalCount > 0 ? criticalCount : undefined,
+            disabled: criticalCount === 0,
+            onSelect: () => {
+              useStore
+                .getState()
+                .setPreferences({ showSecurityPerimeter: true })
+              applyAutoLayout(perimeterLayout)
+            },
           },
           {
             label: 'Stack',
@@ -67,8 +87,15 @@ function applyAutoLayout(autoLayout: AutoLayout) {
       return box ? { ...node, box } : node
     })
 
-  const locations = autoLayout(nodes, freshLayout, projection.visibleEdges)
-  if (freshLayout) {
+  const locations = autoLayout(
+    nodes,
+    freshLayout,
+    projection.visibleEdges,
+    projection.hiddenNodeIds,
+  )
+  if (freshLayout && autoLayout === perimeterLayout) {
+    state.layout(locations, { focusPerimeter: true })
+  } else if (freshLayout) {
     state.layout(
       centerLocationsInViewport(
         locations,

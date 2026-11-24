@@ -8,7 +8,11 @@ import {
   useState,
 } from 'react'
 import { Link, useParams } from 'react-router'
-import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
+import type {
+  ApiAddressEntry,
+  ApiProjectChain,
+  ApiProjectContract,
+} from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
@@ -16,10 +20,13 @@ import { IS_READONLY } from '../../../config/readonly'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconEyeClosed } from '../../../icons/IconEyeClosed'
+import { IconShield } from '../../../icons/IconShield'
 import { IconUnlinked } from '../../../icons/IconUnliked'
 import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useCriticalNow } from '../hooks/useCriticalNow'
+import { isOssificationCritical } from '../ossification'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
@@ -34,6 +41,17 @@ export function ListPanel() {
     throw new Error('Cannot use component outside of project page!')
   }
   const response = useQuery(useProjectQueryOptions(project))
+  const criticalFlags = useMemo(
+    () =>
+      response.data
+        ? response.data.entries.flatMap((entry) => [
+            ...entry.initialContracts.map((contract) => contract.critical),
+            ...entry.discoveredContracts.map((contract) => contract.critical),
+          ])
+        : [],
+    [response.data],
+  )
+  const nowSeconds = useCriticalNow(criticalFlags)
   if (response.isPending) {
     return <LoadingState />
   }
@@ -56,6 +74,7 @@ export function ListPanel() {
                 chain={chain}
                 blockNumber={blockNumber}
                 openedProject={project}
+                nowSeconds={nowSeconds}
               />
             )),
           )}
@@ -107,6 +126,7 @@ function ChainSection(props: {
   chain: string
   blockNumber: number
   openedProject: string
+  nowSeconds: number
 }) {
   const [open, setOpen] = useState(true)
   const onFocus = useCallback(() => setOpen(true), [])
@@ -155,6 +175,7 @@ function ChainSection(props: {
             duplicatedNames={duplicatedNames}
             openedProject={props.openedProject}
             sourceProject={entry.project}
+            nowSeconds={props.nowSeconds}
           />
         ))}
     </li>
@@ -207,13 +228,14 @@ function ChainHeader(props: {
 
 function AddressGroup(props: {
   title: string
-  entries: ApiAddressEntry[]
+  entries: (ApiAddressEntry | ApiProjectContract)[]
   onFocus: () => void
   startClosed: boolean
   chain: string
   duplicatedNames: ReadonlySet<string>
   openedProject: string
   sourceProject: string
+  nowSeconds: number
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const sortedEntries = useMemo(
@@ -269,6 +291,7 @@ function AddressGroup(props: {
               }
               openedProject={props.openedProject}
               sourceProject={props.sourceProject}
+              nowSeconds={props.nowSeconds}
             />
           ))}
         </ol>
@@ -282,12 +305,16 @@ const AddressEntry = memo(function AddressEntry({
   showAddress,
   openedProject,
   sourceProject,
+  nowSeconds,
 }: {
-  entry: ApiAddressEntry
+  entry: ApiAddressEntry | ApiProjectContract
   showAddress: boolean
   openedProject: string
   sourceProject: string
+  nowSeconds: number
 }) {
+  const isCritical =
+    'critical' in entry && isOssificationCritical(entry.critical, nowSeconds)
   const isSelected = usePanelStore((state) =>
     state.selected.includes(entry.address),
   )
@@ -330,6 +357,11 @@ const AddressEntry = memo(function AddressEntry({
         </span>
       )}
       <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
+        {isCritical && (
+          <span title="Ossification-critical" className="text-aux-yellow">
+            <IconShield className="size-3 shrink-0" />
+          </span>
+        )}
         {!IS_READONLY && (
           <UsageBadge
             address={entry.address}
