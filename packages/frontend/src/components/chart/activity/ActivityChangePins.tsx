@@ -37,7 +37,10 @@ const PIN_SIZE = 20
 export const CHANGE_PINS_TOP_MARGIN = PIN_SIZE + 16
 /** The chart's bottom margin, which holds the x axis labels. */
 const X_AXIS_HEIGHT = 25
-const MIN_PIN_SPACING = PIN_SIZE + 6
+const LOGO_SIZE = 14
+// How far each stacked logo sits from the one before it.
+const LOGO_STEP = 10
+const MIN_PIN_SPACING = getPinWidth(2) + 6
 const PLOT_WIDTH_PER_PIN = 160
 const MAX_PINS_HOVER = 6
 const MAX_PINS_TOUCH = 3
@@ -186,6 +189,7 @@ function Pin({
   const event = group.events[0] as ActivityChangeEvent
   const color = chartMeta[event.category]?.color
   const logos = getPinProjects(event, projects)
+  const width = getPinWidth(logos.length)
 
   return (
     <button
@@ -197,36 +201,43 @@ function Pin({
         .map((e) => getEventLabel(e, projects))
         .join('; ')}
       className="group/pin pointer-events-auto absolute top-0 cursor-pointer outline-none"
-      style={{ left: group.x - PIN_SIZE / 2, width: PIN_SIZE }}
+      style={{ left: group.x - width / 2, width }}
     >
+      {/* Down to the x axis, so the pin stands on its day. First, so the ring covers its top. */}
+      <span
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute left-1/2 w-0 border-l border-dashed opacity-50 transition-opacity',
+          'group-hover/pin:opacity-100 group-focus-visible/pin:opacity-100 group-data-[state=open]/pin:opacity-100',
+        )}
+        style={{ top: PIN_SIZE, height: stemHeight, borderColor: color }}
+      />
+      {/* The category's colour rings the logos of the projects behind it,
+          overlapping like an avatar stack when there are two. */}
       <span
         className={cn(
-          'relative flex items-center justify-center rounded-full border-2 bg-surface-primary',
+          'relative flex items-center rounded-full border-2 bg-surface-primary p-px',
           'group-focus-visible/pin:ring-2 group-focus-visible/pin:ring-brand',
           'group-data-[state=open]/pin:ring-2 group-data-[state=open]/pin:ring-primary/20',
         )}
-        style={{ width: PIN_SIZE, height: PIN_SIZE, borderColor: color }}
+        style={{ width, height: PIN_SIZE, borderColor: color }}
       >
-        {logos.length === 1 ? (
-          <img
-            src={logos[0]?.iconUrl}
-            alt=""
-            className="size-3.5 rounded-full"
-          />
-        ) : logos.length > 1 ? (
-          <span className="-space-x-1 flex">
-            {logos.map((project) => (
-              <img
-                key={project.slug}
-                src={project.iconUrl}
-                alt=""
-                className="size-2.5 rounded-full"
-              />
-            ))}
-          </span>
+        {logos.length > 0 ? (
+          logos.map((project, i) => (
+            <img
+              key={project.slug}
+              src={project.iconUrl}
+              alt=""
+              className={cn(
+                'relative size-3.5 shrink-0 rounded-full bg-surface-primary',
+                i > 0 && 'ring-1 ring-surface-primary',
+              )}
+              style={{ marginLeft: i > 0 ? LOGO_STEP - LOGO_SIZE : 0 }}
+            />
+          ))
         ) : (
           <span
-            className="size-2 rounded-full"
+            className="mx-auto size-2 rounded-full"
             style={{ backgroundColor: color }}
           />
         )}
@@ -236,17 +247,13 @@ function Pin({
           </span>
         )}
       </span>
-      {/* Down to the x axis, so the pin reads against its day. */}
-      <span
-        aria-hidden
-        className={cn(
-          'pointer-events-none absolute left-1/2 w-0 border-l border-dashed opacity-0 transition-opacity',
-          'group-hover/pin:opacity-100 group-focus-visible/pin:opacity-100 group-data-[state=open]/pin:opacity-100',
-        )}
-        style={{ top: PIN_SIZE, height: stemHeight, borderColor: color }}
-      />
     </button>
   )
+}
+
+/** A ring around one logo, widened by a step for each logo stacked after it. */
+function getPinWidth(logoCount: number) {
+  return PIN_SIZE + Math.max(0, logoCount - 1) * LOGO_STEP
 }
 
 /** The date, then each change on it with the projects that drove it. */
