@@ -10,7 +10,7 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 | `warningGlyphColor` | `frontend` | The `fill-warning` class. Warning glyphs keep `fill-yellow-700 dark:fill-yellow-300`, as `packages/frontend/DESIGN.md` says. |
 | `dotSeparator` | `frontend` | A plain space before a "·" separator in a string or JSX text. Use `DOT_SEPARATOR` from `~/utils/dotSeparator`, whose space does not break, so no wrapped line starts with "·". |
 
-The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too. `dotSeparator` skips a "·" that is alone in its element, since wrapping there is up to the layout.
+The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too. `dotSeparator` skips a "·" that is alone in its element, since wrapping there is up to the layout, and a "·" between two expressions with no text of its own (`{a} · {b}`).
 
 ## Adding a rule
 
