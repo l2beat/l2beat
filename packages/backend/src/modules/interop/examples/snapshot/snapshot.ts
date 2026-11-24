@@ -13,9 +13,8 @@ import {
   type MulticallV3Client,
   type MulticallV3Response,
   type Receipt,
+  RetryHandler,
   RpcClientCompat,
-  toRetryOptions,
-  withRetries,
 } from '@l2beat/shared'
 import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
@@ -51,22 +50,21 @@ export class RpcSnapshotClient extends RpcClientCompat {
       metricsEnabled: MetricsAggregator.metricsEnabled,
       maxCallsPerMinute: deps.callsPerMinute,
     })
-    const client = new EthRpcClient(http, deps.url, deps.generateId)
-    const retryOptions = toRetryOptions(deps.retryStrategy)
-    const compat = new RpcSnapshotClient(
+    const client = new EthRpcClient(
+      http,
+      deps.url,
+      deps.generateId,
+      undefined,
+      undefined,
+      undefined,
+      RetryHandler.create(deps.retryStrategy, logger),
+    )
+    return new RpcSnapshotClient(
       client,
       deps.chain,
       deps.inputs,
       deps.multicallClient,
     )
-    const wrapped = withRetries(compat, {
-      initialTimeoutMs: retryOptions.initialRetryDelayMs,
-      maxAttempts: retryOptions.maxRetries,
-      maxTimeoutMs: retryOptions.maxRetryDelayMs,
-      logger,
-    })
-
-    return wrapped
   }
 
   override async getLatestBlockNumber(): Promise<number> {

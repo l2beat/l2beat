@@ -750,10 +750,9 @@ describe(`${EthRpcClient.name} rate limit`, () => {
       const error = await client.getBlockNumber().catch((e: Error) => e)
 
       expect(error).toBeA(Error)
-      expect((error as Error).cause).toEqual({
-        status: 429,
-        rateLimit: { 'retry-after': '7' },
-      })
+      const cause = (error as Error).cause as Record<string, unknown>
+      expect(cause.status).toEqual(429)
+      expect(cause.rateLimit).toEqual({ 'retry-after': '7' })
     })
   }
 

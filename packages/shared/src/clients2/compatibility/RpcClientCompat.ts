@@ -24,7 +24,7 @@ import type {
   LogsClient,
   LogsTopicFilter,
 } from '../../clients/types'
-import { toRetryOptions } from '../../tools'
+import { RetryHandler } from '../../tools'
 import {
   EthRpcClient,
   type RpcBlock,
@@ -34,7 +34,6 @@ import {
   type RpcTransaction,
 } from '../EthRpcClient'
 import { Http } from '../Http'
-import { withRetries } from '../retries'
 
 export interface Receipt {
   blockHash?: string
@@ -139,22 +138,9 @@ export class RpcClientCompat implements IRpcClient {
         rpcClient: RpcClientCompat.name,
       }),
       { maxBatchSize: deps.maxBatchSize, logger },
+      RetryHandler.create(deps.retryStrategy, logger),
     )
-    const retryOptions = toRetryOptions(deps.retryStrategy)
-    const compat = new RpcClientCompat(client, deps.chain, deps.multicallClient)
-    const wrapped = withRetries(compat, {
-      initialTimeoutMs: retryOptions.initialRetryDelayMs,
-      // RetryHandler's maxRetries come after the first attempt
-      maxAttempts: retryOptions.maxRetries + 1,
-      maxTimeoutMs: retryOptions.maxRetryDelayMs,
-      logger,
-      shouldRetry: (error) =>
-        // Callers at the head poll for a block the RPC has not got yet
-        !(error instanceof NotFoundOnRpcError) &&
-        // getLogs has already split what a split could fix
-        !isLimitAnswer(error),
-    })
-    return wrapped
+    return new RpcClientCompat(client, deps.chain, deps.multicallClient)
   }
 
   async getLatestBlockNumber(): Promise<number> {
@@ -379,11 +365,17 @@ function isLimitAnswer(error: unknown): boolean {
     error instanceof Error &&
     error.message.startsWith('RPC call failed') &&
     isLimitExceededError(error) &&
-    !(
-      typeof error.cause === 'object' &&
-      error.cause !== null &&
-      'status' in error.cause
-    )
+    !hasErrorStatus(error.cause)
+  )
+}
+
+function hasErrorStatus(cause: unknown): boolean {
+  return (
+    typeof cause === 'object' &&
+    cause !== null &&
+    'status' in cause &&
+    typeof cause.status === 'number' &&
+    cause.status >= 400
   )
 }
 

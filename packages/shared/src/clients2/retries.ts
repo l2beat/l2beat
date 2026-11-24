@@ -1,12 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { readRateLimit } from '../clients/http/rateLimitHeaders'
 
 export interface RetryOptions {
   initialTimeoutMs: number
   maxAttempts: number
   maxTimeoutMs?: number
   logger?: Logger
-  shouldRetry?: (error: unknown) => boolean
 }
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
@@ -25,18 +23,10 @@ export async function retry<T>(
       }
       return await callback()
     } catch (error) {
-      if (
-        attempt >= options.maxAttempts ||
-        options.shouldRetry?.(error) === false
-      ) {
+      if (attempt >= options.maxAttempts) {
         throw error
       }
-      options.logger?.warn('Retrying', {
-        attempt,
-        error,
-        // Where the provider says what its limit is
-        rateLimit: readRateLimit(error),
-      })
+      options.logger?.warn('Retrying', { attempt, error })
       await new Promise((resolve) => setTimeout(resolve, nextTimeout))
       nextTimeout = Math.min(maxTimeoutMs, nextTimeout * 2)
     }

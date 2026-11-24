@@ -6,6 +6,7 @@ import { MulticallV3Client } from '../../clients/rpc/multicall/MulticallV3Client
 import { NotFoundOnRpcError, RpcClient } from '../../clients/rpc/RpcClient'
 import type { CallParameters } from '../../clients/rpc/types'
 import { withServer } from '../../test/withServer'
+import type { RetryHandlerVariant } from '../../tools'
 import { type IRpcClient, RpcClientCompat } from './RpcClientCompat'
 
 // The backend switches from RpcClient to RpcClientCompat with a flag. Both
@@ -16,6 +17,8 @@ type Answer =
   | { result: unknown }
   | { error: { code: number; message: string } }
   | { status: number; body: string }
+  /** Sent as it is, with no `jsonrpc` added */
+  | { envelope: Record<string, unknown> }
 
 interface Call {
   method: string
@@ -24,9 +27,19 @@ interface Call {
 
 interface Case {
   name: string
-  /** Called once per call, in the order the calls reach the RPC */
-  answer: (call: Call, index: number) => Answer
+  /**
+   * Called once per call, in the order the calls reach the RPC. `request`
+   * counts HTTP requests, of which a batch is one.
+   */
+  answer: (call: Call, index: number, request: number) => Answer
   run: (client: IRpcClient) => Promise<unknown>
+  /** TEST, with one retry, unless set */
+  retryStrategy?: RetryHandlerVariant
+  /**
+   * Calls sent in parallel reach the RPC in no set order, so which of them is
+   * refused, and sent again, differs from run to run
+   */
+  refusesAnyOf?: true
   /** Set when the case checks only that both clients fail */
   fails?: true
   /** Gives both clients a multicall deployed at block 1000 */
@@ -291,12 +304,136 @@ const CASES: Case[] = [
     answer: () => ({ result: '0x' }),
     run: (c) => c.multicall([callParams()], 1500),
     fails: true,
+    // Sends nothing, so nothing to retry: a retry would wait 1 + 2 + 4 s
+    retryStrategy: 'RELIABLE',
   },
   {
     name: 'a call that keeps failing',
     answer: () => ({ error: { code: -32000, message: 'header not found' } }),
     run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
     fails: true,
+  },
+  {
+    name: 'block header of block 0',
+    answer: () => ({ result: block(0) }),
+    run: (c) => c.getBlock(0, false),
+  },
+  {
+    name: 'logs from block 0',
+    answer: () => ({ result: [log(0)] }),
+    run: (c) => c.getLogs(0, 100),
+  },
+  {
+    name: 'a result sent with "error": null',
+    answer: () => ({
+      envelope: { jsonrpc: '2.0', result: '0x7b', error: null },
+    }),
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'receipts in a batch sent with "error": null',
+    answer: (call) => ({
+      envelope: {
+        jsonrpc: '2.0',
+        result: receipt(String(call.params[0])),
+        error: null,
+      },
+    }),
+    run: (c) => c.getTransactionReceipts([HASH_A, HASH_B]),
+  },
+  {
+    name: 'a result sent without jsonrpc',
+    answer: () => ({ envelope: { result: '0x7b' } }),
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'logs over a range the RPC splits, with the limit sent without jsonrpc',
+    answer: (call) => {
+      const { fromBlock, toBlock } = call.params[0] as Record<string, string>
+      if (Number(toBlock) - Number(fromBlock) > 100) {
+        return {
+          envelope: {
+            error: { code: -32005, message: 'Log response size exceeded' },
+          },
+        }
+      }
+      return { result: [log(Number(fromBlock))] }
+    },
+    run: (c) => c.getLogs(1, 800),
+  },
+  {
+    name: 'a call answered after a body that is not JSON',
+    answer: (_, i) =>
+      i === 0 ? { status: 200, body: '<html>busy</html>' } : { result: '0x7b' },
+    run: (c) => c.getBalance(EthereumAddress(ADDRESS_A), 100),
+  },
+  {
+    name: 'a batch answered after a body that is not JSON',
+    answer: (call, _, request) =>
+      request === 0
+        ? { status: 200, body: '<html>busy</html>' }
+        : { result: receipt(String(call.params[0])) },
+    run: (c) => c.getTransactionReceipts([HASH_A, HASH_B]),
+  },
+  {
+    name: 'a batch in which the RPC fails one call',
+    answer: (call) =>
+      call.params[0] === HASH_B
+        ? { error: { code: -32000, message: 'header not found' } }
+        : { result: receipt(HASH_A) },
+    run: (c) => c.getTransactionReceipts([HASH_A, HASH_B]),
+    fails: true,
+  },
+  {
+    name: 'multicall in 8 batches while every 5th request is refused',
+    answer: refuseEvery(5, (call) => ({
+      result: (call.params[0] as Record<string, string>).input,
+    })),
+    run: (c) =>
+      c.multicall(
+        Array.from({ length: 16 }, (_, i) => callParams(i + 1)),
+        1500,
+      ),
+    multicall: true,
+    retryStrategy: 'SCRIPT',
+    refusesAnyOf: true,
+  },
+  {
+    name: 'logs over a range the RPC splits while every 5th request is refused',
+    answer: refuseEvery(5, (call) => {
+      const { fromBlock, toBlock } = call.params[0] as Record<string, string>
+      if (Number(toBlock) - Number(fromBlock) > 100) {
+        return {
+          error: { code: -32005, message: 'Log response size exceeded' },
+        }
+      }
+      return { result: [log(Number(fromBlock))] }
+    }),
+    run: (c) => c.getLogs(1, 800),
+    retryStrategy: 'SCRIPT',
+    refusesAnyOf: true,
+  },
+  {
+    name: 'receipts in a batch refused once',
+    answer: refuseEvery(
+      2,
+      (call) => ({
+        result: receipt(String(call.params[0])),
+      }),
+      0,
+    ),
+    run: (c) => c.getTransactionReceipts([HASH_A, HASH_B]),
+  },
+  {
+    name: 'block timestamps in a batch refused once',
+    answer: refuseEvery(
+      2,
+      (call) => ({
+        result: block(Number(call.params[0])),
+      }),
+      0,
+    ),
+    run: (c) => c.getBlockTimestamps([1, 2, 3]),
   },
 ]
 
@@ -307,7 +444,12 @@ describe('RpcClient and RpcClientCompat parity', () => {
       const compat = await runOn(testCase, createCompat)
 
       // A split range is asked for in parallel, in no set order
-      expect(compat.calls).toEqualUnsorted(old.calls)
+      if (testCase.refusesAnyOf) {
+        expect(new Set(compat.calls)).toEqual(new Set(old.calls))
+        expect(compat.calls.length).toEqual(old.calls.length)
+      } else {
+        expect(compat.calls).toEqualUnsorted(old.calls)
+      }
       expect(compat.requests).toEqual(old.requests)
       if (testCase.fails) {
         expect(old.error).not.toEqual(undefined)
@@ -334,29 +476,45 @@ describe('RpcClient and RpcClientCompat parity', () => {
   })
 })
 
-type Create = (url: string, multicallClient?: MulticallV3Client) => IRpcClient
+type Create = (
+  url: string,
+  retryStrategy: RetryHandlerVariant,
+  multicallClient?: MulticallV3Client,
+) => IRpcClient
 
-const createOld: Create = (url, multicallClient) =>
+const createOld: Create = (url, retryStrategy, multicallClient) =>
   new RpcClient({
     url,
     chain: 'chain',
     http: new HttpClient(),
     logger: Logger.SILENT,
     callsPerMinute: 600_000,
-    retryStrategy: 'TEST',
+    retryStrategy,
     multicallClient,
   })
 
-const createCompat: Create = (url, multicallClient) =>
+const createCompat: Create = (url, retryStrategy, multicallClient) =>
   RpcClientCompat.create({
     url,
     chain: 'chain',
     http: new HttpClient(),
     logger: Logger.SILENT,
     callsPerMinute: 600_000,
-    retryStrategy: 'TEST',
+    retryStrategy,
     multicallClient,
   })
+
+/** Refuses every `n`th HTTP request with 429, counting from `first` */
+function refuseEvery(
+  n: number,
+  answer: Case['answer'],
+  first = n - 1,
+): Case['answer'] {
+  return (call, index, request) =>
+    request % n === first
+      ? { status: 429, body: 'Too Many Requests' }
+      : answer(call, index, request)
+}
 
 /** Two calls per batch; a batch's answer is its calldata, read back as one result */
 class StubMulticall extends MulticallV3Client {
@@ -398,7 +556,7 @@ async function runOn(testCase: Case, create: Create) {
           calls.push(`${call.method}(${JSON.stringify(call.params)})`)
           return {
             id: call.id,
-            answer: testCase.answer(call, calls.length - 1),
+            answer: testCase.answer(call, calls.length - 1, requests - 1),
           }
         })
         const http = answers.find(({ answer }) => 'status' in answer)?.answer
@@ -407,11 +565,11 @@ async function runOn(testCase: Case, create: Create) {
           res.end(http.body)
           return
         }
-        const envelopes = answers.map(({ id, answer }) => ({
-          jsonrpc: '2.0',
-          id,
-          ...answer,
-        }))
+        const envelopes = answers.map(({ id, answer }) =>
+          'envelope' in answer
+            ? { id, ...answer.envelope }
+            : { jsonrpc: '2.0', id, ...answer },
+        )
         res.setHeader('Content-Type', 'application/json')
         res.end(
           JSON.stringify(Array.isArray(request) ? envelopes : envelopes[0]),
@@ -420,7 +578,13 @@ async function runOn(testCase: Case, create: Create) {
     },
     (url) =>
       testCase
-        .run(create(url, testCase.multicall ? new StubMulticall() : undefined))
+        .run(
+          create(
+            url,
+            testCase.retryStrategy ?? 'TEST',
+            testCase.multicall ? new StubMulticall() : undefined,
+          ),
+        )
         .then((value) => ({ value: plain(value), error: undefined }))
         .catch((error: unknown) => ({ value: undefined, error })),
   )
@@ -480,7 +644,11 @@ function block(number: number) {
   return {
     number: hex(number),
     hash: '0x' + number.toString(16).padStart(64, '0'),
-    parentHash: '0x' + (number - 1).toString(16).padStart(64, '0'),
+    parentHash:
+      '0x' +
+      Math.max(number - 1, 0)
+        .toString(16)
+        .padStart(64, '0'),
     nonce: '0x0000000000000000',
     sha3Uncles: '0x' + '1d'.repeat(32),
     logsBloom: '0x' + '00'.repeat(256),

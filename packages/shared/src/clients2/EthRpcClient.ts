@@ -7,7 +7,9 @@ import {
   RpcBatcher,
   type RpcBatcherOptions,
 } from '../clients/rpc/RpcBatcher'
+import { isLimitExceededError } from '../clients/rpc/RpcClient'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
+import type { RetryHandler } from '../tools/RetryHandler'
 import type { Http, HttpResponse } from './Http'
 
 export type BlockParameter =
@@ -45,6 +47,8 @@ export class EthRpcClient {
     private timeout?: number,
     private readonly rpcMetrics?: RpcMetricsRecorder,
     batching?: RpcBatcherOptions,
+    /** Retries each request, as RpcClient did; none when not given */
+    private readonly retryHandler?: RetryHandler,
   ) {
     this.batcher = new RpcBatcher(batching)
   }
@@ -286,46 +290,20 @@ export class EthRpcClient {
     let rejected = false
 
     try {
-      const response = await this.http.fetch(this.url, {
-        method: 'POST',
-        body: JSON.stringify(
-          paramsList.map((params, i) => ({
-            jsonrpc: '2.0',
-            id: ids[i],
-            method,
-            params,
-          })),
-        ),
-        headers: { 'Content-Type': 'application/json' },
-        timeout: this.timeout,
-      })
-      let data: unknown
-      try {
-        data = JSON.parse(response.body)
-      } catch {}
-      if (isBatchRejected(response.status, data)) {
+      const envelopes = await this.retrying(() =>
+        this.fetchBatch(method, paramsList, ids),
+      )
+      if (envelopes === BATCH_REJECTED) {
         rejected = true
         return BATCH_REJECTED
       }
-      const parsed = v.array(JsonRpcResponse).safeValidate(data)
-      if (!response.ok || !parsed.success) {
-        throw new Error(
-          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-          { cause: httpCause(response) },
-        )
-      }
-      if (parsed.data.some((envelope) => 'result' in envelope)) {
-        this.http.answered(response.sentAt)
-      }
-      const byId = new Map(
-        parsed.data.map((envelope) => [envelope.id, envelope]),
-      )
+      const byId = new Map(envelopes.map((envelope) => [envelope.id, envelope]))
       return ids.map((id) => {
         const envelope = byId.get(id)
         if (!envelope) {
           throw new Error('RPC call failed. ID mismatch.')
         }
-        if ('error' in envelope) {
+        if (isErrorEnvelope(envelope)) {
           throw new Error(
             `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
           )
@@ -340,57 +318,126 @@ export class EthRpcClient {
     }
   }
 
+  private async fetchBatch(
+    method: string,
+    paramsList: unknown[],
+    ids: (string | number)[],
+  ): Promise<JsonRpcResponse[] | typeof BATCH_REJECTED> {
+    const response = await this.http.fetch(this.url, {
+      method: 'POST',
+      body: JSON.stringify(
+        paramsList.map((params, i) => ({
+          jsonrpc: '2.0',
+          id: ids[i],
+          method,
+          params,
+        })),
+      ),
+      headers: { 'Content-Type': 'application/json' },
+      timeout: this.timeout,
+    })
+    let data: unknown
+    try {
+      data = JSON.parse(response.body)
+    } catch {}
+    if (isBatchRejected(response.status, data)) {
+      return BATCH_REJECTED
+    }
+    const parsed = v.array(JsonRpcResponse).safeValidate(data)
+    if (!response.ok || !parsed.success) {
+      throw new Error(
+        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        { cause: httpCause(response) },
+      )
+    }
+    if (parsed.data.some((envelope) => !isErrorEnvelope(envelope))) {
+      this.http.answered(response.sentAt)
+    }
+    return parsed.data
+  }
+
   async rawCall(method: string, params: unknown = []) {
     const id = this.nextId()
 
     try {
-      const response = await this.http.fetch(this.url, {
-        method: 'POST',
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          id,
-          method,
-          params,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-        timeout: this.timeout,
-      })
-      let data: unknown
-      let jsonSuccess = true
-      try {
-        data = JSON.parse(response.body)
-      } catch {
-        jsonSuccess = false
-      }
-      const parsed = JsonRpcResponse.safeValidate(data)
-      if (!jsonSuccess || !parsed.success) {
-        throw new Error(
-          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-          { cause: httpCause(response) },
-        )
-      }
-      const envelope = parsed.data
-      if ('error' in envelope) {
+      const envelope = await this.retrying(() =>
+        this.fetchCall(method, params, id),
+      )
+      if (isErrorEnvelope(envelope)) {
         throw new Error(
           `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
-          response.ok ? undefined : { cause: httpCause(response) },
         )
-      }
-      if (!response.ok) {
-        throw new Error(
-          `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-          { cause: httpCause(response) },
-        )
-      }
-      this.http.answered(response.sentAt)
-      if (envelope.id !== id) {
-        throw new Error('RPC call failed. ID mismatch.')
       }
       return envelope.result
     } finally {
       this.rpcMetrics?.record({
         method,
       })
+    }
+  }
+
+  /** Throws what a retry can fix, returns an answer to the call */
+  private async fetchCall(
+    method: string,
+    params: unknown,
+    id: string | number,
+  ): Promise<JsonRpcResponse> {
+    const response = await this.http.fetch(this.url, {
+      method: 'POST',
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id,
+        method,
+        params,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+      timeout: this.timeout,
+    })
+    let data: unknown
+    let jsonSuccess = true
+    try {
+      data = JSON.parse(response.body)
+    } catch {
+      jsonSuccess = false
+    }
+    const parsed = JsonRpcResponse.safeValidate(data)
+    if (!jsonSuccess || !parsed.success) {
+      throw new Error(
+        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
+        { cause: httpCause(response) },
+      )
+    }
+    const envelope = parsed.data
+    if (isErrorEnvelope(envelope)) {
+      // The range holds too many logs: the caller splits it, not retries
+      if (response.ok && isLimitExceededError(envelope.error)) {
+        return envelope
+      }
+      throw new Error(
+        `RPC call failed. RPC code: ${envelope.error.code}, message: ${envelope.error.message}`,
+        response.ok ? undefined : { cause: httpCause(response) },
+      )
+    }
+    if (!response.ok) {
+      throw new Error('RPC call failed. HTTP error status', {
+        cause: { ...httpCause(response), body: response.body },
+      })
+    }
+    this.http.answered(response.sentAt)
+    if (envelope.id !== id) {
+      throw new Error('RPC call failed. ID mismatch.')
+    }
+    return envelope
+  }
+
+  private async retrying<T>(attempt: () => Promise<T>): Promise<T> {
+    try {
+      return await attempt()
+    } catch (error) {
+      if (!this.retryHandler) {
+        throw error
+      }
+      return await this.retryHandler.retry(attempt, { error })
     }
   }
 }
@@ -443,10 +490,10 @@ function encodeTransaction(transaction: TransactionParameter) {
 
 function encodeFilter(filter: FilterParameter) {
   const encoded: Record<string, unknown> = {}
-  if (filter.fromBlock) {
+  if (filter.fromBlock !== undefined) {
     encoded.fromBlock = encodeBlock(filter.fromBlock)
   }
-  if (filter.toBlock) {
+  if (filter.toBlock !== undefined) {
     encoded.toBlock = encodeBlock(filter.toBlock)
   }
   if (filter.address) {
@@ -689,22 +736,31 @@ const FeeHistory = v.object({
   reward: v.array(v.array(vQuantity)).optional(),
 })
 
-const JsonRpcResponse = v.union([
-  v.passthroughObject({
-    jsonrpc: v.literal('2.0'),
-    error: v.passthroughObject({
-      code: v.number(),
-      message: v.string(),
-      data: v.unknown().optional(),
-    }),
-    id: v.union([v.null(), v.string(), v.number()]),
+// `jsonrpc` is optional, as some nodes leave it out and RpcClient read them
+const JsonRpcError = v.passthroughObject({
+  jsonrpc: v.literal('2.0').optional(),
+  error: v.passthroughObject({
+    code: v.number(),
+    message: v.string(),
+    data: v.unknown().optional(),
   }),
+  id: v.union([v.null(), v.string(), v.number()]),
+})
+type JsonRpcError = v.infer<typeof JsonRpcError>
+const JsonRpcResponse = v.union([
+  JsonRpcError,
   v.passthroughObject({
-    jsonrpc: v.literal('2.0'),
+    jsonrpc: v.literal('2.0').optional(),
     result: v.unknown(),
     id: v.union([v.null(), v.string(), v.number()]),
   }),
 ])
+type JsonRpcResponse = v.infer<typeof JsonRpcResponse>
+
+/** A result can come with `"error": null` */
+function isErrorEnvelope(envelope: JsonRpcResponse): envelope is JsonRpcError {
+  return JsonRpcError.safeValidate(envelope).success
+}
 
 const alphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
