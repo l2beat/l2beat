@@ -33,6 +33,19 @@ describe(ZkStackPlugin.name, () => {
 
       expect(result).toEqual(undefined)
     })
+
+    it('matches the earliest of identical ERC-20 withdrawals', () => {
+      const db = new InMemoryEventDb()
+      addBridgeBurn(db, '0xbb', 200)
+      const earliest = addBridgeBurn(db, '0xaa', 100)
+
+      const result = new ZkStackPlugin({
+        get: () => undefined,
+      } as unknown as InteropConfigStore).match(bridgeMintL1(2741), db)
+
+      const transfer = result?.find((r) => r.kind === 'InteropTransfer')
+      expect(transfer?.src.event).toEqual(earliest)
+    })
   })
 })
 
@@ -70,6 +83,33 @@ function addWithdrawal(
   )
   db.addEvent(withdrawal)
   return withdrawal
+}
+
+function addBridgeBurn(
+  db: InMemoryEventDb,
+  txHash: string,
+  timestamp: UnixTime,
+) {
+  const ctx = { chain: 'abstract', txHash, timestamp }
+  const burn = event(
+    'zkstack.BridgeBurn',
+    {
+      matchId: MATCH_ID,
+      assetId: '0x01',
+      receiver: RECEIVER,
+      srcAmount: 1n,
+    },
+    { ...ctx, logIndex: 1 },
+  )
+  db.addEvent(burn)
+  db.addEvent(
+    event(
+      'zkstack.L1MessageSent',
+      { $dstChain: 'ethereum' },
+      { ...ctx, logIndex: 2 },
+    ),
+  )
+  return burn
 }
 
 function bridgeMintL1(chainId: number) {

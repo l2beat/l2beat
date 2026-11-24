@@ -404,9 +404,10 @@ export class PolygonPlugin implements InteropPluginResyncable {
     }
 
     if (L1WithdrawalFinalized.checkType(event)) {
-      const withdrawal = db.find(L2WithdrawalInitiated, {
-        matchId: event.args.matchId,
-      })
+      // Earliest first, so an identical newer withdrawal can't leave an older one to expire
+      const withdrawal = db
+        .findAll(L2WithdrawalInitiated, { matchId: event.args.matchId })
+        .sort((a, b) => a.ctx.timestamp - b.ctx.timestamp)[0]
       if (!withdrawal) return
 
       const config = this.configs.get(PolygonConfig)

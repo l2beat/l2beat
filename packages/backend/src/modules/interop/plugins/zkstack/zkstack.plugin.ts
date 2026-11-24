@@ -608,10 +608,13 @@ export class ZkStackPlugin implements InteropPluginResyncable {
         ]
       }
 
-      const bridgeBurn = db.find(BridgeBurn, {
-        matchId: event.args.matchId,
-        ctx: { chain: srcChain },
-      })
+      // Earliest first, so an identical newer burn can't leave an older one to expire
+      const bridgeBurn = db
+        .findAll(BridgeBurn, {
+          matchId: event.args.matchId,
+          ctx: { chain: srcChain },
+        })
+        .sort((a, b) => a.ctx.timestamp - b.ctx.timestamp)[0]
       if (!bridgeBurn) return
 
       const l1MessageSent = db.find(L1MessageSent, {
