@@ -7,9 +7,7 @@ export function ContractsUpdated() {
     <Callout
       className="my-2 p-4"
       color="yellow"
-      icon={
-        <ShieldIcon className="size-5 fill-icon-warning" />
-      }
+      icon={<ShieldIcon className="size-5 fill-icon-warning" />}
       body={
         <div className="text-paragraph-15 md:text-paragraph-16">
           <strong>Note:</strong> {CONTRACTS_UPDATED_NOTE}

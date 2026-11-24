@@ -227,9 +227,7 @@ export function ProjectNameMobileStatusIcons({
       {project.statuses?.yellowWarning && (
         <MobileProjectIconTooltip
           label="Warning"
-          icon={
-            <ShieldIcon className="size-4 fill-icon-warning" />
-          }
+          icon={<ShieldIcon className="size-4 fill-icon-warning" />}
         >
           <Markdown inline ignoreGlossary>
             {project.statuses.yellowWarning}
@@ -481,9 +479,7 @@ function getTooltipSections(project: ProjectCellProject) {
       id: 'yellow-warning',
       text: project.statuses.yellowWarning,
       variant: 'warning',
-      icon: (
-        <ShieldIcon className="size-4 fill-icon-warning" />
-      ),
+      icon: <ShieldIcon className="size-4 fill-icon-warning" />,
     })
   }
 
