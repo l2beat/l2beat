@@ -15,6 +15,7 @@ import {
   Popover,
   PopoverAnchor,
   PopoverContent,
+  PopoverPortal,
 } from '~/components/core/Popover'
 import {
   Tooltip,
@@ -161,16 +162,20 @@ export function ActivityChangePins({
             <PinTooltip group={group} projects={projects} hidden={!!openKey}>
               <PopoverAnchor asChild>{pin}</PopoverAnchor>
             </PinTooltip>
-            <PopoverContent
-              side="bottom"
-              align="center"
-              sideOffset={6}
-              collisionPadding={16}
-              aria-label="Change breakdown"
-              className="max-h-(--radix-popover-content-available-height) w-[360px] overflow-y-auto p-4"
-            >
-              {details(group, index)}
-            </PopoverContent>
+            {/* In place, it would inherit the overlay's pointer-events-none
+                and be clipped by the chart's box. */}
+            <PopoverPortal>
+              <PopoverContent
+                side="bottom"
+                align="center"
+                sideOffset={6}
+                collisionPadding={16}
+                aria-label="Change breakdown"
+                className="max-h-(--radix-popover-content-available-height) w-[360px] overflow-y-auto p-4"
+              >
+                {details(group, index)}
+              </PopoverContent>
+            </PopoverPortal>
           </Popover>
         )
       })}
@@ -436,12 +441,12 @@ function ChangeDetails({
           />
         ))}
       </div>
-      <TooltipFootnote className="mt-3">
+      <p className="mt-3 text-2xs text-secondary leading-snug">
         Pins mark days when a category moved far outside its usual range. Each
         project is compared with its median day over the previous{' '}
         {BASELINE_DAYS} days; the baseline is the sum of those medians. This
         shows where activity changed, not why.
-      </TooltipFootnote>
+      </p>
       <div className="mt-3 flex items-center justify-between gap-2 border-divider border-t pt-3">
         {position.count > 1 ? (
           <div className="flex items-center gap-1.5">
