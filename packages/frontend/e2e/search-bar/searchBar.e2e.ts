@@ -71,3 +71,31 @@ function firstResult(page: Page) {
 function highlightedResult(page: Page) {
   return page.locator('[role="option"][aria-selected="true"]')
 }
+
+/**
+ * Phones in landscape are wide enough for the floating palette but short.
+ * Opens it in such a viewport (an iPhone's, minus Safari's bars) and on one
+ * shorter than the palette itself, and checks the whole dialog is on screen.
+ */
+for (const viewport of [
+  { width: 932, height: 560 },
+  { width: 932, height: 300 },
+]) {
+  test(`the dialog fits a ${viewport.width}x${viewport.height} viewport`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport)
+    await page.goto('/scaling/summary', { waitUntil: 'networkidle' })
+    await page.keyboard.press('/')
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    // Waits out the open animation, which scales the dialog.
+    await page.waitForTimeout(300)
+    const box = await dialog.boundingBox()
+    expect(box?.y).toBeGreaterThanOrEqual(0)
+    expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(
+      viewport.height,
+    )
+    await expect(page.getByRole('combobox')).toBeInViewport({ ratio: 1 })
+  })
+}
