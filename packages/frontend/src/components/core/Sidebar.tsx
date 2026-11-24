@@ -128,7 +128,11 @@ function Sidebar({
                 tablets up. */}
             <Drawer.Popup
               id={MOBILE_SIDEBAR_ID}
-              className="h-full w-full bg-background/99 text-primary shadow-lg outline-none transition-[transform,visibility] duration-450 ease-drawer [transform:translateX(var(--drawer-swipe-movement-x))] data-closed:invisible data-ending-style:duration-[calc(var(--drawer-swipe-strength,1)*300ms)] data-swiping:duration-0 max-sm:transition-none sm:max-w-sm md:max-w-60 data-closed:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]"
+              // Off-screen while closed, and out of reach from the moment it
+              // starts closing. Not `visibility: hidden`: Base UI finds nothing
+              // to focus in a hidden popup when it opens, and traps no focus.
+              inert={!openMobile}
+              className="h-full w-full bg-background/99 text-primary shadow-lg outline-none transition-transform duration-450 ease-drawer [transform:translateX(var(--drawer-swipe-movement-x))] data-ending-style:duration-[calc(var(--drawer-swipe-strength,1)*300ms)] data-swiping:duration-0 max-sm:transition-none sm:max-w-sm md:max-w-60 data-closed:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]"
               render={keepRendered}
             >
               <Drawer.Title className="sr-only">Menu</Drawer.Title>
@@ -162,8 +166,8 @@ function Sidebar({
 /**
  * Drops the `hidden` Base UI sets on a closed, kept-mounted drawer, which
  * Tailwind's preflight turns into an unbeatable `display: none`. The closed
- * menu stays laid out, invisible and off-screen, so opening it only reveals it:
- * styling, laying out and painting it on tap stalled its first frames.
+ * menu stays laid out off-screen, so opening it only slides it in: styling,
+ * laying out and painting it on tap stalled its first frames.
  */
 function keepRendered({ hidden: _, ...props }: React.ComponentProps<'div'>) {
   return <div {...props} />
