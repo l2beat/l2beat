@@ -7,6 +7,7 @@ import {
 import { QUANTUM_RESISTANCE_TOOLTIPS } from '~/components/projects/quantumResistanceTooltips'
 import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { TrustedSetupsByProofSystemSection } from '~/pages/zk-catalog/v2/project/components/header/ZkCatalogProjectSummary'
+import { RiskList } from '../RiskList'
 import type { ProverInfoData } from './StateValidationSection'
 
 export function ProverInfo({ proverInfo }: { proverInfo: ProverInfoData }) {
@@ -47,6 +48,13 @@ export function ProverInfo({ proverInfo }: { proverInfo: ProverInfoData }) {
       <TrustedSetupsByProofSystemSection
         trustedSetupsByProofSystem={proverInfo.trustedSetups}
         variant="l2"
+      />
+      <RiskList
+        risks={proverInfo.trustedSetupWarnings.map((text) => ({
+          text,
+          isCritical: false,
+        }))}
+        className="col-span-full mt-2 md:mt-2"
       />
     </div>
   )

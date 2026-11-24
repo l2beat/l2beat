@@ -36,6 +36,7 @@ describe(getTrustedSetupsSectionFromTrustedSetups.name, () => {
         participantCount: undefined,
         contributionCount: 30,
         phases: setup.phases,
+        warning: undefined,
         proofSystems: [first, second],
       },
     ])

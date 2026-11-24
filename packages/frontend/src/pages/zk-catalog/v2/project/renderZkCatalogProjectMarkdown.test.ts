@@ -375,6 +375,7 @@ const ENTRY: ProjectZkCatalogEntry = {
   header: {
     description: 'SP1 Turbo is a zkVM for RISC-V programs.',
     links: [],
+    trustedSetupWarnings: [],
     techStack: {
       zkVM: [tag('STARK', 'Plonky3'), tag('ISA', 'RISC-V')],
       finalWrap: [GROTH16],

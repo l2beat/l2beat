@@ -1,6 +1,7 @@
 import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
+import { getSingleParticipantSectionWarning } from './getSingleParticipantTrustedSetupWarnings'
 
 export function getTrustedSetupsSection(
   project: Project<'zkCatalogInfo'>,
@@ -29,6 +30,7 @@ export function getTrustedSetupsSectionFromTrustedSetups(
         participantCount: ts.participantCount,
         contributionCount: ts.contributionCount,
         phases: ts.phases,
+        warning: getSingleParticipantSectionWarning(ts),
       }
     } else {
       trustedSetup.proofSystems.push(ts.proofSystem)

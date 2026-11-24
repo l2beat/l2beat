@@ -212,6 +212,7 @@ describe(renderProjectSection.name, () => {
             name: 'SP1',
             icon: '/icons/sp1.png',
             href: '/zk-catalog/sp1',
+            trustedSetupWarnings: [],
             trustedSetups: {
               'Groth16-bn254': {
                 trustedSetups: [

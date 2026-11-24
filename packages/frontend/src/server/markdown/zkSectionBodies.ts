@@ -17,6 +17,7 @@ import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/ut
 import { getTrustedSetupParticipantSummaries } from '~/utils/project/getTrustedSetupParticipantSummaries'
 import { configMarkdown } from './configMarkdown'
 import { bulletList, heading, joinBlocks, link, subsection } from './markdown'
+import { renderRisks } from './renderSectionParts'
 
 /*
  * Markdown bodies of the sections describing a proving system (ZK catalog and
@@ -41,6 +42,9 @@ export function renderTrustedSetups(
               `${label}: ${value}${unit ? ` ${unit}` : ''}${description ? ` (${description})` : ''}`,
           ),
         ]),
+        renderRisks(
+          setup.warning ? [{ text: setup.warning, isCritical: false }] : [],
+        ),
         configMarkdown(setup.description, level + 1),
       ]),
     ),

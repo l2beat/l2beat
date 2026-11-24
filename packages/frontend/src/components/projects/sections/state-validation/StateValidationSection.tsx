@@ -17,6 +17,8 @@ export interface ProverInfoData {
   href: string
   quantumResistant?: boolean
   trustedSetups: TrustedSetupsByProofSystem
+  /** One per trusted setup of this project's verifiers that rests on a single participant. */
+  trustedSetupWarnings: string[]
 }
 
 export interface StateValidationSectionProps extends ProjectSectionProps {

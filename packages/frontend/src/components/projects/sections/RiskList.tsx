@@ -1,8 +1,10 @@
 import { CRITICAL_TEXT_CLASS } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
+import { cn } from '~/utils/cn'
 
 export interface RiskList {
   risks: TechnologyRisk[]
+  className?: string
 }
 
 export interface TechnologyRisk {
@@ -10,13 +12,18 @@ export interface TechnologyRisk {
   isCritical: boolean
 }
 
-export function RiskList({ risks }: RiskList) {
+export function RiskList({ risks, className }: RiskList) {
   if (risks.length === 0) {
     return null
   }
 
   return (
-    <ul className="mt-4 rounded-lg bg-surface-negative p-4 md:mt-6">
+    <ul
+      className={cn(
+        'mt-4 rounded-lg bg-surface-negative p-4 md:mt-6',
+        className,
+      )}
+    >
       {risks.map((risk, i) => (
         <li className="mt-2 flex gap-3 first:mt-0" key={i}>
           <ShieldIcon className="shrink-0 fill-negative" />

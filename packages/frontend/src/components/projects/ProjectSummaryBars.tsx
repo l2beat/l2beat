@@ -12,6 +12,7 @@ interface Project {
   header?: {
     warning?: string
     redWarning?: ProjectRedWarning
+    trustedSetupWarnings?: string[]
     emergencyWarning?: string
   }
 }
@@ -32,6 +33,7 @@ export function ProjectSummaryBars({
     !project.underReviewStatus &&
     !project.header?.warning &&
     !project.header?.redWarning &&
+    !project.header?.trustedSetupWarnings?.length &&
     !project.header?.emergencyWarning
   ) {
     return null
@@ -67,6 +69,11 @@ export function ProjectSummaryBars({
           {project.header.redWarning.text}
         </Banner>
       )}
+      {project.header?.trustedSetupWarnings?.map((warning) => (
+        <Banner key={warning} type="negative" centered asMarkdown>
+          {warning}
+        </Banner>
+      ))}
       {project.header?.emergencyWarning && (
         <Banner type="warning" centered asMarkdown>
           {project.header.emergencyWarning}

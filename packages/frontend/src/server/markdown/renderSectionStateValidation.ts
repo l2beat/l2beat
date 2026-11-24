@@ -73,6 +73,9 @@ function renderProverInfo(prover: ProverInfoData, level: number) {
         ),
       ),
     ),
+    renderRisks(
+      prover.trustedSetupWarnings.map((text) => ({ text, isCritical: false })),
+    ),
   ])
 }
 
