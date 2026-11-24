@@ -23,14 +23,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
-import { CustomLink } from '~/components/link/CustomLink'
 import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
-import { ChevronIcon } from '~/icons/Chevron'
 import { CloseIcon } from '~/icons/Close'
-import { buildCompareUrl } from '~/pages/layer2s/compare/utils/buildCompareUrl'
-import { createDefaultChartConfig } from '~/pages/layer2s/compare/utils/compareChartState'
-import { COMPARE_PAGE_PATH } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type {
   ActivityChangeEvent,
   ActivityChangeEventsData,
@@ -120,16 +115,13 @@ export function ActivityChangePins({
     () => getPinGroups(events, chartData, width, canHover),
     [events, chartData, width, canHover],
   )
-  const openIndex = groups.findIndex((g) => g.key === openKey)
-  const openGroup = groups[openIndex]
+  const openGroup = groups.find((g) => g.key === openKey)
 
-  const details = (group: PinGroup, index: number) => (
+  const details = (group: PinGroup) => (
     <ChangeDetails
       events={group.events}
       projects={projects}
       chartMeta={chartMeta}
-      position={{ index, count: groups.length }}
-      onStep={(direction) => setOpenKey(groups[index + direction]?.key)}
       onClose={() => setOpenKey(undefined)}
       inDrawer={!canHover}
     />
@@ -141,7 +133,7 @@ export function ActivityChangePins({
       data-role="activity-change-pins"
       className="pointer-events-none absolute inset-0 z-10"
     >
-      {groups.map((group, index) => {
+      {groups.map((group) => {
         const pin = (
           <Pin
             group={group}
@@ -179,7 +171,7 @@ export function ActivityChangePins({
                 // the card, it takes the tooltip's dark surface, not the page's.
                 className="max-h-(--radix-popover-content-available-height) w-[328px] overflow-y-auto border border-divider border-solid p-3 shadow-none! dark:bg-header-secondary"
               >
-                {details(group, index)}
+                {details(group)}
               </PopoverContent>
             </PopoverPortal>
           </Popover>
@@ -197,7 +189,7 @@ export function ActivityChangePins({
             {/* Room on the right for the close button's hit area, which sits
                 past the content edge; the scroll box would clip it. */}
             <DrawerHeader className="-mr-[9px] min-h-0 overflow-y-auto pr-[9px] pb-8">
-              {openGroup && details(openGroup, openIndex)}
+              {openGroup && details(openGroup)}
             </DrawerHeader>
           </DrawerContent>
         </Drawer>
@@ -381,20 +373,15 @@ function ChangeDetails({
   events: groupEvents,
   projects,
   chartMeta,
-  position,
-  onStep,
   onClose,
   inDrawer,
 }: {
   events: ActivityChangeEvent[]
   projects: Record<string, ActivityChangeProject>
   chartMeta: ChartMeta
-  position: { index: number; count: number }
-  onStep: (direction: -1 | 1) => void
   onClose: () => void
   inDrawer: boolean
 }) {
-  const first = groupEvents[0] as ActivityChangeEvent
   const events = [...groupEvents].sort((a, b) => a.timestamp - b.timestamp)
   const timestamps = events.map((e) => e.timestamp)
   const from = Math.min(...timestamps)
@@ -403,28 +390,6 @@ function ChangeDetails({
   const isOneDay = from === to
   const titleText = formatRange(from, to + UnixTime.DAY)
   const titleClassName = 'font-medium text-label-value-14 text-primary'
-  const compareSlugs = [
-    ...new Set(
-      groupEvents.flatMap((event) =>
-        getDrivers(event).flatMap(([id]) =>
-          projects[id] ? [projects[id].slug] : [],
-        ),
-      ),
-    ),
-  ]
-  const compareUrl = buildCompareUrl(COMPARE_PAGE_PATH, {
-    projects: compareSlugs,
-    range: {
-      from: from - 45 * UnixTime.DAY,
-      to: to + 45 * UnixTime.DAY,
-    },
-    charts: [
-      {
-        ...createDefaultChartConfig('activity'),
-        activity: { unit: first.metric },
-      },
-    ],
-  })
 
   return (
     <div className="flex flex-col text-left">
@@ -435,15 +400,16 @@ function ChangeDetails({
         ) : (
           <span className={titleClassName}>{titleText}</span>
         )}
-        <IconButton
-          label="Close"
+        <button
+          type="button"
+          aria-label="Close"
+          title="Close"
           onClick={onClose}
-          variant="ghost"
           // The glyph, not the hit area, ends on the content edge.
-          className="-mr-[9px] -my-1.5"
+          className="-mr-[9px] -my-1.5 flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-surface-secondary"
         >
           <CloseIcon className="size-2.5" />
-        </IconButton>
+        </button>
       </div>
       <div className="flex flex-col divide-y divide-divider">
         {events.map((event) => (
@@ -457,38 +423,6 @@ function ChangeDetails({
           />
         ))}
       </div>
-      {(position.count > 1 || compareSlugs.length > 0) && (
-        <div className="mt-2.5 flex items-center justify-between gap-2 border-divider border-t pt-3">
-          {position.count > 1 ? (
-            <div className="flex items-center gap-1.5">
-              <IconButton
-                label="Previous change"
-                onClick={() => onStep(-1)}
-                disabled={position.index === 0}
-              >
-                <ChevronIcon className="size-3 rotate-90" />
-              </IconButton>
-              <span className="text-2xs text-secondary tabular-nums">
-                {position.index + 1} of {position.count}
-              </span>
-              <IconButton
-                label="Next change"
-                onClick={() => onStep(1)}
-                disabled={position.index === position.count - 1}
-              >
-                <ChevronIcon className="-rotate-90 size-3" />
-              </IconButton>
-            </div>
-          ) : (
-            <span />
-          )}
-          {compareSlugs.length > 0 && (
-            <CustomLink href={compareUrl} className="text-label-value-13">
-              Open in Compare →
-            </CustomLink>
-          )}
-        </div>
-      )}
     </div>
   )
 }
@@ -544,7 +478,9 @@ function EventDetails({
         vs {formatActivityCount(countPerSecond(event.baseline))} usual (past{' '}
         {BASELINE_DAYS} days)
       </p>
-      <ul className="mt-2 flex flex-col">
+      {/* One grid for all rows, so the values line up and the share sits
+          right after them, as wide as its widest entry. */}
+      <ul className="mt-2 grid grid-cols-[minmax(0,1fr)_auto_auto] gap-x-2">
         {drivers.map(([projectId, delta]) => {
           const project = projects[projectId]
           return (
@@ -604,54 +540,20 @@ function ContributorRow({
   muted?: boolean
 }) {
   return (
-    <li className="flex items-baseline justify-between gap-2 py-1 text-label-value-13">
+    <li className="col-span-3 grid grid-cols-subgrid items-baseline py-1 text-label-value-13">
       <div className="min-w-0">{label}</div>
-      <span className="flex shrink-0 items-baseline gap-2 whitespace-nowrap tabular-nums">
-        <span className={muted ? 'text-secondary' : 'font-medium'}>
-          {formatSignedRate(delta)}
-        </span>
-        <span className="w-20 text-right text-2xs text-secondary">
-          {share ?? ''}
-        </span>
+      <span
+        className={cn(
+          'whitespace-nowrap text-right tabular-nums',
+          muted ? 'text-secondary' : 'font-medium',
+        )}
+      >
+        {formatSignedRate(delta)}
+      </span>
+      <span className="whitespace-nowrap text-right text-2xs text-secondary tabular-nums">
+        {share ?? ''}
       </span>
     </li>
-  )
-}
-
-function IconButton({
-  label,
-  onClick,
-  disabled,
-  variant = 'filled',
-  className,
-  children,
-}: {
-  label: string
-  onClick: () => void
-  disabled?: boolean
-  /** Ghost for close, so it doesn't outweigh the title beside it. */
-  variant?: 'filled' | 'ghost'
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'flex size-7 shrink-0 items-center justify-center rounded-md',
-        variant === 'filled'
-          ? 'bg-surface-secondary hover:bg-surface-tertiary'
-          : 'hover:bg-surface-secondary',
-        className,
-        'disabled:cursor-not-allowed disabled:opacity-40',
-      )}
-    >
-      {children}
-    </button>
   )
 }
 
@@ -786,17 +688,11 @@ function formatDay(timestamp: number) {
   return formatRange(timestamp, timestamp + UnixTime.DAY)
 }
 
-/** A project's part of the change, e.g. "91% of rise". */
+/** A driver's part of the change, e.g. "91% of rise". */
 function formatShare(delta: number, event: ActivityChangeEvent) {
-  if (!isSameDirection(delta, event)) return undefined
   const share = delta / (event.observed - event.baseline)
-  const word = getChangeWord(event)
-  const value = isOverWhole(share)
-    ? '>100%'
-    : share < 0.01
-      ? '<1%'
-      : `${Math.round(share * 100)}%`
-  return `${value} of ${word}`
+  const value = isOverWhole(share) ? '>100%' : `${Math.round(share * 100)}%`
+  return `${value} of ${getChangeWord(event)}`
 }
 
 function formatRelative(event: ActivityChangeEvent) {
