@@ -357,9 +357,11 @@ export function getPerimeterFocusBoxes(
 }
 
 export function isPerimeterVisibleInViewport(
-  boxes: readonly Box[],
+  nodes: readonly Node[],
+  hidden: ReadonlySet<string>,
   transform: State['transform'],
   viewportContainer: HTMLElement | undefined,
+  zones: readonly PerimeterZone[] = computeSecurityPerimeter(nodes, hidden),
 ): boolean {
   const rect = viewportContainer?.getBoundingClientRect()
   const width =
@@ -368,12 +370,35 @@ export function isPerimeterVisibleInViewport(
     rect !== undefined && rect.height > 0
       ? rect.height
       : FALLBACK_VIEWPORT_HEIGHT
-  for (const box of boxes) {
-    const left = box.x * transform.scale + transform.offsetX
-    const top = box.y * transform.scale + transform.offsetY
-    const right = left + box.width * transform.scale
-    const bottom = top + box.height * transform.scale
+  for (const node of nodes) {
+    if (hidden.has(node.id) || getNodeCriticality(node, hidden) === 'none') {
+      continue
+    }
+    const left = node.box.x * transform.scale + transform.offsetX
+    const top = node.box.y * transform.scale + transform.offsetY
+    const right = left + node.box.width * transform.scale
+    const bottom = top + node.box.height * transform.scale
     if (right > 0 && left < width && bottom > 0 && top < height) {
+      return true
+    }
+  }
+  const halfStroke = PERIMETER_STROKE_HALF * transform.scale
+  for (const zone of zones) {
+    const left = zone.box.x * transform.scale + transform.offsetX
+    const top = zone.box.y * transform.scale + transform.offsetY
+    const right = left + zone.box.width * transform.scale
+    const bottom = top + zone.box.height * transform.scale
+    const overlapsOuter =
+      right + halfStroke > 0 &&
+      left - halfStroke < width &&
+      bottom + halfStroke > 0 &&
+      top - halfStroke < height
+    const viewportInsideEmptyInterior =
+      left + halfStroke <= 0 &&
+      right - halfStroke >= width &&
+      top + halfStroke <= 0 &&
+      bottom - halfStroke >= height
+    if (overlapsOuter && !viewportInsideEmptyInterior) {
       return true
     }
   }

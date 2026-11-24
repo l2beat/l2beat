@@ -23,6 +23,7 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[], autoGroups: AutoGroup[]) => void
+  syncCriticality: (criticalIds: ReadonlySet<string>) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   alignSelected: (direction: AlignDirection) => void

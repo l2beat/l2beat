@@ -8,7 +8,7 @@ import { computeSecurityPerimeter } from '../utils/securityPerimeter'
 import { persistNodeLayout } from '../utils/storage'
 import { redo, undo } from './history'
 import { type AutoGroup, loadNodes } from './loadNodes'
-import { layout } from './other'
+import { layout, syncCriticality } from './other'
 
 describe(loadNodes.name, () => {
   const originalLocalStorage = globalThis.localStorage
@@ -230,6 +230,98 @@ describe(loadNodes.name, () => {
       reloadedCore !== undefined &&
         intersectsViewport(reloadedCore.box, transform, 540, 800),
     ).toEqual(true)
+  })
+
+  it('refocuses a restored layout when only an enclosure empty interior overlaps the viewport', () => {
+    const topLeft = makeNode('eth:topLeft', true)
+    const bottomRight = makeNode('eth:bottomRight', true)
+    const viewport = {
+      getBoundingClientRect: () => ({ width: 540, height: 800 }),
+    } as HTMLElement
+
+    const savedState: State = {
+      ...makeState(viewport),
+      projectId: 'project',
+      nodes: [
+        { ...topLeft, box: { x: -2000, y: -2000, width: 200, height: 80 } },
+        { ...bottomRight, box: { x: 2000, y: 2000, width: 200, height: 80 } },
+      ],
+    }
+    persistNodeLayout(savedState)
+
+    const reloaded = loadNodes(
+      makeState(viewport),
+      'project',
+      [topLeft, bottomRight],
+      [],
+    )
+    const loadedNodes = reloaded.nodes ?? []
+    const transform = reloaded.transform ?? { offsetX: 0, offsetY: 0, scale: 1 }
+
+    expect(
+      loadedNodes.some((node) =>
+        intersectsViewport(node.box, transform, 540, 800),
+      ),
+    ).toEqual(true)
+  })
+
+  it('preserves the camera on restore when a critical node is already visible inside a wide enclosure', () => {
+    const topLeft = makeNode('eth:topLeft', true)
+    const center = makeNode('eth:center', true)
+    const bottomRight = makeNode('eth:bottomRight', true)
+    const viewport = {
+      getBoundingClientRect: () => ({ width: 540, height: 800 }),
+    } as HTMLElement
+    const initialTransform = { offsetX: 0, offsetY: 0, scale: 1 }
+
+    const savedState: State = {
+      ...makeState(viewport),
+      projectId: 'project',
+      nodes: [
+        { ...topLeft, box: { x: -2000, y: -2000, width: 200, height: 80 } },
+        { ...center, box: { x: 100, y: 100, width: 200, height: 80 } },
+        { ...bottomRight, box: { x: 2000, y: 2000, width: 200, height: 80 } },
+      ],
+    }
+    persistNodeLayout(savedState)
+
+    const reloaded = loadNodes(
+      { ...makeState(viewport), transform: initialTransform },
+      'project',
+      [topLeft, center, bottomRight],
+      [],
+    )
+    expect(reloaded.transform ?? initialTransform).toEqual(initialTransform)
+  })
+
+  it('updates leaf criticality across top-level and grouped nodes without moving them', () => {
+    const top = {
+      ...makeNode('eth:top', true),
+      box: { x: 120, y: 40, width: 200, height: 80 },
+    }
+    const groupedLeaf = {
+      ...makeNode('eth:member', false),
+      box: { x: 400, y: 40, width: 200, height: 80 },
+    }
+    const group: Node = {
+      ...makeNode('group:shared:test', false),
+      box: { x: 400, y: 40, width: 200, height: 80 },
+      subnodes: [groupedLeaf],
+    }
+    const state: State = {
+      ...makeState(),
+      nodes: [top, group],
+      transform: { offsetX: -50, offsetY: 30, scale: 0.8 },
+    }
+
+    expect(syncCriticality(state, new Set(['eth:top']))).toEqual({})
+
+    const updated = syncCriticality(state, new Set(['eth:member']))
+    expect(updated.transform).toEqual(undefined)
+    expect(updated.nodes?.[0]?.isCritical).toEqual(false)
+    expect(updated.nodes?.[0]?.box).toEqual(top.box)
+    expect(updated.nodes?.[1]?.subnodes[0]?.isCritical).toEqual(true)
+    expect(updated.nodes?.[1]?.subnodes[0]?.box).toEqual(groupedLeaf.box)
   })
 
   it('fits a wide perimeter chain in a narrow panel down to MIN_ZOOM', () => {

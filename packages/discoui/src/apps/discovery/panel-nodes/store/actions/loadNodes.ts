@@ -10,6 +10,7 @@ import { perimeterLayout } from '../utils/perimeterLayout'
 import { buildRenderGraph } from '../utils/renderGraph'
 import { reconcileCompressedRows } from '../utils/rows'
 import {
+  computeSecurityPerimeter,
   focusSecurityPerimeter,
   getPerimeterFocusBoxes,
   isPerimeterVisibleInViewport,
@@ -198,13 +199,16 @@ export function loadNodes(
   })
   if (state.nodes.length === 0 && hasSavedLayout && restored.nodes) {
     const graph = buildRenderGraph(restored.nodes)
-    const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden)
+    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden, zones)
     if (
       focusBoxes.length > 0 &&
       !isPerimeterVisibleInViewport(
-        focusBoxes,
+        graph.nodes,
+        graph.hidden,
         state.transform,
         state.viewportContainer,
+        zones,
       )
     ) {
       return {

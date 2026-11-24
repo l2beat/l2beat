@@ -69,6 +69,21 @@ export function withoutHiddenFields(nodes: readonly Node[]): Node[] {
   )
 }
 
+export function syncCriticality(
+  state: State,
+  criticalIds: ReadonlySet<string>,
+): Partial<State> {
+  let changed = false
+  const nodes = mapGraphItems(state.nodes, (node) => {
+    if (node.subnodes.length > 0) return node
+    const isCritical = criticalIds.has(node.id)
+    if (node.isCritical === isCritical) return node
+    changed = true
+    return { ...node, isCritical }
+  })
+  return changed ? { nodes } : {}
+}
+
 export function clear(): Partial<State> {
   return {
     projectId: '',

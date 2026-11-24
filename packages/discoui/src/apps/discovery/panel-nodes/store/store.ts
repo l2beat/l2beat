@@ -24,6 +24,7 @@ import {
   setSpacePressed,
   setTool,
   showHidden,
+  syncCriticality,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
@@ -87,6 +88,7 @@ export const useStore = create<StoreState>()(
     (set) => ({
       ...INITIAL_STATE,
       loadNodes: wrapHistoryResetAction(set, loadNodes),
+      syncCriticality: wrapAction(set, syncCriticality),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
       alignSelected: wrapUndoableAction(set, alignSelected),

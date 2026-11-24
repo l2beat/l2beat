@@ -2,7 +2,9 @@ import { expect } from 'earl'
 import {
   formatCriticalDate,
   getCriticalStatus,
+  getNextCriticalTransitionDelayMs,
   isOssificationCritical,
+  MAX_CRITICAL_TIMEOUT_MS,
 } from './ossification'
 
 describe('ossification helpers', () => {
@@ -84,6 +86,38 @@ describe('ossification helpers', () => {
         NOW,
       ),
     ).toEqual('scheduled')
+  })
+
+  it('computes the delay until the next critical window transition', () => {
+    const nowMs = NOW * 1000
+    expect(
+      getNextCriticalTransitionDelayMs(
+        [
+          undefined,
+          true,
+          { sinceTimestamp: NOW - 10, untilTimestamp: NOW - 1 },
+        ],
+        nowMs,
+      ),
+    ).toEqual(undefined)
+
+    expect(
+      getNextCriticalTransitionDelayMs([{ untilTimestamp: NOW }], nowMs),
+    ).toEqual(1000)
+
+    expect(
+      getNextCriticalTransitionDelayMs(
+        [{ sinceTimestamp: NOW + 50 }, { untilTimestamp: NOW + 20 }],
+        nowMs,
+      ),
+    ).toEqual(21_000)
+
+    expect(
+      getNextCriticalTransitionDelayMs(
+        [{ untilTimestamp: NOW + 60 * 60 * 24 * 60 }],
+        nowMs,
+      ),
+    ).toEqual(MAX_CRITICAL_TIMEOUT_MS)
   })
 
   it('formats unix seconds as UTC YYYY-MM-DD', () => {

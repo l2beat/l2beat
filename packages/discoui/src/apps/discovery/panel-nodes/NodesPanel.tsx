@@ -10,6 +10,7 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { AgentNote } from '../agent/AgentNote'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useCriticalNow } from '../hooks/useCriticalNow'
 import { isOssificationCritical } from '../ossification'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
@@ -82,7 +83,19 @@ function NodesSync(props: {
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
+  const syncCriticality = useNodeStore((state) => state.syncCriticality)
   const preferences = useNodeStore((state) => state.userPreferences)
+  const criticalFlags = useMemo(
+    () =>
+      data
+        ? data.entries.flatMap((chain) => [
+            ...chain.initialContracts.map((contract) => contract.critical),
+            ...chain.discoveredContracts.map((contract) => contract.critical),
+          ])
+        : [],
+    [data],
+  )
+  const nowSeconds = useCriticalNow(criticalFlags)
 
   useEffect(() => {
     clear()
@@ -91,7 +104,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     const nodes: Node[] = []
     const autoGroups: AutoGroup[] = []
-    const nowSeconds = Math.floor(Date.now() / 1000)
+    const loadNowSeconds = Math.floor(Date.now() / 1000)
     for (const chain of data.entries) {
       const isSharedModule =
         chain.project !== project && chain.project.startsWith('shared-')
@@ -115,7 +128,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
-          isCritical: isOssificationCritical(contract.critical, nowSeconds),
+          isCritical: isOssificationCritical(contract.critical, loadNowSeconds),
           isReachable: contract.isReachable,
           hasTemplate: contract.template !== undefined,
           name: contract.name ?? fallback,
@@ -169,6 +182,24 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
     }
     loadNodes(project, nodes, autoGroups)
   }, [project, data, clear, loadNodes])
+
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+    const criticalIds = new Set<string>()
+    for (const chain of data.entries) {
+      for (const contract of [
+        ...chain.initialContracts,
+        ...chain.discoveredContracts,
+      ]) {
+        if (isOssificationCritical(contract.critical, nowSeconds)) {
+          criticalIds.add(contract.address)
+        }
+      }
+    }
+    syncCriticality(criticalIds)
+  }, [data, nowSeconds, syncCriticality])
 
   // A closed panel draws nothing, so the store must not read as loaded: the
   // agent would arrange a graph that the next mount clears and loads again.

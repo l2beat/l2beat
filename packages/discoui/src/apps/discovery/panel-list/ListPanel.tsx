@@ -25,6 +25,7 @@ import { IconUnlinked } from '../../../icons/IconUnliked'
 import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { useCriticalNow } from '../hooks/useCriticalNow'
 import { isOssificationCritical } from '../ossification'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
@@ -40,6 +41,17 @@ export function ListPanel() {
     throw new Error('Cannot use component outside of project page!')
   }
   const response = useQuery(useProjectQueryOptions(project))
+  const criticalFlags = useMemo(
+    () =>
+      response.data
+        ? response.data.entries.flatMap((entry) => [
+            ...entry.initialContracts.map((contract) => contract.critical),
+            ...entry.discoveredContracts.map((contract) => contract.critical),
+          ])
+        : [],
+    [response.data],
+  )
+  const nowSeconds = useCriticalNow(criticalFlags)
   if (response.isPending) {
     return <LoadingState />
   }
@@ -62,6 +74,7 @@ export function ListPanel() {
                 chain={chain}
                 blockNumber={blockNumber}
                 openedProject={project}
+                nowSeconds={nowSeconds}
               />
             )),
           )}
@@ -113,6 +126,7 @@ function ChainSection(props: {
   chain: string
   blockNumber: number
   openedProject: string
+  nowSeconds: number
 }) {
   const [open, setOpen] = useState(true)
   const onFocus = useCallback(() => setOpen(true), [])
@@ -161,6 +175,7 @@ function ChainSection(props: {
             duplicatedNames={duplicatedNames}
             openedProject={props.openedProject}
             sourceProject={entry.project}
+            nowSeconds={props.nowSeconds}
           />
         ))}
     </li>
@@ -220,6 +235,7 @@ function AddressGroup(props: {
   duplicatedNames: ReadonlySet<string>
   openedProject: string
   sourceProject: string
+  nowSeconds: number
 }) {
   const [open, setOpen] = useState(!props.startClosed)
   const sortedEntries = useMemo(
@@ -275,6 +291,7 @@ function AddressGroup(props: {
               }
               openedProject={props.openedProject}
               sourceProject={props.sourceProject}
+              nowSeconds={props.nowSeconds}
             />
           ))}
         </ol>
@@ -288,14 +305,16 @@ const AddressEntry = memo(function AddressEntry({
   showAddress,
   openedProject,
   sourceProject,
+  nowSeconds,
 }: {
   entry: ApiAddressEntry | ApiProjectContract
   showAddress: boolean
   openedProject: string
   sourceProject: string
+  nowSeconds: number
 }) {
   const isCritical =
-    'critical' in entry && isOssificationCritical(entry.critical)
+    'critical' in entry && isOssificationCritical(entry.critical, nowSeconds)
   const isSelected = usePanelStore((state) =>
     state.selected.includes(entry.address),
   )

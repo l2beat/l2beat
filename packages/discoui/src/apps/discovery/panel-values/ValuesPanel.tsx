@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -9,6 +9,7 @@ import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
 import { IconShield } from '../../../icons/IconShield'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { useCriticalNow } from '../hooks/useCriticalNow'
 import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
 import { formatCriticalDate, getCriticalStatus } from '../ossification'
@@ -405,7 +406,9 @@ function WithHeadline(props: { headline: string; children: React.ReactNode }) {
 function OssificationStatus(props: {
   critical: NonNullable<ApiProjectContract['critical']>
 }) {
-  const status = getCriticalStatus(props.critical)
+  const flags = useMemo(() => [props.critical], [props.critical])
+  const nowSeconds = useCriticalNow(flags)
+  const status = getCriticalStatus(props.critical, nowSeconds)
   const since =
     typeof props.critical === 'object' &&
     props.critical.sinceTimestamp !== undefined
