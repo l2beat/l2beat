@@ -85,7 +85,7 @@ function getProtocolRoutes(
       }
     case 'stakewise':
       return {
-        routes: ['waiting in the redemption queue, which earns nothing'],
+        routes: ['waiting in the redemption queue'],
         queued: true,
         notes: [],
       }
