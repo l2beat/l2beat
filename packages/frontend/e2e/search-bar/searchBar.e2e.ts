@@ -89,13 +89,15 @@ for (const viewport of [
     await page.keyboard.press('/')
     const dialog = page.getByRole('dialog')
     await expect(dialog).toBeVisible()
-    // Waits out the open animation, which scales the dialog.
-    await page.waitForTimeout(300)
-    const box = await dialog.boundingBox()
-    expect(box?.y).toBeGreaterThanOrEqual(0)
-    expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(
-      viewport.height,
-    )
+    // Retries while the open animation scales the dialog.
+    await expect
+      .poll(async () => {
+        const box = await dialog.boundingBox()
+        return (
+          box !== null && box.y >= 0 && box.y + box.height <= viewport.height
+        )
+      })
+      .toBe(true)
     await expect(page.getByRole('combobox')).toBeInViewport({ ratio: 1 })
   })
 }
