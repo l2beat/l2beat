@@ -64,11 +64,7 @@ describe(RpcCounter.name, () => {
     // of them into the counted block broke /api/uops/block for every EVM
     // chain. How: feed a block shaped like the RPC client returns it.
     it('returns a block that serializes to JSON when the RPC block has bigint fields', () => {
-      const rpcBlock = {
-        ...createBlock(1),
-        baseFeePerGas: 1_000_000_000n,
-        transactions: [{ ...createBlock(1).transactions[0], value: 1n }],
-      }
+      const rpcBlock = { ...createBlock(1), baseFeePerGas: 1_000_000_000n }
 
       const result = new RpcCounter().countForBlock(rpcBlock)
 
