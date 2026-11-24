@@ -327,7 +327,12 @@ function EventDetails({
           />
         </span>
         <span className="font-bold text-label-value-15">{label}</span>
-        <span className="font-medium text-label-value-14 tabular-nums">
+        <span
+          className={cn(
+            'font-medium text-label-value-14 tabular-nums',
+            getChangeColor(event),
+          )}
+        >
           {formatRelative(event)}
         </span>
       </div>
@@ -555,12 +560,24 @@ function formatShare(delta: number, event: ActivityChangeEvent) {
   return `${value} of ${getChangeWord(event)}`
 }
 
+/**
+ * Signed like the tables' changes, "+8%" or "−8%". Past 3× a multiple reads
+ * better than a four-digit percentage, and only a rise gets there.
+ */
 function formatRelative(event: ActivityChangeEvent) {
-  if (event.baseline <= 0) return '▲ from zero'
+  if (event.baseline <= 0) return 'up from zero'
   const ratio = event.observed / event.baseline
-  if (ratio >= 3) return `▲ ${Math.round(ratio)}×`
+  if (ratio >= 3) return `${Math.round(ratio)}×`
   const pct = Math.round(Math.abs(ratio - 1) * 100)
-  return ratio >= 1 ? `▲ ${pct}%` : `▼ ${pct}%`
+  if (pct === 0) return '0%'
+  return `${ratio > 1 ? '+' : '−'}${pct}%`
+}
+
+/** The tables' colours: green up, red down, grey when it rounds to 0%. */
+function getChangeColor(event: ActivityChangeEvent) {
+  const pct = Math.round(Math.abs(event.observed / event.baseline - 1) * 100)
+  if (event.baseline > 0 && pct === 0) return 'text-secondary'
+  return event.observed > event.baseline ? 'text-positive' : 'text-negative'
 }
 
 function formatVsBaseline(event: ActivityChangeEvent) {
