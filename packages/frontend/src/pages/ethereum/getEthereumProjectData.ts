@@ -1,7 +1,10 @@
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getEthereumProjectEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
+import { getLiveChain } from '~/server/features/eth-supply/getLiveChain'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getDaMetadataDescription } from '~/ssr/head/projectMetaDescriptions'
 import type { RenderData } from '~/ssr/types'
@@ -15,12 +18,41 @@ export async function getEthereumProjectData(
   cache: InMemoryCache,
 ): Promise<RenderData> {
   const data = await getCachedEthereumProjectPage(manifest, cache)
+  const sections = await withLiveChain(data.props.entry.sections)
   return {
     head: data.head,
     ssr: {
       page: 'EthereumProjectPage',
-      props: data.props,
+      props: { ...data.props, entry: { ...data.props.entry, sections } },
     },
+  }
+}
+
+/** The page is cached for minutes, but the chain head is read per request. */
+async function withLiveChain(
+  sections: ProjectDetailsSection[],
+): Promise<ProjectDetailsSection[]> {
+  if (!sections.some((section) => section.type === 'EconomicsSection')) {
+    return sections
+  }
+  const initialChain = await getInitialChain()
+  if (!initialChain) return sections
+  return sections.map((section) =>
+    section.type === 'EconomicsSection'
+      ? { ...section, props: { ...section.props, initialChain } }
+      : section,
+  )
+}
+
+/** The economics stand without the chain head, so a failed read only hides its tile. */
+async function getInitialChain() {
+  try {
+    return await getLiveChain()
+  } catch (error) {
+    getLogger()
+      .for('getEthereumProjectData')
+      .error('Live chain unavailable', { error })
+    return undefined
   }
 }
 

@@ -1,0 +1,124 @@
+/* The Economics section of the Ethereum page. The bento answers to the
+   section's width, not the viewport's: the page's sidebar and gutters leave
+   it anywhere from 330px to 1010px. */
+.economics {
+  container: economics / inline-size;
+}
+
+/* One panel ruled into cells: the divider colour shows through the 1px gaps
+   between cells. Every row of every arrangement is filled, so no gap shows
+   as a hole. Cell padding matches the card's, so cell content lines up with
+   the section header. */
+.economics-tile {
+  background-color: var(--surface-primary);
+  padding: 24px 16px;
+}
+@media (width >= 48rem) {
+  .economics-tile {
+    padding: 24px;
+  }
+}
+
+.economics-bento {
+  display: grid;
+  gap: 1px;
+  background-color: var(--divider);
+  border-block: 1px solid var(--divider);
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking" "chain";
+}
+.economics-bento-no-chain {
+  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking";
+}
+
+/* Two columns: wide tiles span both; narrow ones pair up with a neighbour
+   of about their height, or one whose chart grows to it. The burn rate has
+   no such neighbour, so it runs as a band. */
+@container economics (min-width: 600px) {
+  .economics-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "hero hero"
+      "offset records"
+      "rate rate"
+      "flows flows"
+      "staking staking"
+      "price chain";
+  }
+  .economics-bento-no-chain {
+    grid-template-areas:
+      "hero hero"
+      "offset records"
+      "rate rate"
+      "flows flows"
+      "staking staking"
+      "price price";
+  }
+}
+
+/* Three columns, a zigzag: the supply with the burn beside it on the right,
+   then the flows with records and price on the left, then staking with the
+   chain on the right. */
+@container economics (min-width: 740px) {
+  .economics-bento {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "hero hero offset"
+      "hero hero rate"
+      "records flows flows"
+      "price flows flows"
+      "staking staking chain";
+  }
+  .economics-bento-no-chain {
+    grid-template-areas:
+      "hero hero offset"
+      "hero hero rate"
+      "records flows flows"
+      "price flows flows"
+      "staking staking staking";
+  }
+}
+
+.economics-ping {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .economics-roll {
+    animation: economics-roll 320ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .economics-pulse {
+    animation: economics-pulse 2s ease-in-out infinite;
+  }
+  .economics-ping {
+    animation: economics-ping 2.4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  }
+}
+@keyframes economics-roll {
+  from {
+    transform: translateY(-0.3em);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes economics-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes economics-ping {
+  from {
+    transform: scale(0.5);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}

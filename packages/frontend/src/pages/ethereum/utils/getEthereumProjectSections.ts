@@ -2,8 +2,13 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
-import { getLiquidStakingOverview } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
+import {
+  getLiquidStakingOverview,
+  type LiquidStakingOverview,
+} from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
+import { getEthSupplyOverview } from '~/server/features/eth-supply/getEthSupplyOverview'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
+import { getLogger } from '~/server/utils/logger'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
 import { toChartProject } from '~/utils/project/toChartProject'
@@ -35,9 +40,10 @@ export async function getEthereumProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const [throughputSection, liquidStakingSection] = await Promise.all([
+  const [throughputSection, liquidStaking, ethSupply] = await Promise.all([
     getDaThroughputSection(ethereum),
-    getLiquidStakingSection(),
+    getLiquidStaking(),
+    getEthSupply(),
   ])
 
   if (interopData) {
@@ -77,8 +83,26 @@ export async function getEthereumProjectSections({
     },
   })
 
-  if (liquidStakingSection) {
-    items.push(liquidStakingSection)
+  // Economics folds in the liquid staking table, so it replaces that section.
+  if (ethSupply) {
+    items.push({
+      type: 'EconomicsSection',
+      props: {
+        id: 'economics',
+        title: 'Economics',
+        ethSupply,
+        liquidStaking,
+      },
+    })
+  } else if (liquidStaking) {
+    items.push({
+      type: 'LiquidStakingSection',
+      props: {
+        id: 'liquid-staking',
+        title: 'Liquid staking',
+        ...liquidStaking,
+      },
+    })
   }
 
   if (
@@ -129,15 +153,22 @@ export async function getEthereumProjectSections({
   return items
 }
 
-async function getLiquidStakingSection(): Promise<
-  ProjectDetailsSection | undefined
-> {
+async function getLiquidStaking(): Promise<LiquidStakingOverview | undefined> {
   // Its links lead to DeFi pages, so it follows their flag.
   if (!env.CLIENT_SIDE_DEFI_ENABLED) return undefined
   const overview = await getLiquidStakingOverview()
-  if (overview.entries.length === 0) return undefined
-  return {
-    type: 'LiquidStakingSection',
-    props: { id: 'liquid-staking', title: 'Liquid staking', ...overview },
+  return overview.entries.length > 0 ? overview : undefined
+}
+
+/** The page stays useful without its economics, so a failed read only hides them. */
+async function getEthSupply() {
+  if (!env.CLIENT_SIDE_ETH_ECONOMICS_ENABLED) return undefined
+  try {
+    return await getEthSupplyOverview()
+  } catch (error) {
+    getLogger()
+      .for('getEthereumProjectSections')
+      .error('ETH supply unavailable', { error })
+    return undefined
   }
 }
