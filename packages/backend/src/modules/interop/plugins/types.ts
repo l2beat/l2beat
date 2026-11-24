@@ -102,7 +102,7 @@ export interface InteropEventType<T> {
 }
 
 // For source events of transfers the user finalizes on the destination, which
-// they can do at any time. Covers 97-99% of finalizations within a year.
+// they can do at any time
 export const SLOW_WITHDRAWAL_TTL = 180 * UnixTime.DAY
 
 export function createInteropEventType<T>(
