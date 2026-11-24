@@ -25,6 +25,7 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
 
 - **Warning glyphs keep main's yellow: `fill-yellow-700` in light mode, `fill-yellow-300` in dark.** This covers the (!) warning circle (`RoundedWarningIcon`), warning-bar icons and the yellow shields. Swapping them to the `warning` token (`fill-warning`) or any darker yellow, for consistency or contrast, is off the table.
   Why: in light mode the `warning` token (`#8a6700`) reads as a muddy olive, not as a warning.
+  Enforced by the `warningGlyphColor` lint rule (`lint/README.md`).
 
 - **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`).** The brand kit's paper `#F5F3EE` and warm beige tints stay out.
   Why: paper is used nowhere on the site.
@@ -88,5 +89,5 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
 - **A change shown with its period always reads "−5.65% / 7d": the change, then "/ period" in `text-secondary`.** Table column headers like "7D" are headings and stay as they are. Table cells give the period in a tooltip.
   Why: without the slash, "−5.65% 7d" reads as one unclear figure.
 
-- **When a list joined by " · " wraps, the separator ends the line, so no line starts with "·".** Join the separator to the item before it with a non-breaking space.
+- **When a list joined by " · " wraps, the separator ends the line, so no line starts with "·".** Use `DOT_SEPARATOR` from `~/utils/dotSeparator`, which joins the separator to the item before it with a non-breaking space. Enforced by the `dotSeparator` lint rule (`lint/README.md`); Markdown pages and meta descriptions keep a plain space.
   Why: a line that starts with "·" reads as a stray bullet.

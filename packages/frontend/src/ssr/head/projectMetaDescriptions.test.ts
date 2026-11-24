@@ -1,3 +1,4 @@
+// biome-ignore-all lint/plugin/dotSeparator: meta descriptions are plain text shown by search engines
 import { expect } from 'earl'
 import {
   getDaMetadataDescription,

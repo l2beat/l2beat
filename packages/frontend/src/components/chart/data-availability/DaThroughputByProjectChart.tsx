@@ -23,6 +23,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import { formatRange } from '~/utils/dates'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
@@ -431,7 +432,7 @@ function CustomTooltip({
                   <span className="text-secondary">
                     {othersCount}{' '}
                     {othersCount === 1 ? 'hidden project' : 'hidden projects'}
-                    {' · '}
+                    {DOT_SEPARATOR}
                   </span>
                 )}
                 {entry.value !== null ? `${formattedValue} ${unit}` : 'No data'}

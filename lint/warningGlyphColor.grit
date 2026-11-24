@@ -1,0 +1,7 @@
+or {
+  JsStringLiteralExpression() as $class where { $class <: r".*fill-warning.*" },
+  JsxString() as $class where { $class <: r".*fill-warning.*" },
+  JsTemplateChunkElement() as $class where { $class <: r"(?s).*fill-warning.*" }
+} where {
+  register_diagnostic(span=$class, message="Warning glyphs (the warning circle, warning-bar icons, yellow shields) keep `fill-yellow-700 dark:fill-yellow-300`. The `warning` token reads as a muddy olive in light mode. See packages/frontend/DESIGN.md.", severity="error")
+}

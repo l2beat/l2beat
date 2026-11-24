@@ -18,6 +18,7 @@ import {
   WINDOW_SLOTS,
 } from '~/server/features/data-availability/live-blobs/liveBlobsSlots'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { EASE_OUT_QUINT } from '~/utils/easing'
 import { PulseSkeleton } from './blocks/BeltFrame'
 import { formatClock } from './blocks/format'
@@ -119,7 +120,9 @@ function BlobPulse({
   // the belt's caption has the slot's number, so this says when it was
   const viewTime = view === undefined ? '' : formatClock(slotStart(view))
   const describeView =
-    view === undefined ? 'Live' : `${viewTime} · ${ago(view, head)}`
+    view === undefined
+      ? 'Live'
+      : `${viewTime}${DOT_SEPARATOR}${ago(view, head)}`
 
   return (
     <div>
@@ -209,7 +212,10 @@ function BlobPulse({
           // on a phone, the time alone fits between the ends
           <span className="text-center">
             <span className="text-primary tabular-nums">{viewTime}</span>
-            <span className="max-md:hidden"> · {ago(view, head)}</span>
+            <span className="max-md:hidden">
+              {DOT_SEPARATOR}
+              {ago(view, head)}
+            </span>
           </span>
         )}
         {view === undefined ? (

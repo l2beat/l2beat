@@ -1,0 +1,8 @@
+or {
+  JsStringLiteralExpression() as $text where { $text <: r".* ·.*" },
+  JsxString() as $text where { $text <: r".* ·.*" },
+  JsTemplateChunkElement() as $text where { $text <: r"(?s).* ·.*" },
+  JsxText() as $text where { $text <: r"(?s).*\S\s+·.*" }
+} where {
+  register_diagnostic(span=$text, message="Join the \"·\" separator to the item before it with a non-breaking space: use DOT_SEPARATOR from ~/utils/dotSeparator. With a plain space a wrapped line can start with \"·\", which reads as a stray bullet. See packages/frontend/DESIGN.md.", severity="error")
+}

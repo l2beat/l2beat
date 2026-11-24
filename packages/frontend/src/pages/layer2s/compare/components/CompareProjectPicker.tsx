@@ -19,6 +19,7 @@ import { CloseIcon } from '~/icons/Close'
 import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/layer2s/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { nameInView, withViewTransition } from '~/utils/viewTransition'
 import type { CompareMetric } from '../metrics/types'
 import { useCompareSeries } from './CompareSeriesContext'
@@ -177,7 +178,7 @@ export function CompareProjectPicker({
                 </button>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{missingLabels.join(' · ')}</TooltipContent>
+            <TooltipContent>{missingLabels.join(DOT_SEPARATOR)}</TooltipContent>
           </Tooltip>
         )
       })}
@@ -260,7 +261,7 @@ export function CompareProjectPicker({
                   </span>
                   {missingLabels.length > 0 && (
                     <span className="ml-auto font-medium text-2xs text-secondary">
-                      {missingLabels.join(' · ')}
+                      {missingLabels.join(DOT_SEPARATOR)}
                     </span>
                   )}
                 </CommandItem>

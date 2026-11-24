@@ -20,6 +20,7 @@ import {
   ZoomControls,
 } from '~/components/pan-zoom/ZoomControls'
 import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { DiagramWatermark } from './DiagramWatermark'
 import { edgeKey, getActiveBacking } from './graphSelectors'
 import { layoutRelationsGraph } from './layoutRelationsGraph'
@@ -266,7 +267,8 @@ export function RelationsDiagram({
 function DiagramCaption({ fillsView }: { fillsView: boolean }) {
   return (
     <p className="text-label-value-12 text-secondary leading-4">
-      Past 24h cross-chain volume ·{' '}
+      Past 24h cross-chain volume
+      {DOT_SEPARATOR}
       <span className="[@media(pointer:coarse)]:hidden">
         {fillsView
           ? 'Scroll or drag to move the diagram'

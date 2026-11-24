@@ -34,6 +34,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
 import {
@@ -349,7 +350,7 @@ function getRecentProjectListing(
       href: `/layer2s/projects/${slug}`,
       label:
         scalingInfo.type === 'Other'
-          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} · Other`
+          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'}${DOT_SEPARATOR}Other`
           : (scalingInfo.type ?? 'Scaling project'),
     }
   }
