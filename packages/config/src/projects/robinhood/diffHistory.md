@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x4846a395f7da279b9dcb102863db92ae3b75fec3
+
+# Diff at Tue, 24 Nov 2026 08:54:38 GMT:
+
+- id: 80434803
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@61d019c4faea98684600f451671e92cf57c548a9 block: 1794870000
+- current timestamp: 1795457402
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6233 → 6234. The new entry is a forced L1 transaction trying to move WETH out of the frozen wallet holding most of the Green Bull (VLAD) memecoin supply.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6233
++        6234
+    }
+```
+
 Generated with discovered.json: 0x18924a52c89a7fa0a113c3b8a4255c89b4209d78
 
 # Diff at Mon, 16 Nov 2026 23:05:01 GMT:
