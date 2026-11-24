@@ -344,7 +344,7 @@ export class EthRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok || !Array.isArray(data)) {
-      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
+      throw new Error('RPC call failed. HTTP error', {
         cause: httpCause(response),
       })
     }
@@ -394,7 +394,7 @@ export class EthRpcClient {
     }
     const parsed = JsonRpcResponse.safeValidate(data)
     if (!jsonSuccess || !parsed.success) {
-      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
+      throw new Error('RPC call failed. HTTP error', {
         cause: httpCause(response),
       })
     }
@@ -414,7 +414,7 @@ export class EthRpcClient {
       )
     }
     if (!response.ok) {
-      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
+      throw new Error('RPC call failed. HTTP error', {
         cause: httpCause(response),
       })
     }

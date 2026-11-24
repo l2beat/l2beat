@@ -33,7 +33,7 @@ describe(EthRpcClient.name, () => {
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
     await expect(client.getBlockNumber()).toBeRejectedWith(
-      'RPC call failed. HTTP status: 503',
+      'RPC call failed. HTTP error',
     )
   })
 
@@ -337,7 +337,7 @@ describe(EthRpcClient.name, () => {
         { to: EthereumAddress.random(), input: '0xdeadbeef' },
         'latest',
       ),
-    ).toBeRejectedWith('RPC call failed. HTTP status: 400')
+    ).toBeRejectedWith('RPC call failed. HTTP error')
   })
 
   it('eth_call fail', async () => {
@@ -675,7 +675,7 @@ describe(`${EthRpcClient.name} with a retry handler`, () => {
 
     expect(await client.getBlockNumber()).toEqual(123n)
     expect(retried.map((e) => (e as Error).message)).toEqual([
-      'RPC call failed. HTTP status: 401',
+      'RPC call failed. HTTP error',
     ])
   })
 })
