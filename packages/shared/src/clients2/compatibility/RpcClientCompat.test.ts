@@ -29,7 +29,7 @@ describe(RpcClientCompat.name, () => {
 
   describe(RpcClientCompat.prototype.call.name, () => {
     // Why: the log formats a cause that is an Error as {}
-    it('keeps what a refused call was answered in a plain cause', async () => {
+    it('keeps the status of a refused call in a plain cause', async () => {
       const error = await withServer(
         (_, res) => {
           res.statusCode = 503
@@ -60,7 +60,6 @@ describe(RpcClientCompat.name, () => {
       expect((error as Error).cause).toEqual({
         status: 503,
         rateLimit: { 'retry-after': '7' },
-        error: 'RPC call failed. RPC code: 3, message: execution reverted',
       })
     })
   })

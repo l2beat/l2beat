@@ -566,20 +566,20 @@ describe('RpcClient and RpcClientCompat parity', () => {
     'execution reverted',
     'Execution Reverted',
     'CALL_EXCEPTION',
+    'invalid opcode: INVALID',
+    'invalid opcode: PUSH0',
+    'gas required exceeds allowance',
   ]) {
-    it(`both name a revert answered as "${message}", as callWithOptionalMulticall reads`, async () => {
-      const revert: Case = {
+    it(`both give callWithOptionalMulticall the same read of "${message}"`, async () => {
+      const answered: Case = {
         name: message,
         answer: () => ({ error: { code: 3, message } }),
         run: (c) => c.call(callParams(), 100),
       }
-      for (const create of [createOld, createCompat]) {
-        const { error } = await runOn(revert, create)
-        const read = (error as Error).message.toLowerCase()
-        expect(
-          read.includes('revert') || read.includes('call_exception'),
-        ).toEqual(true)
-      }
+      const [old, compat] = await Promise.all(
+        [createOld, createCompat].map((create) => runOn(answered, create)),
+      )
+      expect(readsAsRevert(compat.error)).toEqual(readsAsRevert(old.error))
     })
   }
 })
@@ -611,6 +611,12 @@ const createCompat: Create = (url, retryStrategy, multicallClient) =>
     retryStrategy,
     multicallClient,
   })
+
+/** As callWithOptionalMulticall reads an error */
+function readsAsRevert(error: unknown): boolean {
+  const message = (error as Error).message.toLowerCase()
+  return message.includes('revert') || message.includes('call_exception')
+}
 
 /** Refuses every `n`th HTTP request with 429, counting from `first` */
 function refuseEvery(

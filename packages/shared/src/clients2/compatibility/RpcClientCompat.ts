@@ -333,15 +333,14 @@ export class RpcClientCompat implements IRpcClient {
         // Callers read "revert" in a message as a revert, and a refused
         // request is not one, whatever its JSON-RPC error says
         if (error instanceof Error && hasErrorStatus(error.cause)) {
-          throw new Error('RPC call failed. Refused', {
-            cause: { ...error.cause, error: error.message },
-          })
+          throw new Error('RPC call failed. Refused', { cause: error.cause })
         }
         throw error
       })
     if (result.reverted) {
-      throw new Error('Call reverted', {
-        cause: { reason: result.reason, to: callParams.to, blockNumber },
+      // The node's own words, which callers read as RpcClient gave them
+      throw new Error(result.reason, {
+        cause: { to: callParams.to, blockNumber },
       })
     }
     return Bytes.fromHex(result.data)

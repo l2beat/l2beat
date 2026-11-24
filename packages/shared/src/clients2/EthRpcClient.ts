@@ -787,23 +787,16 @@ function randomId() {
   return id
 }
 
-/**
- * The node ran the call and answered that it failed: what callers of
- * RpcClient read as a revert in its error message
- */
+/** The node ran the call and answered that it failed */
 function isRevert(e: unknown): e is Error {
-  if (
-    !(e instanceof Error) ||
-    !e.message.startsWith('RPC call failed. RPC code') ||
-    hasErrorStatus(e.cause)
-  ) {
-    return false
-  }
-  const message = e.message.toLowerCase()
   return (
-    message.includes('revert') ||
-    message.includes('call_exception') ||
-    message.includes('invalid opcode') ||
-    message.includes('gas required exceeds allowance')
+    e instanceof Error &&
+    e.message.startsWith('RPC call failed. RPC code') &&
+    !hasErrorStatus(e.cause) &&
+    (e.message.includes('invalid opcode: INVALID') ||
+      e.message.includes('CALL_EXCEPTION') ||
+      e.message.includes('revert') ||
+      e.message.includes('reverted') ||
+      e.message.includes('gas required exceeds allowance'))
   )
 }
