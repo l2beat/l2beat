@@ -10,23 +10,30 @@
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
-        "decimals": 18,
-        "sinceTimestamp": 1754512679
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Facet legacy L1Bridge."
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xaE00fb77048Af97E40b01aA812c6B4827cca1E71",
+            "decimals": 18,
+            "sinceTimestamp": 1795206131
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+            "decimals": 18,
+            "sinceTimestamp": 1754512679
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
