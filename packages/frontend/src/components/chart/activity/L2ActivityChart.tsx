@@ -34,12 +34,19 @@ import {
 } from '~/server/features/home/homeSeries'
 import type { L2ActivityEntry } from '~/server/features/layer2s/activity/getL2ActivityEntries'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
-import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
+import {
+  type ActivityResolution,
+  getActivityResolution,
+} from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import type { ChartScale } from '../types'
+import {
+  ActivityChangeEventsList,
+  getVisibleChangeEvents,
+} from './ActivityChangePins'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import {
   L2RecategorizedActivityChart,
@@ -61,17 +68,20 @@ export function L2ActivityChart({ milestones, entries }: Props) {
     RECATEGORISED_ACTIVITY_CHART_META,
   )
 
+  const filter = {
+    type: 'projects' as const,
+    projectIds: entries.map((entry) => entry.id),
+  }
   const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.activity.recategorisedChart,
-    {
-      range,
-      filter: {
-        type: 'projects',
-        projectIds: entries.map((entry) => entry.id),
-      },
-      hourly: true,
-    },
+    { range, filter, hourly: true },
   )
+  const { data: changeEvents } = useQuery({
+    ...trpc.activity.changeEvents.queryOptions({ range, filter }),
+    // Changes compare whole days, so hourly ranges get no pins.
+    enabled: getActivityResolution(range) === 'day',
+  })
+  const { metric } = useActivityMetricContext()
 
   const ratioData = useMemo(() => getRatioChartData(data), [data])
   const timeRange = useMemo(
@@ -115,6 +125,13 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           dataKeys,
           onItemClick: toggleDataKey,
         }}
+        hasChangePins={data?.resolution === 'day'}
+        // Pins follow the shown chart, not a range still loading.
+        changeEvents={isPlaceholderData ? undefined : changeEvents}
+      />
+      <ActivityChangeEventsList
+        events={getVisibleChangeEvents(changeEvents, metric, dataKeys)}
+        projects={changeEvents?.projects ?? {}}
       />
       <div className="mt-3 mb-2">
         <ActivityRatioChart

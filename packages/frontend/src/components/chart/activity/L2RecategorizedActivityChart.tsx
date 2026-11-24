@@ -22,9 +22,19 @@ import {
   type ActivityMetric,
   useActivityMetricContext,
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import type {
+  ActivityChangeEvent,
+  ActivityChangeEventsData,
+} from '~/server/features/layer2s/activity/getActivityChangeEvents'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { formatRange } from '~/utils/dates'
 import type { ChartScale } from '../types'
+import {
+  ActivityChangePins,
+  ActivityChangeTooltipLine,
+  CHANGE_PINS_TOP_MARGIN,
+  getVisibleChangeEvents,
+} from './ActivityChangePins'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
   rollups: {
@@ -70,6 +80,9 @@ interface Props {
     onItemClick: (dataKey: string) => void
   }
   scale?: ChartScale
+  /** Reserves the pins' row, so the plot doesn't move when they load. */
+  hasChangePins?: boolean
+  changeEvents?: ActivityChangeEventsData
 }
 
 export function L2RecategorizedActivityChart({
@@ -80,8 +93,24 @@ export function L2RecategorizedActivityChart({
   scale,
   chartMeta,
   interactiveLegend: { dataKeys, onItemClick },
+  hasChangePins,
+  changeEvents,
 }: Props) {
   const { metric } = useActivityMetricContext()
+  const events = useMemo(
+    () => getVisibleChangeEvents(changeEvents, metric, dataKeys),
+    [changeEvents, metric, dataKeys],
+  )
+  const eventsByTimestamp = useMemo(() => {
+    const result = new Map<number, ActivityChangeEvent[]>()
+    for (const event of events) {
+      result.set(event.timestamp, [
+        ...(result.get(event.timestamp) ?? []),
+        event,
+      ])
+    }
+    return result
+  }, [events])
 
   const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
   const chartData = useMemo(() => {
@@ -133,6 +162,7 @@ export function L2RecategorizedActivityChart({
       <TimeSeriesChart
         data={chartData}
         ariaLabel="Activity"
+        margin={hasChangePins ? { top: CHANGE_PINS_TOP_MARGIN } : undefined}
         series={(
           ['rollups', 'validiumsAndOptimiums', 'others', 'ethereum'] as const
         ).map((key) => ({
@@ -155,9 +185,23 @@ export function L2RecategorizedActivityChart({
             syncedUntil={data?.syncedUntil}
             resolutionSeconds={resolutionSeconds}
             metric={metric}
+            changes={
+              changeEvents && {
+                events: eventsByTimestamp.get(row.timestamp) ?? [],
+                projects: changeEvents.projects,
+              }
+            }
           />
         )}
       />
+      {hasChangePins && changeEvents && (
+        <ActivityChangePins
+          events={events}
+          projects={changeEvents.projects}
+          chartData={chartData}
+          chartMeta={chartMeta}
+        />
+      )}
     </ChartContainer>
   )
 }
@@ -168,12 +212,17 @@ function CustomTooltip({
   syncedUntil,
   resolutionSeconds,
   metric,
+  changes,
 }: {
   row: { timestamp: number } & Record<SeriesKey, number | null>
   visibleKeys: SeriesKey[]
   syncedUntil: number | undefined
   resolutionSeconds: number
   metric: ActivityMetric
+  changes?: {
+    events: ActivityChangeEvent[]
+    projects: ActivityChangeEventsData['projects']
+  }
 }) {
   const label = row.timestamp
   // Series without a value at this point are left out.
@@ -188,15 +237,26 @@ function CustomTooltip({
         </ChartTooltipTitle>
         <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => (
-            <ChartTooltipRow key={entry.name} name={entry.name}>
-              <ChartTooltipValue
-                value={entry.value}
-                format={formatActivityCount}
-                className="tabular-nums"
-              />
-            </ChartTooltipRow>
-          ))}
+          {payload.map((entry) => {
+            const event = changes?.events.find((e) => e.category === entry.name)
+            return (
+              <div key={entry.name} className="flex flex-col gap-2">
+                <ChartTooltipRow name={entry.name}>
+                  <ChartTooltipValue
+                    value={entry.value}
+                    format={formatActivityCount}
+                    className="tabular-nums"
+                  />
+                </ChartTooltipRow>
+                {event && changes && (
+                  <ActivityChangeTooltipLine
+                    event={event}
+                    projects={changes.projects}
+                  />
+                )}
+              </div>
+            )
+          })}
         </div>
 
         <TooltipHeader
