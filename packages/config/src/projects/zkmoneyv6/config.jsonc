@@ -20,7 +20,10 @@
     "eth:0xc1db06e5b9096ab71df8f461d3dd08cd8438f698",
     "eth:0x7929694e5353ebe5908305ad680dd600b08a99ff",
     "eth:0x0e577df99c43f258d38460b68326b002178b8369",
-    "eth:0xa72bdcbe8901101f26d764698ae120d0ae580d67"
+    "eth:0xa72bdcbe8901101f26d764698ae120d0ae580d67",
+    // Bridge-out to other chains through Across, which the features document
+    // turns on.
+    "eth:0x482fcb714eb34075453a9e5954ebee9c85bc9142"
   ],
   "names": {
     "eth:0x8F4105a55C457D796Adab90d5D9E649861E81625": "SwapEscrowFactory",

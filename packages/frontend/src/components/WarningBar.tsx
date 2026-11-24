@@ -18,10 +18,23 @@ interface WarningBarProps {
   className?: string
   ignoreMarkdown?: boolean
   iconClassName?: string
+  /** Inside a tooltip: the compact callout with a 16px icon. */
+  compact?: boolean
 }
 
-const iconVariants = cva('size-5', {
+/**
+ * The "(CRITICAL)" mark. It sits on red fills, where --negative is 3.7:1 in
+ * light, so light takes the deeper red-800.
+ */
+export const CRITICAL_TEXT_CLASS =
+  'font-semibold text-red-800 dark:text-negative'
+
+const iconVariants = cva('', {
   variants: {
+    compact: {
+      true: 'size-4',
+      false: 'size-5',
+    },
     color: {
       red: 'fill-red-300',
       yellow: 'fill-yellow-700 dark:fill-yellow-300',
@@ -39,18 +52,19 @@ export function WarningBar({
   className,
   ignoreMarkdown,
   iconClassName,
+  compact = false,
 }: WarningBarProps) {
   const textElement = ignoreMarkdown ? (
     <>
       {text}
-      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
+      {isCritical && <span className={CRITICAL_TEXT_CLASS}> (CRITICAL)</span>}
     </>
   ) : (
     <>
       <Markdown className="leading-snug" inline>
         {text}
       </Markdown>
-      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
+      {isCritical && <span className={CRITICAL_TEXT_CLASS}> (CRITICAL)</span>}
     </>
   )
   const Icon = icon ?? ShieldIcon
@@ -58,9 +72,14 @@ export function WarningBar({
     return (
       <PlainLink href={href}>
         <Callout
-          className={cn('p-4', className)}
+          className={cn(!compact && 'p-4', className)}
           color={color}
-          icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
+          compact={compact}
+          icon={
+            <Icon
+              className={cn(iconVariants({ color, compact }), iconClassName)}
+            />
+          }
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -74,9 +93,12 @@ export function WarningBar({
 
   return (
     <Callout
-      className={cn('p-4', className)}
+      className={cn(!compact && 'p-4', className)}
       color={color}
-      icon={<Icon className={cn(iconVariants({ color }), iconClassName)} />}
+      compact={compact}
+      icon={
+        <Icon className={cn(iconVariants({ color, compact }), iconClassName)} />
+      }
       body={textElement}
     />
   )

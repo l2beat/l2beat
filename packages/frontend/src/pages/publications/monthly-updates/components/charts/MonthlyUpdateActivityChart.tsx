@@ -11,6 +11,7 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import { type ChartMeta, useChart } from '~/components/core/chart/ChartContext'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -148,9 +149,9 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(label, label + UnixTime.DAY)}
-        </div>
+        </ChartTooltipTitle>
         {getTooltipEntries(row, keys).map((entry) => {
           const config = meta[entry.name]
           assert(config, 'No config')

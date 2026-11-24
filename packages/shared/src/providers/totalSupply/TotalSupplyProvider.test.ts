@@ -95,12 +95,16 @@ describe(TotalSupplyProvider.name, () => {
       expect(result).toEqual([123_456n, 654_321n, 0n])
     })
 
-    it('throws when a totalSupply call reverts', async () => {
+    // Halting the whole batch is intended: returning 0n would record wrong
+    // TVS, and skipping would leave a hole TokenValueIndexer retries forever.
+    it('throws with the revert data in cause when a totalSupply call reverts', async () => {
+      // A bare custom-error selector, as multicall returns it for a failed item
+      const revertData = '0x82b42900'
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicall: mockFn().resolvesToOnce([
           { success: true, data: Bytes.fromNumber(123_456) },
-          { success: false, data: Bytes.fromHex('0x') },
+          { success: false, data: Bytes.fromHex(revertData) },
           { success: true, data: Bytes.fromNumber(654_321) },
         ]),
         chain: CHAIN,
@@ -108,9 +112,18 @@ describe(TotalSupplyProvider.name, () => {
 
       const totalSupplyProvider = new TotalSupplyProvider([rpc], Logger.SILENT)
 
-      await expect(
-        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith('Failed to fetch totalSupply')
+      const error = await totalSupplyProvider
+        .getTotalSupplies(TOKENS, BLOCK, CHAIN)
+        .catch((e: unknown) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual('Failed to fetch totalSupply')
+      expect((error as Error).cause).toEqual({
+        token: TOKENS[1],
+        blockNumber: BLOCK,
+        chain: CHAIN,
+        returnData: revertData,
+      })
     })
 
     it('tries next RPC client if a single call fails', async () => {

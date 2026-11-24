@@ -28,7 +28,7 @@ export function renderEthereumProjectMarkdown(
         ...[
           ...getEthereumProjectStats(entry),
           {
-            title: 'DA Bridge',
+            title: 'DA bridge',
             value: header.bridgeName,
             tooltip: header.bridgeTooltip,
           },

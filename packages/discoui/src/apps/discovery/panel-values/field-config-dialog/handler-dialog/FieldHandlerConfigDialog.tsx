@@ -35,10 +35,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
     currentlyConfiguredHandler,
   )
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
-  )
-
   const editorKey = `handler-${context}-${fieldName}`
 
   // Not using useCodeStore since we're running in controlled mode
@@ -52,18 +48,8 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
     setHandlerEditorContent(currentlyConfiguredHandler)
   }, [currentlyConfiguredHandler])
 
-  useEffect(() => {
-    validateContents(selectedHandler?.type ?? '', handlerEditorContent)
-  }, [selectedHandler, handlerEditorContent])
-
-  function validateContents(type: string, content: string) {
-    const result = parseRaw(type, content)
-    if (!result.ok) {
-      setErrorMessage(result.message)
-    } else {
-      setErrorMessage(undefined)
-    }
-  }
+  const validation = parseRaw(selectedHandler?.type ?? '', handlerEditorContent)
+  const errorMessage = validation.ok ? undefined : validation.message
 
   function onSave(content: string) {
     const result = parseRaw(selectedHandler?.type ?? '', content)
@@ -93,7 +79,6 @@ export function FieldHandlerConfigDialog({ context, fieldName }: Props) {
     if (!open) {
       setHandlerEditorContent(currentlyConfiguredHandler)
       setSelectedHandler(detectHandler(currentlyConfiguredHandler))
-      setErrorMessage(undefined)
     }
   }
 

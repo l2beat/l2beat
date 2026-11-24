@@ -43,7 +43,7 @@ describe('getStakeWiseReads', () => {
     const state = toState([ok(RATE), FAILED], TIMESTAMP)
     expect(state.exchangeRate).toEqual(RATE)
     expect(state.lastRequestId).toEqual(null)
-    expect(state.lastFinalizedRequestId).toEqual(null)
+    expect(state.retiredLastRequestId).toEqual(null)
   })
 
   it('counts the first queue in thousandths of an osETH', () => {
@@ -61,11 +61,13 @@ describe('getStakeWiseReads', () => {
       ],
       TIMESTAMP,
     )
-    expect(state.lastRequestId).toEqual(752_750)
-    expect(state.lastFinalizedRequestId).toEqual(723_523)
+    expect(state.retiredLastRequestId).toEqual(752_750)
+    expect(state.retiredLastFinalizedRequestId).toEqual(723_523)
+    expect(state.lastRequestId).toEqual(null)
+    expect(state.lastFinalizedRequestId).toEqual(null)
   })
 
-  it('adds both queues after the swap, so the counters keep growing', () => {
+  it('counts each queue on its own after the swap', () => {
     const { calls, toState } = getLiquidStakingReads(stakewise, 26_400_000)
     expect(calls.length).toEqual(8)
     expect(calls[4]?.to).toEqual(ChainSpecificAddress.address(REDEEMER))
@@ -83,8 +85,10 @@ describe('getStakeWiseReads', () => {
       ],
       TIMESTAMP,
     )
-    expect(state.lastRequestId).toEqual(767_000)
-    expect(state.lastFinalizedRequestId).toEqual(733_000)
+    expect(state.retiredLastRequestId).toEqual(752_000)
+    expect(state.retiredLastFinalizedRequestId).toEqual(723_000)
+    expect(state.lastRequestId).toEqual(15_000)
+    expect(state.lastFinalizedRequestId).toEqual(10_000)
   })
 
   it('finalizes redeemed and bought shares only at the next checkpoint', () => {
@@ -103,8 +107,8 @@ describe('getStakeWiseReads', () => {
       ],
       TIMESTAMP,
     )
-    expect(state.lastRequestId).toEqual(767_000)
-    expect(state.lastFinalizedRequestId).toEqual(728_000)
+    expect(state.lastRequestId).toEqual(15_000)
+    expect(state.lastFinalizedRequestId).toEqual(5_000)
   })
 })
 

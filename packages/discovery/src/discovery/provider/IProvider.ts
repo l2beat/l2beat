@@ -77,6 +77,15 @@ export interface IProvider extends IStatelessProvider {
     slot: number | bigint | Bytes,
   ): Promise<bigint>
 
+  /**
+   * Per holder: which of `tokens` it ever sent or received, or undefined when
+   * the RPC of the chain keeps no such index. A candidate set, not balances.
+   */
+  getHeldTokens(
+    holders: ChainSpecificAddress[],
+    tokens: ChainSpecificAddress[],
+  ): Promise<(ChainSpecificAddress[] | undefined)[]>
+
   getLogs(
     address: ChainSpecificAddress,
     topics: (string | string[] | null)[],

@@ -21,7 +21,10 @@ export const PRIVACY_EXPOSURE_LABEL: Record<PrivacyExposure, string> = {
   unverifiable: 'unverifiable',
 }
 
-/** Chip colours of the interior field verdicts. */
+/**
+ * Chip colours of the interior field verdicts: pastel fills with dark text,
+ * the same in both modes.
+ */
 export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
   {
     private: 'text-[#17452A] bg-[#C8F2D7] border-[#4FB875]',
@@ -29,6 +32,13 @@ export const PRIVACY_EXPOSURE_CHIP_CLASS_NAME: Record<PrivacyExposure, string> =
     exposed: 'text-[#5D1111] bg-[#FFC9C9] border-[#E06565]',
     unverifiable: 'text-[#3A3F4B] bg-[#E3E6EC] border-[#9AA1AE]',
   }
+
+/** The shape of every chip on privacy pages. */
+export const PRIVACY_CHIP_BASE_CLASS_NAME =
+  'inline-flex select-none items-center gap-1.5 rounded border px-1.5 py-0.5 font-medium text-label-value-12'
+
+/** A chip that labels rather than grades, like "Outside the app". */
+export const PRIVACY_CHIP_CLASS_NAME = `${PRIVACY_CHIP_BASE_CLASS_NAME} border-divider bg-surface-secondary text-primary`
 
 /** Title of the interior field chips; entry and exit are public and have none. */
 export const PRIVACY_INTERIOR_LABEL = 'Inside'
@@ -95,8 +105,16 @@ export function getPrivacyAdversaryRosetteValues(
   adversaries: PrivacyAdversariesSummary,
 ): RosetteValue[] {
   return adversaries.cells.map((cell) =>
-    toPrivacyRosetteValue(cell.label, cell.sentiment, cell.reason),
+    toPrivacyRosetteValue(cell.id, cell.label, cell.sentiment, cell.reason),
   )
+}
+
+/** Who the adversary is: the framework's sentence, capitalized to stand alone, and examples. */
+export function getPrivacyAdversaryWho(adversary: PrivacyAdversary): string {
+  const { description, examples } = adversary
+  // Not lodash/upperFirst: here it would add a JS chunk to every project page.
+  const sentence = description.charAt(0).toUpperCase() + description.slice(1)
+  return `${sentence} Examples: ${examples}`
 }
 
 /** A slice of the project page rosette, explaining who the adversary is. */
@@ -105,13 +123,15 @@ export function getPrivacyAdversarySectionRosetteValue(
   cell: PrivacyAdversaryCell,
 ): RosetteValue {
   return toPrivacyRosetteValue(
+    adversary.id,
     adversary.label,
     cell.sentiment,
-    `${adversary.description} Examples: ${adversary.examples}`,
+    getPrivacyAdversaryWho(adversary),
   )
 }
 
 function toPrivacyRosetteValue(
+  id: PrivacyAdversaryId,
   name: string,
   sentiment: PrivacyAdversarySentiment,
   description: string,
@@ -121,12 +141,13 @@ function toPrivacyRosetteValue(
     value: PRIVACY_ADVERSARY_VERDICT[sentiment],
     sentiment,
     description,
+    href: `#${getPrivacyAdversaryBlockId(id)}`,
   }
 }
 
 export const PRIVACY_ADVERSARIES_SECTION_ID = 'privacy-adversaries'
 
-/** Anchor of one adversary's block on the project page, which advice steps link. */
+/** Anchor of one adversary's block on the project page, which rosette slices and advice steps link. */
 export function getPrivacyAdversaryBlockId(id: PrivacyAdversaryId): string {
   return `${PRIVACY_ADVERSARIES_SECTION_ID}-${kebabCase(id)}`
 }

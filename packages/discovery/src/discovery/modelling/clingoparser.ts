@@ -73,8 +73,7 @@ class ClingoFactParser {
 
   skipWhitespace(): void {
     while (this.pos < this.src.length) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      const ch = this.src[this.pos]!
+      const ch = this.src[this.pos]
       if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
         this.pos++
       } else break
@@ -162,8 +161,7 @@ class ClingoFactParser {
     this.pos++
     let result = ''
     while (this.pos < this.src.length) {
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      const ch = this.src[this.pos]!
+      const ch = this.src[this.pos]
       if (ch === '\\' && this.src[this.pos + 1] === '"') {
         result += '"'
         this.pos += 2

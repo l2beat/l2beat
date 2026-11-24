@@ -15,7 +15,10 @@ export function ProjectInteropMetrics({
     },
     {
       label: 'Last 24h cross-chain transfers',
-      value: formatActivityCount(interop.transferCount),
+      // A count of transfers: whole numbers below 1K ("55", not "55.00").
+      value: formatActivityCount(interop.transferCount, {
+        decimals: interop.transferCount < 1000 ? 0 : 2,
+      }),
     },
   ]
 
@@ -28,7 +31,7 @@ export function ProjectInteropMetrics({
             href="#interop-flows"
             className="group flex max-md:items-center max-md:justify-between md:flex-col md:gap-1.5"
           >
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="text-label-value-13 text-primary leading-4">
               {stat.label}
             </span>
             <span className="font-bold text-label-value-16 group-hover:underline">
@@ -37,35 +40,41 @@ export function ProjectInteropMetrics({
           </a>
         ))}
       </div>
-      <HorizontalSeparator />
-      <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
-        <InteropMetric
-          title="Interop protocols used"
-          href="#interop-flows"
-          items={{
-            items: interop.protocols.items.map((protocol) => ({
-              id: protocol.id,
-              displayName: protocol.name,
-              iconUrl: protocol.iconUrl,
-              volume: protocol.volume,
-            })),
-            remainingCount: interop.protocols.remainingCount,
-          }}
-        />
-        <InteropMetric
-          title="Tokens by volume"
-          href="#interop-flows"
-          items={{
-            items: interop.tokens.items.map((token) => ({
-              id: token.id,
-              displayName: token.symbol,
-              iconUrl: token.iconUrl,
-              volume: token.volume,
-            })),
-            remainingCount: interop.tokens.remainingCount,
-          }}
-        />
-      </div>
+      {/* No protocols or tokens to list: no empty ruled band either. */}
+      {(interop.protocols.items.length > 0 ||
+        interop.tokens.items.length > 0) && (
+        <>
+          <HorizontalSeparator />
+          <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+            <InteropMetric
+              title="Interop protocols used"
+              href="#interop-flows"
+              items={{
+                items: interop.protocols.items.map((protocol) => ({
+                  id: protocol.id,
+                  displayName: protocol.name,
+                  iconUrl: protocol.iconUrl,
+                  volume: protocol.volume,
+                })),
+                remainingCount: interop.protocols.remainingCount,
+              }}
+            />
+            <InteropMetric
+              title="Tokens by volume"
+              href="#interop-flows"
+              items={{
+                items: interop.tokens.items.map((token) => ({
+                  id: token.id,
+                  displayName: token.symbol,
+                  iconUrl: token.iconUrl,
+                  volume: token.volume,
+                })),
+                remainingCount: interop.tokens.remainingCount,
+              }}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -93,7 +102,7 @@ function InteropMetric({
 
   return (
     <a href={href} className="group block">
-      <p className="mb-2 font-medium text-label-value-12 text-secondary group-hover:underline">
+      <p className="mb-2 text-label-value-13 text-primary leading-4 group-hover:underline">
         {title}
       </p>
       <InteropTopItems topItems={items} hideDialog />

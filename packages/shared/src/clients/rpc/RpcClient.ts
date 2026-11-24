@@ -9,6 +9,7 @@ import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { FetchInit } from '../http/fetchWithTimeout'
+import { readRateLimitHeaders } from '../http/rateLimitHeaders'
 import type { BlockHeader, LogsTopicFilter } from '../types'
 import type { MulticallV3Client } from './multicall/MulticallV3Client'
 import { BATCH_REJECTED, isBatchRejected, RpcBatcher } from './RpcBatcher'
@@ -19,6 +20,7 @@ import {
   type CallParameters,
   EVMBalanceResponse,
   EVMBlock,
+  EVMBlockReceiptsResponse,
   EVMBlockResponse,
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
@@ -202,6 +204,29 @@ export class RpcClient extends ClientCore implements IRpcClient {
     }
 
     return receipts.data.map((receipt) => ({ ...receipt.result }))
+  }
+
+  /** Every receipt of a block in one call (eth_getBlockReceipts). */
+  async getBlockReceipts(blockNumber: number) {
+    const response = await this.query('eth_getBlockReceipts', [
+      Quantity.encode(BigInt(blockNumber)),
+    ])
+    const receipts = EVMBlockReceiptsResponse.safeParse(response)
+    if (!receipts.success) {
+      this.$.logger.warn('Invalid response', {
+        blockNumber,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Block receipts: Error during parsing', {
+        cause: { blockNumber },
+      })
+    }
+    if (receipts.data.result === null) {
+      throw new NotFoundOnRpcError('Block not found', {
+        cause: { blockNumber },
+      })
+    }
+    return receipts.data.result.map((receipt) => ({ ...receipt }))
   }
 
   async getBalance(
@@ -496,6 +521,9 @@ export class RpcClient extends ClientCore implements IRpcClient {
   ): Promise<unknown[] | typeof BATCH_REJECTED> {
     const start = Date.now()
     const response = await this.$.http.fetchRaw(this.$.url, init)
+    if (response.status === 429) {
+      this.rateLimiter.throttled(start)
+    }
     const text = await response.text()
     this.metricsAggregator.push({
       duration: Date.now() - start,
@@ -511,14 +539,22 @@ export class RpcClient extends ClientCore implements IRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok) {
+      const rateLimit = readRateLimitHeaders(response.headers)
       throw new Error('HTTP error', {
-        cause: { status: response.status, statusText: response.statusText },
+        cause: {
+          status: response.status,
+          statusText: response.statusText,
+          ...(Object.keys(rateLimit).length > 0 && { rateLimit }),
+        },
       })
     }
     if (!Array.isArray(body)) {
       throw new Error('Batch not answered with an array', {
         cause: { body: text },
       })
+    }
+    if (body.some(hasResult)) {
+      this.rateLimiter.answered(start)
     }
     return body
   }
@@ -578,4 +614,9 @@ function isNullResult(response: unknown): boolean {
     'result' in response &&
     response.result === null
   )
+}
+
+/** Not an error in its place: the provider served this call of the batch */
+function hasResult(item: unknown): boolean {
+  return typeof item === 'object' && item !== null && 'result' in item
 }

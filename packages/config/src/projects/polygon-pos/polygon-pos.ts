@@ -139,7 +139,7 @@ export const polygonpos: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
         ),
-        premintedTokens: ['TRADE'],
+        premintedTokens: ['TRADE', 'QUICK'],
         tokens: '*',
       }),
       discovery.getEscrowDetails({

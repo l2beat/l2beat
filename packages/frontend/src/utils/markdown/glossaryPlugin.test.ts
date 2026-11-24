@@ -42,6 +42,15 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('does not link terms inside markdown headings', () => {
+    const input = '## Data availability\n\nData availability is spicy.'
+    expect(linkTerms(input)).toEqual(
+      `## Data availability\n\n[Data availability](/glossary#da?description=${encodeURIComponent(
+        'DA description',
+      )}) is spicy.`,
+    )
+  })
+
   it('lets a longer term win over a shorter one that starts earlier', () => {
     const overlapping = linkGlossaryTerms([
       { id: 'ab', matches: ['alpha beta'], description: 'AB' },
@@ -164,7 +173,7 @@ describe(glossaryPlugin.name, () => {
     const output = md.render(input, { glossaryDescriptionIdPrefix: 'md1' })
     expect(output).toInclude('aria-describedby="md1-glossary-blob"')
     expect(output).toInclude(
-      '</a><span id="md1-glossary-blob" class="sr-only">Blob &lt;b&gt; description</span>',
+      '</a><span id="md1-glossary-blob" class="sr-only select-none">Blob &lt;b&gt; description</span>',
     )
   })
 

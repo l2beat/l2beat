@@ -3,23 +3,16 @@ import type { HttpClient } from '@l2beat/shared'
 import {
   type EthereumAddress,
   Hash256,
-  Retries,
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
+import { callWithBackoff, isPermanentHttpError } from './callWithBackoff'
 import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
 
 const DEFAULT_URL = 'https://sourcify.dev/server'
 
 class SourcifyError extends Error {}
-
-const shouldRetry = Retries.exponentialBackOff({
-  stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
-  maxAttempts: 10,
-  maxDistanceMs: Number.POSITIVE_INFINITY,
-  notifyAfterAttempts: Number.POSITIVE_INFINITY,
-})
 
 export class SourcifyClient implements IEtherscanClient {
   protected readonly rateLimiter = new RateLimiter({
@@ -106,20 +99,13 @@ export class SourcifyClient implements IEtherscanClient {
   }
 
   async callWithRetries(address: string): Promise<unknown> {
-    let attempts = 0
-    while (true) {
-      try {
-        return await this.call(address)
-      } catch (error) {
-        attempts++
-        const result = shouldRetry(attempts, error)
-        if (result.shouldStop) {
-          throw error
-        }
+    return await callWithBackoff(() => this.call(address), {
+      random: Math.random,
+      isPermanentError: isPermanentHttpError,
+      retryCallback: (attempts, error) => {
         this.logger.warn('Retrying', { attempts, error })
-        await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
-      }
-    }
+      },
+    })
   }
 
   private async call(address: string): Promise<unknown | null> {
@@ -142,9 +128,9 @@ export class SourcifyClient implements IEtherscanClient {
     }
 
     if (!response.ok) {
-      throw new SourcifyError(
-        `HTTP error: ${response.status} ${response.statusText}`,
-      )
+      throw new SourcifyError('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const json = await response.json()

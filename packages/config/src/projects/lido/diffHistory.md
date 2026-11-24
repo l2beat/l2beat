@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x14b0aa8c3ba75910bdced9926cb04bbc8768ef71
+
+# Diff at Mon, 16 Nov 2026 22:34:01 GMT:
+
+- id: a1c44618
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1793982907
+- current timestamp: 1794868354
+
+## Description
+
+- EmergencyBrakesEthereum: member rotated.
+- CircuitBreakerCommittee: member rotated.
+- DualGovernanceEmergencyActivationCommittee: member rotated.
+- DualGovernanceEmergencyExecutionCommittee: member rotated (the same swap as the activation committee).
+
+## Watched changes
+
+```diff
+    contract EmergencyBrakesEthereum (eth:0x73b047fe6337183A454c5217241D780a932777bD) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xdd19274b614b5ecAcf493Bc43C380ef6B8dfB56c"
++        "eth:0xcfc7834eb929e7E621F0Ba71d421A27Eddf6DDA1"
+    }
+```
+
+```diff
+    contract CircuitBreakerCommittee (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xA4cddAB88F16eA33dA1b0851ee2Beb6d2f5C91e4"
++        "eth:0x2FDE5A00c293102Bb4d0C95744f8fA956f418ac3"
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyActivationCommittee (eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x237Cddf3aA765260cf6b60E064065Da7c3Aa1559"
++        "eth:0x3554630ec64e7756007dF4137abf7c5881C533D0"
+    }
+```
+
+```diff
+    contract DualGovernanceEmergencyExecutionCommittee (eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x237Cddf3aA765260cf6b60E064065Da7c3Aa1559"
++        "eth:0x3554630ec64e7756007dF4137abf7c5881C533D0"
+    }
+```
+
 Generated with discovered.json: 0x254b185d8a50c2d0c4f98028cb717f29571a1121
 
 # Diff at Fri, 06 Nov 2026 16:36:36 GMT:

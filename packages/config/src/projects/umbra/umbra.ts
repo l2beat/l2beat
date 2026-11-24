@@ -3,6 +3,10 @@ import { formatEther } from 'ethers/lib/utils'
 import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -10,6 +14,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { umbraAdversaries } from './adversaries'
+import { umbraRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('umbra')
 
@@ -84,6 +89,7 @@ export const umbra: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-07-31')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -120,7 +126,7 @@ export const umbra: BaseProject = {
       delivery: { type: 'hosted' },
       source: {
         repository: 'https://github.com/ScopeLift/umbra-protocol',
-        commit: '685f710e4e846db3b88f8138e6f78ee82482a391',
+        commit: '53ed4af5e575919680a4e70c1a090feafe365275',
       },
     },
     trackedOn: ['ethereum'],
@@ -140,16 +146,13 @@ export const umbra: BaseProject = {
       extractor: 'umbraStealthKeyChanged',
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         'The contracts are immutable. The toll applies only to new payments, so recipients can always withdraw what they received.',
       walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The contracts, the umbra-js library and the frontend are open source and build locally. The indexer and the relayer API behind the hosted app are closed.',
     },
@@ -163,7 +166,7 @@ export const umbra: BaseProject = {
         'registeredAddresses',
       ),
     ),
-    riskSummary: readProjectMarkdown('umbra', 'riskSummary'),
+    riskSummary: umbraRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
     },

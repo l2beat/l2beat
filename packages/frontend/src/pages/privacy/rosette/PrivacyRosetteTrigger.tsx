@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
   TooltipVisualOnly,
 } from '~/components/core/tooltip/Tooltip'
+import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { PizzaRosetteTooltip } from '~/components/rosette/pizza/PizzaRosetteTooltip'
 import type { RosetteValue } from '~/components/rosette/types'
 import { TableLink } from '~/components/table/TableLink'
@@ -91,9 +92,9 @@ export function PrivacyRosetteTrigger({
             isUnderReview={isUnderReview}
           />
           {settings.hint && (
-            <p className="mt-3 font-normal text-paragraph-12 text-secondary leading-none">
+            <TooltipFootnote className="mt-3 leading-none">
               {settings.hint}
-            </p>
+            </TooltipFootnote>
           )}
         </TooltipVisualOnly>
         <TooltipHtmlCopyOnly>

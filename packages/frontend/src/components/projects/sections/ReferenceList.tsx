@@ -14,8 +14,9 @@ export function ReferenceList({ references, tight }: ReferenceListProps) {
   return (
     <ol
       className={cn(
-        'text-paragraph-15 md:text-paragraph-16',
-        tight ? 'mt-2' : 'mt-4 md:mt-6',
+        // Citations: a step under the prose, with room between multi-line titles.
+        'space-y-1.5 text-paragraph-14 md:text-paragraph-15',
+        tight ? 'mt-2' : 'mt-3',
       )}
     >
       {references.map((reference, i) => (

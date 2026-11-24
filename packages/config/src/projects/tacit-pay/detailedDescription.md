@@ -19,7 +19,7 @@ A deposit address is an ordinary address derived from the user's keys. Anyone ca
 
 ### Keys
 
-All keys derive from one signature of the user's wallet over a fixed message, so whoever obtains that signature controls the funds. Contract wallets cannot sign in. A Tacit address holds three public keys: one that checks spends, one behind each note's nullifier and one that payers encrypt memos to. A .wei, .gwei or .eth name can publish the whole address onchain in its `finance.tacit` text record, so payers can pay the name. Deposit addresses can be found again from the keys alone.
+All keys derive from one signature of the user's wallet over a fixed message, so whoever obtains that signature controls the funds. Contract wallets cannot sign in. A Tacit address holds the public key of the signature-derived key. It also holds three pool keys: one that checks spends, one behind each note's nullifier and one that payers encrypt memos to. A .wei, .gwei or .eth name can publish the address onchain in its `finance.tacit` text record, so payers can pay the name. Deposit addresses can be found again from the keys alone. Sign-in also takes a pasted 64-character key in place of the signature.
 
 ### App
 
@@ -27,7 +27,7 @@ anon.wei is one HTML page stored as contract code on Ethereum, each version immu
 
 ### Network
 
-The page reads the chain through public RPC nodes and syncs from the relay's history feed. It keeps a feed page only where the tree it builds matches a root the pool has held. The feed can still hide a note, which Rebuild recovers from chain logs. Under Endpoints the user can set their own node and another relay or none. A wallet pointed at an own Ethereum node also sends its transactions through it, which shows the node's IP to its peers with each shield.
+The page reads the chain through public RPC nodes and syncs from the relay's history feed. It keeps a feed page only where the tree it builds matches a root the pool has held. The feed can hide a note, which Rebuild recovers from chain logs. Under Endpoints the user can set their own node and another relay or none. A wallet pointed at an own Ethereum node also sends its transactions through it, which shows the node's IP to its peers with each shield.
 
 ### Exits
 

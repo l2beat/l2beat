@@ -35,6 +35,7 @@ function Calendar({
       captionLayout={captionLayout}
       formatters={{
         formatWeekdayName: (day) => {
+          // biome-ignore lint/plugin/utcDates: the picker's days are local dates, read in the browser only
           return new Intl.DateTimeFormat('en-US', { weekday: 'short' })
             .format(day)
             .toUpperCase()
@@ -192,6 +193,7 @@ function CalendarDayButton({
   return (
     <button
       ref={ref}
+      // biome-ignore lint/plugin/utcDates: the picker's days are local dates, read in the browser only
       data-day={day.date.toLocaleDateString()}
       data-selected-single={
         modifiers.selected &&

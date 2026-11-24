@@ -39,5 +39,11 @@
     "address": "eth:0xE440CC08A71694C8229323803F59024E3144630e",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "DelayedWETH_v2_0_0": {
+    "hash": "0x02609c2374653d3ec97ddd154d41a72c2eb2335ffc0405b036171512f6d7b187",
+    "address": "eth:0xF024e96317907C3b8d8CB346B9FD9034c8640e15",
+    "chain": "ethereum",
+    "blockNumber": 26430859
   }
 }

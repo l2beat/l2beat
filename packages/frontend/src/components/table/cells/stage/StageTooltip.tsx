@@ -39,7 +39,7 @@ export function StageTooltip({
       : undefined
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-3">
       <div
         className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-baseline')}
       >
@@ -67,7 +67,7 @@ export function StageTooltip({
           stageConfig.additionalConsiderations.short
         )
       ) : null}
-      <HorizontalSeparator className="my-3" />
+      <HorizontalSeparator />
       {walkAway === 'passed' && (
         <Callout
           color="green"
@@ -78,7 +78,7 @@ export function StageTooltip({
             </>
           }
           icon={<WalkAwayPassedIcon className="size-4 fill-positive" />}
-          className={cn('mb-3 gap-2! px-3 py-2')}
+          compact
         />
       )}
       {walkAway === 'not-passed' && (
@@ -91,7 +91,7 @@ export function StageTooltip({
             </>
           }
           icon={<WalkAwayNotPassedIcon className="size-4 fill-negative" />}
-          className={cn('mb-3 gap-2! px-3 py-2')}
+          compact
         />
       )}
       {emergencyWarning && (
@@ -99,19 +99,19 @@ export function StageTooltip({
           color="yellow"
           body={emergencyWarning}
           icon={<EmergencyIcon className="size-4" />}
-          className={cn('mb-3 gap-2! px-3 py-2')}
+          compact
         />
       )}
       {stageConfig.stage === 'UnderReview' && (
         <p>
           Projects under review might present uncompleted information & data.
           <br />
-          ETHBEAT Team is working to research & validate content before
+          ETHBEAT team is working to research & validate content before
           publishing.
         </p>
       )}
       {stageConfig.stage !== 'UnderReview' && !stageConfig.downgradePending && (
-        <div>
+        <div className="flex flex-col gap-3">
           {stageConfig.message && (
             <WarningBar
               color="yellow"
@@ -120,14 +120,14 @@ export function StageTooltip({
                   ? RoundedWarningIcon
                   : UnderReviewIcon
               }
-              className="mb-4 px-3 py-2"
+              compact
               text={stageConfig.message.text}
               ignoreMarkdown
             />
           )}
           {stageConfig.missing && (
-            <div>
-              <span className="mb-2 block font-bold text-label-value-14">
+            <div className="flex flex-col gap-2">
+              <span className="font-bold text-label-value-14">
                 Items missing for{' '}
                 <span
                   className={getColorClassName(stageConfig.missing.nextStage)}
@@ -135,10 +135,13 @@ export function StageTooltip({
                   {stageConfig.missing.nextStage}
                 </span>
               </span>
-              <ul className="list-none space-y-2">
+              {/* Requirement text starts where callout text does. */}
+              <ul className="list-none space-y-2 pl-3">
                 {missing?.map((requirement, i) => (
-                  <li className="flex gap-1.5" key={i}>
-                    <MissingIcon className="relative top-0.5 inline-block shrink-0" />
+                  <li className="flex gap-2" key={i}>
+                    <span className="flex h-[1lh] shrink-0 items-center">
+                      <MissingIcon className="size-4 fill-negative" />
+                    </span>
                     <div>
                       {requirement}
                       {stageConfig.missing?.principle === requirement &&
@@ -163,12 +166,9 @@ export function StageTooltip({
       )}
       <Callout
         color="blue"
-        body="Please mind, stages do not reflect project security"
-        icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
-        className={cn(
-          'gap-1! px-3 py-2',
-          stageConfig.stage !== 'Stage 2' && 'mt-3',
-        )}
+        body="Please mind, stages do not reflect project security."
+        icon={<InfoIcon className="size-4 fill-link" />}
+        compact
       />
     </div>
   )

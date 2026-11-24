@@ -18,6 +18,8 @@ describeDatabase(LiquidStakingSnapshotRepository.name, (db) => {
     const updated = {
       ...record('a', 1),
       exchangeRate: 1_234_567_890_123_456_789_012n,
+      retiredLastRequestId: 7,
+      retiredLastFinalizedRequestId: 6,
       instantExitEth: 5n,
       instantExitFeeBps: 30,
       marketExitEth: 99_953_000_000_000_000_000n,
@@ -96,6 +98,8 @@ function record(
     exchangeRate: 10n ** 18n,
     lastRequestId: 10,
     lastFinalizedRequestId: 8,
+    retiredLastRequestId: 5,
+    retiredLastFinalizedRequestId: 4,
     instantExitEth: null,
     instantExitFeeBps: null,
     lockTime: null,

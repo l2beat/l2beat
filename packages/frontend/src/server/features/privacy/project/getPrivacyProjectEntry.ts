@@ -44,6 +44,7 @@ import {
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { renderPrivacyRiskSummary } from '../utils/renderPrivacyRiskSummary'
 import { resolvePrivacySources } from '../utils/resolvePrivacySources'
 
 export interface ProjectPrivacyEntry {
@@ -187,7 +188,7 @@ export async function getPrivacyProjectEntry(
       type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         rangeControls: 'privacy',
         project: chartProject,
@@ -226,7 +227,7 @@ export async function getPrivacyProjectEntry(
       type: 'PrivacyAssetsBreakdownSection',
       props: {
         id: 'privacy-assets-breakdown',
-        title: 'Assets Breakdown',
+        title: 'Assets breakdown',
         assets: details.assets,
         showTvl: details.hasTvl,
       },
@@ -238,20 +239,20 @@ export async function getPrivacyProjectEntry(
       type: 'MilestonesAndIncidentsSection',
       props: {
         id: 'milestones-and-incidents',
-        title: 'Milestones & Incidents',
+        title: 'Milestones & incidents',
         milestones: details.milestones,
       },
     })
   }
 
-  if (details.riskSummary) {
+  if (details.riskSummary && details.riskSummary.length > 0) {
     sections.push({
       type: 'MarkdownSection',
       sideNavTitle: 'Risk summary',
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
-        content: details.riskSummary,
+        content: renderPrivacyRiskSummary(details.riskSummary),
         mdClassName:
           '[&_.mdc-h2]:mb-0 [&_.mdc-h2]:font-bold [&_.mdc-h2]:text-red-300 [&_.mdc-h2]:text-paragraph-15 md:[&_.mdc-h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
       },
@@ -263,7 +264,7 @@ export async function getPrivacyProjectEntry(
       type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
+        title: 'Upgrades & governance',
         content: details.upgradesAndGovernance.content,
         governanceInfo: details.upgradesAndGovernance.governanceInfo,
       },

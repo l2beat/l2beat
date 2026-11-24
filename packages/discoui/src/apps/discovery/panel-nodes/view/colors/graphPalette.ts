@@ -18,6 +18,9 @@ export interface GraphPalette {
   connection: RGBA
   connectionDimmed: RGBA
   connectionGrayed: RGBA
+  perimeterFill: RGBA
+  perimeterBorder: RGBA
+  perimeterNodeBorder: RGBA
   grayedAlpha: number
   dimmedAlpha: number
 }
@@ -39,6 +42,9 @@ export const DARK_GRAPH_PALETTE: GraphPalette = {
   connection: rgbaFromHex('#a98763', 0.6),
   connectionDimmed: rgbaFromHex('#a98763', 0.18),
   connectionGrayed: rgbaFromHex('#f0d8bd', 0.1),
+  perimeterFill: rgbaFromHex('#fabd30', 0.06),
+  perimeterBorder: rgbaFromHex('#fabd30', 0.72),
+  perimeterNodeBorder: rgbaFromHex('#fabd30', 0.85),
   grayedAlpha: 0.2,
   dimmedAlpha: 0.4,
 }
@@ -59,6 +65,9 @@ export const LIGHT_GRAPH_PALETTE: GraphPalette = {
   connection: rgbaFromHex('#6c5d52', 0.72),
   connectionDimmed: rgbaFromHex('#6c5d52', 0.18),
   connectionGrayed: rgbaFromHex('#2f2721', 0.1),
+  perimeterFill: rgbaFromHex('#876201', 0.07),
+  perimeterBorder: rgbaFromHex('#876201', 0.75),
+  perimeterNodeBorder: rgbaFromHex('#876201', 0.9),
   grayedAlpha: 0.28,
   dimmedAlpha: 0.55,
 }

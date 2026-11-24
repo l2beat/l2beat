@@ -131,6 +131,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
 `
 
+const OP_SUCCINCT_V3143_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.10.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.10.0\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\`, \`make\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [succinctlabs/op-succinct](https://github.com/succinctlabs/op-succinct) repo: \`git checkout v3.14.3\`. Commit hash should be \`ed2c54d901c95f5a9cefa9ca7927941b1726f2af\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the Ethereum DA range ELF from source: from \`programs/range/ethereum\` run \`cargo prove build --elf-name range-elf-embedded --docker --tag v6.10.0 --output-directory ../../../elf\`. Its SHA-256 should be \`5cdc0d15f52a4674d5ef1e41cae5258ed250fd2603c672069bdc45ac98a68c50\`.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.10.0 --output-directory ../../elf\`. Its SHA-256 should be \`19c6b75efc0ee368a28dcb28bf85a3dd9feba133041b89e4c3d6b2d93d932b02\`.
+5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -527,6 +543,14 @@ Verify:
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_V3141_STEPS,
   },
+  '0x0014f8323d9960173711ccef45d3b3aeddc7aa3fc1db9cdb978625bd5bbaf127': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.3/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3143_STEPS,
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -577,6 +601,14 @@ Verify:
     proverSystemProject: ProjectId('sp1hypercube'),
     verificationStatus: 'successful',
     verificationSteps: OP_SUCCINCT_V3141_STEPS,
+  },
+  '0x6b44a1ac3684125e6912a8025753526067d4d7524da7400141b8d61c79d1eb1d': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.14.3/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_V3143_STEPS,
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
@@ -790,6 +822,15 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x0022379400ea3157fae440ae7a8101e8bb01ca58e6a5f132c66751513aa58f08.md',
     ),
   },
+  '0x00bc954fe627a8c36173e608608795425e22b4134914c7da5bd233b4718c855b': {
+    title: 'Derive V3 exchange program',
+    description:
+      'Proves batches of the Derive V3 exchange: margin, settlement, deposits and withdrawals, plus a Celestia light client step and the inclusion of the batch data on Celestia.',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'unsuccessful',
+    verificationSteps:
+      'The program source is not public, so the program hash cannot be regenerated.',
+  },
   '0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf': {
     ...OP_SUCCINCT_AGG_BLOBS,
     programUrl:
@@ -850,6 +891,26 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'notVerified',
     verificationSteps: readMarkdown(
       'common/programHashes/0x1dc938274cd550224002662e765b50c838b6fcb3234308b847ece2ce0e4a5631.md',
+    ),
+  },
+  '0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/mantle-v1.6.3/programs/aggregation',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x007ed65c7e2e8c98e61b66811a86adc05a182e444cee082fda55242fe9b4a56e.md',
+    ),
+  },
+  '0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/mantle-v1.6.3/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x57b7251f39bcced01bb272042859b1511b1cb42d49ac5ebe45117b32570ad872.md',
     ),
   },
   '0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf': {
@@ -2648,6 +2709,19 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x031ac6f15c19010da258f5cb633ef6ca9318c2d0f244bea6b2045ce6b790e1df.md',
+    ),
+  },
+  // SUPER_CANNON_KONA (game type 9) prestate set by Upgrade 21 (OPCM 9.0.3).
+  // Reproduced via kona Docker build, tag kona-client/v1.9.0 (commit 1286a886).
+  '0x03e5a54835d39c1d83b198314473e1f111c3539c04f65c3e8a9b8ccebe3737c9': {
+    title: 'OP Kona interop absolute prestate v1.9.0 (cannon64-kona-interop)',
+    description:
+      'A commitment to the initial state of the OP stack fault proof program of Kona client, in the interop variant run by the super fault dispute game (respected game type 9).',
+    programUrl:
+      'https://github.com/ethereum-optimism/optimism/tree/kona-client/v1.9.0/rust/kona',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x03e5a54835d39c1d83b198314473e1f111c3539c04f65c3e8a9b8ccebe3737c9.md',
     ),
   },
   '0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025': {

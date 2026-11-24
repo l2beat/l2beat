@@ -6,16 +6,36 @@ import {
 } from '../../common/privacyAdversaries'
 import type { ProjectPrivacyReferenceApp } from '../../types'
 
-// v1.5.0 of the web app, which privacypools.com serves.
+// The v1.6.0 release bundle of the web app, loaded by its CID. It differs
+// from privacypools.com in its build env: no Alchemy key, public endpoints.
 export const REFERENCE_APP = {
-  name: 'privacypools.com',
-  url: 'https://privacypools.com',
-  since: '2026-10-23',
-  delivery: { type: 'hosted' },
+  name: 'Privacy Pools release bundle',
+  url: 'https://github.com/0xbow-io/privacy-pools-website-v2/releases/tag/v1.6.0',
+  since: '2026-11-18',
+  version: '1.6.0',
+  delivery: {
+    type: 'pinned',
+    pin: {
+      type: 'ipfs',
+      cid: 'bafybeif7cfytgswbv6rdv4arclle2xrhzullzay4qhl7wuj3h2idpf5cfa',
+    },
+    rebuild:
+      'https://github.com/0xbow-io/privacy-pools-website-v2/blob/5dc5434b443b10aa33c7db5421824d84b71a08b4/docs/static-releases.md',
+  },
   source: {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-    commit: '6fd83a092004ab7123613abff2b0ca319a2106ce',
+    commit: '5dc5434b443b10aa33c7db5421824d84b71a08b4',
   },
+  checkedApps: [
+    {
+      name: 'Casberi',
+      finding:
+        "Names the user's account to 0xbow's relayer in a fee quote when the send screen opens, before the relay names the recipient.",
+      fix: 'Quote fees without naming an account until the recipient is set, as the release bundle does.',
+      source:
+        'https://github.com/alexanderchopan/casberi/blob/881139276206d683aba3e54bce945796a43c1d93/Casberi/Casberi/Model/PrivateMove.swift#L318-L323',
+    },
+  ],
 } satisfies ProjectPrivacyReferenceApp
 const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers. The app
@@ -57,12 +77,13 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
             MONOREPO + 'packages/circuits/circuits/templates/Transact.circom',
         },
         {
-          title:
-            'Relayed transfers pay the fee as a public output (checked 2026-10-30)',
+          title: 'Relayed transfers pay the fee as a public output',
+          checked: '2026-10-30',
           url: DOCS + 'operations/transfer',
         },
         {
-          title: 'Ragequit publishes the label and owner (checked 2026-10-30)',
+          title: 'Ragequit publishes the label and owner',
+          checked: '2026-10-30',
           url: DOCS + 'operations/ragequit',
         },
       ],
@@ -94,8 +115,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'Each root update links its list on IPFS',
         },
         {
-          title:
-            'Share counts encode the exchange rate at deposit (checked 2026-10-30)',
+          title: 'Share counts encode the exchange rate at deposit',
+          checked: '2026-10-30',
           url: DOCS + 'concepts/yield-shares',
         },
         {
@@ -105,11 +126,11 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       ],
     },
     networkObserver: {
-      sentiment: 'warning',
+      sentiment: 'good',
       exposureShort:
-        "When 0xbow's registry feeds fail, the default RPCs, led by Alchemy under 0xbow's key, receive the account right before its withdrawal.",
+        "No request names the account, so over an IP-hiding route no third party can link the user's deposit and withdrawal.",
       exposureContinued:
-        "A connected wallet's address reaches Alchemy's token API whatever the endpoint, and Alchemy sees when that session withdraws. A local node set in the app receives the account reads instead.",
+        "A connected wallet's address reaches the default RPC, PublicNode on Ethereum, through the deposit screen's balance reads.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -117,26 +138,21 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         asset: 'private',
         linkage: {
           verdict: 'atRisk',
-          note: 'Private only with a local node, an IP-hiding route and a private window that never connected a wallet.',
+          note: 'Private only over an IP-hiding route, in a private window that never connected a wallet.',
         },
       },
       sources: [
         {
-          title:
-            'Own-account reads ask the RPC when the feeds have no current data',
-          url: WEBSITE + 'services/keystore-registry-reads.ts#L9-L18',
+          title: 'Account reads come only from the local registry',
+          url: WEBSITE + 'services/keystore-registry-reads.ts#L29-L33',
         },
         {
-          title: 'Alchemy first, public node last',
-          url: WEBSITE + 'config/rpc-order.ts#L55-L70',
+          title: 'Public node when the build has no Alchemy key',
+          url: WEBSITE + 'config/prod-deployments.ts#L99-L105',
         },
         {
-          title: "A connected wallet's tokens are read from Alchemy by address",
-          url: WEBSITE + 'services/wallet-tokens.ts#L182-L190',
-        },
-        {
-          title: 'A custom endpoint replaces the defaults, with no fallback',
-          url: WEBSITE + 'config/custom-rpc.ts#L17-L20',
+          title: "The deposit screen polls a connected wallet's balances",
+          url: WEBSITE + 'components/home/action-hub.tsx#L2250-L2265',
         },
       ],
     },
@@ -145,7 +161,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. 0xbow can change the hosted app at any time, and a multisig can upgrade the four core contracts without delay.",
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. A multisig can upgrade the four core contracts without delay.",
       interior: {
         sender: 'private',
         recipient: {
@@ -169,8 +185,8 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
           title: 'transact: only the latest ASP root is accepted',
         },
         {
-          title:
-            'What the relayer receives, the IP included (checked 2026-10-30)',
+          title: 'What the relayer receives, the IP included',
+          checked: '2026-10-30',
           url: DOCS + 'introduction/threat-model',
         },
       ],
@@ -210,8 +226,14 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   },
   advice: [
     {
+      name: 'Load',
+      text: `Install ${toolLink('ipfsDesktop')} and use Import CAR on \`site.car\` from the [v1.6.0 release](${REFERENCE_APP.url}). Open the app at \`http://localhost:8080/ipfs/${REFERENCE_APP.delivery.pin.cid}\`. A [rebuild](${REFERENCE_APP.delivery.rebuild}) from the reviewed source gives the same CID.`,
+      against: ['privilegedInsider'],
+      outside: true,
+    },
+    {
       name: 'Set up',
-      text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic, and reconnect it before each session. In the app's settings, set a ${toolLink('ethereumNode', 'local Ethereum node')} as the endpoint before signing in. 0xbow's relayer refuses Tor exits on the app's default settings.`,
+      text: `Turn on ${toolLink('nymVpn')} with the Random profile, an IP-hiding route for all of the computer's traffic, and reconnect it before each session. 0xbow's relayer refuses Tor exits on the app's default settings.`,
       against: ['networkObserver', 'privilegedInsider'],
       outside: true,
     },

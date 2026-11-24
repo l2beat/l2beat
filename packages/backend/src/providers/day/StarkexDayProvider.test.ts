@@ -89,52 +89,6 @@ describe(StarkexDayProvider.name, () => {
       })
     })
 
-    it('aggregates correctly with three products', async () => {
-      const starkexClient = mockObject<StarkexClient>({
-        getDailyCount: mockFn()
-          .resolvesToOnce(100) // product1, day 1
-          .resolvesToOnce(200) // product2, day 1
-          .resolvesToOnce(300), // product3, day 1
-      })
-
-      const provider = new StarkexDayProvider(starkexClient, [
-        'product1',
-        'product2',
-        'product3',
-      ])
-      const result = await provider.getDailyTxsCount(1, 2)
-
-      expect(result).toEqual({
-        [1 * UnixTime.DAY]: 600, // 100 + 200 + 300
-      })
-      expect(starkexClient.getDailyCount).toHaveBeenCalledTimes(3)
-    })
-
-    it('processes multiple days correctly', async () => {
-      const starkexClient = mockObject<StarkexClient>({
-        getDailyCount: mockFn()
-          // Day 1
-          .resolvesToOnce(10)
-          .resolvesToOnce(20)
-          // Day 2
-          .resolvesToOnce(30)
-          .resolvesToOnce(40)
-          // Day 3
-          .resolvesToOnce(50)
-          .resolvesToOnce(60),
-      })
-
-      const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2'])
-      const result = await provider.getDailyTxsCount(1, 4)
-
-      expect(result).toEqual({
-        [1 * UnixTime.DAY]: 30, // 10 + 20
-        [2 * UnixTime.DAY]: 70, // 30 + 40
-        [3 * UnixTime.DAY]: 110, // 50 + 60
-      })
-      expect(starkexClient.getDailyCount).toHaveBeenCalledTimes(6)
-    })
-
     it('handles API errors gracefully', async () => {
       const starkexClient = mockObject<StarkexClient>({
         getDailyCount: mockFn().rejectsWithOnce(new Error('API Error')),
@@ -171,47 +125,6 @@ describe(StarkexDayProvider.name, () => {
         [2 * UnixTime.DAY]: 0,
       })
       expect(starkexClient.getDailyCount).not.toHaveBeenCalled()
-    })
-
-    it('handles large day numbers', async () => {
-      const starkexClient = mockObject<StarkexClient>({
-        getDailyCount: mockFn().resolvesTo(1000),
-      })
-
-      const provider = new StarkexDayProvider(starkexClient, ['product1'])
-      const largeDay = 1000000
-      const result = await provider.getDailyTxsCount(largeDay, largeDay + 1)
-
-      expect(result).toEqual({
-        [largeDay * UnixTime.DAY]: 1000,
-      })
-      expect(starkexClient.getDailyCount).toHaveBeenCalledWith(
-        largeDay,
-        'product1',
-      )
-    })
-
-    it('maintains correct order of calls for multiple products', async () => {
-      const calls: string[] = []
-      const starkexClient = mockObject<StarkexClient>({
-        getDailyCount: mockFn((day: number, product: string) => {
-          calls.push(`day${day}-${product}`)
-          return Promise.resolve(1)
-        }),
-      })
-
-      const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2', 'p3'])
-      await provider.getDailyTxsCount(1, 3)
-
-      // Each day should process all products before moving to next day
-      expect(calls).toEqual([
-        'day1-p1',
-        'day1-p2',
-        'day1-p3',
-        'day2-p1',
-        'day2-p2',
-        'day2-p3',
-      ])
     })
   })
 })

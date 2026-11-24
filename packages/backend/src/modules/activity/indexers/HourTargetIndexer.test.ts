@@ -15,7 +15,7 @@ describe(HourTargetIndexer.name, () => {
         { onTick },
       )
 
-      expect(await indexer.tick()).toEqual(lastHour / UnixTime.HOUR)
+      expect(await indexer.tick()).toEqual(498_109)
       expect(onTick).toHaveBeenOnlyCalledWith(lastHour)
     })
   })

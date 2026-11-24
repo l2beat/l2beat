@@ -9,7 +9,7 @@ export function RiskAnalysisUnderReview({ title }: { title: string }) {
       <p>
         Projects under review might present uncompleted information & data.
         <br />
-        ETHBEAT Team is working to research & validate content before
+        ETHBEAT team is working to research & validate content before
         publishing.
       </p>
     </div>

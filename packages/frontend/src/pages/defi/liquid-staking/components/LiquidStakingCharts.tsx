@@ -1,5 +1,10 @@
-import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatNumber,
+  formatNumberWithCommas,
+} from '@l2beat/shared-pure'
 import { type ReactNode, useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import {
   ChartRangeControls,
@@ -68,8 +73,19 @@ export function LiquidStakingCharts({
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
 
   return (
-    <>
-      <div className="grid gap-4 md:mt-4 lg:grid-cols-2">
+    // On phones the range bar drives two stacked cards, so it heads them
+    // instead of trailing the second one. It comes first in the document so
+    // focus order matches the phone layout.
+    <div className="flex flex-col">
+      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:order-last md:mt-4 md:mb-0">
+        <ChartRangeControls
+          name="liquid-staking"
+          value={range}
+          setValue={setRange}
+          options={LIQUID_STAKING_RANGE_OPTIONS}
+        />
+      </ChartControlsWrapper>
+      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
         <YieldChart
           projectSeries={projectSeries}
           range={range}
@@ -82,15 +98,7 @@ export function LiquidStakingCharts({
           frame={ChartCard}
         />
       </div>
-      <ChartControlsWrapper className="mt-4 justify-end max-md:pr-4">
-        <ChartRangeControls
-          name="liquid-staking"
-          value={range}
-          setValue={setRange}
-          options={LIQUID_STAKING_RANGE_OPTIONS}
-        />
-      </ChartControlsWrapper>
-    </>
+    </div>
   )
 }
 
@@ -169,7 +177,7 @@ export function YieldChart({
       key: ETH_STAKED_KEY,
       label: ETH_STAKED_TITLE,
       color: 'var(--chart-ethereum-secondary)',
-      formatAxisLabel: (value) => formatNumber(value),
+      formatAxisLabel: (value) => `${formatNumber(value, 0)} ETH`,
       formatTooltipValue: formatEthStaked,
       formatTooltipSubValue: (timestamp) => {
         const value = usd.get(timestamp)
@@ -182,8 +190,8 @@ export function YieldChart({
     title: 'Rate-implied yield',
     description: [
       YIELD_METRIC.tooltip,
-      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
-      'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
+      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days.',
+      'The shaded area is the ETH staked.',
     ].join(' '),
     timeRange: getChartTimeRangeFromData(chartData),
     isPlaceholderData,
@@ -247,7 +255,9 @@ export function CostOfExitChart({
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
-        formatYAxisLabel={(value) => `${value.toFixed(0)}d`}
+        formatYAxisLabel={(value) =>
+          `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
+        }
         // ~ marks a value that counts requests still queued.
         formatTooltipValue={(value, key, timestamp) =>
           `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`
@@ -282,26 +292,26 @@ function ChartCard({
   isPlaceholderData,
   children,
 }: LiquidStakingChartFrameProps) {
-  // The date range changes width with the range and while loading, so its
-  // line has a fixed height to keep both cards the same size.
   return (
     <PrimaryCard>
-      <div className="flex items-center gap-2">
-        <h2 className="font-bold text-lg md:text-xl">{title}</h2>
-        <Tooltip>
-          <TooltipTrigger>
-            <InfoIcon className="size-3.5" />
-          </TooltipTrigger>
-          <TooltipContent>{description}</TooltipContent>
-        </Tooltip>
-      </div>
-      <div className="mt-1 mb-4 flex h-5 items-center lg:h-6">
-        <ChartTimeRange
-          timeRange={timeRange}
-          isPlaceholderData={isPlaceholderData}
-        />
-      </div>
-      {children}
+      <ChartCardHeader
+        title={title}
+        subtitle={
+          <Tooltip>
+            <TooltipTrigger className="translate-y-px">
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{description}</TooltipContent>
+          </Tooltip>
+        }
+        meta={
+          <ChartTimeRange
+            timeRange={timeRange}
+            isPlaceholderData={isPlaceholderData}
+          />
+        }
+      />
+      <div className="mt-4">{children}</div>
     </PrimaryCard>
   )
 }

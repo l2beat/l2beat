@@ -111,8 +111,10 @@ function Content({ className }: { className?: string }) {
             // span the width the graph or the list under them takes. Over the
             // list, the last column also aligns right, on its values' edge.
             // Beside the graph the top route takes the top token's place:
-            // the token list under them already starts with it.
-            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 sm:gap-x-6 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
+            // the token list under them already starts with it. On the
+            // narrowest phones three 32px figures don't fit one row, so the
+            // volume takes a row of its own.
+            <div className="home-wide:col-start-2 home-wide:row-start-1 grid interop-corners:hidden grid-cols-[repeat(3,minmax(0,max-content))] justify-between gap-x-3 gap-y-6 max-[390px]:grid-cols-2 sm:gap-x-6 max-[390px]:[&>:first-child]:col-span-2 home-wide:[&>:nth-child(3)]:items-end home-wide:[&>:nth-child(3)]:text-right home-wide:[&>:nth-child(n+6)]:hidden">
               {figures.volume}
               {figures.transfers}
               {figures.activeRoutes}
@@ -149,7 +151,10 @@ function Content({ className }: { className?: string }) {
                   iconUrl: p.iconUrl,
                   volume: p.volume,
                 }))}
-                className="home-wide:col-start-2 home-wide:row-start-2 home-wide:self-end"
+                // Stacked, it takes the height left first, up to its header
+                // (15px + 8px) and five rows: its rows' box is a size
+                // container, so the cap cannot come from its content.
+                className="home-wide:col-start-2 home-wide:row-start-2 interop-stacked:max-h-[223px] interop-stacked:grow-1000 home-wide:self-end"
               />
               <InteropTopList
                 title="Top tokens"
@@ -160,7 +165,10 @@ function Content({ className }: { className?: string }) {
                   iconUrl: t.iconUrl,
                   volume: t.volume,
                 }))}
-                className="home-wide:col-start-2 home-wide:row-start-3 home-wide:flex hidden"
+                // Stacked, it takes what the protocols leave, when that holds
+                // two rows (`interop-list-short`); its own top padding is the
+                // gap above it, so while it is hidden it takes none.
+                className="interop-stacked:-mt-5 home-wide:col-start-2 home-wide:row-start-3 home-wide:flex interop-stacked:flex hidden interop-stacked:pt-5 interop-stacked:[container:interop-list/size]"
               />
             </>
           )}

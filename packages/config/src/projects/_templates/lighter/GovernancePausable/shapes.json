@@ -4,5 +4,11 @@
     "address": "eth:0xE935fa009Ae2F913A26B4411a901ECF6dBAb6D43",
     "chain": "ethereum",
     "blockNumber": 26104874
+  },
+  "Governance_November16_2026.sol": {
+    "hash": "0x54124ce8dfe63677bd848871bb38f839e1ecad982742e3285c1a8348261ea45d",
+    "address": "eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80",
+    "chain": "ethereum",
+    "blockNumber": 26429197
   }
 }

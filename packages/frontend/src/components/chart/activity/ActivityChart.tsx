@@ -15,6 +15,7 @@ import type {
 } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
@@ -25,7 +26,7 @@ import {
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
 import { formatRange } from '~/utils/dates'
@@ -34,6 +35,8 @@ import type { ChartScale } from '../types'
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 type SeriesKey = 'ethereum' | 'projects'
+
+const HIDDEN_ON_PROJECT_PAGES = ['ethereum'] as const
 
 interface ActivityChartDataPoint {
   timestamp: number
@@ -97,7 +100,12 @@ export function ActivityChart({
     [project.id, project.name, project.shortName, type],
   ) satisfies ChartMeta
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  // Ethereum's line dwarfs most projects' and reads as the project's own, so
+  // it starts hidden on project pages. The legend turns it back on.
+  const { dataKeys, toggleDataKey } = useChartDataKeys(
+    chartMeta,
+    project.id === ProjectId.ETHEREUM ? undefined : HIDDEN_ON_PROJECT_PAGES,
+  )
 
   const series: ChartSeries<SeriesKey, ActivityChartDataPoint>[] = [
     {
@@ -140,6 +148,7 @@ export function ActivityChart({
           scale: scale === 'linear' ? undefined : scaleSymlog,
           domain: 'autoIfSingle',
           unit: metric === 'tps' ? ' TPS' : ' UOPS',
+          format: (value) => formatActivityCount(value),
           tickCount: tickCount ?? 3,
         }}
         syncedUntil={syncedUntil}
@@ -180,11 +189,10 @@ export function ActivityCustomTooltip<
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(timestamp, timestamp + resolutionSeconds)}
-        </div>
-        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
-        <HorizontalSeparator className="mt-1.5" />
+        </ChartTooltipTitle>
+        <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>
@@ -197,10 +205,10 @@ export function ActivityCustomTooltip<
           ))}
         </div>
 
-        <span className="mt-3 text-heading-16">
-          {metric === 'uops' ? 'Operations' : 'Transactions'} count
-        </span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader
+          className="mt-3"
+          label={`${metric === 'uops' ? 'Operations' : 'Transactions'} count`}
+        />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>

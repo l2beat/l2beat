@@ -10,6 +10,7 @@ export function NodesSettingsTab() {
   const enableDimmingId = useId()
   const hideLargeArraysId = useId()
   const highlightOverlappingId = useId()
+  const showSecurityPerimeterId = useId()
 
   return (
     <SettingsSection title="Graph">
@@ -73,6 +74,29 @@ export function NodesSettingsTab() {
           checked={preferences.highlightOverlapping}
           onCheckedChange={(highlightOverlapping) =>
             setPreferences({ highlightOverlapping })
+          }
+        />
+      </SettingRow>
+      <SettingRow
+        title="Show ossification security perimeter"
+        description="Highlight ossification-critical contracts and draw a security perimeter around them."
+        controlId={showSecurityPerimeterId}
+        isDefault={
+          preferences.showSecurityPerimeter ===
+          DEFAULT_USER_PREFERENCES.showSecurityPerimeter
+        }
+        onReset={() =>
+          setPreferences({
+            showSecurityPerimeter:
+              DEFAULT_USER_PREFERENCES.showSecurityPerimeter,
+          })
+        }
+      >
+        <Switch
+          id={showSecurityPerimeterId}
+          checked={preferences.showSecurityPerimeter}
+          onCheckedChange={(showSecurityPerimeter) =>
+            setPreferences({ showSecurityPerimeter })
           }
         />
       </SettingRow>

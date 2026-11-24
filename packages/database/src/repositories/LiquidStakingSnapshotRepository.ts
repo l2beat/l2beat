@@ -13,15 +13,18 @@ export interface LiquidStakingSnapshotRecord {
   /** Withdrawal queue counters (Lido, ether.fi), or the unwrap request and allocation counters (wBETH). */
   lastRequestId: number | null
   lastFinalizedRequestId: number | null
+  /** The same counters of a queue the protocol has replaced (StakeWise). It still holds requests, paid apart from the new queue's. */
+  retiredLastRequestId: number | null
+  retiredLastFinalizedRequestId: number | null
   /** ETH the protocol pays out at once: burning rETH (Rocket Pool), or the instant redemption (ether.fi), wei. */
   instantExitEth: bigint | null
   /** The instant exit's fee, basis points. */
   instantExitFeeBps: number | null
   /** Lock on an onchain redemption (wBETH), seconds. */
   lockTime: number | null
-  /** ETH the best onchain pool pays for 100 tokens, wei; null without a quote. */
+  /** ETH the best onchain pool pays for 1 token, wei; null without a quote. */
   marketExitEth: bigint | null
-  /** What those tokens are worth at the protocol's rate, wei. */
+  /** What that token is worth at the protocol's rate, wei. */
   marketExitValueEth: bigint | null
 }
 
@@ -71,6 +74,10 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
             exchangeRate: eb.ref('excluded.exchangeRate'),
             lastRequestId: eb.ref('excluded.lastRequestId'),
             lastFinalizedRequestId: eb.ref('excluded.lastFinalizedRequestId'),
+            retiredLastRequestId: eb.ref('excluded.retiredLastRequestId'),
+            retiredLastFinalizedRequestId: eb.ref(
+              'excluded.retiredLastFinalizedRequestId',
+            ),
             instantExitEth: eb.ref('excluded.instantExitEth'),
             instantExitFeeBps: eb.ref('excluded.instantExitFeeBps'),
             lockTime: eb.ref('excluded.lockTime'),

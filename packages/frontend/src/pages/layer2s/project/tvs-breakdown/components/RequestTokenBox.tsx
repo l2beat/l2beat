@@ -2,12 +2,12 @@ import { externalLinks } from '~/consts/externalLinks'
 
 export function RequestTokenBox() {
   return (
-    <div className="-mb-4 mt-16 flex flex-col items-center justify-between gap-2 bg-linear-to-r from-brand/40 via-brand/25 to-brand/10 px-10 py-6 text-lg md:mb-20 md:flex-row md:rounded-xl">
-      <div className="text-center font-medium">
+    <div className="mt-4 mb-4 flex flex-col items-start gap-3 bg-surface-primary px-4 py-5 md:mt-6 md:mb-20 md:flex-row md:items-center md:justify-between md:rounded-xl md:px-6">
+      <p className="font-medium text-label-value-15">
         Can&apos;t find a token you&apos;re looking for?
-      </div>
+      </p>
       <a
-        className="font-bold tracking-wide underline"
+        className="flex items-center gap-1.5 rounded-md border border-divider px-3 py-1.5 font-medium text-label-value-13 leading-4 transition-colors hover:bg-surface-secondary"
         href={externalLinks.tokenRequest}
         target="_blank"
         rel="noreferrer"

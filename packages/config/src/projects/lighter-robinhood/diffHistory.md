@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x9466cda64e3653ef4ec4c5c4f9c9d41def6ea9d4
+
+# Diff at Fri, 20 Nov 2026 12:27:00 GMT:
+
+- id: a702cdef
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1794829276
+- current timestamp: 1795177545
+
+## Description
+
+Registered ANT stock on Robinhood lighter.
+
+## Watched changes
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.registeredAssets.28:
++        {"assetIndex":30,"tokenAddress":"robinhood:0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373"}
+    }
+```
+
+Generated with discovered.json: 0xfcc1221ed60722f85f7324dcc9d9262ab3ed4e28
+
+# Diff at Mon, 16 Nov 2026 11:42:21 GMT:
+
+- id: e9efe747
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1791898285
+- current timestamp: 1794829276
+
+## Description
+
+Rotated insurance fund operator and treasury.
+
+## Watched changes
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.insuranceFundOperator:
+-        "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A"
++        "robinhood:0x51aa1F735ee60FF7f3EBF81c9c20C373Bddd0435"
+      values.treasury:
+-        "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357"
++        "robinhood:0x7F21cE90Bc7566ADB84130997070782c4628b15E"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x51aa1F735ee60FF7f3EBF81c9c20C373Bddd0435) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x7F21cE90Bc7566ADB84130997070782c4628b15E) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../SafeL2.sol                                     | 1864 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   63 +
+ .../SafeL2.sol                                     | 1864 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   63 +
+ .../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |    0
+ 6 files changed, 3854 insertions(+)
+```
+
 Generated with discovered.json: 0xf808f925e888f67a4d4794ef745abe31baa5a261
 
 # Diff at Mon, 26 Oct 2026 08:55:10 GMT:

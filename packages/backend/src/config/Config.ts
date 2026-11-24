@@ -62,6 +62,12 @@ export interface Config {
   readonly interop: InteropFeatureConfig | false
   readonly privacy: PrivacyConfig | false
   readonly newClientsEnabled: boolean
+  /**
+   * The share of its rate an RPC or Fuel client gives up when the provider
+   * refuses calls for it, logging the rate it settles at. Unset, the rate
+   * stays fixed. See `RateLimiter`.
+   */
+  readonly rpcStepDownOnThrottle: number | undefined
 
   readonly backoffice: BackofficeFeatureConfig | false
 
@@ -147,6 +153,8 @@ export interface ActivityConfigProject {
   id: ProjectId
   chainName: string
   activityConfig: ProjectActivityConfig
+  /** Stores the blocks at the head of its EVM chain as they come, for live views */
+  followHead: boolean
 }
 
 export interface MetricsAuthConfig {

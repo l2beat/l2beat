@@ -17,9 +17,15 @@ const calloutVariants = cva('flex items-start rounded-lg', {
       true: 'gap-2 rounded text-sm',
       false: 'gap-3',
     },
+    /** Inside a tooltip: one size for every callout there. */
+    compact: {
+      true: 'gap-2 rounded-md px-3 py-2',
+      false: '',
+    },
   },
   defaultVariants: {
     small: false,
+    compact: false,
   },
 })
 
@@ -33,14 +39,18 @@ interface CalloutProps extends VariantProps<typeof calloutVariants> {
 export function Callout({
   color,
   small,
+  compact,
   icon,
   body,
   message,
   className,
 }: CalloutProps) {
   return (
-    <div className={cn(calloutVariants({ color, small }), className)}>
-      <span className="flex items-center">{icon}</span>
+    <div className={cn(calloutVariants({ color, small, compact }), className)}>
+      {/* A compact callout centres its icon on the first line of text. */}
+      <span className={cn('flex items-center', compact && 'h-[1lh] shrink-0')}>
+        {icon}
+      </span>
       <div className="flex flex-col gap-2">
         {message}
         <div>{body}</div>

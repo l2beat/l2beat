@@ -47,12 +47,14 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         meta: {
           align: 'right',
           tooltip:
-            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7D ago. It leaves out data posted to other DA layers.',
+            'The data posted by the project to Ethereum over the past day, together with a % change compared to 7 days ago. It leaves out data posted to other DA layers.',
         },
       }),
       (row) => ({
         change: row.dataPosted?.change,
-        period: row.dataPosted?.changePeriod,
+        // Data posted always compares to 7 days ago, so a tab with no data still
+        // labels its change column.
+        period: row.dataPosted?.changePeriod ?? '7D',
       }),
     ),
     !hideProofSystem &&
@@ -61,7 +63,7 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
         cell: (ctx) => <ProofSystemCell {...ctx.row.original} />,
         meta: {
           tooltip:
-            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
+            'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront).',
         },
       }),
     columnHelper.display({

@@ -13,9 +13,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
+import { PercentChange } from '~/components/PercentChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import {
+  PERIOD_LABEL,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 
 export type TvsData = {
   breakdown: {
@@ -55,7 +58,7 @@ export function TvsBreakdownSummaryBox({
       <ChartStatsPrimaryItem
         className="col-span-1 md:col-span-2 lg:col-span-1"
         label="Total"
-        tooltip="Total value secured displayed together with a percentage change compared to 7D ago."
+        tooltip="Total value secured displayed together with a percentage change compared to 7 days ago."
       >
         {isLoading ? (
           <div className="flex items-end gap-3.5 lg:flex-col lg:items-center lg:gap-0.5">
@@ -63,45 +66,44 @@ export function TvsBreakdownSummaryBox({
             <Skeleton className="h-4 w-13" />
           </div>
         ) : (
-          <ValueWithPercentageChange
-            change={tvsData?.change.total}
-            changePeriod={tvsData?.changePeriod}
-            className="font-bold text-heading-24! text-primary leading-none lg:mr-0"
-            changeClassName="text-label-value-16"
-            containerClassName="lg:flex-col max-lg:items-baseline"
-            changeContainerClassName="leading-none"
-          >
-            {warning && (
-              <Tooltip>
-                <TooltipTrigger
-                  className="relative top-[3px] mr-2"
-                  aria-label="TVS warning"
-                >
-                  <RoundedWarningIcon
-                    sentiment={warning?.sentiment}
-                    className="size-6"
-                    aria-hidden
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{warning?.value}</TooltipContent>
-              </Tooltip>
-            )}
-            {formatCurrency(tvsData?.breakdown.total ?? 0, 'usd')}
-          </ValueWithPercentageChange>
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 lg:flex-col lg:items-center">
+            <span className="font-bold text-heading-24 text-primary leading-none">
+              {warning && (
+                <Tooltip>
+                  <TooltipTrigger
+                    className="relative top-[3px] mr-2"
+                    aria-label="TVS warning"
+                  >
+                    <RoundedWarningIcon
+                      sentiment={warning?.sentiment}
+                      className="size-6"
+                      aria-hidden
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>{warning?.value}</TooltipContent>
+                </Tooltip>
+              )}
+              {formatCurrency(tvsData?.breakdown.total ?? 0, 'usd')}
+            </span>
+            <ChangeWithPeriod
+              change={tvsData?.change.total}
+              period={tvsData?.changePeriod}
+            />
+          </div>
         )}
       </ChartStatsPrimaryItem>
       <div className="grid gap-2 max-md:mt-3 md:col-span-3 md:grid-cols-3 md:gap-3">
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Canonically Bridged</span>
+              <span className="max-md:hidden">Canonically bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Canonically Bridged Value
+                Canonically bridged value
               </span>
               <span className="xs:hidden">Canonical</span>
             </>
           }
-          tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}
@@ -113,14 +115,14 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Natively Minted</span>
+              <span className="max-md:hidden">Natively minted</span>
               <span className="max-xs:hidden md:hidden">
-                Natively Minted Tokens
+                Natively minted tokens
               </span>
               <span className="xs:hidden">Native</span>
             </>
           }
-          tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value of natively minted tokens displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}
@@ -132,14 +134,14 @@ export function TvsBreakdownSummaryBox({
         <ChartStatsItem
           label={
             <>
-              <span className="max-md:hidden">Externally Bridged</span>
+              <span className="max-md:hidden">Externally bridged</span>
               <span className="max-xs:hidden md:hidden">
-                Externally Bridged Value
+                Externally bridged value
               </span>
               <span className="xs:hidden">External</span>
             </>
           }
-          tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7D ago."
+          tooltip="Total value of externally bridged tokens displayed together with a percentage change compared to 7 days ago."
         >
           <StatItemContent
             isLoading={isLoading}
@@ -199,15 +201,11 @@ function StatItemContent(props: StatsItemProps) {
   if (props.value === undefined) return <NoDataBadge />
 
   return (
-    <div className="flex items-center gap-1">
-      <ValueWithPercentageChange
-        change={props.change}
-        changePeriod={props.changePeriod}
-        changeContainerClassName="leading-none!"
-        className="font-bold text-primary leading-none! md:text-lg"
-      >
+    <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
+      <span className="font-bold text-primary leading-none md:text-lg">
         {formatCurrency(props.value, 'usd')}
-      </ValueWithPercentageChange>
+      </span>
+      <ChangeWithPeriod change={props.change} period={props.changePeriod} />
       {props.warning && (
         <Tooltip>
           <TooltipTrigger aria-label="Warning">
@@ -221,5 +219,27 @@ function StatItemContent(props: StatsItemProps) {
         </Tooltip>
       )}
     </div>
+  )
+}
+
+/** "−4.63% / 7d", as on the value secured tiles and the chart heads. */
+function ChangeWithPeriod({
+  change,
+  period,
+}: {
+  change: number | undefined
+  period: PercentageChangePeriod | undefined
+}) {
+  if (change === undefined || period === undefined) return null
+  return (
+    <span className="flex items-baseline gap-1 whitespace-nowrap font-medium text-label-value-13 leading-none">
+      <PercentChange
+        className="min-w-0 cursor-default text-left"
+        textClassName="text-label-value-13"
+        value={change}
+        period={period}
+      />
+      <span className="text-secondary">/ {PERIOD_LABEL[period]}</span>
+    </span>
   )
 }

@@ -146,28 +146,28 @@ describe(InteropAggregatingIndexer.name, () => {
       const aggregatedInteropTransfer = mockObject<
         Database['aggregatedInteropTransfer']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
       const aggregatedInteropToken = mockObject<
         Database['aggregatedInteropToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
       const aggregatedInteropDeployedToken = mockObject<
         Database['aggregatedInteropDeployedToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
@@ -229,7 +229,7 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(transaction).toHaveBeenCalledTimes(1)
       expect(
-        aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
+        aggregatedInteropTransfer.deleteAllButEarliestPromotedPerDayBefore,
       ).toHaveBeenCalledWith(retentionCutoff)
       expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
         to,
@@ -241,14 +241,14 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedTokens,
       )
       expect(
-        aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
+        aggregatedInteropToken.deleteAllButEarliestPromotedPerDayBefore,
       ).toHaveBeenCalledWith(retentionCutoff)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
       expect(aggregatedInteropDeployedToken.insertMany).toHaveBeenCalledWith(
         aggregatedDeployedTokens,
       )
       expect(
-        aggregatedInteropDeployedToken.deleteAllButEarliestPerDayBefore,
+        aggregatedInteropDeployedToken.deleteAllButEarliestPromotedPerDayBefore,
       ).toHaveBeenCalledWith(retentionCutoff)
       expect(
         aggregatedInteropDeployedToken.deleteByTimestamp,
@@ -257,7 +257,7 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedTokensPairs,
       )
       expect(
-        aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore,
+        aggregatedInteropTokensPair.deleteAllButEarliestPromotedPerDayBefore,
       ).toHaveBeenCalledWith(retentionCutoff)
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
@@ -272,28 +272,28 @@ describe(InteropAggregatingIndexer.name, () => {
       const aggregatedInteropTransfer = mockObject<
         Database['aggregatedInteropTransfer']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropToken = mockObject<
         Database['aggregatedInteropToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropDeployedToken = mockObject<
         Database['aggregatedInteropDeployedToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
@@ -381,28 +381,28 @@ describe(InteropAggregatingIndexer.name, () => {
       const aggregatedInteropTransfer = mockObject<
         Database['aggregatedInteropTransfer']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropToken = mockObject<
         Database['aggregatedInteropToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropDeployedToken = mockObject<
         Database['aggregatedInteropDeployedToken']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropTokensPair = mockObject<
         Database['aggregatedInteropTokensPair']
       >({
-        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
@@ -648,7 +648,7 @@ function mockAggregateDb(previous: {
   const aggregatedInteropTransfer = mockObject<
     Database['aggregatedInteropTransfer']
   >({
-    deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+    deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
     deleteByTimestamp: mockFn().resolvesTo(0),
     insertMany: mockFn().resolvesTo(0),
     getByTimestamp: mockFn().resolvesTo(previous.previousTransfers ?? []),
@@ -663,7 +663,7 @@ function mockAggregateDb(previous: {
   )
   const aggregatedInteropToken = mockObject<Database['aggregatedInteropToken']>(
     {
-      deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+      deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
       deleteByTimestamp: mockFn().resolvesTo(0),
       insertMany: mockFn().resolvesTo(0),
       getByTimestamp: mockFn().resolvesTo(previous.previousTokens ?? []),
@@ -672,7 +672,7 @@ function mockAggregateDb(previous: {
   const aggregatedInteropDeployedToken = mockObject<
     Database['aggregatedInteropDeployedToken']
   >({
-    deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+    deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
     deleteByTimestamp: mockFn().resolvesTo(0),
     insertMany: mockFn().resolvesTo(0),
     getByTimestamp: mockFn().resolvesTo([]),
@@ -680,7 +680,7 @@ function mockAggregateDb(previous: {
   const aggregatedInteropTokensPair = mockObject<
     Database['aggregatedInteropTokensPair']
   >({
-    deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+    deleteAllButEarliestPromotedPerDayBefore: mockFn().resolvesTo(0),
     deleteByTimestamp: mockFn().resolvesTo(0),
     insertMany: mockFn().resolvesTo(0),
     getByTimestamp: mockFn().resolvesTo([]),

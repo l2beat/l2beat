@@ -2,6 +2,10 @@
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
   "extends": ["../../../biome.json"],
+  "plugins": [
+    "../../lint/repositoryMockType.grit",
+    "../../lint/staticErrorMessage.grit"
+  ],
   "files": { "maxSize": 10485760 },
   "linter": {
     "rules": {

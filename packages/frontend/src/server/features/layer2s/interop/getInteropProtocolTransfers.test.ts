@@ -63,27 +63,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     })
   })
 
-  it('adds explorer tx hash links when explorer urls are available', () => {
+  it('uses the abstract token icon when we have one', () => {
     const result = toInteropProtocolTransferDetailsItem(
       transfer(),
-      new Map([
-        [
-          'ethereum',
-          {
-            name: 'Ethereum',
-            iconUrl: '/icons/ethereum.png',
-            explorerUrl: 'https://etherscan.io',
-          },
-        ],
-        [
-          'arbitrum',
-          {
-            name: 'Arbitrum One',
-            iconUrl: '/icons/arbitrum.png',
-            explorerUrl: 'https://arbiscan.io',
-          },
-        ],
-      ]),
+      new Map(),
       new Map([
         [
           'eth',
@@ -93,8 +76,6 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
-    expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
     expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
     expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
   })

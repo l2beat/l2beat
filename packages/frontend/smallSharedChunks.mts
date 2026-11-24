@@ -145,8 +145,7 @@ function findRootsOf(roots: string[], ctx: ChunkingContext) {
   for (const root of roots) {
     const stack = [root]
     while (stack.length > 0) {
-      // biome-ignore lint/style/noNonNullAssertion: length checked above
-      const id = stack.pop()!
+      const id = stack.pop()
       const loadedBy = rootsOf.get(id) ?? new Set<string>()
       if (loadedBy.has(root)) continue
       loadedBy.add(root)

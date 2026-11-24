@@ -106,9 +106,9 @@ export class RailgunBroadcasterProvider {
             observation.seen.add(ad.railgunAddress.toLowerCase())
           })
           if (!subscribed) {
-            throw new Error(
-              `Failed to subscribe to the Railgun fees topic for chainId ${chainId}`,
-            )
+            throw new Error('Failed to subscribe to the Railgun fees topic', {
+              cause: { chainId },
+            })
           }
         }),
       )

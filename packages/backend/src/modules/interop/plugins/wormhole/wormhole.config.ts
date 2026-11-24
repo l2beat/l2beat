@@ -318,11 +318,14 @@ export class WormholeConfigPlugin
           ...(weth ? { weth } : {}),
         }
       } catch (error) {
-        this.logger.debug('Failed to resolve Wormhole core for chain', {
+        this.logger.warn('Failed to resolve Wormhole core for chain', {
           chain: chain.name,
           error,
         })
-        return undefined
+        // The SDK entry alone has no core contract, so capture would throw
+        return previousNetworks.find(
+          (n) => n.chain === chain.name && n.coreContract,
+        )
       }
     })
 

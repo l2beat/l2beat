@@ -58,8 +58,8 @@ const remainingCountVariants = cva('font-bold', {
 const iconVariants = cva(`rounded-full ${iconBackdropClasses}`, {
   variants: {
     type: {
-      default: 'size-7 min-w-7 border border-divider shadow-sm',
-      cell: 'hover:-translate-y-0.5 relative size-5 min-w-5 shadow transition-transform hover:z-10!',
+      default: 'size-7 min-w-7 border border-divider',
+      cell: 'hover:-translate-y-0.5 relative size-5 min-w-5 transition-transform hover:z-10!',
     },
   },
 })
@@ -187,13 +187,13 @@ function ItemIconWithTooltip({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>
-          <p className="font-bold text-label-value-15">{item.displayName}</p>
+          <p className="text-heading-16">{item.displayName}</p>
           {item.issuer && (
             <p className="text-label-value-13 text-secondary">
               Issued by <span className="capitalize">{item.issuer}</span>
             </p>
           )}
-          <p className="text-label-value-13 text-secondary">
+          <p className="mt-1 font-medium text-label-value-14 tabular-nums">
             {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
           </p>
         </TooltipContent>

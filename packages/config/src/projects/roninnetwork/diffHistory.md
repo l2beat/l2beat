@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xaec18b56e05cd848b07ae2055fed46ad626e70d7
+
+# Diff at Mon, 23 Nov 2026 13:59:29 GMT:
+
+- id: 02938b4c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794868331
+- current timestamp: 1795442299
+
+## Description
+
+RISC Zero emergency-stopped the Groth16 verifier routes 0xbb001d44 (v2.2.0) and 0x73c457ba (v3.0.0) on its shared router after the critical advisory [GHSA-mm6c-35cm-g4x2](https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2). Ronin's respected game is the PermissionedDisputeGame, so only its retired Kailua path used these routes.
+
+## Watched changes
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x0fd3f405e9ccf430129a0bd0c3b500eb7145baa1
+
+# Diff at Mon, 16 Nov 2026 22:33:51 GMT:
+
+- id: 7dbd2e68
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@33953ebfd29755f915c8500adce5cced0fbc9449 block: 1794320625
+- current timestamp: 1794868331
+
+## Description
+
+Conduit Multisig 1: member removed; threshold 4/11 → 4/10.
+
+RiscZeroVerifierEmergencyStop: RISC Zero permanently stopped route 0x242f9d5b (RiscZeroSetVerifier 0.9.0) of its verifier router on 2026-11-11 ([tx](https://etherscan.io/tx/0x5eac4419eb6750f10e5ba3e5c932e3047dd050a3ba462c0c32b08debc127df62)). No effect on Ronin: its Kailua games never posted a proof, and since 2026-09-07 ([tx](https://etherscan.io/tx/0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482)) state roots come from the PermissionedDisputeGame.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.8:
+-        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x98941194b558a6801c8d552edb26f99160ec00b4
 
 # Diff at Tue, 10 Nov 2026 14:25:46 GMT:

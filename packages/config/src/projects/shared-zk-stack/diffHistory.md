@@ -1,3 +1,512 @@
+Generated with discovered.json: 0xb2df7a2e3c5d07ccb1af182dcef95491c71fbbe0
+
+# Diff at Fri, 20 Nov 2026 12:39:08 GMT:
+
+- id: f90c17fb
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1794996848
+- current timestamp: 1795177406
+
+## Description
+
+L1 part of Guardian dissolution (ZIP-19) is executed and the process is finalized. ZKSync Foundation multisig takes over the powers of the Guardians:
+
+- Veto and upgrade powers over `ProtocolUpgradeHandler`.
+- `EmergencyUpgradeBoard` now needs sigs only from the security council and the foundation (3/3 -> 2/2).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x015318c16AE443a20DE0A776dB06a59F0D279057) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SecurityCouncil (eth:0x29D2e773A31C07D375c50F0110422832bd044d08) [shared-zk-stack/SecurityCouncil] {
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+      receivedPermissions.0.description:
+-        "one of its 3/3 signers."
++        "one of its 2/2 signers."
+      receivedPermissions.0.from:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/old/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1","description":"one of its 2/2 signers.","role":".ZK_FOUNDATION_SAFE"}
+      receivedPermissions.0.role:
+-        ".ZK_FOUNDATION_SAFE"
++        ".zkFoundation"
+      receivedPermissions.0.description:
+-        "one of its 3/3 signers."
++        "extend the legal veto period, approve a protocol upgrade (executable only after the full waiting period)."
+      receivedPermissions.0.from:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sourceHashes.1:
+-        "0x94736426ab1ce890a3dc2ff8465aadec6e85a38613ef011bd5c755c3a556ecc0"
++        "0xac99f73391e8d8423a346e6ae9fd96045e039113d173e2996496a6c9b51c4504"
+      values.$implementation:
+-        "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"
++        "eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE"
+      values.$pastUpgrades.4:
++        ["2026-11-20T10:50:47.000Z","0x60cdf65cb68b7c7c77cf51b4e9db88132e2a850fe735f7c07d2eb4c659a6d018",["eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE"]]
+      values.$upgradeCount:
+-        4
++        5
++++ severity: HIGH
+      values.emergencyUpgradeBoard:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1"
+      values.guardians:
+-        "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F"
++++ severity: HIGH
+      values.zkFoundation:
++        "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
+      implementationNames.eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811:
+-        "ProtocolUpgradeHandler"
+      implementationNames.eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE:
++        "ProtocolUpgradeHandler"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 2/2 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08 and eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+## Source code changes
+
+```diff
+.../EmergencyUpgradeBoard.sol                      |  425 +++--
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../.flat@1794996848/Guardians.sol => /dev/null    | 1823 --------------------
+ .../ProtocolUpgradeHandler.sol                     |  116 +-
+ 19 files changed, 266 insertions(+), 10610 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794996848 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x015318c16AE443a20DE0A776dB06a59F0D279057) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade.","role":".guardians"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/old/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      template:
+-        "shared-zk-stack/EmergencyUpgradeBoard"
++        "shared-zk-stack/old/EmergencyUpgradeBoard"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      description:
+-        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      fieldMeta.guardians:
+-        {"severity":"HIGH"}
+      fieldMeta.zkFoundation:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x318568c4d17e1d19f863d7f9380ef89f40f50302
+
+# Diff at Wed, 18 Nov 2026 10:15:44 GMT:
+
+- id: 0001eb45
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794825975
+- current timestamp: 1794996848
+
+## Description
+
+One security council member upgraded its Safe to v1.5.0.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x69462a81ba94D64c404575f1899a464F123497A2) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "Safe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.3.0"
++        "1.5.0"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../Safe}/GnosisSafeProxy.p.sol                    |    0
+ .../projects/shared-zk-stack/.flat/Safe/Safe.sol   | 1797 ++++++++++++++++++++
+ 3 files changed, 1797 insertions(+), 1026 deletions(-)
+```
+
+Generated with discovered.json: 0x036de1d5b384befe1db8baaf7bbfc1713eb9afb1
+
+# Diff at Mon, 16 Nov 2026 12:44:29 GMT:
+
+- id: 0c1fbcaa
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@470153e37b9b4db6f9c1f929151e642b8c8f0012 block: 1794319575
+- current timestamp: 1794825975
+
+## Description
+
+L2 part of Guardian dissolution is executed.
+
+The veto guardian of ZkTokenGovernor and ZkGovOpsGovernor changes from the L1 5/8 Guardians to the 3/6 ZK Foundation Era Multisig, a Safe on ZKsync Era with the same signers and threshold as the ZK Foundation Multisig on Ethereum (by redeploying the governor contracts, whose veto guardian is immutable). The L1 part of ZIP-19 (ProtocolUpgradeHandler upgrade and the new 2/2 EmergencyUpgradeBoard) is still pending. Governance flow of zk stack chains is to be updated after the L1 is finalized.
+
+See these proposals:
+- https://www.tally.xyz/gov/zksync/proposal/104794020732055103905008046624736361863307761965418890686383471704465618736740?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746
+- https://www.tally.xyz/gov/zksync/proposal/95099219650033505811430848209984462218844390725611066258767666502656782605818?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160
+- https://www.tally.xyz/gov/zksync/proposal/50493255232415902362620838873379866057752952721482013941205421986273471752436?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f
+
+## Watched changes
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor]
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions:
++        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200}]},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"propose transactions.","role":".Proposer"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"role":".Executor"}]
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Executor.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c"
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Canceller.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Executor.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
++++ severity: MEDIUM
+      values.Proposer.0:
+-        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor]
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+    contract ZK Foundation Era Multisig (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenGovernor (zksync:0x1C52A302314d78f0dC2aEEbF89851564d81DcaFf) [shared-zk-stack/ZkGovernor]
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 6539 --------------------
+ .../ZkGovOpsGovernor.sol}                          |    0
+ .../ZkTokenGovernor.sol                            |  224 +-
+ 3 files changed, 114 insertions(+), 6649 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794319575 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LegacyGuardians (eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.","role":".PROPOSE_GUARDIAN"}
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+      critical:
+-        true
++        {"untilTimestamp":1794577660}
+      values.PROPOSE_GUARDIAN:
+-        "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
++        "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
+      values.VETO_GUARDIAN:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
+      fieldMeta.isProposeGuarded:
+-        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+      values.VETO_GUARDIAN:
+-        "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
++        "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkGovOpsGovernor (zksync:0xB99860AD8B1de3376d8b4c5f4D52Efa46e413A8c) [shared-zk-stack/ZkGovernor]
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs), which are advisory and execute through the GovOpsTimelockController. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
++   Status: CREATED
+    contract ZK Foundation Era Multisig (zksync:0xF197677d63BF6E2841F5108b8dFd2FD6eCEff74B) [GnosisSafe]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfe51b3dfa47050b5aaebdae5d4ec0d722709a3bf
 
 # Diff at Tue, 10 Nov 2026 17:10:27 GMT:

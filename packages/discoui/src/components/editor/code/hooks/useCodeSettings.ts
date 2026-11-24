@@ -6,24 +6,14 @@ import { useUrlState } from './useUrlState'
 export function useCodeSettings() {
   const { resetRange } = useCodeStore()
 
-  const { queryParams, shareableUrl, buildShareableUrl, getCleanUrl } =
-    useUrlState()
+  const { queryParams, buildShareableUrl } = useUrlState()
 
   const { selection, initialSelection, setSelection, clearSelection } =
     useLineSelection(queryParams.lines)
 
   useEffect(() => {
-    buildShareableUrl(selection)
+    window.history.replaceState(null, '', buildShareableUrl(selection))
   }, [selection, buildShareableUrl])
-
-  useEffect(() => {
-    if (shareableUrl) {
-      window.history.replaceState(null, '', shareableUrl)
-    } else {
-      const url = getCleanUrl()
-      window.history.replaceState(null, '', url)
-    }
-  }, [shareableUrl])
 
   return {
     initialSelection,

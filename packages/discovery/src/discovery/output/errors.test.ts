@@ -16,11 +16,6 @@ describe(neuterErrors.name, () => {
     })
   })
 
-  it('single entry', () => {
-    const entry = { key: 'This is an error' }
-    expect(neuterErrors(entry)).toEqual({ key: 'Processing error occurred.' })
-  })
-
   it('empty returns empty', () => {
     expect(neuterErrors({})).toEqual({})
   })

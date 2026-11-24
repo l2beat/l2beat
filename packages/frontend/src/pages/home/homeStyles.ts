@@ -18,7 +18,12 @@ export const HOME_TEXT = {
   value: 'font-medium text-label-value-15 tabular-nums',
   /** Descriptions. */
   body: 'text-label-value-15 text-secondary text-pretty leading-5.5',
-  /** Labels and other small print. */
+  /**
+   * What a figure or column is, e.g. "Value locked", "TVL" or a category:
+   * a key, so in the text's own colour (the site keeps keys out of grey).
+   */
+  label: 'font-normal text-label-value-13 text-primary',
+  /** Small print: dates, periods, units, counts beside a title. */
   meta: 'font-normal text-label-value-13 text-secondary',
   /**
    * Beside a card title, e.g. "Last 24h". A 16px line, so the title and the
@@ -49,9 +54,12 @@ export const HOME_BANNER_TITLE_CLASS =
 
 /**
  * Every KPI chart on the page, so the Layer 2s, Privacy and Ethereum pairs
- * match; shorter where the KPIs stack as rows and each chart is wide.
+ * match; shorter where the KPIs stack as rows and each chart is wide, and
+ * as tall as the figure and its label beside it in Ethereum's compact rows
+ * (`kpi-compact`), too short for the high and low labels (see
+ * `HomeSparkline`).
  */
-export const HOME_CHART_HEIGHT_CLASS = 'h-28 kpi-rows:h-24'
+export const HOME_CHART_HEIGHT_CLASS = 'h-28 kpi-rows:h-24 kpi-compact:h-13'
 
 /** Every list and ranking row on the page, so they all match. */
 export const HOME_ROW_CLASS = 'h-10'

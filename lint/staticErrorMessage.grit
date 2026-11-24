@@ -1,0 +1,13 @@
+`new Error($message, $...)` where {
+  $message <: or {
+    JsTemplateExpression() where { $message <: contains JsTemplateElement() },
+    JsBinaryExpression(),
+    JsParenthesizedExpression() where {
+      $message <: contains or {
+        JsTemplateElement(),
+        JsBinaryExpression()
+      }
+    }
+  },
+  register_diagnostic(span=$message, message="Keep the error message static and put the dynamic values in `cause`: new Error('HTTP error', { cause: { status } }). A fixed message lets one exact match in Elasticsearch find every occurrence.", severity="error")
+}

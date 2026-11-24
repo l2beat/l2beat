@@ -98,11 +98,11 @@ export async function getDefiProjectEntry(
     getDefiDependencyProjectsById(project.externalDependencies),
     getProjectOssification(project),
     getDefiTokens(project.defiInfo.tokens ?? []),
-    project.liquidStaking
-      ? getLiquidStakingSummary({
-          ...project,
-          liquidStaking: project.liquidStaking,
-        })
+    project.liquidStaking?.risks
+      ? getLiquidStakingSummary(
+          { ...project, liquidStaking: project.liquidStaking },
+          project.liquidStaking.risks,
+        )
       : undefined,
   ])
   // DeFi pages get the Updates section together with ossification.
@@ -184,7 +184,7 @@ export async function getDefiProjectEntry(
       type: 'DefiTvlSection',
       props: {
         id: 'tvs',
-        title: 'Value Locked',
+        title: 'Value locked',
         defaultRange: defaultChartRange,
         project: {
           id: project.id,
@@ -199,7 +199,7 @@ export async function getDefiProjectEntry(
     })
   }
 
-  if (liquidStaking) {
+  if (liquidStaking?.costOfExitDescription) {
     sections.push({
       type: 'LiquidStakingYieldAndExitSection',
       props: {

@@ -14,6 +14,7 @@ import {
   getExposure,
   getExposureNote,
   getPrivacyAdversaryDescription,
+  getPrivacyAdversaryWho,
   PRIVACY_ADVERSARIES_TOOLTIP,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
@@ -140,7 +141,7 @@ function renderAdversary(
   return joinBlocks([
     heading(level, adversary.label),
     withSentiment(cell.value, cell.sentiment),
-    `**Who:** ${adversary.description} Examples: ${adversary.examples}`,
+    `**Who:** ${getPrivacyAdversaryWho(adversary)}`,
     getPrivacyAdversaryDescription(cell),
     cell.interior
       ? baseline?.interior
@@ -169,8 +170,8 @@ export function renderPrivacyAdvice({
     `${ADVICE.intro} ${link(ADVICE.methodologyLink, ADVICE.methodologyHref)}`,
     numberedList(
       steps.map((step) => {
-        const against = getStepAdversaries(step, adversaries).map((adversary) =>
-          adversary.label.toLowerCase(),
+        const against = getStepAdversaries(step, adversaries).map(
+          (adversary) => adversary.label,
         )
         const name = step.outside
           ? `${step.name}, ${ADVICE.outsideLabel}`
@@ -182,7 +183,7 @@ export function renderPrivacyAdvice({
       }),
     ),
     uncovered.length > 0
-      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label.toLowerCase()).join(', ')}.`
+      ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label).join(', ')}.`
       : '',
   ])
 }

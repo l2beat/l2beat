@@ -98,13 +98,17 @@ export function formatTimestamp(
 
 /**
  * A chart snapshot: "3 Jun 2026" in daily data. Finer data always shows the
- * time, midnight included, so neighboring points read alike.
+ * time, midnight included, so neighboring points read alike. Daily data can
+ * end on the latest hourly snapshot, which shows its time too.
  */
 export function formatSnapshotTimestamp(
   timestamp: number,
   resolution: ChartResolution,
 ) {
-  const mode = resolution === 'day' ? 'date' : 'datetime'
+  const mode =
+    resolution === 'day' && UnixTime.isFull(timestamp, 'day')
+      ? 'date'
+      : 'datetime'
   return formatTimestamp(timestamp, { mode })
 }
 
@@ -122,6 +126,7 @@ export function formatDate(date: string) {
 export function formatLocalDateTime(timestamp: number) {
   if (new Date(timestamp * 1000).getTimezoneOffset() === 0) return undefined
 
+  // biome-ignore lint/plugin/utcDates: the one local-time helper, called only in the browser
   const parts = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: '2-digit',

@@ -58,8 +58,8 @@ export function PastUpgradesDialog({
 }) {
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
-      <HistoryClockIcon className="size-3.5 fill-brand-deep" />
-      <span className="font-bold text-brand-deep text-label-value-15 underline md:text-label-value-16">
+      <HistoryClockIcon className="size-3.5 fill-link" />
+      <span className="font-medium text-label-value-14 text-link underline md:text-label-value-15">
         View past upgrades
       </span>
     </div>

@@ -67,10 +67,6 @@ export class TaskQueue<T> {
       opts.shouldStopAfterFailedRetries ?? true
   }
 
-  get length() {
-    return this.queue.length
-  }
-
   addIfEmpty(task: T) {
     if (!this.isEmpty()) {
       return
@@ -192,19 +188,5 @@ export class TaskQueue<T> {
       this.busyWorkers--
       setTimeout(() => this.execute())
     }
-  }
-
-  /**
-   * WARNING: this method should be used only in tests
-   */
-  _TEST_ONLY_stop() {
-    this.stopped = true
-  }
-
-  /**
-   * WARNING: this method should be used only in tests
-   */
-  _TEST_ONLY_clear() {
-    this.queue.splice(0, this.queue.length)
   }
 }

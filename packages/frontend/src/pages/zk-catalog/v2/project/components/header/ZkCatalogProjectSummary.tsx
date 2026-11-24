@@ -18,6 +18,7 @@ import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 import { TechStackCell } from '../../../components/TechStackCell'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
@@ -42,15 +43,16 @@ export function ProjectZkCatalogSummary({ project }: Props) {
       />
       <HorizontalSeparator className="my-4 md:hidden" />
       <TechStackSection techStack={project.header.techStack} />
-      <div className="flex gap-6 md:mt-4">
-        <div className="max-md:hidden">
+      {/* One label row and one value row shared by both columns, each on a
+          common baseline, so "Value secured" lines up with "About". */}
+      <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] gap-x-6 gap-y-2 max-md:hidden md:mt-4">
+        <div className="row-span-2 grid grid-rows-subgrid items-baseline [&>*]:contents">
           <TvsStat {...project.header.tvs} />
         </div>
         {project.header.description && (
-          <AboutSection
-            description={project.header.description}
-            className="max-md:hidden"
-          />
+          <div className="row-span-2 grid grid-rows-subgrid items-baseline [&>*]:contents">
+            <AboutSection description={project.header.description} />
+          </div>
         )}
       </div>
       <HorizontalSeparator className="-mx-4 mt-4 w-[calc(100%+2rem)] md:hidden" />
@@ -71,10 +73,10 @@ export function TrustedSetupsByProofSystemSection({
   return (
     <div className="flex flex-col gap-2 md:gap-3">
       <h2 className="font-semibold text-subtitle-12 uppercase">
-        Trusted Setups
+        Trusted setups
       </h2>
       {/* Mobile */}
-      <div className="space-y-4 md:hidden">
+      <div className="space-y-6 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
           ([
             key,
@@ -103,7 +105,15 @@ export function TrustedSetupsByProofSystemSection({
       </div>
       {/* Desktop */}
       <div className="rounded-sm border border-divider px-4 max-md:hidden">
-        <table className="w-full border-separate border-spacing-y-4">
+        {/* The L2 variant spreads its two wide cells across the card. The ZK
+            catalog's short cells pack left, so they sit at the same x on
+            every project page. */}
+        <table
+          className={cn(
+            'border-separate border-spacing-y-4',
+            variant === 'l2' ? 'w-full' : 'w-auto',
+          )}
+        >
           <tbody>
             {Object.entries(trustedSetupsByProofSystem).map(
               ([
@@ -120,7 +130,7 @@ export function TrustedSetupsByProofSystemSection({
                       variant === 'l2' ? 'align-top' : 'h-8 align-middle'
                     }
                   >
-                    <td className={variant === 'l2' ? 'align-top' : undefined}>
+                    <td className={variant === 'l2' ? 'align-top' : 'pr-10'}>
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
@@ -170,10 +180,10 @@ function MobileTrustedSetupsDetails({
   }
 
   return (
-    <div className="grid grid-cols-[200px_1fr] gap-1">
+    <div className="flex flex-wrap items-start gap-x-8 gap-y-4">
       <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} mobile />
-      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
       <VerifierStatusBlock verifiers={verifiers} mobile />
+      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
     </div>
   )
 }
@@ -208,13 +218,17 @@ function DesktopTrustedSetupsCells({
   return (
     <>
       <td>
-        <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} />
+        {onchainVerifiers?.length ? (
+          <div className="mr-10">
+            <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} />
+          </div>
+        ) : null}
+      </td>
+      <td className="pr-10">
+        <VerifierStatusBlock verifiers={verifiers} />
       </td>
       <td>
         <UsedInBlock projectsUsedIn={projectsUsedIn} />
-      </td>
-      <td>
-        <VerifierStatusBlock verifiers={verifiers} />
       </td>
     </>
   )
@@ -233,9 +247,7 @@ function OnchainVerifierBlock({
     <div
       className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
     >
-      <p className="font-medium text-label-value-12 text-secondary">
-        Onchain verifier
-      </p>
+      <p className="text-label-value-13 leading-4">Onchain verifier</p>
       <OnchainVerifiers onchainVerifiers={onchainVerifiers} />
     </div>
   )
@@ -255,11 +267,23 @@ function UsedInBlock({
   return (
     <div
       className={
-        mobile || stacked ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'
+        stacked
+          ? 'flex flex-col gap-2'
+          : mobile
+            ? 'flex flex-col gap-1.5'
+            : 'flex items-center gap-1.5'
       }
     >
-      <p className="font-medium text-label-value-12 text-secondary">Used in</p>
-      <ProjectsUsedIn usedIn={projectsUsedIn} />
+      <p className="text-label-value-13 leading-4">Used in</p>
+      {mobile && !stacked ? (
+        // A 20px line like the verifier figures. On touch the icon list is a
+        // 44px tap target, which centres in it and overflows both ways.
+        <div className="flex h-5 items-center">
+          <ProjectsUsedIn usedIn={projectsUsedIn} />
+        </div>
+      ) : (
+        <ProjectsUsedIn usedIn={projectsUsedIn} />
+      )}
     </div>
   )
 }
@@ -275,9 +299,7 @@ function VerifierStatusBlock({
     <div
       className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
     >
-      <p className="font-medium text-label-value-12 text-secondary">
-        Verifiers
-      </p>
+      <p className="text-label-value-13 leading-4">Verifiers</p>
       <VerifiedCountWithDetails data={verifiers} horizontal />
     </div>
   )
@@ -312,9 +334,7 @@ function MergedOnchainVerifierBlock({
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
       <div className="flex items-center gap-1">
-        <p className="font-medium text-label-value-12 text-secondary">
-          {title}
-        </p>
+        <p className="text-label-value-13 leading-4">{title}</p>
         <Tooltip>
           <TooltipTrigger
             type="button"
@@ -387,32 +407,32 @@ function TechStackSection({
   const rightSideEmpty = !finalWrap?.length
 
   return (
-    <div className="mt-3 flex flex-col gap-2">
-      <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
-      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+    <div className="mt-3 flex flex-col gap-2 md:gap-3">
+      <h2 className="font-semibold text-subtitle-12 uppercase">Tech stack</h2>
+      <div className="flex gap-2 rounded-sm border-divider max-md:flex-col max-md:gap-4 md:items-end md:border md:p-4">
         {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
-              zkVM
+            <span className="font-normal text-label-value-13 text-primary">
+              Main prover
             </span>
             <TechStackCell
               tags={[...(techStack.zkVM ?? []), ...(techStack.snark ?? [])]}
-              className="flex-wrap md:min-w-fit"
+              className="flex-wrap pb-0 md:min-w-fit"
             />
           </div>
         )}
         {!leftSideEmpty && !rightSideEmpty && (
-          <FilledArrowIcon className="mb-2.5 fill-secondary max-md:hidden" />
+          <FilledArrowIcon className="mb-px fill-secondary max-md:hidden" />
         )}
         {!rightSideEmpty && (
           <div className="flex flex-col">
-            <span className="font-medium text-label-value-12 text-secondary">
+            <span className="font-normal text-label-value-13 text-primary">
               Final wrap
             </span>
             <TechStackCell
               tags={techStack.finalWrap ?? []}
-              className="flex-wrap"
+              className="flex-wrap pb-0"
               emptyText="No final wrap"
             />
           </div>
@@ -434,18 +454,14 @@ function TvsStat({
   return (
     <ProjectSummaryStat
       titleAsChild
-      title={
-        <div className="font-semibold text-subtitle-12">
-          <span className="md:hidden">Total Value Secured</span>
-          <span className="max-md:hidden">TVS</span>
-        </div>
-      }
+      title={<div>Value secured</div>}
       className="w-full md:gap-2"
       value={
         value ? (
           <span className="mb-0.5 flex items-center gap-2">
             <ValueWithPercentageChange
-              className="!text-base !leading-[100%] text-nowrap"
+              containerClassName="flex-nowrap"
+              className="text-nowrap font-semibold text-label-value-20! tabular-nums leading-6!"
               changeClassName="text-label-value-14 font-bold"
               change={change}
               changePeriod={changePeriod}

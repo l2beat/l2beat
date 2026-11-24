@@ -33,24 +33,28 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
       <TableBody>
         {entries.map((entry, rowIndex) => (
           <TableRow key={entry.slug} highlightId={undefined}>
-            <TableCell className="whitespace-nowrap max-md:first:pl-4">
-              <ProjectCell entry={entry} />
-            </TableCell>
-            <TableCell className="py-3">
-              <div className="flex gap-2 md:justify-center md:gap-3.5">
-                {toCropEntries(entry.crops, entry.ossification).map(
-                  (crop, columnIndex) => (
-                    <EvaluatedCrop
-                      key={crop.definition.key}
-                      crop={crop}
-                      delay={entranceDelay(rowIndex, columnIndex)}
-                      jitterKey={`${entry.slug}:${crop.definition.key}`}
-                    />
-                  ),
-                )}
+            <TableCell className="whitespace-nowrap max-md:py-3 max-md:pr-0">
+              {/* On phones the row stacks, so all four plants show without a sideways scroll. */}
+              <div className="flex items-center justify-between gap-3">
+                <ProjectCell entry={entry} />
+                <div className="md:hidden">
+                  <MetricCell metric={entry.metric} />
+                </div>
               </div>
+              <EvaluatedCrops
+                entry={entry}
+                rowIndex={rowIndex}
+                className={cn(PHONE_PLANTS_CLASS, 'mt-2 md:hidden')}
+              />
             </TableCell>
-            <TableCell align="right">
+            <TableCell className="py-3 max-md:hidden">
+              <EvaluatedCrops
+                entry={entry}
+                rowIndex={rowIndex}
+                className="flex justify-center gap-3.5"
+              />
+            </TableCell>
+            <TableCell align="right" className="max-md:hidden">
               <MetricCell metric={entry.metric} />
             </TableCell>
           </TableRow>
@@ -72,21 +76,14 @@ function CropLettersHeader() {
       </colgroup>
       <TableHeader>
         <TableHeaderRow {...stickyTableColumnRowProps}>
-          <TableHead />
-          <TableHead>
-            <div className="flex gap-2 md:mx-auto md:gap-3.5">
-              {CROP_COLUMNS.map((column) => (
-                <abbr
-                  key={column.key}
-                  title={column.label}
-                  className="w-14 text-center no-underline"
-                >
-                  {column.letter}
-                </abbr>
-              ))}
-            </div>
+          {/* The body cell's insets, so the letters sit over their plants. */}
+          <TableHead className="max-md:pr-0 max-md:first:pl-3">
+            <CropLetters className={cn(PHONE_PLANTS_CLASS, 'md:hidden')} />
           </TableHead>
-          <TableHead />
+          <TableHead className="max-md:hidden">
+            <CropLetters className="mx-auto flex gap-3.5" />
+          </TableHead>
+          <TableHead className="max-md:hidden" />
         </TableHeaderRow>
         {/* Sets the stuck header apart from the rows it covers, as on other tables. Desktop has none. */}
         <TableHeaderRow className="md:hidden">
@@ -94,6 +91,55 @@ function CropLettersHeader() {
         </TableHeaderRow>
       </TableHeader>
     </>
+  )
+}
+
+/**
+ * Under the project name: the 34 px icon and its 12 px gap. Below 400 px that
+ * indent leaves too little room for four 56 px plants, so they spread across
+ * the whole row instead of scrolling sideways.
+ */
+const PHONE_PLANTS_CLASS =
+  'flex w-full justify-between min-[400px]:justify-start min-[400px]:gap-2 min-[400px]:pl-[46px]'
+
+function CropLetters({ className }: { className: string }) {
+  return (
+    <div className={className}>
+      {CROP_COLUMNS.map((column) => (
+        <abbr
+          key={column.key}
+          title={column.label}
+          className="w-14 text-center no-underline"
+        >
+          {column.letter}
+        </abbr>
+      ))}
+    </div>
+  )
+}
+
+function EvaluatedCrops({
+  entry,
+  rowIndex,
+  className,
+}: {
+  entry: GardenEntry
+  rowIndex: number
+  className: string
+}) {
+  return (
+    <div className={className}>
+      {toCropEntries(entry.crops, entry.ossification).map(
+        (crop, columnIndex) => (
+          <EvaluatedCrop
+            key={crop.definition.key}
+            crop={crop}
+            delay={entranceDelay(rowIndex, columnIndex)}
+            jitterKey={`${entry.slug}:${crop.definition.key}`}
+          />
+        ),
+      )}
+    </div>
   )
 }
 
@@ -138,7 +184,8 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
         height={40}
         className="size-[34px] max-w-none shrink-0 rounded-lg md:size-10"
       />
-      <div className="flex flex-col leading-tight">
+      {/* Wraps on phones, so a long name and its TVL fit one row. */}
+      <div className="flex flex-col leading-tight max-md:whitespace-normal">
         <span
           className={cn(
             'font-semibold text-primary text-sm md:text-base',
@@ -154,42 +201,57 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
     </>
   )
   if (!entry.href) {
-    return <div className="flex items-center gap-3">{content}</div>
+    return <div className="flex min-w-0 items-center gap-3">{content}</div>
   }
   return (
-    <a href={entry.href} className="group/project flex items-center gap-3">
+    <a
+      href={entry.href}
+      className="group/project flex min-w-0 items-center gap-3"
+    >
       {content}
     </a>
   )
 }
 
-// The change has a column of its own, empty when there is none, so amounts and the dash share a right edge.
+/**
+ * The change hangs under the amount on a row of no height, so every amount
+ * shares the right edge and a row with a change is as tall as one without:
+ * on phones it sits in the gap above the plants instead of pushing them down.
+ * Being in the grid, it still widens the cell when it is wider than the
+ * amount, so it cannot run into the project name.
+ * Below 400px the plants reach the right edge (`PHONE_PLANTS_CLASS`), so
+ * there is no gap and the change is left out.
+ */
 function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
   return (
-    <div className="inline-grid grid-cols-[auto_3.5rem] items-baseline gap-x-1 gap-y-px text-right">
+    <div className="inline-grid items-baseline gap-y-px text-right">
       {metric ? (
         <>
-          <span className="font-medium text-[12px] text-secondary">
+          <span className="font-medium text-label-value-13 text-primary">
             {metric.label}
           </span>
-          <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
+          <span className="font-semibold text-base text-primary tabular-nums">
             {metric.kind === 'usd'
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
-          <span className="row-start-2 text-left">
-            {metric.change !== undefined && (
-              <PercentChange value={metric.change} textClassName="text-xs" />
-            )}
-          </span>
+          {metric.change !== undefined && (
+            <span className="-translate-y-1 h-0 leading-none max-[400px]:hidden">
+              <PercentChange
+                value={metric.change}
+                period="7D"
+                textClassName="text-2xs leading-none"
+              />
+            </span>
+          )}
         </>
       ) : (
         <>
           {/* Holds the label's line, so the dash sits on the amounts' line. */}
-          <span aria-hidden className="text-[12px]">
+          <span aria-hidden className="text-label-value-13">
             &nbsp;
           </span>
-          <span className="row-start-2 text-secondary">&mdash;</span>
+          <span className="text-secondary">&mdash;</span>
         </>
       )}
     </div>

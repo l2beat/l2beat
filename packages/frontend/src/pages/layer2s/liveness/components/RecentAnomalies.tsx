@@ -55,7 +55,9 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
 
   return (
     <PrimaryCard className={className}>
-      <h2 className="text-heading-18">Recent major anomalies</h2>
+      <h2 className="font-semibold text-heading-20 leading-6 tracking-[-0.01em]">
+        Recent major anomalies
+      </h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-3">
           {firstColumns.map((projectWithAnomalies) => (
@@ -106,7 +108,7 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className="text-left font-bold text-label-value-14 md:text-label-value-16">
+          <span className="text-left font-medium text-label-value-15">
             {projectWithAnomalies.name}
           </span>
         </div>
@@ -124,12 +126,12 @@ function AnomalyCollapsible({
                 {isAnomalyOngoing(anomaly) ? (
                   <div className="mb-1 flex items-center gap-1">
                     <LiveIndicator />
-                    <span className="subtitle-12 text-negative uppercase leading-none">
+                    <span className="text-negative text-subtitle-12 uppercase leading-none">
                       Ongoing anomaly
                     </span>
                   </div>
                 ) : (
-                  <span className="subtitle-12 text-secondary uppercase leading-none">
+                  <span className="text-secondary text-subtitle-12 uppercase leading-none">
                     Resolved
                   </span>
                 )}
@@ -174,7 +176,7 @@ function FailureMechanism({
   )
   return (
     <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5">
-      <span className="text-secondary text-subtitle-10 uppercase leading-none">
+      <span className="text-primary text-subtitle-10 uppercase leading-none">
         Failure mechanism
       </span>
       {failureMechanism.description ? (

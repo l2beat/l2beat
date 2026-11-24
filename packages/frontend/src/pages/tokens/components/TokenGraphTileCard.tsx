@@ -35,10 +35,10 @@ export function TokenGraphTileCard({
         </span>
         {tile.volume !== null && (
           <span className="ml-auto flex shrink-0 flex-col items-end gap-0.5">
-            <span className="font-medium text-2xs text-secondary uppercase leading-none">
-              Volume
+            <span className="font-medium text-2xs uppercase leading-none">
+              24h volume
             </span>
-            <span className="font-medium text-label-value-13 leading-none">
+            <span className="font-semibold text-label-value-15 tabular-nums leading-none">
               {formatCurrency(tile.volume, 'usd')}
             </span>
           </span>

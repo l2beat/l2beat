@@ -45,15 +45,19 @@ export function HomeDomainCard({
  * the side-by-side tiles would be too narrow (see `kpi-rows`), or as two
  * tiles in a column beside the rankings (`kpi-column`). As rows, the
  * two share their columns, so both charts start where the wider figure ends,
- * and at least 7.5rem in, wider than any figure, so they line up across the
- * cards too.
+ * and at least 9.5rem in, wider than any 32px figure ("$999.99M"), so they
+ * line up across the cards too.
  */
 export function HomeKpiRow({ children }: { children: ReactNode }) {
   return (
     <div className="@container/kpis min-w-0">
-      <div className="grid grid-cols-2 kpi-column:grid-cols-1 kpi-rows:grid-cols-[minmax(7.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
+      <div className={cn('kpi-column:grid-cols-1', HOME_KPI_GRID_CLASS)}>
         {children}
       </div>
     </div>
   )
 }
+
+/** The grid of a `HomeKpiRow`: two tiles side by side, or a row each. */
+export const HOME_KPI_GRID_CLASS =
+  'grid grid-cols-2 kpi-rows:grid-cols-[minmax(9.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8'

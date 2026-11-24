@@ -245,9 +245,13 @@ const TooltipTrigger = ({
   )
 }
 
-/** The tooltip's look, without its open and close animation. */
+/**
+ * The tooltip's look, without its open and close animation. Prose reads at
+ * regular weight; keys, values and titles set their own. On phones it keeps
+ * a 12px gutter from each edge of the screen.
+ */
 const tooltipSurfaceClassName =
-  'z-110 rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case shadow-popover max-sm:max-w-screen dark:bg-header-secondary'
+  'z-110 rounded-lg border border-divider bg-surface-primary p-3 text-left font-normal text-paragraph-13 text-primary normal-case max-sm:max-w-[calc(100vw-24px)] dark:bg-header-secondary'
 
 // A modal dialog turns off pointer events on the body, which the popup is
 // portaled into, so the popup turns them back on to stay hoverable.
@@ -280,7 +284,7 @@ const TooltipContent = ({
   align = 'center',
   sideOffset = 8,
   alignOffset,
-  collisionPadding = 0,
+  collisionPadding = 12,
   avoidCollisions = true,
   hideWhenDetached,
   onPointerDownOutside,
@@ -335,7 +339,8 @@ const TooltipContent = ({
       {tooltip.contentDescriptionId && (
         // A span, unlike a div, is not split by the HTML parser when the
         // tooltip sits in phrasing content, so hydration stays consistent.
-        <span id={tooltip.contentDescriptionId} className="sr-only">
+        // select-none keeps it out of text copied from around the trigger.
+        <span id={tooltip.contentDescriptionId} className="sr-only select-none">
           <InsideHtmlCopyContext value={true}>{children}</InsideHtmlCopyContext>
         </span>
       )}

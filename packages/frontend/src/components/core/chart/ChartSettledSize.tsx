@@ -50,7 +50,11 @@ export function ChartSettledSize({
   useLayoutEffect(() => () => clearTimeout(settleTimer.current), [])
 
   return (
-    <div ref={outerRef} className={className}>
+    // The inner box holds the settled width in pixels. Without inline-size
+    // containment that width becomes the outer box's minimum, so in a grid
+    // or flex row the outer box never shrinks, the observer never fires and
+    // the chart keeps its old width after the window narrows.
+    <div ref={outerRef} className={cn('[contain:inline-size]', className)}>
       <div
         ref={innerRef}
         className={cn('origin-top-left', !settled && 'size-full')}

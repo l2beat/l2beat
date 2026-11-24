@@ -460,11 +460,21 @@ describe(ValueService.name, () => {
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
-      await expect(
-        async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejectedWith(
-        `Amount not found for ${amountConfigId} within configured range (timestamp: ${mockTimestamp}, since: ${amountFormula.sinceTimestamp}, until: ${amountFormula.untilTimestamp})`,
+      const error = await valueService
+        .calculate(tvsConfig, [mockTimestamp])
+        .catch((e: unknown) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual(
+        'Amount not found within configured range',
       )
+      expect((error as Error).cause).toEqual({
+        tokenId: 'tokenId',
+        configId: amountConfigId,
+        timestamp: mockTimestamp,
+        sinceTimestamp: amountFormula.sinceTimestamp,
+        untilTimestamp: amountFormula.untilTimestamp,
+      })
     })
 
     it('should calculate TVS - min formula with both arguments resolving to 0', async () => {

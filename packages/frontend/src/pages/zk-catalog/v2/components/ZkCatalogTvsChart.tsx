@@ -1,6 +1,7 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo, useState } from 'react'
+import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
@@ -8,14 +9,15 @@ import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleA
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -107,27 +109,26 @@ export function ZkCatalogTvsChart({ provers, defaultRange }: Props) {
 
   return (
     <PrimaryCard className="mb-4">
-      <div className="mb-3">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <h2 className="font-bold text-lg md:text-xl">Prover adoption</h2>
-          <RadioGroup
-            name="zkCatalogProverMetric"
-            value={metric}
-            onValueChange={(value) => setMetric(value as Metric)}
-            variant="highlighted"
-            className="h-9"
-          >
-            <RadioGroupItem value="value" className="md:text-base">
-              Value secured
-            </RadioGroupItem>
-            <RadioGroupItem value="projects" className="md:text-base">
-              Projects
-            </RadioGroupItem>
-          </RadioGroup>
-        </div>
-        <ChartTimeRange
-          isPlaceholderData={isPlaceholderData}
-          timeRange={timeRange}
+      <div className="mb-4">
+        <ChartCardHeader
+          title="Prover adoption"
+          accessory={
+            <RadioGroup
+              name="zkCatalogProverMetric"
+              value={metric}
+              onValueChange={(value) => setMetric(value as Metric)}
+              variant="highlighted"
+            >
+              <RadioGroupItem value="value">Value secured</RadioGroupItem>
+              <RadioGroupItem value="projects">Projects</RadioGroupItem>
+            </RadioGroup>
+          }
+          meta={
+            <ChartTimeRange
+              isPlaceholderData={isPlaceholderData}
+              timeRange={timeRange}
+            />
+          }
         />
       </div>
       <ChartContainer
@@ -231,18 +232,12 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
-        <div className="font-medium text-label-value-14 text-secondary">
+      <div className="flex min-w-[200px] flex-col [@media(min-width:600px)]:min-w-60">
+        <ChartTooltipTitle>
           {formatSnapshotTimestamp(label, resolution)}
-        </div>
+        </ChartTooltipTitle>
         {unit === 'absolute' && (
-          <>
-            <div className="mt-3 mb-1.5 flex items-center justify-between gap-2 text-heading-16">
-              <span>Total</span>
-              <span className="text-primary">{format(total)}</span>
-            </div>
-            <HorizontalSeparator />
-          </>
+          <TooltipHeader className="mt-3" label="Total" value={format(total)} />
         )}
         <div className="mt-2 flex flex-col gap-2">
           {visible.map(({ name, amount }) => {

@@ -38,6 +38,7 @@ export const onChainProjects: string[] = [
   'tornado-cash',
   'butternetwork',
   'interfold',
+  'phylax',
 ]
 
 describe('discovery config.jsonc', () => {

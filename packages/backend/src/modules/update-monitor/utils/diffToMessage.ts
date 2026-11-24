@@ -49,12 +49,12 @@ function getTrackedTxsMessage(): string {
   return '\n' + wrapItalic('Tracked transactions might be affected.')
 }
 
-export function wrapItalic(content: string) {
+function wrapItalic(content: string) {
   const affix = '*'
   return `${affix}${content}${affix}`
 }
 
-export function wrapBoldAndItalic(content: string) {
+function wrapBoldAndItalic(content: string) {
   const affix = '***'
   return `${affix}${content}${affix}`
 }

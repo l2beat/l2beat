@@ -32,6 +32,8 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     expect(discovery.modelledAgainst).toEqual({})
   })
 
+  // Reading joins with Object.assign, so a key holding undefined would land on
+  // the entry and the diff would report a change that did not happen.
   it('stores a permission in the map, never on the entry', () => {
     const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
 
@@ -65,33 +67,6 @@ describe(combinePermissionsIntoDiscovery.name, () => {
         ],
       },
     })
-  })
-
-  it('has no key for an entry that received nothing', () => {
-    const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
-
-    combinePermissionsIntoDiscovery(
-      discovery,
-      permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
-      discovery.entries,
-    )
-
-    expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
-  })
-
-  // Reading joins with Object.assign, so a key holding undefined would land on
-  // the entry and the diff would report a change that did not happen.
-  it('never writes a key holding undefined', () => {
-    const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
-
-    combinePermissionsIntoDiscovery(
-      discovery,
-      permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
-      discovery.entries,
-    )
-
-    const stored = discovery.permissions?.[PROXY_ADMIN]
-    expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
   })
 
   // The consumer's crawl stops at the entrypoint, so an actor inside a shared

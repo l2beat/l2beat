@@ -1,0 +1,161 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StateOracle",
+  "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect {{ ASSERTION_TIMELOCK_BLOCKS }} blocks later, a new assertion needs a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
+  "ignoreMethods": [
+    "DEFAULT_ADMIN_ROLE",
+    "GOVERNANCE_ROLE",
+    "GUARDIAN_ADMIN_ROLE",
+    "GUARDIAN_ROLE",
+    "OPERATOR_ADMIN_ROLE",
+    "OPERATOR_ROLE"
+  ],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership."
+        }
+      ]
+    },
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "governance": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVERNANCE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove admin verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter."
+        }
+      ]
+    },
+    "guardianAdmins": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke the guardian role."
+        }
+      ]
+    },
+    "guardians": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove any adopter's assertions and revoke any adopter's manager."
+        }
+      ]
+    },
+    "operatorAdmins": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke the operator role."
+        }
+      ]
+    },
+    "operators": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "OPERATOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove accounts on the registration allowlist."
+        }
+      ]
+    },
+    "ASSERTION_TIMELOCK_BLOCKS": {
+      "severity": "MEDIUM"
+    },
+    "DA_VERIFIER": {
+      "severity": "MEDIUM"
+    },
+    "whitelistEnabled": {
+      "description": "If true, only allowlisted accounts can register adopters and add assertions.",
+      "severity": "MEDIUM"
+    },
+    "registrationAllowlist": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "AddedToWhitelist" },
+        "remove": { "event": "RemovedFromWhitelist" },
+        "ignoreRelative": true
+      }
+    },
+    "adminVerifiers": {
+      "description": "Contracts that approve who may become an adopter's manager.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "adminVerifier",
+        "add": { "event": "AdminVerifierAdded" },
+        "remove": { "event": "AdminVerifierRemoved" }
+      }
+    },
+    "adopterManagers": {
+      "description": "Current manager of each adopter. The zero address means it was revoked.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "groupBy": "contractAddress",
+        "set": [
+          { "event": "AssertionAdopterAdded" },
+          { "event": "ManagerTransferred" }
+        ]
+      },
+      // keep the manager of the latest registration or transfer of each adopter
+      "edit": [
+        "map_values",
+        [
+          "pipe",
+          ["pick", "manager", "newManager"],
+          ["to_entries"],
+          ["get", 0, 1]
+        ]
+      ],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role."
+        }
+      ]
+    },
+    "assertions": {
+      "description": "Assertion IDs of each adopter that were added and not removed.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "groupBy": "assertionAdopter",
+        "select": "assertionId",
+        "add": { "event": "AssertionAdded" },
+        "remove": { "event": "AssertionRemoved" }
+      }
+    }
+  }
+}

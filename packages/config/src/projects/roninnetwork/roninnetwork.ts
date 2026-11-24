@@ -131,8 +131,8 @@ const roninTemplate = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://api.roninchain.com/rpc',
-        callsPerMinute: 100,
+        url: 'https://ronin.gateway.tenderly.co',
+        callsPerMinute: 1500,
       },
       {
         type: 'blockscout',

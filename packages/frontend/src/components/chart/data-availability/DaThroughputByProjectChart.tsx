@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import uniq from 'lodash/uniq'
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useState } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -11,6 +11,7 @@ import type {
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
@@ -185,22 +186,24 @@ export function DaThroughputByProjectChart({
   // The legend keeps its keys from the first data. A project that appears
   // later (another range, or non-L2 posters) gets the same default as on
   // load: broken out if it is Unknown or a top project, else in Others.
-  const seenProjects = useRef(new Set<string>())
-  useEffect(() => {
-    const seen = seenProjects.current
-    const isFirstData = seen.size === 0
-    for (const project of allProjects) {
-      if (seen.has(project)) continue
-      seen.add(project)
-      if (
-        !isFirstData &&
-        !hiddenDataKeys.includes(project) &&
-        !dataKeys.includes(project)
-      ) {
-        toggleDataKey(project)
+  // Adjusted during render, so no frame draws it inside Others first.
+  const [seenProjects, setSeenProjects] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  )
+  const unseenProjects = allProjects.filter(
+    (project) => !seenProjects.has(project),
+  )
+  if (unseenProjects.length > 0) {
+    const isFirstData = seenProjects.size === 0
+    setSeenProjects(new Set([...seenProjects, ...unseenProjects]))
+    if (!isFirstData) {
+      for (const project of unseenProjects) {
+        if (!hiddenDataKeys.includes(project) && !dataKeys.includes(project)) {
+          toggleDataKey(project)
+        }
       }
     }
-  }, [allProjects, hiddenDataKeys, dataKeys, toggleDataKey])
+  }
 
   const max = useMemo(() => {
     return data
@@ -389,9 +392,9 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="font-medium text-label-value-14 text-secondary">
+      <ChartTooltipTitle>
         {formatRange(label, label + UnixTime.periodToSeconds(resolution))}
-      </div>
+      </ChartTooltipTitle>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
         {capacityPayload.map((entry) => (
@@ -438,7 +441,7 @@ function CustomTooltip({
         })}
         {projectRows.length > 20 && (
           <div className="font-medium text-label-value-14 text-secondary">
-            + {projectRows.length - 20} more
+            +{projectRows.length - 20} more
           </div>
         )}
       </div>

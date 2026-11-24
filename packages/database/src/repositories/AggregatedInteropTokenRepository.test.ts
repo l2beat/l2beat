@@ -65,8 +65,8 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
   })
 
   describe(
-    AggregatedInteropTokenRepository.prototype.deleteAllButEarliestPerDayBefore
-      .name,
+    AggregatedInteropTokenRepository.prototype
+      .deleteAllButEarliestPromotedPerDayBefore.name,
     () => {
       it('keeps earliest record per day and deletes others before timestamp', async () => {
         // Day 1: timestamps at 100, 200, 300 - should keep 100
@@ -131,9 +131,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + UnixTime.DAY),
+          )
         expect(deleted).toEqual(3) // Should delete record2, record3, record5
 
         const remaining = await repository.getAll()
@@ -203,7 +204,7 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         // Delete before day2Mid (which is 200 + DAY)
         const deleted =
-          await repository.deleteAllButEarliestPerDayBefore(day2Mid)
+          await repository.deleteAllButEarliestPromotedPerDayBefore(day2Mid)
         // Should delete record2 (day1Mid), but keep record1 (earliest of day1)
         // Should keep record3 (earliest of day2) and record4 (at timestamp boundary)
         // Should keep record5 (after timestamp)
@@ -214,9 +215,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
       })
 
       it('returns 0 when no records exist', async () => {
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(100),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(100),
+          )
         expect(deleted).toEqual(0)
       })
 
@@ -247,9 +249,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
           }),
         ])
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(50),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(50),
+          )
         expect(deleted).toEqual(0)
 
         const remaining = await repository.getAll()
@@ -295,9 +298,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500 + 2 * UnixTime.DAY),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500 + 2 * UnixTime.DAY),
+          )
         // All records are earliest of their day, so nothing to delete
         expect(deleted).toEqual(0)
 
@@ -345,9 +349,10 @@ describeDatabase(AggregatedInteropTokenRepository.name, (db) => {
 
         await repository.insertMany(records)
 
-        const deleted = await repository.deleteAllButEarliestPerDayBefore(
-          UnixTime(500),
-        )
+        const deleted =
+          await repository.deleteAllButEarliestPromotedPerDayBefore(
+            UnixTime(500),
+          )
         // Should keep earliest (record1), delete others
         expect(deleted).toEqual(2)
 

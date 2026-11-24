@@ -11,7 +11,7 @@ import {
 } from './tilePreviewLayout'
 
 const NODE_STROKE_WIDTH = 1
-const EDGE_STROKE_WIDTH = 0.8
+const EDGE_STROKE_WIDTH = 1
 
 export function TokenGraphTileDiagram({
   graph,
@@ -33,7 +33,7 @@ export function TokenGraphTileDiagram({
         <path
           d={preview.path}
           fill="none"
-          className="stroke-primary/25"
+          className="stroke-primary/35"
           strokeWidth={EDGE_STROKE_WIDTH}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -144,8 +144,9 @@ function ChainMark({
 export function TokenGraphTilesLegend() {
   const radius = BASE_RADIUS * 1.5
   const pill = getClusterMetrics(1, radius)
+  const r = BASE_RADIUS * 0.6
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-primary">
       <span className="flex items-center gap-2">
         <svg width={radius * 2 + 2} height={radius * 2 + 2} aria-hidden>
           <ChainMark
@@ -178,14 +179,16 @@ export function TokenGraphTilesLegend() {
         Burn & mint cluster
       </span>
       <span className="flex items-center gap-2">
-        <svg width="8" height="22" aria-hidden>
+        {/* Two deployments and the line between them, as the tiles draw it. */}
+        <svg width={r * 2 + 2} height={r * 6 + 2} aria-hidden>
           <path
-            d="M 4 1 V 21"
+            d={`M ${r + 1} ${r * 2 + 1} V ${r * 4 + 1}`}
             fill="none"
-            className="stroke-primary/25"
-            strokeWidth={EDGE_STROKE_WIDTH * 1.5}
-            strokeLinecap="round"
+            className="stroke-primary/35"
+            strokeWidth={EDGE_STROKE_WIDTH}
           />
+          <ChainMark iconUrl={undefined} x={r + 1} y={r + 1} radius={r} />
+          <ChainMark iconUrl={undefined} x={r + 1} y={r * 5 + 1} radius={r} />
         </svg>
         Backs the deployment below
       </span>

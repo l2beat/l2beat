@@ -5,8 +5,10 @@ import {
 } from '../../common/privacyAdversaries'
 
 const CAKE =
-  'https://github.com/cake-tech/cake_wallet/blob/d803aecf9de21461c7459c974ce5e3f2d92b70ed/'
-const MONERO = 'https://github.com/monero-project/monero/blob/v0.18.5.1/'
+  'https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/'
+// v0.18.5.1
+const MONERO =
+  'https://github.com/monero-project/monero/blob/4f92268d7c16741cfb41e5bbe2aa46cc260a9ea5/'
 
 export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
   promise: {
@@ -38,7 +40,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
             'The deposit is a plain transfer from the wallet to the address the service returned',
           url:
             CAKE +
-            'lib/view_model/exchange/exchange_trade_view_model.dart#L200-L206',
+            'lib/view_model/exchange/exchange_trade_view_model.dart#L205-L211',
         },
         {
           title: 'An EVM wallet has a single address',
@@ -88,7 +90,7 @@ export const moneroCakeWalletAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title: 'Built-in Tor is off unless the user enables it',
-          url: CAKE + 'lib/store/settings_store.dart#L1604',
+          url: CAKE + 'lib/store/settings_store.dart#L1627',
         },
         {
           title:

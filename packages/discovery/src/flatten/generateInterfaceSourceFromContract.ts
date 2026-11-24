@@ -101,11 +101,7 @@ export function generateInterfaceSourceFromContract(
           elements.push([
             'FunctionDefinition',
             padding +
-              formatPublicVariableGetter(
-                variable,
-                typeMap,
-                findGetterStruct(variable.typeName, resolveStruct),
-              ),
+              formatPublicVariableGetter(variable, typeMap, resolveStruct),
           ])
         }
         break
@@ -250,12 +246,16 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
 function formatPublicVariableGetter(
   variable: AST.StateVariableDeclarationVariable,
   typeMap: Map<string, DeclarationType>,
-  struct: AST.StructDefinition | undefined,
+  resolveStruct: (namePath: string) => AST.StructDefinition | undefined,
 ): string {
   assert(variable.typeName !== null, 'Variable must have a type')
 
   const params: string[] = []
   const leafType = unwindGetterType(variable.typeName, params)
+  const struct =
+    leafType.type === 'UserDefinedTypeName'
+      ? resolveStruct(leafType.namePath)
+      : undefined
   const returnStr =
     struct === undefined
       ? formatTypeNameForReturn(leafType, typeMap)
@@ -282,19 +282,6 @@ function formatStructGetterReturns(
   }
   assert(returns.length > 0, 'Struct getter returns nothing')
   return returns.join(', ')
-}
-
-function findGetterStruct(
-  typeName: AST.TypeName | null,
-  resolveStruct: (namePath: string) => AST.StructDefinition | undefined,
-): AST.StructDefinition | undefined {
-  assert(typeName !== null, 'Variable must have a type')
-  let leaf = typeName
-  while (leaf.type === 'Mapping' || leaf.type === 'ArrayTypeName') {
-    leaf = leaf.type === 'Mapping' ? leaf.valueType : leaf.baseTypeName
-  }
-  if (leaf.type !== 'UserDefinedTypeName') return undefined
-  return resolveStruct(leaf.namePath)
 }
 
 function unwindGetterType(

@@ -4,6 +4,9 @@
   "category": "core",
   "canActIndependently": false,
   "fields": {
+    "fraudWindowDuration": {
+      "description": "Seconds between the authorization of a withdrawal and the time its recipient can claim it. The contract enforces a minimum of 1 day. The withdraw canceller can delete an authorized withdrawal until it is claimed."
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl",

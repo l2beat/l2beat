@@ -3,8 +3,8 @@ import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
-import { readExecutionDay } from './network/dune/readExecutionDay'
 import { EthereumStakingIndexer } from './network/EthereumStakingIndexer'
+import { readExecutionDay } from './network/executionDay'
 import { shareBlockLookups } from './shareBlockLookups'
 import { LiquidStakingIndexer } from './tokens/LiquidStakingIndexer'
 
@@ -50,7 +50,7 @@ export function createLiquidStakingModule({
           configurations: [
             {
               id: project.configurationId,
-              minHeight: sinceTimestamp,
+              minHeight: project.sinceTimestamp,
               maxHeight: null,
               properties: project,
             },
@@ -71,7 +71,7 @@ export function createLiquidStakingModule({
       db,
       rpc,
       readExecutionDay: (day, fromBlock, toBlock) =>
-        readExecutionDay(dune, logger, day, fromBlock, toBlock),
+        readExecutionDay(dune, rpc, logger, day, fromBlock, toBlock),
       beacon,
       blockFinder,
     },

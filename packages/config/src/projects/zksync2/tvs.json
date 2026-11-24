@@ -492,6 +492,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-EURC-1",
+      "priceId": "euro-coin",
+      "symbol": "EURC",
+      "name": "Euro Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e5642282Ef93A564CdF389ea8C38f232Bf2DA9f",
+        "chain": "zksync2",
+        "decimals": 6,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
@@ -661,6 +679,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x71d0f1A92C3Be74ACB58a0aBe2575d7552931454",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-FUL-1",
+      "priceId": "fulcrom",
+      "symbol": "FUL",
+      "name": "FUL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29684/large/FUL_Token_%281%29.png?1696528618",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc415ae549050AA8DB14c59a30693eb3F6e21bb77",
         "chain": "zksync2",
         "decimals": 18,
         "sinceTimestamp": 1739109131
@@ -1085,6 +1121,24 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x159ca632689676fe729529a87DC94c18820a31e5",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-MYST-1",
+      "priceId": "mysterium",
+      "symbol": "MYST",
+      "name": "Mysterium",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/757/large/mysterium.png?1696501911",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6f54599343edd812DE1ba66630a6b9075F51d29a",
         "chain": "zksync2",
         "decimals": 18,
         "sinceTimestamp": 1739109131

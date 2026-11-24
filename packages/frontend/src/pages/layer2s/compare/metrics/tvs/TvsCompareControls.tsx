@@ -35,7 +35,7 @@ export function TvsCompareControls({
 }: CompareMetricControlsProps) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[264px]" />
+    return <Skeleton className="h-8 w-[264px]" />
   }
   const restrictedRwaFilterActive = config.tvs.filter === 'rwaRestricted'
   return (
@@ -50,7 +50,6 @@ export function TvsCompareControls({
           }))
         }
         variant="highlighted"
-        className="h-9"
       >
         <RadioGroupItem value="usd" className="h-full px-2 text-sm">
           USD
@@ -69,7 +68,7 @@ export function TvsCompareControls({
         }
       >
         <SelectTrigger
-          className="h-9 primary-card:bg-surface-secondary"
+          className="primary-card:bg-surface-secondary"
           aria-label="Filter the compared value"
         >
           <SelectValue />
@@ -104,7 +103,6 @@ export function TvsCompareControls({
       <DisplayOptionCheckbox
         optionKey="excludeRwaRestrictedTokens"
         name="compareTvs-excludeRwaRestrictedTokens"
-        className="h-9"
         // Show the effective value: the toggle is overridden to false while
         // the Restricted RWAs filter is active, because excluding restricted
         // RWAs while comparing them would zero the chart.
@@ -124,7 +122,6 @@ export function TvsCompareControls({
       <DisplayOptionCheckbox
         optionKey="excludeAssociatedTokens"
         name="compareTvs-excludeAssociatedTokens"
-        className="h-9"
         checked={config.tvs.excludeAssociatedTokens}
         onCheckedChange={(excludeAssociatedTokens) =>
           setConfig((prev) => ({

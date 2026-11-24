@@ -1,9 +1,9 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
-import round from 'lodash/round'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
@@ -34,7 +34,7 @@ export function ActivityRatioChart({
 }: Props) {
   const chartMeta = {
     ratio: {
-      label: 'UOPS/TPS Ratio',
+      label: 'UOPS/TPS ratio',
       color: 'var(--chart-emerald)',
       indicatorType: {
         shape: 'line',
@@ -61,7 +61,7 @@ export function ActivityRatioChart({
           },
         ]}
         yAxis={{
-          format: (value) => `${round(value, 2)}x`,
+          format: (value) => `${value.toFixed(2)}x`,
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
@@ -86,12 +86,12 @@ function ActivityCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(
             timestamp,
             timestamp + UnixTime.periodToSeconds(resolution),
           )}
-        </div>
+        </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">
             <ChartTooltipValue

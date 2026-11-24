@@ -87,12 +87,14 @@ export class UpdateNotifier {
       nonce,
       trackedTxsAffected,
     )
-    await this.notify(message)
-    this.logger.info('Updates detected, notification sent [INTERNAL]', {
-      name,
-      amount: countDiff(throttled),
-      throttledCount: diff.length - throttled.length,
-    })
+    const sent = await this.notify(message, { project: name })
+    if (sent) {
+      this.logger.info('Updates detected, notification sent [INTERNAL]', {
+        name,
+        amount: countDiff(throttled),
+        throttledCount: diff.length - throttled.length,
+      })
+    }
 
     const filteredDiff = filterDiff(throttled, unknownContracts)
     if (filteredDiff.length === 0) {
@@ -122,7 +124,11 @@ export class UpdateNotifier {
     return latestId + 1
   }
 
-  private async notify(messages: string | string[]) {
+  /** Resolves to whether every message reached Discord. */
+  private async notify(
+    messages: string | string[],
+    context: Record<string, unknown> = {},
+  ): Promise<boolean> {
     if (!this.discordClient) {
       if (!this.loggedDiscordClientMissing) {
         this.logger.info(
@@ -130,16 +136,24 @@ export class UpdateNotifier {
         )
         this.loggedDiscordClientMissing = true
       }
-      return
+      return false
     }
 
+    let allSent = true
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      await this.discordClient.sendMessage(message).then(
-        () => this.logger.debug('Notification to Discord has been sent'),
-        (e) => this.logger.error('Discord API error', e),
-      )
+      try {
+        await this.discordClient.sendMessage(message)
+        this.logger.debug('Notification to Discord has been sent')
+      } catch (e) {
+        allSent = false
+        this.logger.error('Discord API error', e, {
+          ...context,
+          messageLength: message.length,
+        })
+      }
     }
+    return allSent
   }
 
   async handleStart() {

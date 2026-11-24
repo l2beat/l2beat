@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "silicon",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"]

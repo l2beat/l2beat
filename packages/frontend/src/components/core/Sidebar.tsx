@@ -91,8 +91,8 @@ function Sidebar({
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        {/* From the left, where the desktop sidebar sits: the whole screen
-            on phones, the desktop sidebar's width from tablets up. */}
+        {/* From the right, next to the menu button that opens it: the whole
+            screen on phones, the desktop sidebar's width from tablets up. */}
         <SheetContent
           id={MOBILE_SIDEBAR_ID}
           // iOS Safari tints its toolbars from the overlay and swaps the tint in
@@ -108,7 +108,7 @@ function Sidebar({
               '--sidebar-width-desktop': SIDEBAR_WIDTH,
             } as React.CSSProperties
           }
-          side="left"
+          side="right"
         >
           <SheetHeader className="sr-only">
             <SheetTitle>Sidebar</SheetTitle>

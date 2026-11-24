@@ -90,6 +90,8 @@ export interface BasicTableProps<T extends BasicTableRow> {
    * rather than as a page's main subject.
    */
   compact?: boolean
+  /** Narrows the gap between columns, for a table with many of them. */
+  dense?: boolean
 }
 
 type BasicTableCellData = {
@@ -132,6 +134,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         <BasicTableActualHeaderRow
           actualHeader={actualHeader}
           compact={props.compact}
+          dense={props.dense}
         />
         <BasicTableHeaderDividerRow />
       </TableHeader>
@@ -224,9 +227,11 @@ function BasicTableGroupedHeaderRow<T>({
 function BasicTableActualHeaderRow<T>({
   actualHeader,
   compact,
+  dense,
 }: {
   actualHeader: HeaderGroup<T>
   compact: boolean | undefined
+  dense: boolean | undefined
 }) {
   return (
     <TableHeaderRow {...stickyTableColumnRowProps}>
@@ -237,12 +242,15 @@ function BasicTableActualHeaderRow<T>({
           return (
             <React.Fragment key={`${actualHeader.id}-${header.id}`}>
               <TableHead
+                dense={dense}
                 colSpan={getRenderedColSpan(header)}
                 className={getBasicTableHeaderCellClassName({
                   groupParams,
                   isPinned: header.column.getIsPinned() !== false,
                   headClassName: header.column.columnDef.meta?.headClassName,
                   compact,
+                  isSortable: header.column.getCanSort(),
+                  align: header.column.columnDef.meta?.align,
                 })}
                 align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
@@ -304,6 +312,7 @@ export function BasicTableRow<T extends BasicTableRow>({
 
     const cellProps: React.ComponentProps<typeof TableCell> = {
       align: cellData.meta?.align,
+      dense: props.dense,
       className: getBasicTableBodyCellClassName({
         groupParams,
         isSortable: cellData.cell.column.getCanSort(),

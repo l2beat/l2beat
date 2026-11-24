@@ -1,3 +1,4 @@
+import { cva } from 'class-variance-authority'
 import type * as React from 'react'
 import {
   HighlightedTableRowProvider,
@@ -84,7 +85,7 @@ const Table = ({
             }
           }}
         >
-          <ChevronIcon className="-rotate-90 size-3.5 text-zinc-500 dark:text-n-zinc-300" />
+          <ChevronIcon className="-rotate-90 size-3.5 text-secondary" />
         </button>
       </div>
     </div>
@@ -108,7 +109,7 @@ const TableHeader = ({
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
   <thead
     className={cn(
-      'group/header whitespace-pre py-2 align-bottom font-medium text-xs text-zinc-500 uppercase dark:text-n-zinc-300',
+      'group/header whitespace-pre py-2 align-bottom font-medium text-primary text-xs uppercase',
       className,
     )}
     {...props}
@@ -163,20 +164,32 @@ const TableRow = ({
 }
 TableRow.displayName = 'TableRow'
 
+/**
+ * Columns sit 16px apart from md up, or 12px in a dense table, for one with
+ * too many columns to fit otherwise.
+ */
+const columnGap = cva('pr-3', {
+  variants: { dense: { false: 'md:pr-4', true: undefined } },
+  defaultVariants: { dense: false },
+})
+
 const TableHead = ({
   className,
   children,
   tooltip,
   align,
+  dense,
   ...props
 }: React.ThHTMLAttributes<HTMLTableCellElement> & {
   tooltip?: React.ReactNode
   align?: 'right' | 'center'
+  dense?: boolean
 }) => (
   <th
     className={cn(
       'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
-      'pr-3 first:pl-2 last:pr-2 md:pr-4',
+      columnGap({ dense }),
+      'first:pl-2 last:pr-2',
       className,
     )}
     {...props}
@@ -199,14 +212,17 @@ const TableCell = ({
   className,
   children,
   align,
+  dense,
   ...props
 }: React.TdHTMLAttributes<HTMLTableCellElement> & {
   align?: 'right' | 'center'
+  dense?: boolean
 }) => (
   <td
     className={cn(
       'group h-10 whitespace-pre p-0 align-middle text-xs transition-colors md:h-14 md:text-sm',
-      'pr-3 first:pl-3 last:pr-3 md:pr-4',
+      columnGap({ dense }),
+      'first:pl-3 last:pr-3',
       align === 'center' && 'text-center',
       align === 'right' && 'text-right',
       className,

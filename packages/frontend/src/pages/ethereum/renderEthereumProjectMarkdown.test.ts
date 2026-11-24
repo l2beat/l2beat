@@ -24,14 +24,14 @@ describe(renderEthereumProjectMarkdown.name, () => {
       '- Duration of storage: 18 days',
       '- Used by: Eclipse, Manta Pacific',
     )
-    expect(summary).toMatchRegex(/- Total Value Secured: \$40\.00 B \(Total/)
+    expect(summary).toMatchRegex(/- Total value secured: \$40\.00 B \(Total/)
   })
 
   it('explains the enshrined bridge in its tooltip, not a risk rosette', () => {
     const summary = getSection(renderEthereumProjectMarkdown(ENTRY), 'Summary')
 
     expect(summary).toInclude(
-      '- DA Bridge: Enshrined Bridge (Full nodes self-verify the data availability of each block.)',
+      '- DA bridge: Enshrined Bridge (Full nodes self-verify the data availability of each block.)',
     )
     expect(summary).not.toInclude('### Risks')
   })

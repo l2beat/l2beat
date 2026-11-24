@@ -10,13 +10,14 @@ import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
   ChartTooltipRow,
+  ChartTooltipTitle,
   ChartTooltipValue,
   ChartTooltipWrapper,
   getTooltipEntries,
 } from '~/components/core/chart/ChartTooltip'
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -142,6 +143,9 @@ export function L2RecategorizedActivityChart({
           scale: scale === 'symlog' ? scaleSymlog : undefined,
           domain: 'autoIfSingle',
           unit: metric === 'uops' ? ' UOPS' : ' TPS',
+          // Abbreviated like the figure above it ("30.00K"), as tvs and
+          // costs axes are
+          format: (value) => formatActivityCount(value),
         }}
         syncedUntil={data?.syncedUntil}
         renderTooltip={(row, keys) => (
@@ -179,11 +183,10 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
+        <ChartTooltipTitle className="mb-3 whitespace-nowrap">
           {formatRange(label, label + resolutionSeconds)}
-        </div>
-        <span className="text-heading-16">Average {metric.toUpperCase()}</span>
-        <HorizontalSeparator className="mt-1.5" />
+        </ChartTooltipTitle>
+        <TooltipHeader label={`Average ${metric.toUpperCase()}`} />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>
@@ -196,10 +199,10 @@ function CustomTooltip({
           ))}
         </div>
 
-        <span className="mt-3 text-heading-16">
-          {metric === 'uops' ? 'Operations' : 'Transactions'} count
-        </span>
-        <HorizontalSeparator className="mt-1.5" />
+        <TooltipHeader
+          className="mt-3"
+          label={`${metric === 'uops' ? 'Operations' : 'Transactions'} count`}
+        />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => (
             <ChartTooltipRow key={entry.name} name={entry.name}>

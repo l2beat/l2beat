@@ -170,7 +170,7 @@ export function renderPrivacyAnonymitySetSection(
   return joinBlocks([
     subsection(
       level,
-      `${days} day historic anonymity set`,
+      `${days}-day historic anonymity set`,
       joinBlocks([copy.historicDescription, copy.looksBackwardsNote]),
     ),
     subsection(level, copy.durationTitle, copy.durationDescription),
@@ -246,7 +246,7 @@ function renderLast30DayAnomalies(
 ) {
   return subsection(
     level,
-    'Last 30 day anomalies',
+    'Anomalies in the past 30 days',
     anomalies.length > 0
       ? joinBlocks([
           LAST_30_DAY_ANOMALIES_DESCRIPTION,

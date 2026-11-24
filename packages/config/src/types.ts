@@ -1071,6 +1071,7 @@ export type ProjectDefiCategory =
   | 'Prediction market'
   | 'Multisig'
   | 'Payments'
+  | 'Attestations'
 
 export interface ProjectDefiInfo {
   /** Short category label shown on the project page, e.g. "Stablecoin". */
@@ -1094,16 +1095,34 @@ export interface ProjectDefiRiskValue extends TableReadyValue {
   description: string
 }
 
+/**
+ * A protocol can be listed before research reviews it: with neither field set,
+ * only its TVL (from `defiInfo.tvl`) is tracked.
+ */
 export interface ProjectLiquidStaking {
+  /** For the yield and cost of exit. Without it, both show as no data. */
+  tracking?: ProjectLiquidStakingTracking
+  /**
+   * The row of the liquid staking risk comparison. Without it, the protocol
+   * is not reviewed: it has no project page, only its row and chart lines on
+   * the liquid staking page.
+   */
+  risks?: ProjectLiquidStakingRisks
+}
+
+export interface ProjectLiquidStakingTracking {
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
   /**
-   * Pools quoted for selling 100 tokens (stETH for Lido); the best quote is
-   * the market exit. A pool that doesn't exist yet gives no quote.
+   * Pools quoted for selling 1 token (stETH for Lido); the best quote is the
+   * market exit. A pool that doesn't exist yet gives no quote.
    */
   marketQuotes: ProjectLiquidStakingMarketQuote[]
-  /** The row of the liquid staking risk comparison. */
-  risks: ProjectLiquidStakingRisks
+  /**
+   * The first hour to read, for contracts deployed after the start of 2024.
+   * Reads before a contract exists fail, and the indexer retries them forever.
+   */
+  sinceTimestamp?: UnixTime
 }
 
 export interface ProjectLiquidStakingRisks {
@@ -1226,7 +1245,8 @@ export interface ProjectPrivacyInfo {
    * ProjectZkCatalogInfo.quantumResistant
    */
   quantumResistant?: true
-  riskSummary?: string
+  /** Author with definePrivacyRisks. */
+  riskSummary?: PrivacyRiskGroup[]
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1445,6 +1465,29 @@ export interface PrivacySummaryValue extends TableReadyValue {
   description: string
 }
 
+export type PrivacyRiskCategory =
+  | 'Funds can be stolen if'
+  | 'Funds can be lost if'
+  | 'Funds can be frozen if'
+  | 'Use can be stopped if'
+  | 'Privacy can be lost if'
+
+/** The risks under one heading of the risk summary, in page order. */
+export interface PrivacyRiskGroup {
+  category: PrivacyRiskCategory
+  risks: PrivacyRisk[]
+}
+
+export interface PrivacyRisk {
+  /**
+   * Completes the category into one sentence of at most 25 words. Markdown,
+   * which may link a section of the project page.
+   */
+  text: string
+  /** The adversary cells that explain the risk. The page links them. */
+  see?: PrivacyAdversaryId[]
+}
+
 export interface PrivacyAttribute {
   id: string
   label: string
@@ -1482,7 +1525,7 @@ export type PrivacyAdversaryId =
 export interface PrivacyAdversary {
   id: PrivacyAdversaryId
   label: string
-  /** What this adversary can observe or do. */
+  /** What this adversary can observe or do, as a sentence that completes the label. */
   description: string
   /** Real-world actors that hold (at least) this capability. */
   examples: string
@@ -1580,7 +1623,15 @@ export interface PrivacyAdversaryAssessment {
  * validated against the project's contracts in tests.
  */
 export type PrivacySource =
-  | { title: string; url: string }
+  | {
+      title: string
+      url: string
+      /**
+       * The day we last read a page that can change, like docs, a policy or
+       * a served app. A link pinned to a commit needs none.
+       */
+      checked?: string
+    }
   | { contract: string; title?: string }
   | {
       section:
@@ -2097,19 +2148,40 @@ export type ProjectLiquidStakingContracts =
       redeemer: ChainSpecificAddress
       previousRedeemer: ChainSpecificAddress
     }
+  | {
+      /**
+       * Any protocol, without a reader of its own: the rate is its only read,
+       * so selling is the only exit counted. The token must not rebase.
+       */
+      type: 'rate'
+      token: ChainSpecificAddress
+      /** With TVS, the TVL counts the token `<project id>-<symbol>`. */
+      symbol: string
+      rate: {
+        /** Often the token itself, or its Balancer rate provider. */
+        address: ChainSpecificAddress
+        /**
+         * A view that returns the ETH one token is worth, with 18 decimals,
+         * e.g. `function getRate() view returns (uint256)`. One that takes an
+         * amount, like ERC-4626's `convertToAssets(uint256)`, is given 1e18.
+         */
+        method: string
+      }
+    }
 
 /** A pool selling the token for ETH or WETH. */
 export type ProjectLiquidStakingMarketQuote =
   | {
-      type: 'curve'
+      /** `curveCrypto` is a pool that takes its coin indexes as uint256. */
+      type: 'curve' | 'curveCrypto'
       pool: ChainSpecificAddress
       /** Coin indexes of the token sold and of ETH or WETH. */
       i: number
       j: number
     }
   | {
-      /** Quoted by Uniswap's QuoterV2, against WETH. */
-      type: 'uniswapV3'
+      /** Quoted by the exchange's QuoterV2, against WETH. */
+      type: 'uniswapV3' | 'pancakeV3'
       /** The pool's fee tier, in hundredths of a basis point. */
       fee: number
     }
@@ -2117,6 +2189,15 @@ export type ProjectLiquidStakingMarketQuote =
       /** Quoted by BalancerQueries, against WETH. */
       type: 'balancerV2'
       poolId: string
+      /** The pool isn't quoted from this block on: it was drained. */
+      untilBlock?: number
+    }
+  | {
+      /** A boosted pool, quoted by Balancer V3's BatchRouter. */
+      type: 'balancerV3'
+      pool: ChainSpecificAddress
+      /** The ERC-4626 wrapper the pool holds in place of WETH. */
+      wrappedWeth: ChainSpecificAddress
     }
   | {
       type: 'fluid'

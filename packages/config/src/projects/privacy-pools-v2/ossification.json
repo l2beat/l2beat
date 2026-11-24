@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "timestamp": 1792504655,
+      "type": "state",
+      "contract": "eth:0x0Eb42804BF897662aF851370eaeAdcDBEC1b97ed",
+      "transaction": "0xcbe0b9742bd2d22453bb94ea924846aa459d056dd425fc8508811b121879d080",
+      "reason": "PoolVault: all 27 Groth16 verifiers (deposit, ragequit and the 25 transact shapes) were replaced with newly deployed contracts in 27 transactions of block 26234240, starting with this one (DepositVerifierSet, RagequitVerifierSet, VerifierConfigured). This predates the initial discovery, so no diffHistory entry records it."
+    },
+    {
       "timestamp": 1792680419,
       "type": "state",
       "contract": "eth:0x40a6bC296D87f71Ab31Ca3Bfb50513441fBD5160",

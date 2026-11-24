@@ -33,8 +33,8 @@ export interface ScaleBounds {
 
 const DEFAULT_SCALE_BOUNDS: ScaleBounds = { min: 0.2, max: 4 }
 const FIT_PADDING = 32
-/** Below this the node text stops being readable. */
-const READABLE_SCALE = 0.55
+/** Below this the node text stops being readable (11–12px node titles). */
+const READABLE_SCALE = 0.8
 /** The most one wheel event zooms by: a mouse wheel's notch. */
 const WHEEL_ZOOM_STEP = 1.15
 /** A wheel zoom draws the diagram anew once the wheel has rested this long. */
@@ -429,7 +429,11 @@ export function wheelZoomFactor(
   return clamp(Math.exp(-deltaY / 100), 1 / WHEEL_ZOOM_STEP, WHEEL_ZOOM_STEP)
 }
 
-/** Fits the width and anchors the top: a tall graph is panned, not shrunk into a smudge. */
+/**
+ * Fits the width and anchors the top: a tall graph is panned, not shrunk into
+ * a smudge. A graph wider than the view opens on `focusX`, but never pans so
+ * far that empty canvas shows on one side while nodes are cut on the other.
+ */
 export function fitWidthCamera(
   content: Size,
   viewport: Size,
@@ -452,7 +456,11 @@ export function fitWidthCamera(
         ? (viewport.width - width) / 2
         : focusX === undefined
           ? FIT_PADDING
-          : viewport.width / 2 - focusX * k,
+          : clamp(
+              viewport.width / 2 - focusX * k,
+              viewport.width - FIT_PADDING - width,
+              FIT_PADDING,
+            ),
     y: height <= innerHeight ? (viewport.height - height) / 2 : FIT_PADDING,
   }
 }

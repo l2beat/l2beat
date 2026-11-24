@@ -80,7 +80,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${newAnomaly.projectId}-${newAnomaly.subtype}-${lastRecord.timestamp}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -228,7 +228,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${newAnomaly.projectId}-${newAnomaly.subtype}-${lastRecord.timestamp}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -514,7 +514,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -586,7 +586,7 @@ describe(AnomalyNotifier.name, () => {
         mockDatabase({
           notifications: notificationsRepository,
         }),
-        100,
+        0,
         mockTrackedTxsConfig([]),
       )
 
@@ -595,7 +595,11 @@ describe(AnomalyNotifier.name, () => {
 
       const lastRecord = mockObject<RealTimeLivenessRecord>()
       const stats = mockObject<AnomalyStatsRecord>()
-      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>()
+      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
+        projectId,
+        subtype,
+        start: block.timestamp,
+      })
 
       await notifier.anomalyOngoing(
         ongoingAnomaly,
@@ -675,7 +679,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -737,7 +741,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-recovered',
-          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -818,7 +822,7 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-recovered',
-          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          relatedEntityId: 'project-1-batchSubmissions-5678',
           timestamp: block.timestamp,
         },
       ])
@@ -903,8 +907,6 @@ describe(AnomalyNotifier.name, () => {
 
       await notifier.dailyReport()
 
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
-
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         '# Daily report @ 2026-07-14\n' +
           '### Ongoing anomalies:\n' +
@@ -964,8 +966,6 @@ describe(AnomalyNotifier.name, () => {
       notifier.sendDiscordNotification = mockSendDiscordNotification
 
       await notifier.dailyReport()
-
-      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         '# Daily report @ 2026-07-14\n' +

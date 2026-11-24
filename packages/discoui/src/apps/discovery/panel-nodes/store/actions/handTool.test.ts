@@ -126,6 +126,7 @@ function makeNode(id: string): Node {
     id,
     address: `test:${id}`,
     isInitial: false,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Contract',
     name: id,
@@ -152,6 +153,7 @@ function makeState(overrides: Partial<State>): State {
       enableDimming: true,
       hideLargeArrays: true,
       highlightOverlapping: true,
+      showSecurityPerimeter: true,
     },
     transform: { offsetX: 0, offsetY: 0, scale: 1 },
     input: {

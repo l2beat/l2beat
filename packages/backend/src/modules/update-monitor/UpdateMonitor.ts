@@ -92,8 +92,14 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: () =>
-        this.updateProject(this.runner, project, timestamp, updateStart),
+      job: (signal: AbortSignal) =>
+        this.updateProject(
+          this.runner,
+          project,
+          timestamp,
+          updateStart,
+          signal,
+        ),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
@@ -164,11 +170,19 @@ export class UpdateMonitor {
     project: string,
     timestamp: UnixTime,
     discoveryTimestamp: UnixTime,
+    signal: AbortSignal,
   ) {
     return await withCoreFeatureRpcMetricsContext(
       'updateMonitor.discovery',
       { project },
-      () => this._updateProject(runner, project, timestamp, discoveryTimestamp),
+      () =>
+        this._updateProject(
+          runner,
+          project,
+          timestamp,
+          discoveryTimestamp,
+          signal,
+        ),
     )
   }
 
@@ -177,6 +191,7 @@ export class UpdateMonitor {
     project: string,
     timestamp: UnixTime,
     discoveryTimestamp: UnixTime,
+    signal: AbortSignal,
   ) {
     const projectUpdateStart = UnixTime.now()
 
@@ -206,6 +221,7 @@ export class UpdateMonitor {
       const previousDiscovery = await this.getPreviousDiscovery(
         runner,
         projectConfig,
+        signal,
       )
 
       const { discovery } = runResult
@@ -216,6 +232,9 @@ export class UpdateMonitor {
         return
       }
 
+      // The pool reports an aborted task as failed and a later run may have
+      // written this project already, so nothing may be written from here on.
+      signal.throwIfAborted()
       this.discoveryOutputCache.set(projectConfig.name, discovery)
 
       const deployedDiscovered = this.configReader.readDiscovery(
@@ -236,8 +255,10 @@ export class UpdateMonitor {
         unverifiedEntries,
       )
 
+      signal.throwIfAborted()
       await this.handleUpdateNotifier(diff, discovery, projectConfig, timestamp)
 
+      signal.throwIfAborted()
       await this.db.updateMonitor.upsert({
         projectId: projectConfig.name,
         timestamp,
@@ -288,6 +309,7 @@ export class UpdateMonitor {
   async getPreviousDiscovery(
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
+    signal: AbortSignal,
   ): Promise<DiscoveryOutput | undefined> {
     this.logger.info('Getting previous discovery', {
       project: projectConfig.name,
@@ -317,6 +339,9 @@ export class UpdateMonitor {
       previousDiscovery = databaseEntry.discovery
     }
 
+    // The pool has given an aborted task's slot away already, so a second
+    // discovery here would run on top of the configured concurrency.
+    signal.throwIfAborted()
     const runResult = await runner.run(
       projectConfig,
       previousDiscovery.timestamp,
@@ -334,6 +359,7 @@ export class UpdateMonitor {
     // the same. The only way to detect it is to check if the block number of
     // the ondisk discovery is higher than the one in the flat source table
     if (onDiskConfigChanged || onDiskDiscoveryChanged) {
+      signal.throwIfAborted()
       this.logger.info('Upserting flat source', project)
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,

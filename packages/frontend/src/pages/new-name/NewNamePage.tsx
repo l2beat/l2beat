@@ -146,7 +146,7 @@ function History() {
               </span>
               {practice.name}
             </h3>
-            <p className="max-w-[36rem] text-pretty text-[17px] leading-[1.6] max-md:pl-11 md:text-[18px]">
+            <p className="text-pretty text-[17px] leading-[1.6] max-md:pl-11 md:text-[18px]">
               {practice.text}
             </p>
           </li>
@@ -290,7 +290,7 @@ function Practical() {
       {/* The lists above close on a rule, so space alone opens this group. */}
       <div className="mt-16 md:mt-20">
         <h3 className={HEADING}>{practical.links.heading}</h3>
-        <p className="mt-5 max-w-[36rem] text-pretty text-[17px] leading-[1.6] md:text-[18px]">
+        <p className="mt-5 text-pretty text-[17px] leading-[1.6] md:text-[18px]">
           {practical.links.text}
         </p>
         <div className="mt-8">

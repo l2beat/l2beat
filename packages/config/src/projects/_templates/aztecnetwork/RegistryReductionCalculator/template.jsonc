@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Sequencer reward calculator for the Rollup. It pays a reduced reward per proven checkpoint to validators staked through token positions (ATPs) of owner-listed registries, and the default reward to everyone else. It never pays more than the default.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set or remove the reduced sequencer reward of validators staked through token positions of a registry."
+        }
+      ]
+    },
+    "registryRewards": {
+      "description": "Registries with a reduced sequencer reward per checkpoint, capped at the default when paid.",
+      "handler": {
+        "type": "event",
+        "select": ["registry", "sequencerReward"],
+        "dedupBy": "registry",
+        "add": { "event": "RegistryRewardSet" },
+        "remove": { "event": "RegistryRewardRemoved" },
+        "ignoreRelative": true
+      }
+    }
+  }
+}

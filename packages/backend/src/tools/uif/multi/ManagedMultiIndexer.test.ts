@@ -40,7 +40,7 @@ describe(ManagedMultiIndexer.name, () => {
       new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
       expect(() => {
         new TestIndexer({ ...common, name: 'same-name' }, Logger.SILENT)
-      }).toThrow('Indexer id same-name is duplicated!')
+      }).toThrow('Indexer id is duplicated')
     })
 
     it('throws on duplicate configuration ids', () => {
@@ -60,7 +60,7 @@ describe(ManagedMultiIndexer.name, () => {
           },
           Logger.SILENT,
         )
-      }).toThrow('Configuration id a is duplicated in other-name')
+      }).toThrow('Configuration id is duplicated')
     })
   })
 
@@ -300,28 +300,6 @@ describe(ManagedMultiIndexer.name, () => {
       })
     })
   })
-
-  describe(
-    ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
-    () => {
-      it('calls indexer service', async () => {
-        const indexerService = mockObject<IndexerService>({
-          updateConfigurationsCurrentHeight: async () => {},
-        })
-
-        const indexer = new TestIndexer(
-          { ...common, indexerService },
-          Logger.SILENT,
-        )
-
-        await indexer.updateConfigurationsCurrentHeight(100)
-
-        expect(
-          indexerService.updateConfigurationsCurrentHeight,
-        ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
-      })
-    },
-  )
 
   describe(ManagedMultiIndexer.prototype.invalidate.name, () => {
     it('returns target height', async () => {

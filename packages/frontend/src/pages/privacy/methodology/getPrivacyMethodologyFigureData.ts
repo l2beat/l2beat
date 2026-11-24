@@ -5,7 +5,6 @@ import {
   PRIVACY_FIELDS,
 } from '@l2beat/config/build/common/privacyAdversaries'
 import { PRIVACY_CATEGORIES } from '@l2beat/config/build/common/privacyCategories'
-import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
 export type PrivacyMethodologyFigureData = ReturnType<
   typeof getPrivacyMethodologyFigureData
@@ -21,7 +20,7 @@ export function getPrivacyMethodologyFigureData() {
     adversaries: PRIVACY_ADVERSARY_ORDER.map((id) => ({
       id,
       label: PRIVACY_ADVERSARIES[id].label,
-      text: FRAMEWORK_ADVERSARY_TEXT[id],
+      text: PRIVACY_ADVERSARIES[id].description,
     })),
     fields: PRIVACY_FIELD_ORDER.map((id) => ({
       id,

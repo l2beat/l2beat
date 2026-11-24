@@ -55,11 +55,11 @@ export function PermissionsSection({
             <div key={chain} className="mt-8">
               <Subsection title={<ChainNameHeader>{chain}</ChainNameHeader>}>
                 {permissions.roles.length > 0 && (
-                  <div className="mt-3">
+                  <div className="mt-6">
                     <Subsection
                       title={
-                        <SubsectionHeading className="text-heading-18">
-                          Roles:
+                        <SubsectionHeading className="font-semibold text-label-value-16 leading-6">
+                          Roles
                         </SubsectionHeading>
                       }
                     >
@@ -67,7 +67,7 @@ export function PermissionsSection({
                         <ContractEntry
                           key={technologyContractKey(permission)}
                           contract={permission}
-                          className="my-4"
+                          className="my-6"
                         />
                       ))}
                       {changedRoles.length > 0 && (
@@ -80,11 +80,11 @@ export function PermissionsSection({
                   </div>
                 )}
                 {permissions.actors.length > 0 && (
-                  <div className="mt-3">
+                  <div className="mt-6">
                     <Subsection
                       title={
-                        <SubsectionHeading className="text-heading-18">
-                          Actors:
+                        <SubsectionHeading className="font-semibold text-label-value-16 leading-6">
+                          Actors
                         </SubsectionHeading>
                       }
                     >
@@ -92,7 +92,7 @@ export function PermissionsSection({
                         <ContractEntry
                           key={technologyContractKey(permission)}
                           contract={permission}
-                          className="my-4"
+                          className="my-6"
                           expandableAddresses={permission.addresses.length > 1}
                         />
                       ))}

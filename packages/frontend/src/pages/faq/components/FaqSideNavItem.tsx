@@ -13,7 +13,7 @@ export function FaqSideNavItem({ ref, entry, selected }: Props) {
       <a
         href={`#${entry.id}`}
         className={cn(
-          'inline-block font-medium text-base text-primary leading-[112%]! transition hover:text-brand-deep dark:opacity-80 dark:hover:opacity-100',
+          'inline-block font-medium text-primary text-xs leading-5 transition hover:text-brand-deep',
           selected && 'text-brand-deep hover:text-brand-deep/80',
         )}
       >

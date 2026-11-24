@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AdminVerifierWhitelist",
+  "description": "Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
+  "ignoreMethods": ["DEFAULT_ADMIN_ROLE", "WHITELIST_ADMIN_ROLE"],
+  "fields": {
+    "defaultAdmin": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke the admin and whitelist admin roles."
+        }
+      ]
+    },
+    "whitelistAdmins": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "WHITELIST_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters."
+        }
+      ]
+    },
+    "assignedManagers": {
+      "description": "Account assigned to each adopter.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["assertionAdopter", "admin"],
+        "dedupBy": "assertionAdopter",
+        "add": { "event": "WhitelistAdded" },
+        "remove": { "event": "WhitelistRemoved" },
+        "ignoreRelative": true
+      }
+    },
+    "exclusions": {
+      "description": "Excluded adopters and the account that can lift each exclusion.",
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "event",
+        "select": ["assertionAdopter", "releaser"],
+        "dedupBy": "assertionAdopter",
+        "add": { "event": "ExclusionAdded" },
+        "remove": { "event": "ExclusionReleased" },
+        "ignoreRelative": true
+      }
+    }
+  }
+}

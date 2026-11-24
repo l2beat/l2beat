@@ -40,7 +40,7 @@ export function FlowsStatsPanel({
 
   return (
     <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-      <div className="mb-3 font-bold text-label-value-12 text-secondary uppercase">
+      <div className="mb-3 font-bold text-label-value-12 uppercase">
         {label}
       </div>
       {singleProtocolId && !hasRouteSelection ? (

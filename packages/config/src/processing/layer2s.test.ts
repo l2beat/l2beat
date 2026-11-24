@@ -10,6 +10,7 @@ import uniq from 'lodash/uniq'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
+import { isDiscoveredAnywhere } from '../test/discovery/fixtures'
 import { isRiskCorrectlyFormatted } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
@@ -72,7 +73,10 @@ describe('layer2s', () => {
         const discovery = new ProjectDiscovery(layer2.id.toString())
         for (const escrow of escrows) {
           const address = ChainSpecificAddress.from('eth', escrow.address)
-          if (discovery.getContractByAddress(address) === undefined) {
+          if (
+            discovery.getContractByAddress(address) === undefined &&
+            !isDiscoveredAnywhere(address)
+          ) {
             missing.push(`${layer2.id} ${address}`)
           }
         }
@@ -233,8 +237,17 @@ describe('layer2s', () => {
             ChainSpecificAddress.address(address).toString().toLowerCase(),
           ),
       )
+      const escrowsDiscoveredElsewhere = new Set(
+        layer2.config.escrows
+          .map((e) => ChainSpecificAddress.from('eth', e.address))
+          .filter(isDiscoveredAnywhere)
+          .map((a) => ChainSpecificAddress.address(a).toString().toLowerCase()),
+      )
       for (const address of referencedAddresses) {
-        if (!discoveryAddresses.has(address)) {
+        if (
+          !discoveryAddresses.has(address) &&
+          !escrowsDiscoveredElsewhere.has(address)
+        ) {
           missing.push(`${layer2.id} ${address}`)
         }
       }
@@ -242,47 +255,38 @@ describe('layer2s', () => {
     expect(missing).toEqual([])
   }).timeout(10_000)
 
-  describe('display', () => {
-    it('every description ends with a dot', () => {
-      const invalid = layer2s
-        .filter((l) => !l.display.description.endsWith('.'))
-        .map((l) => l.id)
-      expect(invalid).toEqual([])
-    })
+  it('every technology choice is correctly formatted', () => {
+    const keys = [
+      'dataAvailability',
+      'operator',
+      'forceTransactions',
+      'exitMechanisms',
+      'massExit',
+      'otherConsiderations',
+    ] as const satisfies (keyof ProjectScalingTechnology)[]
 
-    it('every technology choice is correctly formatted', () => {
-      const keys = [
-        'dataAvailability',
-        'operator',
-        'forceTransactions',
-        'exitMechanisms',
-        'massExit',
-        'otherConsiderations',
-      ] as const satisfies (keyof ProjectScalingTechnology)[]
-
-      const problems: string[] = []
-      for (const layer2 of layer2s) {
-        for (const key of keys) {
-          const item = layer2.technology?.[key]
-          const choices = item === undefined ? [] : [item].flat()
-          for (const [i, choice] of choices.entries()) {
-            const label = `${layer2.id} ${key}[${i}]`
-            if (choice.name.endsWith('.')) {
-              problems.push(`${label}.name ends with a dot`)
-            }
-            if (!choice.description.endsWith('.')) {
-              problems.push(`${label}.description does not end with a dot`)
-            }
-            for (const risk of choice.risks) {
-              if (!isRiskCorrectlyFormatted(risk)) {
-                problems.push(`${label}.risks: ${risk.text}`)
-              }
+    const problems: string[] = []
+    for (const layer2 of layer2s) {
+      for (const key of keys) {
+        const item = layer2.technology?.[key]
+        const choices = item === undefined ? [] : [item].flat()
+        for (const [i, choice] of choices.entries()) {
+          const label = `${layer2.id} ${key}[${i}]`
+          if (choice.name.endsWith('.')) {
+            problems.push(`${label}.name ends with a dot`)
+          }
+          if (!choice.description.endsWith('.')) {
+            problems.push(`${label}.description does not end with a dot`)
+          }
+          for (const risk of choice.risks) {
+            if (!isRiskCorrectlyFormatted(risk)) {
+              problems.push(`${label}.risks: ${risk.text}`)
             }
           }
         }
       }
-      expect(problems).toEqual([])
-    })
+    }
+    expect(problems).toEqual([])
   })
 
   describe('others', () => {

@@ -30,9 +30,12 @@ export class DerivedTxStore {
           continue
         }
         if (requestsByEventType.has(request.creatorEvent.type)) {
-          throw new Error(
-            `Multiple derived tx requests for ${plugin.name}:${request.creatorEvent.type}`,
-          )
+          throw new Error('Multiple derived tx requests for one event type', {
+            cause: {
+              plugin: plugin.name,
+              eventType: request.creatorEvent.type,
+            },
+          })
         }
         requestsByEventType.set(request.creatorEvent.type, request)
       }
@@ -165,9 +168,9 @@ export class DerivedTxStore {
     const txHash = args[request.txHashArg]
     const chain = args[request.chainArg]
     if (typeof txHash !== 'string' || typeof chain !== 'string') {
-      throw new Error(
-        `Invalid derived tx request values for ${event.plugin}:${event.type}`,
-      )
+      throw new Error('Invalid derived tx request values', {
+        cause: { plugin: event.plugin, eventType: event.type },
+      })
     }
     return { chain, txHash }
   }
