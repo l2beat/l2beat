@@ -147,6 +147,27 @@ describe(renderZkCatalogProjectMarkdown.name, () => {
     )
   })
 
+  // The HTML header shows these as red banners; a reader of the .md page
+  // must not miss a warning the HTML reader sees. Rendered with a red warning
+  // and the facts around them to pin the order.
+  it('lists single-participant trusted setup warnings after the red warning', () => {
+    const summary = getSection(
+      renderZkCatalogProjectMarkdown({
+        ...ENTRY,
+        header: {
+          ...ENTRY.header,
+          redWarning: { text: 'The verifier is unverified.' },
+          trustedSetupWarnings: ['Setup A had a single participant.'],
+        },
+      }),
+      'Summary',
+    )
+
+    expect(summary).toMatchRegex(
+      /^\n\*\*Warning:\*\* The verifier is unverified\.\n\n\*\*Warning:\*\* Setup A had a single participant\.\n\n- Creator:/,
+    )
+  })
+
   it('follows the HTML page outline with one H2 per section', () => {
     const headings = renderZkCatalogProjectMarkdown(ENTRY)
       .split('\n')
