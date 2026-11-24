@@ -32,7 +32,7 @@ describe(EthRpcClient.name, () => {
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
     await expect(client.getBlockNumber()).toBeRejectedWith(
-      'RPC call failed. HTTP status: 503, body: Oops, our server is down',
+      'RPC call failed. HTTP status: 503',
     )
   })
 

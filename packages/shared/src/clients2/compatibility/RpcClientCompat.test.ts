@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { HttpClient } from '../../clients/http/HttpClient'
 import { NotFoundOnRpcError } from '../../clients/rpc/RpcClient'
@@ -24,6 +24,44 @@ describe(RpcClientCompat.name, () => {
         expect(header.number).toEqual(100)
       })
       expect(requests).toEqual(2)
+    })
+  })
+
+  describe(RpcClientCompat.prototype.call.name, () => {
+    // Why: the log formats a cause that is an Error as {}
+    it('keeps what a refused call was answered in a plain cause', async () => {
+      const error = await withServer(
+        (_, res) => {
+          res.statusCode = 503
+          res.setHeader('Retry-After', '7')
+          res.end(
+            JSON.stringify({
+              jsonrpc: '2.0',
+              id: 1,
+              error: { code: 3, message: 'execution reverted' },
+            }),
+          )
+        },
+        (url) =>
+          RpcClientCompat.create({
+            url,
+            chain: 'ethereum',
+            http: new HttpClient(),
+            logger: Logger.SILENT,
+            callsPerMinute: 60_000,
+            retryStrategy: 'TEST',
+          })
+            .call({ to: EthereumAddress.random(), input: Bytes.EMPTY }, 100)
+            .catch((e: Error) => e),
+      )
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).not.toInclude('revert')
+      expect((error as Error).cause).toEqual({
+        status: 503,
+        rateLimit: { 'retry-after': '7' },
+        error: 'RPC call failed. RPC code: 3, message: execution reverted',
+      })
     })
   })
 

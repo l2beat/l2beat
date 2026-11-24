@@ -346,10 +346,9 @@ export class EthRpcClient {
       return BATCH_REJECTED
     }
     if (!response.ok || !Array.isArray(data)) {
-      throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-        { cause: httpCause(response) },
-      )
+      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
+        cause: httpCause(response),
+      })
     }
     if (data.some(hasResult)) {
       this.http.answered(response.sentAt)
@@ -403,10 +402,9 @@ export class EthRpcClient {
     }
     const parsed = JsonRpcResponse.safeValidate(data)
     if (!jsonSuccess || !parsed.success) {
-      throw new Error(
-        `RPC call failed. HTTP status: ${response.status}, body: ${response.body}`,
-        { cause: httpCause(response) },
-      )
+      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
+        cause: httpCause(response),
+      })
     }
     const envelope = parsed.data
     if (isErrorEnvelope(envelope)) {
@@ -420,7 +418,7 @@ export class EthRpcClient {
       )
     }
     if (!response.ok) {
-      throw new Error('RPC call failed. HTTP error status', {
+      throw new Error(`RPC call failed. HTTP status: ${response.status}`, {
         cause: httpCause(response),
       })
     }
@@ -440,13 +438,14 @@ export class EthRpcClient {
   }
 }
 
-export function hasErrorStatus(cause: unknown): boolean {
+/** Sent with a status other than 2xx, so refused, whatever the body says */
+export function hasErrorStatus(cause: unknown): cause is { status: number } {
   return (
     typeof cause === 'object' &&
     cause !== null &&
     'status' in cause &&
     typeof cause.status === 'number' &&
-    cause.status >= 400
+    (cause.status < 200 || cause.status >= 300)
   )
 }
 
@@ -788,16 +787,23 @@ function randomId() {
   return id
 }
 
-/** The node ran the call and answered that it failed, as RpcClient read it */
+/**
+ * The node ran the call and answered that it failed: what callers of
+ * RpcClient read as a revert in its error message
+ */
 function isRevert(e: unknown): e is Error {
+  if (
+    !(e instanceof Error) ||
+    !e.message.startsWith('RPC call failed. RPC code') ||
+    hasErrorStatus(e.cause)
+  ) {
+    return false
+  }
+  const message = e.message.toLowerCase()
   return (
-    e instanceof Error &&
-    e.message.startsWith('RPC call failed. RPC code') &&
-    !hasErrorStatus(e.cause) &&
-    (e.message.includes('invalid opcode: INVALID') ||
-      e.message.includes('CALL_EXCEPTION') ||
-      e.message.includes('revert') ||
-      e.message.includes('reverted') ||
-      e.message.includes('gas required exceeds allowance'))
+    message.includes('revert') ||
+    message.includes('call_exception') ||
+    message.includes('invalid opcode') ||
+    message.includes('gas required exceeds allowance')
   )
 }

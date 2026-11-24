@@ -330,9 +330,14 @@ export class RpcClientCompat implements IRpcClient {
         blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
       )
       .catch((error: unknown) => {
-        // Callers read "revert" in a message as a revert, and a failed
-        // request, whatever its body says, is not one
-        throw new Error('RPC call failed', { cause: error })
+        // Callers read "revert" in a message as a revert, and a refused
+        // request is not one, whatever its JSON-RPC error says
+        if (error instanceof Error && hasErrorStatus(error.cause)) {
+          throw new Error('RPC call failed. Refused', {
+            cause: { ...error.cause, error: error.message },
+          })
+        }
+        throw error
       })
     if (result.reverted) {
       throw new Error('Call reverted', {

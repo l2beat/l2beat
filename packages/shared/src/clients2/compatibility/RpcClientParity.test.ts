@@ -539,6 +539,14 @@ describe('RpcClient and RpcClientCompat parity', () => {
       status: 200,
       body: '<style>* { all: revert }</style>',
     },
+    'HTTP 302 with a JSON-RPC revert': {
+      status: 302,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        error: { code: 3, message: 'execution reverted' },
+      }),
+    },
   })) {
     it(`neither names a revert for an eth_call refused with ${name}`, async () => {
       const refused: Case = {
@@ -554,14 +562,26 @@ describe('RpcClient and RpcClientCompat parity', () => {
     })
   }
 
-  it('both name a revert in the error, as callWithOptionalMulticall reads', async () => {
-    const revert = CASES.find((c) => c.name === 'a reverted eth_call')
-    if (!revert) throw new Error('Missing case')
-    for (const create of [createOld, createCompat]) {
-      const { error } = await runOn(revert, create)
-      expect((error as Error).message.toLowerCase()).toInclude('revert')
-    }
-  })
+  for (const message of [
+    'execution reverted',
+    'Execution Reverted',
+    'CALL_EXCEPTION',
+  ]) {
+    it(`both name a revert answered as "${message}", as callWithOptionalMulticall reads`, async () => {
+      const revert: Case = {
+        name: message,
+        answer: () => ({ error: { code: 3, message } }),
+        run: (c) => c.call(callParams(), 100),
+      }
+      for (const create of [createOld, createCompat]) {
+        const { error } = await runOn(revert, create)
+        const read = (error as Error).message.toLowerCase()
+        expect(
+          read.includes('revert') || read.includes('call_exception'),
+        ).toEqual(true)
+      }
+    })
+  }
 })
 
 type Create = (
