@@ -172,6 +172,7 @@ function makeState(nodes: Node[]): State {
       enableDimming: true,
       hideLargeArrays: true,
       highlightOverlapping: true,
+      showSecurityPerimeter: true,
     },
     transform: { offsetX: 0, offsetY: 0, scale: 1 },
     input: {
@@ -206,6 +207,7 @@ function makeNode(
     id,
     address: `test:${id}`,
     isInitial,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Contract',
     name: id,

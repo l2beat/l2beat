@@ -11,7 +11,10 @@ export function undo(state: State): Partial<State> {
     return {}
   }
 
-  const current = captureHistorySnapshot(state)
+  const current = captureHistorySnapshot(
+    state,
+    snapshot.transform !== undefined,
+  )
   const restored = applyHistorySnapshot(state, snapshot)
 
   return {
@@ -29,7 +32,10 @@ export function redo(state: State): Partial<State> {
     return {}
   }
 
-  const current = captureHistorySnapshot(state)
+  const current = captureHistorySnapshot(
+    state,
+    snapshot.transform !== undefined,
+  )
   const restored = applyHistorySnapshot(state, snapshot)
 
   return {
