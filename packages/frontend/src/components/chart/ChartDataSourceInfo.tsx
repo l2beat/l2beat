@@ -8,6 +8,7 @@ import {
 } from '~/components/core/Drawer'
 import { CustomLink } from '~/components/link/CustomLink'
 import { InfoIcon } from '~/icons/Info'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 
 interface Props {
   dataSource: string
@@ -25,7 +26,7 @@ export function ChartDataSourceInfo({ dataSource, href, scope }: Props) {
     <>
       <div className="font-medium text-2xs text-secondary [overflow-wrap:anywhere] max-sm:hidden">
         Data source: {source}
-        {scope ? ` · ${scope}` : null}
+        {scope ? `${DOT_SEPARATOR}${scope}` : null}
       </div>
       <Drawer>
         <DrawerTrigger className="flex items-center gap-1 font-medium text-[13px] text-secondary sm:hidden">
@@ -39,7 +40,7 @@ export function ChartDataSourceInfo({ dataSource, href, scope }: Props) {
             </DrawerTitle>
             <DrawerDescription className="font-normal text-primary [overflow-wrap:anywhere]">
               {source}
-              {scope ? ` · ${scope}` : null}
+              {scope ? `${DOT_SEPARATOR}${scope}` : null}
             </DrawerDescription>
           </DrawerHeader>
         </DrawerContent>

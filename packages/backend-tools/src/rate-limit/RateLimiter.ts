@@ -8,6 +8,33 @@ interface QueuedFunction<T> {
 
 export interface RateLimiterOptions {
   callsPerMinute: number
+  /**
+   * Lowers the rate when the provider refuses a call. The rate stays down
+   * until the process restarts: it never climbs back by itself, so a
+   * limiter that has settled no longer draws refusals. Unset, the default,
+   * keeps the rate fixed.
+   */
+  stepDownOnThrottle?: {
+    /**
+     * Share of the rate given up per step. A step is taken at most once a
+     * minute, only once a call sent after the last step was answered, only
+     * when at least a twentieth of the calls sent since then were refused,
+     * and down to a tenth of `callsPerMinute`.
+     */
+    share: number
+    /**
+     * Called on every step. A rate that never moved was never tested, so
+     * the steps, not the rate alone, say whether it was found.
+     */
+    onStep?: (step: RateLimiterStepDown) => void
+  }
+}
+
+export interface RateLimiterStepDown {
+  from: number
+  to: number
+  /** At the floor the refusals are not about the rate, or not only. */
+  atFloor: boolean
 }
 
 export interface RateLimiterLabelStats {
@@ -41,13 +68,38 @@ export interface RateLimiterStats {
 export const DEFAULT_RATE_LIMITER_LABEL = 'default'
 
 const MS_PER_MINUTE = 60 * 1000
+/**
+ * A burst of calls is refused together, and each refusal reports in. One
+ * step a minute lets the lower rate show its effect before the next.
+ */
+const STEP_DOWN_INTERVAL_MS = MS_PER_MINUTE
+/** Refusals that are not about the rate must not grind a client to a halt. */
+const LOWEST_SHARE_OF_RATE = 0.1
+/**
+ * Providers also send the odd 429 that is not about the rate. Only when
+ * this share of the calls sent since the last step was refused is the
+ * rate taken to be too high.
+ */
+const REFUSED_SHARE_TO_STEP_DOWN = 0.05
 
 export class RateLimiter {
+  /** The configured rate, which the effective one never exceeds. */
   readonly callsPerMinute: number
   // biome-ignore lint/suspicious/noExplicitAny: generic type
   private queue: QueuedFunction<any>[] = []
   private lastCalled = 0
-  private readonly minTimeElapsed: number
+  private effective: number
+  private readonly stepDownOnThrottle: RateLimiterOptions['stepDownOnThrottle']
+  private steppedDownAt = Number.NEGATIVE_INFINITY
+  /**
+   * A provider that locks an address out refuses every call for minutes,
+   * whatever the rate. Until it answers a call sent after the last step,
+   * more refusals say nothing new about the rate.
+   */
+  private answeredCallSentAt = 0
+  /** Calls sent since the last step that the provider answered or refused */
+  private answeredSinceStep = 0
+  private refusedSinceStep = 0
   private wakeUpTimer: ReturnType<typeof setTimeout> | undefined
   private labelStats = new Map<string, RateLimiterLabelStats>()
   private inFlight = 0
@@ -55,7 +107,75 @@ export class RateLimiter {
 
   constructor(options: RateLimiterOptions) {
     this.callsPerMinute = options.callsPerMinute
-    this.minTimeElapsed = MS_PER_MINUTE / options.callsPerMinute
+    this.effective = options.callsPerMinute
+    this.stepDownOnThrottle = options.stepDownOnThrottle
+  }
+
+  /**
+   * The rate dispatch is paced at. Below `callsPerMinute` once refusals
+   * have stepped it down: that is the rate the provider was seen to take.
+   */
+  get effectiveCallsPerMinute(): number {
+    return this.effective
+  }
+
+  private get minTimeElapsed(): number {
+    return MS_PER_MINUTE / this.effective
+  }
+
+  /**
+   * Reports that the provider refused a call sent at `sentAt` for the rate
+   * (HTTP 429). Does nothing unless `stepDownOnThrottle` is set.
+   */
+  throttled(sentAt: number): void {
+    const stepDown = this.stepDownOnThrottle
+    if (!stepDown) {
+      return
+    }
+    if (sentAt > this.steppedDownAt) {
+      this.refusedSinceStep++
+    }
+    if (!this.mayStepDown(sentAt)) {
+      return
+    }
+    const from = this.effective
+    const floor = this.callsPerMinute * LOWEST_SHARE_OF_RATE
+    const to = Math.max(floor, from * (1 - stepDown.share))
+    if (to === from) {
+      return
+    }
+    this.steppedDownAt = Date.now()
+    this.answeredSinceStep = 0
+    this.refusedSinceStep = 0
+    this.effective = to
+    stepDown.onStep?.({ from, to, atFloor: to === floor })
+  }
+
+  /**
+   * Reports that the provider answered a call sent at `sentAt`. A promise
+   * that resolves is not enough to go by: a batch the provider turned away
+   * for its size resolves too.
+   */
+  answered(sentAt: number): void {
+    this.answeredCallSentAt = Math.max(this.answeredCallSentAt, sentAt)
+    if (sentAt > this.steppedDownAt) {
+      this.answeredSinceStep++
+    }
+  }
+
+  /**
+   * A call sent before the last step went out at the old rate, so neither
+   * its refusal nor its answer says anything about the new one.
+   */
+  private mayStepDown(refusedCallSentAt: number): boolean {
+    return (
+      refusedCallSentAt > this.steppedDownAt &&
+      this.answeredCallSentAt > this.steppedDownAt &&
+      Date.now() - this.steppedDownAt >= STEP_DOWN_INTERVAL_MS &&
+      this.refusedSinceStep >=
+        REFUSED_SHARE_TO_STEP_DOWN *
+          (this.refusedSinceStep + this.answeredSinceStep)
+    )
   }
 
   clear(): void {

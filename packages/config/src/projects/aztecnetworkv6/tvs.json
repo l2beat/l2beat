@@ -20,6 +20,84 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "aztecnetworkv6-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xCB99C58Fe81Ae6b2cB4835e46F7b703745879042",
+        "decimals": 18,
+        "sinceTimestamp": 1793015927
+      },
+      "category": "stablecoin",
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "aztecnetworkv6-steakUSDC",
+      "priceId": "steakhouse-usdc",
+      "symbol": "steakUSDC",
+      "name": "Steakhouse Prime USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/71229/large/steakusdc.png?1766513116",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xbeef088055857739C12CD3765F20b7679Def0f51",
+        "chain": "ethereum",
+        "escrowAddress": "0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf",
+        "decimals": 18,
+        "sinceTimestamp": 1794498911
+      },
+      "category": "stablecoin",
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "aztecnetworkv6-sUSDS",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0x2EbFEE284bABf94869FAC44BC85eDb3C34e536D8",
+        "decimals": 18,
+        "sinceTimestamp": 1793018447
+      },
+      "category": "stablecoin",
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     }
   ]
 }

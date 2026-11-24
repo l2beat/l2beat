@@ -306,7 +306,7 @@ function getCalloutProps(contract: TechnologyContract) {
   if (contract.impactfulChange) {
     return {
       color: undefined,
-      icon: <ShieldIcon className="size-5 fill-warning" />,
+      icon: <ShieldIcon className="size-5 fill-icon-warning" />,
     }
   }
 

@@ -513,7 +513,7 @@ describe(renderProjectSection.name, () => {
     )
   })
 
-  it('lists the liquid staking protocols with their latest numbers, linking the tokens with a page and marking missing numbers and protocols under review', () => {
+  it('lists the liquid staking protocols with their latest numbers, linking the tokens with a page and marking missing numbers and protocols under review or not reviewed', () => {
     const markdown = render({
       type: 'LiquidStakingSection',
       props: {
@@ -533,6 +533,7 @@ describe(renderProjectSection.name, () => {
             href: '/defi/projects/lido',
             description: 'Lido description',
             isUnderReview: false,
+            isTracked: true,
             tokens: [
               { symbol: 'stETH', href: '/tokens/steth/lido/steth' },
               { symbol: 'wstETH' },
@@ -549,7 +550,18 @@ describe(renderProjectSection.name, () => {
             href: '/defi/projects/wbeth',
             description: 'wBETH description',
             isUnderReview: true,
+            isTracked: true,
             tokens: [{ symbol: 'wBETH' }],
+          },
+          {
+            id: 'meth',
+            slug: 'meth',
+            name: 'Mantle Staked ETH',
+            icon: '/icons/meth.png',
+            isUnderReview: false,
+            isTracked: false,
+            tokens: [],
+            totalValueLockedUsd: 1_000_000_000,
           },
         ],
       },
@@ -559,6 +571,7 @@ describe(renderProjectSection.name, () => {
       'ETH staked: 35.40 M ETH ($120.00 B) (as of 2025-11-09 00:00 UTC)',
       '| [Lido](https://ethbeat.org/defi/projects/lido) | [stETH](https://ethbeat.org/tokens/steth/lido/steth), wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
       '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
+      '| Mantle Staked ETH (not reviewed) |  | $1.00 B | No data | No data |',
     )
   })
 

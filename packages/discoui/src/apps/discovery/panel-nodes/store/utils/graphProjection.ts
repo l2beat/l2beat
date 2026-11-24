@@ -118,6 +118,7 @@ function leavesOfSameGraph(
 function isSameGraphItem(before: Node, after: Node): boolean {
   if (before.id !== after.id) return false
   if (before.isInitial !== after.isInitial) return false
+  if (before.isCritical !== after.isCritical) return false
   if (before.isReachable !== after.isReachable) return false
   if (before.hiddenFields !== after.hiddenFields) return false
   if (before.subnodes.length !== after.subnodes.length) return false

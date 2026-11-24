@@ -1,37 +1,8 @@
 {
   "name": "lighter",
-  "timestamp": 1795005121,
+  "timestamp": 1795519933,
   "configHash": "0xb9d6fb62fa33ae3d7d0c180d6d8c2c7f8f2f54af58e6cf54a4feb3fe26a5ab1f",
   "entries": [
-    {
-      "address": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
-      "type": "EOA",
-      "sourceHashes": [
-        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
-      ],
-      "proxyType": "EIP7702 EOA",
-      "values": {
-        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
-        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
-        "DOMAIN_VERSION": "1",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EIP7702StatelessDeleGator",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
-        "getDeposit": 0,
-        "getDomainHash": "0x0d8be483cc5fa59dfb77bb3b3858ff01fb2ff458dc1e441e34f79ecc6c95858a",
-        "getNonce": 0,
-        "NAME": "EIP7702StatelessDeleGator",
-        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
-        "VERSION": "1.3.0"
-      }
-    },
     {
       "address": "eth:0x0bF05AA3b821Eaa341fAD0a674081A02d3dB169D",
       "type": "EOA",
@@ -57,7 +28,7 @@
         "$implementation": "eth:0x15c3FEA3F0A18BfC308F5c9cE7996E44062aD1Bb",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "createdMarkets": ["ASELS", "ANT"],
+        "createdMarkets": ["ASELS", "ANT", "SNDK"],
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x15c3FEA3F0A18BfC308F5c9cE7996E44062aD1Bb",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
@@ -120,7 +91,7 @@
       "template": "lighter/ZkLighterWithCoreMessaging",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xab7e96eb43f2c53f7e8b2b14eb2a96994fb87c634a21e49c60d658247ded4f0a"
+        "0x1ee76354e1289060084fba1a560431820a1e56bab23959a9308ca827f21a27e8"
       ],
       "proxyType": "zkLighter proxy",
       "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, keeps the priority queue (deposits are submitted here, all other L1 requests only through eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
@@ -149,7 +120,7 @@
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "$implementation": [
-          "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f",
+          "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F",
           "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6"
         ],
         "$pastUpgrades": [
@@ -282,9 +253,14 @@
             "2026-11-16T17:50:59.000Z",
             "0x68d0fc6274acbbacdac97074e05dd7cde056dcfb798a96fe93768d38b738b290",
             ["eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f"]
+          ],
+          [
+            "2026-11-22T16:42:59.000Z",
+            "0x8a99567ce9e46ddb3b95e77b190cbddb6c6ba551dcd722c6f508e163a6b7ad6f",
+            ["eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F"]
           ]
         ],
-        "$upgradeCount": 26,
+        "$upgradeCount": 27,
         "additionalZkLighter": "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6",
         "assetConfigETH": {
           "tokenAddress": "eth:0x0000000000000000000000000000000000000000",
@@ -302,8 +278,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 270915,
-        "committedPriorityRequestCount": 1991134,
+        "committedBatchesCount": 275963,
+        "committedPriorityRequestCount": 1997022,
         "coreMessaging": "eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D",
         "createdMarketsPostSpot": [
           "ETH/USDC",
@@ -499,18 +475,18 @@
           "META"
         ],
         "desertMode": false,
-        "desertVerifier": "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121",
-        "executedBatchesCount": 270907,
-        "executedOnChainBatchesCount": 155762,
-        "executedPriorityRequestCount": 1991126,
+        "desertVerifier": "eth:0xEC6B495B02F506FD3027E9235465f3d163C06FDc",
+        "executedBatchesCount": 275951,
+        "executedOnChainBatchesCount": 157231,
+        "executedPriorityRequestCount": 1997006,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f",
+        "getTarget": "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 769905,
-        "lastVerifiedEndBlockNumber": 392568829,
-        "lastVerifiedStateRoot": "0xf501a64630127810f159794bae89f624f1b911e22d88a304cf6cd730ca9d5ad6",
-        "lastVerifiedValidiumRoot": "0xd7b902f2571513e61ccce73290e2b27a23000950f2b51af50954bdf678542458",
+        "lastAccountIndex": 771847,
+        "lastVerifiedEndBlockNumber": 400638151,
+        "lastVerifiedStateRoot": "0x8a4188dbdd4c9e81d999315e8c5ce70ca07ec97e414c21fad037dad9ba72d444",
+        "lastVerifiedValidiumRoot": "0x5f55f752e520ed22ac69c610985e80169381636559ecd492300d2412826fad98",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -534,8 +510,8 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 13,
-        "pendingOnChainBatchesCount": 2,
+        "openPriorityRequestCount": 28,
+        "pendingOnChainBatchesCount": 1,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -591,13 +567,13 @@
             "tokenAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
           }
         ],
-        "stateRoot": "0xf501a64630127810f159794bae89f624f1b911e22d88a304cf6cd730ca9d5ad6",
+        "stateRoot": "0x8a4188dbdd4c9e81d999315e8c5ce70ca07ec97e414c21fad037dad9ba72d444",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0xd7b902f2571513e61ccce73290e2b27a23000950f2b51af50954bdf678542458",
-        "verifiedBatchesCount": 270907,
-        "verifiedPriorityRequestCount": 1991126,
+        "validiumRoot": "0x5f55f752e520ed22ac69c610985e80169381636559ecd492300d2412826fad98",
+        "verifiedBatchesCount": 275951,
+        "verifiedPriorityRequestCount": 1997006,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -622,7 +598,7 @@
       },
       "implementationNames": {
         "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "Proxy",
-        "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f": "ZkLighter",
+        "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F": "ZkLighter",
         "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6": "AdditionalZkLighter"
       }
     },
@@ -677,6 +653,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x6e889Ad7803F9Bd2537710250D046675E9Ea2D79",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x6FEe6cdD595D12Ec6cD1803474B3615f1D2fb9ed",
       "type": "EOA",
       "proxyType": "EOA"
@@ -720,14 +701,14 @@
           "eth:0x57ccC925f54aC946C3423808929fE77265c9045d",
           "eth:0x0bF05AA3b821Eaa341fAD0a674081A02d3dB169D",
           "eth:0x8B0190046D7b366642D4ff091C100d84ec4AB6f6",
-          "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A"
+          "eth:0x6e889Ad7803F9Bd2537710250D046675E9Ea2D79"
         ],
         "$threshold": 4,
         "domainSeparator": "0xa285fb69ffea3ae8ae62ec3a2e6063b7953d6bc001d8955b93911c0907f7636b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 93,
+        "nonce": 95,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -764,7 +745,7 @@
         "securityCouncilAddress": "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 81,
+        "versionId": 82,
         "zkLighterProxy": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
       },
       "fieldMeta": {
@@ -785,24 +766,6 @@
       },
       "implementationNames": {
         "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": "UpgradeGatekeeper"
-      }
-    },
-    {
-      "name": "DesertVerifier",
-      "address": "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe15438f3c82980f051c1769f8dbcb73c9212785f9e3cc6e2218e2cfe6ab6efda"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
-      "critical": true,
-      "deployerAddress": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
-      "sinceTimestamp": 1793538587,
-      "sinceBlock": 26320128,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121": "DesertVerifier"
       }
     },
     {
@@ -834,7 +797,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 251,
+        "nonce": 256,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1006,7 +969,7 @@
       "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xff69a3bb75f703b9371e471da0cc78589c58ea4d3d75e5dc924485c695639d52"
+        "0x0cd18461515739d79d7bca801793c519d6694792a62ab67238f8d1bb5898d7d5"
       ],
       "proxyType": "UpgradeGatekeeper proxy",
       "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
@@ -1016,7 +979,7 @@
       "sinceBlock": 21642011,
       "values": {
         "$admin": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "$implementation": "eth:0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f",
+        "$implementation": "eth:0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B",
         "$pastUpgrades": [
           [
             "2025-01-17T05:05:35.000Z",
@@ -1372,15 +1335,20 @@
             "2026-11-01T14:31:47.000Z",
             "0x09995618b691658e611ee788ac4ae5222f2f61563b82db9d146a25a102824839",
             ["eth:0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f"]
+          ],
+          [
+            "2026-11-22T16:42:59.000Z",
+            "0x8a99567ce9e46ddb3b95e77b190cbddb6c6ba551dcd722c6f508e163a6b7ad6f",
+            ["eth:0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B"]
           ]
         ],
-        "$upgradeCount": 71,
+        "$upgradeCount": 72,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-        "getTarget": "eth:0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f"
+        "getTarget": "eth:0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B"
       },
       "implementationNames": {
         "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA": "Proxy",
-        "eth:0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f": "ZkLighterVerifier"
+        "eth:0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B": "ZkLighterVerifier"
       }
     },
     {
@@ -1412,6 +1380,22 @@
       "address": "eth:0xEc589ee2DF6dd2E7e0873F229d18e024B97d0FA6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "DesertVerifier",
+      "address": "eth:0xEC6B495B02F506FD3027E9235465f3d163C06FDc",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd39509ac181b3f5311caf23087112be3903f0b266329b3080121113ea4540f15"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
+      "sinceTimestamp": 1795361951,
+      "sinceBlock": 26471608,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xEC6B495B02F506FD3027E9235465f3d163C06FDc": "DesertVerifier"
+      }
     },
     {
       "address": "eth:0xF65F409d8f3fa3635287783256394D7eB7aD7835",
@@ -1520,11 +1504,6 @@
       "function transferMastership(address _newMaster)",
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
-    ],
-    "eth:0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0x357353649F8782549d0FD6474DF101bC5A5eDB80": [
       "constructor()",
@@ -1667,57 +1646,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
-      "constructor(address _delegationManager, address _entryPoint)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ExecutionFailed()",
-      "error InvalidEIP712NameLength()",
-      "error InvalidEIP712VersionLength()",
-      "error InvalidShortString()",
-      "error NotDelegationManager()",
-      "error NotEntryPoint()",
-      "error NotEntryPointOrSelf()",
-      "error NotSelf()",
-      "error StringTooLong(string str)",
-      "error UnauthorizedCallContext()",
-      "error UnsupportedCallType(bytes1 callType)",
-      "error UnsupportedExecType(bytes1 execType)",
-      "event EIP712DomainChanged()",
-      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
-      "event SetDelegationManager(address indexed newDelegationManager)",
-      "event SetEntryPoint(address indexed entryPoint)",
-      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
-      "function DOMAIN_VERSION() view returns (string)",
-      "function NAME() view returns (string)",
-      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
-      "function VERSION() view returns (string)",
-      "function addDeposit() payable",
-      "function delegationManager() view returns (address)",
-      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
-      "function entryPoint() view returns (address)",
-      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
-      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
-      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
-      "function getDeposit() view returns (uint256)",
-      "function getDomainHash() view returns (bytes32)",
-      "function getNonce(uint192 _key) view returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
-      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
-      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
-      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
-      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
-      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    "eth:0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ],
     "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": [
       "constructor(address _singleton)"
@@ -1748,15 +1680,7 @@
       "function versionId() view returns (uint256)",
       "function zkLighterProxy() view returns (address)"
     ],
-    "eth:0x975210588389526a3A1DeF1628e7A4d7aBdFD121": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
-    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
-      "constructor(address _singleton)"
-    ],
-    "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f": [
+    "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F": [
       "constructor()",
       "error ZkLighter_BatchNotInOnChainQueue()",
       "error ZkLighter_CannotBeInitialisedByImpl()",
@@ -1888,6 +1812,9 @@
       "function withdrawPendingBalance(address _owner, uint16 _assetIndex, uint128 _baseAmount)",
       "function withdrawPendingBalanceLegacy(address _owner, uint128 _baseAmount)"
     ],
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
+      "constructor(address _singleton)"
+    ],
     "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310": [
       "constructor(address _singleton)"
     ],
@@ -1988,6 +1915,11 @@
       "function transferMastership(address _newMaster)",
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
+    ],
+    "eth:0xEC6B495B02F506FD3027E9235465f3d163C06FDc": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
     ]
   },
   "usedTemplates": {
@@ -1998,8 +1930,8 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithCoreMessaging": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 26441962 },
-  "permissionsConfigHash": "0x5903ea87a983598094a4e4039677b719916f19481727ee2b8205b781d48af1a5",
+  "usedBlockNumbers": { "ethereum": 26484738 },
+  "permissionsConfigHash": "0xf3c42b18a69388da9b5780ff6c16201c4793f85a51b8c9b0a36bfaf9ea347996",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
       "receivedPermissions": [

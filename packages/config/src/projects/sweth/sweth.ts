@@ -130,16 +130,18 @@ export const sweth: BaseProject = {
     ],
   },
   liquidStaking: {
-    contracts: {
-      type: 'sweth',
-      swETH: discovery.getContract('swETH').address,
-      exitQueue: discovery.getContract('swEXIT').address,
+    tracking: {
+      contracts: {
+        type: 'sweth',
+        swETH: discovery.getContract('swETH').address,
+        exitQueue: discovery.getContract('swEXIT').address,
+      },
+      // swETH's WETH pools; Uniswap's is the deeper one.
+      marketQuotes: [
+        { type: 'uniswapV3', fee: 500 },
+        { type: 'pancakeV3', fee: 500 },
+      ],
     },
-    // swETH's WETH pools; Uniswap's is the deeper one.
-    marketQuotes: [
-      { type: 'uniswapV3', fee: 500 },
-      { type: 'pancakeV3', fee: 500 },
-    ],
     risks: {
       minting: {
         value: whitelisted ? 'Whitelisted' : 'Permissionless',

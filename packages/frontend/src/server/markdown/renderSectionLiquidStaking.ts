@@ -16,7 +16,7 @@ import {
 } from './markdown'
 import { formatUtcDateOrDay, formatUtcDateTime } from './renderSectionParts'
 
-/** The same rows as the HTML table, each protocol linked to its page. */
+/** The same rows as the HTML table, each reviewed protocol linked to its page. */
 export function renderLiquidStakingSection({
   entries,
   ethStaked,
@@ -33,7 +33,7 @@ export function renderLiquidStakingSection({
         ...LIQUID_STAKING_METRICS.map((metric) => metric.title),
       ],
       entries.map((entry) => [
-        `${link(entry.name, entry.href)}${entry.isUnderReview ? ' (under review)' : ''}`,
+        `${entry.href ? link(entry.name, entry.href) : `${entry.name} (not reviewed)`}${entry.isUnderReview ? ' (under review)' : ''}`,
         entry.tokens
           .map((token) =>
             token.href ? link(token.symbol, token.href) : token.symbol,

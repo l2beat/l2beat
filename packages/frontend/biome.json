@@ -2,7 +2,11 @@
   "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
   "extends": ["../../../biome.json"],
-  "plugins": ["../../lint/repositoryMockType.grit", "../../lint/utcDates.grit"],
+  "plugins": [
+    "../../lint/repositoryMockType.grit",
+    "../../lint/utcDates.grit",
+    "../../lint/dotSeparator.grit"
+  ],
   "files": {
     "includes": ["**", "!**/static/**", "!**/dist/**", "!**/index.html"]
   },

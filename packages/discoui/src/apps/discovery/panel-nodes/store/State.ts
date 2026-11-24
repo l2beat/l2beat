@@ -9,6 +9,7 @@ export interface State {
     readonly enableDimming: boolean
     readonly hideLargeArrays: boolean
     readonly highlightOverlapping: boolean
+    readonly showSecurityPerimeter: boolean
   }
   readonly transform: {
     readonly offsetX: number
@@ -56,6 +57,7 @@ export interface Node {
   readonly id: string
   readonly address: string
   readonly isInitial: boolean
+  readonly isCritical: boolean
   readonly hasTemplate: boolean
   readonly addressType: ApiAddressType
   readonly name: string
@@ -82,6 +84,7 @@ export interface HistoryState {
 
 export interface HistorySnapshot {
   readonly nodes: readonly Node[]
+  readonly transform?: State['transform']
 }
 
 export interface Field {

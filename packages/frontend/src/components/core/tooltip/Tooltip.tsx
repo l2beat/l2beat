@@ -339,7 +339,8 @@ const TooltipContent = ({
       {tooltip.contentDescriptionId && (
         // A span, unlike a div, is not split by the HTML parser when the
         // tooltip sits in phrasing content, so hydration stays consistent.
-        <span id={tooltip.contentDescriptionId} className="sr-only">
+        // select-none keeps it out of text copied from around the trigger.
+        <span id={tooltip.contentDescriptionId} className="sr-only select-none">
           <InsideHtmlCopyContext value={true}>{children}</InsideHtmlCopyContext>
         </span>
       )}

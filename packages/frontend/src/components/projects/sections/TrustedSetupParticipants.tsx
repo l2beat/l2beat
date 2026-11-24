@@ -1,4 +1,5 @@
 import type { TrustedSetup } from '@l2beat/config'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { getTrustedSetupParticipantSummaries } from '~/utils/project/getTrustedSetupParticipantSummaries'
 
 const PHASE_KINDS = { 1: 'Universal', 2: 'Circuit-specific' } as const
@@ -40,7 +41,7 @@ export function TrustedSetupParticipants(
                   <span className="font-normal">
                     {/* The middot stays with the label (no-break space), so a
                         wrapped line starts with the kind, never the dot. */}
-                    {'\u00a0· '}
+                    {DOT_SEPARATOR}
                     <span className="whitespace-nowrap">
                       {PHASE_KINDS[summary.phase]}
                     </span>

@@ -32,7 +32,7 @@ export function LiquidStakingPage({
             Liquid staking
           </MainPageHeader>
           <LiquidStakingCharts
-            projects={entries}
+            projects={entries.filter((entry) => entry.isTracked)}
             defaultRange={defaultChartRange}
           />
           <PrimaryCard className="max-md:border-divider max-md:border-t md:mt-4">

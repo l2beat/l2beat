@@ -69,6 +69,7 @@ export function initClients(config: Config, logger: Logger): Clients {
       : new RpcClient({
           ...options,
           http,
+          stepDownOnThrottle: config.rpcStepDownOnThrottle,
           rpcMetrics: rpcMetricsAggregator.createRecorder({
             rpcChain: options.chain,
             rpcClient: RpcClient.name,
@@ -153,6 +154,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             url: blockApi.url,
             http,
             callsPerMinute: blockApi.callsPerMinute,
+            stepDownOnThrottle: config.rpcStepDownOnThrottle,
             retryStrategy: blockApi.retryStrategy,
             logger: chainLogger,
           })

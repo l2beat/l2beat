@@ -1,6 +1,6 @@
 {
   "name": "facet",
-  "timestamp": 1795086039,
+  "timestamp": 1795177510,
   "configHash": "0xf137041221e5076cafcf3f7ea3ce175725e7cc3f9cae76c5b846b70e0d96a1ea",
   "entries": [
     {
@@ -15,7 +15,7 @@
       "type": "Contract",
       "template": "facet/FacetEtherBridgeShutdown",
       "sourceHashes": [
-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5",
+        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d",
         "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
       ],
       "proxyType": "EIP1967 proxy",
@@ -49,10 +49,10 @@
         }
       },
       "implementationNames": {
-        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6Shutdown",
         "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570": "FacetEtherBridgeV6Shutdown"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Rollup",
@@ -76,15 +76,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 5051260,
-        "anchorProposalId": 738,
-        "anchorRoot": "0xb67390aa3ac8cffccebf08b65b2c41244f95af4abc5353523a153bb53b892192",
+        "anchorL2BlockNumber": 5060260,
+        "anchorProposalId": 743,
+        "anchorRoot": "0xe9abac649a57fd00d19989a55b4ec8fc68dcf9370e3ee895f0a22e2cf26241bf",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 767,
+        "getProposalsLength": 772,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1778518859,
@@ -232,9 +232,9 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 3731860,
-        "anchorProposalId": 1146,
-        "anchorRoot": "0x81d753aaee498fc44046c83e10fd4660dd6501687884184f24426cfa7e518e9a",
+        "anchorL2BlockNumber": 3780460,
+        "anchorProposalId": 1173,
+        "anchorRoot": "0x33abf378343548b98e5389d9c47d0904dd9fca753c8e959afd3270bd63cc3ec1",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
@@ -247,7 +247,7 @@
         "l2BlockAge": [],
         "MAX_CHALLENGE_SECS": 604800,
         "MAX_PROVE_SECS": 604800,
-        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSAL_INTERVAL": 1800,
         "PROPOSER_BOND": 5000000000000000,
         "RANGE_VKEY_COMMITMENT": "0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829",
@@ -256,9 +256,7 @@
         "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
         "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
         "version": "1.0.0",
-        "whitelistedProposers": [
-          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
-        ]
+        "whitelistedProposers": []
       },
       "implementationNames": {
         "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": "Rollup"
@@ -341,7 +339,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SP1VerifierGateway",
@@ -417,7 +416,7 @@
           "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 366,
+        "nonce": 367,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -519,24 +518,41 @@
   "abis": {
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
       "constructor()",
+      "error BatchAlreadyPaid(uint256 batchIndex)",
+      "error DepositsClosed()",
+      "error EmptyBatch()",
       "error FeatureDisabled()",
       "error InvalidAmount()",
       "error InvalidInitialization()",
+      "error LengthMismatch()",
       "error NotFactory()",
       "error NotInitializing()",
+      "error NotStrictlyIncreasing()",
+      "error Reentrancy()",
+      "error ZeroAddress()",
       "error ZeroAdminAddress()",
+      "error ZeroAmount()",
+      "event BatchDisbursed(uint256 indexed batchIndex, uint256 count, uint256 totalAmount, address firstAddress, address lastAddress)",
+      "event DepositsClosedEvent()",
       "event Initialized(uint64 version)",
+      "event Locked()",
       "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
-      "function adminWithdraw(address recipient, uint256 amount)",
       "function adminWithdrawFCT(address recipient, uint256 amount)",
       "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function closeDeposits()",
       "function deposit() payable",
+      "function depositsClosed() view returns (bool)",
+      "function disburse(uint256 batchIndex, address[] addresses, uint256[] amounts)",
       "function donateETH() payable",
       "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
       "function getAdmin() view returns (address)",
       "function getDumbContract() pure returns (address)",
+      "function getLastDisbursedAddress() view returns (address)",
       "function getSigner() view returns (address)",
       "function initialize()",
+      "function isBatchPaid(uint256 batchIndex) view returns (bool)",
+      "function isLocked() view returns (bool)",
+      "function lock()",
       "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
       "function setAdmin(address admin)",
       "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
@@ -978,8 +994,8 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 26448689, "facet": 5103458 },
-  "permissionsConfigHash": "0xc99f1584e6cc2a69c3aa47c6510215a360d90219f6a13baaf2c5f078e8a8330c",
+  "usedBlockNumbers": { "ethereum": 26456289, "facet": 5111080 },
+  "permissionsConfigHash": "0x92a087266d1d09d6506103b00b8a2d128943cb348cefbaaad2a5fbd4475e2a78",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [
@@ -997,12 +1013,6 @@
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
-          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
-          "role": ".whitelistedProposers"
         }
       ]
     },
@@ -1011,12 +1021,6 @@
         {
           "permission": "interact",
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
-          "description": "can set the whitelisted proposers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
           "description": "can set the whitelisted proposers.",
           "role": ".owner"
         }

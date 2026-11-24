@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -59,6 +58,14 @@ export const risc0: BaseProject = {
         'risc0-zkvm 2.3.2 and 3.0.3 fix a bug letting a malicious host write anywhere in guest memory.',
       type: 'incident',
     },
+    {
+      title: 'Groth16 claim substitution vulnerability',
+      url: 'https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2',
+      date: '2026-11-11T00:00:00Z',
+      description:
+        'risc0-zkvm 3.1.0 fixes a bug that let one valid Groth16 receipt prove any claim.',
+      type: 'incident',
+    },
   ],
   zkCatalogInfo: {
     creator: 'RISC Zero',
@@ -70,7 +77,7 @@ export const risc0: BaseProject = {
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
-        ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         ZK_CATALOG_TAGS.curve.BN254,
         // ZK_CATALOG_TAGS.Arithmetization.R1CS,
         // ZK_CATALOG_TAGS.PCS.KZG,
@@ -79,9 +86,14 @@ export const risc0: BaseProject = {
     proofSystemInfo: readProjectMarkdown('risc0', 'proofSystemInfo'),
     trustedSetups: [
       {
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        ...TRUSTED_SETUPS.Risc0,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
+        ...TRUSTED_SETUPS.Risc0Groth16_v3_1_0,
       },
+      // 2024 setup of the verifiers up to v3.0.0, all estopped after GHSA-mm6c-35cm-g4x2
+      // {
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   ...TRUSTED_SETUPS.Risc0,
+      // },
     ],
     projectsForTvs: [
       {
@@ -91,6 +103,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('bob'),
         sinceTimestamp: UnixTime(1752703200),
+        untilTimestamp: UnixTime(1789547003), // 2026-09-16 respected game type back to PermissionedDisputeGame
       },
       {
         projectId: ProjectId('megaeth'),
@@ -99,6 +112,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('soon'),
         sinceTimestamp: UnixTime(1765180787),
+        untilTimestamp: UnixTime(1785292451), // 2026-07-29 OptimismPortal reads the permissioned L2OutputOracle
       },
       {
         projectId: ProjectId('base'),
@@ -108,197 +122,198 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('roninnetwork'),
         sinceTimestamp: UnixTime(1780557929), // Kailua KailuaTreasury deployed (not yet active)
+        untilTimestamp: UnixTime(1788777107), // 2026-09-07 respected game type back to PermissionedDisputeGame
       },
     ],
     verifierHashes: [
-      {
-        hash: '0xa42b7a9c647b7bea4f92660bfd9cd3c5afc91b4c40773f9fb410eb55c8402e40',
-        name: 'RiscZero v2.2.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.2.0/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
-            ),
-            overrideUsedIn: [
-              ProjectId('taiko'),
-              ProjectId('bob'),
-              ProjectId('megaeth'),
-              ProjectId('soon'),
-              ProjectId('roninnetwork'),
-            ],
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'risc0',
-          'verificationSteps-0xa42b7a9c',
-        ),
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
-      },
-      {
-        hash: '0x10ab33bc472e3e9024d89e512d33781519ba9b1621e4fe0ffd80cd20523062a8',
-        name: 'RiscZero v3.0.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v3.0.0/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
-            ),
-            overrideUsedIn: [
-              ProjectId('bob'),
-              ProjectId('taiko'),
-              ProjectId('roninnetwork'),
-            ],
-          },
-          // {
-          //   address: ChainSpecificAddress.fromLong(
-          //     'ethereum',
-          //     '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
-          //   ),
-          // },
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'risc0',
-          'verificationSteps-0x10ab33bc',
-        ),
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
-      },
-      {
-        hash: '0xf5904d2c6c6ecb457efb46a01d9ae0a11c666ad6c70668ce3df9b6b28604da3b',
-        name: 'RiscZero v3.1.0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e',
-            ),
-            // its only route, 0x8b38038c, is estopped, so no project can reach it
-            overrideUsedIn: [],
-          },
-        ],
-        verificationStatus: 'notVerified',
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
-      },
+      // {
+      //   hash: '0xa42b7a9c647b7bea4f92660bfd9cd3c5afc91b4c40773f9fb410eb55c8402e40',
+      //   name: 'RiscZero v2.2.0',
+      //   sourceLink: 'https://github.com/risc0/risc0/tree/v2.2.0/risc0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
+      //       ),
+      //       // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'risc0',
+      //     'verificationSteps-0xa42b7a9c',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
+      // },
+      // {
+      //   hash: '0x10ab33bc472e3e9024d89e512d33781519ba9b1621e4fe0ffd80cd20523062a8',
+      //   name: 'RiscZero v3.0.0',
+      //   sourceLink: 'https://github.com/risc0/risc0/tree/v3.0.0/risc0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
+      //       ),
+      //       // estopped after GHSA-mm6c-35cm-g4x2, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //     // {
+      //     //   address: ChainSpecificAddress.fromLong(
+      //     //     'ethereum',
+      //     //     '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
+      //     //   ),
+      //     // },
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'risc0',
+      //     'verificationSteps-0x10ab33bc',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
+      // },
+      // {
+      //   hash: '0xf5904d2c6c6ecb457efb46a01d9ae0a11c666ad6c70668ce3df9b6b28604da3b',
+      //   name: 'RiscZero v3.1.0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e',
+      //       ),
+      //       // its only route, 0x8b38038c, is estopped, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code equals v3.0.0. Its Groth16 verifying key and `bn254_control_id` match risc0 v3.1.0, its `control_root` matches no release. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
+      // },
       {
         hash: '0x88492a617f432f3c03449951b7cdaf0db75b27058a52ef935ac06c01d5d4b384',
         name: 'RiscZero v3.1.0 (control root 0xe6feef13)',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        sourceLink: 'https://github.com/risc0/risc0/tree/v3.1.0/risc0',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Risc0_v3_1_0,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x8c915b5071206C6E328BC18529586c513408aB3b',
             ),
-            overrideUsedIn: [ProjectId('taiko')],
           },
         ],
         verificationStatus: 'notVerified',
         description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The contract code and Groth16 verifying key equal those of the other v3.1.0 verifier, the `control_root` differs. The verifying key, `control_root` and `bn254_control_id` appear in no public RISC Zero release. No trusted setup ceremony for this verifying key is published.',
+          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values. The verifying key, `control_root` and `bn254_control_id` match risc0 v3.1.0. The verifying key comes from trusted setup 2026-10-20.1, whose phase 2 has a single contribution.',
       },
-      {
-        hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
-        name: 'RiscZero v1.0.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'risc0',
-          'verificationSteps-0x79325d9d',
-        ),
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
-      },
-      {
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
-        name: 'Kailua v1.2.0 verifier',
-        sourceLink:
-          'https://github.com/boundless-xyz/kailua/tree/v1.2.0/crates/contracts',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        description:
-          'Kailua v1.2.0 introduces a dedicated KailuaVerifier wrapper contract (deployed behind a proxy) that gates proof verification with optional fault-proof permits before delegating to the underlying RISC Zero verifier at `RISC_ZERO_VERIFIER`.',
-      },
-      {
-        hash: '0x55c1a9d623f4b589ad496bf8fde885abfafbcbf0129c67f1dbc78c8430b69eaf',
-        name: 'RiscZero v2.0.0-rc.3',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'risc0',
-          'verificationSteps-0x55c1a9d6',
-        ),
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
-      },
-      {
-        hash: '0x23aae7a460d8470faa11d2b75a9005eee1d3e0bce0e88ac2288f1ada4e4664df',
-        name: 'RiscZero v2.1.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.1.0/risc0',
-        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF',
-            ),
-          },
-        ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'risc0',
-          'verificationSteps-0x23aae7a4',
-        ),
-        description:
-          'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
-      },
+      // {
+      //   hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
+      //   name: 'RiscZero v1.0.0',
+      //   sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0/risc0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C',
+      //       ),
+      //       // route 0x310fe598 is estopped, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'risc0',
+      //     'verificationSteps-0x79325d9d',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
+      // },
+      // {
+      //   hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+      //   name: 'Kailua v1.2.0 verifier',
+      //   sourceLink:
+      //     'https://github.com/boundless-xyz/kailua/tree/v1.2.0/crates/contracts',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d',
+      //       ),
+      //       // BOB's Kailua game is no longer respected
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   description:
+      //     'Kailua v1.2.0 introduces a dedicated KailuaVerifier wrapper contract (deployed behind a proxy) that gates proof verification with optional fault-proof permits before delegating to the underlying RISC Zero verifier at `RISC_ZERO_VERIFIER`.',
+      // },
+      // {
+      //   hash: '0x55c1a9d623f4b589ad496bf8fde885abfafbcbf0129c67f1dbc78c8430b69eaf',
+      //   name: 'RiscZero v2.0.0-rc.3',
+      //   sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3/risc0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97',
+      //       ),
+      //       // route 0x9f39696c is estopped, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'risc0',
+      //     'verificationSteps-0x55c1a9d6',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
+      // },
+      // {
+      //   hash: '0x23aae7a460d8470faa11d2b75a9005eee1d3e0bce0e88ac2288f1ada4e4664df',
+      //   name: 'RiscZero v2.1.0',
+      //   sourceLink: 'https://github.com/risc0/risc0/tree/v2.1.0/risc0',
+      //   proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF',
+      //       ),
+      //       // route 0xf536085a is estopped, so no project can reach it
+      //       overrideUsedIn: [],
+      //     },
+      //   ],
+      //   verificationStatus: 'successful',
+      //   attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //   verificationSteps: readProjectMarkdown(
+      //     'risc0',
+      //     'verificationSteps-0x23aae7a4',
+      //   ),
+      //   description:
+      //     'Custom verifier ID: SHA256 hash of the following values abi packed together: the bytes32 value of internal pure function verifier_key_digest() of the RiscZeroGroth16Verifier.sol, bytes32 value of `control_root` and bytes32 value of `bn254_control_id` of contract constructor values.',
+      // },
     ],
   },
 }

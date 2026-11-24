@@ -7,6 +7,10 @@ import {
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -14,6 +18,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zamaCwAdversaries } from './adversaries'
+import { zamaCwRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zama-cw')
 
@@ -410,9 +415,7 @@ export const zamaCw: BaseProject = {
         'Only amounts are hidden. Every transfer names its sender and recipient.',
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         "Zama's governance multisigs can upgrade every contract instantly.",
       walkawayTest: {
@@ -421,8 +424,7 @@ export const zamaCw: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The contracts, the SDK and the coprocessor source are public. The source of the KMS nodes and of Zama's app is not.",
     },
@@ -437,7 +439,7 @@ export const zamaCw: BaseProject = {
       },
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
-    riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
+    riskSummary: zamaCwRiskSummary({
       kmsSignerCount,
       kmsKeyThreshold,
       coprocessorThreshold,

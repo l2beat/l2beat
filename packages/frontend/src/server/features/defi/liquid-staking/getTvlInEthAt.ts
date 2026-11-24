@@ -26,9 +26,12 @@ export async function getTvlInEthAt(
   if (timestamps.length === 0) return []
   if (env.MOCK) return timestamps.map(() => MOCK_TVL_ETH)
 
+  const token = getTvlToken(project)
+  // Untracked, the token's rate is unknown.
+  if (!token) return timestamps.map(() => null)
+
   const from = Math.min(...timestamps)
   const to = Math.max(...timestamps)
-  const token = getTvlToken(project)
   const [tokenValues, snapshots] = await Promise.all([
     getDb().tvsTokenValue.getByProject(
       project.id,
@@ -52,7 +55,7 @@ export async function getTvlInEthAt(
  * weETH. The others' snapshots read the rate of the token the TVL counts.
  */
 export const TVL_TOKENS: Record<
-  ProjectLiquidStakingContracts['type'],
+  Exclude<ProjectLiquidStakingContracts['type'], 'rate'>,
   { symbol: string; rebasing: boolean }
 > = {
   lido: { symbol: 'stETH', rebasing: true },
@@ -70,8 +73,14 @@ export interface TvlToken {
   rebasing: boolean
 }
 
-export function getTvlToken(project: TvlInEthProject): TvlToken {
-  const { symbol, rebasing } = TVL_TOKENS[project.liquidStaking.contracts.type]
+/** None when the protocol's rate isn't tracked. */
+export function getTvlToken(project: TvlInEthProject): TvlToken | undefined {
+  const contracts = project.liquidStaking.tracking?.contracts
+  if (!contracts) return undefined
+  const { symbol, rebasing } =
+    contracts.type === 'rate'
+      ? { symbol: contracts.symbol, rebasing: false }
+      : TVL_TOKENS[contracts.type]
   return { id: `${project.id}-${symbol}`, rebasing }
 }
 

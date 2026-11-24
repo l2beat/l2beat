@@ -89,7 +89,8 @@ export const zkApiAdversaries = definePrivacyAdversaries({
           url: `${OA_CHAT}chat/services/networkProxy.js#L7-L10`,
         },
         {
-          title: 'Hosted app loads Fathom Analytics (checked 2026-11-11)',
+          title: 'Hosted app loads Fathom Analytics',
+          checked: '2026-11-11',
           url: 'https://chat.openanonymity.ai',
         },
       ],

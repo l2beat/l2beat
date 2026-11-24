@@ -30,11 +30,17 @@ export interface RenderGraph {
   readonly containers: GroupContainer[]
 }
 
+let cachedRenderNodes: readonly Node[] | undefined
+let cachedRenderGraph: RenderGraph | undefined
+
 // Expand opened groups into their members so the renderer can draw what is
 // inside them, while closed groups remain a single collapsed box. Connection
 // geometry is recomputed against the expanded layout. When nothing is opened
 // the original node refs are returned untouched so memoization keeps working.
 export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
+  if (nodes === cachedRenderNodes && cachedRenderGraph !== undefined) {
+    return cachedRenderGraph
+  }
   const projection = getGraphProjection(nodes)
   const effectiveHidden = projection.hiddenNodeIds
   const {
@@ -53,12 +59,15 @@ export function buildRenderGraph(nodes: readonly Node[]): RenderGraph {
     }
     laidOut = rendered.map((node) => layoutFields(node, boxById))
   }
-  return {
+  const result: RenderGraph = {
     nodes: laidOut,
     hidden: effectiveHidden,
     containers,
     liveGroupTargets: getLiveGroupTargets(laidOut, projection.visibleEdges),
   }
+  cachedRenderNodes = nodes
+  cachedRenderGraph = result
+  return result
 }
 
 // Whether a field's connection should be drawn and counted for dimming. For

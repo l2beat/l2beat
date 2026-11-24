@@ -74,6 +74,12 @@ describe('dates', () => {
       ).toEqual('3 Jun 2026')
     })
 
+    it('shows the time on the latest snapshot of daily data, which is hourly', () => {
+      expect(
+        formatSnapshotTimestamp(at('2026-06-03T14:00:00Z'), 'day'),
+      ).toEqual('3 Jun 2026, 14:00 UTC')
+    })
+
     it('shows the time on every point of finer data, midnight included', () => {
       const hourly = [
         '2026-06-02T23:00:00Z',

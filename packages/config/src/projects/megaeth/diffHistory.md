@@ -1,3 +1,82 @@
+Generated with discovered.json: 0xf29a12dcd50467c91316c536d9bd225a6be7a88b
+
+# Diff at Mon, 23 Nov 2026 13:58:15 GMT:
+
+- id: fe03eebc
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1793195533
+- current timestamp: 1795442230
+
+## Description
+
+The owner of MegaETH's RISC Zero router, the EOA eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97, added route 0xe71e6620 to RISC Zero's emergency stop wrapping the Groth16 verifier v3.1.0. It then removed route 0x73c457ba. That route pointed directly at a Groth16 verifier for the v3.0.0 circuits, without an emergency stop. RISC Zero's stops therefore did not cover it, and the claim substitution bug of [GHSA-mm6c-35cm-g4x2](https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2) stayed reachable through this router until the removal.
+
+Kailua proofs now verify only against v3.1.0, whose trusted setup has a single phase 2 contribution. The EOA can still add or remove routes instantly.
+
+Config: the router's `verifier` field reads route 0xe71e6620.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.0.0-rc.3).
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
++++ severity: MEDIUM
+      values.verifier_73c457ba:
+-        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
++        "eth:0x0000000000000000000000000000000000000001"
++++ severity: MEDIUM
+      values.verifier_e71e6620:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x5144A37e65fd032F628663Cb21E16490378a8630"
+      values.verifier:
++        "eth:0x5144A37e65fd032F628663Cb21E16490378a8630"
+      errors:
+-        {"verifier":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x5144A37e65fd032F628663Cb21E16490378a8630) [risc0/RiscZeroVerifierEmergencyStop]
+    +++ description: A verifier wrapper for the eth:0x8c915b5071206C6E328BC18529586c513408aB3b that allows pausing (emergency stop) the verifier by its owner.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x8c915b5071206C6E328BC18529586c513408aB3b) [taiko/RiscZeroGroth16Verifier]
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).
+```
+
+## Source code changes
+
+```diff
+.../RiscZeroGroth16Verifier.sol                    | 187 ++---------
+ .../.flat/RiscZeroVerifierEmergencyStop.sol        | 366 +++++++++++++++++++++
+ 2 files changed, 402 insertions(+), 151 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1793195533 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x910b159F79288DD706789ec7768E979d4D88C057) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97).
+      values.verifier:
+-        "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3"
+      errors:
++        {"verifier":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x86dbe4cd883e465205e20ded466fd280cfdf9e27
 
 # Diff at Tue, 10 Nov 2026 14:30:49 GMT:
