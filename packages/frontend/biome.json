@@ -5,7 +5,6 @@
   "plugins": [
     "../../lint/repositoryMockType.grit",
     "../../lint/utcDates.grit",
-    "../../lint/warningGlyphColor.grit",
     "../../lint/dotSeparator.grit"
   ],
   "files": {

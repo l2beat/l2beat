@@ -109,9 +109,6 @@
   --header-primary: #ffffff;
   --header-secondary: #eeeff4;
   --icon-secondary: #5f6470;
-  /* Warning glyphs (the warning circle, warning-bar icons, yellow shields):
-     brighter than --warning, which is dark enough to read as text. */
-  --icon-warning: #cb9800;
   --overlay: #181b2d99;
   --divider: #ccd0da;
   --link-stroke: #badaff;
@@ -165,7 +162,6 @@
   --header-primary: #1b1e2a;
   --header-secondary: #232634;
   --icon-secondary: #80869a;
-  --icon-warning: #fdcf44;
   --overlay: #04050acc;
   --divider: #3d4358;
   --link-stroke: #24406b;
@@ -521,7 +517,6 @@
   --color-header-secondary: var(--header-secondary);
   --color-header-primary: var(--header-primary);
   --color-icon-secondary: var(--icon-secondary);
-  --color-icon-warning: var(--icon-warning);
   --color-overlay: var(--overlay);
   --color-divider: var(--divider);
   --color-link: var(--link);

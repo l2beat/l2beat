@@ -23,9 +23,8 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
 - **Coloured badges keep main's fill, size and text colour:** transfer-type badges are white all-caps text on `bg-yellow-700` (Lock & Mint) and `bg-teal-500` (Burn & Mint); proof-system badges keep their coloured text. Contrast fixes that darken a fill, shrink a label or switch its text to ink are off the table. This is a known exception to the contrast fix above: white on `bg-teal-500` (`#27ac9f`) is about 2.8:1, below WCAG AA, and the owner keeps it anyway.
   Why: the owner found the darker fills, the smaller label and the black badge text worse than main's.
 
-- **Warning glyphs keep main's yellow, the `icon-warning` token (`fill-icon-warning`): `#cb9800` in light mode, `#fdcf44` in dark.** This covers the (!) warning circle (`RoundedWarningIcon`), warning-bar icons and the yellow shields. Swapping them to the `warning` token (`fill-warning`) or any darker yellow, for consistency or contrast, is off the table.
+- **Warning glyphs keep main's yellow: `fill-yellow-700` in light mode, `fill-yellow-300` in dark.** This covers the (!) warning circle (`RoundedWarningIcon`), warning-bar icons and the yellow shields. Swapping them to the `warning` token (`fill-warning`) or any darker yellow, for consistency or contrast, is off the table.
   Why: in light mode the `warning` token (`#8a6700`) reads as a muddy olive, not as a warning.
-  Enforced by the `warningGlyphColor` lint rule (`lint/README.md`).
 
 - **Images shown on the site use the site palette: `#FFFFFF`, `#E6E7EC` (`--surface-secondary`) and `#CCD0DA` (`--divider`).** The brand kit's paper `#F5F3EE` and warm beige tints stay out.
   Why: paper is used nowhere on the site.

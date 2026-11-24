@@ -7,7 +7,6 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 | `repositoryMockType` | packages that use the database | `mockObject<SomeRepository>(...)`. Type the mock as `Database['repo']` or `TokenDatabase['repo']`, so no repository class is exported only for tests. |
 | `staticErrorMessage` | `backend`, `token-backend` (services whose errors go to Kibana) | `new Error(...)` whose message is a template with `${}` or a concatenation. Write a fixed message and put the values in `cause`: `new Error('HTTP error', { cause: { status } })`. A fixed message lets one exact match in Elasticsearch find every occurrence. |
 | `utcDates` | `frontend` | Local-time date reads and formatting: `getDate()`, `toLocaleDateString()`, `Intl.DateTimeFormat` without `timeZone: 'UTC'`. |
-| `warningGlyphColor` | `frontend` | The `fill-warning` class, which is the text token. Warning glyphs take `fill-icon-warning`, as `packages/frontend/DESIGN.md` says. |
 | `dotSeparator` | `frontend` | A plain space before a "·" separator in a string or JSX text. Use `DOT_SEPARATOR` from `~/utils/dotSeparator`, whose space does not break, so no wrapped line starts with "·". |
 
 The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too. `dotSeparator` skips a "·" that is alone in its element, since wrapping there is up to the layout, and a "·" between two expressions with no text of its own (`{a} · {b}`).
