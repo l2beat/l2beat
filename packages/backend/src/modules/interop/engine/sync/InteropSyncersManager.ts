@@ -16,8 +16,10 @@ import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
+import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
+import { InteropSyncerStallAlerter } from './InteropSyncerStallAlerter'
 
 export type BlockProcessingStat = {
   cluster: string
@@ -66,6 +68,7 @@ export class InteropSyncersManager {
     UpsertMap<LongChainName, InteropEventSyncer>
   >()
   private dataCleaners: InteropDataCleaner[] = []
+  private stallAlerter?: InteropSyncerStallAlerter
   private readonly knownChains: Set<string>
 
   constructor(
@@ -77,6 +80,7 @@ export class InteropSyncersManager {
     private readonly db: Database,
     private readonly logger: Logger,
     private readonly rpcMetricsAggregator: RpcMetricsAggregator,
+    notifier?: InteropNotifier,
   ) {
     this.knownChains = new Set(knownChains)
     for (const cluster of pluginClusters) {
@@ -127,6 +131,14 @@ export class InteropSyncersManager {
         )
       }
     }
+
+    if (notifier) {
+      this.stallAlerter = new InteropSyncerStallAlerter(
+        [...this.syncers.values()].flatMap((byChain) => [...byChain.values()]),
+        notifier,
+        logger,
+      )
+    }
   }
 
   start() {
@@ -138,6 +150,7 @@ export class InteropSyncersManager {
     for (const cleaner of this.dataCleaners) {
       cleaner.start()
     }
+    this.stallAlerter?.start()
   }
 
   /**

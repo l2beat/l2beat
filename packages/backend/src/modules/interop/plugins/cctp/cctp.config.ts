@@ -164,8 +164,13 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const previousV2 = this.store.get(CCTPV2Config) ?? []
 
     const chainPromises = this.chains.map(async (chain) => {
+      // The override alone has no message transmitter, so capture would throw.
+      // Any lookup that does not resolve one keeps the last resolved entry.
+      const previous = previousV2.find(
+        (n) => n.chain === chain.name && n.messageTransmitter,
+      )
       const rpc = this.rpcs.get(chain.name)
-      if (!rpc) return
+      if (!rpc) return previous
 
       try {
         const result = await rpc.call(
@@ -177,7 +182,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         )
 
         if (result.toString() === '0x') {
-          return
+          return previous
         }
 
         const decoded = decodeFunctionResult({
@@ -197,10 +202,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           chain: chain.name,
           error,
         })
-        // The override alone has no message transmitter, so capture would throw
-        return previousV2.find(
-          (n) => n.chain === chain.name && n.messageTransmitter,
-        )
+        return previous
       }
     })
 

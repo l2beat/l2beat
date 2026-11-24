@@ -14,6 +14,7 @@ const MAX_ENTRIES_IN_MESSAGE = 200
 const MAX_BLOCKED_REASONS_IN_MESSAGE = 20
 const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
 const MAX_SKIPPED_VALUATIONS_IN_MESSAGE = 10
+const MAX_SYNCERS_IN_MESSAGE = 20
 
 const BACKOFFICE_URL = 'https://backoffice.l2beat.com'
 
@@ -57,6 +58,12 @@ export interface InteropSkippedTransferValuationNotification {
   valueUsd: number | undefined
   reason: 'priceAboveThreshold' | 'valueAboveThreshold'
   thresholdUsd: number
+}
+
+export interface InteropSyncerNotification {
+  cluster: string
+  chain: string
+  failingSince: UnixTime
 }
 
 export class InteropNotifier {
@@ -200,6 +207,40 @@ export class InteropNotifier {
     this.messageQueue.addToBack(message)
   }
 
+  notifyStalledSyncers(syncers: InteropSyncerNotification[]): void {
+    if (syncers.length === 0) {
+      return
+    }
+    const link = this.backofficeLink('/interop/indexing/plugin-statuses')
+    this.messageQueue.addToBack(
+      [
+        `🚨 Interop capture stalled on \`${syncers.length}\` syncers - each retries the same block until it stops failing`,
+        ...(link ? [`[Status in backoffice ↗](${link})`] : []),
+        '',
+        ...renderSyncers(
+          syncers,
+          (s) => ` failing since \`${formatTimestamp(s.failingSince)}\``,
+        ),
+      ].join('\n'),
+    )
+  }
+
+  notifyRecoveredSyncers(syncers: InteropSyncerNotification[]): void {
+    if (syncers.length === 0) {
+      return
+    }
+    this.messageQueue.addToBack(
+      [
+        `✅ Interop capture resumed on \`${syncers.length}\` syncers`,
+        '',
+        ...renderSyncers(
+          syncers,
+          (s) => ` after failing since \`${formatTimestamp(s.failingSince)}\``,
+        ),
+      ].join('\n'),
+    )
+  }
+
   private notifyConfigDiff(diff: InteropConfigDiff): void {
     const header = `⚙️ **${diff.key}** config change - (\`${diff.entries.length}\` diff entries)`
     const markdown = interopConfigDiffToMarkdown(diff, MAX_ENTRIES_IN_MESSAGE)
@@ -208,13 +249,13 @@ export class InteropNotifier {
     this.messageQueue.addToBack(message)
   }
 
-  private backofficeLink(path: string, rowKey: string): string | undefined {
+  private backofficeLink(path: string, rowKey?: string): string | undefined {
     if (!this.backofficeEnvironment) {
       return undefined
     }
     const env = encodeURIComponent(this.backofficeEnvironment)
-    const hash = encodeURIComponent(rowKey)
-    return `${BACKOFFICE_URL}${path}?env=${env}#${hash}`
+    const hash = rowKey ? `#${encodeURIComponent(rowKey)}` : ''
+    return `${BACKOFFICE_URL}${path}?env=${env}${hash}`
   }
 
   private async send(message: string): Promise<void> {
@@ -237,6 +278,20 @@ export class InteropNotifier {
   _TEST_ONLY_waitTillEmpty(): Promise<void> {
     return this.messageQueue.waitTillEmpty()
   }
+}
+
+function renderSyncers(
+  syncers: InteropSyncerNotification[],
+  suffix: (syncer: InteropSyncerNotification) => string,
+): string[] {
+  const lines = syncers
+    .slice(0, MAX_SYNCERS_IN_MESSAGE)
+    .map((s) => `- \`${s.cluster}\` on \`${s.chain}\`${suffix(s)}`)
+  const remaining = syncers.length - MAX_SYNCERS_IN_MESSAGE
+  if (remaining > 0) {
+    lines.push(`- ...and ${remaining} more`)
+  }
+  return lines
 }
 
 function formatTimestamp(timestamp: UnixTime): string {

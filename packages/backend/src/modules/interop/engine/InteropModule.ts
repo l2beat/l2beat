@@ -118,6 +118,7 @@ export function createInteropModule({
     db,
     logger,
     providers.clients.rpcMetricsAggregator,
+    notificationClient,
   )
 
   const processors: InteropBlockProcessor[] = []

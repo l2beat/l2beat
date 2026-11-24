@@ -20,36 +20,52 @@ const CHAIN_IDS_SOURCE = 'ChainIDCelo ChainID = 14'
 
 describe(WormholeConfigPlugin.name, () => {
   describe(WormholeConfigPlugin.prototype.getLatestNetworks.name, () => {
+    const previous: WormholeNetwork = {
+      chain: 'celo',
+      chainId: 42220,
+      wormholeChainId: 14,
+      coreContract: CORE_CONTRACT,
+    }
+
     it('keeps the previous core contract when the RPC lookup fails', async () => {
-      const previous: WormholeNetwork = {
-        chain: 'celo',
-        chainId: 42220,
-        wormholeChainId: 14,
-        coreContract: CORE_CONTRACT,
-      }
-      const store = new InteropConfigStore(undefined)
-      store.writeAll({ [WormholeConfig.key]: [previous] })
       const rpc = mockObject<IRpcClient>({
         getBlock: mockFn().rejectsWith(new Error('HTTP timeout')),
       })
-      const http = mockObject<HttpClient>({
-        fetchRaw: mockFn(async (url: string) => {
-          const body = url.endsWith('.go') ? CHAIN_IDS_SOURCE : DOCS_HTML
-          return { text: async () => body } as unknown as Response
-        }),
-      })
-      const plugin = new WormholeConfigPlugin(
-        [{ id: 42220, name: 'celo' }],
-        store,
-        Logger.SILENT,
-        http,
-        new Map([['celo', rpc]]),
-        60_000,
-      )
 
-      const networks = await plugin.getLatestNetworks()
+      const networks = await createPlugin([previous], rpc).getLatestNetworks()
+
+      expect(networks).toEqual([previous])
+    })
+
+    it('keeps the previous core contract when no core resolves', async () => {
+      const rpc = mockObject<IRpcClient>({
+        getBlock: mockFn().resolvesTo({ number: 1 }),
+        isMulticallDeployed: mockFn().returns(false),
+        call: mockFn().rejectsWith(new Error('execution reverted')),
+      })
+
+      const networks = await createPlugin([previous], rpc).getLatestNetworks()
 
       expect(networks).toEqual([previous])
     })
   })
 })
+
+function createPlugin(previous: WormholeNetwork[], rpc: IRpcClient) {
+  const store = new InteropConfigStore(undefined)
+  store.writeAll({ [WormholeConfig.key]: previous })
+  const http = mockObject<HttpClient>({
+    fetchRaw: mockFn(async (url: string) => {
+      const body = url.endsWith('.go') ? CHAIN_IDS_SOURCE : DOCS_HTML
+      return { text: async () => body } as unknown as Response
+    }),
+  })
+  return new WormholeConfigPlugin(
+    [{ id: 42220, name: 'celo' }],
+    store,
+    Logger.SILENT,
+    http,
+    new Map([['celo', rpc]]),
+    60_000,
+  )
+}
