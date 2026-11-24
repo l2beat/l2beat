@@ -9,7 +9,7 @@ Generated with discovered.json: 0xc0bde1a1e6adb74764de71a025e77621b54c5d6c
 
 ## Description
 
-AdminVerifierWhitelist: one more adopter assigned to a manager account.
+AdminVerifierWhitelist: Lighter's insurance fund operator Safe added as an adopter, under the same manager account as Lighter's other adopters.
 Adopter manager EOA: now an EIP-7702 account delegated to MetaMask's EIP7702StatelessDeleGator v1.3.0.
 
 ## Watched changes
