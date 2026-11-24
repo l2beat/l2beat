@@ -380,6 +380,14 @@ model EthereumStakingDaily {
   builderBlockCount Int
 }
 
+/// ETH in existence as each UTC day starts, from CoinGecko: its market cap over its price.
+model EthereumSupplyDaily {
+  /// Start of the day.
+  timestamp DateTime @id @db.Timestamp(6)
+  /// In ETH; an estimate, rounded like the circulating supplies TVS uses.
+  supply    Float
+}
+
 model TokenMetadata {
   tokenId      String  @db.VarChar(255)
   projectId    String  @db.VarChar(255)
