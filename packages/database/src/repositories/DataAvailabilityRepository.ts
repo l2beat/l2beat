@@ -38,7 +38,10 @@ export function toRecord(
 }
 
 export function toProjectsSummedRecord(
-  row: Omit<Selectable<DataAvailability>, 'projectId' | 'configurationId'>,
+  row: Pick<
+    Selectable<DataAvailability>,
+    'daLayer' | 'timestamp' | 'totalSize'
+  >,
 ): ProjectsSummedDataAvailabilityRecord {
   return {
     daLayer: row.daLayer,
