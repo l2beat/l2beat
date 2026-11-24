@@ -110,8 +110,8 @@ export interface Posted {
   batches: number
   lastSlot: number
   lastBlobs: number
-  /** What the blobs cost at the blob base fee of their blocks, the blob gas alone */
-  feeEth: number
+  /** What the blobs cost at the blob base fee of their blocks, the blob gas alone. Null while a block of theirs has no fee stored */
+  feeEth: number | null
   /**
    * Steps are fixed in time, not counted back from the head, so a new block
    * adds to the last (under way) step and leaves the rest be

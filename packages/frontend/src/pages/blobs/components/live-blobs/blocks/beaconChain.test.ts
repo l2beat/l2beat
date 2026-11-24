@@ -35,6 +35,12 @@ describe(isSameBlock.name, () => {
     ).toEqual(false)
   })
 
+  it('tells a held block from the same one once it got its fee', () => {
+    expect(
+      isSameBlock(proposed, { ...proposed, blobBaseFee: 0.003, batches: [] }),
+    ).toEqual(false)
+  })
+
   it('has nothing to match while the slot is not held', () => {
     expect(isSameBlock(undefined, { slot: 100, status: 'missed' })).toEqual(
       false,

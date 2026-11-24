@@ -16,5 +16,5 @@ export function formatBlobCost(usd: number): string {
   if (usd >= 1) return formatCurrency(usd, 'usd')
   if (usd === 0) return '$0'
   const decimals = 1 - Math.floor(Math.log10(usd))
-  return `$${usd.toFixed(Math.min(decimals, 8))}`
+  return `$${usd.toFixed(decimals)}`
 }

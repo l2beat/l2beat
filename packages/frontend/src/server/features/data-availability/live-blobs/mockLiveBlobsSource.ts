@@ -140,7 +140,7 @@ function sumPosted(batches: LiveBlobBatchRecord[]): LivePostedRecord[] {
     posted.blobs += batch.blobs
     posted.batches++
     posted.lastBlobs += batch.blobs
-    posted.feeEth += batch.blobs * MOCK_FEE_ETH_PER_BLOB
+    posted.feeEth = (posted.feeEth ?? 0) + batch.blobs * MOCK_FEE_ETH_PER_BLOB
     byProject.set(batch.projectId, posted)
   }
   return [...byProject.values()]

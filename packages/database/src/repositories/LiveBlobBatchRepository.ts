@@ -27,8 +27,8 @@ export interface LivePostedRecord {
   lastSlot: number
   /** Blobs of every batch the project had in `lastSlot` */
   lastBlobs: number
-  /** What the blobs cost at the blob base fee of their blocks; a block stored without a fee counts as free */
-  feeEth: number
+  /** What the blobs cost at the blob base fee of their blocks. Null while a block of theirs is stored without a fee */
+  feeEth: number | null
 }
 
 /** A project's blobs over the `bucket`-th run of `bucketSlots` slots from genesis */
@@ -112,7 +112,7 @@ export class LiveBlobBatchRepository extends BaseRepository {
       batches: string
       lastSlot: number
       lastBlobs: string
-      feeWei: string
+      feeWei: string | null
     }>`
       SELECT
         "projectId",
@@ -120,7 +120,9 @@ export class LiveBlobBatchRepository extends BaseRepository {
         count(*) AS batches,
         max(slot) AS "lastSlot",
         sum(blobs) FILTER (WHERE slot = "projectLastSlot") AS "lastBlobs",
-        sum(blobs::numeric * ${GAS_PER_BLOB} * coalesce("blobBaseFee", 0)) AS "feeWei"
+        CASE WHEN count("blobBaseFee") = count(*)
+          THEN sum(blobs::numeric * ${GAS_PER_BLOB} * "blobBaseFee")
+        END AS "feeWei"
       FROM (
         SELECT
           "projectId",
@@ -140,7 +142,7 @@ export class LiveBlobBatchRepository extends BaseRepository {
       batches: Number(row.batches),
       lastSlot: row.lastSlot,
       lastBlobs: Number(row.lastBlobs),
-      feeEth: Number(row.feeWei) / WEI_PER_ETH,
+      feeEth: row.feeWei === null ? null : Number(row.feeWei) / WEI_PER_ETH,
     }))
   }
 

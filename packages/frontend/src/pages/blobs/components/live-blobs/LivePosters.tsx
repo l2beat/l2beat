@@ -23,6 +23,7 @@ import {
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
+import { EM_DASH } from '~/consts/characters'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
@@ -393,8 +394,9 @@ const PosterRow = memo(function PosterRow({
   )
 })
 
-/** In dollars when the price is known, else in ETH: the sums run from a cent to thousands */
-function formatPaid(feeEth: number, ethPriceUsd: number | undefined) {
+/** In dollars when the price is known, else in ETH: the sums run from a cent to thousands. A dash while a block's fee is missing, as the sum would be too low */
+function formatPaid(feeEth: number | null, ethPriceUsd: number | undefined) {
+  if (feeEth === null) return EM_DASH
   if (ethPriceUsd === undefined)
     return formatCurrency(feeEth, 'eth', { decimals: 4 })
   const usd = feeEth * ethPriceUsd

@@ -88,6 +88,18 @@ describe(totalByPoster.name, () => {
       ['base', 3, 1, 3],
     ])
   })
+
+  it('has no fee for a poster while a part of it has none', () => {
+    const totals = totalByPoster(
+      [
+        posted(undefined, 2, 12),
+        { ...posted('archived', 4, 12), feeEth: null },
+      ],
+      posters,
+    )
+
+    expect(totals.posters.map((p) => p.feeEth)).toEqual([null])
+  })
 })
 
 // Methodology: three posters ranked a block ago, now in another order by their

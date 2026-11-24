@@ -40,7 +40,7 @@ export interface PosterTotal {
   batches: number
   lastSlot: number
   lastBlobs: number
-  feeEth: number
+  feeEth: number | null
   buckets: number[]
 }
 
@@ -63,7 +63,10 @@ export function totalByPoster(posted: Posted[], posters: LivePoster[]) {
     }
     total.blobs += p.blobs
     total.batches += p.batches
-    total.feeEth += p.feeEth
+    total.feeEth =
+      total.feeEth === null || p.feeEth === null
+        ? null
+        : total.feeEth + p.feeEth
     p.buckets.forEach((bucket, i) => {
       total.buckets[i] = (total.buckets[i] ?? 0) + bucket
     })

@@ -28,7 +28,8 @@ export type PosterIndexOf = (projectId: string | undefined) => number
 
 /**
  * A reorg can leave a slot empty or holding another block; one built on the
- * same parent has the same number, so only the hash tells them apart
+ * same parent has the same number, so only the hash tells them apart. A block
+ * stored before fees were kept gets its fee later, under the same hash
  */
 export function isSameBlock(
   held: ChainBlock | undefined,
@@ -37,7 +38,9 @@ export function isSameBlock(
   if (!held || held.status !== block.status) return false
   return (
     held.status === 'missed' ||
-    (block.status === 'proposed' && held.hash === block.hash)
+    (block.status === 'proposed' &&
+      held.hash === block.hash &&
+      held.blobBaseFee === block.blobBaseFee)
   )
 }
 

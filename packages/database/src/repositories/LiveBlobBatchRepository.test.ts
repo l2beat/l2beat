@@ -89,14 +89,14 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
           lastBlobs: 6,
           feeEth: 12,
         },
-        // the block without a fee counts as free
+        // one of its blocks has no fee, so the sum would be too low
         {
           projectId: undefined,
           blobs: 3,
           batches: 2,
           lastSlot: 104,
           lastBlobs: 2,
-          feeEth: 1,
+          feeEth: null,
         },
       ])
     })
@@ -127,7 +127,7 @@ describeDatabase(LiveBlobBatchRepository.name, (db) => {
           batches: 1,
           lastSlot: 104,
           lastBlobs: 2,
-          feeEth: 0,
+          feeEth: null,
         },
       ])
     })

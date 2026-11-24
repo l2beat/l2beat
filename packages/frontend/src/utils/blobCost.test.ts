@@ -14,5 +14,7 @@ describe(formatBlobCost.name, () => {
     expect(formatBlobCost(0.0014)).toEqual('$0.0014')
     expect(formatBlobCost(0.12)).toEqual('$0.12')
     expect(formatBlobCost(0)).toEqual('$0')
+    // a blob at the 1 wei floor
+    expect(formatBlobCost(3.9e-10)).toEqual('$0.00000000039')
   })
 })

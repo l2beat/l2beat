@@ -142,11 +142,16 @@ export function ProjectDaAbsoluteThroughputChart({
         projectChartMeta.projectMax?.indicatorType.strokeDasharray,
       curve: 'stepAfter',
     },
-    {
-      key: 'blobFee',
-      stroke: projectChartMeta.blobFee?.color,
-      axis: 'right',
-    },
+    // without fee data there is no legend item to hide it: it would open an empty right axis
+    ...(withBlobFee
+      ? [
+          {
+            key: 'blobFee' as const,
+            stroke: projectChartMeta.blobFee?.color,
+            axis: 'right' as const,
+          },
+        ]
+      : []),
   ]
 
   return (
