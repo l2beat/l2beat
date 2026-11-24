@@ -8,7 +8,11 @@ import {
   useState,
 } from 'react'
 import { Link, useParams } from 'react-router'
-import type { ApiAddressEntry, ApiProjectChain } from '../../../api/types'
+import type {
+  ApiAddressEntry,
+  ApiProjectChain,
+  ApiProjectContract,
+} from '../../../api/types'
 import { AddressIcon } from '../../../components/AddressIcon'
 import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
@@ -16,10 +20,12 @@ import { IS_READONLY } from '../../../config/readonly'
 import { IconChevronDown } from '../../../icons/IconChevronDown'
 import { IconChevronRight } from '../../../icons/IconChevronRight'
 import { IconEyeClosed } from '../../../icons/IconEyeClosed'
+import { IconShield } from '../../../icons/IconShield'
 import { IconUnlinked } from '../../../icons/IconUnliked'
 import { cn } from '../../../utils/cn'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { isOssificationCritical } from '../ossification'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
 import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
@@ -207,7 +213,7 @@ function ChainHeader(props: {
 
 function AddressGroup(props: {
   title: string
-  entries: ApiAddressEntry[]
+  entries: (ApiAddressEntry | ApiProjectContract)[]
   onFocus: () => void
   startClosed: boolean
   chain: string
@@ -283,11 +289,13 @@ const AddressEntry = memo(function AddressEntry({
   openedProject,
   sourceProject,
 }: {
-  entry: ApiAddressEntry
+  entry: ApiAddressEntry | ApiProjectContract
   showAddress: boolean
   openedProject: string
   sourceProject: string
 }) {
+  const isCritical =
+    'critical' in entry && isOssificationCritical(entry.critical)
   const isSelected = usePanelStore((state) =>
     state.selected.includes(entry.address),
   )
@@ -330,6 +338,11 @@ const AddressEntry = memo(function AddressEntry({
         </span>
       )}
       <div className="mr-1 ml-auto flex items-center gap-1 text-coffee-400">
+        {isCritical && (
+          <span title="Ossification-critical" className="text-aux-yellow">
+            <IconShield className="size-3 shrink-0" />
+          </span>
+        )}
         {!IS_READONLY && (
           <UsageBadge
             address={entry.address}

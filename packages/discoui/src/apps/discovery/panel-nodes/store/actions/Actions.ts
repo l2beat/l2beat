@@ -30,7 +30,10 @@ export interface Actions {
   groupSelected: () => void
   ungroupSelected: () => void
   renameGroup: (id: string, name: string) => void
-  layout: (locations: NodeLocations) => void
+  layout: (
+    locations: NodeLocations,
+    options?: { focusPerimeter?: boolean },
+  ) => void
   arrange: (request: ArrangeRequest) => void
   undo: () => void
   redo: () => void

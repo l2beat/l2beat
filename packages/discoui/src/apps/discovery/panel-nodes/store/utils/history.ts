@@ -11,17 +11,21 @@ export function emptyHistoryState(): HistoryState {
 }
 
 export function captureHistorySnapshot(
-  state: Pick<State, 'nodes'>,
+  state: Pick<State, 'nodes' | 'transform'>,
+  includeTransform = false,
 ): HistorySnapshot {
-  return {
-    nodes: state.nodes,
-  }
+  return includeTransform
+    ? { nodes: state.nodes, transform: state.transform }
+    : { nodes: state.nodes }
 }
 
 export function snapshotsEqual(
   left: HistorySnapshot,
   right: HistorySnapshot,
 ): boolean {
+  if (!transformsEqual(left.transform, right.transform)) {
+    return false
+  }
   if (left.nodes.length !== right.nodes.length) {
     return false
   }
@@ -64,6 +68,9 @@ export function applyHistorySnapshot(
 
   return updateNodePositions(state, {
     nodes: [...snapshot.nodes],
+    ...(snapshot.transform !== undefined
+      ? { transform: snapshot.transform }
+      : {}),
     selected,
     resizingNode: undefined,
     mouseUpAction: undefined,
@@ -71,6 +78,19 @@ export function applyHistorySnapshot(
     selection: undefined,
     positionsBeforeMove: {},
   })
+}
+
+export function transformsEqual(
+  left: State['transform'] | undefined,
+  right: State['transform'] | undefined,
+): boolean {
+  if (left === right) return true
+  if (left === undefined || right === undefined) return false
+  return (
+    left.offsetX === right.offsetX &&
+    left.offsetY === right.offsetY &&
+    left.scale === right.scale
+  )
 }
 
 function snapshotNodesEqual(left: Node, right: Node): boolean {

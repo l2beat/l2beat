@@ -43,6 +43,7 @@ import {
   emptyHistoryState,
   pushHistorySnapshot,
   snapshotsEqual,
+  transformsEqual,
 } from './utils/history'
 import { persistNodeLayout } from './utils/storage'
 
@@ -141,28 +142,38 @@ function wrapAction<A extends unknown[]>(
   return wrapWithReducer(set, (state, ...args) => action(state, ...args))
 }
 
+export function applyUndoablePartial(
+  state: State,
+  partial: Partial<State>,
+): Partial<State> {
+  if (state.history.pending) {
+    return partial
+  }
+
+  const nextState = mergeState(state, partial)
+  const includeTransform = !transformsEqual(
+    state.transform,
+    nextState.transform,
+  )
+  const before = captureHistorySnapshot(state, includeTransform)
+  const after = captureHistorySnapshot(nextState, includeTransform)
+  if (snapshotsEqual(before, after)) {
+    return partial
+  }
+
+  return {
+    ...partial,
+    history: pushHistorySnapshot(state.history, before),
+  }
+}
+
 function wrapUndoableAction<A extends unknown[]>(
   set: StoreSetter,
   action: (state: State, ...args: A) => Partial<State>,
 ): (...args: A) => void {
-  return wrapWithReducer(set, (state, ...args) => {
-    const before = captureHistorySnapshot(state)
-    const partial = action(state, ...args)
-
-    if (state.history.pending) {
-      return partial
-    }
-
-    const after = captureHistorySnapshot(mergeState(state, partial))
-    if (snapshotsEqual(before, after)) {
-      return partial
-    }
-
-    return {
-      ...partial,
-      history: pushHistorySnapshot(state.history, before),
-    }
-  })
+  return wrapWithReducer(set, (state, ...args) =>
+    applyUndoablePartial(state, action(state, ...args)),
+  )
 }
 
 function wrapHistoryResetAction<A extends unknown[]>(
@@ -241,7 +252,7 @@ function wrapWithReducer<A extends unknown[]>(
   return (...args: A) => set((state) => reducer(state, ...args))
 }
 
-function mergeState(state: StoreState, partial: Partial<State>): StoreState {
+function mergeState(state: State, partial: Partial<State>): State {
   return {
     ...state,
     ...partial,

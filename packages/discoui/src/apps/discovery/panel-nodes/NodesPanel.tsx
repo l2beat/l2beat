@@ -10,6 +10,7 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { AgentNote } from '../agent/AgentNote'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
+import { isOssificationCritical } from '../ossification'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
 import type { AutoGroup } from './store/actions/loadNodes'
@@ -58,8 +59,8 @@ export function NodesPanel() {
   return (
     <div className="h-full w-full overflow-x-hidden">
       <div className="relative h-full w-full flex-1">
-        <NodesSync data={response.data} project={project} />
         <Viewport />
+        <NodesSync data={response.data} project={project} />
         <Controls />
         <AgentNote project={project} />
       </div>
@@ -113,6 +114,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
+          isCritical: isOssificationCritical(contract.critical),
           isReachable: contract.isReachable,
           hasTemplate: contract.template !== undefined,
           name: contract.name ?? fallback,
@@ -136,6 +138,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
         const node: Node = {
           id: eoa.address,
           isInitial: false,
+          isCritical: false,
           isReachable: eoa.isReachable,
           hasTemplate: false,
           name: eoa.name ?? fallback,

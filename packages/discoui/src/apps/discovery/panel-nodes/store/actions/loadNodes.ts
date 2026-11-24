@@ -6,7 +6,14 @@ import {
   hideItems,
   mapGraphItems,
 } from '../utils/graphProjection'
+import { perimeterLayout } from '../utils/perimeterLayout'
+import { buildRenderGraph } from '../utils/renderGraph'
 import { reconcileCompressedRows } from '../utils/rows'
+import {
+  computeSecurityPerimeter,
+  focusSecurityPerimeter,
+  isPerimeterVisibleInViewport,
+} from '../utils/securityPerimeter'
 import {
   type NodeLocations,
   recallNodeLayout,
@@ -131,14 +138,29 @@ export function loadNodes(
   const shouldAutoLayoutFromScratch =
     state.nodes.length === 0 && !hasSavedLayout
   if (shouldAutoLayoutFromScratch) {
+    const hasCritical = visibleNodes.some((node) => node.isCritical)
+    const initialLayout = hasCritical ? perimeterLayout : flowLayout
     const laidOut = {
       ...baseState,
       ...layout(
         baseState,
-        flowLayout(visibleNodes, true, projection.visibleEdges),
+        initialLayout(visibleNodes, true, projection.visibleEdges),
       ),
     }
-    return collapseAutoGroups(laidOut, autoGroups)
+    const grouped = collapseAutoGroups(laidOut, autoGroups, hasCritical)
+    if (!hasCritical) {
+      return grouped
+    }
+    const graph = buildRenderGraph(grouped.nodes)
+    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    return {
+      ...grouped,
+      transform: focusSecurityPerimeter(
+        zones,
+        grouped.transform,
+        grouped.viewportContainer,
+      ),
+    }
   }
 
   const fallbackLocations =
@@ -164,12 +186,34 @@ export function loadNodes(
           }
         })
 
-  return updateNodePositions(state, {
+  const restored = updateNodePositions(state, {
     nodes: nodesWithFallback,
     projectId,
     loaded: true,
     loadCount: state.loadCount + 1,
   })
+  if (state.nodes.length === 0 && hasSavedLayout && restored.nodes) {
+    const graph = buildRenderGraph(restored.nodes)
+    const zones = computeSecurityPerimeter(graph.nodes, graph.hidden)
+    if (
+      zones.length > 0 &&
+      !isPerimeterVisibleInViewport(
+        zones,
+        state.transform,
+        state.viewportContainer,
+      )
+    ) {
+      return {
+        ...restored,
+        transform: focusSecurityPerimeter(
+          zones,
+          state.transform,
+          state.viewportContainer,
+        ),
+      }
+    }
+  }
+  return restored
 }
 
 function combinedHiddenFields(
@@ -198,10 +242,14 @@ function restoreSavedGroupFields(
   })
 }
 
-function collapseAutoGroups(state: State, autoGroups: AutoGroup[]): State {
+function collapseAutoGroups(
+  state: State,
+  autoGroups: AutoGroup[],
+  keepMixedExpanded: boolean,
+): State {
   const byId = new Map(state.nodes.map((node) => [node.id, node]))
   const groups = autoGroups
-    .map((group) => toStoredGroup(group, byId))
+    .map((group) => toStoredGroup(group, byId, keepMixedExpanded))
     .filter((group): group is StoredGroup => group !== undefined)
   if (groups.length === 0) {
     return state
@@ -214,8 +262,24 @@ function collapseAutoGroups(state: State, autoGroups: AutoGroup[]): State {
 function toStoredGroup(
   group: AutoGroup,
   byId: Map<string, Node>,
+  keepMixedExpanded: boolean,
 ): StoredGroup | undefined {
-  const anchor = group.memberIds.map((id) => byId.get(id)).find(Boolean)?.box
+  const members = group.memberIds
+    .map((id) => byId.get(id))
+    .filter((node): node is Node => node !== undefined)
+  if (members.length === 0) {
+    return undefined
+  }
+  // Leave shared modules with both critical and non-critical contracts
+  // expanded on fresh perimeter layout so all critical members stay inside.
+  if (keepMixedExpanded) {
+    const hasCritical = members.some((node) => node.isCritical)
+    const hasNonCritical = members.some((node) => !node.isCritical)
+    if (hasCritical && hasNonCritical) {
+      return undefined
+    }
+  }
+  const anchor = members[0]?.box
   if (anchor === undefined) {
     return undefined
   }
