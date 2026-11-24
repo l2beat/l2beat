@@ -1,7 +1,7 @@
 {
   "name": "hinkal",
-  "timestamp": 1795173590,
-  "configHash": "0x9c1886fafa44c939f9bf7fb9d95a627e6fecc090db49c7b176899664165ea9f5",
+  "timestamp": 1795509601,
+  "configHash": "0xdf450c976f47c96941ddb567a1a32eb64f34b082bb22729e4859c1f24d2810e3",
   "entries": [
     {
       "name": "SwapGroth16VerifierEVM2x2x1",
@@ -467,12 +467,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ExternalAction_6D9e",
+      "name": "DepositOnChainUtxosExternalAction",
       "address": "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Unverified Hinkal external action registered under an ID whose name is not known. Shielded funds are sent to it during external transactions that use this ID.",
+      "description": "Unverified Hinkal external action registered under the DepositOnChainUtxos ID. Shielded funds are sent to it during external transactions that use this ID.",
       "deployerAddress": "eth:0x7A93Bc3F8E3962Dc32Ea4eE6Fb7eF3Df4355288D",
       "sinceTimestamp": 1787035319,
       "sinceBlock": 25780252,
@@ -533,6 +533,7 @@
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable Hinkal external action with an unverified implementation. Its verified predecessor runs a batch of arbitrary calls with shielded funds, optionally through a user's HinkalWallet, pays the relayer and returns the resulting token balances to Hinkal.",
+      "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784188499,
       "sinceBlock": 25543867,
@@ -846,7 +847,7 @@
         },
         "hinkalHelper": {
           "severity": "HIGH",
-          "description": "Helper contract that validates relayers, access tokens and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
+          "description": "Helper contract that validates relayers and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
           "type": "CODE_CHANGE"
         },
         "verifiers": {
@@ -1150,7 +1151,7 @@
         "0xcfb3f328375cfdfd5c21d3e9559d1d6c17defa3f8a4a1feb60b5b4d8d34795d9"
       ],
       "proxyType": "immutable",
-      "description": "Immutable smart account that only the Emporium can call. It executes arbitrary calls and pays relayers on behalf of shielded users, and accepts ERC-1271 signatures only from itself.",
+      "description": "Immutable code that public accounts delegate to with EIP-7702. Only the Emporium can call it, and through it the Emporium makes the account run any call and pay relayers. It accepts ERC-1271 signatures only from the account's own key.",
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784188535,
       "sinceBlock": 25543870,
@@ -1160,6 +1161,34 @@
       },
       "implementationNames": {
         "eth:0xB24043ebDC72ddC1923ec749cFBDFbEfF3FC82f6": "HinkalWallet"
+      }
+    },
+    {
+      "name": "ReceiveVaultFactory",
+      "address": "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "description": "Unverified factory of the deposit addresses that receive public transfers for a private account. Settling a deposit address moves its funds through the factory into Hinkal.",
+      "critical": true,
+      "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
+      "sinceTimestamp": 1788796715,
+      "sinceBlock": 25926522,
+      "values": {
+        "$admin": "eth:0xBdc77a0c69f13207aCB70a6981Cad60B4c1D1942",
+        "$implementation": "eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd",
+        "$pastUpgrades": [
+          [
+            "2026-09-07T15:58:35.000Z",
+            "0x5183ed2412b5d8998dd5b526452407707b6bd3596d4ee5a42691f335e844d7c2",
+            ["eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": "ERC1967Proxy",
+        "eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd": ""
       }
     },
     {
@@ -1382,6 +1411,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 6h.",
+      "critical": true,
       "deployerAddress": "eth:0xb176a21D16760601534E42662Ca37F7Ae851fd5b",
       "sinceTimestamp": 1787634983,
       "sinceBlock": 25830061,
@@ -1745,6 +1775,12 @@
       "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
+    "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xc0291cCc4e8E86C88106B4ABb194812C7191fc4A": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[20] _pubSignals) view returns (bool)"
     ],
@@ -1846,8 +1882,8 @@
     "hinkal/LifiExternalAction": "0x71a9166894295c2d79e6035d0cc8c4f2cb763dda854555f05e4bc26f79f1672e",
     "hinkal/VerifierEVM": "0x7a3bc198c665275072df6783fc87111b9a228c8167367b8c884bd7f72acc0170"
   },
-  "usedBlockNumbers": { "ethereum": 26455967 },
-  "permissionsConfigHash": "0x7c8cd29c3692daa8efbb1de40af2ecfe33b158934b57cb4015a74c3eaa0286c9",
+  "usedBlockNumbers": { "ethereum": 26483877 },
+  "permissionsConfigHash": "0xf337bb2e54084e90292bb396241213cd4048e21faeac973d3d33b50a4136a7c6",
   "permissions": {
     "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": {
       "receivedPermissions": [
@@ -2047,8 +2083,14 @@
           "from": "eth:0xfF0b792E9833B8aFb8BDE1f6695717e1A87968A3",
           "description": "replace the helper that computes the fee taken from swap outputs, and add addresses allowed to call runAction.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd",
+          "role": "admin"
         }
-      ]
+      ],
+      "eoaWithUpgradePermissions": true
     },
     "eth:0xE6bDF21Ecd55358aF595D3f5Eea912A8e82ECA5e": {
       "receivedPermissions": [

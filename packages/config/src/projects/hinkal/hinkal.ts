@@ -64,6 +64,41 @@ assert(
     .every((manager) => manager === TIMELOCK.address),
   'Only the timelock can replace the Hinkal helper',
 )
+// The deployer keeps DEFAULT_ADMIN_ROLE but has no code path that uses it.
+const HINKAL_DEPLOYER = discovery.getContract('HinkalDeployer')
+assert(
+  discovery
+    .getContractValue<string[]>('Hinkal', 'defaultAdmins')
+    .every(
+      (admin) =>
+        admin === TIMELOCK.address || admin === HINKAL_DEPLOYER.address,
+    ),
+  'Only the timelock can register external actions',
+)
+
+// The governance text names one Safe signer that controls the periphery
+// without delay.
+const PERIPHERY_EOA = discovery.getContractValue<string>(
+  'HinkalWrapper',
+  'owner',
+)
+assert(
+  discovery
+    .getContractValue<string[]>('Safe', '$members')
+    .includes(PERIPHERY_EOA),
+  'The periphery owner must be a Safe signer',
+)
+for (const [contract, field] of [
+  ['LifiExternalAction', 'owner'],
+  ['DepositOnChainUtxosExternalAction', 'owner'],
+  ['ReceiveVaultFactory', '$admin'],
+] as const) {
+  assert(
+    discovery.getContractValue<string>(contract, field) === PERIPHERY_EOA,
+    'One Safe signer controls the periphery',
+    { contract, field },
+  )
+}
 
 export const hinkal: BaseProject = {
   id: ProjectId('hinkal'),
@@ -72,6 +107,7 @@ export const hinkal: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-11-20')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(SINCE_TIMESTAMP),
   statuses: {
     yellowWarning: undefined,
     redWarning: undefined,
@@ -107,12 +143,12 @@ export const hinkal: BaseProject = {
       url: 'https://etherscan.io/tx/0x3edad43af4d9d5e3d18e116ecacd5e43ae94e7a9403465d75bb11467b942fdaa',
       date: '2026-08-25T00:00:00Z',
       description:
-        "An EOA hands the pool to a timelock behind Hinkal's 2-of-3 Safe.",
+        "An EOA hands the pool to a timelock behind Hinkal's 2/3 Safe.",
       type: 'general',
     },
     {
-      // Tx 0x53c7a449… sets the v1 pool's helper (0x2ea81946…) to the zero
-      // address. Its transact calls the helper first, so every spend reverts.
+      // Tx 0x53c7a449… sets the helper of the v1 pool 0x2ea81946… to the
+      // zero address. Its transact calls the helper first, so every spend reverts.
       // The pool held about 6,213 USDT, 3.34 ETH and 228 USDC on 2026-11-20.
       title: '2023 Hinkal pool frozen',
       url: 'https://etherscan.io/tx/0x53c7a4490fe7beab196b44365edd991ed9497d308bbc0843adda15aa50919195',
@@ -206,10 +242,10 @@ export const hinkal: BaseProject = {
       ProjectId('polygon-pos'),
       ProjectId('robinhood'),
     ],
-    // TODO: anonymity sets are not tracked yet. Hinkal emits no event with
-    // token, amount and depositor: deposits and withdrawals are only in the
-    // calldata of transact and prooflessDeposit, partly in internal calls.
-    // Tracking needs a calldata-based Hinkal extractor in the backend.
+    // Not tracked: Hinkal emits no event with token, amount and depositor.
+    // Deposits reach the pool from public accounts through the Emporium,
+    // directly, and from deposit addresses through the ReceiveVaultFactory,
+    // so tracking needs a trace-based extractor in the backend.
     tokens: [],
     exitWindow: {
       value: formatSeconds(timelockDelay),
