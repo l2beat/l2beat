@@ -107,7 +107,7 @@ export function AnonymitySetCell({ anonymitySet }: Props) {
             <div className="flex flex-col gap-2 text-primary">
               <div className="flex flex-col gap-1">
                 <span className="font-medium">
-                  How to mix with {displayValue} users:
+                  How to reach an anonymity set of {displayValue}:
                 </span>
                 <ol className="ml-4 list-decimal space-y-1">
                   {series.steps.map((step) => (

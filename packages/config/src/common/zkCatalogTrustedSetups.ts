@@ -107,6 +107,26 @@ export const TRUSTED_SETUPS = {
       'Circuit-specific trusted setup for Risc0 final wrap Groth16 onchain verifier. Phase 1 used 54 participant contributions and a public randomness beacon, and phase 2 reached 238 participants. Proving system could be broken if either phase 1 or 2 is compromised.',
     longDescription: readMarkdown('common/trustedSetups/Risc0.md'),
   },
+  Risc0Groth16_v3_1_0: {
+    id: 'Risc0Groth16_v3_1_0',
+    name: 'Risc0 v3.1.0 Groth16',
+    contributionCount: 1,
+    phases: {
+      phase1: { count: 61, unit: 'contributions' },
+      phase2: {
+        count: 1,
+        unit: 'contributions',
+        description:
+          'Named with the ceremony script placeholder and followed by a beacon with a fixed value.',
+      },
+    },
+    risk: 'red',
+    shortDescription:
+      'Circuit-specific trusted setup 2026-10-20.1 for the Risc0 v3.1.0 Groth16 final wrap circuit. Phase 1 used 61 Perpetual Powers of Tau participant contributions and a public randomness beacon. The published phase 2 transcript holds one contribution and a beacon with a fixed value. Whoever made that contribution could break the proving system.',
+    longDescription: readMarkdown(
+      'common/trustedSetups/Risc0Groth16_v3_1_0.md',
+    ),
+  },
   Halo2KZG: {
     id: 'Halo2KZG',
     name: 'Halo2 KZG over BN254',

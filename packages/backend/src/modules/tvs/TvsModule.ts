@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
+import { COINGECKO_CORRECTIONS } from '@l2beat/config/build/global/coingeckoCorrections'
 import type { Database, TokenMetadataRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
@@ -16,6 +17,7 @@ import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
+import { overwriteCorrectedHours } from './tools/overwriteCorrectedHours'
 import { SyncOptimizer } from './tools/SyncOptimizer'
 import { updateSyncMetadataTargets } from './tools/updateSyncMetadataTargets'
 import { isOnchainAmountConfig, type ProjectTvsConfig } from './types'
@@ -67,6 +69,7 @@ export function initTvsModule({
         properties: price,
       })),
       priceProvider: providers.price,
+      coingeckoCorrections: COINGECKO_CORRECTIONS,
       syncOptimizer,
       db: db,
     },
@@ -92,6 +95,7 @@ export function initTvsModule({
         indexerService,
         configurations: circulatingSupplyConfigurations,
         circulatingSupplyProvider: providers.circulatingSupply,
+        coingeckoCorrections: COINGECKO_CORRECTIONS,
         syncOptimizer,
         db: db,
       },
@@ -215,9 +219,17 @@ export function initTvsModule({
     )
   }
 
+  const tvsConfig = config.tvs
   const tvsProjects = config.tvs.projects
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
+    await overwriteCorrectedHours(
+      COINGECKO_CORRECTIONS,
+      tvsConfig,
+      syncOptimizer,
+      db,
+      logger,
+    )
     await hourlyIndexer.start()
     await priceIndexer.start()
 

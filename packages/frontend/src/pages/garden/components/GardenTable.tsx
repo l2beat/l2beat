@@ -38,10 +38,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               <div className="flex items-center justify-between gap-3">
                 <ProjectCell entry={entry} />
                 <div className="md:hidden">
-                  <MetricCell
-                    metric={entry.metric}
-                    alwaysReserveChange={false}
-                  />
+                  <MetricCell metric={entry.metric} />
                 </div>
               </div>
               <EvaluatedCrops
@@ -217,44 +214,34 @@ function ProjectCell({ entry }: { entry: GardenEntry }) {
 }
 
 /**
- * In the table the change has a column of its own, empty when there is none,
- * so amounts and the dash share a right edge. A phone row stands alone, so
- * without a change its amount goes to the row's right edge instead.
+ * The change hangs under the amount on a row of no height, so every amount
+ * shares the right edge and a row with a change is as tall as one without:
+ * on phones it sits in the gap above the plants instead of pushing them down.
+ * Being in the grid, it still widens the cell when it is wider than the
+ * amount, so it cannot run into the project name.
+ * Below 400px the plants reach the right edge (`PHONE_PLANTS_CLASS`), so
+ * there is no gap and the change is left out.
  */
-function MetricCell({
-  metric,
-  alwaysReserveChange = true,
-}: {
-  metric: GardenEntry['metric']
-  alwaysReserveChange?: boolean
-}) {
-  const reserveChange = alwaysReserveChange || metric?.change !== undefined
+function MetricCell({ metric }: { metric: GardenEntry['metric'] }) {
   return (
-    <div
-      className={cn(
-        'inline-grid items-baseline gap-x-1 gap-y-px text-right',
-        reserveChange ? 'grid-cols-[auto_3.5rem]' : 'grid-cols-[auto]',
-      )}
-    >
+    <div className="inline-grid items-baseline gap-y-px text-right">
       {metric ? (
         <>
           <span className="font-medium text-label-value-13 text-primary">
             {metric.label}
           </span>
-          <span className="row-start-2 font-semibold text-base text-primary tabular-nums">
+          <span className="font-semibold text-base text-primary tabular-nums">
             {metric.kind === 'usd'
               ? formatDollarValueNumber(metric.value)
               : formatInteger(metric.value)}
           </span>
-          {reserveChange && (
-            <span className="row-start-2 text-left">
-              {metric.change !== undefined && (
-                <PercentChange
-                  value={metric.change}
-                  period="7D"
-                  textClassName="text-xs"
-                />
-              )}
+          {metric.change !== undefined && (
+            <span className="-translate-y-1 h-0 leading-none max-[400px]:hidden">
+              <PercentChange
+                value={metric.change}
+                period="7D"
+                textClassName="text-2xs leading-none"
+              />
             </span>
           )}
         </>
@@ -264,7 +251,7 @@ function MetricCell({
           <span aria-hidden className="text-label-value-13">
             &nbsp;
           </span>
-          <span className="row-start-2 text-secondary">&mdash;</span>
+          <span className="text-secondary">&mdash;</span>
         </>
       )}
     </div>

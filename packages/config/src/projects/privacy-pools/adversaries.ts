@@ -129,7 +129,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Deposit',
-      text: `${A.notWalletSignature('from a recovery phrase')} ${A.largestPool} Your usual browser and wallet will do, since the deposit is public.`,
+      text: `Create your account from a recovery phrase, not from a wallet signature. ${A.largestPool} Your usual browser and wallet will do, since the deposit is public.`,
       against: ['futureAdversary', 'chainAnalyst'],
     },
     {

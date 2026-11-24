@@ -1,12 +1,17 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { fluidkeyAdversaries } from './adversaries'
+import { fluidkeyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('fluidkey')
 
@@ -73,9 +78,7 @@ export const fluidkey: BaseProject = {
         'Fluidkey sends funds to individual stealth Safes instead of mixing deposits in a shared pool.',
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         "The user's funds sit in Safes controlled only by their keys. The open recovery app finds them and Eternal Safe withdraws them, both without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
       walkawayTest: {
@@ -85,8 +88,7 @@ export const fluidkey: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The web and mobile apps are closed source. The open stealth account kit and recovery app derive keys, verify addresses and recover funds without Fluidkey. The API, ENS gateway, indexer and relayer are closed.',
     },
@@ -101,7 +103,7 @@ export const fluidkey: BaseProject = {
         description: 'Interop with DeFi vaults through stealth Safes.',
       },
     ],
-    riskSummary: readProjectMarkdown('fluidkey', 'riskSummary'),
+    riskSummary: fluidkeyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),
     },

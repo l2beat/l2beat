@@ -171,6 +171,7 @@ function graph(spec: Record<string, string[]>) {
       id,
       address: id,
       isInitial: false,
+      isCritical: false,
       hasTemplate: false,
       addressType: 'Contract',
       name: id,

@@ -32,28 +32,30 @@ import {
  * same public data with increasing time and effort, so protection against a
  * later one implies protection against an earlier one. The network observer
  * and the privileged insider are positional and do not nest with the spine.
+ *
+ * Each description is the framework's sentence, which completes the label:
+ * "Public observer: reads public transactions…".
  */
 export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
   {
     publicObserver: {
       id: 'publicObserver',
       label: 'Public observer',
-      description:
-        'Everyone with a block explorer and some basic tools. Sees every public onchain event, but does no correlation beyond following links.',
+      description: 'reads public transactions and follows explicit links.',
       examples: 'A curious counterparty, an employer, a journalist.',
     },
     chainAnalyst: {
       id: 'chainAnalyst',
       label: 'Chain analyst',
       description:
-        'Scrapes all public data and correlates it: timing, amounts, gas and wallet fingerprints, address clusters.',
+        'combines public data to correlate timing, amounts, gas payments and addresses.',
       examples: 'Chain analytics firms, ZachXBT, data brokers.',
     },
     networkObserver: {
       id: 'networkObserver',
       label: 'Network observer',
       description:
-        'Sits between the user and the services and sees traffic only: ISPs, VPNs, Tor exits, public RPCs and relayers. Ties requests to a user by content, session or timing: what they name, a shared IP or login, and when they arrive. Services the operator runs count as the insider.',
+        "sees traffic on the user's network path and at third parties, such as ISPs, VPNs, public RPCs and relayers. Services the operator runs count as the insider, a service under the operator's account counts for both.",
       examples:
         'Infura or Alchemy, a Tornado relayer, a wallet vendor selling telemetry, Google captcha or analytics in the dapp frontend.',
     },
@@ -61,7 +63,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'privilegedInsider',
       label: 'Privileged insider',
       description:
-        'Holds an operator role, custodies funds, receives keys or plaintext by design, or delivers the app: upgrade admin, custodian, view key holder, enclave operator, association set provider, hosted prover, registry, frontend host.',
+        'controls or serves part of the system, holds keys or plaintext, custodies funds, or delivers the app.',
       examples:
         'A compliance backdoor key, a DAO with an upgrade key, a KMS committee, an ASP operator, a custodial bridge.',
     },
@@ -69,7 +71,7 @@ export const PRIVACY_ADVERSARIES: Record<PrivacyAdversaryId, PrivacyAdversary> =
       id: 'futureAdversary',
       label: 'Future adversary',
       description:
-        'Harvest now, decrypt later. Holds every byte ever published and runs the known quantum attacks: elliptic curves, pairings and RSA fall. Hashes, symmetric ciphers and post-quantum schemes stand until an attack on them is known.',
+        'archives public data, then runs the known quantum attacks, which break elliptic curves, pairings and RSA, and uses every key they recover. Other schemes stand until an attack on them is known, and the cell names the assumption that remains. Retained logs, insider keys and recorded traffic are outside this scenario.',
       examples:
         'An intelligence agency archiving chain data today, then anyone once a break is public.',
     },
@@ -252,7 +254,10 @@ export function toolLink(id: PrivacyToolId, text?: string) {
   return `[${text ?? tool.names[0]}](${PRIVACY_METHODOLOGY_URL}#${tool.anchor})`
 }
 
-/** Imperative sentences for `advice` steps. */
+/**
+ * Imperative sentences for `advice` steps, one per habit the methodology
+ * explains. A step prints one unchanged or writes its own sentence.
+ */
 export const ADVICE_SNIPPETS = {
   /** Pools. `relayer` is the project's word for it. */
   relayer: (relayer: string) =>
@@ -268,37 +273,21 @@ export const ADVICE_SNIPPETS = {
   /** Native apps and anything else Tor Browser cannot run. */
   ipHidingRoute: (app: string) =>
     `Run ${app} with all traffic through an ${adviceLink('IP-hiding route', 'routes')}.`,
-  /** Open clients served from a hosted frontend. */
-  localBuild:
-    'Build the app from the reviewed source and run it locally instead of the hosted website.',
-  /** Account keys a wallet signature would derive. `alternative` is the app's own option, e.g. "from a recovery phrase". */
-  notWalletSignature: (alternative: string) =>
-    `Create your account ${alternative}, not from a wallet signature.`,
 } as const
 
+/** Exposure sentences that at least four projects print unchanged. */
 export const PRIVACY_ADVERSARY_SNIPPETS = {
   // Public observer
   /** Pools: the public ends of a shielded flow. */
   entryExitPublic: (entryExit = 'Deposits and withdrawals') =>
     `${entryExit} show address, token and amount.`,
-  /** Stealth addresses handed out by an operator: the rest of the promise. */
-  stealthPromiseTail:
-    'The payer knows the address it was given; sender, asset, amount and where the funds go next are public.',
 
   // Chain analyst
   /** Pools: the self-paid alternative to a relayer. */
   walletFingerprint: (relayer: string) =>
     `Paying gas from the user's wallet instead of a ${relayer} exposes its fingerprint, account implementation and fee habits, even from a fresh address.`,
 
-  // Privileged insider
-  /** Stealth addresses handed out by an operator. */
-  operatorViewingKey: (operator: string) =>
-    `${operator} holds the viewing key, so it can regenerate every address and tie its activity to the user's account.`,
-
   // Future adversary
-  /** Stealth addresses without onchain announcements. */
-  noAnnouncement:
-    'No announcement is published, so address derivations cannot be replayed from the chain alone.',
   /** Account keys derived from a wallet signature. `extra` names what else is needed, e.g. a PIN. */
   walletSignatureAccounts: (extra?: string) =>
     `Accounts created from a wallet signature reduce to that wallet's key${extra ? ` ${extra}` : ''}.`,

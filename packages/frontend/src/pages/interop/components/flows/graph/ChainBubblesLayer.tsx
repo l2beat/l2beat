@@ -1,4 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
+import { useRef, useState } from 'react'
 import type { FlowsGraphChainData } from '~/server/features/layer2s/interop/getInteropFlowsOverview'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
@@ -75,9 +76,23 @@ function ChainBubble({
   const nameLines = getChainNameLines(chain.name, isSmallScreen)
   const nameLineHeight = isSmallScreen ? 11 : 12
   const nameY = y + radius + 16
-  const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
+  const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 17
 
   const highlighted = highlightedChains.includes(chain.id)
+
+  // Chromium ignores text-underline-offset and skip-ink on SVG text, so a CSS
+  // underline cuts through the descenders. Draw it below them instead, sized
+  // from each line's rendered width.
+  const nameRef = useRef<SVGTextElement>(null)
+  const [underlineWidths, setUnderlineWidths] = useState<number[]>()
+  const measureUnderlines = () => {
+    const lines = nameRef.current?.querySelectorAll('tspan')
+    if (lines) {
+      setUnderlineWidths(
+        Array.from(lines, (line) => line.getComputedTextLength()),
+      )
+    }
+  }
 
   const { fillOpacity, strokeWidth, strokeOpacity } = getBubbleStyle(
     highlighted,
@@ -104,12 +119,12 @@ function ChainBubble({
         height={iconSize}
       />
       <text
+        ref={nameRef}
         x={x}
         y={nameY}
         textAnchor="middle"
         className={cn(
           'fill-primary font-medium',
-          href && 'underline-offset-2 group-hover/chain:underline',
           isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
         )}
       >
@@ -119,6 +134,21 @@ function ChainBubble({
           </tspan>
         ))}
       </text>
+      {href &&
+        underlineWidths?.map((width, index) => {
+          const lineY = nameY + index * nameLineHeight + UNDERLINE_GAP
+          return (
+            <line
+              key={index}
+              x1={x - width / 2}
+              x2={x + width / 2}
+              y1={lineY}
+              y2={lineY}
+              strokeWidth={1}
+              className="pointer-events-none stroke-primary opacity-0 group-hover/chain:opacity-100"
+            />
+          )
+        })}
       <text
         x={x}
         y={netFlowY}
@@ -135,7 +165,12 @@ function ChainBubble({
 
   if (href) {
     return (
-      <a href={href} aria-label={chain.name} className="group/chain">
+      <a
+        href={href}
+        aria-label={chain.name}
+        className="group/chain"
+        onMouseEnter={measureUnderlines}
+      >
         {content}
       </a>
     )
@@ -146,6 +181,9 @@ function ChainBubble({
     </g>
   )
 }
+
+/** Distance from a name line's baseline to its underline, below descenders. */
+const UNDERLINE_GAP = 4
 
 function getBubbleStyle(highlighted: boolean, highlightedCount: number) {
   if (highlighted) {

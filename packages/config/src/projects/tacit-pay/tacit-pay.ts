@@ -9,6 +9,10 @@ import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -25,6 +29,7 @@ import {
   TACIT_REPOSITORY,
   tacitPayAdversaries,
 } from './adversaries'
+import { tacitPayRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('tacit-pay')
 
@@ -240,16 +245,13 @@ export const tacitPay: BaseProject = {
       ],
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         'The pool, its router and verifier are immutable and cannot be paused, so users can always withdraw with a valid proof.',
       walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The contracts, circuit, app and relay are public under MIT, and every contract is verified. The verifier rebuilds from the circuit and the ceremony key, and the deployed app rebuilds byte for byte from its readable source.',
     },
@@ -259,7 +261,7 @@ export const tacitPay: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: tacitPayAdversaries,
-    riskSummary: readProjectMarkdown('tacit-pay', 'riskSummary'),
+    riskSummary: tacitPayRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),
     },

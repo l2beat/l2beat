@@ -23,6 +23,7 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[], autoGroups: AutoGroup[]) => void
+  syncCriticality: (criticalIds: ReadonlySet<string>) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   alignSelected: (direction: AlignDirection) => void
@@ -30,7 +31,10 @@ export interface Actions {
   groupSelected: () => void
   ungroupSelected: () => void
   renameGroup: (id: string, name: string) => void
-  layout: (locations: NodeLocations) => void
+  layout: (
+    locations: NodeLocations,
+    options?: { focusPerimeter?: boolean },
+  ) => void
   arrange: (request: ArrangeRequest) => void
   undo: () => void
   redo: () => void

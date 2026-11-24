@@ -4,6 +4,7 @@ import { SingleChainStats } from '~/pages/interop/components/flows/selection-pan
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { BridgeFlowStats } from './BridgeFlowStats'
 
 interface FlowsStatsPanelProps {
@@ -104,5 +105,5 @@ function getStatsLabel({
         : (protocols.find((p) => p.id === singleProtocolId)?.name ?? 'protocol')
       : `${selectedProtocols.length} protocols`
 
-  return `${baseLabel} · ${protocolSuffix}`
+  return `${baseLabel}${DOT_SEPARATOR}${protocolSuffix}`
 }

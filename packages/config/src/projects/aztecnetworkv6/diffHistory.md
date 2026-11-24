@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x5b87b7fc65a474c3ddf018f7bcd7aca830482513
+
+# Diff at Mon, 23 Nov 2026 13:15:02 GMT:
+
+- id: 69c68e0c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794568266
+- current timestamp: 1795438939
+
+## Description
+
+Governance set the Rollup's sequencer reward calculator to the new immutable RegistryReductionCalculator. It pays no sequencer reward for checkpoints proposed by validators staked through token positions (ATPs) of two registries: eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80, used by the ProtocolTreasury and ecosystem vesting contracts, and eth:0x667d2641cb96734f386adA6A9afCF07B1815fB8b. Everyone else gets the default reward.
+
+The calculator never pays more than the default, and the unpaid part stays in the RewardDistributor. The Rollup falls back to the default split when the call fails or returns malformed data, so the calculator cannot block proofs. Governance owns it and can add or remove registries. State validation and user funds are unaffected.
+
+## Watched changes
+
+```diff
+    external contract Governance (eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0xbfa4597532b2bac2b7429EDe41da29E2fe3Ee43D","description":"set or remove the reduced sequencer reward of validators staked through token positions of a registry.","role":".owner"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0xE37A2663Cc9c119BA41572C40fAb0bbb23a5402f) [aztecnetwork/Rollup_v6] {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
++++ description: Owner-set contract that returns the sequencer reward of each proven checkpoint. Zero means the default split. A failing or malformed response falls back to the default split and cannot block a proof.
++++ severity: MEDIUM
+      values.getSequencerRewardCalculator:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xbfa4597532b2bac2b7429EDe41da29E2fe3Ee43D"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RegistryReductionCalculator (eth:0xbfa4597532b2bac2b7429EDe41da29E2fe3Ee43D) [aztecnetwork/RegistryReductionCalculator]
+    +++ description: Sequencer reward calculator for the Rollup. It pays a reduced reward per proven checkpoint to validators staked through token positions (ATPs) of owner-listed registries, and the default reward to everyone else. It never pays more than the default.
+```
+
+## Source code changes
+
+```diff
+.../.flat/RegistryReductionCalculator.sol          | 2639 ++++++++++++++++++++
+ 1 file changed, 2639 insertions(+)
+```
+
 Generated with discovered.json: 0x5c962d562dd2c78157f8648b553b874ab0a0491b
 
 # Diff at Mon, 16 Nov 2026 10:54:47 GMT:

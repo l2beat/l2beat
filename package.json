@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": "^24.15.0",
+    "node": "^24.22.3",
     "pnpm": ">=12"
   },
   "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457",
@@ -62,9 +62,9 @@
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.4.5",
     "earl": "^1.1.0",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.2",
     "mocha": "^10.2.0",
-    "tsx": "^4.9.3",
+    "tsx": "^4.23.0",
     "turbo": "^2.10.12",
     "typescript": "^7.0.2",
     "wait-for-expect": "^3.0.2"

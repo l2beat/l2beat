@@ -335,6 +335,7 @@ function makeNode(
     id,
     address: `test:${id}`,
     isInitial,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Contract',
     name: id,

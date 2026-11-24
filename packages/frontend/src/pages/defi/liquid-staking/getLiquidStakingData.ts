@@ -38,10 +38,9 @@ export async function getLiquidStakingData(
         structuredData: (page) => [
           getItemListStructuredData(page, {
             name: 'Liquid staking protocols',
-            items: entries.map((entry) => ({
-              name: entry.name,
-              path: entry.href,
-            })),
+            items: entries.flatMap((entry) =>
+              entry.href ? [{ name: entry.name, path: entry.href }] : [],
+            ),
           }),
         ],
       }),

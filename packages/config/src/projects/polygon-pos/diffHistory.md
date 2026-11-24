@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xa7ce0d2568266968e6dedb83532ccbd6e7fdf19e
+
+# Diff at Mon, 23 Nov 2026 13:15:15 GMT:
+
+- id: b38ff126
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794986377
+- current timestamp: 1795438946
+
+## Description
+
+The Katana Foundation Engineering/Security Multisig added one signer and swapped two, on L1 and L2. It is now 2 of 6.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x0Acac1D1c7536378542ca783d7FcaF37348A378d"
+      values.$members.2:
+-        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "eth:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+      values.$members.3:
+-        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "eth:0x14E7737b48D7783d551C5cf516a6B65f309d3741"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x6b7a0a2eea054e38a0a5bfc61b3911847e15af05
 
 # Diff at Wed, 18 Nov 2026 08:06:35 GMT:

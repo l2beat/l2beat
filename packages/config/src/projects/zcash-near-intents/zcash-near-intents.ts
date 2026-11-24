@@ -1,9 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zcashNearIntentsAdversaries } from './adversaries'
+import { zcashNearIntentsRiskSummary } from './riskSummary'
 
 // The route has no Ethereum contracts: the custodial bridge holds funds in plain
 // accounts, so there is nothing for discovery to track. Governance and
@@ -151,9 +156,7 @@ export const zcashNearIntents: BaseProject = {
         "The set is Zcash's shielded pool, outside the chains ETHBEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The NEAR Intents multisig upgrades the Verifier and the Rainbow Bridge multisig the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
       walkawayTest: {
@@ -163,8 +166,7 @@ export const zcashNearIntents: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's desktop releases do not claim byte-for-byte rebuilds. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
@@ -175,7 +177,7 @@ export const zcashNearIntents: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zcashNearIntentsAdversaries,
-    riskSummary: readProjectMarkdown('zcash-near-intents', 'riskSummary'),
+    riskSummary: zcashNearIntentsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zcash-near-intents',

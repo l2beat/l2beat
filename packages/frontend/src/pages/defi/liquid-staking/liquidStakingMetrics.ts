@@ -37,8 +37,7 @@ export interface LiquidStakingMetric {
 export const YIELD_METRIC: LiquidStakingMetric = {
   key: 'yield',
   title: 'Yield',
-  tooltip:
-    "What a holder earned, net of protocol fees: the annualised change of the token's exchange rate over the previous 30 days.",
+  tooltip: 'Annualised return over the last 30 days, net of protocol fees.',
   format: formatYield,
   dailyBuckets: false,
 }
@@ -72,11 +71,16 @@ export function formatMetricDate(
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
 
-/** On a project's page, the cost of exit names only the routes it has. */
+/**
+ * On a project's page, the cost of exit names only the routes it has. An
+ * untracked one has no routes to name.
+ */
 export function getProjectMetrics(
-  costOfExit: CostOfExitDescription,
+  costOfExit: CostOfExitDescription | undefined,
 ): LiquidStakingMetric[] {
-  return [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+  return costOfExit
+    ? [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+    : LIQUID_STAKING_METRICS
 }
 
 export const ETH_STAKED_TITLE = 'ETH staked'

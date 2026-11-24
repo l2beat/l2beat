@@ -26,6 +26,6 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/swagger-ui-dist": "^3.30.6",
-    "tsx": "^4.9.3"
+    "tsx": "^4.23.0"
   }
 }

@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "tsx": "^4.9.3"
+    "tsx": "^4.23.0"
   }
 }

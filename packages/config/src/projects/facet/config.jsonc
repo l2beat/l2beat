@@ -1,6 +1,5 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "archived": true,
   "name": "facet",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
@@ -36,6 +35,8 @@
       "ignoreDiscovery": true
     },
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
+      // hidden from the page: shut down, admins renounced, no longer interacts with the Rollup
+      "category": "spam",
       "fields": {
         // deployed by Solady's ERC1967Factory, which keeps the upgrade admin itself
         // and leaves the EIP-1967 admin slot empty
@@ -58,6 +59,8 @@
       }
     },
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": {
+      // hidden from the page: disabled, immutable, no longer interacts with the Rollup
+      "category": "spam",
       "ignoreMethods": [
         "admin",
         "l2TokenBridge",

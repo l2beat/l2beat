@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xe7f88cfe94f31f16249bba27c68d86a452986563
+
+# Diff at Fri, 20 Nov 2026 13:08:22 GMT:
+
+- id: 34833c9f
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1794828230
+- current timestamp: 1795177421
+
+## Description
+
+Added two ms members (2/2 -> 2/4). Also changed contract verification from flaky scrollscan to sourcify, scrollscan inconsistency in library version lead to changed source hash of `L2PauseController`. No real code change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (scr:0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "scr:0xB213Ff1FAFFd8bC62492B0a68B5E58979E45e8A6"
+      values.$members.1:
++        "scr:0x15fC51143Ef108093AfFB37cCD3cB5F01886B194"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 4 (50%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794828230 (main branch discovery), not current.
+
+```diff
+    contract L2PauseController (scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd) [scroll/PauseController] {
+    +++ description: None
+      sourceHashes.0:
+-        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+    }
+```
+
 Generated with discovered.json: 0xbc05606a288f467021152abaf8cb4cb616f359ee
 
 # Diff at Mon, 16 Nov 2026 12:27:37 GMT:
