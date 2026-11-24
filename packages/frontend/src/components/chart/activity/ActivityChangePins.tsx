@@ -66,6 +66,8 @@ const MAX_PINS_TOUCH = 3
 const MAX_EVENTS_PER_PIN = 3
 // A pin names one project only when it explains at least half the change.
 const LEADER_MIN_SHARE = 0.5
+// The breakdown lists a project only when it drove a tenth of the change.
+const DRIVER_MIN_SHARE = 0.1
 
 export function getEventKey(event: ActivityChangeEvent) {
   return `${event.timestamp}:${event.category}`
@@ -171,7 +173,11 @@ export function ActivityChangePins({
                 sideOffset={6}
                 collisionPadding={16}
                 aria-label="Change breakdown"
-                className="max-h-(--radix-popover-content-available-height) w-[360px] overflow-y-auto p-4"
+                // The chart tooltip's frame: a border in place of the shared
+                // popover's shadow. tailwind-merge sees neither the shared
+                // `shadow-popover` nor `border-none` as overridden here. Out of
+                // the card, it takes the tooltip's dark surface, not the page's.
+                className="max-h-(--radix-popover-content-available-height) w-[328px] overflow-y-auto border border-divider border-solid p-3 shadow-none! dark:bg-header-secondary"
               >
                 {details(group, index)}
               </PopoverContent>
@@ -188,7 +194,9 @@ export function ActivityChangePins({
             className="max-h-[85dvh]"
             contentClassName="flex min-h-0 flex-col pb-0"
           >
-            <DrawerHeader className="min-h-0 overflow-y-auto pb-8">
+            {/* Room on the right for the close button's hit area, which sits
+                past the content edge; the scroll box would clip it. */}
+            <DrawerHeader className="-mr-[9px] min-h-0 overflow-y-auto pr-[9px] pb-8">
               {openGroup && details(openGroup, openIndex)}
             </DrawerHeader>
           </DrawerContent>
@@ -393,17 +401,14 @@ function ChangeDetails({
   const to = Math.max(...timestamps)
   // A merged pin can hold changes days apart; then each one shows its date.
   const isOneDay = from === to
-  const title = (
-    <span className="font-medium text-label-value-14 text-secondary">
-      {isOneDay ? formatDay(from) : `${events.length} changes`}
-    </span>
-  )
+  const titleText = formatRange(from, to + UnixTime.DAY)
+  const titleClassName = 'font-medium text-label-value-14 text-primary'
   const compareSlugs = [
     ...new Set(
       groupEvents.flatMap((event) =>
-        event.contributors
-          .filter(([, delta]) => isSameDirection(delta, event))
-          .flatMap(([id]) => (projects[id] ? [projects[id].slug] : [])),
+        getDrivers(event).flatMap(([id]) =>
+          projects[id] ? [projects[id].slug] : [],
+        ),
       ),
     ),
   ]
@@ -423,9 +428,20 @@ function ChangeDetails({
 
   return (
     <div className="flex flex-col text-left">
-      <div className="flex items-start justify-between gap-2">
-        {inDrawer ? <DialogTitle asChild>{title}</DialogTitle> : title}
-        <IconButton label="Close" onClick={onClose}>
+      <div className="flex items-center justify-between gap-2">
+        {inDrawer ? (
+          // Not asChild: its own classes would win over these unmerged.
+          <DialogTitle className={titleClassName}>{titleText}</DialogTitle>
+        ) : (
+          <span className={titleClassName}>{titleText}</span>
+        )}
+        <IconButton
+          label="Close"
+          onClick={onClose}
+          variant="ghost"
+          // The glyph, not the hit area, ends on the content edge.
+          className="-mr-[9px] -my-1.5"
+        >
           <CloseIcon className="size-2.5" />
         </IconButton>
       </div>
@@ -441,46 +457,46 @@ function ChangeDetails({
           />
         ))}
       </div>
-      <p className="mt-3 text-2xs text-secondary leading-snug">
-        Pins mark days when a category moved far outside its usual range. Each
-        project is compared with its median day over the previous{' '}
-        {BASELINE_DAYS} days; the baseline is the sum of those medians. This
-        shows where activity changed, not why.
-      </p>
-      <div className="mt-3 flex items-center justify-between gap-2 border-divider border-t pt-3">
-        {position.count > 1 ? (
-          <div className="flex items-center gap-1.5">
-            <IconButton
-              label="Previous change"
-              onClick={() => onStep(-1)}
-              disabled={position.index === 0}
-            >
-              <ChevronIcon className="size-3 rotate-90" />
-            </IconButton>
-            <span className="text-2xs text-secondary tabular-nums">
-              {position.index + 1} of {position.count}
-            </span>
-            <IconButton
-              label="Next change"
-              onClick={() => onStep(1)}
-              disabled={position.index === position.count - 1}
-            >
-              <ChevronIcon className="-rotate-90 size-3" />
-            </IconButton>
-          </div>
-        ) : (
-          <span />
-        )}
-        {compareSlugs.length > 0 && (
-          <CustomLink href={compareUrl} className="text-xs">
-            Compare these projects →
-          </CustomLink>
-        )}
-      </div>
+      {(position.count > 1 || compareSlugs.length > 0) && (
+        <div className="mt-2.5 flex items-center justify-between gap-2 border-divider border-t pt-3">
+          {position.count > 1 ? (
+            <div className="flex items-center gap-1.5">
+              <IconButton
+                label="Previous change"
+                onClick={() => onStep(-1)}
+                disabled={position.index === 0}
+              >
+                <ChevronIcon className="size-3 rotate-90" />
+              </IconButton>
+              <span className="text-2xs text-secondary tabular-nums">
+                {position.index + 1} of {position.count}
+              </span>
+              <IconButton
+                label="Next change"
+                onClick={() => onStep(1)}
+                disabled={position.index === position.count - 1}
+              >
+                <ChevronIcon className="-rotate-90 size-3" />
+              </IconButton>
+            </div>
+          ) : (
+            <span />
+          )}
+          {compareSlugs.length > 0 && (
+            <CustomLink href={compareUrl} className="text-label-value-13">
+              Open in Compare →
+            </CustomLink>
+          )}
+        </div>
+      )}
     </div>
   )
 }
 
+/**
+ * The category's change, then only the projects that drove it; the rest
+ * sum into one row.
+ */
 function EventDetails({
   event,
   showDate,
@@ -494,41 +510,42 @@ function EventDetails({
   label: ReactNode
   color: string | undefined
 }) {
-  const change = event.observed - event.baseline
   const unit = event.metric === 'uops' ? 'UOPS' : 'TPS'
+  const drivers = getDrivers(event)
+  const others = event.contributors.filter((c) => !drivers.includes(c))
+  const otherCount = event.restCount + others.length
+  const otherDelta =
+    event.restDelta + others.reduce((sum, [, delta]) => sum + delta, 0)
+
   return (
-    <div className="flex flex-col py-3 first:pt-2">
+    <div className="flex flex-col py-2.5 first:pt-1 last:pb-0">
       {showDate && (
         <span className="mb-1 text-2xs text-secondary">
           {formatDay(event.timestamp)}
         </span>
       )}
-      <div className="flex items-center gap-1.5">
-        <span
-          className="size-2.5 shrink-0 rounded-full"
-          style={{ backgroundColor: color }}
-        />
+      <div className="flex items-baseline gap-1.5">
+        {/* As wide as the project icons, so the name lines up with theirs. */}
+        <span className="flex w-4 shrink-0 justify-center self-center">
+          <span
+            className="size-2.5 rounded-full"
+            style={{ backgroundColor: color }}
+          />
+        </span>
         <span className="font-bold text-label-value-15">{label}</span>
         <span className="font-medium text-label-value-14 tabular-nums">
           {formatRelative(event)}
         </span>
       </div>
-      <p className="mt-1.5 text-paragraph-14 leading-snug">
-        <EventSentence event={event} projects={projects} label={label} />
+      <p className="mt-1 pl-5.5 text-label-value-13 text-secondary tabular-nums">
+        <span className="font-medium text-primary">
+          {formatActivityCount(countPerSecond(event.observed))} {unit}
+        </span>{' '}
+        vs {formatActivityCount(countPerSecond(event.baseline))} usual (past{' '}
+        {BASELINE_DAYS} days)
       </p>
-      <dl className="mt-3 grid grid-cols-3 gap-2">
-        <Figure
-          label="That day"
-          value={`${formatActivityCount(countPerSecond(event.observed))} ${unit}`}
-        />
-        <Figure
-          label={`${BASELINE_DAYS}-day baseline`}
-          value={formatActivityCount(countPerSecond(event.baseline))}
-        />
-        <Figure label="Change" value={formatSignedRate(change)} />
-      </dl>
-      <ul className="mt-3 flex flex-col">
-        {event.contributors.map(([projectId, delta]) => {
+      <ul className="mt-2 flex flex-col">
+        {drivers.map(([projectId, delta]) => {
           const project = projects[projectId]
           return (
             <ContributorRow
@@ -537,12 +554,12 @@ function EventDetails({
                 project ? (
                   <a
                     href={`/layer2s/projects/${project.slug}#activity`}
-                    className="flex min-w-0 items-center gap-1.5 hover:underline"
+                    className="flex min-w-0 items-baseline gap-1.5 hover:underline"
                   >
                     <img
                       src={project.iconUrl}
                       alt=""
-                      className="size-4 shrink-0 rounded-full"
+                      className="size-4 shrink-0 self-center rounded-full"
                     />
                     <span className="truncate">{project.name}</span>
                   </a>
@@ -555,89 +572,21 @@ function EventDetails({
             />
           )
         })}
-        {event.restCount > 0 && (
+        {otherCount > 0 && (
           <ContributorRow
             label={
-              <span className="text-secondary">
-                {event.restCount} other projects
+              <span className="pl-5.5 text-secondary">
+                {drivers.length === 0
+                  ? `Spread across ${otherCount} projects`
+                  : `${otherCount} other ${otherCount === 1 ? 'project' : 'projects'}`}
               </span>
             }
-            delta={event.restDelta}
+            delta={otherDelta}
             share={undefined}
+            muted
           />
         )}
       </ul>
-    </div>
-  )
-}
-
-function EventSentence({
-  event,
-  projects,
-  label,
-}: {
-  event: ActivityChangeEvent
-  projects: Record<string, ActivityChangeProject>
-  label: ReactNode
-}) {
-  const isDrop = event.observed < event.baseline
-  const word = isDrop ? 'drop' : 'rise'
-  const leader = getLeader(event)
-  const leaderName =
-    leader && (projects[leader.projectId]?.name ?? leader.projectId)
-  const ratio = event.baseline > 0 ? event.observed / event.baseline : undefined
-  const relative =
-    ratio === undefined ? (
-      <>rose from no activity in the previous {BASELINE_DAYS} days</>
-    ) : ratio >= 3 ? (
-      <>
-        ran at <strong>{Math.round(ratio)}×</strong> its {BASELINE_DAYS}-day
-        baseline
-      </>
-    ) : (
-      <>
-        ran{' '}
-        <strong>
-          {Math.round(Math.abs(ratio - 1) * 100)}% {isDrop ? 'below' : 'above'}
-        </strong>{' '}
-        its {BASELINE_DAYS}-day baseline
-      </>
-    )
-
-  return (
-    <>
-      {label} {relative}.{' '}
-      {leader ? (
-        isOverWhole(leader.share) ? (
-          <>
-            <strong>{leaderName}</strong> alone moved more than the whole
-            category; other projects moved the other way.
-          </>
-        ) : leader.share >= 0.95 ? (
-          <>
-            <strong>{leaderName}</strong> accounts for almost all of the {word}.
-          </>
-        ) : (
-          <>
-            <strong>{leaderName}</strong> accounts for{' '}
-            <strong>{Math.round(leader.share * 100)}%</strong> of the {word}.
-          </>
-        )
-      ) : (
-        <>
-          The {word} is spread across{' '}
-          {event.contributors.length + event.restCount} projects.
-        </>
-      )}
-    </>
-  )
-}
-
-function Figure({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-col gap-0.5">
-      <dt className="text-2xs text-secondary">{label}</dt>
-      <dd className="font-bold text-label-value-14 tabular-nums">{value}</dd>
     </div>
   )
 }
@@ -646,17 +595,24 @@ function ContributorRow({
   label,
   delta,
   share,
+  muted,
 }: {
   label: ReactNode
   delta: number
   share: string | undefined
+  /** The leftover row, quieter than the projects that drove the change. */
+  muted?: boolean
 }) {
   return (
-    <li className="flex items-center justify-between gap-2 border-divider border-b py-1.5 text-label-value-13 last:border-b-0">
+    <li className="flex items-baseline justify-between gap-2 py-1 text-label-value-13">
       <div className="min-w-0">{label}</div>
-      <span className="flex shrink-0 gap-2 whitespace-nowrap tabular-nums">
-        {formatSignedRate(delta)}
-        <span className="w-9 text-right text-secondary">{share ?? ''}</span>
+      <span className="flex shrink-0 items-baseline gap-2 whitespace-nowrap tabular-nums">
+        <span className={muted ? 'text-secondary' : 'font-medium'}>
+          {formatSignedRate(delta)}
+        </span>
+        <span className="w-20 text-right text-2xs text-secondary">
+          {share ?? ''}
+        </span>
       </span>
     </li>
   )
@@ -666,11 +622,16 @@ function IconButton({
   label,
   onClick,
   disabled,
+  variant = 'filled',
+  className,
   children,
 }: {
   label: string
   onClick: () => void
   disabled?: boolean
+  /** Ghost for close, so it doesn't outweigh the title beside it. */
+  variant?: 'filled' | 'ghost'
+  className?: string
   children: ReactNode
 }) {
   return (
@@ -681,7 +642,11 @@ function IconButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex size-7 shrink-0 items-center justify-center rounded-md bg-surface-secondary hover:bg-surface-tertiary',
+        'flex size-7 shrink-0 items-center justify-center rounded-md',
+        variant === 'filled'
+          ? 'bg-surface-secondary hover:bg-surface-tertiary'
+          : 'hover:bg-surface-secondary',
+        className,
         'disabled:cursor-not-allowed disabled:opacity-40',
       )}
     >
@@ -700,7 +665,7 @@ function ActivityChangeSummary({
 }) {
   const leader = getLeader(event)
   const project = leader && projects[leader.projectId]
-  const word = event.observed < event.baseline ? 'drop' : 'rise'
+  const word = getChangeWord(event)
   return (
     <span className="flex flex-col gap-0.5 text-paragraph-12 text-secondary">
       {project && leader ? (
@@ -801,6 +766,18 @@ function isOverWhole(share: number) {
   return share > 1.005
 }
 
+function getChangeWord(event: ActivityChangeEvent) {
+  return event.observed < event.baseline ? 'drop' : 'rise'
+}
+
+/** The listed projects that moved with the change and drove enough of it. */
+function getDrivers(event: ActivityChangeEvent) {
+  const change = event.observed - event.baseline
+  return event.contributors.filter(
+    ([, delta]) => change !== 0 && delta / change >= DRIVER_MIN_SHARE,
+  )
+}
+
 function isSameDirection(delta: number, event: ActivityChangeEvent) {
   return Math.sign(delta) === Math.sign(event.observed - event.baseline)
 }
@@ -809,12 +786,17 @@ function formatDay(timestamp: number) {
   return formatRange(timestamp, timestamp + UnixTime.DAY)
 }
 
+/** A project's part of the change, e.g. "91% of rise". */
 function formatShare(delta: number, event: ActivityChangeEvent) {
   if (!isSameDirection(delta, event)) return undefined
   const share = delta / (event.observed - event.baseline)
-  if (isOverWhole(share)) return '>100%'
-  if (share < 0.01) return '<1%'
-  return `${Math.round(share * 100)}%`
+  const word = getChangeWord(event)
+  const value = isOverWhole(share)
+    ? '>100%'
+    : share < 0.01
+      ? '<1%'
+      : `${Math.round(share * 100)}%`
+  return `${value} of ${word}`
 }
 
 function formatRelative(event: ActivityChangeEvent) {
