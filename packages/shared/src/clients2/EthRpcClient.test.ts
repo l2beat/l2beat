@@ -1,8 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import FakeTimers from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
+import type { RetryHandler } from '../tools/RetryHandler'
 import { EthRpcClient } from './EthRpcClient'
 import { Http, type HttpResponse, MockHttp, makeHttpResponse } from './Http'
 
@@ -637,6 +638,47 @@ for (const url of URLS) {
     })
   })
 }
+
+describe(`${EthRpcClient.name} with a retry handler`, () => {
+  // Why: the retry is logged with the error's message, and a provider can
+  // echo a key into its JSON-RPC error
+  it('retries a refusal under its status only, as RpcClient did', async () => {
+    const http = new MockHttp()
+    http.queueResponse(
+      401,
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        error: { code: -32001, message: 'bad key secret-in-body' },
+      }),
+    )
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x7b' }),
+    )
+    const retried: unknown[] = []
+    const retryHandler = mockObject<RetryHandler>({
+      retry: async (fn, metadata) => {
+        retried.push(metadata?.error)
+        return await fn()
+      },
+    })
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      retryHandler,
+    )
+
+    expect(await client.getBlockNumber()).toEqual(123n)
+    expect(retried.map((e) => (e as Error).message)).toEqual([
+      'RPC call failed. HTTP status: 401',
+    ])
+  })
+})
 
 describe(`${EthRpcClient.name} rate limit`, () => {
   // Why: the limiter steps down on HTTP 429, so the rate a provider takes

@@ -407,7 +407,9 @@ export class EthRpcClient {
       })
     }
     const envelope = parsed.data
-    if (isErrorEnvelope(envelope)) {
+    // Refused with a JSON-RPC error: RpcClient, which the retrying client
+    // stands in for, gave only the status. Interop reads the message.
+    if (isErrorEnvelope(envelope) && (response.ok || !this.retryHandler)) {
       // The range holds too many logs: the caller splits it, not retries
       if (response.ok && isLimitExceededError(envelope.error)) {
         return envelope

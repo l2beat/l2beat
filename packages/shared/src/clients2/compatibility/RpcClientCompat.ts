@@ -321,22 +321,13 @@ export class RpcClientCompat implements IRpcClient {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
-    const result = await this.ethRpcClient
-      .call(
-        {
-          to: callParams.to,
-          input: callParams.input.toString(),
-        },
-        blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
-      )
-      .catch((error: unknown) => {
-        // Callers read "revert" in a message as a revert, and a refused
-        // request is not one, whatever its JSON-RPC error says
-        if (error instanceof Error && hasErrorStatus(error.cause)) {
-          throw new Error('RPC call failed. Refused', { cause: error.cause })
-        }
-        throw error
-      })
+    const result = await this.ethRpcClient.call(
+      {
+        to: callParams.to,
+        input: callParams.input.toString(),
+      },
+      blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
+    )
     if (result.reverted) {
       // The node's own words, which callers read as RpcClient gave them
       throw new Error(result.reason, {
