@@ -22,7 +22,7 @@ import {
   SidebarGroupSubLink,
   SidebarHeader,
   SidebarSeparator,
-  useSidebar,
+  useSetSidebarOpen,
 } from '../../core/Sidebar'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { Logo } from '../../Logo'
@@ -39,7 +39,7 @@ interface Props {
 }
 
 export function NavSidebar({ groups, logoLink, className }: Props) {
-  const { setOpenMobile } = useSidebar()
+  const setOpenMobile = useSetSidebarOpen()
   const closeMobileSidebar = () => setOpenMobile(false)
   return (
     <Sidebar className={className}>
