@@ -563,6 +563,8 @@
 
   /* Web Animations take a copy: EASE_OUT_QUINT in ~/utils/easing.ts. */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  /* iOS drawer curve: fast off the mark, settling softly. */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;

@@ -112,10 +112,11 @@ function Sidebar({
               tint in one frame, so on phones the backdrop matches the sheet and
               nothing animates. The 1% see-through keeps Chrome drawing the page
               beneath, so closing isn't delayed on Android. From `sm` the page
-              beside the sheet stays dimmed, and iPad Safari leaves its toolbar
-              untinted, so the dim fades and the sheet slides. */}
+              beside the sheet stays dimmed and iPad Safari leaves its toolbar
+              untinted, so the dim fades and the sheet slides; both follow a
+              swipe. */}
           <Drawer.Backdrop
-            className="fixed inset-0 z-998 bg-black/80 transition-[opacity,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-closed:invisible data-closed:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-200 max-sm:bg-background/99 max-sm:transition-none"
+            className="fixed inset-0 z-998 bg-black/40 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-[opacity,visibility] duration-450 ease-drawer data-closed:invisible data-closed:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength,1)*300ms)] data-swiping:duration-0 max-sm:bg-background/99 max-sm:transition-none"
             render={keepRendered}
           />
           <Drawer.Viewport
@@ -127,7 +128,7 @@ function Sidebar({
                 tablets up. */}
             <Drawer.Popup
               id={MOBILE_SIDEBAR_ID}
-              className="h-full w-full bg-background/99 text-primary shadow-lg outline-none transition-[transform,visibility] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] [transform:translateX(var(--drawer-swipe-movement-x))] data-closed:invisible data-ending-style:duration-200 data-swiping:duration-0 max-sm:transition-none sm:max-w-sm md:max-w-60 data-closed:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]"
+              className="h-full w-full bg-background/99 text-primary shadow-lg outline-none transition-[transform,visibility] duration-450 ease-drawer [transform:translateX(var(--drawer-swipe-movement-x))] data-closed:invisible data-ending-style:duration-[calc(var(--drawer-swipe-strength,1)*300ms)] data-swiping:duration-0 max-sm:transition-none sm:max-w-sm md:max-w-60 data-closed:[transform:translateX(100%)] data-ending-style:[transform:translateX(100%)]"
               render={keepRendered}
             >
               <Drawer.Title className="sr-only">Menu</Drawer.Title>
