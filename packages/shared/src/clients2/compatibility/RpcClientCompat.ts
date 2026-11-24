@@ -27,6 +27,7 @@ import type {
 import { RetryHandler } from '../../tools'
 import {
   EthRpcClient,
+  hasErrorStatus,
   type RpcBlock,
   type RpcBlockWithTransactions,
   type RpcLog,
@@ -320,13 +321,19 @@ export class RpcClientCompat implements IRpcClient {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
-    const result = await this.ethRpcClient.call(
-      {
-        to: callParams.to,
-        input: callParams.input.toString(),
-      },
-      blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
-    )
+    const result = await this.ethRpcClient
+      .call(
+        {
+          to: callParams.to,
+          input: callParams.input.toString(),
+        },
+        blockNumber === 'latest' ? 'latest' : BigInt(blockNumber),
+      )
+      .catch((error: unknown) => {
+        // Callers read "revert" in a message as a revert, and a failed
+        // request, whatever its body says, is not one
+        throw new Error('RPC call failed', { cause: error })
+      })
     if (result.reverted) {
       throw new Error('Call reverted', {
         cause: { reason: result.reason, to: callParams.to, blockNumber },
@@ -367,16 +374,6 @@ function isLimitAnswer(error: unknown): boolean {
     error.message.startsWith('RPC call failed. RPC code') &&
     isLimitExceededError(error) &&
     !hasErrorStatus(error.cause)
-  )
-}
-
-function hasErrorStatus(cause: unknown): boolean {
-  return (
-    typeof cause === 'object' &&
-    cause !== null &&
-    'status' in cause &&
-    typeof cause.status === 'number' &&
-    cause.status >= 400
   )
 }
 

@@ -326,19 +326,17 @@ describe(EthRpcClient.name, () => {
     })
   })
 
-  it('eth_call revert #2', async () => {
+  // A failed request is not a revert, whatever its body says, as in RpcClient
+  it('eth_call refused with a revert in the body', async () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(400, 'invalid opcode: INVALID')
-    const result = await client.call(
-      { to: EthereumAddress.random(), input: '0xdeadbeef' },
-      'latest',
-    )
-    expect(result).toEqual({
-      reverted: true,
-      reason:
-        'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
-    })
+    await expect(
+      client.call(
+        { to: EthereumAddress.random(), input: '0xdeadbeef' },
+        'latest',
+      ),
+    ).toBeRejectedWith('RPC call failed. HTTP status: 400')
   })
 
   it('eth_call fail', async () => {

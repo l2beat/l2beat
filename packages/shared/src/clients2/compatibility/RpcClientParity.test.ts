@@ -522,6 +522,38 @@ describe('RpcClient and RpcClientCompat parity', () => {
     })
   }
 
+  for (const [name, answer] of Object.entries<Answer>({
+    'HTTP 503 with a JSON-RPC revert': {
+      status: 503,
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        error: { code: 3, message: 'execution reverted' },
+      }),
+    },
+    'HTTP 503 with a page that mentions revert': {
+      status: 503,
+      body: '<style>* { all: revert }</style>',
+    },
+    'HTTP 200 with a page that mentions revert': {
+      status: 200,
+      body: '<style>* { all: revert }</style>',
+    },
+  })) {
+    it(`neither names a revert for an eth_call refused with ${name}`, async () => {
+      const refused: Case = {
+        name,
+        answer: () => answer,
+        run: (c) => c.call(callParams(), 100),
+      }
+      for (const create of [createOld, createCompat]) {
+        const { error } = await runOn(refused, create)
+        expect(error).toBeA(Error)
+        expect((error as Error).message.toLowerCase()).not.toInclude('revert')
+      }
+    })
+  }
+
   it('both name a revert in the error, as callWithOptionalMulticall reads', async () => {
     const revert = CASES.find((c) => c.name === 'a reverted eth_call')
     if (!revert) throw new Error('Missing case')

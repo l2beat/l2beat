@@ -440,6 +440,16 @@ export class EthRpcClient {
   }
 }
 
+export function hasErrorStatus(cause: unknown): boolean {
+  return (
+    typeof cause === 'object' &&
+    cause !== null &&
+    'status' in cause &&
+    typeof cause.status === 'number' &&
+    cause.status >= 400
+  )
+}
+
 /** Not an error in its place: the provider served this call of the batch */
 function hasResult(item: unknown): boolean {
   return typeof item === 'object' && item !== null && 'result' in item
@@ -778,10 +788,12 @@ function randomId() {
   return id
 }
 
+/** The node ran the call and answered that it failed, as RpcClient read it */
 function isRevert(e: unknown): e is Error {
   return (
     e instanceof Error &&
-    e.message.startsWith('RPC call failed') &&
+    e.message.startsWith('RPC call failed. RPC code') &&
+    !hasErrorStatus(e.cause) &&
     (e.message.includes('invalid opcode: INVALID') ||
       e.message.includes('CALL_EXCEPTION') ||
       e.message.includes('revert') ||
