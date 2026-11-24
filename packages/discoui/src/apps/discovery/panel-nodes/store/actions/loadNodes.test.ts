@@ -324,6 +324,53 @@ describe(loadNodes.name, () => {
     expect(updated.nodes?.[1]?.subnodes[0]?.box).toEqual(groupedLeaf.box)
   })
 
+  it('preserves live leaf criticality when undo or redo restores layout history', () => {
+    const top = {
+      ...makeNode('eth:top', true),
+      box: { x: 100, y: 40, width: 200, height: 80 },
+    }
+    const groupedLeaf = {
+      ...makeNode('eth:member', false),
+      box: { x: 400, y: 40, width: 200, height: 80 },
+    }
+    const group: Node = {
+      ...makeNode('group:shared:test', false),
+      box: { x: 400, y: 40, width: 200, height: 80 },
+      subnodes: [groupedLeaf],
+    }
+    let state: State = {
+      ...makeState(),
+      nodes: [top, group],
+    }
+
+    // Perform an undoable layout before the time-window transition.
+    state = {
+      ...state,
+      ...applyUndoablePartial(
+        state,
+        layout(state, { 'eth:top': { x: 600, y: 120 } }),
+      ),
+    }
+    expect(state.nodes[0]?.box.x).toEqual(600)
+
+    // Window boundary crosses: eth:top retires, eth:member becomes critical.
+    state = { ...state, ...syncCriticality(state, new Set(['eth:member'])) }
+    expect(state.nodes[0]?.isCritical).toEqual(false)
+    expect(state.nodes[1]?.subnodes[0]?.isCritical).toEqual(true)
+
+    // Undo restores position but keeps the live criticality values.
+    state = { ...state, ...undo(state) }
+    expect(state.nodes[0]?.box.x).toEqual(100)
+    expect(state.nodes[0]?.isCritical).toEqual(false)
+    expect(state.nodes[1]?.subnodes[0]?.isCritical).toEqual(true)
+
+    // Redo restores the moved position and still keeps live criticality.
+    state = { ...state, ...redo(state) }
+    expect(state.nodes[0]?.box.x).toEqual(600)
+    expect(state.nodes[0]?.isCritical).toEqual(false)
+    expect(state.nodes[1]?.subnodes[0]?.isCritical).toEqual(true)
+  })
+
   it('fits a wide perimeter chain in a narrow panel down to MIN_ZOOM', () => {
     const chain = Array.from({ length: 12 }, (_, i) =>
       makeNode(`eth:c${i}`, true, i === 11 ? [] : [`eth:c${i + 1}`]),

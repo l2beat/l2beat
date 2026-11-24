@@ -44,14 +44,15 @@ export function getNextCriticalTransitionDelayMs(
   for (const flag of flags) {
     if (flag === undefined || flag === true) continue
     if (flag.sinceTimestamp !== undefined) {
-      const atMs = flag.sinceTimestamp * 1000
+      // Scheduled while nowSeconds < sinceTimestamp; activates at ceil(sinceTimestamp).
+      const atMs = Math.ceil(flag.sinceTimestamp) * 1000
       if (atMs > nowMs && (earliestMs === undefined || atMs < earliestMs)) {
         earliestMs = atMs
       }
     }
     if (flag.untilTimestamp !== undefined) {
-      // Active while nowSeconds <= untilTimestamp; retires at untilTimestamp + 1s.
-      const atMs = (flag.untilTimestamp + 1) * 1000
+      // Active while nowSeconds <= untilTimestamp; retires at floor(untilTimestamp) + 1s.
+      const atMs = (Math.floor(flag.untilTimestamp) + 1) * 1000
       if (atMs > nowMs && (earliestMs === undefined || atMs < earliestMs)) {
         earliestMs = atMs
       }

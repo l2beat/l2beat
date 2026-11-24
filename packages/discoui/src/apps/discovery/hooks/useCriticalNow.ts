@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ApiCriticalFlag } from '../../../api/types'
 import {
   getNextCriticalTransitionDelayMs,
@@ -13,9 +13,24 @@ export function useCriticalNow(
   flags: readonly (ApiCriticalFlag | undefined)[],
 ): number {
   const [tick, setTick] = useState(0)
+  const renderedNowMs = Date.now()
+  const renderedNowMsRef = useRef(renderedNowMs)
+  renderedNowMsRef.current = renderedNowMs
 
   useEffect(() => {
-    const delayMs = getNextCriticalTransitionDelayMs(flags, Date.now())
+    const currentMs = Date.now()
+    const delayFromRender = getNextCriticalTransitionDelayMs(
+      flags,
+      renderedNowMsRef.current,
+    )
+    if (
+      delayFromRender !== undefined &&
+      renderedNowMsRef.current + delayFromRender <= currentMs
+    ) {
+      setTick((n) => n + 1)
+      return
+    }
+    const delayMs = getNextCriticalTransitionDelayMs(flags, currentMs)
     if (delayMs === undefined) {
       return
     }
@@ -28,5 +43,5 @@ export function useCriticalNow(
     return () => clearTimeout(timer)
   }, [flags, tick])
 
-  return Math.floor(Date.now() / 1000)
+  return Math.floor(renderedNowMs / 1000)
 }

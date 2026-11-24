@@ -1,4 +1,5 @@
 import type { HistorySnapshot, HistoryState, Node, State } from '../State'
+import { mapGraphItems } from './graphProjection'
 import { updateNodePositions } from './updateNodePositions'
 
 const HISTORY_LIMIT = 50
@@ -63,11 +64,18 @@ export function applyHistorySnapshot(
   state: State,
   snapshot: HistorySnapshot,
 ): State {
-  const nodeIds = new Set(snapshot.nodes.map((node) => node.id))
+  const liveCriticality = collectLeafCriticality(state.nodes)
+  const nodes = mapGraphItems(snapshot.nodes, (node) => {
+    if (node.subnodes.length > 0) return node
+    const live = liveCriticality.get(node.id)
+    if (live === undefined || live === node.isCritical) return node
+    return { ...node, isCritical: live }
+  })
+  const nodeIds = new Set(nodes.map((node) => node.id))
   const selected = state.selected.filter((id) => nodeIds.has(id))
 
   return updateNodePositions(state, {
-    nodes: [...snapshot.nodes],
+    nodes,
     ...(snapshot.transform !== undefined
       ? { transform: snapshot.transform }
       : {}),
@@ -78,6 +86,23 @@ export function applyHistorySnapshot(
     selection: undefined,
     positionsBeforeMove: {},
   })
+}
+
+function collectLeafCriticality(nodes: readonly Node[]): Map<string, boolean> {
+  const map = new Map<string, boolean>()
+  const stack: Node[] = [...nodes]
+  while (stack.length > 0) {
+    const current = stack.pop()
+    if (!current) continue
+    if (current.subnodes.length === 0) {
+      map.set(current.id, current.isCritical)
+    } else {
+      for (const subnode of current.subnodes) {
+        stack.push(subnode)
+      }
+    }
+  }
+  return map
 }
 
 export function transformsEqual(
