@@ -1,31 +1,14 @@
 import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
-import {
-  type ComponentProps,
-  Fragment,
-  type ReactNode,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { type ComponentProps, type ReactNode, useMemo, useRef } from 'react'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTooltipTitle } from '~/components/core/chart/ChartTooltip'
-import { DialogTitle } from '~/components/core/Dialog'
-import { Drawer, DrawerContent, DrawerHeader } from '~/components/core/Drawer'
-import {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-  PopoverPortal,
-} from '~/components/core/Popover'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { TooltipFootnote } from '~/components/core/tooltip/TooltipParts'
 import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
-import { CloseIcon } from '~/icons/Close'
 import type {
   ActivityChangeEvent,
   ActivityChangeEventsData,
@@ -89,10 +72,10 @@ interface PinGroup {
 }
 
 /**
- * Logo pins along the top edge of the chart, in its top margin, at
- * the strongest changes. A pin opens the breakdown: a popover where the
- * pointer can hover, a drawer on touch. Rendered inside the chart's plot box,
- * whose width the x axis spans like the milestones under it.
+ * Logo pins along the top edge of the chart, in its top margin, at the
+ * strongest changes. Each pin's tooltip is the change's breakdown; on touch a
+ * tap opens it. Rendered inside the chart's plot box, whose width the x axis
+ * spans like the milestones under it.
  */
 export function ActivityChangePins({
   events,
@@ -105,26 +88,14 @@ export function ActivityChangePins({
   chartData: { timestamp: number }[] | undefined
   chartMeta: ChartMeta
 }) {
-  const [openKey, setOpenKey] = useState<string>()
   const ref = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref })
-  // Undefined while hydrating: render what the server did, the popover.
+  // Undefined while hydrating: render what the server did, as for a mouse.
   const canHover = useCanHover() !== false
 
   const groups = useMemo(
     () => getPinGroups(events, chartData, width, canHover),
     [events, chartData, width, canHover],
-  )
-  const openGroup = groups.find((g) => g.key === openKey)
-
-  const details = (group: PinGroup) => (
-    <ChangeDetails
-      events={group.events}
-      projects={projects}
-      chartMeta={chartMeta}
-      onClose={() => setOpenKey(undefined)}
-      inDrawer={!canHover}
-    />
   )
 
   return (
@@ -133,67 +104,25 @@ export function ActivityChangePins({
       data-role="activity-change-pins"
       className="pointer-events-none absolute inset-0 z-10"
     >
-      {groups.map((group) => {
-        const pin = (
-          <Pin
-            group={group}
-            projects={projects}
-            chartMeta={chartMeta}
-            isOpen={group.key === openKey}
-            stemHeight={Math.max(0, (height ?? 0) - PIN_SIZE - X_AXIS_HEIGHT)}
-            onOpen={() =>
-              setOpenKey(group.key === openKey ? undefined : group.key)
-            }
-          />
-        )
-        if (!canHover) return <Fragment key={group.key}>{pin}</Fragment>
-        return (
-          <Popover
-            key={group.key}
-            open={group.key === openKey}
-            onOpenChange={(open) => !open && setOpenKey(undefined)}
-          >
-            <PinTooltip group={group} projects={projects} hidden={!!openKey}>
-              <PopoverAnchor asChild>{pin}</PopoverAnchor>
-            </PinTooltip>
-            {/* In place, it would inherit the overlay's pointer-events-none
-                and be clipped by the chart's box. */}
-            <PopoverPortal>
-              <PopoverContent
-                side="bottom"
-                align="center"
-                sideOffset={6}
-                collisionPadding={16}
-                aria-label="Change breakdown"
-                // The chart tooltip's frame: a border in place of the shared
-                // popover's shadow. tailwind-merge sees neither the shared
-                // `shadow-popover` nor `border-none` as overridden here. Out of
-                // the card, it takes the tooltip's dark surface, not the page's.
-                className="max-h-(--radix-popover-content-available-height) w-[328px] overflow-y-auto border border-divider border-solid p-3 shadow-none! dark:bg-header-secondary"
-              >
-                {details(group)}
-              </PopoverContent>
-            </PopoverPortal>
-          </Popover>
-        )
-      })}
-      {!canHover && (
-        <Drawer
-          open={!!openGroup}
-          onOpenChange={(open) => !open && setOpenKey(undefined)}
-        >
-          <DrawerContent
-            className="max-h-[85dvh]"
-            contentClassName="flex min-h-0 flex-col pb-0"
-          >
-            {/* Room on the right for the close button's hit area, which sits
-                past the content edge; the scroll box would clip it. */}
-            <DrawerHeader className="-mr-[9px] min-h-0 overflow-y-auto pr-[9px] pb-8">
-              {openGroup && details(openGroup)}
-            </DrawerHeader>
-          </DrawerContent>
-        </Drawer>
-      )}
+      {groups.map((group) => (
+        <Tooltip key={group.key} delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Pin
+              group={group}
+              projects={projects}
+              chartMeta={chartMeta}
+              stemHeight={Math.max(0, (height ?? 0) - PIN_SIZE - X_AXIS_HEIGHT)}
+            />
+          </TooltipTrigger>
+          <TooltipContent side="bottom" className="w-[328px]">
+            <ChangeBreakdown
+              events={group.events}
+              projects={projects}
+              chartMeta={chartMeta}
+            />
+          </TooltipContent>
+        </Tooltip>
+      ))}
     </div>
   )
 }
@@ -246,18 +175,13 @@ function Pin({
   group,
   projects,
   chartMeta,
-  isOpen,
   stemHeight,
-  onOpen,
-  onClick,
   ...props
 }: ComponentProps<'button'> & {
   group: PinGroup
   projects: Record<string, ActivityChangeProject>
   chartMeta: ChartMeta
-  isOpen: boolean
   stemHeight: number
-  onOpen: () => void
 }) {
   const event = group.events[0] as ActivityChangeEvent
   const color = chartMeta[event.category]?.color
@@ -265,18 +189,13 @@ function Pin({
 
   return (
     <button
-      // The popover anchor and the tooltip trigger pass their props and ref here.
+      // The tooltip trigger passes its props, ref and open state here.
       {...props}
       type="button"
       aria-label={[...group.events]
         .sort((a, b) => a.timestamp - b.timestamp)
         .map((e) => getEventLabel(e, projects))
         .join('; ')}
-      aria-expanded={isOpen}
-      onClick={(e) => {
-        onClick?.(e)
-        onOpen()
-      }}
       className="group/pin pointer-events-auto absolute top-0 cursor-pointer outline-none"
       style={{ left: group.x - PIN_SIZE / 2, width: PIN_SIZE }}
     >
@@ -284,7 +203,7 @@ function Pin({
         className={cn(
           'relative flex items-center justify-center rounded-full border-2 bg-surface-primary',
           'group-focus-visible/pin:ring-2 group-focus-visible/pin:ring-brand',
-          isOpen && 'ring-2 ring-primary/20',
+          'group-data-[state=open]/pin:ring-2 group-data-[state=open]/pin:ring-primary/20',
         )}
         style={{ width: PIN_SIZE, height: PIN_SIZE, borderColor: color }}
       >
@@ -322,8 +241,7 @@ function Pin({
         aria-hidden
         className={cn(
           'pointer-events-none absolute left-1/2 w-0 border-l border-dashed opacity-0 transition-opacity',
-          'group-hover/pin:opacity-100 group-focus-visible/pin:opacity-100',
-          isOpen && 'opacity-100',
+          'group-hover/pin:opacity-100 group-focus-visible/pin:opacity-100 group-data-[state=open]/pin:opacity-100',
         )}
         style={{ top: PIN_SIZE, height: stemHeight, borderColor: color }}
       />
@@ -331,56 +249,15 @@ function Pin({
   )
 }
 
-function PinTooltip({
-  group,
-  projects,
-  hidden,
-  children,
-}: {
-  group: PinGroup
-  projects: Record<string, ActivityChangeProject>
-  hidden: boolean
-  children: ReactNode
-}) {
-  const events = [...group.events].sort((a, b) => a.timestamp - b.timestamp)
-  return (
-    <Tooltip delayDuration={0}>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      {/* The breakdown replaces the tooltip while it is open. */}
-      {!hidden && (
-        <TooltipContent side="bottom" className="max-w-64">
-          <div className="flex flex-col gap-2">
-            {events.map((event) => (
-              <div key={getEventKey(event)} className="flex flex-col gap-0.5">
-                <ChartTooltipTitle className="whitespace-nowrap">
-                  {formatDay(event.timestamp)}
-                </ChartTooltipTitle>
-                <span className="font-medium text-label-value-14">
-                  {CATEGORY_LABELS[event.category]} {formatRelative(event)}
-                </span>
-                <ActivityChangeSummary event={event} projects={projects} />
-              </div>
-            ))}
-            <TooltipFootnote>Click for the breakdown</TooltipFootnote>
-          </div>
-        </TooltipContent>
-      )}
-    </Tooltip>
-  )
-}
-
-function ChangeDetails({
+/** The date, then each change on it with the projects that drove it. */
+function ChangeBreakdown({
   events: groupEvents,
   projects,
   chartMeta,
-  onClose,
-  inDrawer,
 }: {
   events: ActivityChangeEvent[]
   projects: Record<string, ActivityChangeProject>
   chartMeta: ChartMeta
-  onClose: () => void
-  inDrawer: boolean
 }) {
   const events = [...groupEvents].sort((a, b) => a.timestamp - b.timestamp)
   const timestamps = events.map((e) => e.timestamp)
@@ -388,29 +265,12 @@ function ChangeDetails({
   const to = Math.max(...timestamps)
   // A merged pin can hold changes days apart; then each one shows its date.
   const isOneDay = from === to
-  const titleText = formatRange(from, to + UnixTime.DAY)
-  const titleClassName = 'font-medium text-label-value-14 text-primary'
 
   return (
     <div className="flex flex-col text-left">
-      <div className="flex items-center justify-between gap-2">
-        {inDrawer ? (
-          // Not asChild: its own classes would win over these unmerged.
-          <DialogTitle className={titleClassName}>{titleText}</DialogTitle>
-        ) : (
-          <span className={titleClassName}>{titleText}</span>
-        )}
-        <button
-          type="button"
-          aria-label="Close"
-          title="Close"
-          onClick={onClose}
-          // The glyph, not the hit area, ends on the content edge.
-          className="-mr-[9px] -my-1.5 flex size-7 shrink-0 items-center justify-center rounded-md hover:bg-surface-secondary"
-        >
-          <CloseIcon className="size-2.5" />
-        </button>
-      </div>
+      <ChartTooltipTitle>
+        {formatRange(from, to + UnixTime.DAY)}
+      </ChartTooltipTitle>
       <div className="flex flex-col divide-y divide-divider">
         {events.map((event) => (
           <EventDetails
