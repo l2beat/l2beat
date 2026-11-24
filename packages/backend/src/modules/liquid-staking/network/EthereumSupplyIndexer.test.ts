@@ -121,6 +121,23 @@ describe(toDailySupplies.name, () => {
     ])
   })
 
+  it('takes a valid point within the hour when the one at midnight is invalid', () => {
+    const data: CoinMarketChartRangeData = {
+      prices: [
+        { date: date(day), value: 3_000 },
+        { date: date(day + HOUR), value: 3_000 },
+      ],
+      marketCaps: [
+        { date: date(day), value: 0 },
+        { date: date(day + HOUR), value: 360_000_000_000 },
+      ],
+    }
+
+    expect(toDailySupplies(data, day, day)).toEqual([
+      { timestamp: day, supply: 120_000_000 },
+    ])
+  })
+
   it('leaves out a day whose point gives no positive supply', () => {
     const data: CoinMarketChartRangeData = {
       prices: [{ date: date(day), value: 3_000 }],
