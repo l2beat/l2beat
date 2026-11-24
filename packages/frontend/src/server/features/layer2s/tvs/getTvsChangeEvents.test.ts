@@ -50,7 +50,7 @@ describe(computeTvsChangeEvents.name, () => {
     const records = [
       ...series('a', drift(10e9)),
       ...series('b', drift(5e9)),
-      ...series('c', (day) => drift(1e9)(day) - (day >= 35 ? 4e8 : 0)),
+      ...series('c', (day) => drift(1e9)(day) - (day >= 35 ? 6e8 : 0)),
     ]
 
     const [event] = computeTvsChangeEvents(records, categories, VISIBLE_FROM)
@@ -73,11 +73,12 @@ describe(computeTvsChangeEvents.name, () => {
     )
   })
 
-  it('ignores a jump that is small next to all L2 TVS', () => {
+  it('ignores a jump too small to see next to all L2 TVS', () => {
+    // A fifth of its category, but about 1% of all L2 TVS.
     const records = [
       ...series('a', drift(100e9)),
       ...series('b', drift(50e9)),
-      ...series('c', (day) => drift(1e8)(day) + (day >= 35 ? 5e7 : 0)),
+      ...series('c', (day) => drift(10e9)(day) + (day >= 35 ? 2e9 : 0)),
     ]
 
     expect(computeTvsChangeEvents(records, categories, VISIBLE_FROM)).toEqual(

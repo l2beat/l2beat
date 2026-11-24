@@ -44,10 +44,11 @@ export type TvsChangeEventsParams = v.infer<typeof TvsChangeEventsParams>
 // doesn't fire.
 const MIN_ROBUST_Z = 4
 // The change beyond the market, and the category's whole change, which the
-// pin shows: big enough to read as a jump on the chart.
+// pin shows, against the category.
 const MIN_RELATIVE_EXCESS = 0.03
 const MIN_RELATIVE_CHANGE = 0.05
-const MIN_SHARE_OF_ALL_L2 = 0.005
+// The chart stacks all L2s, so this is what a jump must be to show on it.
+const MIN_SHARE_OF_ALL_L2 = 0.03
 
 const cache = new FrontendInMemoryCache('getTvsChangeEvents')
 
