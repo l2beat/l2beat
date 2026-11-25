@@ -23,6 +23,8 @@ export function getFileVersionOnMainBranch(
   const result = spawnSync('git', ['show', `main:${filePath}`], {
     maxBuffer: BUFFER_SIZE,
     encoding: 'utf-8',
+    // The missing-file check below reads git's English error text.
+    env: { ...process.env, LC_ALL: 'C' },
   })
   return interpretGitShowResult(filePath, result, logger, getMainBranchHash)
 }
