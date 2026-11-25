@@ -208,7 +208,6 @@ export class WatchMonitorController {
       record,
       hashWatchConfig(config),
     )
-    const judge = this.watchReader.readJudgePrompt(location.name)
     const label = statusLabel(classified.status)
     const publishableRecord = classified.record
 
@@ -238,10 +237,6 @@ export class WatchMonitorController {
         watchDiffToMarkdown(classified.pending.diff),
         '',
       )
-    }
-
-    if (judge !== null) {
-      lines.push('## Judge Guidance', '', judge.trim(), '')
     }
 
     lines.push(

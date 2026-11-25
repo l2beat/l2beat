@@ -244,8 +244,15 @@ describe(createWatchMonitorRouter.name, () => {
         }
         return undefined
       },
-      readJudgePrompt: (name: string) =>
-        name === 'optimism' ? 'Alert on new audit PDFs.' : null,
+      readJudgePrompt: (name: string) => {
+        if (name === 'optimism') {
+          return 'Alert on new audit PDFs.'
+        }
+        if (name === 'newly-public') {
+          return 'Internal triage note for private-org/secret-repo.'
+        }
+        return null
+      },
     })
 
     const controller = new WatchMonitorController(db, reader, [
@@ -287,7 +294,7 @@ describe(createWatchMonitorRouter.name, () => {
       expect(res.headers.get('access-control-allow-origin')).toEqual(null)
       const body = (await res.json()) as {
         generatedAt: string
-        watches: { name: string }[]
+        watches: { name: string; judge: string | null }[]
         failedWatches: {
           name: string
           kind: 'project' | 'global'
@@ -303,6 +310,12 @@ describe(createWatchMonitorRouter.name, () => {
         'private-repo',
         'repointed-public',
       ])
+      expect(body.watches.find((w) => w.name === 'optimism')?.judge).toEqual(
+        'Alert on new audit PDFs.',
+      )
+      expect(
+        body.watches.find((w) => w.name === 'newly-public')?.judge,
+      ).toEqual('Internal triage note for private-org/secret-repo.')
       expect(body.failedWatches).toEqual([
         {
           name: 'failed-watch',
@@ -423,11 +436,12 @@ describe(createWatchMonitorRouter.name, () => {
       expect(text).toInclude('# optimism')
       expect(text).toInclude('## Changes')
       expect(text).toInclude('+     org/r:b.pdf: {"sha":"2","size":20}')
-      expect(text).toInclude('## Judge Guidance')
-      expect(text).toInclude('Alert on new audit PDFs.')
+      // Judge prompts stay behind authenticated /watch/pending, never public markdown.
+      expect(text).not.toInclude('## Judge Guidance')
+      expect(text).not.toInclude('Alert on new audit PDFs.')
 
       // Watch switched from private -> public before a fresh public run:
-      // must NOT leak the previous private snapshot's files, diff, or raw error.
+      // must NOT leak the previous private snapshot's files, diff, raw error, or judge.md.
       const newlyPublic = await fetch(
         `${url}/status/watch/newly-public.html.md`,
       )
@@ -437,6 +451,8 @@ describe(createWatchMonitorRouter.name, () => {
       expect(newlyPublicText).toInclude('- **Last attempt**: Never')
       expect(newlyPublicText).not.toInclude('leaked-secret.pdf')
       expect(newlyPublicText).not.toInclude('private-org/secret-repo')
+      expect(newlyPublicText).not.toInclude('Internal triage note')
+      expect(newlyPublicText).not.toInclude('## Judge Guidance')
       expect(newlyPublicText).not.toInclude('## Changes')
 
       // Failure-only row recorded while private must NOT surface as Failed or
