@@ -1,9 +1,4 @@
-import {
-  Address32,
-  assert,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { Address32, assert, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeFunctionData, parseAbi } from 'viem'
 import {
   createEventParser,
@@ -15,6 +10,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
   type TxToCapture,
 } from '../types'
 import { deriveEthDeposit } from './deriveEthDeposit'
@@ -115,7 +111,7 @@ export const L2ToL1Tx = createInteropEventType<{
   position: number
   amount?: bigint // ETH amount if callvalue > 0
   isEthOnly?: boolean // true if ETH sent with no calldata
-}>('orbitstack.L2ToL1Tx', { ttl: 30 * UnixTime.DAY })
+}>('orbitstack.L2ToL1Tx', { ttl: SLOW_WITHDRAWAL_TTL })
 
 export const OutBoxTransactionExecuted = createInteropEventType<{
   chain: string
