@@ -29,6 +29,7 @@ function record(
     configHash: null,
     pendingNotifications: [],
     lastAttemptAt: null,
+    lastAttemptId: null,
     lastError: null,
     ...partial,
   }
@@ -87,11 +88,13 @@ describe(createWatchMonitorRouter.name, () => {
           },
         },
       }),
-      // Captured earlier while private; watch.jsonc has since switched to public: true.
+      // Captured earlier while private (including a private error diagnostic);
+      // watch.jsonc has since switched to public: true.
       record({
         name: 'newly-public',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        lastError: '401 private-org/secret-repo',
         isPublic: false,
         configHash: hashWatchConfig(watchConfig('newly-public', false)),
         values: {
@@ -243,6 +246,13 @@ describe(createWatchMonitorRouter.name, () => {
           lastError: 'GitHub tree truncated',
         },
         {
+          name: 'newly-public',
+          kind: 'project',
+          lastAttemptAt: 1_700_000_000,
+          lastSuccessAt: 1_700_000_000,
+          lastError: '401 private-org/secret-repo',
+        },
+        {
           name: 'stale-watch',
           kind: 'project',
           lastAttemptAt: 1_700_003_600,
@@ -341,7 +351,7 @@ describe(createWatchMonitorRouter.name, () => {
       expect(text).toInclude('Alert on new audit PDFs.')
 
       // Watch switched from private -> public before a fresh public run:
-      // must NOT leak the previous private snapshot's files or diff.
+      // must NOT leak the previous private snapshot's files, diff, or raw error.
       const newlyPublic = await fetch(
         `${url}/status/watch/newly-public.html.md`,
       )
@@ -349,7 +359,16 @@ describe(createWatchMonitorRouter.name, () => {
       const newlyPublicText = await newlyPublic.text()
       expect(newlyPublicText).toInclude('- **Status**: Not yet run')
       expect(newlyPublicText).not.toInclude('leaked-secret.pdf')
+      expect(newlyPublicText).not.toInclude('private-org/secret-repo')
       expect(newlyPublicText).not.toInclude('## Changes')
+
+      // Public watch with a failed latest run shows generic status only, not raw error.
+      const stale = await fetch(`${url}/status/watch/stale-watch.html.md`)
+      expect(stale.status).toEqual(200)
+      const staleText = await stale.text()
+      expect(staleText).toInclude('- **Status**: Stale (last run failed)')
+      expect(staleText).not.toInclude('HTTP timeout')
+      expect(staleText).not.toInclude('Last error')
 
       const privateWatch = await fetch(
         `${url}/status/watch/private-repo.html.md`,

@@ -225,15 +225,8 @@ export class WatchMonitorController {
       `- **Last attempt**: ${formatIso(publishableRecord?.lastAttemptAt ?? null)}`,
       `- **Pending items**: ${classified.pending?.pendingItems ?? 0}`,
       `- **Changed paths**: ${classified.pending?.changedPaths ?? 0}`,
+      '',
     ]
-
-    if (
-      publishableRecord?.lastError !== null &&
-      publishableRecord?.lastError !== undefined
-    ) {
-      lines.push(`- **Last error**: ${publishableRecord.lastError}`)
-    }
-    lines.push('')
 
     if (
       classified.pending !== undefined &&
@@ -292,24 +285,24 @@ export class WatchMonitorController {
         pending: undefined,
       }
     }
-    // Never publish a snapshot captured under a private or outdated watch config.
+    // Never publish a snapshot or error captured under a private or outdated
+    // watch config. Raw error text stays behind authenticated /watch/pending.
+    if (record.timestamp === null && record.lastError !== null) {
+      return {
+        location,
+        status: 'failed',
+        record: {
+          ...record,
+          lastError: null,
+        },
+        pending: undefined,
+      }
+    }
     const snapshotMatchesCurrentPublicConfig =
       record.isPublic &&
       record.configHash !== null &&
       record.configHash === expectedConfigHash
     if (!snapshotMatchesCurrentPublicConfig) {
-      if (record.lastError !== null) {
-        return {
-          location,
-          status: 'failed',
-          record: {
-            ...record,
-            timestamp: null,
-            values: null,
-          },
-          pending: undefined,
-        }
-      }
       return {
         location,
         status: 'never-run',
