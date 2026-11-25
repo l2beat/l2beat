@@ -85,9 +85,11 @@ export async function writeWatchDiffHistory(
     onDisk === undefined
       ? { id: undefined, description: undefined }
       : findUnmergedWatchEntry(diffHistoryPath, onDisk, fromMain, logger)
-  if (onDisk !== undefined && diff.length === 0) {
+  if (diff.length === 0) {
     logger.info('No changes found.')
-    await revertDiffHistory(diffHistoryPath, fromMain)
+    if (onDisk !== undefined) {
+      await revertDiffHistory(diffHistoryPath, fromMain)
+    }
     return
   }
   const date = new Date().toUTCString()

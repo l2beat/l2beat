@@ -186,24 +186,9 @@ describe(githubDirectory.name, () => {
     ).toEqual(false)
   })
 
-  it('rejects private repositories when running with publicOnly and a token', async () => {
-    const fetchPrivate = mockFn().resolvesTo({ private: true })
-    await expect(
-      githubDirectory.fetch(
-        { repository: 'org/secret', branch: 'main', path: 'audits' },
-        {
-          http: mockObject<HttpClient>({ fetch: fetchPrivate }),
-          githubToken: 'public-token',
-          publicOnly: true,
-        },
-      ),
-    ).toBeRejectedWith('GitHub repository is private')
-    expect(fetchPrivate).toHaveBeenCalledTimes(1)
-
-    const fetchPublic = mockFn()
-      .resolvesToOnce({ private: false })
-      .resolvesToOnce(TREE_RESPONSE)
-    const result = await githubDirectory.fetch(
+  it('never sends authorization headers when publicOnly is set', async () => {
+    const fetch = mockFn().resolvesTo(TREE_RESPONSE)
+    await githubDirectory.fetch(
       {
         repository: 'org/public',
         branch: 'main',
@@ -211,11 +196,20 @@ describe(githubDirectory.name, () => {
         extensions: ['.pdf'],
       },
       {
-        http: mockObject<HttpClient>({ fetch: fetchPublic }),
-        githubToken: 'public-token',
+        http: mockObject<HttpClient>({ fetch }),
+        githubToken: 'should-not-be-sent',
         publicOnly: true,
       },
     )
-    expect(Object.keys(result as Record<string, unknown>).length).toEqual(2)
+    expect(fetch).toHaveBeenOnlyCalledWith(
+      'https://api.github.com/repos/org/public/git/trees/main?recursive=1',
+      {
+        headers: {
+          accept: 'application/vnd.github+json',
+          'x-github-api-version': '2022-11-28',
+        },
+        timeout: 30_000,
+      },
+    )
   })
 })

@@ -18,11 +18,9 @@ export const GithubTree = v.object({
 })
 export type GithubTree = v.infer<typeof GithubTree>
 
-const GithubRepository = v.object({
-  private: v.boolean(),
-})
-
-// Anonymous GitHub allows 60 requests an hour per IP; the token lifts that.
+// Anonymous GitHub allows 60 requests an hour per IP; the token lifts that for
+// private watches. Public watches always run anonymously so a newly-private
+// repository can never be fetched and published without TOCTOU races.
 export async function fetchGithubJson(
   context: WatchContext,
   url: string,
@@ -31,7 +29,11 @@ export async function fetchGithubJson(
     accept: 'application/vnd.github+json',
     'x-github-api-version': '2022-11-28',
   }
-  if (context.githubToken !== undefined && context.githubToken !== '') {
+  if (
+    context.publicOnly !== true &&
+    context.githubToken !== undefined &&
+    context.githubToken !== ''
+  ) {
     headers.authorization = `Bearer ${context.githubToken}`
   }
   return await context.http.fetch(url, {
@@ -42,28 +44,12 @@ export async function fetchGithubJson(
 }
 
 // A truncated tree lists only part of the repository, and the missing part
-// would read as removed files. When a public watch runs with an authenticated
-// token, also verify repository visibility so a newly-private repo never leaks.
+// would read as removed files.
 export async function fetchGithubTree(
   context: WatchContext,
   repository: string,
   branch: string,
 ): Promise<GithubTree> {
-  if (
-    context.publicOnly === true &&
-    context.githubToken !== undefined &&
-    context.githubToken !== ''
-  ) {
-    const repoUrl = `https://api.github.com/repos/${repository}`
-    const repo = GithubRepository.validate(
-      await fetchGithubJson(context, repoUrl),
-    )
-    if (repo.private) {
-      throw new Error('GitHub repository is private', {
-        cause: { repository },
-      })
-    }
-  }
   const encodedBranch = branch.split('/').map(encodeURIComponent).join('/')
   const url = `https://api.github.com/repos/${repository}/git/trees/${encodedBranch}?recursive=1`
   const tree = GithubTree.validate(await fetchGithubJson(context, url))

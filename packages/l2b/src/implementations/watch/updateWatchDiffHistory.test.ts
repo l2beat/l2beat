@@ -1,7 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { WatchDiff } from '@l2beat/discovery'
 import { expect } from 'earl'
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'fs'
+import {
+  existsSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
 import { assertNoUnmergedWatchEntry } from '../discovery/updateDiffHistory'
@@ -171,6 +177,12 @@ describe(writeWatchDiffHistory.name, () => {
     )
     await writeWatchDiffHistory(file, main, [], 1, undefined, Logger.SILENT)
     expect(readFileSync(file, 'utf-8')).toEqual(main)
+  })
+
+  it('skips creating diffHistory.md when there is no history on disk and diff is empty', async () => {
+    const file = join(directory, 'diffHistory.md')
+    await writeWatchDiffHistory(file, '', [], 1, undefined, Logger.SILENT)
+    expect(existsSync(file)).toEqual(false)
   })
 })
 
