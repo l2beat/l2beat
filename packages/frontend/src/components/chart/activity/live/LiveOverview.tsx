@@ -122,12 +122,7 @@ export function LiveOverview({
     const next = target.current
     target.current = undefined
     if (next === undefined) return
-    if (read) {
-      handlers.current.onMove({
-        ...next,
-        end: next.end === undefined ? undefined : Math.round(next.end),
-      })
-    }
+    if (read) handlers.current.onMove(next)
     handlers.current.onSeek(undefined)
   }
   const timeAt = (event: PointerEvent) => {
@@ -156,7 +151,10 @@ export function LiveOverview({
   const pointTo = (event: PointerEvent) => {
     const drag = dragging.current
     if (drag === undefined) return
-    const at = drag.at + (event.clientX - drag.x) * drag.scale
+    const box = ref.current?.getBoundingClientRect()
+    const moved = drag.at + (event.clientX - drag.x) * drag.scale
+    // at or past the strip's end is the newest block, as it is now
+    const at = box && event.clientX >= box.right ? Math.max(moved, to) : moved
     const resize = drag.resize
     // a resize from the keyboard not yet read is kept
     const seconds = target.current?.seconds ?? length
