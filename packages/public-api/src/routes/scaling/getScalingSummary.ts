@@ -11,7 +11,7 @@ import {
   type ScalingRiskValue,
 } from '@l2beat/config/build/utils/scalingAssessment'
 import type { Database } from '@l2beat/database'
-import { calculatePercentageChange, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type {
   ScalingRisk,
@@ -133,6 +133,7 @@ function toScalingRisk({
   sentiment,
   description,
   warning,
+  regular,
 }: ScalingRiskValue): ScalingRisk {
   return {
     name,
@@ -140,6 +141,7 @@ function toScalingRisk({
     sentiment,
     description,
     warning: warning && { value: warning.value, sentiment: warning.sentiment },
+    regular: regular && { value: regular.value, sentiment: regular.sentiment },
   }
 }
 
@@ -183,11 +185,19 @@ export function getLatestTvsByProject(
         associated: latest.associated,
       },
       change7d: sevenDaysAgo
-        ? calculatePercentageChange(latest.value, sevenDaysAgo.value)
+        ? getRelativeChange(latest.value, sevenDaysAgo.value)
         : null,
     })
   }
   return result
+}
+
+/**
+ * Unlike the website's calculatePercentageChange, which shows 0% for both,
+ * a change from 0 is unknown and a fall to 0 is -100%.
+ */
+function getRelativeChange(now: number, then: number): number | null {
+  return then === 0 ? null : now / then - 1
 }
 
 /** The same window as the frontend's optionToRange('3d') start. */

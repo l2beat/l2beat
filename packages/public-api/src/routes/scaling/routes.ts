@@ -16,7 +16,7 @@ export function addScalingRoutes(
     {
       summary: 'Assessment and TVS of every active layer 2 and layer 3',
       description:
-        'Stage, risks and under-review status match the ETHBEAT website. TVS excludes restricted RWA tokens and includes associated tokens, like the scaling summary page. A project whose TVS is not tracked or not yet synced has `tvs: null`; a project whose `tvs.timestamp` is older than `tvsTimestamp` is lagging. `change7d` is a fraction (0.05 is +5%) and null when there is no value from seven days before.',
+        'Stage, risks and under-review status match the ETHBEAT website. TVS excludes restricted RWA tokens and includes associated tokens, like the scaling summary page. A project whose TVS is not tracked or not yet synced has `tvs: null`; a project whose `tvs.timestamp` is older than `tvsTimestamp` is lagging. `change7d` is a fraction (0.05 is +5%) and null when there is no value from seven days before, or that value was 0.',
       tags: ['scaling'],
       result: ScalingSummarySchema,
     },

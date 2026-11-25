@@ -158,6 +158,40 @@ describe(toScalingSummary.name, () => {
       'Proposer Failure',
     ])
   })
+
+  // Why: the website shows an exit window with emergency upgrades as
+  // "Emergency: None" beside its regular window; "None" alone overstates the
+  // risk.
+  // How: an exit window with a regular window; the API returns it too.
+  it('keeps the regular exit window', () => {
+    const regular = {
+      value: '10d',
+      sentiment: 'warning' as const,
+      description: 'Regular upgrades',
+    }
+    const view = riskView('None')
+    const summary = toScalingSummary({
+      projects: [
+        scalingProject('arbitrum', {
+          self: {
+            ...view,
+            exitWindow: {
+              ...view.exitWindow,
+              regular,
+            } as typeof view.exitWindow,
+          },
+        }),
+      ],
+      tvs: new Map(),
+      changeReport: {},
+      tvsTimestamp: NOW,
+    })
+
+    const exitWindow = summary.projects[0]?.risks.find(
+      (r) => r.name === 'Exit Window',
+    )
+    expect(exitWindow?.regular).toEqual({ value: '10d', sentiment: 'warning' })
+  })
 })
 
 describe(getLatestTvsByProject.name, () => {
@@ -186,6 +220,24 @@ describe(getLatestTvsByProject.name, () => {
       ['base-ETH'],
     )
     expect(result.get('base')?.change7d).toEqual(null)
+  })
+
+  // Why: the website's percentage helper turns both of these into 0%, which
+  // would claim the TVS did not move. From 0 the change is undefined; to 0 it
+  // is -100%.
+  // How: one project that starts at 0 and one that falls to 0.
+  it('reports change7d as null from 0 and as -1 down to 0', () => {
+    const result = getLatestTvsByProject(
+      [
+        tvsRow('rising', SEVEN_DAYS_AGO, 0),
+        tvsRow('rising', NOW, 100),
+        tvsRow('emptied', SEVEN_DAYS_AGO, 100),
+        tvsRow('emptied', NOW, 0),
+      ],
+      ['rising-ETH', 'emptied-ETH'],
+    )
+    expect(result.get('rising')?.change7d).toEqual(null)
+    expect(result.get('emptied')?.change7d).toEqual(-1)
   })
 
   // Why: the website hides TVS the backend has never synced; so must we.

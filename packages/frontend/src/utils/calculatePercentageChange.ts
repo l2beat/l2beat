@@ -1,7 +1,3 @@
-import { calculatePercentageChange } from '@l2beat/shared-pure'
-
-export { calculatePercentageChange }
-
 export type PercentageChangePeriod =
   | '1D'
   | '7D'
@@ -24,6 +20,21 @@ export const PERIOD_LABEL: Record<PercentageChangePeriod, string> = {
   last24h: '24h',
   last7d: '7d',
   last30d: '30d',
+}
+
+export function calculatePercentageChange(now: number, then: number) {
+  if (now === then || then === 0 || now < 0.01) {
+    return 0
+  }
+  const change = now / then - 1
+  if (
+    change === Number.POSITIVE_INFINITY ||
+    change === null ||
+    Number.isNaN(change)
+  ) {
+    return 0
+  }
+  return change
 }
 
 export function formatPercent(value: number) {

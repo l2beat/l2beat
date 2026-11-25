@@ -14,6 +14,17 @@ export const ScalingRiskSchema = v
         sentiment: v.enum(['bad', 'warning', 'neutral']),
       })
       .optional(),
+    regular: v
+      .object({
+        value: v.string(),
+        sentiment: v
+          .enum(['bad', 'warning', 'good', 'neutral', 'UnderReview'])
+          .optional(),
+      })
+      .optional()
+      .describe(
+        'Exit Window only: the window for regular upgrades, when `value` is the one for emergency upgrades.',
+      ),
   })
   .describe('ScalingRisk')
 export type ScalingRisk = v.infer<typeof ScalingRiskSchema>
