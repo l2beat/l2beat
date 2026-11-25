@@ -94,6 +94,18 @@ describe(toTokens.name, () => {
     expect(result[0]?.addresses).toEqual([])
   })
 
+  // Configs write gas tokens as the symbol is spelled (USDe, reETH), so an
+  // exact comparison against an upper-cased symbol misses them.
+  it('recognizes a gas token whose symbol has mixed case', () => {
+    const project = mockProject([
+      mockToken('USDe', mockAmount({ type: 'const' })),
+    ])
+
+    const [token] = toTokens(project, [mockValue('USDe')])
+
+    expect(token?.isGasToken).toEqual(true)
+  })
+
   function mockValue(
     tokenId: string,
     values: Partial<TokenValueRecord> = {},
@@ -146,7 +158,7 @@ function mockProject(
     tvsConfig: tokens,
     chainConfig: mockObject<NonNullable<Project<'chainConfig'>['chainConfig']>>(
       {
-        gasTokens: ['ETH'],
+        gasTokens: ['ETH', 'USDe'],
       },
     ),
   })

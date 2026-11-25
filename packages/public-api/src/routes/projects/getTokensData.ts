@@ -30,7 +30,9 @@ export function toTokens(
   const tokenValuesMap = new Map(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
-  const gasTokens = project.chainConfig?.gasTokens
+  const gasTokens = project.chainConfig?.gasTokens?.map((symbol) =>
+    symbol.toUpperCase(),
+  )
 
   const tokens: Token[] = []
   for (const token of project.tvsConfig) {

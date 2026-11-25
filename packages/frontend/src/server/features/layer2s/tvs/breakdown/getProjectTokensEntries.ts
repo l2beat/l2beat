@@ -110,7 +110,9 @@ function getEntries(
   const breakdown: ProjectTvsBreakdownTokenEntry[] = []
 
   const projectTokens = project.tvsConfig
-  const gasTokens = project.chainConfig?.gasTokens
+  const gasTokens = project.chainConfig?.gasTokens?.map((symbol) =>
+    symbol.toUpperCase(),
+  )
 
   for (const token of projectTokens) {
     const tokenValue = tokenValuesMap.get(token.id)
