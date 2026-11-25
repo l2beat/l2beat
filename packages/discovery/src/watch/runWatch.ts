@@ -1,4 +1,4 @@
-import { type json, UnixTime } from '@l2beat/shared-pure'
+import { assert, type json, UnixTime } from '@l2beat/shared-pure'
 import { assertWatchValueNotPending } from './pendingItems'
 import { hashWatchConfig, type WatchConfig, type Watched } from './WatchReader'
 import type { WatchContext } from './WatchTemplate'
@@ -43,6 +43,8 @@ export async function runWatch(
     const sorted = sortDeep(value)
     // Reject pending items inside arrays up front before the snapshot can be saved.
     visitObjects(sorted, () => {})
+    // Assigning it would set the prototype of values instead of a key.
+    assert(watch.key !== '__proto__', 'Watch key named __proto__')
     values[watch.key] = sorted
   }
   return { timestamp, configHash: hashWatchConfig(config), values }
