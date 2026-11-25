@@ -7,13 +7,13 @@ import { BLOCK_PERCENTILES, estimateTips, HISTORY_BLOCKS } from './estimateTips'
 import { type FeeHistoryRpc, readBlockTips } from './readBlockTips'
 import { type EthUsdRpc, readEthUsd } from './readEthUsd'
 
-/** Each run reads the newest blocks again, in case of a reorg */
-const REREAD_BLOCKS = 300
+/** Each run reads the newest blocks again, in case of a reorg. Two epochs: a reorg since the Merge is a block or two deep */
+const REREAD_BLOCKS = 64
 
 /**
  * Keeps our estimator's tips at the newest block in the database, for the live
  * card. Blocks already read are kept in memory, so a new head costs one
- * eth_feeHistory call.
+ * eth_feeHistory call for the newest 64.
  */
 export class LiveTipsLoop extends TimeLoop {
   /** Each block's tips at BLOCK_PERCENTILES, by block number */
