@@ -10,7 +10,6 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   description?: string
   tags?: Tags[]
   params?: Validator<P> & { definition?: ImpDefinition }
-  paramDescriptions?: Record<string, string>
   query?: Validator<Q> & { definition?: ImpDefinition }
   queryDescriptions?: Record<string, string>
   result: Validator<O> & { definition?: ImpDefinition }
@@ -212,11 +211,7 @@ export class OpenApi {
             description: route.options.description,
             parameters: [
               ...(route.options.params
-                ? this.schemaToParameters(
-                    'params',
-                    route.options.params,
-                    route.options.paramDescriptions,
-                  )
+                ? this.schemaToParameters('params', route.options.params)
                 : []),
               ...(route.options.query
                 ? this.schemaToParameters(

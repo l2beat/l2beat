@@ -7,7 +7,6 @@ import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import {
   findProject,
-  PROJECT_ID_OR_SLUG_DESCRIPTION,
   projectNotFoundDescription,
 } from '../../utils/findProject'
 import { getTokenTvsData } from './getTokenTvsData'
@@ -67,7 +66,6 @@ export function addTvsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       query: TvsQuerySchema,
       queryDescriptions: TVS_QUERY_DESCRIPTIONS,
       result: TvsResultSchema,
@@ -94,7 +92,7 @@ export function addTvsRoutes(
         {
           key: [
             'tvs',
-            project.id,
+            projectId,
             range,
             ...tokenExclusionsCacheKey(exclusions),
           ],

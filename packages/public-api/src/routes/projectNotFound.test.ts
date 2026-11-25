@@ -9,19 +9,17 @@ import { addActivityRoutes } from './activity/routes'
 import { addProjectsRoutes } from './projects/routes'
 import { addTvsRoutes } from './tvs/routes'
 
-// Why: callers of the website API address projects by slug, and a slug is
-// not always the id. These tests pin how `:projectId` resolves and what a
-// 404 says, because partners branch on both.
+// Why: partners branch on what a 404 says, so "no project has this id" and
+// "this project has no data of that kind" must stay apart, and the contracts
+// and tokens routes must answer with a message rather than an empty body.
 // How: the real routes run in a real Express app on a random port, over an
-// in-memory project list. "alpha" is both the id of one project and the slug
-// of another, which no real project does today, so id precedence can be
-// checked. The database returns no rows; the tests read which project ids
-// reach it and which keys reach the cache.
-describe('per-project routes accept an id or a slug', () => {
+// in-memory project list. "across" exists but has no activity or TVS config.
+// The database returns no rows; the tests read the status and JSON body, and
+// which project ids reach the database and which keys reach the cache.
+describe('per-project routes answer 404 with a message', () => {
   const PROJECTS = [
-    project({ id: 'alpha', slug: 'alpha-one', activity: true }),
-    project({ id: 'other', slug: 'alpha', activity: true }),
-    project({ id: 'across', slug: 'across', activity: false }),
+    project({ id: 'alpha', activity: true }),
+    project({ id: 'across', activity: false }),
   ]
 
   let baseUrl: string
@@ -48,28 +46,14 @@ describe('per-project routes accept an id or a slug', () => {
   afterEach(() => close())
 
   it('finds a project by its id', async () => {
-    const res = await get('/v1/project/other')
-
-    expect(res.status).toEqual(200)
-    expect(res.body).toEqual(expect.subset({ id: 'other', slug: 'alpha' }))
-  })
-
-  it('finds a project by a slug that differs from its id', async () => {
-    const res = await get('/v1/project/alpha-one')
-
-    expect(res.status).toEqual(200)
-    expect(res.body).toEqual(expect.subset({ id: 'alpha' }))
-  })
-
-  it('prefers the id when the value is one project id and another slug', async () => {
     const res = await get('/v1/project/alpha')
 
+    expect(res.status).toEqual(200)
     expect(res.body).toEqual(expect.subset({ id: 'alpha' }))
-    expect(res.body).not.toEqual(expect.subset({ id: 'other' }))
   })
 
-  it('queries data and caches it under the resolved id', async () => {
-    await get('/v1/activity/alpha-one')
+  it('queries data and caches it under the project id', async () => {
+    await get('/v1/activity/alpha')
 
     expect(getActivityRecords).toHaveBeenOnlyCalledWith(
       [ProjectId('alpha')],
@@ -92,9 +76,7 @@ describe('per-project routes accept an id or a slug', () => {
       const res = await get(path)
 
       expect(res.status).toEqual(404)
-      expect(res.body).toEqual({
-        message: 'No project has the id or slug "nope"',
-      })
+      expect(res.body).toEqual({ message: 'No project has the id "nope"' })
     })
   }
 
@@ -127,27 +109,23 @@ interface FakeProject {
   activityConfig?: unknown
 }
 
-function project(opts: { id: string; slug: string; activity: boolean }) {
+function project(opts: { id: string; activity: boolean }) {
   return {
     id: ProjectId(opts.id),
-    slug: opts.slug,
+    slug: opts.id,
     name: opts.id,
     activityConfig: opts.activity ? { type: 'block' } : undefined,
   } satisfies FakeProject
 }
 
-// Mirrors ProjectDatabase.getProject: id wins over slug when both are given,
-// and every `select` key must be present.
+// Mirrors ProjectDatabase.getProject: every `select` key must be present.
 function fakeProjectService(projects: FakeProject[]) {
   return mockObject<ProjectService>({
     getProject: (async (query: {
       id?: string
-      slug?: string
       select?: (keyof FakeProject)[]
     }) => {
-      const found = projects.find((p) =>
-        query.id !== undefined ? p.id === query.id : p.slug === query.slug,
-      )
+      const found = projects.find((p) => p.id === query.id)
       if (found && (query.select ?? []).every((k) => found[k] !== undefined)) {
         return found as unknown as Project
       }
