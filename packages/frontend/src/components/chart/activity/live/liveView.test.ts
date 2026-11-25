@@ -3,13 +3,169 @@ import { expect } from 'earl'
 import {
   clampTo,
   formatBucket,
+  getEdgeAt,
   getKeyEnd,
+  getKeyLength,
   getMoveEnd,
+  getResizedFrom,
+  getResizedTo,
+  getTargetEnd,
   isMoveKey,
   ticksOf,
 } from './liveView'
 
 const T = UnixTime(1_800_000_000)
+const MINUTE = UnixTime.MINUTE
+
+describe(getEdgeAt.name, () => {
+  it('takes an edge within reach outside the window', () => {
+    expect(getEdgeAt(93, [100, 200], 8)).toEqual('from')
+    expect(getEdgeAt(207, [100, 200], 8)).toEqual('to')
+    expect(getEdgeAt(91, [100, 200], 8)).toEqual(undefined)
+  })
+
+  it('leaves the middle third of a narrow window to move it', () => {
+    expect(getEdgeAt(103, [100, 112], 8)).toEqual('from')
+    expect(getEdgeAt(106, [100, 112], 8)).toEqual(undefined)
+    expect(getEdgeAt(109, [100, 112], 8)).toEqual('to')
+  })
+})
+
+describe(getResizedFrom.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
+
+  it('holds the end, in whole minutes', () => {
+    expect(
+      getResizedFrom(T - 3600 - 20 * MINUTE - 10, T - 3600, buffer, false),
+    ).toEqual({ end: T - 3600, seconds: 20 * MINUTE, holdsEnd: true })
+  })
+
+  it('holds the end of a window at the newest block', () => {
+    expect(getResizedFrom(T - 20 * MINUTE, undefined, buffer, false)).toEqual({
+      end: undefined,
+      seconds: 20 * MINUTE,
+      holdsEnd: true,
+    })
+  })
+
+  it('keeps where a move not yet read put the end', () => {
+    // Methodology: ArrowLeft moved the window to end at T - 3690, then a
+    // resize came before that was read
+    const target = getResizedFrom(
+      T - 3690 - 20 * MINUTE,
+      T - 3690,
+      buffer,
+      true,
+    )
+    expect(target).toEqual({ end: T - 3690, seconds: 20 * MINUTE, exact: true })
+    expect(getTargetEnd(target, buffer)).toEqual(T - 3690)
+  })
+
+  it('stops at the start of the buffer', () => {
+    expect(
+      getResizedFrom(
+        buffer.from - 600,
+        buffer.from + 10 * MINUTE + 30,
+        buffer,
+        false,
+      ).seconds,
+    ).toEqual(10 * MINUTE)
+  })
+})
+
+describe(getResizedTo.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
+  const live = 30
+
+  it('holds the start, in whole minutes', () => {
+    expect(
+      getResizedTo(T - 3600 + 7 * MINUTE + 5, T - 3600, buffer, live),
+    ).toEqual({ end: T - 3600 + 7 * MINUTE, seconds: 7 * MINUTE, exact: true })
+  })
+
+  it('holds the start of a live window dragged in from the right', () => {
+    // Methodology: 2 min back on 1H is within the 3 min a move would
+    // still follow the newest block in
+    const target = getResizedTo(T - 2 * MINUTE, T - 3600, buffer, live)
+    expect(target).toEqual({
+      end: T - 2 * MINUTE,
+      seconds: 58 * MINUTE,
+      exact: true,
+    })
+    expect(getTargetEnd(target, buffer)).toEqual(T - 2 * MINUTE)
+  })
+
+  it('follows the newest block once it reaches it', () => {
+    expect(getResizedTo(T - 20, T - 10 * MINUTE, buffer, live)).toEqual({
+      end: undefined,
+      seconds: 10 * MINUTE,
+      exact: true,
+    })
+  })
+
+  it('keeps the length of a live window trailing the newest block', () => {
+    // Methodology: a 90 min window drawn 45 s behind the newest block, its
+    // right edge taken where it is drawn, within a minute of the newest block
+    expect(getResizedTo(T - 45, T - 45 - 90 * MINUTE, buffer, 60)).toEqual({
+      end: undefined,
+      seconds: 90 * MINUTE,
+      exact: true,
+    })
+  })
+
+  it('keeps at least the shortest preset', () => {
+    expect(getResizedTo(T - 3590, T - 3600, buffer, live).seconds).toEqual(
+      5 * MINUTE,
+    )
+  })
+})
+
+describe(getTargetEnd.name, () => {
+  it('keeps an exact end within a buffer that has moved on', () => {
+    const buffer = { from: T - 4 * UnixTime.HOUR + 60, to: T }
+    expect(
+      getTargetEnd(
+        { end: T - 4 * UnixTime.HOUR + 900, seconds: 900, exact: true },
+        buffer,
+      ),
+    ).toEqual(T - 4 * UnixTime.HOUR + 960)
+  })
+})
+
+describe(getKeyLength.name, () => {
+  const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
+
+  it('lengthens back and shortens forward by a tenth, in whole minutes', () => {
+    expect(getKeyLength('ArrowLeft', 15 * MINUTE, T, buffer)).toEqual(
+      17 * MINUTE,
+    )
+    expect(getKeyLength('ArrowRight', 15 * MINUTE, T, buffer)).toEqual(
+      14 * MINUTE,
+    )
+  })
+
+  it('changes the shortest length by a whole minute', () => {
+    expect(getKeyLength('ArrowUp', 5 * MINUTE, T, buffer)).toEqual(5 * MINUTE)
+    expect(getKeyLength('ArrowDown', 5 * MINUTE, T, buffer)).toEqual(6 * MINUTE)
+  })
+
+  it('stops at the start of the buffer', () => {
+    expect(
+      getKeyLength('ArrowLeft', 20 * MINUTE, buffer.from + 21 * MINUTE, buffer),
+    ).toEqual(21 * MINUTE)
+  })
+
+  it('does not shorten a window it lengthens at the start of the buffer', () => {
+    // Methodology: the server rounds a 16 min window's end to 959 s into it
+    expect(
+      getKeyLength('ArrowLeft', 16 * MINUTE, buffer.from + 959, buffer),
+    ).toEqual(16 * MINUTE)
+  })
+
+  it('resizes with no other key', () => {
+    expect(getKeyLength('Home', 15 * MINUTE, T, buffer)).toEqual(undefined)
+  })
+})
 
 describe(getMoveEnd.name, () => {
   const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
@@ -17,13 +173,24 @@ describe(getMoveEnd.name, () => {
   it('follows the newest block when the overview shows it does', () => {
     // Methodology: 14 s behind on 5M is within its 15 s, but rounded to a
     // 12 s bucket first it would be 24 s behind
-    expect(getMoveEnd(T - 14, buffer, 300, 12)).toEqual(undefined)
+    expect(getMoveEnd({ end: T - 14, seconds: 300 }, buffer, 12)).toEqual(
+      undefined,
+    )
   })
 
   it('ends a window looked back on on a bucket', () => {
-    expect(getMoveEnd(T - 100, buffer, 300, 12)).toEqual(
+    expect(getMoveEnd({ end: T - 100, seconds: 300 }, buffer, 12)).toEqual(
       T - 100 - ((T - 100) % 12),
     )
+  })
+
+  it('keeps a resized window off the newest block, however close', () => {
+    expect(
+      getMoveEnd({ end: T - 120, seconds: 3600, exact: true }, buffer, 24),
+    ).toEqual(T - 120 - ((T - 120) % 24))
+    expect(
+      getMoveEnd({ end: T, seconds: 3600, exact: true }, buffer, 24),
+    ).toEqual(undefined)
   })
 })
 

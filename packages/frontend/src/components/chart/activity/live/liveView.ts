@@ -1,4 +1,5 @@
 import { formatRange, parseTimestamp } from '~/utils/dates'
+import { toLiveLength } from '~/utils/range/liveRanges'
 
 interface Edges {
   from: number
@@ -27,21 +28,43 @@ export function clampTo(
   return clamped >= buffer.to - seconds * FOLLOW_WITHIN ? undefined : clamped
 }
 
+/** A window on the overview, before it is read */
+export interface LiveTarget {
+  /** Undefined at the newest block, as it moves on */
+  end: number | undefined
+  seconds: number
+  /** A resize's: it follows the newest block only when it ends there */
+  exact?: boolean
+  /** A resize by the left edge: the window keeps the end it was asked for */
+  holdsEnd?: boolean
+}
+
 /**
- * Where a window moved to `end` ends once read: clamped as the overview shows
- * it, so following the newest block is decided before rounding, then on a
- * bucket, so moves within one share a read
+ * Where a window asked for ends, undefined following the newest block: a
+ * moved one as `clampTo` has it, a resized one where its edge is
+ */
+export function getTargetEnd(target: LiveTarget, buffer: Edges | undefined) {
+  if (!target.exact) return clampTo(target.end, buffer, target.seconds)
+  if (buffer === undefined || target.end === undefined) return undefined
+  // the buffer may have moved on since, as while the move was not yet read
+  const end = Math.max(buffer.from + target.seconds, target.end)
+  return end >= buffer.to ? undefined : end
+}
+
+/**
+ * Where a window asked for ends once read: as the overview shows it, so
+ * following the newest block is decided before rounding, then on a bucket,
+ * so moves within one share a read
  */
 export function getMoveEnd(
-  end: number,
+  target: LiveTarget,
   buffer: Edges | undefined,
-  seconds: number,
   bucket: number,
 ) {
-  const clamped = clampTo(end, buffer, seconds)
-  return clamped === undefined
-    ? undefined
-    : clampTo(clamped - (clamped % bucket), buffer, seconds)
+  const end = getTargetEnd(target, buffer)
+  if (end === undefined) return undefined
+  const rounded = end - (end % bucket)
+  return target.exact ? rounded : clampTo(rounded, buffer, target.seconds)
 }
 
 const back = (end: number, _: Edges, seconds: number) =>
@@ -75,6 +98,94 @@ export function getKeyEnd(
   seconds: number,
 ) {
   return KEY_ENDS.get(key)?.(end, buffer, seconds)
+}
+
+export type LiveEdge = 'from' | 'to'
+
+/**
+ * The edge of the window `[left, right]` at `x`, within `reach` outside it
+ * and less inside, so a narrow window's middle still moves it
+ */
+export function getEdgeAt(
+  x: number,
+  [left, right]: [number, number],
+  reach: number,
+): LiveEdge | undefined {
+  const inner = Math.min(reach, (right - left) / 3)
+  if (x >= left - reach && x <= left + inner) return 'from'
+  if (x >= right - inner && x <= right + reach) return 'to'
+}
+
+/**
+ * A window resized by its left edge, ending where the strip shows it, at
+ * `end`. It holds the end asked for, or after a move not yet read, where the
+ * move put it
+ */
+export function holdEnd(
+  end: number | undefined,
+  seconds: number,
+  moved: boolean,
+): LiveTarget {
+  return moved
+    ? { end, seconds, exact: true }
+    : { end, seconds, holdsEnd: true }
+}
+
+/**
+ * The window the left edge dragged to `at` makes, ending at `end`, or at the
+ * newest block for undefined, at the length it is read
+ */
+export function getResizedFrom(
+  at: number,
+  end: number | undefined,
+  buffer: Edges,
+  moved: boolean,
+): LiveTarget {
+  const to = end ?? buffer.to
+  return holdEnd(end, toLiveLength(to - at, to - buffer.from), moved)
+}
+
+/**
+ * The window the right edge dragged to `at` makes, starting at `start`, at
+ * the length it is read. Within `liveWithin` of the newest block it ends
+ * there
+ */
+export function getResizedTo(
+  at: number,
+  start: number,
+  buffer: Edges,
+  liveWithin: number,
+): LiveTarget {
+  if (at >= buffer.to - liveWithin) {
+    return {
+      end: undefined,
+      seconds: toLiveLength(Math.min(at, buffer.to) - start),
+      exact: true,
+    }
+  }
+  const seconds = toLiveLength(at - start, buffer.to - start)
+  return { end: start + seconds, seconds, exact: true }
+}
+
+/**
+ * The length a key with Shift asks a window ending at `end` for, moving its
+ * left edge: back to lengthen, forward to shorten. Undefined for a key that
+ * resizes nothing
+ */
+export function getKeyLength(
+  key: string,
+  seconds: number,
+  end: number,
+  buffer: Edges,
+) {
+  if (!key.startsWith('Arrow')) return undefined
+  const longer = key === 'ArrowLeft' || key === 'ArrowDown'
+  const next = toLiveLength(
+    seconds * (1 + (longer ? KEY_STEP : -KEY_STEP)),
+    end - buffer.from,
+  )
+  // the buffer's start may cap a length under the one it has
+  return longer ? Math.max(next, seconds) : Math.min(next, seconds)
 }
 
 /** Every multiple of `step` from `from` to `to` */

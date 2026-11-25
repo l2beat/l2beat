@@ -2,11 +2,7 @@ import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RollingNumber } from '~/components/RollingNumber'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { formatRange } from '~/utils/dates'
-import {
-  LIVE_RANGES,
-  LIVE_USUAL_DAYS,
-  type LiveRange,
-} from '~/utils/range/liveRanges'
+import { formatLiveLength, LIVE_USUAL_DAYS } from '~/utils/range/liveRanges'
 import {
   formatDecimal,
   hasHistory,
@@ -29,14 +25,14 @@ export function LiveStats({
   usual: number | undefined
   metric: LiveMetric
   stats: ReturnType<typeof getWindowStats>
-  /** The range following the newest block, or the window looked back to */
-  span: LiveRange | [number, number] | undefined
+  /** The length following the newest block, or the window looked back to */
+  span: number | [number, number] | undefined
   isLoading: boolean
 }) {
   const { rate, counted, formatRate } = LIVE_METRICS[metric]
   const spanText =
-    typeof span === 'string'
-      ? `last ${LIVE_RANGES[span].label}`
+    typeof span === 'number'
+      ? `last ${formatLiveLength(span)}`
       : span
         ? formatRange(span[0], span[1])
         : ''

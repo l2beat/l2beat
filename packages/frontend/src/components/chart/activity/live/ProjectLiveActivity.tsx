@@ -9,6 +9,8 @@ import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
 import { formatTimestamp, parseTimestamp } from '~/utils/dates'
 import {
+  formatLiveLength,
+  getLiveTick,
   LIVE_BUFFER_RANGE,
   LIVE_RANGE_KEYS,
   LIVE_RANGES,
@@ -81,10 +83,11 @@ export function ProjectLiveActivity({
         />
         <RadioGroup
           name="liveActivityRange"
-          value={range}
+          // none of the presets for another length
+          value={range ?? ''}
           onValueChange={(value) => {
             const next = LIVE_RANGE_KEYS.find((key) => key === value)
-            if (next) live.setRange(next)
+            if (next) live.setLength(LIVE_RANGES[next])
           }}
         >
           {LIVE_RANGE_KEYS.map((value) => (
@@ -104,7 +107,7 @@ export function ProjectLiveActivity({
         usual={data?.usual ?? []}
         domain={domain}
         lookahead={live.lookahead}
-        tick={LIVE_RANGES[live.shown].tick}
+        tick={getLiveTick(live.shown)}
         head={live.scrolling && !live.stale}
         isLoading={live.isLoading}
         isPlaceholderData={live.stale}
@@ -117,7 +120,8 @@ export function ProjectLiveActivity({
             buffer={data.buffer}
             selection={selection}
             selectionText={live.selectionText}
-            length={LIVE_RANGES[range].seconds}
+            length={live.seconds}
+            following={!live.lookingBack}
             metric={metric}
             onSeek={live.seek}
             onMove={live.moveTo}
@@ -126,7 +130,7 @@ export function ProjectLiveActivity({
             <span className="whitespace-nowrap">
               {data.buffer.filling
                 ? formatTimestamp(data.buffer.from, { mode: 'time' })
-                : `${LIVE_RANGES[LIVE_BUFFER_RANGE].label} ago`}
+                : `${formatLiveLength(LIVE_RANGES[LIVE_BUFFER_RANGE])} ago`}
             </span>
             {live.lookingBack ? (
               <span className="text-center">
@@ -140,7 +144,8 @@ export function ProjectLiveActivity({
               </span>
             ) : (
               <span className="min-w-0 truncate text-center max-md:hidden">
-                A bar a minute. Press or drag to look back
+                A bar a minute. Press or drag to look back, drag an edge to
+                resize
               </span>
             )}
             {live.following ? (

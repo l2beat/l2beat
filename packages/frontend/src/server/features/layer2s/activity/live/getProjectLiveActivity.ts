@@ -9,11 +9,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getLogger } from '~/server/utils/logger'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import {
-  LIVE_RANGE_KEYS,
-  LIVE_USUAL_DAYS,
-  type LiveRange,
-} from '~/utils/range/liveRanges'
+import { LIVE_USUAL_DAYS, toLiveLength } from '~/utils/range/liveRanges'
 import {
   getBlockSeconds,
   getLastMinuteRates,
@@ -33,7 +29,8 @@ export const ProjectLiveStatusParams = v.object({ projectId: v.string() })
 
 export const ProjectLiveWindowParams = v.object({
   projectId: v.string(),
-  range: v.enum(LIVE_RANGE_KEYS),
+  /** The window's length, read rounded and clamped as `toLiveLength` does */
+  seconds: v.number().check(Number.isFinite),
   /** Where the window ends, excluded. Left out, it follows the newest block */
   to: v.number().optional(),
 })
@@ -51,7 +48,8 @@ export interface ProjectLiveStatus {
 export interface ProjectLiveWindow {
   /** What was read, `to` excluded */
   window: {
-    range: LiveRange
+    /** Its length */
+    seconds: number
     from: UnixTime
     to: UnixTime
     /** Seconds per bucket */
@@ -83,17 +81,18 @@ export function getProjectLiveStatus(
 export function getProjectLiveWindow(
   params: ProjectLiveWindowParams,
 ): Promise<ProjectLiveWindow> {
+  const seconds = toLiveLength(params.seconds)
   return cache.get(
     {
       key: [
         'project-live-window',
         params.projectId,
-        params.range,
+        seconds.toString(),
         params.to?.toString(),
       ],
       ttl: 2,
     },
-    () => readProjectLiveWindow(params),
+    () => readProjectLiveWindow({ ...params, seconds }),
   )
 }
 
@@ -122,7 +121,7 @@ async function readProjectLiveStatus(
 
 async function readProjectLiveWindow({
   projectId,
-  range,
+  seconds,
   to,
 }: ProjectLiveWindowParams): Promise<ProjectLiveWindow> {
   // not found without stored blocks: the status says so first, and the
@@ -139,7 +138,7 @@ async function readProjectLiveWindow({
 
   const buffer = getLiveBuffer(newest, oldest)
   const window = getLiveWindow(
-    range,
+    seconds,
     buffer,
     getBlockSeconds(latest.map((b) => b.timestamp)),
     to,

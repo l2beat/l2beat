@@ -60,8 +60,8 @@ describe(getLiveWindow.name, () => {
   const buffer = { from: T - 4 * UnixTime.HOUR, to: T + 4 }
 
   it('ends with the last bucket the newest block is past', () => {
-    expect(getLiveWindow('15m', buffer, 2)).toEqual({
-      range: '15m',
+    expect(getLiveWindow(900, buffer, 2)).toEqual({
+      seconds: 900,
       from: T - 900,
       to: T,
       bucket: 6,
@@ -71,21 +71,29 @@ describe(getLiveWindow.name, () => {
   })
 
   it('stretches the bucket to whole blocks', () => {
-    expect(getLiveWindow('5m', buffer, 12).bucket).toEqual(12)
-    expect(getLiveWindow('1h', buffer, 12).bucket).toEqual(24)
-    expect(getLiveWindow('5m', buffer, 0).bucket).toEqual(2)
+    expect(getLiveWindow(300, buffer, 12).bucket).toEqual(12)
+    expect(getLiveWindow(3600, buffer, 12).bucket).toEqual(24)
+    expect(getLiveWindow(300, buffer, 0).bucket).toEqual(2)
+  })
+
+  it('sizes the bucket of any length to about 1/150 of it', () => {
+    // Methodology: 7 min / 150 = 2.8 s, rounded up to a second or a block
+    expect(getLiveWindow(420, buffer, 1).bucket).toEqual(3)
+    expect(getLiveWindow(420, buffer, 2).bucket).toEqual(4)
+    const window = getLiveWindow(420, buffer, 2)
+    expect(window.to - window.from).toEqual(420)
   })
 
   it('keeps ten buckets in the window whatever the gap between blocks', () => {
     // Methodology: a stale block stored hours before a new one
-    const window = getLiveWindow('5m', buffer, 3 * UnixTime.HOUR)
+    const window = getLiveWindow(300, buffer, 3 * UnixTime.HOUR)
 
     expect(window.bucket).toEqual(30)
     expect((window.to - window.from) / window.bucket).toEqual(10)
   })
 
   it('spans the whole range, read from a bucket before it', () => {
-    const window = getLiveWindow('5m', buffer, 7)
+    const window = getLiveWindow(300, buffer, 7)
 
     expect(window.bucket).toEqual(7)
     expect(window.to - window.from).toEqual(300)
@@ -94,12 +102,12 @@ describe(getLiveWindow.name, () => {
   })
 
   it('ends where looked back to, but not past the newest block', () => {
-    expect(getLiveWindow('15m', buffer, 2, T - 3600 + 5).to).toEqual(T - 3600)
-    expect(getLiveWindow('15m', buffer, 2, T + 600).to).toEqual(T)
+    expect(getLiveWindow(900, buffer, 2, T - 3600 + 5).to).toEqual(T - 3600)
+    expect(getLiveWindow(900, buffer, 2, T + 600).to).toEqual(T)
   })
 
   it('starts no earlier than the buffer', () => {
-    const window = getLiveWindow('15m', buffer, 2, T - 5 * UnixTime.HOUR)
+    const window = getLiveWindow(900, buffer, 2, T - 5 * UnixTime.HOUR)
 
     expect(window.from).toEqual(buffer.from)
   })
@@ -107,8 +115,8 @@ describe(getLiveWindow.name, () => {
   it('ends at the newest block while the buffer is shorter than the range', () => {
     const filling = { from: T - 600, to: T + 4 }
 
-    expect(getLiveWindow('1h', filling, 2).to).toEqual(T)
-    expect(getLiveWindow('1h', filling, 2, T - 300).to).toEqual(T)
+    expect(getLiveWindow(3600, filling, 2).to).toEqual(T)
+    expect(getLiveWindow(3600, filling, 2, T - 300).to).toEqual(T)
   })
 })
 
