@@ -137,4 +137,55 @@ describe(runWatch.name, () => {
     ).toBeRejectedWith('Run cancelled')
     expect(second).not.toHaveBeenCalled()
   })
+
+  it('strips private githubToken for public watches and sets publicOnly', async () => {
+    let observedToken: string | undefined
+    let observedPublicOnly: boolean | undefined
+    const spy = template(async (_params, ctx) => {
+      observedToken = ctx.githubToken
+      observedPublicOnly = ctx.publicOnly
+      return 1
+    })
+
+    await runWatch(
+      {
+        name: 'priv',
+        isPublic: false,
+        watches: [{ key: 'a', template: spy, params: {} }],
+      },
+      {
+        ...context,
+        githubToken: 'private-pat',
+        publicGithubToken: 'public-pat',
+      },
+    )
+    expect(observedToken).toEqual('private-pat')
+    expect(observedPublicOnly).toEqual(undefined)
+
+    await runWatch(
+      {
+        name: 'pub-anon',
+        isPublic: true,
+        watches: [{ key: 'a', template: spy, params: {} }],
+      },
+      { ...context, githubToken: 'private-pat' },
+    )
+    expect(observedToken).toEqual(undefined)
+    expect(observedPublicOnly).toEqual(true)
+
+    await runWatch(
+      {
+        name: 'pub-scoped',
+        isPublic: true,
+        watches: [{ key: 'a', template: spy, params: {} }],
+      },
+      {
+        ...context,
+        githubToken: 'private-pat',
+        publicGithubToken: 'public-pat',
+      },
+    )
+    expect(observedToken).toEqual('public-pat')
+    expect(observedPublicOnly).toEqual(true)
+  })
 })

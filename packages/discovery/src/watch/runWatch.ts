@@ -11,6 +11,17 @@ export async function runWatch(
   context: WatchContext,
 ): Promise<Watched> {
   const timestamp = UnixTime.now()
+  // Public watches must never receive private credentials (e.g. GITHUB_TOKEN).
+  const templateContext: WatchContext = config.isPublic
+    ? {
+        http: context.http,
+        ...(context.publicGithubToken !== undefined
+          ? { githubToken: context.publicGithubToken }
+          : {}),
+        publicOnly: true,
+        ...(context.signal !== undefined ? { signal: context.signal } : {}),
+      }
+    : context
   const values: Record<string, json> = {}
   for (const watch of config.watches) {
     if (context.signal?.aborted) {
@@ -18,7 +29,7 @@ export async function runWatch(
     }
     let value: json
     try {
-      value = await watch.template.fetch(watch.params, context)
+      value = await watch.template.fetch(watch.params, templateContext)
     } catch (error) {
       if (context.signal?.aborted) {
         throw context.signal.reason
