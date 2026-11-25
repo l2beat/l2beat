@@ -116,7 +116,7 @@ in one place and will forever: `TokenDbHistory` stores the executed command as
 an immutable JSON snapshot, so entries recorded before the rename still use the
 old field names. The history page reads both spellings for that reason — see
 `LEGACY_ENDPOINT_FIELDS` in
-[`TokenHistoryPage.tsx`](../../../../../packages/token-ui/src/pages/tokens/TokenHistoryPage.tsx).
+[`TokenHistoryPage.tsx`](../../../../../packages/backoffice/src/pages/token-db/tokens/TokenHistoryPage.tsx).
 Nothing else should ever accept the old names.
 
 The remaining columns:
@@ -405,13 +405,13 @@ relations where the token's role is minted. Deliberately excluded: relations
 where the token is locked, relations with an unknown role (one of their
 endpoints is minted, but nothing says it is this one), and — defensively,
 since no writer produces them — `nonMinting` relations, which mint nothing.
-Token-UI exposes the same query
+The back office's Token DB pages expose the same query
 as `deployedTokens.getMintingPlugins` and shows the list above the Relations
 table, so the summary can be eyeballed against the roles in the table.
 
 ## Relations graph
 
-The graph page in token-ui is a view of the relation observations resolved
+The Token DB graph page in the back office is a view of the relation observations resolved
 against the current token catalogue. Every observed `(chain, address)`
 endpoint is a node, including endpoints that do not yet have a
 `DeployedToken` row. Catalogued nodes are green and labelled on two lines with
@@ -594,7 +594,7 @@ Some relations no interop transfer can ever evidence — most prominently
 same-chain wrappers such as ETH ↔ WETH on ethereum, where WETH is minted by
 locking ETH in the WETH contract, but wrapping is not an interop transfer and
 no plugin observes it. Without the relation, both tokens look like "original"
-assets. The Relations tab of a deployed token in token-UI therefore has an
+assets. The Relations tab of a deployed token in the back office therefore has an
 *Add relation* flow that records such a relation manually through the
 standard add intent.
 

@@ -1,5 +1,6 @@
 import type { BackendRouter } from '@l2beat/backend/trpc'
 import { trpcTransformer } from '@l2beat/shared-pure'
+import type { AppRouter as TokenDbRouter } from '@l2beat/token-backend'
 import { type QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTRPCClient, httpBatchLink, loggerLink } from '@trpc/client'
 import {
@@ -37,6 +38,17 @@ export function useBackendTrpc(env?: Environment): Api {
   return CLIENTS[env ?? environment].useTRPC()
 }
 
+// The Token DB has a single (production) backend, independent of the
+// environment selected for the main backend.
+const tokenDbTrpc = createTRPCContext<TokenDbRouter, { keyPrefix: true }>()
+
+export function useTokenDbTrpc(): TRPCOptionsProxy<
+  TokenDbRouter,
+  { keyPrefix: true }
+> {
+  return tokenDbTrpc.useTRPC()
+}
+
 export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
   const { allConfigs } = useEnvironment()
   const urls = Object.fromEntries(
@@ -47,33 +59,79 @@ export function TRPCReactProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={defaultQueryClient}>
-      <PinnedProvider
-        trpc={productionBackendTrpc}
-        keyPrefix="production"
-        queryClient={defaultQueryClient}
-        url={urls.production ?? '/trpc/production'}
-      >
+      <TokenDbProvider queryClient={defaultQueryClient}>
         <PinnedProvider
-          trpc={stagingBackendTrpc}
-          keyPrefix="staging"
+          trpc={productionBackendTrpc}
+          keyPrefix="production"
           queryClient={defaultQueryClient}
-          url={urls.staging ?? '/trpc/staging'}
+          url={urls.production ?? '/trpc/production'}
         >
-          {urls.local ? (
-            <PinnedProvider
-              trpc={localBackendTrpc}
-              keyPrefix="local"
-              queryClient={defaultQueryClient}
-              url={urls.local}
-            >
-              {children}
-            </PinnedProvider>
-          ) : (
-            children
-          )}
+          <PinnedProvider
+            trpc={stagingBackendTrpc}
+            keyPrefix="staging"
+            queryClient={defaultQueryClient}
+            url={urls.staging ?? '/trpc/staging'}
+          >
+            {urls.local ? (
+              <PinnedProvider
+                trpc={localBackendTrpc}
+                keyPrefix="local"
+                queryClient={defaultQueryClient}
+                url={urls.local}
+              >
+                {children}
+              </PinnedProvider>
+            ) : (
+              children
+            )}
+          </PinnedProvider>
         </PinnedProvider>
-      </PinnedProvider>
+      </TokenDbProvider>
     </QueryClientProvider>
+  )
+}
+
+function TokenDbProvider({
+  queryClient,
+  children,
+}: {
+  queryClient: QueryClient
+  children: React.ReactNode
+}) {
+  const [trpcClient] = useState(() =>
+    createTRPCClient<TokenDbRouter>({
+      links: [
+        loggerLink({
+          enabled: (op) =>
+            process.env.NODE_ENV === 'development' ||
+            (op.direction === 'down' && op.result instanceof Error),
+        }),
+        httpBatchLink({
+          // History pages can resolve hundreds of relation endpoints at once.
+          methodOverride: 'POST',
+          transformer: trpcTransformer,
+          url: '/trpc/tokens',
+          headers: () => {
+            const headers = new Headers()
+            const readOnlyToken = import.meta.env
+              .VITE_TOKEN_BACKEND_READONLY_AUTH_TOKEN
+            if (readOnlyToken) {
+              headers.set('Authorization', readOnlyToken)
+            }
+            return headers
+          },
+        }),
+      ],
+    }),
+  )
+  return (
+    <tokenDbTrpc.TRPCProvider
+      keyPrefix="token-db"
+      queryClient={queryClient}
+      trpcClient={trpcClient}
+    >
+      {children}
+    </tokenDbTrpc.TRPCProvider>
   )
 }
 

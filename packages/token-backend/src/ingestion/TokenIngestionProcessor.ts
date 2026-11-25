@@ -992,7 +992,7 @@ function formatRef(ref: AbstractTokenRef) {
  *   also not a real mismatch; the deployed-token symbol is adopted and the
  *   CoinGecko spelling is recorded in the abstract token's comment.
  * - Genuine difference: conflict, carrying the structured `symbolConflict`
- *   data the token-UI resolve dialog needs. Resolution happens outside the
+ *   data the Token DB resolve dialog needs. Resolution happens outside the
  *   pipeline: a human creates the abstract token manually (choosing its
  *   symbol) and retries the entry, which then takes the existing-abstract
  *   path and never reaches this check.

@@ -35,7 +35,7 @@ export const trcpRoot = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
     return {
       ...shape,
-      // The token UI shows only this message, and the details are in `cause`
+      // The back office shows only this message, and the details are in `cause`
       message: error.cause ? formatError(error.cause) : shape.message,
       data: {
         ...shape.data,

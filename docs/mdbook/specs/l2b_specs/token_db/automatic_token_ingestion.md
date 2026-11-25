@@ -567,7 +567,7 @@ EVM addresses. Normalization:
 
 ## What this replaces
 
-The two cards on the legacy Token UI suggestions page.
+The two cards on the legacy Token DB suggestions page in the back office.
 
 ## Future: persistent trace audit
 
