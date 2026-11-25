@@ -30,6 +30,7 @@ function record(
     pendingNotifications: [],
     lastAttemptAt: null,
     lastAttemptId: null,
+    lastAttemptConfigHash: null,
     lastError: null,
     ...partial,
   }
@@ -61,6 +62,10 @@ describe(createWatchMonitorRouter.name, () => {
       ['failed-watch', watchConfig('failed-watch', true)],
       ['never-ran', watchConfig('never-ran', true)],
       ['newly-public', watchConfig('newly-public', true)],
+      [
+        'newly-public-failed-private',
+        watchConfig('newly-public-failed-private', true),
+      ],
       ['optimism', watchConfig('optimism', true)],
       ['private-repo', watchConfig('private-repo', false)],
       ['quiet', watchConfig('quiet', true)],
@@ -79,6 +84,7 @@ describe(createWatchMonitorRouter.name, () => {
         name: 'optimism',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashOf('optimism'),
         isPublic: true,
         configHash: hashOf('optimism'),
         values: {
@@ -94,6 +100,9 @@ describe(createWatchMonitorRouter.name, () => {
         name: 'newly-public',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashWatchConfig(
+          watchConfig('newly-public', false),
+        ),
         lastError: '401 private-org/secret-repo',
         isPublic: false,
         configHash: hashWatchConfig(watchConfig('newly-public', false)),
@@ -103,10 +112,21 @@ describe(createWatchMonitorRouter.name, () => {
           },
         },
       }),
+      // Failure-only row recorded while private; watch.jsonc has since
+      // switched to public: true. Must not surface as Failed or leak timestamp.
+      record({
+        name: 'newly-public-failed-private',
+        lastAttemptAt: 1_700_003_600,
+        lastAttemptConfigHash: hashWatchConfig(
+          watchConfig('newly-public-failed-private', false),
+        ),
+        lastError: '403 private-org/secret-repo',
+      }),
       record({
         name: 'private-repo',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashOf('private-repo'),
         isPublic: false,
         configHash: hashOf('private-repo'),
         values: {
@@ -119,6 +139,7 @@ describe(createWatchMonitorRouter.name, () => {
         name: 'quiet',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashOf('quiet'),
         isPublic: true,
         configHash: hashOf('quiet'),
         values: { version: '1' },
@@ -127,6 +148,7 @@ describe(createWatchMonitorRouter.name, () => {
         name: 'stale-watch',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_003_600,
+        lastAttemptConfigHash: hashOf('stale-watch'),
         lastError: 'HTTP timeout',
         isPublic: true,
         configHash: hashOf('stale-watch'),
@@ -135,6 +157,7 @@ describe(createWatchMonitorRouter.name, () => {
       record({
         name: 'failed-watch',
         lastAttemptAt: 1_700_003_600,
+        lastAttemptConfigHash: hashOf('failed-watch'),
         lastError: 'GitHub tree truncated',
       }),
     ]
@@ -152,6 +175,11 @@ describe(createWatchMonitorRouter.name, () => {
       { name: 'failed-watch', kind: 'project' as const, path: '/p/failed' },
       { name: 'never-ran', kind: 'project' as const, path: '/p/never-ran' },
       { name: 'newly-public', kind: 'project' as const, path: '/p/newly-pub' },
+      {
+        name: 'newly-public-failed-private',
+        kind: 'project' as const,
+        path: '/p/newly-pub-failed',
+      },
       { name: 'optimism', kind: 'project' as const, path: '/p/optimism' },
       { name: 'private-repo', kind: 'project' as const, path: '/p/private' },
       { name: 'quiet', kind: 'global' as const, path: '/w/quiet' },
@@ -253,6 +281,13 @@ describe(createWatchMonitorRouter.name, () => {
           lastError: '401 private-org/secret-repo',
         },
         {
+          name: 'newly-public-failed-private',
+          kind: 'project',
+          lastAttemptAt: 1_700_003_600,
+          lastSuccessAt: null,
+          lastError: '403 private-org/secret-repo',
+        },
+        {
           name: 'stale-watch',
           kind: 'project',
           lastAttemptAt: 1_700_003_600,
@@ -318,6 +353,9 @@ describe(createWatchMonitorRouter.name, () => {
         '- [newly-public](/status/watch/newly-public.html.md) [project]: Not yet run',
       )
       expect(text).toInclude(
+        '- [newly-public-failed-private](/status/watch/newly-public-failed-private.html.md) [project]: Not yet run',
+      )
+      expect(text).toInclude(
         '- [failed-watch](/status/watch/failed-watch.html.md) [project]: Failed (no successful run) (never succeeded)',
       )
       expect(text).toInclude(
@@ -358,9 +396,26 @@ describe(createWatchMonitorRouter.name, () => {
       expect(newlyPublic.status).toEqual(200)
       const newlyPublicText = await newlyPublic.text()
       expect(newlyPublicText).toInclude('- **Status**: Not yet run')
+      expect(newlyPublicText).toInclude('- **Last attempt**: Never')
       expect(newlyPublicText).not.toInclude('leaked-secret.pdf')
       expect(newlyPublicText).not.toInclude('private-org/secret-repo')
       expect(newlyPublicText).not.toInclude('## Changes')
+
+      // Failure-only row recorded while private must NOT surface as Failed or
+      // leak the private attempt timestamp after switching to public: true.
+      const newlyPublicFailed = await fetch(
+        `${url}/status/watch/newly-public-failed-private.html.md`,
+      )
+      expect(newlyPublicFailed.status).toEqual(200)
+      const newlyPublicFailedText = await newlyPublicFailed.text()
+      expect(newlyPublicFailedText).toInclude('- **Status**: Not yet run')
+      expect(newlyPublicFailedText).toInclude(
+        '- **Last successful run**: Never',
+      )
+      expect(newlyPublicFailedText).toInclude('- **Last attempt**: Never')
+      expect(newlyPublicFailedText).not.toInclude('Failed')
+      expect(newlyPublicFailedText).not.toInclude('2023-11-14T23:13:20.000Z')
+      expect(newlyPublicFailedText).not.toInclude('private-org/secret-repo')
 
       // Public watch with a failed latest run shows generic status only, not raw error.
       const stale = await fetch(`${url}/status/watch/stale-watch.html.md`)

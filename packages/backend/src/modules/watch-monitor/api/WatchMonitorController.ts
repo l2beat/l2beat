@@ -285,24 +285,31 @@ export class WatchMonitorController {
         pending: undefined,
       }
     }
-    // Never publish a snapshot or error captured under a private or outdated
-    // watch config. Raw error text stays behind authenticated /watch/pending.
-    if (record.timestamp === null && record.lastError !== null) {
-      return {
-        location,
-        status: 'failed',
-        record: {
-          ...record,
-          lastError: null,
-        },
-        pending: undefined,
-      }
-    }
-    const snapshotMatchesCurrentPublicConfig =
+    // Never publish a snapshot, attempt timestamp, or failure status captured
+    // under a private or outdated watch config. Raw error text always stays
+    // behind authenticated /watch/pending.
+    const snapshotMatches =
       record.isPublic &&
       record.configHash !== null &&
       record.configHash === expectedConfigHash
-    if (!snapshotMatchesCurrentPublicConfig) {
+    const attemptMatches =
+      record.lastAttemptConfigHash !== null &&
+      record.lastAttemptConfigHash === expectedConfigHash
+
+    if (!snapshotMatches) {
+      if (attemptMatches && record.lastError !== null) {
+        return {
+          location,
+          status: 'failed',
+          record: {
+            ...record,
+            timestamp: null,
+            values: null,
+            lastError: null,
+          },
+          pending: undefined,
+        }
+      }
       return {
         location,
         status: 'never-run',
@@ -310,26 +317,37 @@ export class WatchMonitorController {
         pending: undefined,
       }
     }
+
+    const publicRecord: WatchMonitorRecord = {
+      ...record,
+      lastAttemptAt: attemptMatches ? record.lastAttemptAt : record.timestamp,
+      lastError: null,
+    }
     const pending = computePendingWatchDiff(
       location,
-      record,
+      publicRecord,
       this.watchReader.readWatched(location.name),
     )
-    if (record.lastError !== null) {
+    if (attemptMatches && record.lastError !== null) {
       return {
         location,
-        status: record.timestamp === null ? 'failed' : 'stale',
-        record,
+        status: publicRecord.timestamp === null ? 'failed' : 'stale',
+        record: publicRecord,
         pending,
       }
     }
-    if (record.timestamp === null) {
-      return { location, status: 'never-run', record, pending: undefined }
+    if (publicRecord.timestamp === null) {
+      return {
+        location,
+        status: 'never-run',
+        record: publicRecord,
+        pending: undefined,
+      }
     }
     return {
       location,
       status: pending !== undefined ? 'changes' : 'up-to-date',
-      record,
+      record: publicRecord,
       pending,
     }
   }
