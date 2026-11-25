@@ -14,5 +14,5 @@ export function extractAddressesFromTokenConfig(token: TvsToken): Address[] {
       ? []
       : [{ address: amount.address, chain: amount.chain }],
   )
-  return uniqBy(addresses, 'address')
+  return uniqBy(addresses, (a) => `${a.chain}:${a.address}`)
 }
