@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "ankr",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "ankr-ankrETH",
+      "priceId": "ankreth",
+      "symbol": "ankrETH",
+      "name": "Ankr Staked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1608163200
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
