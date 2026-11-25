@@ -14,7 +14,10 @@ import type { HttpClient } from '@l2beat/shared'
 import { type Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
-import type { WorkerPool } from '../update-monitor/createWorkers'
+import {
+  createWorkerPool,
+  type WorkerPool,
+} from '../update-monitor/createWorkers'
 import { WatchMonitor } from './WatchMonitor'
 import type { WatchNotifier } from './WatchNotifier'
 
@@ -78,6 +81,13 @@ function createMemoryDb() {
       ) {
         return false
       }
+      const liveQueue = prev?.pendingNotifications ?? []
+      const nextQueue =
+        obs.newNotification !== null
+          ? [...liveQueue, obs.newNotification].slice(
+              -obs.maxPendingNotifications,
+            )
+          : liveQueue
       storedAttemptDates.set(obs.name, obs.attemptAt)
       stored.set(obs.name, {
         name: obs.name,
@@ -85,13 +95,62 @@ function createMemoryDb() {
         values: obs.values,
         isPublic: obs.isPublic,
         configHash: obs.configHash,
-        pendingNotifications: obs.pendingNotifications,
+        pendingNotifications: nextQueue,
         lastAttemptAt: UnixTime.fromDate(obs.attemptAt),
         lastAttemptId: obs.attemptId,
         lastAttemptConfigHash: obs.configHash,
         lastError: null,
       })
       return true
+    },
+    claimNextPendingNotification: async (
+      name: string,
+      ownerId: string,
+      nowMs: number,
+      leaseMs: number,
+    ) => {
+      const prev = stored.get(name)
+      const head = prev?.pendingNotifications[0]
+      if (prev === undefined || head === undefined) {
+        return undefined
+      }
+      if (
+        head.claimedBy !== undefined &&
+        head.claimedAt !== undefined &&
+        nowMs - head.claimedAt < leaseMs
+      ) {
+        return undefined
+      }
+      const claimed = {
+        id: head.id,
+        timestamp: head.timestamp,
+        diff: head.diff,
+        claimedBy: ownerId,
+        claimedAt: nowMs,
+      }
+      stored.set(name, {
+        ...prev,
+        pendingNotifications: [claimed, ...prev.pendingNotifications.slice(1)],
+      })
+      return claimed
+    },
+    releasePendingNotificationClaim: async (
+      name: string,
+      notificationId: string,
+      ownerId: string,
+    ) => {
+      const prev = stored.get(name)
+      if (prev === undefined) {
+        return
+      }
+      stored.set(name, {
+        ...prev,
+        pendingNotifications: prev.pendingNotifications.map((item) =>
+          item.id === notificationId && item.claimedBy === ownerId
+            ? { id: item.id, timestamp: item.timestamp, diff: item.diff }
+            : item,
+        ),
+      })
     },
     acknowledgePendingNotification: async (
       name: string,
@@ -549,5 +608,196 @@ describe(WatchMonitor.name, () => {
       ),
     ).toBeRejectedWith('Task timeout')
     expect(stored.get('optimism')?.lastError).toEqual(null)
+  })
+
+  it('does not restore a delivered alert when an observation writes after concurrent acknowledgment', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn().resolvesToOnce('failed').resolvesTo('sent'),
+    })
+
+    const seedMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+    )
+    await expect(
+      seedMonitor.updateWatch(
+        'optimism',
+        TIMESTAMP,
+        undefined,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
+      ),
+    ).toBeRejectedWith('Watch notification failed')
+    const queuedId = stored.get('optimism')?.pendingNotifications[0]?.id
+    expect(queuedId).not.toEqual(undefined)
+
+    // Worker 2 reads the row while queuedId is still present; another worker
+    // acknowledges queuedId (leaving lastAttemptId unchanged) before Worker 2
+    // writes its observation.
+    const originalFindLatest = db.watchMonitor.findLatest
+    let ackedDuringRead = false
+    db.watchMonitor.findLatest = mockFn(async (name: string) => {
+      const row = await originalFindLatest(name)
+      if (!ackedDuringRead && queuedId !== undefined) {
+        ackedDuringRead = true
+        await db.watchMonitor.acknowledgePendingNotification(name, queuedId)
+      }
+      return row
+    })
+
+    const secondMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP + 3600, values: { v: 'B' } }),
+    )
+    await secondMonitor.updateWatch(
+      'optimism',
+      TIMESTAMP + 3600,
+      undefined,
+      new Date((TIMESTAMP + 3600) * 1000),
+      'attempt-2',
+    )
+
+    // Delivered alert was NOT resurrected and NOT resent.
+    expect(notifier.handleUpdate).toHaveBeenCalledTimes(1)
+    expect(stored.get('optimism')?.pendingNotifications).toEqual([])
+  })
+
+  it('delivers each queued alert at most once across slow Discord sends and worker timeouts', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readAllWatches: () => [
+        { name: 'optimism', kind: 'project', path: '/p/optimism' },
+      ],
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+
+    // 1) Real worker pool with short task timeout (30ms) and slower Discord
+    // send (60ms): Discord runs outside the pool so it delivers exactly once.
+    const pool = createWorkerPool({
+      workerCount: 1,
+      timeoutPerTaskMs: 30,
+      timeoutPerRunMs: 1_000,
+      logger: Logger.SILENT,
+    })
+    const slowNotifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 60))
+        return 'sent' as const
+      }),
+      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+    const poolMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      slowNotifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      pool,
+      [],
+      async () => ({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+    )
+
+    await poolMonitor.update(TIMESTAMP)
+    expect(slowNotifier.handleUpdate).toHaveBeenCalledTimes(1)
+    expect(stored.get('optimism')?.pendingNotifications).toEqual([])
+    expect(stored.get('optimism')?.lastError).toEqual(null)
+
+    // 2) Direct updateWatch whose signal aborts mid-Discord-send while another
+    // worker tries to drain concurrently: claim blocks the second sender and
+    // the original worker still acknowledges once Discord accepts the message.
+    let resolveInFlight: (() => void) | undefined
+    const inFlightStarted = new Promise<void>((resolve) => {
+      resolveInFlight = resolve
+    })
+    let releaseSend: (() => void) | undefined
+    const sendGate = new Promise<void>((resolve) => {
+      releaseSend = resolve
+    })
+    const gatedNotifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn(async () => {
+        resolveInFlight?.()
+        await sendGate
+        return 'sent' as const
+      }),
+      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+    const directDb = createMemoryDb()
+    const directMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      gatedNotifier,
+      directDb.db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP + 3600, values: { v: 'C' } }),
+    )
+    const abortController = new AbortController()
+    const firstAttempt = directMonitor.updateWatch(
+      'optimism',
+      TIMESTAMP + 3600,
+      abortController.signal,
+      new Date((TIMESTAMP + 3600) * 1000),
+      'attempt-direct-1',
+    )
+    await inFlightStarted
+    abortController.abort(new Error('Task timeout'))
+
+    // Concurrent drain while first send is still in flight must NOT resend.
+    const secondMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      gatedNotifier,
+      directDb.db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => {
+        throw new Error('Source offline')
+      },
+    )
+    await expect(
+      secondMonitor.updateWatch(
+        'optimism',
+        TIMESTAMP + 3601,
+        undefined,
+        new Date((TIMESTAMP + 3601) * 1000),
+        'attempt-direct-2',
+      ),
+    ).toBeRejectedWith('Source offline')
+    expect(gatedNotifier.handleUpdate).toHaveBeenCalledTimes(1)
+
+    releaseSend?.()
+    await expect(firstAttempt).toBeRejectedWith('Task timeout')
+    expect(gatedNotifier.handleUpdate).toHaveBeenCalledTimes(1)
+    expect(directDb.stored.get('optimism')?.pendingNotifications).toEqual([])
   })
 })

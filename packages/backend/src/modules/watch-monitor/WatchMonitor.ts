@@ -16,10 +16,11 @@ import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from '../update-monitor/createWorkers'
 import { getPendingWatchDiffs } from './pendingWatchDiffs'
-import type { WatchNotifier } from './WatchNotifier'
+import type { WatchNotifier, WatchNotifyResult } from './WatchNotifier'
 
 const MAX_PENDING_NOTIFICATIONS = 20
 const MAX_OBSERVATION_CAS_ATTEMPTS = 3
+const NOTIFICATION_CLAIM_LEASE_MS = 5 * 60 * 1000
 
 export type RunWatchFn = (
   config: WatchConfig,
@@ -89,18 +90,26 @@ export class WatchMonitor {
           id: name,
           name: `Watch ${name}`,
         },
+        // Keep Discord delivery out of the abortable worker pool so task/run
+        // timeouts only cancel external fetches and never race an in-flight
+        // Discord send against post-pool recovery.
         job: (signal: AbortSignal) =>
-          this.updateWatch(name, timestamp, signal, attemptAt, attemptId),
+          this.fetchAndPersistWatch(
+            name,
+            timestamp,
+            signal,
+            attemptAt,
+            attemptId,
+          ),
       }
     })
 
     const results = await this.workerPool.runInPool(tasks)
 
-    // Persist pool-level failures (including task/run timeouts and skipped
-    // tasks), and drain any already-queued alerts outside the timed-out worker
-    // signal so a source timeout never strands earlier transitions.
+    const failedSet = new Set<string>()
     for (const taskError of results.errors) {
       const name = taskError.identity.id
+      failedSet.add(name)
       const attemptId = attemptIds.get(name) ?? randomUUID()
       const configHash = attemptConfigHashes.get(name) ?? null
       await this.db.watchMonitor.recordFailure(
@@ -110,18 +119,36 @@ export class WatchMonitor {
         taskError.error.message,
         configHash,
       )
-      await this.drainQueuedNotifications(name)
     }
 
-    const failedWatches = results.errors
-      .map((error) => error.identity.id)
-      .sort()
+    // Drain persisted transition alerts once per watch outside the abortable
+    // worker signal so both succeeded watches and timed-out/failed sources
+    // deliver queued alerts cleanly under single-owner claims.
+    for (const name of enabledWatches) {
+      const deliveredAll = await this.drainQueuedNotifications(name)
+      if (!deliveredAll) {
+        if (!failedSet.has(name)) {
+          const attemptId = attemptIds.get(name) ?? randomUUID()
+          const configHash = attemptConfigHashes.get(name) ?? null
+          await this.db.watchMonitor.recordFailure(
+            name,
+            attemptAt,
+            attemptId,
+            'Watch notification failed',
+            configHash,
+          )
+        }
+        failedSet.add(name)
+      }
+    }
+
+    const failedWatches = [...failedSet].sort()
 
     this.logger.info('Watch update finished', {
       duration: UnixTime.now() - updateStart,
       updateTarget: timestamp,
       timedOut: results.timedOut,
-      successCount: results.results.length,
+      successCount: tasks.length - failedWatches.length,
       failedCount: failedWatches.length,
       totalCount: tasks.length,
     })
@@ -150,16 +177,18 @@ export class WatchMonitor {
     attemptAt: Date = new Date(),
     attemptId: string = randomUUID(),
   ): Promise<void> {
-    let config: WatchConfig | undefined
+    let persisted: boolean
     let configHash: Hash256 | null = null
-    let result: Watched
     try {
-      config = this.watchReader.readWatchConfig(name)
-      configHash = hashWatchConfig(config)
-      result = await this.runWatchFn(config, {
-        ...this.watchContext,
+      const outcome = await this.fetchAndPersistWatch(
+        name,
+        timestamp,
         signal,
-      })
+        attemptAt,
+        attemptId,
+      )
+      persisted = outcome.persisted
+      configHash = outcome.configHash
     } catch (error) {
       if (!signal?.aborted) {
         const message = error instanceof Error ? error.message : String(error)
@@ -168,12 +197,43 @@ export class WatchMonitor {
           attemptAt,
           attemptId,
           message,
-          configHash,
+          this.tryReadConfigHash(name),
         )
         await this.drainQueuedNotifications(name, signal)
       }
       throw error
     }
+
+    if (!persisted) {
+      return
+    }
+
+    const deliveredAll = await this.drainQueuedNotifications(name, signal)
+    if (!deliveredAll) {
+      await this.db.watchMonitor.recordFailure(
+        name,
+        attemptAt,
+        attemptId,
+        'Watch notification failed',
+        configHash,
+      )
+      throw new Error('Watch notification failed', { cause: { name } })
+    }
+  }
+
+  private async fetchAndPersistWatch(
+    name: string,
+    timestamp: UnixTime,
+    signal: AbortSignal | undefined,
+    attemptAt: Date,
+    attemptId: string,
+  ): Promise<{ persisted: boolean; configHash: Hash256 }> {
+    const config = this.watchReader.readWatchConfig(name)
+    const configHash = hashWatchConfig(config)
+    const result = await this.runWatchFn(config, {
+      ...this.watchContext,
+      signal,
+    })
 
     if (signal?.aborted) {
       throw signal.reason
@@ -192,21 +252,7 @@ export class WatchMonitor {
     if (signal?.aborted) {
       throw signal.reason
     }
-    if (!persisted) {
-      return
-    }
-
-    const deliveredAll = await this.drainQueuedNotifications(name, signal)
-    if (!deliveredAll) {
-      await this.db.watchMonitor.recordFailure(
-        name,
-        attemptAt,
-        attemptId,
-        'Watch notification failed',
-        configHash,
-      )
-      throw new Error('Watch notification failed', { cause: { name } })
-    }
+    return { persisted, configHash }
   }
 
   private async persistObservationWithCas(
@@ -231,16 +277,10 @@ export class WatchMonitor {
 
       const previousValues = existing?.values ?? committed?.values ?? {}
       const transitionDiff = diffWatched(previousValues, result.values)
-      const queued: WatchPendingNotification[] = [
-        ...(existing?.pendingNotifications ?? []),
-      ]
-      if (transitionDiff.length > 0) {
-        queued.push({ id: randomUUID(), timestamp, diff: transitionDiff })
-      }
-      const boundedQueue =
-        queued.length > MAX_PENDING_NOTIFICATIONS
-          ? queued.slice(queued.length - MAX_PENDING_NOTIFICATIONS)
-          : queued
+      const newNotification: WatchPendingNotification | null =
+        transitionDiff.length > 0
+          ? { id: randomUUID(), timestamp, diff: transitionDiff }
+          : null
 
       const persisted = await this.db.watchMonitor.upsertObservation({
         name,
@@ -251,7 +291,8 @@ export class WatchMonitor {
         values: result.values,
         isPublic: config.isPublic === true,
         configHash,
-        pendingNotifications: boundedQueue,
+        newNotification,
+        maxPendingNotifications: MAX_PENDING_NOTIFICATIONS,
       })
       if (persisted) {
         return true
@@ -273,26 +314,56 @@ export class WatchMonitor {
     name: string,
     signal?: AbortSignal,
   ): Promise<boolean> {
-    const existing = await this.db.watchMonitor.findLatest(name)
-    if (existing === undefined || existing.pendingNotifications.length === 0) {
-      return true
-    }
-    for (const item of existing.pendingNotifications) {
+    const ownerId = randomUUID()
+    for (let i = 0; i < MAX_PENDING_NOTIFICATIONS; i++) {
       if (signal?.aborted) {
         throw signal.reason
       }
-      const notifyResult = await this.watchNotifier.handleUpdate(
+      const item = await this.db.watchMonitor.claimNextPendingNotification(
         name,
-        item.diff,
-        item.timestamp,
+        ownerId,
+        Date.now(),
+        NOTIFICATION_CLAIM_LEASE_MS,
       )
-      if (signal?.aborted) {
-        throw signal.reason
+      if (item === undefined) {
+        return true
       }
+
+      let notifyResult: WatchNotifyResult
+      try {
+        notifyResult = await this.watchNotifier.handleUpdate(
+          name,
+          item.diff,
+          item.timestamp,
+        )
+      } catch (error) {
+        await this.db.watchMonitor.releasePendingNotificationClaim(
+          name,
+          item.id,
+          ownerId,
+        )
+        throw error
+      }
+
       if (notifyResult === 'failed') {
+        await this.db.watchMonitor.releasePendingNotificationClaim(
+          name,
+          item.id,
+          ownerId,
+        )
+        if (signal?.aborted) {
+          throw signal.reason
+        }
         return false
       }
+
+      // Acknowledge unconditionally once Discord accepted the message (or no
+      // client is configured), even if signal aborted while the request was
+      // already in flight, so the delivered alert cannot be sent again.
       await this.db.watchMonitor.acknowledgePendingNotification(name, item.id)
+      if (signal?.aborted) {
+        throw signal.reason
+      }
     }
     return true
   }

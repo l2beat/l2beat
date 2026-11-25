@@ -8,6 +8,8 @@ export interface WatchPendingNotification {
   id: string
   timestamp: UnixTime
   diff: WatchDiff[]
+  claimedBy?: string
+  claimedAt?: number
 }
 
 export interface WatchMonitorRecord {
@@ -32,7 +34,8 @@ export interface WatchObservation {
   values: Record<string, json>
   isPublic: boolean
   configHash: Hash256
-  pendingNotifications: WatchPendingNotification[]
+  newNotification: WatchPendingNotification | null
+  maxPendingNotifications: number
 }
 
 export function toRecord(row: Selectable<WatchMonitor>): WatchMonitorRecord {
@@ -87,12 +90,15 @@ export class WatchMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  // Optimistic CAS on expectedLastAttemptId plus monotonic attempt ordering:
-  // prevents a newer attempt from silently overwriting an observation/queue
-  // persisted by another attempt between read and write.
+  // Optimistic CAS on expectedLastAttemptId plus monotonic attempt ordering,
+  // and atomic SQL append for newNotification: prevents a concurrent attempt
+  // from either overwriting a newer observation or restoring an already
+  // acknowledged/claimed notification from a stale read.
   async upsertObservation(observation: WatchObservation): Promise<boolean> {
     const timestamp = UnixTime.toDate(observation.timestamp)
     const configHash = observation.configHash.toString()
+    const initialQueue =
+      observation.newNotification !== null ? [observation.newNotification] : []
     const result = await this.db
       .insertInto('WatchMonitor')
       .values({
@@ -101,9 +107,7 @@ export class WatchMonitorRepository extends BaseRepository {
         valuesJsonBlob: JSON.stringify(observation.values),
         isPublic: observation.isPublic,
         configHash,
-        pendingNotificationsJsonBlob: JSON.stringify(
-          observation.pendingNotifications,
-        ),
+        pendingNotificationsJsonBlob: JSON.stringify(initialQueue),
         lastAttemptAt: observation.attemptAt,
         lastAttemptId: observation.attemptId,
         lastAttemptConfigHash: configHash,
@@ -117,9 +121,25 @@ export class WatchMonitorRepository extends BaseRepository {
             valuesJsonBlob: eb.ref('excluded.valuesJsonBlob'),
             isPublic: eb.ref('excluded.isPublic'),
             configHash: eb.ref('excluded.configHash'),
-            pendingNotificationsJsonBlob: eb.ref(
-              'excluded.pendingNotificationsJsonBlob',
-            ),
+            ...(observation.newNotification !== null
+              ? {
+                  pendingNotificationsJsonBlob: sql<unknown>`(
+                    SELECT COALESCE(jsonb_agg(elem ORDER BY ord), '[]'::jsonb)
+                    FROM (
+                      SELECT elem, ord
+                      FROM jsonb_array_elements(
+                        (CASE
+                          WHEN jsonb_typeof("WatchMonitor"."pendingNotificationsJsonBlob") = 'array'
+                          THEN "WatchMonitor"."pendingNotificationsJsonBlob"
+                          ELSE '[]'::jsonb
+                        END) || ${JSON.stringify([observation.newNotification])}::jsonb
+                      ) WITH ORDINALITY AS t(elem, ord)
+                      ORDER BY ord DESC
+                      LIMIT ${observation.maxPendingNotifications}
+                    ) sub
+                  )`,
+                }
+              : {}),
             lastAttemptAt: eb.ref('excluded.lastAttemptAt'),
             lastAttemptId: eb.ref('excluded.lastAttemptId'),
             lastAttemptConfigHash: eb.ref('excluded.lastAttemptConfigHash'),
@@ -170,8 +190,91 @@ export class WatchMonitorRepository extends BaseRepository {
     return Number(result.numInsertedOrUpdatedRows ?? 0) > 0
   }
 
-  // Monotonic per-item removal so concurrent drains can never resurrect an
-  // already-acknowledged notification or drop a newly appended one.
+  // Claims the head queued notification under a row lock so at most one active
+  // delivery owner sends it at a time while preserving FIFO order.
+  async claimNextPendingNotification(
+    name: string,
+    ownerId: string,
+    nowMs: number,
+    leaseMs: number,
+  ): Promise<WatchPendingNotification | undefined> {
+    return await this.transaction(async () => {
+      const row = await this.db
+        .selectFrom('WatchMonitor')
+        .select('pendingNotificationsJsonBlob')
+        .where('name', '=', name)
+        .forUpdate()
+        .executeTakeFirst()
+      if (!row || !Array.isArray(row.pendingNotificationsJsonBlob)) {
+        return undefined
+      }
+      const queue =
+        row.pendingNotificationsJsonBlob as WatchPendingNotification[]
+      const head = queue[0]
+      if (head === undefined) {
+        return undefined
+      }
+      if (
+        head.claimedBy !== undefined &&
+        head.claimedAt !== undefined &&
+        nowMs - head.claimedAt < leaseMs
+      ) {
+        return undefined
+      }
+      const claimed: WatchPendingNotification = {
+        id: head.id,
+        timestamp: head.timestamp,
+        diff: head.diff,
+        claimedBy: ownerId,
+        claimedAt: nowMs,
+      }
+      const updated = [claimed, ...queue.slice(1)]
+      await this.db
+        .updateTable('WatchMonitor')
+        .set({ pendingNotificationsJsonBlob: JSON.stringify(updated) })
+        .where('name', '=', name)
+        .execute()
+      return claimed
+    })
+  }
+
+  async releasePendingNotificationClaim(
+    name: string,
+    notificationId: string,
+    ownerId: string,
+  ): Promise<void> {
+    await this.transaction(async () => {
+      const row = await this.db
+        .selectFrom('WatchMonitor')
+        .select('pendingNotificationsJsonBlob')
+        .where('name', '=', name)
+        .forUpdate()
+        .executeTakeFirst()
+      if (!row || !Array.isArray(row.pendingNotificationsJsonBlob)) {
+        return
+      }
+      const queue =
+        row.pendingNotificationsJsonBlob as WatchPendingNotification[]
+      let changed = false
+      const updated = queue.map((item) => {
+        if (item.id === notificationId && item.claimedBy === ownerId) {
+          changed = true
+          return { id: item.id, timestamp: item.timestamp, diff: item.diff }
+        }
+        return item
+      })
+      if (changed) {
+        await this.db
+          .updateTable('WatchMonitor')
+          .set({ pendingNotificationsJsonBlob: JSON.stringify(updated) })
+          .where('name', '=', name)
+          .execute()
+      }
+    })
+  }
+
+  // Monotonic per-item removal preserving FIFO order so concurrent drains can
+  // never resurrect an already-acknowledged notification or drop a newer one.
   async acknowledgePendingNotification(
     name: string,
     notificationId: string,
@@ -180,8 +283,8 @@ export class WatchMonitorRepository extends BaseRepository {
       UPDATE "WatchMonitor"
       SET "pendingNotificationsJsonBlob" = COALESCE(
         (
-          SELECT jsonb_agg(elem)
-          FROM jsonb_array_elements("pendingNotificationsJsonBlob") AS elem
+          SELECT jsonb_agg(elem ORDER BY ord)
+          FROM jsonb_array_elements("pendingNotificationsJsonBlob") WITH ORDINALITY AS t(elem, ord)
           WHERE elem->>'id' <> ${notificationId}
         ),
         '[]'::jsonb
