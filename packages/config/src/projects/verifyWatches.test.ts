@@ -32,14 +32,20 @@ describe('Verify watches', () => {
 
       it('has a sorted watched.json without pending items', () => {
         const text = readFileSync(join(location.path, WATCHED_FILE), 'utf-8')
-        const watched = JSON.parse(text)
-        expect(formatJson(watched)).toEqual(text)
-        expect(JSON.stringify(sortDeep(watched))).toEqual(
-          JSON.stringify(watched),
-        )
-        visitObjects(watched, (object) => {
-          expect(isPendingItem(object)).toEqual(false)
-        })
+        const raw = JSON.parse(text)
+        expect(formatJson(raw)).toEqual(text)
+        const watched = reader.readWatched(location.name)
+        expect(watched).not.toEqual(undefined)
+        const keys = Object.keys(watched?.values ?? {})
+        expect(keys).toEqual([...keys].sort())
+        // Validate each watch value individually so depth-8 template outputs
+        // are not rejected for sitting inside the watched.json envelope.
+        for (const value of Object.values(watched?.values ?? {})) {
+          expect(JSON.stringify(sortDeep(value))).toEqual(JSON.stringify(value))
+          visitObjects(value, (object) => {
+            expect(isPendingItem(object)).toEqual(false)
+          })
+        }
       })
     })
   }

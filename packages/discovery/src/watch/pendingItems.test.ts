@@ -33,10 +33,17 @@ describe(stripPendingItems.name, () => {
     )
   })
 
-  it('rejects a pending item inside an array', () => {
+  it('rejects a pending item inside an array, even beneath an outer pending object', () => {
     expect(() => stripPendingItems({ list: [{ pending: true }] })).toThrow(
       'Pending item inside an array',
     )
+    expect(() =>
+      stripPendingItems({
+        outer: {
+          a: { pending: true, items: [{ pending: true }] },
+        },
+      }),
+    ).toThrow('Pending item inside an array')
   })
 })
 

@@ -11,6 +11,9 @@ export function stripPendingItems(
   for (const [key, value] of Object.entries(values)) {
     assertWatchValueNotPending(key, value)
     const copy = structuredClone(value)
+    // Validate the full subtree before deleting outer pending objects, so
+    // pending items nested inside arrays are rejected consistently with counting.
+    visitObjects(copy, () => {})
     visitObjects(copy, (object) => {
       for (const [childKey, child] of Object.entries(object)) {
         if (isPendingItem(child)) {
