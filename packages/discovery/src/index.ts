@@ -162,6 +162,7 @@ export { countPendingItems, stripPendingItems } from './watch/pendingItems'
 export { runWatch } from './watch/runWatch'
 export { WATCH_TEMPLATES } from './watch/templates'
 export {
+  parseWatched,
   readWatchedFile,
   WATCH_CONFIG_FILE,
   WATCHED_FILE,
@@ -172,4 +173,5 @@ export {
   WatchReader,
 } from './watch/WatchReader'
 export type { WatchContext, WatchTemplate } from './watch/WatchTemplate'
+export { watchDiffToMarkdown } from './watch/watchDiffToMarkdown'
 export { isPendingItem, sortDeep, visitObjects } from './watch/watchedValue'

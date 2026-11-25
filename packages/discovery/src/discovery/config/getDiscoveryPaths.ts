@@ -8,6 +8,7 @@ export interface DiscoveryPaths {
   root: string
   discovery: string
   cache: string
+  watches: string
 }
 
 let memoized: DiscoveryPaths | undefined
@@ -38,9 +39,10 @@ function discoverRoot(): string {
 const ConfigInput = v.object({
   discovery: v.string().optional(),
   cache: v.string().optional(),
+  watches: v.string().optional(),
 })
 
-const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root'> = {
+const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root' | 'watches'> = {
   discovery: 'discovery',
   cache: 'cache/discovery.sqlite',
 }
@@ -48,9 +50,12 @@ const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root'> = {
 function readConfig(root: string): DiscoveryPaths {
   const source = readFileSync(join(root, CONFIG_FILENAME), 'utf-8')
   const parsed = ConfigInput.validate(JSON.parse(source))
+  const discovery = resolve(root, parsed.discovery ?? DEFAULT_CONFIG.discovery)
   return {
     root: resolve(root),
-    discovery: resolve(root, parsed.discovery ?? DEFAULT_CONFIG.discovery),
+    discovery,
     cache: resolve(root, parsed.cache ?? DEFAULT_CONFIG.cache),
+    // Global watches belong to no project, so they live next to projects/.
+    watches: resolve(root, parsed.watches ?? join(discovery, '..', 'watches')),
   }
 }
