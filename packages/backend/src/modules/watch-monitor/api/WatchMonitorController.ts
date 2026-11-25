@@ -118,6 +118,15 @@ export class WatchMonitorController {
         }
         continue
       }
+      // Until the next run, a baseline committed after the stored snapshot
+      // would diff backwards: its new values would read as removed.
+      if (
+        committed !== undefined &&
+        record.timestamp !== null &&
+        committed.timestamp > record.timestamp
+      ) {
+        continue
+      }
       const pending = computePendingWatchDiff(location, record, committed)
       if (pending !== undefined) {
         watches.push({

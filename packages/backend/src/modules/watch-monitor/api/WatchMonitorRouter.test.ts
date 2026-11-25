@@ -66,6 +66,7 @@ describe(createWatchMonitorRouter.name, () => {
         'newly-public-failed-private',
         watchConfig('newly-public-failed-private', true),
       ],
+      ['older-snapshot', watchConfig('older-snapshot', false)],
       ['optimism', watchConfig('optimism', true)],
       ['private-repo', watchConfig('private-repo', false)],
       ['quiet', watchConfig('quiet', true)],
@@ -94,6 +95,15 @@ describe(createWatchMonitorRouter.name, () => {
             'org/r:b.pdf': { sha: '2', size: 20 },
           },
         },
+      }),
+      // Stored before the baseline below was committed.
+      record({
+        name: 'older-snapshot',
+        timestamp: 1_700_000_000,
+        lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashOf('older-snapshot'),
+        configHash: hashOf('older-snapshot'),
+        values: { version: '1' },
       }),
       // Captured earlier while private (including a private error diagnostic);
       // watch.jsonc has since switched to public: true.
@@ -196,6 +206,7 @@ describe(createWatchMonitorRouter.name, () => {
         kind: 'project' as const,
         path: '/p/newly-pub-failed',
       },
+      { name: 'older-snapshot', kind: 'project' as const, path: '/p/older' },
       { name: 'optimism', kind: 'project' as const, path: '/p/optimism' },
       { name: 'private-repo', kind: 'project' as const, path: '/p/private' },
       { name: 'quiet', kind: 'global' as const, path: '/w/quiet' },
@@ -222,6 +233,13 @@ describe(createWatchMonitorRouter.name, () => {
             timestamp: 1,
             configHash: hashOf('optimism'),
             values: { audits: { 'org/r:a.pdf': { sha: '1', size: 10 } } },
+          }
+        }
+        if (name === 'older-snapshot') {
+          return {
+            timestamp: 1_700_000_001,
+            configHash: hashOf(name),
+            values: { version: '2' },
           }
         }
         if (name === 'quiet' || name === 'stale-watch') {
