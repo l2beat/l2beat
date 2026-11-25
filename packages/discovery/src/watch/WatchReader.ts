@@ -164,7 +164,8 @@ export function hashWatchConfig(config: WatchConfig): Hash256 {
     watches: config.watches.map((watch) => ({
       key: watch.key,
       template: watch.template.name,
-      params: watch.params as json,
+      // A template may take no params, and undefined is not JSON.
+      ...(watch.params !== undefined ? { params: watch.params as json } : {}),
     })),
   })
   return hashJson(canonical)

@@ -18,7 +18,7 @@ import {
   createWorkerPool,
   type WorkerPool,
 } from '../update-monitor/createWorkers'
-import { WatchMonitor } from './WatchMonitor'
+import { summarizeWatchError, WatchMonitor } from './WatchMonitor'
 import type { WatchNotifier } from './WatchNotifier'
 
 const instantWorkerPool = mockObject<WorkerPool>({
@@ -353,6 +353,103 @@ describe(WatchMonitor.name, () => {
     expect(stored.get('slow')?.lastError).toEqual('Task timeout')
     expect(stored.get('slow')?.pendingNotifications).toEqual([])
     expect(notifier.handleUpdate).toHaveBeenCalledTimes(2)
+  })
+
+  it('still drains and reports when one watch cannot be written or claimed', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readAllWatches: () => [
+        { name: 'broken', kind: 'project', path: '/p/broken' },
+        { name: 'queued', kind: 'project', path: '/p/queued' },
+      ],
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn().resolvesToOnce('failed').resolvesTo('sent'),
+      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+    const seeding = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      mockFn().resolvesTo({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+    )
+    await expect(seeding.updateWatch('queued', TIMESTAMP)).toBeRejectedWith(
+      'Watch notification failed',
+    )
+    expect(stored.get('queued')?.pendingNotifications.length).toEqual(1)
+
+    // Methodology: every database call for `broken` rejects, as on a lost
+    // connection for one row, while `queued` has an alert waiting.
+    const working = db.watchMonitor
+    const failingDb = mockObject<Database>({
+      watchMonitor: mockObject<Database['watchMonitor']>({
+        findLatest: (name) => working.findLatest(name),
+        getAll: () => working.getAll(),
+        recordFailure: async (name, ...rest) => {
+          if (name === 'broken') {
+            throw new Error('Database error')
+          }
+          return await working.recordFailure(name, ...rest)
+        },
+        claimNextPendingNotification: async (name, ...rest) => {
+          if (name === 'broken') {
+            throw new Error('Database error')
+          }
+          return await working.claimNextPendingNotification(name, ...rest)
+        },
+        acknowledgePendingNotification: (...args) =>
+          working.acknowledgePendingNotification(...args),
+      }),
+    })
+    const failingPool = mockObject<WorkerPool>({
+      runInPool: async (tasks) => ({
+        results: [],
+        errors: tasks.map((task) => ({
+          identity: task.identity,
+          error: new Error('Watch run failed'),
+        })),
+        timedOut: false,
+      }),
+    })
+    const monitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      failingDb,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      failingPool,
+      [],
+    )
+
+    await monitor.update(TIMESTAMP + 3600)
+    expect(stored.get('queued')?.pendingNotifications).toEqual([])
+    expect(notifier.sendDailyReminder).toHaveBeenCalledTimes(1)
+    expect(notifier.sendDailyReminder.calls[0]?.args[3]).toEqual([
+      'broken',
+      'queued',
+    ])
+  })
+
+  it('keeps the watch key and the source error of a failed run', () => {
+    const error = new Error('Watch run failed', {
+      cause: { name: 'alpha', key: 'docs', error: new Error('HTTP error') },
+    })
+    expect(summarizeWatchError(error)).toEqual(
+      'Watch run failed: key docs: HTTP error',
+    )
+    expect(summarizeWatchError(new Error('Task timeout'))).toEqual(
+      'Task timeout',
+    )
   })
 
   it('retries CAS when a concurrent attempt persists an undelivered alert between read and write', async () => {

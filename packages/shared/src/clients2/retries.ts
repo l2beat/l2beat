@@ -19,6 +19,8 @@ export async function retry<T>(
   let nextTimeout = options.initialTimeoutMs
   for (let attempt = 1; ; attempt++) {
     if (options.signal?.aborted) {
+      // The eager first call already runs; its rejection must not go unhandled.
+      firstResult?.catch(() => {})
       throw options.signal.reason
     }
     try {

@@ -68,7 +68,8 @@ function toLeaves(path: string[], value: json, isSetItem: boolean): string[] {
 
 function formatLeaf(path: string[], value: json, isSetItem: boolean): string {
   const joined = path.join('.')
-  if (isSetItem && value === true) {
+  // A root value has no path to stand in for it.
+  if (isSetItem && value === true && joined !== '') {
     return joined
   }
   const text = isShort(value) ? JSON.stringify(value) : collapse(value)
