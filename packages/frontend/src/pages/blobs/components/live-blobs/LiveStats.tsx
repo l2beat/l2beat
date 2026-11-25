@@ -267,7 +267,12 @@ function useShares(totals: PosterTotals | undefined): PosterShare[] {
  * wide as its share: no gaps or minimum widths, which on a phone would give
  * the long tail most of the strip. Stretches do not
  * ease to their new size: a block moves them by less than a pixel, and
- * easing `flex-grow` lays the whole strip out again on every frame
+ * easing `flex-grow` lays the whole strip out again on every frame.
+ *
+ * The colors are one gradient on the strip, not a background per stretch:
+ * Safari antialiases each stretch's fractional edges on its own, and let the
+ * last one spill past the rounded corner. The stretches stay, unpainted, to
+ * carry each poster's tooltip
  */
 function ShareStrip({
   shares,
@@ -281,6 +286,7 @@ function ShareStrip({
   return (
     <div
       className="mt-4 flex h-4 overflow-hidden rounded-[3px] md:h-5"
+      style={{ backgroundImage: hardStopGradient(shares) }}
       role="img"
       aria-label={`${formatWhole(blobs)} blobs from ${projects} projects`}
     >
@@ -289,15 +295,24 @@ function ShareStrip({
           key={share.id}
           title={`${share.name}${DOT_SEPARATOR}${formatPercent(share.share)}`}
           className="h-full"
-          style={{
-            flexGrow: share.share,
-            flexBasis: 0,
-            backgroundColor: share.color,
-          }}
+          style={{ flexGrow: share.share, flexBasis: 0 }}
         />
       ))}
     </div>
   )
+}
+
+/** Each share as a solid band, ending where the next begins */
+function hardStopGradient(shares: PosterShare[]): string | undefined {
+  if (shares.length === 0) return undefined
+  let start = 0
+  const stops = shares.map(({ share, color }) => {
+    const end = start + share * 100
+    const stop = `${color} ${start}% ${end}%`
+    start = end
+    return stop
+  })
+  return `linear-gradient(to right, ${stops.join(', ')})`
 }
 
 function ShareLegend({
