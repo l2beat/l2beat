@@ -1,9 +1,10 @@
+import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import FakeTimers from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
-import type { RetryHandler } from '../tools/RetryHandler'
+import { RetryHandler } from '../tools/RetryHandler'
 import { EthRpcClient } from './EthRpcClient'
 import { Http, type HttpResponse, MockHttp, makeHttpResponse } from './Http'
 
@@ -677,6 +678,40 @@ describe(`${EthRpcClient.name} with a retry handler`, () => {
     expect(retried.map((e) => (e as Error).message)).toEqual([
       'RPC call failed. HTTP error',
     ])
+  })
+
+  // Why: the message is the same for every refusal, and the status tells a
+  // throttled chain (429) from a blocked one (403)
+  it('logs the status of a refused request with its retry', async () => {
+    const http = new MockHttp()
+    http.queueResponse(403, 'Forbidden')
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x7b' }),
+    )
+    let self: Logger = Logger.SILENT
+    const logger = mockObject<Logger>({ for: () => self, warn: () => {} })
+    self = logger
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      new RetryHandler({
+        maxRetries: 1,
+        initialRetryDelayMs: 1,
+        maxRetryDelayMs: 1,
+        logger,
+      }),
+    )
+
+    expect(await client.getBlockNumber()).toEqual(123n)
+    expect(logger.warn).toHaveBeenOnlyCalledWith(
+      'Scheduling retry',
+      expect.subset({ error: 'RPC call failed. HTTP error', status: 403 }),
+    )
   })
 })
 
