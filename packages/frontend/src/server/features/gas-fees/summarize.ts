@@ -12,7 +12,6 @@ export interface GasFeesTotals {
   l1DataFees: number
   /** Prices are null when no day in the span had transactions */
   avgFee: number | null
-  medianFee: number | null
   transfer: number | null
   erc20: number | null
   swap: number | null
@@ -29,9 +28,8 @@ export function inRange<T extends { timestamp: number }>(
 }
 
 /**
- * Totals are sums, the average fee is fees over transactions, the median is
- * weighted by transactions like the average so it can't exceed it over a long
- * span, and action costs are plain means of the days that have one.
+ * Totals are sums, the average fee is fees over transactions, and action
+ * costs are plain means of the days that have one.
  */
 export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
   if (records.length === 0) return undefined
@@ -40,8 +38,6 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
   let baseFees = 0
   let priorityFees: number | null = null
   let l1DataFees = 0
-  let medianWeighted = 0
-  let medianTxCount = 0
   for (const r of records) {
     txCount += r.txCount
     totalFees += r.totalFees
@@ -49,10 +45,6 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
     l1DataFees += r.l1DataFees
     if (r.priorityFees !== null) {
       priorityFees = (priorityFees ?? 0) + r.priorityFees
-    }
-    if (r.medianFee !== null) {
-      medianWeighted += r.medianFee * r.txCount
-      medianTxCount += r.txCount
     }
   }
   return {
@@ -63,7 +55,6 @@ export function summarize(records: GasFeesRecord[]): GasFeesTotals | undefined {
     priorityFees,
     l1DataFees,
     avgFee: txCount > 0 ? totalFees / txCount : null,
-    medianFee: medianTxCount > 0 ? medianWeighted / medianTxCount : null,
     transfer: mean(records.map((r) => r.transfer)),
     erc20: mean(records.map((r) => r.erc20)),
     swap: mean(records.map((r) => r.swap)),

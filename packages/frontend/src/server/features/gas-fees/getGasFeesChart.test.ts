@@ -46,7 +46,12 @@ describe(buildGasFeesChart.name, () => {
     const days = Array.from({ length: 200 }, (_, i) => i + 1)
     const records: GasFeesRecords = new Map([
       ['ethereum', days.map((day) => record(day, day))],
-      ['base', days.filter((day) => day !== 200).map((day) => record(day, 1))],
+      // Lacks one day of the last week
+      ['base', days.filter((day) => day !== 199).map((day) => record(day, 1))],
+      // Had no transactions on most of it
+      ['taiko', days.map((day) => record(day, day > 196 ? null : 1))],
+      // Lacks most of it
+      ['ink', days.filter((day) => day < 196).map((day) => record(day, 1))],
     ])
 
     const { chart, smoothed } = buildGasFeesChart(records, {
@@ -57,7 +62,9 @@ describe(buildGasFeesChart.name, () => {
     expect(smoothed).toEqual(true)
     // The mean of days 194 to 200
     expect(chart.at(-1)?.[index('ethereum')]).toEqual(197)
-    expect(chart.at(-1)?.[index('base')]).toEqual(null)
+    expect(chart.at(-1)?.[index('base')]).toEqual(1)
+    expect(chart.at(-1)?.[index('taiko')]).toEqual(null)
+    expect(chart.at(-1)?.[index('ink')]).toEqual(null)
   })
 })
 

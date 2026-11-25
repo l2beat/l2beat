@@ -59,7 +59,7 @@ export function GasFeesTipPayers({
             <Split label="Transactions" shares={payers.txShares} />
             <Split label="Tips paid" shares={payers.tipShares} />
           </div>
-          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-secondary text-xs">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-xs">
             {GROUPS.map((group) => (
               <li key={group.key} className="flex items-center gap-1.5">
                 <span
@@ -80,7 +80,7 @@ function Split({ label, shares }: { label: string; shares: Shares }) {
   const last = percent(shares[GROUPS[GROUPS.length - 1]?.key ?? 'low'])
   return (
     <div className="flex flex-col gap-1">
-      <span className="text-secondary text-xs">{label}</span>
+      <span className="text-xs">{label}</span>
       <div className="relative flex h-11 gap-0.5 font-semibold text-sm tabular-nums">
         {GROUPS.map((group) => {
           const share = percent(shares[group.key])
@@ -102,7 +102,7 @@ function Split({ label, shares }: { label: string; shares: Shares }) {
           )
         })}
         {last < THINNEST_LABELLED && (
-          <span className="-translate-y-1/2 absolute top-1/2 left-full ml-2 text-secondary">
+          <span className="-translate-y-1/2 absolute top-1/2 left-full ml-2">
             {last}%
           </span>
         )}

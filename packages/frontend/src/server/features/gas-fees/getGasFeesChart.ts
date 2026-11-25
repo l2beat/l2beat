@@ -19,6 +19,8 @@ export type GasFeesChartParams = v.infer<typeof GasFeesChartParams>
 /** Beyond this, daily values are noise at chart width, so lines show a 7-day average */
 const SMOOTHING_THRESHOLD_DAYS = 120
 const SMOOTHING_WINDOW_DAYS = 7
+/** A point needs most of its week: fewer days would pass for a week's average */
+const SMOOTHING_MIN_DAYS = 4
 
 export interface GasFeesChartData {
   /**
@@ -158,24 +160,28 @@ function round(value: number | null) {
   return value === null ? null : Number(value.toPrecision(3))
 }
 
-/** Over the days the chain has of the 7 ending at `day`. null when it lacks `day` itself, so a gap stays a gap */
+/**
+ * Over the days of the 7 ending at `day` that have a value. null when most of
+ * them have none, missing or without transactions, so a gap stays a gap. A
+ * shorter gap can't show at a point a week.
+ */
 function trailingAverage(
   byDay: Map<number, GasFeesRecord>,
   day: number,
   metric: GasFeesMetric,
 ) {
-  if (!byDay.has(day)) return null
-  const window: GasFeesRecord[] = []
+  const priced: GasFeesRecord[] = []
   for (let i = 0; i < SMOOTHING_WINDOW_DAYS; i++) {
     const record = byDay.get(day - i * UnixTime.DAY)
-    if (record) window.push(record)
+    if (record && dailyValue(record, metric) !== null) priced.push(record)
   }
+  if (priced.length < SMOOTHING_MIN_DAYS) return null
   if (metric === 'avgFee') {
-    const fees = window.reduce((sum, r) => sum + r.totalFees, 0)
-    const txs = window.reduce((sum, r) => sum + r.txCount, 0)
-    return txs > 0 ? fees / txs : null
+    const fees = priced.reduce((sum, r) => sum + r.totalFees, 0)
+    const txs = priced.reduce((sum, r) => sum + r.txCount, 0)
+    return fees / txs
   }
-  return mean(window.map((r) => r[metric]))
+  return mean(priced.map((r) => r[metric]))
 }
 
 function dailyValue(record: GasFeesRecord | undefined, metric: GasFeesMetric) {

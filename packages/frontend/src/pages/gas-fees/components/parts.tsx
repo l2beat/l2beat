@@ -33,7 +33,7 @@ export function Label({
     <span
       style={style}
       className={cn(
-        'font-semibold text-2xs text-secondary uppercase tracking-wider',
+        'font-semibold text-2xs text-primary uppercase tracking-wider',
         className,
       )}
     >

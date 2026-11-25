@@ -28,12 +28,12 @@ describe(getSureWait.name, () => {
     expect(getSureWait(buckets)).toEqual(18)
   })
 
-  it('is the start of the last bucket, which has no end', () => {
+  it('has no wait to give within the last bucket, which has no end', () => {
     const buckets = [
       { waitFromMs: 0, waitToMs: 500, txCount: 1 },
       { waitFromMs: 1_800_000, waitToMs: null, txCount: 9 },
     ]
-    expect(getSureWait(buckets)).toEqual(1_800)
+    expect(getSureWait(buckets)).toEqual(undefined)
   })
 })
 

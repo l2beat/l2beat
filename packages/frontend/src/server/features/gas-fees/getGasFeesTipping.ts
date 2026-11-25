@@ -247,8 +247,8 @@ function buildPriceOfSpeed(
 
 /**
  * Seconds within which 99% of the transactions in the buckets had landed,
- * placed within its bucket by the share of it that is needed. The last bucket
- * has no end, so there it is the bucket's start.
+ * placed within its bucket by the share of it that is needed. undefined when
+ * that is the last bucket, which has no end: the wait is only known to be longer.
  */
 export function getSureWait(
   buckets: (GasFeesWaitBucket & { txCount: number })[],
@@ -259,8 +259,8 @@ export function getSureWait(
   let landed = 0
   for (const bucket of sorted) {
     if (landed + bucket.txCount >= needed) {
-      const width =
-        bucket.waitToMs === null ? 0 : bucket.waitToMs - bucket.waitFromMs
+      if (bucket.waitToMs === null) return undefined
+      const width = bucket.waitToMs - bucket.waitFromMs
       const within = (needed - landed) / bucket.txCount
       return round((bucket.waitFromMs + width * within) / 1000)
     }

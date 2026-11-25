@@ -27,8 +27,8 @@ import type {
   GasFeesSummaryRow,
 } from '~/server/features/gas-fees/getGasFeesSummary'
 import {
-  GAS_FEES_USD_METRICS,
-  type GasFeesUsdMetric,
+  GAS_FEES_PERIOD_METRICS,
+  type GasFeesPeriodMetric,
 } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
@@ -74,7 +74,7 @@ export function GasFeesTable({
   highlightedChainId,
   setHighlightedChainId,
 }: Props) {
-  const [action, setAction] = useState<GasFeesUsdMetric>('erc20')
+  const [action, setAction] = useState<GasFeesPeriodMetric>('erc20')
   const [sort, setSort] = useState<Sort>({ id: 'cost', desc: false })
   const nameOf = (id: string) => chains.find((c) => c.id === id)?.name ?? id
   const noData = summary?.noDataIds.map(nameOf) ?? []
@@ -230,7 +230,7 @@ export function GasFeesTable({
 }
 
 function getCostColumns(
-  action: GasFeesUsdMetric,
+  action: GasFeesPeriodMetric,
   ethereum: GasFeesSummaryRow | undefined,
 ): Column[] {
   return [
@@ -296,19 +296,19 @@ function ActionPicker({
   value,
   onChange,
 }: {
-  value: GasFeesUsdMetric
-  onChange: (value: GasFeesUsdMetric) => void
+  value: GasFeesPeriodMetric
+  onChange: (value: GasFeesPeriodMetric) => void
 }) {
   return (
     <Select
       value={value}
-      onValueChange={(v) => onChange(v as GasFeesUsdMetric)}
+      onValueChange={(v) => onChange(v as GasFeesPeriodMetric)}
     >
       <SelectTrigger className="min-h-8 rounded-lg bg-surface-secondary px-3 font-medium">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {GAS_FEES_USD_METRICS.map((metric) => (
+        {GAS_FEES_PERIOD_METRICS.map((metric) => (
           <SelectItem key={metric} value={metric}>
             {GAS_FEES_METRIC_LABELS[metric].short}
           </SelectItem>
@@ -396,7 +396,7 @@ function getSplitColumn(): Column {
               return (
                 <span key={p.key} className="flex flex-col gap-0.5">
                   <span className="flex justify-between gap-3">
-                    <span className="flex items-center gap-1.5 whitespace-nowrap text-secondary">
+                    <span className="flex items-center gap-1.5 whitespace-nowrap">
                       {hasNotes && (
                         <span
                           className={cn(

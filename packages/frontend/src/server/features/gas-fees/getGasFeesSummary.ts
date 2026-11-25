@@ -9,16 +9,16 @@ import {
 } from './getGasFeesRecords'
 import { type GasFeesTotals, inRange, median, summarize } from './summarize'
 import {
-  GAS_FEES_USD_METRICS,
+  GAS_FEES_PERIOD_METRICS,
+  type GasFeesPeriodMetric,
   type GasFeesRecord,
-  type GasFeesUsdMetric,
 } from './types'
 
 export const GasFeesSummaryParams = v.object({ range: ChartRange })
 export type GasFeesSummaryParams = v.infer<typeof GasFeesSummaryParams>
 
 export interface GasFeesSummaryRow
-  extends Record<GasFeesUsdMetric, number | null> {
+  extends Record<GasFeesPeriodMetric, number | null> {
   id: GasFeesChainId
   gasToken: string
   totalFees: number
@@ -31,7 +31,7 @@ export interface GasFeesSummaryRow
     l1Data: number
   }
   /** Ethereum's value over the same days divided by this chain's, null for Ethereum */
-  timesCheaper: Record<GasFeesUsdMetric, number | null> | null
+  timesCheaper: Record<GasFeesPeriodMetric, number | null> | null
 }
 
 export interface GasFeesSummary {
@@ -101,7 +101,6 @@ export function buildGasFeesSummary(
       id: chain.id,
       gasToken: chain.gasToken,
       avgFee: totals.avgFee,
-      medianFee: totals.medianFee,
       transfer: totals.transfer,
       erc20: totals.erc20,
       swap: totals.swap,
@@ -160,12 +159,12 @@ function timesCheaper(
     ethereum.filter((r) => timestamps.has(r.timestamp)),
   )
   return Object.fromEntries(
-    GAS_FEES_USD_METRICS.map((metric) => {
+    GAS_FEES_PERIOD_METRICS.map((metric) => {
       const ours = totals[metric]
       const theirs = sameDays?.[metric] ?? null
       return [metric, ours && theirs ? theirs / ours : null]
     }),
-  ) as Record<GasFeesUsdMetric, number | null>
+  ) as Record<GasFeesPeriodMetric, number | null>
 }
 
 function getLatestErc20(

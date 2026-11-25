@@ -18,7 +18,18 @@ export const GAS_FEES_METRICS = [
   ...GAS_FEES_USD_METRICS,
   ...GAS_FEES_GAS_METRICS,
 ] as const
+/**
+ * The fees a period has one figure for. Not the median fee: the median of a
+ * period's transactions can't be had from its days' medians.
+ */
+export const GAS_FEES_PERIOD_METRICS = [
+  'avgFee',
+  'transfer',
+  'erc20',
+  'swap',
+] as const
 export type GasFeesUsdMetric = (typeof GAS_FEES_USD_METRICS)[number]
+export type GasFeesPeriodMetric = (typeof GAS_FEES_PERIOD_METRICS)[number]
 export type GasFeesGasMetric = (typeof GAS_FEES_GAS_METRICS)[number]
 export type GasFeesMetric = (typeof GAS_FEES_METRICS)[number]
 export const GasFeesMetric = v.enum(GAS_FEES_METRICS)

@@ -123,11 +123,11 @@ function TipsNow({
   return (
     <table className="w-full min-w-[600px] tabular-nums">
       <thead>
-        <tr className="text-left text-secondary text-xs">
+        <tr className="text-left text-xs uppercase">
           <th className="w-[16%] pb-1.5 font-medium">Speed, gwei</th>
           <th className="w-[24%] pb-1.5 font-medium">
             <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5">
-              <span className="flex items-center gap-1.5 text-primary">
+              <span className="flex items-center gap-1.5">
                 <Logo className="block h-5 w-auto" animated={false} />
                 estimate
               </span>
@@ -142,7 +142,7 @@ function TipsNow({
                 i === 0 && 'border-l',
               )}
             >
-              <span className="flex items-center gap-1.5 whitespace-nowrap text-primary">
+              <span className="flex items-center gap-1.5 whitespace-nowrap">
                 <img
                   src={walletIcons[wallet]}
                   alt=""

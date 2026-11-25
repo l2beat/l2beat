@@ -129,7 +129,7 @@ function SplitBar({
               className="size-2 rounded-xs"
               style={{ backgroundColor: p.color }}
             />
-            <span className="text-secondary">{p.label}</span>
+            <span>{p.label}</span>
             <span className="font-medium tabular-nums">
               {share(p.value) < NARROWEST_LABELLED && `${usd(p.value)}, `}
               {Math.round(share(p.value) * 100)}%

@@ -54,12 +54,7 @@ export function FeeSplitKey({
   className?: string
 }) {
   return (
-    <span
-      className={cn(
-        'flex items-center gap-3 text-2xs text-secondary',
-        className,
-      )}
-    >
+    <span className={cn('flex items-center gap-3 text-2xs', className)}>
       {keys.map((key) => (
         <span key={key} className="flex items-center gap-1">
           <span className={cn('size-2 rounded-xs', FEE_SPLIT_COLORS[key])} />

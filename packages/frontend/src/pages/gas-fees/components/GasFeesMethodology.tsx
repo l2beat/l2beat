@@ -48,7 +48,7 @@ const TIERS = [
 export function GasFeesMethodology() {
   return (
     <Dialog>
-      <DialogTrigger className="flex items-center gap-1 whitespace-nowrap rounded font-medium text-secondary text-xs underline decoration-dotted underline-offset-2 hover:text-primary">
+      <DialogTrigger className="flex items-center gap-1 whitespace-nowrap rounded font-medium text-secondary text-xs normal-case underline decoration-dotted underline-offset-2 hover:text-primary">
         <InfoIcon className="size-3 fill-current" />
         How we estimate
       </DialogTrigger>
@@ -180,7 +180,7 @@ function Table({
   return (
     <table className="w-full">
       <thead>
-        <tr className="text-secondary text-xs">
+        <tr className="text-xs uppercase">
           <th className="pb-1.5 text-left font-normal">
             <span className="sr-only">Speed</span>
           </th>

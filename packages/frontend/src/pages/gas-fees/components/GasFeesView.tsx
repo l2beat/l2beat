@@ -37,7 +37,7 @@ const RANGE_LABELS: Record<(typeof GAS_FEES_RANGE_OPTIONS)[number], string> = {
   '30d': '30D',
   '90d': '90D',
   '1y': '1Y',
-  max: 'Max',
+  max: 'MAX',
 }
 
 interface Props {
@@ -184,7 +184,7 @@ export function GasFeesView({
             >
               {GAS_FEES_RANGE_OPTIONS.map((option) => (
                 <RadioGroupItem key={option} value={option}>
-                  {option === 'max' ? 'All' : RANGE_LABELS[option]}
+                  {option === 'max' ? 'ALL' : RANGE_LABELS[option]}
                 </RadioGroupItem>
               ))}
             </RadioGroup>

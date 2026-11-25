@@ -89,7 +89,7 @@ export function GasFeesUpgrades({
                       Next
                     </span>
                   ) : (
-                    <span className="whitespace-nowrap text-2xs text-secondary">
+                    <span className="whitespace-nowrap text-2xs">
                       {formatTimestamp(upgrade.timestamp)}
                     </span>
                   )}

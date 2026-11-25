@@ -191,7 +191,7 @@ function TransferCost({ f }: { f: Figures }) {
       <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1.5 text-xs">
         {rows.map((row) => (
           <Fragment key={row.label}>
-            <span className="text-secondary">{row.label}</span>
+            <span>{row.label}</span>
             <span className="h-2.5">
               <span
                 className="block h-full rounded-sm"
@@ -262,7 +262,7 @@ export function KeyedBar({
               className="size-2 rounded-xs"
               style={{ backgroundColor: p.color }}
             />
-            <span className="text-secondary">{p.label}</span>
+            <span>{p.label}</span>
             <span className="font-medium tabular-nums">
               {percent(total > 0 ? p.value / total : 0)}
             </span>
