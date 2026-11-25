@@ -64,8 +64,13 @@ export function getMoveEnd(
 
 const back = (end: number, _: Edges, seconds: number) =>
   end - seconds * KEY_STEP
-const forward = (end: number, _: Edges, seconds: number) =>
-  end + seconds * KEY_STEP
+// in whole steps back from the newest block, as it moves on between presses,
+// so a step back and one forward return to it
+const forward = (end: number, buffer: Edges, seconds: number) => {
+  const step = seconds * KEY_STEP
+  const steps = Math.round((buffer.to - end) / step)
+  return buffer.to - Math.max(0, steps - 1) * step
+}
 const KEY_ENDS = new Map<
   string,
   (end: number, buffer: Edges, seconds: number) => number

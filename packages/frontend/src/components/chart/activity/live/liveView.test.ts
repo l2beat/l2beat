@@ -351,6 +351,15 @@ describe(getKeyEnd.name, () => {
     expect(getKeyEnd('ArrowUp', T - 1800, buffer, 900)).toEqual(T - 1710)
   })
 
+  it('steps forward in whole steps from the newest block as it moves on', () => {
+    // Methodology: a step back read before the newest block moved on 5 s
+    const moved = { ...buffer, to: T + 5 }
+    expect(getKeyEnd('ArrowRight', T - 90, moved, 900)).toEqual(T + 5)
+    expect(getKeyEnd('ArrowRight', T - 1800, moved, 900)).toEqual(
+      T + 5 - 1800 + 90,
+    )
+  })
+
   it('goes to the first window and to the newest block', () => {
     expect(getKeyEnd('Home', T - 1800, buffer, 900)).toEqual(buffer.from + 900)
     expect(getKeyEnd('End', T - 1800, buffer, 900)).toEqual(T)
