@@ -176,18 +176,16 @@ describe(getResizedFrom.name, () => {
 
 describe(getResizedTo.name, () => {
   const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
-  const live = 30
-
   it('holds the start, in whole minutes', () => {
-    expect(
-      getResizedTo(T - 3600 + 7 * MINUTE + 5, T - 3600, buffer, live),
-    ).toEqual({ end: T - 3600 + 7 * MINUTE, seconds: 7 * MINUTE, exact: true })
+    expect(getResizedTo(T - 3600 + 7 * MINUTE + 5, T - 3600, buffer)).toEqual({
+      end: T - 3600 + 7 * MINUTE,
+      seconds: 7 * MINUTE,
+      exact: true,
+    })
   })
 
   it('holds the start of a live window dragged in from the right', () => {
-    // Methodology: 2 min back on 1H is within the 3 min a move would
-    // still follow the newest block in
-    const target = getResizedTo(T - 2 * MINUTE, T - 3600, buffer, live)
+    const target = getResizedTo(T - 2 * MINUTE, T - 3600, buffer)
     expect(target).toEqual({
       end: T - 2 * MINUTE,
       seconds: 58 * MINUTE,
@@ -196,28 +194,21 @@ describe(getResizedTo.name, () => {
     expect(getTargetEnd(target, buffer)).toEqual(T - 2 * MINUTE)
   })
 
-  it('follows the newest block once it reaches it', () => {
-    expect(getResizedTo(T - 20, T - 10 * MINUTE, buffer, live)).toEqual({
+  it('follows the newest block once it reaches it, not short of it', () => {
+    expect(getResizedTo(T, T - 10 * MINUTE, buffer)).toEqual({
       end: undefined,
       seconds: 10 * MINUTE,
       exact: true,
     })
-  })
-
-  it('keeps the length of a live window trailing the newest block', () => {
-    // Methodology: a 90 min window drawn 45 s behind the newest block, its
-    // right edge taken where it is drawn, within a minute of the newest block
-    expect(getResizedTo(T - 45, T - 45 - 90 * MINUTE, buffer, 60)).toEqual({
-      end: undefined,
-      seconds: 90 * MINUTE,
+    expect(getResizedTo(T - MINUTE, T - 10 * MINUTE, buffer)).toEqual({
+      end: T - MINUTE,
+      seconds: 9 * MINUTE,
       exact: true,
     })
   })
 
   it('keeps at least the shortest preset', () => {
-    expect(getResizedTo(T - 3590, T - 3600, buffer, live).seconds).toEqual(
-      5 * MINUTE,
-    )
+    expect(getResizedTo(T - 3590, T - 3600, buffer).seconds).toEqual(5 * MINUTE)
   })
 })
 
@@ -271,11 +262,10 @@ describe(getKeyLength.name, () => {
 describe(getMoveEnd.name, () => {
   const buffer = { from: T - 4 * UnixTime.HOUR, to: T }
 
-  it('follows the newest block when the overview shows it does', () => {
-    // Methodology: 14 s behind on 5M is within its 15 s, but rounded to a
-    // 12 s bucket first it would be 24 s behind
+  it('follows the newest block when moved onto it, not short of it', () => {
+    expect(getMoveEnd({ end: T, seconds: 300 }, buffer, 12)).toEqual(undefined)
     expect(getMoveEnd({ end: T - 14, seconds: 300 }, buffer, 12)).toEqual(
-      undefined,
+      T - 14 - ((T - 14) % 12),
     )
   })
 
@@ -308,9 +298,9 @@ describe(clampTo.name, () => {
     )
   })
 
-  it('follows the newest block within a twentieth of the window of it', () => {
-    expect(clampTo(T - 46, buffer, 900)).toEqual(T - 46)
-    expect(clampTo(T - 45, buffer, 900)).toEqual(undefined)
+  it('follows the newest block only once it reaches it', () => {
+    expect(clampTo(T - 1, buffer, 900)).toEqual(T - 1)
+    expect(clampTo(T, buffer, 900)).toEqual(undefined)
     expect(clampTo(T + 600, buffer, 900)).toEqual(undefined)
   })
 

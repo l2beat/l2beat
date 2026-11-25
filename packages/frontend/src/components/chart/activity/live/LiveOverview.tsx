@@ -166,12 +166,7 @@ export function LiveOverview({
               buffer,
               resize.moved,
             )
-          : getResizedTo(
-              at + resize.grab,
-              resize.start,
-              buffer,
-              EDGE_REACH * secondsPerPixel(),
-            )
+          : getResizedTo(at + resize.grab, resize.start, buffer)
         : { end: at + seconds / 2, seconds },
     )
   }

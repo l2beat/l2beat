@@ -8,15 +8,10 @@ interface Edges {
 
 /** The share of the window an arrow key moves it by */
 const KEY_STEP = 1 / 10
-/**
- * The share of the window its end may be from the newest block and still
- * follow it. Under a key's step, so one press back from there stops following
- */
-const FOLLOW_WITHIN = KEY_STEP / 2
 
 /**
  * Where a window of `seconds` asked to end at `end` does: within the buffer,
- * and undefined, so following the newest block, once close to it
+ * and undefined, so following the newest block, once it reaches it
  */
 export function clampTo(
   end: number | undefined,
@@ -25,7 +20,7 @@ export function clampTo(
 ) {
   if (end === undefined || buffer === undefined) return undefined
   const clamped = Math.max(buffer.from + seconds, end)
-  return clamped >= buffer.to - seconds * FOLLOW_WITHIN ? undefined : clamped
+  return clamped >= buffer.to ? undefined : clamped
 }
 
 /** A window on the overview, before it is read */
@@ -152,19 +147,17 @@ export function getResizedFrom(
 
 /**
  * The window the right edge dragged to `at` makes, starting at `start`, at
- * the length it is read. Within `liveWithin` of the newest block it ends
- * there
+ * the length it is read. Dragged to the newest block it follows it
  */
 export function getResizedTo(
   at: number,
   start: number,
   buffer: Edges,
-  liveWithin: number,
 ): LiveTarget {
-  if (at >= buffer.to - liveWithin) {
+  if (at >= buffer.to) {
     return {
       end: undefined,
-      seconds: toLiveLength(Math.min(at, buffer.to) - start),
+      seconds: toLiveLength(buffer.to - start),
       exact: true,
     }
   }
