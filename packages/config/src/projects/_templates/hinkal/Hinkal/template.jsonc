@@ -33,7 +33,7 @@
       "severity": "MEDIUM"
     },
     "hinkalHelper": {
-      "description": "Helper contract that validates relayers, access tokens and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
+      "description": "Helper contract that validates relayers and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
       "severity": "HIGH",
       "type": "CODE_CHANGE"
     },
@@ -72,7 +72,7 @@
           "0x231494729b043f6a9966f717390620d8aff7acdbe746ffef8a2f430c8124da25", // Odos
           "0x2ab0b866d21ac9b7200cb612980a6bede5fc41279d81375c7fe2efd9fa4d9073", // OneInch
           "0x162ae7bd88e973ad984146534c902b875ee6b7d329586ca9ce335288570fefde", // Lifi
-          "0x0516ec502da3218e5f396ac5cb0b29055018773f4a92d2cb13db8e2ecc5103e5" // unknown name
+          "0x0516ec502da3218e5f396ac5cb0b29055018773f4a92d2cb13db8e2ecc5103e5" // DepositOnChainUtxos
         ]
       }
     },

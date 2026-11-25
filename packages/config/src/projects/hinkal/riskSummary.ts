@@ -12,28 +12,24 @@ export function hinkalRiskSummary({
 }) {
   return definePrivacyRisks({
     stolen: [
-      'whoever made the single phase 2 contribution of the [trusted setup](#trusted-setups) kept or leaks its secret, which allows forged proofs.',
       R.proofSystem('spends or withdrawals'),
-      `the ${multisigStats} multisig registers a malicious verifier or helper through the timelock, which takes effect after ${timelockDelay}.`,
-      `the ${multisigStats} multisig upgrades the Emporium through the timelock, which can then move the funds of every public account delegated to the HinkalWallet.`,
+      'whoever made the single phase 2 contribution of a circuit in the [trusted setup](#trusted-setups) kept its secret, allowing forged proofs.',
+      `the ${multisigStats} multisig registers a malicious verifier or helper through the [timelock](#upgrades-and-governance), which takes effect after ${timelockDelay}.`,
+      'the HinkalHelper, whose deployed code is unverified, builds proof inputs that differ from the transaction.',
+      'the Emporium, whose current code is unverified, or an upgrade of it through the timelock moves the funds of public accounts delegated to the HinkalWallet.',
+      "a single Safe signer redirects HinkalWrapper deposits, takes swap output down to the user's minimum, or upgrades the ReceiveVaultFactory, with no delay.",
     ],
-    lost: [
-      'a user loses the recovery phrase or the wallet whose signature derives their keys.',
-    ],
+    lost: ['a user loses their recovery phrase.'],
     frozen: [
-      "Hinkal's relayers refuse a withdrawal, since no released app can submit it from the user's own wallet.",
+      "Hinkal's relayers refuse a withdrawal, since the extension submits only through them.",
     ],
     privacy: [
       {
-        text: 'Hinkal reads notes with its enclave key, to which every note is encrypted.',
+        text: "Hinkal decrypts notes with its enclave key, learns each spend's notes at its relayers, or receives the nullifying key by default.",
         see: ['privilegedInsider'],
       },
       {
-        text: "a user signs in to Hinkal Pay, or keeps the extension's default Remote Proving, which send keys to Hinkal's enclave.",
-        see: ['privilegedInsider'],
-      },
-      {
-        text: 'most deposits of a token leave again as the same amount, so few deposits hide a withdrawal.',
+        text: 'a token has few depositors who leave funds in the pool, as most USDT deposits meet a matching withdrawal within minutes.',
         see: ['chainAnalyst'],
       },
       {
@@ -41,7 +37,7 @@ export function hinkalRiskSummary({
         see: ['networkObserver'],
       },
       {
-        text: "elliptic-curve cryptography is broken, which opens every note through the enclave key or the sender's published H1.",
+        text: "elliptic-curve cryptography is broken, which decrypts every note through the enclave's public key.",
         see: ['futureAdversary'],
       },
     ],

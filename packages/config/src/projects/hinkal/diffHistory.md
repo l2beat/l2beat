@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7c50791b5c85ea9c12f94c51a682dacc33b16f51
+Generated with discovered.json: 0xdff91c7bede5c74864b1b4ac11f26a92b91af15a
 
-# Diff at Fri, 20 Nov 2026 11:32:48 GMT:
+# Diff at Tue, 24 Nov 2026 08:41:13 GMT:
 
 - id: dc4f3a79
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1795173590
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current timestamp: 1795509601
 
 ## Description
 
@@ -134,8 +134,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract ExternalAction_6D9e (eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d) [N/A]
-    +++ description: Unverified Hinkal external action registered under an ID whose name is not known. Shielded funds are sent to it during external transactions that use this ID.
+    contract DepositOnChainUtxosExternalAction (eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d) [N/A]
+    +++ description: Unverified Hinkal external action registered under the DepositOnChainUtxos ID. Shielded funds are sent to it during external transactions that use this ID.
 ```
 
 ```diff
@@ -267,7 +267,13 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 ```diff
 +   Status: CREATED
     contract HinkalWallet (eth:0xB24043ebDC72ddC1923ec749cFBDFbEfF3FC82f6) [hinkal/HinkalWallet]
-    +++ description: Immutable smart account that only the Emporium can call. It executes arbitrary calls and pays relayers on behalf of shielded users, and accepts ERC-1271 signatures only from itself.
+    +++ description: Immutable code that public accounts delegate to with EIP-7702. Only the Emporium can call it, and through it the Emporium makes the account run any call and pay relayers. It accepts ERC-1271 signatures only from the account's own key.
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveVaultFactory (eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd) [N/A]
+    +++ description: Unverified factory of the deposit addresses that receive public transfers for a private account. Settling a deposit address moves its funds through the factory into Hinkal.
 ```
 
 ```diff
