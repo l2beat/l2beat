@@ -94,16 +94,16 @@ function getProjectLastSyncedDay(
   if (record.syncedUntil === null) {
     return undefined
   }
-  // A chain that stopped making blocks is synced, though its time lags
-  const isSynced =
-    record.syncedUntil >= record.target ||
-    (record.blockTarget !== null &&
-      record.blockSyncedUntil === record.blockTarget)
-  if (isSynced) {
-    return rangeEnd
-  }
-  const lastFullDay =
-    UnixTime.toStartOf(record.syncedUntil, 'day') - UnixTime.DAY
+  // A chain that reached its block target holds every block until its own
+  // target, even when its latest block is old. Its target can still lag the
+  // newest one, and the days after it were never checked.
+  const reachedBlockTarget =
+    record.blockTarget !== null &&
+    record.blockSyncedUntil === record.blockTarget
+  const coveredUntil = reachedBlockTarget
+    ? Math.max(record.target, record.syncedUntil)
+    : record.syncedUntil
+  const lastFullDay = UnixTime.toStartOf(coveredUntil, 'day') - UnixTime.DAY
   return Math.min(lastFullDay, rangeEnd)
 }
 

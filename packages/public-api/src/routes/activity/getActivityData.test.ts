@@ -95,6 +95,29 @@ describe(getActivityData.name, () => {
     })
   })
 
+  it('stops at the target of a chain whose own target fell behind', async () => {
+    const db = mockDb(
+      [activity(ALPHA, RANGE_END - 3 * DAY, 4)],
+      [
+        sync(ALPHA, {
+          target: RANGE_END - DAY + UnixTime.HOUR,
+          syncedUntil: RANGE_END - 10 * DAY,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
+        }),
+      ],
+    )
+
+    const result = await getActivityData(db, '30d', [ALPHA])
+
+    expect(result).toEqual([
+      { timestamp: RANGE_END - 3 * DAY, txCount: 4, uopsCount: 4 },
+      { timestamp: RANGE_END - 2 * DAY, txCount: 0, uopsCount: 0 },
+      { timestamp: RANGE_END - DAY, txCount: null, uopsCount: null },
+      { timestamp: RANGE_END, txCount: null, uopsCount: null },
+    ])
+  })
+
   function mockDb(
     records: ActivityRecord[],
     syncRecords: SyncMetadataRecord[],
@@ -123,6 +146,7 @@ describe(getActivityData.name, () => {
     id: ProjectId,
     opts: {
       syncedUntil: UnixTime
+      target?: UnixTime
       blockTarget?: number
       blockSyncedUntil?: number
     },
@@ -130,7 +154,7 @@ describe(getActivityData.name, () => {
     return {
       feature: 'activity',
       id,
-      target: TODAY + DAY,
+      target: opts.target ?? TODAY + DAY,
       syncedUntil: opts.syncedUntil,
       blockTarget: opts.blockTarget ?? null,
       blockSyncedUntil: opts.blockSyncedUntil ?? null,
