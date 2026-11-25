@@ -44,6 +44,15 @@ describe(watchDiffToMarkdown.name, () => {
     expect(markdown).toInclude('+     eip155:1:0x1234\n')
   })
 
+  it('keeps a root `true` that has no path to stand in for it', () => {
+    const markdown = watchDiffToMarkdown([
+      { key: 'added', changes: [{ path: [], after: true }] },
+      { key: 'removed', changes: [{ path: [], before: true }] },
+    ])
+    expect(markdown).toInclude('+     true\n')
+    expect(markdown).toInclude('-     true\n')
+  })
+
   it('lists a large new value one level down, collapsing long children', () => {
     const items = Object.fromEntries(
       Array.from({ length: 30 }, (_, i) => [`item:${i}`, { s: 'ok' }]),

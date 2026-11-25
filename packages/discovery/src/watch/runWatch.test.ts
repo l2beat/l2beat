@@ -169,4 +169,19 @@ describe(runWatch.name, () => {
     expect(observedToken).toEqual(undefined)
     expect(observedPublicOnly).toEqual(true)
   })
+
+  it('rejects a watch key named __proto__, and runs without params', async () => {
+    const run = (key: string) =>
+      runWatch(
+        {
+          name: 'alpha',
+          watches: [
+            { key, template: template(async () => 1), params: undefined },
+          ],
+        },
+        context,
+      )
+    await expect(run('__proto__')).toBeRejectedWith('Watch key named __proto__')
+    expect((await run('a')).values).toEqual({ a: 1 })
+  })
 })
