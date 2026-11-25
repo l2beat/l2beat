@@ -159,7 +159,7 @@ So, as with Lamport, forging a Winternitz signature forces the attacker to **go 
 
 ---
 
-## The hidden second way to go backwards
+## A second way to go backwards
 
 In Lamport, going backwards means one thing: inverting $f$. In Winternitz, there is a **second way** to go backwards without ever inverting the revealed value.
 
