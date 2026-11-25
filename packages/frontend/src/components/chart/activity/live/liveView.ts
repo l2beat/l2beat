@@ -135,8 +135,8 @@ export function holdEnd(
 /**
  * The window the left edge makes, dragged `by` seconds in (negative out) from
  * a window drawn `drawn` long, ending at `end`, or at the newest block for
- * undefined, at the length it is read. Dragged out, the buffer's start does
- * not shorten it below `current`, the length asked for
+ * undefined, at the length it is read. Not dragged in, the buffer's start
+ * does not shorten it below `current`, the length asked for
  */
 export function getResizedFrom(
   drawn: number,
@@ -147,7 +147,7 @@ export function getResizedFrom(
   moved: boolean,
 ): LiveTarget {
   const next = toLiveLength(drawn - by, (end ?? buffer.to) - buffer.from)
-  return holdEnd(end, by < 0 ? Math.max(next, current) : next, moved)
+  return holdEnd(end, by <= 0 ? Math.max(next, current) : next, moved)
 }
 
 /**
@@ -170,6 +170,22 @@ export function getResizedTo(
   }
   const seconds = toLiveLength(at - start, buffer.to - start)
   return { end: start + seconds, seconds, exact: true }
+}
+
+/**
+ * Where a finger, reaching edges only from outside the window, finds them: an
+ * edge at the strip's side is taken as within, so it can be reached, as far
+ * as it stays `reach` clear of the other edge, so the window still moves
+ */
+export function getTouchEdges(
+  [left, right]: [number, number],
+  width: number,
+  reach: number,
+): [number, number] {
+  return [
+    Math.max(left, Math.min(reach, right - reach)),
+    Math.min(right, Math.max(width - reach, left + reach)),
+  ]
 }
 
 /**

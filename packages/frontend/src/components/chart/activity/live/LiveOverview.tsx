@@ -7,6 +7,7 @@ import {
   getKeyLength,
   getResizedFrom,
   getResizedTo,
+  getTouchEdges,
   holdEnd,
   isMoveKey,
   type LiveTarget,
@@ -63,8 +64,9 @@ export function LiveOverview({
               end: number | undefined
               moved: boolean
               /**
-               * Where the pointer was pressed and the strip's scale then, as
-               * the buffer moves on under a drag, the length drawn and asked for
+               * The pointer's x and seconds per pixel when pressed, fixed so
+               * the buffer moving on isn't read as a drag; the length drawn
+               * and asked for
                */
               x: number
               scale: number
@@ -132,15 +134,12 @@ export function LiveOverview({
     if (!box) return
     // where the edges are drawn, which a window longer than the buffer is not
     const px = (t: number) => (xOf(t) / 100) * box.width
-    // a finger covers a narrow window, whose middle still moves it, so it
-    // reaches edges only from outside, and those at the strip's sides from
-    // as far within
+    const edges: [number, number] = [px(selection[0]), px(selection[1])]
+    // a finger covers a narrow window, whose middle still moves it
     const touch = event.pointerType === 'touch'
-    const reachable = (x: number) =>
-      touch ? Math.min(Math.max(x, EDGE_REACH), box.width - EDGE_REACH) : x
     return getEdgeAt(
       event.clientX - box.left,
-      [reachable(px(selection[0])), reachable(px(selection[1]))],
+      touch ? getTouchEdges(edges, box.width, EDGE_REACH) : edges,
       EDGE_REACH,
       touch ? 0 : EDGE_REACH,
     )

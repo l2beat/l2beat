@@ -10,6 +10,7 @@ import {
   getResizedFrom,
   getResizedTo,
   getTargetEnd,
+  getTouchEdges,
   isMoveKey,
   ticksOf,
 } from './liveView'
@@ -35,6 +36,22 @@ describe(getEdgeAt.name, () => {
     expect(getEdgeAt(102, [100, 120], 8, 0)).toEqual(undefined)
     expect(getEdgeAt(118, [100, 120], 8, 0)).toEqual(undefined)
     expect(getEdgeAt(123, [100, 120], 8, 0)).toEqual('to')
+  })
+})
+
+describe(getTouchEdges.name, () => {
+  it('takes an edge at the strip side as within', () => {
+    expect(getTouchEdges([0, 20], 300, 8)).toEqual([8, 20])
+    expect(getTouchEdges([279, 299], 300, 8)).toEqual([279, 292])
+  })
+
+  it('leaves the edges of a window too narrow to keep clear of each other', () => {
+    expect(getTouchEdges([0, 7], 300, 8)).toEqual([0, 7])
+    expect(getTouchEdges([292, 299], 300, 8)).toEqual([292, 299])
+  })
+
+  it('leaves edges away from the sides', () => {
+    expect(getTouchEdges([100, 140], 300, 8)).toEqual([100, 140])
   })
 })
 
@@ -121,6 +138,15 @@ describe(getResizedFrom.name, () => {
         false,
       ).seconds,
     ).toEqual(31 * MINUTE)
+  })
+
+  it('does not shorten a window drawn shorter than asked, not dragged across', () => {
+    // Methodology: 15 min asked, 10 min stored, the pointer moved only down
+    const filling = { from: T - 10 * MINUTE, to: T }
+    expect(
+      getResizedFrom(10 * MINUTE, 0, 15 * MINUTE, undefined, filling, false)
+        .seconds,
+    ).toEqual(15 * MINUTE)
   })
 
   it('does not shorten a window longer than a filling buffer dragged out', () => {
