@@ -104,14 +104,15 @@ export type LiveEdge = 'from' | 'to'
 
 /**
  * The edge of the window `[left, right]` at `x`, within `reach` outside it
- * and less inside, so a narrow window's middle still moves it
+ * and at most `inside` within, so a narrow window's middle still moves it
  */
 export function getEdgeAt(
   x: number,
   [left, right]: [number, number],
   reach: number,
+  inside = reach,
 ): LiveEdge | undefined {
-  const inner = Math.min(reach, (right - left) / 3)
+  const inner = Math.min(inside, (right - left) / 3)
   if (x >= left - reach && x <= left + inner) return 'from'
   if (x >= right - inner && x <= right + reach) return 'to'
 }
@@ -132,17 +133,19 @@ export function holdEnd(
 }
 
 /**
- * The window the left edge dragged to `at` makes, ending at `end`, or at the
- * newest block for undefined, at the length it is read
+ * The window of `seconds` the left edge is dragged to, ending at `end`, or at
+ * the newest block for undefined, at the length it is read. Dragged out from
+ * `current`, the buffer's start does not shorten it
  */
 export function getResizedFrom(
-  at: number,
+  seconds: number,
+  current: number,
   end: number | undefined,
   buffer: Edges,
   moved: boolean,
 ): LiveTarget {
-  const to = end ?? buffer.to
-  return holdEnd(end, toLiveLength(to - at, to - buffer.from), moved)
+  const next = toLiveLength(seconds, (end ?? buffer.to) - buffer.from)
+  return holdEnd(end, seconds > current ? Math.max(next, current) : next, moved)
 }
 
 /**

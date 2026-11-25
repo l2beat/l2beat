@@ -62,15 +62,17 @@ export function LiveOverview({
               edge: 'from'
               end: number | undefined
               moved: boolean
-              grab: number
+              /** Where the pointer was pressed, the length drawn and asked for */
+              at: number
+              drawn: number
+              seconds: number
             }
           | { edge: 'to'; start: number; grab: number }
       }
     | undefined
   >(undefined)
   const settle = useRef<ReturnType<typeof setTimeout>>(undefined)
-  // a move is read as the view is when it stops, as the range may have
-  // changed since it started
+  // timers and pointer handlers call the latest callbacks
   const handlers = useRef({ onSeek, onMove })
   handlers.current = { onSeek, onMove }
   const target = useRef<LiveTarget | undefined>(undefined)
@@ -130,6 +132,8 @@ export function LiveOverview({
       event.clientX - box.left,
       [px(selection[0]), px(selection[1])],
       EDGE_REACH,
+      // a finger covers a narrow window, whose middle still moves it
+      event.pointerType === 'touch' ? 0 : EDGE_REACH,
     )
   }
   const pointTo = (event: PointerEvent) => {
@@ -141,7 +145,13 @@ export function LiveOverview({
     seek(
       resize
         ? resize.edge === 'from'
-          ? getResizedFrom(at + resize.grab, resize.end, buffer, resize.moved)
+          ? getResizedFrom(
+              resize.drawn - (at - resize.at),
+              resize.seconds,
+              resize.end,
+              buffer,
+              resize.moved,
+            )
           : getResizedTo(
               at + resize.grab,
               resize.start,
@@ -158,9 +168,10 @@ export function LiveOverview({
     const resized = event.shiftKey
       ? getKeyLength(event.key, seconds, end, buffer)
       : undefined
-    const moved = event.shiftKey
-      ? undefined
-      : getKeyEnd(event.key, end, buffer, seconds)
+    const moved =
+      resized === undefined
+        ? getKeyEnd(event.key, end, buffer, seconds)
+        : undefined
     const next: LiveTarget | undefined =
       resized !== undefined
         ? holdEnd(shownEnd, resized, isMoved(target.current))
@@ -223,7 +234,9 @@ export function LiveOverview({
                   edge,
                   end: shownEnd,
                   moved: isMoved(target.current),
-                  grab: shownFrom - at,
+                  at,
+                  drawn: selection[1] - shownFrom,
+                  seconds: target.current?.seconds ?? length,
                 }
               : edge === 'to'
                 ? { edge, start: shownFrom, grab: selection[1] - at }

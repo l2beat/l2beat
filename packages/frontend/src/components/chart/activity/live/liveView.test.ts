@@ -29,6 +29,13 @@ describe(getEdgeAt.name, () => {
     expect(getEdgeAt(106, [100, 112], 8)).toEqual(undefined)
     expect(getEdgeAt(109, [100, 112], 8)).toEqual('to')
   })
+
+  it('leaves a window to move it within, reaching nothing inside', () => {
+    expect(getEdgeAt(97, [100, 120], 8, 0)).toEqual('from')
+    expect(getEdgeAt(102, [100, 120], 8, 0)).toEqual(undefined)
+    expect(getEdgeAt(118, [100, 120], 8, 0)).toEqual(undefined)
+    expect(getEdgeAt(123, [100, 120], 8, 0)).toEqual('to')
+  })
 })
 
 describe(getResizedFrom.name, () => {
@@ -36,23 +43,22 @@ describe(getResizedFrom.name, () => {
 
   it('holds the end, in whole minutes', () => {
     expect(
-      getResizedFrom(T - 3600 - 20 * MINUTE - 10, T - 3600, buffer, false),
+      getResizedFrom(20 * MINUTE + 10, 15 * MINUTE, T - 3600, buffer, false),
     ).toEqual({ end: T - 3600, seconds: 20 * MINUTE, holdsEnd: true })
   })
 
   it('holds the end of a window at the newest block', () => {
-    expect(getResizedFrom(T - 20 * MINUTE, undefined, buffer, false)).toEqual({
-      end: undefined,
-      seconds: 20 * MINUTE,
-      holdsEnd: true,
-    })
+    expect(
+      getResizedFrom(20 * MINUTE, 15 * MINUTE, undefined, buffer, false),
+    ).toEqual({ end: undefined, seconds: 20 * MINUTE, holdsEnd: true })
   })
 
   it('keeps where a move not yet read put the end', () => {
     // Methodology: ArrowLeft moved the window to end at T - 3690, then a
     // resize came before that was read
     const target = getResizedFrom(
-      T - 3690 - 20 * MINUTE,
+      20 * MINUTE,
+      15 * MINUTE,
       T - 3690,
       buffer,
       true,
@@ -64,12 +70,27 @@ describe(getResizedFrom.name, () => {
   it('stops at the start of the buffer', () => {
     expect(
       getResizedFrom(
-        buffer.from - 600,
+        20 * MINUTE,
+        5 * MINUTE,
         buffer.from + 10 * MINUTE + 30,
         buffer,
         false,
       ).seconds,
     ).toEqual(10 * MINUTE)
+  })
+
+  it('does not shorten a window dragged out at the start of the buffer', () => {
+    // Methodology: a 31 min window at the oldest position, its end rounded
+    // 12 s early to a bucket, leaves 30 min 48 s to the buffer's start
+    expect(
+      getResizedFrom(
+        32 * MINUTE,
+        31 * MINUTE,
+        buffer.from + 31 * MINUTE - 12,
+        buffer,
+        false,
+      ).seconds,
+    ).toEqual(31 * MINUTE)
   })
 })
 
