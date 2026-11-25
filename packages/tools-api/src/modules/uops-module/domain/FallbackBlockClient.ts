@@ -17,9 +17,11 @@ export class FallbackBlockClient implements BlockClient {
   }
 
   private async call<T>(fn: (client: BlockClient) => Promise<T>): Promise<T> {
+    // Snapshot, since concurrent calls move `preferred` while this one waits.
+    const start = this.preferred
     let lastError: unknown
     for (let i = 0; i < this.clients.length; i++) {
-      const index = (this.preferred + i) % this.clients.length
+      const index = (start + i) % this.clients.length
       const client = this.clients[index]
       if (!client) continue
       try {

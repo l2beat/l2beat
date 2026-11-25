@@ -21,6 +21,29 @@ describe(FallbackBlockClient.name, () => {
     expect(alive.getLatestBlockNumber).toHaveBeenCalledTimes(2)
   })
 
+  it('still reaches the fallback when a concurrent call switched to it', async () => {
+    let failSlowCall: (error: Error) => void = () => {}
+    const dead = mockObject<BlockClient>({
+      getLatestBlockNumber: mockFn()
+        .returnsOnce(
+          new Promise<number>((_, reject) => {
+            failSlowCall = reject
+          }),
+        )
+        .rejectsWith(new Error('disabled')),
+    })
+    const alive = mockObject<BlockClient>({
+      getLatestBlockNumber: mockFn().resolvesTo(100),
+    })
+    const client = new FallbackBlockClient([dead, alive])
+
+    const slowCall = client.getLatestBlockNumber()
+    expect(await client.getLatestBlockNumber()).toEqual(100)
+    failSlowCall(new Error('disabled'))
+
+    expect(await slowCall).toEqual(100)
+  })
+
   it('throws the last error when every client fails', async () => {
     const client = new FallbackBlockClient([
       mockObject<BlockClient>({
