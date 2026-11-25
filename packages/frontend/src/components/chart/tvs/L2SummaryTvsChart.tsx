@@ -38,7 +38,8 @@ import {
 import { TVS_CHANGE_FORMAT } from '../change-pins/formats'
 import type { ChartUnit } from '../types'
 
-const chartMeta = {
+/** The L2 categories, which change pins on any TVS chart are coloured by. */
+export const l2CategoryTvsChartMeta = {
   rollups: {
     label: 'Rollups',
     color: 'var(--chart-pink)',
@@ -61,6 +62,7 @@ const chartMeta = {
     },
   },
 } satisfies ChartMeta
+const chartMeta = l2CategoryTvsChartMeta
 
 export function L2SummaryTvsChart({
   unit,

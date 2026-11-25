@@ -7,6 +7,7 @@ import { useTRPC } from '~/trpc/React'
 import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
 import { BridgeTypeTvsChart } from './BridgeTypeTvsChart'
+import { useL2TvsChangePins } from './L2TvsChangePins'
 
 interface Props {
   milestones: Milestone[]
@@ -62,8 +63,18 @@ export function L2BridgeTypeTvsChart({
     [data, unit],
   )
 
+  const { pins, marginTop } = useL2TvsChangePins({
+    range,
+    unit,
+    filter,
+    excludeRwaRestrictedTokens,
+    chartData,
+  })
+
   return (
     <BridgeTypeTvsChart
+      overlay={pins}
+      marginTop={marginTop}
       isPlaceholderData={isPlaceholderData}
       resolution={rangeToResolution(shownInput.range)}
       data={chartData}

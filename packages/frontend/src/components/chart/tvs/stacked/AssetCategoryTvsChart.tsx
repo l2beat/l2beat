@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import omit from 'lodash/omit'
+import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
@@ -35,6 +36,9 @@ interface Props {
   resolution: ChartResolution
   tickCount?: number
   project?: ChartProject
+  /** Drawn over the plot, e.g. change pins, with room above it if needed. */
+  overlay?: ReactNode
+  marginTop?: number
   excludeRwaRestrictedTokens: boolean
 }
 
@@ -86,6 +90,8 @@ export function AssetCategoryTvsChart({
   toggleDataKey,
   project,
   excludeRwaRestrictedTokens,
+  overlay,
+  marginTop,
 }: Props) {
   const meta = useMemo(
     () =>
@@ -136,6 +142,7 @@ export function AssetCategoryTvsChart({
         series={series}
         ariaLabel="Value secured by asset category"
         syncedUntil={syncedUntil}
+        margin={marginTop !== undefined ? { top: marginTop } : undefined}
         yAxis={{
           domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),
@@ -150,6 +157,7 @@ export function AssetCategoryTvsChart({
           />
         )}
       />
+      {overlay}
     </ChartContainer>
   )
 }
