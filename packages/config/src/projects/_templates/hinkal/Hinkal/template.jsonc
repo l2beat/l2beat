@@ -33,7 +33,7 @@
       "severity": "MEDIUM"
     },
     "hinkalHelper": {
-      "description": "Helper contract that validates relayers and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
+      "description": "Helper contract that validates relayers and transaction dimensions, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
       "severity": "HIGH",
       "type": "CODE_CHANGE"
     },

@@ -1,31 +1,37 @@
 {
   "name": "hinkal",
-  "timestamp": 1795601480,
-  "configHash": "0xe9d40d414720f24aaeafda6c906af2d41e8e4ea92b77fd08157af489000e25d2",
+  "timestamp": 1795605838,
+  "configHash": "0x192142a6c4183ab1c10763c871e14f9b3c65c3cca3f6517449fecdb3348a220b",
   "entries": [
     {
       "name": "SwapGroth16VerifierEVM2x2x1",
       "address": "eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0x046ded289e97e702defb098e86173ac355433b74f1aa4285d7b4c1138be8c427"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM2x2x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807291,
       "sinceBlock": 25595233,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131": ""
+        "eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131": "SwapGroth16VerifierEVM2x2x1"
       }
     },
     {
       "name": "SwapVerifierEVM2x6x1",
       "address": "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0x8bc7d5e49c2dcaa83aa10f678409317d3782acf0ece5e55f8c20feab84a57401"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 2x6x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807411,
@@ -34,8 +40,13 @@
         "$immutable": true,
         "verifier": "eth:0x8391788640Bc7002A97ab218C899D6567C3114E7"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76": ""
+        "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76": "SwapVerifierEVM2x6x1"
       }
     },
     {
@@ -68,16 +79,19 @@
       "name": "SwapGroth16VerifierEVM3x6x1",
       "address": "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0xf1a599d89cf8f97924a8f8111bc7c03802d362b8ae7f6466e12a43b82aeb6fca"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM3x6x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807519,
       "sinceBlock": 25595251,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11": ""
+        "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11": "SwapGroth16VerifierEVM3x6x1"
       }
     },
     {
@@ -109,32 +123,38 @@
       "name": "SwapGroth16VerifierEVM3x2x1",
       "address": "eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0xbcb3e249735002b200927d93570d09d4efac36f65ab47ca2cc3424b6a3015a5b"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM3x2x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807447,
       "sinceBlock": 25595245,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab": ""
+        "eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab": "SwapGroth16VerifierEVM3x2x1"
       }
     },
     {
       "name": "SwapGroth16VerifierEVM1x6x1",
       "address": "eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0x201e9394e45a15e1073d3312d67e0a26d13b429de9acc334edb3de2bf1130e32"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM1x6x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807219,
       "sinceBlock": 25595227,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6": ""
+        "eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6": "SwapGroth16VerifierEVM1x6x1"
       }
     },
     {
@@ -268,9 +288,12 @@
       "name": "SwapVerifierEVM1x2x1",
       "address": "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0x6b8b10e65216f72813f7035f6fa331d06b36f1351c54834b4c5e334606d28330"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 1x2x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807183,
@@ -279,8 +302,13 @@
         "$immutable": true,
         "verifier": "eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21": ""
+        "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21": "SwapVerifierEVM1x2x1"
       }
     },
     {
@@ -406,16 +434,22 @@
       "name": "HinkalHelper",
       "address": "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/HinkalHelper",
+      "sourceHashes": [
+        "0xfd41addb54b53b05080eed109eb27970cb4c46c958543b0f57e2fd98ef88770b"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified helper of the Hinkal contract. Its verified predecessor checks that the relayer is whitelisted and is tx.origin, checks calldata integrity and transaction dimensions, and builds the public inputs of the proof from the transaction data.",
+      "description": "Helper that the Hinkal contract calls on every transaction. It checks that a relayed transaction is sent by a whitelisted relayer, that the calldata hash and the transaction dimensions are consistent, and builds the public inputs of the proof from the transaction data. It also holds the relayer list.",
       "critical": true,
       "deployerAddress": "eth:0xb176a21D16760601534E42662Ca37F7Ae851fd5b",
       "sinceTimestamp": 1794924011,
       "sinceBlock": 26435221,
       "values": {
         "$immutable": true,
+        "ARC_MAINNET_CHAIN_ID": 5042,
+        "ARC_TESTNET_CHAIN_ID": 5042002,
         "hinkalAddress": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+        "MAX_AMOUNT": "7237005577332262213973186563042994240829374041602535252466099000494570602496",
         "MAX_LEAVES_PD": 100,
         "owner": "eth:0xF04310839973454155d9886a4023451F8D3Db7D0",
         "relayers": [
@@ -443,7 +477,7 @@
         }
       },
       "implementationNames": {
-        "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": ""
+        "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": "HinkalHelper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -547,9 +581,13 @@
       "name": "Emporium",
       "address": "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/Emporium",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xace9cabd04dadb82a8d079197eef7316ec515f5b3e9279b0f99324f90fd20b21"
+      ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable Hinkal external action with an unverified implementation. Its verified predecessor runs a batch of arbitrary calls with shielded funds, optionally through a user's HinkalWallet, pays the relayer and returns the resulting token balances to Hinkal.",
+      "description": "Upgradeable Hinkal external action. It runs a batch of calls with shielded funds, or through a public account's HinkalWallet when that account signed the batch, pays the relayer and returns the resulting token balances to Hinkal.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784188499,
@@ -580,13 +618,24 @@
           ]
         ],
         "$upgradeCount": 4,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Emporium",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
         "hinkalHelper": "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607",
-        "owner": "eth:0xF04310839973454155d9886a4023451F8D3Db7D0"
+        "MAX_AMOUNT": "7237005577332262213973186563042994240829374041602535252466099000494570602496",
+        "owner": "eth:0xF04310839973454155d9886a4023451F8D3Db7D0",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
         "owner": {
           "severity": "MEDIUM",
-          "description": "Owner of the Emporium logic.",
+          "description": "Owner of the Emporium logic. Ownership moves in two steps and cannot be renounced.",
           "type": "PERMISSION"
         },
         "hinkalHelper": {
@@ -595,7 +644,7 @@
       },
       "implementationNames": {
         "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1": "TransparentUpgradeableProxy",
-        "eth:0x285bcC755f7c78959fCC73C485a01340CeF365d9": ""
+        "eth:0x285bcC755f7c78959fCC73C485a01340CeF365d9": "EmporiumUpgradeable"
       }
     },
     {
@@ -629,9 +678,12 @@
       "name": "SwapVerifierEVM1x6x1",
       "address": "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0x9bb0a6e6102007c50232d29dd057d9eb71bb73ece17631a13890b7b317b1184b"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 1x6x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807255,
@@ -640,17 +692,25 @@
         "$immutable": true,
         "verifier": "eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b": ""
+        "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b": "SwapVerifierEVM1x6x1"
       }
     },
     {
       "name": "SwapVerifierEVM3x6x1",
       "address": "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0x8c8be13d4c1c5787505962156e52168941141f7326e356e39d4b1163d9141090"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 3x6x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807567,
@@ -659,8 +719,13 @@
         "$immutable": true,
         "verifier": "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C": ""
+        "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C": "SwapVerifierEVM3x6x1"
       }
     },
     {
@@ -864,7 +929,7 @@
         },
         "hinkalHelper": {
           "severity": "HIGH",
-          "description": "Helper contract that validates relayers and token limits, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
+          "description": "Helper contract that validates relayers and transaction dimensions, and builds the public inputs checked against the proof. Replaceable by HINKAL_HELPER_MANAGER.",
           "type": "CODE_CHANGE"
         },
         "verifiers": {
@@ -931,16 +996,19 @@
       "name": "SwapGroth16VerifierEVM2x6x1",
       "address": "eth:0x8391788640Bc7002A97ab218C899D6567C3114E7",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0xd7eb6b2d9d3c17610cfc838cf6b01ed85d47171fb18fb00d95b8a3ba47b55f54"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM2x6x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807363,
       "sinceBlock": 25595239,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0x8391788640Bc7002A97ab218C899D6567C3114E7": ""
+        "eth:0x8391788640Bc7002A97ab218C899D6567C3114E7": "SwapGroth16VerifierEVM2x6x1"
       }
     },
     {
@@ -1093,16 +1161,19 @@
       "name": "SwapGroth16VerifierEVM1x2x1",
       "address": "eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapGroth16VerifierEVM",
+      "sourceHashes": [
+        "0x06af8fd409570c26dbf8df0ce723e48e89a0ff6cfc0624a2eebe9fcea09da490"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Groth16 verifier behind SwapVerifierEVM1x2x1.",
+      "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807123,
       "sinceBlock": 25595219,
       "values": { "$immutable": true },
       "implementationNames": {
-        "eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5": ""
+        "eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5": "SwapGroth16VerifierEVM1x2x1"
       }
     },
     {
@@ -1184,9 +1255,13 @@
       "name": "ReceiveVaultFactory",
       "address": "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/ReceiveVaultFactory",
+      "sourceHashes": [
+        "0x3fdf32f1c47da113fac0a216260af28d8f4d514a4ead929122cc1ce71734cdde",
+        "0x72364d089d75776bedd65151d196dfdc9efb6883f1611537a4b115fe523cdbd3"
+      ],
       "proxyType": "EIP1967 proxy",
-      "description": "Unverified factory of the deposit addresses that receive public transfers for a private account. Settling a deposit address moves its funds through the factory into Hinkal.",
+      "description": "Upgradeable factory of the deposit addresses (receive vaults) that take public transfers for a private account. A whitelisted relayer settles a deposit address: the factory deploys the vault, pays the relayer its fee and deposits the rest into Hinkal for the recipient fixed in the address. The key that owns a deposit address can instead sign a recovery of its funds to any address.",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1788796715,
@@ -1206,11 +1281,36 @@
             ["eth:0xA8934082A0174ff8C44EE638a35B2c49475af148"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 2,
+        "hinkal": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+        "hinkalHelper": "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607",
+        "owner": "eth:0xBdc77a0c69f13207aCB70a6981Cad60B4c1D1942",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "vaultInitCodeHash": [
+          "0x437db9b45aa81aeb29b945cee9ccaef51e5a2539e9c527e4a813c39b708b7126"
+        ],
+        "vaultVersionCount": 1
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Owner of the factory, who authorizes its upgrades."
+        },
+        "owner": { "severity": "HIGH", "type": "PERMISSION" },
+        "hinkal": {
+          "severity": "HIGH",
+          "description": "Contract that receives settled deposits as proofless deposits. The owner can change it."
+        },
+        "hinkalHelper": {
+          "description": "Helper of the configured Hinkal contract. Its relayer list decides who may settle, and it computes the relayer fee."
+        },
+        "vaultInitCodeHash": {
+          "description": "Init code hash of each vault version. A deposit address is derived from its recipient, owner and version."
+        }
       },
       "implementationNames": {
         "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": "ERC1967Proxy",
-        "eth:0xA8934082A0174ff8C44EE638a35B2c49475af148": ""
+        "eth:0xA8934082A0174ff8C44EE638a35B2c49475af148": "ReceiveVaultFactory"
       }
     },
     {
@@ -1408,9 +1508,12 @@
       "name": "SwapVerifierEVM2x2x1",
       "address": "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0xb06f04156bfcd40721314f364353b34085e2f26bc559086d0952734e6ce45c8c"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 2x2x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807327,
@@ -1419,8 +1522,13 @@
         "$immutable": true,
         "verifier": "eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702": ""
+        "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702": "SwapVerifierEVM2x2x1"
       }
     },
     {
@@ -1504,9 +1612,12 @@
       "name": "SwapVerifierEVM3x2x1",
       "address": "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/SwapVerifierEVM",
+      "sourceHashes": [
+        "0x15ce70e2ab722249ef051b5877f5b7e32f305cd181cd4b6a6151969a8be40ccd"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified verifier adapter for 3x2x1 transactions through the Uniswap, Odos or OneInch external actions.",
+      "description": "Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
       "critical": true,
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784807483,
@@ -1515,8 +1626,13 @@
         "$immutable": true,
         "verifier": "eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab"
       },
+      "fieldMeta": {
+        "verifier": {
+          "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+        }
+      },
       "implementationNames": {
-        "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee": ""
+        "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee": "SwapVerifierEVM3x2x1"
       }
     },
     {
@@ -1555,6 +1671,17 @@
     }
   ],
   "abis": {
+    "eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[20] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
+    "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[37] _pubSignals) view returns (bool)"
+    ],
     "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": [
       "constructor(address admin, bytes32 _bytecodeHash)",
       "error AlreadyDeployed()",
@@ -1575,6 +1702,12 @@
       "function resetBytecodeChunks()",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[25] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[19] _pubSignals) view returns (bool)"
+    ],
     "eth:0x272738a20d8EC72C3b6CA88f2CDE9FDc09f66634": [
       "constructor(address verifierInstance)",
       "function verifier() view returns (address)",
@@ -1585,6 +1718,36 @@
       "function verifier() view returns (address)",
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
     ],
+    "eth:0x285bcC755f7c78959fCC73C485a01340CeF365d9": [
+      "constructor()",
+      "error BalanceChangeShouldBePositive()",
+      "error CallFailed(bytes err)",
+      "error FeeExceedsSignedMax()",
+      "error InvalidSignature()",
+      "error SignatureExpired()",
+      "error UnauthorizedWalletCall()",
+      "error UsedMessage()",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function MAX_AMOUNT() view returns (int256)",
+      "function __ExternalActionBase_init(address[] _allowedRecipients)",
+      "function acceptOwnership()",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(address _hinkalHelper, address[] _allowedRecipients, address _owner)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function runAction(tuple(uint256 rootHashHinkal, uint256 rootHashHinkalIndex, address[] erc20TokenAddresses, int256[] amountChanges, uint256[][] inputNullifiers, uint256[][] outCommitments, bytes[][] encryptedOutputs, bytes onChainEncryptedOutput, bool[] onChainCreation, int256[] slippageValues, tuple(address feeToken, uint256 flatFee, uint256 variableRate) feeStructure, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp, uint256 calldataHash, uint256 emporiumMessage, uint16 publicSignalCount, address relay, tuple(address externalAddress, uint256 externalActionId, bytes externalActionMetadata) externalActionData, tuple(address preHookContract, address postHookContract, bytes preHookMetadata, bytes postHookMetadata) hookData, address originalSender, bytes extraData) circomData, int256[] deltaAmountChanges) returns (tuple(uint256 amount, address erc20Address, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp)[])",
+      "function setAllowedRecipients(address[] recipients)",
+      "function setHinkalHelper(address _hinkalHelper)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x2cd65aC8E4bF2Ac3d21fDb0b9330CF6233b1Ca4d": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[15] _pubSignals) view returns (bool)"
     ],
@@ -1594,6 +1757,11 @@
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
     ],
     "eth:0x3ad4aA1cf04a6f36f98fFCCc2CE63B2736b01C69": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
+    "eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21": [
       "constructor(address verifierInstance)",
       "function verifier() view returns (address)",
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
@@ -1663,6 +1831,30 @@
     "eth:0x64489e6F9C2b0767d7b57CD4c896EcAa4E98eA61": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[20] _pubSignals) view returns (bool)"
     ],
+    "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": [
+      "constructor(address[] _initialRelays)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RelayAdded(address relayAddress)",
+      "event RelayRemoved(address relayAddress)",
+      "function ARC_MAINNET_CHAIN_ID() view returns (uint256)",
+      "function ARC_TESTNET_CHAIN_ID() view returns (uint256)",
+      "function MAX_AMOUNT() view returns (int256)",
+      "function MAX_LEAVES_PD() view returns (uint256)",
+      "function addRelay(address _relayAddress)",
+      "function calculateRelayFee(uint256 balance, uint256 flatFee, uint256 variableRate) pure returns (uint256 relayFee)",
+      "function getRelayStore() view returns (address[])",
+      "function hinkalAddress() view returns (address)",
+      "function isRelayInList(address relayAddress) view returns (bool)",
+      "function owner() view returns (address)",
+      "function performHinkalChecks(tuple(uint256 rootHashHinkal, uint256 rootHashHinkalIndex, address[] erc20TokenAddresses, int256[] amountChanges, uint256[][] inputNullifiers, uint256[][] outCommitments, bytes[][] encryptedOutputs, bytes onChainEncryptedOutput, bool[] onChainCreation, int256[] slippageValues, tuple(address feeToken, uint256 flatFee, uint256 variableRate) feeStructure, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp, uint256 calldataHash, uint256 emporiumMessage, uint16 publicSignalCount, address relay, tuple(address externalAddress, uint256 externalActionId, bytes externalActionMetadata) externalActionData, tuple(address preHookContract, address postHookContract, bytes preHookMetadata, bytes postHookMetadata) hookData, address originalSender, bytes extraData) circomData, tuple(uint16 tokenNumber, uint16 nullifierAmount, uint16 outputAmount) dimensions, address sender) view returns (uint256[])",
+      "function performProoflessDepositChecks(address[] erc20Addresses, uint256[] amounts, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress)[] stealthAddressStructures, bytes[] onChainEncryptedOutputs) view",
+      "function performSideEffects(tuple(uint256 rootHashHinkal, uint256 rootHashHinkalIndex, address[] erc20TokenAddresses, int256[] amountChanges, uint256[][] inputNullifiers, uint256[][] outCommitments, bytes[][] encryptedOutputs, bytes onChainEncryptedOutput, bool[] onChainCreation, int256[] slippageValues, tuple(address feeToken, uint256 flatFee, uint256 variableRate) feeStructure, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp, uint256 calldataHash, uint256 emporiumMessage, uint16 publicSignalCount, address relay, tuple(address externalAddress, uint256 externalActionId, bytes externalActionMetadata) externalActionData, tuple(address preHookContract, address postHookContract, bytes preHookMetadata, bytes postHookMetadata) hookData, address originalSender, bytes extraData))",
+      "function relayStore(uint256) view returns (address)",
+      "function removeRelay(address _relayAddress)",
+      "function renounceOwnership()",
+      "function setHinkalAddress(address _hinkalAddress)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x6998fE93f3a3AbDb31df1922EB91BC282F42aa1d": [
       "constructor(address _hinkal)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
@@ -1717,6 +1909,16 @@
       "event Upgraded(address indexed implementation)"
     ],
     "eth:0x7a8Ff2a17bA07854e9A4f557f5A58426b680C510": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
+    "eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
+    "eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C": [
       "constructor(address verifierInstance)",
       "function verifier() view returns (address)",
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
@@ -1789,6 +1991,9 @@
     "eth:0x7DEDDE9C37c81a6d30D3934933b73B8E42DeB14D": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[19] _pubSignals) view returns (bool)"
     ],
+    "eth:0x8391788640Bc7002A97ab218C899D6567C3114E7": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[28] _pubSignals) view returns (bool)"
+    ],
     "eth:0x843cA657cE751A0B5aD601deC214953e9E7E155F": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[35] _pubSignals) view returns (bool)"
     ],
@@ -1814,6 +2019,54 @@
       "constructor(address verifierInstance)",
       "function verifier() view returns (address)",
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
+    "eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[15] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xA8934082A0174ff8C44EE638a35B2c49475af148": [
+      "constructor()",
+      "error BadOutputSignature()",
+      "error BadRecoverySignature()",
+      "error InvalidVersion()",
+      "error NotARelayer()",
+      "error NothingToSettle()",
+      "error RecoveryAlreadyUsed()",
+      "error RecoveryExpired()",
+      "error VariableRateTooHigh()",
+      "error VaultInitCodeChanged()",
+      "error ZeroHinkal()",
+      "error ZeroOwner()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event HinkalSet(address indexed hinkal)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ReceiveVaultRecovered(address indexed vault, address indexed token, address to, uint256 amount)",
+      "event ReceiveVaultSettled(address indexed vault, address indexed token, uint256 depositAmount, uint256 relayFee)",
+      "event Upgraded(address indexed implementation)",
+      "event VaultInitCodeHashSet(uint256 indexed version, bytes32 indexed vaultInitCodeHash)",
+      "function acceptOwnership()",
+      "function addVaultVersion(bytes creationCode) returns (uint256)",
+      "function hinkal() view returns (address)",
+      "function hinkalHelper() view returns (address)",
+      "function initialize(address initialOwner, address _hinkal)",
+      "function outputDigest(address vault, bytes32 encryptedOutputHash) view returns (bytes32)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recover(tuple(tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) recipient, address owner, uint256 version) params, address token, address to, uint256 deadline, bytes signature)",
+      "function recoveryDigest(address vault, address token, address to, uint256 deadline) view returns (bytes32)",
+      "function recoveryUsed(bytes32 digest) view returns (bool)",
+      "function renounceOwnership()",
+      "function setHinkal(address _hinkal)",
+      "function settle(tuple(tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) recipient, address owner, uint256 version) params, address token, uint256 flatFee, uint256 variableRate, bytes encryptedOutput, bytes outputSignature, bool createBlockedUtxos)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function vaultAddressOf(tuple(tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) recipient, address owner, uint256 version) params) view returns (address)",
+      "function vaultInitCodeHash(uint256 version) view returns (bytes32)",
+      "function vaultVersionCount() view returns (uint256)"
     ],
     "eth:0xA8d3E41A1531dC002B51F00afdC6FAFe7BD5cAB7": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[46] _pubSignals) view returns (bool)"
@@ -1870,6 +2123,11 @@
     "eth:0xE8405c68A5c0aFF32128FDe91a2f059D7fF4DC89": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[30] _pubSignals) view returns (bool)"
     ],
+    "eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
     "eth:0xF04310839973454155d9886a4023451F8D3Db7D0": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -1909,6 +2167,11 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
+    "eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee": [
+      "constructor(address verifierInstance)",
+      "function verifier() view returns (address)",
+      "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[] input, uint256) view returns (bool)"
+    ],
     "eth:0xfF0b792E9833B8aFb8BDE1f6695717e1A87968A3": [
       "constructor(address _hinkalHelper, address _wrapper, address _router, address[] _allowedRecipients)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
@@ -1935,16 +2198,21 @@
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "hinkal/DepositOnChainUtxosExternalAction": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "hinkal/Emporium": "0xd13362f940b55d31132e56d3ec52a82522d958b86b861fca9085c0cab7f9eb34",
     "hinkal/Groth16VerifierEVM": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "hinkal/Hinkal": "0x4d0fdc8755a7d477567c6d65956cabdde59fdf201138b0b87b988e2531b7d0f2",
     "hinkal/HinkalFactory": "0x42fa57cc20731a98c076f5d100d6b43386488c3d1185b9b3eca0aa9a71b15515",
+    "hinkal/HinkalHelper": "0x7b0f373d9cb6996112c4eade0ee874aa10fc81385baf29939a7b313959486fb8",
     "hinkal/HinkalWallet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "hinkal/HinkalWrapper": "0xdf31ab640eb208ea5c0e8205f690ccbd7a5497263889689aba082287b2757345",
     "hinkal/LifiExternalAction": "0x71a9166894295c2d79e6035d0cc8c4f2cb763dda854555f05e4bc26f79f1672e",
+    "hinkal/ReceiveVaultFactory": "0x18b8238ae96c479ed180e19990884c40b4d4af098daf398c0e69588ea890e7bd",
+    "hinkal/SwapGroth16VerifierEVM": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "hinkal/SwapVerifierEVM": "0x7a3bc198c665275072df6783fc87111b9a228c8167367b8c884bd7f72acc0170",
     "hinkal/VerifierEVM": "0x7a3bc198c665275072df6783fc87111b9a228c8167367b8c884bd7f72acc0170"
   },
-  "usedBlockNumbers": { "ethereum": 26491514 },
-  "permissionsConfigHash": "0x5b85ae23fb9b106637be871b1869bc824866294cb2306c4444cb17eb0dd20505",
+  "usedBlockNumbers": { "ethereum": 26491875 },
+  "permissionsConfigHash": "0xc9963bb20422137097126a61ae4f6b604a61e12fca95258c02db5e185e1e8dea",
   "permissions": {
     "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": {
       "receivedPermissions": [
@@ -2120,7 +2388,7 @@
         {
           "permission": "interact",
           "from": "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607",
-          "description": "submit relayed private transactions and withdrawals for users and collect the relayer fee.",
+          "description": "submit relayed private transactions and withdrawals for users and collect the relayer fee, and settle deposit addresses of the ReceiveVaultFactory with a flat fee of their choice.",
           "role": ".relayers"
         }
       ]
@@ -2141,6 +2409,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd",
+          "description": "change the contract that settled deposits are sent to, and add vault code versions for new deposit addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xfF0b792E9833B8aFb8BDE1f6695717e1A87968A3",
           "description": "replace the helper that computes the fee taken from swap outputs, and add addresses allowed to call runAction.",
           "role": ".owner"
@@ -2148,7 +2422,8 @@
         {
           "permission": "upgrade",
           "from": "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd",
-          "role": "admin"
+          "description": "upgrade the factory, which can then move the funds waiting at every deposit address.",
+          "role": ".$admin"
         }
       ],
       "eoaWithUpgradePermissions": true
@@ -2158,7 +2433,7 @@
         {
           "permission": "interact",
           "from": "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607",
-          "description": "submit relayed private transactions and withdrawals for users and collect the relayer fee.",
+          "description": "submit relayed private transactions and withdrawals for users and collect the relayer fee, and settle deposit addresses of the ReceiveVaultFactory with a flat fee of their choice.",
           "role": ".relayers"
         }
       ]

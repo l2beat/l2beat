@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ReceiveVaultFactory",
+  "critical": true,
+  "description": "Upgradeable factory of the deposit addresses (receive vaults) that take public transfers for a private account. A whitelisted relayer settles a deposit address: the factory deploys the vault, pays the relayer its fee and deposits the rest into Hinkal for the recipient fixed in the address. The key that owns a deposit address can instead sign a recovery of its funds to any address.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "$admin": {
+      "description": "Owner of the factory, who authorizes its upgrades.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the factory, which can then move the funds waiting at every deposit address."
+        }
+      ]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the contract that settled deposits are sent to, and add vault code versions for new deposit addresses."
+        }
+      ]
+    },
+    "hinkal": {
+      "description": "Contract that receives settled deposits as proofless deposits. The owner can change it.",
+      "severity": "HIGH"
+    },
+    "hinkalHelper": {
+      "description": "Helper of the configured Hinkal contract. Its relayer list decides who may settle, and it computes the relayer fee."
+    },
+    "vaultInitCodeHash": {
+      "description": "Init code hash of each vault version. A deposit address is derived from its recipient, owner and version."
+    }
+  }
+}

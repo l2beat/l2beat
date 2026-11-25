@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xea5c38d99b542779144c349b5fa19e2a5f957030
+Generated with discovered.json: 0x92d90765df49fdc84f70963587a30984702c1107
 
-# Diff at Wed, 25 Nov 2026 10:12:29 GMT:
+# Diff at Wed, 25 Nov 2026 11:27:35 GMT:
 
 - id: dc4f3a79
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1795601480
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- current timestamp: 1795605838
 
 ## Description
 
@@ -14,14 +14,14 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM2x2x1 (eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM2x2x1.
+    contract SwapGroth16VerifierEVM2x2x1 (eth:0x04864a507102C7c63Cc6d798Afc4d1fE3eB05131) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM2x6x1 (eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76) [N/A]
-    +++ description: Unverified verifier adapter for 2x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM2x6x1 (eth:0x054388101D8a799541B4E094bBEb6Dff783e2C76) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff
@@ -32,8 +32,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM3x6x1 (eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM3x6x1.
+    contract SwapGroth16VerifierEVM3x6x1 (eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
@@ -44,14 +44,14 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM3x2x1 (eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM3x2x1.
+    contract SwapGroth16VerifierEVM3x2x1 (eth:0x14eBe78aE7Cf7e4EED6dF7eb837C29e17F376cab) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM1x6x1 (eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM1x6x1.
+    contract SwapGroth16VerifierEVM1x6x1 (eth:0x2592E6C9e5A493598bd29FeC0CDdCeD99227D0B6) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
@@ -86,8 +86,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM1x2x1 (eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21) [N/A]
-    +++ description: Unverified verifier adapter for 1x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM1x2x1 (eth:0x3b98ca90b01fd48e6cD072Ba25189BD065bdAB21) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff
@@ -122,8 +122,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract HinkalHelper (eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607) [N/A]
-    +++ description: Unverified helper of the Hinkal contract. Its verified predecessor checks that the relayer is whitelisted and is tx.origin, checks calldata integrity and transaction dimensions, and builds the public inputs of the proof from the transaction data.
+    contract HinkalHelper (eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607) [hinkal/HinkalHelper]
+    +++ description: Helper that the Hinkal contract calls on every transaction. It checks that a relayed transaction is sent by a whitelisted relayer, that the calldata hash and the transaction dimensions are consistent, and builds the public inputs of the proof from the transaction data. It also holds the relayer list.
 ```
 
 ```diff
@@ -152,8 +152,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract Emporium (eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1) [N/A]
-    +++ description: Upgradeable Hinkal external action with an unverified implementation. Its verified predecessor runs a batch of arbitrary calls with shielded funds, optionally through a user's HinkalWallet, pays the relayer and returns the resulting token balances to Hinkal.
+    contract Emporium (eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1) [hinkal/Emporium]
+    +++ description: Upgradeable Hinkal external action. It runs a batch of calls with shielded funds, or through a public account's HinkalWallet when that account signed the batch, pays the relayer and returns the resulting token balances to Hinkal.
 ```
 
 ```diff
@@ -164,14 +164,14 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM1x6x1 (eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b) [N/A]
-    +++ description: Unverified verifier adapter for 1x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM1x6x1 (eth:0x7A912eb23F6362069FFfAE94E211Cc07a09E3f4b) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM3x6x1 (eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C) [N/A]
-    +++ description: Unverified verifier adapter for 3x6x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM3x6x1 (eth:0x7b479ff8B48E818a285963D8b59508Aa3c65729C) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff
@@ -200,8 +200,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM2x6x1 (eth:0x8391788640Bc7002A97ab218C899D6567C3114E7) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM2x6x1.
+    contract SwapGroth16VerifierEVM2x6x1 (eth:0x8391788640Bc7002A97ab218C899D6567C3114E7) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
@@ -242,8 +242,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapGroth16VerifierEVM1x2x1 (eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5) [N/A]
-    +++ description: Unverified Groth16 verifier behind SwapVerifierEVM1x2x1.
+    contract SwapGroth16VerifierEVM1x2x1 (eth:0xa7997B7b18BB23b32a4f6c6074B0FBFA0b7e17E5) [hinkal/SwapGroth16VerifierEVM]
+    +++ description: Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs.
 ```
 
 ```diff
@@ -272,8 +272,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract ReceiveVaultFactory (eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd) [N/A]
-    +++ description: Unverified factory of the deposit addresses that receive public transfers for a private account. Settling a deposit address moves its funds through the factory into Hinkal.
+    contract ReceiveVaultFactory (eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd) [hinkal/ReceiveVaultFactory]
+    +++ description: Upgradeable factory of the deposit addresses (receive vaults) that take public transfers for a private account. A whitelisted relayer settles a deposit address: the factory deploys the vault, pays the relayer its fee and deposits the rest into Hinkal for the recipient fixed in the address. The key that owns a deposit address can instead sign a recovery of its funds to any address.
 ```
 
 ```diff
@@ -326,8 +326,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM2x2x1 (eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702) [N/A]
-    +++ description: Unverified verifier adapter for 2x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM2x2x1 (eth:0xeC138727d8779E61054DD5DFe158b77B6Ef28702) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff
@@ -338,8 +338,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract SwapVerifierEVM3x2x1 (eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee) [N/A]
-    +++ description: Unverified verifier adapter for 3x2x1 transactions through the Uniswap, Odos or OneInch external actions.
+    contract SwapVerifierEVM3x2x1 (eth:0xf7A8BB4A259b5974dC0a72f251c41d9E98D333Ee) [hinkal/SwapVerifierEVM]
+    +++ description: Immutable adapter between Hinkal and one Groth16 verifier for transactions through a swap external action. It copies the public inputs into a fixed-size array and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).
 ```
 
 ```diff

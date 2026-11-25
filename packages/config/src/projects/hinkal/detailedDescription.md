@@ -25,7 +25,7 @@ The [Hinkal Wallet](https://chromewebstore.google.com/detail/khfjgapjfcdoffmklch
 
 A transaction can hand shielded funds to an external action, a contract registered on the pool. The action returns the result as new notes, with tokens and amounts public. The pool checks its balance after every action, so an action can lose what its own transaction sent it and nothing more. Swaps use the LI.FI action.
 
-The extension's public accounts delegate to the HinkalWallet contract with EIP-7702, and Hinkal's relayers submit their shields and other calls through the Emporium action. The HinkalWallet lets the Emporium make the account run any call, so an Emporium upgrade can move everything the account holds.
+Hinkal Wallet also creates a public address for each user, only this public address can interact with dApps. Public account delegates control to HinkalWallet and upgradeable contract Emporium, so an Emporium upgrade can move everything these accounts hold.
 
 ### Exits
 
