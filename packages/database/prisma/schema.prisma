@@ -970,6 +970,8 @@ model AppState {
 
 /// One UTC day of fees on one chain, computed from the chain's transactions and blocks on Dune.
 /// Raw sums, so per-transaction and per-gas figures are derived when read.
+/// A chain's day has a row only once Dune has all of it, so there is no status: a missing row for a day
+/// the fees indexer has passed is a day Dune hasn't got whole. It is read again for 30 days, then stays missing.
 model GasFeesDaily {
   /// Start of the day.
   timestamp      DateTime @db.Timestamp(6)

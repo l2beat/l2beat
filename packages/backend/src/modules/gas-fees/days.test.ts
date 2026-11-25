@@ -1,4 +1,7 @@
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer, RootIndexer } from '@l2beat/uif'
+import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
 import { DuneDayWait, nextDays } from './days'
 
@@ -96,6 +99,33 @@ describe(DuneDayWait.name, () => {
     })
   })
 
+  it('is retried by a real indexer as it classifies each update', async () => {
+    const clock = install()
+    try {
+      const waits = new DuneDayWait('Not on Dune yet')
+      const duneError = () => Promise.reject(new Error('Dune error'))
+      const wait = () => waits.run(day, day, async (wait) => wait({ day }))
+      const indexer = new ScriptedIndexer(waits, [
+        duneError,
+        wait,
+        duneError,
+        wait,
+      ])
+
+      await indexer.parents[0]?.start()
+      await indexer.start()
+      await clock.tickAsync(3 * HOUR_MS)
+
+      const gaps = indexer.updatedAt.slice(1).map((at, i) => {
+        return at - (indexer.updatedAt[i] ?? 0)
+      })
+      // The waits don't count as failures: the second failure backs off as the second, not the third
+      expect(gaps).toEqual([5 * 60_000, HOUR_MS, 10 * 60_000, HOUR_MS])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
   it('reads again from a given time, whatever the gap', async () => {
     const waits = new DuneDayWait('Not on Dune yet')
     const readAgainAt = UnixTime(day + 2 * UnixTime.HOUR)
@@ -132,3 +162,49 @@ describe(DuneDayWait.name, () => {
     expect(await waits.run(day, later, async () => 2)).toEqual(2)
   })
 })
+
+class OneHeightRoot extends RootIndexer {
+  override initialize() {
+    return Promise.resolve({ safeHeight: 1 })
+  }
+
+  override tick() {
+    return Promise.resolve(1)
+  }
+}
+
+/** Its updates run `script` in turn, then succeed. The framework drives the wait's retry strategy */
+class ScriptedIndexer extends ChildIndexer {
+  readonly updatedAt: number[] = []
+
+  constructor(
+    waits: DuneDayWait,
+    private readonly script: (() => Promise<unknown>)[],
+  ) {
+    super(Logger.SILENT, [new OneHeightRoot(Logger.SILENT)], {
+      updateRetryStrategy: waits.retryStrategy,
+    })
+  }
+
+  override async update(_from: number, to: number) {
+    this.updatedAt.push(Date.now())
+    await this.script.shift()?.()
+    return to
+  }
+
+  override initialize() {
+    return Promise.resolve({ safeHeight: 0 })
+  }
+
+  override setInitialState() {
+    return Promise.resolve()
+  }
+
+  override setSafeHeight() {
+    return Promise.resolve()
+  }
+
+  override invalidate(targetHeight: number) {
+    return Promise.resolve(targetHeight)
+  }
+}

@@ -21,8 +21,8 @@ describe(LiveTipsLoop.name, () => {
       // 1,800 blocks, the first run
       [1024, 10_000],
       [776, 8_976],
-      // Then the newest 300, read again for reorgs
-      [300, 10_001],
+      // Then the newest 64, read again for reorgs
+      [64, 10_001],
     ])
     expect(liveTips.replace).toHaveBeenCalledTimes(2)
     expect(liveTips.replace.calls[1]?.args[0]).toEqual({
