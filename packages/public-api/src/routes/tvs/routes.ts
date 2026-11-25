@@ -12,7 +12,13 @@ import {
 } from '../../utils/findProject'
 import { getTokenTvsData } from './getTokenTvsData'
 import { getTvsData } from './getTvsData'
-import { TokenTvsResultSchema, TvsRangeSchema, TvsResultSchema } from './types'
+import {
+  type TokenExclusions,
+  TokenTvsResultSchema,
+  TvsQuerySchema,
+  TvsRangeSchema,
+  TvsResultSchema,
+} from './types'
 
 export function addTvsRoutes(
   openapi: OpenApi,
@@ -24,25 +30,26 @@ export function addTvsRoutes(
     '/v1/tvs',
     {
       summary: 'Total Value Secured with ability to control the time range',
+      description: TVS_CHART_DESCRIPTION,
       tags: ['tvs'],
-      query: v.object({
-        range: TvsRangeSchema.optional(),
-      }),
+      query: TvsQuerySchema,
+      queryDescriptions: TVS_QUERY_DESCRIPTIONS,
       result: TvsResultSchema,
     },
     async (req, res) => {
       const { range = '30d' } = req.query
+      const exclusions = parseTokenExclusions(req.query)
 
       const data = await cache.get(
         {
-          key: ['tvs', range],
+          key: ['tvs', range, ...tokenExclusionsCacheKey(exclusions)],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
         async () => {
           const projectIds = await getTvsProjects(ps)
 
-          return getTvsData(db, range, projectIds)
+          return getTvsData(db, range, projectIds, exclusions)
         },
       )
 
@@ -55,14 +62,14 @@ export function addTvsRoutes(
     {
       summary:
         'Total Value Secured for a specific project with ability to control the time range.',
+      description: TVS_CHART_DESCRIPTION,
       tags: ['tvs'],
       params: v.object({
         projectId: v.string(),
       }),
       paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
-      query: v.object({
-        range: TvsRangeSchema.optional(),
-      }),
+      query: TvsQuerySchema,
+      queryDescriptions: TVS_QUERY_DESCRIPTIONS,
       result: TvsResultSchema,
       errors: {
         404: GenericErrorResponse,
@@ -72,6 +79,7 @@ export function addTvsRoutes(
     async (req, res) => {
       const { projectId } = req.params
       const { range = '30d' } = req.query
+      const exclusions = parseTokenExclusions(req.query)
       const { project, notFoundMessage } = await findProject(ps, projectId, {
         select: ['tvsConfig'],
         dataName: 'TVS data',
@@ -84,11 +92,16 @@ export function addTvsRoutes(
 
       const data = await cache.get(
         {
-          key: ['tvs', project.id, range],
+          key: [
+            'tvs',
+            project.id,
+            range,
+            ...tokenExclusionsCacheKey(exclusions),
+          ],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
-        () => getTvsData(db, range, [project.id]),
+        () => getTvsData(db, range, [project.id], exclusions),
       )
 
       res.json(data)
@@ -138,4 +151,35 @@ async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
   })
 
   return projects.map((p) => p.id)
+}
+
+const TVS_CHART_DESCRIPTION = [
+  'Points are spaced by the resolution of the range: hourly up to 7 days, six-hourly below 180 days, daily otherwise.',
+  'A point whose values are `null` has no data: it is missing, not zero. Its timestamp is kept so the spacing stays regular.',
+  'The timestamp of the last point is the time the data is synced until, the same value the website reports as `syncedUntil`. For a sum of many projects it is the latest time any of them has data for, so a project that lags behind is left out of the newest points.',
+  '`ethPrice` is the USD price of ETH at that point, the one the website uses to show TVS in ETH: divide `totalTvs` by it. It is `null` when the price is unknown.',
+  'Unlike the website, this endpoint counts restricted RWA tokens by default. To get the number the website shows, pass `excludeRwaRestrictedTokens=true`.',
+].join('\n\n')
+
+const TVS_QUERY_DESCRIPTIONS = {
+  excludeAssociatedTokens:
+    'When `true`, leaves out tokens associated with the project, such as its own governance token. Defaults to `false`, like the website.',
+  excludeRwaRestrictedTokens:
+    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `false`, which counts them. The website defaults to `true`: pass `true` to match its numbers.',
+}
+
+function parseTokenExclusions(
+  query: v.infer<typeof TvsQuerySchema>,
+): TokenExclusions {
+  return {
+    excludeAssociatedTokens: query.excludeAssociatedTokens === 'true',
+    excludeRwaRestrictedTokens: query.excludeRwaRestrictedTokens === 'true',
+  }
+}
+
+function tokenExclusionsCacheKey(exclusions: TokenExclusions): string[] {
+  return [
+    `excludeAssociatedTokens=${exclusions.excludeAssociatedTokens}`,
+    `excludeRwaRestrictedTokens=${exclusions.excludeRwaRestrictedTokens}`,
+  ]
 }

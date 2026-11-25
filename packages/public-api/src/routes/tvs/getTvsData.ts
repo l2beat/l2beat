@@ -7,12 +7,16 @@ import keyBy from 'lodash/keyBy'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getTimestampedValuesRange } from '../../utils/getTimestampedValuesRange'
 import { rangeToResolution } from '../../utils/range'
-import type { TvsRange, TvsResultItem } from './types'
+import type { TokenExclusions, TvsRange, TvsResultItem } from './types'
+
+/** The same price the website uses to show TVS in ETH */
+const ETH_PRICE_ID = 'ethereum'
 
 export async function getTvsData(
   db: Database,
   range: TvsRange,
   projectIds: ProjectId[],
+  exclusions: TokenExclusions,
 ): Promise<TvsResultItem[]> {
   const resolution = rangeToResolution(range)
   const [from, to] = getTimestampedValuesRange(range, resolution, {
@@ -21,16 +25,13 @@ export async function getTvsData(
 
   const forSummary = projectIds.length !== 1
 
-  const records = await db.tvsTokenValue.getSummedByTimestampByProjects(
-    projectIds,
-    from,
-    to,
-    {
+  const [records, ethPrices] = await Promise.all([
+    db.tvsTokenValue.getSummedByTimestampByProjects(projectIds, from, to, {
       forSummary,
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: false,
-    },
-  )
+      ...exclusions,
+    }),
+    db.tvsPrice.getPricesInRangeByPriceId(ETH_PRICE_ID, from, to),
+  ])
 
   if (records.length === 0) {
     return []
@@ -40,52 +41,60 @@ export async function getTvsData(
   const fromTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
   const groupedByTimestamp = keyBy(records, (r) => r.timestamp)
+  const ethPriceByTimestamp = new Map(
+    ethPrices.map((p) => [p.timestamp, p.priceUsd]),
+  )
 
-  return generateTimestamps([fromTimestamp, maxTimestamp], resolution).flatMap(
+  return generateTimestamps([fromTimestamp, maxTimestamp], resolution).map(
     (timestamp: UnixTime) => {
       const record = groupedByTimestamp[timestamp]
+      // A timestamp without a record is missing data, not a TVS of zero
       if (!record) {
-        return createEmptyRecord(timestamp)
+        return createMissingRecord(timestamp)
       }
-      return mapRecord(record)
+      return mapRecord(record, ethPriceByTimestamp.get(timestamp) ?? null)
     },
   )
 }
 
-function createEmptyRecord(timestamp: UnixTime): TvsResultItem {
+function createMissingRecord(timestamp: UnixTime): TvsResultItem {
   return {
-    timestamp: timestamp,
-    totalTvs: 0,
+    timestamp,
+    totalTvs: null,
     bySource: {
-      native: 0,
-      canonical: 0,
-      external: 0,
+      native: null,
+      canonical: null,
+      external: null,
     },
     byCategory: {
-      stablecoins: 0,
-      eth: 0,
-      btc: 0,
-      other: 0,
-      publicRwa: 0,
-      restrictedRwa: 0,
+      stablecoins: null,
+      eth: null,
+      btc: null,
+      other: null,
+      publicRwa: null,
+      restrictedRwa: null,
     },
+    ethPrice: null,
   }
 }
 
-function mapRecord({
-  timestamp,
-  value,
-  canonical,
-  customCanonical,
-  external,
-  native,
-  ether,
-  stablecoin,
-  btc,
-  rwaRestricted,
-  rwaPublic,
-  other,
-}: SummedByTimestampTokenValueRecord): TvsResultItem {
+function mapRecord(
+  {
+    timestamp,
+    value,
+    canonical,
+    customCanonical,
+    external,
+    native,
+    ether,
+    stablecoin,
+    btc,
+    rwaRestricted,
+    rwaPublic,
+    other,
+  }: SummedByTimestampTokenValueRecord,
+  ethPrice: number | null,
+): TvsResultItem {
   return {
     timestamp,
     totalTvs: value,
@@ -102,5 +111,6 @@ function mapRecord({
       publicRwa: rwaPublic,
       restrictedRwa: rwaRestricted,
     },
+    ethPrice,
   }
 }

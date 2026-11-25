@@ -12,6 +12,7 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   params?: Validator<P> & { definition?: ImpDefinition }
   paramDescriptions?: Record<string, string>
   query?: Validator<Q> & { definition?: ImpDefinition }
+  queryDescriptions?: Record<string, string>
   result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
   errors?: Record<number, Validator<E> & { definition?: ImpDefinition }>
@@ -218,7 +219,11 @@ export class OpenApi {
                   )
                 : []),
               ...(route.options.query
-                ? this.schemaToParameters('query', route.options.query)
+                ? this.schemaToParameters(
+                    'query',
+                    route.options.query,
+                    route.options.queryDescriptions,
+                  )
                 : []),
             ],
             responses: this.getResponses(route),
