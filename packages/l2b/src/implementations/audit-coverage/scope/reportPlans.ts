@@ -2,7 +2,6 @@ import { v } from '@l2beat/validate'
 import { readFileSync } from 'fs'
 import path from 'path'
 import type { ScopedPath, SnapshotPlan } from './scopeGraph'
-import { SCOPE_OVERRIDES } from './scopeOverrides'
 
 const Version = v.object({
   revision: v.object({
@@ -17,7 +16,8 @@ const Summary = v.object({
     v.object({
       id: v.string(),
       isRelevant: v.boolean(),
-      imports: v.string().optional(),
+      unlisted: v.enum(['not_mentioned', 'excluded']).optional(),
+      dependencies: v.enum(['included', 'excluded']).optional(),
       repositories: v
         .array(v.object({ id: v.string(), url: v.string() }))
         .optional(),
@@ -67,14 +67,10 @@ export function readReportPlans(
   return summary.reports
     .filter((report) => report.isRelevant)
     .map((report): ReportPlan => {
-      const override = SCOPE_OVERRIDES[report.id]
+      // Absent when the report was not read for its scope statements.
       const unlisted =
-        override?.unlisted ??
-        (report.imports === 'audited_unless_excluded'
-          ? 'not-mentioned'
-          : report.imports === 'not_audited'
-            ? 'excluded'
-            : undefined)
+        report.unlisted === 'not_mentioned' ? 'not-mentioned' : report.unlisted
+      const dependencies = report.dependencies
       const urls = new Map(
         (report.repositories ?? []).map((r) => [r.id, r.url]),
       )
@@ -129,14 +125,9 @@ export function readReportPlans(
             commit,
             included: lists.included,
             partial: lists.partial,
-            excluded: [
-              ...(excluded.get(repository) ?? []),
-              ...(override?.excluded ?? []),
-            ],
+            excluded: excluded.get(repository) ?? [],
             unlisted: unlisted ?? 'not-mentioned',
-            ...(override?.dependencies
-              ? { dependencies: override.dependencies }
-              : {}),
+            ...(dependencies ? { dependencies } : {}),
           }
         })
       const status: ReportStatus = !solidity

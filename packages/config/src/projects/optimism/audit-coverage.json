@@ -3,30 +3,23 @@
   "project": "optimism",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
-  "discoveredAt": 1792587967,
+  "discoveredAt": 1793984419,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "_libs/solady": { "name": "Solady", "kind": "library" },
-    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
-    "celo": { "name": "Celo", "kind": "project" },
-    "ethscriptions": { "name": "Ethscriptions", "kind": "project" },
-    "facet": { "name": "Facet", "kind": "project" },
     "mantle": { "name": "Mantle", "kind": "project" },
-    "morph": { "name": "Morph", "kind": "project" },
     "optimism": { "name": "OP Mainnet", "kind": "project" },
-    "scroll": { "name": "Scroll", "kind": "project" },
-    "starknet": { "name": "Starknet", "kind": "project" },
-    "taiko": { "name": "Taiko Alethia", "kind": "project" },
-    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+    "roninnetwork": { "name": "Ronin", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" }
   },
   "reports": {
     "3docsecurity-cannon-fgetfd-2024-10": {
       "collections": ["optimism"],
-      "title": "Audit Report - OP Cannon (3DOC Security, F_GETFD)",
+      "title": "Audit Report - OP Cannon (F_GETFD)",
       "auditor": "3DOC Security",
       "date": "2024-10-03",
       "document": "optimism/reports/2024_10-Cannon-FGETFD-3DocSecurity.md"
@@ -39,14 +32,14 @@
       "document": "optimism/reports/2025_06-Cannon-3DOC.pdf"
     },
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "ackee-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",
@@ -54,55 +47,55 @@
     },
     "alephv-op-program-blob-handling-2025-04": {
       "collections": ["optimism"],
-      "title": "Optimism Blob Bug Fix Review (Aleph_v)",
+      "title": "Optimism Blob Bug Fix Review",
       "auditor": "Aleph_v",
       "document": "optimism/reports/2025_04-op-program-blob-handling-aleph_v.pdf"
     },
     "base-mt64cannon-2025-02": {
       "collections": ["optimism"],
-      "title": "MT64Cannon Security Review (Coinbase Protocol Security)",
+      "title": "MT64Cannon Security Review",
       "auditor": "Base",
       "date": "2025-02-06",
       "document": "optimism/reports/2025_01-MT-Cannon-Base.pdf"
     },
     "cantina-custom-gas-token-2025-11": {
       "collections": ["optimism"],
-      "title": "Optimism: Custom Gas Token Security Review (Cantina Managed)",
+      "title": "Optimism: Custom Gas Token Security Review",
       "auditor": "Cantina",
       "date": "2025-11-18",
       "document": "optimism/reports/2025_11-Custom-Gas-Token-Spearbit.pdf"
     },
     "cantina-eip7702-2025-02": {
       "collections": ["optimism"],
-      "title": "Optimism Security Review (Cantina, EIP-7702 / Pectra impact)",
+      "title": "Optimism Security Review (EIP-7702 / Pectra impact)",
       "auditor": "Cantina",
       "date": "2025-03-09",
       "document": "optimism/reports/2025_02-EIP7702-Cantina.pdf"
     },
     "cantina-fault-proofs-mips-2024-08": {
       "collections": ["optimism"],
-      "title": "Base fault proofs mips Security Review (Cantina)",
+      "title": "Base fault proofs mips Security Review",
       "auditor": "Cantina",
       "date": "2024-08-14",
       "document": "optimism/reports/2024_08_Fault-Proofs-MIPS_Cantina.pdf"
     },
     "cantina-fee-splitter-2025-11": {
       "collections": ["optimism"],
-      "title": "Wonderland - Optimism Fee Splitter Security Review (Cantina Managed)",
+      "title": "Wonderland - Optimism Fee Splitter Security Review",
       "auditor": "Cantina",
       "date": "2025-11-04",
       "document": "optimism/reports/2025_10-Rev-Sharing-Spearbit.pdf"
     },
     "cantina-interop-l2-rereview-2026-06": {
       "collections": ["optimism"],
-      "title": "Optimism L2 Interop Re-review (Cantina Managed)",
+      "title": "Optimism L2 Interop Re-review",
       "auditor": "Cantina",
       "date": "2026-06-18",
       "document": "optimism/reports/2026_06-Interop-L2-Contracts.pdf"
     },
     "cantina-interop-op-program-2025-03": {
       "collections": ["optimism"],
-      "title": "Optimism Interop Proofs Security Review (Cantina)",
+      "title": "Optimism Interop Proofs Security Review",
       "auditor": "Cantina",
       "date": "2025-05-07",
       "document": "optimism/reports/2025_03-Interop-OpProgram-Cantina.pdf"
@@ -123,28 +116,28 @@
     },
     "cantina-mcp-l1-2024-02": {
       "collections": ["optimism"],
-      "title": "Optimism Cycle 19 Security Review (Cantina, MCP L1)",
+      "title": "Optimism Cycle 19 Security Review (MCP L1)",
       "auditor": "Cantina",
       "date": "2024-02-15",
       "document": "optimism/reports/2024_02-MCP_L1-Cantina.pdf"
     },
     "cantina-opcmv2-2026-06": {
       "collections": ["optimism"],
-      "title": "Optimism OPCMv2 Security Review (Cantina)",
+      "title": "Optimism OPCMv2 Security Review",
       "auditor": "Cantina",
       "date": "2026-06-08",
       "document": "optimism/reports/2026_06-OPCMv2-Cantina.pdf"
     },
     "cantina-policyenginestaking-2026-03": {
       "collections": ["optimism"],
-      "title": "Optimism: PolicyEngine Staking Contract Security Review (Cantina)",
+      "title": "Optimism: PolicyEngine Staking Contract Security Review",
       "auditor": "Cantina",
       "date": "2026-03-27",
       "document": "optimism/reports/2026_03-PolicyEngineStaking-Cantina.pdf"
     },
     "cantina-safe-extensions-2024-06": {
       "collections": ["optimism"],
-      "title": "Optimism Safe Extensions Competition (Cantina)",
+      "title": "Optimism Safe Extensions Competition",
       "auditor": "Cantina",
       "date": "2024-06-06",
       "document": "optimism/reports/2024_05_SafeLivenessExtensions-Cantina.pdf"
@@ -158,34 +151,34 @@
     },
     "cantina-u18-2026-01": {
       "collections": ["optimism"],
-      "title": "Optimism PBC U18 Security Review (Cantina)",
+      "title": "Optimism PBC U18 Security Review",
       "auditor": "Cantina",
       "date": "2026-01-12",
       "document": "optimism/reports/2026_01-U18-Cantina.pdf"
     },
     "cantina-u19-2026-05": {
       "collections": ["optimism"],
-      "title": "Optimism: Upgrade 19 Security Review (Cantina)",
+      "title": "Optimism: Upgrade 19 Security Review",
       "auditor": "Cantina",
       "date": "2026-05-23",
       "document": "optimism/reports/2026_05-U19-Cantina.pdf"
     },
     "cantina-upgrade20-2026-08": {
       "collections": ["optimism"],
-      "title": "Optimism Upgrade 20 Security Review (Cantina Managed)",
+      "title": "Optimism Upgrade 20 Security Review",
       "auditor": "Cantina",
       "date": "2026-08-20",
       "document": "optimism/reports/2026_08-U20-Cantina.pdf"
     },
     "certora-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Assessment",
       "auditor": "Certora",
       "date": "2026-07-29",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
     },
     "certora-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
       "auditor": "Certora",
       "date": "2025-01-14",
@@ -198,86 +191,44 @@
       "date": "2026-02-16",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
     },
-    "chainsecurity-makerdao-starknet-dai-bridge-2022-10": {
-      "collections": ["starknet"],
-      "title": "ChainSecurity Code Assessment of the StarkNet-DAI-Bridge Smart Contracts",
-      "auditor": "ChainSecurity",
-      "date": "2022-10-18",
-      "document": "starknet/reports/2022_10-chainsecurity-makerdao-starknet-dai-bridge-audit.pdf"
-    },
-    "chainsecurity-makerdao-starknet-teleport-2022-06": {
-      "collections": ["starknet"],
-      "title": "ChainSecurity Code Assessment of the Starknet Teleport Smart Contracts",
-      "auditor": "ChainSecurity",
-      "date": "2022-06-21",
-      "document": "starknet/reports/2022_06-chainsecurity-makerdao-starknet-teleport-audit.pdf"
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
+      "auditor": "Certora",
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
     },
     "code4rena-base-2023-08": {
       "collections": ["optimism"],
-      "title": "BASE Findings & Analysis Report (Code4rena)",
+      "title": "BASE Findings & Analysis Report",
       "auditor": "Code4rena",
       "date": "2023-08-10",
       "document": "optimism/reports/2023_08-OP-Stack-Base-Code4rena.html"
     },
+    "code4rena-ronin-katana-v3-2024-10": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin Findings & Analysis Report (Katana V3)",
+      "auditor": "Code4rena",
+      "date": "2024-11-25",
+      "document": "roninnetwork/reports/Code4rena - Ronin Katana v3.html"
+    },
     "code4rena-superchain-2024-08": {
       "collections": ["optimism"],
-      "title": "Optimism Superchain Findings & Analysis Report (Code4rena)",
+      "title": "Optimism Superchain Findings & Analysis Report",
       "auditor": "Code4rena",
       "date": "2024-08-16",
       "document": "optimism/reports/2024_08-Superchain-Code4rena.html"
     },
-    "code4rena-taiko-2024-04": {
-      "collections": ["taiko"],
-      "title": "Taiko Findings & Analysis Report (Code4rena)",
-      "auditor": "Code4rena",
-      "date": "2024-04-26",
-      "document": "taiko/reports/2024_04-code4rena-taiko.html"
-    },
-    "code4rena-zksync-era-2023-10": {
-      "collections": ["zksync2"],
-      "title": "zkSync Era Findings & Analysis Report",
-      "auditor": "Code4rena",
-      "date": "2024-02-29",
-      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
-    },
-    "code4rena-zksync-era-2024-03": {
-      "collections": ["zksync2"],
-      "title": "zkSync Era Findings & Analysis Report",
-      "auditor": "Code4rena",
-      "date": "2024-05-29",
-      "document": "zksync2/reports/2024_03-code4rena-zksync-era.html"
-    },
-    "code4rena-zksync-era-system-contracts-2023-03": {
-      "collections": ["zksync2"],
-      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
-      "auditor": "Code4rena",
-      "date": "2023-06-14",
-      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
-    },
     "coinbase-cannon-u16-2025-05": {
       "collections": ["optimism"],
-      "title": "Cannon U16 Security Review (Coinbase Protocol Security)",
+      "title": "Cannon U16 Security Review",
       "auditor": "Coinbase",
       "date": "2025-05-30",
       "document": "optimism/reports/2025_05-Cannon-Go-Updates-Coinbase.pdf"
     },
-    "consensys-arbitrum-core-token-bridge-2021-11": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
-      "auditor": "ConsenSys Diligence",
-      "date": "2021-11-05",
-      "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
-    },
-    "consensys-nitro-contracts-2022-06": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Nitro Smart Contracts (ConsenSys Diligence, June 2022)",
-      "auditor": "ConsenSys Diligence",
-      "date": "2022-06-24",
-      "document": "arbitrum/reports/2022_06_24_consensys_diligence_security_audit_nitro_contracts.pdf"
-    },
     "consensys-safetychecker-2021-03": {
       "collections": ["optimism"],
-      "title": "Optimism SafetyChecker (ConsenSys Diligence)",
+      "title": "Optimism SafetyChecker",
       "auditor": "ConsenSys Diligence",
       "document": "optimism/reports/2021_03-SafetyChecker-ConsenSysDiligence.pdf"
     },
@@ -316,6 +267,27 @@
       "date": "2023-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
     },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2024-12-v5.2": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.2 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-12-04",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
+    },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
     "contracts__audits__2025-07-v5.4": {
       "collections": ["_libs/openzeppelin"],
       "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
@@ -350,28 +322,28 @@
       "document": "_libs/openzeppelin/reports/formal-verification__fv__reports__2022-05.pdf"
     },
     "g0-safe-1-1-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
     },
     "g0-safe-1-1-1": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
       "auditor": "G0 Group",
       "date": "2019-11-11",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
     },
     "g0-safe-1-3-0-final": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
       "auditor": "G0 Group",
       "date": "2021-05-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
     },
     "g0-safe-1-3-0-initial": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
       "auditor": "G0 Group",
       "date": "2021-04-01",
@@ -383,29 +355,22 @@
       "auditor": "G0 Group",
       "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v0.1.0__audit-report-g0.md"
     },
-    "hashlock-celo-optimism-superchain-2026-02": {
-      "collections": ["celo"],
-      "title": "Celo Smart Contract Audit Report (Optimism and Superchain, 2nd audit)",
-      "auditor": "Hashlock Pty Ltd",
-      "date": "2026-02-28",
-      "document": "celo/reports/Hashlock - Celo Optimism and Superchain (2nd Audit).pdf"
+    "g0-safe-gas-validation-1-2-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Gas Validation Adjustment",
+      "auditor": "G0 Group",
+      "date": "2020-05-04",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_2_0.pdf"
     },
     "milotruck-deputypausemodule-2025-01": {
       "collections": ["optimism"],
-      "title": "Optimism DeputyPauseModule (MiloTruck)",
+      "title": "Optimism DeputyPauseModule",
       "auditor": "MiloTruck",
       "date": "2025-01-07",
       "document": "optimism/reports/2024_12-DPM-MiloTruck.pdf"
     },
-    "nethermind-nm-0561-celo-custom-gas-token-2025-07-01": {
-      "collections": ["celo"],
-      "title": "NM-0561 Celo Custom Gas Token Security Review",
-      "auditor": "Nethermind Security",
-      "date": "2025-07-01",
-      "document": "celo/reports/Nethermind - NM-0561 Celo Custom Gas Token.pdf"
-    },
     "nethermind-safe-1-3-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account v1.3.0 Security Review",
       "auditor": "Nethermind Security",
       "date": "2026-08-17",
@@ -420,28 +385,28 @@
     },
     "offbeatlabs-incident-response-updates-2025-01": {
       "collections": ["optimism"],
-      "title": "Optimism Incident Response Updates Review (Offbeat Security)",
+      "title": "Optimism Incident Response Updates Review",
       "auditor": "Offbeat Labs",
       "date": "2025-01-24",
       "document": "optimism/reports/2025_01-IRI-OffbeatLabs.pdf"
     },
     "openzeppelin-agora-governor-v6-2023-11": {
       "collections": ["optimism"],
-      "title": "Agora Optimism Governance Audit (OpenZeppelin)",
+      "title": "Agora Optimism Governance Audit",
       "auditor": "OpenZeppelin",
       "date": "2023-11-22",
       "document": "optimism/reports/2023_11-Governor-OpenZeppelin.pdf"
     },
     "openzeppelin-bedrock-bridge-2022-05": {
       "collections": ["optimism"],
-      "title": "Optimism Bridge Audit (OpenZeppelin, May 2022)",
+      "title": "Optimism Bridge Audit (May 2022)",
       "auditor": "OpenZeppelin",
       "date": "2022-05-16",
       "document": "optimism/reports/2022_05-Bedrock_Contracts-Zeppelin.pdf"
     },
     "openzeppelin-bedrock-periphery-2022-09": {
       "collections": ["optimism"],
-      "title": "Optimism Bedrock and Periphery Audit (OpenZeppelin)",
+      "title": "Optimism Bedrock and Periphery Audit",
       "auditor": "OpenZeppelin",
       "date": "2022-09-02",
       "document": "optimism/reports/2022_09-Bedrock_and_Periphery-Zeppelin.pdf"
@@ -452,6 +417,13 @@
       "auditor": "OpenZeppelin",
       "date": "2025-08-04",
       "document": "optimism/reports/2025_08-Governor-OpenZeppelin.pdf"
+    },
+    "openzeppelin-mantle-token-and-bridge-2023-06": {
+      "collections": ["mantle"],
+      "title": "Mantle Token and Bridge Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2023-06-30",
+      "document": "mantle/reports/2023_06-openzeppelin-mantle-token-and-bridge-audit.pdf"
     },
     "openzeppelin-mantle-v2-solidity-contracts-2024-03": {
       "collections": ["mantle"],
@@ -466,23 +438,16 @@
       "auditor": "OpenZeppelin",
       "document": "optimism/reports/2021_03-OVM_and_Rollup-OpenZeppelin.pdf"
     },
-    "openzeppelin-taiko-protocol-2024-06": {
-      "collections": ["taiko"],
-      "title": "Taiko Protocol Audit (OpenZeppelin)",
-      "auditor": "OpenZeppelin",
-      "date": "2024-06-19",
-      "document": "taiko/reports/2024_06-openzeppelin-taiko-protocol-audit.pdf"
-    },
-    "openzeppelin-zksync-l1-diff-2023-02": {
-      "collections": ["zksync2"],
-      "title": "zkSync | Layer 1 Diff Audit February",
-      "auditor": "OpenZeppelin",
-      "date": "2023-03-08",
-      "document": "zksync2/reports/2023_02-openzeppelin-zksync-l1-diff-audit.html"
+    "quantstamp-mantle-bridge-contracts-2023-06": {
+      "collections": ["mantle"],
+      "title": "Mantle Network (Bridge Contracts) Audit",
+      "auditor": "Quantstamp",
+      "date": "2023-07-13",
+      "document": "mantle/reports/2023_06-quantstamp-mantle-bridge-contracts.pdf"
     },
     "radiantlabs-deputypausemodule-2024-12": {
       "collections": ["optimism"],
-      "title": "DeputyPauseModule Security Review (Radiant Labs)",
+      "title": "DeputyPauseModule Security Review",
       "auditor": "Radiant Labs",
       "date": "2024-12-28",
       "document": "optimism/reports/2024_12-DPM-RadiantLabs.pdf"
@@ -503,21 +468,21 @@
     },
     "secure3-mantle-v2-public-contest-2024-04": {
       "collections": ["mantle"],
-      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, April 2024 edition)",
+      "title": "Mantle_V2_Public Competitive Security Assessment (April 2024 edition)",
       "auditor": "Secure3",
       "date": "2024-04-18",
       "document": "mantle/reports/2024_04-secure3-mantle-v2-public-audit-contest.pdf"
     },
     "secure3-mantle-v2-public-contest-final-2024-05": {
       "collections": ["mantle"],
-      "title": "Mantle_V2_Public Competitive Security Assessment (Secure3, May 2024 final edition)",
+      "title": "Mantle_V2_Public Competitive Security Assessment (May 2024 final edition)",
       "auditor": "Secure3",
       "date": "2024-05-10",
       "document": "mantle/reports/2024_05-secure3-mantle-v2-public-audit-contest-final.pdf"
     },
     "secure3-mantle-v2-tectonic-2024-03": {
       "collections": ["mantle"],
-      "title": "Mantle V2 Competitive Security Assessment (Secure3, March 2024)",
+      "title": "Mantle V2 Competitive Security Assessment (March 2024)",
       "auditor": "Secure3",
       "date": "2024-03-04",
       "document": "mantle/reports/2024_03-secure3-mantle-v2-tectonic-competitive-security-assessment.pdf"
@@ -536,15 +501,9 @@
       "date": "2024-06-07",
       "document": "optimism/reports/2024_05-FaultProofs-Sherlock.pdf"
     },
-    "sigma-prime-taiko-smart-contracts-2024-02": {
-      "collections": ["taiko"],
-      "title": "Taiko Smart Contract Security Assessment (Sigma Prime)",
-      "auditor": "Sigma Prime",
-      "document": "taiko/reports/2024_02-sigma-prime-taiko-smart-contract-security-assessment.pdf"
-    },
     "sigmaprime-mantle-l2-rollup-2023-07": {
       "collections": ["mantle"],
-      "title": "Mantle L2 Rollup Security Assessment (Sigma Prime)",
+      "title": "Mantle L2 Rollup Security Assessment",
       "auditor": "Sigma Prime",
       "document": "mantle/reports/2023_07-sigmaprime-mantle-l2-rollup-security-assessment.pdf"
     },
@@ -554,12 +513,12 @@
       "auditor": "Sigma Prime",
       "document": "mantle/reports/2024_04-sigmaprime-mantle-l2-rollup-v2-security-assessment.pdf"
     },
-    "solidified-aztec-element-bridge-2022-05-11": {
+    "solidified-aztec-lido-bridge-2022-04-12": {
       "collections": ["aztecnetwork"],
-      "title": "Aztec Element Bridge Audit",
+      "title": "Aztec Lido Bridge Audit",
       "auditor": "Solidified",
-      "date": "2022-05-11",
-      "document": "aztecnetwork/reports/Solidified - Aztec Element Bridge.pdf"
+      "date": "2022-04-12",
+      "document": "aztecnetwork/reports/Solidified - Aztec Lido Bridge.pdf"
     },
     "spearbit-cannon-eventfd-syscall-fix-review-2025-06": {
       "collections": ["optimism"],
@@ -577,14 +536,14 @@
     },
     "spearbit-fault-proofs-no-mips-2024-08": {
       "collections": ["optimism"],
-      "title": "Base Fault Proofs no MIPS Security Review (Spearbit)",
+      "title": "Base Fault Proofs no MIPS Security Review",
       "auditor": "Spearbit",
       "date": "2024-08-14",
       "document": "optimism/reports/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf"
     },
     "spearbit-interop-contracts-2025-03": {
       "collections": ["optimism"],
-      "title": "Optimism Interop Security Review (Spearbit)",
+      "title": "Optimism Interop Security Review",
       "auditor": "Spearbit",
       "date": "2025-03-19",
       "document": "optimism/reports/2025_03-Interop-Contracts-Spearbit.pdf"
@@ -598,35 +557,35 @@
     },
     "spearbit-mt-cannon-2025-02": {
       "collections": ["optimism"],
-      "title": "Optimism Mt Cannon Security Review (Spearbit)",
+      "title": "Optimism Mt Cannon Security Review",
       "auditor": "Spearbit",
       "date": "2025-02-20",
       "document": "optimism/reports/2025_01-MT-Cannon-Spearbit.pdf"
     },
     "spearbit-safersafes-2025-11": {
       "collections": ["optimism"],
-      "title": "Optimism SaferSafes Security Review (Spearbit)",
+      "title": "Optimism SaferSafes Security Review",
       "auditor": "Spearbit",
       "date": "2025-11-13",
       "document": "optimism/reports/2025_11-SaferSafes-Spearbit.pdf"
     },
     "spearbit-u16a-2025-09": {
       "collections": ["optimism"],
-      "title": "Optimism u16 Security Review - U16a (Spearbit)",
+      "title": "Optimism u16 Security Review - U16a",
       "auditor": "Spearbit",
       "date": "2025-10-07",
       "document": "optimism/reports/2025_09-U16a-Spearbit.pdf"
     },
     "spearbit-upgrade13-2025-02": {
       "collections": ["optimism"],
-      "title": "Optimism Security Review (Spearbit, Upgrade 13)",
+      "title": "Optimism Security Review (Upgrade 13)",
       "auditor": "Spearbit",
       "date": "2025-03-05",
       "document": "optimism/reports/2025_02-Upgrade13-Spearbit.pdf"
     },
     "spearbit-upgrade16-2025-05": {
       "collections": ["optimism"],
-      "title": "Optimism Security Review - Upgrade 16 (Spearbit)",
+      "title": "Optimism Security Review - Upgrade 16",
       "auditor": "Spearbit",
       "date": "2025-05-20",
       "document": "optimism/reports/2025_05-Upgrade16-Spearbit.pdf"
@@ -645,40 +604,12 @@
       "date": "2023-01-18",
       "document": "optimism/reports/2023_01-Bedrock_Updates-TrailOfBits.pdf"
     },
-    "trailofbits-custom-fee-token-2024-08": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Labs Custom Fee Token Security Assessment Summary Report (Trail of Bits, 2023)",
-      "auditor": "Trail of Bits",
-      "date": "2024-08-01",
-      "document": "arbitrum/reports/2024-08-offchain-labs-custom-fee-token-securityreview.pdf"
-    },
-    "trailofbits-governance-token-bridge-2023-06": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
-      "auditor": "Trail of Bits",
-      "date": "2023-01-06",
-      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
-    },
     "trailofbits-invariant-testing-2022-11": {
       "collections": ["optimism"],
       "title": "Optimism Security Assessment (testing strategy and invariants, November 2022)",
       "auditor": "Trail of Bits",
       "date": "2022-11-10",
       "document": "optimism/reports/2022_11-Invariant_Testing-TrailOfBits.pdf"
-    },
-    "trailofbits-morph-l2-2024-07": {
-      "collections": ["morph"],
-      "title": "Morph L2 Security Assessment (Comprehensive Report with Fix Review)",
-      "auditor": "Trail of Bits",
-      "date": "2024-07-18",
-      "document": "morph/reports/2024_07-trailofbits-morph-l2-security-assessment-with-fix-review.pdf"
-    },
-    "trailofbits-nitro-1-of-2-2022-03": {
-      "collections": ["arbitrum"],
-      "title": "Offchain Nitro Security Assessment (Trail of Bits, first Nitro review, 2022)",
-      "auditor": "Trail of Bits",
-      "date": "2022-05-25",
-      "document": "arbitrum/reports/2022_03_14_trail_of_bits_security_audit_nitro_1_of_2.pdf"
     },
     "trailofbits-opnode-fix-review-2022-07": {
       "collections": ["optimism"],
@@ -694,23 +625,16 @@
       "date": "2020-10-30",
       "document": "optimism/reports/2020_10-Rollup-TrailOfBits.pdf"
     },
-    "trust-security-zksync-era-contracts-2024-10": {
-      "collections": ["zksync2"],
-      "title": "Trust Security ZKsync Era Contracts Audit",
-      "auditor": "Trust Security",
-      "date": "2024-10-13",
-      "document": "zksync2/reports/2024_10-trust-security-zksync-era-contracts-audit.pdf"
-    },
     "trust-superchainconfig-upgrade-2024-01": {
       "collections": ["optimism"],
-      "title": "Smart Contract Audit: Optimism Bedrock upgrade (Trust Security)",
+      "title": "Smart Contract Audit: Optimism Bedrock upgrade",
       "auditor": "Trust Security",
       "date": "2024-01-11",
       "document": "optimism/reports/2023_12_SuperchainConfigUpgrade_Trust.pdf"
     },
     "wonderland-interop-portal-2025-03": {
       "collections": ["optimism"],
-      "title": "ETHLockbox redesign - Unified report (Wonderland)",
+      "title": "ETHLockbox redesign - Unified report",
       "auditor": "Wonderland",
       "document": "optimism/reports/2025_03-Interop-Portal-Wonderland.pdf"
     },
@@ -727,20 +651,6 @@
       "auditor": "Zach Obront",
       "date": "2023-05-12",
       "document": "optimism/reports/2023_05-Governor-ZachObront.md"
-    },
-    "zellic-facet-bridge-2024-11-04": {
-      "collections": ["ethscriptions", "facet"],
-      "title": "Facet Bridge Smart Contract Security Assessment",
-      "auditor": "Zellic",
-      "date": "2024-11-04",
-      "document": "ethscriptions/reports/Zellic_Facet_Bridge_Audit_Report.pdf"
-    },
-    "zellic-scroll-bridge-rollup-audit-2023-05": {
-      "collections": ["scroll"],
-      "title": "Scroll Tech Smart Contract Security Assessment",
-      "auditor": "Zellic",
-      "date": "2023-05-26",
-      "document": "scroll/reports/zellic-scroll-bridge-rollup-audit-2023-05.pdf"
     }
   },
   "auditedFiles": {
@@ -756,29 +666,23 @@
       "path": "packages/contracts-bedrock/src/L1/SystemConfig.sol",
       "blob": "0082d8e94fb8edbd39abe244e0f16719ab4e3f96"
     },
-    "0111284eea9d": {
-      "repository": "sky-ecosystem/starknet-dai-bridge",
-      "commit": "51b832099acb5fa02da5a5c683f729922e88d497",
-      "path": "contracts/l1/L1DAIBridge.sol",
-      "blob": "0111284eea9d8af9055949ad89e0bb86df62e6ac"
-    },
     "01d71942b5b3": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/L1/OptimismPortal2.sol",
       "blob": "01d71942b5b36fad11917f4d544bb7376dfc13fb"
     },
+    "03f5296c43bc": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "03f5296c43bc11e29fad1408042e7cc7b10839a6"
+    },
     "0487cb845c4b": {
       "repository": "ethereum-optimism/optimism",
       "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/L1/L1ERC721Bridge.sol",
       "blob": "0487cb845c4b487781e5b1b0e6de278793e1b865"
-    },
-    "07a6de4542ee": {
-      "repository": "code-423n4/2023-10-zksync",
-      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
-      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
-      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
     },
     "08d136770b8c": {
       "repository": "ethereum-optimism/optimism",
@@ -812,13 +716,13 @@
     },
     "0b72714bacc7": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/common/StorageAccessible.sol",
       "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852"
     },
     "0b859cc51b9a": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Syscalls.sol",
       "blob": "0b859cc51b9a143aebd3e7481e14800051dfa2de"
     },
@@ -845,6 +749,12 @@
       "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Instructions.sol",
       "blob": "0ec1ecc1cc3531658e1fd91298de936809464490"
+    },
+    "1122589690b5": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+      "blob": "1122589690b54dee86ff08bf8b4503822e6dc058"
     },
     "11522e3740d7": {
       "repository": "ethereum-optimism/optimism",
@@ -900,12 +810,6 @@
       "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
       "blob": "1cc118f42f1e947ea87295c30fa1a237c31777b5"
     },
-    "1cf7e0b2edfc": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "blob": "1cf7e0b2edfce1fb89d4f1ab51380cec2b9960aa"
-    },
     "1d3a83dd0f27": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
@@ -944,7 +848,7 @@
     },
     "2104202e53bf": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
       "blob": "2104202e53bfabc460665d0d244ca33854e318d4"
     },
@@ -986,7 +890,7 @@
     },
     "2a22f831f011": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
       "path": "packages/contracts-bedrock/interfaces/L1/ISuperchainConfig.sol",
       "blob": "2a22f831f011e336ce7bfd7d2b38f0fa3cb72b7d"
     },
@@ -1038,6 +942,12 @@
       "path": "contracts/utils/Strings.sol",
       "blob": "332d2a2984e917adbca3dd915d8f6a7dc5561504"
     },
+    "33bc7a1bf439": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+      "path": "packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",
+      "blob": "33bc7a1bf439308a31a44c4b26ddfb2fe649a87b"
+    },
     "33d08b4a94b8": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
@@ -1080,11 +990,29 @@
       "path": "packages/contracts-bedrock/src/universal/ReinitializableBase.sol",
       "blob": "3b6a2b1659a5c08effbeef2953f31c1c4cf2014a"
     },
+    "3c067ef40128": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "blob": "3c067ef401283b6ae369fcc275e4ef6371daa7d3"
+    },
     "3c18c4e1bc15": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/libraries/Types.sol",
       "blob": "3c18c4e1bc1511614d0049777bd524c4756f582b"
+    },
+    "3ca6357b402d": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/interfaces/L2/IOptimismERC20Factory.sol",
+      "blob": "3ca6357b402d9786f8853aa5ffb4738afd57a02a"
+    },
+    "3cad4512d200": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+      "blob": "3cad4512d2007abe76477d9b3b87ca8809b7c4f5"
     },
     "3d2846231b4f": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1098,11 +1026,11 @@
       "path": "packages/contracts/contracts/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
       "blob": "40ceb10de60729759e7059ee0524b16e50f7b775"
     },
-    "41ede9d660b2": {
-      "repository": "OffchainLabs/arbitrum-classic",
-      "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
-      "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
-      "blob": "41ede9d660b2dfee65788266a6dc867d48e0ff31"
+    "421b1f357d10": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/TransferHelper.sol",
+      "blob": "421b1f357d10f6850f3c5e175eddc73e295fd775"
     },
     "42b05511e680": {
       "repository": "ethereum-optimism/optimism",
@@ -1118,7 +1046,7 @@
     },
     "43541048d14a": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/interfaces/universal/IOptimismMintableERC20.sol",
       "blob": "43541048d14aa9b399f79272832448f00b698b94"
     },
@@ -1128,6 +1056,18 @@
       "path": "packages/contracts-bedrock/interfaces/L2/IL2ToL1MessagePasser.sol",
       "blob": "4629dbaba8d09fcacb9ba8b369ec1e2716a0b51b"
     },
+    "47a9fd588556": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC5267.sol",
+      "blob": "47a9fd5885563f1d65a77f0847bdd91bfed9d17a"
+    },
+    "4ccae82dfed6": {
+      "repository": "ethereum-optimism/optimism",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+      "blob": "4ccae82dfed64459d2c29e742a7f4210941688d7"
+    },
     "4e1a5780eb4b": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
@@ -1136,7 +1076,7 @@
     },
     "4e60bb9d6ba0": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/common/SelfAuthorized.sol",
       "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0"
     },
@@ -1232,7 +1172,7 @@
     },
     "62a4ee973483": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/FallbackManager.sol",
       "blob": "62a4ee97348305cd83c45d8d489f35e8d97e5484"
     },
@@ -1260,11 +1200,11 @@
       "path": "packages/contracts/contracts/L1/messaging/IL1ERC20Bridge.sol",
       "blob": "645202915fbb91e49e5c6a228a41ac6a47397385"
     },
-    "668700b0b04b": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
-      "path": "contracts/Safe.sol",
-      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
+    "6858df3a8d89": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/token/ERC20/ERC20.sol",
+      "blob": "6858df3a8d894ee55edcd00cff59eaa78fa01de5"
     },
     "6974af456c9b": {
       "repository": "ethereum-optimism/optimism",
@@ -1301,6 +1241,12 @@
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
       "path": "contracts/interfaces/IERC165.sol",
       "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "7597bb3d8bc3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/utils/Address.sol",
+      "blob": "7597bb3d8bc392c0fc3777e26c501c95bc92280e"
     },
     "75a018b0c25d": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1350,11 +1296,11 @@
       "path": "packages/contracts-bedrock/src/L1/ETHLockbox.sol",
       "blob": "793563cc5b495b01007f648bd2fae723779269db"
     },
-    "794f7ba95b86": {
+    "7bcdbb96154c": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
-      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-      "blob": "794f7ba95b863605079005af860876cf58f7640b"
+      "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+      "path": "packages/contracts-bedrock/src/vendor/AddressAliasHelper.sol",
+      "blob": "7bcdbb96154c4539c2586f9ff1711f78f22eab20"
     },
     "7c91266c8d06": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1374,6 +1320,12 @@
       "path": "contracts/utils/introspection/ERC165Checker.sol",
       "blob": "80d020ff7c1d2c73623fa050892d634514c3f869"
     },
+    "81d713d4bed0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/ShortStrings.sol",
+      "blob": "81d713d4bed045f5f83f431ef60dfb1c51012f40"
+    },
     "8259df1c162b": {
       "repository": "mantle-xyz/mantle-v2",
       "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
@@ -1382,13 +1334,13 @@
     },
     "82cac572c953": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/universal/ERC721Bridge.sol",
       "blob": "82cac572c953c6d1b18d4d50d2710d1b28319c43"
     },
     "82fa53b0cf17": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/OwnerManager.sol",
       "blob": "82fa53b0cf17d10cfb3f05dd59626a66ed97e7ab"
     },
@@ -1416,12 +1368,6 @@
       "path": "packages/contracts/contracts/L2/messaging/IL2ERC20Bridge.sol",
       "blob": "895f80a4bc17e15ec6c631652f93682dd6f17ac7"
     },
-    "89a3e6314f67": {
-      "repository": "OffchainLabs/token-bridge-contracts",
-      "commit": "6396a178e001da2b86509bb21c775488530fd541",
-      "path": "contracts/tokenbridge/libraries/ERC165.sol",
-      "blob": "89a3e6314f6724bede3e5452edc2f838220e95c0"
-    },
     "89e8432dc5af": {
       "repository": "mantle-xyz/mantle-v2",
       "commit": "840fdcb42fe257f1765fa1027480bc3c57ee07c3",
@@ -1440,23 +1386,29 @@
       "path": "packages/contracts-bedrock/src/Safe/SafeSigners.sol",
       "blob": "8b8442123116de3be84d8b1a0402fd2b9fdb34c7"
     },
+    "8c239942ac89": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC1271.sol",
+      "blob": "8c239942ac894b2ebb9b192646b5b0e455cd968f"
+    },
     "8d366ae9c470": {
       "repository": "ethereum-optimism/optimism",
       "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/dispute/DisputeGameFactory.sol",
       "blob": "8d366ae9c470b7eba3a6049d41cbc459709d2171"
     },
-    "8d475bd3daf8": {
-      "repository": "code-423n4/2023-03-zksync",
-      "commit": "21d9a364a4a75adfa6f1e038232d8c0f39858a64",
-      "path": "contracts/openzeppelin/token/ERC20/utils/SafeERC20.sol",
-      "blob": "8d475bd3daf8df3bf2d086ef429b5d9f9c05aeb1"
-    },
     "92a43ff9c033": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "6d415c508be94ef8391ed6525df365452466da76",
       "path": "contracts/utils/Address.sol",
       "blob": "92a43ff9c0337e137f8e9c218c5cf872d0656da7"
+    },
+    "9569249ef08a": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+      "blob": "9569249ef08a1ad116472d95b0d304b84ad046df"
     },
     "979554d4061c": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -1482,11 +1434,11 @@
       "path": "packages/contracts-bedrock/src/libraries/SemverComp.sol",
       "blob": "9afc40c37c24ecfae3e3d9ca366a395049b6e4cc"
     },
-    "9c421d7aa0fb": {
+    "9cd1b0920675": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
-      "path": "contracts/base/ModuleManager.sol",
-      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/Safe.sol",
+      "blob": "9cd1b0920675ca0b4c6f4db5760bb84870cbbc7d"
     },
     "9de908305096": {
       "repository": "ethereum-optimism/optimism",
@@ -1505,12 +1457,6 @@
       "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
       "path": "contracts/proxy/Proxy.sol",
       "blob": "9f02979f1ee66d455e547298479d143f0f7f91c7"
-    },
-    "9f8072a72ba3": {
-      "repository": "sky-ecosystem/starknet-dai-bridge",
-      "commit": "51b832099acb5fa02da5a5c683f729922e88d497",
-      "path": "contracts/l1/L1Escrow.sol",
-      "blob": "9f8072a72ba3ff5868af92eb2c0cae367a8403f7"
     },
     "9fafeba8c058": {
       "repository": "safe-fndn/safe-smart-account",
@@ -1532,7 +1478,7 @@
     },
     "a1d689e731db": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Arch.sol",
       "blob": "a1d689e731dba1e5e6f7d429028418f8c00c0f0a"
     },
@@ -1584,12 +1530,6 @@
       "path": "packages/contracts-bedrock/src/universal/ProxyAdminOwnedBase.sol",
       "blob": "a7ecfeead33dee98e92cf7e6a8622cfef43cf09b"
     },
-    "a8904777a883": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "6982dd1bd411be75ce45144e91609c995460065f",
-      "path": "contracts/utils/ShortStrings.sol",
-      "blob": "a8904777a883cef3807aa0175f21e0ebb0b0f14e"
-    },
     "aae9c49bfc06": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
@@ -1625,6 +1565,12 @@
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
       "path": "contracts/utils/StorageSlot.sol",
       "blob": "b0e9189675cc5f0b86963d29b363a9568d156dd0"
+    },
+    "b21f7e9bd367": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/introspection/ERC165.sol",
+      "blob": "b21f7e9bd3670ef8b51f30c2eeb4ca03c1f9b373"
     },
     "b544418a8dc6": {
       "repository": "mantle-xyz/mantle-v2",
@@ -1670,7 +1616,7 @@
     },
     "c3f36cb881fd": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol",
       "blob": "c3f36cb881fd328c3b6224523d6dd5e16a6c4ddf"
     },
@@ -1686,15 +1632,9 @@
       "path": "packages/contracts-bedrock/src/cannon/MIPS64.sol",
       "blob": "c52c3b8f832befe64a78f04bedff62a29d8c4e37"
     },
-    "c595287872c9": {
-      "repository": "ArbitrumFoundation/governance",
-      "commit": "cf6762d45678847cd901544f90989d852dfdd6ea",
-      "path": "src/Util.sol",
-      "blob": "c595287872c9502608250764ab4c2719de73b9f5"
-    },
     "c6c458e0aa0c": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Memory.sol",
       "blob": "c6c458e0aa0c90403050956f5912aac70d4cc79e"
     },
@@ -1752,15 +1692,9 @@
       "path": "packages/contracts-bedrock/src/dispute/SuperFaultDisputeGame.sol",
       "blob": "cb64904052788d0fe55b77d275c9cb0f4c41165a"
     },
-    "cbc5aef79df2": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
-      "path": "contracts/token/ERC20/ERC20.sol",
-      "blob": "cbc5aef79df2fa45e68ad7ff4044f29c0b3b60d2"
-    },
     "cc0e892278f4": {
-      "repository": "mantlenetworkio/mantle",
-      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "7040d029eefc7a2d5a33e03bc15d6815e4a25fd6",
       "path": "packages/contracts/contracts/libraries/resolver/Lib_AddressManager.sol",
       "blob": "cc0e892278f49456777e1efc87e86b91ff6dc220"
     },
@@ -1790,7 +1724,7 @@
     },
     "d0d036bf8dba": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/GuardManager.sol",
       "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
     },
@@ -1808,9 +1742,15 @@
     },
     "d2cd2e5fed06": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/interfaces/ISignatureValidator.sol",
       "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
+    },
+    "d472eec338a0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/token/ERC721/IERC721Receiver.sol",
+      "blob": "d472eec338a00e435611b5f4ec95c9ab8f6d415a"
     },
     "d6d096a743bb": {
       "repository": "ethereum-optimism/optimism",
@@ -1836,27 +1776,15 @@
       "path": "contracts/access/AccessControl.sol",
       "blob": "d934eddafe9cd6f9dc4955cb7994a2e298cd20ae"
     },
-    "da0282ed88c8": {
-      "repository": "matter-labs/era-contracts",
-      "commit": "29f9ff4bbe12dc133c852f81acd70e2b4139d6b2",
-      "path": "l2-contracts/contracts/vendor/AddressAliasHelper.sol",
-      "blob": "da0282ed88c86d592b56169d27c5d8f71e4fa1e8"
-    },
     "dc671f8ceab3": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/libraries/trie/SecureMerkleTrie.sol",
       "blob": "dc671f8ceab329a15c3fef87478ce5da71ab34c8"
     },
-    "e0252405f5d7": {
-      "repository": "celo-org/optimism",
-      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
-      "path": "packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",
-      "blob": "e0252405f5d7432671e81f975e61562a46950443"
-    },
     "e313f6dc2d74": {
-      "repository": "mantlenetworkio/mantle",
-      "commit": "c4a8fd856aab7fd6eedb0c8bc2a8129d252de24b",
+      "repository": "mantle-xyz/mantle-v2",
+      "commit": "7040d029eefc7a2d5a33e03bc15d6815e4a25fd6",
       "path": "packages/contracts/contracts/libraries/bridge/ICrossDomainMessenger.sol",
       "blob": "e313f6dc2d749917899955d56cdb0fdab5e59516"
     },
@@ -1889,12 +1817,6 @@
       "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
       "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
       "blob": "e77c193bdf4ec8c79ffe054952c4f732c103d076"
-    },
-    "ec004a31130c": {
-      "repository": "celo-org/optimism",
-      "commit": "8d76b55c7fdb88f723291f83adee3af8d1206235",
-      "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
-      "blob": "ec004a31130c329b4352108d18ebe1dd486b8c49"
     },
     "ed91314c7424": {
       "repository": "ethereum-optimism/optimism",
@@ -1944,27 +1866,15 @@
       "path": "contracts/utils/cryptography/MessageHashUtils.sol",
       "blob": "f71603017bf79399215b0b9cd86b5d4057926aa6"
     },
-    "f775356ad924": {
-      "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
-      "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
-      "blob": "f775356ad924548bd4eaea50f5271260f673ceae"
-    },
     "f79445c548ce": {
       "repository": "ethereum-optimism/optimism",
       "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
       "path": "packages/contracts-bedrock/src/libraries/Burn.sol",
       "blob": "f79445c548ced4851c9cfa4e1aadd7a60a201616"
     },
-    "f93d219f21bd": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-      "path": "contracts/token/ERC721/IERC721Receiver.sol",
-      "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
-    },
     "fa5ef6dd918f": {
       "repository": "ethereum-optimism/optimism",
-      "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+      "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
       "path": "packages/contracts-bedrock/interfaces/legacy/ILegacyMintableERC20.sol",
       "blob": "fa5ef6dd918f2cb3b8ec2214ee0e427e71575f66"
     },
@@ -2003,15 +1913,19 @@
         "cantina-opcmv2-2026-06",
         "cantina-policyenginestaking-2026-03",
         "cantina-safe-extensions-2024-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
         "spearbit-safersafes-2025-11",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "48db7077d4ee": {
@@ -2033,7 +1947,12 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
@@ -2041,7 +1960,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -2106,10 +2025,13 @@
       "reports": [
         "ackee-safe-1-4-0",
         "certora-safe-1-3-0",
+        "certora-safe-library-contracts-1-4-1",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
+        "g0-safe-1-3-0-initial",
+        "g0-safe-gas-validation-1-2-0",
+        "nethermind-safe-1-3-0"
       ]
     },
     "37dc539ed622": {
@@ -2126,7 +2048,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -2171,7 +2093,7 @@
       "lines": 12,
       "status": "identical",
       "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -2252,11 +2174,8 @@
       "kind": "library",
       "lines": 182,
       "status": "differs",
-      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
-      "reports": [
-        "code4rena-zksync-era-2023-10",
-        "code4rena-zksync-era-system-contracts-2023-03"
-      ],
+      "audited": { "object": "7597bb3d8bc3", "lines": [9, 236] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
       "added": [
         [19, 26],
         [72, 72],
@@ -2282,15 +2201,7 @@
       "name": "TokenLike",
       "kind": "interface",
       "lines": 3,
-      "status": "differs",
-      "audited": { "object": "0111284eea9d", "lines": [18, 22] },
-      "reports": [
-        "chainsecurity-makerdao-starknet-dai-bridge-2022-10",
-        "chainsecurity-makerdao-starknet-teleport-2022-06"
-      ],
-      "added": [[1, 1]],
-      "removed": [[1, 1, 3]],
-      "covered": 2
+      "status": "none"
     },
     "a467358836f7": {
       "name": "iOVM_L2ERC20Bridge",
@@ -2304,6 +2215,8 @@
       },
       "reports": [
         "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-mantle-token-and-bridge-2023-06",
+        "quantstamp-mantle-bridge-contracts-2023-06",
         "secure3-mantle-v1-contest-2023-07",
         "sigmaprime-mantle-l2-rollup-2023-07"
       ],
@@ -2339,7 +2252,8 @@
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "043c3c292b42": {
@@ -2353,14 +2267,18 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "401eb66867f1": {
@@ -2374,13 +2292,17 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "3a8d9764d8a4": {
@@ -2394,14 +2316,18 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "f596c9295bd4": {
@@ -2415,14 +2341,18 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "50f26d5b74f2": {
@@ -2436,14 +2366,18 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "e9aa0f101d68": {
@@ -2457,9 +2391,12 @@
         "cantina-interop-l2-rereview-2026-06",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "3e463bddb22c": {
@@ -2472,8 +2409,10 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-l2-rereview-2026-06",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -2529,13 +2468,17 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "dad13f394614": {
@@ -2555,6 +2498,7 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
         "code4rena-superchain-2024-08",
@@ -2562,7 +2506,9 @@
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "a8ac2aff9c48": {
@@ -2581,7 +2527,8 @@
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "722461548a39": {
@@ -2598,13 +2545,16 @@
         "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "offbeatlabs-incident-response-updates-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "6d4853d36d81": {
@@ -2617,12 +2567,16 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-fault-proofs-no-mips-2024-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "5fe8253cda76": {
@@ -2643,9 +2597,12 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "e2b40f3d642c": {
@@ -2658,9 +2615,12 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "b5dcc6adafd5": {
@@ -2672,9 +2632,12 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "28c2fba54f06": {
@@ -2687,11 +2650,14 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "b667763fb033": {
@@ -2711,9 +2677,12 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "7d1791449349": {
@@ -2732,7 +2701,8 @@
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "c957ce169cf6": {
@@ -2744,6 +2714,7 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08"
       ]
@@ -2758,12 +2729,15 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "spearbit-safersafes-2025-11",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "9e1f6b2ac65d": {
@@ -2775,6 +2749,7 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08"
       ]
@@ -2804,6 +2779,7 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08"
       ]
@@ -2874,14 +2850,18 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-superchain-2024-08",
         "milotruck-deputypausemodule-2025-01",
         "radiantlabs-deputypausemodule-2024-12",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "e304276af8e0": {
@@ -2905,11 +2885,8 @@
       "kind": "library",
       "lines": 214,
       "status": "differs",
-      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
-      "reports": [
-        "code4rena-zksync-era-2023-10",
-        "code4rena-zksync-era-system-contracts-2023-03"
-      ],
+      "audited": { "object": "7597bb3d8bc3", "lines": [9, 236] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
       "added": [
         [77, 77],
         [126, 127],
@@ -2973,8 +2950,10 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "code4rena-base-2023-08",
         "openzeppelin-bedrock-bridge-2022-05",
         "openzeppelin-bedrock-periphery-2022-09",
         "openzeppelin-mantle-v2-solidity-contracts-2024-03",
@@ -2983,6 +2962,7 @@
         "secure3-mantle-v2-tectonic-2024-03",
         "sherlock-bedrock-2023-03",
         "sherlock-fault-proofs-2024-06",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05",
         "trailofbits-invariant-testing-2022-11",
         "trailofbits-opnode-fix-review-2022-07"
@@ -2997,9 +2977,11 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
         "sherlock-fault-proofs-2024-06",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3010,6 +2992,7 @@
       "status": "identical",
       "audited": { "object": "1ac24cfad012", "lines": [15, 182] },
       "reports": [
+        "code4rena-base-2023-08",
         "openzeppelin-mantle-v2-solidity-contracts-2024-03",
         "secure3-mantle-v2-tectonic-2024-03",
         "sigmaprime-mantle-l2-rollup-v2-2024-04"
@@ -3030,6 +3013,7 @@
       "status": "differs",
       "audited": { "object": "8259df1c162b", "lines": [10, 213] },
       "reports": [
+        "code4rena-base-2023-08",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05"
       ],
@@ -3061,10 +3045,12 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
         "sherlock-fault-proofs-2024-06",
         "spearbit-fault-proofs-no-mips-2024-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3101,8 +3087,10 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3142,9 +3130,11 @@
       "reports": [
         "base-mt64cannon-2025-02",
         "cantina-fault-proofs-mips-2024-08",
+        "cantina-u17-2025-10",
         "code4rena-superchain-2024-08",
         "spearbit-fault-proofs-no-mips-2024-08",
         "spearbit-mt-cannon-2025-02",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3193,6 +3183,7 @@
       "status": "identical",
       "audited": { "object": "8259df1c162b", "lines": [10, 213] },
       "reports": [
+        "code4rena-base-2023-08",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05"
       ]
@@ -3209,7 +3200,30 @@
       "name": "AddressUpgradeable",
       "kind": "library",
       "lines": 187,
-      "status": "none"
+      "status": "differs",
+      "audited": {
+        "object": "7597bb3d8bc3",
+        "lines": [9, 236],
+        "name": "Address"
+      },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
+      "added": [
+        [77, 77],
+        [126, 127],
+        [129, 129],
+        [153, 154],
+        [156, 156],
+        [173, 183]
+      ],
+      "removed": [
+        [77, 77, 77],
+        [129, 120, 120],
+        [156, 145, 145],
+        [158, 147, 194],
+        [173, 210, 210],
+        [186, 213, 226]
+      ],
+      "covered": 174
     },
     "8d8dc0a58b96": {
       "name": "Initializable",
@@ -3232,7 +3246,10 @@
         "lines": [16, 24],
         "name": "Context"
       },
-      "reports": ["contracts__audits__2023-10-v5.0"],
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ],
       "added": [[0, 5], [13, 19]],
       "removed": [[0, 0, 0]],
       "covered": 15
@@ -3267,9 +3284,12 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "87b61868f828": {
@@ -3337,7 +3357,10 @@
       "lines": 10,
       "status": "differs",
       "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
-      "reports": ["contracts__audits__2023-10-v5.0"],
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ],
       "added": [[1, 1], [5, 6]],
       "removed": [[1, 1, 1], [5, 5, 5]],
       "covered": 7
@@ -3378,6 +3401,7 @@
       "audited": { "object": "cc0e892278f4", "lines": [10, 67] },
       "reports": [
         "secure3-mantle-v1-contest-2023-07",
+        "secure3-mantle-v2-public-contest-final-2024-05",
         "sigmaprime-mantle-l2-rollup-2023-07"
       ]
     },
@@ -3397,12 +3421,12 @@
       "kind": "contract",
       "lines": 6,
       "status": "identical",
-      "audited": { "object": "ec004a31130c", "lines": [18, 23] },
+      "audited": { "object": "4ccae82dfed6", "lines": [18, 23] },
       "reports": [
         "cantina-eip7702-2025-02",
         "cantina-mcp-l1-2024-02",
-        "hashlock-celo-optimism-superchain-2026-02",
-        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05",
         "trust-superchainconfig-upgrade-2024-01"
       ]
@@ -3412,12 +3436,12 @@
       "kind": "contract",
       "lines": 51,
       "status": "identical",
-      "audited": { "object": "ec004a31130c", "lines": [30, 80] },
+      "audited": { "object": "4ccae82dfed6", "lines": [30, 80] },
       "reports": [
         "cantina-eip7702-2025-02",
         "cantina-mcp-l1-2024-02",
-        "hashlock-celo-optimism-superchain-2026-02",
-        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05",
         "trust-superchainconfig-upgrade-2024-01"
       ]
@@ -3441,8 +3465,12 @@
       "kind": "abstract",
       "lines": 354,
       "status": "identical",
-      "audited": { "object": "794f7ba95b86", "lines": [89, 438] },
-      "reports": ["spearbit-upgrade16-2025-05"]
+      "audited": { "object": "4ccae82dfed6", "lines": [90, 440] },
+      "reports": [
+        "cantina-eip7702-2025-02",
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09"
+      ]
     },
     "beef9d9054b0": {
       "name": "IOptimismPortal2",
@@ -3515,26 +3543,13 @@
       "name": "ApproveLike",
       "kind": "interface",
       "lines": 3,
-      "status": "differs",
-      "audited": { "object": "9f8072a72ba3", "lines": [18, 20] },
-      "reports": [
-        "chainsecurity-makerdao-starknet-dai-bridge-2022-10",
-        "chainsecurity-makerdao-starknet-teleport-2022-06"
-      ],
-      "added": [[1, 1]],
-      "removed": [[1, 1, 1]],
-      "covered": 2
+      "status": "none"
     },
     "40319d181ecc": {
       "name": "L1Escrow",
       "kind": "contract",
       "lines": 37,
-      "status": "differs",
-      "audited": { "object": "9f8072a72ba3", "lines": [23, 56] },
-      "reports": ["chainsecurity-makerdao-starknet-dai-bridge-2022-10"],
-      "added": [[12, 12]],
-      "removed": [[12, 14, 14]],
-      "covered": 36
+      "status": "none"
     },
     "d768b8759414": {
       "name": "Context",
@@ -3542,7 +3557,10 @@
       "lines": 9,
       "status": "identical",
       "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
-      "reports": ["contracts__audits__2023-10-v5.0"]
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ]
     },
     "9b385480472b": {
       "name": "Ownable",
@@ -3562,6 +3580,7 @@
       "status": "identical",
       "audited": { "object": "9ec9f07fc0ec", "lines": [14, 64] },
       "reports": [
+        "code4rena-base-2023-08",
         "openzeppelin-bedrock-periphery-2022-09",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05"
@@ -3630,9 +3649,12 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "a4a11528bc42": {
@@ -3645,8 +3667,10 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-eip7702-2025-02",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3656,7 +3680,11 @@
       "lines": 183,
       "status": "identical",
       "audited": { "object": "82cac572c953", "lines": [15, 188] },
-      "reports": ["spearbit-upgrade16-2025-05"]
+      "reports": [
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "f98775a7d0f9": {
       "name": "IERC165",
@@ -3664,7 +3692,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "6052ff08685e": {
       "name": "IERC721",
@@ -3687,9 +3720,12 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "bf98f394dbe3": {
@@ -3700,6 +3736,8 @@
       "audited": { "object": "0c089ff9a341", "lines": [6, 19] },
       "reports": [
         "cantina-custom-gas-token-2025-11",
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ],
       "added": [[0, 0]],
@@ -3743,7 +3781,12 @@
       "lines": 92,
       "status": "differs",
       "audited": { "object": "643d86cf72d9", "lines": [8, 65] },
-      "reports": ["contracts__audits__2018-10", "g0-safe-allowance-v0-1-0"],
+      "reports": [
+        "contracts__audits__2018-10",
+        "g0-safe-1-1-0",
+        "g0-safe-1-1-1",
+        "g0-safe-allowance-v0-1-0"
+      ],
       "added": [[12, 12], [27, 27], [51, 51], [69, 69], [88, 88]],
       "removed": [
         [12, 44, 44],
@@ -3766,9 +3809,15 @@
       "name": "IERC20",
       "kind": "interface",
       "lines": 70,
-      "status": "identical",
-      "audited": { "object": "41ede9d660b2", "lines": [11, 80] },
-      "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+      "status": "differs",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [[18, 18], [54, 54]],
+      "removed": [[18, 32, 32], [54, 68, 68]],
+      "covered": 68
     },
     "f4a609ef32bc": {
       "name": "SafeERC20",
@@ -3797,7 +3846,9 @@
       "name": "IOptimismERC20Factory",
       "kind": "interface",
       "lines": 6,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "3ca6357b402d", "lines": [7, 12] },
+      "reports": ["cantina-u17-2025-10"]
     },
     "809d3ad2bcb8": {
       "name": "IERC20",
@@ -3806,7 +3857,7 @@
       "status": "identical",
       "audited": { "object": "a19535a30046", "lines": [9, 78] },
       "reports": [
-        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2022-10-ERC4626",
         "contracts__audits__2023-10-v5.0"
       ]
     },
@@ -3815,45 +3866,24 @@
       "kind": "interface",
       "lines": 16,
       "status": "identical",
-      "audited": { "object": "1cf7e0b2edfc", "lines": [13, 28] },
-      "reports": ["contracts__audits__2023-10-v5.0"]
+      "audited": { "object": "3c067ef40128", "lines": [11, 26] },
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0",
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
     },
     "c6d0c3b96308": {
       "name": "ERC20",
       "kind": "contract",
       "lines": 349,
       "status": "differs",
-      "audited": { "object": "cbc5aef79df2", "lines": [38, 343] },
-      "reports": ["contracts__audits__2023-10-v5.0"],
-      "added": [
-        [0, 0],
-        [12, 14],
-        [166, 166],
-        [169, 169],
-        [171, 171],
-        [191, 210],
-        [217, 218],
-        [222, 231],
-        [245, 259],
-        [280, 282],
-        [302, 302],
-        [308, 347]
-      ],
-      "removed": [
-        [0, 0, 0],
-        [9, 9, 13],
-        [166, 164, 164],
-        [169, 167, 169],
-        [171, 171, 171],
-        [191, 187, 194],
-        [212, 196, 230],
-        [212, 232, 232],
-        [222, 240, 244],
-        [245, 255, 259],
-        [280, 276, 281],
-        [302, 297, 299]
-      ],
-      "covered": 298
+      "audited": { "object": "6858df3a8d89", "lines": [35, 366] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
+      "added": [[203, 206], [228, 228], [252, 255]],
+      "removed": [[203, 195, 200], [228, 223, 226], [252, 250, 254]],
+      "covered": 340
     },
     "5c1b98c91663": {
       "name": "IERC20Permit",
@@ -3956,7 +3986,7 @@
       "lines": 173,
       "status": "identical",
       "audited": { "object": "2019a49d122b", "lines": [7, 243] },
-      "reports": ["cantina-custom-gas-token-2025-11"]
+      "reports": ["cantina-custom-gas-token-2025-11", "cantina-u17-2025-10"]
     },
     "197395080909": {
       "name": "ILegacyMintableERC20",
@@ -3965,8 +3995,12 @@
       "status": "identical",
       "audited": { "object": "fa5ef6dd918f", "lines": [11, 17] },
       "reports": [
+        "cantina-u17-2025-10",
+        "code4rena-base-2023-08",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -3977,8 +4011,12 @@
       "status": "identical",
       "audited": { "object": "43541048d14a", "lines": [10, 18] },
       "reports": [
+        "cantina-u17-2025-10",
+        "code4rena-base-2023-08",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4031,11 +4069,8 @@
       "kind": "library",
       "lines": 214,
       "status": "differs",
-      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
-      "reports": [
-        "code4rena-zksync-era-2023-10",
-        "code4rena-zksync-era-system-contracts-2023-03"
-      ],
+      "audited": { "object": "7597bb3d8bc3", "lines": [9, 236] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
       "added": [
         [77, 77],
         [126, 127],
@@ -4102,7 +4137,11 @@
       "lines": 77,
       "status": "differs",
       "audited": { "object": "645202915fbb", "lines": [7, 118] },
-      "reports": ["secure3-mantle-v1-contest-2023-07"],
+      "reports": [
+        "openzeppelin-mantle-token-and-bridge-2023-06",
+        "quantstamp-mantle-bridge-contracts-2023-06",
+        "secure3-mantle-v1-contest-2023-07"
+      ],
       "added": [[31, 36], [49, 54], [69, 74]],
       "removed": [[31, 46, 46], [49, 61, 66], [69, 90, 95], [76, 97, 110]],
       "covered": 59
@@ -4117,12 +4156,12 @@
       "name": "ERC165",
       "kind": "abstract",
       "lines": 8,
-      "status": "identical",
-      "audited": { "object": "89a3e6314f67", "lines": [25, 32] },
-      "reports": [
-        "trailofbits-custom-fee-token-2024-08",
-        "trailofbits-governance-token-bridge-2023-06"
-      ]
+      "status": "differs",
+      "audited": { "object": "b21f7e9bd367", "lines": [20, 25] },
+      "reports": ["contracts__audits__2025-07-v5.4"],
+      "added": [[4, 4]],
+      "removed": [[4, 2, 2]],
+      "covered": 7
     },
     "d01239fbce9a": {
       "name": "Strings",
@@ -4177,7 +4216,9 @@
       "status": "differs",
       "audited": { "object": "e313f6dc2d74", "lines": [7, 37] },
       "reports": [
+        "openzeppelin-mantle-token-and-bridge-2023-06",
         "secure3-mantle-v1-contest-2023-07",
+        "secure3-mantle-v2-public-contest-final-2024-05",
         "sigmaprime-mantle-l2-rollup-2023-07"
       ],
       "added": [],
@@ -4195,8 +4236,8 @@
       "kind": "library",
       "lines": 82,
       "status": "differs",
-      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
-      "reports": ["code4rena-zksync-era-system-contracts-2023-03"],
+      "audited": { "object": "9569249ef08a", "lines": [19, 95] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
       "added": [],
       "removed": [[63, 42, 57]],
       "covered": 82
@@ -4215,6 +4256,8 @@
       "audited": { "object": "895f80a4bc17", "lines": [7, 102] },
       "reports": [
         "openzeppelin-bedrock-bridge-2022-05",
+        "openzeppelin-mantle-token-and-bridge-2023-06",
+        "quantstamp-mantle-bridge-contracts-2023-06",
         "secure3-mantle-v1-contest-2023-07",
         "sigmaprime-mantle-l2-rollup-2023-07"
       ],
@@ -4280,7 +4323,9 @@
       "name": "IERC5267",
       "kind": "interface",
       "lines": 23,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "47a9fd588556", "lines": [6, 28] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
     },
     "0d73af18a3a5": {
       "name": "StorageSlot",
@@ -4298,11 +4343,11 @@
       "kind": "library",
       "lines": 84,
       "status": "differs",
-      "audited": { "object": "a8904777a883", "lines": [39, 121] },
-      "reports": ["contracts__audits__2023-05-v4.9"],
-      "added": [[1, 2], [54, 54], [62, 62], [77, 77]],
-      "removed": [[1, 1, 2], [54, 54, 54], [62, 62, 62], [77, 76, 76]],
-      "covered": 80
+      "audited": { "object": "81d713d4bed0", "lines": [40, 122] },
+      "reports": ["contracts__audits__2025-07-v5.4"],
+      "added": [[28, 28]],
+      "removed": [[28, 27, 27]],
+      "covered": 83
     },
     "c93f4cab4139": {
       "name": "Math",
@@ -4384,8 +4429,11 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
-        "spearbit-upgrade16-2025-05"
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "05d01a350872": {
@@ -4394,7 +4442,11 @@
       "lines": 32,
       "status": "identical",
       "audited": { "object": "2a22f831f011", "lines": [6, 37] },
-      "reports": ["spearbit-upgrade16-2025-05"]
+      "reports": [
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "spearbit-verify-opcm-2025-07"
+      ]
     },
     "41d6f86c1979": {
       "name": "ECDSA",
@@ -4418,7 +4470,12 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -4426,7 +4483,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
@@ -4434,7 +4496,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "06a60947381e": {
       "name": "Executor",
@@ -4448,12 +4510,9 @@
       "name": "ModuleManager",
       "kind": "abstract",
       "lines": 176,
-      "status": "differs",
-      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
-      "reports": ["ackee-safe-1-4-0"],
-      "added": [[22, 22]],
-      "removed": [[22, 22, 22]],
-      "covered": 175
+      "status": "identical",
+      "audited": { "object": "03f5296c43bc", "lines": [17, 196] },
+      "reports": ["certora-safe-library-contracts-1-4-1"]
     },
     "f1b466f7c6f6": {
       "name": "OwnerManager",
@@ -4461,7 +4520,7 @@
       "lines": 150,
       "status": "identical",
       "audited": { "object": "82fa53b0cf17", "lines": [13, 169] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -4488,7 +4547,7 @@
       "lines": 73,
       "status": "identical",
       "audited": { "object": "62a4ee973483", "lines": [10, 79] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
@@ -4496,7 +4555,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -4504,7 +4563,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
@@ -4512,7 +4576,7 @@
       "lines": 17,
       "status": "identical",
       "audited": { "object": "d0d036bf8dba", "lines": [8, 24] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "d63eef9ff914": {
       "name": "GuardManager",
@@ -4520,7 +4584,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "d0d036bf8dba", "lines": [37, 78] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -4536,18 +4600,15 @@
       "lines": 12,
       "status": "identical",
       "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "268c431cb6b0": {
       "name": "Safe",
       "kind": "contract",
       "lines": 409,
-      "status": "differs",
-      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
-      "reports": ["ackee-safe-1-4-0"],
-      "added": [[14, 14]],
-      "removed": [[14, 14, 14]],
-      "covered": 408
+      "status": "identical",
+      "audited": { "object": "9cd1b0920675", "lines": [36, 467] },
+      "reports": ["certora-safe-library-contracts-1-4-1"]
     },
     "5c25b6316c9c": {
       "name": "SuperchainConfig",
@@ -4586,8 +4647,8 @@
       "kind": "library",
       "lines": 98,
       "status": "identical",
-      "audited": { "object": "8d475bd3daf8", "lines": [19, 95] },
-      "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
+      "audited": { "object": "9569249ef08a", "lines": [19, 95] },
+      "reports": ["contracts__audits__2022-10-ERC4626"]
     },
     "e950fe694422": {
       "name": "ERC165Checker",
@@ -4611,8 +4672,12 @@
       "kind": "abstract",
       "lines": 466,
       "status": "identical",
-      "audited": { "object": "f775356ad924", "lines": [24, 451] },
-      "reports": ["spearbit-upgrade16-2025-05"]
+      "audited": { "object": "3cad4512d200", "lines": [27, 454] },
+      "reports": [
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05"
+      ]
     },
     "6a1ed4d6f29f": {
       "name": "L1StandardBridge",
@@ -4629,7 +4694,12 @@
       "name": "TransferHelper",
       "kind": "library",
       "lines": 46,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "421b1f357d10", "lines": [6, 47] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[7, 7], [20, 20], [34, 34]],
+      "removed": [[7, 29, 29], [20, 19, 19], [34, 8, 9]],
+      "covered": 43
     },
     "7c7ea8275882": {
       "name": "Forwarder",
@@ -4663,6 +4733,7 @@
       "audited": { "object": "9afc40c37c24", "lines": [9, 95] },
       "reports": [
         "cantina-custom-gas-token-2025-11",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "spearbit-safersafes-2025-11",
         "spearbit-u16a-2025-09"
@@ -4682,7 +4753,7 @@
       "lines": 7,
       "status": "identical",
       "audited": { "object": "d0d036bf8dba", "lines": [26, 31] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "50d971b27034": {
       "name": "Constants",
@@ -4731,7 +4802,9 @@
       "audited": { "object": "a1d689e731db", "lines": [4, 9] },
       "reports": [
         "base-mt64cannon-2025-02",
+        "cantina-u17-2025-10",
         "spearbit-mt-cannon-2025-02",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4743,7 +4816,9 @@
       "audited": { "object": "c6c458e0aa0c", "lines": [7, 173] },
       "reports": [
         "base-mt64cannon-2025-02",
+        "cantina-u17-2025-10",
         "spearbit-mt-cannon-2025-02",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4754,6 +4829,7 @@
       "status": "identical",
       "audited": { "object": "0b859cc51b9a", "lines": [12, 447] },
       "reports": [
+        "cantina-u17-2025-10",
         "spearbit-cannon-eventfd-syscall-fix-review-2025-06",
         "spearbit-u16a-2025-09"
       ]
@@ -4783,8 +4859,10 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4797,8 +4875,10 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4842,12 +4922,11 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "code4rena-taiko-2024-04",
-        "openzeppelin-taiko-protocol-2024-06",
         "sherlock-fault-proofs-2024-06",
-        "sigma-prime-taiko-smart-contracts-2024-02",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4860,12 +4939,11 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08",
-        "code4rena-taiko-2024-04",
-        "openzeppelin-taiko-protocol-2024-06",
         "sherlock-fault-proofs-2024-06",
-        "sigma-prime-taiko-smart-contracts-2024-02",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4874,12 +4952,26 @@
       "kind": "library",
       "lines": 23,
       "status": "identical",
-      "audited": { "object": "da0282ed88c8", "lines": [21, 43] },
+      "audited": { "object": "7bcdbb96154c", "lines": [21, 43] },
       "reports": [
-        "code4rena-zksync-era-2023-10",
-        "code4rena-zksync-era-2024-03",
-        "openzeppelin-zksync-l1-diff-2023-02",
-        "trust-security-zksync-era-contracts-2024-10"
+        "cantina-custom-gas-token-2025-11",
+        "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
+        "cantina-u18-2026-01",
+        "cantina-upgrade20-2026-08",
+        "code4rena-base-2023-08",
+        "openzeppelin-bedrock-periphery-2022-09",
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
+        "secure3-mantle-v1-contest-2023-07",
+        "secure3-mantle-v2-public-contest-2024-04",
+        "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
+        "sherlock-bedrock-2023-03",
+        "sherlock-fault-proofs-2024-06",
+        "sigmaprime-mantle-l2-rollup-2023-07",
+        "spearbit-u16a-2025-09",
+        "spearbit-upgrade16-2025-05",
+        "trailofbits-invariant-testing-2022-11"
       ]
     },
     "aa62e8be9962": {
@@ -4943,9 +5035,11 @@
       "status": "identical",
       "audited": { "object": "89e8432dc5af", "lines": [10, 53] },
       "reports": [
+        "code4rena-base-2023-08",
         "openzeppelin-mantle-v2-solidity-contracts-2024-03",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
         "sherlock-bedrock-2023-03"
       ]
     },
@@ -4973,14 +5067,11 @@
       "kind": "contract",
       "lines": 41,
       "status": "differs",
-      "audited": { "object": "e0252405f5d7", "lines": [24, 68] },
-      "reports": [
-        "hashlock-celo-optimism-superchain-2026-02",
-        "nethermind-nm-0561-celo-custom-gas-token-2025-07-01"
-      ],
-      "added": [[0, 0], [2, 2], [12, 12]],
-      "removed": [[0, 0, 0], [2, 2, 2], [30, 29, 33]],
-      "covered": 38
+      "audited": { "object": "33bc7a1bf439", "lines": [17, 56] },
+      "reports": ["cantina-mcp-l1-2024-02"],
+      "added": [[0, 0], [2, 2], [5, 6], [11, 12], [26, 26]],
+      "removed": [[0, 0, 0], [2, 2, 2], [5, 5, 6], [11, 11, 11], [26, 25, 25]],
+      "covered": 34
     },
     "a6df5b2b9c6d": {
       "name": "Constants",
@@ -4990,6 +5081,8 @@
       "audited": { "object": "2104202e53bf", "lines": [11, 54] },
       "reports": [
         "cantina-interop-portal-2025-04",
+        "cantina-u17-2025-10",
+        "spearbit-u16a-2025-09",
         "spearbit-upgrade16-2025-05"
       ]
     },
@@ -4999,18 +5092,19 @@
       "lines": 38,
       "status": "identical",
       "audited": { "object": "5f03d07947e7", "lines": [4, 40] },
-      "reports": ["cantina-custom-gas-token-2025-11", "cantina-u18-2026-01"]
+      "reports": [
+        "cantina-custom-gas-token-2025-11",
+        "cantina-u17-2025-10",
+        "cantina-u18-2026-01"
+      ]
     },
     "bf312d30bb56": {
       "name": "Predeploys",
       "kind": "library",
       "lines": 183,
-      "status": "differs",
-      "audited": { "object": "5ae20ddc024c", "lines": [7, 238] },
-      "reports": ["spearbit-upgrade16-2025-05"],
-      "added": [[148, 151], [155, 156], [163, 165]],
-      "removed": [[148, 206, 206], [163, 213, 214]],
-      "covered": 174
+      "status": "identical",
+      "audited": { "object": "1122589690b5", "lines": [9, 245] },
+      "reports": ["cantina-u17-2025-10", "spearbit-u16a-2025-09"]
     },
     "e18db2239a28": {
       "name": "LibZip",
@@ -5106,8 +5200,11 @@
       "status": "differs",
       "audited": { "object": "aaf9d3297260", "lines": [11, 74] },
       "reports": [
+        "code4rena-base-2023-08",
+        "openzeppelin-mantle-v2-solidity-contracts-2024-03",
         "secure3-mantle-v2-public-contest-2024-04",
         "secure3-mantle-v2-public-contest-final-2024-05",
+        "secure3-mantle-v2-tectonic-2024-03",
         "sherlock-bedrock-2023-03"
       ],
       "added": [[0, 11], [14, 50]],
@@ -5123,6 +5220,7 @@
       "reports": [
         "cantina-custom-gas-token-2025-11",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
         "cantina-upgrade20-2026-08"
       ]
@@ -5183,8 +5281,11 @@
       "kind": "interface",
       "lines": 17,
       "status": "identical",
-      "audited": { "object": "f93d219f21bd", "lines": [11, 24] },
-      "reports": ["contracts__audits__2023-10-v5.0"]
+      "audited": { "object": "d472eec338a0", "lines": [11, 28] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
     },
     "6fcde4441d60": {
       "name": "ERC721",
@@ -5391,8 +5492,11 @@
         "cantina-custom-gas-token-2025-11",
         "cantina-interop-portal-2025-04",
         "cantina-opcmv2-2026-06",
+        "cantina-u17-2025-10",
         "cantina-u18-2026-01",
-        "cantina-upgrade20-2026-08"
+        "cantina-upgrade20-2026-08",
+        "spearbit-u16a-2025-09",
+        "spearbit-verify-opcm-2025-07"
       ]
     },
     "ebc961a8bd34": {
@@ -5469,12 +5573,7 @@
       "name": "uncheckedInc",
       "kind": "function",
       "lines": 5,
-      "status": "differs",
-      "audited": { "object": "c595287872c9", "lines": [10, 14] },
-      "reports": ["trailofbits-governance-token-bridge-2023-06"],
-      "added": [[0, 0], [2, 2]],
-      "removed": [[0, 0, 0], [2, 2, 2]],
-      "covered": 3
+      "status": "none"
     },
     "18a42fa99a71": {
       "name": "bytes32ToString",
@@ -5486,7 +5585,9 @@
       "name": "IERC1271",
       "kind": "interface",
       "lines": 8,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "8c239942ac89", "lines": [10, 17] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
     },
     "9f66c14db880": {
       "name": "SignatureChecker",
@@ -5524,7 +5625,7 @@
       "status": "identical",
       "audited": { "object": "a19535a30046", "lines": [9, 78] },
       "reports": [
-        "code4rena-zksync-era-system-contracts-2023-03",
+        "contracts__audits__2022-10-ERC4626",
         "contracts__audits__2023-10-v5.0"
       ]
     },
@@ -5533,39 +5634,17 @@
       "kind": "contract",
       "lines": 349,
       "status": "differs",
-      "audited": { "object": "cbc5aef79df2", "lines": [38, 343] },
-      "reports": ["contracts__audits__2023-10-v5.0"],
-      "added": [
-        [0, 0],
-        [12, 14],
-        [148, 148],
-        [166, 166],
-        [168, 169],
-        [171, 171],
-        [191, 210],
-        [217, 218],
-        [222, 231],
-        [245, 259],
-        [280, 282],
-        [302, 302],
-        [308, 347]
-      ],
+      "audited": { "object": "6858df3a8d89", "lines": [35, 366] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
+      "added": [[148, 148], [168, 168], [203, 206], [228, 228], [252, 255]],
       "removed": [
-        [0, 0, 0],
-        [9, 9, 13],
-        [148, 146, 146],
-        [166, 164, 164],
-        [168, 166, 169],
-        [171, 171, 171],
-        [191, 187, 194],
-        [212, 196, 230],
-        [212, 232, 232],
-        [222, 240, 244],
-        [245, 255, 259],
-        [280, 276, 281],
-        [302, 297, 299]
+        [148, 144, 144],
+        [168, 164, 164],
+        [203, 195, 200],
+        [228, 223, 226],
+        [252, 250, 254]
       ],
-      "covered": 296
+      "covered": 338
     },
     "54de67b304e2": {
       "name": "ERC20Burnable",
@@ -5792,14 +5871,14 @@
       ["b2400038371b", 604],
       ["3e84ad780965", 620]
     ],
-    "8f148cb6bfe6fc4478973e81d95723a77ef01328019c2bb1defc76e5d573d104": [
-      ["867ac382a0ff", 6],
-      ["6907ed764fb7", 107],
-      ["5e5ea72f4af5", 149],
-      ["9f1625bb6f8b", 239],
-      ["3936fa48c10f", 422],
-      ["a467358836f7", 429],
-      ["370e99cf5cac", 535]
+    "73713fb911af2b28ffe974b7e932f4e268cfec461874538920641b5fac48ba78": [
+      ["867ac382a0ff", 4],
+      ["6907ed764fb7", 105],
+      ["5e5ea72f4af5", 147],
+      ["9f1625bb6f8b", 237],
+      ["3936fa48c10f", 420],
+      ["a467358836f7", 427],
+      ["370e99cf5cac", 533]
     ],
     "978bc2e5622ff76d3e1bb6939f48fbb851c77d379669238d91aa2ac6163520ed": [
       ["e565cfa17434", 5],
@@ -6809,7 +6888,7 @@
     },
     "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
       "name": "L1DAITokenBridge",
-      "source": "8f148cb6bfe6fc4478973e81d95723a77ef01328019c2bb1defc76e5d573d104"
+      "source": "73713fb911af2b28ffe974b7e932f4e268cfec461874538920641b5fac48ba78"
     },
     "eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208": {
       "name": "SuperFaultDisputeGame",
@@ -7142,10 +7221,9 @@
         "timestamp": 1636668000,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 2, "differs": 11, "none": 30 },
-        "lines": { "total": 5878, "covered": 1993 },
+        "units": { "identical": 2, "differs": 10, "none": 31 },
+        "lines": { "total": 5878, "covered": 1976 },
         "reports": [
-          "consensys-arbitrum-core-token-bridge-2021-11",
           "contracts__audits__2018-10",
           "dapphub-ecdsa-wallet-2020-11",
           "g0-safe-1-3-0-final",
@@ -7155,51 +7233,35 @@
         ]
       },
       {
+        "timestamp": 1649721600,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 2, "differs": 10, "none": 31 },
+        "lines": { "total": 5878, "covered": 1976 },
+        "reports": ["solidified-aztec-lido-bridge-2022-04-12"]
+      },
+      {
         "timestamp": 1651363200,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 3, "differs": 11, "none": 29 },
-        "lines": { "total": 5878, "covered": 2075 },
+        "units": { "identical": 3, "differs": 10, "none": 30 },
+        "lines": { "total": 5878, "covered": 2058 },
         "reports": ["formal-verification__fv__reports__2022-05"]
-      },
-      {
-        "timestamp": 1652227200,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 3, "differs": 11, "none": 29 },
-        "lines": { "total": 5878, "covered": 2075 },
-        "reports": ["solidified-aztec-element-bridge-2022-05-11"]
       },
       {
         "timestamp": 1652659200,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 3, "differs": 13, "none": 27 },
-        "lines": { "total": 5878, "covered": 2478 },
+        "units": { "identical": 3, "differs": 12, "none": 28 },
+        "lines": { "total": 5878, "covered": 2461 },
         "reports": ["openzeppelin-bedrock-bridge-2022-05"]
-      },
-      {
-        "timestamp": 1653436800,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 3, "differs": 13, "none": 27 },
-        "lines": { "total": 5878, "covered": 2481 },
-        "reports": ["trailofbits-nitro-1-of-2-2022-03"]
-      },
-      {
-        "timestamp": 1656028800,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 3, "differs": 13, "none": 27 },
-        "lines": { "total": 5878, "covered": 2481 },
-        "reports": ["consensys-nitro-contracts-2022-06"]
       },
       {
         "timestamp": 1662076800,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 9, "differs": 14, "none": 20 },
-        "lines": { "total": 5878, "covered": 4040 },
+        "units": { "identical": 10, "differs": 13, "none": 20 },
+        "lines": { "total": 5878, "covered": 4043 },
         "reports": ["openzeppelin-bedrock-periphery-2022-09"]
       },
       {
@@ -7211,59 +7273,35 @@
         "reports": ["trailofbits-invariant-testing-2022-11"]
       },
       {
-        "timestamp": 1672963200,
+        "timestamp": 1668470400,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4043 },
-        "reports": ["trailofbits-governance-token-bridge-2023-06"]
+        "units": { "identical": 12, "differs": 13, "none": 16 },
+        "lines": { "total": 5742, "covered": 4150 },
+        "reports": ["contracts__audits__2022-10-ERC4626"]
       },
       {
         "timestamp": 1677801600,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4067 },
+        "units": { "identical": 12, "differs": 13, "none": 16 },
+        "lines": { "total": 5742, "covered": 4174 },
         "reports": ["sherlock-bedrock-2023-03"]
-      },
-      {
-        "timestamp": 1678233600,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4067 },
-        "reports": ["openzeppelin-zksync-l1-diff-2023-02"]
       },
       {
         "timestamp": 1679961600,
         "contracts": 7,
         "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4067 },
+        "units": { "identical": 12, "differs": 13, "none": 16 },
+        "lines": { "total": 5742, "covered": 4174 },
         "reports": ["ackee-safe-1-4-0"]
-      },
-      {
-        "timestamp": 1683590400,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4067 },
-        "reports": ["contracts__audits__2023-05-v4.9"]
-      },
-      {
-        "timestamp": 1685059200,
-        "contracts": 7,
-        "withoutSource": 0,
-        "units": { "identical": 10, "differs": 13, "none": 20 },
-        "lines": { "total": 5878, "covered": 4067 },
-        "reports": ["zellic-scroll-bridge-rollup-audit-2023-05"]
       },
       {
         "timestamp": 1685377355,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 11, "differs": 17, "none": 21 },
-        "lines": { "total": 6638, "covered": 4781 },
+        "units": { "identical": 14, "differs": 17, "none": 16 },
+        "lines": { "total": 6502, "covered": 4897 },
         "changes": [
           {
             "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -7286,8 +7324,8 @@
         "timestamp": 1686067127,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 41, "differs": 20, "none": 38 },
-        "lines": { "total": 14293, "covered": 9002 },
+        "units": { "identical": 43, "differs": 20, "none": 25 },
+        "lines": { "total": 12891, "covered": 9109 },
         "changes": [
           {
             "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -7307,59 +7345,51 @@
         ]
       },
       {
-        "timestamp": 1686700800,
-        "contracts": 10,
-        "withoutSource": 0,
-        "units": { "identical": 42, "differs": 24, "none": 34 },
-        "lines": { "total": 14391, "covered": 9896 },
-        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
-      },
-      {
         "timestamp": 1688169600,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 44, "differs": 22, "none": 34 },
-        "lines": { "total": 14391, "covered": 9946 },
+        "units": { "identical": 45, "differs": 18, "none": 25 },
+        "lines": { "total": 12891, "covered": 9159 },
         "reports": ["sigmaprime-mantle-l2-rollup-2023-07"]
       },
       {
         "timestamp": 1689552000,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 44, "differs": 22, "none": 34 },
-        "lines": { "total": 14391, "covered": 9946 },
+        "units": { "identical": 45, "differs": 18, "none": 25 },
+        "lines": { "total": 12891, "covered": 9159 },
         "reports": ["secure3-mantle-v1-contest-2023-07"]
       },
       {
         "timestamp": 1691625600,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 51, "differs": 15, "none": 34 },
-        "lines": { "total": 14391, "covered": 10293 },
+        "units": { "identical": 63, "differs": 9, "none": 16 },
+        "lines": { "total": 12891, "covered": 10709 },
         "reports": ["code4rena-base-2023-08"]
       },
       {
         "timestamp": 1696291200,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 52, "differs": 14, "none": 21 },
-        "lines": { "total": 13805, "covered": 10257 },
+        "units": { "identical": 63, "differs": 8, "none": 9 },
+        "lines": { "total": 12388, "covered": 10664 },
         "reports": ["contracts__audits__2023-10-v5.0"]
       },
       {
         "timestamp": 1704931200,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 54, "differs": 14, "none": 19 },
-        "lines": { "total": 13805, "covered": 10433 },
+        "units": { "identical": 63, "differs": 8, "none": 9 },
+        "lines": { "total": 12388, "covered": 10674 },
         "reports": ["trust-superchainconfig-upgrade-2024-01"]
       },
       {
         "timestamp": 1705954799,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 60, "differs": 18, "none": 22 },
-        "lines": { "total": 15311, "covered": 11289 },
+        "units": { "identical": 70, "differs": 10, "none": 11 },
+        "lines": { "total": 13466, "covered": 11297 },
         "changes": [
           {
             "address": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -7372,16 +7402,16 @@
         "timestamp": 1707955200,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 60, "differs": 18, "none": 22 },
-        "lines": { "total": 15311, "covered": 11321 },
+        "units": { "identical": 70, "differs": 10, "none": 11 },
+        "lines": { "total": 13466, "covered": 11329 },
         "reports": ["cantina-mcp-l1-2024-02"]
       },
       {
         "timestamp": 1708983851,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 51, "differs": 26, "none": 25 },
-        "lines": { "total": 14364, "covered": 9937 },
+        "units": { "identical": 48, "differs": 31, "none": 14 },
+        "lines": { "total": 12519, "covered": 9653 },
         "changes": [
           {
             "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -7404,24 +7434,24 @@
         "timestamp": 1709510400,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 53, "differs": 28, "none": 21 },
-        "lines": { "total": 14364, "covered": 10533 },
+        "units": { "identical": 49, "differs": 30, "none": 14 },
+        "lines": { "total": 12519, "covered": 9662 },
         "reports": ["secure3-mantle-v2-tectonic-2024-03"]
       },
       {
         "timestamp": 1710460800,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 53, "differs": 28, "none": 21 },
-        "lines": { "total": 14364, "covered": 10533 },
+        "units": { "identical": 49, "differs": 30, "none": 14 },
+        "lines": { "total": 12519, "covered": 9662 },
         "reports": ["openzeppelin-mantle-v2-solidity-contracts-2024-03"]
       },
       {
         "timestamp": 1712868599,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 57, "differs": 24, "none": 21 },
-        "lines": { "total": 14784, "covered": 11083 },
+        "units": { "identical": 53, "differs": 26, "none": 14 },
+        "lines": { "total": 12939, "covered": 10212 },
         "changes": [
           {
             "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -7444,32 +7474,24 @@
         "timestamp": 1713398400,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 61, "differs": 24, "none": 17 },
-        "lines": { "total": 14784, "covered": 11581 },
+        "units": { "identical": 53, "differs": 26, "none": 14 },
+        "lines": { "total": 12939, "covered": 10212 },
         "reports": ["secure3-mantle-v2-public-contest-2024-04"]
-      },
-      {
-        "timestamp": 1714089600,
-        "contracts": 11,
-        "withoutSource": 0,
-        "units": { "identical": 61, "differs": 24, "none": 17 },
-        "lines": { "total": 14784, "covered": 11549 },
-        "reports": ["code4rena-taiko-2024-04"]
       },
       {
         "timestamp": 1715299200,
         "contracts": 11,
         "withoutSource": 0,
-        "units": { "identical": 61, "differs": 24, "none": 17 },
-        "lines": { "total": 14784, "covered": 11549 },
+        "units": { "identical": 53, "differs": 26, "none": 14 },
+        "lines": { "total": 12939, "covered": 10212 },
         "reports": ["secure3-mantle-v2-public-contest-final-2024-05"]
       },
       {
         "timestamp": 1715887043,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 66, "differs": 27, "none": 27 },
-        "lines": { "total": 17294, "covered": 12205 },
+        "units": { "identical": 58, "differs": 28, "none": 23 },
+        "lines": { "total": 15048, "covered": 10669 },
         "changes": [
           {
             "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
@@ -7482,8 +7504,8 @@
         "timestamp": 1717149791,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 96, "differs": 27, "none": 30 },
-        "lines": { "total": 19660, "covered": 14103 },
+        "units": { "identical": 88, "differs": 28, "none": 26 },
+        "lines": { "total": 17414, "covered": 12567 },
         "changes": [
           {
             "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
@@ -7501,24 +7523,24 @@
         "timestamp": 1717632000,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 98, "differs": 28, "none": 27 },
-        "lines": { "total": 19660, "covered": 14543 },
+        "units": { "identical": 90, "differs": 29, "none": 23 },
+        "lines": { "total": 17414, "covered": 13007 },
         "reports": ["cantina-safe-extensions-2024-06"]
       },
       {
         "timestamp": 1717718400,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 113, "differs": 25, "none": 15 },
-        "lines": { "total": 19660, "covered": 15597 },
+        "units": { "identical": 113, "differs": 18, "none": 11 },
+        "lines": { "total": 17414, "covered": 14205 },
         "reports": ["sherlock-fault-proofs-2024-06"]
       },
       {
         "timestamp": 1718037779,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 108, "differs": 36, "none": 16 },
-        "lines": { "total": 20774, "covered": 15766 },
+        "units": { "identical": 108, "differs": 29, "none": 12 },
+        "lines": { "total": 18528, "covered": 14374 },
         "changes": [
           {
             "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -7533,27 +7555,11 @@
         ]
       },
       {
-        "timestamp": 1718755200,
-        "contracts": 14,
-        "withoutSource": 0,
-        "units": { "identical": 108, "differs": 36, "none": 16 },
-        "lines": { "total": 20774, "covered": 15766 },
-        "reports": ["openzeppelin-taiko-protocol-2024-06"]
-      },
-      {
-        "timestamp": 1721260800,
-        "contracts": 14,
-        "withoutSource": 0,
-        "units": { "identical": 108, "differs": 36, "none": 16 },
-        "lines": { "total": 20774, "covered": 15766 },
-        "reports": ["trailofbits-morph-l2-2024-07"]
-      },
-      {
         "timestamp": 1723593600,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15879 },
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
         "reports": [
           "cantina-fault-proofs-mips-2024-08",
           "spearbit-fault-proofs-no-mips-2024-08"
@@ -7563,48 +7569,56 @@
         "timestamp": 1723766400,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15879 },
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
         "reports": ["code4rena-superchain-2024-08"]
       },
       {
-        "timestamp": 1730678400,
+        "timestamp": 1724371200,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15881 },
-        "reports": ["zellic-facet-bridge-2024-11-04"]
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
+        "reports": ["certora-safe-library-contracts-1-4-1"]
+      },
+      {
+        "timestamp": 1733270400,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
+        "reports": ["contracts__audits__2024-12-v5.2"]
       },
       {
         "timestamp": 1735344000,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15881 },
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
         "reports": ["radiantlabs-deputypausemodule-2024-12"]
       },
       {
         "timestamp": 1736208000,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15881 },
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
         "reports": ["milotruck-deputypausemodule-2025-01"]
       },
       {
         "timestamp": 1736812800,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 120, "differs": 24, "none": 16 },
-        "lines": { "total": 20774, "covered": 15881 },
+        "units": { "identical": 120, "differs": 17, "none": 12 },
+        "lines": { "total": 18528, "covered": 14487 },
         "reports": ["certora-safe-1-5-0"]
       },
       {
         "timestamp": 1737729695,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 118, "differs": 24, "none": 16 },
-        "lines": { "total": 21406, "covered": 15624 },
+        "units": { "identical": 118, "differs": 17, "none": 13 },
+        "lines": { "total": 19374, "covered": 14371 },
         "changes": [
           {
             "address": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
@@ -7617,48 +7631,48 @@
         "timestamp": 1738800000,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 118, "differs": 24, "none": 16 },
-        "lines": { "total": 21406, "covered": 15624 },
+        "units": { "identical": 118, "differs": 17, "none": 13 },
+        "lines": { "total": 19374, "covered": 14371 },
         "reports": ["base-mt64cannon-2025-02"]
       },
       {
         "timestamp": 1740009600,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 118, "differs": 24, "none": 16 },
-        "lines": { "total": 21406, "covered": 15624 },
+        "units": { "identical": 118, "differs": 17, "none": 13 },
+        "lines": { "total": 19374, "covered": 14371 },
         "reports": ["spearbit-mt-cannon-2025-02"]
       },
       {
         "timestamp": 1741132800,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 118, "differs": 24, "none": 16 },
-        "lines": { "total": 21406, "covered": 15657 },
+        "units": { "identical": 118, "differs": 17, "none": 13 },
+        "lines": { "total": 19374, "covered": 14404 },
         "reports": ["spearbit-upgrade13-2025-02"]
       },
       {
         "timestamp": 1741478400,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 119, "differs": 24, "none": 15 },
-        "lines": { "total": 21406, "covered": 15677 },
+        "units": { "identical": 119, "differs": 17, "none": 12 },
+        "lines": { "total": 19374, "covered": 14424 },
         "reports": ["cantina-eip7702-2025-02"]
       },
       {
         "timestamp": 1742342400,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 119, "differs": 24, "none": 15 },
-        "lines": { "total": 21406, "covered": 15677 },
+        "units": { "identical": 119, "differs": 17, "none": 12 },
+        "lines": { "total": 19374, "covered": 14424 },
         "reports": ["spearbit-interop-contracts-2025-03"]
       },
       {
         "timestamp": 1743612623,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 104, "differs": 23, "none": 11 },
-        "lines": { "total": 16250, "covered": 12968 },
+        "units": { "identical": 104, "differs": 18, "none": 8 },
+        "lines": { "total": 14619, "covered": 11968 },
         "changes": [
           {
             "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
@@ -7688,11 +7702,19 @@
         ]
       },
       {
+        "timestamp": 1743638400,
+        "contracts": 14,
+        "withoutSource": 0,
+        "units": { "identical": 104, "differs": 18, "none": 8 },
+        "lines": { "total": 14619, "covered": 11968 },
+        "reports": ["contracts__audits__2025-04-v5.3"]
+      },
+      {
         "timestamp": 1745511383,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 102, "differs": 25, "none": 11 },
-        "lines": { "total": 16433, "covered": 13060 },
+        "units": { "identical": 102, "differs": 20, "none": 8 },
+        "lines": { "total": 14802, "covered": 12060 },
         "changes": [
           {
             "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -7715,8 +7737,8 @@
         "timestamp": 1747699200,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 112, "differs": 18, "none": 8 },
-        "lines": { "total": 16433, "covered": 13668 },
+        "units": { "identical": 112, "differs": 13, "none": 5 },
+        "lines": { "total": 14802, "covered": 12673 },
         "reports": [
           "spearbit-interop-portal-2025-05",
           "spearbit-upgrade16-2025-05"
@@ -7726,16 +7748,16 @@
         "timestamp": 1748390400,
         "contracts": 14,
         "withoutSource": 0,
-        "units": { "identical": 112, "differs": 18, "none": 8 },
-        "lines": { "total": 16433, "covered": 13668 },
+        "units": { "identical": 112, "differs": 13, "none": 5 },
+        "lines": { "total": 14802, "covered": 12673 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1748963099,
         "contracts": 15,
         "withoutSource": 0,
-        "units": { "identical": 132, "differs": 18, "none": 8 },
-        "lines": { "total": 17941, "covered": 15176 },
+        "units": { "identical": 133, "differs": 13, "none": 5 },
+        "lines": { "total": 16437, "covered": 14308 },
         "changes": [
           {
             "address": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
@@ -7748,32 +7770,32 @@
         "timestamp": 1748995200,
         "contracts": 15,
         "withoutSource": 0,
-        "units": { "identical": 132, "differs": 18, "none": 8 },
-        "lines": { "total": 17941, "covered": 15176 },
+        "units": { "identical": 133, "differs": 13, "none": 5 },
+        "lines": { "total": 16437, "covered": 14308 },
         "reports": ["cantina-interop-portal-2025-04"]
       },
       {
-        "timestamp": 1751328000,
+        "timestamp": 1752624000,
         "contracts": 15,
         "withoutSource": 0,
-        "units": { "identical": 132, "differs": 18, "none": 8 },
-        "lines": { "total": 17941, "covered": 15182 },
-        "reports": ["nethermind-nm-0561-celo-custom-gas-token-2025-07-01"]
+        "units": { "identical": 133, "differs": 13, "none": 5 },
+        "lines": { "total": 16437, "covered": 14308 },
+        "reports": ["spearbit-verify-opcm-2025-07"]
       },
       {
         "timestamp": 1752710400,
         "contracts": 15,
         "withoutSource": 0,
-        "units": { "identical": 133, "differs": 18, "none": 8 },
-        "lines": { "total": 18068, "covered": 15309 },
+        "units": { "identical": 133, "differs": 13, "none": 5 },
+        "lines": { "total": 16437, "covered": 14308 },
         "reports": ["contracts__audits__2025-07-v5.4"]
       },
       {
         "timestamp": 1753379243,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 215, "differs": 17, "none": 15 },
-        "lines": { "total": 26686, "covered": 21306 },
+        "units": { "identical": 215, "differs": 8, "none": 12 },
+        "lines": { "total": 24199, "covered": 19515 },
         "changes": [
           {
             "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
@@ -7816,8 +7838,8 @@
         "timestamp": 1759422923,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 211, "differs": 21, "none": 17 },
-        "lines": { "total": 26593, "covered": 21100 },
+        "units": { "identical": 211, "differs": 12, "none": 14 },
+        "lines": { "total": 24106, "covered": 19309 },
         "changes": [
           {
             "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -7840,40 +7862,40 @@
         "timestamp": 1759795200,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 214, "differs": 18, "none": 17 },
-        "lines": { "total": 26593, "covered": 21191 },
+        "units": { "identical": 217, "differs": 8, "none": 12 },
+        "lines": { "total": 24106, "covered": 19423 },
         "reports": ["spearbit-u16a-2025-09"]
       },
       {
         "timestamp": 1761523200,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 214, "differs": 19, "none": 16 },
-        "lines": { "total": 26593, "covered": 21228 },
+        "units": { "identical": 217, "differs": 9, "none": 11 },
+        "lines": { "total": 24106, "covered": 19460 },
         "reports": ["cantina-u17-2025-10"]
       },
       {
         "timestamp": 1762992000,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 214, "differs": 19, "none": 16 },
-        "lines": { "total": 26593, "covered": 21229 },
+        "units": { "identical": 217, "differs": 9, "none": 11 },
+        "lines": { "total": 24106, "covered": 19461 },
         "reports": ["spearbit-safersafes-2025-11"]
       },
       {
         "timestamp": 1763424000,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 214, "differs": 21, "none": 14 },
-        "lines": { "total": 26593, "covered": 21243 },
+        "units": { "identical": 217, "differs": 9, "none": 11 },
+        "lines": { "total": 24106, "covered": 19461 },
         "reports": ["cantina-custom-gas-token-2025-11"]
       },
       {
         "timestamp": 1764092795,
         "contracts": 17,
         "withoutSource": 0,
-        "units": { "identical": 214, "differs": 21, "none": 14 },
-        "lines": { "total": 26706, "covered": 21356 },
+        "units": { "identical": 217, "differs": 9, "none": 11 },
+        "lines": { "total": 24219, "covered": 19574 },
         "changes": [
           {
             "address": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
@@ -7906,8 +7928,8 @@
         "timestamp": 1764596735,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 231, "differs": 23, "none": 16 },
-        "lines": { "total": 30361, "covered": 23017 },
+        "units": { "identical": 236, "differs": 11, "none": 13 },
+        "lines": { "total": 28459, "covered": 21820 },
         "changes": [
           {
             "address": "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a",
@@ -7920,16 +7942,16 @@
         "timestamp": 1768176000,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 232, "differs": 22, "none": 16 },
-        "lines": { "total": 30361, "covered": 23045 },
+        "units": { "identical": 237, "differs": 10, "none": 13 },
+        "lines": { "total": 28459, "covered": 21848 },
         "reports": ["cantina-u18-2026-01"]
       },
       {
         "timestamp": 1770667859,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 20, "none": 16 },
-        "lines": { "total": 30467, "covered": 23151 },
+        "units": { "identical": 237, "differs": 10, "none": 13 },
+        "lines": { "total": 28565, "covered": 21954 },
         "changes": [
           {
             "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
@@ -7957,40 +7979,32 @@
         "timestamp": 1771200000,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 20, "none": 16 },
-        "lines": { "total": 30467, "covered": 23151 },
+        "units": { "identical": 237, "differs": 10, "none": 13 },
+        "lines": { "total": 28565, "covered": 21954 },
         "reports": ["certora-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1772150400,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 20, "none": 16 },
-        "lines": { "total": 30467, "covered": 23151 },
+        "units": { "identical": 237, "differs": 10, "none": 13 },
+        "lines": { "total": 28565, "covered": 21954 },
         "reports": ["contracts__audits__2026-02-v5.6"]
-      },
-      {
-        "timestamp": 1772236800,
-        "contracts": 18,
-        "withoutSource": 0,
-        "units": { "identical": 234, "differs": 20, "none": 16 },
-        "lines": { "total": 30467, "covered": 23151 },
-        "reports": ["hashlock-celo-optimism-superchain-2026-02"]
       },
       {
         "timestamp": 1774569600,
         "contracts": 18,
         "withoutSource": 0,
-        "units": { "identical": 234, "differs": 20, "none": 16 },
-        "lines": { "total": 30467, "covered": 23151 },
+        "units": { "identical": 237, "differs": 10, "none": 13 },
+        "lines": { "total": 28565, "covered": 21954 },
         "reports": ["cantina-policyenginestaking-2026-03"]
       },
       {
         "timestamp": 1778190599,
         "contracts": 20,
         "withoutSource": 0,
-        "units": { "identical": 245, "differs": 22, "none": 18 },
-        "lines": { "total": 34915, "covered": 26819 },
+        "units": { "identical": 248, "differs": 12, "none": 15 },
+        "lines": { "total": 33013, "covered": 25622 },
         "changes": [
           {
             "address": "eth:0xaCc005DCd857B401e4732E6F7837135A22825cfA",
@@ -8008,32 +8022,32 @@
         "timestamp": 1779494400,
         "contracts": 20,
         "withoutSource": 0,
-        "units": { "identical": 246, "differs": 21, "none": 18 },
-        "lines": { "total": 34915, "covered": 26822 },
+        "units": { "identical": 249, "differs": 11, "none": 15 },
+        "lines": { "total": 33013, "covered": 25625 },
         "reports": ["cantina-u19-2026-05"]
       },
       {
         "timestamp": 1780876800,
         "contracts": 20,
         "withoutSource": 0,
-        "units": { "identical": 246, "differs": 21, "none": 18 },
-        "lines": { "total": 34915, "covered": 26825 },
+        "units": { "identical": 249, "differs": 11, "none": 15 },
+        "lines": { "total": 33013, "covered": 25628 },
         "reports": ["cantina-opcmv2-2026-06"]
       },
       {
         "timestamp": 1781740800,
         "contracts": 20,
         "withoutSource": 0,
-        "units": { "identical": 247, "differs": 20, "none": 18 },
-        "lines": { "total": 34915, "covered": 26836 },
+        "units": { "identical": 250, "differs": 10, "none": 15 },
+        "lines": { "total": 33013, "covered": 25639 },
         "reports": ["cantina-interop-l2-rereview-2026-06"]
       },
       {
         "timestamp": 1782428747,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 230, "differs": 39, "none": 14 },
-        "lines": { "total": 34645, "covered": 27976 },
+        "units": { "identical": 232, "differs": 28, "none": 11 },
+        "lines": { "total": 32315, "covered": 26372 },
         "changes": [
           {
             "address": "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113",
@@ -8081,8 +8095,8 @@
         "timestamp": 1783526401,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 262, "differs": 48, "none": 18 },
-        "lines": { "total": 40175, "covered": 33004 },
+        "units": { "identical": 264, "differs": 36, "none": 14 },
+        "lines": { "total": 37444, "covered": 31197 },
         "changes": [
           {
             "address": "oeth:0x4200000000000000000000000000000000000007",
@@ -8110,32 +8124,32 @@
         "timestamp": 1785283200,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 262, "differs": 48, "none": 18 },
-        "lines": { "total": 40175, "covered": 33004 },
+        "units": { "identical": 264, "differs": 36, "none": 14 },
+        "lines": { "total": 37444, "covered": 31197 },
         "reports": ["certora-safe-1-3-0"]
       },
       {
         "timestamp": 1786924800,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 262, "differs": 48, "none": 18 },
-        "lines": { "total": 40175, "covered": 33004 },
+        "units": { "identical": 264, "differs": 36, "none": 14 },
+        "lines": { "total": 37444, "covered": 31197 },
         "reports": ["nethermind-safe-1-3-0", "nethermind-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1787184000,
         "contracts": 21,
         "withoutSource": 0,
-        "units": { "identical": 264, "differs": 46, "none": 18 },
-        "lines": { "total": 40175, "covered": 33021 },
+        "units": { "identical": 266, "differs": 34, "none": 14 },
+        "lines": { "total": 37444, "covered": 31214 },
         "reports": ["cantina-upgrade20-2026-08"]
       },
       {
         "timestamp": 1788049679,
         "contracts": 23,
         "withoutSource": 0,
-        "units": { "identical": 292, "differs": 46, "none": 21 },
-        "lines": { "total": 44866, "covered": 36572 },
+        "units": { "identical": 294, "differs": 34, "none": 17 },
+        "lines": { "total": 42135, "covered": 34765 },
         "changes": [
           {
             "address": "eth:0x19AF533Cc2A2A55786DCB8672aA5717e64213208",
@@ -8153,8 +8167,8 @@
         "timestamp": 1790268683,
         "contracts": 23,
         "withoutSource": 0,
-        "units": { "identical": 297, "differs": 41, "none": 21 },
-        "lines": { "total": 44868, "covered": 36578 },
+        "units": { "identical": 299, "differs": 29, "none": 17 },
+        "lines": { "total": 42137, "covered": 34771 },
         "changes": [
           {
             "address": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
@@ -8174,11 +8188,11 @@
         ]
       },
       {
-        "timestamp": 1792587967,
+        "timestamp": 1793984419,
         "contracts": 23,
         "withoutSource": 0,
-        "units": { "identical": 297, "differs": 41, "none": 21 },
-        "lines": { "total": 44868, "covered": 36578 }
+        "units": { "identical": 299, "differs": 29, "none": 17 },
+        "lines": { "total": 42137, "covered": 34771 }
       }
     ],
     "undatedReports": []

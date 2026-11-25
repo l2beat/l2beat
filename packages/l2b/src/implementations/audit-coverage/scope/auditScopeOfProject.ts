@@ -13,7 +13,7 @@ import {
   type ImpliedCode,
   withImpliedUnits,
 } from '../AuditedCode'
-import type { AuditIndex } from '../AuditIndex'
+import { type AuditIndex, auditedBy } from '../AuditIndex'
 import { type AuditObjects, sha1BlobId } from '../AuditObjects'
 import { type CoveredUnit, coverFlat } from '../coverFlat'
 import type { GetDeployedSource } from '../deployedSource'
@@ -84,20 +84,20 @@ export async function auditScopeOfProject(
   }
 
   log.status('Indexing audited code')
-  const strictIndex = withoutExpandedImports(inputs.index, plans)
-  const scoped = new Set(
-    Object.values(strictIndex.repositories).flatMap((byCommit) =>
-      Object.values(byCommit).flatMap((s) => Object.values(s.files)),
-    ),
+  // Strict counts only what a report lists, whichever collection it is from.
+  // Relaxed keeps what reports of other collections imply, and takes what the
+  // project's own reports imply from the graphs instead of the export.
+  const strict = auditedCodeOf(
+    withoutExpandedImports(inputs.index, plans, true),
+    inputs.objects,
   )
-  const strict = buildAuditedCode(
-    strictIndex,
-    new Map([...inputs.objects].filter(([object]) => scoped.has(object))),
-    () => {},
+  const relaxedBase = auditedCodeOf(
+    withoutExpandedImports(inputs.index, plans, false),
+    inputs.objects,
   )
   const upstream = new Map<string, string>()
   const relaxed = withImpliedUnits(
-    strict,
+    relaxedBase,
     implied.map(({ report, unit }): ImpliedCode => {
       const object = impliedObjectId(unit)
       upstream.set(object, unit.origin.blob)
@@ -117,6 +117,12 @@ export async function auditScopeOfProject(
       }
     }),
   )
+  // A file that only reports of other collections imply is implied code too.
+  const impliedObjects = new Set(relaxed.implied)
+  for (const object of relaxedBase.declarationsByObject.keys()) {
+    if (!strict.declarationsByObject.has(object)) impliedObjects.add(object)
+  }
+  relaxed.implied = impliedObjects
 
   const units: ScopeUnits = {}
   const auditedFiles: ScopeFiles = {}
@@ -197,14 +203,29 @@ export async function auditScopeOfProject(
   }
 }
 
+function auditedCodeOf(index: AuditIndex, objects: AuditObjects): AuditedCode {
+  const scoped = new Set(
+    Object.values(index.repositories).flatMap((byCommit) =>
+      Object.values(byCommit).flatMap((s) => Object.values(s.files)),
+    ),
+  )
+  return buildAuditedCode(
+    index,
+    new Map([...objects].filter(([object]) => scoped.has(object))),
+    () => {},
+  )
+}
+
 /**
- * The export without the files its import expansion added to these reports:
- * only the paths a report lists stay scoped, and a file no remaining audit
- * covers is dropped.
+ * The export without the files its import expansion added: to the reports of
+ * these plans, and with `everyReport` to every other report too. Only the
+ * paths a report lists stay scoped, and a file no remaining audit covers is
+ * dropped.
  */
 function withoutExpandedImports(
   index: AuditIndex,
   plans: ReportPlan[],
+  everyReport: boolean,
 ): AuditIndex {
   const named = new Map(plans.map((plan) => [plan.id, plan.named]))
   const repositories: AuditIndex['repositories'] = {}
@@ -213,20 +234,21 @@ function withoutExpandedImports(
       const audits: typeof snapshot.audits = {}
       for (const [report, paths] of Object.entries(snapshot.audits)) {
         const listed = named.get(report)?.get(`${repository}@${commit}`)
-        const kept =
-          named.get(report) === undefined
-            ? paths
-            : Object.fromEntries(
-                Object.entries(paths).filter(([p]) => listed?.has(p)),
-              )
+        const implied = everyReport ? (snapshot.implied?.[report] ?? []) : []
+        const kept = Object.fromEntries(
+          Object.entries(paths).filter(([p]) =>
+            named.get(report) === undefined
+              ? !implied.includes(p)
+              : listed?.has(p),
+          ),
+        )
         if (Object.keys(kept).length > 0) audits[report] = kept
       }
-      const scoped = Object.values(audits).flatMap((paths) =>
-        Object.keys(paths),
-      )
       const files = Object.fromEntries(
         Object.entries(snapshot.files).filter(([file]) =>
-          scoped.some((p) => file === p || file.startsWith(`${p}/`)),
+          Object.keys(audits).some((report) =>
+            auditedBy({ ...snapshot, audits }, report, file),
+          ),
         ),
       )
       if (Object.keys(files).length === 0) continue

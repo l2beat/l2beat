@@ -22,10 +22,10 @@ Run it anywhere in the repository after discovery. Deployed sources come from di
 
 Both files come from the audit dataset, pinned to one dataset commit.
 
-- `audit-index.json`: where audited code lives and who audited it.
-  - `collections[id]`: display `name` and `kind`, `project` (the id is the ETHBEAT project id) or `library`.
+- `audit-index.json`: where audited code lives and who audited it. The export's schema 2.0.0 is read (described in `export.md` of the dataset), and 1.1.0 still is.
+  - `collections[id]`: display `name` and `kind`, `project` (the id is the ETHBEAT project id) or `library`. Only collections whose summaries are on the dataset's latest schema are exported.
   - `reports[id]`: `collections`, `title`, `auditor`, `date`, and `document`, the dataset path of the original report. Every relevant report is listed, also those that audited no Solidity.
-  - `repositories[repository][commit]`: one audited snapshot. `timestamp` is the commit time in unix seconds, `files` maps a path to an object id, `audits[report][path]` lists the paths a report scoped (a file or a directory). A file is audited by every report whose scoped path is the file or a directory above it.
+  - `repositories[repository][commit]`: one audited snapshot. `timestamp` is the commit time in unix seconds, `files` maps a path to an object id, and `audits[report]` says what the report `listed` there (a file or a directory, with the major findings open in it), what it `excluded`, and which files it only `implied` or `included` through the imports of what it audited. A file is audited by every report that lists it or a directory above it, or implies or includes it, unless the report excludes it. Files a report only excludes or can see are not read.
 - `audit-objects.json.zst`: zstd-compressed JSON from object id to file contents. The dataset stores audited files formatted with `forge fmt`; an object id is the first 12 hex characters of the git blob id of those stored contents, so contents are checked against their id when loaded. Files that do not parse as Solidity (zkSync's templated `Constants.sol`) are skipped.
 
 ## Coverage units

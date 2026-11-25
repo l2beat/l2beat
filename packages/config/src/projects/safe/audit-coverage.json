@@ -3,13 +3,12 @@
   "project": "safe",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "c27d18e4909861a1c3a3d19992735946af880921"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
   "discoveredAt": 1793093365,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
     "_libs/safe": { "name": "Safe (library)", "kind": "library" },
-    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "safe": { "name": "Safe", "kind": "project" }
   },
   "reports": {
@@ -74,6 +73,13 @@
       "date": "2023-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
     },
+    "contracts__audits__2024-12-v5.2": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.2 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-12-04",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
+    },
     "g0-safe-1-1-0": {
       "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe v1.1.0",
@@ -129,13 +135,6 @@
       "auditor": "Runtime Verification",
       "date": "2019-02-27",
       "document": "_libs/safe/reports/safe-verification__docs__Gnosis_Safe_Formal_Verification_Report_1_0_0.pdf"
-    },
-    "trailofbits-governance-token-bridge-2023-06": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
-      "auditor": "Trail of Bits",
-      "date": "2023-01-06",
-      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     }
   },
   "auditedFiles": {
@@ -144,6 +143,12 @@
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
       "path": "contracts/GnosisSafe.sol",
       "blob": "0045b2bbd61230dbb61abbddfefb0bef6f366d84"
+    },
+    "03f5296c43bc": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "03f5296c43bc11e29fad1408042e7cc7b10839a6"
     },
     "0681f1239d0c": {
       "repository": "safe-fndn/safe-smart-account",
@@ -165,7 +170,7 @@
     },
     "0b72714bacc7": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/common/StorageAccessible.sol",
       "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852"
     },
@@ -217,6 +222,12 @@
       "path": "contracts/GnosisSafeL2.sol",
       "blob": "1ba2faa6c37efb5dd674932a890f28eeab84dbae"
     },
+    "1e67fa067d1d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "1e67fa067d1d24febb335bb0fe37eb6fe390f9ea"
+    },
     "216eea02fb9b": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
@@ -265,6 +276,12 @@
       "path": "contracts/libraries/CreateCall.sol",
       "blob": "45e3175978285a768ab80b4ae57348b01377a1cf"
     },
+    "4caf3d1a2055": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "4caf3d1a20553596a28cc19d4d9081d488970688"
+    },
     "4d47b26ef41d": {
       "repository": "safe-fndn/safe-smart-account",
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
@@ -273,7 +290,7 @@
     },
     "4e60bb9d6ba0": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/common/SelfAuthorized.sol",
       "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0"
     },
@@ -303,7 +320,7 @@
     },
     "62a4ee973483": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/FallbackManager.sol",
       "blob": "62a4ee97348305cd83c45d8d489f35e8d97e5484"
     },
@@ -312,12 +329,6 @@
       "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
       "path": "contracts/interfaces/INativeCurrencyPaymentFallback.sol",
       "blob": "64912b8890efba36034c5bc366aceafd7573cd0b"
-    },
-    "668700b0b04b": {
-      "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
-      "path": "contracts/Safe.sol",
-      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
     },
     "676100587e8e": {
       "repository": "safe-fndn/safe-smart-account",
@@ -381,7 +392,7 @@
     },
     "82fa53b0cf17": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/OwnerManager.sol",
       "blob": "82fa53b0cf17d10cfb3f05dd59626a66ed97e7ab"
     },
@@ -427,11 +438,11 @@
       "path": "contracts/accessors/SimulateTxAccessor.sol",
       "blob": "971498409cb7532807bb4a0f4878c9a47dbcf8e3"
     },
-    "9c421d7aa0fb": {
+    "9cd1b0920675": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
-      "path": "contracts/base/ModuleManager.sol",
-      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/Safe.sol",
+      "blob": "9cd1b0920675ca0b4c6f4db5760bb84870cbbc7d"
     },
     "9fafeba8c058": {
       "repository": "safe-fndn/safe-smart-account",
@@ -519,13 +530,13 @@
     },
     "d0d036bf8dba": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/base/GuardManager.sol",
       "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
     },
     "d2cd2e5fed06": {
       "repository": "safe-fndn/safe-smart-account",
-      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
       "path": "contracts/interfaces/ISignatureValidator.sol",
       "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
     },
@@ -609,11 +620,13 @@
       "audited": { "object": "c66dc10ef367", "lines": [11, 67] },
       "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
-    "0c503ff9b24a": {
+    "3475eaf50906": {
       "name": "SafeProxy",
-      "kind": "interface",
-      "lines": 3,
-      "status": "none"
+      "kind": "contract",
+      "lines": 55,
+      "status": "identical",
+      "audited": { "object": "4caf3d1a2055", "lines": [18, 70] },
+      "reports": ["ackee-safe-1-5-0"]
     },
     "063760d21f9b": {
       "name": "SafeProxyFactory",
@@ -637,7 +650,12 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "447d1057dc7c": {
       "name": "NativeCurrencyPaymentFallback",
@@ -645,7 +663,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "aa97dd1bf3f1": {
       "name": "SelfAuthorized",
@@ -653,7 +676,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "40ce0b25499c": {
       "name": "Enum",
@@ -673,12 +696,9 @@
       "name": "ModuleManager",
       "kind": "abstract",
       "lines": 176,
-      "status": "differs",
-      "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
-      "reports": ["ackee-safe-1-4-0"],
-      "added": [[22, 22]],
-      "removed": [[22, 22, 22]],
-      "covered": 175
+      "status": "identical",
+      "audited": { "object": "03f5296c43bc", "lines": [17, 196] },
+      "reports": ["certora-safe-library-contracts-1-4-1"]
     },
     "f1b466f7c6f6": {
       "name": "OwnerManager",
@@ -686,7 +706,7 @@
       "lines": 150,
       "status": "identical",
       "audited": { "object": "82fa53b0cf17", "lines": [13, 169] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "13e5d12afa8b": {
       "name": "SignatureDecoder",
@@ -716,10 +736,13 @@
       "reports": [
         "ackee-safe-1-4-0",
         "certora-safe-1-3-0",
+        "certora-safe-library-contracts-1-4-1",
         "g0-safe-1-1-0",
         "g0-safe-1-1-1",
         "g0-safe-1-3-0-final",
-        "g0-safe-1-3-0-initial"
+        "g0-safe-1-3-0-initial",
+        "g0-safe-gas-validation-1-2-0",
+        "nethermind-safe-1-3-0"
       ]
     },
     "f44a94390330": {
@@ -728,7 +751,7 @@
       "lines": 73,
       "status": "identical",
       "audited": { "object": "62a4ee973483", "lines": [10, 79] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "e213c56fc229": {
       "name": "StorageAccessible",
@@ -736,7 +759,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "b3dc850565d8": {
       "name": "IERC165",
@@ -744,7 +767,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "051f4e0bd8fb": {
       "name": "Guard",
@@ -752,7 +780,7 @@
       "lines": 17,
       "status": "identical",
       "audited": { "object": "d0d036bf8dba", "lines": [8, 24] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "d63eef9ff914": {
       "name": "GuardManager",
@@ -760,7 +788,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "d0d036bf8dba", "lines": [37, 78] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "6cd3fcc5ec00": {
       "name": "SafeMath",
@@ -776,18 +804,15 @@
       "lines": 12,
       "status": "identical",
       "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "268c431cb6b0": {
       "name": "Safe",
       "kind": "contract",
       "lines": 409,
-      "status": "differs",
-      "audited": { "object": "668700b0b04b", "lines": [36, 467] },
-      "reports": ["ackee-safe-1-4-0"],
-      "added": [[14, 14]],
-      "removed": [[14, 14, 14]],
-      "covered": 408
+      "status": "identical",
+      "audited": { "object": "9cd1b0920675", "lines": [36, 467] },
+      "reports": ["certora-safe-library-contracts-1-4-1"]
     },
     "88d4a08d8eb5": {
       "name": "SafeL2",
@@ -850,7 +875,12 @@
       "lines": 5,
       "status": "identical",
       "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "16eb9f2e8752": {
       "name": "SelfAuthorized",
@@ -858,7 +888,7 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "68dd4bd4433d": {
       "name": "Executor",
@@ -922,7 +952,7 @@
       "lines": 42,
       "status": "identical",
       "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "bd90fb921f2d": {
       "name": "GuardManager",
@@ -967,7 +997,7 @@
       "lines": 12,
       "status": "identical",
       "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
-      "reports": ["ackee-safe-1-4-0"]
+      "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"]
     },
     "3e84ad780965": {
       "name": "GnosisSafe",
@@ -1008,7 +1038,7 @@
       "lines": 81,
       "status": "identical",
       "audited": { "object": "a90b143934dc", "lines": [14, 91] },
-      "reports": ["ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "3923d837db2f": {
       "name": "IGuardManager",
@@ -1016,7 +1046,7 @@
       "lines": 14,
       "status": "identical",
       "audited": { "object": "f5f12542408f", "lines": [9, 22] },
-      "reports": ["ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "2c1d2c592263": {
       "name": "IOwnerManager",
@@ -1024,7 +1054,7 @@
       "lines": 56,
       "status": "identical",
       "audited": { "object": "7737e794dd8d", "lines": [8, 63] },
-      "reports": ["ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "27197a94b85e": {
       "name": "IFallbackManager",
@@ -1064,7 +1094,7 @@
       "lines": 43,
       "status": "identical",
       "audited": { "object": "16bc91daa4f9", "lines": [5, 43] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "f5600fb3eefd": {
       "name": "ERC777TokensRecipient",
@@ -1072,7 +1102,7 @@
       "lines": 19,
       "status": "identical",
       "audited": { "object": "ac790c9f8d20", "lines": [9, 27] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "f694daf8ae76": {
       "name": "ERC721TokenReceiver",
@@ -1080,7 +1110,7 @@
       "lines": 17,
       "status": "identical",
       "audited": { "object": "8a630a6d1025", "lines": [5, 23] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "c1159590bf55": {
       "name": "TokenCallbackHandler",
@@ -1104,7 +1134,7 @@
       "lines": 12,
       "status": "identical",
       "audited": { "object": "c4ca0b59c0d3", "lines": [10, 21] },
-      "reports": ["ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "5e68d2b3fa16": {
       "name": "CompatibilityFallbackHandler",
@@ -1122,13 +1152,21 @@
       "audited": { "object": "d7877ddb3d4c", "lines": [10, 59] },
       "reports": ["ackee-safe-1-4-0"]
     },
+    "477fadda0baa": {
+      "name": "SafeProxy",
+      "kind": "contract",
+      "lines": 34,
+      "status": "identical",
+      "audited": { "object": "1e67fa067d1d", "lines": [17, 48] },
+      "reports": ["ackee-safe-1-4-0"]
+    },
     "9ca46a4af290": {
       "name": "IProxyCreationCallback",
       "kind": "interface",
       "lines": 10,
       "status": "identical",
       "audited": { "object": "86f95fc68dd9", "lines": [10, 20] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "ef34d9038e86": {
       "name": "SafeProxyFactory",
@@ -1420,7 +1458,7 @@
       "lines": 43,
       "status": "identical",
       "audited": { "object": "16bc91daa4f9", "lines": [5, 43] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "96fc8854e148": {
       "name": "ERC777TokensRecipient",
@@ -1428,7 +1466,7 @@
       "lines": 10,
       "status": "identical",
       "audited": { "object": "ac790c9f8d20", "lines": [9, 27] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "c02d41e85fca": {
       "name": "ERC721TokenReceiver",
@@ -1436,7 +1474,7 @@
       "lines": 20,
       "status": "identical",
       "audited": { "object": "8a630a6d1025", "lines": [5, 23] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0", "certora-safe-1-5-0"]
     },
     "f98775a7d0f9": {
       "name": "IERC165",
@@ -1444,7 +1482,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "2b55700404cc": {
       "name": "DefaultCallbackHandler",
@@ -1494,9 +1537,9 @@
       ["a8b2362ebc57", 16],
       ["dfaea07a9471", 58]
     ],
-    "8ccc642687b2d596e9bff8308a741acc197d6433d2b6e42f5145cddceb592282": [
-      ["0c503ff9b24a", 2],
-      ["063760d21f9b", 10]
+    "8924541cae265c9173161913c354de2b92e6600291a992220caceb07bb320c11": [
+      ["3475eaf50906", 6],
+      ["063760d21f9b", 66]
     ],
     "daef0eb110e8d8f827a06a0298b469b9ca92be93efc633b0abd6a0788a41dbc9": [
       ["fd24fd4ff57b", 8]
@@ -1595,10 +1638,10 @@
       ["d1308f86f627", 775],
       ["268c431cb6b0", 805]
     ],
-    "17a8334651ffebcf5c21e39029db59be6164f2ec1e9082ff8556d8db11ef58c0": [
-      ["0c503ff9b24a", 2],
-      ["9ca46a4af290", 10],
-      ["ef34d9038e86", 25]
+    "378314dde978e65fbfc5f40457346af0d679de1ab9075fdfad8f2a9f9e8dfd3c": [
+      ["477fadda0baa", 6],
+      ["9ca46a4af290", 45],
+      ["ef34d9038e86", 60]
     ],
     "e4f435772a16758dd7143e2e06b9dae950ef36c62746f084c969c64d4a5cbf1e": [
       ["44f82569da3f", 6],
@@ -1816,7 +1859,7 @@
     },
     "eth:0x14F2982D601c9458F93bd70B218933A6f8165e7b": {
       "name": "SafeProxyFactory_v1_5_0",
-      "source": "8ccc642687b2d596e9bff8308a741acc197d6433d2b6e42f5145cddceb592282",
+      "source": "8924541cae265c9173161913c354de2b92e6600291a992220caceb07bb320c11",
       "critical": true
     },
     "eth:0x218543288004CD07832472D464648173c77D7eB7": {
@@ -1861,7 +1904,7 @@
     },
     "eth:0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67": {
       "name": "SafeProxyFactory_v1_4_1",
-      "source": "17a8334651ffebcf5c21e39029db59be6164f2ec1e9082ff8556d8db11ef58c0",
+      "source": "378314dde978e65fbfc5f40457346af0d679de1ab9075fdfad8f2a9f9e8dfd3c",
       "critical": true
     },
     "eth:0x4FfeF8222648872B3dE295Ba1e49110E61f5b5aa": {
@@ -1944,16 +1987,9 @@
           "g0-safe-1-1-0",
           "g0-safe-1-1-1",
           "g0-safe-1-3-0-final",
-          "g0-safe-1-3-0-initial"
+          "g0-safe-1-3-0-initial",
+          "g0-safe-gas-validation-1-2-0"
         ]
-      },
-      {
-        "timestamp": 1672963200,
-        "contracts": 4,
-        "withoutSource": 0,
-        "units": { "identical": 50, "differs": 0, "none": 0 },
-        "lines": { "total": 3242, "covered": 3242 },
-        "reports": ["trailofbits-governance-token-bridge-2023-06"]
       },
       {
         "timestamp": 1679961600,
@@ -1967,8 +2003,8 @@
         "timestamp": 1686289703,
         "contracts": 5,
         "withoutSource": 0,
-        "units": { "identical": 51, "differs": 0, "none": 0 },
-        "lines": { "total": 3357, "covered": 3357 },
+        "units": { "identical": 52, "differs": 0, "none": 0 },
+        "lines": { "total": 3391, "covered": 3391 },
         "changes": [
           {
             "address": "eth:0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
@@ -1981,8 +2017,8 @@
         "timestamp": 1686851699,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 92, "differs": 7, "none": 0 },
-        "lines": { "total": 6882, "covered": 6876 },
+        "units": { "identical": 93, "differs": 7, "none": 0 },
+        "lines": { "total": 6916, "covered": 6910 },
         "changes": [
           {
             "address": "eth:0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
@@ -2005,32 +2041,48 @@
         "timestamp": 1696291200,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 92, "differs": 7, "none": 0 },
-        "lines": { "total": 6882, "covered": 6876 },
+        "units": { "identical": 93, "differs": 7, "none": 0 },
+        "lines": { "total": 6916, "covered": 6910 },
         "reports": ["contracts__audits__2023-10-v5.0"]
+      },
+      {
+        "timestamp": 1724371200,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 99, "differs": 1, "none": 0 },
+        "lines": { "total": 6916, "covered": 6916 },
+        "reports": ["certora-safe-library-contracts-1-4-1"]
+      },
+      {
+        "timestamp": 1733270400,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 99, "differs": 1, "none": 0 },
+        "lines": { "total": 6916, "covered": 6916 },
+        "reports": ["contracts__audits__2024-12-v5.2"]
       },
       {
         "timestamp": 1736812800,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 6, "none": 0 },
-        "lines": { "total": 6882, "covered": 6876 },
+        "units": { "identical": 100, "differs": 0, "none": 0 },
+        "lines": { "total": 6916, "covered": 6916 },
         "reports": ["certora-safe-1-5-0"]
       },
       {
         "timestamp": 1748390400,
         "contracts": 8,
         "withoutSource": 0,
-        "units": { "identical": 93, "differs": 6, "none": 0 },
-        "lines": { "total": 6882, "covered": 6876 },
+        "units": { "identical": 100, "differs": 0, "none": 0 },
+        "lines": { "total": 6916, "covered": 6916 },
         "reports": ["ackee-safe-1-5-0"]
       },
       {
         "timestamp": 1750776395,
         "contracts": 10,
         "withoutSource": 0,
-        "units": { "identical": 100, "differs": 6, "none": 0 },
-        "lines": { "total": 7367, "covered": 7361 },
+        "units": { "identical": 108, "differs": 0, "none": 0 },
+        "lines": { "total": 7456, "covered": 7456 },
         "changes": [
           {
             "address": "eth:0x3EfCBb83A4A7AfcB4F68D501E2c2203a38be77f4",
@@ -2048,8 +2100,8 @@
         "timestamp": 1751543195,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 6, "none": 0 },
-        "lines": { "total": 9821, "covered": 9815 },
+        "units": { "identical": 143, "differs": 0, "none": 0 },
+        "lines": { "total": 9910, "covered": 9910 },
         "changes": [
           {
             "address": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
@@ -2067,16 +2119,16 @@
         "timestamp": 1771200000,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 6, "none": 0 },
-        "lines": { "total": 9821, "covered": 9815 },
+        "units": { "identical": 143, "differs": 0, "none": 0 },
+        "lines": { "total": 9910, "covered": 9910 },
         "reports": ["certora-safe-allowance-v1-0-0"]
       },
       {
         "timestamp": 1793093365,
         "contracts": 12,
         "withoutSource": 0,
-        "units": { "identical": 135, "differs": 6, "none": 0 },
-        "lines": { "total": 9821, "covered": 9815 }
+        "units": { "identical": 143, "differs": 0, "none": 0 },
+        "lines": { "total": 9910, "covered": 9910 }
       }
     ],
     "undatedReports": []

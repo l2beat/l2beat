@@ -6,7 +6,7 @@ import { execFileSync } from 'child_process'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { writeFileSync } from 'fs'
 import path from 'path'
-import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
+import { parseAuditIndex } from '../implementations/audit-coverage/AuditIndex'
 import { parseAuditObjects } from '../implementations/audit-coverage/AuditObjects'
 import { readAuditDataset } from '../implementations/audit-coverage/auditDataset'
 import { deployedSourceFromDiscovery } from '../implementations/audit-coverage/deployedSource'
@@ -63,7 +63,7 @@ export const AuditScope = command({
       path.join(args.dataset, 'audit-objects.json.zst'),
       commit,
     )
-    const index = AuditIndex.parse(JSON.parse(files.index))
+    const index = parseAuditIndex(JSON.parse(files.index))
     const objects = parseAuditObjects(files.objects, index)
     const warnings: string[] = []
     const scope = await auditScopeOfProject(

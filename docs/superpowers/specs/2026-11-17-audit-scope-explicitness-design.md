@@ -32,8 +32,8 @@ dashboard table.
 
 Out of scope:
 
-- The audit dataset. What its summaries cannot express yet is kept in `scopeOverrides.ts` next to
-  the command (section 9).
+- The audit dataset. Its summaries state what a report says about unlisted code and dependencies
+  since summary schema 1.8.0 (section 9).
 - `audit-coverage.json`, which is not changed. The coverage history, its chart and the dashboard
   sparkline keep the base reading it was generated with (section 8).
 - The audit information in the contracts section of the regular project pages, which also keeps the
@@ -118,8 +118,9 @@ They differ only in which audited code counts as evidence for a deployed unit:
 
 - **Strict:** code a report explicitly includes. Reports of library collections (OpenZeppelin's
   audits of OpenZeppelin) count, because they name the code.
-- **Relaxed:** strict, plus `not-mentioned` units of the project's own reports. A unit covered only
-  this way is labelled "implied by <auditor>".
+- **Relaxed:** strict, plus `not-mentioned` units of the project's own reports and the files that
+  reports of other collections imply. A unit covered only this way is labelled "implied by
+  <auditor>".
 
 In both readings vendor code that differs from its audited version counts as differing. The base
 coverage leaves such units out of the counts; here the relaxed reading is the only place where doubt
@@ -182,17 +183,17 @@ model works under either reading.
 `l2b audit-scope <project> --dataset <path to an audit-dataset checkout>`, implemented in
 `packages/l2b/src/implementations/audit-coverage/scope`:
 
-1. Reads `<project>/audit-summary.json` for what each report lists, and `scopeOverrides.ts` for what
-   the summary cannot express yet.
+1. Reads `<project>/audit-summary.json` for what each report lists, excludes, and says about
+   unlisted code and dependencies.
 2. For each audited commit, reads the repository from a blobless clone cached in
    `~/.cache/l2b-audit-scope`, with submodules at their pinned commits. Imports are resolved
    relative to the file, then with the remappings of the nearest Foundry project (`foundry.toml`,
    `remappings.txt`, `lib/*`), then against the project and repository roots, then as a package of
    the same monorepo.
 3. Builds the graph and the explicitness numbers.
-4. Covers the deployed code twice. Strict uses the dataset export without the files its import
-   expansion added to the project's own reports. Relaxed adds the `not-mentioned` units, read from
-   the clones.
+4. Covers the deployed code twice. Strict uses only the paths the export marks as listed, for every
+   report. Relaxed adds the `not-mentioned` units of the project's own reports, read from the
+   clones, and the files the export marks as implied by reports of other collections.
 
 An import that cannot be read (an npm package) still says what it names: the imported symbol, or the
 unit the file is named after. Such a name becomes an `unavailable` node, or is counted as an
@@ -220,24 +221,29 @@ interface when it starts with `I` followed by a capital or sits under `/interfac
 
 ## 7. Results
 
-Generated from the audit dataset at `29fc7fd7`. Lines are over the distinct deployed units of every
+Generated from the audit dataset at `650d02b9`, whose export (schema 2.0.0) holds 14 collections. Lines are over the distinct deployed units of every
 discovered contract, interfaces excluded; the pages show the critical contracts only, so their
 percentages differ.
 
 | Project | Reports with a graph | Strict | Relaxed | What the graphs show |
 | --- | --- | --- | --- | --- |
-| `uniswapv2` | 1 of 1 | 42.8% | 42.8% | The control: a directory scope, 6 of 6 units named, nothing external. |
-| `uniswapv3` | 3 of 3 | 40.4% | 40.4% | Trail of Bits names 19 of 20 own units; ABDK's periphery report names all 13, 11 of them as excluded, and its 5 npm dependencies are `unavailable`. |
-| `optimism` | 33 of 54 | 74.9% | 90.7% | Reports name between 17% and 100% of the own units in their graph and none of the external ones, except one report that excludes unlisted code in words. |
+| `uniswapv2` | 1 of 1 | 42.8% | 49.5% | The control: a directory scope, 6 of 6 units named, nothing external. |
+| `uniswapv3` | 3 of 3 | 40.3% | 51.8% | Trail of Bits names 19 of 20 own units; ABDK's periphery report names all 13, 11 of them as excluded, and its 5 npm dependencies are `unavailable`. |
+| `optimism` | 33 of 54 | 74.2% | 90.7% | Reports name between 17% and 100% of the own units in their graph and none of the external ones, except one report that excludes unlisted code in words. |
 | `safe` | 13 of 14 | 99.9% | 100.0% | Reports scope whole directories, so most name every own unit of their graph; the code has no external dependencies. |
-| `tornado-cash` | 4 of 7 | 52.0% | 52.0% | All four are silent about unlisted code; the only dependencies are npm packages, which are `unavailable`. |
-| `aztecnetwork` | 15 of 27 | 69.6% | 73.5% | ConsenSys Diligence and Veridise limit their scope in words, and Veridise is the one report with a general statement about external libraries. The Cantina reviews name about a fifth of the own units their code reaches. |
+| `tornado-cash` | 4 of 7 | 48.4% | 54.6% | All four are silent about unlisted code; the only dependencies are npm packages, which are `unavailable`. |
+| `aztecnetwork` | 15 of 27 | 69.5% | 73.3% | ConsenSys Diligence and Veridise limit their scope in words, and Veridise is the one report with a general statement about external libraries. The Cantina reviews name about a fifth of the own units their code reaches. |
 
 The other 21 Optimism reports have no graph: 17 are fix or diff reviews, 4 scope no Solidity.
 
-For `aztecnetwork`, `safe` and `tornado-cash` the dataset's summaries carry no reviewed `imports`
-field, so every entry of `scopeOverrides.ts` for them comes from reading the report for this
-prototype.
+What each report says about unlisted code and dependencies comes from the dataset's summaries. The
+hand-written overrides this prototype started with were moved there and removed here.
+
+For `uniswapv2`, `uniswapv3` and `tornado-cash` the two readings differ only through other
+collections: library and fork audits carry the files their audited code imports, such as
+OpenZeppelin's `SafeMath`, and for `uniswapv3` the periphery and core libraries that Ronin's audits
+of its Katana V3 fork reach. No report lists those files, so they count in the relaxed reading
+only.
 
 ## 8. Known gaps
 
@@ -246,12 +252,6 @@ prototype.
   numbers next to them. Closing this means generating the history with the strict evidence.
 - The contracts section of the regular project pages shows audit information under the base reading.
 - npm dependencies are `unavailable`: the lockfile pins them, the tarballs are not fetched.
-- Import expansion in other collections' exports is not stripped, so a stack or library report with
-  expanded imports still counts them in the strict reading.
-- An exclusion inside a directory scope reaches the graph but not the strict reading: Akhunov's Safe
-  report scopes `contracts` and says only one module was audited. The override marks the other
-  modules as excluded; the strict reading still counts them, because the export scopes the
-  directory.
 - Findings are not attributed to implied units.
 - The unit diff against implied code, which is read from the audited repository itself, was checked
   by fetching the file directly but not in the page: the mock frontend has no database for the
@@ -259,15 +259,15 @@ prototype.
 
 ## 9. What the audit dataset needs to take over
 
-`scopeOverrides.ts` stands in for what the extraction skill and `audit-summary.json` should record,
-each with the report line it rests on:
+Done with summary schema 1.8.0 and export schema 2.0.0 of the dataset. The summaries record:
 
-1. Whether unlisted code is excluded by words in the report, or only not mentioned. Today `imports:
-   "not_audited"` covers both, plus diff-scoped reports.
-2. General statements about third-party dependencies, which the skill currently tells the extractor
-   to skip.
-3. Exclusions inside a directory scope.
-4. Where the scope list comes from when it is not in the report.
+1. Whether unlisted code is excluded by words in the report, or only not mentioned (`unlisted`).
+2. General statements about third-party dependencies (`dependencies`).
+3. Exclusions inside a directory scope, as `not_audited` paths.
 
-The export should then label each scoped path as named or implied, and carry dependency sources at
-their pinned versions. Report titles should not embed the auditor, which has a field of its own.
+The export labels what each report lists, excludes, implies and can only see, carries dependency
+sources at their pinned versions, and its report titles no longer embed the auditor. Where a scope
+list comes from when it is not in the report is not recorded.
+
+Not used here yet: the command still builds each graph from its own clone of the audited
+repository, although the export now carries the imports and the reached files.

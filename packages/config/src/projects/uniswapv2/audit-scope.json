@@ -3,7 +3,7 @@
   "project": "uniswapv2",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
   "reports": {
     "dapp-org-uniswap-v2-2020-05": {
@@ -76,6 +76,41 @@
       "date": "2021-03-23",
       "document": "uniswapv3/reports/audit-2.pdf"
     },
+    "beosin-ronin-bridge-2023-09": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin Bridge Smart Contract Security Audit (No. 202309081700)",
+      "auditor": "Beosin",
+      "date": "2023-09-08",
+      "document": "roninnetwork/reports/Beosin - Ronin Bridge (2023-09).pdf"
+    },
+    "beosin-ronin-network-2023-03": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin Network Public Block Chain Security Audit V1.5 (No. 202303031441)",
+      "auditor": "Beosin",
+      "date": "2023-03-03",
+      "document": "roninnetwork/reports/Beosin - Ronin Network (2023-03).pdf"
+    },
+    "certik-axie-infinity-ronin-bridge-2022-06": {
+      "collections": ["roninnetwork"],
+      "title": "Axie Infinity - Audit (Ronin Bridge Security Assessment)",
+      "auditor": "CertiK",
+      "date": "2022-06-21",
+      "document": "roninnetwork/reports/CertiK - Axie Infinity Ronin Bridge v8 (2022-06).pdf"
+    },
+    "certik-ronin-dpos-contracts-2023-03": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin DPoS Contracts Security Assessment",
+      "auditor": "CertiK",
+      "date": "2023-03-30",
+      "document": "roninnetwork/reports/CertiK - Ronin DPoS Contracts (2023-03).pdf"
+    },
+    "code4rena-ronin-katana-v3-2024-10": {
+      "collections": ["roninnetwork"],
+      "title": "Ronin Findings & Analysis Report (Katana V3)",
+      "auditor": "Code4rena",
+      "date": "2024-11-25",
+      "document": "roninnetwork/reports/Code4rena - Ronin Katana v3.html"
+    },
     "dapp-org-uniswap-v2-2020-05": {
       "collections": ["uniswapv2"],
       "title": "Uniswap V2 Audit Report",
@@ -111,13 +146,6 @@
       "date": "2021-12-31",
       "document": "_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
     },
-    "trail-of-bits-celo-l2-2024-12-19": {
-      "collections": ["celo"],
-      "title": "cLabs Celo L2 Security Assessment",
-      "auditor": "Trail of Bits",
-      "date": "2024-12-19",
-      "document": "celo/reports/Trail of Bits - Celo L2.pdf"
-    },
     "trailofbits-compound-governance-2020-02": {
       "collections": ["compound"],
       "title": "Compound Governance Security Assessment",
@@ -132,45 +160,27 @@
       "date": "2021-03-12",
       "document": "uniswapv3/reports/audit.pdf"
     },
-    "verilog-celo-monorepo-prs-9798-10159-2023-03": {
-      "collections": ["celo"],
-      "title": "Celo Monorepo Report (PR Audit #9798-#10159)",
-      "auditor": "Verilog Solutions",
-      "date": "2023-03-09",
-      "document": "celo/reports/Verilog - Celo Monorepo PRs 9798-10159.js"
+    "verichains-ronin-bridge-smart-contracts-2022-06": {
+      "collections": ["roninnetwork"],
+      "title": "Security Audit - Ronin Bridge Smart Contracts (Public Report, Version 1.1)",
+      "auditor": "Verichains Lab",
+      "date": "2022-06-28",
+      "document": "roninnetwork/reports/Verichains - Ronin Bridge v1.1 (2022-06).pdf"
     }
   },
   "collections": {
     "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
+    "roninnetwork": { "name": "Ronin", "kind": "project" },
     "uniswapv2": { "name": "Uniswap V2", "kind": "project" },
     "compound": { "name": "Compound", "kind": "project" },
-    "_libs/solmate": { "name": "Solmate", "kind": "library" },
-    "celo": { "name": "Celo", "kind": "project" }
+    "_libs/solmate": { "name": "Solmate", "kind": "library" }
   },
   "auditedFiles": {
-    "0a8da8e69260": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IWETH.sol",
-      "blob": "0a8da8e69260936480af9d197dd093a36f3e8545"
-    },
-    "161ab62324e5": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Factory.sol",
-      "blob": "161ab62324e50c0767cd2541a582edfb4982dd13"
-    },
     "1aefb612aefb": {
       "repository": "compound-finance/compound-protocol",
       "commit": "55729b31b85220ab42e26d7b6db0ff6c0eb0dd23",
       "path": "contracts/Timelock.sol",
       "blob": "1aefb612aefb837c0e25d4b6198e66d00a7d1bd4"
-    },
-    "1f419229f028": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
-      "blob": "1f419229f028733e0b921efee4438ce67f265008"
     },
     "3b77ba02ba7b": {
       "repository": "Arr00-Blurr/compound-protocol",
@@ -183,6 +193,12 @@
       "commit": "413fce0c4e3b97f80465000354ef8f4091c2de81",
       "path": "contracts/Governance/GovernorBravoInterfaces.sol",
       "blob": "4180878e9cc17f4954183cdf441a59d28221ad8d"
+    },
+    "421b1f357d10": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/TransferHelper.sol",
+      "blob": "421b1f357d10f6850f3c5e175eddc73e295fd775"
     },
     "45ff1763897f": {
       "repository": "Uniswap/v2-core",
@@ -202,23 +218,35 @@
       "path": "contracts/libraries/SafeMath.sol",
       "blob": "5f9c76532cd919f7a6217f790ffc7686af998041"
     },
+    "6459515e840a": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IUniswapV2Pair.sol",
+      "blob": "6459515e840a682966196fa870ca4dabff3b2944"
+    },
+    "6f87f3a18132": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/interfaces/IERC20Minimal.sol",
+      "blob": "6f87f3a181327ea51db572ee0f438538c6bef2a1"
+    },
     "73e366d021d0": {
       "repository": "Uniswap/v2-core",
       "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
       "path": "contracts/libraries/UQ112x112.sol",
       "blob": "73e366d021d04753ccfc2cac7632b556e5e4ca4a"
     },
-    "7c655b3cf914": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2ERC20.sol",
-      "blob": "7c655b3cf9146d4f25221e2cc82cd0d5c0a69027"
-    },
     "7c781dbafd08": {
       "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+      "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
       "path": "contracts/interfaces/IERC20Minimal.sol",
       "blob": "7c781dbafd0895434bbc9e31cc8b2db1bb6318d1"
+    },
+    "7eb656ff2f32": {
+      "repository": "axieinfinity/ronin-dpos-contracts",
+      "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+      "path": "contracts/interfaces/IWETH.sol",
+      "blob": "7eb656ff2f32a64539b19dbde0a1f99c82892eb1"
     },
     "80d6a937b1fa": {
       "repository": "Uniswap/v2-core",
@@ -227,9 +255,9 @@
       "blob": "80d6a937b1fa4073bf8baeadbd74073d8981a532"
     },
     "9f14b7120df0": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Callee.sol",
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IUniswapV2Callee.sol",
       "blob": "9f14b7120df040b275eee3b2fb5d5c266d669cde"
     },
     "a61d24e44aa7": {
@@ -250,6 +278,24 @@
       "path": "contracts/interfaces/IERC20.sol",
       "blob": "c31e4d7a3d994968a226d7dd05cbcddcada33209"
     },
+    "cc48d54fdb1b": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IUniswapV2ERC20.sol",
+      "blob": "cc48d54fdb1b588102c5c684a65f8c14fe739d74"
+    },
+    "cfce76fbe5dc": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IUniswapV2Factory.sol",
+      "blob": "cfce76fbe5dc0be910597b878f1ade89d1c40901"
+    },
+    "d42f81ce8b27": {
+      "repository": "compound-finance/compound-protocol",
+      "commit": "55729b31b85220ab42e26d7b6db0ff6c0eb0dd23",
+      "path": "contracts/SafeMath.sol",
+      "blob": "d42f81ce8b2717646a6acd88cc5f9f8185cadb7a"
+    },
     "fa4488edf9a3": {
       "repository": "Rari-Capital/solmate",
       "commit": "134f10afd9c996cee217aec6274839f56c742eac",
@@ -264,8 +310,8 @@
         "kind": "interface",
         "lines": 50,
         "status": "identical",
-        "audited": { "object": "1f419229f028", "lines": [3, 55] },
-        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+        "audited": { "object": "6459515e840a", "lines": [3, 53] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
       }
     },
     "3382aa985d0a": {
@@ -274,8 +320,8 @@
         "kind": "interface",
         "lines": 21,
         "status": "identical",
-        "audited": { "object": "7c655b3cf914", "lines": [3, 26] },
-        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+        "audited": { "object": "cc48d54fdb1b", "lines": [3, 24] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
       }
     },
     "87d0c9824d32": {
@@ -314,8 +360,8 @@
         "kind": "interface",
         "lines": 15,
         "status": "identical",
-        "audited": { "object": "161ab62324e5", "lines": [3, 17] },
-        "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+        "audited": { "object": "cfce76fbe5dc", "lines": [3, 17] },
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
       }
     },
     "5a22afd309d6": {
@@ -345,11 +391,7 @@
         "lines": 3,
         "status": "identical",
         "audited": { "object": "9f14b7120df0", "lines": [3, 5] },
-        "reports": [
-          "dapp-org-uniswap-v2-2020-05",
-          "trail-of-bits-celo-l2-2024-12-19",
-          "verilog-celo-monorepo-prs-9798-10159-2023-03"
-        ]
+        "reports": ["dapp-org-uniswap-v2-2020-05"]
       }
     },
     "da40d0634b58": {
@@ -433,10 +475,20 @@
         "lines": 43,
         "status": "identical",
         "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+        "reports": ["abdk-uniswap-v3-core-2021-03"]
+      },
+      "relaxed": {
+        "name": "IERC20Minimal",
+        "kind": "interface",
+        "lines": 43,
+        "status": "identical",
+        "audited": { "object": "6f87f3a18132", "lines": [6, 48] },
         "reports": [
           "abdk-uniswap-v3-core-2021-03",
+          "code4rena-ronin-katana-v3-2024-10",
           "trailofbits-uniswap-v3-core-2021-03"
-        ]
+        ],
+        "impliedBy": ["code4rena-ronin-katana-v3-2024-10"]
       }
     },
     "d868cebabdae": {
@@ -558,6 +610,24 @@
         "kind": "library",
         "lines": 168,
         "status": "none"
+      },
+      "relaxed": {
+        "name": "SafeMath",
+        "kind": "library",
+        "lines": 168,
+        "status": "differs",
+        "audited": { "object": "d42f81ce8b27", "lines": [19, 164] },
+        "reports": [
+          "openzeppelin-compound-alpha-governance-2020-02",
+          "trailofbits-compound-governance-2020-02"
+        ],
+        "added": [[79, 100]],
+        "removed": [],
+        "covered": 160,
+        "impliedBy": [
+          "openzeppelin-compound-alpha-governance-2020-02",
+          "trailofbits-compound-governance-2020-02"
+        ]
       }
     },
     "db167b498ad1": {
@@ -735,6 +805,18 @@
         "kind": "library",
         "lines": 24,
         "status": "none"
+      },
+      "relaxed": {
+        "name": "TransferHelper",
+        "kind": "library",
+        "lines": 24,
+        "status": "differs",
+        "audited": { "object": "421b1f357d10", "lines": [6, 47] },
+        "reports": ["code4rena-ronin-katana-v3-2024-10"],
+        "added": [[3, 3], [9, 9], [15, 15]],
+        "removed": [[3, 29, 29], [9, 19, 19], [15, 8, 9]],
+        "covered": 21,
+        "impliedBy": ["code4rena-ronin-katana-v3-2024-10"]
       }
     },
     "0d461ecceaf0": {
@@ -742,12 +824,35 @@
         "name": "IWETH",
         "kind": "interface",
         "lines": 5,
-        "status": "identical",
-        "audited": { "object": "0a8da8e69260", "lines": [3, 7] },
+        "status": "differs",
+        "audited": { "object": "7eb656ff2f32", "lines": [4, 10] },
         "reports": [
-          "trail-of-bits-celo-l2-2024-12-19",
-          "verilog-celo-monorepo-prs-9798-10159-2023-03"
-        ]
+          "beosin-ronin-network-2023-03",
+          "certik-axie-infinity-ronin-bridge-2022-06",
+          "certik-ronin-dpos-contracts-2023-03",
+          "verichains-ronin-bridge-smart-contracts-2022-06"
+        ],
+        "added": [[2, 3]],
+        "removed": [[3, 2, 5]],
+        "covered": 3
+      },
+      "relaxed": {
+        "name": "IWETH",
+        "kind": "interface",
+        "lines": 5,
+        "status": "differs",
+        "audited": { "object": "7eb656ff2f32", "lines": [4, 10] },
+        "reports": [
+          "beosin-ronin-bridge-2023-09",
+          "beosin-ronin-network-2023-03",
+          "certik-axie-infinity-ronin-bridge-2022-06",
+          "certik-ronin-dpos-contracts-2023-03",
+          "verichains-ronin-bridge-smart-contracts-2022-06"
+        ],
+        "added": [[2, 3]],
+        "removed": [[3, 2, 5]],
+        "covered": 3,
+        "impliedBy": []
       }
     },
     "0b2f577b18e5": {

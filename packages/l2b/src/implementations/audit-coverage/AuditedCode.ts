@@ -1,7 +1,11 @@
 import { format } from '@l2beat/discovery'
 import { parseReportDate } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { type AuditIndex, type AuditIndexSnapshot, covers } from './AuditIndex'
+import {
+  type AuditIndex,
+  type AuditIndexSnapshot,
+  auditedBy,
+} from './AuditIndex'
 import type { AuditObjects } from './AuditObjects'
 import {
   type Declaration,
@@ -193,10 +197,7 @@ function collectOccurrences(index: AuditIndex): Map<string, Occurrence[]> {
   for (const [repository, byCommit] of Object.entries(index.repositories)) {
     for (const [commit, snapshot] of Object.entries(byCommit)) {
       for (const [path, object] of Object.entries(snapshot.files)) {
-        const { findings, directoryScoped } = findingsCovering(
-          snapshot.audits,
-          path,
-        )
+        const { findings, directoryScoped } = findingsCovering(snapshot, path)
         const list = occurrences.get(object) ?? []
         list.push({
           repository,
@@ -215,13 +216,13 @@ function collectOccurrences(index: AuditIndex): Map<string, Occurrence[]> {
 }
 
 function findingsCovering(
-  audits: AuditIndexSnapshot['audits'],
+  snapshot: Pick<AuditIndexSnapshot, 'audits' | 'excluded'>,
   path: string,
 ): Pick<Occurrence, 'findings' | 'directoryScoped'> {
   const findings: Record<string, string[]> = {}
   const directoryScoped: string[] = []
-  for (const [report, paths] of Object.entries(audits)) {
-    if (Object.keys(paths).some((p) => covers(p, path))) {
+  for (const [report, paths] of Object.entries(snapshot.audits)) {
+    if (auditedBy(snapshot, report, path)) {
       findings[report] = paths[path] ?? []
       if (paths[path] === undefined) {
         directoryScoped.push(report)

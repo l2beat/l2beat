@@ -22,7 +22,7 @@ import { writeFileSync } from 'fs'
 import path from 'path'
 import type { AuditCoverage as Coverage } from '../implementations/audit-coverage/AuditCoverage'
 import { buildAuditedCode } from '../implementations/audit-coverage/AuditedCode'
-import { AuditIndex } from '../implementations/audit-coverage/AuditIndex'
+import { parseAuditIndex } from '../implementations/audit-coverage/AuditIndex'
 import { parseAuditObjects } from '../implementations/audit-coverage/AuditObjects'
 import {
   type AuditCoverageHistoryOptions,
@@ -84,7 +84,7 @@ export const AuditCoverage = command({
     const loading = cli.status()
     loading.update('Reading audit index and objects')
     const dataset = await loadDataset(args)
-    const index = AuditIndex.parse(JSON.parse(dataset.index))
+    const index = parseAuditIndex(JSON.parse(dataset.index))
     const objects = parseAuditObjects(dataset.objects, index)
     const code = buildAuditedCode(index, objects, (split, count) =>
       loading.update(progress(split, count, 'Splitting audited files')),

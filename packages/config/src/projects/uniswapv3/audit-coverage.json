@@ -3,22 +3,19 @@
   "project": "uniswapv3",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "aec88c04f10eda2ce483c2b5ccaef547bacfc997"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
   "discoveredAt": 1786913047,
   "collections": {
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
-    "_libs/safe": { "name": "Safe", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "_libs/solmate": { "name": "Solmate", "kind": "library" },
-    "arbitrum": { "name": "Arbitrum One", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
-    "celo": { "name": "Celo", "kind": "project" },
     "compound": { "name": "Compound", "kind": "project" },
-    "katana": { "name": "Katana", "kind": "project" },
     "roninnetwork": { "name": "Ronin", "kind": "project" },
-    "starknet": { "name": "Starknet", "kind": "project" },
-    "uniswapv3": { "name": "Uniswap V3", "kind": "project" },
-    "zksync2": { "name": "ZKsync Era", "kind": "project" }
+    "safe": { "name": "Safe", "kind": "project" },
+    "uniswapv2": { "name": "Uniswap V2", "kind": "project" },
+    "uniswapv3": { "name": "Uniswap V3", "kind": "project" }
   },
   "reports": {
     "abdk-uniswap-v3-core-2021-03": {
@@ -36,36 +33,32 @@
       "document": "uniswapv3/reports/audit-3.pdf"
     },
     "ackee-safe-1-4-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Contracts 1.4.0 Security Review",
       "auditor": "Ackee Blockchain",
       "date": "2023-03-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
     },
     "ackee-safe-1-5-0": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Safe Smart Account Security Review",
       "auditor": "Ackee Blockchain Security",
       "date": "2025-05-28",
       "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
     },
-    "certora-vault-bridge-2025-05": {
-      "collections": ["katana"],
-      "title": "Vault Bridge Security Assessment (Manual Audit)",
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
       "auditor": "Certora",
-      "document": "katana/reports/2025_05-certora-vault-bridge-manual-audit.pdf"
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
     },
-    "certora-vault-bridge-fv-2025-06": {
-      "collections": ["katana"],
-      "title": "Vault Bridge Security Assessment (Formal Verification)",
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
       "auditor": "Certora",
-      "document": "katana/reports/2025_06-certora-vault-bridge-formal-verification.pdf"
-    },
-    "certora-vault-bridge-v1-1-2025-11": {
-      "collections": ["katana"],
-      "title": "Polygon Vault Bridge V1.1 Security Assessment",
-      "auditor": "Certora",
-      "document": "katana/reports/2025_11-certora-vault-bridge-v1.1-audit.pdf"
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
     },
     "code4rena-ronin-katana-v3-2024-10": {
       "collections": ["roninnetwork"],
@@ -74,33 +67,19 @@
       "date": "2024-11-25",
       "document": "roninnetwork/reports/Code4rena - Ronin Katana v3.html"
     },
-    "code4rena-zksync-era-2023-10": {
-      "collections": ["zksync2"],
-      "title": "zkSync Era Findings & Analysis Report",
-      "auditor": "Code4rena",
-      "date": "2024-02-29",
-      "document": "zksync2/reports/2023_10-code4rena-zksync-era.html"
-    },
-    "code4rena-zksync-era-system-contracts-2023-03": {
-      "collections": ["zksync2"],
-      "title": "zkSync Era System Contracts contest Findings & Analysis Report (Code4rena)",
-      "auditor": "Code4rena",
-      "date": "2023-06-14",
-      "document": "zksync2/reports/2023_03-code4rena-zksync-era-system-contracts.html"
-    },
-    "consensys-arbitrum-core-token-bridge-2021-11": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Smart Contracts (ConsenSys Diligence, November 2021)",
-      "auditor": "ConsenSys Diligence",
-      "date": "2021-11-05",
-      "document": "arbitrum/reports/2021_11_05_consensys_diligence_security_audit_core_contracts_token_bridge.pdf"
-    },
     "contracts__audits__2018-10": {
       "collections": ["_libs/openzeppelin"],
       "title": "Open Zeppelin v2.0 Security Audit",
       "auditor": "Level K",
       "date": "2018-10-21",
       "document": "_libs/openzeppelin/reports/contracts__audits__2018-10.pdf"
+    },
+    "contracts__audits__2022-10-ERC4626": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin ERC4626 Tokenized Vault Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2022-11-15",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2022-10-ERC4626.pdf"
     },
     "contracts__audits__2023-10-v5.0": {
       "collections": ["_libs/openzeppelin"],
@@ -109,6 +88,27 @@
       "date": "2023-10-03",
       "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
     },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2024-12-v5.2": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.2 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-12-04",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
+    },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
     "contracts__audits__2026-02-v5.6": {
       "collections": ["_libs/openzeppelin"],
       "title": "OpenZeppelin Contracts v5.6 Audit",
@@ -116,15 +116,22 @@
       "date": "2026-02-27",
       "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
     },
+    "dapp-org-uniswap-v2-2020-05": {
+      "collections": ["uniswapv2"],
+      "title": "Uniswap V2 Audit Report",
+      "auditor": "dapp.org",
+      "date": "2020-04-30",
+      "document": "uniswapv2/reports/dapp.org - Uniswap V2 Audit Report.html"
+    },
     "g0-safe-1-3-0-final": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
       "auditor": "G0 Group",
       "date": "2021-05-01",
       "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
     },
     "g0-safe-1-3-0-initial": {
-      "collections": ["_libs/safe"],
+      "collections": ["_libs/safe", "safe"],
       "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
       "auditor": "G0 Group",
       "date": "2021-04-01",
@@ -151,26 +158,6 @@
       "date": "2019-10-23",
       "document": "compound/reports/OpenZeppelin - Compound Timelock Audit.html"
     },
-    "peckshield-starkex-v1-0-2020-02": {
-      "collections": ["starknet"],
-      "title": "PeckShield StarkEx v1.0 Smart Contract Audit",
-      "auditor": "PeckShield",
-      "date": "2020-02-26",
-      "document": "starknet/reports/2020_02-peckshield-starkex-v1.0-audit.pdf"
-    },
-    "peckshield-starkex-v2-0-2020-10": {
-      "collections": ["starknet"],
-      "title": "PeckShield StarkEx V2 Smart Contract Audit",
-      "auditor": "PeckShield",
-      "date": "2020-10-26",
-      "document": "starknet/reports/2020_10-peckshield-starkex-v2.0-audit.pdf"
-    },
-    "sigmaprime-yield-exposed-token-2025-04": {
-      "collections": ["katana"],
-      "title": "Yield Exposed Token Security Assessment Report (v2.0)",
-      "auditor": "Sigma Prime",
-      "document": "katana/reports/2025_04-sigmaprime-vault-bridge-yield-exposed-token-security-assessment.pdf"
-    },
     "solidified-aztec-aave-bridge-2022-05-18": {
       "collections": ["aztecnetwork"],
       "title": "Aztec Aave Bridge Audit",
@@ -178,12 +165,19 @@
       "date": "2022-05-18",
       "document": "aztecnetwork/reports/Solidified - Aztec Aave Bridge.pdf"
     },
-    "solidified-aztec-element-bridge-2022-05-11": {
+    "solidified-aztec-dca-bridge-2022-09-21": {
       "collections": ["aztecnetwork"],
-      "title": "Aztec Element Bridge Audit",
+      "title": "Aztec DCA Bridge Audit",
       "auditor": "Solidified",
-      "date": "2022-05-11",
-      "document": "aztecnetwork/reports/Solidified - Aztec Element Bridge.pdf"
+      "date": "2022-09-21",
+      "document": "aztecnetwork/reports/Solidified - Aztec DCA Bridge.pdf"
+    },
+    "solidified-aztec-lido-bridge-2022-04-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Lido Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-04-12",
+      "document": "aztecnetwork/reports/Solidified - Aztec Lido Bridge.pdf"
     },
     "solidified-aztec-liquity-bridge-2022-06-14": {
       "collections": ["aztecnetwork"],
@@ -192,6 +186,13 @@
       "date": "2022-06-14",
       "document": "aztecnetwork/reports/Solidified - Aztec Liquity Bridge.pdf"
     },
+    "solidified-aztec-liquity-trove-bridge-ii-2022-11-21": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Liquity Trove Bridge Re-Audit",
+      "auditor": "Solidified",
+      "date": "2022-11-21",
+      "document": "aztecnetwork/reports/Solidified - Aztec Liquity Trove Bridge II.pdf"
+    },
     "solmate-v6__audits__v6-Fixed-Point-Solutions": {
       "collections": ["_libs/solmate"],
       "title": "solmate Smart Contract Library Assessment",
@@ -199,26 +200,12 @@
       "date": "2021-12-31",
       "document": "_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
     },
-    "trail-of-bits-celo-l2-2024-12-19": {
-      "collections": ["celo"],
-      "title": "cLabs Celo L2 Security Assessment",
-      "auditor": "Trail of Bits",
-      "date": "2024-12-19",
-      "document": "celo/reports/Trail of Bits - Celo L2.pdf"
-    },
     "trailofbits-compound-governance-2020-02": {
       "collections": ["compound"],
       "title": "Compound Governance Security Assessment",
       "auditor": "Trail of Bits",
       "date": "2020-02-28",
       "document": "compound/reports/Trail of Bits - Compound Governance.pdf"
-    },
-    "trailofbits-governance-token-bridge-2023-06": {
-      "collections": ["arbitrum"],
-      "title": "Arbitrum Governance Security Assessment (Trail of Bits, governance and token bridge, 2022)",
-      "auditor": "Trail of Bits",
-      "date": "2023-01-06",
-      "document": "arbitrum/reports/2023_06_23_trail_of_bits_security_audit_governance_report_governance_token_bridge.pdf"
     },
     "trailofbits-uniswap-v3-core-2021-03": {
       "collections": ["uniswapv3"],
@@ -231,8 +218,8 @@
   "auditedFiles": {
     "002c382d5cd8": {
       "repository": "AztecProtocol/aztec-connect-bridges",
-      "commit": "5a3766115b55dd3471ca981a26c8b8381f12fae7",
-      "path": "src/bridges/liquity/interfaces/ISwapRouter.sol",
+      "commit": "f9f2554d63519c1b3288325f5edc50acaac2bbc5",
+      "path": "src/interfaces/uniswapv3/ISwapRouter.sol",
       "blob": "002c382d5cd81788084d6c990125be869e725511"
     },
     "029c06a7e748": {
@@ -247,35 +234,29 @@
       "path": "contracts/introspection/ERC165.sol",
       "blob": "034ee911fe4bac97038477f602c6a95a240772d6"
     },
-    "07a6de4542ee": {
-      "repository": "code-423n4/2023-10-zksync",
-      "commit": "1fb4649b612fac7b4ee613df6f6b7d921ddd6b0d",
-      "path": "code/system-contracts/contracts/openzeppelin/utils/Address.sol",
-      "blob": "07a6de4542ee31b3221052eaa6ec898744866607"
+    "0cbda5ddce00": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/LiquidityManagement.sol",
+      "blob": "0cbda5ddce007eb6ece1377b1892c76e19dd5f85"
     },
-    "092a067f397a": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/LowGasSafeMath.sol",
-      "blob": "092a067f397a8e1cbe86333fa0e68644ac4d4875"
-    },
-    "0ba362bf2665": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/TransferHelper.sol",
-      "blob": "0ba362bf2665cce4186101a34fde87456e2fb9ab"
+    "0d6adb3febaf": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/FullMath.sol",
+      "blob": "0d6adb3febaf2b7808beeda5915add268b0df2b9"
     },
     "101ca93d6e03": {
-      "repository": "Uniswap/v3-core",
-      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-      "path": "contracts/interfaces/pool/IUniswapV3PoolActions.sol",
+      "repository": "AztecProtocol/aztec-connect-bridges",
+      "commit": "46af4186f21cd1925d41fd0275883be18755d212",
+      "path": "src/interfaces/uniswapv3/pool/IUniswapV3PoolActions.sol",
       "blob": "101ca93d6e03fc63a340933729344ca50f0832f4"
     },
-    "1138570bc167": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/FixedPoint96.sol",
-      "blob": "1138570bc167aaf339de5de829f134b49c5497f9"
+    "1217f8ff9f70": {
+      "repository": "compound-finance/compound-protocol",
+      "commit": "f244c2270f905287cb731d8fd3693ac77f8404f9",
+      "path": "contracts/SafeMath.sol",
+      "blob": "1217f8ff9f704f2aadee78d763ea962c354a7bb7"
     },
     "1a59de42c5d0": {
       "repository": "Uniswap/v3-core",
@@ -295,17 +276,17 @@
       "path": "contracts/UniswapV3Pool.sol",
       "blob": "1b88538ae1c5406630046390843b92f38d046ad1"
     },
+    "1ea39c692f5b": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/IMulticall.sol",
+      "blob": "1ea39c692f5bf92f47208cc11195b80fe0eacd2a"
+    },
     "1eb423f63bd3": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/token/ERC721/IERC721.sol",
       "blob": "1eb423f63bd30a984c44bfba460c587c32c47a0d"
-    },
-    "1f419229f028": {
-      "repository": "celo-org/celo-monorepo",
-      "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
-      "path": "packages/protocol/contracts/uniswap/interfaces/IUniswapV2Pair.sol",
-      "blob": "1f419229f028733e0b921efee4438ce67f265008"
     },
     "20c17044f667": {
       "repository": "ronin-chain/katana-v3-contracts",
@@ -313,21 +294,21 @@
       "path": "src/periphery/interfaces/IPeripheryImmutableState.sol",
       "blob": "20c17044f667326f19fa61375374007950fedf42"
     },
-    "216d5ddf2e57": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/interfaces/callback/IUniswapV3SwapCallback.sol",
-      "blob": "216d5ddf2e579161ac56fabc02d845459c80d777"
-    },
     "272851b2f81b": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
       "path": "contracts/utils/structs/EnumerableSet.sol",
       "blob": "272851b2f81b2c71dcf5115a063892668f38275f"
     },
+    "282a00e88986": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/IERC721Permit.sol",
+      "blob": "282a00e889867f64a404b8078596acfc85231b4d"
+    },
     "2bba6afbc97f": {
       "repository": "ronin-chain/katana-operation-contracts",
-      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
       "path": "src/aggregate-router/modules/PaymentsImmutables.sol",
       "blob": "2bba6afbc97fab8d25b297ab47f3b96a23ad06a2"
     },
@@ -337,11 +318,11 @@
       "path": "contracts/utils/Context.sol",
       "blob": "2d517987d5b49aee1a37634c95a69dae911b9d7a"
     },
-    "2d637eb4eb26": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/BitMath.sol",
-      "blob": "2d637eb4eb26f5c61d7a6b8ac49b915504333d28"
+    "2d8b60041d09": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
+      "path": "src/aggregate-router/modules/Permit2Payments.sol",
+      "blob": "2d8b60041d095b710575c47ccf598ab9f4deb3bd"
     },
     "2eeb24b7812c": {
       "repository": "Uniswap/v3-core",
@@ -349,17 +330,29 @@
       "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
       "blob": "2eeb24b7812cef9cb98413b76691966e786031e2"
     },
+    "2fa16ff47c1b": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
+      "path": "src/aggregate-router/modules/katana/v3/V3Path.sol",
+      "blob": "2fa16ff47c1b8bb0f8d0d4cb25acd05d61a935e6"
+    },
     "3101c4f1a7b3": {
       "repository": "ronin-chain/katana-v3-contracts",
       "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
       "path": "src/periphery/base/PoolInitializer.sol",
       "blob": "3101c4f1a7b348a4db5f42a68bcec59ffcf12ce4"
     },
-    "34d6e4c7e269": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/UnsafeMath.sol",
-      "blob": "34d6e4c7e2692d2edc02fa89862192e681bfb424"
+    "31981a3d62f9": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/ISelfPermit.sol",
+      "blob": "31981a3d62f97d3013b7f11d783676a967f6804c"
+    },
+    "3603b3af79b9": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
+      "path": "src/aggregate-router/libraries/Constants.sol",
+      "blob": "3603b3af79b9943ceaccc6b3efa78e66574e8cbe"
     },
     "3b77ba02ba7b": {
       "repository": "Arr00-Blurr/compound-protocol",
@@ -379,11 +372,11 @@
       "path": "contracts/Governance/GovernorBravoInterfaces.sol",
       "blob": "4180878e9cc17f4954183cdf441a59d28221ad8d"
     },
-    "41ede9d660b2": {
-      "repository": "OffchainLabs/arbitrum-classic",
-      "commit": "d730bc40932c24e239577d16b1737455ab75ee26",
-      "path": "packages/arb-bridge-eth/contracts/interfaces/IERC20.sol",
-      "blob": "41ede9d660b2dfee65788266a6dc867d48e0ff31"
+    "421b1f357d10": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/TransferHelper.sol",
+      "blob": "421b1f357d10f6850f3c5e175eddc73e295fd775"
     },
     "48a5beba6436": {
       "repository": "Uniswap/v3-core",
@@ -391,11 +384,11 @@
       "path": "contracts/interfaces/pool/IUniswapV3PoolState.sol",
       "blob": "48a5beba643694a4d10612a3a1d6809fbb4a7fe8"
     },
-    "5130ac00df1b": {
-      "repository": "Uniswap/v3-core",
-      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-      "path": "contracts/libraries/Oracle.sol",
-      "blob": "5130ac00df1bf6ac83d926f93e6bb486e88c3a00"
+    "4a7e05197625": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/BytesLib.sol",
+      "blob": "4a7e051976251fb8605ac96a17e827031b31659b"
     },
     "545b136a90f1": {
       "repository": "Arr00-Blurr/compound-protocol",
@@ -409,17 +402,71 @@
       "path": "contracts/SwapRouter.sol",
       "blob": "5573529839010ab090e88c3141540a1bd118b9f7"
     },
+    "57d21d705c50": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/TickBitmap.sol",
+      "blob": "57d21d705c50c5a33c4fb7f2db3a600d3bc2b660"
+    },
+    "5e58e8f4303d": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/Path.sol",
+      "blob": "5e58e8f4303da527393a219f6b4e618e67f30c3e"
+    },
     "5ff67fd4d7ae": {
       "repository": "ronin-chain/katana-operation-contracts",
       "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
       "path": "src/aggregate-router/libraries/Commands.sol",
       "blob": "5ff67fd4d7aeb2949120266d47df1733d80a6f57"
     },
-    "64e8fd9b3c5e": {
-      "repository": "Uniswap/v3-core",
-      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-      "path": "contracts/libraries/TickMath.sol",
-      "blob": "64e8fd9b3c5e40e39e1ba9d3811d31c5e43decfe"
+    "6325a39731a7": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/INonfungiblePositionManager.sol",
+      "blob": "6325a39731a7025340d8ec06e1bda9b0267ff34d"
+    },
+    "63b42c294e82": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/FixedPoint96.sol",
+      "blob": "63b42c294e821eb038793b7f1afb9ae0427f0691"
+    },
+    "6459515e840a": {
+      "repository": "Uniswap/v2-core",
+      "commit": "816075049f811f1b061bca81d5d040b96f4c07eb",
+      "path": "contracts/interfaces/IUniswapV2Pair.sol",
+      "blob": "6459515e840a682966196fa870ca4dabff3b2944"
+    },
+    "661e95a7b80c": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/BitMath.sol",
+      "blob": "661e95a7b80c2bb205667837366e11996012a5d2"
+    },
+    "6d6948b10600": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/FixedPoint128.sol",
+      "blob": "6d6948b106003cf35f8f877b7913cbc933133ed9"
+    },
+    "6d7d8b4872c0": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
+      "path": "src/aggregate-router/interfaces/external/IWETH9.sol",
+      "blob": "6d7d8b4872c0da30409858b36d8984e28b8350f8"
+    },
+    "6f87f3a18132": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/interfaces/IERC20Minimal.sol",
+      "blob": "6f87f3a181327ea51db572ee0f438538c6bef2a1"
+    },
+    "72cb8b7ce36b": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/ChainId.sol",
+      "blob": "72cb8b7ce36b8c2e2800dc0d28b250536108b71d"
     },
     "732cc02b109a": {
       "repository": "safe-fndn/safe-smart-account",
@@ -433,29 +480,41 @@
       "path": "contracts/UniswapV3PoolDeployer.sol",
       "blob": "752bb196d4b9a64fdb843385dbba330197d550a7"
     },
+    "7597bb3d8bc3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+      "path": "contracts/utils/Address.sol",
+      "blob": "7597bb3d8bc392c0fc3777e26c501c95bc92280e"
+    },
     "75b04581f7a2": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
       "path": "contracts/token/ERC721/extensions/IERC721Enumerable.sol",
       "blob": "75b04581f7a2e0338a4534c8446c48f42c8bdad7"
     },
-    "7c44280f07aa": {
+    "7d1019563f5a": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "6d415c508be94ef8391ed6525df365452466da76",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
       "path": "contracts/token/ERC20/IERC20.sol",
-      "blob": "7c44280f07aa184f6f7506e335c9da0db8c30469"
-    },
-    "7c781dbafd08": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/interfaces/IERC20Minimal.sol",
-      "blob": "7c781dbafd0895434bbc9e31cc8b2db1bb6318d1"
+      "blob": "7d1019563f5af1dfe72a771bc4d5fac1ffc8afd9"
     },
     "7deb70c13c49": {
       "repository": "Uniswap/v3-core",
       "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
       "path": "contracts/interfaces/pool/IUniswapV3PoolEvents.sol",
       "blob": "7deb70c13c499d801f30626f109f63bb2fbc9f7a"
+    },
+    "809ab4950a4b": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/IPeripheryPayments.sol",
+      "blob": "809ab4950a4b34226adecc288bdd02a8601ea219"
+    },
+    "823225c5dea3": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/INonfungibleTokenPositionDescriptor.sol",
+      "blob": "823225c5dea3d6c9316e484d261d3471070380b7"
     },
     "8776a081aa23": {
       "repository": "Uniswap/v3-core",
@@ -469,11 +528,11 @@
       "path": "src/aggregate-router/modules/katana/v3/V3SwapRouter.sol",
       "blob": "8a5e6d6166ae2dde6025adf12bc225974a1338d8"
     },
-    "8aa1e5b61ce8": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/FixedPoint128.sol",
-      "blob": "8aa1e5b61ce8db63b3205555cbba846c5fa5c2b0"
+    "8aeb935ed283": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/LiquidityMath.sol",
+      "blob": "8aeb935ed283f93c952ec10f3ff59ea6d2f6ce8f"
     },
     "8b39faaee4a3": {
       "repository": "ronin-chain/katana-operation-contracts",
@@ -481,17 +540,29 @@
       "path": "src/aggregate-router/modules/katana/v2/V2SwapRouter.sol",
       "blob": "8b39faaee4a30c1fc900a28be4c8443f0e561b05"
     },
+    "8c239942ac89": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC1271.sol",
+      "blob": "8c239942ac894b2ebb9b192646b5b0e455cd968f"
+    },
     "8c953638d384": {
       "repository": "Uniswap/v3-core",
       "commit": "c3e2b3c938f50892b413422901cdac99a27c43a2",
       "path": "contracts/interfaces/IUniswapV3Factory.sol",
       "blob": "8c953638d3844cf9c8470f007e74fed5c8d8392d"
     },
-    "934e726462a7": {
-      "repository": "Uniswap/v3-core",
-      "commit": "fc783807986595e33cdfc6ac82479535a42b955b",
-      "path": "contracts/libraries/FullMath.sol",
-      "blob": "934e726462a7bace5783f4991e1e4a7cc5bc3365"
+    "90304d2a610c": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/SelfPermit.sol",
+      "blob": "90304d2a610cdb9cd81c4f43dfafda59809a7461"
+    },
+    "96895f5b71cb": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/TransferHelper.sol",
+      "blob": "96895f5b71cbcc7a7d75bb35ec1232ffdb47d6fe"
     },
     "979554d4061c": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -499,23 +570,17 @@
       "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
       "blob": "979554d4061c5a62d62524fbfda1c16307f4a7cb"
     },
-    "9ac414611c86": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/Position.sol",
-      "blob": "9ac414611c8613a3430e195f46f8838b2f50bfa0"
+    "9886e4a829f9": {
+      "repository": "AztecProtocol/aztec-connect-bridges",
+      "commit": "46af4186f21cd1925d41fd0275883be18755d212",
+      "path": "src/interfaces/uniswapv3/callback/IUniswapV3SwapCallback.sol",
+      "blob": "9886e4a829f921171c97af46c5b1b78780b01713"
     },
-    "9b1bfc70990f": {
-      "repository": "agglayer/vault-bridge",
-      "commit": "950e64d4ead51a8ef911829ab8775a18533a8cca",
-      "path": "src/etc/IWETH9.sol",
-      "blob": "9b1bfc70990f74ba352d7e9c878b2dafa0ef1851"
-    },
-    "a3669850aee1": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/LiquidityMath.sol",
-      "blob": "a3669850aee142bbca81902f1b75c65d590e41e5"
+    "a19535a30046": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "a19535a30046f312e5208ab5b2ff7eb351a0f72d"
     },
     "a416559a9f40": {
       "repository": "Uniswap/v3-core",
@@ -523,11 +588,47 @@
       "path": "contracts/interfaces/callback/IUniswapV3FlashCallback.sol",
       "blob": "a416559a9f40e972957999796bc34be11e411f40"
     },
+    "a46f0ac83fac": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/Multicall.sol",
+      "blob": "a46f0ac83facf2162ab89bdf6efbd27dc9dc74c6"
+    },
+    "a5101c92d37b": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/ERC721Permit.sol",
+      "blob": "a5101c92d37b704d562fed4b00ee219ef174c2d2"
+    },
+    "a69fae52071a": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/PeripheryPayments.sol",
+      "blob": "a69fae52071a2f09dcfba443072883f12bb19b33"
+    },
+    "a817e1cffd3f": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/external/IERC20PermitAllowed.sol",
+      "blob": "a817e1cffd3fdf2ddc63436f0a9656edd64fa37e"
+    },
     "aadec0e1605e": {
       "repository": "Uniswap/v3-core",
       "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
       "path": "contracts/interfaces/callback/IUniswapV3MintCallback.sol",
       "blob": "aadec0e1605e4f51d1d47514306143e638c0e215"
+    },
+    "ac05cac0a562": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/BlockTimestamp.sol",
+      "blob": "ac05cac0a562db4bad694d41519ff020013762de"
+    },
+    "acd27fd3c628": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/TickMath.sol",
+      "blob": "acd27fd3c628d2e3149ab0d670540270a75a9e55"
     },
     "afc86bbe5db2": {
       "repository": "ronin-chain/katana-v3-contracts",
@@ -535,17 +636,35 @@
       "path": "src/periphery/base/PeripheryImmutableState.sol",
       "blob": "afc86bbe5db24f35d0fe2262ceffe4d00f7feced"
     },
-    "b6baf5b1e12f": {
-      "repository": "Uniswap/v3-core",
-      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-      "path": "contracts/libraries/SqrtPriceMath.sol",
-      "blob": "b6baf5b1e12fb5a80c1183fc95814c1072818ae8"
+    "b0ce45181edd": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/SqrtPriceMath.sol",
+      "blob": "b0ce45181eddd61aff97c350b155cb17605e667c"
     },
-    "c04f3782b240": {
-      "repository": "Uniswap/v3-core",
-      "commit": "d6fe02aaa6b4e30e03b5a0efa51b200e3c7e6bdc",
-      "path": "contracts/libraries/Tick.sol",
-      "blob": "c04f3782b240bb43beb35f1be8793893abca03fa"
+    "bcc4ea938409": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/Tick.sol",
+      "blob": "bcc4ea938409cbd036daa736a0a2b7dc926049ec"
+    },
+    "bd293a81056d": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/base/PeripheryValidation.sol",
+      "blob": "bd293a81056d13c12c80f13be058054cbfc09bd0"
+    },
+    "c2146992de16": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/interfaces/IPoolInitializer.sol",
+      "blob": "c2146992de165cd8739cc4f0473ab8886bd4f497"
+    },
+    "c3e82091dadb": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/LiquidityAmounts.sol",
+      "blob": "c3e82091dadb76260af3a7bafdbcd7ea24f5d0d6"
     },
     "c4258e6e4fa2": {
       "repository": "Uniswap/v3-core",
@@ -553,23 +672,35 @@
       "path": "contracts/UniswapV3Factory.sol",
       "blob": "c4258e6e4fa273438296923d72b9dd25ac6d3f28"
     },
-    "caabda2d5aff": {
-      "repository": "Uniswap/v3-core",
-      "commit": "7445e61f17a7c1233bcabcdc920f0473793f6d78",
-      "path": "contracts/libraries/SwapMath.sol",
-      "blob": "caabda2d5aff4601bb6c255862e3ee652877ebfa"
+    "ca081bf69912": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/SafeCast.sol",
+      "blob": "ca081bf6991292d39bf0dc76cede136b45d9f76e"
     },
-    "d0ef753e12b5": {
-      "repository": "Uniswap/v3-core",
-      "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
-      "path": "contracts/libraries/TickBitmap.sol",
-      "blob": "d0ef753e12b59b6efc94e7987639383bfa2f25c5"
+    "d02161994783": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/PositionKey.sol",
+      "blob": "d021619947833b09af8687ae1b053147a1d649bd"
     },
     "d15e0dd08582": {
       "repository": "ronin-chain/katana-operation-contracts",
-      "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
       "path": "src/aggregate-router/modules/Payments.sol",
       "blob": "d15e0dd085825f4f939e8639269cf26aa45b76a3"
+    },
+    "d42f81ce8b27": {
+      "repository": "compound-finance/compound-protocol",
+      "commit": "55729b31b85220ab42e26d7b6db0ff6c0eb0dd23",
+      "path": "contracts/SafeMath.sol",
+      "blob": "d42f81ce8b2717646a6acd88cc5f9f8185cadb7a"
+    },
+    "d472eec338a0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/token/ERC721/IERC721Receiver.sol",
+      "blob": "d472eec338a00e435611b5f4ec95c9ab8f6d415a"
     },
     "d84e2b059f2e": {
       "repository": "Uniswap/v3-core",
@@ -583,11 +714,29 @@
       "path": "contracts/NoDelegateCall.sol",
       "blob": "daac1671a4c72a826ae7acda2acb0e879eb27be1"
     },
+    "dbc817c2ec80": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/LowGasSafeMath.sol",
+      "blob": "dbc817c2ec806775b7c9b213c6db0dffe00ea8cd"
+    },
+    "dd49f3fbfe0c": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/Position.sol",
+      "blob": "dd49f3fbfe0c3082526488a4b3256a76441a86a0"
+    },
     "dff6307ef81f": {
       "repository": "Uniswap/v3-core",
       "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/IUniswapV3Pool.sol",
       "blob": "dff6307ef81f086e44f8fd8e31411ae1a773d97c"
+    },
+    "e5ab5428ce9d": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/periphery/libraries/CallbackValidation.sol",
+      "blob": "e5ab5428ce9d6343bdfec3b17cf634add03aab8a"
     },
     "f486ba94eacc": {
       "repository": "Uniswap/v3-periphery",
@@ -595,23 +744,41 @@
       "path": "contracts/NonfungiblePositionManager.sol",
       "blob": "f486ba94eacc78e71a65227999e5f3080de4f230"
     },
+    "f62f84676fa3": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/UnsafeMath.sol",
+      "blob": "f62f84676fa39f98b4ae1f7a073fc767ecf78aaa"
+    },
     "f7c87028768a": {
       "repository": "Uniswap/v3-core",
       "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
       "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
       "blob": "f7c87028768ab9490b4bc281ef0179d83a1e1252"
     },
-    "f93d219f21bd": {
-      "repository": "OpenZeppelin/openzeppelin-contracts",
-      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
-      "path": "contracts/token/ERC721/IERC721Receiver.sol",
-      "blob": "f93d219f21bd9c817755d1500100013ef1ca310d"
-    },
     "fa4488edf9a3": {
       "repository": "Rari-Capital/solmate",
       "commit": "134f10afd9c996cee217aec6274839f56c742eac",
       "path": "src/utils/SafeTransferLib.sol",
       "blob": "fa4488edf9a35ab5612090e4e63efc8c79e05795"
+    },
+    "fab5d38cdb90": {
+      "repository": "ronin-chain/katana-operation-contracts",
+      "commit": "ab399b12ede7d28cd0cb5765f7d75929746ff563",
+      "path": "src/aggregate-router/modules/katana/v3/BytesLib.sol",
+      "blob": "fab5d38cdb90bbb8b249ec68669d33dae6e8e557"
+    },
+    "fec4d017a23e": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/Oracle.sol",
+      "blob": "fec4d017a23eee4c025c01f1c814fe5841fc3585"
+    },
+    "ffc92b9620fd": {
+      "repository": "ronin-chain/katana-v3-contracts",
+      "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+      "path": "src/core/libraries/SwapMath.sol",
+      "blob": "ffc92b9620fd849abe2b6b7c162b18fa65d767a7"
     }
   },
   "units": {
@@ -631,7 +798,9 @@
       "name": "IERC1271",
       "kind": "interface",
       "lines": 7,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "8c239942ac89", "lines": [10, 17] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
     },
     "8ba5ffb53834": {
       "name": "SignatureVerification",
@@ -787,9 +956,10 @@
       "kind": "interface",
       "lines": 43,
       "status": "identical",
-      "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+      "audited": { "object": "6f87f3a18132", "lines": [6, 48] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ]
     },
@@ -892,7 +1062,15 @@
       "name": "SafeMath",
       "kind": "library",
       "lines": 168,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "d42f81ce8b27", "lines": [19, 164] },
+      "reports": [
+        "openzeppelin-compound-alpha-governance-2020-02",
+        "trailofbits-compound-governance-2020-02"
+      ],
+      "added": [[79, 100]],
+      "removed": [],
+      "covered": 160
     },
     "db167b498ad1": {
       "name": "Timelock",
@@ -972,7 +1150,10 @@
       "lines": 98,
       "status": "identical",
       "audited": { "object": "101ca93d6e03", "lines": [6, 92] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "solidified-aztec-liquity-trove-bridge-ii-2022-11-21"
+      ]
     },
     "df7bd0675943": {
       "name": "IUniswapV3PoolOwnerActions",
@@ -1023,61 +1204,53 @@
       "kind": "library",
       "lines": 41,
       "status": "identical",
-      "audited": { "object": "092a067f397a", "lines": [6, 36] },
-      "reports": [
-        "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
-      ]
+      "audited": { "object": "dbc817c2ec80", "lines": [6, 46] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "05266917f0d5": {
       "name": "SafeCast",
       "kind": "library",
       "lines": 23,
       "status": "identical",
-      "audited": { "object": "d84e2b059f2e", "lines": [6, 25] },
-      "reports": [
-        "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
-      ]
+      "audited": { "object": "ca081bf69912", "lines": [6, 28] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "d4a2af7bfb0e": {
       "name": "TickMath",
       "kind": "library",
       "lines": 199,
       "status": "identical",
-      "audited": { "object": "64e8fd9b3c5e", "lines": [7, 248] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "audited": { "object": "acd27fd3c628", "lines": [7, 248] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10"
+      ]
     },
     "ad44de351743": {
       "name": "LiquidityMath",
       "kind": "library",
       "lines": 13,
       "status": "identical",
-      "audited": { "object": "a3669850aee1", "lines": [5, 15] },
-      "reports": [
-        "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
-      ]
+      "audited": { "object": "8aeb935ed283", "lines": [5, 17] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "93d9cc12a404": {
       "name": "Tick",
       "kind": "library",
       "lines": 172,
-      "status": "differs",
-      "audited": { "object": "c04f3782b240", "lines": [12, 155] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"],
-      "added": [[14, 24], [104, 106], [120, 128], [159, 161], [166, 168]],
-      "removed": [[120, 104, 108]],
-      "covered": 151
+      "status": "identical",
+      "audited": { "object": "bcc4ea938409", "lines": [12, 185] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "de7dd3abbbce": {
       "name": "BitMath",
       "kind": "library",
       "lines": 89,
       "status": "identical",
-      "audited": { "object": "2d637eb4eb26", "lines": [6, 98] },
+      "audited": { "object": "661e95a7b80c", "lines": [6, 98] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ]
     },
@@ -1086,9 +1259,10 @@
       "kind": "library",
       "lines": 70,
       "status": "identical",
-      "audited": { "object": "d0ef753e12b5", "lines": [9, 76] },
+      "audited": { "object": "57d21d705c50", "lines": [9, 76] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ]
     },
@@ -1097,17 +1271,21 @@
       "kind": "library",
       "lines": 118,
       "status": "identical",
-      "audited": { "object": "934e726462a7", "lines": [7, 116] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "audited": { "object": "0d6adb3febaf", "lines": [7, 116] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10"
+      ]
     },
     "db4870aea40a": {
       "name": "FixedPoint128",
       "kind": "library",
       "lines": 3,
       "status": "identical",
-      "audited": { "object": "8aa1e5b61ce8", "lines": [6, 8] },
+      "audited": { "object": "6d6948b10600", "lines": [6, 8] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ]
     },
@@ -1116,50 +1294,26 @@
       "kind": "library",
       "lines": 78,
       "status": "identical",
-      "audited": { "object": "9ac414611c86", "lines": [11, 79] },
-      "reports": ["trailofbits-uniswap-v3-core-2021-03"]
+      "audited": { "object": "dd49f3fbfe0c", "lines": [11, 79] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "ea9e8e52b91e": {
       "name": "Oracle",
       "kind": "library",
       "lines": 315,
-      "status": "differs",
-      "audited": { "object": "5130ac00df1b", "lines": [11, 311] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"],
-      "added": [
-        [7, 7],
-        [30, 31],
-        [45, 50],
-        [242, 242],
-        [246, 246],
-        [254, 275],
-        [297, 297],
-        [301, 301],
-        [303, 303],
-        [311, 311]
-      ],
-      "removed": [
-        [7, 7, 7],
-        [30, 28, 28],
-        [45, 42, 42],
-        [242, 239, 239],
-        [246, 245, 245],
-        [253, 252, 266],
-        [254, 268, 268],
-        [297, 290, 290],
-        [301, 294, 294],
-        [303, 296, 297]
-      ],
-      "covered": 281
+      "status": "identical",
+      "audited": { "object": "fec4d017a23e", "lines": [11, 324] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "4afb833fe729": {
       "name": "IERC20Minimal",
       "kind": "interface",
       "lines": 47,
       "status": "identical",
-      "audited": { "object": "7c781dbafd08", "lines": [6, 48] },
+      "audited": { "object": "6f87f3a18132", "lines": [6, 48] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ]
     },
@@ -1168,36 +1322,27 @@
       "kind": "library",
       "lines": 4,
       "status": "identical",
-      "audited": { "object": "1138570bc167", "lines": [7, 10] },
+      "audited": { "object": "63b42c294e82", "lines": [7, 10] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
+        "code4rena-ronin-katana-v3-2024-10"
       ]
     },
     "5024ee9859f6": {
       "name": "UnsafeMath",
       "kind": "library",
       "lines": 12,
-      "status": "differs",
-      "audited": { "object": "34d6e4c7e269", "lines": [6, 13] },
-      "reports": [
-        "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
-      ],
-      "added": [[7, 9]],
-      "removed": [[7, 4, 5]],
-      "covered": 9
+      "status": "identical",
+      "audited": { "object": "f62f84676fa3", "lines": [6, 17] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "90ad2da4d98a": {
       "name": "SqrtPriceMath",
       "kind": "library",
       "lines": 215,
-      "status": "differs",
-      "audited": { "object": "b6baf5b1e12f", "lines": [13, 215] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"],
-      "added": [[150, 151]],
-      "removed": [],
-      "covered": 214
+      "status": "identical",
+      "audited": { "object": "b0ce45181edd", "lines": [13, 217] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "ce6036b55095": {
       "name": "IUniswapV3MintCallback",
@@ -1212,9 +1357,10 @@
       "kind": "library",
       "lines": 16,
       "status": "identical",
-      "audited": { "object": "0ba362bf2665", "lines": [8, 19] },
+      "audited": { "object": "96895f5b71cb", "lines": [8, 19] },
       "reports": [
         "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10",
         "trailofbits-uniswap-v3-core-2021-03"
       ],
       "findings": { "trailofbits-uniswap-v3-core-2021-03": ["TOB-UNI-009"] }
@@ -1224,19 +1370,19 @@
       "kind": "library",
       "lines": 90,
       "status": "identical",
-      "audited": { "object": "caabda2d5aff", "lines": [9, 87] },
-      "reports": ["abdk-uniswap-v3-core-2021-03"]
+      "audited": { "object": "ffc92b9620fd", "lines": [9, 87] },
+      "reports": [
+        "abdk-uniswap-v3-core-2021-03",
+        "code4rena-ronin-katana-v3-2024-10"
+      ]
     },
     "60015c6fa2ba": {
       "name": "IUniswapV3SwapCallback",
       "kind": "interface",
       "lines": 16,
       "status": "identical",
-      "audited": { "object": "216d5ddf2e57", "lines": [6, 16] },
-      "reports": [
-        "abdk-uniswap-v3-core-2021-03",
-        "trailofbits-uniswap-v3-core-2021-03"
-      ]
+      "audited": { "object": "9886e4a829f9", "lines": [6, 17] },
+      "reports": ["solidified-aztec-liquity-trove-bridge-ii-2022-11-21"]
     },
     "a724e854e1b5": {
       "name": "IUniswapV3FlashCallback",
@@ -1418,25 +1564,20 @@
       "name": "IERC20",
       "kind": "interface",
       "lines": 71,
-      "status": "differs",
-      "audited": { "object": "7c44280f07aa", "lines": [7, 23] },
-      "reports": ["contracts__audits__2018-10"],
-      "added": [[23, 23]],
-      "removed": [[23, 3, 3]],
-      "covered": 70
+      "status": "identical",
+      "audited": { "object": "7d1019563f5a", "lines": [9, 79] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
     },
     "cfd9b1798641": {
       "name": "IWETH9",
       "kind": "interface",
       "lines": 7,
       "status": "identical",
-      "audited": { "object": "9b1bfc70990f", "lines": [10, 16] },
-      "reports": [
-        "certora-vault-bridge-2025-05",
-        "certora-vault-bridge-fv-2025-06",
-        "certora-vault-bridge-v1-1-2025-11",
-        "sigmaprime-yield-exposed-token-2025-04"
-      ]
+      "audited": { "object": "6d7d8b4872c0", "lines": [7, 13] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "ef0267624314": {
       "name": "IEIP712",
@@ -1489,7 +1630,12 @@
       "name": "Constants",
       "kind": "library",
       "lines": 23,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "3603b3af79b9", "lines": [8, 40] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [],
+      "removed": [[1, 1, 4], [6, 10, 15]],
+      "covered": 23
     },
     "ff4da44d17a2": {
       "name": "ActionConstants",
@@ -1531,15 +1677,20 @@
       "name": "Permit2Payments",
       "kind": "abstract",
       "lines": 37,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "2d8b60041d09", "lines": [10, 50] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[17, 17]],
+      "removed": [[17, 16, 16]],
+      "covered": 36
     },
     "338dd97e6505": {
       "name": "IUniswapV2Pair",
       "kind": "interface",
       "lines": 50,
       "status": "identical",
-      "audited": { "object": "1f419229f028", "lines": [3, 55] },
-      "reports": ["trail-of-bits-celo-l2-2024-12-19"]
+      "audited": { "object": "6459515e840a", "lines": [3, 53] },
+      "reports": ["dapp-org-uniswap-v2-2020-05"]
     },
     "171dfeda963d": {
       "name": "UniswapV2Library",
@@ -1690,13 +1841,20 @@
       "name": "BytesLib",
       "kind": "library",
       "lines": 73,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "fab5d38cdb90", "lines": [8, 100] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[1, 2], [66, 71]],
+      "removed": [[55, 59, 69], [66, 81, 91]],
+      "covered": 69
     },
     "a857511a6247": {
       "name": "V3Path",
       "kind": "library",
       "lines": 36,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "2fa16ff47c1b", "lines": [8, 43] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "7615c17c1053": {
       "name": "SafeCast_1",
@@ -1840,13 +1998,17 @@
       "name": "IPoolInitializer",
       "kind": "interface",
       "lines": 15,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "c2146992de16", "lines": [8, 20] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "fcf64d744ef9": {
       "name": "IPeripheryPayments",
       "kind": "interface",
       "lines": 23,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "809ab4950a4b", "lines": [6, 24] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "2bd97b603d69": {
       "name": "IPeripheryImmutableState",
@@ -1865,7 +2027,12 @@
       "lines": 11,
       "status": "identical",
       "audited": { "object": "732cc02b109a", "lines": [5, 15] },
-      "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
     },
     "6052ff08685e": {
       "name": "IERC721",
@@ -1898,13 +2065,20 @@
       "name": "IERC721Permit",
       "kind": "interface",
       "lines": 25,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "282a00e88986", "lines": [8, 27] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "cd23b102fb09": {
       "name": "INonfungiblePositionManager",
       "kind": "interface",
       "lines": 164,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "6325a39731a7", "lines": [17, 174] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[158, 162]],
+      "removed": [[61, 61, 66]],
+      "covered": 163
     },
     "e15413b9a9e5": {
       "name": "PositionInfoLibrary",
@@ -2035,7 +2209,9 @@
       "name": "IMulticall",
       "kind": "interface",
       "lines": 7,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "1ea39c692f5b", "lines": [7, 13] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "804ae9f8790a": {
       "name": "IMulticallExtended",
@@ -2047,7 +2223,9 @@
       "name": "ISelfPermit",
       "kind": "interface",
       "lines": 71,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "31981a3d62f9", "lines": [6, 56] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "62aeef498c71": {
       "name": "ISwapRouter02",
@@ -2100,21 +2278,31 @@
       "name": "IERC20",
       "kind": "interface",
       "lines": 70,
-      "status": "identical",
-      "audited": { "object": "41ede9d660b2", "lines": [11, 80] },
-      "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
+      "status": "differs",
+      "audited": { "object": "a19535a30046", "lines": [9, 78] },
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ],
+      "added": [[18, 18], [54, 54]],
+      "removed": [[18, 32, 32], [54, 68, 68]],
+      "covered": 68
     },
     "87f8d353251c": {
       "name": "TransferHelper",
       "kind": "library",
       "lines": 55,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "421b1f357d10", "lines": [6, 47] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "5c7491e76d37": {
       "name": "PeripheryPayments",
       "kind": "abstract",
       "lines": 58,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "a69fae52071a", "lines": [13, 63] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "4a63bde82807": {
       "name": "PeripheryPaymentsExtended",
@@ -2162,19 +2350,25 @@
       "name": "BlockTimestamp",
       "kind": "abstract",
       "lines": 7,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "ac05cac0a562", "lines": [6, 12] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "e400903a5742": {
       "name": "BytesLib",
       "kind": "library",
       "lines": 91,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "4a7e05197625", "lines": [11, 95] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "e8885accd552": {
       "name": "Path",
       "kind": "library",
       "lines": 63,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "5e58e8f4303d", "lines": [7, 61] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "a4124bbf80de": {
       "name": "PoolAddress",
@@ -2203,7 +2397,12 @@
       "name": "CallbackValidation",
       "kind": "library",
       "lines": 29,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "e5ab5428ce9d", "lines": [8, 35] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[12, 12], [23, 23], [25, 25]],
+      "removed": [[12, 10, 11], [23, 22, 22], [25, 24, 24]],
+      "covered": 26
     },
     "52c595b90978": {
       "name": "V3SwapRouter",
@@ -2281,13 +2480,17 @@
       "name": "Multicall",
       "kind": "abstract",
       "lines": 20,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "a46f0ac83fac", "lines": [9, 30] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "e36328dffc44": {
       "name": "PeripheryValidation",
       "kind": "abstract",
       "lines": 6,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "bd293a81056d", "lines": [6, 11] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "922dc01600fd": {
       "name": "PeripheryValidationExtended",
@@ -2313,13 +2516,17 @@
       "name": "IERC20PermitAllowed",
       "kind": "interface",
       "lines": 22,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "a817e1cffd3f", "lines": [6, 27] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "4664291b7820": {
       "name": "SelfPermit",
       "kind": "abstract",
       "lines": 50,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "90304d2a610c", "lines": [14, 54] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "36ee06c092a7": {
       "name": "SwapRouter02",
@@ -2331,7 +2538,12 @@
       "name": "Multicall",
       "kind": "abstract",
       "lines": 20,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "a46f0ac83fac", "lines": [9, 30] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[2, 2]],
+      "removed": [[2, 2, 2]],
+      "covered": 19
     },
     "f04119ddc474": {
       "name": "Context",
@@ -2339,7 +2551,10 @@
       "lines": 10,
       "status": "differs",
       "audited": { "object": "2d517987d5b4", "lines": [16, 24] },
-      "reports": ["contracts__audits__2023-10-v5.0"],
+      "reports": [
+        "contracts__audits__2022-10-ERC4626",
+        "contracts__audits__2023-10-v5.0"
+      ],
       "added": [[1, 1], [5, 6]],
       "removed": [[1, 1, 1], [5, 5, 5]],
       "covered": 7
@@ -2359,18 +2574,36 @@
       "name": "SafeMath",
       "kind": "library",
       "lines": 197,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "1217f8ff9f70", "lines": [19, 161] },
+      "reports": ["openzeppelin-compound-timelock-2019-10"],
+      "added": [
+        [1, 56],
+        [64, 64],
+        [84, 85],
+        [118, 119],
+        [135, 136],
+        [154, 154],
+        [174, 174],
+        [193, 193]
+      ],
+      "removed": [
+        [85, 27, 27],
+        [119, 84, 84],
+        [136, 121, 121],
+        [154, 44, 46],
+        [174, 103, 106],
+        [193, 139, 139]
+      ],
+      "covered": 165
     },
     "9f1625bb6f8b": {
       "name": "Address",
       "kind": "library",
       "lines": 182,
       "status": "differs",
-      "audited": { "object": "07a6de4542ee", "lines": [9, 236] },
-      "reports": [
-        "code4rena-zksync-era-2023-10",
-        "code4rena-zksync-era-system-contracts-2023-03"
-      ],
+      "audited": { "object": "7597bb3d8bc3", "lines": [9, 236] },
+      "reports": ["contracts__audits__2022-10-ERC4626"],
       "added": [
         [19, 26],
         [72, 72],
@@ -2426,8 +2659,11 @@
       "kind": "interface",
       "lines": 12,
       "status": "identical",
-      "audited": { "object": "f93d219f21bd", "lines": [11, 24] },
-      "reports": ["contracts__audits__2023-10-v5.0"]
+      "audited": { "object": "d472eec338a0", "lines": [11, 28] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
     },
     "d1212597348d": {
       "name": "ERC721",
@@ -2439,19 +2675,25 @@
       "name": "ChainId",
       "kind": "library",
       "lines": 9,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "72cb8b7ce36b", "lines": [5, 13] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "b0a377b19c85": {
       "name": "IERC1271",
       "kind": "interface",
       "lines": 10,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "8c239942ac89", "lines": [10, 17] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
     },
     "aaba7035c139": {
       "name": "ERC721Permit",
       "kind": "abstract",
       "lines": 73,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "a5101c92d37b", "lines": [15, 78] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "e8895f6d2b4b": {
       "name": "PoolInitializer",
@@ -2474,31 +2716,56 @@
       "name": "PeripheryPayments",
       "kind": "abstract",
       "lines": 58,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "a69fae52071a", "lines": [13, 63] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[6, 6], [17, 21]],
+      "removed": [[6, 6, 6], [17, 17, 17]],
+      "covered": 52
     },
     "e53bc1dc3e2c": {
       "name": "LiquidityAmounts",
       "kind": "library",
       "lines": 129,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "c3e82091dadb", "lines": [9, 146] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "a6a54bdc01b1": {
       "name": "LiquidityManagement",
       "kind": "abstract",
       "lines": 73,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "0cbda5ddce00", "lines": [18, 81] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[0, 0], [5, 17], [36, 39], [45, 45], [49, 49]],
+      "removed": [
+        [0, 0, 0],
+        [5, 5, 17],
+        [36, 35, 35],
+        [45, 40, 40],
+        [49, 44, 44]
+      ],
+      "covered": 56
     },
     "4a8615d13939": {
       "name": "PositionKey",
       "kind": "library",
       "lines": 10,
-      "status": "none"
+      "status": "identical",
+      "audited": { "object": "d02161994783", "lines": [4, 9] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"]
     },
     "1c9e6d49832e": {
       "name": "INonfungibleTokenPositionDescriptor",
       "kind": "interface",
       "lines": 16,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "823225c5dea3", "lines": [7, 17] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [[1, 5]],
+      "removed": [],
+      "covered": 15
     },
     "94298f0647be": {
       "name": "NonfungiblePositionManager",
@@ -2518,7 +2785,10 @@
       "lines": 59,
       "status": "differs",
       "audited": { "object": "002c382d5cd8", "lines": [6, 64] },
-      "reports": ["solidified-aztec-liquity-bridge-2022-06-14"],
+      "reports": [
+        "solidified-aztec-dca-bridge-2022-09-21",
+        "solidified-aztec-liquity-bridge-2022-06-14"
+      ],
       "added": [[0, 0]],
       "removed": [[0, 0, 0]],
       "covered": 58
@@ -2527,7 +2797,12 @@
       "name": "Path",
       "kind": "library",
       "lines": 55,
-      "status": "none"
+      "status": "differs",
+      "audited": { "object": "5e58e8f4303d", "lines": [7, 61] },
+      "reports": ["code4rena-ronin-katana-v3-2024-10"],
+      "added": [],
+      "removed": [[21, 21, 28]],
+      "covered": 55
     },
     "51d2bec1333b": {
       "name": "SwapRouter",
@@ -3046,16 +3321,15 @@
         "timestamp": 1620156420,
         "contracts": 3,
         "withoutSource": 0,
-        "units": { "identical": 32, "differs": 11, "none": 22 },
-        "lines": { "total": 7411, "covered": 4930 },
+        "units": { "identical": 32, "differs": 12, "none": 21 },
+        "lines": { "total": 7411, "covered": 5095 },
         "reports": [
           "abdk-uniswap-v3-core-2021-03",
           "abdk-uniswap-v3-periphery-part1-2021-04",
           "contracts__audits__2018-10",
           "g0-safe-1-3-0-final",
           "g0-safe-1-3-0-initial",
-          "peckshield-starkex-v1-0-2020-02",
-          "peckshield-starkex-v2-0-2020-10",
+          "openzeppelin-compound-timelock-2019-10",
           "trailofbits-uniswap-v3-core-2021-03"
         ]
       },
@@ -3063,8 +3337,8 @@
         "timestamp": 1620250931,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
+        "units": { "identical": 45, "differs": 17, "none": 21 },
+        "lines": { "total": 9731, "covered": 7168 },
         "changes": [
           {
             "address": "eth:0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640",
@@ -3074,123 +3348,123 @@
         ]
       },
       {
-        "timestamp": 1636070400,
+        "timestamp": 1649721600,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
-        "reports": ["consensys-arbitrum-core-token-bridge-2021-11"]
-      },
-      {
-        "timestamp": 1652227200,
-        "contracts": 4,
-        "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
-        "reports": ["solidified-aztec-element-bridge-2022-05-11"]
+        "units": { "identical": 45, "differs": 17, "none": 21 },
+        "lines": { "total": 9731, "covered": 7168 },
+        "reports": ["solidified-aztec-lido-bridge-2022-04-12"]
       },
       {
         "timestamp": 1652832000,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
+        "units": { "identical": 45, "differs": 17, "none": 21 },
+        "lines": { "total": 9731, "covered": 7168 },
         "reports": ["solidified-aztec-aave-bridge-2022-05-18"]
       },
       {
-        "timestamp": 1672963200,
+        "timestamp": 1668470400,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
-        "reports": ["trailofbits-governance-token-bridge-2023-06"]
+        "units": { "identical": 45, "differs": 17, "none": 19 },
+        "lines": { "total": 9539, "covered": 7168 },
+        "reports": ["contracts__audits__2022-10-ERC4626"]
+      },
+      {
+        "timestamp": 1668988800,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 45, "differs": 17, "none": 19 },
+        "lines": { "total": 9539, "covered": 7168 },
+        "reports": ["solidified-aztec-liquity-trove-bridge-ii-2022-11-21"]
       },
       {
         "timestamp": 1679961600,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 16, "none": 22 },
-        "lines": { "total": 9731, "covered": 7003 },
+        "units": { "identical": 45, "differs": 17, "none": 19 },
+        "lines": { "total": 9539, "covered": 7168 },
         "reports": ["ackee-safe-1-4-0"]
-      },
-      {
-        "timestamp": 1686700800,
-        "contracts": 4,
-        "withoutSource": 0,
-        "units": { "identical": 45, "differs": 17, "none": 21 },
-        "lines": { "total": 9731, "covered": 7161 },
-        "reports": ["code4rena-zksync-era-system-contracts-2023-03"]
       },
       {
         "timestamp": 1696291200,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 17, "none": 19 },
-        "lines": { "total": 9452, "covered": 7161 },
+        "units": { "identical": 45, "differs": 17, "none": 18 },
+        "lines": { "total": 9270, "covered": 7168 },
         "reports": ["contracts__audits__2023-10-v5.0"]
+      },
+      {
+        "timestamp": 1724371200,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 45, "differs": 17, "none": 18 },
+        "lines": { "total": 9270, "covered": 7168 },
+        "reports": ["certora-safe-library-contracts-1-4-1"]
+      },
+      {
+        "timestamp": 1727913600,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 45, "differs": 17, "none": 18 },
+        "lines": { "total": 9270, "covered": 7168 },
+        "reports": ["contracts__audits__2024-10-v5.1"]
       },
       {
         "timestamp": 1732492800,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
         "reports": ["code4rena-ronin-katana-v3-2024-10"]
       },
       {
-        "timestamp": 1743465600,
+        "timestamp": 1733270400,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
-        "reports": ["sigmaprime-yield-exposed-token-2025-04"]
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
+        "reports": ["contracts__audits__2024-12-v5.2"]
       },
       {
-        "timestamp": 1746057600,
+        "timestamp": 1736812800,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
-        "reports": ["certora-vault-bridge-2025-05"]
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
+        "reports": ["certora-safe-1-5-0"]
+      },
+      {
+        "timestamp": 1743638400,
+        "contracts": 4,
+        "withoutSource": 0,
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
+        "reports": ["contracts__audits__2025-04-v5.3"]
       },
       {
         "timestamp": 1748390400,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
         "reports": ["ackee-safe-1-5-0"]
-      },
-      {
-        "timestamp": 1748736000,
-        "contracts": 4,
-        "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
-        "reports": ["certora-vault-bridge-fv-2025-06"]
-      },
-      {
-        "timestamp": 1761955200,
-        "contracts": 4,
-        "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
-        "reports": ["certora-vault-bridge-v1-1-2025-11"]
       },
       {
         "timestamp": 1772150400,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 },
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 },
         "reports": ["contracts__audits__2026-02-v5.6"]
       },
       {
         "timestamp": 1786913047,
         "contracts": 4,
         "withoutSource": 0,
-        "units": { "identical": 45, "differs": 20, "none": 16 },
-        "lines": { "total": 9452, "covered": 7231 }
+        "units": { "identical": 65, "differs": 12, "none": 3 },
+        "lines": { "total": 9270, "covered": 7907 }
       }
     ],
     "undatedReports": []

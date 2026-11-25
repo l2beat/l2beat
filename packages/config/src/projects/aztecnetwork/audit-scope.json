@@ -3,7 +3,7 @@
   "project": "aztecnetwork",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
   "reports": {
     "consensys-diligence-aztec-protocol-2019-04-08": {
@@ -179,6 +179,7 @@
     },
     "sentnl-barretenberg-fuzzing-2022-03-26": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "solidified-aztec-lido-bridge-2022-04-12": {
@@ -807,22 +808,27 @@
     },
     "zksecurity-barretenberg-bigfield-2024-07-01": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "zellic-barretenberg-bigfield-2024-07-25": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "cantina-barretenberg-bigfield-2024-10-04": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "konnov-pani-governance-formal-verification-2025-09-15": {
       "status": "partial",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "veridise-barretenberg-bigfield-2025-09-18": {
       "status": "no-solidity",
+      "unlisted": "excluded",
       "snapshots": []
     },
     "veridise-governance-2025-10-13": {
@@ -1508,6 +1514,7 @@
     },
     "cantina-barretenberg-bool-bytearray-2025-11-10": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "cantina-coinissuer-2025-11-12": {
@@ -1800,17 +1807,24 @@
         }
       ]
     },
-    "cantina-governance-2025-11-12": { "status": "partial", "snapshots": [] },
+    "cantina-governance-2025-11-12": {
+      "status": "partial",
+      "unlisted": "not-mentioned",
+      "snapshots": []
+    },
     "cantina-rollup-contracts-2025-11-12": {
       "status": "partial",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "cantina-barretenberg-stdlib-field-2025-12-16": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "sherlock-barretenberg-cycle-group-rom-ram-2026-01-28": {
       "status": "no-solidity",
+      "unlisted": "not-mentioned",
       "snapshots": []
     },
     "cantina-escape-hatch-2026-02-24": {
@@ -5903,6 +5917,7 @@
     },
     "cyfrin-barretenberg-logic-module-2026-04-06": {
       "status": "no-solidity",
+      "unlisted": "excluded",
       "snapshots": []
     }
   },
@@ -5963,20 +5978,6 @@
       "date": "2025-11-12",
       "document": "aztecnetwork/reports/Cantina - Governance.pdf"
     },
-    "cantina-nitro-validator-2024-12": {
-      "collections": ["base"],
-      "title": "Nitro Validator Security Review",
-      "auditor": "Cantina",
-      "date": "2025-01-29",
-      "document": "base/reports/2024_12-Nitro_Validator-Cantina.pdf"
-    },
-    "cantina-nitro-validator-2026-07": {
-      "collections": ["base"],
-      "title": "nitro-validator [05294ec0] Security Review",
-      "auditor": "Cantina",
-      "date": "2026-08-03",
-      "document": "base/reports/2026_07-Nitro_Validator-Cantina.pdf"
-    },
     "cantina-payload-2026-03-05": {
       "collections": ["aztecnetwork"],
       "title": "Aztec PR 20865 Security Review (Alpha Upgrade Payload)",
@@ -5990,6 +5991,20 @@
       "auditor": "Cantina",
       "date": "2025-11-12",
       "document": "aztecnetwork/reports/Cantina - Rollup Contracts.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
+      "auditor": "Certora",
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
     },
     "consensys-diligence-aztec-protocol-2019-04-08": {
       "collections": ["aztecnetwork"],
@@ -6033,12 +6048,26 @@
       "date": "2024-12-04",
       "document": "_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
     },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
     "contracts__audits__2025-07-v5.4": {
       "collections": ["_libs/openzeppelin"],
       "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
       "auditor": "OpenZeppelin",
       "date": "2025-07-17",
       "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
+    },
+    "contracts__audits__2025-11-RLP": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OIF Broadcaster Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-11-26",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-11-RLP.pdf"
     },
     "contracts__audits__2026-02-v5.6": {
       "collections": ["_libs/openzeppelin"],
@@ -6178,7 +6207,6 @@
     "_libs/safe": { "name": "Safe (library)", "kind": "library" },
     "safe": { "name": "Safe", "kind": "project" },
     "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
-    "base": { "name": "Base Chain", "kind": "project" },
     "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" }
   },
   "auditedFiles": {
@@ -6195,6 +6223,12 @@
       "path": "l1-contracts/src/governance/libraries/ProposalLib.sol",
       "blob": "9cd39a011ed95c5d5959354b4e92fd8792895edc",
       "upstream": true
+    },
+    "02de22859973": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC1363.sol",
+      "blob": "02de22859973a398a699ba415a57054c659ec78a"
     },
     "04288d5419c1": {
       "repository": "openzeppelin/openzeppelin-contracts",
@@ -6309,6 +6343,12 @@
       "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
       "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
       "blob": "16f1cfb087f560c0bc0f355a99cfe59b067505a5"
+    },
+    "175db7358095": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "175db73580957df1d5d5d4729dfc150e0436bf74"
     },
     "178c0f0f95ce": {
       "repository": "AztecProtocol/aztec-packages",
@@ -6518,18 +6558,17 @@
       "path": "contracts/utils/structs/EnumerableSet.sol",
       "blob": "425876d19c7cc82182285c89e997caa9751a69d0"
     },
-    "4356f5804e58": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/cryptography/ECDSA.sol",
-      "blob": "6493f56338ac22d133456cc439fc651b9459e54c",
-      "upstream": true
-    },
     "43c6fe5f3a57": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "c9cd1b9deb54ca43d3b4762eb73fd0dcf983e473",
       "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
       "blob": "43c6fe5f3a576ed7e1bb5f1eb16096a254bb99a5"
+    },
+    "442fc18920f8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/Errors.sol",
+      "blob": "442fc18920f87e8d8923e8e86c4b3de6b529d01c"
     },
     "445fd2f5f013": {
       "repository": "AztecProtocol/aztec-packages",
@@ -6571,6 +6610,12 @@
       "blob": "0d1009761b3c169b140a1bf6f1dd6ac66addaec3",
       "upstream": true
     },
+    "47a9fd588556": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC5267.sol",
+      "blob": "47a9fd5885563f1d65a77f0847bdd91bfed9d17a"
+    },
     "49a1e3ebfc8e": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
@@ -6608,6 +6653,12 @@
       "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
       "blob": "f9062c3b8c1b7ff3113183110efd4d0c7499324f",
       "upstream": true
+    },
+    "4e535fe03c24": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d4b2e98c737f54a21961b39d6bba13b839f3b6f4",
+      "path": "contracts/utils/Context.sol",
+      "blob": "4e535fe03c243f864568b8f4430c17c25dbadb47"
     },
     "502f4ecb03fb": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
@@ -6681,6 +6732,12 @@
       "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
       "path": "contracts/utils/SlotDerivation.sol",
       "blob": "5d41be5fa7f36cf6649f49384f41b107c1fef3a9"
+    },
+    "5dbfabc2ad17": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d4b2e98c737f54a21961b39d6bba13b839f3b6f4",
+      "path": "contracts/utils/structs/Checkpoints.sol",
+      "blob": "5dbfabc2ad178e01780f6a6c7368e584313cf36c"
     },
     "5dc82d7558b1": {
       "repository": "AztecProtocol/aztec-packages",
@@ -6852,6 +6909,12 @@
       "path": "l1-contracts/src/shared/libraries/CompressedTimeMath.sol",
       "blob": "7cf08e18f3dfba1e42697fd111d0ee65b80c745e"
     },
+    "7d1019563f5a": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "7d1019563f5af1dfe72a771bc4d5fac1ffc8afd9"
+    },
     "7ed828535483": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "fd98ab2827138ace06840a2375f2783e9f459674",
@@ -6889,17 +6952,17 @@
       "blob": "9c805986614f3f92a1b66bae031251d7c90a80d3",
       "upstream": true
     },
+    "81d713d4bed0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/ShortStrings.sol",
+      "blob": "81d713d4bed045f5f83f431ef60dfb1c51012f40"
+    },
     "82be180d0bed": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "3887ea20a027890a3c807c41895d74fd756f6447",
       "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
       "blob": "82be180d0bed01e2565c7c3ae0e827f80a4bc15f"
-    },
-    "844be6ba9468": {
-      "repository": "base/nitro-validator",
-      "commit": "7dd8c275b743783546a003a36a452ab65495b1fd",
-      "path": "src/ICertManager.sol",
-      "blob": "844be6ba9468ef5de589d21fcbf0b57ad5aff7df"
     },
     "859aca072ef3": {
       "repository": "AztecProtocol/aztec-packages",
@@ -6995,13 +7058,6 @@
       "blob": "2c7e3ee48185621307c565825588cc179925fbf9",
       "upstream": true
     },
-    "9c82e88f4be6": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/structs/Checkpoints.sol",
-      "blob": "8d8f130319d2559626134765b47da89b64f3f925",
-      "upstream": true
-    },
     "9f00c610436d": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
@@ -7069,13 +7125,6 @@
       "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
       "blob": "abaf7a34e29cd5afc3bc1e240b7fbeb1b0ef6062"
     },
-    "ac26f189cf54": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/Errors.sol",
-      "blob": "442fc18920f87e8d8923e8e86c4b3de6b529d01c",
-      "upstream": true
-    },
     "ac4aa74e9bb8": {
       "repository": "OpenZeppelin/openzeppelin-contracts",
       "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
@@ -7089,11 +7138,11 @@
       "blob": "80d872d23223f1a6056c29b9260d269106a4b7ab",
       "upstream": true
     },
-    "ae1f8277d3f1": {
-      "repository": "base/nitro-validator",
-      "commit": "05294ec098f7f38ef33b2d2470cfbbd08186b943",
-      "path": "src/CborDecode.sol",
-      "blob": "ae1f8277d3f1ea9e40e23939a73b83383006104b"
+    "aebb10524a2c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "aebb10524a2c82aa78ceb8394e5f3c1b0e5abeea"
     },
     "aec86ed2246b": {
       "repository": "AztecProtocol/aztec-packages",
@@ -7126,13 +7175,6 @@
       "commit": "270e2a58ae2a378472f9be791900bbd4342c7881",
       "path": "l1-contracts/src/core/libraries/compressed-data/StakingQueueConfig.sol",
       "blob": "b3dca4d7c8c115990885e3e9a6a3991d875cffca"
-    },
-    "b4aa35600295": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/StorageSlot.sol",
-      "blob": "aebb10524a2c82aa78ceb8394e5f3c1b0e5abeea",
-      "upstream": true
     },
     "b565dfffa895": {
       "repository": "AztecProtocol/aztec-packages",
@@ -7183,13 +7225,6 @@
       "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
       "path": "l1-contracts/src/periphery/SlashPayloadCloneable.sol",
       "blob": "eeaae44b9095250279dca127d8e22a5a5417bfd6",
-      "upstream": true
-    },
-    "bf2d618ab5ca": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/ShortStrings.sol",
-      "blob": "fb8bde516685af590c53dd1576b4f96a917d54cf",
       "upstream": true
     },
     "bf9c8bd0e951": {
@@ -7320,13 +7355,6 @@
       "blob": "aab7c27cdad5df5e9179674926ea58aa85a98ae9",
       "upstream": true
     },
-    "d643a39620c0": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/Context.sol",
-      "blob": "4e535fe03c243f864568b8f4430c17c25dbadb47",
-      "upstream": true
-    },
     "d67377fb0412": {
       "repository": "AztecProtocol/aztec-packages",
       "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
@@ -7378,6 +7406,12 @@
       "blob": "7e7a779d1b7b52a361888357256f8eacaeb6abe7",
       "upstream": true
     },
+    "e168824d34b3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d9f966fc3f7c4eec7f565c2442cc64481e7fb499",
+      "path": "contracts/utils/Panic.sol",
+      "blob": "e168824d34b3f0ba0be33317fb34b9e74fc148b6"
+    },
     "e21ef00b7ced": {
       "repository": "openzeppelin/openzeppelin-contracts",
       "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
@@ -7396,13 +7430,6 @@
       "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
       "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
       "blob": "be7591e5d07392def565c8fca2b79e54140bd7de",
-      "upstream": true
-    },
-    "e3fc6dd390e3": {
-      "repository": "openzeppelin/openzeppelin-contracts",
-      "commit": "448efeea6640bbbc09373f03fbc9c88e280147ba",
-      "path": "contracts/utils/Panic.sol",
-      "blob": "e168824d34b3f0ba0be33317fb34b9e74fc148b6",
       "upstream": true
     },
     "e4396eb4f1b9": {
@@ -8672,15 +8699,21 @@
         "kind": "library",
         "lines": 32,
         "status": "identical",
-        "audited": { "object": "e3fc6dd390e3", "lines": [26, 57] },
+        "audited": { "object": "e168824d34b3", "lines": [26, 57] },
         "reports": [
           "cantina-escape-hatch-2026-02-24",
           "cantina-payload-2026-03-05",
-          "contracts__audits__2024-10-v5.1"
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4",
+          "contracts__audits__2025-11-RLP"
         ],
         "impliedBy": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4",
+          "contracts__audits__2025-11-RLP"
         ]
       }
     },
@@ -8788,15 +8821,9 @@
         "kind": "library",
         "lines": 169,
         "status": "identical",
-        "audited": { "object": "4356f5804e58", "lines": [12, 180] },
-        "reports": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ],
-        "impliedBy": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ]
+        "audited": { "object": "175db7358095", "lines": [12, 180] },
+        "reports": ["contracts__audits__2025-07-v5.4"],
+        "impliedBy": ["contracts__audits__2025-07-v5.4"]
       }
     },
     "b7e470aa4499": {
@@ -8945,6 +8972,21 @@
         "added": [[23, 23]],
         "removed": [[23, 3, 3]],
         "covered": 70
+      },
+      "relaxed": {
+        "name": "IERC20",
+        "kind": "interface",
+        "lines": 71,
+        "status": "identical",
+        "audited": { "object": "7d1019563f5a", "lines": [9, 79] },
+        "reports": [
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2"
+        ],
+        "impliedBy": [
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2"
+        ]
       }
     },
     "bf1e6b11fc8d": {
@@ -9193,6 +9235,20 @@
         "status": "identical",
         "audited": { "object": "732cc02b109a", "lines": [5, 15] },
         "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      },
+      "relaxed": {
+        "name": "IERC165",
+        "kind": "interface",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0",
+          "certora-safe-library-contracts-1-4-1"
+        ],
+        "impliedBy": []
       }
     },
     "ba18d750e681": {
@@ -9201,6 +9257,21 @@
         "kind": "interface",
         "lines": 71,
         "status": "none"
+      },
+      "relaxed": {
+        "name": "IERC1363",
+        "kind": "interface",
+        "lines": 71,
+        "status": "identical",
+        "audited": { "object": "02de22859973", "lines": [16, 86] },
+        "reports": [
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2"
+        ],
+        "impliedBy": [
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2"
+        ]
       }
     },
     "f555a7706b9d": {
@@ -9352,15 +9423,9 @@
         "kind": "library",
         "lines": 615,
         "status": "identical",
-        "audited": { "object": "9c82e88f4be6", "lines": [16, 630] },
-        "reports": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ],
-        "impliedBy": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ]
+        "audited": { "object": "5dbfabc2ad17", "lines": [16, 621] },
+        "reports": ["contracts__audits__2025-04-v5.3"],
+        "impliedBy": ["contracts__audits__2025-04-v5.3"]
       }
     },
     "e15fae7e3a24": {
@@ -9684,16 +9749,22 @@
         "kind": "abstract",
         "lines": 13,
         "status": "identical",
-        "audited": { "object": "d643a39620c0", "lines": [16, 28] },
+        "audited": { "object": "4e535fe03c24", "lines": [16, 28] },
         "reports": [
           "cantina-coinissuer-2025-11-12",
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-04-v5.3"
         ],
         "impliedBy": [
           "cantina-coinissuer-2025-11-12",
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-04-v5.3"
         ]
       }
     },
@@ -9716,12 +9787,14 @@
           "cantina-coinissuer-2025-11-12",
           "cantina-escape-hatch-2026-02-24",
           "cantina-payload-2026-03-05",
-          "contracts__audits__2023-10-v5.0"
+          "contracts__audits__2023-10-v5.0",
+          "contracts__audits__2024-10-v5.1"
         ],
         "impliedBy": [
           "cantina-coinissuer-2025-11-12",
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-10-v5.1"
         ]
       }
     },
@@ -10044,6 +10117,15 @@
         "kind": "interface",
         "lines": 23,
         "status": "none"
+      },
+      "relaxed": {
+        "name": "IERC5267",
+        "kind": "interface",
+        "lines": 23,
+        "status": "identical",
+        "audited": { "object": "47a9fd588556", "lines": [6, 28] },
+        "reports": ["contracts__audits__2024-12-v5.2"],
+        "impliedBy": ["contracts__audits__2024-12-v5.2"]
       }
     },
     "ed25952f120e": {
@@ -10086,14 +10168,18 @@
         "kind": "library",
         "lines": 110,
         "status": "identical",
-        "audited": { "object": "b4aa35600295", "lines": [34, 143] },
+        "audited": { "object": "aebb10524a2c", "lines": [34, 143] },
         "reports": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
         ],
         "impliedBy": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
         ]
       }
     },
@@ -10114,15 +10200,9 @@
         "kind": "library",
         "lines": 83,
         "status": "identical",
-        "audited": { "object": "bf2d618ab5ca", "lines": [40, 122] },
-        "reports": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ],
-        "impliedBy": [
-          "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
-        ]
+        "audited": { "object": "81d713d4bed0", "lines": [40, 122] },
+        "reports": ["contracts__audits__2025-07-v5.4"],
+        "impliedBy": ["contracts__audits__2025-07-v5.4"]
       }
     },
     "ecccefa39d54": {
@@ -10143,11 +10223,13 @@
         "reports": [
           "cantina-escape-hatch-2026-02-24",
           "cantina-payload-2026-03-05",
-          "contracts__audits__2024-10-v5.1"
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2"
         ],
         "impliedBy": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2"
         ]
       }
     },
@@ -10196,11 +10278,13 @@
         "audited": { "object": "46dd00462ecf", "lines": [15, 84] },
         "reports": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2"
         ],
         "impliedBy": [
           "cantina-escape-hatch-2026-02-24",
-          "cantina-payload-2026-03-05"
+          "cantina-payload-2026-03-05",
+          "contracts__audits__2024-12-v5.2"
         ]
       }
     },
@@ -10947,12 +11031,18 @@
         "kind": "library",
         "lines": 21,
         "status": "identical",
-        "audited": { "object": "ac26f189cf54", "lines": [14, 34] },
+        "audited": { "object": "442fc18920f8", "lines": [14, 34] },
         "reports": [
           "cantina-escape-hatch-2026-02-24",
-          "contracts__audits__2024-10-v5.1"
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
         ],
-        "impliedBy": ["cantina-escape-hatch-2026-02-24"]
+        "impliedBy": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
+        ]
       }
     },
     "ed45c021b6bb": {
@@ -10970,8 +11060,14 @@
         "lines": 76,
         "status": "identical",
         "audited": { "object": "ab8eaef98e3c", "lines": [17, 92] },
-        "reports": ["cantina-escape-hatch-2026-02-24"],
-        "impliedBy": ["cantina-escape-hatch-2026-02-24"]
+        "reports": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2"
+        ],
+        "impliedBy": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2"
+        ]
       }
     },
     "eaafae4a5d71": {
@@ -12801,15 +12897,21 @@
         "lines": 21,
         "status": "identical",
         "audited": {
-          "object": "ac26f189cf54",
+          "object": "442fc18920f8",
           "lines": [14, 34],
           "name": "Errors"
         },
         "reports": [
           "cantina-escape-hatch-2026-02-24",
-          "contracts__audits__2024-10-v5.1"
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
         ],
-        "impliedBy": ["cantina-escape-hatch-2026-02-24"]
+        "impliedBy": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-07-v5.4"
+        ]
       }
     },
     "5fd2958faea4": {
@@ -12830,11 +12932,17 @@
         "lines": 76,
         "status": "differs",
         "audited": { "object": "ab8eaef98e3c", "lines": [17, 92] },
-        "reports": ["cantina-escape-hatch-2026-02-24"],
+        "reports": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2"
+        ],
         "added": [[22, 22], [37, 37]],
         "removed": [[22, 22, 22], [37, 37, 37]],
         "covered": 74,
-        "impliedBy": ["cantina-escape-hatch-2026-02-24"]
+        "impliedBy": [
+          "cantina-escape-hatch-2026-02-24",
+          "contracts__audits__2024-12-v5.2"
+        ]
       }
     },
     "aaca6a24d299": {
@@ -13102,12 +13210,7 @@
         "name": "ICertManager",
         "kind": "interface",
         "lines": 13,
-        "status": "differs",
-        "audited": { "object": "844be6ba9468", "lines": [4, 20] },
-        "reports": ["cantina-nitro-validator-2024-12"],
-        "added": [[8, 11]],
-        "removed": [[8, 8, 15]],
-        "covered": 11
+        "status": "none"
       }
     },
     "fe4101bce7a3": {
@@ -13115,12 +13218,7 @@
         "name": "LibCborElement",
         "kind": "library",
         "lines": 42,
-        "status": "identical",
-        "audited": { "object": "ae1f8277d3f1", "lines": [8, 49] },
-        "reports": [
-          "cantina-nitro-validator-2024-12",
-          "cantina-nitro-validator-2026-07"
-        ]
+        "status": "none"
       }
     },
     "774dca79c899": {

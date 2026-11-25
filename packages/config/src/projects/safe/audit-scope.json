@@ -3,7 +3,7 @@
   "project": "safe",
   "dataset": {
     "repository": "sergeyshemyakov/audit-dataset",
-    "commit": "29fc7fd763e95c91755451e0b531c457bc921dc2"
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
   },
   "reports": {
     "akhunov-gnosis-safe-2018": {
@@ -2411,7 +2411,11 @@
         }
       ]
     },
-    "runtime-verification-safe-1-0-0": { "status": "partial", "snapshots": [] },
+    "runtime-verification-safe-1-0-0": {
+      "status": "partial",
+      "unlisted": "not-mentioned",
+      "snapshots": []
+    },
     "certora-safe-1-5-0": {
       "status": "graph",
       "unlisted": "not-mentioned",
