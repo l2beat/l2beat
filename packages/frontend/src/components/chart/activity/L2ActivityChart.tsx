@@ -54,6 +54,7 @@ import {
   RECATEGORISED_ACTIVITY_CHART_META,
 } from './L2RecategorizedActivityChart'
 import { L2RecategorizedActivityStats } from './L2RecategorizedActivityStats'
+import { formatActivityPeriod } from './utils/activityPeriod'
 import { getRatioChartData } from './utils/getRatioChartData'
 
 interface Props {
@@ -141,7 +142,9 @@ export function L2ActivityChart({ milestones, entries }: Props) {
           data={ratioData}
           isLoading={isLoading}
           syncedUntil={data?.syncedUntil}
-          resolution={data?.resolution}
+          formatPeriod={(timestamp) =>
+            formatActivityPeriod(timestamp, data?.resolution ?? 'day')
+          }
         />
       </div>
       <Controls

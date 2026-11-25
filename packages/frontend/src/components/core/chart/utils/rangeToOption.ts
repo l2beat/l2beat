@@ -1,5 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { type ChartRange, optionToDays } from '~/utils/range/range'
+import { type ChartRange, endsToday, optionToDays } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export type ChartRangeOptionValue =
@@ -22,11 +21,7 @@ export function rangeToOption<T extends ChartRangeOptionValue>(
   [from, to]: ChartRange,
   values: readonly T[],
 ): T | 'max' | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
-  ) {
-    return 'custom'
-  }
+  if (!endsToday([from, to])) return 'custom'
   if (from === null) return 'max'
   const days = rangeToDays([from, to])
   return values.find((value) => optionToDays(value) === days) ?? 'custom'

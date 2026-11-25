@@ -59,14 +59,14 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x0b4835549c725db37f158fde0f2522a1d1278d0640768f1ee637af9828a5879e',
+        hash: '0xe3ea4ddb977dc02c30e2e5e0b14dc6ef54bd258ef24d50e3fb8e2f8536e040d7',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x329d7d7f7B3F2879991B83E1A53BCe6D7ce63E6f',
+              '0x701bD48e94d17f64B6C50d6aF12635be9FaB8B1B',
             ),
           },
         ],
@@ -78,39 +78,20 @@ export const lighterprover: BaseProject = {
       },
       {
         // DesertVerifier
-        hash: '0x156f444f62404c056e3126b7bccad049dd99ec0812d5d0ef1abdbbfc0dfec500',
+        hash: '0x797766e02724b2197e955be158ec81b28ca3941ded7ad9109f7d8eb33aa846a9',
         name: 'Lighter Desert verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x975210588389526a3A1DeF1628e7A4d7aBdFD121',
+              '0xEC6B495B02F506FD3027E9235465f3d163C06FDc',
             ),
           },
         ],
         verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
-      },
-      {
-        // ZkLighterStateRootUpgradeVerifier
-        hash: '0xdb6ffbd7513b7d6ff32acc9006f35d6a929ca0670dcd6d40f3d960b47ef56cca',
-        name: 'Lighter state root upgrade verifier',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xcb7131edbe3f54fc3101da943b969fb0cd04ca95',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'The sources for the state root upgrade circuits are not published and thus the verifier cannot be independently regenerated.',
-        description:
-          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined. One-time verifier that lets a validator replace the state root outside of regular batch proving, see the proof system description.',
       },
       {
         hash: '0xa29ec4d3bd2bd13606a2504774017527b16f8e107649e09389e817da1ad205a2',

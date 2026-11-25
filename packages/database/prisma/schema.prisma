@@ -59,6 +59,7 @@ model LiveActivityBlock {
 
   @@id([projectId, number])
   @@index([timestamp])
+  @@index([projectId, timestamp])
 }
 
 model AggregatedL2Cost {
@@ -378,6 +379,14 @@ model EthereumStakingDaily {
   blockCount        Int
   /// Blocks counted as builder blocks: the fee recipient's last transaction pays the proposer.
   builderBlockCount Int
+}
+
+/// ETH in existence as each UTC day starts, from CoinGecko: its market cap over its price.
+model EthereumSupplyDaily {
+  /// Start of the day.
+  timestamp DateTime @id @db.Timestamp(6)
+  /// In ETH; an estimate, rounded like the circulating supplies TVS uses.
+  supply    Float
 }
 
 model TokenMetadata {

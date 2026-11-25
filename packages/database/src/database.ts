@@ -19,6 +19,7 @@ import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepos
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
+import { EthereumSupplyDailyRepository } from './repositories/EthereumSupplyDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { HourlyActivityRepository } from './repositories/HourlyActivityRepository'
 import { IndexerConfigurationRepository } from './repositories/IndexerConfigurationRepository'
@@ -120,6 +121,7 @@ export function createDatabase(
     defiTvl: new DefiTvlRepository(db),
     liquidStakingSnapshot: new LiquidStakingSnapshotRepository(db),
     ethereumStakingDaily: new EthereumStakingDailyRepository(db),
+    ethereumSupplyDaily: new EthereumSupplyDailyRepository(db),
     // #endregion
 
     // #region UIF

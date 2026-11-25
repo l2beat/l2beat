@@ -8,6 +8,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { TokensDialog } from '../tokens/TokensDialog'
@@ -69,7 +70,9 @@ export function FlowsGeneralStats() {
         General stats
       </div>
       <div className="mt-1 text-pretty font-normal text-label-value-13 text-secondary leading-4">
-        Last 24h · selected chains and protocols
+        Last 24h
+        {DOT_SEPARATOR}
+        selected chains and protocols
       </div>
       <div className="mt-1.5 space-y-2">
         {/* Sized by the panel itself (container query) so it works both as

@@ -2809,6 +2809,10 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     title: 'Appchain TEE Enclave hash',
     verificationStatus: 'notVerified',
   },
+  '0xd43fd2303ff1b4f3a5089cab49482b6ace29c16b5830943828f531d533b5844e': {
+    title: 'Appchain CAS TEE Enclave hash',
+    verificationStatus: 'notVerified',
+  },
   '0x583e7aa038d9dbd6ac02ff85270ad47c76b68899886f63563c59e7e1589d2145': {
     title: 'Apechain TEE Enclave hash',
     verificationStatus: 'notVerified',

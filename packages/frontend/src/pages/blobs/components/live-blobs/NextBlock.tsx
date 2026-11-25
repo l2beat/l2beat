@@ -1,10 +1,10 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { type CSSProperties, useRef } from 'react'
+import { writeText } from '~/components/RollingNumber'
 import { useAnimationFrame } from '~/hooks/useAnimationFrame'
 import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import { cn } from '~/utils/cn'
 import { useChainClock } from './chainClock'
-import { writeText } from './liveMotion'
 
 const RING_RADIUS = 6
 const RING_LENGTH = 2 * Math.PI * RING_RADIUS

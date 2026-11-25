@@ -25,7 +25,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getSP1Verifiers } from '../../templates/opStack'
+import { getRisc0Verifiers, getSP1Verifiers } from '../../templates/opStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('taiko')
@@ -845,11 +845,6 @@ function getTaikoVKeys(): string[] {
 
 function getVerifiers(): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
-  result.push(
-    ...discovery
-      .getContracts()
-      .filter((contract) => contract.name === 'RiscZeroGroth16Verifier')
-      .map((contract) => contract.address),
-  )
+  result.push(...getRisc0Verifiers(discovery))
   return result
 }

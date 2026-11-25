@@ -1,3 +1,4 @@
+// biome-ignore-all lint/plugin/dotSeparator: Markdown for agents, which is not wrapped by us
 import type {
   PrivacyAdversaryCell,
   PrivacyAdversaryId,

@@ -11,6 +11,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -72,7 +73,7 @@ export function DefiTvlSection({
       : undefined,
   ]
     .filter((value) => value !== undefined)
-    .join(' · ')
+    .join(DOT_SEPARATOR)
 
   return (
     <ProjectSection {...projectSectionProps}>

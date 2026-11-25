@@ -56,6 +56,7 @@ export function ChartHoverOverlay<T>({
   ariaLabel,
   syncId,
   dotRadius = ACTIVE_DOT_RADIUS,
+  hover = 'nearest',
   renderTooltip,
 }: {
   rows: T[]
@@ -65,6 +66,8 @@ export function ChartHoverOverlay<T>({
   ariaLabel: string
   syncId?: string
   dotRadius?: number
+  /** `before`: the last row at or before the pointer, but never the last. */
+  hover?: 'nearest' | 'before'
   renderTooltip: (row: T) => ReactNode
 }) {
   const [self] = useState(() => ({}))
@@ -92,7 +95,7 @@ export function ChartHoverOverlay<T>({
       .map((d) => ({ d, value: d.value(target, index) }))
       .find(({ value }) => isNumber(value))
     return {
-      x: current.scales.x?.map(getX(target)) ?? 0,
+      x: xWithin(current, getX(target)),
       y:
         first && isNumber(first.value)
           ? (current.scales[first.d.scale]?.map(first.value) ?? 0)
@@ -102,7 +105,7 @@ export function ChartHoverOverlay<T>({
 
   const tooltip = useChartTooltip({
     // Not gated on the scene: it is published after this first renders.
-    count: rows.length,
+    count: hover === 'before' ? rows.length - 1 : rows.length,
     anchorOf,
     place: (anchor, size) =>
       sceneRef.current
@@ -165,21 +168,25 @@ export function ChartHoverOverlay<T>({
     // Layout is clean between moves (only transforms change), so this
     // does not force one.
     const rect = event.currentTarget.getBoundingClientRect()
-    const index = nearestIndex(
-      rows,
-      getX,
-      Number(xScale.invert(event.clientX - rect.left)),
-    )
+    const x = Number(xScale.invert(event.clientX - rect.left))
+    const index =
+      hover === 'before'
+        ? Math.min(
+            Math.max(0, lastIndexAtOrBefore(rows, getX, x)),
+            rows.length - 2,
+          )
+        : nearestIndex(rows, getX, x)
+    const row = rows[index]
+    if (row === undefined || !sceneRef.current) return
     // x snaps to the hovered row; only y follows the pointer.
     tooltip.select(index, {
-      x: xScale.map(getX(rows[index] as T)),
+      x: xWithin(sceneRef.current, getX(row)),
       y: event.clientY - rect.top,
     })
   }
 
-  const xScale = scene?.scales.x
   const plot = scene?.chart
-  const cx = row !== undefined && xScale ? xScale.map(getX(row)) : 0
+  const cx = row !== undefined && scene ? xWithin(scene, getX(row)) : 0
 
   return (
     <div
@@ -226,6 +233,28 @@ export function ChartHoverOverlay<T>({
       </div>
     </div>
   )
+}
+
+/** A value's pixel on the x axis, kept in the plot: a clipped chart has rows outside. */
+function xWithin(scene: ChartScene, value: number) {
+  const { x, width } = scene.chart
+  return Math.min(x + width, Math.max(x, scene.scales.x?.map(value) ?? 0))
+}
+
+/** Index of the last row at or before `x`, -1 without one; rows are sorted by x. */
+export function lastIndexAtOrBefore<T>(
+  rows: T[],
+  getX: (row: T) => number,
+  x: number,
+) {
+  let lo = 0
+  let hi = rows.length
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1
+    if (getX(rows[mid] as T) <= x) lo = mid + 1
+    else hi = mid
+  }
+  return lo - 1
 }
 
 /** Index of the row closest to `x`; rows are sorted by x. */

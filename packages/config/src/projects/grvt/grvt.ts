@@ -102,8 +102,8 @@ export const grvt: ScalingProject = zkStackL2({
       ],
       references: [
         {
-          title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691#code#F1#L50',
+          title: 'CommitterFacet - _commitOneBatchEra() function',
+          url: 'https://etherscan.io/address/0xc188e345d448770750f0b40Cde84E9eCF327430A#code',
         },
       ],
     },
@@ -121,7 +121,7 @@ export const grvt: ScalingProject = zkStackL2({
       name: "Users can't force all transactions",
       description:
         'If a user is censored by the L2 Sequencer, they cannot by default force their transaction via the L1 queue. An active TransactionFilterer contract which allows only whitelisted accounts to enqueue, prevents it. Even if a user was specifically whitelisted, there is no mechanism that forces L2 Sequencer to include\
-            transactions from the queue in an L2 block, as they have the choice to process the queue in order or not at all.',
+            transactions from the queue in an L2 block, as they have the choice to process the queue in order or not at all. The chain admin can also pause the L1 queue, which rejects all new forced transactions and deposits until it unpauses.',
       risks: [
         {
           category: 'Users can be censored if',
@@ -131,6 +131,10 @@ export const grvt: ScalingProject = zkStackL2({
           category: 'Users can be censored if',
           text: 'the Operator does not specifically whitelist them in the TransactionFilterer.',
         },
+        {
+          category: 'Users can be censored if',
+          text: 'the chain admin pauses the L1 queue, which is possible without delay.',
+        },
       ],
       references: [
         {
@@ -139,7 +143,7 @@ export const grvt: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x1e34aB39a9682149165ddeCc0583d238A5448B45#code#F1#L472',
+          url: 'https://etherscan.io/address/0x7eD1e478dA92B3Fd33f7C566512f4a0b958cBBa8#code',
         },
         {
           title: 'TransactionFilterer',

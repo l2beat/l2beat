@@ -6,11 +6,15 @@ import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
   computeCostOfExitChart,
+  computeTvlChart,
   computeYieldChart,
   getLastChartDay,
+  trimLeadingIncomplete,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
 import { getLiquidStakingProjects } from './getLiquidStakingProjects'
+import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
+import { type TvlBreakdown, toBreakdown } from './liquidStakingTvlBreakdown'
 
 export const LiquidStakingChartsParams = v.object({
   range: ChartRange,
@@ -70,7 +74,7 @@ export async function getLiquidStakingCharts(
 export async function getLiquidStakingYieldChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingYieldPoint[]> {
-  const projectIds = await getProjectIds(params)
+  const projectIds = (await getProjects(params)).map((project) => project.id)
   if (env.MOCK) {
     const days = getDays(params, 'started').days
     const yields = projectIds.map(() => randomWalk(days.length, 0.03, 0.4))
@@ -105,11 +109,78 @@ export async function getLiquidStakingYieldChart(
   })
 }
 
+/**
+ * Each day split into the protocols' TVL in ETH at their own rates, the rest
+ * of the stake and the rest of the supply, each as the day started.
+ */
+export async function getLiquidStakingTvlChart(
+  params: LiquidStakingChartsParams,
+): Promise<TvlBreakdown[]> {
+  const projects = await getProjects(params)
+  const projectIds = projects.map((project) => project.id)
+  // A day's stake is indexed once the day ends.
+  const { days, from, to } = getDays(params, 'ended')
+  if (env.MOCK) {
+    const tvl = projects.map((_, i) =>
+      randomWalk(days.length, 9_000_000 / 2 ** i, 0.15),
+    )
+    const ethStaked = randomWalk(days.length, 34_000_000, 0.05)
+    const ethPrice = randomWalk(days.length, 3_000, 0.3)
+    return days.map((timestamp, i) =>
+      toBreakdown({
+        timestamp,
+        projects: byProject(projectIds, tvl, i),
+        staked: ethStaked[i] ?? null,
+        supply: 120_000_000 + i * 1_000,
+        ethPrice: ethPrice[i] ?? null,
+      }),
+    )
+  }
+  const db = getDb()
+  const [network, ethSupplies, ethPrices, tvlByProject] = await Promise.all([
+    db.ethereumStakingDaily.getInRange(from, to),
+    db.ethereumSupplyDaily.getInRange(from, to),
+    db.tvsPrice.getPricesInRangeByPriceId('ethereum', from, to),
+    Promise.all(
+      projects.map(
+        async (project) =>
+          [project.id, await getTvlSince(project, days)] as const,
+      ),
+    ),
+  ])
+  const points = computeTvlChart({
+    days,
+    tvlByProject: new Map(tvlByProject),
+    network,
+    ethSupplies: new Map(ethSupplies.map((s) => [s.timestamp, s.supply])),
+    ethPrices: new Map(ethPrices.map((p) => [p.timestamp, p.priceUsd])),
+  })
+  // Only MAX reaches the days before every protocol has data; on a shorter
+  // range a leading gap is real and shows as such.
+  return params.range[0] === null ? trimLeadingIncomplete(points) : points
+}
+
+/**
+ * Zero where it has no value before the contracts the indexer reads were
+ * deployed, so a protocol that launched later doesn't leave the days before it
+ * without Others.
+ */
+async function getTvlSince(
+  project: TvlInEthProject,
+  days: UnixTime[],
+): Promise<(number | null)[]> {
+  const tvl = await getTvlInEthAt(project, days)
+  const since = project.liquidStaking.tracking?.sinceTimestamp
+  return since === undefined
+    ? tvl
+    : tvl.map((value, i) => ((days[i] ?? 0) < since ? (value ?? 0) : value))
+}
+
 /** In days of yield, by the cheapest route. */
 export async function getLiquidStakingCostOfExitChart(
   params: LiquidStakingChartsParams,
 ): Promise<LiquidStakingCostOfExitPoint[]> {
-  const projectIds = await getProjectIds(params)
+  const projectIds = (await getProjects(params)).map((project) => project.id)
   if (env.MOCK) {
     const days = getDays(params, 'ended').days
     const costOfExit = projectIds.map(() => randomWalk(days.length, 3, 1))
@@ -131,14 +202,14 @@ export async function getLiquidStakingCostOfExitChart(
   return computeCostOfExitChart({ days, projectIds, snapshots })
 }
 
-async function getProjectIds(
-  params: LiquidStakingChartsParams,
-): Promise<string[]> {
+/** The tracked ones, as only they have chart values. */
+async function getProjects(params: LiquidStakingChartsParams) {
   const projects = await getLiquidStakingProjects()
-  return projects
-    .filter((project) => project.liquidStaking.tracking !== undefined)
-    .map((project) => project.id)
-    .filter((id) => params.projectId === undefined || id === params.projectId)
+  return projects.filter(
+    (project) =>
+      project.liquidStaking.tracking !== undefined &&
+      (params.projectId === undefined || project.id === params.projectId),
+  )
 }
 
 /**
@@ -152,7 +223,9 @@ function getDays(
   const to = getLastChartDay(params.range[1], lastDay)
   const from = UnixTime(Math.max(params.range[0] ?? FIRST_DAY, FIRST_DAY))
   const lookback = UnixTime(from - YIELD_WINDOW_DAYS * UnixTime.DAY)
-  return { days: generateTimestamps([from, to], 'day'), from, to, lookback }
+  // generateTimestamps counts backwards from `from` when `to` is before it.
+  const days = to < from ? [] : generateTimestamps([from, to], 'day')
+  return { days, from, to, lookback }
 }
 
 function byProject(projectIds: string[], series: number[][], index: number) {

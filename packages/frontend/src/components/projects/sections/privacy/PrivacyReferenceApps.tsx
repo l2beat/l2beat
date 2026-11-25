@@ -15,6 +15,7 @@ import {
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { DeliveryIcon, type DeliveryPart } from './PrivacyDelivery'
 
 const CHIPS = {
@@ -217,7 +218,7 @@ function Meta({ parts }: { parts: ReactNode[] }) {
     <p className="text-paragraph-13 text-secondary md:text-paragraph-14">
       {parts.filter(Boolean).map((part, i) => (
         <Fragment key={i}>
-          {i > 0 && ' · '}
+          {i > 0 && DOT_SEPARATOR}
           {part}
         </Fragment>
       ))}

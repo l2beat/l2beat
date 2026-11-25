@@ -19,6 +19,8 @@ export interface LiquidStakingSummary {
   /** Absent until research reviews the protocol. */
   risks?: ProjectLiquidStakingRisks
   totalValueLockedUsd?: number
+  /** The same TVL in ETH, at the protocol's own exchange rate. */
+  totalValueLockedEth?: number
   /** The TVL in ETH at the protocol's rate, as a fraction of the ETH staked network-wide. */
   stakedEthShare?: LiquidStakingStakedEthShare
   yield?: LiquidStakingLatestValue
@@ -126,6 +128,7 @@ export function buildLiquidStakingSummary(
   return {
     ...(risks && { risks }),
     totalValueLockedUsd: tvl?.valueUsd,
+    totalValueLockedEth: tvl?.valueEth,
     stakedEthShare: tvl && getStakedEthShare(tvl, charts.yield),
     yield: getLatestValue(charts.yield, projectId, () => false),
     costOfExit: getLatestValue(charts.costOfExit, projectId, (point) =>

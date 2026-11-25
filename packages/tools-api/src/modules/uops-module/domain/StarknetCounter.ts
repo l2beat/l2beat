@@ -6,7 +6,9 @@ import { type Counter, getOperationsRatio } from './Counter'
 export class StarknetCounter implements Counter {
   countForBlock(block: Block): CountedBlock {
     return {
-      ...block,
+      number: block.number,
+      timestamp: block.timestamp,
+      hash: block.hash,
       transactions: block.transactions.map((tx: Transaction) => {
         const starknetTx = tx as StarknetTransaction
         return {

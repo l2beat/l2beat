@@ -9,6 +9,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from '../types'
 import {
   L2ToL1Tx,
@@ -55,7 +56,9 @@ const WethWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
   amount: bigint
-}>('orbitstack-wethgateway.WethWithdrawalInitiated')
+}>('orbitstack-wethgateway.WethWithdrawalInitiated', {
+  ttl: SLOW_WITHDRAWAL_TTL,
+})
 
 const parseWithdrawalInitiated = createEventParser(
   'event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)',

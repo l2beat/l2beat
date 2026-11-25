@@ -53,6 +53,26 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
   })
 
   describe(
+    LiveActivityBlockRepository.prototype.getOldestTimestamp.name,
+    () => {
+      it("returns when the project's oldest block is from", async () => {
+        await repository.upsertMany([
+          block('b', 1),
+          block('a', 2),
+          block('a', 3),
+        ])
+
+        expect(await repository.getOldestTimestamp(ProjectId('a'))).toEqual(
+          block('a', 2).timestamp,
+        )
+        expect(await repository.getOldestTimestamp(ProjectId('c'))).toEqual(
+          undefined,
+        )
+      })
+    },
+  )
+
+  describe(
     LiveActivityBlockRepository.prototype.getByProjectNumberRange.name,
     () => {
       it("returns the project's blocks in the range, both ends included", async () => {
@@ -67,6 +87,101 @@ describeDatabase(LiveActivityBlockRepository.name, (db) => {
         expect(
           await repository.getByProjectNumberRange(ProjectId('a'), 2, 4),
         ).toEqual([block('a', 2), block('a', 4)])
+      })
+    },
+  )
+
+  describe(LiveActivityBlockRepository.prototype.getProjectBuckets.name, () => {
+    it("sums the project's blocks in the range, its ends included, per bucket", async () => {
+      const minute = UnixTime.toStartOf(START, 'hour')
+      await repository.upsertMany([
+        { ...block('a', 1), timestamp: minute + 5 },
+        { ...block('a', 2), timestamp: minute + 50, uopsCount: null },
+        { ...block('a', 3), timestamp: minute + 70 },
+        { ...block('a', 4), timestamp: minute + 120 },
+        { ...block('a', 6), timestamp: minute + 121 },
+        { ...block('b', 5), timestamp: minute + 10 },
+      ])
+
+      expect(
+        await repository.getProjectBuckets(
+          ProjectId('a'),
+          minute,
+          minute + 120,
+          60,
+        ),
+      ).toEqual([
+        {
+          timestamp: minute,
+          blocks: 2,
+          count: 30,
+          uopsCount: 31,
+          gasUsed: 3_000_000,
+        },
+        {
+          timestamp: minute + 60,
+          blocks: 1,
+          count: 30,
+          uopsCount: 33,
+          gasUsed: 3_000_000,
+        },
+        {
+          timestamp: minute + 120,
+          blocks: 1,
+          count: 40,
+          uopsCount: 44,
+          gasUsed: 4_000_000,
+        },
+      ])
+    })
+  })
+
+  describe(
+    LiveActivityBlockRepository.prototype.getContiguousHoursAfter.name,
+    () => {
+      it("sums the project's blocks above the number per hour", async () => {
+        const hour = UnixTime.toStartOf(START, 'hour')
+        await repository.upsertMany([
+          { ...block('a', 1), timestamp: hour + 10 },
+          { ...block('a', 2), timestamp: hour + 20 },
+          { ...block('a', 3), timestamp: hour + 30, uopsCount: null },
+          { ...block('a', 4), timestamp: hour + UnixTime.HOUR + 5 },
+          { ...block('b', 5), timestamp: hour + 40 },
+        ])
+
+        expect(
+          await repository.getContiguousHoursAfter(ProjectId('a'), 1),
+        ).toEqual([
+          {
+            timestamp: hour,
+            count: 50,
+            // Block 3 counts no user operations, so its transactions stand in
+            uopsCount: 52,
+            lastTimestamp: hour + 30,
+          },
+          {
+            timestamp: hour + UnixTime.HOUR,
+            count: 40,
+            uopsCount: 44,
+            lastTimestamp: hour + UnixTime.HOUR + 5,
+          },
+        ])
+      })
+
+      it('has none when the blocks do not run on from the number', async () => {
+        await repository.upsertMany([block('a', 3), block('a', 4)])
+
+        expect(
+          await repository.getContiguousHoursAfter(ProjectId('a'), 1),
+        ).toEqual([])
+      })
+
+      it('has none when the blocks have a gap', async () => {
+        await repository.upsertMany([block('a', 2), block('a', 4)])
+
+        expect(
+          await repository.getContiguousHoursAfter(ProjectId('a'), 1),
+        ).toEqual([])
       })
     },
   )

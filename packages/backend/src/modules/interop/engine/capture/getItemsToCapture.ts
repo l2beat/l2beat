@@ -1,5 +1,8 @@
 import type { Block, Log } from '@l2beat/shared-pure'
-import { toInteropTransaction } from '../../dto/interopTransaction'
+import {
+  checksumAddress,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
 import type {
   CapturedLog,
   LogToCapture,
@@ -76,7 +79,7 @@ export function logToViemLog(log: Log): CapturedLog {
     blockNumber: BigInt(log.blockNumber),
     blockHash: log.blockHash as `0x${string}`,
     transactionHash: log.transactionHash as `0x${string}`,
-    address: log.address as `0x${string}`,
+    address: checksumAddress(log.address) as `0x${string}`,
     topics: log.topics as [`0x${string}`, ...`0x${string}`[]] | [],
     data: log.data as `0x${string}`,
     logIndex: log.logIndex,

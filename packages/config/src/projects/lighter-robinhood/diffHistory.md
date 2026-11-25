@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0e0edda6eea5a73b5dadc8c3d52a2cc3a3972687
+
+# Diff at Tue, 24 Nov 2026 11:28:22 GMT:
+
+- id: dece369c
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a0e8d2c645ce72f78de158365893b06c7072f0d5 block: 1795177545
+- current timestamp: 1795519632
+
+## Description
+
+Added TTEQ as a new asset.
+
+## Watched changes
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [lighter/ZkLighterWithSpotQuoteAsset] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit priority requests and controls desert mode (escape hatch). This variant uses a configurable quote asset and commits state differences through host-chain calldata instead of EIP-4844 blob hashes. Logic is split between two contracts because of code-size limits, with many operations delegated to AdditionalZkLighter.
+      values.registeredAssets.29:
++        {"assetIndex":31,"tokenAddress":"robinhood:0x80E10255A83B257F5A8674D363F547842aa53b8e"}
+    }
+```
+
 Generated with discovered.json: 0x9466cda64e3653ef4ec4c5c4f9c9d41def6ea9d4
 
 # Diff at Fri, 20 Nov 2026 12:27:00 GMT:

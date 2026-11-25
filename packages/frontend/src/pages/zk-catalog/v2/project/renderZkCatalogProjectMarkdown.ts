@@ -23,6 +23,7 @@ export function renderZkCatalogProjectMarkdown(
         ...getProjectStatusWarnings(entry),
         entry.header.emergencyWarning,
         entry.header.redWarning?.text,
+        ...entry.header.trustedSetupWarnings,
         entry.header.warning,
       ]),
       facts: getFacts(entry),
