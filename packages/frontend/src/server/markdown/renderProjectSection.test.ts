@@ -539,6 +539,8 @@ describe(renderProjectSection.name, () => {
               { symbol: 'wstETH' },
             ],
             totalValueLockedUsd: 30_000_000_000,
+            totalValueLockedEth: 8_000_000,
+            stakedEthShare: { value: 0.25, timestamp: 1762646400 },
             yield: { value: 0.0275, timestamp: 1762646400, estimated: false },
             costOfExit: { value: 2.5, timestamp: 1762646400, estimated: true },
           },
@@ -569,7 +571,7 @@ describe(renderProjectSection.name, () => {
 
     expect(markdown).toInclude(
       'ETH staked: 35.40 M ETH ($120.00 B) (as of 2025-11-09 00:00 UTC)',
-      '| [Lido](https://ethbeat.org/defi/projects/lido) | [stETH](https://ethbeat.org/tokens/steth/lido/steth), wstETH | $30.00 B | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
+      '| [Lido](https://ethbeat.org/defi/projects/lido) | [stETH](https://ethbeat.org/tokens/steth/lido/steth), wstETH | $30.00 B (8.00 M ETH, 25.0% of staked ETH) | 2.75% (on 2025-11-09 00:00 UTC) | ~2.5 days (over 2025-11-09 00:00 UTC to 2025-11-10 00:00 UTC) |',
       '| [Binance Staked ETH](https://ethbeat.org/defi/projects/wbeth) (under review) | wBETH | No data | No data | No data |',
       '| Mantle Staked ETH (not reviewed) |  | $1.00 B | No data | No data |',
     )
