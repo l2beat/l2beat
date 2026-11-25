@@ -68,26 +68,54 @@ export class WatchMonitorController {
       if (record === undefined) {
         continue
       }
-      if (record.lastError !== null) {
+      const config = this.watchReader.readWatchConfig(location.name)
+      const expectedConfigHash = hashWatchConfig(config)
+      const snapshotMatches =
+        record.configHash !== null && record.configHash === expectedConfigHash
+      const attemptMatches =
+        record.lastAttemptConfigHash !== null &&
+        record.lastAttemptConfigHash === expectedConfigHash
+
+      if (record.lastError !== null && attemptMatches) {
         failedWatches.push({
           name: location.name,
           kind: location.kind,
           lastAttemptAt: record.lastAttemptAt,
-          lastSuccessAt: record.timestamp,
+          lastSuccessAt: snapshotMatches ? record.timestamp : null,
           lastError: record.lastError,
         })
+      } else if (!snapshotMatches) {
+        failedWatches.push({
+          name: location.name,
+          kind: location.kind,
+          lastAttemptAt: attemptMatches ? record.lastAttemptAt : null,
+          lastSuccessAt: null,
+          lastError:
+            'Stored watch snapshot is stale (watch.jsonc changed); awaiting refresh',
+        })
       }
+
+      if (!snapshotMatches) {
+        continue
+      }
+      const committed = this.watchReader.readWatched(location.name)
+      const matchingCommitted =
+        committed !== undefined && committed.configHash === expectedConfigHash
+          ? committed
+          : undefined
       const pending = computePendingWatchDiff(
         location,
         record,
-        this.watchReader.readWatched(location.name),
+        matchingCommitted,
       )
       if (pending !== undefined) {
         watches.push({
           ...pending,
           judge: this.watchReader.readJudgePrompt(location.name),
-          lastAttemptAt: record.lastAttemptAt,
-          lastError: record.lastError,
+          lastAttemptAt: attemptMatches
+            ? record.lastAttemptAt
+            : record.timestamp,
+          lastError: attemptMatches ? record.lastError : null,
         })
       }
     }

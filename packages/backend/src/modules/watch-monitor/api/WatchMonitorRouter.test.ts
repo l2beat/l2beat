@@ -305,7 +305,6 @@ describe(createWatchMonitorRouter.name, () => {
       }
       expect(typeof body.generatedAt).toEqual('string')
       expect(body.watches.map((w) => w.name)).toEqual([
-        'newly-public',
         'optimism',
         'private-repo',
         'repointed-public',
@@ -313,9 +312,6 @@ describe(createWatchMonitorRouter.name, () => {
       expect(body.watches.find((w) => w.name === 'optimism')?.judge).toEqual(
         'Alert on new audit PDFs.',
       )
-      expect(
-        body.watches.find((w) => w.name === 'newly-public')?.judge,
-      ).toEqual('Internal triage note for private-org/secret-repo.')
       expect(body.failedWatches).toEqual([
         {
           name: 'failed-watch',
@@ -327,16 +323,18 @@ describe(createWatchMonitorRouter.name, () => {
         {
           name: 'newly-public',
           kind: 'project',
-          lastAttemptAt: 1_700_000_000,
-          lastSuccessAt: 1_700_000_000,
-          lastError: '401 private-org/secret-repo',
+          lastAttemptAt: null,
+          lastSuccessAt: null,
+          lastError:
+            'Stored watch snapshot is stale (watch.jsonc changed); awaiting refresh',
         },
         {
           name: 'newly-public-failed-private',
           kind: 'project',
-          lastAttemptAt: 1_700_003_600,
+          lastAttemptAt: null,
           lastSuccessAt: null,
-          lastError: '403 private-org/secret-repo',
+          lastError:
+            'Stored watch snapshot is stale (watch.jsonc changed); awaiting refresh',
         },
         {
           name: 'stale-watch',
