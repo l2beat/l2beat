@@ -29,7 +29,7 @@ export function hinkalRiskSummary({
         see: ['privilegedInsider'],
       },
       {
-        text: 'a token has few depositors who leave funds in the pool, as most stablecoin deposits meet a same-amount withdrawal within minutes.',
+        text: 'a token has few depositors who leave funds in the pool, as most USDT deposits meet a matching withdrawal within minutes.',
         see: ['chainAnalyst'],
       },
       {

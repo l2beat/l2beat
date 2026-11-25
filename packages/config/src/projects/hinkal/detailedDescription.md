@@ -41,4 +41,4 @@ The contracts take no protocol fee. The wallet charges 0.25% on shields, private
 
 ### Anonymity set
 
-Each token has its own anonymity set, since every transaction names its tokens. Many deposits are followed within minutes by a withdrawal of the same amount, and these hide no one.
+Each token has its own anonymity set, since every transaction names its tokens. Many deposits are followed within minutes by a withdrawal of about the same amount, and these hide no one.

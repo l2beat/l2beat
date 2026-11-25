@@ -245,8 +245,9 @@ export const hinkal: BaseProject = {
     // Not tracked: Hinkal emits no event with token, amount and depositor.
     // Deposits reach the pool from public accounts through the Emporium,
     // directly, and from deposit addresses through the ReceiveVaultFactory,
-    // so tracking needs a trace-based extractor in the backend.
+    // so tracking would need a trace-based extractor.
     tokens: [],
+    anonymitySet: { type: 'too-small' },
     exitWindow: {
       value: formatSeconds(timelockDelay),
       sentiment: 'bad',

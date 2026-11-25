@@ -104,7 +104,7 @@ export function hinkalAdversaries(upgradeDelay: string) {
         exposureShort:
           "A withdrawal hides among its token's depositors who left funds in the pool: about 120 for ETH, 55 each for USDT and USDC.",
         exposureContinued:
-          'Most stablecoin deposits are followed within minutes by a withdrawal of the same amount, which pairs the two. An unusual amount withdrawn whole links a deposit to its withdrawal.',
+          'Most USDT deposits are followed within ten minutes by a withdrawal of about the same amount, which pairs the two. An unusual amount withdrawn whole links a deposit to its withdrawal.',
         interior: {
           ...INTERIOR,
           linkage: {
@@ -121,7 +121,7 @@ export function hinkalAdversaries(upgradeDelay: string) {
           },
           {
             title:
-              'Deposits followed by a withdrawal of the same amount, or up to 3% less within a day: ETH 50%, USDT 71%, USDC 57%. 119, 55 and 56 addresses have other deposits',
+              'Deposits followed within ten minutes by a withdrawal of the same amount less up to 3%: USDT 68%, USDC 47%, ETH 39%. With such pairs of one day left out, 119 ETH, 55 USDT and 56 USDC addresses remain',
             url: POOL,
             checked: '2026-11-24',
           },
