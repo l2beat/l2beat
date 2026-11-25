@@ -106,7 +106,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
     const claimed1 = await repository.claimNextPendingNotification(
       'optimism',
       'owner-0',
-      1_000,
       60_000,
     )
     expect(claimed1?.id).toEqual('notif-1')
@@ -147,7 +146,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
     const claimed = await repository.claimNextPendingNotification(
       'optimism',
       'owner-1',
-      1_000,
       60_000,
     )
     expect(claimed?.id).toEqual('notif-2')
@@ -155,7 +153,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       await repository.claimNextPendingNotification(
         'optimism',
         'owner-2',
-        2_000,
         60_000,
       ),
     ).toEqual(undefined)
@@ -209,7 +206,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       await repository.claimNextPendingNotification(
         'optimism',
         'owner-2',
-        2_500,
         60_000,
       ),
     ).toEqual(undefined)
@@ -224,7 +220,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       await repository.claimNextPendingNotification(
         'optimism',
         'owner-2',
-        3_000,
         60_000,
       ),
     ).toEqual(undefined)
@@ -238,7 +233,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
         await repository.claimNextPendingNotification(
           'optimism',
           'owner-2',
-          4_000,
           60_000,
         )
       )?.claimedBy,
@@ -261,7 +255,6 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
     const claimed4 = await repository.claimNextPendingNotification(
       'optimism',
       'owner-2',
-      4_500,
       60_000,
     )
     expect(claimed4?.id).toEqual('notif-4')

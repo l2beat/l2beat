@@ -188,7 +188,6 @@ export interface WatchMonitorConfig {
   readonly runOnStart?: boolean
   readonly disabledWatches: string[]
   readonly githubToken?: string
-  readonly publicGithubToken?: string
   readonly discordWebhookUrl?: string
   readonly workerPool: {
     readonly workerCount: number

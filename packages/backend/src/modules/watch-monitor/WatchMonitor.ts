@@ -344,7 +344,6 @@ export class WatchMonitor {
       const item = await this.db.watchMonitor.claimNextPendingNotification(
         name,
         ownerId,
-        Date.now(),
         this.notificationClaimLeaseMs,
       )
       if (item === undefined) {

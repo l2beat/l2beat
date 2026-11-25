@@ -212,11 +212,12 @@ export class WatchMonitorRepository extends BaseRepository {
   }
 
   // Claims the head queued notification under a row lock so at most one active
-  // delivery owner sends it at a time while preserving FIFO order.
+  // delivery owner sends it at a time while preserving FIFO order. Uses
+  // PostgreSQL's clock_timestamp() after acquiring FOR UPDATE so lock wait
+  // time and cross-replica clock skew never eat into the claim lease.
   async claimNextPendingNotification(
     name: string,
     ownerId: string,
-    nowMs: number,
     leaseMs: number,
   ): Promise<WatchPendingNotification | undefined> {
     return await this.transaction(async () => {
@@ -229,6 +230,12 @@ export class WatchMonitorRepository extends BaseRepository {
       if (!row || !Array.isArray(row.pendingNotificationsJsonBlob)) {
         return undefined
       }
+      const clockResult = await sql<{ now_ms: number }>`
+        SELECT (EXTRACT(EPOCH FROM clock_timestamp()) * 1000)::double precision AS now_ms
+      `.execute(this.db)
+      const nowMs = Math.floor(
+        Number(clockResult.rows[0]?.now_ms ?? Date.now()),
+      )
       const queue =
         row.pendingNotificationsJsonBlob as WatchPendingNotification[]
       const head = queue[0]

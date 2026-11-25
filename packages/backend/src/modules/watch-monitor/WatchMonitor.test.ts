@@ -117,7 +117,6 @@ function createMemoryDb() {
     claimNextPendingNotification: async (
       name: string,
       ownerId: string,
-      nowMs: number,
       leaseMs: number,
     ) => {
       const prev = stored.get(name)
@@ -125,6 +124,7 @@ function createMemoryDb() {
       if (prev === undefined || head === undefined) {
         return undefined
       }
+      const nowMs = Date.now()
       if (
         head.claimedBy !== undefined &&
         head.claimedAt !== undefined &&
@@ -675,7 +675,6 @@ describe(WatchMonitor.name, () => {
         await db.watchMonitor.claimNextPendingNotification(
           name,
           'other-owner',
-          Date.now(),
           60_000,
         )
         await db.watchMonitor.acknowledgePendingNotification(

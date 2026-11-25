@@ -41,7 +41,6 @@ export function createWatchMonitorModule({
     {
       http: new HttpClient(),
       githubToken: config.watchMonitor.githubToken,
-      publicGithubToken: config.watchMonitor.publicGithubToken,
     },
     watchNotifier,
     db,
