@@ -264,7 +264,7 @@ Here is the difference between the two schemes on this same hash function $f$:
 
 This counterexample does *not* mean Winternitz with Keccak-256 or SHA-256 is broken. Nobody expects Keccak-256 to hide a contrived $\mathsf{RAMP}$ lane.
 
-What a counterexample proves in cryptography is a **logical gap**: the assumption *"$f$ is one-way"* is too weak to imply *"Winternitz($f$) is secure."* If you want to claim Winternitz is secure, you *must* assume extra properties of $f$ beyond one-wayness. The rungs of the ladder also come apart in practice. Both [MD5](https://en.wikipedia.org/wiki/MD5#Collision_vulnerabilities) and [SHA-1](https://eprint.iacr.org/2017/190) suffered practical collision attacks while their preimage resistance stayed unbroken. Those collisions would not forge a Winternitz signature, which requires a targeted merge rather than a free collision, yet they show that hash security is not a single property that stands or falls together.
+What a counterexample proves in cryptography is a **logical gap**: the assumption *"$f$ is one-way"* is too weak to imply *"Winternitz($f$) is secure."* If you want to claim Winternitz is secure, you *must* assume extra properties of $f$ beyond one-wayness. The rungs of the ladder also come apart in practice. Both [MD5](https://en.wikipedia.org/wiki/MD5#Collision_vulnerabilities) and [SHA-1](https://eprint.iacr.org/2017/190) suffered practical collision attacks while their preimage resistance stayed practically unbroken. Those collisions would not forge a Winternitz signature, which requires a targeted merge rather than a free collision, yet they show that hash security is not a single property that stands or falls together.
 
 Specifically, security proofs for Winternitz that name concrete properties of the hash (known as standard-model proofs) rely on two extra properties beyond one-wayness:
 
@@ -300,12 +300,12 @@ Even so, the PQ stack introduces three distinct shifts relative to today's proto
 
 Separately, two proof obligations remain open across the stack. `leanXMSS`, `leanSPHINCS`, `leanVM`, and `LeanDA` all come with impressive Lean 4 formal proofs in the classical RPM. First, **no quantum security bound is formally proved yet** for any of them (the README's 62-bit quantum figure for `leanVM` is stated, not proved). Second, the signature proofs cover forging against a single signer's key pair in isolation: `leanVM`'s [formal statement](https://github.com/leanEthereum/leanVM/blob/main/formal/statement.tex) leaves multi-key security unstated, which is the setting that matters across Ethereum's validator set and account base.
 
-The figure below summarizes where each scheme sits, from bottom to top, noting that 128-bit digests in the top tier trade away the 256-bit collision resistance of the tier below:
+The figure below summarizes where each scheme sits, from bottom to top, noting that 128-bit digests in the top tier trade away the 256-bit collision resistance of the collision tier:
 
 ![The cryptographic assumption stack for Keccak](/images/publications/hash-based-is-not-an-assumption/04-assumption-ladder.svg)
 
 ### What this means for the "post-AI" and hybrid debates
 
-Hash-based signatures still have a strong case as the most **practically minimal** post-quantum option: they remove elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
+A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
 
-What that framing cannot give you is a free reduction in risk. Reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes, so hybrid designs (pairing BLS or ECDSA with a hash-based scheme so a forgery has to break both) cannot be dismissed on that basis alone, even if their bandwidth, verification, and liveness costs ultimately argue against them. The right question for Ethereum's PQ roadmap is not whether a scheme is hash-based. It is **which new assumptions the migration takes on, and how much confidence each one deserves.**
+What that framing cannot give you is a free reduction in risk. Reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. That is where hybrid designs (pairing BLS or ECDSA with a hash-based scheme so a forgery has to break both) enter the picture: they hedge those new assumptions, at the cost of extra bandwidth, verification, and liveness complexity. The right question for Ethereum's PQ roadmap is not whether a scheme is hash-based. It is **which new assumptions the migration takes on, and how much confidence each one deserves.**
