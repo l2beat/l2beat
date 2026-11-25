@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import type { LiveChain, SlotStatus } from '~/server/features/eth-supply/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { Figure, Tile, TileTitle, TYPE } from './ui'
 
 /** One hue, more solid the more settled the slot. */
@@ -61,7 +62,7 @@ export function ChainTile({ initialChain }: { initialChain: LiveChain }) {
             {chain.headSlot.toLocaleString('en-US')}
           </span>
         }
-        sub={`Head slot · finality ${lag} epoch${lag === 1 ? '' : 's'} behind`}
+        sub={`Head slot${DOT_SEPARATOR}finality ${lag} epoch${lag === 1 ? '' : 's'} behind`}
       />
       <div className="mt-auto flex flex-col gap-3 pt-1">
         <div className={TYPE.label}>Latest {chain.slots.length} slots</div>

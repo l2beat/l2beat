@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import type { EthSupplyDay } from '~/server/features/eth-supply/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { COLORS, nearestIndex, placeLabels, timeTicks } from './chart'
 import {
   type EconomicsRange,
@@ -258,7 +259,7 @@ function SupplyChart({ days }: { days: EthSupplyDay[] }) {
                 y={y(p.totalSupply)}
                 below={i === 1}
                 width={width}
-                text={`${i === 0 ? 'High' : 'Low'} ${formatEthShort(p.totalSupply)} · ${formatMonthYear(p.timestamp)}`}
+                text={`${i === 0 ? 'High' : 'Low'} ${formatEthShort(p.totalSupply)}${DOT_SEPARATOR}${formatMonthYear(p.timestamp)}`}
               />
             ) : null,
           )}

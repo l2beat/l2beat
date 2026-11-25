@@ -1,4 +1,5 @@
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { COLORS } from './chart'
 import type { WindowSummary } from './economics'
 import { formatEth, formatEthShort, formatSignedEth } from './format'
@@ -149,7 +150,7 @@ export function BurnRateTile({
       <Figure
         value={formatEth(perDay)}
         unit="ETH / day"
-        sub={`${formatEth(perDay / 24)} ETH / hour · ${formatEth(perDay / 1440)} ETH / min`}
+        sub={`${formatEth(perDay / 24)} ETH / hour${DOT_SEPARATOR}${formatEth(perDay / 1440)} ETH / min`}
       />
     </Tile>
   )
