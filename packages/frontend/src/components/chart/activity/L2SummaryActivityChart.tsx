@@ -41,7 +41,7 @@ export function L2SummaryActivityChart({ range, rangeLabel }: Props) {
     <div className="flex flex-col gap-4">
       <ChartCardHeader
         title="Activity"
-        link={{ href: '/layer2s/activity', label: 'By project' }}
+        link={{ href: '/layer2s/activity', label: 'Breakdown' }}
         value={
           stats !== undefined
             ? formatActivityCount(countPerSecond(stats.latest))
