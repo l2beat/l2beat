@@ -28,22 +28,18 @@ export interface LiveTarget {
   /** Undefined at the newest block, as it moves on */
   end: number | undefined
   seconds: number
-  /** A resize's: it follows the newest block only when it ends there */
+  /** A resize's: read ending on the bucket its edge is in, not the next one */
   exact?: boolean
   /** A resize by the left edge: the window keeps the end it was asked for */
   holdsEnd?: boolean
 }
 
 /**
- * Where a window asked for ends, undefined following the newest block: a
- * moved one as `clampTo` has it, a resized one where its edge is
+ * Where a window asked for ends, undefined following the newest block, within
+ * the buffer as it may have moved on since
  */
 export function getTargetEnd(target: LiveTarget, buffer: Edges | undefined) {
-  if (!target.exact) return clampTo(target.end, buffer, target.seconds)
-  if (buffer === undefined || target.end === undefined) return undefined
-  // the buffer may have moved on since, as while the move was not yet read
-  const end = Math.max(buffer.from + target.seconds, target.end)
-  return end >= buffer.to ? undefined : end
+  return clampTo(target.end, buffer, target.seconds)
 }
 
 /**
@@ -58,8 +54,11 @@ export function getMoveEnd(
 ) {
   const end = getTargetEnd(target, buffer)
   if (end === undefined) return undefined
-  const rounded = end - (end % bucket)
-  return target.exact ? rounded : clampTo(rounded, buffer, target.seconds)
+  // a move up to a bucket, so a key's step back and one forward return to the
+  // newest block
+  return target.exact
+    ? end - (end % bucket)
+    : clampTo(Math.ceil(end / bucket) * bucket, buffer, target.seconds)
 }
 
 const back = (end: number, _: Edges, seconds: number) =>
@@ -161,7 +160,8 @@ export function getResizedTo(
       exact: true,
     }
   }
-  const seconds = toLiveLength(at - start, buffer.to - start)
+  // short of the newest block, so rounding doesn't end it there
+  const seconds = toLiveLength(at - start, buffer.to - start - 1)
   return { end: start + seconds, seconds, exact: true }
 }
 

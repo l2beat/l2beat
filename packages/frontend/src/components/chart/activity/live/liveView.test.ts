@@ -194,6 +194,16 @@ describe(getResizedTo.name, () => {
     expect(getTargetEnd(target, buffer)).toEqual(T - 2 * MINUTE)
   })
 
+  it('stays short of the newest block when its length rounds up to it', () => {
+    const target = getResizedTo(T - 1, T - 10 * MINUTE, buffer)
+    expect(target).toEqual({
+      end: T - MINUTE,
+      seconds: 9 * MINUTE,
+      exact: true,
+    })
+    expect(getMoveEnd(target, buffer, 12)).not.toEqual(undefined)
+  })
+
   it('follows the newest block once it reaches it, not short of it', () => {
     expect(getResizedTo(T, T - 10 * MINUTE, buffer)).toEqual({
       end: undefined,
@@ -265,13 +275,23 @@ describe(getMoveEnd.name, () => {
   it('follows the newest block when moved onto it, not short of it', () => {
     expect(getMoveEnd({ end: T, seconds: 300 }, buffer, 12)).toEqual(undefined)
     expect(getMoveEnd({ end: T - 14, seconds: 300 }, buffer, 12)).toEqual(
-      T - 14 - ((T - 14) % 12),
+      Math.ceil((T - 14) / 12) * 12,
+    )
+  })
+
+  it('returns to the newest block with a key step back and one forward', () => {
+    const asked = (end: number | undefined) =>
+      getMoveEnd({ end, seconds: 900 }, buffer, 12)
+    const back = asked(getKeyEnd('ArrowLeft', T - 5, buffer, 900))
+    expect(back).not.toEqual(undefined)
+    expect(asked(getKeyEnd('ArrowRight', back ?? 0, buffer, 900))).toEqual(
+      undefined,
     )
   })
 
   it('ends a window looked back on on a bucket', () => {
     expect(getMoveEnd({ end: T - 100, seconds: 300 }, buffer, 12)).toEqual(
-      T - 100 - ((T - 100) % 12),
+      Math.ceil((T - 100) / 12) * 12,
     )
   })
 

@@ -63,6 +63,10 @@ export function LiveOverview({
         /** The pointer's x when pressed, and whether it has been dragged since */
         x: number
         dragged: boolean
+        /** Where a window following the newest block was drawn to end */
+        live: number | undefined
+        /** A move's: where the window ends from the pointer */
+        grab: number
         resize?:
           | {
               edge: 'from'
@@ -78,7 +82,7 @@ export function LiveOverview({
               drawn: number
               seconds: number
             }
-          | { edge: 'to'; start: number; grab: number }
+          | { edge: 'to'; start: number; grab: number; seconds: number }
       }
     | undefined
   >(undefined)
@@ -152,23 +156,29 @@ export function LiveOverview({
   const pointTo = (event: PointerEvent) => {
     const at = timeAt(event)
     if (at === undefined) return
-    const resize = dragging.current?.resize
+    const drag = dragging.current
+    const resize = drag?.resize
     // a resize from the keyboard not yet read is kept
     const seconds = target.current?.seconds ?? length
-    seek(
-      resize
-        ? resize.edge === 'from'
-          ? getResizedFrom(
-              resize.drawn,
-              (event.clientX - resize.x) * resize.scale,
-              resize.seconds,
-              resize.end,
-              buffer,
-              resize.moved,
-            )
+    // drawn behind the newest block, a following window keeps following, and
+    // its length, unless dragged back from where it was drawn
+    const follows = (end: number | undefined) =>
+      drag?.live !== undefined && end !== undefined && end >= drag.live
+    const next: LiveTarget = resize
+      ? resize.edge === 'from'
+        ? getResizedFrom(
+            resize.drawn,
+            (event.clientX - resize.x) * resize.scale,
+            resize.seconds,
+            resize.end,
+            buffer,
+            resize.moved,
+          )
+        : follows(at + resize.grab)
+          ? { end: undefined, seconds: resize.seconds, exact: true }
           : getResizedTo(at + resize.grab, resize.start, buffer)
-        : { end: at + seconds / 2, seconds },
-    )
+      : { end: at + (drag?.grab ?? seconds / 2), seconds }
+    seek(follows(next.end) ? { ...next, end: undefined } : next)
   }
   const onKeyDown = (event: KeyboardEvent) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return
@@ -235,10 +245,16 @@ export function LiveOverview({
         const at = timeAt(event) ?? 0
         // as drawn, which a window longer than the buffer is not
         const shownFrom = Math.max(selection[0], from)
+        // a press on the window moves it once dragged, one beside it there
+        const inside = !edge && at >= shownFrom && at <= selection[1]
         // where the edge is from the pointer, kept through the drag
         dragging.current = {
           x: event.clientX,
-          dragged: false,
+          dragged: !edge && !inside,
+          live: following ? selection[1] : undefined,
+          grab: inside
+            ? selection[1] - at
+            : (target.current?.seconds ?? length) / 2,
           resize:
             edge === 'from'
               ? {
@@ -251,18 +267,22 @@ export function LiveOverview({
                   seconds: target.current?.seconds ?? length,
                 }
               : edge === 'to'
-                ? { edge, start: shownFrom, grab: selection[1] - at }
+                ? {
+                    edge,
+                    start: shownFrom,
+                    grab: selection[1] - at,
+                    seconds: target.current?.seconds ?? length,
+                  }
                 : undefined,
         }
         event.currentTarget.setPointerCapture(event.pointerId)
-        // a press on an edge resizes from where the window is
-        if (!edge) pointTo(event)
+        if (!edge && !inside) pointTo(event)
       }}
       onPointerMove={(event) => {
         const drag = dragging.current
         if (drag !== undefined) {
-          // an edge resizes once dragged, not with a hand's tremor on a press
-          if (drag.resize && !drag.dragged) {
+          // not with a hand's tremor on a press
+          if (!drag.dragged) {
             if (Math.abs(event.clientX - drag.x) < DRAG_PX) return
             drag.dragged = true
           }
