@@ -4,6 +4,7 @@ import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { EthereumStakingIndexer } from './network/EthereumStakingIndexer'
+import { EthereumSupplyIndexer } from './network/EthereumSupplyIndexer'
 import { readExecutionDay } from './network/executionDay'
 import { shareBlockLookups } from './shareBlockLookups'
 import { LiquidStakingIndexer } from './tokens/LiquidStakingIndexer'
@@ -77,6 +78,16 @@ export function createLiquidStakingModule({
     },
     logger,
   )
+  const ethereumSupplyIndexer = new EthereumSupplyIndexer(
+    {
+      parents: [dailyIndexer],
+      indexerService,
+      firstDay: sinceTimestamp,
+      db,
+      coingecko: providers.clients.coingecko,
+    },
+    logger,
+  )
 
   logger.info('Liquid staking config loaded', { projects: projects.length })
 
@@ -88,6 +99,7 @@ export function createLiquidStakingModule({
         await indexer.start()
       }
       await ethereumStakingIndexer.start()
+      await ethereumSupplyIndexer.start()
     },
   }
 }
