@@ -3,8 +3,8 @@ import { v } from '@l2beat/validate'
 export const ActivityResultItemSchema = v
   .object({
     timestamp: v.number(),
-    txCount: v.number(),
-    uopsCount: v.number(),
+    txCount: v.union([v.number(), v.null()]),
+    uopsCount: v.union([v.number(), v.null()]),
   })
   .describe('ActivityChartDataPoint')
 

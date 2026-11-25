@@ -22,6 +22,7 @@ export function addActivityRoutes(
     '/v1/activity',
     {
       summary: 'Activity data with ability to control the time range.',
+      description: ACTIVITY_CHART_DESCRIPTION,
       tags: ['activity'],
       query: v.object({
         range: ActivityRangeSchema.optional(),
@@ -52,6 +53,7 @@ export function addActivityRoutes(
     {
       summary:
         'Activity data for a specific project with ability to control the time range.',
+      description: ACTIVITY_CHART_DESCRIPTION,
       tags: ['activity'],
       params: v.object({
         projectId: v.string(),
@@ -102,3 +104,8 @@ async function getActivityProjects(ps: ProjectService): Promise<ProjectId[]> {
 
   return projects.map((p) => p.id)
 }
+
+const ACTIVITY_CHART_DESCRIPTION = [
+  'One point per day. Counts are `null` for days the data is not synced for yet: they are missing, not zero. A synced day with no transactions is `0`.',
+  'For a sum of many projects, a day counts as synced once any of them is synced for it, so a project that lags behind is left out of the newest days.',
+].join('\n\n')

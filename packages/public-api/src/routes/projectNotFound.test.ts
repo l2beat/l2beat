@@ -149,6 +149,7 @@ function mockDatabase(
     }),
     syncMetadata: mockObject<Database['syncMetadata']>({
       getMaxTargetForFeature: mockFn().resolvesTo(UnixTime.now()),
+      getByFeatureAndIds: mockFn().resolvesTo([]),
     }),
   })
 }
