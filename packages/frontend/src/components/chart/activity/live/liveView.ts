@@ -174,17 +174,18 @@ export function getResizedTo(
 
 /**
  * Where a finger, reaching edges only from outside the window, finds them: an
- * edge at the strip's side is taken as within, so it can be reached, as far
- * as it stays `reach` clear of the other edge, so the window still moves
+ * edge within `reach` of the strip's side is taken as within, so it can be
+ * reached, by at most a third of the window, so its middle still moves it
  */
 export function getTouchEdges(
   [left, right]: [number, number],
   width: number,
   reach: number,
 ): [number, number] {
+  const most = (right - left) / 3
   return [
-    Math.max(left, Math.min(reach, right - reach)),
-    Math.min(right, Math.max(width - reach, left + reach)),
+    Math.max(left, Math.min(reach, left + most)),
+    Math.min(right, Math.max(width - reach, right - most)),
   ]
 }
 

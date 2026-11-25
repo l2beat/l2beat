@@ -40,18 +40,28 @@ describe(getEdgeAt.name, () => {
 })
 
 describe(getTouchEdges.name, () => {
-  it('takes an edge at the strip side as within', () => {
-    expect(getTouchEdges([0, 20], 300, 8)).toEqual([8, 20])
-    expect(getTouchEdges([279, 299], 300, 8)).toEqual([279, 292])
+  it('takes an edge within reach of the strip side as within', () => {
+    expect(getTouchEdges([0, 30], 300, 8)).toEqual([8, 30])
+    expect(getTouchEdges([270, 299], 300, 8)).toEqual([270, 292])
   })
 
-  it('leaves the edges of a window too narrow to keep clear of each other', () => {
-    expect(getTouchEdges([0, 7], 300, 8)).toEqual([0, 7])
-    expect(getTouchEdges([292, 299], 300, 8)).toEqual([292, 299])
+  it('takes it in by at most a third of the window', () => {
+    expect(getTouchEdges([0, 12], 300, 8)).toEqual([4, 12])
+    expect(getTouchEdges([292.5, 300], 300, 8)).toEqual([292.5, 297.5])
   })
 
   it('leaves edges away from the sides', () => {
     expect(getTouchEdges([100, 140], 300, 8)).toEqual([100, 140])
+  })
+
+  it('leaves a narrow window at a side its handle and its middle', () => {
+    // Methodology: a live 6 min window on a 300 px strip, and 16 px at the left
+    const live = getTouchEdges([292.5, 300], 300, 8)
+    expect(getEdgeAt(299, live, 8, 0)).toEqual('to')
+    expect(getEdgeAt(296, live, 8, 0)).toEqual(undefined)
+    const left = getTouchEdges([0, 16], 300, 8)
+    expect(getEdgeAt(2, left, 8, 0)).toEqual('from')
+    expect(getEdgeAt(8, left, 8, 0)).toEqual(undefined)
   })
 })
 
