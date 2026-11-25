@@ -2,7 +2,7 @@ import { type json, UnixTime } from '@l2beat/shared-pure'
 import { assertWatchValueNotPending } from './pendingItems'
 import type { WatchConfig, Watched } from './WatchReader'
 import type { WatchContext } from './WatchTemplate'
-import { sortDeep } from './watchedValue'
+import { sortDeep, visitObjects } from './watchedValue'
 
 // A watch is one unit: if any template throws, the whole run rejects, so a
 // caller never stores or diffs a run that is missing a key.
@@ -13,16 +13,28 @@ export async function runWatch(
   const timestamp = UnixTime.now()
   const values: Record<string, json> = {}
   for (const watch of config.watches) {
+    if (context.signal?.aborted) {
+      throw context.signal.reason
+    }
     let value: json
     try {
       value = await watch.template.fetch(watch.params, context)
     } catch (error) {
+      if (context.signal?.aborted) {
+        throw context.signal.reason
+      }
       throw new Error('Watch run failed', {
         cause: { name: config.name, key: watch.key, error },
       })
     }
+    if (context.signal?.aborted) {
+      throw context.signal.reason
+    }
     assertWatchValueNotPending(watch.key, value)
-    values[watch.key] = sortDeep(value)
+    const sorted = sortDeep(value)
+    // Reject pending items inside arrays up front before the snapshot can be saved.
+    visitObjects(sorted, () => {})
+    values[watch.key] = sorted
   }
   return { timestamp, values }
 }

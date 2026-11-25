@@ -5,6 +5,7 @@ import type { Validator, v } from '@l2beat/validate'
 export interface WatchContext {
   http: HttpClient
   githubToken?: string
+  signal?: AbortSignal
 }
 
 // `fetch` must throw on any failure instead of returning partial data: a

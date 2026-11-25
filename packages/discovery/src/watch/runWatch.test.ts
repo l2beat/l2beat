@@ -64,4 +64,43 @@ describe(runWatch.name, () => {
       'Watch value is a pending item',
     )
   })
+
+  it('rejects a template that places a pending item inside an array', async () => {
+    const config: WatchConfig = {
+      name: 'alpha',
+      watches: [
+        {
+          key: 'a',
+          template: template(async () => [{ pending: true }]),
+          params: {},
+        },
+      ],
+    }
+    await expect(runWatch(config, context)).toBeRejectedWith(
+      'Pending item inside an array',
+    )
+  })
+
+  it('stops running templates once the context signal is aborted', async () => {
+    const controller = new AbortController()
+    const second = mockFn().resolvesTo(1)
+    const config: WatchConfig = {
+      name: 'alpha',
+      watches: [
+        {
+          key: 'a',
+          template: template(async () => {
+            controller.abort(new Error('Run cancelled'))
+            return 1
+          }),
+          params: {},
+        },
+        { key: 'b', template: template(second), params: {} },
+      ],
+    }
+    await expect(
+      runWatch(config, { ...context, signal: controller.signal }),
+    ).toBeRejectedWith('Run cancelled')
+    expect(second).not.toHaveBeenCalled()
+  })
 })

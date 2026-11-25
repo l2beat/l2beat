@@ -1,5 +1,5 @@
 import { assert, type json } from '@l2beat/shared-pure'
-import { isJsonObject, MAX_WATCHED_DEPTH } from './watchedValue'
+import { isJsonObject, MAX_WATCHED_DEPTH, sortDeep } from './watchedValue'
 
 export interface WatchChange {
   // Item ids of keyed objects are path segments.
@@ -71,7 +71,7 @@ function toChange(
   if (after === undefined) {
     return { path, before }
   }
-  if (JSON.stringify(before) === JSON.stringify(after)) {
+  if (JSON.stringify(sortDeep(before)) === JSON.stringify(sortDeep(after))) {
     return undefined
   }
   return { path, before, after }

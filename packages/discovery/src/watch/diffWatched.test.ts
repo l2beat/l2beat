@@ -51,10 +51,13 @@ describe(diffWatched.name, () => {
     ])
   })
 
-  it('ignores object key order', () => {
+  it('ignores object key order, including inside arrays of objects', () => {
     expect(diffWatched({ a: { x: 1, y: 2 } }, { a: { y: 2, x: 1 } })).toEqual(
       [],
     )
+    expect(
+      diffWatched({ list: [{ a: 1, b: 2 }] }, { list: [{ b: 2, a: 1 }] }),
+    ).toEqual([])
   })
 
   it('rejects values deeper than 8 levels', () => {
