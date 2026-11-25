@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x31786020c0a930ecbfe61589a15077b9a9e0ee3d
+
+# Diff at Tue, 24 Nov 2026 09:25:56 GMT:
+
+- id: 64416180
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4543e3b4810d193ef5a247036295c604271b20a8 block: 1792013664
+- current timestamp: 1795512257
+
+## Description
+
+EigenDAOperationsMultisig: 2 members rotated.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6"
++        "eth:0x0cD17b1c29eF6C22Fb066988BfC681e9E257B866"
+      values.$members.3:
+-        "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
++        "eth:0x50efF9378be47c6B53506168499783b1c287403e"
+    }
+```
+
 Generated with discovered.json: 0x2adab79244a22c2cbe29b2db78bf01917f61477e
 
 # Diff at Tue, 20 Oct 2026 09:05:15 GMT:
