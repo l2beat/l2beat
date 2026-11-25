@@ -77,9 +77,6 @@ export const TokenSchema = v
         "USD value counted toward the project's TVS: usually amount times priceUsd, with custom rules for some tokens to avoid double counting.",
     }),
     name: v.string().meta({ description: 'Full token name, e.g. "Ether".' }),
-    iconUrl: v.union([v.string(), v.null()]).meta({
-      description: 'URL of the token icon. Null when we have no icon for it.',
-    }),
     amount: v.number().meta({
       description:
         'Amount of the token secured by the project, in whole tokens (decimals already applied).',
