@@ -7,6 +7,7 @@ CREATE TABLE "WatchMonitor" (
     "configHash" VARCHAR(255),
     "pendingNotificationsJsonBlob" JSONB,
     "lastAttemptAt" TIMESTAMP(6),
+    "lastAttemptId" VARCHAR(64),
     "lastError" TEXT,
 
     CONSTRAINT "WatchMonitor_pkey" PRIMARY KEY ("name")

@@ -13,6 +13,7 @@ function record(
     configHash: null,
     pendingNotifications: [],
     lastAttemptAt: null,
+    lastAttemptId: null,
     lastError: null,
     ...partial,
   }

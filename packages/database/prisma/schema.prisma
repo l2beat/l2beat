@@ -184,6 +184,7 @@ model WatchMonitor {
   configHash                   String?   @db.VarChar(255)
   pendingNotificationsJsonBlob Json?
   lastAttemptAt                DateTime? @db.Timestamp(6)
+  lastAttemptId                String?   @db.VarChar(64)
   lastError                    String?
 }
 

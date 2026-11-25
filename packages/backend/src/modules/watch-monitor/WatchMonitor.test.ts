@@ -12,7 +12,7 @@ import type {
   WatchReader,
 } from '@l2beat/discovery'
 import type { HttpClient } from '@l2beat/shared'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
 import type { WorkerPool } from '../update-monitor/createWorkers'
@@ -46,18 +46,36 @@ const TIMESTAMP = 1_700_000_000
 
 function createMemoryDb() {
   const stored = new Map<string, WatchMonitorRecord>()
+  const storedAttemptDates = new Map<string, Date>()
+  const canWrite = (name: string, attemptAt: Date, attemptId: string) => {
+    const prev = stored.get(name)
+    const prevDate = storedAttemptDates.get(name)
+    if (prev === undefined || prevDate === undefined) {
+      return true
+    }
+    if (prevDate.getTime() < attemptAt.getTime()) {
+      return true
+    }
+    return (
+      prevDate.getTime() === attemptAt.getTime() &&
+      prev.lastAttemptId === attemptId
+    )
+  }
+
   const watchMonitor = mockObject<Database['watchMonitor']>({
     findLatest: async (name: string) => stored.get(name),
     getAll: async () => [...stored.values()],
     upsertObservation: async (obs: WatchObservation) => {
       const prev = stored.get(obs.name)
       if (
-        prev !== undefined &&
-        ((prev.timestamp !== null && prev.timestamp > obs.timestamp) ||
-          (prev.lastAttemptAt !== null && prev.lastAttemptAt > obs.attemptAt))
+        (prev !== undefined &&
+          prev.timestamp !== null &&
+          prev.timestamp > obs.timestamp) ||
+        !canWrite(obs.name, obs.attemptAt, obs.attemptId)
       ) {
         return false
       }
+      storedAttemptDates.set(obs.name, obs.attemptAt)
       stored.set(obs.name, {
         name: obs.name,
         timestamp: obs.timestamp,
@@ -65,34 +83,35 @@ function createMemoryDb() {
         isPublic: obs.isPublic,
         configHash: obs.configHash,
         pendingNotifications: obs.pendingNotifications,
-        lastAttemptAt: obs.attemptAt,
+        lastAttemptAt: UnixTime.fromDate(obs.attemptAt),
+        lastAttemptId: obs.attemptId,
         lastError: null,
       })
       return true
     },
     updatePendingNotifications: async (
       name: string,
-      attemptAt: UnixTime,
+      attemptId: string,
       pendingNotifications: WatchPendingNotification[],
     ) => {
       const prev = stored.get(name)
-      if (prev !== undefined && prev.lastAttemptAt === attemptAt) {
-        stored.set(name, { ...prev, pendingNotifications })
+      if (prev === undefined || prev.lastAttemptId !== attemptId) {
+        return false
       }
+      stored.set(name, { ...prev, pendingNotifications })
+      return true
     },
     recordFailure: async (
       name: string,
-      attemptAt: UnixTime,
+      attemptAt: Date,
+      attemptId: string,
       errorMessage: string,
     ) => {
-      const prev = stored.get(name)
-      if (
-        prev !== undefined &&
-        prev.lastAttemptAt !== null &&
-        prev.lastAttemptAt > attemptAt
-      ) {
+      if (!canWrite(name, attemptAt, attemptId)) {
         return
       }
+      const prev = stored.get(name)
+      storedAttemptDates.set(name, attemptAt)
       stored.set(name, {
         name,
         timestamp: prev?.timestamp ?? null,
@@ -100,7 +119,8 @@ function createMemoryDb() {
         isPublic: prev?.isPublic ?? false,
         configHash: prev?.configHash ?? null,
         pendingNotifications: prev?.pendingNotifications ?? [],
-        lastAttemptAt: attemptAt,
+        lastAttemptAt: UnixTime.fromDate(attemptAt),
+        lastAttemptId: attemptId,
         lastError: errorMessage,
       })
     },
@@ -156,7 +176,6 @@ describe(WatchMonitor.name, () => {
       runWatchFn,
     )
 
-    // Hour 1: new file compared to committed baseline -> persists + notifies + clears queue.
     await monitor.update(TIMESTAMP)
     expect(notifier.handleUpdate).toHaveBeenCalledTimes(1)
     expect(stored.get('optimism')?.values).toEqual(values)
@@ -170,7 +189,6 @@ describe(WatchMonitor.name, () => {
       [],
     )
 
-    // Hour 2: unchanged -> no transition alert, still reported in daily reminder.
     await monitor.update(TIMESTAMP + 3600)
     expect(notifier.handleUpdate).toHaveBeenCalledTimes(1)
     expect(notifier.sendDailyReminder).toHaveBeenNthCalledWith(
@@ -262,16 +280,28 @@ describe(WatchMonitor.name, () => {
       runWatchFn,
     )
 
-    // Hour 1: A -> B, Discord fails -> B persisted, A->B retained in queue, failure recorded.
-    await monitor.update(TIMESTAMP)
+    await monitor
+      .updateWatch(
+        'optimism',
+        TIMESTAMP,
+        undefined,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
+      )
+      .catch(() => {})
     expect(stored.get('optimism')?.values).toEqual({ v: 'B' })
     expect(stored.get('optimism')?.pendingNotifications.length).toEqual(1)
     expect(stored.get('optimism')?.lastError).toEqual(
       'Watch notification failed',
     )
 
-    // Hour 2: B -> A (source reverted), Discord recovers -> BOTH A->B and B->A are delivered!
-    await monitor.update(TIMESTAMP + 3600)
+    await monitor.updateWatch(
+      'optimism',
+      TIMESTAMP + 3600,
+      undefined,
+      new Date((TIMESTAMP + 3600) * 1000),
+      'attempt-2',
+    )
     expect(notifier.handleUpdate).toHaveBeenCalledTimes(3)
     expect(notifier.handleUpdate).toHaveBeenNthCalledWith(
       2,
@@ -289,6 +319,109 @@ describe(WatchMonitor.name, () => {
     expect(stored.get('optimism')?.lastError).toEqual(null)
   })
 
+  it('drains already-queued alerts even when the source is offline on the next run', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn().resolvesToOnce('failed').resolvesToOnce('sent'),
+    })
+    const runWatchFn = mockFn()
+      .resolvesToOnce({ timestamp: TIMESTAMP, values: { v: 'B' } })
+      .rejectsWithOnce(new Error('Watch run failed'))
+
+    const monitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      runWatchFn,
+    )
+
+    // Hour 1: source returns B, Discord is down -> alert queued.
+    await expect(
+      monitor.updateWatch(
+        'optimism',
+        TIMESTAMP,
+        undefined,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
+      ),
+    ).toBeRejectedWith('Watch notification failed')
+    expect(stored.get('optimism')?.pendingNotifications.length).toEqual(1)
+
+    // Hour 2: source is offline, Discord recovered -> queued alert IS delivered,
+    // queue cleared, and fetch failure recorded.
+    await expect(
+      monitor.updateWatch(
+        'optimism',
+        TIMESTAMP + 3600,
+        undefined,
+        new Date((TIMESTAMP + 3600) * 1000),
+        'attempt-2',
+      ),
+    ).toBeRejectedWith('Watch run failed')
+    expect(notifier.handleUpdate).toHaveBeenCalledTimes(2)
+    expect(stored.get('optimism')?.pendingNotifications).toEqual([])
+    expect(stored.get('optimism')?.lastError).toEqual('Watch run failed')
+  })
+
+  it('isolates overlapping attempts started at the exact same instant using attemptId', async () => {
+    const { stored, db } = createMemoryDb()
+    const sameInstant = new Date(TIMESTAMP * 1000)
+    const reader = mockObject<WatchReader>({
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn().resolvesTo('sent'),
+    })
+
+    const monitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      mockFn()
+        .resolvesToOnce({ timestamp: TIMESTAMP, values: { v: 'B' } })
+        .rejectsWithOnce(new Error('Watch run failed')),
+    )
+
+    // Attempt B succeeds at sameInstant.
+    await monitor.updateWatch(
+      'optimism',
+      TIMESTAMP,
+      undefined,
+      sameInstant,
+      'attempt-b',
+    )
+    // Attempt A fails at the exact same instant with a different attemptId:
+    // must NOT overwrite attempt B's healthy state.
+    await expect(
+      monitor.updateWatch(
+        'optimism',
+        TIMESTAMP,
+        undefined,
+        sameInstant,
+        'attempt-a',
+      ),
+    ).toBeRejectedWith('Watch run failed')
+    expect(stored.get('optimism')?.lastAttemptId).toEqual('attempt-b')
+    expect(stored.get('optimism')?.lastError).toEqual(null)
+  })
+
   it('does not let a timed-out Discord request mark a newer successful run stale', async () => {
     const abortController = new AbortController()
     const { stored, db } = createMemoryDb()
@@ -297,7 +430,6 @@ describe(WatchMonitor.name, () => {
       readWatched: () => ({ timestamp: 1, values: { v: 1 } }),
     })
 
-    // Simulate run 1's Discord request hanging until after abort, then returning 'failed'.
     const notifier = mockObject<WatchNotifier>({
       handleUpdate: mockFn(async () => {
         abortController.abort(new Error('Task timeout'))
@@ -323,10 +455,10 @@ describe(WatchMonitor.name, () => {
         'optimism',
         TIMESTAMP,
         abortController.signal,
-        TIMESTAMP,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
       ),
     ).toBeRejectedWith('Task timeout')
-    // Must not overwrite lastError after abort.
     expect(stored.get('optimism')?.lastError).toEqual(null)
   })
 
@@ -364,7 +496,8 @@ describe(WatchMonitor.name, () => {
         'optimism',
         TIMESTAMP,
         abortController.signal,
-        TIMESTAMP,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
       ),
     ).toBeRejectedWith('Task timeout')
     expect(receivedSignal).toEqual(abortController.signal)
