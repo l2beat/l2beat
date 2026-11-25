@@ -214,7 +214,7 @@ export const polygonpos: ScalingProject = {
     apis: [
       {
         type: 'rpc',
-        url: 'https://polygon.llamarpc.com',
+        url: 'https://polygon.drpc.org',
         callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },
