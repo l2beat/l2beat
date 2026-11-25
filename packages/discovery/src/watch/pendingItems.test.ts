@@ -59,4 +59,9 @@ describe(countPendingItems.name, () => {
     expect(countPendingItems(values)).toEqual(2)
     expect(countPendingItems(stripPendingItems(values))).toEqual(0)
   })
+
+  it('rejects a watch key named __proto__', () => {
+    const values = JSON.parse('{"__proto__":{"a":1}}')
+    expect(() => stripPendingItems(values)).toThrow('Watch key named __proto__')
+  })
 })
