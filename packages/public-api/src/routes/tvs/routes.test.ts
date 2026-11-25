@@ -2,6 +2,7 @@ import type { Project, ProjectService } from '@l2beat/config'
 import type {
   Database,
   SummedByTimestampTokenValueRecord,
+  TvsPriceRecord,
 } from '@l2beat/database'
 import { type InMemoryCache, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -28,14 +29,19 @@ describe('/v1/tvs', () => {
   let baseUrl: string
   let close: () => void
   let getSummed: ReturnType<typeof mockGetSummed>
+  let getEthPrices: ReturnType<typeof mockGetEthPrices>
   let cache: ReturnType<typeof mockCache>
 
   beforeEach(async () => {
     getSummed = mockGetSummed([record(T0, 100), record(T2, 300)])
+    getEthPrices = mockGetEthPrices([price(T0, 2000)])
     cache = mockCache()
     const db = mockObject<Database>({
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
         getSummedByTimestampByProjects: getSummed,
+      }),
+      tvsPrice: mockObject<Database['tvsPrice']>({
+        getPricesInRangeByPriceId: getEthPrices,
       }),
     })
     const app = express()
@@ -54,6 +60,22 @@ describe('/v1/tvs', () => {
 
     expect(res.status).toEqual(200)
     expect(res.body.map((p) => p.timestamp)).toEqual([T0, T2])
+  })
+
+  it('adds the ETH price of each point, null when it is unknown', async () => {
+    const res = await get('/v1/tvs/alpha')
+
+    expect(getEthPrices).toHaveBeenCalledWith(
+      'ethereum',
+      expect.anything(),
+      expect.anything(),
+    )
+    expect(res.body[0]).toEqual(
+      expect.subset({ totalTvs: 100, ethPrice: 2000 }),
+    )
+    expect(res.body[1]).toEqual(
+      expect.subset({ totalTvs: 300, ethPrice: null }),
+    )
   })
 
   for (const [path, keyPrefix] of [
@@ -151,10 +173,20 @@ function record(
   }
 }
 
+function price(timestamp: UnixTime, priceUsd: number): TvsPriceRecord {
+  return { timestamp, priceUsd, configurationId: 'eth', priceId: 'ethereum' }
+}
+
 function mockGetSummed(records: SummedByTimestampTokenValueRecord[]) {
   return mockFn<
     Database['tvsTokenValue']['getSummedByTimestampByProjects']
   >().resolvesTo(records)
+}
+
+function mockGetEthPrices(prices: TvsPriceRecord[]) {
+  return mockFn<Database['tvsPrice']['getPricesInRangeByPriceId']>().resolvesTo(
+    prices,
+  )
 }
 
 function fakeProjectService() {
