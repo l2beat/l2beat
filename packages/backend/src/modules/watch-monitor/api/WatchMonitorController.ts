@@ -323,10 +323,18 @@ export class WatchMonitorController {
       lastAttemptAt: attemptMatches ? record.lastAttemptAt : record.timestamp,
       lastError: null,
     }
+    const committed = this.watchReader.readWatched(location.name)
+    // Apply the same public-config provenance check to the committed baseline
+    // so an older private watched.json never leaks private paths as removals
+    // after a watch is repointed and switched to public.
+    const publishableCommitted =
+      committed !== undefined && committed.configHash === expectedConfigHash
+        ? committed
+        : undefined
     const pending = computePendingWatchDiff(
       location,
       publicRecord,
-      this.watchReader.readWatched(location.name),
+      publishableCommitted,
     )
     if (attemptMatches && record.lastError !== null) {
       return {

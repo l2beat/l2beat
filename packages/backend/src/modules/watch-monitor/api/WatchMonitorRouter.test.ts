@@ -69,6 +69,7 @@ describe(createWatchMonitorRouter.name, () => {
       ['optimism', watchConfig('optimism', true)],
       ['private-repo', watchConfig('private-repo', false)],
       ['quiet', watchConfig('quiet', true)],
+      ['repointed-public', watchConfig('repointed-public', true)],
       ['stale-watch', watchConfig('stale-watch', true)],
     ])
     const hashOf = (name: string) => {
@@ -144,6 +145,21 @@ describe(createWatchMonitorRouter.name, () => {
         configHash: hashOf('quiet'),
         values: { version: '1' },
       }),
+      // Fresh public run after repointing from a private repo, while watched.json
+      // on disk still holds the earlier private baseline.
+      record({
+        name: 'repointed-public',
+        timestamp: 1_700_000_000,
+        lastAttemptAt: 1_700_000_000,
+        lastAttemptConfigHash: hashOf('repointed-public'),
+        isPublic: true,
+        configHash: hashOf('repointed-public'),
+        values: {
+          audits: {
+            'public/repo:new.pdf': { sha: '1', size: 10 },
+          },
+        },
+      }),
       record({
         name: 'stale-watch',
         timestamp: 1_700_000_000,
@@ -183,6 +199,11 @@ describe(createWatchMonitorRouter.name, () => {
       { name: 'optimism', kind: 'project' as const, path: '/p/optimism' },
       { name: 'private-repo', kind: 'project' as const, path: '/p/private' },
       { name: 'quiet', kind: 'global' as const, path: '/w/quiet' },
+      {
+        name: 'repointed-public',
+        kind: 'project' as const,
+        path: '/p/repointed',
+      },
       { name: 'stale-watch', kind: 'project' as const, path: '/p/stale' },
     ]
     const reader = mockObject<WatchReader>({
@@ -199,11 +220,27 @@ describe(createWatchMonitorRouter.name, () => {
         if (name === 'optimism') {
           return {
             timestamp: 1,
+            configHash: hashOf('optimism'),
             values: { audits: { 'org/r:a.pdf': { sha: '1', size: 10 } } },
           }
         }
         if (name === 'quiet' || name === 'stale-watch') {
-          return { timestamp: 1, values: { version: '1' } }
+          return {
+            timestamp: 1,
+            configHash: hashOf(name),
+            values: { version: '1' },
+          }
+        }
+        if (name === 'repointed-public') {
+          return {
+            timestamp: 1,
+            configHash: hashWatchConfig(watchConfig('repointed-public', false)),
+            values: {
+              audits: {
+                'private-org/secret-baseline:old.pdf': { sha: '9', size: 99 },
+              },
+            },
+          }
         }
         return undefined
       },
@@ -264,6 +301,7 @@ describe(createWatchMonitorRouter.name, () => {
         'newly-public',
         'optimism',
         'private-repo',
+        'repointed-public',
       ])
       expect(body.failedWatches).toEqual([
         {
@@ -424,6 +462,17 @@ describe(createWatchMonitorRouter.name, () => {
       expect(staleText).toInclude('- **Status**: Stale (last run failed)')
       expect(staleText).not.toInclude('HTTP timeout')
       expect(staleText).not.toInclude('Last error')
+
+      // Repointed watch that ran under its new public config while watched.json
+      // still holds an older private baseline must NOT leak private removals.
+      const repointed = await fetch(
+        `${url}/status/watch/repointed-public.html.md`,
+      )
+      expect(repointed.status).toEqual(200)
+      const repointedText = await repointed.text()
+      expect(repointedText).toInclude('public/repo:new.pdf')
+      expect(repointedText).not.toInclude('private-org/secret-baseline')
+      expect(repointedText).not.toInclude('old.pdf')
 
       const privateWatch = await fetch(
         `${url}/status/watch/private-repo.html.md`,
