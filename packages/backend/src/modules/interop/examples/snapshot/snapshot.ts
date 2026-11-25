@@ -207,6 +207,14 @@ export class RpcSnapshotClient extends RpcClientCompat {
     return feeHistory
   }
 
+  override async getMaxPriorityFeePerGas(): Promise<bigint> {
+    const key = this.buildSnapshotKey(['maxPriorityFeePerGas'])
+
+    const tip = await super.getMaxPriorityFeePerGas()
+    await this.exampleInputs.writeRpc(key, tip.toString())
+    return tip
+  }
+
   override async call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
