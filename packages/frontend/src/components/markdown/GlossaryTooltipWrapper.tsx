@@ -9,10 +9,13 @@ import {
 } from '../core/tooltip/Tooltip'
 
 interface GlossaryTooltipWrapperProps {
+  /** The HTML the children render; the links are wrapped again only when it changes. */
+  html: string
   children: React.ReactNode
 }
 
 export function GlossaryTooltipWrapper({
+  html,
   children,
 }: GlossaryTooltipWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -32,11 +35,19 @@ export function GlossaryTooltipWrapper({
       }
     })
 
+    // Unmounting a root synchronously while React commits is not allowed.
+    const roots = rootsRef.current
+    queueMicrotask(() => {
+      for (const root of roots) {
+        root.unmount()
+      }
+    })
+
     rootsRef.current = []
     replacedLinksRef.current = []
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to re-run this effect when the children change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the links to wrap are in `html`, which the children render
   useLayoutEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -91,7 +102,7 @@ export function GlossaryTooltipWrapper({
     })
 
     return cleanupRoots
-  }, [children])
+  }, [html])
 
   return (
     <div ref={containerRef} className="inline">

@@ -1,73 +1,46 @@
-import type { ProjectLiquidStaking } from '@l2beat/config'
+import type { ProjectLiquidStakingTracking } from '@l2beat/config'
 
 export interface CostOfExitDescription {
   /** What the value measures, by the routes counted. */
   tooltip: string
-  /** The tooltip, with how each route is measured. */
+  /** The tooltip, with what is particular to the protocol's exit. */
   chart: string
 }
 
-interface ExitRoute {
-  /** Ends "by the cheapest route: …". */
-  phrase: string
-  /** How the route is measured. */
-  note?: string
-}
-
-const INTRO =
-  'How many days of staking yield a holder gives up to exit about 1 ETH'
+const INTRO = 'Days of staking yield it costs to exit 1 ETH'
 const ESTIMATE_NOTE =
-  "~ marks an estimate: requests still queued are timed at the last 7 days' pace."
-const MARKET_NOTE =
-  "The discount is the day's median of hourly quotes for selling 1 token on the deepest pools, on days they could fill the sale for most hours."
-const INSTANT_NOTE =
-  'An instant exit counts on days it could pay out 1 ETH for most hours.'
+  "~ marks an estimate: requests still in the queue are timed at the last 7 days' pace."
 
-const QUEUE: ExitRoute = {
-  phrase: "the protocol's withdrawal queue, which earns nothing while it waits",
-}
-const INSTANT: ExitRoute = {
-  phrase: "the protocol's instant exit, for its fee",
-  note: INSTANT_NOTE,
-}
-const MARKET: ExitRoute = {
-  phrase: 'selling on the best onchain pool, for its discount',
-  note: MARKET_NOTE,
-}
+/** Each ends "by the cheapest route: …". */
+const QUEUE = 'waiting in the queue, which earns nothing'
+const INSTANT = "an instant exit's fee"
+const MARKET = 'the market discount'
 
 const ALL_ROUTES_TOOLTIP = `${describeRoutes([QUEUE, INSTANT, MARKET])} ${ESTIMATE_NOTE}`
 
 /** Every route any protocol has, for pages that compare them. */
 export const ALL_ROUTES_COST_OF_EXIT: CostOfExitDescription = {
   tooltip: ALL_ROUTES_TOOLTIP,
-  chart: [
-    ALL_ROUTES_TOOLTIP,
-    MARKET_NOTE,
-    INSTANT_NOTE,
-    'wBETH unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
-  ].join(' '),
+  chart: ALL_ROUTES_TOOLTIP,
 }
 
 /** The cost of exit of one protocol, naming only the routes it has. */
 export function getCostOfExitDescription(
-  liquidStaking: Pick<ProjectLiquidStaking, 'contracts' | 'marketQuotes'>,
+  tracking: ProjectLiquidStakingTracking,
 ): CostOfExitDescription {
-  const market = liquidStaking.marketQuotes.length > 0 ? [MARKET] : []
-  const noMarketNote =
-    market.length === 0 ? ['Its pools are too thin to quote.'] : []
-  const { routes, queued, notes } = getProtocolRoutes(
-    liquidStaking.contracts.type,
-  )
-  const all = [...routes, ...market]
+  const hasMarket = tracking.marketQuotes.length > 0
+  const { routes, queued, notes } = getProtocolRoutes(tracking.contracts.type)
 
-  const tooltip = [describeRoutes(all), queued ? ESTIMATE_NOTE : undefined]
+  const tooltip = [
+    describeRoutes(hasMarket ? [...routes, MARKET] : routes),
+    queued ? ESTIMATE_NOTE : undefined,
+  ]
     .filter((sentence) => sentence !== undefined)
     .join(' ')
   const chart = [
     tooltip,
-    ...all.flatMap((route) => (route.note ? [route.note] : [])),
     ...notes,
-    ...noMarketNote,
+    ...(hasMarket ? [] : ['Its pools are too thin to quote.']),
   ].join(' ')
   return { tooltip, chart }
 }
@@ -76,8 +49,10 @@ export function getCostOfExitDescription(
  * The routes the indexer reads for each protocol type, apart from selling,
  * which depends on the pools quoted.
  */
-function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
-  routes: ExitRoute[]
+function getProtocolRoutes(
+  type: ProjectLiquidStakingTracking['contracts']['type'],
+): {
+  routes: string[]
   /** Its queue wait can be an estimate. */
   queued: boolean
   notes: string[]
@@ -87,12 +62,7 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
       return { routes: [QUEUE], queued: true, notes: [] }
     case 'rocketpool':
       return {
-        routes: [
-          {
-            phrase: 'burning rETH, which pays out at once',
-            note: 'Burning counts on days it could pay out 1 ETH for most hours.',
-          },
-        ],
+        routes: ['burning rETH, which pays out at once'],
         queued: false,
         notes: [],
       }
@@ -100,10 +70,11 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
       return { routes: [QUEUE, INSTANT], queued: true, notes: [] }
     case 'wbeth':
       return {
-        routes: [{ phrase: 'unwrapping, which earns nothing while it waits' }],
+        routes: ['unwrapping, which earns nothing while it waits'],
         queued: true,
         notes: [
-          'Unwraps wait for Binance to allocate ETH, and at least the operator-set lock time.',
+          'Unwraps wait for Binance to allocate ETH and for its lock time.',
+          '~ also marks an unwrap still inside the lock.',
         ],
       }
     case 'cbeth':
@@ -114,19 +85,23 @@ function getProtocolRoutes(type: ProjectLiquidStaking['contracts']['type']): {
       }
     case 'stakewise':
       return {
-        routes: [
-          { phrase: "the protocol's redemption queue, paid out in batches" },
-        ],
+        routes: ['waiting in the redemption queue, which earns nothing'],
         queued: true,
         notes: [],
+      }
+    case 'rate':
+      return {
+        routes: [],
+        queued: false,
+        notes: ["The protocol's own exit is not read."],
       }
   }
 }
 
-function describeRoutes(routes: ExitRoute[]): string {
-  const phrases = routes.map((route) => route.phrase)
-  const last = phrases.at(-1)
+function describeRoutes(routes: string[]): string {
+  const last = routes.at(-1)
   if (last === undefined) return `${INTRO}.`
-  if (phrases.length === 1) return `${INTRO}, by its only route: ${last}.`
-  return `${INTRO}, by the cheapest route: ${phrases.slice(0, -1).join('; ')}; or ${last}.`
+  if (routes.length === 1) return `${INTRO}, by its only route: ${last}.`
+  const cheapest = routes.length === 2 ? 'cheaper' : 'cheapest'
+  return `${INTRO}, by the ${cheapest} route: ${routes.slice(0, -1).join(', ')}, or ${last}.`
 }

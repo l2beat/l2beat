@@ -16,7 +16,9 @@ function readNumberFlag(name: string, fallback: number): number {
   if (index === -1) return fallback
   const value = Number(process.argv[index + 1])
   if (!Number.isFinite(value) || value <= 0) {
-    throw new Error(`${name} expects a positive number`)
+    throw new Error('Argument expects a positive number', {
+      cause: { name },
+    })
   }
   return value
 }
@@ -33,7 +35,7 @@ async function main() {
   })
   const result = results.get(chainId)
   if (!result) {
-    throw new Error(`Missing observation result for chainId ${chainId}`)
+    throw new Error('Missing observation result', { cause: { chainId } })
   }
 
   console.log(

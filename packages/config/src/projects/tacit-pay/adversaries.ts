@@ -38,10 +38,10 @@ export const REFERENCE_APP = {
       name: 'tacit.finance',
       icon: 'tacit-finance',
       finding:
-        "Sends ten of the user's deposit addresses per request to one public node at every sign-in, with no setting for the user's own node.",
+        "Sends ten of the user's deposit addresses per request to Tacit's relay at every sign-in, with no setting for the user's own node.",
       fix: 'Read each deposit address in its own request and offer an own-node setting, as anon.wei does.',
       source: 'https://tacit.finance/pay/eth/',
-      checked: '2026-11-09',
+      checked: '2026-11-18',
     },
   ],
 } satisfies ProjectPrivacyReferenceApp
@@ -102,7 +102,8 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       sources: [
         {
           title:
-            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded (counted 2026-11-13)',
+            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded',
+          checked: '2026-11-13',
           url: 'https://etherscan.io/address/0x000000c2A20657CE25f2Ba99737933D031AFBEE9',
         },
         {
@@ -116,7 +117,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The user's own Ethereum node can take every read that names a deposit address or the recipient, leaving third parties only pool-wide logs.",
       exposureContinued:
-        'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. Base and Robinhood Chain nodes still receive the deposit addresses, which are the same on every chain.',
+        'By default, Tenderly and dRPC receive the deposit addresses and the withdrawal recipient in one session, so either can tie both sides. On Base and Robinhood Chain, public nodes receive the deposit addresses, which are the same on every chain.',
       interior: {
         ...INTERIOR,
         linkage: {
@@ -180,11 +181,17 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       sentiment: 'bad',
       exposureShort:
         'Whoever breaks elliptic-curve cryptography recovers the key of each wallet that signed in and sent a transaction, which opens its notes and links.',
-      exposureContinued: `${S.walletSignatureAccounts()} A Tacit address published in a name record yields its view and nullifier keys the same way, exposing its incoming notes and their spends.`,
+      exposureContinued: `${S.walletSignatureAccounts()} A Tacit address published in a name record holds the public key of the signature-derived key, which opens the account the same way.`,
       interior: {
-        sender: 'exposed',
-        recipient: 'exposed',
-        amount: 'exposed',
+        sender: {
+          verdict: 'atRisk',
+          note: 'Private only for a user who signs in with a pasted key and whose Tacit address stays unshared.',
+        },
+        recipient: {
+          verdict: 'atRisk',
+          note: "Private only while the recipient's Tacit address stays unshared.",
+        },
+        amount: 'atRisk',
         asset: 'exposed',
         linkage: 'exposed',
       },
@@ -194,14 +201,18 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
           url: TACIT + 'dapp/identity-message.js',
         },
         {
-          title: 'Note keys tweak the address keys by an ECDH secret',
-          url: TACIT + 'dapp/btc-pool-zk.js#L126-L160',
+          title:
+            'A Tacit address holds the public key of the signature-derived key',
+          url: PAGE + '#L1479-L1485',
         },
         {
           title: 'Names publish a Tacit address in a text record',
           url: TACIT + 'docs/EVM-POOL.md#names',
         },
-        { section: 'trusted-setups' },
+        {
+          title: 'Sign-in also takes a 64-character key',
+          url: PAGE + '#L4447-L4451',
+        },
       ],
     },
   },

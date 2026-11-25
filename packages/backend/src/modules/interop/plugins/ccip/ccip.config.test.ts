@@ -156,7 +156,7 @@ function encodeResult(
 
 function getNetwork(networks: CCIPNetwork[], chain: string): CCIPNetwork {
   const network = networks.find((n) => n.chain === chain)
-  if (!network) throw new Error(`Missing network ${chain}`)
+  if (!network) throw new Error('Missing network', { cause: { chain } })
   return network
 }
 

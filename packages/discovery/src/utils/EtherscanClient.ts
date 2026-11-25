@@ -1,13 +1,8 @@
 import { type Logger, RateLimiter, redactUrl } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  Retries,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { callWithBackoff, isPermanentHttpError } from './callWithBackoff'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
@@ -30,13 +25,6 @@ function isRateLimitError(error: unknown): boolean {
   const message = (error as { message?: unknown }).message
   return typeof message === 'string' && message.includes('rate limit reached')
 }
-
-const shouldRetry = Retries.exponentialBackOff({
-  stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
-  maxAttempts: 10,
-  maxDistanceMs: Number.POSITIVE_INFINITY,
-  notifyAfterAttempts: Number.POSITIVE_INFINITY,
-})
 
 export class EtherscanClient implements IEtherscanClient {
   protected readonly rateLimiter = new RateLimiter({
@@ -256,22 +244,15 @@ export class EtherscanClient implements IEtherscanClient {
     action: string,
     params: Record<string, string>,
   ): Promise<unknown> {
-    let attempts = 0
-    while (true) {
-      try {
-        return await this.callRaw(module, action, params)
-      } catch (error) {
-        attempts++
-        const result = shouldRetry(attempts, error)
-        if (result.shouldStop) {
-          throw error
-        }
+    return await callWithBackoff(() => this.callRaw(module, action, params), {
+      random: Math.random,
+      isPermanentError: isPermanentHttpError,
+      retryCallback: (attempts, error) => {
         if (!isRateLimitError(error)) {
           this.logger.warn('Retrying', { attempts, error })
         }
-        await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
-      }
-    }
+      },
+    })
   }
 
   private async callRaw(
@@ -382,8 +363,7 @@ function parsePath(path: string | undefined): string | undefined {
   if (path.includes(':')) {
     const parts = path.split(':')
     assert(parts.length === 2, 'Expected only a single colon')
-    // biome-ignore lint/style/noNonNullAssertion: we know it's there
-    return parts[0]!
+    return parts[0]
   }
 
   return path

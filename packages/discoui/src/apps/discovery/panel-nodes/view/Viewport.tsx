@@ -9,6 +9,7 @@ import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnectionsWebGL } from './NodesAndConnectionsWebGL'
+import { PerimeterLabels } from './PerimeterLabels'
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -93,6 +94,7 @@ export function Viewport() {
       )}
     >
       <NodesAndConnectionsWebGL />
+      <PerimeterLabels />
       <ChainCaptions />
       <MouseSelection />
     </div>

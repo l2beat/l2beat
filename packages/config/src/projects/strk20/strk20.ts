@@ -2,9 +2,14 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { strk20Adversaries } from './adversaries'
+import { strk20RiskSummary } from './riskSummary'
 
 const STRK20_POOL = {
   chain: 'starknet',
@@ -184,10 +189,10 @@ export const strk20: BaseProject = {
           name: 'Haven web app',
           icon: 'haven',
           finding:
-            "Reads the account's balances and transfers through Cartridge's public RPC, a third party that refuses most Tor circuits.",
-          fix: "Read the chain through Haven's own servers or a user-set RPC, and accept Tor there.",
+            "Reads the account's balances and transfers through PublicNode's public RPC, with no setting for the user's own node.",
+          fix: 'Let users set their own RPC, as Bramble does.',
           source: 'https://go.haven.hn',
-          checked: '2026-10-30',
+          checked: '2026-11-18',
         },
         {
           name: 'OffMarket web app',
@@ -204,9 +209,7 @@ export const strk20: BaseProject = {
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The pool and the anonymizer that owns every shadow account are immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
       walkawayTest: {
@@ -216,8 +219,7 @@ export const strk20: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The pool contract, SDK, discovery service and prover are open source. The deployed pool, anonymizer and bridge helpers rebuild from their published source. Source for the AVNU, Endur and escrow helpers is not published. Bramble's store build matches a rebuild of its tag, while its gateway runs closed code.",
     },
@@ -228,7 +230,7 @@ export const strk20: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: strk20Adversaries,
-    riskSummary: readProjectMarkdown('strk20', 'riskSummary'),
+    riskSummary: strk20RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
     },

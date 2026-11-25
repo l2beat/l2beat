@@ -12,7 +12,8 @@ export function useGlobalShortcut(key: string, callback: () => void) {
       const isEnabled =
         [
           ...document.querySelectorAll('[data-radix-popper-content-wrapper]'),
-          ...document.querySelectorAll('[role="dialog"]'),
+          // The mobile nav stays mounted while closed, and inert.
+          ...document.querySelectorAll('[role="dialog"]:not([inert])'),
         ].length === 0
       if (!isEnabled) return
 

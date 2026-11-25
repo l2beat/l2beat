@@ -37,6 +37,22 @@ describe(hasDefiProjectPage.name, () => {
     expect(hasDefiProjectPage(NOT_OSSIFIED)).toEqual(false)
   })
 
+  it('gives no page to a liquid staking protocol research has not reviewed', () => {
+    env.CLIENT_SIDE_DEFI_ENABLED = true
+
+    expect(hasDefiProjectPage({ liquidStaking: {} })).toEqual(false)
+    expect(
+      hasDefiProjectPage({
+        liquidStaking: {
+          risks:
+            mockObject<
+              NonNullable<Project<'liquidStaking'>['liquidStaking']['risks']>
+            >(),
+        },
+      }),
+    ).toEqual(true)
+  })
+
   it('gives no page when neither DeFi nor Ossification is enabled', () => {
     env.CLIENT_SIDE_DEFI_ENABLED = false
     env.CLIENT_SIDE_OSSIFICATION_ENABLED = false

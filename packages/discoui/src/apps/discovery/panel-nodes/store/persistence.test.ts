@@ -12,6 +12,7 @@ const USER_PREFERENCES: State['userPreferences'] = {
   enableDimming: false,
   hideLargeArrays: false,
   highlightOverlapping: false,
+  showSecurityPerimeter: false,
 }
 
 describe(partializeNodeStore.name, () => {
@@ -42,6 +43,25 @@ describe(migrateNodeStoreState.name, () => {
   it('uses defaults for an invalid payload', () => {
     expect(migrateNodeStoreState({ userPreferences: 'invalid' })).toEqual({
       userPreferences: DEFAULT_USER_PREFERENCES,
+    })
+  })
+
+  it('defaults showSecurityPerimeter when upgrading saved preferences', () => {
+    const result = migrateNodeStoreState({
+      userPreferences: {
+        enableDimming: false,
+        hideLargeArrays: false,
+        highlightOverlapping: false,
+      },
+    })
+
+    expect(result).toEqual({
+      userPreferences: {
+        enableDimming: false,
+        hideLargeArrays: false,
+        highlightOverlapping: false,
+        showSecurityPerimeter: true,
+      },
     })
   })
 })

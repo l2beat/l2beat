@@ -9,5 +9,11 @@
     "address": "eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad",
     "chain": "ethereum",
     "blockNumber": 25424438
+  },
+  "ETHLockbox_v2_0_0": {
+    "hash": "0x2e1b69625d621e8569a0d223d61fd22b3e80afd6e15d634bd684d47113b84a6a",
+    "address": "eth:0xDF75E6b07E98873E36BA5c05508F80c1454e0aFe",
+    "chain": "ethereum",
+    "blockNumber": 26430859
   }
 }

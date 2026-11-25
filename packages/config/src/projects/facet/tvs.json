@@ -10,23 +10,30 @@
       "name": "Ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
-        "decimals": 18,
-        "sinceTimestamp": 1754512679
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
           {
-            "name": "Facet legacy L1Bridge"
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xaE00fb77048Af97E40b01aA812c6B4827cca1E71",
+            "decimals": 18,
+            "sinceTimestamp": 1795206131
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x4E2eBa30a786c0643699b92234d74a71e958C08E",
+            "decimals": 18,
+            "sinceTimestamp": 1754512679
           }
         ]
-      }
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -56,6 +63,33 @@
     },
     {
       "mode": "auto",
+      "id": "facet-ETH-3",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+        "decimals": 18,
+        "sinceTimestamp": 1733855519,
+        "untilTimestamp": 1795042019
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Facet deprecated bridge"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "facet-WETH",
       "priceId": "weth",
       "symbol": "WETH",
@@ -67,7 +101,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
         "decimals": 18,
-        "sinceTimestamp": 1733855519
+        "sinceTimestamp": 1733855519,
+        "untilTimestamp": 1795042019
       },
       "category": "ether",
       "source": "external",

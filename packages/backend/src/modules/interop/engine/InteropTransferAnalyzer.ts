@@ -5,7 +5,7 @@ import type {
 } from './notifications/InteropNotifier'
 
 export const VALUE_DIFF_THRESHOLD_PERCENT = 15
-export const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
+export const MINIMUM_LARGER_SIDE_VALUE_USD_THRESHOLD = 100_000
 export const EXTREME_VALUE_RATIO_THRESHOLD = 5
 
 export interface InteropTransferValues {
@@ -49,15 +49,8 @@ export function analyzeSuspiciousTransfer(
     return
   }
 
-  if (
-    srcValueUsd <= MINIMUM_SIDE_VALUE_USD_THRESHOLD ||
-    dstValueUsd <= MINIMUM_SIDE_VALUE_USD_THRESHOLD
-  ) {
-    return
-  }
-
   const maxSideValueUsd = Math.max(srcValueUsd, dstValueUsd)
-  if (maxSideValueUsd === 0) {
+  if (maxSideValueUsd < MINIMUM_LARGER_SIDE_VALUE_USD_THRESHOLD) {
     return
   }
 
@@ -70,9 +63,6 @@ export function analyzeSuspiciousTransfer(
   }
 
   const minSideValueUsd = Math.min(srcValueUsd, dstValueUsd)
-  if (minSideValueUsd === 0) {
-    return
-  }
 
   return {
     dominantSide: srcValueUsd >= dstValueUsd ? 'src' : 'dst',

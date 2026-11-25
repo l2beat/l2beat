@@ -1,8 +1,8 @@
 import { Address32, type Block } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { Log } from 'viem'
 import type { InteropTransaction } from '../dto/interopTransaction'
 import { AgglayerPlugin } from './agglayer'
+import type { CapturedLog } from './types'
 
 describe(AgglayerPlugin.name, () => {
   describe('capture', () => {
@@ -43,7 +43,7 @@ const ETH_TRANSFER_LOG = {
   data: '0x000000000000000000000000000000000000000000000000000000006ae1eab3',
   transactionHash: TX_HASH,
   logIndex: 0xc6,
-} as unknown as Log
+} as unknown as CapturedLog
 
 // destinationNetwork changed from 69 (a Sepolia-only network) to 20 (Katana),
 // so the mainnet network list resolves it.
@@ -55,4 +55,4 @@ const BRIDGE_EVENT_LOG = {
   data: '0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000014000000000000000000000000eea3304dd7a7292c7087a28a4db25a628b2c6afb000000000000000000000000000000000000000000000000000000006ae1eab3000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000350510000000000000000000000000000000000000000000000000000000000000000',
   transactionHash: TX_HASH,
   logIndex: 0xc7,
-} as unknown as Log
+} as unknown as CapturedLog

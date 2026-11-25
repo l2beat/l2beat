@@ -2,7 +2,7 @@
 ARG TURBO_TEAM
 ARG COREPACK_VERSION="^0.36.0"
 
-FROM node:24.22.1-slim AS base
+FROM node:24.22.3-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ARG COREPACK_VERSION
@@ -37,12 +37,17 @@ FROM deps AS proddeps
 RUN rm -rf node_modules packages/*/node_modules && \
   CI=true pnpm install --prod --frozen-lockfile --offline
 
-FROM node:24.22.1-slim AS release
+FROM node:24.22.3-slim AS release
 
-# Install curl for healthcheck and create non-root user
-RUN apt update && \
-  apt install -y curl && \
-  apt clean && \
+# The release command runs Node directly; package managers are build-time tools.
+# Drop npm and its bundled dependencies without fetching floating updates.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
+
+# Refresh available distro patches, install curl for healthcheck, and create non-root user
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y curl && \
+  apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 

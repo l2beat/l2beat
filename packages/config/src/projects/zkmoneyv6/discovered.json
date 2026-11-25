@@ -1,7 +1,7 @@
 {
   "name": "zkmoneyv6",
   "timestamp": 1794571906,
-  "configHash": "0x9f01ac5d48f7a5b24909bbef360ba98dfe95858459546f897bfbdfc2b90ee26a",
+  "configHash": "0x92b85128b35989cff76c6b5c90ce55ae2a40077eb95eebee7bc8feb64c82d634",
   "entries": [
     {
       "address": "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e",
@@ -331,6 +331,58 @@
       },
       "implementationNames": {
         "eth:0x3dc71762063D7b87b3F79b3B98E03F0051b00A6e": "Resolver"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "AcrossBridgeEscrowFactory",
+      "address": "eth:0x482fCB714Eb34075453a9e5954EbEe9c85BC9142",
+      "type": "Contract",
+      "template": "zkmoney/v6/AcrossBridgeEscrowFactory",
+      "sourceHashes": [
+        "0x3ba05a75298159e75551473576f4c5d89e492492bdb18298e8a5dbf0c2c6172e"
+      ],
+      "proxyType": "immutable",
+      "description": "Bridge-out on withdraw: a withdrawal can pay DAI to an AcrossBridgeEscrow clone whose destination chain, recipient, Across fee, tip and recovery commitment are fixed in its address. Anyone can deploy and execute a funded clone.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793185367,
+      "sinceBlock": 26290800,
+      "values": {
+        "$immutable": true,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "IMPLEMENTATION": "eth:0x49e5A38c822E22222D1c7A7445e73B33B484EfF6"
+      },
+      "implementationNames": {
+        "eth:0x482fCB714Eb34075453a9e5954EbEe9c85BC9142": "AcrossBridgeEscrowFactory"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "AcrossBridgeEscrow",
+      "address": "eth:0x49e5A38c822E22222D1c7A7445e73B33B484EfF6",
+      "type": "Contract",
+      "template": "zkmoney/v6/AcrossBridgeEscrow",
+      "sourceHashes": [
+        "0x2db33cb42d79c7d6bd87772b51ae7f5a233de6831d7a65d98f1863184cb12615"
+      ],
+      "proxyType": "immutable",
+      "description": "AcrossBridgeEscrow implementation. A clone swaps its DAI to USDC or USDT on the Curve 3pool and deposits it into Across's SpokePool, whose relayers pay the recipient on the destination chain. If the deposit is never filled, Across refunds the clone, and only the recovery key committed in its address can move the funds.",
+      "deployerAddress": "eth:0x2A1888d8Ba7375d6f3A153B606c74c77C4980CD4",
+      "sinceTimestamp": 1793185367,
+      "sinceBlock": 26290800,
+      "values": {
+        "$immutable": true,
+        "ACROSS_INPUT_TOKEN_DECIMALS": 6,
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "FACTORY": "eth:0x482fCB714Eb34075453a9e5954EbEe9c85BC9142",
+        "FILL_DEADLINE_OFFSET": 21600,
+        "SPOKE_POOL": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+        "THREE_POOL": "eth:0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
+        "USDC": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "USDT": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "implementationNames": {
+        "eth:0x49e5A38c822E22222D1c7A7445e73B33B484EfF6": "AcrossBridgeEscrow"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1909,6 +1961,58 @@
       "function resolveWithProof(bytes response, bytes extraData) view returns (bytes)",
       "function supportsInterface(bytes4 interfaceID) pure returns (bool)"
     ],
+    "eth:0x482fCB714Eb34075453a9e5954EbEe9c85BC9142": [
+      "constructor(address _dai, address _usdc, address _usdt, address _threePool, address _spokePool)",
+      "error CloneArgumentsTooLong()",
+      "error Create2EmptyBytecode()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "event EscrowExecuted(address indexed escrow, address tipRecipient)",
+      "function DAI() view returns (address)",
+      "function IMPLEMENTATION() view returns (address)",
+      "function deploy(tuple(address acrossInputToken, uint256 destinationChainId, address recipient, address acrossOutputToken, uint8 acrossOutputTokenDecimals, uint256 acrossFee, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function deployAndExecute(tuple(address acrossInputToken, uint256 destinationChainId, address recipient, address acrossOutputToken, uint8 acrossOutputTokenDecimals, uint256 acrossFee, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) returns (address escrow)",
+      "function predictEscrowAddress(tuple(address acrossInputToken, uint256 destinationChainId, address recipient, address acrossOutputToken, uint8 acrossOutputTokenDecimals, uint256 acrossFee, bytes32 recoveryCommitment, uint256 relayerTip, bytes32 nonce) _args) view returns (address)"
+    ],
+    "eth:0x49e5A38c822E22222D1c7A7445e73B33B484EfF6": [
+      "constructor(address _dai, address _usdc, address _usdt, address _threePool, address _spokePool)",
+      "error AcrossBridgeEscrow__AcrossOutputDecimalsBelowInput(uint8 acrossOutputTokenDecimals)",
+      "error AcrossBridgeEscrow__AmountNotAboveAcrossFee(uint256 amount, uint256 acrossFee)",
+      "error AcrossBridgeEscrow__UnsupportedAcrossInputToken(address acrossInputToken)",
+      "error AcrossBridgeEscrow__ZeroRecipient()",
+      "error EscrowBase__EmptyBalance()",
+      "error EscrowBase__EthTransferFailed()",
+      "error EscrowBase__NonceAlreadyUsed()",
+      "error EscrowBase__NotClone()",
+      "error EscrowBase__NotFactory()",
+      "error RecoveryAuthLib__InvalidSignature()",
+      "error RecoveryAuthLib__RecoveryCommitmentMismatch()",
+      "error RecoveryAuthLib__RecoveryExpired(uint256 deadline)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SafeERC20FailedOperation(address token)",
+      "event EscrowRecovered(address indexed token, address indexed target, uint256 amount)",
+      "function ACROSS_INPUT_TOKEN_DECIMALS() view returns (uint8)",
+      "function DAI() view returns (address)",
+      "function FACTORY() view returns (address)",
+      "function FILL_DEADLINE_OFFSET() view returns (uint32)",
+      "function SPOKE_POOL() view returns (address)",
+      "function THREE_POOL() view returns (address)",
+      "function USDC() view returns (address)",
+      "function USDT() view returns (address)",
+      "function acrossFee() view returns (uint256)",
+      "function acrossInputToken() view returns (address)",
+      "function acrossOutputToken() view returns (address)",
+      "function acrossOutputTokenDecimals() view returns (uint8)",
+      "function destinationChainId() view returns (uint256)",
+      "function execute(address _tipRecipient)",
+      "function nonce() view returns (bytes32)",
+      "function recipient() view returns (address)",
+      "function recoverERC20(bytes32 _recoverySalt, address _account, bytes _signature, address _target, address _token, bytes32 _nonce, uint256 _deadline)",
+      "function recoverETH(bytes32 _recoverySalt, address _account, bytes _signature, address _target, bytes32 _nonce, uint256 _deadline)",
+      "function recoveryCommitment() view returns (bytes32)",
+      "function relayerTip() view returns (uint256)",
+      "function usedNonces(bytes32 nonce) view returns (bool used)"
+    ],
     "eth:0x4a29C4b0ED569621f0B38Aa2EF7633A950207bDf": [
       "constructor(address _teeRegistry, address _underlying, address _registry, uint256 _rollupVersion, tuple(address frozenNotes, address frozenDeposits, address unprocessedDeposit) _verifiers, uint128 _txAmountCap, uint256 _rate, uint256 _globalLimit)",
       "error Caps__GlobalLimitSurpassed()",
@@ -2934,6 +3038,8 @@
     "zkmoney/SkyWithdrawalExecutor": "0xa9b2e44ea9cd8843b9d99851bbc4e372011666afb06cb5354e9b9d391ee94707",
     "zkmoney/SwapEscrowFactoryV2": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/SwapEscrowV2": "0x84cc242a76dad9bb39d117b773e1d6d5aa9175466c4c41d63c1d181ab30b41cc",
+    "zkmoney/v6/AcrossBridgeEscrow": "0x186444c9b21c44848e0383728abeb6d7c659c41b697893e9ef5378c3c5e8e77a",
+    "zkmoney/v6/AcrossBridgeEscrowFactory": "0x43020a812d505bcaa795bf5559514f333fbdf2128b66ba88a7bd40dfcd3d4cac",
     "zkmoney/v6/AddPasskeySIPA": "0xd473eef370e141cc507f0b44fa9bcd75e7d85880fdc25f9a14f23ea414ea4d64",
     "zkmoney/v6/DepositSIPA": "0x3fd8e9865b619085d7554a73acb4bca89e060fcbfe1bf56bc749b9db7d07100b",
     "zkmoney/v6/ForwardingTable": "0x304b5810e0629fa676ccd1a1006fdcf61aa1374aed3c71740e0841539d6ffcbc",
@@ -2954,7 +3060,7 @@
     "zkmoney/v6/UserOpSIPA": "0xd2c68e7858153cdb3b7db447ee96d8da53d3eb8e68e1f66fb3a24eb53d6cc67c"
   },
   "usedBlockNumbers": { "ethereum": 26405957 },
-  "permissionsConfigHash": "0x00b80ea990116cbf6af68663678fd520e876eec95461ef715a68a3b5df152a93",
+  "permissionsConfigHash": "0x3f6754a4353c55104f217efa722d3d9052754023b3eb9b16edb41b9a9b407db5",
   "permissions": {
     "eth:0x04Ffc6aD66934937737DD5Fea303bd0903B7625e": {
       "receivedPermissions": [

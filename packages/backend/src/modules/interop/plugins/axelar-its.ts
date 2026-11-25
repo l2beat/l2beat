@@ -63,8 +63,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         interchainTransfer.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log) => parseTransfer(log, null),
       )
 
@@ -99,8 +98,7 @@ export class AxelarITSPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         interchainTransferReceived.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log) => parseTransfer(log, null),
       )
 

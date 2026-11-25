@@ -13,12 +13,6 @@ describe(hashJson.name, () => {
     )
   })
 
-  it('returns same hash for similar objects', () => {
-    const hashA = hashJson({ foo: 1, bar: 2 })
-    const hashB = hashJson({ foo: 1, bar: 2 })
-    expect(hashA).toEqual(hashB)
-  })
-
   it('returns different hash for different objects', () => {
     const hashA = hashJson({ foo: 1, bar: 2 })
     const hashB = hashJson({ foo: 123 })

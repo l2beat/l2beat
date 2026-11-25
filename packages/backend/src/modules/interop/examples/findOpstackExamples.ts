@@ -71,7 +71,7 @@ export interface Findings {
 
 function env(name: string): string {
   const v = process.env[name]
-  if (!v) throw new Error(`Missing env: ${name}`)
+  if (!v) throw new Error('Missing env', { cause: { name } })
   return v
 }
 
@@ -377,7 +377,7 @@ export async function findOpstackExamples(
   opts: { l1Blocks?: number } = {},
 ): Promise<Findings> {
   const network = OPSTACK_NETWORKS.find((n) => n.chain === chain)
-  if (!network) throw new Error(`Unknown opstack chain: ${chain}`)
+  if (!network) throw new Error('Unknown opstack chain', { cause: { chain } })
 
   const l1 = client(env('ETHEREUM_RPC_URL'))
   const l2 = client(env(`${chain.toUpperCase()}_RPC_URL`))

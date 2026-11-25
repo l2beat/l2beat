@@ -28,6 +28,7 @@ export async function getProjectSectionLinks(
       'zkCatalogInfo',
       'privacyInfo',
       'defiInfo',
+      'liquidStaking',
     ],
   })
   if (!project) return []
@@ -52,7 +53,7 @@ export async function getProjectSectionLinks(
       href: `/privacy/projects/${slug}`,
     },
     env.CLIENT_SIDE_DEFI_ENABLED &&
-      isListedDefiProject(project.defiInfo) && {
+      isListedDefiProject(project) && {
         section: 'defi',
         href: `/defi/projects/${slug}`,
       },

@@ -2,7 +2,6 @@ import {
   Address32,
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   MessagePassed,
@@ -21,6 +20,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  SLOW_WITHDRAWAL_TTL,
 } from './types'
 
 // == Event signatures ==
@@ -93,7 +93,7 @@ const WithdrawalInitiated = createInteropEventType<{
   l1Token: Address32
   l2Token: Address32
 }>('maker-bridge.WithdrawalInitiated', {
-  ttl: 30 * UnixTime.DAY,
+  ttl: SLOW_WITHDRAWAL_TTL,
 })
 
 // L1 finalization: ERC20WithdrawalFinalized from Maker bridge

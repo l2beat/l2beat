@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 
 interface Props<T extends string> {
@@ -6,12 +7,15 @@ interface Props<T extends string> {
   /** No longer changes the look; the compare page still passes it. */
   projectChart?: boolean
   className?: string
+  /** Items for the values `T` has besides these two */
+  children?: ReactNode
 }
 
 export function ActivityMetricControls<T extends string>({
   value,
   onValueChange,
   className,
+  children,
 }: Props<T>) {
   return (
     <RadioGroup
@@ -23,6 +27,7 @@ export function ActivityMetricControls<T extends string>({
     >
       <RadioGroupItem value="uops">UOPS</RadioGroupItem>
       <RadioGroupItem value="tps">TPS</RadioGroupItem>
+      {children}
     </RadioGroup>
   )
 }

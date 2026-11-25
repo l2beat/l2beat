@@ -42,6 +42,14 @@ export function optionToRange(option: ChartRangePredefinedOption): ChartRange {
   ]
 }
 
+/**
+ * Whether a range ends today, as the presets and calendar ranges up to today
+ * do, save the presets in the hour and a quarter after midnight
+ */
+export function endsToday([, to]: ChartRange, now = UnixTime.now()): boolean {
+  return UnixTime.toStartOf(to, 'day') === UnixTime.toStartOf(now, 'day')
+}
+
 export function optionToDays(option: 'max'): null
 export function optionToDays(
   option: Exclude<ChartRangePredefinedOption, 'max'>,

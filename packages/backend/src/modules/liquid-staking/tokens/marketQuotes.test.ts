@@ -1,3 +1,4 @@
+import type { MulticallV3Response } from '@l2beat/shared'
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
@@ -18,6 +19,12 @@ const ROUTER = new utils.Interface([
   'function querySwapExactIn((address tokenIn, (address pool, address tokenOut, bool isBuffer)[] steps, uint256 exactAmountIn, uint256 minAmountOut)[] paths, address sender, bytes userData)',
 ])
 const OUT = 10n ** 20n
+const FAILED: MulticallV3Response = { success: false, data: Bytes.EMPTY }
+const BALANCER_V3 = {
+  type: 'balancerV3' as const,
+  pool: POOL,
+  wrappedWeth: WRAPPED_WETH,
+}
 
 describe(getMarketQuote.name, () => {
   it('takes the first word, as the quoter returns more after it', () => {
@@ -27,15 +34,15 @@ describe(getMarketQuote.name, () => {
       [OUT, 1, 2, 3],
     )
 
-    expect(decode({ success: true, data: Bytes.fromHex(data) })).toEqual(OUT)
+    expect(decode([{ success: true, data: Bytes.fromHex(data) }])).toEqual(OUT)
   })
 
   it('asks PancakeSwap its own quoter', () => {
     const uniswap = getMarketQuote(TOKEN, { type: 'uniswapV3', fee: 500 })
     const pancake = getMarketQuote(TOKEN, { type: 'pancakeV3', fee: 500 })
 
-    expect(pancake.call.to).not.toEqual(uniswap.call.to)
-    expect(pancake.call.input).toEqual(uniswap.call.input)
+    expect(pancake.calls[0]?.to).not.toEqual(uniswap.calls[0]?.to)
+    expect(pancake.calls[0]?.input).toEqual(uniswap.calls[0]?.input)
   })
 
   it('gives nothing for a pool that does not exist yet or reverts', () => {
@@ -46,26 +53,18 @@ describe(getMarketQuote.name, () => {
       j: 0,
     })
 
-    expect(decode({ success: true, data: Bytes.EMPTY })).toEqual(undefined)
-    expect(decode({ success: false, data: Bytes.EMPTY })).toEqual(undefined)
+    expect(decode([{ success: true, data: Bytes.EMPTY }])).toEqual(undefined)
+    expect(decode([{ success: false, data: Bytes.EMPTY }])).toEqual(undefined)
   })
 
   it('reads the Balancer V3 path amount, behind the array offsets', () => {
-    const { call, decode } = getMarketQuote(TOKEN, {
-      type: 'balancerV3',
-      pool: POOL,
-      wrappedWeth: WRAPPED_WETH,
-    })
-    const data = utils.defaultAbiCoder.encode(
-      ['uint256[]', 'address[]', 'uint256[]'],
-      [[OUT], [WETH], [OUT]],
-    )
+    const { calls, decode } = getMarketQuote(TOKEN, BALANCER_V3)
 
-    expect(decode({ success: true, data: Bytes.fromHex(data) })).toEqual(OUT)
+    expect(decode([swapOut(OUT), words(OUT, 0n), words(0n)])).toEqual(OUT)
     // Sells into the pool, then unwraps to WETH through the vault's buffer.
     const [paths] = ROUTER.decodeFunctionData(
       'querySwapExactIn',
-      call.input.toString(),
+      calls[0]?.input.toString() ?? '',
     )
     expect(
       paths[0].steps.map((s: utils.Result) => [s.pool, s.tokenOut, s.isBuffer]),
@@ -73,6 +72,19 @@ describe(getMarketQuote.name, () => {
       [ChainSpecificAddress.address(POOL), WRAPPED, false],
       [WRAPPED, WETH, true],
     ])
+  })
+
+  it('gives no Balancer V3 quote while the wrapped WETH cannot be unwrapped', () => {
+    const { decode } = getMarketQuote(TOKEN, BALANCER_V3)
+    const buffer = words(OUT - 1n, 4n * OUT)
+
+    // The buffer is short, so the swap would redeem the sale and half of
+    // the buffer's wrapped WETH from the wrapper.
+    expect(decode([swapOut(OUT), buffer, words(3n * OUT)])).toEqual(OUT)
+    expect(decode([swapOut(OUT), buffer, words(3n * OUT - 1n)])).toEqual(
+      undefined,
+    )
+    expect(decode([swapOut(OUT), buffer, FAILED])).toEqual(undefined)
   })
 
   it('reads the Fluid swap result from its revert', () => {
@@ -85,7 +97,31 @@ describe(getMarketQuote.name, () => {
       `0xb3bfda99${utils.defaultAbiCoder.encode(['uint256'], [OUT]).slice(2)}`,
     )
 
-    expect(decode({ success: false, data: revert })).toEqual(OUT)
-    expect(decode({ success: false, data: Bytes.EMPTY })).toEqual(undefined)
+    expect(decode([{ success: false, data: revert }])).toEqual(OUT)
+    expect(decode([FAILED])).toEqual(undefined)
   })
 })
+
+function swapOut(amount: bigint): MulticallV3Response {
+  return {
+    success: true,
+    data: Bytes.fromHex(
+      utils.defaultAbiCoder.encode(
+        ['uint256[]', 'address[]', 'uint256[]'],
+        [[amount], [WETH], [amount]],
+      ),
+    ),
+  }
+}
+
+function words(...values: bigint[]): MulticallV3Response {
+  return {
+    success: true,
+    data: Bytes.fromHex(
+      utils.defaultAbiCoder.encode(
+        values.map(() => 'uint256'),
+        values,
+      ),
+    ),
+  }
+}

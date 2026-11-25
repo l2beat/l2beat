@@ -1,5 +1,6 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectLiquidStaking } from '@l2beat/config'
 import { env } from '~/env'
+import { isUnreviewedLiquidStaking } from '../isListedDefiProject'
 
 /**
  * While DeFi pages are disabled, projects tracked by Ossification still get a
@@ -8,7 +9,9 @@ import { env } from '~/env'
  */
 export function hasDefiProjectPage(project: {
   ossificationHistory?: Project<'ossificationHistory'>['ossificationHistory']
+  liquidStaking?: ProjectLiquidStaking
 }): boolean {
+  if (isUnreviewedLiquidStaking(project)) return false
   return (
     env.CLIENT_SIDE_DEFI_ENABLED ||
     (env.CLIENT_SIDE_OSSIFICATION_ENABLED &&

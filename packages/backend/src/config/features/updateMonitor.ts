@@ -80,7 +80,7 @@ function getChainDiscoveryConfig(
 ): DiscoveryChainConfig {
   const chainConfig = chains.find((c) => c.name === chain)
   if (!chainConfig) {
-    throw new Error('Unknown chain: ' + chain)
+    throw new Error('Unknown chain', { cause: { chain } })
   }
 
   const multicallV3 = chainConfig.multicallContracts?.find(
@@ -138,7 +138,7 @@ function getChainDiscoveryConfig(
   }
 
   if (explorer.length === 0) {
-    throw new Error('Missing explorerApi for chain: ' + chain)
+    throw new Error('Missing explorerApi for chain', { cause: { chain } })
   }
 
   const ENV_NAME = chain.toUpperCase()

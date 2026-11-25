@@ -1,10 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2Bridge",
-  "description": "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+  "description": "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
   "ignoreMethods": ["finalizedDeposits"],
+  "ignoreInWatchMode": ["totalSupply"],
   "category": "bridge-canonical",
   "fields": {
-    "l1Bridge": { "edit": ["format", "EthereumAddress"] }
+    "l1Bridge": { "edit": ["format", "EthereumAddress"] },
+    // the L2 alias of l1Bridge, shown un-aliased so it is not followed as an L2 EOA
+    "aliasedL1Bridge": { "edit": ["format", "UndoL2Alias"] }
   }
 }

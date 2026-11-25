@@ -180,6 +180,7 @@ function generateNodes(
       id: `eth:n${i}`,
       address: `eth:0x${i.toString(16).padStart(40, '0')}`,
       isInitial: false,
+      isCritical: false,
       hasTemplate: false,
       addressType: 'Contract',
       name: `Node ${i}`,

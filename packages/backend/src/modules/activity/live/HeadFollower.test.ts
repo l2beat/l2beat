@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import type {
-  Database,
-  IndexerStateRecord,
-  LiveActivityBlockRecord,
+import {
+  type Database,
+  type IndexerStateRecord,
+  LIVE_BUFFER_SECONDS,
+  type LiveActivityBlockRecord,
 } from '@l2beat/database'
 import { NotFoundOnRpcError } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -10,7 +11,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import range from 'lodash/range'
 import { mockDatabase } from '../../../test/database'
 import { HeadFollower, type LinkedBlock } from './HeadFollower'
-import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
 const PROJECT = ProjectId('base')
 const CONFIG_HASH = 'current'
@@ -97,7 +97,7 @@ describe(HeadFollower.name, () => {
       const chain = new FakeChain(100)
       const old = {
         ...chain.block(50),
-        timestamp: UnixTime.now() - LIVE_BLOCKS_KEPT_FOR - 60,
+        timestamp: UnixTime.now() - LIVE_BUFFER_SECONDS - 60,
       }
       const store = new FakeStore([old])
 
@@ -110,7 +110,7 @@ describe(HeadFollower.name, () => {
       const chain = new FakeChain(100)
       const old = {
         ...chain.block(100),
-        timestamp: UnixTime.now() - LIVE_BLOCKS_KEPT_FOR - 60,
+        timestamp: UnixTime.now() - LIVE_BUFFER_SECONDS - 60,
       }
       const head = follower(chain, new FakeStore([old]))
 

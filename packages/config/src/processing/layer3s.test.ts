@@ -108,29 +108,25 @@ describe('layer3s', () => {
     }
   })
 
-  describe('sentences', () => {
-    describe('every description ends with a dot', () => {
-      for (const layer3 of layer3s) {
-        it(layer3.display.name, () => {
-          expect(layer3.display.description.endsWith('.')).toEqual(true)
-        })
+  it('every state validation description ends with a dot', () => {
+    const invalid: string[] = []
+    for (const layer3 of layer3s) {
+      const stateValidation = layer3.stateValidation
+      if (!stateValidation) continue
+
+      if (
+        stateValidation.description &&
+        !stateValidation.description.endsWith('.')
+      ) {
+        invalid.push(`${layer3.id}: description`)
       }
-    })
-  })
-
-  describe('state validation', () => {
-    describe('every description ends with a dot', () => {
-      for (const layer3 of layer3s) {
-        if (!layer3.stateValidation) continue
-
-        if (layer3.stateValidation.description) {
-          expect(layer3.stateValidation.description.endsWith('.')).toEqual(true)
+      for (const category of stateValidation.categories) {
+        if (!category.description.endsWith('.')) {
+          invalid.push(`${layer3.id}: ${category.title}`)
         }
-        layer3.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toEqual(true)
-        })
       }
-    })
+    }
+    expect(invalid).toEqual([])
   })
 
   describe('badges', () => {

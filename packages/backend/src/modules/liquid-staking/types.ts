@@ -7,6 +7,7 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 export interface LiquidStakingProjectConfig {
   configurationId: string
   projectId: ProjectId
+  sinceTimestamp: UnixTime
   contracts: ProjectLiquidStakingContracts
   marketQuotes: ProjectLiquidStakingMarketQuote[]
 }

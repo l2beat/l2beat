@@ -86,9 +86,13 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
           deployedToken.abstractTokenId,
         )
         if (abstractToken === undefined) {
-          throw new Error(
-            `Missing abstract token ${deployedToken.abstractTokenId} assigned to ${deployedToken.chain}:${deployedToken.address}`,
-          )
+          throw new Error('Missing abstract token assigned to deployed token', {
+            cause: {
+              abstractTokenId: deployedToken.abstractTokenId,
+              chain: deployedToken.chain,
+              address: deployedToken.address,
+            },
+          })
         }
         return { deployedToken, abstractToken }
       }),
@@ -98,9 +102,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       .query(async ({ ctx, input }) => {
         const relation = await ctx.tokenDb.tokenRelation.findByPrimaryKey(input)
         if (relation === undefined) {
-          throw new Error(
-            `Token relation ${formatTokenRelationPrimaryKey(input)} no longer exists`,
-          )
+          throw new Error('Token relation no longer exists', {
+            cause: { relation: formatTokenRelationPrimaryKey(input) },
+          })
         }
         return relation
       }),

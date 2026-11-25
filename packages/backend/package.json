@@ -77,18 +77,18 @@
     "diff": "^7.0.0",
     "ethers": "^5.7.2",
     "jose": "^6.1.0",
-    "koa": "^2.14.1",
+    "koa": "^2.16.4",
     "koa-bodyparser": "^4.4.1",
     "koa-compress": "^5.1.1",
     "koa-conditional-get": "^3.0.0",
     "koa-etag": "^4.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "redis": "^4.7.0",
     "source-map-support": "^0.5.21",
     "viem": "^2.31.6",
-    "ws": "^8.18.2"
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
@@ -104,6 +104,6 @@
     "@types/react-dom": "^19.0.4",
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.3.1",
-    "tsx": "^4.9.3"
+    "tsx": "^4.23.0"
   }
 }

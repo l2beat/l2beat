@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { CoingeckoCorrection } from '@l2beat/config/build/global/coingeckoCorrections'
 import type {
   BalanceProvider,
   BlockProvider,
@@ -17,6 +18,7 @@ import {
   type OnchainAmountConfig,
   type PriceConfig,
 } from '../types'
+import { correctedValues } from './coingeckoCorrections'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
 
@@ -32,6 +34,7 @@ export class DataFormulaExecutor {
     private starknetTotalSupplyProvider: StarknetTotalSupplyProvider,
     private starknetBalanceProvider: StarknetBalanceProvider,
     private balanceProvider: BalanceProvider,
+    private coingeckoCorrections: CoingeckoCorrection[],
     private logger: Logger,
   ) {}
 
@@ -402,6 +405,17 @@ export class DataFormulaExecutor {
 
     await Promise.all(
       prices.map(async (price) => {
+        const corrected = correctedValues(
+          this.coingeckoCorrections,
+          'price',
+          price.priceId,
+        ).get(timestamp)
+        if (corrected !== undefined) {
+          // the cache and the DB may hold the value from before the correction
+          await this.localStorage.writePrice(price.id, timestamp, corrected)
+          return
+        }
+
         const cachedValue = await this.localStorage.getPrice(
           price.id,
           timestamp,
@@ -470,6 +484,22 @@ export class DataFormulaExecutor {
 
     await Promise.all(
       circulatingAmounts.map(async (amount) => {
+        assert(amount.type === 'circulatingSupply')
+        const corrected = correctedValues(
+          this.coingeckoCorrections,
+          'circulatingSupply',
+          amount.apiId,
+        ).get(timestamp)
+        if (corrected !== undefined) {
+          // the cache and the DB may hold the value from before the correction
+          await this.localStorage.writeAmount(
+            amount.id,
+            timestamp,
+            BigInt(corrected * 10 ** amount.decimals),
+          )
+          return
+        }
+
         const cachedValue = await this.localStorage.getAmount(
           amount.id,
           timestamp,

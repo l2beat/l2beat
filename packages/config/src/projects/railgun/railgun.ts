@@ -10,6 +10,10 @@ import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -23,6 +27,7 @@ import {
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { railgunAdversaries } from './adversaries'
+import { railgunRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -192,7 +197,7 @@ export const railgun: BaseProject = {
       url: 'https://etherscan.io/tx/0x2bd98cd135e2eaf7b7239bb4951a043f655629b5d0f0ca12334ce05718512361',
       date: '2022-05-08T00:00:00Z',
       description:
-        "The proxy that holds today's pool is unpaused with the RailgunLogic implementation.",
+        "The pool's proxy is unpaused with the RailgunLogic implementation.",
       type: 'general',
     },
   ],
@@ -282,11 +287,11 @@ export const railgun: BaseProject = {
           name: 'Anon Wallet',
           icon: 'anon-wallet',
           finding:
-            "Asks Anon's server for each stealth account's balance under the user's login, so Anon can link them to each other and to the user's addresses.",
-          fix: "Read stealth account balances from the user's RPC only, without the login token.",
+            "Asks Anon's server for every stealth account's balance in one burst per chain, so Anon can link them to each other and to the user's IP.",
+          fix: "Read stealth account balances from the user's RPC only.",
           source:
             'https://chromewebstore.google.com/detail/anon-wallet-private-evm-w/gnkbgepgknkbhnnbaihklcfkjhbclajk',
-          checked: '2026-11-11',
+          checked: '2026-11-18',
         },
         {
           name: 'Terminal Wallet',
@@ -324,15 +329,12 @@ export const railgun: BaseProject = {
       sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
     },
     exitWindow: {
-      value: formatSeconds(executionStartOffset),
-      sentiment: 'warning',
-      orderHint: executionStartOffset,
+      ...PRIVACY_EXIT_WINDOW.delay(executionStartOffset),
       description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before execution, so users can unshield before a change they reject.`,
       walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
@@ -345,7 +347,7 @@ export const railgun: BaseProject = {
     adversaries: railgunAdversaries(
       formatSeconds(executionStartOffset, { fullUnit: true }),
     ),
-    riskSummary: readProjectMarkdown('railgun', 'riskSummary', {
+    riskSummary: railgunRiskSummary({
       executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
     upgradesAndGovernance: {

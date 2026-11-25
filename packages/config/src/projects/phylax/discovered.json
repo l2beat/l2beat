@@ -1,0 +1,2662 @@
+{
+  "name": "phylax",
+  "timestamp": 1795512257,
+  "configHash": "0x6c2830260bc1e2ab12e530316cf4d03ebe36a224b8eec750c39e94f1c824d53e",
+  "entries": [
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8290187e6041d3c34aae7a023e1c97a399850b6f4a6b0f067b3e86a5e86ccfa5"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793808551,
+      "sinceBlock": 26342550,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://etherscan.io/address/0x14386aF70E91dFE12aC6243D4B5e087870d7f14D#code"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x0a03D5B6bAb06F3dCeac6B313e23117EADc1d17f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DAVerifierECDSA",
+      "address": "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f",
+      "type": "Contract",
+      "template": "phylax/DAVerifierECDSA",
+      "sourceHashes": [
+        "0xfa396b3fb0934ad96c35d135df063a67d590288d2793f1ec98dd0528120dcf74"
+      ],
+      "proxyType": "immutable",
+      "description": "DA verifier that accepts an assertion only if its proof is DA_PROVER's signature of the assertion ID. The assertion's code is not required onchain.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783504511,
+      "sinceBlock": 25487087,
+      "values": {
+        "$immutable": true,
+        "DA_PROVER": "eth:0x15766b20DDe232EAEbf14f03DE0F46bFed8C2E6d"
+      },
+      "implementationNames": {
+        "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f": "DAVerifierECDSA"
+      }
+    },
+    {
+      "name": "StateOracle",
+      "address": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+      "type": "Contract",
+      "template": "phylax/StateOracle",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xdf7b159bdac0523c6f44a75c030c405b5dff946f322a422a0c4ebbbe90b3769a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 75 blocks later, and a new assertion needs a proof that a registered DA verifier accepts.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793808551,
+      "sinceBlock": 26342550,
+      "values": {
+        "$admin": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E",
+        "$implementation": "eth:0xADE4deA20fca28324dFaBEE7c74b4d01181D5bF5",
+        "$pastUpgrades": [
+          [
+            "2026-11-04T16:09:11.000Z",
+            "0xef9457c95f6f79c52f9c6a961f23ce8e52ec6c0d258f21af245a76148de56e0c",
+            ["eth:0xADE4deA20fca28324dFaBEE7c74b4d01181D5bF5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adminVerifiers": ["eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130"],
+        "adopterManagers": {
+          "eth:0x71CefA7F3Da65Da0A838eCAe919b823ecCeE4059": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0xFe1C5759F8e1077f6C675dC7c3c60F99131FDB8b": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0FE51078d37cF6bF80dbfD80E00951Bb6C07831D": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x8DcC88963187E193EAfa860e1f6917D239FAF95e": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x1D3B68C4d56E3BfFF7c41E0eF6BFE5128462a680": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x18554EEE2c4598905eDab1C6525d11EB085B34Dc": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66": "eth:0x3A24d388d214514800eDCD34571516848e088285",
+          "eth:0xBBA9c82D9dC4b73f2a93c40A39B1A54564FcE86f": "eth:0x0000000000000000000000000000000000000000",
+          "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8"
+        },
+        "ASSERTION_TIMELOCK_BLOCKS": 75,
+        "assertions": {
+          "eth:0x71CefA7F3Da65Da0A838eCAe919b823ecCeE4059": [],
+          "eth:0xFe1C5759F8e1077f6C675dC7c3c60F99131FDB8b": [],
+          "eth:0x0FE51078d37cF6bF80dbfD80E00951Bb6C07831D": [],
+          "eth:0x1D3B68C4d56E3BfFF7c41E0eF6BFE5128462a680": [],
+          "eth:0x8DcC88963187E193EAfa860e1f6917D239FAF95e": [],
+          "eth:0x18554EEE2c4598905eDab1C6525d11EB085B34Dc": [
+            "0x5c052863a39f6926be64ad81a7004c1d7965e1b30886c1e76079818f061f14a6"
+          ],
+          "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66": [
+            "0x309beab5d93b3a9e1c3b13638cc2bf0e707bc49217c04b47c8018e83b43fb860",
+            "0xf0817bbf150cc02426bef365387c67ba35c8146407db2b42bf7f8c4e233ece01",
+            "0xfab44d5e3cf33773708f0da795a6ab75c367da8c766a633f2176681acebf22b2"
+          ],
+          "eth:0xBBA9c82D9dC4b73f2a93c40A39B1A54564FcE86f": [],
+          "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0": []
+        },
+        "daVerifiers": ["eth:0x5d8070789035f77624153CbF7d4cdCecfd520c5A"],
+        "governance": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "guardianAdmins": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "guardians": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "maxAssertionsPerAA": 20,
+        "operatorAdmins": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "operators": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "owner": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "registrationAllowlist": [
+          "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8",
+          "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+          "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+        ],
+        "whitelistEnabled": true
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pendingOwner": { "severity": "MEDIUM" },
+        "governance": { "severity": "HIGH" },
+        "guardianAdmins": { "severity": "HIGH" },
+        "guardians": { "severity": "HIGH" },
+        "operatorAdmins": { "severity": "MEDIUM" },
+        "operators": { "severity": "MEDIUM" },
+        "ASSERTION_TIMELOCK_BLOCKS": { "severity": "MEDIUM" },
+        "whitelistEnabled": {
+          "severity": "MEDIUM",
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
+        },
+        "registrationAllowlist": { "severity": "MEDIUM" },
+        "adminVerifiers": {
+          "severity": "HIGH",
+          "description": "Contracts that approve who may become an adopter's manager."
+        },
+        "daVerifiers": {
+          "severity": "MEDIUM",
+          "description": "Contracts that check the proof of a new assertion."
+        },
+        "adopterManagers": {
+          "severity": "HIGH",
+          "description": "Current manager of each adopter. The zero address means it was revoked."
+        },
+        "assertions": {
+          "severity": "HIGH",
+          "description": "Assertion IDs of each adopter that were added and not removed."
+        }
+      },
+      "implementationNames": {
+        "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D": "TransparentUpgradeableProxy",
+        "eth:0xADE4deA20fca28324dFaBEE7c74b4d01181D5bF5": "StateOracle"
+      }
+    },
+    {
+      "address": "eth:0x15766b20DDe232EAEbf14f03DE0F46bFed8C2E6d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdminVerifierWhitelist",
+      "address": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierWhitelist",
+      "sourceHashes": [
+        "0x4b615ee4f9c02dab91e33509cb242c838984cd8a31a4b8dca89d246e17f230ef"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793808551,
+      "sinceBlock": 26342550,
+      "values": {
+        "$immutable": true,
+        "assignedManagers": [
+          {
+            "assertionAdopter": "eth:0x4cbB3297eC90b2811d22Fe1A63B6F93CF03CcA52",
+            "admin": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+          },
+          {
+            "assertionAdopter": "eth:0x18554EEE2c4598905eDab1C6525d11EB085B34Dc",
+            "admin": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+          },
+          {
+            "assertionAdopter": "eth:0x756CE7F777F1BF51E9EC9536B5726EBdd57F59C9",
+            "admin": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+          },
+          {
+            "assertionAdopter": "eth:0x20053Eca14839d40FaE113034501e9FE1477dc66",
+            "admin": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+          },
+          {
+            "assertionAdopter": "eth:0xdaA6eB4557F1AABBDEbBfb9A08BA0211C1316B2e",
+            "admin": "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071"
+          },
+          {
+            "assertionAdopter": "eth:0xde8F765EAf6b1b081Ed31bC3927a31F0ea2FD3e0",
+            "admin": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8"
+          },
+          {
+            "assertionAdopter": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
+            "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          }
+        ],
+        "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "exclusions": [],
+        "whitelistAdmins": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"]
+      },
+      "fieldMeta": {
+        "defaultAdmin": { "severity": "HIGH" },
+        "whitelistAdmins": { "severity": "HIGH" },
+        "assignedManagers": {
+          "severity": "MEDIUM",
+          "description": "Account assigned to each adopter."
+        },
+        "exclusions": {
+          "severity": "MEDIUM",
+          "description": "Excluded adopters and the account that can lift each exclusion."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130": "AdminVerifierWhitelist"
+      }
+    },
+    {
+      "address": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdminVerifierWhitelist",
+      "address": "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierWhitelist_ownable",
+      "sourceHashes": [
+        "0x6df3cbff9dab42d429f75df3fcc12be9c2ac03cde92ea5473bc3985cf6ff251f"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves a manager registration only from the account the owner assigned to that adopter. The owner can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783504547,
+      "sinceBlock": 25487090,
+      "values": {
+        "$immutable": true,
+        "assignedManagers": [],
+        "exclusions": [],
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "assignedManagers": {
+          "severity": "MEDIUM",
+          "description": "Account assigned to each adopter."
+        },
+        "exclusions": {
+          "severity": "MEDIUM",
+          "description": "Excluded adopters and the account that can lift each exclusion."
+        }
+      },
+      "implementationNames": {
+        "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E": "AdminVerifierWhitelist"
+      }
+    },
+    {
+      "address": "eth:0x26587a64014361F4be5b8C307265ed1342583083",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdminVerifierWhitelist",
+      "address": "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierWhitelist_ownable",
+      "sourceHashes": [
+        "0x6df3cbff9dab42d429f75df3fcc12be9c2ac03cde92ea5473bc3985cf6ff251f"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves a manager registration only from the account the owner assigned to that adopter. The owner can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1782130427,
+      "sinceBlock": 25373069,
+      "values": {
+        "$immutable": true,
+        "assignedManagers": [],
+        "exclusions": [],
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "assignedManagers": {
+          "severity": "MEDIUM",
+          "description": "Account assigned to each adopter."
+        },
+        "exclusions": {
+          "severity": "MEDIUM",
+          "description": "Excluded adopters and the account that can lift each exclusion."
+        }
+      },
+      "implementationNames": {
+        "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291": "AdminVerifierWhitelist"
+      }
+    },
+    {
+      "address": "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0x3A24d388d214514800eDCD34571516848e088285",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+      "sinceTimestamp": 1794932075,
+      "sinceBlock": 26435891,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+          "eth:0x26587a64014361F4be5b8C307265ed1342583083",
+          "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x32827f4e7692e5ced5036f110e4850269ae4d832265146b96bbfcf87f0632a70",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 2,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0x3A24d388d214514800eDCD34571516848e088285": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
+    },
+    {
+      "address": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x30cb07e685b38c7fe2269ef438311403e7178f0b5bda254087903879ed8fca00",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "eth:0x3C03f3B143fB9dA33856C0e2204cB4B4d40276C9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DAVerifierOnChain",
+      "address": "eth:0x5d8070789035f77624153CbF7d4cdCecfd520c5A",
+      "type": "Contract",
+      "template": "phylax/DAVerifierOnChain",
+      "sourceHashes": [
+        "0x0c0ac38ca062f80cbfb0d63a7ea22bdb684ae34f42029adac9240de13bd99752"
+      ],
+      "proxyType": "immutable",
+      "description": "DA verifier that accepts an assertion only if its proof hashes (keccak256) to the assertion ID, so the assertion's bytes are published onchain.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793808551,
+      "sinceBlock": 26342550,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x5d8070789035f77624153CbF7d4cdCecfd520c5A": "DAVerifierOnChain"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783504571,
+      "sinceBlock": 25487092,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "AdminVerifierOwner",
+      "address": "eth:0x6d67e393eFc3E48e522Fa5829438fe799C5DB7be",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierOwner",
+      "sourceHashes": [
+        "0x6c7e3259a65b091f5eaa279619dcc7edb75dcc10f7662e656c10ee389d3b1c9d"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves only the account returned by the adopter's owner() as its manager.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783504535,
+      "sinceBlock": 25487089,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x6d67e393eFc3E48e522Fa5829438fe799C5DB7be": "AdminVerifierOwner"
+      }
+    },
+    {
+      "name": "AdminVerifierAlwaysApprove",
+      "address": "eth:0x6e6EE23D01E5B1dA7054923286681AA432EB7892",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783505411,
+      "sinceBlock": 25487162,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x6e6EE23D01E5B1dA7054923286681AA432EB7892": ""
+      }
+    },
+    {
+      "address": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x93a6108a08b864a7aa9292c97160716bbe0776d24200fcb3e606c9372c700750",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "address": "eth:0x78471170bE963A8e503AB2ee00826C9385034064",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "AdminVerifierAlwaysApprove",
+      "address": "eth:0x90792771aeA614983f1AD851De764276D0D9D279",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783457147,
+      "sinceBlock": 25483151,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x90792771aeA614983f1AD851De764276D0D9D279": ""
+      }
+    },
+    {
+      "address": "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TimelockController",
+      "address": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0x3d36d493b22d28ce536d4901653b65ba94a6a7389499578f0298434341ba8fbf"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 3d.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793812763,
+      "sinceBlock": 26342900,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"]
+          }
+        },
+        "Canceller": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757"],
+        "Executor": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
+        "Proposer": ["eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70"],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "defaultAdminAC": { "severity": "MEDIUM" },
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "MEDIUM" },
+        "Proposer": { "severity": "MEDIUM" },
+        "Canceller": { "severity": "MEDIUM" },
+        "Executor": {
+          "severity": "MEDIUM",
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      },
+      "implementationNames": {
+        "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757": "TimelockController"
+      }
+    },
+    {
+      "name": "PhylaxMultisig",
+      "address": "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xe11de7576ff53dbc2f216729426016b32575102a9e8b0d9ec13e34766ffae943",
+        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793805047,
+      "sinceBlock": 26342259,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b",
+        "$members": [
+          "eth:0x78471170bE963A8e503AB2ee00826C9385034064",
+          "eth:0xD4f639806483B68BddF1a338C9d4Fa188e01241c",
+          "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xf439180bb5f0dee69efb6c8f3a85bad56e2f1f6716583a5896efa39c3553b2cf",
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 29,
+        "VERSION": "1.5.0"
+      },
+      "implementationNames": {
+        "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": "SafeProxy",
+        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": "Safe"
+      }
+    },
+    {
+      "name": "StateOracle",
+      "address": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+      "type": "Contract",
+      "template": "phylax/StateOracle_singleDAVerifier",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x02bd8c7e229b92b095d044603b414df166243b6fc30c6d136645872e25eaf3a3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 10 blocks later, a new assertion needs a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1783504571,
+      "sinceBlock": 25487092,
+      "values": {
+        "$admin": "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA",
+        "$implementation": "eth:0x9255dc50e47317AF0D4d6C9e43946065f17244C8",
+        "$pastUpgrades": [
+          [
+            "2026-07-08T09:56:11.000Z",
+            "0xe9247c7606377291138886d1d3877c98641f94a044f3859bbf9e589b2cb3e8d3",
+            ["eth:0x9255dc50e47317AF0D4d6C9e43946065f17244C8"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adminVerifiers": [
+          "eth:0x6d67e393eFc3E48e522Fa5829438fe799C5DB7be",
+          "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E",
+          "eth:0x6e6EE23D01E5B1dA7054923286681AA432EB7892",
+          "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517"
+        ],
+        "adopterManagers": {
+          "eth:0x9AC51085Ab361CE58bA91d2A40884AEc920852eB": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xdaA6eB4557F1AABBDEbBfb9A08BA0211C1316B2e": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
+          "eth:0x0000000000000000000000000000000000000000": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
+          "eth:0x22eA5329abf311C736ee0188dA48022Fd121011c": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x94d9772f632B4f91eF60a321e3A83C6F7CdBD989": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xf4bc0Dc50e326CA54345675673e24a983f51dfb4": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xe6997c7F5F7691aE85140a986efe172A31F98AB5": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x558fDbd7eBdEB87C023b9Dd6513F8938F63E62CF": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x23533944a73352Ddc05a731a0e2Ac8f5084Af862": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x55555815a5595991C3A0Ff119B59AEF6C8B55555": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0xbEef047a543E45807105E51A8BBEFCc5950fcfBa": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0x94643e86aa5E38DDAc6c7791C1297f4E40cD96c1": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0xdd0f28e19C1780eb6396170735D45153D261490d": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374",
+          "eth:0x29132D1Cf9b8FAdf9D46E3359432433731bc5872": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x81145861E4538c12D50b57b6AFb3199c19f2c375": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x354953222f116f501780C23Eb8799D308C0A0Bf6": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x913C5D3c0bC8b654F37f44DA3Ba7A28c77F1B707": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x0A44762C2c6eF7357b10d3bEBC1872C81Eb6F242": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc2d90b5682175be70F70CE08e6169c77FEaDEf5C": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x95e1e8516f23EA6Dc37b557BF46015E2F07C7356": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xbDf484EDB784F1E2A34EDA0891CBD720e620dE54": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x29F0744813999D3298C59f4CA9704a1F8683C36C": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xef3ecA0d55649a6e1d64fed0b6DCcBF4F6e3162A": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xbA1333333333a1BA1108E8412f11850A5C319bA9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x0018bC66c723790Bc356CFC8AD85f69dF9420292": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x0aE0978B868804929fd4C06B3B22D9197B8cd3c6": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x8748D1c21CC550B435487F473d9Aaf6C84dA46A6": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x3821eBea3BBbE23F3dea74f24082BD0f0b67f6c5": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x2070Af1C865f5d764F673Baf5654822947e71243": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x6f0D6567099621deE3850C673d73c532071A888d": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x73C641fe41EB0270C7f473f3c3E4A40eb97fd8dE": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xBEDA454aBd1e865C8685e4B97231Cb2DB5dA8417": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xe5b38fa85FE04482ea4d0f9487e6E33A976bb0d3": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x55D9ea822D0945deE4331991c0B50E6F42D30B65": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x55C07fD38e377D3DbB378cbb59b80245cF657d33": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc6A4681D40033065C791c7c0a280FD96B7425dB3": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x9C56C7e299F31A3Ae000c99a64CcFBe60EececD9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x7aCD87cc58883ba8Ab532EE650AD573F45746897": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc79c1D3Aa61d2C3dA2819e2eA691b0C62B1E4DDc": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xd1Fa705b645857628D3f50bC27fB3EaB84934729": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x0C9a3dd6b8F28529d72d7f9cE918D493519EE383": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x2ff5F1Ca35f5100226ac58E1BFE5aac56919443B": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xD8b27CF359b7D15710a5BE299AF6e7Bf904984C2": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x40b19ee6a161213ef6e9321683e31B378dEE17BB": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x291b946768016494Cf24D9F4AAE90CF27f9867eC": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xe4d8ce8c889955879158e9b23421242184867AAb": "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23",
+          "eth:0x3DcA0e3C3656Cb83b3FB837237a6d910a70473b7": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"
+        },
+        "ASSERTION_TIMELOCK_BLOCKS": 10,
+        "assertions": {
+          "eth:0x9AC51085Ab361CE58bA91d2A40884AEc920852eB": [
+            "0x6085884dcceebaf3c90259c6bcf4fbd21a32ecdcdae51a82f9aba4017fdb38fb",
+            "0x2cc7b41964e7464ca2a76725323d1dda4716bf17131b7db980bf51a2697eac6f"
+          ],
+          "eth:0xdaA6eB4557F1AABBDEbBfb9A08BA0211C1316B2e": [
+            "0x56a04665c59c022da27fe3f6ec1337820d1cc2450a40fb24e42139a5e0eba2a3",
+            "0xcd4c99657d7e775e4e5cbb96f40fab9777f521c4eb87071038592899aac0269f"
+          ],
+          "eth:0x0000000000000000000000000000000000000000": [],
+          "eth:0x22eA5329abf311C736ee0188dA48022Fd121011c": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x94d9772f632B4f91eF60a321e3A83C6F7CdBD989": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xf4bc0Dc50e326CA54345675673e24a983f51dfb4": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xe6997c7F5F7691aE85140a986efe172A31F98AB5": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x558fDbd7eBdEB87C023b9Dd6513F8938F63E62CF": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x23533944a73352Ddc05a731a0e2Ac8f5084Af862": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x55555815a5595991C3A0Ff119B59AEF6C8B55555": [
+            "0xa032e1d28061c74d1d9504b56f94cec931551ce0c422613617ab0b35dc98781d"
+          ],
+          "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": [
+            "0xa6466097b74d3876e860c9b49c52545c7ca0c91cdd557d0568611381a700cb26"
+          ],
+          "eth:0xbEef047a543E45807105E51A8BBEFCc5950fcfBa": [
+            "0x856c894cb2c35bfd772764ecc1ac252566e1f8242522ab132e25f3316b781ac8"
+          ],
+          "eth:0x94643e86aa5E38DDAc6c7791C1297f4E40cD96c1": [
+            "0xc79db5ee895b491800a23d953e0fb3bb7aa3ef139736fde4b4384d4c271bae1e"
+          ],
+          "eth:0xdd0f28e19C1780eb6396170735D45153D261490d": [
+            "0xd14ab1430975711adf7575c7cb9e0031d48809ddcdbd4e1e292611f01fd3e134"
+          ],
+          "eth:0x29132D1Cf9b8FAdf9D46E3359432433731bc5872": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x81145861E4538c12D50b57b6AFb3199c19f2c375": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x354953222f116f501780C23Eb8799D308C0A0Bf6": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x913C5D3c0bC8b654F37f44DA3Ba7A28c77F1B707": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x0A44762C2c6eF7357b10d3bEBC1872C81Eb6F242": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xc2d90b5682175be70F70CE08e6169c77FEaDEf5C": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x95e1e8516f23EA6Dc37b557BF46015E2F07C7356": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xbDf484EDB784F1E2A34EDA0891CBD720e620dE54": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x29F0744813999D3298C59f4CA9704a1F8683C36C": [
+            "0x0524c5e488147451f0322b4287add050d1c299a481193339ba4a8ceffefd8743"
+          ],
+          "eth:0xef3ecA0d55649a6e1d64fed0b6DCcBF4F6e3162A": [
+            "0xceaa8763e47dd40c390718f46082bd7d1a25ad3eff44d757dd45b6ae42910f58",
+            "0x8d7d568793aa806cc64c02f9817f0b6a3b4ee50e19bf44e1f9b84dd7b7fe2435",
+            "0xd77660e2566e796f834af5ff2460cde6ce5963b89f56c0137121dfb0f89ebcea"
+          ],
+          "eth:0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8": [
+            "0xc05ab3da1d4bffa0889f1f95cd43861483ca0280556cb13c8895d788b617f078",
+            "0x8c33bc467e5324b347be8afc6703da920feea4555c31ef8e6b6915cacf8b7845"
+          ],
+          "eth:0xbA1333333333a1BA1108E8412f11850A5C319bA9": [
+            "0x82d392db72a248735de16d5cdb30baf6e46b8227f4e02977c4cd17945f5320a1",
+            "0x4124079a8d5c92c57adfb623794b131c3f6e248ea56da1fe08abdcdd572c9994"
+          ],
+          "eth:0x0018bC66c723790Bc356CFC8AD85f69dF9420292": [
+            "0x18adf18eab3570903cde42132916ed2a805a5cb677788efb0b6a389e51abc084"
+          ],
+          "eth:0x0aE0978B868804929fd4C06B3B22D9197B8cd3c6": [
+            "0xb63655b82710679df2e8a8452d08eaece213120e9ae9062017583812537efa7c"
+          ],
+          "eth:0x8748D1c21CC550B435487F473d9Aaf6C84dA46A6": [
+            "0x0e892737c3fe6d111b06677049cacf78a7b4671239fb4a58121454d547f7d50a"
+          ],
+          "eth:0x3821eBea3BBbE23F3dea74f24082BD0f0b67f6c5": [
+            "0xa48e55e49fa1c3be5ad4830d0895ce288b4b0f17541ceb8cbe094b22442d91ac"
+          ],
+          "eth:0x2070Af1C865f5d764F673Baf5654822947e71243": [
+            "0x46ec9648dbe612c70825499faf83d00a6571dcbfaddbda99a27de7e77ef2ffec"
+          ],
+          "eth:0x6f0D6567099621deE3850C673d73c532071A888d": [
+            "0xb475a3ddd1bc0e7a9a02d1b20416b278651c1e1cf1f246285787ad2c66204a39"
+          ],
+          "eth:0x73C641fe41EB0270C7f473f3c3E4A40eb97fd8dE": [
+            "0x113a1f64d2eea4c2834894e2050d592ef19c797863faffa53ad1522672dfdd25"
+          ],
+          "eth:0xBEDA454aBd1e865C8685e4B97231Cb2DB5dA8417": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xe5b38fa85FE04482ea4d0f9487e6E33A976bb0d3": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x55D9ea822D0945deE4331991c0B50E6F42D30B65": [],
+          "eth:0x55C07fD38e377D3DbB378cbb59b80245cF657d33": [],
+          "eth:0xc6A4681D40033065C791c7c0a280FD96B7425dB3": [],
+          "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9": [
+            "0xec710d5f8f1cb42e64910f2f9c090351d311940f0be05246bde6344502e7aafd",
+            "0xe684d5fe9fe9b0d9d867275a3a019c665de2abd3685c18030a43523ee66891bf",
+            "0xd9fd5652b8e1c1e9fbe43f5d6621a057b388709265b639404bbea19cb7c36ca5",
+            "0x66639abc8950eba67d72300931aeec0a777d959096dff2f739f0ec219ad23d5d"
+          ],
+          "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931": [
+            "0xc78303dd5928fd086f8709bb5b41a717cdface17e9d1c81f4c12e4f1783712ff",
+            "0x7c3650e596dd3e861a8b1f5929a0360cfe305541b2220d0a286c6d70b231fb0f",
+            "0x61b188c23b391d350f4ebb1a6eef9fa6520dd3107905388db1c553b5ca856d23"
+          ],
+          "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+            "0xe49349b557617b36131b1e9cea151809a74aa4d8d39b33885c4bd08f4e961aad",
+            "0x84b5130c3df84b922555f94af80209aaf373b38becb44345ae38f96aa45b8674"
+          ],
+          "eth:0x9C56C7e299F31A3Ae000c99a64CcFBe60EececD9": [
+            "0x61b4f5f04d3b3fef8c18f617e0882eb5ee8d481f8aff989cf7902aad2bcccc4d"
+          ],
+          "eth:0x7aCD87cc58883ba8Ab532EE650AD573F45746897": [],
+          "eth:0xc79c1D3Aa61d2C3dA2819e2eA691b0C62B1E4DDc": [],
+          "eth:0xd1Fa705b645857628D3f50bC27fB3EaB84934729": [],
+          "eth:0x0C9a3dd6b8F28529d72d7f9cE918D493519EE383": [
+            "0x05988fdfd0e5d3e1f1d1948bad413cb5fb1d67ceae93df7e1aad7931932e9439"
+          ],
+          "eth:0x2ff5F1Ca35f5100226ac58E1BFE5aac56919443B": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba"
+          ],
+          "eth:0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba"
+          ],
+          "eth:0xD8b27CF359b7D15710a5BE299AF6e7Bf904984C2": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba",
+            "0xfc574ba417ab4ba143b086ddec6669758e4bb1c729c6daad72f3a32c5df1094d"
+          ],
+          "eth:0x40b19ee6a161213ef6e9321683e31B378dEE17BB": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x291b946768016494Cf24D9F4AAE90CF27f9867eC": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xe4d8ce8c889955879158e9b23421242184867AAb": [
+            "0x0cc603735ba1ea6756490e3f70b9cbd23829dbbecd49a93533a7cb356b5982c6",
+            "0x2e63f1e4bbc3df155a1c328461f67f21a46773c6137b65780c8c0d61eb2d7129"
+          ],
+          "eth:0x3DcA0e3C3656Cb83b3FB837237a6d910a70473b7": [
+            "0x6298170642cd27d662308d351a0405af5f31c982680e9d4ff9f43160bf3d87f9"
+          ],
+          "eth:0x2e7dF4fAf35a1599979C7E764444e112d936ec42": [
+            "0x7bef786707c9fe495225df0fb78358d5ee4921c2b5ba8ca67a90931466815fb6",
+            "0x9122951d0837aa78b157625ad111ba1f58ac8f5bbadfa6732a45071da9455ba7",
+            "0x2aa44e869ec8d004e4e44df6365f37cc6c7c6e6c36daaf6c7b9d3131d3428fe4",
+            "0x682fcdb41f6e56744386848f3cda8b90672b9f67ace5e58cd15378222f0fec37"
+          ],
+          "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": [
+            "0x766c014f83033733dfbac0060a2c36c5f55ea5df1f396fa07d97d9bdd545febf",
+            "0x83e0f06925709e0e5b40a831f2f9e49e0f6c0db55474fef9156e69d8c3f66f8b",
+            "0x4310e36a59325bd66e1121ba234af0ce0f110767d1412f888376e6c39f1a589f"
+          ],
+          "eth:0xd330145C17fB6EF2a21ACf1275Ce683A305F58BB": [
+            "0x7524fa468b5a4e38d7425104145b2e7cd96e2170f6a12fd24de94f0380a78629"
+          ],
+          "eth:0x7c743D79C9C595cE332314503d84cBBb4E85FA63": [
+            "0xb294b724cae6514773b2b6919411b5ca08e06c2bb9ba5e0eb5eb3bb6c355bd15"
+          ],
+          "eth:0x4EcBfaBF336a757FE82898e0e1083a6Cbb042C3D": [
+            "0xfe3a70984a6dfcd9c52eca8c36df427ce575eae2135d1130800a0ac5c331f146"
+          ],
+          "eth:0xE366CcA474968e33b777E13905829A3b800CFAD3": [
+            "0xc62b96ed6d9f0c9462b8982e618b1ad5d1880c7f892259ff34feff3f88b2b048"
+          ],
+          "eth:0x2c53cbB96fb65e8711dAAe530c87473789a13781": [
+            "0xfe3a70984a6dfcd9c52eca8c36df427ce575eae2135d1130800a0ac5c331f146"
+          ],
+          "eth:0xD773a38B81bBe7992209D6c4ef663c6A7F6cbfBd": [
+            "0xfe3a70984a6dfcd9c52eca8c36df427ce575eae2135d1130800a0ac5c331f146"
+          ],
+          "eth:0xeB26aA88C73D3a03fE82be3C241B6ccd2D596811": [
+            "0xfe3a70984a6dfcd9c52eca8c36df427ce575eae2135d1130800a0ac5c331f146"
+          ]
+        },
+        "DA_VERIFIER": "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f",
+        "governance": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "guardianAdmins": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "guardians": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "maxAssertionsPerAA": 100,
+        "operatorAdmins": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "operators": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "registrationAllowlist": [],
+        "whitelistEnabled": false
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pendingOwner": { "severity": "MEDIUM" },
+        "governance": { "severity": "HIGH" },
+        "guardianAdmins": { "severity": "HIGH" },
+        "guardians": { "severity": "HIGH" },
+        "operatorAdmins": { "severity": "MEDIUM" },
+        "operators": { "severity": "MEDIUM" },
+        "ASSERTION_TIMELOCK_BLOCKS": { "severity": "MEDIUM" },
+        "DA_VERIFIER": { "severity": "MEDIUM" },
+        "whitelistEnabled": {
+          "severity": "MEDIUM",
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
+        },
+        "registrationAllowlist": { "severity": "MEDIUM" },
+        "adminVerifiers": {
+          "severity": "HIGH",
+          "description": "Contracts that approve who may become an adopter's manager."
+        },
+        "adopterManagers": {
+          "severity": "HIGH",
+          "description": "Current manager of each adopter. The zero address means it was revoked."
+        },
+        "assertions": {
+          "severity": "HIGH",
+          "description": "Assertion IDs of each adopter that were added and not removed."
+        }
+      },
+      "implementationNames": {
+        "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2": "TransparentUpgradeableProxy",
+        "eth:0x9255dc50e47317AF0D4d6C9e43946065f17244C8": "StateOracle"
+      }
+    },
+    {
+      "name": "CredibleRegistry",
+      "address": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+      "type": "Contract",
+      "template": "phylax/CredibleRegistry",
+      "sourceHashes": [
+        "0x71b1a3f2513f5cb8b74981ef4085a83ac09103300c3e112c131787e269042ca8"
+      ],
+      "proxyType": "immutable",
+      "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker to the end of that block and in calls with a zero gas price. Changes to the builder set and to the delay are timelocked for at least 3d.",
+      "ignoreInWatchMode": ["lastCredibleBlock"],
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1793812763,
+      "sinceBlock": 26342900,
+      "values": {
+        "$immutable": true,
+        "builders": ["eth:0x0a03D5B6bAb06F3dCeac6B313e23117EADc1d17f"],
+        "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "guardians": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
+        "lastCredibleBlock": 26455758,
+        "MAX_TIMELOCK_DELAY": 31536000,
+        "MIN_TIMELOCK_DELAY": 259200,
+        "minTimelockDelayFormatted": "3d",
+        "timelock": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+        "timelockDelay": 259200
+      },
+      "fieldMeta": {
+        "timelockDelay": {
+          "description": "Minimum delay of the timelock. Operations wait the longer of this and MIN_TIMELOCK_DELAY."
+        },
+        "defaultAdmin": { "severity": "HIGH" },
+        "guardians": { "severity": "MEDIUM" },
+        "builders": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70": "CredibleRegistry"
+      }
+    },
+    {
+      "name": "StateOracle",
+      "address": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+      "type": "Contract",
+      "template": "phylax/StateOracle_singleDAVerifier",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x02bd8c7e229b92b095d044603b414df166243b6fc30c6d136645872e25eaf3a3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of assertions, rules that enforcers run offchain, per protected contract (adopter). Each adopter has a manager, approved by a registered admin verifier, who adds and removes its assertions. Changes take effect 10 blocks later, a new assertion needs a proof that DA_VERIFIER accepts, and a removed assertion cannot be added again.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1782130427,
+      "sinceBlock": 25373069,
+      "values": {
+        "$admin": "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE",
+        "$implementation": "eth:0xcD5Fd8B8E0BE3b9f9CE5c7e176e19e4Add924686",
+        "$pastUpgrades": [
+          [
+            "2026-06-22T12:13:47.000Z",
+            "0x6d57e325811130e3cc4ff7d869fcfa946c9e209a667aaab248665f226d04f936",
+            ["eth:0xcD5Fd8B8E0BE3b9f9CE5c7e176e19e4Add924686"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "adminVerifiers": [
+          "eth:0xCb2e47Abe9b093462aa0e7FA3221fc3Fc90C4dFb",
+          "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291",
+          "eth:0x90792771aeA614983f1AD851De764276D0D9D279"
+        ],
+        "adopterManagers": {
+          "eth:0x9AC51085Ab361CE58bA91d2A40884AEc920852eB": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xC205bfc7AFF7751C82b57ebA3258B0703Ec08B8F": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xdaE8A89AE5CC437C17cCdEeF3e63D9DA69746BaE": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x9C56C7e299F31A3Ae000c99a64CcFBe60EececD9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x55D9ea822D0945deE4331991c0B50E6F42D30B65": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x55C07fD38e377D3DbB378cbb59b80245cF657d33": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc6A4681D40033065C791c7c0a280FD96B7425dB3": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x187BE128ba696cd58451D336D0326F363CDb728C": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc82207062475643D167549a27Ff4CA150509ED47": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x8889E0E404A0ae5958771861373FA71ad5C9272a": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0xc41CCa8246DeAfEa4ECDD68783eb018c820C7a2F": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x8A8C7953bfEF697f19a40769f51D949D880A474B": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x794A4dBbC1Ae4324099b8D679be16c277ed51497": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x83a822Fb897dA33BF08197e6a875734045b73BB0": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x281486365E62730ebfDc473b56d87Dae55A70e9b": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x33e144370FF03997824B51f14b0445DA10803352": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x0CBc5218E91567B56E9278b03084B1049A96D91a": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0x539Bf26fdd9E14E80adF611fb4c289469911Fc89": "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5",
+          "eth:0x8467B56dbA747A9A331542B419Be8C4FCf48F923": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0x82CC35Ea953c87dBE61d6B6feABD91371201d9Bb": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x0889e9327b98D7d1BE3C301A4585ff3330502c9A": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x0476C2483f4c6AA4Dfb6EFA29815AB74d9C1e508": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x7f54F05635d15Cde17A49502fEdB9D1803A3Be8A": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xbA1333333333a1BA1108E8412f11850A5C319bA9": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x2B5AB59163a6e93b4486f6055D33CA4a115Dd4D5": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x71E4f98e8f20C88112489de3DDEd4489802a3A87": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x0C9a3dd6b8F28529d72d7f9cE918D493519EE383": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x2ff5F1Ca35f5100226ac58E1BFE5aac56919443B": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xD8b27CF359b7D15710a5BE299AF6e7Bf904984C2": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xa390825958F42D7b23A490Be2e29311B12381917": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x88F2543689c4f036516e253d518B6e21F3Bce1ed": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0x39A577D0e008ABeD3E891925e0a91658C71A35ee": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0x4c92C3BC58D97894474e724abb05d53ec96fDE46": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0x7d9323089349604890f8e8f635237EB3B56F924C": "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+          "eth:0x5EcE6Acf776A754a6899d914a23c7A3b8BA09f2E": "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5",
+          "eth:0xdaA6eB4557F1AABBDEbBfb9A08BA0211C1316B2e": "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+          "eth:0x32F1f95b9D890F5E0B7222d62c68f02f3a1f50f2": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0xA8EbcB38E303AB97c4F1F40Fc9dFa41E4CaA5FB0": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50",
+          "eth:0x4c1d2c03894b81595237E9a2b1dd8e7c42B942ed": "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+          "eth:0x9B9d4d5129C69a3350f8EE3678e4fa117a142bcB": "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc",
+          "eth:0x4Bf1170C8F0BF6e1c22276183A3c3c8c9DcBd9f2": "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+          "eth:0x68E8cD7D280FC7601f63a24059127E980474819F": "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc"
+        },
+        "ASSERTION_TIMELOCK_BLOCKS": 10,
+        "assertions": {
+          "eth:0x9AC51085Ab361CE58bA91d2A40884AEc920852eB": [
+            "0x6085884dcceebaf3c90259c6bcf4fbd21a32ecdcdae51a82f9aba4017fdb38fb"
+          ],
+          "eth:0xC205bfc7AFF7751C82b57ebA3258B0703Ec08B8F": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xdaE8A89AE5CC437C17cCdEeF3e63D9DA69746BaE": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x9C56C7e299F31A3Ae000c99a64CcFBe60EececD9": [
+            "0x61b4f5f04d3b3fef8c18f617e0882eb5ee8d481f8aff989cf7902aad2bcccc4d"
+          ],
+          "eth:0x55D9ea822D0945deE4331991c0B50E6F42D30B65": [],
+          "eth:0x55C07fD38e377D3DbB378cbb59b80245cF657d33": [],
+          "eth:0xc6A4681D40033065C791c7c0a280FD96B7425dB3": [],
+          "eth:0x187BE128ba696cd58451D336D0326F363CDb728C": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0xc82207062475643D167549a27Ff4CA150509ED47": [
+            "0xe361e1e1702dc3861d2021125fe1c8f5524196dbddc97e6521c0ec6566cc88d7"
+          ],
+          "eth:0x8889E0E404A0ae5958771861373FA71ad5C9272a": [
+            "0xe9f9e9f5b3152e616f5eca73644de86b18a5fbd73412b70c21e37a440a0349f1"
+          ],
+          "eth:0xc41CCa8246DeAfEa4ECDD68783eb018c820C7a2F": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x8A8C7953bfEF697f19a40769f51D949D880A474B": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x794A4dBbC1Ae4324099b8D679be16c277ed51497": [
+            "0xe361e1e1702dc3861d2021125fe1c8f5524196dbddc97e6521c0ec6566cc88d7"
+          ],
+          "eth:0x83a822Fb897dA33BF08197e6a875734045b73BB0": [
+            "0xe9f9e9f5b3152e616f5eca73644de86b18a5fbd73412b70c21e37a440a0349f1"
+          ],
+          "eth:0x281486365E62730ebfDc473b56d87Dae55A70e9b": [
+            "0xc32cbc3977927d6152c2174bb28acb17986ab5df3f3a46ea1822cc35c1254605"
+          ],
+          "eth:0x33e144370FF03997824B51f14b0445DA10803352": [],
+          "eth:0x0CBc5218E91567B56E9278b03084B1049A96D91a": [
+            "0x970693809ae7d43c2fca111c60fb040066d8331fcb0cdca4587e732b39ae1e74",
+            "0x0da8b1693ad90068065c95d63ba129e2802eddf84713d34d25d27ab2a20d8c76"
+          ],
+          "eth:0x539Bf26fdd9E14E80adF611fb4c289469911Fc89": [
+            "0x83dc19fe4cba9f70c61cb6f33331ee061f24b5750ea426ffad84b090400bb530"
+          ],
+          "eth:0x8467B56dbA747A9A331542B419Be8C4FCf48F923": [
+            "0x4711cc1c936da302aa40aabfb98848becc66492c8e7ec0d39d2a3eb6cbc3eb47"
+          ],
+          "eth:0x82CC35Ea953c87dBE61d6B6feABD91371201d9Bb": [
+            "0x7f2c5d9e17d5c47c8a5ba21508bb1b9568dea0ffd48515437e0cbf2074fe9307"
+          ],
+          "eth:0x0889e9327b98D7d1BE3C301A4585ff3330502c9A": [
+            "0x7f2c5d9e17d5c47c8a5ba21508bb1b9568dea0ffd48515437e0cbf2074fe9307"
+          ],
+          "eth:0x0476C2483f4c6AA4Dfb6EFA29815AB74d9C1e508": [
+            "0x7f2c5d9e17d5c47c8a5ba21508bb1b9568dea0ffd48515437e0cbf2074fe9307"
+          ],
+          "eth:0x7f54F05635d15Cde17A49502fEdB9D1803A3Be8A": [
+            "0x7f2c5d9e17d5c47c8a5ba21508bb1b9568dea0ffd48515437e0cbf2074fe9307"
+          ],
+          "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9": [
+            "0xec710d5f8f1cb42e64910f2f9c090351d311940f0be05246bde6344502e7aafd",
+            "0xe684d5fe9fe9b0d9d867275a3a019c665de2abd3685c18030a43523ee66891bf",
+            "0xd9fd5652b8e1c1e9fbe43f5d6621a057b388709265b639404bbea19cb7c36ca5",
+            "0x66639abc8950eba67d72300931aeec0a777d959096dff2f739f0ec219ad23d5d"
+          ],
+          "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931": [
+            "0xc78303dd5928fd086f8709bb5b41a717cdface17e9d1c81f4c12e4f1783712ff",
+            "0x7c3650e596dd3e861a8b1f5929a0360cfe305541b2220d0a286c6d70b231fb0f",
+            "0x61b188c23b391d350f4ebb1a6eef9fa6520dd3107905388db1c553b5ca856d23"
+          ],
+          "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+            "0xe49349b557617b36131b1e9cea151809a74aa4d8d39b33885c4bd08f4e961aad",
+            "0x84b5130c3df84b922555f94af80209aaf373b38becb44345ae38f96aa45b8674"
+          ],
+          "eth:0xbA1333333333a1BA1108E8412f11850A5C319bA9": [
+            "0x82d392db72a248735de16d5cdb30baf6e46b8227f4e02977c4cd17945f5320a1",
+            "0x4124079a8d5c92c57adfb623794b131c3f6e248ea56da1fe08abdcdd572c9994"
+          ],
+          "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862": [
+            "0x1bc24ae3eb973602f96e03aa6107af46ec455fc1db8f6cc9306f56aac4aa89b4",
+            "0xdc936ce2c502c6e4ed9fb07b1467bbf236cae9b4320ed75b25839725842b5e79"
+          ],
+          "eth:0x2B5AB59163a6e93b4486f6055D33CA4a115Dd4D5": [
+            "0x711622326f6c8ee90070e8d100e62746089d45a7ce4a8e9ce8156e0569875ba2",
+            "0xf8a309e722348233879a0449c3d6b917d85aea4196db9d37954bd7701b0627ce"
+          ],
+          "eth:0x71E4f98e8f20C88112489de3DDEd4489802a3A87": [
+            "0xbe18600dca893eb2c2dcf71ae2d698d521c1ae9c8970e0e79b78079b5523614d",
+            "0xf23c4c0c7432a451e9872498143cad61d4862eb1200df034e922a39789ce3fbb"
+          ],
+          "eth:0x0C9a3dd6b8F28529d72d7f9cE918D493519EE383": [
+            "0x33d80a182df9c2de7195d6af736bd4a62fbb6aacee0a5b03d5fd17416fd0aacb"
+          ],
+          "eth:0x2ff5F1Ca35f5100226ac58E1BFE5aac56919443B": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba"
+          ],
+          "eth:0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba"
+          ],
+          "eth:0xD8b27CF359b7D15710a5BE299AF6e7Bf904984C2": [
+            "0x7492e2778af9324a5ffd7826067adc837f46f9aca8f89e189058a7fece75efc0",
+            "0x8bc3cf2900d6754afe2a6edd5f5c54c55185b71a2ba856d5c74d590705b620a6",
+            "0x222e1dd56accf0bf90640182dfedda401f04a67a15b8da77c6b5b09dbb8ddfba",
+            "0xfc574ba417ab4ba143b086ddec6669758e4bb1c729c6daad72f3a32c5df1094d"
+          ],
+          "eth:0xa390825958F42D7b23A490Be2e29311B12381917": [
+            "0xf22b44d528045fdcbb8c1dbcec2bb933be1fa4f235c45b7379e9fc9be17882ac",
+            "0x6f548fad5b2a8df9292303e10232cc2d96f209cd7d847bd4fc815d2acd58e241"
+          ],
+          "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7": [
+            "0xcf44f11b00fe6c18e6bebc1780355f5b368ff8631364b4b82502a7e19fe43c61",
+            "0x841d6455076a95b3d6478c50938c2cb1e79cb1eea4460df8267831dda640e4ae",
+            "0x657609f1929e69bb62fac87fb2c3357aa0684ea5d76f80b5d78684eeefc7c14e",
+            "0x2f1f023e18b7492d683b1033b7e27aa4bce0ea50b2974f35cfc3e535773edd32"
+          ],
+          "eth:0x88F2543689c4f036516e253d518B6e21F3Bce1ed": [],
+          "eth:0x39A577D0e008ABeD3E891925e0a91658C71A35ee": [],
+          "eth:0x4c92C3BC58D97894474e724abb05d53ec96fDE46": [
+            "0x7127c880b2c31c989c51bb95876e18784c8be14cda7ccf5104bb752784d3a470"
+          ],
+          "eth:0x7d9323089349604890f8e8f635237EB3B56F924C": [
+            "0x39999f6ff880a4a98311b4850cb9356b07b53a65bef0a0c344b7a5093c847f75"
+          ],
+          "eth:0x5EcE6Acf776A754a6899d914a23c7A3b8BA09f2E": [
+            "0xb7dee0b7d7b89c9d76cbdb7a525b2451a548223ef3a4abfa11f2c8f9d24dcb55",
+            "0x108df0e8e9ccf7acabc3144977588c83ed582421d4539cd8b73f2fb6dfac2d36",
+            "0xf42a526690db72d289cb38213b5123f0f4843d8bd9c5b5768297dc61c7bb3e29",
+            "0xad452c68ed67713d2da997f312616bdb33e1037a3aa1e1eec83de89a721c059b",
+            "0xfa56c48f29ff23475540ec98795190f1b9f785942be215a748daac1f21d2de07",
+            "0x599c602e27fa4b94b517fe903d9e109b0a4504f5405da3c673e012684efd0633",
+            "0x5127ea51b146872b9b5ce92510d56273dc07808eaf4231cbf35fd48ef1129115"
+          ],
+          "eth:0xdaA6eB4557F1AABBDEbBfb9A08BA0211C1316B2e": [],
+          "eth:0x32F1f95b9D890F5E0B7222d62c68f02f3a1f50f2": [
+            "0x3aac94f50270318aa5864d713f09e024a4ab6368ea4de66a1f386659cc8b4839",
+            "0xb47b04a4ab9e65fe34014134384509acac1515efc1d21ceaa3cb85d93c968f37"
+          ],
+          "eth:0xA8EbcB38E303AB97c4F1F40Fc9dFa41E4CaA5FB0": [
+            "0x821524cf578bbe075a1615c0a5f141b8bd3d8a793adf6a9e6807b240d0d80197",
+            "0x683a8aded54baa89e3a72ee2f7d34e3ee8806116a1f2288e9659e81d789072e5"
+          ],
+          "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": [
+            "0x8e640a316475f145d944cbdfe2b992ebd8be4f6d44df2b7c37f96eaf790e7ada",
+            "0xde6a759a3ce59ab6c7be64beb06565c98de946ac440c44d250909af40aaae496",
+            "0xa9298aebd981fe5f1b60799d66091a6ee6c129d4208557ae3d61b56f48e81ba4",
+            "0x40eb7bca057674acc702cbd5c28830cfe288ce74bfb4225f77cbe2183fe180d1",
+            "0xa730e8722475277ab5466b87cb790c991cf1780f8a77af0f3e2adeef2e4cda57"
+          ],
+          "eth:0x62c004a89EDBd7bECBdf54E14779B7e7F5b390F7": [
+            "0xd42304c2b070dc5f5f8d0c58dccca624e5858c3ee989b9136454b896b8b87e46",
+            "0x44caf6cf59d8ef0c6b2a328c9be8a47b0833bba99dfce7fe71eb02e60d9a53cd"
+          ],
+          "eth:0x4c1d2c03894b81595237E9a2b1dd8e7c42B942ed": [
+            "0xe50e82261eec71d799f99f4c654292f965c252e5b2ad96ecb0c027ceb353407d",
+            "0x6ffa050e974ee9e8e3f943e89d8139f29adcfb516993dc0eec5f30620b891d70",
+            "0x786f65bf91db48092413c62522f999c17a1be84a71d40e32820ed66f884d994e"
+          ],
+          "eth:0x9B9d4d5129C69a3350f8EE3678e4fa117a142bcB": [
+            "0xa7b8f07689ade1bf2ecfa7251bbf3c778d82046e347fe7d3c65eca287b2bf9ba",
+            "0xd22fc59b568d6adcd7c9ae0c8d4b763f1a0f4c572ef521eca4dce042c57ab07f",
+            "0x18dbbc08fe779c56c1bbcfb7a08839a63e25fef43abafc55a8b2b10878631f46"
+          ],
+          "eth:0x4Bf1170C8F0BF6e1c22276183A3c3c8c9DcBd9f2": [],
+          "eth:0x68E8cD7D280FC7601f63a24059127E980474819F": [
+            "0x8908885cc524f585ee986cda08746e441497a2f2e814e80430c2803b3d502621",
+            "0xe3559163797f3fa6a4b0a4934202bce475e1ba9912ca0e741bb10ae901ec9876"
+          ]
+        },
+        "DA_VERIFIER": "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1",
+        "governance": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "guardianAdmins": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "guardians": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "maxAssertionsPerAA": 20,
+        "operatorAdmins": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "operators": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "registrationAllowlist": [],
+        "whitelistEnabled": false
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pendingOwner": { "severity": "MEDIUM" },
+        "governance": { "severity": "HIGH" },
+        "guardianAdmins": { "severity": "HIGH" },
+        "guardians": { "severity": "HIGH" },
+        "operatorAdmins": { "severity": "MEDIUM" },
+        "operators": { "severity": "MEDIUM" },
+        "ASSERTION_TIMELOCK_BLOCKS": { "severity": "MEDIUM" },
+        "DA_VERIFIER": { "severity": "MEDIUM" },
+        "whitelistEnabled": {
+          "severity": "MEDIUM",
+          "description": "If true, only allowlisted accounts can register adopters and add assertions."
+        },
+        "registrationAllowlist": { "severity": "MEDIUM" },
+        "adminVerifiers": {
+          "severity": "HIGH",
+          "description": "Contracts that approve who may become an adopter's manager."
+        },
+        "adopterManagers": {
+          "severity": "HIGH",
+          "description": "Current manager of each adopter. The zero address means it was revoked."
+        },
+        "assertions": {
+          "severity": "HIGH",
+          "description": "Assertion IDs of each adopter that were added and not removed."
+        }
+      },
+      "implementationNames": {
+        "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262": "TransparentUpgradeableProxy",
+        "eth:0xcD5Fd8B8E0BE3b9f9CE5c7e176e19e4Add924686": "StateOracle"
+      }
+    },
+    {
+      "name": "AdminVerifierOwner",
+      "address": "eth:0xCb2e47Abe9b093462aa0e7FA3221fc3Fc90C4dFb",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierOwner",
+      "sourceHashes": [
+        "0x6c7e3259a65b091f5eaa279619dcc7edb75dcc10f7662e656c10ee389d3b1c9d"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves only the account returned by the adopter's owner() as its manager.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1782130427,
+      "sinceBlock": 25373069,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xCb2e47Abe9b093462aa0e7FA3221fc3Fc90C4dFb": "AdminVerifierOwner"
+      }
+    },
+    {
+      "address": "eth:0xD4f639806483B68BddF1a338C9d4Fa188e01241c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1782130427,
+      "sinceBlock": 25373069,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "fieldMeta": { "owner": { "severity": "MEDIUM" } },
+      "implementationNames": {
+        "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "AdminVerifierSuperAdmin",
+      "address": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
+      "type": "Contract",
+      "template": "phylax/AdminVerifierSuperAdmin",
+      "sourceHashes": [
+        "0x83ff25356e73c197d8d8612bde4ef286cd22455a2c53999f4213918497105162"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin verifier that approves only SUPER_ADMIN_ROLE holders, each of whom can become the manager of any adopter without one.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1791453059,
+      "sinceBlock": 26146897,
+      "values": {
+        "$immutable": true,
+        "defaultAdmin": ["eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221"],
+        "superAdmins": [
+          "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+          "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8"
+        ]
+      },
+      "fieldMeta": {
+        "defaultAdmin": { "severity": "HIGH" },
+        "superAdmins": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517": "AdminVerifierSuperAdmin"
+      }
+    },
+    {
+      "name": "DAVerifierECDSA",
+      "address": "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1",
+      "type": "Contract",
+      "template": "phylax/DAVerifierECDSA",
+      "sourceHashes": [
+        "0xfa396b3fb0934ad96c35d135df063a67d590288d2793f1ec98dd0528120dcf74"
+      ],
+      "proxyType": "immutable",
+      "description": "DA verifier that accepts an assertion only if its proof is DA_PROVER's signature of the assertion ID. The assertion's code is not required onchain.",
+      "deployerAddress": "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221",
+      "sinceTimestamp": 1782130415,
+      "sinceBlock": 25373068,
+      "values": {
+        "$immutable": true,
+        "DA_PROVER": "eth:0x3C03f3B143fB9dA33856C0e2204cB4B4d40276C9"
+      },
+      "implementationNames": {
+        "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1": "DAVerifierECDSA"
+      }
+    },
+    {
+      "address": "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x943d7ce4d9f0874ee158a5223c59c7fff5a25a2a05b854560e4ae1061ce25156",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f": [
+      "constructor(address daProver)",
+      "error InvalidProof()",
+      "function DA_PROVER() view returns (address)",
+      "function verifyDA(bytes32 assertionId, bytes, bytes proof) view returns (bool verified)"
+    ],
+    "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130": [
+      "constructor(address defaultAdmin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressExcluded()",
+      "error AlreadyWhitelisted()",
+      "error InvalidAssertionAdopter()",
+      "error InvalidReleaser()",
+      "error NoExclusion()",
+      "error NotExclusionReleaser()",
+      "error NotWhitelisted()",
+      "event ExclusionAdded(address indexed assertionAdopter, address indexed releaser)",
+      "event ExclusionReleased(address indexed assertionAdopter)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WhitelistAdded(address indexed assertionAdopter, address indexed admin)",
+      "event WhitelistRemoved(address indexed assertionAdopter, address indexed admin)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function WHITELIST_ADMIN_ROLE() view returns (bytes32)",
+      "function addToWhitelist(address assertionAdopter, address admin)",
+      "function exclude(address assertionAdopter, address releaser)",
+      "function exclusions(address assertionAdopter) view returns (address releaser)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function grantWhitelistAdminRole(address whitelistAdmin)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isExcluded(address assertionAdopter) view returns (bool)",
+      "function isWhitelisted(address assertionAdopter, address admin) view returns (bool)",
+      "function releaseExclusion(address assertionAdopter)",
+      "function removeFromWhitelist(address assertionAdopter, address admin)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeWhitelistAdminRole(address whitelistAdmin)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function verifyAdmin(address assertionAdopter, address requester, bytes) view returns (bool)",
+      "function whitelist(address assertionAdopter) view returns (address admin)"
+    ],
+    "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E": [
+      "constructor(address admin)",
+      "error AddressExcluded()",
+      "error AlreadyInitialized()",
+      "error AlreadyWhitelisted()",
+      "error InvalidAssertionAdopter()",
+      "error InvalidReleaser()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoExclusion()",
+      "error NoHandoverRequest()",
+      "error NotExclusionReleaser()",
+      "error NotWhitelisted()",
+      "error Unauthorized()",
+      "event ExclusionAdded(address indexed assertionAdopter, address indexed releaser)",
+      "event ExclusionReleased(address indexed assertionAdopter)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event WhitelistAdded(address indexed assertionAdopter, address indexed admin)",
+      "event WhitelistRemoved(address indexed assertionAdopter, address indexed admin)",
+      "function addToWhitelist(address assertionAdopter, address admin)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function exclude(address assertionAdopter, address releaser)",
+      "function exclusions(address assertionAdopter) view returns (address releaser)",
+      "function isExcluded(address assertionAdopter) view returns (bool)",
+      "function isWhitelisted(address assertionAdopter, address admin) view returns (bool)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function releaseExclusion(address assertionAdopter)",
+      "function removeFromWhitelist(address assertionAdopter, address admin)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyAdmin(address assertionAdopter, address requester, bytes) view returns (bool)",
+      "function whitelist(address assertionAdopter) view returns (address admin)"
+    ],
+    "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291": [
+      "constructor(address admin)",
+      "error AddressExcluded()",
+      "error AlreadyInitialized()",
+      "error AlreadyWhitelisted()",
+      "error InvalidAssertionAdopter()",
+      "error InvalidReleaser()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoExclusion()",
+      "error NoHandoverRequest()",
+      "error NotExclusionReleaser()",
+      "error NotWhitelisted()",
+      "error Unauthorized()",
+      "event ExclusionAdded(address indexed assertionAdopter, address indexed releaser)",
+      "event ExclusionReleased(address indexed assertionAdopter)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event WhitelistAdded(address indexed assertionAdopter, address indexed admin)",
+      "event WhitelistRemoved(address indexed assertionAdopter, address indexed admin)",
+      "function addToWhitelist(address assertionAdopter, address admin)",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function exclude(address assertionAdopter, address releaser)",
+      "function exclusions(address assertionAdopter) view returns (address releaser)",
+      "function isExcluded(address assertionAdopter) view returns (bool)",
+      "function isWhitelisted(address assertionAdopter, address admin) view returns (bool)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function releaseExclusion(address assertionAdopter)",
+      "function removeFromWhitelist(address assertionAdopter, address admin)",
+      "function renounceOwnership() payable",
+      "function requestOwnershipHandover() payable",
+      "function transferOwnership(address newOwner) payable",
+      "function verifyAdmin(address assertionAdopter, address requester, bytes) view returns (bool)",
+      "function whitelist(address assertionAdopter) view returns (address admin)"
+    ],
+    "eth:0x3A24d388d214514800eDCD34571516848e088285": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x5d8070789035f77624153CbF7d4cdCecfd520c5A": [
+      "error InvalidProof()",
+      "function verifyDA(bytes32 assertionId, bytes, bytes proof) pure returns (bool verified)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
+    "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x6d67e393eFc3E48e522Fa5829438fe799C5DB7be": [
+      "function verifyAdmin(address contractAddress, address requester, bytes) view returns (bool)"
+    ],
+    "eth:0x9255dc50e47317AF0D4d6C9e43946065f17244C8": [
+      "constructor(uint128 assertionTimelockBlocks, address daVerifier)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AccountNotWhitelisted(address account)",
+      "error AdminVerifierAlreadyRegistered()",
+      "error AdminVerifierNotRegistered()",
+      "error AlreadyWhitelisted(address account)",
+      "error AssertionAdopterAlreadyRegistered()",
+      "error AssertionAdopterNotRegistered()",
+      "error AssertionAlreadyExists()",
+      "error AssertionAlreadyRemoved()",
+      "error AssertionDoesNotExist()",
+      "error BatchError(bytes result)",
+      "error CannotGrantDefaultAdminRole()",
+      "error CannotRenounceOwnerDefaultAdminRole()",
+      "error CannotRevokeOwnerDefaultAdminRole()",
+      "error InvalidAssertionTimelock()",
+      "error InvalidInitialization()",
+      "error InvalidManagerTransferRequest()",
+      "error InvalidProof()",
+      "error NoPendingManager()",
+      "error NotInitializing()",
+      "error NotWhitelisted()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TooManyAssertions()",
+      "error UnauthorizedManager()",
+      "error UnauthorizedRegistrant()",
+      "error WhitelistAlreadyDisabled()",
+      "error WhitelistAlreadyEnabled()",
+      "event AddedToWhitelist(address indexed account)",
+      "event AdminVerifierAdded(address adminVerifier)",
+      "event AdminVerifierRemoved(address adminVerifier)",
+      "event AssertionAdded(address assertionAdopter, bytes32 assertionId, uint256 activationBlock)",
+      "event AssertionAdopterAdded(address indexed contractAddress, address indexed manager, address adminVerifier)",
+      "event AssertionRemoved(address assertionAdopter, bytes32 assertionId, uint256 deactivationBlock)",
+      "event Initialized(uint64 version)",
+      "event ManagerTransferRequested(address indexed contractAddress, address indexed manager, address indexed newManager)",
+      "event ManagerTransferred(address indexed contractAddress, address indexed newManager)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemovedFromWhitelist(address indexed account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WhitelistDisabled()",
+      "event WhitelistEnabled()",
+      "function ASSERTION_TIMELOCK_BLOCKS() view returns (uint128)",
+      "function DA_VERIFIER() view returns (address)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GOVERNANCE_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function acceptManagerTransfer(address contractAddress)",
+      "function acceptOwnership()",
+      "function addAdminVerifier(address adminVerifier)",
+      "function addAssertion(address contractAddress, bytes32 assertionId, bytes metadata, bytes proof)",
+      "function addToWhitelist(address account)",
+      "function adminVerifiers(address adminVerifier) view returns (bool isRegistered)",
+      "function assertionAdopters(address) view returns (address manager, address pendingManager, uint16 assertionCount)",
+      "function batch(bytes[] calls)",
+      "function disableWhitelist()",
+      "function enableWhitelist()",
+      "function getAssertionCount(address contractAddress) view returns (uint16 assertionCount)",
+      "function getAssertionWindow(address contractAddress, bytes32 assertionId) view returns (uint128 activationBlock, uint128 deactivationBlock)",
+      "function getManager(address contractAddress) view returns (address manager)",
+      "function getPendingManager(address contractAddress) view returns (address pendingManager)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantGovernanceRole(address governance)",
+      "function grantGuardianAdminRole(address guardianAdmin)",
+      "function grantGuardianRole(address guardian)",
+      "function grantOperatorAdminRole(address operatorAdmin)",
+      "function grantOperatorRole(address operator)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAssertion(address contractAddress, bytes32 assertionId) view returns (bool isAssociated)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address[] _adminVerifiers, uint16 _maxAssertionsPerAA)",
+      "function isAdminVerifierRegistered(address adminVerifier) view returns (bool isRegistered)",
+      "function isWhitelisted(address account) view returns (bool)",
+      "function maxAssertionsPerAA() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerAssertionAdopter(address contractAddress, address adminVerifier, bytes data)",
+      "function removeAdminVerifier(address adminVerifier)",
+      "function removeAssertion(address contractAddress, bytes32 assertionId)",
+      "function removeAssertionByGuardian(address contractAddress, bytes32 assertionId)",
+      "function removeFromWhitelist(address account)",
+      "function renounceOwnership()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeGovernanceRole(address governance)",
+      "function revokeGuardianAdminRole(address guardianAdmin)",
+      "function revokeGuardianRole(address guardian)",
+      "function revokeManager(address contractAddress)",
+      "function revokeOperatorAdminRole(address operatorAdmin)",
+      "function revokeOperatorRole(address operator)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setMaxAssertionsPerAA(uint16 _maxAssertionsPerAA)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferManager(address contractAddress, address newManager)",
+      "function transferOwnership(address newOwner)",
+      "function whitelist(address) view returns (bool)",
+      "function whitelistEnabled() view returns (bool)"
+    ],
+    "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0xADE4deA20fca28324dFaBEE7c74b4d01181D5bF5": [
+      "constructor(uint256 assertionTimelockBlocks)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AccountNotWhitelisted(address account)",
+      "error AdminVerifierAlreadyRegistered()",
+      "error AdminVerifierNotRegistered()",
+      "error AlreadyWhitelisted(address account)",
+      "error AssertionAdopterAlreadyRegistered()",
+      "error AssertionAdopterNotRegistered()",
+      "error AssertionAlreadyExists()",
+      "error AssertionAlreadyRemoved()",
+      "error AssertionDoesNotExist()",
+      "error BatchError(bytes result)",
+      "error CannotGrantDefaultAdminRole()",
+      "error CannotRenounceOwnerDefaultAdminRole()",
+      "error CannotRevokeOwnerDefaultAdminRole()",
+      "error DAVerifierAlreadyRegistered()",
+      "error DAVerifierNotRegistered()",
+      "error DAVerifierNotRegistered()",
+      "error InvalidAssertionTimelock()",
+      "error InvalidDAProof(address daVerifier)",
+      "error InvalidInitialization()",
+      "error InvalidManagerTransferRequest()",
+      "error NoPendingManager()",
+      "error NotInitializing()",
+      "error NotWhitelisted()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TooManyAssertions()",
+      "error UnauthorizedManager()",
+      "error UnauthorizedRegistrant()",
+      "error WhitelistAlreadyDisabled()",
+      "error WhitelistAlreadyEnabled()",
+      "event AddedToWhitelist(address indexed account)",
+      "event AdminVerifierAdded(address adminVerifier)",
+      "event AdminVerifierRemoved(address adminVerifier)",
+      "event AssertionAdded(address indexed assertionAdopter, bytes32 indexed assertionId, uint256 activationBlock, address indexed daVerifier, bytes metadata, bytes proof)",
+      "event AssertionAdopterAdded(address indexed contractAddress, address indexed manager, address adminVerifier)",
+      "event AssertionRemoved(address indexed assertionAdopter, bytes32 indexed assertionId, uint256 deactivationBlock)",
+      "event DAVerifierAdded(address daVerifier)",
+      "event DAVerifierRemoved(address daVerifier)",
+      "event Initialized(uint64 version)",
+      "event ManagerTransferRequested(address indexed contractAddress, address indexed manager, address indexed newManager)",
+      "event ManagerTransferred(address indexed contractAddress, address indexed newManager)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemovedFromWhitelist(address indexed account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event StorageReset(address indexed adopter, bytes32 indexed storageKey, uint256 resetBlock)",
+      "event WhitelistDisabled()",
+      "event WhitelistEnabled()",
+      "function ASSERTION_TIMELOCK_BLOCKS() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GOVERNANCE_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function acceptManagerTransfer(address contractAddress)",
+      "function acceptOwnership()",
+      "function addAdminVerifier(address adminVerifier)",
+      "function addAssertion(address contractAddress, bytes32 assertionId, address daVerifier, bytes metadata, bytes proof)",
+      "function addDAVerifier(address daVerifier)",
+      "function addToWhitelist(address account)",
+      "function adminVerifiers(address adminVerifier) view returns (bool isRegistered)",
+      "function assertionAdopters(address) view returns (address manager, address pendingManager, uint16 assertionCount)",
+      "function batch(bytes[] calls)",
+      "function daVerifiers(address daVerifier) view returns (bool isRegistered)",
+      "function disableWhitelist()",
+      "function enableWhitelist()",
+      "function getAssertionCount(address contractAddress) view returns (uint16 assertionCount)",
+      "function getAssertionWindow(address contractAddress, bytes32 assertionId) view returns (uint256 activationBlock, uint256 deactivationBlock)",
+      "function getManager(address contractAddress) view returns (address manager)",
+      "function getPendingManager(address contractAddress) view returns (address pendingManager)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantGovernanceRole(address governance)",
+      "function grantGuardianAdminRole(address guardianAdmin)",
+      "function grantGuardianRole(address guardian)",
+      "function grantOperatorAdminRole(address operatorAdmin)",
+      "function grantOperatorRole(address operator)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAssertion(address contractAddress, bytes32 assertionId) view returns (bool isAssociated)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address[] _adminVerifiers, address[] _daVerifiers, uint16 _maxAssertionsPerAA)",
+      "function initializeWithWhitelist(address admin, address[] _adminVerifiers, address[] _daVerifiers, uint16 _maxAssertionsPerAA, bool _whitelistEnabled, address[] _initialWhitelist)",
+      "function isAdminVerifierRegistered(address adminVerifier) view returns (bool isRegistered)",
+      "function isDAVerifierRegistered(address daVerifier) view returns (bool isRegistered)",
+      "function isWhitelisted(address account) view returns (bool)",
+      "function maxAssertionsPerAA() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerAssertionAdopter(address contractAddress, address adminVerifier, bytes data)",
+      "function removeAdminVerifier(address adminVerifier)",
+      "function removeAssertion(address contractAddress, bytes32 assertionId)",
+      "function removeAssertionByGuardian(address contractAddress, bytes32 assertionId)",
+      "function removeDAVerifier(address daVerifier)",
+      "function removeFromWhitelist(address account)",
+      "function renounceOwnership()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function resetStorage(address adopter, bytes32 storageKey)",
+      "function revokeGovernanceRole(address governance)",
+      "function revokeGuardianAdminRole(address guardianAdmin)",
+      "function revokeGuardianRole(address guardian)",
+      "function revokeManager(address contractAddress)",
+      "function revokeOperatorAdminRole(address operatorAdmin)",
+      "function revokeOperatorRole(address operator)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setMaxAssertionsPerAA(uint16 _maxAssertionsPerAA)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferManager(address contractAddress, address newManager)",
+      "function transferOwnership(address newOwner)",
+      "function whitelist(address) view returns (bool)",
+      "function whitelistEnabled() view returns (bool)"
+    ],
+    "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70": [
+      "constructor(address admin_, address guardian_, address[] initialBuilders_)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CallerNotTimelock()",
+      "error DelayUpdateNotLatest(bytes32 operationId, bytes32 latestOperationId)",
+      "error NoInitialBuilders()",
+      "error NoPendingOperation(bytes32 operationKey)",
+      "error OperationAlreadyPending(bytes32 operationKey)",
+      "error OpposingBuilderOperationPending(address builder, bytes32 pendingOperationKey)",
+      "error RoleManagedByTimelock(bytes32 role)",
+      "error TimelockDelayTooHigh(uint256 requestedDelay, uint256 maximumDelay)",
+      "error UnexpectedBlockTimestamp(uint256 expectedBlockTimestamp, uint256 actualBlockTimestamp)",
+      "error ZeroAdminAddress()",
+      "error ZeroBuilderAddress()",
+      "error ZeroGuardianAddress()",
+      "event BuilderDewhitelisted(address indexed builder)",
+      "event BuilderWhitelisted(address indexed builder)",
+      "event CredibleBlockMarked(uint256 indexed blockNumber, address indexed builder)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CREDIBLE_BUILDER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function LAST_CREDIBLE_BLOCK_SLOT() view returns (bytes32)",
+      "function MAX_TIMELOCK_DELAY() view returns (uint256)",
+      "function MIN_TIMELOCK_DELAY() view returns (uint256)",
+      "function cancelDelayUpdate(uint256 newDelay)",
+      "function cancelDewhitelistBuilder(address builder)",
+      "function cancelWhitelistBuilder(address builder)",
+      "function dewhitelistBuilder(address builder)",
+      "function executeDelayUpdate(uint256 newDelay)",
+      "function executeDewhitelistBuilder(address builder)",
+      "function executeWhitelistBuilder(address builder)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isCredibleBlock() view returns (bool)",
+      "function lastCredibleBlock() view returns (uint256)",
+      "function markCurrentBlockCredible(uint256 expectedBlockTimestamp)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function scheduleDelayUpdate(uint256 newDelay)",
+      "function scheduleDewhitelistBuilder(address builder)",
+      "function scheduleWhitelistBuilder(address builder)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function timelock() view returns (address)",
+      "function whitelistBuilder(address builder)"
+    ],
+    "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xCb2e47Abe9b093462aa0e7FA3221fc3Fc90C4dFb": [
+      "function verifyAdmin(address contractAddress, address requester, bytes) view returns (bool)"
+    ],
+    "eth:0xcD5Fd8B8E0BE3b9f9CE5c7e176e19e4Add924686": [
+      "constructor(uint128 assertionTimelockBlocks, address daVerifier)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AccountNotWhitelisted(address account)",
+      "error AdminVerifierAlreadyRegistered()",
+      "error AdminVerifierNotRegistered()",
+      "error AlreadyWhitelisted(address account)",
+      "error AssertionAdopterAlreadyRegistered()",
+      "error AssertionAdopterNotRegistered()",
+      "error AssertionAlreadyExists()",
+      "error AssertionAlreadyRemoved()",
+      "error AssertionDoesNotExist()",
+      "error BatchError(bytes result)",
+      "error CannotGrantDefaultAdminRole()",
+      "error CannotRenounceOwnerDefaultAdminRole()",
+      "error CannotRevokeOwnerDefaultAdminRole()",
+      "error InvalidAssertionTimelock()",
+      "error InvalidInitialization()",
+      "error InvalidManagerTransferRequest()",
+      "error InvalidProof()",
+      "error NoPendingManager()",
+      "error NotInitializing()",
+      "error NotWhitelisted()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TooManyAssertions()",
+      "error UnauthorizedManager()",
+      "error UnauthorizedRegistrant()",
+      "error WhitelistAlreadyDisabled()",
+      "error WhitelistAlreadyEnabled()",
+      "event AddedToWhitelist(address indexed account)",
+      "event AdminVerifierAdded(address adminVerifier)",
+      "event AdminVerifierRemoved(address adminVerifier)",
+      "event AssertionAdded(address assertionAdopter, bytes32 assertionId, uint256 activationBlock)",
+      "event AssertionAdopterAdded(address indexed contractAddress, address indexed manager, address adminVerifier)",
+      "event AssertionRemoved(address assertionAdopter, bytes32 assertionId, uint256 deactivationBlock)",
+      "event Initialized(uint64 version)",
+      "event ManagerTransferRequested(address indexed contractAddress, address indexed manager, address indexed newManager)",
+      "event ManagerTransferred(address indexed contractAddress, address indexed newManager)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RemovedFromWhitelist(address indexed account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WhitelistDisabled()",
+      "event WhitelistEnabled()",
+      "function ASSERTION_TIMELOCK_BLOCKS() view returns (uint128)",
+      "function DA_VERIFIER() view returns (address)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GOVERNANCE_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ADMIN_ROLE() view returns (bytes32)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function acceptManagerTransfer(address contractAddress)",
+      "function acceptOwnership()",
+      "function addAdminVerifier(address adminVerifier)",
+      "function addAssertion(address contractAddress, bytes32 assertionId, bytes metadata, bytes proof)",
+      "function addToWhitelist(address account)",
+      "function adminVerifiers(address adminVerifier) view returns (bool isRegistered)",
+      "function assertionAdopters(address) view returns (address manager, address pendingManager, uint16 assertionCount)",
+      "function batch(bytes[] calls)",
+      "function disableWhitelist()",
+      "function enableWhitelist()",
+      "function getAssertionCount(address contractAddress) view returns (uint16 assertionCount)",
+      "function getAssertionWindow(address contractAddress, bytes32 assertionId) view returns (uint128 activationBlock, uint128 deactivationBlock)",
+      "function getManager(address contractAddress) view returns (address manager)",
+      "function getPendingManager(address contractAddress) view returns (address pendingManager)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantGovernanceRole(address governance)",
+      "function grantGuardianAdminRole(address guardianAdmin)",
+      "function grantGuardianRole(address guardian)",
+      "function grantOperatorAdminRole(address operatorAdmin)",
+      "function grantOperatorRole(address operator)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasAssertion(address contractAddress, bytes32 assertionId) view returns (bool isAssociated)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address[] _adminVerifiers, uint16 _maxAssertionsPerAA)",
+      "function isAdminVerifierRegistered(address adminVerifier) view returns (bool isRegistered)",
+      "function isWhitelisted(address account) view returns (bool)",
+      "function maxAssertionsPerAA() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerAssertionAdopter(address contractAddress, address adminVerifier, bytes data)",
+      "function removeAdminVerifier(address adminVerifier)",
+      "function removeAssertion(address contractAddress, bytes32 assertionId)",
+      "function removeAssertionByGuardian(address contractAddress, bytes32 assertionId)",
+      "function removeFromWhitelist(address account)",
+      "function renounceOwnership()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeGovernanceRole(address governance)",
+      "function revokeGuardianAdminRole(address guardianAdmin)",
+      "function revokeGuardianRole(address guardian)",
+      "function revokeManager(address contractAddress)",
+      "function revokeOperatorAdminRole(address operatorAdmin)",
+      "function revokeOperatorRole(address operator)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setMaxAssertionsPerAA(uint16 _maxAssertionsPerAA)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferManager(address contractAddress, address newManager)",
+      "function transferOwnership(address newOwner)",
+      "function whitelist(address) view returns (bool)",
+      "function whitelistEnabled() view returns (bool)"
+    ],
+    "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517": [
+      "constructor(address defaultAdmin, address[] superAdmins)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error InvalidAdmin()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function SUPER_ADMIN_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function verifyAdmin(address, address requester, bytes) view returns (bool)"
+    ],
+    "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1": [
+      "constructor(address daProver)",
+      "error InvalidProof()",
+      "function DA_PROVER() view returns (address)",
+      "function verifyDA(bytes32 assertionId, bytes, bytes proof) view returns (bool verified)"
+    ],
+    "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedModuleGuard(address indexed moduleGuard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkNSignatures(address executor, bytes32 dataHash, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function checkSignatures(address executor, bytes32 dataHash, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32 txHash)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setModuleGuard(address moduleGuard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "phylax/AdminVerifierOwner": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "phylax/AdminVerifierSuperAdmin": "0x3dc7e276d76d6faad9f81cb2ae78808b8df9d6526017189723972144106a4f04",
+    "phylax/AdminVerifierWhitelist": "0xd841b30f72f5bbd74bbd15d285ef73223f3d4c2f0d513011f62f2899007d8c44",
+    "phylax/AdminVerifierWhitelist_ownable": "0x12d2eb09dcdf0f1133cce14cf3aaa3d92ea879c212b79ab9bf68dc5837c1112b",
+    "phylax/CredibleRegistry": "0x9919ab67ae964788e3c4a34dc3780da2083a8126b1bbdc1fd2171010aa825965",
+    "phylax/DAVerifierECDSA": "0xb4f14b2d320d8450eeae3f2c4340e3123f8b09096c0eaf4a78f445150b23192b",
+    "phylax/DAVerifierOnChain": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "phylax/StateOracle": "0x12b0ad377e91a6c2840ddeef791229df2697206aca4555b42fb5a447b628bd3b",
+    "phylax/StateOracle_singleDAVerifier": "0xc2880dacf692aac8cb84761ab851f88c15ae036fb9d4b0c79af0a93d3f42d969"
+  },
+  "usedBlockNumbers": { "ethereum": 26484098 },
+  "permissionsConfigHash": "0xeec68eb30029a85444350c698daf36bb73c8ab50c0a50ebd711e365876d34c45",
+  "permissions": {
+    "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x0E8a92cc15f7793aD34d2c54365201261781aBB5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x0a03D5B6bAb06F3dCeac6B313e23117EADc1d17f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+          "description": "mark the current block as credible.",
+          "role": ".builders"
+        }
+      ]
+    },
+    "eth:0x15766b20DDe232EAEbf14f03DE0F46bFed8C2E6d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x12b2E5606688b0B111D7eb961b24A5BC032B4C0f",
+          "description": "sign the assertion IDs this verifier accepts.",
+          "role": ".DA_PROVER"
+        }
+      ]
+    },
+    "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
+          "via": [
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x205eBbAdb329b3550b93c89Ef70f72B18fEdfdD5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x26587a64014361F4be5b8C307265ed1342583083": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
+          "via": [
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
+          ]
+        }
+      ]
+    },
+    "eth:0x2913e84C4a9065daB453C6746B61FD5f99ACe221": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x25642997751A2F1bbA234a3B1c2100bD0aB9a73E",
+          "description": "assign the account that may register as each adopter's manager, exclude adopters and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3107dbCe36e98FE30539DE78bd0899bDCd9Ca291",
+          "description": "assign the account that may register as each adopter's manager, exclude adopters and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove accounts on the registration allowlist.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove admin verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "grant or revoke the guardian role.",
+          "role": ".guardianAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "grant or revoke the operator role.",
+          "role": ".operatorAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove accounts on the registration allowlist.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove admin verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "grant or revoke the guardian role.",
+          "role": ".guardianAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "grant or revoke the operator role.",
+          "role": ".operatorAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
+          "description": "become the manager of any adopter without one.",
+          "role": ".superAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
+          "description": "grant or revoke the admin and super admin roles.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x34b687f2B3642e1Bf9C813728340664E3135fFF8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd9eaa6063cE1D8b6A20648dF961cA89D5F19c517",
+          "description": "become the manager of any adopter without one.",
+          "role": ".superAdmins"
+        }
+      ]
+    },
+    "eth:0x3A24d388d214514800eDCD34571516848e088285": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x3C03f3B143fB9dA33856C0e2204cB4B4d40276C9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xeedd9c29D597B378108483Bd46eaDC65044713f1",
+          "description": "sign the assertion IDs this verifier accepts.",
+          "role": ".DA_PROVER"
+        }
+      ]
+    },
+    "eth:0x69Fb398BdF54C8313C4C0fd6087128d6E8527bbA": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x711f5a08857ae2a1eb6bF1BFDDe962188a65EE50": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x9EAAe186f9A0314b7Db856509277F030894C1Dcc": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers",
+          "via": [
+            { "address": "eth:0x3A24d388d214514800eDCD34571516848e088285" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0xD808cF91d30A99DCB8f6D8c3563475628863bdEE": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xF31b02F47596AcC7328E9fb04aFc52Fe91Da6071": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+          "description": "add or remove the assertions of the adopters it manages and transfer that role.",
+          "role": ".adopterManagers"
+        }
+      ]
+    },
+    "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove accounts on the registration allowlist.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "add or remove admin and DA verifiers, toggle the registration allowlist and set the maximum number of assertions per adopter.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "grant or revoke the governance, guardian admin and operator admin roles, and transfer ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "grant or revoke the guardian role.",
+          "role": ".guardianAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "grant or revoke the operator role.",
+          "role": ".operatorAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "description": "remove any adopter's assertions and revoke any adopter's manager.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
+          "description": "assign the account that may register as each adopter's manager, and exclude adopters.",
+          "role": ".whitelistAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130",
+          "description": "grant or revoke the admin and whitelist admin roles.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+          "delay": 259200,
+          "description": "add or remove builders and change the timelock delay.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+          "description": "cancel scheduled builder and delay changes.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+          "description": "grant or revoke the admin and guardian roles.",
+          "role": ".defaultAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ]
+    }
+  }
+}

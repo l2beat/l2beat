@@ -7,6 +7,7 @@ import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { NoResultsInfo } from '~/pages/interop/summary/components/NoResultsInfo'
 import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { useTRPC } from '~/trpc/React'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { describeChainScope } from '../utils/describeChainScope'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { ProtocolsByVolumeTable } from './ProtocolsByVolumeTable'
@@ -40,7 +41,8 @@ export function ProtocolsByVolumeCard({ isEnabled }: { isEnabled: boolean }) {
             Protocols by volume
           </h2>
           <div className="mt-1 font-normal text-label-value-13 text-secondary leading-4">
-            Last 24h ·{' '}
+            Last 24h
+            {DOT_SEPARATOR}
             {describeChainScope(selectedChains.length, allChains.length)}
           </div>
         </div>

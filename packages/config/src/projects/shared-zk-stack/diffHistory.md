@@ -1,3 +1,319 @@
+Generated with discovered.json: 0xb2df7a2e3c5d07ccb1af182dcef95491c71fbbe0
+
+# Diff at Fri, 20 Nov 2026 12:39:08 GMT:
+
+- id: f90c17fb
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1794996848
+- current timestamp: 1795177406
+
+## Description
+
+L1 part of Guardian dissolution (ZIP-19) is executed and the process is finalized. ZKSync Foundation multisig takes over the powers of the Guardians:
+
+- Veto and upgrade powers over `ProtocolUpgradeHandler`.
+- `EmergencyUpgradeBoard` now needs sigs only from the security council and the foundation (3/3 -> 2/2).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x015318c16AE443a20DE0A776dB06a59F0D279057) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SecurityCouncil (eth:0x29D2e773A31C07D375c50F0110422832bd044d08) [shared-zk-stack/SecurityCouncil] {
+    +++ description: Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).
+      receivedPermissions.0.description:
+-        "one of its 3/3 signers."
++        "one of its 2/2 signers."
+      receivedPermissions.0.from:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians]
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/old/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1","description":"one of its 2/2 signers.","role":".ZK_FOUNDATION_SAFE"}
+      receivedPermissions.0.role:
+-        ".ZK_FOUNDATION_SAFE"
++        ".zkFoundation"
+      receivedPermissions.0.description:
+-        "one of its 3/3 signers."
++        "extend the legal veto period, approve a protocol upgrade (executable only after the full waiting period)."
+      receivedPermissions.0.from:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      sourceHashes.1:
+-        "0x94736426ab1ce890a3dc2ff8465aadec6e85a38613ef011bd5c755c3a556ecc0"
++        "0xac99f73391e8d8423a346e6ae9fd96045e039113d173e2996496a6c9b51c4504"
+      values.$implementation:
+-        "eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811"
++        "eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE"
+      values.$pastUpgrades.4:
++        ["2026-11-20T10:50:47.000Z","0x60cdf65cb68b7c7c77cf51b4e9db88132e2a850fe735f7c07d2eb4c659a6d018",["eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE"]]
+      values.$upgradeCount:
+-        4
++        5
++++ severity: HIGH
+      values.emergencyUpgradeBoard:
+-        "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C"
++        "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1"
+      values.guardians:
+-        "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F"
++++ severity: HIGH
+      values.zkFoundation:
++        "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
+      implementationNames.eth:0x76C4c9897c610C554C948Ece32BEF1257ddE3811:
+-        "ProtocolUpgradeHandler"
+      implementationNames.eth:0xaD417a02cD56e535703404DEd7C8c5BaFE088DEE:
++        "ProtocolUpgradeHandler"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1) [shared-zk-stack/EmergencyUpgradeBoard]
+    +++ description: A custom contract allowing a 2/2 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08 and eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+## Source code changes
+
+```diff
+.../EmergencyUpgradeBoard.sol                      |  425 +++--
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../.flat@1794996848/Guardians.sol => /dev/null    | 1823 --------------------
+ .../ProtocolUpgradeHandler.sol                     |  116 +-
+ 19 files changed, 266 insertions(+), 10610 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794996848 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (eth:0x015318c16AE443a20DE0A776dB06a59F0D279057) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Guardians (eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F) [shared-zk-stack/Guardians] {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade.","role":".guardians"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C) [shared-zk-stack/old/EmergencyUpgradeBoard] {
+    +++ description: A custom contract allowing a 3/3 of eth:0x29D2e773A31C07D375c50F0110422832bd044d08, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      template:
+-        "shared-zk-stack/EmergencyUpgradeBoard"
++        "shared-zk-stack/old/EmergencyUpgradeBoard"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf) [GnosisSafe] {
+    +++ description: None
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      description:
+-        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The two members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      fieldMeta.guardians:
+-        {"severity":"HIGH"}
+      fieldMeta.zkFoundation:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x318568c4d17e1d19f863d7f9380ef89f40f50302
+
+# Diff at Wed, 18 Nov 2026 10:15:44 GMT:
+
+- id: 0001eb45
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3dfa2521afaa0ee629ab37834547459cfd2fa49a block: 1794825975
+- current timestamp: 1794996848
+
+## Description
+
+One security council member upgraded its Safe to v1.5.0.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x69462a81ba94D64c404575f1899a464F123497A2) [GnosisSafe] {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "Safe"
+      sourceHashes.1:
+-        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
++        "0xb66849da6643e8cd188f73efe4edb32704a1540eda5b1aef77a2217ad2d81f78"
+      values.$implementation:
+-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b"
+      values.getChainId:
+-        1
+      values.VERSION:
+-        "1.3.0"
++        "1.5.0"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFf51A5898e281Db6DfC7855790607438dF2ca44b:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 1026 -----------
+ .../Safe}/GnosisSafeProxy.p.sol                    |    0
+ .../projects/shared-zk-stack/.flat/Safe/Safe.sol   | 1797 ++++++++++++++++++++
+ 3 files changed, 1797 insertions(+), 1026 deletions(-)
+```
+
 Generated with discovered.json: 0x036de1d5b384befe1db8baaf7bbfc1713eb9afb1
 
 # Diff at Mon, 16 Nov 2026 12:44:29 GMT:

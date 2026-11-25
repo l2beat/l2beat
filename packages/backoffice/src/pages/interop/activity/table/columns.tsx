@@ -14,7 +14,6 @@ const columnHelper = createColumnHelper<SuspiciousTransferRow>()
 
 export function createSuspiciousTransfersColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
-  valueDiffThresholdPercent: number
 }): TableOptions<SuspiciousTransferRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
@@ -144,16 +143,11 @@ export function createSuspiciousTransfersColumns(options: {
     }),
     columnHelper.accessor('valueDifferencePercent', {
       header: 'Diff %',
-      cell: ({ row }) => {
-        const value = row.original.valueDifferencePercent
-        const isOverThreshold = value > options.valueDiffThresholdPercent
-
-        return (
-          <span className={isOverThreshold ? 'font-semibold text-red-700' : ''}>
-            {value.toFixed(2)}%
-          </span>
-        )
-      },
+      cell: ({ row }) => (
+        <span className="font-semibold text-red-700">
+          {row.original.valueDifferencePercent.toFixed(2)}%
+        </span>
+      ),
       meta: {
         csvHeader: 'Diff %',
         getCsvValue: ({ row }) =>

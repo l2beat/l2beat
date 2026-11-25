@@ -131,7 +131,8 @@ export function glossaryPlugin(md: MarkdownIt) {
     if (!state || !pending) return rendered
 
     state.pendingAfterLink = undefined
-    return `${rendered}<span id="${md.utils.escapeHtml(pending.id)}" class="sr-only">${md.utils.escapeHtml(pending.description)}</span>`
+    // select-none keeps the description out of text copied from the prose.
+    return `${rendered}<span id="${md.utils.escapeHtml(pending.id)}" class="sr-only select-none">${md.utils.escapeHtml(pending.description)}</span>`
   }
 }
 

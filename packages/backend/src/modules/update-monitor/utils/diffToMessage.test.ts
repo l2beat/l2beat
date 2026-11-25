@@ -2,7 +2,7 @@ import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { diffToMessage, wrapBoldAndItalic, wrapItalic } from './diffToMessage'
+import { diffToMessage } from './diffToMessage'
 
 const ADDRESS = ChainSpecificAddress(
   'eth:0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01',
@@ -44,7 +44,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessage(name, diff, BLOCK_NUMBER, dependents)
 
       const expected = [
-        `***${name}*** | detected changes`,
+        '***system*** | detected changes',
         discoveryDiffToMarkdown(diff),
       ]
 
@@ -84,34 +84,14 @@ describe('Discord message formatting', () => {
       const result = diffToMessage(name, diff, BLOCK_NUMBER, dependents)
 
       const expected = [
-        `***${name}*** | detected changes\n`,
-        wrapItalic('This module is referenced by the following projects:'),
+        '***module*** | detected changes\n',
+        '*This module is referenced by the following projects:*',
         ' ',
-        wrapBoldAndItalic('system1, system2.'),
+        '***system1, system2.***',
         discoveryDiffToMarkdown(diff),
       ]
 
       expect(result).toEqual(expected.join(''))
-    })
-  })
-
-  describe(wrapItalic.name, () => {
-    it('wraps content correctly', () => {
-      const content = 'projectName'
-
-      const result = wrapItalic(content)
-
-      expect(result).toEqual(`*${content}*`)
-    })
-  })
-
-  describe(wrapBoldAndItalic.name, () => {
-    it('wraps content correctly', () => {
-      const content = 'projectName'
-
-      const result = wrapBoldAndItalic(content)
-
-      expect(result).toEqual(`***${content}***`)
     })
   })
 })

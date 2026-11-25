@@ -198,8 +198,7 @@ export class EventHandler implements Handler {
 
     const onlySingleKey = values.every((v) => Object.keys(v).length === 1)
     if (onlySingleKey) {
-      // biome-ignore lint/style/noNonNullAssertion: We know it's there
-      values = values.map((o) => Object.values(o)[0]!)
+      values = values.map((o) => Object.values(o)[0])
     }
 
     return extractArray ? values[0] : values

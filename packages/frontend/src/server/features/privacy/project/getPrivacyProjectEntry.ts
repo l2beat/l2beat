@@ -44,6 +44,7 @@ import {
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { renderPrivacyRiskSummary } from '../utils/renderPrivacyRiskSummary'
 import { resolvePrivacySources } from '../utils/resolvePrivacySources'
 
 export interface ProjectPrivacyEntry {
@@ -244,14 +245,14 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.riskSummary) {
+  if (details.riskSummary && details.riskSummary.length > 0) {
     sections.push({
       type: 'MarkdownSection',
       sideNavTitle: 'Risk summary',
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
-        content: details.riskSummary,
+        content: renderPrivacyRiskSummary(details.riskSummary),
         mdClassName:
           '[&_.mdc-h2]:mb-0 [&_.mdc-h2]:font-bold [&_.mdc-h2]:text-red-300 [&_.mdc-h2]:text-paragraph-15 md:[&_.mdc-h2]:text-paragraph-16 [&_ol]:mb-0 [&_ol]:list-inside [&_ol]:pl-1.5 [&_li]:ml-0',
       },

@@ -1,9 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zcashNearIntentsAdversaries } from './adversaries'
+import { zcashNearIntentsRiskSummary } from './riskSummary'
 
 // The route has no Ethereum contracts: the custodial bridge holds funds in plain
 // accounts, so there is nothing for discovery to track. Governance and
@@ -13,11 +18,11 @@ export const zcashNearIntents: BaseProject = {
   slug: 'zcash-near-intents',
   name: 'Zcash via NEAR Intents',
   shortName: undefined,
-  aliases: ['Zodl', 'Zashi'],
+  aliases: ['Vizor', 'Zodl', 'Zashi'],
   addedAt: UnixTime.fromDate(new Date('2026-09-15')),
   statuses: {
     yellowWarning:
-      'This route has no Ethereum contracts. Real-time monitoring is not supported. The ratings cover Zodl 3.15.0. The App Store serves [3.20.0](https://apps.apple.com/us/app/zodl-zcash-wallet/id1672392439) since November 9, 2026, and its source is not public. It makes a new server mode called Private the default, which ETHBEAT has not reviewed.',
+      'This route has no Ethereum contracts. Real-time monitoring is not supported.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -25,7 +30,7 @@ export const zcashNearIntents: BaseProject = {
   },
   display: {
     description:
-      'A shielded ledger round trip: Zodl swaps Ethereum funds into shielded ZEC and back through NEAR Intents, which custodies the Ethereum side.',
+      'A shielded ledger round trip: Vizor swaps Ethereum funds into shielded ZEC and back through NEAR Intents, which custodies the Ethereum side.',
     detailedDescription: readProjectMarkdown(
       'zcash-near-intents',
       'detailedDescription',
@@ -34,7 +39,7 @@ export const zcashNearIntents: BaseProject = {
       websites: [
         'https://near-intents.org',
         'https://z.cash',
-        'https://zodl.com',
+        'https://vizor.cash',
       ],
       documentation: [
         'https://docs.near-intents.org',
@@ -50,9 +55,9 @@ export const zcashNearIntents: BaseProject = {
         'https://github.com/Near-One/btc-bridge',
         'https://github.com/Near-One/btc-light-client-contract',
         'https://github.com/defuse-protocol/defuse-frontend',
-        'https://github.com/zodl-inc/zodl-ios',
+        'https://github.com/chainapsis/vizor-wallet',
       ],
-      socialMedia: ['https://x.com/near_intents', 'https://x.com/zodl_app'],
+      socialMedia: ['https://x.com/near_intents'],
       other: [
         'https://docs.near-intents.org/security-compliance/terms-of-service',
         'https://docs.near-intents.org/security-compliance/risk-and-compliance',
@@ -64,16 +69,32 @@ export const zcashNearIntents: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
-      name: 'Zodl',
-      url: 'https://zodl.com',
-      since: '2026-09-16',
-      delivery: { type: 'latestOnly', store: 'App Store' },
-      version: '3.15.0',
+      name: 'Vizor for Linux',
+      url: 'https://github.com/chainapsis/vizor-wallet/releases/tag/release/v0.0.64',
+      since: '2026-11-18',
+      delivery: {
+        type: 'pinned',
+        pin: {
+          type: 'sha256',
+          file: 'Vizor-linux-x86_64.AppImage',
+          hash: 'f325fc38917fcce2c22460145980abb9231e9d732810de621fba3d247a8f782c',
+        },
+      },
+      version: '0.0.64',
       source: {
-        repository: 'https://github.com/zodl-inc/zodl-ios',
-        commit: '75b83d7601573e165e2dacdfaffb69750dadd05f',
+        repository: 'https://github.com/chainapsis/vizor-wallet',
+        commit: '43c1b3467fc00c630fcd7eb8e8070b8b4d409596',
       },
       checkedApps: [
+        {
+          name: 'Zodl',
+          icon: 'zodl',
+          finding:
+            "Each sync sends the account's transparent addresses to its lightwalletd, Zodl's own by default, which can tie the payout and exit to the account.",
+          fix: 'Fetch account records through private information retrieval, as Vizor does.',
+          source:
+            'https://github.com/zodl-inc/slipstream/blob/80f95741896543a22262182ab37a5a05d484d2e7/core/src/engine.rs#L360-L392',
+        },
         // Next finding once this one is fixed: Mixpanel gets the wallet address,
         // deposit tx hashes and withdrawal intent hashes, and Sentry tags each
         // user with the wallet address (defuse-frontend 594085d,
@@ -84,7 +105,7 @@ export const zcashNearIntents: BaseProject = {
           icon: 'near-intents',
           finding:
             'Every swap runs through an account named after the connected wallet, whose one ZEC deposit address links all its round trips publicly.',
-          fix: 'Swap through a fresh 1Click deposit address per quote, as Zodl does.',
+          fix: 'Swap through a fresh 1Click deposit address per quote, as Vizor does.',
           source:
             'https://github.com/defuse-protocol/defuse-frontend/blob/594085d3c7e60ce912fb62b768b12f46c4917510/src/components/DefuseSDK/features/deposit/components/DepositUIMachineProvider.tsx#L112-L121',
         },
@@ -95,7 +116,7 @@ export const zcashNearIntents: BaseProject = {
             "Its built-in Tor skips the Zcash wallet, so the lightwalletd server gets each transaction it sends with the user's IP.",
           fix: "Route the Zcash wallet's lightwalletd connections through the built-in Tor.",
           source:
-            'https://github.com/cake-tech/cake_wallet/blob/196f5a15a9f180602767c56968dcb30114d0b15e/cw_zcash/lib/src/zcash_wallet.dart#L155-L179',
+            'https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/cw_zcash/lib/src/zcash_wallet.dart#L176-L200',
         },
         {
           name: 'Brave Wallet',
@@ -110,10 +131,10 @@ export const zcashNearIntents: BaseProject = {
           name: 'Unstoppable Wallet',
           icon: 'unstoppable',
           finding:
-            "Routes every swap through Unstoppable's own server, which records each leg's payout and refund addresses and deposit transaction hash.",
-          fix: 'Request quotes and report deposits to the 1Click API directly.',
+            "Pays NEAR swaps into ZEC only to a transparent address, by default the account's own, which links its swaps publicly.",
+          fix: 'Pay each swap to a fresh shielded address, as Vizor does.',
           source:
-            'https://github.com/horizontalsystems/unstoppable-wallet-android/blob/d6661c8d0dc02d259767f58b7cd73cabb877da18/walletkit/src/main/java/io/horizontalsystems/walletkit/modules/multiswap/providers/USwapProvider.kt#L1375-L1399',
+            'https://github.com/horizontalsystems/unstoppable-wallet-android/blob/be15af281efe5ab5b1c3ee38efd0814f8ec2c2da/walletkit/src/main/java/io/horizontalsystems/walletkit/modules/multiswap/providers/USwapProvider.kt#L754-L767',
         },
         {
           name: 'Zkool',
@@ -135,9 +156,7 @@ export const zcashNearIntents: BaseProject = {
         "The set is Zcash's shielded pool, outside the chains ETHBEAT indexes. Amounts are public at the pool edge, so an exit hides among the pool entries that could match it in amount and time.",
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The NEAR Intents multisig upgrades the Verifier and the Rainbow Bridge multisig the Zcash bridge, both instantly. The Ethereum funds sit in an EOA the operator controls.',
       walkawayTest: {
@@ -147,10 +166,9 @@ export const zcashNearIntents: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
-        "The Verifier, the bridge token, the Zcash bridge and Zodl are open source, but Zodl's App Store builds cannot be rebuilt from that source. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
+        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's desktop releases do not claim byte-for-byte rebuilds. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,
@@ -159,7 +177,7 @@ export const zcashNearIntents: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zcashNearIntentsAdversaries,
-    riskSummary: readProjectMarkdown('zcash-near-intents', 'riskSummary'),
+    riskSummary: zcashNearIntentsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zcash-near-intents',

@@ -196,6 +196,20 @@
   "overrides": [
     {
       "includes": [
+        "**/vite.config.mts",
+        "**/playwright.config.ts",
+        "**/*.d.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
         "**/test/**/*.ts",
         "**/test/**/*.tsx",
         "**/*.test.ts",

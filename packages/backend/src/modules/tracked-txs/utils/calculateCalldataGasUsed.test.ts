@@ -102,13 +102,8 @@ describe(calculateCalldataGasUsed.name, () => {
       }),
     )
 
-    // All bytes are zero bytes in this case
-    const standardCalldata = 4 * dataLength
-    const compute = gasUsed - standardCalldata - 21000
-
-    expect(result).toEqual(
-      compute >= 1.5 * standardCalldata ? standardCalldata : 10 * dataLength,
-    )
+    // compute = 30,000 - 4 * 50 - 21,000 covers 1.5x the standard cost
+    expect(result).toEqual(4 * 50)
   })
 
   it('handles edge case with all non-zero bytes', () => {
@@ -127,13 +122,8 @@ describe(calculateCalldataGasUsed.name, () => {
       }),
     )
 
-    // All bytes are non-zero bytes in this case
-    const standardCalldata = 16 * dataLength
-    const compute = gasUsed - standardCalldata - 21000
-
-    expect(result).toEqual(
-      compute >= 1.5 * standardCalldata ? standardCalldata : 40 * dataLength,
-    )
+    // compute = 30,000 - 16 * 50 - 21,000 covers 1.5x the standard cost
+    expect(result).toEqual(16 * 50)
   })
 
   it('keeps pre-Glamsterdam rules while Glamsterdam is not scheduled', () => {

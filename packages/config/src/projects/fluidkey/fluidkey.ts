@@ -1,12 +1,17 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { fluidkeyAdversaries } from './adversaries'
+import { fluidkeyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('fluidkey')
 
@@ -52,9 +57,9 @@ export const fluidkey: BaseProject = {
       url: 'https://app.fluidkey.com',
       since: '2026-10-13',
       delivery: { type: 'hosted' },
-      // Expo web entry bundle of the served app, which shows version 1.79.0w.
-      build: 'entrypoint-4e96d22bc2e1da30a73f944178391185',
-      checked: '2026-11-11',
+      // Expo web entry bundle of the served app, which shows version 1.79.5w.
+      build: 'entrypoint-77ace9b9b65d7dc8cdf54db0e9150210',
+      checked: '2026-11-18',
     },
     trackedOn: [
       'ethereum',
@@ -73,9 +78,7 @@ export const fluidkey: BaseProject = {
         'Fluidkey sends funds to individual stealth Safes instead of mixing deposits in a shared pool.',
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         "The user's funds sit in Safes controlled only by their keys. The open recovery app finds them and Eternal Safe withdraws them, both without Fluidkey. Money in auto-earn vaults follows the vaults' withdrawal rules.",
       walkawayTest: {
@@ -85,8 +88,7 @@ export const fluidkey: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The web and mobile apps are closed source. The open stealth account kit and recovery app derive keys, verify addresses and recover funds without Fluidkey. The API, ENS gateway, indexer and relayer are closed.',
     },
@@ -101,7 +103,7 @@ export const fluidkey: BaseProject = {
         description: 'Interop with DeFi vaults through stealth Safes.',
       },
     ],
-    riskSummary: readProjectMarkdown('fluidkey', 'riskSummary'),
+    riskSummary: fluidkeyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),
     },

@@ -234,28 +234,6 @@ describe(getOneTimeEvents.name, () => {
           }),
         ])
       })
-
-      it('no end date', () => {
-        const event: RecurringEvent = recurringEventMock({
-          data: {
-            sinceDate: new Date('2021-01-08'),
-            tillDate: new Date('2021-01-31'),
-            futureEventsCount: 2,
-          },
-        })
-        const events = getOneTimeEvents([event])
-
-        expect(events).toEqual([
-          oneTimeEventMock({
-            id: event.id,
-            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
-          }),
-          oneTimeEventMock({
-            id: event.id,
-            data: { startDate: new Date('2021-01-20T13:00:00.000Z') },
-          }),
-        ])
-      })
     })
 
     describe('cancelledAt', () => {

@@ -157,6 +157,41 @@
       "category": "stablecoin"
     },
     {
+      // Yuzu Confidential Yield vault; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "yzPRVT",
+      "address": "0xC15bBF1Ad6129859628d06115a64581006EC62aC",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Saturn Confidential Tokenized Equity Vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "satcUSDC",
+      "address": "0x7F876BF31089A8D13ccF8F1158Ef7bFecA2dDF94",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Re7 Confidential Ondo USDC vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "re7coUSDC",
+      "address": "0x181E5738D593CE29CcDC91bC562D45da3c480796",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Ember Earn vault; not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "eEARN",
+      "address": "0x9be9294722f8AAd37b11a9792Be2C782182caFA2",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Bitwise Premium+ vault (Ember); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "PPLUS",
+      "address": "0xbc5d3722376d44f3bC316C6EA61C9Bd553Be8CBe",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
@@ -5287,6 +5322,7 @@
       "symbol": "alETH",
       "address": "0x3e29d3a9316dab217754d13b28646b76607c5f04",
       "coingeckoId": "alchemix-eth",
+      "deploymentTimestamp": 1663113600,
       "category": "ether",
       "source": "external",
       "supply": "totalSupply",
@@ -6706,6 +6742,7 @@
       "symbol": "FLUID",
       "address": "0x61e030a56d33e8260fdd81f03b162a79fe3449cd",
       "coingeckoId": "instadapp",
+      "deploymentTimestamp": 1746090553,
       "category": "other",
       "source": "external",
       "supply": "totalSupply",
@@ -6731,6 +6768,7 @@
       "symbol": "LAPTOP",
       "address": "0xb095274743941e953c746f9c228da9c18bb6ec29",
       "coingeckoId": "hunter-biden-s-laptop-3",
+      "deploymentTimestamp": 1788962400,
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"

@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xa7ce0d2568266968e6dedb83532ccbd6e7fdf19e
+
+# Diff at Mon, 23 Nov 2026 13:15:15 GMT:
+
+- id: b38ff126
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794986377
+- current timestamp: 1795438946
+
+## Description
+
+The Katana Foundation Engineering/Security Multisig added one signer and swapped two, on L1 and L2. It is now 2 of 6.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x0Acac1D1c7536378542ca783d7FcaF37348A378d"
+      values.$members.2:
+-        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "eth:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+      values.$members.3:
+-        "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC"
++        "eth:0x14E7737b48D7783d551C5cf516a6B65f309d3741"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x6b7a0a2eea054e38a0a5bfc61b3911847e15af05
+
+# Diff at Wed, 18 Nov 2026 08:06:35 GMT:
+
+- id: da9c368f
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa80c425ecedcb44587e1b61eab58150a95b0145 block: 1794320161
+- current timestamp: 1794986377
+
+## Description
+
+PolygonMultisig2, which maps new tokens in the RootChainManager, swapped two signers and added one. The threshold is unchanged, now 4 of 13.
+
+## Watched changes
+
+```diff
+    contract PolygonMultisig2 (eth:0x424bDE99FCfB68c5a1218fd3215caFfD031f19C4) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xfB948CB3fE208fd067d36768B2bACd5dCF886066"
+      values.$members.4:
+-        "eth:0x6Ab87a62E250A5EB09a53Fca832B9Bda480c3890"
++        "eth:0x5F050BECf0746E4E95C4dB3254eA0E9a56268C0d"
+      values.$members.7:
+-        "eth:0x6B2Ba82994A1606605af1F11E50DA0b2B0cee6e6"
++        "eth:0xb20d2bA1C74744a0Df7852f62BF802AbC8e4d91E"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 13 (31%)"
+    }
+```
+
 Generated with discovered.json: 0x49a3b25e66fa11a28b631b577ea581fed2e83546
 
 # Diff at Tue, 10 Nov 2026 14:29:54 GMT:

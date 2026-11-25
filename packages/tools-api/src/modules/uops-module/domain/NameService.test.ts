@@ -15,36 +15,70 @@ import type { CodeClient } from './RpcCodeClient'
 
 describe(NameService.name, () => {
   describe(NameService.prototype.fillNames.name, () => {
-    it('should fill method and contract names', async () => {
-      const mockBlock: CountedBlock = mockObject<CountedBlock>({
-        transactions: [
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>(),
-          }),
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>(),
-          }),
-        ],
+    it('names every transaction with details and skips the rest', async () => {
+      const knownNames = createKnownNames({
+        methods: new Map([['selector1', 'name1']]),
+        contracts: new Map([['address1', 'Contract1']]),
+        implementations: new Map([['hash1', 'Safe']]),
+      })
+      const codeClient = mockObject<CodeClient>({
+        getCodeHash: mockFn().resolvesTo('hash1'),
+      })
+      const details: CountedOperation = {
+        id: '1',
+        level: 0,
+        methodSelector: 'selector1',
+        contractAddress: 'address1',
+        count: 1,
+        children: [],
+      }
+      const named: CountedTransaction = {
+        from: '0xabc',
+        type: 'EIP-712',
+        hash: '0x1',
+        operationsCount: 1,
+        details,
+      }
+      const skipped: CountedTransaction = {
+        from: '0xdef',
+        type: 'EIP-712',
+        hash: '0x2',
+        operationsCount: 0,
+      }
+      const laterDetails: CountedOperation = {
+        id: '2',
+        level: 0,
+        methodSelector: 'selector1',
+        contractAddress: 'address1',
+        count: 1,
+        children: [],
+      }
+      const laterNamed: CountedTransaction = {
+        from: '0x123',
+        type: 'EIP-712',
+        hash: '0x3',
+        operationsCount: 1,
+        details: laterDetails,
+      }
+      const block = mockObject<CountedBlock>({
+        transactions: [named, skipped, laterNamed],
       })
 
-      const nameService = createNameService()
+      const nameService = createNameService(
+        knownNames,
+        undefined,
+        undefined,
+        codeClient,
+      )
+      await nameService.fillNames(block)
 
-      const fillMethodNamesMock =
-        mockFn<(operation: CountedOperation) => Promise<void>>().resolvesTo()
-      nameService.fillMethodNames = fillMethodNamesMock
-
-      const fillContractNamesMock =
-        mockFn<(operation: CountedOperation) => Promise<void>>().resolvesTo()
-      nameService.fillContractNames = fillContractNamesMock
-
-      const fillImplementationNameMock =
-        mockFn<(tx: CountedTransaction) => Promise<void>>().resolvesTo()
-      nameService.fillImplementationName = fillImplementationNameMock
-
-      await nameService.fillNames(mockBlock)
-      expect(fillContractNamesMock).toHaveBeenCalledTimes(2)
-      expect(fillMethodNamesMock).toHaveBeenCalledTimes(2)
-      expect(fillImplementationNameMock).toHaveBeenCalledTimes(2)
+      expect(named.type).toEqual('EIP-712 (Safe)')
+      expect(details.methodName).toEqual('name1')
+      expect(details.contractName).toEqual('Contract1')
+      expect(skipped.type).toEqual('EIP-712')
+      expect(laterNamed.type).toEqual('EIP-712 (Safe)')
+      expect(laterDetails.methodName).toEqual('name1')
+      expect(laterDetails.contractName).toEqual('Contract1')
     })
   })
 

@@ -31,6 +31,8 @@ describe(getEtherFiReads.name, () => {
       exchangeRate: (105n * ETH) / 100n,
       lastRequestId: 100,
       lastFinalizedRequestId: 90,
+      retiredLastRequestId: null,
+      retiredLastFinalizedRequestId: null,
       instantExitEth: null,
       instantExitFeeBps: null,
       lockTime: null,

@@ -11,8 +11,9 @@ import type { PrivacyExposureMap } from '../../types'
 const ZKMONEY_REPO =
   'https://github.com/aztec-labs-eng/zkmoney-public/blob/00e54087526d6d89f1755958eb027e077184cd9a/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
+// aztec-packages v5.2.0
 const HANDSHAKE_REGISTRY =
-  'https://github.com/AztecProtocol/aztec-packages/blob/v5.2.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96'
+  'https://github.com/AztecProtocol/aztec-packages/blob/49a592109ec4f18d79212b43d621891aaf36f7b6/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L82-L96'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: {
@@ -137,7 +138,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureShort:
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims inside.',
       exposureContinued:
-        "The portal admits only enclaves whose attestation it verifies onchain and approved enclave images are immutable. The sUSDS portal's approved image is unpublished, as is its source. Aztec Labs' default Aztec node, like Alchemy under its key, sees an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+        "The portal admits only enclaves whose attestation it verifies onchain and approved enclave images are immutable. The sUSDS portal's approved image is unpublished, as is its source. Aztec Labs' default Aztec node, like Alchemy under its key, sees an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs, derives each deposit address paid through a name, so it knows the recipient.",
       interior: {
         ...INTERIOR,
         sender: {

@@ -8,6 +8,11 @@
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true
     },
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xaBfaf0d2D33499010575671D28358AF35e4f85ED": {
+      "ignoreDiscovery": true
+    },
     "eth:0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

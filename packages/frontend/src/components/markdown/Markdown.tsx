@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useMemo } from 'react'
 import { cn } from '~/utils/cn'
 import { createMarkdown } from '~/utils/markdown/createMarkdown'
 import {
@@ -48,13 +48,19 @@ export function Markdown(props: MarkdownProps) {
   const rendered = render(
     props.ignoreGlossary ? props.children : linkTerms(props.children),
   )
-  const collapsed = processCollapsibleText(rendered)
+  const collapsed = processCollapsibleText(
+    rendered,
+    `${glossaryDescriptionIdPrefix}collapsible`,
+  )
+  // React rewrites innerHTML whenever this object is new, which would wipe
+  // the glossary tooltips on every render.
+  const innerHtml = useMemo(() => ({ __html: collapsed }), [collapsed])
 
   return (
-    <GlossaryTooltipWrapper>
+    <GlossaryTooltipWrapper html={collapsed}>
       <Comp
         className={cn('mdc', props.className)}
-        dangerouslySetInnerHTML={{ __html: collapsed }}
+        dangerouslySetInnerHTML={innerHtml}
       />
     </GlossaryTooltipWrapper>
   )
@@ -65,11 +71,13 @@ export function Markdown(props: MarkdownProps) {
  * Format: [label: hidden content]
  * Uses the native <details> and <summary> elements with Tailwind classes
  */
-function processCollapsibleText(markdown: string): string {
+function processCollapsibleText(markdown: string, idPrefix: string): string {
   const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g
 
+  let index = 0
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
-    const uniqueId = useId()
+    const uniqueId = `${idPrefix}-${index}`
+    index++
     return `<button class="inline whitespace-nowrap text-secondary bg-surface-secondary rounded px-1 text-sm cursor-pointer select-none hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-divider" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

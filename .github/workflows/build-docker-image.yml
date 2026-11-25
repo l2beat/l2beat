@@ -80,4 +80,5 @@ jobs:
           secrets: |
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
             TURBO_API=${{ secrets.TURBO_API }}
+          pull: true
           no-cache: true

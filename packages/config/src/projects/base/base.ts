@@ -266,7 +266,7 @@ export const base: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://developer-access-mainnet.base.org',
+        url: 'https://mainnet.base.org',
         callsPerMinute: 300,
       },
       { type: 'etherscan', chainId },

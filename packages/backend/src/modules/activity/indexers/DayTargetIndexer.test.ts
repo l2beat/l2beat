@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../../tools/Clock'
 import { DayTargetIndexer } from './DayTargetIndexer'
 
@@ -23,17 +23,17 @@ describe(DayTargetIndexer.name, () => {
   })
 
   describe(DayTargetIndexer.prototype.tick.name, () => {
-    it('returns the number of day', async () => {
+    it('returns the day of the clock, which is the last full day', async () => {
       const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
+        getLastHour: () => UnixTime.fromDate(new Date('2026-10-28T13:00:00Z')),
       })
+      const onTick = mockFn().resolvesTo(undefined)
 
-      const indexer = new DayTargetIndexer(Logger.SILENT, clock)
+      const indexer = new DayTargetIndexer(Logger.SILENT, clock, { onTick })
 
-      const result = await indexer.tick()
-
-      expect(result).toEqual(
-        UnixTime.toDays(UnixTime.toStartOf(LAST_HOUR, 'day')),
+      expect(await indexer.tick()).toEqual(20_754)
+      expect(onTick).toHaveBeenOnlyCalledWith(
+        UnixTime.fromDate(new Date('2026-10-28T00:00:00Z')),
       )
     })
   })

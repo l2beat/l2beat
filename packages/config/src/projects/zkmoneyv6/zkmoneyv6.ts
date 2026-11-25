@@ -11,6 +11,10 @@ import { utils } from 'ethers'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -23,6 +27,7 @@ import type {
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyV6Adversaries } from './adversaries'
+import { zkMoneyV6RiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkmoneyv6')
 
@@ -389,22 +394,22 @@ export const zkmoneyv6: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'zk.money Desktop',
-      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.12.0',
+      url: 'https://github.com/aztec-labs-eng/zkmoney-public/releases/tag/desktop-v0.13.0',
       since: '2026-10-28',
       delivery: {
         type: 'pinned',
         pin: {
           type: 'sha256',
           file: 'zkmoney-desktop-linux-x86_64.AppImage',
-          hash: '4f6b4c4a6ec70b594ad1aec35122513e1a0e9e28f777f58b249d3d3ca26714db',
+          hash: 'b19141c64915ca567a9da4ff029a8fe8d844147ed284dededf6ce17cf534c03d',
         },
         rebuild:
-          'https://github.com/aztec-labs-eng/zkmoney-public/blob/c055ea1ca641d64256855d03802c927b0b1d3ad1/.github/workflows/release-desktop.yml',
+          'https://github.com/aztec-labs-eng/zkmoney-public/blob/516d90660400aee97166376ba69c5b61ce82a7e4/.github/workflows/release-desktop.yml',
       },
-      version: '0.12.0',
+      version: '0.13.0',
       source: {
         repository: 'https://github.com/aztec-labs-eng/zkmoney-public',
-        commit: 'c055ea1ca641d64256855d03802c927b0b1d3ad1',
+        commit: '516d90660400aee97166376ba69c5b61ce82a7e4',
       },
       checkedApps: [
         {
@@ -414,7 +419,7 @@ export const zkmoneyv6: BaseProject = {
             "Runs whatever code Aztec Labs' server sends on each visit, so a changed build could read the user's viewing keys.",
           fix: 'Serve each build under an onchain pin, such as an ENS contenthash, so every code change shows onchain.',
           source: 'https://wallet.zk.money',
-          checked: '2026-11-11',
+          checked: '2026-11-18',
         },
       ],
     },
@@ -449,9 +454,7 @@ export const zkmoneyv6: BaseProject = {
     tokens: privacyTokens,
     zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description: 'The escrow and the approved enclave image are immutable.',
       walkawayTest: {
         passed: false,
@@ -460,8 +463,7 @@ export const zkmoneyv6: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The Ethereum contracts, the wallet, the enclave and the circuit sources are public. The refund and resolver verifiers, the L2 contracts, the approved enclave image and the Desktop app reproduce from them. The resolver and account services are unpublished. The hosted wallet runs a build absent from the public source.',
     },
@@ -472,7 +474,7 @@ export const zkmoneyv6: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zkMoneyV6Adversaries,
-    riskSummary: readProjectMarkdown('zkmoneyv6', 'riskSummary'),
+    riskSummary: zkMoneyV6RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoneyv6',

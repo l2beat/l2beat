@@ -6,6 +6,7 @@ import {
   type Hex,
   parseAbi,
 } from 'viem'
+import { formatError } from '../../../utils/formatError'
 import type { RpcClientConfig } from './types'
 
 const DECIMALS_ABI = parseAbi(['function decimals() view returns (uint8)'])
@@ -45,7 +46,7 @@ export class RpcClient {
       if (error instanceof Error) {
         return {
           success: false,
-          error: error.message,
+          error: formatError(error),
         }
       }
       return {
@@ -67,9 +68,9 @@ export class RpcClient {
     const result = await this.call(callData, 'latest')
 
     if (result === '0x') {
-      throw new Error(
-        `Could not get decimals for token ${address} for URL ${this.config.url}`,
-      )
+      throw new Error('Could not get decimals for token', {
+        cause: { address, url: this.config.url },
+      })
     }
 
     const decimals = Number(
@@ -81,9 +82,9 @@ export class RpcClient {
     )
 
     if (Number.isNaN(decimals)) {
-      throw new Error(
-        `Invalid decimals response for token ${address} for URL ${this.config.url}: ${result}`,
-      )
+      throw new Error('Invalid decimals response for token', {
+        cause: { address, url: this.config.url, result },
+      })
     }
 
     return decimals
@@ -101,9 +102,9 @@ export class RpcClient {
     const result = await this.call(callData, 'latest')
 
     if (result === '0x') {
-      throw new Error(
-        `Could not get symbol for token ${address} for URL ${this.config.url}`,
-      )
+      throw new Error('Could not get symbol for token', {
+        cause: { address, url: this.config.url },
+      })
     }
 
     try {
@@ -114,9 +115,9 @@ export class RpcClient {
       })
 
       if (!symbol) {
-        throw new Error(
-          `Invalid symbol response for token ${address} for URL ${this.config.url}: ${result}`,
-        )
+        throw new Error('Invalid symbol response for token', {
+          cause: { address, url: this.config.url, result },
+        })
       }
 
       return symbol
@@ -134,9 +135,9 @@ export class RpcClient {
       .replace(/\0+$/g, '')
 
     if (!symbol) {
-      throw new Error(
-        `Invalid symbol response for token ${address} for URL ${this.config.url}: ${result}`,
-      )
+      throw new Error('Invalid symbol response for token', {
+        cause: { address, url: this.config.url, result },
+      })
     }
 
     return symbol
@@ -199,18 +200,21 @@ export class RpcClient {
     })
 
     if (!response.ok) {
-      throw new Error(
-        `RPC call failed: ${response.status} ${response.statusText}`,
-      )
+      throw new Error('RPC call failed', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const data = await response.json()
     const envelope = RpcEnvelopeSchema.parse(data)
 
     if (envelope.error) {
-      throw new Error(
-        `RPC error: ${envelope.error.code} - ${envelope.error.message}`,
-      )
+      throw new Error('RPC returned an error', {
+        cause: {
+          code: envelope.error.code,
+          message: envelope.error.message,
+        },
+      })
     }
 
     return resultSchema.parse(envelope.result)

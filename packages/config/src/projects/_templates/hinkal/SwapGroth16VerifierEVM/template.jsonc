@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "Stateless Groth16 verifier generated for one Hinkal circuit of transactions through a swap external action, with the verification key hardcoded. The name gives the transaction shape: tokens x nullifiers x outputs."
+}

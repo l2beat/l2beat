@@ -29,7 +29,9 @@ describe(RpcCounter.name, () => {
       const mockBlock: Block = createBlock(1)
 
       const expectedResult: CountedBlock = {
-        ...mockBlock,
+        number: mockBlock.number,
+        timestamp: mockBlock.timestamp,
+        hash: mockBlock.hash,
         status: '<unknown>',
         transactions: [
           {
@@ -55,6 +57,28 @@ describe(RpcCounter.name, () => {
 
       const result = counter.countForBlock(mockBlock)
       expect(result).toEqual(expectedResult)
+    })
+
+    // Why: the response goes through JSON.stringify, which throws on bigint.
+    // RPC blocks carry bigint fields such as baseFeePerGas, so leaking any
+    // of them into the counted block broke /api/uops/block for every EVM
+    // chain. How: feed a block shaped like the RPC client returns it.
+    it('returns a block that serializes to JSON when the RPC block has bigint fields', () => {
+      const rpcBlock = { ...createBlock(1), baseFeePerGas: 1_000_000_000n }
+
+      const result = new RpcCounter().countForBlock(rpcBlock)
+
+      expect(() => JSON.stringify(result)).not.toThrow()
+    })
+
+    // Why: nodes that predate EIP-2718, such as Metis, leave `type` out of
+    // legacy transactions, and the block view must still load for them.
+    it('labels a transaction without a type as legacy', () => {
+      const tx = { from: 'tx.from', to: 'tx.to', hash: 'tx.hash', data: '0x' }
+
+      const result = new RpcCounter().mapTransaction(tx)
+
+      expect(result.type).toEqual('Legacy')
     })
   })
 

@@ -64,6 +64,10 @@ const CommandDialog = ({
           // A palette, often opened from the keyboard: it opens quickly and
           // gets out of the way faster.
           'overflow-hidden p-0 ease-out-quint data-[state=closed]:duration-100 data-[state=open]:duration-150 max-md:border-none md:top-1/4 md:max-w-lg',
+          // Centred on a quarter of the height, a ~350px palette rises above
+          // the top edge of short viewports (phones in landscape), so there
+          // it is centred instead, and its list shrinks to fit what's left.
+          'md:max-h-[calc(100dvh-2rem)] md:grid-rows-[minmax(0,1fr)] md:[@media(max-height:768px)]:top-1/2',
           !fullScreenMobile && 'max-md:top-1/3',
           contentClassName,
         )}

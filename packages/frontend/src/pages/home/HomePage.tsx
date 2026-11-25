@@ -8,6 +8,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
+import type { HomeLiquidStaking } from '~/server/features/home/getHomeLiquidStaking'
 import type { HomePrivacyData } from '~/server/features/home/getHomePrivacyData'
 import { cn } from '~/utils/cn'
 import { HomeCropsBanner } from './components/HomeCropsBanner'
@@ -31,6 +32,7 @@ interface Props extends AppLayoutProps {
   topL2Projects: HomeTopL2Project[]
   privacy: HomePrivacyData
   ethereumCharts: HomeEthereumCharts
+  liquidStaking: HomeLiquidStaking | undefined
   interop: ComponentProps<typeof HomeInteropSection>
   recentProjects: HomeRecentProject[]
   recentChanges: { count: number; projects: HomeStackedIcon[] }
@@ -45,6 +47,7 @@ export function HomePage({
   topL2Projects,
   privacy,
   ethereumCharts,
+  liquidStaking,
   interop,
   recentProjects,
   recentChanges,
@@ -121,6 +124,7 @@ export function HomePage({
                     <div className="flex home-wide:contents min-w-0 flex-col max-lg:contents md:gap-4">
                       <HomeEthereumCard
                         charts={ethereumCharts}
+                        liquidStaking={liquidStaking}
                         className="home-wide:[grid-area:ethereum]"
                       />
                       {/* The phones' mandate, between Ethereum and Interop. */}
