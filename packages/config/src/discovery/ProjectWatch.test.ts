@@ -30,6 +30,9 @@ describe(ProjectWatch.name, () => {
   it('throws for a missing key or a project without watched.json', () => {
     const watch = new ProjectWatch('near', projects)
     expect(() => watch.getValue('missing')).toThrow('Watched value not found')
+    expect(() => watch.getValue('constructor')).toThrow(
+      'Watched value not found',
+    )
     expect(() => new ProjectWatch('empty', projects)).toThrow(
       'Project has no watched.json',
     )

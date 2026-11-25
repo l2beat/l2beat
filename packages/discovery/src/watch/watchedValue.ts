@@ -37,6 +37,8 @@ export function sortDeep(value: json): json {
       assert(isJsonObject(target))
       for (const key of Object.keys(source).sort()) {
         assert(!key.includes('\n'), 'Watched key with a newline', { key })
+        // Assigning it would set the copy's prototype instead of a key.
+        assert(key !== '__proto__', 'Watched key named __proto__')
         const child = source[key]
         assert(child !== undefined, 'Watched value with undefined', { key })
         const copy = copyShallow(child)

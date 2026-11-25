@@ -25,7 +25,7 @@ export class ProjectWatch {
   }
 
   getValue<T>(key: string): T {
-    const value = this.values[key]
+    const value = Object.hasOwn(this.values, key) ? this.values[key] : undefined
     assert(value !== undefined, 'Watched value not found', {
       projectName: this.projectName,
       key,
