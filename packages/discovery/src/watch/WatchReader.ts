@@ -122,6 +122,7 @@ export class WatchReader {
   ): WatchDefinition {
     assert(key.length > 0, 'Empty watch key', { name })
     assert(!key.includes('\n'), 'Watch key with a newline', { name, key })
+    assert(!key.includes('\r'), 'Watch key with a newline', { name, key })
     assert(key !== '__proto__', 'Watch key named __proto__', { name })
     const template = Object.hasOwn(this.templates, entry.template)
       ? this.templates[entry.template]

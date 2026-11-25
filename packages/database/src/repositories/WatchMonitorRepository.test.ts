@@ -270,7 +270,7 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
     ).toEqual([])
   })
 
-  it('records failures with attemptConfigHash without erasing previous snapshot', async () => {
+  it('records a failure with its attempt config hash for a watch never observed', async () => {
     await repository.recordFailure(
       'broken',
       new Date(1_700_000_000 * 1000),
