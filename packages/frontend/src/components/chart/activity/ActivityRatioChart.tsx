@@ -1,4 +1,5 @@
 import { formatActivityCount } from '@l2beat/shared-pure'
+import type { Ref } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -7,7 +8,12 @@ import {
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import {
+  type ChartSeries,
+  type ChartXAxis,
+  TimeSeriesChart,
+  type TimeSeriesChartHandle,
+} from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 
 interface ActivityRatioChartDataPoint {
@@ -20,8 +26,14 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   isPlaceholderData: boolean
+  xAxis?: ChartXAxis
   /** The period a point covers, as its tooltip's title */
   formatPeriod: (timestamp: number) => string
+  /** As `TimeSeriesChart`'s, for the live view's steps sliding with the clock */
+  curve?: ChartSeries<'ratio'>['curve']
+  clip?: boolean
+  hover?: 'nearest' | 'before'
+  handleRef?: Ref<TimeSeriesChartHandle>
 }
 
 export function ActivityRatioChart({
@@ -29,7 +41,12 @@ export function ActivityRatioChart({
   isLoading,
   isPlaceholderData,
   syncedUntil,
+  xAxis,
   formatPeriod,
+  curve,
+  clip,
+  hover,
+  handleRef,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -57,6 +74,7 @@ export function ActivityRatioChart({
           {
             key: 'ratio',
             ...tinted(chartMeta.ratio.color),
+            curve,
           },
         ]}
         yAxis={{
@@ -64,7 +82,11 @@ export function ActivityRatioChart({
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
+        xAxis={xAxis}
         syncedUntil={syncedUntil}
+        clip={clip}
+        hover={hover}
+        handleRef={handleRef}
         renderTooltip={(row) => (
           <ActivityCustomTooltip row={row} formatPeriod={formatPeriod} />
         )}

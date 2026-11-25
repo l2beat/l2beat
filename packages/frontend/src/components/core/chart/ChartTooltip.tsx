@@ -148,6 +148,26 @@ export function ChartTooltipRow({
   )
 }
 
+/** What stands after a value in brackets, as its share. */
+export function ChartTooltipNote({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <span
+      className={cn(
+        'font-medium text-label-value-13 text-secondary sm:text-label-value-15',
+        className,
+      )}
+    >
+      {children}
+    </span>
+  )
+}
+
 /** A formatted value, or "No data". */
 export function ChartTooltipValue({
   value,

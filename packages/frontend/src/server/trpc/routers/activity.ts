@@ -1,4 +1,6 @@
 import { v as z } from '@l2beat/validate'
+import { TRPCError } from '@trpc/server'
+import { env } from '~/env'
 import {
   ActivityChartParams,
   getActivityChart,
@@ -13,6 +15,12 @@ import {
   getEthereumActivityChart,
 } from '~/server/features/layer2s/activity/getEthereumActivityChart'
 import { getRecategorisedActivityChart } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
+import {
+  getProjectLiveStatus,
+  getProjectLiveWindow,
+  ProjectLiveStatusParams,
+  ProjectLiveWindowParams,
+} from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import { ActivityProjectFilter } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import {
   withLiveActivity,
@@ -20,6 +28,14 @@ import {
 } from '~/server/features/layer2s/activity/withLiveActivity'
 import { ChartRange } from '~/utils/range/range'
 import { procedure, router } from '../trpc'
+
+/** With live activity off, nobody reads the stored blocks */
+const liveActivityProcedure = procedure.use(({ next }) => {
+  if (!env.CLIENT_SIDE_LIVE_ACTIVITY) {
+    throw new TRPCError({ code: 'NOT_FOUND' })
+  }
+  return next()
+})
 
 export const activityRouter = router({
   chart: procedure
@@ -53,4 +69,10 @@ export const activityRouter = router({
       }),
     )
     .query(({ input }) => getActivityChartStats(input.filter)),
+  liveStatus: liveActivityProcedure
+    .input(ProjectLiveStatusParams)
+    .query(({ input }) => getProjectLiveStatus(input.projectId)),
+  liveWindow: liveActivityProcedure
+    .input(ProjectLiveWindowParams)
+    .query(({ input }) => getProjectLiveWindow(input)),
 })
