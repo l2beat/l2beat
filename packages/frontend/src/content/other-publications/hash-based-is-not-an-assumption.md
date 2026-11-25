@@ -24,7 +24,7 @@ The problem is that **"hash-based" names a building block, not an assumption.** 
 
 These are not equivalent. A function can be one-way without being second-preimage-resistant, and second-preimage-resistant without being collision-resistant. Even that textbook trio is incomplete: real hash-based designs also rely on properties outside this ladder altogether, such as outputs looking indistinguishable from random.
 
-Replacing elliptic curves with a hash-based scheme is therefore not automatically a strict reduction in assumptions. Whenever a scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it (which is also why hybrid designs are worth examining): **if one of those new assumptions breaks before the elliptic-curve assumptions you dropped, the migration leaves you worse off.**
+Replacing elliptic curves with a hash-based scheme is therefore not automatically a strict reduction in assumptions. Whenever a scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks before the elliptic-curve assumptions you dropped, the migration leaves you worse off.**
 
 To see how quickly new hash assumptions appear, even before touching Ethereum's full stack, we start with the smallest possible illustration: comparing two hash-based signature schemes, **Lamport** and **Winternitz** (the core building block inside hash-based tree signatures like XMSS, [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`), on the same hash function $f$:
 
