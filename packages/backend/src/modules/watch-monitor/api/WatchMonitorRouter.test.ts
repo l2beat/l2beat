@@ -307,7 +307,6 @@ describe(createWatchMonitorRouter.name, () => {
       expect(body.watches.map((w) => w.name)).toEqual([
         'optimism',
         'private-repo',
-        'repointed-public',
       ])
       expect(body.watches.find((w) => w.name === 'optimism')?.judge).toEqual(
         'Alert on new audit PDFs.',
@@ -335,6 +334,14 @@ describe(createWatchMonitorRouter.name, () => {
           lastSuccessAt: null,
           lastError:
             'Stored watch snapshot is stale (watch.jsonc changed); awaiting refresh',
+        },
+        {
+          name: 'repointed-public',
+          kind: 'project',
+          lastAttemptAt: 1_700_000_000,
+          lastSuccessAt: 1_700_000_000,
+          lastError:
+            'Committed watched.json is stale (watch.jsonc changed); run l2b watch',
         },
         {
           name: 'stale-watch',

@@ -99,15 +99,26 @@ export class WatchMonitorController {
         continue
       }
       const committed = this.watchReader.readWatched(location.name)
-      const matchingCommitted =
-        committed !== undefined && committed.configHash === expectedConfigHash
-          ? committed
-          : undefined
-      const pending = computePendingWatchDiff(
-        location,
-        record,
-        matchingCommitted,
-      )
+      // Diffing against nothing would report the whole value as new, paired
+      // with the current judge.md.
+      if (
+        committed !== undefined &&
+        committed.configHash !== expectedConfigHash
+      ) {
+        const reported = record.lastError !== null && attemptMatches
+        if (!reported) {
+          failedWatches.push({
+            name: location.name,
+            kind: location.kind,
+            lastAttemptAt: attemptMatches ? record.lastAttemptAt : null,
+            lastSuccessAt: record.timestamp,
+            lastError:
+              'Committed watched.json is stale (watch.jsonc changed); run l2b watch',
+          })
+        }
+        continue
+      }
+      const pending = computePendingWatchDiff(location, record, committed)
       if (pending !== undefined) {
         watches.push({
           ...pending,
