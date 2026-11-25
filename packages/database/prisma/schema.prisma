@@ -176,6 +176,19 @@ model UpdateMonitor {
   @@id([projectId])
 }
 
+model WatchMonitor {
+  name                         String    @id @db.VarChar(255)
+  timestamp                    DateTime? @db.Timestamp(6)
+  valuesJsonBlob               Json?
+  isPublic                     Boolean   @default(false)
+  configHash                   String?   @db.VarChar(255)
+  pendingNotificationsJsonBlob Json?
+  lastAttemptAt                DateTime? @db.Timestamp(6)
+  lastAttemptId                String?   @db.VarChar(64)
+  lastAttemptConfigHash        String?   @db.VarChar(255)
+  lastError                    String?
+}
+
 model UpdateNotifier {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now()) @db.Timestamp(6)
