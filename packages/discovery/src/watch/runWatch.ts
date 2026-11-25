@@ -11,13 +11,11 @@ export async function runWatch(
   context: WatchContext,
 ): Promise<Watched> {
   const timestamp = UnixTime.now()
-  // Public watches must never receive private credentials (e.g. GITHUB_TOKEN).
+  // Public watches always run anonymously (never with private credentials such
+  // as GITHUB_TOKEN) so a newly-private repository can never be published.
   const templateContext: WatchContext = config.isPublic
     ? {
         http: context.http,
-        ...(context.publicGithubToken !== undefined
-          ? { githubToken: context.publicGithubToken }
-          : {}),
         publicOnly: true,
         ...(context.signal !== undefined ? { signal: context.signal } : {}),
       }

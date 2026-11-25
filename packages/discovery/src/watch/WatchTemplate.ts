@@ -5,7 +5,6 @@ import type { Validator, v } from '@l2beat/validate'
 export interface WatchContext {
   http: HttpClient
   githubToken?: string
-  publicGithubToken?: string
   /** Set automatically by `runWatch` when executing a watch marked `public: true`. */
   publicOnly?: boolean
   signal?: AbortSignal
