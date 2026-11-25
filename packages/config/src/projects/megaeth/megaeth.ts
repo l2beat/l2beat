@@ -280,4 +280,14 @@ export const megaeth: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
   nonTemplateZkVerifiers: getRisc0Verifiers(discovery),
+  milestones: [
+    {
+      title: 'ZK proof verification disabled',
+      url: 'https://etherscan.io/tx/0x3adeab8a452a2a59d6a6fb1359efe17f5192e3bf99e434f28e2a52627020a60c',
+      date: '2026-11-25T00:00:00Z',
+      description:
+        'The router owner EOA removes the last RISC Zero verifier route used by the Kailua games.',
+      type: 'general',
+    },
+  ],
 })
