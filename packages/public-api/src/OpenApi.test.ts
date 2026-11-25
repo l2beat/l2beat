@@ -341,6 +341,32 @@ describe(OpenApi.name, () => {
       ])
     })
 
+    // Why: a validator's own description names a shared component, so a
+    // parameter's text in the docs has to come from the route options.
+    it('adds parameter and error descriptions given by the route', () => {
+      const app = mockApp()
+      const openapi = new OpenApi(app, baseSchema)
+
+      openapi.get(
+        '/users/:id',
+        {
+          result: v.string(),
+          params: v.object({ id: v.string() }),
+          paramDescriptions: { id: 'User id or name' },
+          errors: { 404: v.object({ message: v.string() }) },
+          errorDescriptions: { 404: 'No user has this id or name' },
+        },
+        mockFn(),
+      )
+
+      const route = openapi.getOpenApiSchema().paths['/users/{id}']?.get
+
+      expect(route?.parameters[0]?.description).toEqual('User id or name')
+      expect(route?.responses[404]?.description).toEqual(
+        'No user has this id or name',
+      )
+    })
+
     it('includes 400 response when params or query are present', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)

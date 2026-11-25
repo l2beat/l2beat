@@ -10,10 +10,13 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   description?: string
   tags?: Tags[]
   params?: Validator<P> & { definition?: ImpDefinition }
+  paramDescriptions?: Record<string, string>
   query?: Validator<Q> & { definition?: ImpDefinition }
   result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
   errors?: Record<number, Validator<E> & { definition?: ImpDefinition }>
+  /** Overrides the generic text for an error status, e.g. to list the cases behind a 404 */
+  errorDescriptions?: Record<number, string>
 }
 
 type OpenApiPath = {
@@ -27,6 +30,7 @@ type OpenApiPath = {
 type OpenApiParameter = {
   name: string
   in: 'query' | 'path'
+  description?: string
   required: boolean
   schema: ReturnType<typeof _toJsonSchema>
 }
@@ -207,7 +211,11 @@ export class OpenApi {
             description: route.options.description,
             parameters: [
               ...(route.options.params
-                ? this.schemaToParameters('params', route.options.params)
+                ? this.schemaToParameters(
+                    'params',
+                    route.options.params,
+                    route.options.paramDescriptions,
+                  )
                 : []),
               ...(route.options.query
                 ? this.schemaToParameters('query', route.options.query)
@@ -253,9 +261,11 @@ export class OpenApi {
       const code = Number.parseInt(statusCode, 10)
       base[code] = {
         description:
-          httpResponsesDescriptions[
+          route.options.errorDescriptions?.[code] ??
+          (httpResponsesDescriptions[
             code as keyof typeof httpResponsesDescriptions
-          ] || `Error ${code}`,
+          ] ||
+            `Error ${code}`),
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(errorValidator),
@@ -270,6 +280,7 @@ export class OpenApi {
   private schemaToParameters<T>(
     type: 'params' | 'query',
     schema: Validator<T> & { definition?: ImpDefinition },
+    descriptions: Record<string, string> = {},
   ): OpenApiParameter[] {
     if (!schema.definition) {
       throw new Error('Schema definition is required')
@@ -281,6 +292,7 @@ export class OpenApi {
     return Object.entries(schema.definition.schema).map(([key, value]) => ({
       name: key,
       in: type === 'query' ? 'query' : 'path',
+      ...(descriptions[key] ? { description: descriptions[key] } : {}),
       required: value.definition.type !== 'optional',
       schema: this.toJsonSchemaWithRefs(value),
     }))

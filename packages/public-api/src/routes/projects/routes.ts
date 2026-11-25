@@ -1,10 +1,15 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
+import {
+  findProject,
+  PROJECT_ID_OR_SLUG_DESCRIPTION,
+  projectNotFoundDescription,
+} from '../../utils/findProject'
 import { getTokensData } from './getTokensData'
 import {
   ContractSchema,
@@ -43,21 +48,22 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/project/:projectId',
     {
-      summary: 'Get a project by ID',
+      summary: 'Get a project by id or slug',
       tags: ['projects'],
       params: v.object({
         projectId: v.string(),
       }),
+      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: DetailedProjectSchema,
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         optional: [
           'scalingInfo',
           'chainConfig',
@@ -69,9 +75,7 @@ export function addProjectsRoutes(
       })
 
       if (!project) {
-        res
-          .status(404)
-          .json({ message: `Project with id ${projectId} does not exist` })
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
@@ -102,21 +106,22 @@ export function addProjectsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
+      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: v.array(ContractSchema),
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         optional: ['chainConfig', 'contracts'],
       })
 
       if (!project) {
-        res.status(404).json()
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
@@ -152,21 +157,22 @@ export function addProjectsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
+      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: v.array(TokenSchema),
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         optional: ['tvsConfig'],
       })
 
       if (!project) {
-        res.status(404).json()
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
@@ -177,7 +183,7 @@ export function addProjectsRoutes(
 
       const data = await cache.get(
         {
-          key: ['projects', 'tokens', projectId],
+          key: ['projects', 'tokens', project.id],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
