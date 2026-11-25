@@ -116,18 +116,18 @@ export class WatchMonitor {
     const results = await this.workerPool.runInPool(tasks)
 
     const failedSet = new Set<string>()
+    const recordFailure = (name: string, message: string) =>
+      this.recordFailureAndLog(
+        name,
+        attemptAt,
+        attemptIds.get(name) ?? randomUUID(),
+        message,
+        attemptConfigHashes.get(name) ?? null,
+      )
     for (const taskError of results.errors) {
       const name = taskError.identity.id
       failedSet.add(name)
-      const attemptId = attemptIds.get(name) ?? randomUUID()
-      const configHash = attemptConfigHashes.get(name) ?? null
-      await this.db.watchMonitor.recordFailure(
-        name,
-        attemptAt,
-        attemptId,
-        taskError.error.message,
-        configHash,
-      )
+      await recordFailure(name, summarizeWatchError(taskError.error))
     }
 
     // Drain persisted transition alerts with bounded concurrency outside the
@@ -141,21 +141,14 @@ export class WatchMonitor {
         if (name === undefined) {
           return
         }
-        const deliveredAll = await this.drainQueuedNotifications(name)
-        if (!deliveredAll) {
-          if (!failedSet.has(name)) {
-            const attemptId = attemptIds.get(name) ?? randomUUID()
-            const configHash = attemptConfigHashes.get(name) ?? null
-            await this.db.watchMonitor.recordFailure(
-              name,
-              attemptAt,
-              attemptId,
-              'Watch notification failed',
-              configHash,
-            )
-          }
-          failedSet.add(name)
+        const deliveredAll = await this.drainAndLog(name)
+        if (deliveredAll) {
+          continue
         }
+        if (!failedSet.has(name)) {
+          await recordFailure(name, 'Watch notification failed')
+        }
+        failedSet.add(name)
       }
     }
     const drainWorkers = Array.from(
@@ -448,6 +441,40 @@ export class WatchMonitor {
     return true
   }
 
+  // One watch whose row cannot be written must not stop the others from
+  // draining: their alerts are already persisted and only wait to be sent.
+  private async recordFailureAndLog(
+    name: string,
+    attemptAt: Date,
+    attemptId: string,
+    message: string,
+    configHash: Hash256 | null,
+  ): Promise<void> {
+    try {
+      await this.db.watchMonitor.recordFailure(
+        name,
+        attemptAt,
+        attemptId,
+        message,
+        configHash,
+      )
+    } catch (error) {
+      this.logger.error('Watch failure not recorded', { watch: name, error })
+    }
+  }
+
+  private async drainAndLog(name: string): Promise<boolean> {
+    try {
+      return await this.drainQueuedNotifications(name)
+    } catch (error) {
+      this.logger.error('Watch notifications not drained', {
+        watch: name,
+        error,
+      })
+      return false
+    }
+  }
+
   private tryReadConfigHash(name: string): Hash256 | null {
     try {
       return hashWatchConfig(this.watchReader.readWatchConfig(name))
@@ -455,4 +482,23 @@ export class WatchMonitor {
       return null
     }
   }
+}
+
+const WATCH_ERROR_SUMMARY_LENGTH_MAX = 500
+
+// runWatch wraps the source error as 'Watch run failed' and keeps the key and
+// the original error in the cause. Without them a stored failure cannot tell
+// bad credentials from a source outage.
+export function summarizeWatchError(error: Error): string {
+  const parts = [error.message]
+  const cause: unknown = error.cause
+  if (typeof cause === 'object' && cause !== null) {
+    if ('key' in cause && typeof cause.key === 'string') {
+      parts.push(`key ${cause.key}`)
+    }
+    if ('error' in cause && cause.error instanceof Error) {
+      parts.push(cause.error.message)
+    }
+  }
+  return parts.join(': ').slice(0, WATCH_ERROR_SUMMARY_LENGTH_MAX)
 }
