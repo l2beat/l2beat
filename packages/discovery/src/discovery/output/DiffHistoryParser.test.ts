@@ -438,5 +438,29 @@ describe('DiffHistoryParser', () => {
       expect(entry.description).toEqual('just text, no diff sections.')
       expect(entry.sections).toEqual([])
     })
+
+    it('parses an offchain-changes section with its fenced body', () => {
+      const body = [
+        '```diff',
+        '    audits {',
+        '+     org/repo:docs/audit.pdf: {"sha":"abc","size":123}',
+        '    }',
+        '```',
+      ]
+      const md = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+        '## Offchain changes',
+        '',
+        ...body,
+        '',
+      ].join('\n')
+
+      expect(parser.parse(md)[0]!.sections).toEqual([
+        { kind: 'offchain-changes', body: body.join('\n') },
+      ])
+    })
   })
 })
