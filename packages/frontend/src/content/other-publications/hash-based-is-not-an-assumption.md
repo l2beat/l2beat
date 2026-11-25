@@ -26,7 +26,7 @@ These are not equivalent. A function can be one-way without being second-preimag
 
 Replacing elliptic curves with a hash-based scheme is therefore not automatically a strict reduction in assumptions. Whenever a scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks before the elliptic-curve assumptions you dropped, the migration leaves you worse off.**
 
-To see how quickly new hash assumptions appear, even before touching Ethereum's full stack, we start with the smallest possible illustration: comparing two hash-based signature schemes, **Lamport** and **Winternitz** (the core building block inside hash-based tree signatures like XMSS, [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`), on the same hash function $f$:
+To see how quickly new hash assumptions appear, even before touching Ethereum's full stack, we start with the most direct comparison: **Lamport**, the minimal hash-based one-time signature scheme, and **Winternitz**, the smallest efficiency improvement on top of it (and the core building block inside XMSS, [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`). Running both on the same hash function $f$:
 
 - **One-wayness alone is enough for Lamport.**
 - **One-wayness alone is provably *not* enough for Winternitz.** We'll build an explicit hash function that is one-way whenever SHA-256 is (so Lamport stays secure on it), yet lets an attacker forge Winternitz signatures 100% of the time.
