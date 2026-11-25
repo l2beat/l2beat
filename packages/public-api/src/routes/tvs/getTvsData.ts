@@ -45,37 +45,17 @@ export async function getTvsData(
     ethPrices.map((p) => [p.timestamp, p.priceUsd]),
   )
 
-  return generateTimestamps([fromTimestamp, maxTimestamp], resolution).map(
+  return generateTimestamps([fromTimestamp, maxTimestamp], resolution).flatMap(
     (timestamp: UnixTime) => {
       const record = groupedByTimestamp[timestamp]
-      // A timestamp without a record is missing data, not a TVS of zero
+      // A timestamp without a record is missing data, not a TVS of zero, so
+      // it gets no point
       if (!record) {
-        return createMissingRecord(timestamp)
+        return []
       }
       return mapRecord(record, ethPriceByTimestamp.get(timestamp) ?? null)
     },
   )
-}
-
-function createMissingRecord(timestamp: UnixTime): TvsResultItem {
-  return {
-    timestamp,
-    totalTvs: null,
-    bySource: {
-      native: null,
-      canonical: null,
-      external: null,
-    },
-    byCategory: {
-      stablecoins: null,
-      eth: null,
-      btc: null,
-      other: null,
-      publicRwa: null,
-      restrictedRwa: null,
-    },
-    ethPrice: null,
-  }
 }
 
 function mapRecord(
