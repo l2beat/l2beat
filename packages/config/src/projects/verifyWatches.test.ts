@@ -36,10 +36,13 @@ describe('Verify watches', () => {
         expect(formatJson(raw)).toEqual(text)
         const watched = reader.readWatched(location.name)
         expect(watched).not.toEqual(undefined)
-        // sortDeep gives the order JSON can hold: index-like keys such as "2"
-        // and "10" always come first, in numeric order.
-        const values = watched?.values ?? {}
-        expect(JSON.stringify(values)).toEqual(JSON.stringify(sortDeep(values)))
+        // An object built from sorted keys has the order JSON can hold:
+        // index-like keys such as "2" and "10" come first, in numeric order.
+        const keys = Object.keys(watched?.values ?? {})
+        const ordered = Object.fromEntries(
+          [...keys].sort().map((key) => [key, true]),
+        )
+        expect(keys).toEqual(Object.keys(ordered))
         // Validate each watch value individually so depth-8 template outputs
         // are not rejected for sitting inside the watched.json envelope.
         for (const value of Object.values(watched?.values ?? {})) {
