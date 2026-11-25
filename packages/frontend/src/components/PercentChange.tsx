@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import {
   COMPARED_TO_PERIOD,
@@ -25,6 +26,8 @@ interface Props {
   className?: string
   textClassName?: string
   period?: PercentageChangePeriod
+  /** What it is compared to, where that is no period. */
+  tooltip?: ReactNode
   disabledOnTouch?: boolean
 }
 
@@ -33,6 +36,7 @@ export function PercentChange({
   className,
   textClassName,
   period,
+  tooltip,
   disabledOnTouch,
 }: Props) {
   const content = (
@@ -48,7 +52,7 @@ export function PercentChange({
     </span>
   )
 
-  if (!period) {
+  if (!period && !tooltip) {
     return content
   }
 
@@ -59,7 +63,11 @@ export function PercentChange({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>
-          <PercentageChangeTooltipContent period={period} />
+          {period ? (
+            <PercentageChangeTooltipContent period={period} />
+          ) : (
+            tooltip
+          )}
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>

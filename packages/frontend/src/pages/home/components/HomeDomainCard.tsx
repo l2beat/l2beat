@@ -51,9 +51,13 @@ export function HomeDomainCard({
 export function HomeKpiRow({ children }: { children: ReactNode }) {
   return (
     <div className="@container/kpis min-w-0">
-      <div className="grid grid-cols-2 kpi-column:grid-cols-1 kpi-rows:grid-cols-[minmax(9.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8">
+      <div className={cn('kpi-column:grid-cols-1', HOME_KPI_GRID_CLASS)}>
         {children}
       </div>
     </div>
   )
 }
+
+/** The grid of a `HomeKpiRow`: two tiles side by side, or a row each. */
+export const HOME_KPI_GRID_CLASS =
+  'grid grid-cols-2 kpi-rows:grid-cols-[minmax(9.5rem,auto)_minmax(0,1fr)] gap-6 lg:gap-x-8'

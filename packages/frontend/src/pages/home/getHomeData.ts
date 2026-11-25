@@ -4,6 +4,7 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { RosetteValue } from '~/components/rosette/types'
 import { SITE_NAME_WITH_FORMER } from '~/consts/siteName'
+import { env } from '~/env'
 import {
   EMPTY_HOME_ETHEREUM_CHARTS,
   getHomeEthereumCharts,
@@ -12,6 +13,10 @@ import {
   EMPTY_HOME_L2_CHARTS,
   getHomeL2Charts,
 } from '~/server/features/home/getHomeL2Charts'
+import {
+  EMPTY_HOME_LIQUID_STAKING,
+  getHomeLiquidStaking,
+} from '~/server/features/home/getHomeLiquidStaking'
 import {
   EMPTY_HOME_PRIVACY_DATA,
   getHomePrivacyData,
@@ -29,6 +34,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import { getOrganizationStructuredData } from '~/ssr/head/structured-data/getOrganizationStructuredData'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
 import {
@@ -120,6 +126,7 @@ async function getCachedData(manifest: Manifest) {
     recentChanges,
     l2Charts,
     ethereumCharts,
+    liquidStaking,
     interop,
     privacy,
     cropsProjects,
@@ -146,6 +153,14 @@ async function getCachedData(manifest: Manifest) {
       getHomeEthereumCharts(chartRange),
       EMPTY_HOME_ETHEREUM_CHARTS,
     ),
+    // Its links lead to DeFi pages, so it follows their flag.
+    env.CLIENT_SIDE_DEFI_ENABLED
+      ? orEmpty(
+          'liquidStaking',
+          getHomeLiquidStaking(chartRange),
+          EMPTY_HOME_LIQUID_STAKING,
+        )
+      : undefined,
     getInteropFlowsForHome(manifest, helpers, orEmpty),
     orEmpty('privacy', getHomePrivacyData(chartRange), EMPTY_HOME_PRIVACY_DATA),
     orEmpty('cropsProjects', getHomeCropsProjects(manifest), []),
@@ -159,6 +174,7 @@ async function getCachedData(manifest: Manifest) {
     topL2Projects,
     privacy,
     ethereumCharts,
+    liquidStaking,
     interop,
     recentProjects,
     recentChanges: {
@@ -334,7 +350,7 @@ function getRecentProjectListing(
       href: `/layer2s/projects/${slug}`,
       label:
         scalingInfo.type === 'Other'
-          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} · Other`
+          ? `${scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'}${DOT_SEPARATOR}Other`
           : (scalingInfo.type ?? 'Scaling project'),
     }
   }

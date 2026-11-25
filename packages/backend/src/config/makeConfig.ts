@@ -17,6 +17,7 @@ import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
+import { getRpcStepDownOnThrottle } from './getRpcStepDownOnThrottle'
 
 interface MakeConfigOptions {
   name: string
@@ -183,6 +184,7 @@ export async function makeConfig(
       (await getPrivacyConfig(ps, env, flags, chains)),
     backoffice: getBackofficeConfig(env, flags, isLocal),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
+    rpcStepDownOnThrottle: getRpcStepDownOnThrottle(env),
     // Must be last
     flags: flags.getResolved(),
   }

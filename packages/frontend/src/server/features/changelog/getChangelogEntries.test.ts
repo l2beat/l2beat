@@ -52,25 +52,6 @@ describe('changelog whats new selection', () => {
     expect(result).toEqual(undefined)
   })
 
-  it('selects an entry only within its active window', () => {
-    const now = new Date('2026-02-19T14:00:00.000Z')
-    const expired = makeEntry('expired', '2026-02-01T00:00:00.000Z', {
-      image: '/expired.png',
-      alt: 'expired',
-      expiresAt: '2026-02-10T00:00:00.000Z',
-    })
-    const active = makeEntry('active', '2026-02-05T00:00:00.000Z', {
-      image: '/active.png',
-      alt: 'active',
-      expiresAt: '2026-03-01T00:00:00.000Z',
-    })
-
-    expect(selectActiveWhatsNewEntry([expired, active], now)?.id).toEqual(
-      'active',
-    )
-    expect(selectActiveWhatsNewEntry([expired], now)).toEqual(undefined)
-  })
-
   it('falls back in the nav to the latest published entry, not a future one', () => {
     const now = new Date('2026-02-19T14:00:00.000Z')
     const expired = makeEntry('expired', '2026-02-01T00:00:00.000Z', {

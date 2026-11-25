@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x16327a54f1d956d1650b750eb1c54d8bcbe51d50
+
+# Diff at Mon, 23 Nov 2026 13:15:32 GMT:
+
+- id: 7e56fe7c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794319523
+- current timestamp: 1795438713
+
+## Description
+
+PolygonAdminMultisig marked rollup types 1 to 8, the zkEVM state-transition types, obsolete. No new chain can be created with them and no chain can upgrade to them. The ten chains registered with types 4 and 7 keep their type.
+
+Rome Rubicon (rollup ID 31) submitted its first pessimistic proof, so its bridge state now settles through the Agglayer. PolygonAdminMultisig swapped one signer and stays 5 of 9.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) [GnosisSafe] {
+    +++ description: None
+      values.$members.8:
+-        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
++        "eth:0xFd6F4310817fCa819Fc59671DEFFad218136d56A"
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.18:
++        31
+      values.rollupTypes.0.obsolete:
+-        false
++        true
+      values.rollupTypes.1.obsolete:
+-        false
++        true
+      values.rollupTypes.2.obsolete:
+-        false
++        true
+      values.rollupTypes.3.obsolete:
+-        false
++        true
+      values.rollupTypes.4.obsolete:
+-        false
++        true
+      values.rollupTypes.5.obsolete:
+-        false
++        true
+      values.rollupTypes.6.obsolete:
+-        false
++        true
+      values.rollupTypes.7.obsolete:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x17d0c46fe6e01b9de2c6ba72583b272f6639fa9c
 
 # Diff at Tue, 10 Nov 2026 14:26:34 GMT:

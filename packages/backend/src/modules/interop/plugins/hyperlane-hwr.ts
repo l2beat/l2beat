@@ -139,8 +139,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       const senderAddress = input.log.address.toLowerCase()
       const messageId = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (txLog, index) => {
           const dispatch = parseDispatch(txLog, null)
           if (!dispatch) return
@@ -165,8 +164,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
 
       const depositForBurn = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log, _index) => parseCctpDepositForBurn(log),
       )
       const amount = toLocalAmount(sentTransferRemote.amount, warpRouteScale)
@@ -175,8 +173,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         : findBestTransferLog(
             input.txLogs,
             depositForBurn?.amount ?? amount,
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            input.log.logIndex!,
+            input.log.logIndex,
           )
       if (depositForBurn) {
         return [
@@ -221,8 +218,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       // Batched deliveries can place the next Process right after this receive, we do not want to accidently consume those
       const messageId = findParsedBefore(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (txLog, index) => {
           const process = parseProcess(txLog, null)
           if (!process) return
@@ -253,8 +249,7 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         : findBestTransferLog(
             input.txLogs,
             amount,
-            // biome-ignore lint/style/noNonNullAssertion: It's there
-            input.log.logIndex!,
+            input.log.logIndex,
             (transfer) => transfer.to === recipient,
           )
       if (!isNativeWarpRoute && !transferMatch.hasTransfer) return

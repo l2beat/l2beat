@@ -1,15 +1,5 @@
 {
   "entrypoints": {
-    "eth:0x015318c16AE443a20DE0A776dB06a59F0D279057": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
     "eth:0x18cC381705761aa2d2e8ea62888a4029A0fAd3aB": {
       "name": "MultisigCommitter",
       "type": "Contract",
@@ -40,11 +30,6 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
-    "eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
     "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": {
       "name": "EraChainAdminProxy",
       "type": "Contract",
@@ -65,6 +50,11 @@
       "type": "Contract",
       "project": "shared-zk-stack"
     },
+    "eth:0x3DBD9c38cc4A0D380fE9E32ACE0D2b147aD29FF1": {
+      "name": "EmergencyUpgradeBoard",
+      "type": "Contract",
+      "project": "shared-zk-stack"
+    },
     "eth:0x419A453e690CEac6E57C7798a375cbB2454dd919": {
       "name": "ChainRegistrationSender",
       "type": "Contract",
@@ -77,21 +67,6 @@
     },
     "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
       "name": "Matter Labs Multisig",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": {
-      "name": "GnosisSafe",
       "type": "Contract",
       "project": "shared-zk-stack"
     },
@@ -111,12 +86,7 @@
       "project": "shared-zk-stack"
     },
     "eth:0x69462a81ba94D64c404575f1899a464F123497A2": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": {
-      "name": "GnosisSafe",
+      "name": "Safe",
       "type": "Contract",
       "project": "shared-zk-stack"
     },
@@ -142,16 +112,6 @@
     },
     "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56": {
       "name": "L1AssetRouter",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F": {
-      "name": "Guardians",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C": {
-      "name": "EmergencyUpgradeBoard",
       "type": "Contract",
       "project": "shared-zk-stack"
     },
@@ -201,11 +161,6 @@
       "project": "shared-zk-stack"
     },
     "eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": {
-      "name": "GnosisSafe",
-      "type": "Contract",
-      "project": "shared-zk-stack"
-    },
-    "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": {
       "name": "GnosisSafe",
       "type": "Contract",
       "project": "shared-zk-stack"
@@ -299,6 +254,66 @@
       "name": "ZK Foundation Era Multisig",
       "type": "Contract",
       "project": "shared-zk-stack"
+    },
+    "eth:0x015318c16AE443a20DE0A776dB06a59F0D279057": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x8f525e55F76050d8dFdDa4870DA1b3ede54E908F": {
+      "name": "Guardians",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0x91989F9BB8391D3471D2672Ec001921cB14C4b7C": {
+      "name": "EmergencyUpgradeBoard",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
+    },
+    "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-zk-stack",
+      "isLegacy": true
     },
     "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": {
       "name": "LegacyGuardians",

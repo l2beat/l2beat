@@ -19,6 +19,7 @@ import { DataAvailabilityRepository } from './repositories/DataAvailabilityRepos
 import { DefiTvlRepository } from './repositories/DefiTvlRepository'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { EthereumStakingDailyRepository } from './repositories/EthereumStakingDailyRepository'
+import { EthereumSupplyDailyRepository } from './repositories/EthereumSupplyDailyRepository'
 import { FlatSourcesRepository } from './repositories/FlatSourcesRepository'
 import { GasFeesDailyRepository } from './repositories/GasFeesDailyRepository'
 import { GasFeesLiveTipsRepository } from './repositories/GasFeesLiveTipsRepository'
@@ -126,6 +127,7 @@ export function createDatabase(
     defiTvl: new DefiTvlRepository(db),
     liquidStakingSnapshot: new LiquidStakingSnapshotRepository(db),
     ethereumStakingDaily: new EthereumStakingDailyRepository(db),
+    ethereumSupplyDaily: new EthereumSupplyDailyRepository(db),
     // #endregion
 
     // #region Gas fees

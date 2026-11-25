@@ -189,9 +189,9 @@ export function buildHyperlaneWarpRouteMap(
     const key = hyperlaneWarpRouteKey(entry.chain, entry.router)
     const previousStandard = result[key]
     if (previousStandard && previousStandard !== entry.standard) {
-      throw new Error(
-        `Conflicting Hyperlane warp route standards for ${key}: ${previousStandard} and ${entry.standard}`,
-      )
+      throw new Error('Conflicting Hyperlane warp route standards', {
+        cause: { key, previousStandard, standard: entry.standard },
+      })
     }
     result[key] = entry.standard
   }
@@ -475,7 +475,9 @@ export class HyperlaneConfigPlugin
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const yaml = await response.text()
@@ -517,7 +519,9 @@ export class HyperlaneConfigPlugin
     })
 
     if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+      throw new Error('HTTP error', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const yaml = await response.text()

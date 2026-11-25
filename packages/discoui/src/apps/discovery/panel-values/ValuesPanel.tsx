@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router'
 import type { ApiAddressEntry, ApiProjectContract } from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
@@ -7,9 +7,12 @@ import { ErrorState } from '../../../components/ErrorState'
 import { LoadingState } from '../../../components/LoadingState'
 import { IS_READONLY } from '../../../config/readonly'
 import { IconShape } from '../../../icons/IconShape'
+import { IconShield } from '../../../icons/IconShield'
 import { useConfigModels } from '../hooks/useConfigModels'
+import { useCriticalNow } from '../hooks/useCriticalNow'
 import { useModelUtils } from '../hooks/useModelUtils'
 import { useProjectData } from '../hooks/useProjectData'
+import { formatCriticalDate, getCriticalStatus } from '../ossification'
 import { usePanelStore } from '../store/panel-store'
 import { UsageDisplay } from '../usage/UsageDisplay'
 import { AbiDisplay } from './AbiDisplay'
@@ -211,6 +214,9 @@ function Display({
             <p className="text-coffee-200/40">No</p>
           </WithHeadline>
         )}
+        {'critical' in selected && selected.critical !== undefined && (
+          <OssificationStatus critical={selected.critical} />
+        )}
         <Category />
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
@@ -394,6 +400,43 @@ function WithHeadline(props: { headline: string; children: React.ReactNode }) {
         {props.children}
       </div>
     </div>
+  )
+}
+
+function OssificationStatus(props: {
+  critical: NonNullable<ApiProjectContract['critical']>
+}) {
+  const flags = useMemo(() => [props.critical], [props.critical])
+  const nowSeconds = useCriticalNow(flags)
+  const status = getCriticalStatus(props.critical, nowSeconds)
+  const since =
+    typeof props.critical === 'object' &&
+    props.critical.sinceTimestamp !== undefined
+      ? formatCriticalDate(props.critical.sinceTimestamp)
+      : undefined
+  const until =
+    typeof props.critical === 'object' &&
+    props.critical.untilTimestamp !== undefined
+      ? formatCriticalDate(props.critical.untilTimestamp)
+      : undefined
+
+  return (
+    <WithHeadline headline="Ossification">
+      <div className="flex flex-wrap items-center gap-1.5">
+        {status === 'critical' ? (
+          <span className="inline-flex items-center gap-1 font-medium text-aux-yellow">
+            <IconShield className="size-3 shrink-0" />
+            Critical
+          </span>
+        ) : status === 'scheduled' ? (
+          <span className="text-coffee-300">Scheduled for perimeter</span>
+        ) : (
+          <span className="text-coffee-300">Retired from perimeter</span>
+        )}
+        {since && <span className="text-coffee-300">since {since}</span>}
+        {until && <span className="text-coffee-300">until {until}</span>}
+      </div>
+    </WithHeadline>
   )
 }
 

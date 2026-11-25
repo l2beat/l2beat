@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "phylax",
+  "import": ["../globalConfig.jsonc"],
+  // The CredibleRegistry and three StateOracles: production and the two earlier
+  // ones (June and July 2026) that hold the only Lighter and Derive
+  // registrations. Nothing onchain links the Registry to an oracle. The staging
+  // oracle is left out.
+  "initialAddresses": [
+    "eth:0xbac71Fe7a8C78F49Eeb2D33b250988224796AF70",
+    "eth:0x14386aF70E91dFE12aC6243D4B5e087870d7f14D",
+    "eth:0xbFBc833F12E973bd4A2cc46AAE959aD1B9531262",
+    "eth:0xB5E1b58638E05a69c853dEf16837D651B7EEeAA2"
+  ],
+  "names": {
+    "eth:0xa4556B53286206A9B50e65700C4372c9Be62b934": "PhylaxMultisig",
+    "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": "ProxyAdmin",
+    "eth:0x6e6EE23D01E5B1dA7054923286681AA432EB7892": "AdminVerifierAlwaysApprove",
+    "eth:0x90792771aeA614983f1AD851De764276D0D9D279": "AdminVerifierAlwaysApprove"
+  },
+  "overrides": {
+    // Unverified. Both share one 519-byte runtime whose only function,
+    // verifyAdmin(address,address,bytes), returns true without reading storage
+    // or calling out.
+    "eth:0x6e6EE23D01E5B1dA7054923286681AA432EB7892": {
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager."
+    },
+    "eth:0x90792771aeA614983f1AD851De764276D0D9D279": {
+      "description": "Admin verifier that approves every request, so any account allowed to register can claim any adopter without a manager."
+    },
+    // The CredibleRegistry is the only proposer, canceller and executor of this
+    // timelock and schedules only builder and delay changes, so it gets an
+    // interact permission instead of the global template's act.
+    "eth:0x9F66A1A08a3f9f9De7a95DfBAD572970bF1D9757": {
+      "fields": {
+        "Executor": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "execute transactions that are ready."
+            }
+          ]
+        }
+      }
+    },
+    // Unverified, created by the StateOracle proxy's constructor. Its runtime
+    // code appears verbatim in the proxy's deployment transaction, so the
+    // proxy's verified source (which contains ProxyAdmin) is linked and owner
+    // is read without an ABI.
+    "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
+      "manualSourcePaths": {
+        "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": "https://etherscan.io/address/0x14386aF70E91dFE12aC6243D4B5e087870d7f14D#code"
+      },
+      "fields": {
+        "owner": {
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
+    }
+  }
+}

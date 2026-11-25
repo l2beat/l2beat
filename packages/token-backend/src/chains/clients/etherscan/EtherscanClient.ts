@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { formatError } from '../../../utils/formatError'
 import {
   ContractCreationResultSchema,
   type EtherscanClientConfig,
@@ -26,7 +27,7 @@ export class EtherscanClient {
       if (error instanceof Error) {
         return {
           success: false,
-          error: error.message,
+          error: formatError(error),
         }
       }
       return {
@@ -57,17 +58,17 @@ export class EtherscanClient {
     })
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error(
-        `Etherscan API error: ${response.status} ${response.statusText}`,
-      )
+      throw new Error('Etherscan API request failed', {
+        cause: { status: response.status, statusText: response.statusText },
+      })
     }
 
     const json = await response.json()
     const data = EtherscanResponseSchema.parse(json)
     if (data.status !== '1' || data.message !== 'OK') {
-      throw new Error(
-        `Etherscan API error: ${data.message ?? 'Unknown error'}. ${data.result}`,
-      )
+      throw new Error('Etherscan API returned an error', {
+        cause: { message: data.message, result: data.result },
+      })
     }
 
     return data.result

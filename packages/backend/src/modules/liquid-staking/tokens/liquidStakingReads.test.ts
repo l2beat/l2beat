@@ -3,7 +3,6 @@ import { Bytes, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import { getLiquidStakingReads } from './liquidStakingReads'
-import { MARKET_SALE } from './marketQuotes'
 
 const A = ChainSpecificAddress('eth:0x1111111111111111111111111111111111111111')
 const B = ChainSpecificAddress('eth:0x2222222222222222222222222222222222222222')
@@ -30,7 +29,7 @@ describe(getLiquidStakingReads.name, () => {
       TIMESTAMP,
     )
     expect(state.marketExitEth).toEqual(110n * ETH)
-    expect(state.marketExitValueEth).toEqual((MARKET_SALE * RATE) / ETH)
+    expect(state.marketExitValueEth).toEqual(RATE)
   })
 
   it('stores no quote when no pool gives one', () => {
@@ -39,6 +38,30 @@ describe(getLiquidStakingReads.name, () => {
     const state = toState([ok(RATE), ok(0n), FAILED, FAILED], TIMESTAMP)
     expect(state.marketExitEth).toEqual(null)
     expect(state.marketExitValueEth).toEqual(null)
+  })
+
+  it('stores no quote when the only pool pays nothing for the sale', () => {
+    const { toState } = getLiquidStakingReads(rocketpool, 0)
+
+    const state = toState([ok(RATE), ok(0n), ok(0n), FAILED], TIMESTAMP)
+    expect(state.marketExitEth).toEqual(null)
+    expect(state.marketExitValueEth).toEqual(null)
+  })
+
+  it('stops quoting a pool from the block it was drained at', () => {
+    const drained = {
+      ...rocketpool,
+      marketQuotes: [
+        {
+          type: 'balancerV2' as const,
+          poolId: `0x${'11'.repeat(32)}`,
+          untilBlock: 100,
+        },
+      ],
+    }
+
+    expect(getLiquidStakingReads(drained, 99).calls.length).toEqual(3)
+    expect(getLiquidStakingReads(drained, 100).calls.length).toEqual(2)
   })
 
   it('values Lido’s sale at one ETH per stETH', () => {
@@ -54,7 +77,7 @@ describe(getLiquidStakingReads.name, () => {
       [ok((12n * ETH) / 10n), ok(1n), ok(1n), ok((9_995n * ETH) / 100n)],
       TIMESTAMP,
     )
-    expect(state.marketExitValueEth).toEqual(MARKET_SALE)
+    expect(state.marketExitValueEth).toEqual(ETH)
   })
 
   for (const [name, failed] of [

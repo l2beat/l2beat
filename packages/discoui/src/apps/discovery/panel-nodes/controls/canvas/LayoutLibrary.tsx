@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import { type CSSProperties, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import {
   getProjectLayout,
@@ -61,22 +61,27 @@ export function LayoutLibrary() {
   const nodeCount = useStore((state) => state.nodes.length)
   const [layoutName, setLayoutName] = useState('')
   const [description, setDescription] = useState('')
-  const [overwriteArmed, setOverwriteArmed] = useState(false)
+  // The confirmation holds for one exact name, so it cannot carry over to
+  // another layout when the name changes under it.
+  const [overwriteArmedName, setOverwriteArmedName] = useState<string | null>(
+    null,
+  )
+  const overwriteArmed = overwriteArmedName === normalizeLayoutName(layoutName)
   const [loadingName, setLoadingName] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (!open) {
-      return
-    }
-
+  const resetSaveForm = () => {
     setLayoutName(projectId)
     setDescription('')
-    setOverwriteArmed(false)
-  }, [open, projectId])
+    setOverwriteArmedName(null)
+  }
 
-  useEffect(() => {
-    setOverwriteArmed(false)
-  }, [layoutName, projectId])
+  // The project can change under an open dialog, like when the agent opens
+  // another one, and the form must not keep the previous project's name.
+  const [formProjectId, setFormProjectId] = useState(projectId)
+  if (formProjectId !== projectId) {
+    setFormProjectId(projectId)
+    resetSaveForm()
+  }
 
   const layoutsQuery = useQuery({
     queryKey: ['project-layouts', projectId],
@@ -117,13 +122,13 @@ export function LayoutLibrary() {
       await queryClient.invalidateQueries({
         queryKey: ['project-layouts', projectId],
       })
-      setOverwriteArmed(false)
+      setOverwriteArmedName(null)
       setLayoutName(variables.name)
       toast.success(`Saved layout "${variables.name}"`)
     },
-    onError: (error) => {
+    onError: (error, variables) => {
       if (error.message.includes('already exists')) {
-        setOverwriteArmed(true)
+        setOverwriteArmedName(variables.name)
       }
       toast.error('Failed to save layout', {
         description: <pre>{error.message}</pre>,
@@ -213,20 +218,29 @@ export function LayoutLibrary() {
       return
     }
 
-    if (existingNames.has(normalizedName) && !overwriteArmed) {
-      setOverwriteArmed(true)
+    const overwriteConfirmed = overwriteArmedName === normalizedName
+    if (existingNames.has(normalizedName) && !overwriteConfirmed) {
+      setOverwriteArmedName(normalizedName)
       return
     }
 
     saveMutation.mutate({
       name: normalizedName,
-      overwrite: overwriteArmed,
+      overwrite: overwriteConfirmed,
     })
   }
 
   return (
     <>
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root
+        open={open}
+        onOpenChange={(nextOpen) => {
+          if (nextOpen) {
+            resetSaveForm()
+          }
+          setOpen(nextOpen)
+        }}
+      >
         <Dialog.Trigger asChild>
           <ToolbarButton
             label="Saved layouts"

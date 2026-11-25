@@ -24,6 +24,7 @@ describe(LiquidStakingIndexer.name, () => {
   const wbeth: LiquidStakingProjectConfig = {
     configurationId: 'bbbbbbbbbbbb',
     projectId: ProjectId('wbeth'),
+    sinceTimestamp: start,
     contracts: {
       type: 'wbeth',
       wBETH: ChainSpecificAddress(
@@ -68,6 +69,8 @@ describe(LiquidStakingIndexer.name, () => {
       exchangeRate: 11n,
       lastRequestId: 23,
       lastFinalizedRequestId: 22,
+      retiredLastRequestId: null,
+      retiredLastFinalizedRequestId: null,
       instantExitEth: null,
       instantExitFeeBps: null,
       lockTime: 22,

@@ -11,6 +11,10 @@ import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ANONYMITY_SET_MINIMUM_AMOUNTS } from '../../common/privacyAnonymitySets'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -31,6 +35,7 @@ import {
   privacyPoolsV2Adversaries,
   REFERENCE_APP,
 } from './adversaries'
+import { privacyPoolsV2RiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-pools-v2')
 
@@ -120,6 +125,7 @@ export const privacyPoolsV2: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2026-10-20')),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  ossificationHistory: discovery.getOssificationHistory(SINCE_TIMESTAMP),
   statuses: {
     yellowWarning:
       'Privacy Pools v2 opened to the public on 2026-10-20 after a capped beta. We are still early, so the ratings rest on the design and ignore the small anonymity set.',
@@ -243,9 +249,7 @@ export const privacyPoolsV2: BaseProject = {
       sources: [relayerSource(POOL_VAULT, 'privacyPoolsV2Withdrawal')],
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description:
         'The upgrader role can replace the PoolVault that escrows deposits without delay, so a malicious upgrade takes the funds before anyone can leave. Ragequit works while the vault is paused, but the same role can stop it at once without an upgrade.',
       walkawayTest: {
@@ -255,10 +259,9 @@ export const privacyPoolsV2: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
-      sentiment: 'good',
+      ...PRIVACY_REPRODUCIBILITY.full,
       description:
-        'Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys. The ASP service is closed.',
+        "Contracts, circuits, SDK, relayer and website are public and build locally, the contracts under a Business Source License. The 27 verifiers rebuild from the circuit sources and ceremony keys, and the website's release bundle byte for byte. The ASP service is closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -267,7 +270,7 @@ export const privacyPoolsV2: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyPoolsV2Adversaries,
-    riskSummary: readProjectMarkdown('privacy-pools-v2', 'riskSummary'),
+    riskSummary: privacyPoolsV2RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'privacy-pools-v2',

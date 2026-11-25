@@ -6,6 +6,7 @@ import { getTrustedSetupsWithVerifiersAndAttesters } from '~/server/features/zk-
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '../../contracts-and-permissions/getContractUtils'
 import type { ProjectWithPageMetadata } from '../../getProjectUrl'
+import { getSingleParticipantRisks } from '../../getSingleParticipantTrustedSetupWarnings'
 import { getUsedZkCatalogProjects } from '../../getUsedZkCatalogProjects'
 
 export function getProverInfos(
@@ -39,6 +40,9 @@ export function getProverInfos(
       href: `/zk-catalog/${zkCatalogProject.slug}`,
       quantumResistant: zkCatalogProject.zkCatalogInfo.quantumResistant,
       trustedSetups,
+      trustedSetupRisks: getSingleParticipantRisks(
+        Object.values(trustedSetups).flatMap((s) => s.trustedSetups),
+      ),
     }
   })
 }

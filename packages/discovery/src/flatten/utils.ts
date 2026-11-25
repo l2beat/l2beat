@@ -273,8 +273,7 @@ export function recalculateSourceHashes(
 
   const masterHash = combineImplementationHashes(implementations as string[])
 
-  // biome-ignore lint/style/noNonNullAssertion: checked above
-  return [proxy!, masterHash]
+  return [proxy, masterHash]
 }
 
 export function combineImplementationHashes(hashes: string[]): Hash256 {

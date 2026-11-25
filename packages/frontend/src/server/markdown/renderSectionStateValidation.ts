@@ -73,6 +73,7 @@ function renderProverInfo(prover: ProverInfoData, level: number) {
         ),
       ),
     ),
+    renderRisks(prover.trustedSetupRisks),
   ])
 }
 

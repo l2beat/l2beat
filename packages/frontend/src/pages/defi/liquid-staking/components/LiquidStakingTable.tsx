@@ -5,6 +5,7 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { Badge } from '~/components/badge/Badge'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -53,15 +54,29 @@ const columns = [
     },
   }),
   ...getLiquidStakingStatColumns(columnHelper),
-  ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }) =>
-    columnHelper.accessor((entry) => entry.risks[key], {
+  // An unreviewed protocol's first risk cell spans the others, which hide.
+  ...LIQUID_STAKING_RISKS.map(({ key, title, tooltip }, i) =>
+    columnHelper.accessor((entry) => entry.risks?.[key] ?? null, {
       id: key,
       header: title,
-      cell: (ctx) => (
-        <TableValueCell value={ctx.getValue()} href={ctx.row.original.href} />
-      ),
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        return value ? (
+          <TableValueCell value={value} href={ctx.row.original.href} />
+        ) : (
+          <Badge type="gray" size="small">
+            Not reviewed
+          </Badge>
+        )
+      },
       enableSorting: false,
-      meta: { tooltip },
+      meta:
+        i === 0
+          ? {
+              tooltip,
+              colSpan: (ctx) => (ctx.row.original.risks ? 1 : 100),
+            }
+          : { tooltip, hideIfNull: true },
     }),
   ),
 ]
@@ -98,7 +113,7 @@ export function LiquidStakingTable({
   return (
     <div className="mt-4">
       <ColumnsControls columns={table.getAllColumns()} />
-      <BasicTable table={table} />
+      <BasicTable table={table} dense />
     </div>
   )
 }

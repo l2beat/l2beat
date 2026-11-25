@@ -7,12 +7,17 @@ import {
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { interfoldAdversaries } from './adversaries'
+import { interfoldRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('interfold')
 
@@ -74,8 +79,6 @@ assert(
   safeSigners[0] === safeSigners[1],
   'The Interfold multisigs no longer share their signers: update the governance text.',
 )
-
-const veMultisigStats = discovery.getMultisigStats('VotingEscrowMultisig')
 
 export const interfold: BaseProject = {
   id: ProjectId('interfold'),
@@ -189,10 +192,9 @@ export const interfold: BaseProject = {
         'Every ballot names the address it counts for. Only the choice is hidden, among the voters of the same vote.',
     },
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
-      description: `The VotingEscrowMultisig (${veMultisigStats}) and the Interfold multisigs can instantly upgrade VotingEscrow, which holds locked FOLD. The Interfold multisigs can also instantly upgrade BondingRegistry, which holds bonded FOLD.`,
+      ...PRIVACY_EXIT_WINDOW.none,
+      description:
+        'The Interfold multisigs can instantly upgrade VotingEscrow and BondingRegistry, which hold locked and bonded FOLD.',
       walkawayTest: {
         passed: false,
         reason:
@@ -200,8 +202,7 @@ export const interfold: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The contracts, ciphernode software, circuits, CRISP server and app are open source, and every deployed contract is verified. A rebuild of the OpenVM program that sums the ballots misses its onchain commitment, since the binary embeds unpublished file paths from the builder's machine.",
     },
@@ -214,7 +215,7 @@ export const interfold: BaseProject = {
       minimumCommittee.decryptionThreshold,
       minimumCommittee.members,
     ),
-    riskSummary: readProjectMarkdown('interfold', 'riskSummary', {
+    riskSummary: interfoldRiskSummary({
       committeeMembers: voteCommittee.members,
       decryptionThreshold: voteCommittee.decryptionThreshold,
     }),
@@ -224,7 +225,6 @@ export const interfold: BaseProject = {
         safeBStats: discovery.getMultisigStats('InterfoldSafeB'),
         voteDuration: formatSeconds(ippStages[0][3], { fullUnit: true }),
         approvalWindow: formatSeconds(ippStages[1][1], { fullUnit: true }),
-        veMultisigStats,
       }),
     },
   },

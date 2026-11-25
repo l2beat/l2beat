@@ -4,7 +4,10 @@ import { cn } from '~/utils/cn'
 /** A sky wash, a sun and two hills. In dark mode the day turns into night. */
 export function GardenBackground() {
   return (
-    <PageBackdrop name="garden">
+    <PageBackdrop
+      name="garden"
+      ground={['var(--garden-hill-far)', 'var(--garden-hill-near)']}
+    >
       <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-garden-sky to-transparent" />
       <PageBackdropScenery>
         <Stars />
@@ -17,11 +20,11 @@ export function GardenBackground() {
         >
           <path
             d="M0 90 C200 40 380 120 600 80 C820 40 1000 110 1200 70 L1200 160 L0 160 Z"
-            className="fill-[#dcead3]/70 dark:fill-[#1b2415]/70"
+            className="fill-(--garden-hill-far)"
           />
           <path
             d="M0 130 C260 90 460 150 720 115 C940 85 1080 140 1200 115 L1200 160 L0 160 Z"
-            className="fill-garden-border/70"
+            className="fill-(--garden-hill-near)"
           />
         </svg>
       </PageBackdropScenery>

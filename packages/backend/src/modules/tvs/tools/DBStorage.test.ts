@@ -48,6 +48,7 @@ describe(DBStorage.name, () => {
           tvsPrice,
         }),
         Logger.SILENT,
+        true,
       )
 
       await storage.preloadPrices(
@@ -61,34 +62,10 @@ describe(DBStorage.name, () => {
         timestamp2,
       )
 
-      const prices = (storage as any).prices
-      expect(prices.size).toEqual(2)
-      expect(prices.get(timestamp1)?.get(configId1)).toEqual(1000)
-      expect(prices.get(timestamp1)?.get(configId2)).toEqual(20000)
-      expect(prices.get(timestamp2)?.get(configId1)).toEqual(1100)
-      expect(prices.get(timestamp2)?.get(configId2)).toEqual(21000)
-    })
-
-    it('handles empty result from database', async () => {
-      const timestamp = UnixTime(100)
-      const configId = 'config1'.repeat(2)
-
-      const tvsPrice = mockObject<Database['tvsPrice']>({
-        getPricesInRange: mockFn().resolvesTo([]),
-      })
-
-      const storage = new DBStorage(
-        mockObject<Database>({
-          tvsPrice,
-        }),
-        Logger.SILENT,
-      )
-
-      await storage.preloadPrices([configId], [timestamp])
-
-      const prices = (storage as any).prices
-      expect(prices.size).toEqual(1)
-      expect(prices.get(timestamp)?.size).toEqual(0)
+      expect(await storage.getPrice(configId1, timestamp1)).toEqual(1000)
+      expect(await storage.getPrice(configId2, timestamp1)).toEqual(20000)
+      expect(await storage.getPrice(configId1, timestamp2)).toEqual(1100)
+      expect(await storage.getPrice(configId2, timestamp2)).toEqual(21000)
     })
   })
 
@@ -135,6 +112,7 @@ describe(DBStorage.name, () => {
           tvsAmount,
         }),
         Logger.SILENT,
+        true,
       )
 
       await storage.preloadAmounts(
@@ -148,34 +126,10 @@ describe(DBStorage.name, () => {
         timestamp2,
       )
 
-      const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(2)
-      expect(amounts.get(timestamp1)?.get(configId1)).toEqual(100n)
-      expect(amounts.get(timestamp1)?.get(configId2)).toEqual(200n)
-      expect(amounts.get(timestamp2)?.get(configId1)).toEqual(300n)
-      expect(amounts.get(timestamp2)?.get(configId2)).toEqual(400n)
-    })
-
-    it('handles empty result from database', async () => {
-      const timestamp = UnixTime(100)
-      const configId = 'config1'.repeat(2)
-
-      const tvsAmount = mockObject<Database['tvsAmount']>({
-        getAmountsInRange: mockFn().resolvesTo([]),
-      })
-
-      const storage = new DBStorage(
-        mockObject<Database>({
-          tvsAmount,
-        }),
-        Logger.SILENT,
-      )
-
-      await storage.preloadAmounts([configId], [timestamp])
-
-      const amounts = (storage as any).amounts
-      expect(amounts.size).toEqual(1)
-      expect(amounts.get(timestamp)?.size).toEqual(0)
+      expect(await storage.getAmount(configId1, timestamp1)).toEqual(100n)
+      expect(await storage.getAmount(configId2, timestamp1)).toEqual(200n)
+      expect(await storage.getAmount(configId1, timestamp2)).toEqual(300n)
+      expect(await storage.getAmount(configId2, timestamp2)).toEqual(400n)
     })
   })
 
@@ -184,10 +138,22 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const storage = new DBStorage({} as Database, Logger.SILENT)
-      ;(storage as any).prices = new Map([
-        [timestamp, new Map([[configId, 1000]])],
-      ])
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsPrice: mockObject<Database['tvsPrice']>({
+            getPricesInRange: mockFn().resolvesTo([
+              {
+                configurationId: configId,
+                timestamp,
+                priceId: 'eth',
+                priceUsd: 1000,
+              },
+            ]),
+          }),
+        }),
+        Logger.SILENT,
+      )
+      await storage.preloadPrices([configId], [timestamp])
 
       const result = await storage.getPrice(configId, timestamp)
 
@@ -216,7 +182,6 @@ describe(DBStorage.name, () => {
         }),
         Logger.SILENT,
       )
-      ;(storage as any).prices = new Map([[timestamp, new Map()]])
 
       const result = await storage.getPrice(configId, timestamp)
 
@@ -239,7 +204,6 @@ describe(DBStorage.name, () => {
         Logger.SILENT,
         true,
       )
-      ;(storage as any).prices = new Map([[timestamp, new Map()]])
 
       const result = await storage.getPrice(configId, timestamp)
 
@@ -270,7 +234,6 @@ describe(DBStorage.name, () => {
         }),
         Logger.SILENT,
       )
-      ;(storage as any).prices = new Map([[timestamp, new Map()]])
 
       const result = await storage.getPrice(configId, timestamp)
 
@@ -287,10 +250,22 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const storage = new DBStorage({} as Database, Logger.SILENT)
-      ;(storage as any).amounts = new Map([
-        [timestamp, new Map([[configId, 100n]])],
-      ])
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsAmount: mockObject<Database['tvsAmount']>({
+            getAmountsInRange: mockFn().resolvesTo([
+              {
+                configurationId: configId,
+                timestamp,
+                project: 'project1',
+                amount: 100n,
+              },
+            ]),
+          }),
+        }),
+        Logger.SILENT,
+      )
+      await storage.preloadAmounts([configId], [timestamp])
 
       const result = await storage.getAmount(configId, timestamp)
 
@@ -319,7 +294,6 @@ describe(DBStorage.name, () => {
         }),
         Logger.SILENT,
       )
-      ;(storage as any).amounts = new Map([[timestamp, new Map()]])
 
       const result = await storage.getAmount(configId, timestamp)
 
@@ -350,7 +324,6 @@ describe(DBStorage.name, () => {
         }),
         Logger.SILENT,
       )
-      ;(storage as any).amounts = new Map([[timestamp, new Map()]])
 
       const result = await storage.getAmount(configId, timestamp)
 

@@ -24,8 +24,7 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
     setSettings,
   } = useDiffSettingsStore()
 
-  const { queryParams, shareableUrl, buildShareableUrl, swapAddresses } =
-    useUrlState()
+  const { queryParams, buildShareableUrl, swapAddresses } = useUrlState()
   const { selection, initialSelection, setSelection, clearSelection } =
     useLineSelection(queryParams.lines)
   const { diff, setDiff, splitLeft, splitRight, leftAddress, rightAddress } =
@@ -54,9 +53,12 @@ export function useDiffEditorSettings(props: UseDiffEditorSettingsProps) {
     setSettings,
   ])
 
-  useEffect(() => {
-    buildShareableUrl(selection, removeUnchanged, ignoreComments, fold)
-  }, [selection, removeUnchanged, ignoreComments, fold, buildShareableUrl])
+  const shareableUrl = buildShareableUrl(
+    selection,
+    removeUnchanged,
+    ignoreComments,
+    fold,
+  )
 
   const wrappedToggleFold = useCallback(() => {
     toggleFold()

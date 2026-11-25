@@ -101,6 +101,10 @@ export interface InteropEventType<T> {
   checkType(action: InteropEvent): action is InteropEvent<T>
 }
 
+// For source events of transfers the user finalizes on the destination, which
+// they can do at any time
+export const SLOW_WITHDRAWAL_TTL = 180 * UnixTime.DAY
+
 export function createInteropEventType<T>(
   type: string,
   options?: { ttl?: number; direction?: 'incoming' | 'outgoing' },
@@ -122,7 +126,7 @@ export function createInteropEventType<T>(
       return this.createCtx(
         {
           chain: capture.chain,
-          logIndex: capture.log.logIndex ?? -1, // log.logIndex being null should never happen!
+          logIndex: capture.log.logIndex,
           timestamp: capture.block.timestamp,
           txHash: capture.tx.hash ?? '', // tx.hash being null should never happen!
         },
@@ -169,16 +173,19 @@ export function createInteropEventType<T>(
   }
 }
 
+/** A mined log: viem types `logIndex` as nullable only for pending logs. */
+export type CapturedLog = Log & { logIndex: number }
+
 export interface LogToCapture {
-  log: Log
-  txLogs: Log[]
+  log: CapturedLog
+  txLogs: CapturedLog[]
   tx: InteropTransaction
   block: Block
   chain: string
 }
 
 export interface TxToCapture {
-  txLogs: Log[]
+  txLogs: CapturedLog[]
   tx: InteropTransaction
   block: Block
   chain: string

@@ -211,24 +211,47 @@ export const stakewise: BaseProject = {
     ],
   },
   liquidStaking: {
-    contracts: {
-      type: 'stakewise',
-      osETH: discovery.getContract('osETH').address,
-      vaultController: discovery.getContract('OsTokenVaultController').address,
-      redeemer: discovery.getContract('OsTokenRedeemer').address,
-      previousRedeemer: discovery.getContract('RetiredOsTokenRedeemer').address,
-    },
-    // The ETH market since 2025-12. Before it, osETH traded against ETH on a
-    // Balancer V2 pool that was drained on 2025-11-03 and now quotes zero.
-    marketQuotes: [
-      {
-        type: 'fluid',
-        pool: ChainSpecificAddress(
-          'eth:0xC0652bdDcfF7739dadf0C9567584B35Ca63eB8E1',
-        ),
-        swap0to1: false,
+    tracking: {
+      contracts: {
+        type: 'stakewise',
+        osETH: discovery.getContract('osETH').address,
+        vaultController: discovery.getContract('OsTokenVaultController')
+          .address,
+        redeemer: discovery.getContract('OsTokenRedeemer').address,
+        previousRedeemer: discovery.getContract('RetiredOsTokenRedeemer')
+          .address,
       },
-    ],
+      // Balancer's V2 pool was the ETH market until an exploit drained it on
+      // 2025-11-03. Its V3 pool has quoted since 2024-12, and is the only quote
+      // in the months Fluid's pool, opened in 2026-01, stood empty.
+      marketQuotes: [
+        {
+          type: 'balancerV2',
+          poolId:
+            '0xdacf5fa19b1f720111609043ac67a9818262850c000000000000000000000635',
+          // The exploit's block. The dust left in the pool quotes at a 99.99%
+          // discount, which would stand as the price whenever no other pool
+          // quotes.
+          untilBlock: 23_717_397,
+        },
+        {
+          type: 'balancerV3',
+          pool: ChainSpecificAddress(
+            'eth:0x57c23c58B1D8C3292c15BEcF07c62C5c52457A42',
+          ),
+          wrappedWeth: ChainSpecificAddress(
+            'eth:0x0bfc9d54Fc184518A81162F8fB99c2eACa081202',
+          ),
+        },
+        {
+          type: 'fluid',
+          pool: ChainSpecificAddress(
+            'eth:0xC0652bdDcfF7739dadf0C9567584B35Ca63eB8E1',
+          ),
+          swap0to1: false,
+        },
+      ],
+    },
     risks: {
       minting: {
         value: 'Permissionless',

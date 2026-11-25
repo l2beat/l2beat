@@ -12,7 +12,8 @@ export function parseTimeArg(value: string): UnixTime {
   const parsed = Date.parse(value)
   if (Number.isNaN(parsed)) {
     throw new Error(
-      `Cannot parse time argument '${value}' - use unix seconds or an ISO date`,
+      'Cannot parse time argument, use unix seconds or an ISO date',
+      { cause: { value } },
     )
   }
   return UnixTime.fromDate(new Date(parsed))
@@ -29,9 +30,9 @@ export function resolveWindow(
     'hour',
   )
   if (resolvedFrom >= resolvedTo) {
-    throw new Error(
-      `Invalid window: from (${resolvedFrom}) must be before to (${resolvedTo})`,
-    )
+    throw new Error('Invalid window: from must be before to', {
+      cause: { from: resolvedFrom, to: resolvedTo },
+    })
   }
   return { from: resolvedFrom, to: resolvedTo }
 }

@@ -61,8 +61,7 @@ export class HyperlanePlugIn implements InteropPluginResyncable {
     const process = parseProcess(input.log, null)
     if (process) {
       const nextLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! + 1,
+        (x) => x.logIndex === input.log.logIndex + 1,
       )
       const processId = nextLog && parseProcessId(nextLog, null)
       if (!processId) return

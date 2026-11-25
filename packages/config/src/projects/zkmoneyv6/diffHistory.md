@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x3a0b8cc3956ec557b956974fc0bd788d8c9afd96
+
+# Diff at Wed, 18 Nov 2026 10:52:31 GMT:
+
+- id: 568e5918
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a9423cc3b7142ce555e610050055e819db4d7d9 block: 1794571906
+- current timestamp: 1794571906
+
+## Description
+
+Add the Across bridge-out escrow factory, which Desktop v0.13.0 reaches when the user withdraws to another chain.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794571906 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AcrossBridgeEscrowFactory (eth:0x482fCB714Eb34075453a9e5954EbEe9c85BC9142) [zkmoney/v6/AcrossBridgeEscrowFactory]
+    +++ description: Bridge-out on withdraw: a withdrawal can pay DAI to an AcrossBridgeEscrow clone whose destination chain, recipient, Across fee, tip and recovery commitment are fixed in its address. Anyone can deploy and execute a funded clone.
+```
+
+```diff
++   Status: CREATED
+    contract AcrossBridgeEscrow (eth:0x49e5A38c822E22222D1c7A7445e73B33B484EfF6) [zkmoney/v6/AcrossBridgeEscrow]
+    +++ description: AcrossBridgeEscrow implementation. A clone swaps its DAI to USDC or USDT on the Curve 3pool and deposits it into Across's SpokePool, whose relayers pay the recipient on the destination chain. If the deposit is never filled, Across refunds the clone, and only the recovery key committed in its address can move the funds.
+```
+
 Generated with discovered.json: 0xc0228be9efe21787c72e1fa77b0e73e38b4c813c
 
 # Diff at Mon, 16 Nov 2026 10:29:55 GMT:

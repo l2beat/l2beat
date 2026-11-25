@@ -1,11 +1,46 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1Bridge",
-  "description": "An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
+  "description": "ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
   "ignoreMethods": ["depositHashes"],
   "ignoreInWatchMode": ["depositNonce"],
   "category": "bridge-canonical",
   "fields": {
-    "l2Bridge": { "edit": ["format", "FacetAddress"] }
+    "l2Bridge": { "edit": ["format", "FacetAddress"] },
+    "rollup": {
+      "description": "Rollup contract whose canonical proposals withdrawals are proven against. It fixes the Facet state transition rules the bridge follows.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the Rollup contract used to prove withdrawals, pause deposits and withdrawals, blacklist state roots and set the withdrawal delay."
+        }
+      ]
+    },
+    "paused": {
+      "severity": "HIGH"
+    },
+    "withdrawalDelay": {
+      "description": "Seconds a proven withdrawal waits before it can be finalized, on top of the Rollup challenge period.",
+      "severity": "MEDIUM"
+    },
+    "blacklistedRoots": {
+      "description": "State roots that cannot be used to prove or finalize withdrawals.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "root",
+        "add": {
+          "event": "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
+          "where": ["=", "#blacklisted", true]
+        },
+        "remove": {
+          "event": "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
+          "where": ["=", "#blacklisted", false]
+        }
+      }
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import { getEnvData } from './ssr/pageDataScripts'
 
@@ -19,6 +20,12 @@ const positiveInteger = z
     'Expected a positive integer',
   )
 
+const isoDate = z
+  .string()
+  .transform(Date.parse)
+  .check(Number.isFinite, 'Expected an ISO 8601 date')
+  .transform((ms) => UnixTime.fromDate(new Date(ms)))
+
 // Unreleased features are on everywhere but production, so local, preview and
 // staging show what is about to ship without per-deployment env setup.
 const featureFlag = coerceBoolean
@@ -37,6 +44,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
   CLIENT_SIDE_TOKENS_PAGE: featureFlag,
   CLIENT_SIDE_BLOBS_PAGE: featureFlag,
+  CLIENT_SIDE_LIVE_ACTIVITY: featureFlag,
   CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag,
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
@@ -61,6 +69,9 @@ const SERVER_CONFIG = {
   MOCK: coerceBoolean.default(false),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
+  // While the TVS backend is down, TVS charts end here instead of trailing
+  // into an empty gap. Unset it once TVS has caught up.
+  TVS_CHARTS_PINNED_TO: isoDate.optional(),
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
 
@@ -138,6 +149,7 @@ function getRawEnv(): Record<
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
+    TVS_CHARTS_PINNED_TO: process.env.TVS_CHARTS_PINNED_TO,
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
@@ -156,6 +168,7 @@ function getRawEnv(): Record<
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
     CLIENT_SIDE_TOKENS_PAGE: process.env.CLIENT_SIDE_TOKENS_PAGE,
     CLIENT_SIDE_BLOBS_PAGE: process.env.CLIENT_SIDE_BLOBS_PAGE,
+    CLIENT_SIDE_LIVE_ACTIVITY: process.env.CLIENT_SIDE_LIVE_ACTIVITY,
     CLIENT_SIDE_OSSIFICATION_ENABLED:
       process.env.CLIENT_SIDE_OSSIFICATION_ENABLED,
   }

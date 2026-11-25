@@ -56,6 +56,7 @@ describe(ClientMetricsAggregator.name, () => {
         queueLength: 1,
       }),
       callsPerMinute: 120,
+      effectiveCallsPerMinute: 90,
     })
     const aggregator = new ClientMetricsAggregator({
       logger: Logger.SILENT,
@@ -80,6 +81,7 @@ describe(ClientMetricsAggregator.name, () => {
         queueDepthMax: 4,
         limiterInFlightMax: 7,
         callsPerMinute: 120,
+        effectiveCallsPerMinute: 90,
       },
       {
         label: 'queued',
@@ -94,6 +96,7 @@ describe(ClientMetricsAggregator.name, () => {
         queueDepthMax: 5,
         limiterInFlightMax: 7,
         callsPerMinute: 120,
+        effectiveCallsPerMinute: 90,
       },
     ])
     expect(rateLimiter.takeStats).toHaveBeenCalledTimes(1)

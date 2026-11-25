@@ -192,6 +192,7 @@ interface State {
   preimages: Record<`0x${string}`, API.PreimageResult>
   requestedPreimages: Record<`0x${string}`, boolean>
   tooltipId: string
+  lookupFailed: boolean
 }
 
 interface Actions {
@@ -210,6 +211,7 @@ interface Actions {
   requestPreimage(hash: `0x${string}`): void
   setPreimage(preimage: API.PreimageResult): void
   showTooltip(id: string): void
+  markLookupFailed(): void
 }
 
 function compareSignatures(a: Signature, b: Signature): number {
@@ -273,6 +275,7 @@ const useStore = create<State & Actions>((set) => ({
   preimages: {},
   requestedPreimages: {},
   tooltipId: '',
+  lookupFailed: false,
   requestSignature: (selector) =>
     set((state) => {
       if (state.requestedSignatures[selector]) return {}
@@ -359,6 +362,7 @@ const useStore = create<State & Actions>((set) => ({
     })),
   showTooltip: (id) =>
     set((state) => ({ tooltipId: state.tooltipId !== id ? id : '' })),
+  markLookupFailed: () => set({ lookupFailed: true }),
 }))
 
 // @ts-expect-error
@@ -391,8 +395,9 @@ function APIChecker() {
       }
     }
     if (selectorsToFetch.length === 0) return
-    void API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then((res) =>
-      store.addSignatures(res),
+    API.lookupSignatures(selectorsToFetch as `0x${string}`[]).then(
+      (res) => store.addSignatures(res),
+      store.markLookupFailed,
     )
   }, [requestedSignatures, store.addSignatures])
 
@@ -408,7 +413,7 @@ function APIChecker() {
       const [left, right] = prefixed.split(':')
       const chainId = Number(left)
       const address = right as `0x${string}`
-      void API.lookupAddress(chainId, address).then((res) => {
+      API.lookupAddress(chainId, address).then((res) => {
         if (res.name) store.setName(chainId, address, res.name)
         if (res.alias) store.setAlias(chainId, address, res.alias)
         if (res.token) store.setToken(chainId, address, res.token)
@@ -422,7 +427,7 @@ function APIChecker() {
             })),
           )
         }
-      })
+      }, store.markLookupFailed)
     }
   }, [
     requestedAddresses,
@@ -440,16 +445,26 @@ function APIChecker() {
         apiRequested.add(hash)
       }
     }
-    void API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then(
-      (res) => {
-        for (const preimage of res) {
-          store.setPreimage(preimage)
-        }
-      },
-    )
+    API.lookupPreimages(preimagesToFetch as `0x${string}`[]).then((res) => {
+      for (const preimage of res) {
+        store.setPreimage(preimage)
+      }
+    }, store.markLookupFailed)
   }, [requestedPreimages, store.setPreimage])
 
-  return null
+  // Failed keys stay in apiRequested and are not asked again, so the flag
+  // lives in the store, where it outlives this component and reaches
+  // whichever instance is mounted when a lookup fails.
+  if (!store.lookupFailed) return null
+  return (
+    <div
+      role="alert"
+      className="mx-auto max-w-[1200px] px-12 pt-4 text-red-500"
+    >
+      Could not load signatures, names or preimages from the API, so the
+      decoding below may be incomplete. Reload the page to try again.
+    </div>
+  )
 }
 
 interface LocalAbi {

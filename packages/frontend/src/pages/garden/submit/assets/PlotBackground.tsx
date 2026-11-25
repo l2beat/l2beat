@@ -5,7 +5,10 @@ import { cn } from '~/utils/cn'
 /** An early-morning plot: clouds, furrows, seedlings and an empty trellis. */
 export function PlotBackground() {
   return (
-    <PageBackdrop name="plot">
+    <PageBackdrop
+      name="plot"
+      ground={['var(--plot-soil-far)', 'var(--plot-soil-near)']}
+    >
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-plot-canvas via-[#f4f6e6]/40 to-transparent dark:via-[#161c12]/40" />
 
       <PageBackdropScenery>
@@ -38,11 +41,11 @@ export function PlotBackground() {
           >
             <path
               d="M0 66 C300 54 900 54 1200 66 L1200 176 L0 176 Z"
-              className="fill-[#e7dcc6]/70 dark:fill-[#241f16]/75"
+              className="fill-(--plot-soil-far)"
             />
             <path
               d="M0 96 C300 86 900 86 1200 96 L1200 176 L0 176 Z"
-              className="fill-[#d8c9ac]/70 dark:fill-[#2a251b]/75"
+              className="fill-(--plot-soil-near)"
             />
             {FURROWS.map((furrow) => (
               <path

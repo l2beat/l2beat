@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { sql } from 'kysely'
 import { BaseRepository } from './BaseRepository'
 import type { Database } from './database'
 import { describeDatabase } from './test/database'
@@ -42,6 +43,12 @@ class TestRepository extends BaseRepository {
   }
 }
 
+async function raiseSerializationFailure(db: Database) {
+  await sql`DO $$ BEGIN RAISE EXCEPTION 'conflict' USING ERRCODE = '40001'; END $$`.execute(
+    db.activity['client'].db,
+  )
+}
+
 function createTestRepository(db: Database) {
   const pgDb = db.activity['client']
   return new TestRepository(pgDb)
@@ -70,6 +77,37 @@ describeDatabase(BaseRepository.name, (db) => {
       })
       const results = await repository.getAll()
       expect(results).toEqual([1, 2])
+    })
+
+    it('runs at the isolation level it asks for', async () => {
+      const level = await db.transaction(async () => {
+        const { rows } = await sql<{
+          transaction_isolation: string
+        }>`SHOW transaction_isolation`.execute(db.activity['client'].db)
+        return rows[0]?.transaction_isolation
+      }, 'repeatable read')
+
+      expect(level).toEqual('repeatable read')
+    })
+
+    it('does not retry after a serialization failure', async () => {
+      let attempts = 0
+      await expect(
+        db.transaction(async () => {
+          attempts++
+          await repository.insert(attempts)
+          await raiseSerializationFailure(db)
+        }, 'serializable'),
+      ).toBeRejectedWith('conflict')
+
+      expect(attempts).toEqual(1)
+      expect(await repository.getAll()).toEqual([])
+    })
+
+    it('rejects a nested transaction that asks for another level', async () => {
+      await expect(
+        db.transaction(() => db.transaction(async () => {}, 'serializable')),
+      ).toBeRejectedWith('Nested transaction asks for another isolation level')
     })
 
     it('rollbacks inside a transaction', async () => {

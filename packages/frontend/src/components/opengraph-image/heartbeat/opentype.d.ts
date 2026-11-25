@@ -25,6 +25,5 @@ declare module '@shuding/opentype.js' {
     ): { toPathData(decimalPlaces?: number): string }
   }
   const opentype: { parse(buffer: ArrayBufferLike): Font }
-  // biome-ignore lint/style/noDefaultExport: the package exports it as default
   export default opentype
 }

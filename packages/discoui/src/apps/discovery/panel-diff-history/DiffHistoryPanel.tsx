@@ -367,12 +367,16 @@ function CollapsibleSection(props: {
   bulkOp: BulkOp
 }) {
   const { section, bulkOp } = props
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if (bulkOp?.kind === 'expand') setOpen(true)
-    else if (bulkOp?.kind === 'collapse') setOpen(false)
-  }, [bulkOp])
+  const [open, setOpen] = useState(bulkOp?.kind === 'expand')
+  // Applied while rendering, so expanding everything renders each section
+  // once, not closed first and open again after an effect.
+  const [appliedBulkOp, setAppliedBulkOp] = useState(bulkOp)
+  if (appliedBulkOp !== bulkOp) {
+    setAppliedBulkOp(bulkOp)
+    if (bulkOp !== null) {
+      setOpen(bulkOp.kind === 'expand')
+    }
+  }
 
   const title = SECTION_TITLE[section.kind]
   return (

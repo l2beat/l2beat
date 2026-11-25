@@ -8,13 +8,8 @@ const INTENTS =
   'https://github.com/near/intents/blob/fa44ede9e874931c39a6c4246de82bc40f4f8d99/'
 const BRIDGE =
   'https://github.com/Near-One/btc-bridge/blob/66d239120981ba58ae92f73dc6860e0369b4ad28/contracts/satoshi-bridge/src/'
-const ZODL =
-  'https://github.com/zodl-inc/zodl-ios/blob/75b83d7601573e165e2dacdfaffb69750dadd05f/secant/Sources/'
-const ZODL_SDK =
-  'https://github.com/zodl-inc/zodl-swift-wallet-sdk/blob/191d0347186a1c6fcd207eead24a891049444041/Sources/ZcashLightClientKit/'
-// The sync engine Zodl 3.15.0 ships, through SDK 5.0.0 (zodl-slipstream 0.2.0).
-const SLIPSTREAM =
-  'https://github.com/zodl-inc/slipstream/blob/3bd434ce6023a000cc377634d8cd2b184161857a/core/src/'
+const VIZOR =
+  'https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/'
 const DOCS = 'https://docs.near-intents.org/'
 
 const PAYOUT_RECIPIENT: PrivacyFieldExposure = {
@@ -59,8 +54,10 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
           url: BRIDGE + 'zcash_utils/orchard_policy.rs#L11-L64',
         },
         {
-          title: 'Zodl creates a fresh shielded address for every quote',
-          url: ZODL + 'Features/SwapAndPayForm/SwapAndPayStore.swift#L908-L955',
+          title: 'Vizor creates a fresh shielded address for every quote',
+          url:
+            VIZOR +
+            'lib/src/features/swap/providers/swap_zec_staging_address_service.dart#L58-L67',
         },
       ],
     },
@@ -99,9 +96,9 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
     networkObserver: {
       sentiment: 'warning',
       exposureShort:
-        "Each sync sends the account's transparent addresses to lightwalletd before fetching its transactions, so lightwalletd can tie the payout and the exit to the account.",
+        "Private queries show Valar's PIR server the block ranges where the wallet has activity, which can tie its payout and exit together.",
       exposureContinued:
-        "With Tor on, each 1Click request and each sent transaction gets its own circuit, and sync lookups go over Tor while blocks download directly. Tor hides the user's IP from the lookups, not the addresses they name.",
+        "With Tor and Private queries on, lightwalletd receives no address or transaction id of the account. By default both are off, and lightwalletd gets the transparent addresses with the user's IP.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -109,27 +106,30 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         asset: 'exposed',
         linkage: {
           verdict: 'atRisk',
-          note: "Private only with Tor on and the user's own lightwalletd server.",
+          note: "Valar's PIR server sees the wallet's active block ranges, and lightwalletd its addresses unless Tor and Private queries are on.",
         },
       },
       sources: [
         {
-          title: 'Zodl syncs with the Slipstream engine',
-          url: ZODL + 'Models/WalletConfig.swift#L14-L25',
+          title: 'Private queries keep transparent lookups from lightwalletd',
+          url:
+            VIZOR +
+            'rust/src/wallet/sync_engine/enhancement/README.md#L335-L347',
         },
         {
-          title:
-            "Each sync opens one connection and looks up the account's transparent addresses first",
-          url: SLIPSTREAM + 'engine.rs#L246-L282',
+          title: 'Each PIR request takes its own Tor circuit',
+          url:
+            VIZOR +
+            'rust/src/wallet/sync_engine/enhancement/transport/mod.rs#L175-L176',
         },
         {
-          title:
-            'Blocks download directly, lookups go over isolated Tor circuits',
-          url: SLIPSTREAM + 'connector.rs#L17-L22',
+          title: 'PIR leaks: active block ranges and status timing',
+          url: 'https://github.com/zakura-core/wallet-libraries/blob/0074b990a635a3e53258c298ad976043a8d42c3e/docs/pir-remaining-leaks-plan.md#L22-L36',
         },
         {
-          title: 'Each sent transaction gets its own Tor circuit',
-          url: ZODL_SDK + 'Transaction/EndpointSubmitter.swift#L26-L41',
+          title: 'Tor is off by default',
+          url:
+            VIZOR + 'lib/src/providers/network_privacy_provider.dart#L92-L95',
         },
       ],
     },
@@ -138,7 +138,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The operator custodies both legs in transit and can freeze any account or deposit, setting the terms on which the user's funds return.",
       exposureContinued:
-        'Over Tor, its 1Click API sees each leg only as NEAR publishes it, with a fresh shielded address per swap. It holds no key into the shielded pool.',
+        "Its 1Click API receives each quote's addresses and amount through Vizor's server, with a fresh shielded address per swap. It holds no key into the shielded pool.",
       interior: {
         sender: 'private',
         recipient: 'private',
@@ -151,8 +151,8 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
-          title:
-            '1Click terms: IP and wallet data, screening, custody (2026-10-30)',
+          title: '1Click terms: IP and wallet data, screening, custody',
+          checked: '2026-10-30',
           url: DOCS + 'security-compliance/terms-of-service',
         },
         {
@@ -165,9 +165,10 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
         },
         {
           title:
-            'Zodl sends its partner key and a fresh refund address with each quote',
+            "1Click calls go through Vizor's server, which adds its referral",
           url:
-            ZODL + 'Dependencies/SwapAndPay/sources/Near1Click.swift#L313-L352',
+            VIZOR +
+            'lib/src/features/swap/providers/swap_provider_config.dart#L6-L15',
         },
       ],
     },
@@ -206,9 +207,8 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: 'Turn on Tor in Zodl and point it at a lightwalletd server you run.',
+      text: 'Turn on Tor and Private queries in Vizor before its first sync.',
       against: ['networkObserver'],
-      outside: true,
     },
     {
       name: 'Hold',

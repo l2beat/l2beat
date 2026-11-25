@@ -1,5 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { TokenGraphTileDiagram } from './TokenGraphTileDiagram'
 
 export function TokenGraphTileCard({
@@ -51,11 +52,11 @@ export function TokenGraphTileCard({
 
       <span className="text-label-value-12 text-secondary">
         {count(tile.deploymentsCount, 'deployment')}
-        {' · '}
+        {DOT_SEPARATOR}
         {count(tile.chainsCount, 'chain')}
         {tile.bridgesCount > 0 && (
           <>
-            {' · '}
+            {DOT_SEPARATOR}
             {count(tile.bridgesCount, 'bridge')}
           </>
         )}

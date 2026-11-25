@@ -52,7 +52,8 @@ function parsePromotionMode(value: string): InteropPromotionConfig['mode'] {
     return value
   }
   throw new Error(
-    `Invalid INTEROP_PROMOTION_MODE "${value}" (expected off | shadow | enforce)`,
+    'Invalid INTEROP_PROMOTION_MODE, expected off | shadow | enforce',
+    { cause: { value } },
   )
 }
 

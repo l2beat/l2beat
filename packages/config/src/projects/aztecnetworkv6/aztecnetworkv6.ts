@@ -11,6 +11,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   OPERATOR,
   RISK_VIEW,
@@ -34,6 +35,8 @@ import stakeDistributionJson from './stake-distribution.json'
 const stakeDistribution = readStakeDistribution(stakeDistributionJson)
 
 const discovery = new ProjectDiscovery('aztecnetworkv6')
+// zk.money v6 portals live in their own discovery, the privacy project's.
+const zkMoneyDiscovery = new ProjectDiscovery('zkmoneyv6')
 
 const governanceConfiguration = discovery.getContractValue<{
   proposeConfig: { lockDelay: number; lockAmount: string }
@@ -353,12 +356,32 @@ export const aztecnetworkv6: ScalingProject = {
   },
   config: {
     associatedTokens: ['AZTEC'],
-    // TODO: add activityConfig once an Aztec RPC serves v6
+    activityConfig: {
+      type: 'block',
+      startBlock: 1,
+      // The indexer range is inclusive; 49 produces one 50-block RPC request.
+      batchSize: 49,
+    },
     escrows: [
       discovery.getEscrowDetails({
         address: feeJuicePortal.address,
         tokens: ['AZTEC'],
       }),
+      ...(
+        [
+          ['OxidePortal', 'DAI'],
+          ['OxidePortal_sUSDS', 'sUSDS'],
+          ['OxidePortal_steakUSDC', 'steakUSDC'],
+        ] as const
+      ).map(([name, token]) =>
+        zkMoneyDiscovery.getEscrowDetails({
+          address: zkMoneyDiscovery.getContract(name).address,
+          tokens: [token],
+          ...ESCROW.CANONICAL_ADD_TA,
+          description:
+            'Escrow of [zk.money](/privacy/projects/zkmoneyv6). Each withdrawal needs a proven Aztec message and a signature from a registered AWS Nitro enclave.',
+        }),
+      ),
     ],
     daTracking: [
       {
@@ -421,7 +444,13 @@ export const aztecnetworkv6: ScalingProject = {
     gasTokens: ['AZTEC'],
     name: 'aztecnetworkv6',
     chainId: 677868, // on chainlist, but aztec is not evm
-    apis: [], // TODO: add an aztec-rpc that serves v6
+    apis: [
+      {
+        type: 'aztec-rpc',
+        url: 'https://aztec-mainnet.drpc.org',
+        callsPerMinute: 60,
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,

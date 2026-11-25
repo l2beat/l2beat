@@ -134,9 +134,15 @@ export class ValueService {
     const amount = await this.storage.getAmount(config.id, timestamp)
 
     if (amount === undefined) {
-      throw new Error(
-        `${tokenId}: Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
-      )
+      throw new Error('Amount not found within configured range', {
+        cause: {
+          tokenId,
+          configId: config.id,
+          timestamp,
+          sinceTimestamp: config.sinceTimestamp,
+          untilTimestamp: config.untilTimestamp,
+        },
+      })
     }
 
     return BigIntWithDecimals(amount, config.decimals)

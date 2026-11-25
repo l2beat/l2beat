@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import {
   useFlagFromQueryParam,
   useQueryParam,
@@ -23,45 +23,6 @@ export function useUrlState() {
   )
   const linesParam = useQueryParam(SEARCH_PARAMS.lines)
 
-  const [shareableUrl, setShareableUrl] = useState<string | null>(null)
-
-  const buildShareableUrl = useCallback(
-    (
-      selection: LineSelection | null,
-      removeUnchanged: boolean,
-      ignoreComments: boolean,
-      fold: boolean,
-    ) => {
-      if (!selection) {
-        setShareableUrl(null)
-        return
-      }
-
-      const url = new URL(window.location.href)
-
-      for (const param of Object.values(SEARCH_PARAMS)) {
-        url.searchParams.delete(param)
-      }
-
-      url.searchParams.set(SEARCH_PARAMS.lines, LineSelector.encode(selection))
-
-      if (removeUnchanged) {
-        url.searchParams.set(SEARCH_PARAMS.removeUnchanged, 'true')
-      }
-
-      if (ignoreComments) {
-        url.searchParams.set(SEARCH_PARAMS.ignoreComments, 'true')
-      }
-
-      if (fold) {
-        url.searchParams.set(SEARCH_PARAMS.fold, 'true')
-      }
-
-      setShareableUrl(url.toString())
-    },
-    [],
-  )
-
   const swapAddresses = useCallback(
     (leftAddress: string, rightAddress: string) => {
       const currentUrl = new URL(window.location.href)
@@ -80,8 +41,40 @@ export function useUrlState() {
       lines: linesParam,
       fold: foldParam,
     },
-    shareableUrl,
     buildShareableUrl,
     swapAddresses,
   }
+}
+
+function buildShareableUrl(
+  selection: LineSelection | null,
+  removeUnchanged: boolean,
+  ignoreComments: boolean,
+  fold: boolean,
+): string | null {
+  if (!selection) {
+    return null
+  }
+
+  const url = new URL(window.location.href)
+
+  for (const param of Object.values(SEARCH_PARAMS)) {
+    url.searchParams.delete(param)
+  }
+
+  url.searchParams.set(SEARCH_PARAMS.lines, LineSelector.encode(selection))
+
+  if (removeUnchanged) {
+    url.searchParams.set(SEARCH_PARAMS.removeUnchanged, 'true')
+  }
+
+  if (ignoreComments) {
+    url.searchParams.set(SEARCH_PARAMS.ignoreComments, 'true')
+  }
+
+  if (fold) {
+    url.searchParams.set(SEARCH_PARAMS.fold, 'true')
+  }
+
+  return url.toString()
 }

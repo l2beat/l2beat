@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AcrossBridgeEscrow",
+  "category": "core",
+  "description": "AcrossBridgeEscrow implementation. A clone swaps its DAI to USDC or USDT on the Curve 3pool and deposits it into Across's SpokePool, whose relayers pay the recipient on the destination chain. If the deposit is never filled, Across refunds the clone, and only the recovery key committed in its address can move the funds.",
+  "ignoreMethods": [
+    "acrossFee",
+    "acrossInputToken",
+    "acrossOutputToken",
+    "acrossOutputTokenDecimals",
+    "destinationChainId",
+    "nonce",
+    "recipient",
+    "recoveryCommitment",
+    "relayerTip"
+  ],
+  "ignoreRelatives": ["DAI", "SPOKE_POOL", "THREE_POOL", "USDC", "USDT"]
+}

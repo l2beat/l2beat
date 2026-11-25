@@ -161,34 +161,28 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
 
       // Other logs can sit between PacketSent and OFTSent (e.g. SafeReceived
       // for a fee refund), so in batched sends the packet is found by guid.
-      const sent = findParsedBefore(
-        input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
-        (log) => {
-          const packetSent = parsePacketSent(log, [endpoint])
-          if (!packetSent) return
-          const packet = decodePacket(packetSent.encodedPayload)
-          if (!packet) return
-          const guid = createLayerZeroGuid(
-            packet.header.nonce,
-            packet.header.srcEid,
-            packet.header.sender,
-            packet.header.dstEid,
-            packet.header.receiver,
-          )
-          if (guid !== oftSentRaw.guid) return
-          return { guid, dstEid: packet.header.dstEid }
-        },
-      )
+      const sent = findParsedBefore(input.txLogs, input.log.logIndex, (log) => {
+        const packetSent = parsePacketSent(log, [endpoint])
+        if (!packetSent) return
+        const packet = decodePacket(packetSent.encodedPayload)
+        if (!packet) return
+        const guid = createLayerZeroGuid(
+          packet.header.nonce,
+          packet.header.srcEid,
+          packet.header.sender,
+          packet.header.dstEid,
+          packet.header.receiver,
+        )
+        if (guid !== oftSentRaw.guid) return
+        return { guid, dstEid: packet.header.dstEid }
+      })
       if (!sent) return
       const guid = sent.guid
       const $dstChain = findChain(networks, (x) => x.eid, sent.dstEid)
 
       const matchingTransferData = findOFTSentTransferData(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         normalized,
       )
 
@@ -212,8 +206,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       // ComposeSent), so the delivery is found by guid.
       const delivered = findParsedAfter(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log) => {
           const packetDelivered = parsePacketDelivered(log, [endpoint])
           if (!packetDelivered) return
@@ -234,8 +227,7 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       const transferMatch = findBestTransferLogByExactAmount(
         input.txLogs,
         oftReceived.amountReceivedLD,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log) => parseTransfer(log, null),
       )
 

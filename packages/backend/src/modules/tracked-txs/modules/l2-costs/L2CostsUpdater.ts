@@ -56,7 +56,9 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       const blobBaseFee = blobBaseFeeByBlock.get(tx.blockNumber)
 
       if (tx.blobVersionedHashes && !blobBaseFee) {
-        throw new Error(`Blob base fee not found for block ${tx.blockNumber}`)
+        throw new Error('Blob base fee not found for block', {
+          cause: { blockNumber: tx.blockNumber },
+        })
       }
 
       const blobGasUsed = tx.blobVersionedHashes

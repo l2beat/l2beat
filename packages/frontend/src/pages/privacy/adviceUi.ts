@@ -14,7 +14,7 @@ export const ADVICE = {
   sectionId: 'stay-private',
   title: PRIVACY_ADVICE_TITLE,
   intro:
-    'What a careful user does with the reference app, in order. The ratings assume these steps.',
+    'What a careful user does with the reference app, in order. The ratings assume these steps. They are not a recommendation to use this project.',
   againstLabel: 'Against',
   /** Leads the adversaries whose cell is not green and that no step names. */
   uncoveredLabel: 'No step helps against',

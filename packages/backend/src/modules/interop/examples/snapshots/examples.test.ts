@@ -23,7 +23,8 @@ describe('interop examples', () => {
         const definition = definitions[example]
         if (!definition) {
           throw new Error(
-            'Definition for ' + example + ' not found - remove snapshot files',
+            'Definition for example not found - remove snapshot files',
+            { cause: { example } },
           )
         }
 
@@ -42,7 +43,8 @@ describe('interop examples', () => {
         const definition = definitions[example]
         if (!definition) {
           throw new Error(
-            'Definition for ' + example + ' not found - remove snapshot files',
+            'Definition for example not found - remove snapshot files',
+            { cause: { example } },
           )
         }
 

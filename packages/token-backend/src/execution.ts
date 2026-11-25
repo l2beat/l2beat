@@ -87,7 +87,9 @@ export async function planAndExecute(
   await db.transaction(async () => {
     const planningResult = await generatePlan(db, intent, { user: opts.user })
     if (planningResult.outcome === 'error') {
-      throw new Error(`Error during planning: ${planningResult.error}`)
+      throw new Error('Error during planning', {
+        cause: { error: planningResult.error },
+      })
     }
     await commitTokenChanges(db, planningResult.plan.commands, {
       kind: 'manual',

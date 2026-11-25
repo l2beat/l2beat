@@ -1,5 +1,10 @@
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 
+/** User operations per transaction: one each where there are none */
+export function getUopsRatio(uops: number, txs: number) {
+  return txs === 0 ? 1 : uops / txs
+}
+
 export function getRatioChartData(
   data: RecategorisedActivityChartData | undefined,
 ) {
@@ -29,7 +34,7 @@ export function getRatioChartData(
 
       return {
         timestamp,
-        ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+        ratio: getUopsRatio(projectsUops, projectsTx),
       }
     },
   )

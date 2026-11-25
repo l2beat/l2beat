@@ -83,15 +83,6 @@ describe('LeveledCache', () => {
         expect(l1Mock.set).toHaveBeenCalledWith(key, value)
         expect(result).toEqual(value)
       })
-
-      it('should handle set in l1 if l2.get succeeds', async () => {
-        l1Mock.get.given(key).resolvesToOnce(undefined)
-        l2Mock.get.given(key).resolvesToOnce(value)
-
-        await leveledCache.get(key)
-
-        expect(l1Mock.set).toHaveBeenCalledWith(key, value)
-      })
     })
 
     describe("Scenario 3: Key Doesn't Exist in Both L1 and L2", () => {

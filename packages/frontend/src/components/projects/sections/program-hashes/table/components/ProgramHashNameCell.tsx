@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -20,22 +20,18 @@ export function ProgramHashNameCell({
   /** Another row has an icon: keep its slot so every name starts at one x. */
   reserveIcon?: boolean
 }) {
-  const titleRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
 
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (titleRef.current) {
-        const isOverflowing =
-          titleRef.current.scrollHeight > titleRef.current.clientHeight
-        setIsOverflowing(isOverflowing)
-      }
-    }
-
-    checkOverflow()
-    window.addEventListener('resize', checkOverflow)
-
-    return () => window.removeEventListener('resize', checkOverflow)
+  // Only the clamp, which changes with the title's own box, can make it
+  // overflow. The observer reads it after layout, so no row forces one. A
+  // ref callback, because turning the tooltip on remounts the title.
+  const observeTitle = useCallback((titleElement: HTMLDivElement | null) => {
+    if (!titleElement) return
+    const observer = new ResizeObserver(() => {
+      setIsOverflowing(titleElement.scrollHeight > titleElement.clientHeight)
+    })
+    observer.observe(titleElement)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -52,7 +48,7 @@ export function ProgramHashNameCell({
           className="text-left"
         >
           <div
-            ref={titleRef}
+            ref={observeTitle}
             className="line-clamp-6 w-max max-w-44 text-pretty break-words font-bold text-label-value-14 leading-normal md:line-clamp-4 md:max-w-60 2xl:max-w-72"
           >
             {withIdentifierBreaks(title, { atCapitals: false })}

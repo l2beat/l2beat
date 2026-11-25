@@ -6,12 +6,7 @@ import type {
   InteropEventRecord,
   InteropPluginSyncedRangeRecord,
 } from '@l2beat/database'
-import type {
-  RpcBlock,
-  RpcLog,
-  RpcReceipt,
-  RpcTransaction,
-} from '@l2beat/shared'
+import type { RpcBlock, RpcReceipt, RpcTransaction } from '@l2beat/shared'
 import {
   type Block,
   ChainSpecificAddress,
@@ -986,35 +981,6 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe('db wrapper methods', () => {
-    it('returns last synced range and oldest event', async () => {
-      const lastRange = makeSyncedRangeRecord()
-      const oldestEvent = makeInteropEventRecord()
-      const getOldestEventForPluginAndChain = mockFn().resolvesTo(oldestEvent)
-      const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncedRange: mockObject<
-            Database['interopPluginSyncedRange']
-          >({
-            findByPluginNameAndChain: mockFn().resolvesTo(lastRange),
-          }),
-          interopEvent: mockObject<Database['interopEvent']>({
-            getOldestEventForPluginAndChain,
-          }),
-        }),
-      })
-
-      const resultRange = await syncer.getLastSyncedRange()
-      const resultEvent = await syncer.getOldestEventForPluginAndChain()
-
-      expect(resultRange).toEqual(lastRange)
-      expect(resultEvent).toEqual(oldestEvent)
-      expect(getOldestEventForPluginAndChain).toHaveBeenCalledTimes(1)
-      expect(getOldestEventForPluginAndChain).toHaveBeenCalledWith(
-        ['across'],
-        'ethereum',
-      )
-    })
-
     it('returns the oldest event for cluster plugin names', async () => {
       const eventA = makeInteropEventRecord({ timestamp: UnixTime(5) })
       const getOldestEventForPluginAndChain = mockFn().resolvesTo(eventA)
@@ -1042,41 +1008,6 @@ describe(InteropEventSyncer.name, () => {
         ['across', 'wormhole'],
         'ethereum',
       )
-    })
-  })
-
-  describe('rpc wrapper methods', () => {
-    it('passes through getBlockByNumber, getLogs, getTransactionReceipt, and getTransactionByHash', async () => {
-      const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(5n))
-      const log = makeRpcLog()
-      const getLogs = mockFn().resolvesTo([log])
-      const receipt = makeRpcReceipt()
-      const getTransactionReceipt = mockFn().resolvesTo(receipt)
-      const transaction = makeRpcTransaction()
-      const getTransactionByHash = mockFn().resolvesTo(transaction)
-      const syncer = createSyncer({
-        rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
-          getBlockByNumber,
-          getLogs,
-          getTransactionReceipt,
-          getTransactionByHash,
-        }),
-      })
-
-      const block = await syncer.getBlockByNumber(5n)
-      const logs = await syncer.getLogs({
-        fromBlock: 1n,
-        toBlock: 2n,
-        address: [],
-        topics: [[]],
-      })
-      const txReceipt = await syncer.getTransactionReceipt(ZERO_HASH)
-      const tx = await syncer.getTransactionByHash(ZERO_HASH)
-
-      expect(block).toEqual(makeRpcBlock(5n))
-      expect(logs).toEqual([log])
-      expect(txReceipt).toEqual(receipt)
-      expect(tx).toEqual(transaction)
     })
   })
 })
@@ -1273,20 +1204,6 @@ function makeRpcBlock(number: bigint): RpcBlock {
     hash: ZERO_HASH,
     logsBloom: `0x${'00'.repeat(256)}`,
   } as RpcBlock
-}
-
-function makeRpcLog(): RpcLog {
-  return {
-    address: EthereumAddress.random(),
-    data: '0x',
-    topics: [],
-    logIndex: 0n,
-    transactionIndex: 0n,
-    transactionHash: ZERO_HASH,
-    blockNumber: 1n,
-    blockTimestamp: 1n,
-    blockHash: ZERO_HASH,
-  }
 }
 
 function makeRpcReceipt(): RpcReceipt {

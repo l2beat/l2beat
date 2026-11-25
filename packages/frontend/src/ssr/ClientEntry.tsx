@@ -5,8 +5,10 @@ import { getPageElement } from '../pages/getPageElement'
 import { getSsrData } from './pageDataScripts'
 
 async function main() {
-  // biome-ignore lint/style/noNonNullAssertion: It's there
-  const root = document.getElementById('root')!
+  const root = document.getElementById('root')
+  if (root === null) {
+    throw new Error('Root element missing')
+  }
   const ssrData = getSsrData()
   const pageElement = await getPageElement(
     ssrData,

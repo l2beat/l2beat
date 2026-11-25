@@ -65,14 +65,6 @@
     "eth:0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44": { "category": "spam" },
     "eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e": { "category": "spam" },
     "eth:0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": { "category": "spam" },
-    "eth:0x015318c16AE443a20DE0A776dB06a59F0D279057": { "category": "spam" },
-    "eth:0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D": { "category": "spam" },
-    "eth:0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": { "category": "spam" },
-    "eth:0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": { "category": "spam" },
-    "eth:0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": { "category": "spam" },
-    "eth:0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": { "category": "spam" },
-    "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": { "category": "spam" },
-    "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": { "category": "spam" },
 
     "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
       // ProxyAdmin (owned by ProtocolUpgradeHandler): upgrade admin of BridgeHub, L1AssetRouter, L1NativeTokenVault, L1Nullifier, ChainAssetHandler, MessageRoot, CTM -> upgrading any of these steals/freezes Era's escrowed funds

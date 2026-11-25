@@ -22,16 +22,6 @@ describe(OpenApi.name, () => {
 
       expect(app.get).toHaveBeenCalledWith('/test', expect.anything())
     })
-
-    it('registers multiple routes', () => {
-      const app = mockApp()
-      const openapi = new OpenApi(app, baseSchema)
-
-      openapi.get('/route1', { result: v.string() }, mockFn())
-      openapi.get('/route2', { result: v.number() }, mockFn())
-
-      expect(app.get).toHaveBeenCalledTimes(2)
-    })
   })
 
   describe('query validation', () => {

@@ -63,10 +63,24 @@
    becomes a row, the figure beside a wider, shorter sparkline. In the page's
    three columns (`home-wide`), where only Ethereum is that narrow, the two
    tiles go one under the other instead (`kpi-column`), down beside the
-   domains' rankings. */
+   domains' rankings. Ethereum with liquid staking (`kpis-rows`) has a ranking
+   of its own to keep level with theirs, so its KPIs stay rows there, with
+   shorter sparklines (`kpi-compact`). They are compact from lg too, where the
+   card shares a column with the recent cards beside Interop: three full rows
+   would make that column the taller one. */
 @custom-variant kpi-rows {
   @container home (width < 1560px) {
     @container kpis (width < 496px) {
+      @slot;
+    }
+  }
+  @container kpis-rows (width < 496px) {
+    @slot;
+  }
+}
+@custom-variant kpi-compact {
+  @media (width >= 64rem) {
+    @container kpis-rows (width < 496px) {
       @slot;
     }
   }
@@ -97,6 +111,16 @@
     @container interop-body (aspect-ratio > 4 / 5) and (width > 500px) {
       @slot;
     }
+  }
+}
+
+/* Interop's top tokens, stacked under its protocols (InteropTopList): too
+   short for its header (15px + 8px) and two rows, it shows nothing. The
+   query reads the content box, so the gap above it, its top padding, is
+   not counted. */
+@custom-variant interop-list-short {
+  @container interop-list (height < 103px) {
+    @slot;
   }
 }
 

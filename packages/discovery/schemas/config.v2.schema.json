@@ -516,7 +516,8 @@
                     {
                       "type": "object",
                       "properties": {
-                        "type": { "const": "arbitrumSequencerVersion" }
+                        "type": { "const": "arbitrumSequencerVersion" },
+                        "includeSeparateBatchEvent": { "type": "boolean" }
                       },
                       "additionalProperties": false,
                       "required": ["type"]

@@ -262,8 +262,6 @@ function UsedInBlock({
   mobile?: boolean
   stacked?: boolean
 }) {
-  if (!projectsUsedIn.length) return null
-
   return (
     <div
       className={
@@ -279,10 +277,16 @@ function UsedInBlock({
         // A 20px line like the verifier figures. On touch the icon list is a
         // 44px tap target, which centres in it and overflows both ways.
         <div className="flex h-5 items-center">
-          <ProjectsUsedIn usedIn={projectsUsedIn} />
+          <ProjectsUsedIn
+            usedIn={projectsUsedIn}
+            emptyClassName="text-label-value-13"
+          />
         </div>
       ) : (
-        <ProjectsUsedIn usedIn={projectsUsedIn} />
+        <ProjectsUsedIn
+          usedIn={projectsUsedIn}
+          emptyClassName="text-label-value-13"
+        />
       )}
     </div>
   )

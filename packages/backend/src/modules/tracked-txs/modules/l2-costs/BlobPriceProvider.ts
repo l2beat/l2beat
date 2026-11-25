@@ -17,7 +17,10 @@ export class BlobPriceProvider {
 
     if (oldestBlock > newestBlock) {
       throw new Error(
-        `Invalid block range: oldestBlock (${oldestBlock}) is greater than newestBlock (${newestBlock})`,
+        'Invalid block range: oldestBlock is greater than newestBlock',
+        {
+          cause: { oldestBlock, newestBlock },
+        },
       )
     }
 
@@ -73,7 +76,8 @@ export class BlobPriceProvider {
           const existingBlobPrice = blobPriceByBlock.get(blockNumber)
           if (existingBlobPrice && existingBlobPrice !== blobBaseFee) {
             throw new Error(
-              `Blob price for block ${blockNumber} was already set. This indicates overlapping ranges or duplicate processing.`,
+              'Blob price for block was already set, this indicates overlapping ranges or duplicate processing',
+              { cause: { blockNumber } },
             )
           }
           blobPriceByBlock.set(blockNumber, blobBaseFee)

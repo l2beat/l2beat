@@ -687,7 +687,9 @@ describe(TokenIngestionLoop.name, () => {
             },
           ]),
           getCoinDataById: mockFn().rejectsWith(
-            new Error('CoinGecko API error: 429 Too Many Requests'),
+            new Error('CoinGecko API request failed', {
+              cause: { status: 429, statusText: 'Too Many Requests' },
+            }),
           ),
         }),
       })
@@ -696,7 +698,7 @@ describe(TokenIngestionLoop.name, () => {
 
       expect(markError).toHaveBeenOnlyCalledWith(
         queueEntry(firstAddress),
-        'Failed to fetch CoinGecko data for usd-coin: CoinGecko API error: 429 Too Many Requests.',
+        'Failed to fetch CoinGecko data for usd-coin: CoinGecko API request failed ({"status":429,"statusText":"Too Many Requests"}).',
       )
       expect(remove).toHaveBeenOnlyCalledWith(queueEntry(secondAddress))
     })

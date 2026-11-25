@@ -1,11 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { useTracking } from '~/hooks/useTracking'
 import type { FilterableValueId } from './filterableValue'
 
@@ -15,7 +9,7 @@ type TableFilterInternalContextValue = {
   selectedId: FilterableValueId | undefined
   setSelectedId: Dispatch<SetStateAction<FilterableValueId | undefined>>
   open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
+  setOpen: (open: boolean) => void
   onEscapeKeyDown: (e: KeyboardEvent) => void
 }
 
@@ -28,25 +22,24 @@ interface Props {
 
 export function TableFilterInternalContextProvider({ children }: Props) {
   const { track } = useTracking()
-  const [open, setOpen] = useState(false)
+  const [open, setOpenState] = useState(false)
   const [search, setSearch] = useState('')
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
 
-  useEffect(() => {
-    if (open) {
-      track('filtersOpened')
-    }
-  }, [open, track])
-
-  // Reset search and selectedId when the filter is opened
-  useEffect(() => {
-    if (open) {
-      setSelectedId(undefined)
-      setSearch('')
-    }
-  }, [open])
+  // Every opening starts from the top of a clean menu.
+  const setOpen = useCallback(
+    (nextOpen: boolean) => {
+      if (nextOpen && !open) {
+        setSelectedId(undefined)
+        setSearch('')
+        track('filtersOpened')
+      }
+      setOpenState(nextOpen)
+    },
+    [open, track],
+  )
 
   const onEscapeKeyDown = useCallback(
     (e: KeyboardEvent) => {

@@ -78,7 +78,7 @@ export function L2SummaryTvsChart({
     <div className="flex flex-col gap-4">
       <ChartCardHeader
         title="Value secured"
-        link={{ href: '/layer2s/tvs', label: 'By project' }}
+        link={{ href: '/layer2s/tvs', label: 'Breakdown' }}
         value={
           stats?.total !== undefined
             ? formatCurrency(stats.total, unit)

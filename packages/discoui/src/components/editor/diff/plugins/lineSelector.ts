@@ -47,8 +47,7 @@ export class LineSelector implements EditorPlugin {
     const side = match[1] === 'L' ? 'left' : 'right'
     // biome-ignore lint/style/noNonNullAssertion: we checked match[2] exists
     const startLine = Number.parseInt(match[2]!, 10)
-    // biome-ignore lint/style/noNonNullAssertion: we checked match[3] exists
-    const endLine = match[3] ? Number.parseInt(match[3]!, 10) : startLine
+    const endLine = match[3] ? Number.parseInt(match[3], 10) : startLine
 
     return { side, startLine, endLine, anchorLine: endLine }
   }

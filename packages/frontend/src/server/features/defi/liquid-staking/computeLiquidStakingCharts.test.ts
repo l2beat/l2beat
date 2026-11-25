@@ -6,10 +6,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   computeCostOfExitChart,
+  computeTvlChart,
   computeYieldChart,
   getLastChartDay,
   getQueueWaits,
+  trimLeadingIncomplete,
 } from './computeLiquidStakingCharts'
+import { toBreakdown } from './liquidStakingTvlBreakdown'
 
 const DAY = UnixTime.DAY
 const HOUR = UnixTime.HOUR
@@ -68,6 +71,75 @@ describe(computeYieldChart.name, () => {
     const point = compute([], [], network).yield[0]
     expect(point?.ethStaked).not.toEqual(null)
     expect(point?.ethStakedUsd).toEqual(null)
+  })
+})
+
+describe(computeTvlChart.name, () => {
+  it("takes each day's own stake, supply and price, leaving the days without one empty", () => {
+    const points = computeTvlChart({
+      days: [UnixTime(START), UnixTime(START + DAY)],
+      tvlByProject: new Map([
+        ['lido', [9, 10]],
+        ['rocketpool', [1, null]],
+      ]),
+      network: [day(START, 31_000n)],
+      ethSupplies: new Map([[START + DAY, 120_000_000]]),
+      ethPrices: new Map([[START, 3_000]]),
+    })
+
+    expect(
+      points.map(({ timestamp, projects, staked, supply, ethPrice }) => ({
+        timestamp,
+        projects,
+        staked,
+        supply,
+        ethPrice,
+      })),
+    ).toEqual([
+      {
+        timestamp: START,
+        projects: { lido: 9, rocketpool: 1 },
+        staked: 30_000,
+        supply: null,
+        ethPrice: 3_000,
+      },
+      {
+        timestamp: UnixTime(START + DAY),
+        projects: { lido: 10, rocketpool: null },
+        staked: null,
+        supply: 120_000_000,
+        ethPrice: null,
+      },
+    ])
+  })
+})
+
+describe(trimLeadingIncomplete.name, () => {
+  const day = (
+    timestamp: number,
+    staked: number | null,
+    projects: Record<string, number | null>,
+  ) =>
+    toBreakdown({ timestamp, projects, staked, supply: null, ethPrice: null })
+
+  it('drops leading days missing a protocol or ETH staked', () => {
+    const days = [
+      day(1, 100, { lido: 30, etherfi: null }),
+      day(2, null, { lido: 30, etherfi: 10 }),
+      day(3, 100, { lido: 30, etherfi: 10 }),
+      day(4, 105, { lido: 31, etherfi: null }),
+    ]
+
+    expect(trimLeadingIncomplete(days)).toEqual(days.slice(2))
+  })
+
+  it('keeps all days when none is complete', () => {
+    const days = [
+      day(1, 100, { lido: 30, etherfi: null }),
+      day(2, 105, { lido: 31, etherfi: null }),
+    ]
+
+    expect(trimLeadingIncomplete(days)).toEqual(days)
   })
 })
 
@@ -142,6 +214,41 @@ describe(computeCostOfExitChart.name, () => {
     expect(completed.costOfExit[0]?.estimated).toEqual([])
   })
 
+  it('times a replaced queue apart, so its unpaid requests do not hold up the new one', () => {
+    // The replaced queue holds two unpaid requests, and gets a third the
+    // same day, which it never pays either.
+    const retired = {
+      retiredLastRequestId: 11,
+      retiredLastFinalizedRequestId: 8,
+    }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', DAY_31, 1, {
+          retiredLastRequestId: 10,
+          retiredLastFinalizedRequestId: 8,
+          lastRequestId: 0,
+          lastFinalizedRequestId: 0,
+        }),
+        snapshot('stakewise', DAY_31 + HOUR, 1, {
+          ...retired,
+          lastRequestId: 2,
+          lastFinalizedRequestId: 0,
+        }),
+        snapshot('stakewise', DAY_31 + 3 * HOUR, 1, {
+          ...retired,
+          lastRequestId: 2,
+          lastFinalizedRequestId: 2,
+        }),
+      ],
+    )
+    expect(present(charts.costOfExit[0]?.projects.stakewise)).toBeCloseTo(
+      2 / 24,
+      1e-12,
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual([])
+  })
+
   it('takes the market when it is cheaper than the queue', () => {
     const charts = compute(
       ['wbeth'],
@@ -181,6 +288,108 @@ describe(computeCostOfExitChart.name, () => {
     )
     // So the exit is the unwrap, which waits out the lock.
     expect(present(charts.costOfExit[0]?.projects.wbeth)).toEqual(40)
+  })
+
+  it('takes the market while a queue that pays nothing leaves the wait unknown', () => {
+    const quoted = {
+      marketExitEth: (100_899n * ETH) / 1000n,
+      marketExitValueEth: 101n * ETH,
+    }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', START + DAY, 1.0),
+        snapshot('stakewise', DAY_31, 1.01, {
+          ...quoted,
+          lastRequestId: 5,
+          lastFinalizedRequestId: 5,
+        }),
+        // Requested an hour ago, in a queue that has paid nothing lately.
+        snapshot('stakewise', DAY_31 + HOUR, 1.01, {
+          ...quoted,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 5,
+        }),
+      ],
+    )
+    // The hour waited so far would undercut the sale's 3 days, so the sale
+    // is shown, as a value the queue could still come in under.
+    expect(present(charts.costOfExit[0]?.projects.stakewise)).toBeCloseTo(
+      (0.001 * 365) / (0.01 * (365 / 30)),
+      1e-9,
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual(['stakewise'])
+  })
+
+  it('times an unpaced wBETH unwrap at the lock, and leaves it unknown past the lock', () => {
+    const lockTime = 10 * DAY
+    // Requested in a queue that has allocated nothing lately.
+    const requested = [
+      snapshot('wbeth', DAY_31, 1, {
+        lockTime,
+        lastRequestId: 5,
+        lastFinalizedRequestId: 5,
+      }),
+      snapshot('wbeth', DAY_31 + HOUR, 1, {
+        lockTime,
+        lastRequestId: 6,
+        lastFinalizedRequestId: 5,
+      }),
+    ]
+    const locked = compute(['wbeth'], requested)
+    expect(locked.costOfExit[0]?.projects.wbeth).toEqual(10)
+    expect(locked.costOfExit[0]?.estimated).toEqual(['wbeth'])
+
+    const overdue = compute(
+      ['wbeth'],
+      [
+        ...requested,
+        snapshot('wbeth', DAY_31 + 11 * DAY, 1, {
+          lockTime,
+          lastRequestId: 6,
+          lastFinalizedRequestId: 5,
+        }),
+      ],
+    )
+    // Not the lock alone, which is for days without requests.
+    expect(overdue.costOfExit[0]?.projects.wbeth).toEqual(null)
+  })
+
+  it('has no market route for a sale that paid nothing', () => {
+    const charts = compute(
+      ['cbeth'],
+      [
+        snapshot('cbeth', START + DAY, 1.0),
+        snapshot('cbeth', DAY_31, 1.01, {
+          marketExitEth: 0n,
+          marketExitValueEth: 101n * ETH,
+        }),
+      ],
+    )
+    expect(charts.costOfExit[0]?.projects.cbeth).toEqual(null)
+  })
+
+  it('leaves the market value unmarked once the queue has waited longer than it costs', () => {
+    const quoted = {
+      marketExitEth: (100_899n * ETH) / 1000n,
+      marketExitValueEth: 101n * ETH,
+    }
+    const waiting = { ...quoted, lastRequestId: 6, lastFinalizedRequestId: 5 }
+    const charts = compute(
+      ['stakewise'],
+      [
+        snapshot('stakewise', START + DAY, 1.0),
+        snapshot('stakewise', DAY_31, 1.01, {
+          ...quoted,
+          lastRequestId: 5,
+          lastFinalizedRequestId: 5,
+        }),
+        snapshot('stakewise', DAY_31 + HOUR, 1.01, waiting),
+        // Unpaid for 5 days, longer than the 3 days the sale costs.
+        snapshot('stakewise', DAY_31 + 5 * DAY, 1.01, waiting),
+      ],
+    )
+    expect(charts.costOfExit[0]?.estimated).toEqual([])
   })
 
   it('exits Rocket Pool at once only while its buffer holds the reference exit', () => {
@@ -250,6 +459,22 @@ describe(computeCostOfExitChart.name, () => {
     )
     expect(allocated.costOfExit[0]?.projects.wbeth).toEqual(10)
   })
+
+  it('counts wBETH’s lock as it stands when the unwrap can be claimed', () => {
+    const at = (days: number, lockDays: number) =>
+      snapshot('wbeth', DAY_31 + days * DAY, 1, { lockTime: lockDays * DAY })
+
+    // Cut from 60 days to 10 on day 5, so claimable once 10 days have passed.
+    const cut = compute(['wbeth'], [at(0, 60), at(5, 10), at(10, 10)])
+    expect(cut.costOfExit[0]?.projects.wbeth).toEqual(10)
+    expect(cut.costOfExit[0]?.estimated).toEqual([])
+
+    // Raised from 10 days to 40 on day 5, before the 10 days had passed.
+    // Still locked at the last snapshot, so the 40 days are a projection.
+    const raised = compute(['wbeth'], [at(0, 10), at(5, 40), at(10, 40)])
+    expect(raised.costOfExit[0]?.projects.wbeth).toEqual(40)
+    expect(raised.costOfExit[0]?.estimated).toEqual(['wbeth'])
+  })
 })
 
 describe(getQueueWaits.name, () => {
@@ -261,21 +486,69 @@ describe(getQueueWaits.name, () => {
         { timestamp: 2 * HOUR, lastRequestId: 5, lastFinalizedRequestId: 3 },
       ]),
     ).toEqual([
-      { timestamp: HOUR, requests: 2, hours: 1, estimated: false },
+      {
+        timestamp: HOUR,
+        requests: 2,
+        hours: 1,
+        estimated: false,
+        unpaced: false,
+      },
       // One request finalized an hour. Requests 4 and 5 are one and two
       // ahead of the finalized 3, so they wait 1.5 hours on average.
-      { timestamp: 2 * HOUR, requests: 2, hours: 1.5, estimated: true },
+      {
+        timestamp: 2 * HOUR,
+        requests: 2,
+        hours: 1.5,
+        estimated: true,
+        unpaced: false,
+      },
     ])
   })
 
-  it('counts the wait so far when nothing has finalized lately', () => {
+  it('paces a queue opened inside the window from its first snapshot', () => {
+    expect(
+      getQueueWaits([
+        { timestamp: 0, lastRequestId: null, lastFinalizedRequestId: null },
+        { timestamp: HOUR, lastRequestId: 0, lastFinalizedRequestId: 0 },
+        { timestamp: 2 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 0 },
+        { timestamp: 3 * HOUR, lastRequestId: 3, lastFinalizedRequestId: 1 },
+      ]),
+    ).toEqual([
+      {
+        timestamp: 2 * HOUR,
+        requests: 1,
+        hours: 1,
+        estimated: false,
+        unpaced: false,
+      },
+      // One request finalized in two hours. Requests 2 and 3 are 1.5 ahead
+      // of it on average, so they wait three more hours.
+      {
+        timestamp: 2 * HOUR,
+        requests: 2,
+        hours: 4,
+        estimated: true,
+        unpaced: false,
+      },
+    ])
+  })
+
+  it('counts only the wait so far when nothing has finalized lately', () => {
     expect(
       getQueueWaits([
         { timestamp: 0, lastRequestId: 1, lastFinalizedRequestId: 1 },
         { timestamp: HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
         { timestamp: 3 * HOUR, lastRequestId: 2, lastFinalizedRequestId: 1 },
       ]),
-    ).toEqual([{ timestamp: HOUR, requests: 1, hours: 2, estimated: true }])
+    ).toEqual([
+      {
+        timestamp: HOUR,
+        requests: 1,
+        hours: 2,
+        estimated: true,
+        unpaced: true,
+      },
+    ])
   })
 })
 
@@ -324,6 +597,8 @@ function snapshot(
     exchangeRate: BigInt(Math.round(rate * 1e9)) * 10n ** 9n,
     lastRequestId: null,
     lastFinalizedRequestId: null,
+    retiredLastRequestId: null,
+    retiredLastFinalizedRequestId: null,
     instantExitEth: null,
     instantExitFeeBps: null,
     lockTime: null,
