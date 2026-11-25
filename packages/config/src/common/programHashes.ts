@@ -147,6 +147,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash.
 `
 
+const CELO_OP_SUCCINCT_V220_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.10.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.10.0\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo: \`git checkout celo/v2.2.0\`. Commit hash should be \`0da183b0d69207af19cfb2214554d53be1c9b5f2\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the EigenDA range ELF from source: from \`programs/range/eigenda\` run \`cargo prove build --elf-name eigenda-range-elf-embedded --docker --tag v6.10.0 --output-directory ../../../elf\`. Its SHA-256 should be \`0fb3b74c2bbe4d5b2d2f9bb6062c1a05283d8d7a4bbfe648f406dc13ddfbadd6\`, the same as the ELF committed in the release.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.10.0 --output-directory ../../elf\`. Its SHA-256 should be \`39c255f50f0e91f5199347c3549df4b292793d8d669f9c55c5b3b91a3b38a9fd\`, the same as the ELF committed in the release.
+5. From the repo root run \`cargo run --bin config --release --features eigenda\` to print the range verification key hash and the aggregation verification key hash.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -479,13 +495,15 @@ Verify:
     ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.2.0'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v2.2.0/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: CELO_OP_SUCCINCT_V220_STEPS,
   },
   '0x543e17e82c4bf2064558a6c56d7e373e6fcb824900c9816d53272ca32b321746': {
     ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.2.0'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v2.2.0/programs/range/eigenda',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
+    verificationSteps: CELO_OP_SUCCINCT_V220_STEPS,
   },
   '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
     ...OP_SUCCINCT_FDP_AGG_EIGENDA('v3.4.1-rise.7'), // Rise
