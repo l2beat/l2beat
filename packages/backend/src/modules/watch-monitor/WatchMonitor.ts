@@ -9,7 +9,7 @@ import {
   type Watched,
   type WatchReader,
 } from '@l2beat/discovery'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type Hash256, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import shuffle from 'lodash/shuffle'
 import type { Clock } from '../../tools/Clock'
@@ -19,6 +19,7 @@ import { getPendingWatchDiffs } from './pendingWatchDiffs'
 import type { WatchNotifier } from './WatchNotifier'
 
 const MAX_PENDING_NOTIFICATIONS = 20
+const MAX_OBSERVATION_CAS_ATTEMPTS = 3
 
 export type RunWatchFn = (
   config: WatchConfig,
@@ -78,9 +79,11 @@ export class WatchMonitor {
     })
 
     const attemptIds = new Map<string, string>()
+    const attemptConfigHashes = new Map<string, Hash256 | null>()
     const tasks = enabledWatches.map((name) => {
       const attemptId = randomUUID()
       attemptIds.set(name, attemptId)
+      attemptConfigHashes.set(name, this.tryReadConfigHash(name))
       return {
         identity: {
           id: name,
@@ -94,15 +97,20 @@ export class WatchMonitor {
     const results = await this.workerPool.runInPool(tasks)
 
     // Persist pool-level failures (including task/run timeouts and skipped
-    // tasks) keyed by this run's originating attemptAt and attemptId.
+    // tasks), and drain any already-queued alerts outside the timed-out worker
+    // signal so a source timeout never strands earlier transitions.
     for (const taskError of results.errors) {
-      const attemptId = attemptIds.get(taskError.identity.id) ?? randomUUID()
+      const name = taskError.identity.id
+      const attemptId = attemptIds.get(name) ?? randomUUID()
+      const configHash = attemptConfigHashes.get(name) ?? null
       await this.db.watchMonitor.recordFailure(
-        taskError.identity.id,
+        name,
         attemptAt,
         attemptId,
         taskError.error.message,
+        configHash,
       )
+      await this.drainQueuedNotifications(name)
     }
 
     const failedWatches = results.errors
@@ -142,28 +150,27 @@ export class WatchMonitor {
     attemptAt: Date = new Date(),
     attemptId: string = randomUUID(),
   ): Promise<void> {
-    let config: WatchConfig
+    let config: WatchConfig | undefined
+    let configHash: Hash256 | null = null
     let result: Watched
     try {
       config = this.watchReader.readWatchConfig(name)
+      configHash = hashWatchConfig(config)
       result = await this.runWatchFn(config, {
         ...this.watchContext,
         signal,
       })
     } catch (error) {
       if (!signal?.aborted) {
-        // A source outage must not block delivery of transitions already queued
-        // from earlier runs. Drain them first, then record the fetch failure.
-        await this.drainExistingNotifications(name, signal)
-        if (!signal?.aborted) {
-          const message = error instanceof Error ? error.message : String(error)
-          await this.db.watchMonitor.recordFailure(
-            name,
-            attemptAt,
-            attemptId,
-            message,
-          )
-        }
+        const message = error instanceof Error ? error.message : String(error)
+        await this.db.watchMonitor.recordFailure(
+          name,
+          attemptAt,
+          attemptId,
+          message,
+          configHash,
+        )
+        await this.drainQueuedNotifications(name, signal)
       }
       throw error
     }
@@ -172,37 +179,16 @@ export class WatchMonitor {
       throw signal.reason
     }
 
-    const existing = await this.db.watchMonitor.findLatest(name)
-    const committed = this.watchReader.readWatched(name)
-    if (signal?.aborted) {
-      throw signal.reason
-    }
-
-    const previousValues = existing?.values ?? committed?.values ?? {}
-    const transitionDiff = diffWatched(previousValues, result.values)
-    const queued: WatchPendingNotification[] = [
-      ...(existing?.pendingNotifications ?? []),
-    ]
-    if (transitionDiff.length > 0) {
-      queued.push({ timestamp, diff: transitionDiff })
-    }
-    const boundedQueue =
-      queued.length > MAX_PENDING_NOTIFICATIONS
-        ? queued.slice(queued.length - MAX_PENDING_NOTIFICATIONS)
-        : queued
-
-    // Persist the observation and queued transitions independently of Discord
-    // delivery so transient changes survive reverts and the API sees fresh state.
-    const persisted = await this.db.watchMonitor.upsertObservation({
+    const persisted = await this.persistObservationWithCas(
       name,
-      timestamp: result.timestamp,
+      config,
+      configHash,
+      result,
+      timestamp,
       attemptAt,
       attemptId,
-      values: result.values,
-      isPublic: config.isPublic === true,
-      configHash: hashWatchConfig(config),
-      pendingNotifications: boundedQueue,
-    })
+      signal,
+    )
     if (signal?.aborted) {
       throw signal.reason
     }
@@ -210,62 +196,95 @@ export class WatchMonitor {
       return
     }
 
-    const deliveredAll = await this.drainNotifications(
-      name,
-      attemptId,
-      boundedQueue,
-      signal,
-    )
+    const deliveredAll = await this.drainQueuedNotifications(name, signal)
     if (!deliveredAll) {
       await this.db.watchMonitor.recordFailure(
         name,
         attemptAt,
         attemptId,
         'Watch notification failed',
+        configHash,
       )
       throw new Error('Watch notification failed', { cause: { name } })
     }
   }
 
-  private async drainExistingNotifications(
+  private async persistObservationWithCas(
     name: string,
-    signal?: AbortSignal,
-  ): Promise<void> {
-    const existing = await this.db.watchMonitor.findLatest(name)
-    if (
-      existing === undefined ||
-      existing.lastAttemptId === null ||
-      existing.pendingNotifications.length === 0
-    ) {
-      return
-    }
-    await this.drainNotifications(
-      name,
-      existing.lastAttemptId,
-      existing.pendingNotifications,
-      signal,
-    )
-  }
-
-  private async drainNotifications(
-    name: string,
-    ownerAttemptId: string,
-    queue: WatchPendingNotification[],
+    config: WatchConfig,
+    configHash: Hash256,
+    result: Watched,
+    timestamp: UnixTime,
+    attemptAt: Date,
+    attemptId: string,
     signal?: AbortSignal,
   ): Promise<boolean> {
-    let remaining = queue
-    while (remaining.length > 0) {
+    const committed = this.watchReader.readWatched(name)
+    for (let attempt = 0; attempt < MAX_OBSERVATION_CAS_ATTEMPTS; attempt++) {
       if (signal?.aborted) {
         throw signal.reason
       }
-      const next = remaining[0]
-      if (next === undefined) {
-        break
+      const existing = await this.db.watchMonitor.findLatest(name)
+      if (signal?.aborted) {
+        throw signal.reason
+      }
+
+      const previousValues = existing?.values ?? committed?.values ?? {}
+      const transitionDiff = diffWatched(previousValues, result.values)
+      const queued: WatchPendingNotification[] = [
+        ...(existing?.pendingNotifications ?? []),
+      ]
+      if (transitionDiff.length > 0) {
+        queued.push({ id: randomUUID(), timestamp, diff: transitionDiff })
+      }
+      const boundedQueue =
+        queued.length > MAX_PENDING_NOTIFICATIONS
+          ? queued.slice(queued.length - MAX_PENDING_NOTIFICATIONS)
+          : queued
+
+      const persisted = await this.db.watchMonitor.upsertObservation({
+        name,
+        timestamp: result.timestamp,
+        attemptAt,
+        attemptId,
+        expectedLastAttemptId: existing?.lastAttemptId ?? null,
+        values: result.values,
+        isPublic: config.isPublic === true,
+        configHash,
+        pendingNotifications: boundedQueue,
+      })
+      if (persisted) {
+        return true
+      }
+      // If another attempt raced ahead with a strictly newer timestamp, stop.
+      const fresh = await this.db.watchMonitor.findLatest(name)
+      if (
+        fresh !== undefined &&
+        fresh.lastAttemptAt !== null &&
+        fresh.lastAttemptAt > UnixTime.fromDate(attemptAt)
+      ) {
+        return false
+      }
+    }
+    return false
+  }
+
+  private async drainQueuedNotifications(
+    name: string,
+    signal?: AbortSignal,
+  ): Promise<boolean> {
+    const existing = await this.db.watchMonitor.findLatest(name)
+    if (existing === undefined || existing.pendingNotifications.length === 0) {
+      return true
+    }
+    for (const item of existing.pendingNotifications) {
+      if (signal?.aborted) {
+        throw signal.reason
       }
       const notifyResult = await this.watchNotifier.handleUpdate(
         name,
-        next.diff,
-        next.timestamp,
+        item.diff,
+        item.timestamp,
       )
       if (signal?.aborted) {
         throw signal.reason
@@ -273,17 +292,16 @@ export class WatchMonitor {
       if (notifyResult === 'failed') {
         return false
       }
-      remaining = remaining.slice(1)
-      const acked = await this.db.watchMonitor.updatePendingNotifications(
-        name,
-        ownerAttemptId,
-        remaining,
-      )
-      if (!acked) {
-        // Another attempt took ownership of the row; stop draining stale work.
-        return true
-      }
+      await this.db.watchMonitor.acknowledgePendingNotification(name, item.id)
     }
     return true
+  }
+
+  private tryReadConfigHash(name: string): Hash256 | null {
+    try {
+      return hashWatchConfig(this.watchReader.readWatchConfig(name))
+    } catch {
+      return null
+    }
   }
 }

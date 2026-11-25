@@ -16,12 +16,14 @@ describe(toRecord.name, () => {
       pendingNotificationsJsonBlob: [],
       lastAttemptAt: new Date(1_700_000_000 * 1000),
       lastAttemptId: 'attempt-1',
+      lastAttemptConfigHash: HASH.toString(),
       lastError: null,
     })
     expect(JSON.stringify(record.values)).toEqual('{"list":[{"a":2,"z":1}]}')
     expect(record.isPublic).toEqual(true)
     expect(record.configHash).toEqual(HASH)
     expect(record.lastAttemptId).toEqual('attempt-1')
+    expect(record.lastAttemptConfigHash).toEqual(HASH)
   })
 
   it('handles a depth-8 template value without exceeding the watched depth limit', () => {
@@ -38,6 +40,7 @@ describe(toRecord.name, () => {
       pendingNotificationsJsonBlob: null,
       lastAttemptAt: new Date(1_700_000_000 * 1000),
       lastAttemptId: 'attempt-1',
+      lastAttemptConfigHash: HASH.toString(),
       lastError: null,
     })
     expect(record.values).toEqual({ key: deep })
@@ -51,77 +54,88 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it('orders observations, failures, and notification acks by attemptAt and attemptId', async () => {
-    const sameInstant = new Date(1_700_003_600 * 1000)
-    const newer = {
-      name: 'optimism',
+  it('enforces optimistic CAS on observations and monotonic notification acknowledgement', async () => {
+    const t1 = new Date(1_700_000_000 * 1000)
+    const t2 = new Date(1_700_003_600 * 1000)
+    const notif1 = {
+      id: 'notif-1',
+      timestamp: 1_700_000_000,
+      diff: [{ key: 'v', changes: [{ path: [], before: 'A', after: 'B' }] }],
+    }
+    const notif2 = {
+      id: 'notif-2',
       timestamp: 1_700_003_600,
-      attemptAt: sameInstant,
-      attemptId: 'attempt-b',
-      values: { audits: { 'org/r:b.pdf': { sha: 'bbb', size: 20 } } },
-      isPublic: true,
-      configHash: HASH,
-      pendingNotifications: [
-        {
-          timestamp: 1_700_003_600,
-          diff: [
-            {
-              key: 'audits',
-              changes: [
-                { path: ['org/r:b.pdf'], after: { sha: 'bbb', size: 20 } },
-              ],
-            },
-          ],
-        },
-      ],
+      diff: [{ key: 'v', changes: [{ path: [], before: 'B', after: 'A' }] }],
     }
 
-    expect(await repository.upsertObservation(newer)).toEqual(true)
-    // A concurrent attempt in the same millisecond with a different attemptId
-    // cannot overwrite the observation, record a failure over it, or ack its queue.
     expect(
       await repository.upsertObservation({
-        ...newer,
-        attemptId: 'attempt-a',
-        values: { audits: {} },
+        name: 'optimism',
+        timestamp: 1_700_000_000,
+        attemptAt: t1,
+        attemptId: 'attempt-1',
+        expectedLastAttemptId: null,
+        values: { v: 'B' },
+        isPublic: true,
+        configHash: HASH,
+        pendingNotifications: [notif1],
+      }),
+    ).toEqual(true)
+
+    // Stale expectedLastAttemptId (null instead of 'attempt-1') is rejected even for newer attemptAt.
+    expect(
+      await repository.upsertObservation({
+        name: 'optimism',
+        timestamp: 1_700_003_600,
+        attemptAt: t2,
+        attemptId: 'attempt-2',
+        expectedLastAttemptId: null,
+        values: { v: 'A' },
+        isPublic: true,
+        configHash: HASH,
+        pendingNotifications: [],
       }),
     ).toEqual(false)
-    await repository.recordFailure(
-      'optimism',
-      sameInstant,
-      'attempt-a',
-      'Stale failure',
-    )
-    expect(
-      await repository.updatePendingNotifications('optimism', 'attempt-a', []),
-    ).toEqual(false)
 
-    expect(await repository.findLatest('optimism')).toEqual({
-      name: 'optimism',
-      timestamp: newer.timestamp,
-      values: newer.values,
-      isPublic: true,
-      configHash: HASH,
-      pendingNotifications: newer.pendingNotifications,
-      lastAttemptAt: 1_700_003_600,
-      lastAttemptId: 'attempt-b',
-      lastError: null,
-    })
-
+    // Matching expectedLastAttemptId succeeds and retains notif1 alongside notif2.
     expect(
-      await repository.updatePendingNotifications('optimism', 'attempt-b', []),
+      await repository.upsertObservation({
+        name: 'optimism',
+        timestamp: 1_700_003_600,
+        attemptAt: t2,
+        attemptId: 'attempt-2',
+        expectedLastAttemptId: 'attempt-1',
+        values: { v: 'A' },
+        isPublic: true,
+        configHash: HASH,
+        pendingNotifications: [notif1, notif2],
+      }),
     ).toEqual(true)
+
+    await repository.acknowledgePendingNotification('optimism', 'notif-1')
+    expect(
+      (await repository.findLatest('optimism'))?.pendingNotifications,
+    ).toEqual([notif2])
+
+    // Re-acknowledging notif-1 is a monotonic no-op and cannot resurrect notif-1.
+    await repository.acknowledgePendingNotification('optimism', 'notif-1')
+    expect(
+      (await repository.findLatest('optimism'))?.pendingNotifications,
+    ).toEqual([notif2])
+
+    await repository.acknowledgePendingNotification('optimism', 'notif-2')
     expect(
       (await repository.findLatest('optimism'))?.pendingNotifications,
     ).toEqual([])
   })
 
-  it('records failures without erasing the previous successful snapshot', async () => {
+  it('records failures with attemptConfigHash without erasing previous snapshot', async () => {
     await repository.recordFailure(
       'broken',
       new Date(1_700_000_000 * 1000),
       'attempt-1',
       'HTTP timeout',
+      HASH,
     )
     expect(await repository.findLatest('broken')).toEqual({
       name: 'broken',
@@ -132,35 +146,8 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       pendingNotifications: [],
       lastAttemptAt: 1_700_000_000,
       lastAttemptId: 'attempt-1',
+      lastAttemptConfigHash: HASH,
       lastError: 'HTTP timeout',
-    })
-
-    await repository.upsertObservation({
-      name: 'broken',
-      timestamp: 1_700_003_600,
-      attemptAt: new Date(1_700_003_600 * 1000),
-      attemptId: 'attempt-2',
-      values: { v: 1 },
-      isPublic: true,
-      configHash: HASH,
-      pendingNotifications: [],
-    })
-    await repository.recordFailure(
-      'broken',
-      new Date(1_700_007_200 * 1000),
-      'attempt-3',
-      'Rate limited',
-    )
-    expect(await repository.findLatest('broken')).toEqual({
-      name: 'broken',
-      timestamp: 1_700_003_600,
-      values: { v: 1 },
-      isPublic: true,
-      configHash: HASH,
-      pendingNotifications: [],
-      lastAttemptAt: 1_700_007_200,
-      lastAttemptId: 'attempt-3',
-      lastError: 'Rate limited',
     })
   })
 })

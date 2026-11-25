@@ -14,6 +14,7 @@ function record(
     pendingNotifications: [],
     lastAttemptAt: null,
     lastAttemptId: null,
+    lastAttemptConfigHash: null,
     lastError: null,
     ...partial,
   }

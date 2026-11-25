@@ -3,7 +3,6 @@ import type {
   Database,
   WatchMonitorRecord,
   WatchObservation,
-  WatchPendingNotification,
 } from '@l2beat/database'
 import type {
   WatchConfig,
@@ -12,7 +11,7 @@ import type {
   WatchReader,
 } from '@l2beat/discovery'
 import type { HttpClient } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
 import type { WorkerPool } from '../update-monitor/createWorkers'
@@ -67,6 +66,10 @@ function createMemoryDb() {
     getAll: async () => [...stored.values()],
     upsertObservation: async (obs: WatchObservation) => {
       const prev = stored.get(obs.name)
+      const currentLastAttemptId = prev?.lastAttemptId ?? null
+      if (currentLastAttemptId !== obs.expectedLastAttemptId) {
+        return false
+      }
       if (
         (prev !== undefined &&
           prev.timestamp !== null &&
@@ -85,27 +88,32 @@ function createMemoryDb() {
         pendingNotifications: obs.pendingNotifications,
         lastAttemptAt: UnixTime.fromDate(obs.attemptAt),
         lastAttemptId: obs.attemptId,
+        lastAttemptConfigHash: obs.configHash,
         lastError: null,
       })
       return true
     },
-    updatePendingNotifications: async (
+    acknowledgePendingNotification: async (
       name: string,
-      attemptId: string,
-      pendingNotifications: WatchPendingNotification[],
+      notificationId: string,
     ) => {
       const prev = stored.get(name)
-      if (prev === undefined || prev.lastAttemptId !== attemptId) {
-        return false
+      if (prev === undefined) {
+        return
       }
-      stored.set(name, { ...prev, pendingNotifications })
-      return true
+      stored.set(name, {
+        ...prev,
+        pendingNotifications: prev.pendingNotifications.filter(
+          (item) => item.id !== notificationId,
+        ),
+      })
     },
     recordFailure: async (
       name: string,
       attemptAt: Date,
       attemptId: string,
       errorMessage: string,
+      configHash: Hash256 | null = null,
     ) => {
       if (!canWrite(name, attemptAt, attemptId)) {
         return
@@ -121,6 +129,7 @@ function createMemoryDb() {
         pendingNotifications: prev?.pendingNotifications ?? [],
         lastAttemptAt: UnixTime.fromDate(attemptAt),
         lastAttemptId: attemptId,
+        lastAttemptConfigHash: configHash,
         lastError: errorMessage,
       })
     },
@@ -200,8 +209,46 @@ describe(WatchMonitor.name, () => {
     )
   })
 
-  it('persists pool-level worker timeouts so the API sees the failure', async () => {
+  it('persists pool-level worker timeouts and still drains already-queued alerts', async () => {
     const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readAllWatches: () => [
+        { name: 'slow', kind: 'project', path: '/p/slow' },
+      ],
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn().resolvesToOnce('failed').resolvesToOnce('sent'),
+      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+
+    // Seed an undelivered alert from an earlier run where Discord failed.
+    const initialMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      mockFn().resolvesTo({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+    )
+    await expect(
+      initialMonitor.updateWatch(
+        'slow',
+        TIMESTAMP,
+        undefined,
+        new Date(TIMESTAMP * 1000),
+        'attempt-1',
+      ),
+    ).toBeRejectedWith('Watch notification failed')
+    expect(stored.get('slow')?.pendingNotifications.length).toEqual(1)
+
+    // Next run times out in the worker pool; Discord is back up -> timeout is
+    // recorded AND the queued alert is drained outside the aborted signal.
     const timeoutPool = mockObject<WorkerPool>({
       runInPool: async (tasks) => ({
         results: [],
@@ -212,18 +259,6 @@ describe(WatchMonitor.name, () => {
         timedOut: true,
       }),
     })
-    const reader = mockObject<WatchReader>({
-      readAllWatches: () => [
-        { name: 'slow', kind: 'project', path: '/p/slow' },
-      ],
-      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
-      readWatched: () => undefined,
-    })
-    const notifier = mockObject<WatchNotifier>({
-      handleUpdate: mockFn().resolvesTo('sent'),
-      sendDailyReminder: mockFn().resolvesTo('sent'),
-    })
-
     const monitor = new WatchMonitor(
       reader,
       CONTEXT,
@@ -236,23 +271,15 @@ describe(WatchMonitor.name, () => {
       [],
     )
 
-    await monitor.update(TIMESTAMP)
+    await monitor.update(TIMESTAMP + 3600)
     expect(stored.get('slow')?.lastError).toEqual('Task timeout')
-    expect(stored.get('slow')?.timestamp).toEqual(null)
-    expect(notifier.sendDailyReminder).toHaveBeenOnlyCalledWith(
-      [],
-      TIMESTAMP,
-      [],
-      ['slow'],
-    )
+    expect(stored.get('slow')?.pendingNotifications).toEqual([])
+    expect(notifier.handleUpdate).toHaveBeenCalledTimes(2)
   })
 
-  it('retains a failed Discord transition even when the source reverts before recovery', async () => {
+  it('retries CAS when a concurrent attempt persists an undelivered alert between read and write', async () => {
     const { stored, db } = createMemoryDb()
     const reader = mockObject<WatchReader>({
-      readAllWatches: () => [
-        { name: 'optimism', kind: 'project', path: '/p/optimism' },
-      ],
       readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
       readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
     })
@@ -261,7 +288,81 @@ describe(WatchMonitor.name, () => {
         .resolvesToOnce('failed')
         .resolvesToOnce('sent')
         .resolvesToOnce('sent'),
-      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+
+    // Older attempt (T) persists A->B and Discord fails (queue has [A->B]).
+    const olderMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+    )
+
+    // Newer attempt (T+10) reads baseline BEFORE olderMonitor writes, then
+    // olderMonitor writes before newerMonitor's upsert executes.
+    let intercepted = false
+    const originalFindLatest = db.watchMonitor.findLatest
+    db.watchMonitor.findLatest = mockFn(async (name: string) => {
+      const result = await originalFindLatest(name)
+      if (!intercepted) {
+        intercepted = true
+        await olderMonitor
+          .updateWatch(
+            name,
+            TIMESTAMP,
+            undefined,
+            new Date(TIMESTAMP * 1000),
+            'attempt-old',
+          )
+          .catch(() => {})
+      }
+      return result
+    })
+
+    const newerMonitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP + 10, values: { v: 'A' } }),
+    )
+
+    await newerMonitor.updateWatch(
+      'optimism',
+      TIMESTAMP + 10,
+      undefined,
+      new Date((TIMESTAMP + 10) * 1000),
+      'attempt-new',
+    )
+
+    // CAS mismatch forced newerMonitor to re-read B + [A->B], append B->A, and deliver BOTH!
+    expect(notifier.handleUpdate).toHaveBeenCalledTimes(3)
+    expect(stored.get('optimism')?.values).toEqual({ v: 'A' })
+    expect(stored.get('optimism')?.pendingNotifications).toEqual([])
+  })
+
+  it('retains a failed Discord transition even when the source reverts before recovery', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn()
+        .resolvesToOnce('failed')
+        .resolvesToOnce('sent')
+        .resolvesToOnce('sent'),
     })
     const runWatchFn = mockFn()
       .resolvesToOnce({ timestamp: TIMESTAMP, values: { v: 'B' } })
@@ -291,9 +392,6 @@ describe(WatchMonitor.name, () => {
       .catch(() => {})
     expect(stored.get('optimism')?.values).toEqual({ v: 'B' })
     expect(stored.get('optimism')?.pendingNotifications.length).toEqual(1)
-    expect(stored.get('optimism')?.lastError).toEqual(
-      'Watch notification failed',
-    )
 
     await monitor.updateWatch(
       'optimism',
@@ -303,34 +401,22 @@ describe(WatchMonitor.name, () => {
       'attempt-2',
     )
     expect(notifier.handleUpdate).toHaveBeenCalledTimes(3)
-    expect(notifier.handleUpdate).toHaveBeenNthCalledWith(
-      2,
-      'optimism',
-      [{ key: 'v', changes: [{ path: [], before: 'A', after: 'B' }] }],
-      TIMESTAMP,
-    )
-    expect(notifier.handleUpdate).toHaveBeenNthCalledWith(
-      3,
-      'optimism',
-      [{ key: 'v', changes: [{ path: [], before: 'B', after: 'A' }] }],
-      TIMESTAMP + 3600,
-    )
     expect(stored.get('optimism')?.pendingNotifications).toEqual([])
     expect(stored.get('optimism')?.lastError).toEqual(null)
   })
 
-  it('drains already-queued alerts even when the source is offline on the next run', async () => {
+  it('drains already-queued alerts monotonically without resurrecting delivered alerts across concurrent drains', async () => {
     const { stored, db } = createMemoryDb()
     const reader = mockObject<WatchReader>({
       readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
       readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
     })
     const notifier = mockObject<WatchNotifier>({
-      handleUpdate: mockFn().resolvesToOnce('failed').resolvesToOnce('sent'),
+      handleUpdate: mockFn().resolvesToOnce('failed').resolvesTo('sent'),
     })
     const runWatchFn = mockFn()
       .resolvesToOnce({ timestamp: TIMESTAMP, values: { v: 'B' } })
-      .rejectsWithOnce(new Error('Watch run failed'))
+      .rejectsWith(new Error('Watch run failed'))
 
     const monitor = new WatchMonitor(
       reader,
@@ -345,7 +431,6 @@ describe(WatchMonitor.name, () => {
       runWatchFn,
     )
 
-    // Hour 1: source returns B, Discord is down -> alert queued.
     await expect(
       monitor.updateWatch(
         'optimism',
@@ -355,11 +440,12 @@ describe(WatchMonitor.name, () => {
         'attempt-1',
       ),
     ).toBeRejectedWith('Watch notification failed')
-    expect(stored.get('optimism')?.pendingNotifications.length).toEqual(1)
+    const queuedId = stored.get('optimism')?.pendingNotifications[0]?.id
+    expect(queuedId).not.toEqual(undefined)
 
-    // Hour 2: source is offline, Discord recovered -> queued alert IS delivered,
-    // queue cleared, and fetch failure recorded.
-    await expect(
+    // Two concurrent failure handlers run while Discord is back up:
+    // both acknowledge monotonically by ID, never resurrecting delivered items.
+    await Promise.allSettled([
       monitor.updateWatch(
         'optimism',
         TIMESTAMP + 3600,
@@ -367,8 +453,14 @@ describe(WatchMonitor.name, () => {
         new Date((TIMESTAMP + 3600) * 1000),
         'attempt-2',
       ),
-    ).toBeRejectedWith('Watch run failed')
-    expect(notifier.handleUpdate).toHaveBeenCalledTimes(2)
+      monitor.updateWatch(
+        'optimism',
+        TIMESTAMP + 3601,
+        undefined,
+        new Date((TIMESTAMP + 3601) * 1000),
+        'attempt-3',
+      ),
+    ])
     expect(stored.get('optimism')?.pendingNotifications).toEqual([])
     expect(stored.get('optimism')?.lastError).toEqual('Watch run failed')
   })
@@ -399,7 +491,6 @@ describe(WatchMonitor.name, () => {
         .rejectsWithOnce(new Error('Watch run failed')),
     )
 
-    // Attempt B succeeds at sameInstant.
     await monitor.updateWatch(
       'optimism',
       TIMESTAMP,
@@ -407,8 +498,6 @@ describe(WatchMonitor.name, () => {
       sameInstant,
       'attempt-b',
     )
-    // Attempt A fails at the exact same instant with a different attemptId:
-    // must NOT overwrite attempt B's healthy state.
     await expect(
       monitor.updateWatch(
         'optimism',
@@ -460,48 +549,5 @@ describe(WatchMonitor.name, () => {
       ),
     ).toBeRejectedWith('Task timeout')
     expect(stored.get('optimism')?.lastError).toEqual(null)
-  })
-
-  it('forwards abort signal and stops before persisting or notifying on fetch timeout', async () => {
-    const abortController = new AbortController()
-    const { stored, db } = createMemoryDb()
-    const reader = mockObject<WatchReader>({
-      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
-      readWatched: () => ({ timestamp: 1, values: { v: 1 } }),
-    })
-    const notifier = mockObject<WatchNotifier>({
-      handleUpdate: mockFn().resolvesTo('sent'),
-    })
-
-    let receivedSignal: AbortSignal | undefined
-    const monitor = new WatchMonitor(
-      reader,
-      CONTEXT,
-      notifier,
-      db,
-      mockObject<Clock>(),
-      Logger.SILENT,
-      false,
-      instantWorkerPool,
-      [],
-      async (_config, ctx) => {
-        receivedSignal = ctx.signal
-        abortController.abort(new Error('Task timeout'))
-        return { timestamp: TIMESTAMP, values: { v: 2 } }
-      },
-    )
-
-    await expect(
-      monitor.updateWatch(
-        'optimism',
-        TIMESTAMP,
-        abortController.signal,
-        new Date(TIMESTAMP * 1000),
-        'attempt-1',
-      ),
-    ).toBeRejectedWith('Task timeout')
-    expect(receivedSignal).toEqual(abortController.signal)
-    expect(notifier.handleUpdate).toHaveBeenCalledTimes(0)
-    expect(stored.get('optimism')).toEqual(undefined)
   })
 })

@@ -1,10 +1,11 @@
 import { sortDeep, type WatchDiff } from '@l2beat/discovery'
 import { Hash256, type json, UnixTime } from '@l2beat/shared-pure'
-import type { Selectable } from 'kysely'
+import { type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { WatchMonitor } from '../kysely/generated/types'
 
 export interface WatchPendingNotification {
+  id: string
   timestamp: UnixTime
   diff: WatchDiff[]
 }
@@ -18,6 +19,7 @@ export interface WatchMonitorRecord {
   pendingNotifications: WatchPendingNotification[]
   lastAttemptAt: UnixTime | null
   lastAttemptId: string | null
+  lastAttemptConfigHash: Hash256 | null
   lastError: string | null
 }
 
@@ -26,6 +28,7 @@ export interface WatchObservation {
   timestamp: UnixTime
   attemptAt: Date
   attemptId: string
+  expectedLastAttemptId: string | null
   values: Record<string, json>
   isPublic: boolean
   configHash: Hash256
@@ -46,6 +49,10 @@ export function toRecord(row: Selectable<WatchMonitor>): WatchMonitorRecord {
       ? UnixTime.fromDate(row.lastAttemptAt)
       : null,
     lastAttemptId: row.lastAttemptId,
+    lastAttemptConfigHash:
+      row.lastAttemptConfigHash !== null
+        ? Hash256(row.lastAttemptConfigHash)
+        : null,
     lastError: row.lastError,
   }
 }
@@ -80,10 +87,12 @@ export class WatchMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  // Only advances the stored snapshot: a late or same-millisecond concurrent
-  // attempt with a different attemptId cannot overwrite an already-persisted run.
+  // Optimistic CAS on expectedLastAttemptId plus monotonic attempt ordering:
+  // prevents a newer attempt from silently overwriting an observation/queue
+  // persisted by another attempt between read and write.
   async upsertObservation(observation: WatchObservation): Promise<boolean> {
     const timestamp = UnixTime.toDate(observation.timestamp)
+    const configHash = observation.configHash.toString()
     const result = await this.db
       .insertInto('WatchMonitor')
       .values({
@@ -91,12 +100,13 @@ export class WatchMonitorRepository extends BaseRepository {
         timestamp,
         valuesJsonBlob: JSON.stringify(observation.values),
         isPublic: observation.isPublic,
-        configHash: observation.configHash.toString(),
+        configHash,
         pendingNotificationsJsonBlob: JSON.stringify(
           observation.pendingNotifications,
         ),
         lastAttemptAt: observation.attemptAt,
         lastAttemptId: observation.attemptId,
+        lastAttemptConfigHash: configHash,
         lastError: null,
       })
       .onConflict((cb) =>
@@ -112,10 +122,18 @@ export class WatchMonitorRepository extends BaseRepository {
             ),
             lastAttemptAt: eb.ref('excluded.lastAttemptAt'),
             lastAttemptId: eb.ref('excluded.lastAttemptId'),
+            lastAttemptConfigHash: eb.ref('excluded.lastAttemptConfigHash'),
             lastError: null,
           }))
           .where((eb) =>
             eb.and([
+              observation.expectedLastAttemptId === null
+                ? eb('WatchMonitor.lastAttemptId', 'is', null)
+                : eb(
+                    'WatchMonitor.lastAttemptId',
+                    '=',
+                    observation.expectedLastAttemptId,
+                  ),
               eb.or([
                 eb('WatchMonitor.timestamp', 'is', null),
                 eb(
@@ -152,21 +170,26 @@ export class WatchMonitorRepository extends BaseRepository {
     return Number(result.numInsertedOrUpdatedRows ?? 0) > 0
   }
 
-  async updatePendingNotifications(
+  // Monotonic per-item removal so concurrent drains can never resurrect an
+  // already-acknowledged notification or drop a newly appended one.
+  async acknowledgePendingNotification(
     name: string,
-    attemptId: string,
-    pendingNotifications: WatchPendingNotification[],
-  ): Promise<boolean> {
-    const result = await this.db
-      .updateTable('WatchMonitor')
-      .set({
-        pendingNotificationsJsonBlob: JSON.stringify(pendingNotifications),
-      })
-      .where('name', '=', name)
-      .where('lastAttemptId', '=', attemptId)
-      .executeTakeFirst()
-
-    return Number(result.numUpdatedRows ?? 0) > 0
+    notificationId: string,
+  ): Promise<void> {
+    await sql`
+      UPDATE "WatchMonitor"
+      SET "pendingNotificationsJsonBlob" = COALESCE(
+        (
+          SELECT jsonb_agg(elem)
+          FROM jsonb_array_elements("pendingNotificationsJsonBlob") AS elem
+          WHERE elem->>'id' <> ${notificationId}
+        ),
+        '[]'::jsonb
+      )
+      WHERE "name" = ${name}
+        AND "pendingNotificationsJsonBlob" IS NOT NULL
+        AND jsonb_typeof("pendingNotificationsJsonBlob") = 'array'
+    `.execute(this.db)
   }
 
   async recordFailure(
@@ -174,7 +197,9 @@ export class WatchMonitorRepository extends BaseRepository {
     attemptAt: Date,
     attemptId: string,
     errorMessage: string,
+    configHash: Hash256 | null = null,
   ): Promise<void> {
+    const attemptConfigHash = configHash?.toString() ?? null
     await this.db
       .insertInto('WatchMonitor')
       .values({
@@ -186,6 +211,7 @@ export class WatchMonitorRepository extends BaseRepository {
         pendingNotificationsJsonBlob: null,
         lastAttemptAt: attemptAt,
         lastAttemptId: attemptId,
+        lastAttemptConfigHash: attemptConfigHash,
         lastError: errorMessage,
       })
       .onConflict((cb) =>
@@ -194,6 +220,7 @@ export class WatchMonitorRepository extends BaseRepository {
           .doUpdateSet((eb) => ({
             lastAttemptAt: eb.ref('excluded.lastAttemptAt'),
             lastAttemptId: eb.ref('excluded.lastAttemptId'),
+            lastAttemptConfigHash: eb.ref('excluded.lastAttemptConfigHash'),
             lastError: eb.ref('excluded.lastError'),
           }))
           .where((eb) =>
