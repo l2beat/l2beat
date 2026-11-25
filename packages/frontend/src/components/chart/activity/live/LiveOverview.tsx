@@ -16,6 +16,8 @@ import {
 const HEIGHT = 40
 /** How far outside the window, in pixels, its edges can be taken to resize it */
 const EDGE_REACH = 8
+/** How far, in pixels, a pressed edge is dragged before it resizes */
+const DRAG_PX = 3
 /** Keys let go closer together than this move the window once, after the last */
 const KEYS_SETTLE_MS = 400
 
@@ -58,6 +60,9 @@ export function LiveOverview({
   /** A drag going on: a move, or a resize by an edge with the other held */
   const dragging = useRef<
     | {
+        /** The pointer's x when pressed, and whether it has been dragged since */
+        x: number
+        dragged: boolean
         resize?:
           | {
               edge: 'from'
@@ -237,6 +242,8 @@ export function LiveOverview({
         const shownFrom = Math.max(selection[0], from)
         // where the edge is from the pointer, kept through the drag
         dragging.current = {
+          x: event.clientX,
+          dragged: false,
           resize:
             edge === 'from'
               ? {
@@ -257,7 +264,15 @@ export function LiveOverview({
         if (!edge) pointTo(event)
       }}
       onPointerMove={(event) => {
-        if (dragging.current !== undefined) return pointTo(event)
+        const drag = dragging.current
+        if (drag !== undefined) {
+          // an edge resizes once dragged, not with a hand's tremor on a press
+          if (drag.resize && !drag.dragged) {
+            if (Math.abs(event.clientX - drag.x) < DRAG_PX) return
+            drag.dragged = true
+          }
+          return pointTo(event)
+        }
         event.currentTarget.style.cursor = edgeAt(event) ? 'ew-resize' : ''
       }}
       onPointerUp={() => release(true)}

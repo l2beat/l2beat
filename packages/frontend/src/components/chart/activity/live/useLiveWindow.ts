@@ -81,10 +81,12 @@ export function useLiveWindow({
   // where the window is asked to end, undefined at the newest block: a move
   // on the overview as it will be read
   const end = seeking && !seekTo.holdsEnd ? getTargetEnd(seekTo, buffer) : to
+  // at the newest block, where the window is drawn while following it
+  const asked = end ?? playhead ?? buffer?.to
   const selection: [number, number] | undefined =
-    buffer && (seeking || isPlaceholderData)
+    asked !== undefined && (seeking || isPlaceholderData)
       ? // as asked for while that is read, not as it was
-        [(end ?? buffer.to) - length, end ?? buffer.to]
+        [asked - length, asked]
       : domain
 
   return {
