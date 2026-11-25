@@ -155,7 +155,6 @@ const TVS_CHART_DESCRIPTION = [
   'Points are spaced by the resolution of the range: hourly up to 7 days, six-hourly below 180 days, daily otherwise.',
   'A timestamp with no data has no point: it is missing, not zero. Read each point by its `timestamp`, since the spacing can have gaps.',
   'The timestamp of the last point is the time the data is synced until, the same value the website reports as `syncedUntil`. For a sum of many projects it is the latest time any of them has data for, so a project that lags behind is left out of the newest points.',
-  '`ethPrice` is the USD price of ETH at that point, the one the website uses to show TVS in ETH: divide `totalTvs` by it. It is `null` when the price is unknown.',
   'Unlike the website, this endpoint counts restricted RWA tokens by default. To get the number the website shows, pass `excludeRwaRestrictedTokens=true`.',
 ].join('\n\n')
 
