@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xc0bde1a1e6adb74764de71a025e77621b54c5d6c
+
+# Diff at Tue, 24 Nov 2026 09:25:45 GMT:
+
+- id: 0a92d111
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4543e3b4810d193ef5a247036295c604271b20a8 block: 1795100733
+- current timestamp: 1795512257
+
+## Description
+
+AdminVerifierWhitelist: Lighter's insurance fund operator Safe added as an adopter, under the same manager account as Lighter's other adopters.
+Adopter manager EOA: now an EIP-7702 account delegated to MetaMask's EIP7702StatelessDeleGator v1.3.0.
+
+## Watched changes
+
+```diff
+    contract AdminVerifierWhitelist (eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130) [phylax/AdminVerifierWhitelist] {
+    +++ description: Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.
++++ description: Account assigned to each adopter.
++++ severity: MEDIUM
+      values.assignedManagers.10:
++        {"assertionAdopter":"eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310","admin":"eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"}
+    }
+```
+
+```diff
+    EOA (eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x3B7F2cA306882D240634e01a3Bf71BD04C194C23","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x30cb07e685b38c7fe2269ef438311403e7178f0b5bda254087903879ed8fca00","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0xecfa6704afe8b88bb9acdd817fe09ff6bc20fedb
 
 # Diff at Thu, 19 Nov 2026 15:06:40 GMT:

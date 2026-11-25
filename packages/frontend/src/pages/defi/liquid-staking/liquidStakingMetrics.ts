@@ -13,6 +13,8 @@ import { formatDays, formatYield } from './formatLiquidStaking'
 
 /** Shown next to the metrics, in the table and on project pages. */
 export const TVL_TOOLTIP = 'Total USD value of assets locked in the protocol.'
+/** For the table, whose TVL column has the TVL in ETH in brackets. */
+export const TVL_WITH_ETH_TOOLTIP = `${TVL_TOOLTIP} In brackets, the ETH the protocol's tokens stand for at its own exchange rate.`
 
 export const STAKED_ETH_SHARE_TOOLTIP =
   "The ETH the protocol's tokens stand for at its own exchange rate, as a share of the balance of all active Ethereum validators. The protocol's ETH includes ETH not yet staked, or exited but not yet withdrawn, so the share can read slightly high."
@@ -71,11 +73,16 @@ export function formatMetricDate(
 /** The chart values, also shown in the table and on project pages. */
 export const LIQUID_STAKING_METRICS = [YIELD_METRIC, COST_OF_EXIT_METRIC]
 
-/** On a project's page, the cost of exit names only the routes it has. */
+/**
+ * On a project's page, the cost of exit names only the routes it has. An
+ * untracked one has no routes to name.
+ */
 export function getProjectMetrics(
-  costOfExit: CostOfExitDescription,
+  costOfExit: CostOfExitDescription | undefined,
 ): LiquidStakingMetric[] {
-  return [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+  return costOfExit
+    ? [YIELD_METRIC, { ...COST_OF_EXIT_METRIC, tooltip: costOfExit.tooltip }]
+    : LIQUID_STAKING_METRICS
 }
 
 export const ETH_STAKED_TITLE = 'ETH staked'

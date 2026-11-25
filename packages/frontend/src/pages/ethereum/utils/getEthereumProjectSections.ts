@@ -7,6 +7,7 @@ import {
   type LiquidStakingOverview,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingOverview'
 import { getEthSupplyOverview } from '~/server/features/eth-supply/getEthSupplyOverview'
+import { getLiveAvailability } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import type { ProjectInteropData } from '~/server/features/layer2s/interop/getProjectInteropData'
 import { getLogger } from '~/server/utils/logger'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
@@ -80,6 +81,7 @@ export async function getEthereumProjectSections({
       defaultRange: optionToRange('1y'),
       project: toChartProject(ethereum),
       milestones: ethereum.milestones ?? [],
+      live: await getLiveAvailability(ethereum.id),
     },
   })
 

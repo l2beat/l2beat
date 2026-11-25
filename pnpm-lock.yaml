@@ -184,16 +184,6 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
 
-  packages/ai-review:
-    dependencies:
-      '@l2beat/validate':
-        specifier: workspace:*
-        version: link:../validate
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-
   packages/backend:
     dependencies:
       '@koa/router':

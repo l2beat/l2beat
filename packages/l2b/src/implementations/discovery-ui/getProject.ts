@@ -297,6 +297,7 @@ function contractFromDiscovery(
     roles: getRoles(contract),
     template: template,
     proxyType: contract.proxyType,
+    critical: contractColorConfig.critical,
     description: contract.description,
     referencedBy: [],
     address: contract.address,

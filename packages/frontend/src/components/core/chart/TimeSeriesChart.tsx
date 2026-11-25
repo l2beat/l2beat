@@ -16,7 +16,15 @@ import { decorative } from '@tanstack/charts/mark/decorative'
 import { Chart } from '@tanstack/charts/react'
 import { scaleLinear } from '@tanstack/charts/scales/linear'
 import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
-import { type ReactNode, useId, useMemo, useRef, useState } from 'react'
+import {
+  type ReactNode,
+  type Ref,
+  useId,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { cn } from '~/utils/cn'
 import { trimTrailingZeros } from '~/utils/trimTrailingZeros'
 import { isSeriesSelected, useChart } from './ChartContext'
@@ -126,6 +134,19 @@ export interface ChartReferenceArea {
   fillOpacity?: number
 }
 
+/** For animating a chart between its renders, without one. */
+export interface TimeSeriesChartHandle {
+  /** The plot's box in px within the chart's; undefined before it renders. */
+  getPlotRect: () =>
+    | { x: number; y: number; width: number; height: number }
+    | undefined
+  /**
+   * Moves the series' lines and fills and the x labels by `px` along x, until
+   * the next call. A render may draw them unmoved, so call it again after.
+   */
+  setXOffset: (px: number) => void
+}
+
 interface Props<T, K extends string> {
   data: T[] | undefined
   /**
@@ -150,6 +171,18 @@ interface Props<T, K extends string> {
   highlight?: K
   /** Radius of the hover dots; 4 px by default. */
   activeDotRadius?: number
+  /**
+   * Cuts what is drawn at the chart's box, for rows outside the x domain or
+   * moved there with `setXOffset`.
+   */
+  clip?: boolean
+  /**
+   * `before` hovers the last row at or before the pointer instead of the
+   * nearest one, for rows that each span up to the next, as `stepAfter`
+   * draws them. The last row then only closes the step and is not hovered.
+   */
+  hover?: 'nearest' | 'before'
+  handleRef?: Ref<TimeSeriesChartHandle>
   renderTooltip: (row: T, visibleKeys: K[]) => ReactNode
 }
 
@@ -171,6 +204,14 @@ const chartClassNames = cn(
   // Only `highlight` changes a line's opacity.
   '[&_path]:transition-[stroke-opacity] [&_path]:duration-200 motion-reduce:[&_path]:transition-none',
 )
+
+/**
+ * What `setXOffset` moves: the same x labels, and the series by the
+ * library's class names, which are not a documented API either. Without
+ * them the chart just stays as rendered.
+ */
+const X_OFFSET_SELECTOR =
+  'text[data-ts-key^="x-tick-label"], .ts-chart__marks :is(.ts-chart__area, .ts-chart__line)'
 
 const CURVES: Record<
   NonNullable<ChartSeries<string>['curve']>,
@@ -197,6 +238,9 @@ export function TimeSeriesChart<T, K extends string>({
   syncId,
   highlight,
   activeDotRadius,
+  clip,
+  hover,
+  handleRef,
   renderTooltip,
 }: Props<T, K>) {
   const { meta, interactiveLegend } = useChart()
@@ -234,6 +278,28 @@ export function TimeSeriesChart<T, K extends string>({
 
   // The hover overlay maps rows to pixels with the last rendered scales.
   const [sceneRef] = useState(() => new ChartSceneStore())
+  const svgRef = useRef<SVGSVGElement>(null)
+  useImperativeHandle(
+    handleRef,
+    () => ({
+      getPlotRect: () => sceneRef.current?.chart,
+      setXOffset: (px) => {
+        const elements =
+          svgRef.current?.querySelectorAll<SVGElement>(X_OFFSET_SELECTOR) ?? []
+        for (const element of elements) {
+          // Repainting for less than this costs without showing.
+          if (
+            Math.abs(Number(element.dataset.xOffset ?? Number.NaN) - px) < 0.1
+          ) {
+            continue
+          }
+          element.dataset.xOffset = String(px)
+          element.style.transform = px === 0 ? '' : `translateX(${px}px)`
+        }
+      },
+    }),
+    [sceneRef],
+  )
 
   // Callers pass inline props, and a new definition rebuilds the whole
   // scene, so the memos key on values (JSON drops functions) and read
@@ -586,7 +652,7 @@ export function TimeSeriesChart<T, K extends string>({
           theme: { muted: 'var(--secondary)' },
           margin: chartMargin,
           // Not clipped, so lines at the domain's ends keep their full width;
-          // every domain contains its data.
+          // every domain contains its data, unless the caller sets `clip`.
         }
       },
       // The library's hover host restyles the whole chart on every pointer
@@ -640,8 +706,12 @@ export function TimeSeriesChart<T, K extends string>({
           inset: 0,
           width: 'auto',
           height: 'auto',
+          overflow: clip ? 'hidden' : undefined,
         }}
-        onRender={({ scene }) => sceneRef.set(scene)}
+        onRender={({ scene, svg }) => {
+          svgRef.current = svg
+          sceneRef.set(scene)
+        }}
       />
       <ChartHoverOverlay
         rows={rows}
@@ -651,6 +721,7 @@ export function TimeSeriesChart<T, K extends string>({
         ariaLabel={ariaLabel}
         syncId={syncId}
         dotRadius={activeDotRadius}
+        hover={hover}
         renderTooltip={(row) => renderTooltip(row, visibleKeys)}
       />
     </>

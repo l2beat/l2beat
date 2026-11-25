@@ -5,20 +5,22 @@ const UserPreferencesSchema = v.object({
   enableDimming: v.boolean(),
   hideLargeArrays: v.boolean(),
   highlightOverlapping: v.boolean(),
+  showSecurityPerimeter: v.boolean().optional(),
 })
 
 const PersistedNodeStoreStateSchema = v.object({
   userPreferences: UserPreferencesSchema,
 })
 
-export type PersistedNodeStoreState = v.infer<
-  typeof PersistedNodeStoreStateSchema
->
+export interface PersistedNodeStoreState {
+  userPreferences: State['userPreferences']
+}
 
 export const DEFAULT_USER_PREFERENCES: State['userPreferences'] = {
   enableDimming: true,
   hideLargeArrays: true,
   highlightOverlapping: true,
+  showSecurityPerimeter: true,
 }
 
 export const NODE_STORE_VERSION = 1
@@ -49,7 +51,12 @@ export function migrateNodeStoreState(
 ): PersistedNodeStoreState {
   const result = PersistedNodeStoreStateSchema.safeParse(persistedState)
   if (result.success) {
-    return result.data
+    return {
+      userPreferences: {
+        ...DEFAULT_USER_PREFERENCES,
+        ...result.data.userPreferences,
+      },
+    }
   }
   return {
     userPreferences: DEFAULT_USER_PREFERENCES,

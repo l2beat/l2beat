@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { cn } from '~/utils/cn'
+import { useSidebar } from '../../core/Sidebar'
 import { Logo } from '../../Logo'
 import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
 import type { NavGroup, NavLink } from '../types'
@@ -20,6 +22,7 @@ export function MobileTopNavbar({
   className?: string
   sideLinks: NavLink[]
 }) {
+  const stickyRef = useRetintStatusBarOnClose()
   return (
     <div className={cn('z-10 bg-header-primary lg:hidden', className)}>
       {/*
@@ -33,7 +36,7 @@ export function MobileTopNavbar({
         painted with the page, so meanwhile its slot shows the navbar's colour
         instead of the grey backdrop behind it.
       */}
-      <div className="sticky top-0">
+      <div ref={stickyRef} className="sticky top-0">
         <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
           {/* Left side */}
           <div className="flex min-w-0 items-center gap-3">
@@ -54,4 +57,38 @@ export function MobileTopNavbar({
       </div>
     </div>
   )
+}
+
+/**
+ * The open sidebar tints the status bar with its sticky grey header. On an
+ * iPhone Duo, whose status bar runs down the side, Safari keeps that grey
+ * after the sidebar closes, because nothing new arrives at the top: the
+ * navbar was there all along. Taking the navbar off `sticky` for one painted
+ * frame and back makes it arrive again. Inside a wrapper of its own height
+ * the navbar never moves, so the swap can't be seen.
+ */
+function useRetintStatusBarOnClose() {
+  const ref = useRef<HTMLDivElement>(null)
+  const { openMobile } = useSidebar()
+  const wasOpen = useRef(openMobile)
+
+  useEffect(() => {
+    const justClosed = wasOpen.current && !openMobile
+    wasOpen.current = openMobile
+    const navbar = ref.current
+    if (!justClosed || !navbar) return
+
+    navbar.style.position = 'static'
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        navbar.style.position = ''
+      })
+    })
+    return () => {
+      cancelAnimationFrame(frame)
+      navbar.style.position = ''
+    }
+  }, [openMobile])
+
+  return ref
 }

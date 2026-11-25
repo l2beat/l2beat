@@ -9,6 +9,7 @@ export const INDEXER_NAMES = {
   DEFI_TVL: 'defi_tvl_indexer',
   LIQUID_STAKING: 'liquid_staking_indexer',
   ETHEREUM_STAKING: 'ethereum_staking_indexer',
+  ETHEREUM_SUPPLY: 'ethereum_supply_indexer',
   INTEROP_RELAY: 'relay_indexer',
   INTEROP_RECENT_PRICES: 'interop_recent_prices_indexer',
   // TVS

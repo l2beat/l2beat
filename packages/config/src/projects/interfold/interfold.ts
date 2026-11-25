@@ -80,8 +80,6 @@ assert(
   'The Interfold multisigs no longer share their signers: update the governance text.',
 )
 
-const veMultisigStats = discovery.getMultisigStats('VotingEscrowMultisig')
-
 export const interfold: BaseProject = {
   id: ProjectId('interfold'),
   slug: 'interfold-crisp',
@@ -195,7 +193,8 @@ export const interfold: BaseProject = {
     },
     exitWindow: {
       ...PRIVACY_EXIT_WINDOW.none,
-      description: `The VotingEscrowMultisig (${veMultisigStats}) and the Interfold multisigs can instantly upgrade VotingEscrow, which holds locked FOLD. The Interfold multisigs can also instantly upgrade BondingRegistry, which holds bonded FOLD.`,
+      description:
+        'The Interfold multisigs can instantly upgrade VotingEscrow and BondingRegistry, which hold locked and bonded FOLD.',
       walkawayTest: {
         passed: false,
         reason:
@@ -226,7 +225,6 @@ export const interfold: BaseProject = {
         safeBStats: discovery.getMultisigStats('InterfoldSafeB'),
         voteDuration: formatSeconds(ippStages[0][3], { fullUnit: true }),
         approvalWindow: formatSeconds(ippStages[1][1], { fullUnit: true }),
-        veMultisigStats,
       }),
     },
   },

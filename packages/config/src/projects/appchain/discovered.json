@@ -1,7 +1,7 @@
 {
   "name": "appchain",
-  "timestamp": 1794868381,
-  "configHash": "0x255d199b27942e73e15e0b6ff4e739ff1d8ec2a02d160c8ab57fecc33e1ad977",
+  "timestamp": 1795013056,
+  "configHash": "0x70dc9855604d09cf702d8d61d828e27fb9a9d9de5bab4dec743122e785ba443f",
   "entries": [
     {
       "name": "Inbox",
@@ -53,11 +53,6 @@
         "eth:0x74110Fb401469FEA31A10680e28c9C4c17aFdd36": "Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0x18a3DB98cc57DF0ba57393dC9226c067daccD39F",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -143,7 +138,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 6888,
+        "delayedMessageCount": 6890,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -151,8 +146,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 4115,
-        "sequencerReportedSubMessageCount": 795529
+        "sequencerMessageCount": 4117,
+        "sequencerReportedSubMessageCount": 795540
       },
       "fieldMeta": {
         "rollup": { "severity": "HIGH" },
@@ -297,13 +292,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 820,
+        "firstUnresolvedNode": 821,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 819,
-        "latestNodeCreated": 822,
+        "latestConfirmed": 820,
+        "latestNodeCreated": 823,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -420,7 +415,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 87,
+        "nonce": 88,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -435,117 +430,29 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EspressoNitroTEEVerifier",
-      "address": "eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a",
-      "type": "Contract",
-      "template": "espresso/Sequencing/EspressoNitroTEEVerifier_WithServices",
-      "sourceHashes": [
-        "0xbe95b49a1d5f9339a3432f5409e7d977bb5eb3652e62dea46484ad626e0fd5c7"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
-      "deployerAddress": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
-      "sinceTimestamp": 1778093747,
-      "sinceBlock": 25037918,
-      "values": {
-        "$immutable": true,
-        "nitroEnclaveVerifier": "eth:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
-        "registeredSigners": [
-          "eth:0x5Cf2284C82332a2a361820B0f004AB6Da86d29Dc",
-          "eth:0x18a3DB98cc57DF0ba57393dC9226c067daccD39F"
-        ],
-        "teeVerifier": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-        "validEnclaveHashes": [
-          "0x5731b637d9e3b693fc0d74e570bac76ca6c0defe3e4c119b1cea981a9bd307d6",
-          "0xe01fc6daa6f80128ffd381ffef639c7b1531b21406e3f3bfbbd09f3920f63f98"
-        ]
-      },
-      "fieldMeta": {
-        "teeVerifier": { "severity": "HIGH" },
-        "validEnclaveHashes": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a": "EspressoNitroTEEVerifier"
-      }
-    },
-    {
-      "address": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
-      "address": "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f",
+      "address": "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "deployerAddress": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
-      "sinceTimestamp": 1778093735,
-      "sinceBlock": 25037917,
+      "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
+      "sinceTimestamp": 1793912327,
+      "sinceBlock": 26351176,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
+        "owner": "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": { "owner": { "severity": "MEDIUM" } },
       "implementationNames": {
-        "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f": "ProxyAdmin"
+        "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573": "ProxyAdmin"
       }
     },
     {
-      "name": "EspressoTEEVerifier",
-      "address": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-      "type": "Contract",
-      "template": "espresso/Sequencing/EspressoTEEVerifier_onlyNitro",
-      "sourceHashes": [
-        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
-        "0x90209df739286de5ae565290370f3dd00b50f97e0ca14389aa20818ed3f3e3ca"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.",
-      "deployerAddress": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
-      "sinceTimestamp": 1778093735,
-      "sinceBlock": 25037917,
-      "values": {
-        "$admin": "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f",
-        "$implementation": "eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0",
-        "$pastUpgrades": [
-          [
-            "2026-05-06T18:55:35.000Z",
-            "0x9717cabe1adc4b2a858bbfccc7e56b1a98eff638e4a5d272f6df472f6ae74bc1",
-            ["eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "EspressoTEEVerifier",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "espressoNitroTEEVerifier": "eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a",
-        "getGuardians": [],
-        "guardianCount": 0,
-        "owner": "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "espressoNitroTEEVerifier": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67": "TransparentUpgradeableProxy",
-        "eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0": "EspressoTEEVerifier"
-      }
-    },
-    {
-      "address": "eth:0x5Cf2284C82332a2a361820B0f004AB6Da86d29Dc",
+      "address": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -685,13 +592,13 @@
       "name": "SequencerInbox",
       "address": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
       "type": "Contract",
-      "template": "orbitstack/SequencerInbox_Espresso",
+      "template": "orbitstack/SequencerInbox_Espresso_CAS",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
-        "0x02b5ed4b727632bc3bef07ea342e78a72508a1be7313d874dfd5ee7511a4e571"
+        "0x8ed81f5b8a4aad6e8e716e8dd885c13f5d8c82ea0bf065dbe075357d0c5c94d8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "description": "Batch posters registered in this contract submit transaction batches or commitments here. While `espressoTEEVerifier` is set, each non-empty batch from a batch poster must be signed by a signer valid in that verifier, either as a CAS certificate in front of the batch data or as a signature passed with the batch.",
       "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
@@ -703,7 +610,7 @@
       "sinceBlock": 21145520,
       "values": {
         "$admin": "eth:0xF025D25aE360D0D33a275dF74863CCc6600E6f8E",
-        "$implementation": "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A",
+        "$implementation": "eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4",
         "$pastUpgrades": [
           [
             "2024-11-08T21:10:11.000Z",
@@ -724,12 +631,17 @@
             "2025-08-08T06:20:59.000Z",
             "0xfb159898c69ee602cf7e18b6c24e60b05cddb75a74c11050dc3600650c0ab7f0",
             ["eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A"]
+          ],
+          [
+            "2026-11-17T13:34:47.000Z",
+            "0xa62438aea4f65f183df95b97bdaf4fc6315122b69be8117ec2dff95dfebee455",
+            ["eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4"]
           ]
         ],
-        "$upgradeCount": 4,
-        "batchCount": 4115,
+        "$upgradeCount": 5,
+        "batchCount": 4117,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
-        "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
+        "batchPosters": ["eth:0xBa7F4cd9f6ad55d1e2452cdEb356CF778E242DD1"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
@@ -742,7 +654,8 @@
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
-        "espressoTEEVerifier": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
+        "ESPRESSO_CERT_LEN": 137,
+        "espressoTEEVerifier": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": false,
         "keySetUpdates": 1,
@@ -756,9 +669,9 @@
         "postsBlobs": false,
         "reader4844": "eth:0x988d097EcB1d416ff9b0f2E4D8cEC4661F9E1871",
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
-        "sequencerVersion": "0x00",
-        "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 6887,
+        "sequencerVersion": "0x88",
+        "setIsBatchPosterCount": 7,
+        "totalDelayedMessagesRead": 6889,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -771,9 +684,93 @@
       },
       "implementationNames": {
         "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473": "TransparentUpgradeableProxy",
-        "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A": "SequencerInbox"
+        "eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "EspressoTEEVerifier",
+      "address": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+      "type": "Contract",
+      "template": "espresso/Sequencing/EspressoTEEVerifier_onlyNitro_v2",
+      "sourceHashes": [
+        "0x3dba0a8d6ee0f10809e376b272f6019a7f88eecc3080236beeb9bd3c61c21bbc",
+        "0x7246aa00b46ba60111afa94a327ef577175341accb857af769ad94de082ec852"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports AWS Nitro TEEs through modular contracts.",
+      "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
+      "sinceTimestamp": 1793912327,
+      "sinceBlock": 26351176,
+      "values": {
+        "$admin": "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573",
+        "$implementation": "eth:0x946fb276dFD92b50458170473711fd9C8cbf0FB2",
+        "$pastUpgrades": [
+          [
+            "2026-11-05T20:58:47.000Z",
+            "0xe3a67846b4c6381ba6c1bf27a69a670a3a1529deb2e788099f63ff33870ee3b9",
+            ["eth:0x946fb276dFD92b50458170473711fd9C8cbf0FB2"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "espressoNitroTEEVerifier": "eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699",
+        "getGuardians": [],
+        "owner": "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "espressoNitroTEEVerifier": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896": "TransparentUpgradeableProxy",
+        "eth:0x946fb276dFD92b50458170473711fd9C8cbf0FB2": ""
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://repo.sourcify.dev/1/0x946fb276dFD92b50458170473711fd9C8cbf0FB2"
+        }
+      ]
+    },
+    {
+      "name": "SafeL2",
+      "address": "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
+      "sinceTimestamp": 1793813423,
+      "sinceBlock": 26342955,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904",
+          "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x4b3f058fd5589932da5acd77fb5e38f5c60d0b537b6c44d0990b20915dec4457",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243": "SafeProxy",
+        "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "address": "eth:0x9e9Bb9a849c4cb29E5aDE488638e117ec7cCd682",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9ed35515aAF24a6d236ff2C95c67e29a335bE291",
@@ -847,6 +844,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xBa7F4cd9f6ad55d1e2452cdEb356CF778E242DD1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -855,6 +857,36 @@
       "address": "eth:0xd16384742f34511ade0555bC6312A284Ab1339bA",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "EspressoNitroTEEVerifier",
+      "address": "eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699",
+      "type": "Contract",
+      "template": "espresso/Sequencing/EspressoNitroTEEVerifier_WithServices",
+      "sourceHashes": [
+        "0xbe95b49a1d5f9339a3432f5409e7d977bb5eb3652e62dea46484ad626e0fd5c7"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
+      "deployerAddress": "eth:0x02867114B27d686f3565E2060424e985a1E565f5",
+      "sinceTimestamp": 1793912339,
+      "sinceBlock": 26351177,
+      "values": {
+        "$immutable": true,
+        "nitroEnclaveVerifier": "eth:0x1b467761E7a125381c4f654e11B397023Fc53DD8",
+        "registeredSigners": ["eth:0x9e9Bb9a849c4cb29E5aDE488638e117ec7cCd682"],
+        "teeVerifier": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+        "validEnclaveHashes": [
+          "0xd43fd2303ff1b4f3a5089cab49482b6ace29c16b5830943828f531d533b5844e"
+        ]
+      },
+      "fieldMeta": {
+        "teeVerifier": { "severity": "HIGH" },
+        "validEnclaveHashes": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699": "EspressoNitroTEEVerifier"
+      }
     },
     {
       "name": "OneStepProverHostIo",
@@ -897,11 +929,6 @@
       "implementationNames": {
         "eth:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
       }
-    },
-    {
-      "address": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe5219fe14E2FD520Ff80be036790913053d1575d",
@@ -1117,10 +1144,80 @@
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
     ],
+    "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": [
       "constructor(address _singleton)"
     ],
-    "eth:0x2C381da225148f7d6390f0EE4A162F958ec40e7A": [
+    "eth:0x31c97a0A216CCd730bd8ab3ecAA97eACbA27b11a": [
+      "constructor()",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TargetCallExecuted(address indexed target, uint256 value, bytes data)",
+      "event UpgradeExecuted(address indexed upgrade, uint256 value, bytes data)",
+      "function ADMIN_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function execute(address upgrade, bytes upgradeCallData) payable",
+      "function executeCall(address target, bytes targetCallData) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address[] executors)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0x346aA678208F56e4C126462a0B722653b1Ae44a4": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
       "error AlreadyInit()",
       "error AlreadyValidDASKeyset(bytes32)",
@@ -1137,6 +1234,7 @@
       "error HadZeroInit()",
       "error IncorrectMessagePreimage()",
       "error InitParamZero(string name)",
+      "error InvalidCasCertificate()",
       "error InvalidHeaderFlag(bytes1)",
       "error MissingDataHashes()",
       "error NativeTokenMismatch()",
@@ -1147,6 +1245,9 @@
       "error NotForked()",
       "error NotOwner(address sender, address owner)",
       "error RollupNotChanged()",
+      "error TEEVerificationFailed()",
+      "event EspressoCertificateVerified(uint256 hotshotBlock, uint256 delayedMessageRead, uint256 messageCount)",
+      "event EspressoTEEVerifierSet(address espressoTEEVerifier)",
       "event InboxMessageDelivered(uint256 indexed messageNum, bytes data)",
       "event InboxMessageDeliveredFromOrigin(uint256 indexed messageNum)",
       "event InvalidateKeyset(bytes32 indexed keysetHash)",
@@ -1159,11 +1260,12 @@
       "function DAS_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function DATA_AUTHENTICATED_FLAG() view returns (bytes1)",
       "function DATA_BLOB_HEADER_FLAG() view returns (bytes1)",
+      "function ESPRESSO_CERT_LEN() view returns (uint256)",
       "function HEADER_LENGTH() view returns (uint256)",
       "function TREE_DAS_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function ZERO_HEAVY_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function addSequencerL2Batch(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes espressoMetadata)",
-      "function addSequencerL2Batch(uint256, bytes, uint256, address gasRefunder, uint256, uint256)",
+      "function addSequencerL2Batch(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
       "function addSequencerL2BatchFromBlobs(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)",
       "function addSequencerL2BatchFromBlobs(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes espressoMetadata)",
       "function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes espressoMetadata)",
@@ -1198,27 +1300,6 @@
       "function setValidKeyset(bytes keysetBytes)",
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
-    ],
-    "eth:0x31c97a0A216CCd730bd8ab3ecAA97eACbA27b11a": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event TargetCallExecuted(address indexed target, uint256 value, bytes data)",
-      "event UpgradeExecuted(address indexed upgrade, uint256 value, bytes data)",
-      "function ADMIN_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function execute(address upgrade, bytes upgradeCallData) payable",
-      "function executeCall(address target, bytes targetCallData) payable",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address admin, address[] executors)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1268,6 +1349,17 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0x480214c3B0707a1e083A3Ae97209FCb671471109": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
       "error InvalidOutboxSet(address outbox)",
@@ -1306,95 +1398,6 @@
       "function setSequencerReportedSubMessageCount(uint256 newMsgCount)",
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
-    ],
-    "eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a": [
-      "constructor(address teeVerifier_, address nitroEnclaveVerifier_)",
-      "error InvalidEnclaveHash(bytes32 enclaveHash)",
-      "error InvalidNitroEnclaveVerifierAddress()",
-      "error InvalidTEEVerifierAddress()",
-      "error UnauthorizedTEEVerifier(address caller)",
-      "error VerificationFailed(uint8 result)",
-      "event DeletedEnclaveHash(bytes32 indexed enclaveHash)",
-      "event EnclaveHashSet(bytes32 indexed enclaveHash, bool indexed valid)",
-      "event NitroEnclaveVerifierSet(address nitroEnclaveVerifierAddress)",
-      "event ServiceRegistered(address indexed signer, bytes32 indexed enclaveHash)",
-      "event TeeVerifierSet(address indexed teeVerifier)",
-      "function deleteEnclaveHashes(bytes32[] enclaveHashes)",
-      "function isSignerValid(address signer) view returns (bool)",
-      "function nitroEnclaveVerifier() view returns (address)",
-      "function registerService(bytes output, bytes proofBytes)",
-      "function registeredEnclaveHash(bytes32 enclaveHash) view returns (bool)",
-      "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
-      "function setNitroEnclaveVerifier(address nitroEnclaveVerifier_)",
-      "function teeVerifier() view returns (address)"
-    ],
-    "eth:0x51835Bbc68679Dd236cC7ed333d1F52a181975e0": [
-      "constructor()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error InvalidGuardianAddress()",
-      "error InvalidInitialization()",
-      "error InvalidSignature()",
-      "error InvalidVerifierAddress()",
-      "error NotGuardian(address caller)",
-      "error NotGuardianOrOwner(address caller)",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error OwnerCantBeGuardian()",
-      "error UnsupportedTeeType(uint8 teeType)",
-      "event EIP712DomainChanged()",
-      "event EspressoNitroTEEVerifierSet(address indexed oldVerifier, address indexed newVerifier)",
-      "event GuardianAdded(address indexed guardian)",
-      "event GuardianRemoved(address indexed guardian)",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function acceptOwnership()",
-      "function addGuardian(address guardian)",
-      "function deleteEnclaveHashes(bytes32[] enclaveHashes, uint8 teeType)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function espressoNitroTEEVerifier() view returns (address)",
-      "function getGuardians() view returns (address[])",
-      "function guardianCount() view returns (uint256)",
-      "function initialize(address _owner, address _espressoNitroTEEVerifier)",
-      "function isGuardian(address account) view returns (bool)",
-      "function isSignerValid(address signer, uint8 teeType) view returns (bool)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function registerService(bytes verificationData, bytes data, uint8 teeType)",
-      "function registeredEnclaveHashes(bytes32 enclaveHash, uint8 teeType) view returns (bool)",
-      "function removeGuardian(address guardian)",
-      "function renounceOwnership()",
-      "function setEnclaveHash(bytes32 enclaveHash, bool valid, uint8 teeType)",
-      "function setEspressoNitroTEEVerifier(address _espressoNitroTEEVerifier)",
-      "function setNitroEnclaveVerifier(address nitroVerifier)",
-      "function transferOwnership(address newOwner)",
-      "function verify(bytes signature, bytes32 userDataHash, uint8 teeType) view returns (bool)"
-    ],
-    "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67": [
-      "constructor(address _logic, address initialOwner, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error ERC1967ProxyUninitialized()",
-      "error FailedCall()",
-      "error ProxyDeniedAdminAccess()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x5F8FE936F629AF71e7af6C7844692f98019d6163": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
@@ -1479,6 +1482,21 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC1967ProxyUninitialized()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243": [
+      "constructor(address _singleton)"
     ],
     "eth:0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
@@ -1589,6 +1607,27 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699": [
+      "constructor(address teeVerifier_, address nitroEnclaveVerifier_)",
+      "error InvalidEnclaveHash(bytes32 enclaveHash)",
+      "error InvalidNitroEnclaveVerifierAddress()",
+      "error InvalidTEEVerifierAddress()",
+      "error UnauthorizedTEEVerifier(address caller)",
+      "error VerificationFailed(uint8 result)",
+      "event DeletedEnclaveHash(bytes32 indexed enclaveHash)",
+      "event EnclaveHashSet(bytes32 indexed enclaveHash, bool indexed valid)",
+      "event NitroEnclaveVerifierSet(address nitroEnclaveVerifierAddress)",
+      "event ServiceRegistered(address indexed signer, bytes32 indexed enclaveHash)",
+      "event TeeVerifierSet(address indexed teeVerifier)",
+      "function deleteEnclaveHashes(bytes32[] enclaveHashes)",
+      "function isSignerValid(address signer) view returns (bool)",
+      "function nitroEnclaveVerifier() view returns (address)",
+      "function registerService(bytes output, bytes proofBytes)",
+      "function registeredEnclaveHash(bytes32 enclaveHash) view returns (bool)",
+      "function setEnclaveHash(bytes32 enclaveHash, bool valid)",
+      "function setNitroEnclaveVerifier(address nitroEnclaveVerifier_)",
+      "function teeVerifier() view returns (address)"
     ],
     "eth:0xD6DC5196b9E1c3fcA62CCDA876ebFFb3eDA384Ea": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1834,7 +1873,7 @@
   },
   "usedTemplates": {
     "espresso/Sequencing/EspressoNitroTEEVerifier_WithServices": "0x2a48dad44007597042c770d7809f685adf01c97b27ab3c748c16fec8a4e4708a",
-    "espresso/Sequencing/EspressoTEEVerifier_onlyNitro": "0xa7462bba7d44a2b825082be8ddd162e2da5883f3e2690823bb53932d0773fffb",
+    "espresso/Sequencing/EspressoTEEVerifier_onlyNitro_v2": "0xfb9cbf9f82329865f48b6eb59754bd9daf97a03f4eda5f3c1a875ef82164fc44",
     "espresso/Sequencing/NitroEnclaveVerifier": "0xeec57567f567c5ffa38c4f80ac540496aa560068877ce088f6f5d9e48c216bca",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -1849,13 +1888,13 @@
     "orbitstack/Outbox": "0xd86f8d49c3e4b3d566c849db6a9c98da4aa341ea5e037697ed99cd4f21837e7b",
     "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
-    "orbitstack/SequencerInbox_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
+    "orbitstack/SequencerInbox_Espresso_CAS": "0xbd45edb6690ce4dfcb72c5c2833e58d82bf133d186fd30d9231377ee641af73f",
     "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26430604 },
-  "permissionsConfigHash": "0x60f77ebac2b6f82d4234be435f4d5780a6f4b3540d0317928b823227e29e71c0",
+  "usedBlockNumbers": { "ethereum": 26442623 },
+  "permissionsConfigHash": "0x74233e7908187e0a7bf7f6c2453c5767de56daef603746c5d26206c995c8cef7",
   "permissions": {
     "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": {
       "receivedPermissions": [
@@ -1948,38 +1987,12 @@
         }
       ]
     },
-    "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f": {
+    "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573": {
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
+          "from": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
           "role": "admin"
-        }
-      ]
-    },
-    "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4e98A1a038831B7D756ea9214508C4b34f4e4D3a",
-          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
-          "role": ".teeVerifier"
-        }
-      ]
-    },
-    "eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-          "description": "add, remove or disable supported enclave hashes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-          "description": "change the TEE verifier contract.",
-          "role": ".owner"
         }
       ]
     },
@@ -2003,14 +2016,55 @@
         }
       ]
     },
-    "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C": {
+    "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896": {
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-          "description": "Add/remove batchPosters (Sequencers).",
-          "role": ".batchPosterManager"
+          "from": "eth:0xD2FE79f866eB26c9af134158132aD5c7Fa119699",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".teeVerifier"
+        }
+      ]
+    },
+    "eth:0x8b2025e6a41CEA90F3D2aE47CBE9cAFE18eb1243": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+          "description": "add or remove guardians.",
+          "role": ".owner"
         },
+        {
+          "permission": "interact",
+          "from": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+          "description": "add, remove or disable supported enclave hashes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+          "description": "change the Nitro TEE verifier contract and the attestation verifier it uses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x809375C1e76653De11AdDE7E7bB59885af89b896",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x47783CC0820d50324d03C8Dee07F8654ab24e573",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xBa7F4cd9f6ad55d1e2452cdEb356CF778E242DD1": {
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
@@ -2019,25 +2073,15 @@
         }
       ]
     },
-    "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B": {
+    "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C": {
       "receivedPermissions": [
         {
-          "permission": "upgrade",
-          "from": "eth:0x5BE313094a4d35b1dB233D640176B4DD11F79b67",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f" }
-          ]
+          "permission": "interact",
+          "from": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "role": ".batchPosterManager"
         }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x546F30e936B1D01f8df1c356fa68833B9AFba99f",
-          "role": ".owner"
-        }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0xF025D25aE360D0D33a275dF74863CCc6600E6f8E": {
       "directlyReceivedPermissions": [

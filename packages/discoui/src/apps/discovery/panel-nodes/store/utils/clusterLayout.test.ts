@@ -59,6 +59,7 @@ function makeNode(id: string, x: number, y: number): Node {
     id,
     address: `test:${id}`,
     isInitial: false,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Contract',
     name: id,

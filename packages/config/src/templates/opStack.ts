@@ -2762,6 +2762,45 @@ export function getSP1Verifiers(
   return activeVerifiers.map((el) => el.verifier)
 }
 
+// Unset route and the router's TOMBSTONE marker for removed routes.
+const RISC0_ROUTER_EMPTY_ROUTES = new Set([
+  '0x0000000000000000000000000000000000000000',
+  '0x0000000000000000000000000000000000000001',
+])
+
+// Returns the verifiers a RiscZeroVerifierRouter can still route proofs to.
+// Routes come from the router's `verifier_<selector>` fields (selectors listed
+// in its template). Unset and removed (tombstoned) routes are skipped, and so
+// are routes whose RiscZeroVerifierEmergencyStop is paused, because an estop
+// cannot be unpaused and every verify call through it reverts.
+export function getRisc0Verifiers(
+  discovery: ProjectDiscovery,
+  router = 'RiscZeroVerifierRouter',
+): ChainSpecificAddress[] {
+  const routes = Object.entries(discovery.getContract(router).values ?? {})
+    .filter(([key]) => key.startsWith('verifier_'))
+    .map(([, target]) => target as ChainSpecificAddress)
+    .filter(
+      (target) =>
+        !RISC0_ROUTER_EMPTY_ROUTES.has(ChainSpecificAddress.address(target)),
+    )
+
+  const verifiers: ChainSpecificAddress[] = []
+  for (const target of routes) {
+    const paused = discovery.getContractValueOrUndefined<boolean>(
+      target,
+      'paused',
+    )
+    if (paused === true) continue
+    const wrapped = discovery.getContractValueOrUndefined<ChainSpecificAddress>(
+      target,
+      'verifier',
+    )
+    verifiers.push(paused === false && wrapped ? wrapped : target)
+  }
+  return [...new Set(verifiers)]
+}
+
 function getOPStackVerifiers(
   discovery: ProjectDiscovery,
 ): ChainSpecificAddress[] {

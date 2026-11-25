@@ -8,6 +8,7 @@ import {
   IconArrowHeadRight,
 } from '../../../../icons/IconArrowHead'
 import { IconInitial } from '../../../../icons/IconInitial'
+import { IconShield } from '../../../../icons/IconShield'
 import { useTheme } from '../../../../theme'
 import { useGlobalSettingsStore } from '../../store/global-settings-store'
 import type { Field, Node } from '../store/State'
@@ -24,6 +25,13 @@ import {
   isFieldConnectionLive,
 } from '../store/utils/renderGraph'
 import { getRowLayout, type NodeRow } from '../store/utils/rows'
+import {
+  computeSecurityPerimeter,
+  getNodeCriticality,
+  type NodeCriticality,
+  PERIMETER_BORDER_WIDTH,
+  type PerimeterZone,
+} from '../store/utils/securityPerimeter'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
 import {
@@ -61,12 +69,18 @@ const CONTAINER_OUTLINE_WIDTH = 2
 const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
 const NODE_BORDER_WIDTH = 1
+const CRITICAL_NODE_BORDER_WIDTH = 2
+const PERIMETER_CORNER_RADIUS = 16
+const PERIMETER_DASH_ON = 8
+const PERIMETER_DASH_OFF = 6
 // The arrow glyph spans 3..13 of its 16-unit cell, see IconArrowHead. Edges
 // stop at its base so the line never shows past the tip.
 const ARROW_HEAD_CELL = 16
 const ARROW_HEAD_TIP = 13 / 16
 const ARROW_HEAD_LENGTH = (10 / 16) * ARROW_HEAD_CELL
 const HEADER_BADGE_STEP = 11
+const CRITICAL_BADGE_SIZE = 13
+const CRITICAL_BADGE_STEP = 14
 const HIGHLIGHTED_ROW_INSET = 3
 const HIGHLIGHTED_ROW_RADIUS = 4
 // Below this zoom field text is under 5 px and names under 6 px, so all text
@@ -146,6 +160,7 @@ interface NodeFlags {
   isDimmed: boolean
   isGrayedOut: boolean
   isOverlapping: boolean
+  criticality: NodeCriticality
   fieldHighlighted: Uint8Array
   fieldTargetHidden: Uint8Array
 }
@@ -156,6 +171,8 @@ interface DrawData {
   flags: Map<string, NodeFlags>
   containers: GroupContainer[]
   selectedContainers: Set<string>
+  perimeterZones: PerimeterZone[]
+  showSecurityPerimeter: boolean
   enableDimming: boolean
   markUnreachableEntries: boolean
   palette: GraphPalette
@@ -185,6 +202,7 @@ interface RenderNode {
 type IconAtlasId =
   | ApiAddressType
   | 'InitialCircle'
+  | 'Shield'
   | 'ArrowHeadLeft'
   | 'ArrowHeadRight'
 
@@ -1027,6 +1045,7 @@ const ICON_LIST = [
     Component: ADDRESS_ICON_COMPONENTS[id],
   })),
   { id: 'InitialCircle' as const, Component: IconInitial },
+  { id: 'Shield' as const, Component: IconShield },
   { id: 'ArrowHeadLeft' as const, Component: IconArrowHeadLeft },
   { id: 'ArrowHeadRight' as const, Component: IconArrowHeadRight },
 ]
@@ -1244,6 +1263,8 @@ interface Buffers {
   cornerQuad: WebGLBuffer
   connectionStrip: WebGLBuffer
   round: InstancedPassBuffer
+  perimeterFill: InstancedPassBuffer
+  perimeterBorder: PassBuffer
   headerText: InstancedPassBuffer
   fieldText: InstancedPassBuffer
   footerText: InstancedPassBuffer
@@ -1266,6 +1287,8 @@ interface ConnectionSpan {
 // stay valid until the data ref changes.
 interface PassCounts {
   round: PassLayout
+  perimeterFill: number
+  perimeterBorder: number
   headerText: PassLayout
   fieldText: PassLayout
   footerText: PassLayout
@@ -1398,6 +1421,8 @@ class WebGLRenderer {
   private cachedData: DrawData | null = null
   private counts: PassCounts = {
     round: EMPTY_LAYOUT,
+    perimeterFill: 0,
+    perimeterBorder: 0,
     headerText: EMPTY_LAYOUT,
     fieldText: EMPTY_LAYOUT,
     footerText: EMPTY_LAYOUT,
@@ -1516,6 +1541,8 @@ class WebGLRenderer {
     )
 
     const round = this.createRoundPassBuffer(cornerQuad)
+    const perimeterFill = this.createRoundPassBuffer(cornerQuad)
+    const perimeterBorder = this.createLinePassBuffer()
     const headerText = this.createTextPassBuffer(cornerQuad)
     const fieldText = this.createTextPassBuffer(cornerQuad)
     const footerText = this.createTextPassBuffer(cornerQuad)
@@ -1531,6 +1558,8 @@ class WebGLRenderer {
       cornerQuad,
       connectionStrip,
       round,
+      perimeterFill,
+      perimeterBorder,
       headerText,
       fieldText,
       footerText,
@@ -1652,11 +1681,18 @@ class WebGLRenderer {
 
     const res: [number, number] = [cssWidth, cssHeight]
 
-    // Connections draw first (under nodes). Within a range, node order is set
-    // by how the instance buffers are filled (selected last). Overlap borders
-    // draw last.
+    // Security perimeter draws behind connections and nodes, connections draw
+    // under nodes. Within a range, node order is set by how the instance
+    // buffers are filled (selected last). Overlap borders draw last.
     gl.disable(gl.DEPTH_TEST)
     this.drawGridPass(transform, res, data.palette.gridDot)
+    this.drawPerimeterFillPass(transform, res)
+    this.drawLinePass(
+      this.buffers.perimeterBorder,
+      this.counts.perimeterBorder,
+      transform,
+      res,
+    )
     this.drawConnectionPass(transform, res)
     gl.enable(gl.DEPTH_TEST)
     this.drawNodeRange(CONTAINER_RANGE, transform, res)
@@ -1700,16 +1736,26 @@ class WebGLRenderer {
   private rebuildAll(data: DrawData) {
     const renderNodes = buildRenderNodes(data)
     const spans = liveConnections(data)
+    this.counts.perimeterFill = this.buildPerimeterFill(
+      data.perimeterZones,
+      data.palette,
+    )
+    this.counts.perimeterBorder = this.buildPerimeterBorder(
+      data.perimeterZones,
+      data.palette,
+    )
     this.counts.round = this.buildRound(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.showSecurityPerimeter,
       data.palette,
     )
     this.counts.icon = this.buildIcons(
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.showSecurityPerimeter,
       data.palette,
     )
     this.counts.arrowHead = this.buildArrowHeads(
@@ -1720,6 +1766,7 @@ class WebGLRenderer {
       renderNodes,
       data.containers,
       data.selectedContainers,
+      data.showSecurityPerimeter,
       data.palette,
     )
     this.counts.fieldText = this.buildFieldText(renderNodes, data.palette)
@@ -1728,10 +1775,77 @@ class WebGLRenderer {
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
+  private buildPerimeterFill(
+    zones: readonly PerimeterZone[],
+    palette: GraphPalette,
+  ): number {
+    if (zones.length === 0) return 0
+    const buf = this.ensureRound(zones.length)
+    const r = PERIMETER_CORNER_RADIUS
+    let n = 0
+    for (const zone of zones) {
+      writeRound(
+        buf,
+        n++,
+        zone.box.x,
+        zone.box.y,
+        zone.box.width,
+        zone.box.height,
+        palette.perimeterFill,
+        r,
+        r,
+        r,
+        r,
+        0,
+        CONTAINER_Z,
+      )
+    }
+    return this.upload(this.buffers.perimeterFill.data, buf, n, QUAD_STRIDE_F)
+  }
+
+  private buildPerimeterBorder(
+    zones: readonly PerimeterZone[],
+    palette: GraphPalette,
+  ): number {
+    if (zones.length === 0) return 0
+    const dashPeriod = PERIMETER_DASH_ON + PERIMETER_DASH_OFF
+    let maxVertices = 0
+    for (const zone of zones) {
+      const lengthEstimate = 2 * (zone.box.width + zone.box.height)
+      const segments =
+        Math.ceil(lengthEstimate / dashPeriod) +
+        PERIMETER_SAMPLES_PER_CORNER * 4 +
+        8
+      maxVertices += segments * 6
+    }
+    const buf = this.ensureLine(maxVertices)
+    let v = 0
+    for (const zone of zones) {
+      const perimeter = roundedRectPerimeter(
+        zone.box.x,
+        zone.box.y,
+        zone.box.width,
+        zone.box.height,
+        PERIMETER_CORNER_RADIUS,
+      )
+      v += emitDashedRibbon(
+        buf,
+        v,
+        perimeter,
+        PERIMETER_BORDER_WIDTH,
+        palette.perimeterBorder,
+        PERIMETER_DASH_ON,
+        PERIMETER_DASH_OFF,
+      )
+    }
+    return this.upload(this.buffers.perimeterBorder.data, buf, v, LINE_STRIDE_F)
+  }
+
   private buildRound(
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    showSecurityPerimeter: boolean,
     palette: GraphPalette,
   ): PassLayout {
     // Upper bound: 5 quads (body, header, border, selection, group outline)
@@ -1843,6 +1957,8 @@ class WebGLRenderer {
         z,
       )
 
+      const isCriticalBorder =
+        showSecurityPerimeter && flags.criticality === 'all'
       writeRound(
         buf,
         n++,
@@ -1850,12 +1966,16 @@ class WebGLRenderer {
         y,
         width,
         height,
-        palette.nodeBorder,
+        isCriticalBorder
+          ? flags.isGrayedOut
+            ? desaturate(palette.perimeterNodeBorder)
+            : palette.perimeterNodeBorder
+          : palette.nodeBorder,
         corner,
         corner,
         corner,
         corner,
-        NODE_BORDER_WIDTH,
+        isCriticalBorder ? CRITICAL_NODE_BORDER_WIDTH : NODE_BORDER_WIDTH,
         z,
       )
 
@@ -1908,9 +2028,10 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    showSecurityPerimeter: boolean,
     palette: GraphPalette,
   ): PassLayout {
-    let max = renderNodes.length * 3 + containers.length
+    let max = renderNodes.length * 4 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
     if (max === 0) return EMPTY_LAYOUT
     const buf = this.ensureText(max)
@@ -1955,6 +2076,21 @@ class WebGLRenderer {
       )
 
       let rightX = x + width - HEADER_PADDING - HEADER_ICON_SIZE
+      if (showSecurityPerimeter && flags.criticality !== 'none') {
+        const shieldOffset = (HEADER_ICON_SIZE - CRITICAL_BADGE_SIZE) / 2
+        const shieldY = y + (headerH - CRITICAL_BADGE_SIZE) / 2
+        n += this.emitIcon(
+          buf,
+          n,
+          'Shield',
+          rightX + shieldOffset,
+          shieldY,
+          CRITICAL_BADGE_SIZE,
+          flags.isGrayedOut ? desaturate(headerTextColor) : headerTextColor,
+          z,
+        )
+        rightX -= CRITICAL_BADGE_STEP
+      }
       if (node.hasTemplate) {
         n += this.emitIcon(
           buf,
@@ -2093,6 +2229,7 @@ class WebGLRenderer {
     renderNodes: readonly RenderNode[],
     containers: readonly GroupContainer[],
     selectedContainers: ReadonlySet<string>,
+    showSecurityPerimeter: boolean,
     palette: GraphPalette,
   ): PassLayout {
     let maxChars = 0
@@ -2124,9 +2261,18 @@ class WebGLRenderer {
       const color = flags.isGrayedOut ? desaturate(baseColor) : baseColor
       const startX =
         node.box.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP
-      const badges = Number(node.hasTemplate) + Number(node.isInitial)
+      const hasShield = showSecurityPerimeter && flags.criticality !== 'none'
+      const dots = Number(node.hasTemplate) + Number(node.isInitial)
       const badgesWidth =
-        badges === 0 ? 0 : HEADER_ICON_SIZE + (badges - 1) * HEADER_BADGE_STEP
+        !hasShield && dots === 0
+          ? 0
+          : !hasShield
+            ? HEADER_ICON_SIZE + (dots - 1) * HEADER_BADGE_STEP
+            : dots === 0
+              ? HEADER_ICON_SIZE
+              : HEADER_ICON_SIZE +
+                CRITICAL_BADGE_STEP +
+                (dots - 1) * HEADER_BADGE_STEP
       const maxX =
         node.box.x +
         node.box.width -
@@ -2453,6 +2599,25 @@ class WebGLRenderer {
     return layer
   }
 
+  private drawPerimeterFillPass(
+    transform: { offsetX: number; offsetY: number; scale: number },
+    res: [number, number],
+  ) {
+    const count = this.counts.perimeterFill
+    if (count === 0) return
+    const gl = this.gl
+    gl.useProgram(this.programs.round)
+    gl.uniform2f(
+      this.uniforms.round.offset,
+      transform.offsetX,
+      transform.offsetY,
+    )
+    gl.uniform1f(this.uniforms.round.scale, transform.scale)
+    gl.uniform2f(this.uniforms.round.resolution, res[0], res[1])
+    pointInstances(gl, this.buffers.perimeterFill, 0)
+    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, count)
+  }
+
   private drawRoundPass(
     range: DrawRange,
     transform: { offsetX: number; offsetY: number; scale: number },
@@ -2594,6 +2759,8 @@ class WebGLRenderer {
     gl.deleteBuffer(this.buffers.connectionStrip)
     for (const pass of [
       this.buffers.round,
+      this.buffers.perimeterFill,
+      this.buffers.perimeterBorder,
       this.buffers.headerText,
       this.buffers.fieldText,
       this.buffers.footerText,
@@ -3222,6 +3389,7 @@ function buildDrawData(
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
+  showSecurityPerimeter: boolean,
   markUnreachableEntries: boolean,
   palette: GraphPalette,
 ): DrawData {
@@ -3280,10 +3448,15 @@ function buildDrawData(
         enableDimming && anyNodeSelected && !highlightedSet.has(node.id),
       isGrayedOut: markUnreachableEntries && !node.isReachable,
       isOverlapping: overlappingIds.has(node.id),
+      criticality: getNodeCriticality(node, hidden),
       fieldHighlighted,
       fieldTargetHidden,
     })
   }
+
+  const perimeterZones = showSecurityPerimeter
+    ? computeSecurityPerimeter(nodes, hidden)
+    : []
 
   return {
     visible,
@@ -3295,6 +3468,8 @@ function buildDrawData(
         .filter((group) => selectedSet.has(group.id))
         .map((group) => group.id),
     ),
+    perimeterZones,
+    showSecurityPerimeter,
     enableDimming,
     markUnreachableEntries,
     palette,
@@ -3357,6 +3532,9 @@ export function NodesAndConnectionsWebGL() {
   const highlightOverlapping = useStore(
     ({ userPreferences }) => userPreferences.highlightOverlapping !== false,
   )
+  const showSecurityPerimeter = useStore(
+    ({ userPreferences }) => userPreferences.showSecurityPerimeter !== false,
+  )
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
@@ -3375,6 +3553,7 @@ export function NodesAndConnectionsWebGL() {
         selected,
         enableDimming,
         highlightOverlapping,
+        showSecurityPerimeter,
         markUnreachableEntries,
         theme === 'light' ? LIGHT_GRAPH_PALETTE : DARK_GRAPH_PALETTE,
       ),
@@ -3383,6 +3562,7 @@ export function NodesAndConnectionsWebGL() {
       selected,
       enableDimming,
       highlightOverlapping,
+      showSecurityPerimeter,
       markUnreachableEntries,
       theme,
     ],

@@ -6,6 +6,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { describeChainScope } from '../utils/describeChainScope'
 import { getChainFlowDerivedStats } from '../utils/flowStats'
@@ -103,7 +104,9 @@ function Stats({
       <div className="mb-1.5 flex items-baseline justify-between gap-2">
         <span className="font-bold text-label-value-12 uppercase">Stats</span>
         <span className="font-medium text-label-value-12 text-secondary">
-          Last 24h · {describeChainScope(selectedChainCount, chainCount)}
+          Last 24h
+          {DOT_SEPARATOR}
+          {describeChainScope(selectedChainCount, chainCount)}
         </span>
       </div>
       <div className="space-y-1.5">

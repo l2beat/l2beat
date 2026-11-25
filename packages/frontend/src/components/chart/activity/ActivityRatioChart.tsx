@@ -1,4 +1,5 @@
-import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
+import { formatActivityCount } from '@l2beat/shared-pure'
+import type { Ref } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import {
@@ -7,10 +8,13 @@ import {
   ChartTooltipValue,
   ChartTooltipWrapper,
 } from '~/components/core/chart/ChartTooltip'
-import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
+import {
+  type ChartSeries,
+  type ChartXAxis,
+  TimeSeriesChart,
+  type TimeSeriesChartHandle,
+} from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
-import type { ActivityResolution } from '~/server/features/layer2s/activity/utils/getActivityResolution'
-import { formatRange } from '~/utils/dates'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
@@ -20,9 +24,16 @@ interface ActivityRatioChartDataPoint {
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   syncedUntil: number | undefined
-  resolution?: ActivityResolution
   isLoading: boolean
   isPlaceholderData: boolean
+  xAxis?: ChartXAxis
+  /** The period a point covers, as its tooltip's title */
+  formatPeriod: (timestamp: number) => string
+  /** As `TimeSeriesChart`'s, for the live view's steps sliding with the clock */
+  curve?: ChartSeries<'ratio'>['curve']
+  clip?: boolean
+  hover?: 'nearest' | 'before'
+  handleRef?: Ref<TimeSeriesChartHandle>
 }
 
 export function ActivityRatioChart({
@@ -30,7 +41,12 @@ export function ActivityRatioChart({
   isLoading,
   isPlaceholderData,
   syncedUntil,
-  resolution = 'day',
+  xAxis,
+  formatPeriod,
+  curve,
+  clip,
+  hover,
+  handleRef,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -58,6 +74,7 @@ export function ActivityRatioChart({
           {
             key: 'ratio',
             ...tinted(chartMeta.ratio.color),
+            curve,
           },
         ]}
         yAxis={{
@@ -65,9 +82,13 @@ export function ActivityRatioChart({
           domain: [1, 'auto'],
           headroom: 0.1,
         }}
+        xAxis={xAxis}
         syncedUntil={syncedUntil}
+        clip={clip}
+        hover={hover}
+        handleRef={handleRef}
         renderTooltip={(row) => (
-          <ActivityCustomTooltip row={row} resolution={resolution} />
+          <ActivityCustomTooltip row={row} formatPeriod={formatPeriod} />
         )}
       />
     </ChartContainer>
@@ -76,21 +97,16 @@ export function ActivityRatioChart({
 
 function ActivityCustomTooltip({
   row,
-  resolution,
+  formatPeriod,
 }: {
   row: ActivityRatioChartDataPoint
-  resolution: ActivityResolution
+  formatPeriod: (timestamp: number) => string
 }) {
-  const timestamp = row.timestamp
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatRange(
-            timestamp,
-            timestamp + UnixTime.periodToSeconds(resolution),
-          )}
+          {formatPeriod(row.timestamp)}
         </ChartTooltipTitle>
         <div className="flex flex-col gap-2">
           <ChartTooltipRow name="ratio">
