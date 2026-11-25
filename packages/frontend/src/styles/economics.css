@@ -122,3 +122,11 @@
     opacity: 0;
   }
 }
+
+/* A chart's server markup, stretched to its box until measured. */
+[data-unmeasured] * {
+  vector-effect: non-scaling-stroke;
+}
+[data-unmeasured] :is(text, circle) {
+  visibility: hidden;
+}

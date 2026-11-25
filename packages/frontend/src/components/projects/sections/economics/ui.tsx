@@ -169,13 +169,30 @@ export function Key({
 export function useChartSize(minHeight: number, fallbackWidth: number) {
   const ref = useRef<HTMLDivElement>(null)
   const size = useElementSize(ref)
+  const width = size.width || fallbackWidth
+  const height = Math.max(minHeight, size.height)
   return [
     ref,
-    {
-      width: size.width || fallbackWidth,
-      height: Math.max(minHeight, size.height),
-    },
+    { width, height, svg: chartSvgSize(size.width > 0, width, height) },
   ] as const
+}
+
+/**
+ * The chart's `<svg>` size. Until the box is measured (server markup, and
+ * the moments before the section hydrates) the fallback geometry stretches
+ * to the box instead of overflowing it, with text and dots hidden since
+ * they would stretch with it.
+ */
+function chartSvgSize(measured: boolean, width: number, height: number) {
+  return measured
+    ? { width, height }
+    : {
+        width: '100%',
+        height: '100%',
+        viewBox: `0 0 ${width} ${height}`,
+        preserveAspectRatio: 'none',
+        'data-unmeasured': true,
+      }
 }
 
 /**

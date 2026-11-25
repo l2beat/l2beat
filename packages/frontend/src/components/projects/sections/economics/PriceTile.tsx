@@ -31,7 +31,7 @@ export function PriceTile({
   rangeLabel: string
 }) {
   const id = useId()
-  const [ref, { width, height }] = useChartSize(MIN_HEIGHT, 280)
+  const [ref, { width, height, svg }] = useChartSize(MIN_HEIGHT, 280)
   const [hover, setHover] = useState<number | null>(null)
   const priced = days.filter((p) => p.ethPriceUsd !== null)
   const latest = priced.at(-1)
@@ -87,8 +87,7 @@ export function PriceTile({
         style={{ minHeight: MIN_HEIGHT }}
       >
         <svg
-          width={width}
-          height={height}
+          {...svg}
           role="img"
           aria-label={`ETH price, ${rangeLabel}`}
           className="absolute inset-0 block touch-pan-y overflow-visible"

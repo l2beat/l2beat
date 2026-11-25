@@ -33,7 +33,7 @@ export function FlowsTile({
   rows: FlowRow[]
   rangeLabel: string
 }) {
-  const [ref, { width, height }] = useChartSize(MIN_HEIGHT, 600)
+  const [ref, { width, height, svg }] = useChartSize(MIN_HEIGHT, 600)
   const [hover, setHover] = useState<number | null>(null)
   const weekly = (rows[1]?.days ?? 1) > 1
 
@@ -77,8 +77,7 @@ export function FlowsTile({
           style={{ minHeight: MIN_HEIGHT }}
         >
           <svg
-            width={width}
-            height={height}
+            {...svg}
             role="img"
             aria-label="Issuance and burn per day, with the net"
             className="absolute inset-0 block touch-pan-y"

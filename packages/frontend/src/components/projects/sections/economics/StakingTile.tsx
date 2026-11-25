@@ -19,7 +19,8 @@ interface Part {
 
 /**
  * Staked ETH, its share of the supply and the network's yield, over the
- * split of the stake across the tracked liquid staking protocols.
+ * supply as a bar: the staked part split across the tracked liquid staking
+ * protocols (their shares are of the stake), then the part not staked.
  */
 export function StakingTile({
   staking,
@@ -73,6 +74,7 @@ export function StakingTile({
       color: OTHER,
     },
   ]
+  const stakedShare = Math.min(1, staking.ethStaked / supply)
 
   return (
     <Tile area="staking" label="Staking">
@@ -89,32 +91,39 @@ export function StakingTile({
         />
         {staking.networkYield !== null && (
           <Figure
-            label="Network yield, 30d"
+            label="Network yield"
             value={formatYield(staking.networkYield)}
+            unit="/ yr"
           />
         )}
       </div>
       {protocols.length > 0 && (
         <div className="mt-auto flex flex-col gap-3 pt-1">
           <div className={TYPE.label}>
-            Staked ETH by liquid staking protocol
+            Supply staked, by liquid staking protocol
           </div>
           <div
             role="img"
-            aria-label={`Staked ETH: ${parts.map((p) => `${p.name} ${formatShare(p.share)}`).join(', ')}`}
+            aria-label={`${formatShare(stakedShare)} of the supply staked: ${parts.map((p) => `${p.name} ${formatShare(p.share)}`).join(', ')} of the stake`}
             className="flex h-4 gap-[2px]"
           >
             {parts.map((part) => (
               <span
                 key={part.key}
-                className="h-full min-w-[2px] transition-opacity duration-150 first:rounded-l-[4px] last:rounded-r-[4px]"
+                className="h-full min-w-[2px] transition-opacity duration-150 first:rounded-l-[4px]"
                 style={{
-                  width: `${part.share * 100}%`,
+                  width: `${part.share * stakedShare * 100}%`,
                   backgroundColor: part.color,
                   opacity: focus === null || focus === part.key ? 1 : 0.3,
                 }}
               />
             ))}
+            <span
+              className="h-full flex-1 rounded-r-[4px] shadow-[inset_0_0_0_1px_var(--divider)]"
+              style={{
+                opacity: focus === null || focus === 'unstaked' ? 1 : 0.3,
+              }}
+            />
           </div>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {parts.map((part) => (
@@ -142,6 +151,14 @@ export function StakingTile({
                 </span>
               </li>
             ))}
+            <li
+              className="flex items-center gap-1.5 whitespace-nowrap font-medium text-label-value-12 text-secondary"
+              onPointerEnter={() => setFocus('unstaked')}
+              onPointerLeave={() => setFocus(null)}
+            >
+              <span className="size-2.5 shrink-0 rounded-[3px] shadow-[inset_0_0_0_1px_var(--divider)]" />
+              Not staked
+            </li>
           </ul>
         </div>
       )}

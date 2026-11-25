@@ -91,7 +91,7 @@ export function SupplyTile({
 }
 
 function SupplyChart({ days }: { days: EthSupplyDay[] }) {
-  const [ref, { width, height }] = useChartSize(MIN_HEIGHT, 600)
+  const [ref, { width, height, svg }] = useChartSize(MIN_HEIGHT, 600)
   const [hover, setHover] = useState<number | null>(null)
 
   const g = useMemo(() => {
@@ -153,8 +153,7 @@ function SupplyChart({ days }: { days: EthSupplyDay[] }) {
         style={{ minHeight: MIN_HEIGHT }}
       >
         <svg
-          width={width}
-          height={height}
+          {...svg}
           role="img"
           aria-label="Total supply over the selected range"
           className="absolute inset-0 block touch-pan-y overflow-visible"
