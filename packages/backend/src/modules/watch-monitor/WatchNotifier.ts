@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { type WatchDiff, watchDiffToMarkdown } from '@l2beat/discovery'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
-import { assert, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
-import { isNineAM } from '../update-monitor/utils/isNineAM'
+import { formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
 
 export interface DailyWatchReminderEntry {
   name: string
@@ -12,12 +11,29 @@ export interface DailyWatchReminderEntry {
 
 export type WatchNotifyResult = 'sent' | 'no-client' | 'failed'
 
+const REMINDER_TIMEZONE = 'Europe/Warsaw'
+const WARSAW_HOUR_FORMAT = new Intl.DateTimeFormat('en-GB', {
+  timeZone: REMINDER_TIMEZONE,
+  hour: '2-digit',
+  hour12: false,
+})
+const WARSAW_DATE_FORMAT = new Intl.DateTimeFormat('en-CA', {
+  timeZone: REMINDER_TIMEZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+})
+
+const MAX_LIST_LINE_CHARS = 400
+const OVERFLOW_WARNING = '... (message too long)'
+
 export class WatchNotifier {
   private loggedDiscordClientMissing = false
 
   constructor(
     private readonly discordClient: DiscordClient | undefined,
     private readonly logger: Logger,
+    private readonly safeTimeOffsetSeconds: number = UnixTime.HOUR,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -45,25 +61,33 @@ export class WatchNotifier {
     timestamp: UnixTime,
     disabledWatches: string[],
     failedWatches: string[],
-  ): Promise<void> {
-    if (!isNineAM(timestamp, 'CET')) {
+  ): Promise<WatchNotifyResult> {
+    const deliveryTimestamp = timestamp + this.safeTimeOffsetSeconds
+    if (!isNineAMWarsaw(deliveryTimestamp)) {
       this.logger.info('Daily watch reminder not sent, not the right time', {
-        date: UnixTime.toDate(timestamp).toISOString(),
+        date: UnixTime.toDate(deliveryTimestamp).toISOString(),
       })
-      return
+      return 'no-client'
     }
 
     if (entries.length === 0 && failedWatches.length === 0) {
-      return
+      return 'no-client'
     }
 
-    const header = formatHeader(timestamp, disabledWatches, failedWatches)
-    const body = formatBody(entries, header)
-    await this.notify(`${header}\n${body}\n`, { reminder: true })
-    this.logger.info('Daily watch reminder sent', {
-      entriesCount: entries.length,
-      failedCount: failedWatches.length,
-    })
+    const message = formatDailyReminderMessage(
+      deliveryTimestamp,
+      entries,
+      disabledWatches,
+      failedWatches,
+    )
+    const result = await this.notify(message, { reminder: true })
+    if (result === 'sent') {
+      this.logger.info('Daily watch reminder sent', {
+        entriesCount: entries.length,
+        failedCount: failedWatches.length,
+      })
+    }
+    return result
   }
 
   private async notify(
@@ -93,25 +117,77 @@ export class WatchNotifier {
   }
 }
 
-function formatHeader(
-  timestamp: UnixTime,
+export function isNineAMWarsaw(deliveryTimestamp: UnixTime): boolean {
+  const hourStart = UnixTime.toStartOf(deliveryTimestamp, 'hour')
+  return WARSAW_HOUR_FORMAT.format(UnixTime.toDate(hourStart)) === '09'
+}
+
+export function formatDailyReminderMessage(
+  deliveryTimestamp: UnixTime,
+  entries: DailyWatchReminderEntry[],
   disabledWatches: string[],
   failedWatches: string[],
 ): string {
-  const disabledLine =
-    disabledWatches.length > 0
-      ? `:warning: Disabled watches: ${disabledWatches.map((w) => `\`${w}\``).join(', ')}\n`
-      : ''
-  const failedLine =
-    failedWatches.length > 0
-      ? `:warning: Failed watches: ${failedWatches.map((w) => `\`${w}\``).join(', ')}\n`
-      : ''
-  return `# Daily watch report @ ${UnixTime.toYYYYMMDD(timestamp)}\n${disabledLine}${failedLine}:hourglass: Pending watch changes`
+  const date = WARSAW_DATE_FORMAT.format(UnixTime.toDate(deliveryTimestamp))
+  const headerLines = [`# Daily watch report @ ${date}`]
+  if (disabledWatches.length > 0) {
+    headerLines.push(
+      formatBoundedList(
+        ':warning: Disabled watches: ',
+        disabledWatches,
+        MAX_LIST_LINE_CHARS,
+      ),
+    )
+  }
+  if (failedWatches.length > 0) {
+    headerLines.push(
+      formatBoundedList(
+        ':warning: Failed watches: ',
+        failedWatches,
+        MAX_LIST_LINE_CHARS,
+      ),
+    )
+  }
+  headerLines.push(':hourglass: Pending watch changes')
+  const header = `${headerLines.join('\n')}\n`
+
+  const remaining = DISCORD_MAX_MESSAGE_LENGTH - header.length - 1
+  const body = formatBody(entries, remaining)
+  const full = `${header}${body}\n`
+  if (full.length <= DISCORD_MAX_MESSAGE_LENGTH) {
+    return full
+  }
+  return `${full.slice(0, DISCORD_MAX_MESSAGE_LENGTH - OVERFLOW_WARNING.length)}${OVERFLOW_WARNING}`
+}
+
+function formatBoundedList(
+  prefix: string,
+  names: string[],
+  maxChars: number,
+): string {
+  const shown: string[] = []
+  let length = prefix.length
+  for (let i = 0; i < names.length; i++) {
+    const item = `\`${names[i]}\``
+    const sep = shown.length > 0 ? ', ' : ''
+    const remaining = names.length - i - 1
+    const moreSuffix = remaining > 0 ? `, ... (+${remaining} more)` : ''
+    if (
+      shown.length > 0 &&
+      length + sep.length + item.length + moreSuffix.length > maxChars
+    ) {
+      const skipped = names.length - shown.length
+      return `${prefix}${shown.join(', ')}, ... (+${skipped} more)`
+    }
+    shown.push(item)
+    length += sep.length + item.length
+  }
+  return `${prefix}${shown.join(', ')}`
 }
 
 function formatBody(
   entries: DailyWatchReminderEntry[],
-  header: string,
+  maxLength: number,
 ): string {
   if (entries.length === 0) {
     return ':white_check_mark: no pending watch changes'
@@ -131,19 +207,14 @@ function formatBody(
     entry.changedPaths.toString(),
   ])
   const table = formatAsAsciiTable(['Watch', 'Pending', 'Changed'], rows)
-  const safetyMargin = 10
-  const maxLength = DISCORD_MAX_MESSAGE_LENGTH - header.length - safetyMargin
-  return truncateBlock(`\`\`\`\n${table}\n`, maxLength, '```')
-}
-
-function truncateBlock(str: string, maxLength: number, suffix: string): string {
-  const warning = '... (message too long)'
-  assert(
-    maxLength > warning.length + suffix.length,
-    'maxLength must fit watch reminder overflow message',
-  )
-  if (str.length + suffix.length <= maxLength) {
-    return str + suffix
+  const fenced = `\`\`\`\n${table}\n\`\`\``
+  if (fenced.length <= maxLength) {
+    return fenced
   }
-  return `${str.slice(0, maxLength - warning.length - suffix.length)}${warning}${suffix}`
+  const suffix = `\n${OVERFLOW_WARNING}\n\`\`\``
+  const minFit = '```\n'.length + suffix.length
+  if (maxLength < minFit) {
+    return `${entries.length} watch(es) with pending changes`
+  }
+  return `${`\`\`\`\n${table}`.slice(0, maxLength - suffix.length)}${suffix}`
 }

@@ -177,9 +177,12 @@ model UpdateMonitor {
 }
 
 model WatchMonitor {
-  name           String   @id @db.VarChar(255)
-  timestamp      DateTime @db.Timestamp(6)
-  valuesJsonBlob Json
+  name                   String    @id @db.VarChar(255)
+  timestamp              DateTime? @db.Timestamp(6)
+  valuesJsonBlob         Json?
+  notifiedValuesJsonBlob Json?
+  lastAttemptAt          DateTime? @db.Timestamp(6)
+  lastError              String?
 }
 
 model UpdateNotifier {

@@ -116,41 +116,77 @@ export class WatchMonitor {
     timestamp: UnixTime,
     signal?: AbortSignal,
   ): Promise<void> {
-    const config = this.watchReader.readWatchConfig(name)
-    const result = await this.runWatchFn(config, this.watchContext)
-    if (signal?.aborted) {
-      throw signal.reason
-    }
-
-    const previous =
-      (await this.db.watchMonitor.findLatest(name)) ??
-      this.watchReader.readWatched(name)
-    if (signal?.aborted) {
-      throw signal.reason
-    }
-
-    const diff = diffWatched(previous?.values ?? {}, result.values)
-    if (diff.length > 0) {
-      const notifyResult = await this.watchNotifier.handleUpdate(
-        name,
-        diff,
-        timestamp,
-      )
-      // Keep the previous DB snapshot when Discord rejects delivery so the
-      // next hourly tick retries the transition notification.
-      if (notifyResult === 'failed') {
-        return
+    let result: Watched
+    try {
+      const config = this.watchReader.readWatchConfig(name)
+      result = await this.runWatchFn(config, {
+        ...this.watchContext,
+        signal,
+      })
+    } catch (error) {
+      if (!signal?.aborted) {
+        const message = error instanceof Error ? error.message : String(error)
+        await this.db.watchMonitor.recordFailure(name, UnixTime.now(), message)
       }
+      throw error
     }
 
     if (signal?.aborted) {
       throw signal.reason
     }
 
-    await this.db.watchMonitor.upsert({
+    const existing = await this.db.watchMonitor.findLatest(name)
+    const committed = this.watchReader.readWatched(name)
+    if (signal?.aborted) {
+      throw signal.reason
+    }
+
+    // Persist the observation independently of Discord delivery so the API
+    // and daily reminder reflect fresh state even when Discord is degraded.
+    const persisted = await this.db.watchMonitor.upsertObservation({
       name,
       timestamp: result.timestamp,
       values: result.values,
     })
+    if (!persisted || signal?.aborted) {
+      if (signal?.aborted) {
+        throw signal.reason
+      }
+      return
+    }
+
+    const previousNotified = existing?.notifiedValues ?? committed?.values ?? {}
+    const diff = diffWatched(previousNotified, result.values)
+
+    if (diff.length === 0) {
+      if (existing?.notifiedValues === null || existing === undefined) {
+        await this.db.watchMonitor.markNotified(
+          name,
+          result.timestamp,
+          result.values,
+        )
+      }
+      return
+    }
+
+    const notifyResult = await this.watchNotifier.handleUpdate(
+      name,
+      diff,
+      timestamp,
+    )
+    if (notifyResult === 'failed') {
+      await this.db.watchMonitor.recordFailure(
+        name,
+        UnixTime.now(),
+        'Watch notification failed',
+      )
+      throw new Error('Watch notification failed', { cause: { name } })
+    }
+
+    await this.db.watchMonitor.markNotified(
+      name,
+      result.timestamp,
+      result.values,
+    )
   }
 }

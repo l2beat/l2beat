@@ -1,9 +1,10 @@
-import type { Database } from '@l2beat/database'
+import type { Database, WatchMonitorRecord } from '@l2beat/database'
 import {
   countPendingItems,
   diffWatched,
   stripPendingItems,
   type WatchDiff,
+  type Watched,
   type WatchLocation,
   type WatchReader,
 } from '@l2beat/discovery'
@@ -16,6 +17,37 @@ export interface PendingWatchDiff {
   pendingItems: number
   changedPaths: number
   diff: WatchDiff[]
+}
+
+export function computePendingWatchDiff(
+  location: WatchLocation,
+  latest: WatchMonitorRecord,
+  committed: Watched | undefined,
+): PendingWatchDiff | undefined {
+  if (latest.timestamp === null || latest.values === null) {
+    return undefined
+  }
+  const committedValues = committed?.values ?? {}
+  const diff = diffWatched(committedValues, latest.values)
+  const pendingItems = countPendingItems(latest.values)
+  const acceptedDiff = diffWatched(
+    committedValues,
+    stripPendingItems(latest.values),
+  )
+  const changedPaths = countChanges(acceptedDiff)
+
+  if (diff.length === 0 && pendingItems === 0) {
+    return undefined
+  }
+
+  return {
+    name: location.name,
+    kind: location.kind,
+    runTimestamp: latest.timestamp,
+    pendingItems,
+    changedPaths,
+    diff,
+  }
 }
 
 // Built purely from the last stored run and the committed watched.json:
@@ -34,28 +66,14 @@ export async function getPendingWatchDiffs(
     if (latest === undefined) {
       continue
     }
-    const committed = reader.readWatched(location.name)
-    const committedValues = committed?.values ?? {}
-    const diff = diffWatched(committedValues, latest.values)
-    const pendingItems = countPendingItems(latest.values)
-    const acceptedDiff = diffWatched(
-      committedValues,
-      stripPendingItems(latest.values),
+    const pending = computePendingWatchDiff(
+      location,
+      latest,
+      reader.readWatched(location.name),
     )
-    const changedPaths = countChanges(acceptedDiff)
-
-    if (diff.length === 0 && pendingItems === 0) {
-      continue
+    if (pending !== undefined) {
+      result.push(pending)
     }
-
-    result.push({
-      name: location.name,
-      kind: location.kind,
-      runTimestamp: latest.timestamp,
-      pendingItems,
-      changedPaths,
-      diff,
-    })
   }
 
   return result

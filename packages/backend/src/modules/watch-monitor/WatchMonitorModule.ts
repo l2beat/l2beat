@@ -24,7 +24,11 @@ export function createWatchMonitorModule({
       : undefined)
   const discordClient = webhookUrl ? new DiscordClient(webhookUrl) : undefined
 
-  const watchNotifier = new WatchNotifier(discordClient, logger)
+  const watchNotifier = new WatchNotifier(
+    discordClient,
+    logger,
+    config.clock.safeTimeOffsetSeconds,
+  )
   const workerPool = createWorkerPool({
     workerCount: config.watchMonitor.workerPool.workerCount,
     timeoutPerTaskMs: config.watchMonitor.workerPool.timeoutPerTaskMs,
