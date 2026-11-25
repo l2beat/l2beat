@@ -7,7 +7,7 @@
       .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
       .tier { font-size: 13px; font-weight: 700; }
       .sub { font-size: 10.5px; }
-      .pill { font-size: 9.8px; font-weight: 600; }
+      .pill { font-size: 9.3px; font-weight: 600; }
     </style>
     <marker id="u-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#a1a1aa"/>
@@ -59,7 +59,7 @@
   <text x="603" y="307.5" text-anchor="middle" class="mono pill" fill="#065f46">Lamport · Rompel</text>
 
   <!-- SHA-256 note strip -->
-  <rect x="62" y="344" width="632" height="38" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="76" y="360" class="sans" font-size="10" fill="#78350f"><tspan font-weight="700">Note on SHA-256 today:</tspan> Ethereum's consensus layer already models SHA-256 as a random oracle in BLS hash-to-curve</text>
-  <text x="76" y="374" class="sans" font-size="10" fill="#78350f">(RFC 9380) and single-round KZG Fiat-Shamir (EIP-4844 / EIP-7594), and for public pseudorandomness in RANDAO and shuffling.</text>
+  <rect x="62" y="344" width="632" height="40" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="76" y="361" class="sans" font-size="9.5" fill="#78350f"><tspan font-weight="700">Note on SHA-256 today:</tspan> Consensus already models SHA-256 as a random oracle in BLS (RFC 9380)</text>
+  <text x="76" y="375" class="sans" font-size="9.5" fill="#78350f">and single-round KZG (EIP-4844/7594), and for public pseudorandomness in RANDAO and shuffling.</text>
 </svg>

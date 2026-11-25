@@ -132,30 +132,30 @@ Write $f^j(x)$ for $f$ applied $j$ times (with $f^0(x) = x$). Take $w = 4$ (digi
 
 Immediately, there's a catch: **hashing forward is free.** If you sign digit $1$ by revealing $f(x)$, anyone can apply $f$ once to get $f^2(x)$ and forge a signature on digit $2$. On top of that, digit $3$ is just $\mathsf{pk}$, which is already public, so anyone could forge the all-3s message without seeing a signature at all.
 
-Winternitz plugs both holes with a **checksum**. Suppose your message is written in base $w$ as digits $d_1, d_2, \dots, d_k$. Compute:
+Winternitz plugs both holes with a **checksum**. Suppose your message $m$ is written in base $w$ as digits $d_1, d_2, \dots, d_k$. Compute:
 
-$$C = \sum_{i=1}^{k} (w - 1 - d_i)$$
+$$C(m) = \sum_{i=1}^{k} (w - 1 - d_i)$$
 
-That is: sum up how many steps *remain* at the top of each message chain, write $C$ in base $w$ using a fixed number of digits (enough to hold the largest possible checksum), and sign those checksum digits with their own chains too. For the all-3s message, $C = 0$, which forces the signer to reveal the raw secret at position $0$ of every checksum chain.
-
-Now the size savings are easy to count. With 32-byte hashes, a 256-bit message splits into 128 base-4 digits plus 5 checksum digits at $w = 4$, or 133 chains (~4.2 KB for both signature and public key). At $w = 16$ (classic XMSS), it takes 64 base-16 digits plus 3 checksum digits, or 67 chains (~2.1 KB), down from Lamport's 8 KB signature and 16 KB public key. Ethereum's `leanXMSS` and `leanSPHINCS` also use 4-position chains, shrinking further to 58 and 64 chains by using 16-byte hashes and a fixed-sum encoding instead of a checksum.
+That is: sum up how many steps *remain* at the top of each message chain, write $C(m)$ in base $w$ using a fixed number of digits (enough to hold the largest possible checksum), and sign those checksum digits with their own chains too. For the all-3s message, $C(m) = 0$, which forces the signer to reveal the raw secret at position $0$ of every checksum chain.
 
 > **Concrete example ($w = 4$, digits $0 \dots 3$)**
 >
-> A 2-digit base-4 message can reach checksum $C = 6$ (on message $(0, 0)$), so the checksum always takes 2 base-4 digits. Suppose the message is $(1, 2)$. The checksum is $C = (3 - 1) + (3 - 2) = 3$, written in two base-4 digits as $(0, 3)$. So you sign 4 digits $(1, 2 \mid 0, 3)$:
+> A 2-digit base-4 message can reach checksum $C(m) = 6$ (on message $(0, 0)$), so the checksum always takes 2 base-4 digits. Your private key holds 4 random secret seeds $x_1, x_2, x_3, x_4$, one per chain. Suppose the message is $m = (1, 2)$. Its checksum is $C(m) = (3 - 1) + (3 - 2) = 3$, written in two base-4 digits as $(0, 3)$. So you sign 4 digits $(1, 2 \mid 0, 3)$:
 >
 > - Chain 1 reveals $f^1(x_1)$
 > - Chain 2 reveals $f^2(x_2)$
 > - Checksum chain 1 reveals $f^0(x_3)$
 > - Checksum chain 2 reveals $f^3(x_4)$
 >
-> Now try to forge $(2, 2)$ by hashing Chain 1 forward once. The new checksum is $(3 - 2) + (3 - 2) = 2$, written $(0, 2)$. To forge that last checksum digit, you'd have to go *backwards* on Checksum chain 2 from $3$ to $2$.
+> Now try to forge $m^* = (2, 2)$ by hashing Chain 1 forward once. The new checksum is $C(m^*) = (3 - 2) + (3 - 2) = 2$, written $(0, 2)$. To forge that last checksum digit, you'd have to go *backwards* on Checksum chain 2 from $3$ to $2$.
+
+Now the size savings are easy to count. With 32-byte hashes, a 256-bit message splits into 128 base-4 digits plus 5 checksum digits at $w = 4$, or 133 chains (~4.2 KB for both signature and public key). At $w = 16$ (classic XMSS), it takes 64 base-16 digits plus 3 checksum digits, or 67 chains (~2.1 KB), down from Lamport's 8 KB signature and 16 KB public key. Ethereum's `leanXMSS` and `leanSPHINCS` also use 4-position chains, shrinking further to 58 and 64 chains by using 16-byte hashes and a fixed-sum encoding instead of a checksum.
 
 The checksum trick works in general:
 
 **Checksum Lemma.** *For any forged message $m^* \neq m$, at least one digit of $m^*$ (either a message digit or a checksum digit) is strictly smaller than the corresponding digit of $m$.*
 
-**Proof.** If any message digit went down, we're done. Otherwise, every message digit stayed the same or went up, and at least one went strictly up, so the checksum $C^*$ is strictly smaller than $C$. When two base-$w$ numbers of the same width satisfy $C^* < C$, reading from the most significant digit, the first digit where they differ must be strictly smaller in $C^*$. ∎
+**Proof.** If any message digit went down, we're done. Otherwise, every message digit stayed the same or went up, and at least one went strictly up, so the checksum satisfies $C(m^*) < C(m)$. When two base-$w$ numbers of the same width satisfy $C(m^*) < C(m)$, reading from the most significant digit, the first digit where they differ must be strictly smaller in $C(m^*)$. ∎
 
 So just like Lamport, forging a Winternitz signature forces the attacker to **go backwards** on at least one chain.
 
@@ -236,7 +236,7 @@ Plugging that bound into our Lamport bound: **Lamport built from $f$ is secure**
 
 **Attack.**
 
-1. **Choose $m$ to sign:** Set the first message digit to $d_1 = 1$ and every other message digit to $w - 1$. Then the checksum is $C = w - 2$, so every checksum digit is $0$ except the lowest digit, which is $w - 2$ (strictly less than $w - 1$, valid for every $w \geq 3$).
+1. **Choose $m$ to sign:** Set the first message digit to $d_1 = 1$ and every other message digit to $w - 1$. Then the checksum is $C(m) = w - 2$, so every checksum digit is $0$ except the lowest digit, which is $w - 2$ (strictly less than $w - 1$, valid for every $w \geq 3$).
 2. **Read the signature on $m$:** Look at the first chain's signature component $\sigma_1 = (\mathsf{tag}, r)$. Because $d_1 = 1$, $\sigma_1$ is an output of $f$, so its tag is either $\mathsf{HASH}$ or $\mathsf{BRIDGE}$, **never $\mathsf{RAMP}$**. Therefore, the next value on the real chain is $f(\sigma_1) = (\mathsf{HASH}, g(r))$.
 3. **Forge $m^*$ (identical to $m$, except $d_1$ is lowered from $1$ to $0$):**
    - For the first chain (now digit $0$), output $\sigma_1^* = (\mathsf{RAMP}, r)$.
@@ -271,7 +271,7 @@ Specifically, standard-model security proofs for Winternitz rely on two extra pr
 1. **Merge resistance (covered by collision resistance or tweaked second-preimage resistance).**
    Our $\mathsf{RAMP}$ construction proves that merge resistance does not come for free from one-wayness: it can fail even when one-wayness holds. Standard proofs usually assume collision resistance or tweaked second-preimage resistance because those properties are cleaner and imply merge resistance. For full 256-bit Keccak-256, Ethereum's existing collision-resistance assumption covers merge resistance. As we see next, Ethereum's proposed 128-bit hash-based signatures lose that fallback, because at 128 bits collision resistance is only ~64-bit.
 2. **Undetectability (where even collision resistance stops covering you).**
-   In our Lamport proof, planting $y^* = f(\text{random})$ into the public key worked because real public-key entries are also $f(\text{random})$. In Winternitz, a reduction has to plant its challenge *mid-chain*, where real values have already been hashed multiple times ($f^d(\text{random})$). If repeated hashing made $f^d(\text{random})$ *efficiently* distinguishable from $f(\text{random})$, for example by funneling chain values into a recognizable subset, an attacker could spot the planted slot and avoid it. Even a collision-resistant hash can fail this: a hash whose outputs always start with a `0` bit stays collision-resistant, yet anyone can tell its outputs from random. So known standard-model Winternitz proofs also assume that $f(\text{random})$ is computationally indistinguishable from a uniform random value, a *distinguishing* assumption outside the preimage and collision ladder altogether.
+   In our Lamport proof, planting $y^* = f(\text{random})$ into the public key worked because real public-key entries are also $f(\text{random})$. In Winternitz, a reduction has to plant its challenge *mid-chain*, where real values have already been hashed multiple times ($f^d(\text{random})$). If repeated hashing made $f^d(\text{random})$ *efficiently* distinguishable from $f(\text{random})$, an attacker could spot the planted slot and avoid it. Even a collision-resistant hash can fail this: define $f(x)$ to output `10` followed by $h(x)$ when $x$ starts with `0`, and `11` followed by $h(x)$ when $x$ starts with `1` (for a collision-resistant $h$). That $f$ stays collision-resistant, yet every output after two or more hashes ($f^d(\text{random})$ for $d \geq 2$) always starts with `11`, whereas half of all single hashes $f(\text{random})$ start with `10`, immediately exposing a planted challenge. So known standard-model Winternitz proofs also assume **undetectability**, that $f(\text{random})$ is computationally indistinguishable from a uniform random value (which, applied step by step, implies $f^d(\text{random})$ is indistinguishable from $f(\text{random})$ too), a *distinguishing* assumption outside the preimage and collision ladder altogether.
 
 ### Modern tweaked schemes (WOTS+)
 
