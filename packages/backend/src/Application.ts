@@ -7,6 +7,8 @@ import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
 import { createAppStateModule } from './modules/app-state/AppStateModule'
 import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
+import { createChainHeadModule } from './modules/chain-head/ChainHeadModule'
+import { ChainHeads } from './modules/chain-head/ChainHeads'
 import { createCropAttestationsModule } from './modules/crop-attestations/CropAttestationsModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
@@ -49,6 +51,11 @@ export class Application {
       providers,
       db,
       blockProcessors: [],
+      chainHeads: new ChainHeads({
+        rpcClients: providers.clients.rpcClients,
+        db,
+        logger,
+      }),
     }
 
     // Modules with TRPC
@@ -93,6 +100,8 @@ export class Application {
 
       // Last: other modules register block processors and load their state first
       createBlockSyncModule(deps),
+      // Last: a chain head takes no more children once it has started
+      createChainHeadModule(deps),
     ]
 
     const apiServer = new ApiServer(
