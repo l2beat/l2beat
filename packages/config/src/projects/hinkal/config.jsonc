@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hinkal",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+    "eth:0xB24043ebDC72ddC1923ec749cFBDFbEfF3FC82f6",
+    "eth:0x6998fE93f3a3AbDb31df1922EB91BC282F42aa1d",
+    "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd"
+  ],
+  "names": {
+    "eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9": "PoseidonHasher2",
+    "eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026": "PoseidonHasher4"
+  },
+  "overrides": {
+    // OpenZeppelin v4 timelock: TIMELOCK_ADMIN_ROLE, not DEFAULT_ADMIN_ROLE, administers its
+    // roles, so the global template's defaultAdminAC is empty here.
+    "eth:0xF04310839973454155d9886a4023451F8D3Db7D0": {
+      "critical": true,
+      "fields": {
+        "timelockAdminAC": {
+          "description": "Addresses with TIMELOCK_ADMIN_ROLE.",
+          "severity": "MEDIUM",
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "grant and revoke the proposer, executor, canceller and timelock admin roles without delay."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9": {
+      "description": "Unverified Poseidon hash contract with two inputs, used to build the commitment Merkle tree.",
+      "critical": true
+    },
+    "eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026": {
+      "description": "Unverified Poseidon hash contract with four inputs, used to hash onchain commitments.",
+      "critical": true
+    }
+  }
+}

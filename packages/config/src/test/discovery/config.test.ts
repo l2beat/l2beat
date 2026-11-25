@@ -39,6 +39,7 @@ export const onChainProjects: string[] = [
   'butternetwork',
   'interfold',
   'phylax',
+  'hinkal',
 ]
 
 describe('discovery config.jsonc', () => {

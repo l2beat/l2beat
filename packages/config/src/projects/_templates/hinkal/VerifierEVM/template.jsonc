@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
+  "description": "Immutable adapter between Hinkal and one Groth16 verifier. It checks the number of public inputs and passes the proof to the verifier for one transaction shape (tokens x nullifiers x outputs in the name).",
+  "fields": {
+    "verifier": {
+      "description": "Groth16 verifier of the circuit for this transaction shape, fixed at deployment."
+    }
+  }
+}
