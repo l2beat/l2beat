@@ -7,7 +7,6 @@ import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import {
   findProject,
-  PROJECT_ID_OR_SLUG_DESCRIPTION,
   projectNotFoundDescription,
 } from '../../utils/findProject'
 import { getTokenTvsData } from './getTokenTvsData'
@@ -59,7 +58,6 @@ export function addTvsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       query: v.object({
         range: TvsRangeSchema.optional(),
       }),
@@ -84,7 +82,7 @@ export function addTvsRoutes(
 
       const data = await cache.get(
         {
-          key: ['tvs', project.id, range],
+          key: ['tvs', projectId, range],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },

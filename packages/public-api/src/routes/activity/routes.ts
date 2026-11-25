@@ -7,7 +7,6 @@ import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import {
   findProject,
-  PROJECT_ID_OR_SLUG_DESCRIPTION,
   projectNotFoundDescription,
 } from '../../utils/findProject'
 import { getActivityData } from './getActivityData'
@@ -57,7 +56,6 @@ export function addActivityRoutes(
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       query: v.object({
         range: ActivityRangeSchema.optional(),
       }),
@@ -83,7 +81,7 @@ export function addActivityRoutes(
 
       const data = await cache.get(
         {
-          key: ['activity', project.id, range],
+          key: ['activity', projectId, range],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },

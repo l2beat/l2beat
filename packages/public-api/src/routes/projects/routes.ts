@@ -7,7 +7,6 @@ import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import {
   findProject,
-  PROJECT_ID_OR_SLUG_DESCRIPTION,
   projectNotFoundDescription,
 } from '../../utils/findProject'
 import { getTokensData } from './getTokensData'
@@ -48,12 +47,11 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/project/:projectId',
     {
-      summary: 'Get a project by id or slug',
+      summary: 'Get a project by ID',
       tags: ['projects'],
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: DetailedProjectSchema,
       errors: {
         404: GenericErrorResponse,
@@ -106,7 +104,6 @@ export function addProjectsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: v.array(ContractSchema),
       errors: {
         404: GenericErrorResponse,
@@ -157,7 +154,6 @@ export function addProjectsRoutes(
       params: v.object({
         projectId: v.string(),
       }),
-      paramDescriptions: { projectId: PROJECT_ID_OR_SLUG_DESCRIPTION },
       result: v.array(TokenSchema),
       errors: {
         404: GenericErrorResponse,
@@ -183,7 +179,7 @@ export function addProjectsRoutes(
 
       const data = await cache.get(
         {
-          key: ['projects', 'tokens', project.id],
+          key: ['projects', 'tokens', projectId],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
