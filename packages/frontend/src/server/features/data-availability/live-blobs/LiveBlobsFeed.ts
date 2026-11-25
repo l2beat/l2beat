@@ -68,6 +68,8 @@ export type LiveBlock =
       /** Tells apart a block that replaced another in the same slot */
       hash: string
       batches: LiveBatch[]
+      /** Gwei per blob gas; null for a block stored before fees were kept */
+      blobBaseFee: number | null
     }
   | { slot: number; status: 'missed' }
 
@@ -98,6 +100,8 @@ export interface PostedWindow {
   firstBucket: number
   /** Most blobs first */
   posted: Posted[]
+  /** For `Posted.feeEth`; undefined when no price is known */
+  ethPriceUsd: number | undefined
 }
 
 export interface Posted {
@@ -106,6 +110,8 @@ export interface Posted {
   batches: number
   lastSlot: number
   lastBlobs: number
+  /** What the blobs cost at the blob base fee of their blocks, the blob gas alone. Null while a block of theirs has no fee stored */
+  feeEth: number | null
   /**
    * Steps are fixed in time, not counted back from the head, so a new block
    * adds to the last (under way) step and leaves the rest be
@@ -129,6 +135,7 @@ export interface LiveBlobsSource {
     Database['liveBlobBatch'],
     'getBySlotRange' | 'getPostedSince' | 'getBucketsSince'
   >
+  currentPrice: Pick<Database['currentPrice'], 'findByCoingeckoId'>
 }
 
 let feed: LiveBlobsFeed | undefined
@@ -309,7 +316,7 @@ async function readRows(
 ): Promise<LiveBlobsRows> {
   const windowStart = head - WINDOW_SLOTS + 1
   const beltStart = head - BELT_SLOTS + 1
-  const [stored, inWindow, blocks, batches, posted, buckets, pulse] =
+  const [stored, inWindow, blocks, batches, posted, buckets, pulse, ethPrice] =
     await Promise.all([
       source.liveBlock.getSlotRange(),
       source.liveBlock.getSlotRange(windowStart),
@@ -318,8 +325,18 @@ async function readRows(
       source.liveBlobBatch.getPostedSince(windowStart),
       source.liveBlobBatch.getBucketsSince(windowStart, BUCKET_SLOTS),
       source.liveBlock.getBucketsSince(windowStart, PULSE_BUCKET_SLOTS),
+      source.currentPrice.findByCoingeckoId('ethereum'),
     ])
-  return { stored, inWindow, blocks, batches, posted, buckets, pulse }
+  return {
+    stored,
+    inWindow,
+    blocks,
+    batches,
+    posted,
+    buckets,
+    pulse,
+    ethPriceUsd: ethPrice?.priceUsd,
+  }
 }
 
 /** Waits for `promise`, but no longer than `seconds`. Says whether it settled */

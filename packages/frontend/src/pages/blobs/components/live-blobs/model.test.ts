@@ -60,6 +60,8 @@ describe(totalByPoster.name, () => {
     batches: 1,
     lastSlot,
     lastBlobs: blobs,
+    // an ETH a blob
+    feeEth: blobs,
     buckets: [blobs],
   })
 
@@ -75,6 +77,9 @@ describe(totalByPoster.name, () => {
     )
 
     expect(totals.blobs).toEqual(14)
+    expect(totals.posters.map((p) => p.feeEth)).toEqual(
+      totals.posters.map((p) => p.blobs),
+    )
     expect(
       totals.posters.map((p) => [p.poster.id, p.blobs, p.batches, p.lastBlobs]),
     ).toEqual([
@@ -82,6 +87,18 @@ describe(totalByPoster.name, () => {
       ['arbitrum', 5, 1, 5],
       ['base', 3, 1, 3],
     ])
+  })
+
+  it('has no fee for a poster while a part of it has none', () => {
+    const totals = totalByPoster(
+      [
+        posted(undefined, 2, 12),
+        { ...posted('archived', 4, 12), feeEth: null },
+      ],
+      posters,
+    )
+
+    expect(totals.posters.map((p) => p.feeEth)).toEqual([null])
   })
 })
 
@@ -100,6 +117,7 @@ describe(inRanking.name, () => {
     batches: 1,
     lastSlot: 0,
     lastBlobs: 0,
+    feeEth: 0,
     buckets: [],
   })
 

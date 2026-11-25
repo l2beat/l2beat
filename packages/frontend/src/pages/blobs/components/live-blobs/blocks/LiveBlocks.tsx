@@ -16,12 +16,18 @@ import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { cn } from '~/utils/cn'
+import { BlobCost } from '../BlobCost'
 import { useChainClock } from '../chainClock'
 import { useImages } from '../hooks'
 import { LivePulse } from '../LivePulse'
 import { LandingsContext } from '../landings'
 import { clampView, earliestView } from '../lookBack'
-import { type BlockLimits, type LivePoster, UNKNOWN_ID } from '../model'
+import {
+  type BlockLimits,
+  describeBlobCost,
+  type LivePoster,
+  UNKNOWN_ID,
+} from '../model'
 import { NextBlock } from '../NextBlock'
 import { PointerTooltip } from '../PointerTooltip'
 import type { LiveStatus } from '../useLiveBlobs'
@@ -66,6 +72,7 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
   const onScreen = useIsOnScreen(beltRef)
   const reducedMotion = usePrefersReducedMotion()
   const { maxBlobsPerBlock, targetBlobsPerBlock } = limits
+  const ethPriceUsd = live?.window.ethPriceUsd
 
   const posterIndexOf = useMemo(() => createPosterIndexOf(posters), [posters])
   // the belt drops what the chain brings in, and the belt needs the chain's
@@ -200,6 +207,16 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
           // fades in where the skeleton was, rather than swapping for it
           className="absolute inset-0 size-full starting:opacity-0 transition-opacity duration-300 ease-out"
         />
+        {layout && (
+          // level with the bay's caption, at the belt's free left end
+          <BlobCost
+            blocks={chainBlocks}
+            ethPriceUsd={ethPriceUsd}
+            hidden={look.view !== undefined}
+            className="pointer-events-none absolute left-0"
+            style={{ top: layout.bayCaptionY - NEXT_BLOCK_ABOVE_BASELINE }}
+          />
+        )}
         {layout && !layout.compact && (
           // level with the bay's caption, at the belt's free right end
           <NextBlock
@@ -219,6 +236,8 @@ export function LiveBlocks({ live, status, posters, limits }: Props) {
               batch={hovered.batch}
               slot={hovered.slot}
               blockNumber={hovered.blockNumber}
+              blobBaseFee={hovered.blobBaseFee}
+              ethPriceUsd={ethPriceUsd}
               pinned={belt.hover.pinned}
             />
           </BatchTooltip>
@@ -370,12 +389,16 @@ function BatchTooltipContent({
   batch,
   slot,
   blockNumber,
+  blobBaseFee,
+  ethPriceUsd,
   pinned,
 }: {
   poster: LivePoster
   batch: BlobBatch
   slot: number
   blockNumber: number
+  blobBaseFee: number | null
+  ethPriceUsd: number | undefined
   pinned: boolean
 }) {
   const rows: [string, string][] = [
@@ -383,6 +406,9 @@ function BatchTooltipContent({
     ['Slot', formatWhole(slot)],
     ['Block', formatWhole(blockNumber)],
   ]
+  if (blobBaseFee !== null) {
+    rows.push(['Blob cost', describeBlobCost(blobBaseFee, ethPriceUsd)])
+  }
   // an inbox nobody claims is the one clue to who sent it
   if (poster.id === UNKNOWN_ID) rows.push(['Sent to', formatAddress(batch.to)])
   return (

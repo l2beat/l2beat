@@ -27,6 +27,8 @@ export interface LivePostedRecord {
   lastSlot: number
   /** Blobs of every batch the project had in `lastSlot` */
   lastBlobs: number
+  /** What the blobs cost at the blob base fee of their blocks. Null while a block of theirs is stored without a fee */
+  feeEth: number | null
 }
 
 /** A project's blobs over the `bucket`-th run of `bucketSlots` slots from genesis */
@@ -43,6 +45,9 @@ export function toRecord(row: Selectable<LiveBlobBatch>): LiveBlobBatchRecord {
 export function toRow(record: LiveBlobBatchRecord): Insertable<LiveBlobBatch> {
   return { ...record, projectId: record.projectId ?? null }
 }
+
+const GAS_PER_BLOB = 131072
+const WEI_PER_ETH = 1e18
 
 export class LiveBlobBatchRepository extends BaseRepository {
   async upsertMany(records: LiveBlobBatchRecord[]): Promise<number> {
@@ -107,21 +112,27 @@ export class LiveBlobBatchRepository extends BaseRepository {
       batches: string
       lastSlot: number
       lastBlobs: string
+      feeWei: string | null
     }>`
       SELECT
         "projectId",
         sum(blobs) AS blobs,
         count(*) AS batches,
         max(slot) AS "lastSlot",
-        sum(blobs) FILTER (WHERE slot = "projectLastSlot") AS "lastBlobs"
+        sum(blobs) FILTER (WHERE slot = "projectLastSlot") AS "lastBlobs",
+        CASE WHEN count("blobBaseFee") = count(*)
+          THEN sum(blobs::numeric * ${GAS_PER_BLOB} * "blobBaseFee")
+        END AS "feeWei"
       FROM (
         SELECT
           "projectId",
-          slot,
+          batch.slot,
           blobs,
-          max(slot) OVER (PARTITION BY "projectId") AS "projectLastSlot"
-        FROM "LiveBlobBatch"
-        WHERE slot >= ${fromSlot}
+          "blobBaseFee",
+          max(batch.slot) OVER (PARTITION BY "projectId") AS "projectLastSlot"
+        FROM "LiveBlobBatch" batch
+        JOIN "LiveBlock" block ON block.slot = batch.slot
+        WHERE batch.slot >= ${fromSlot}
       ) batches
       GROUP BY "projectId"
     `.execute(this.db)
@@ -131,6 +142,7 @@ export class LiveBlobBatchRepository extends BaseRepository {
       batches: Number(row.batches),
       lastSlot: row.lastSlot,
       lastBlobs: Number(row.lastBlobs),
+      feeEth: row.feeWei === null ? null : Number(row.feeWei) / WEI_PER_ETH,
     }))
   }
 

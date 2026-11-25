@@ -353,6 +353,12 @@ describe(LiveBlobsFeed.name, () => {
           return []
         },
       },
+      currentPrice: {
+        findByCoingeckoId: async () => {
+          fail()
+          return undefined
+        },
+      },
     }
     return db
   }
