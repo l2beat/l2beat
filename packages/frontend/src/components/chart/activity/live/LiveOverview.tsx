@@ -151,10 +151,12 @@ export function LiveOverview({
   const pointTo = (event: PointerEvent) => {
     const drag = dragging.current
     if (drag === undefined) return
+    const at = drag.at + (event.clientX - drag.x) * drag.scale
     const box = ref.current?.getBoundingClientRect()
-    const moved = drag.at + (event.clientX - drag.x) * drag.scale
-    // at or past the strip's end is the newest block, as it is now
-    const at = box && event.clientX >= box.right ? Math.max(moved, to) : moved
+    // a dragged edge at or past the strip's end is at the newest block, as it
+    // is now, wherever on the edge the pointer took it
+    const pastEnd = box !== undefined && event.clientX >= box.right - 1
+    const edge = (time: number) => (pastEnd ? Math.max(time, to) : time)
     const resize = drag.resize
     // a resize from the keyboard not yet read is kept
     const seconds = target.current?.seconds ?? length
@@ -172,10 +174,10 @@ export function LiveOverview({
             buffer,
             resize.moved,
           )
-        : follows(at + resize.grab)
+        : follows(edge(at + resize.grab))
           ? { end: undefined, seconds: resize.seconds, exact: true }
-          : getResizedTo(at + resize.grab, resize.start, buffer)
-      : { end: at + drag.grab, seconds }
+          : getResizedTo(edge(at + resize.grab), resize.start, buffer)
+      : { end: edge(at + drag.grab), seconds }
     seek(follows(next.end) ? { ...next, end: undefined } : next)
   }
   const onKeyDown = (event: KeyboardEvent) => {
