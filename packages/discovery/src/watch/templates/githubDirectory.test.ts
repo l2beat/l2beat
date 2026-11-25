@@ -185,4 +185,37 @@ describe(githubDirectory.name, () => {
       }).success,
     ).toEqual(false)
   })
+
+  it('rejects private repositories when running with publicOnly and a token', async () => {
+    const fetchPrivate = mockFn().resolvesTo({ private: true })
+    await expect(
+      githubDirectory.fetch(
+        { repository: 'org/secret', branch: 'main', path: 'audits' },
+        {
+          http: mockObject<HttpClient>({ fetch: fetchPrivate }),
+          githubToken: 'public-token',
+          publicOnly: true,
+        },
+      ),
+    ).toBeRejectedWith('GitHub repository is private')
+    expect(fetchPrivate).toHaveBeenCalledTimes(1)
+
+    const fetchPublic = mockFn()
+      .resolvesToOnce({ private: false })
+      .resolvesToOnce(TREE_RESPONSE)
+    const result = await githubDirectory.fetch(
+      {
+        repository: 'org/public',
+        branch: 'main',
+        path: 'docs/security-reviews',
+        extensions: ['.pdf'],
+      },
+      {
+        http: mockObject<HttpClient>({ fetch: fetchPublic }),
+        githubToken: 'public-token',
+        publicOnly: true,
+      },
+    )
+    expect(Object.keys(result as Record<string, unknown>).length).toEqual(2)
+  })
 })

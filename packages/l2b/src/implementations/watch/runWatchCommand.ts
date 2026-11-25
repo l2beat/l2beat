@@ -46,6 +46,7 @@ export async function runWatchCommand(
   const run = await runWatch(reader.readWatchConfig(name), {
     http: new HttpClient(),
     githubToken: process.env.GITHUB_TOKEN,
+    publicGithubToken: process.env.WATCH_PUBLIC_GITHUB_TOKEN,
   })
   const accepted = stripPendingItems(run.values)
   const pending = diffWatched(accepted, run.values)

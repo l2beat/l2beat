@@ -100,6 +100,24 @@ describe(findUnmergedWatchEntry.name, () => {
       findUnmergedWatchEntry('d.md', onDisk, main, Logger.SILENT),
     ).toThrow('Unmerged discovery entry in diffHistory.md')
   })
+
+  it('refuses to overwrite an unmerged description-only discovery entry', () => {
+    const sectionless = [
+      '# Diff at 29 Oct 2026 09:00:00 GMT:',
+      '',
+      '- id: 00000029',
+      '- current timestamp: 1',
+      '',
+      '## Description',
+      '',
+      'Manual discovery note.',
+      '',
+    ].join('\n')
+    const onDisk = `${sectionless}\n${main}`
+    expect(() =>
+      findUnmergedWatchEntry('d.md', onDisk, main, Logger.SILENT),
+    ).toThrow('Unmerged discovery entry in diffHistory.md')
+  })
 })
 
 describe(assertNoUnmergedWatchEntry.name, () => {

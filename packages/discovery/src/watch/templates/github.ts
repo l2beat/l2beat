@@ -18,6 +18,10 @@ export const GithubTree = v.object({
 })
 export type GithubTree = v.infer<typeof GithubTree>
 
+const GithubRepository = v.object({
+  private: v.boolean(),
+})
+
 // Anonymous GitHub allows 60 requests an hour per IP; the token lifts that.
 export async function fetchGithubJson(
   context: WatchContext,
@@ -38,12 +42,28 @@ export async function fetchGithubJson(
 }
 
 // A truncated tree lists only part of the repository, and the missing part
-// would read as removed files.
+// would read as removed files. When a public watch runs with an authenticated
+// token, also verify repository visibility so a newly-private repo never leaks.
 export async function fetchGithubTree(
   context: WatchContext,
   repository: string,
   branch: string,
 ): Promise<GithubTree> {
+  if (
+    context.publicOnly === true &&
+    context.githubToken !== undefined &&
+    context.githubToken !== ''
+  ) {
+    const repoUrl = `https://api.github.com/repos/${repository}`
+    const repo = GithubRepository.validate(
+      await fetchGithubJson(context, repoUrl),
+    )
+    if (repo.private) {
+      throw new Error('GitHub repository is private', {
+        cause: { repository },
+      })
+    }
+  }
   const encodedBranch = branch.split('/').map(encodeURIComponent).join('/')
   const url = `https://api.github.com/repos/${repository}/git/trees/${encodedBranch}?recursive=1`
   const tree = GithubTree.validate(await fetchGithubJson(context, url))

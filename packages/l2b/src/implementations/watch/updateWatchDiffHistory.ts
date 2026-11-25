@@ -153,7 +153,10 @@ export function findUnmergedWatchEntry(
       continue
     }
     const kinds = entry.sections.map((section) => section.kind)
-    if (kinds.some((kind) => kind !== 'offchain-changes')) {
+    if (
+      kinds.length === 0 ||
+      kinds.some((kind) => kind !== 'offchain-changes')
+    ) {
       throw new Error('Unmerged discovery entry in diffHistory.md', {
         cause: { diffHistoryPath, id: entry.id },
       })
