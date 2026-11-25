@@ -363,33 +363,6 @@ describe('deployedTokensRouter', () => {
     })
   })
 
-  describe('getMintingPlugins', () => {
-    it('returns the plugin names straight from the repository', async () => {
-      const getMintingPluginsFor = mockFn().resolvesTo([
-        'canonicalbridge',
-        'superbridge',
-      ])
-      const mockTokenDb = mockObject<TokenDatabase>({
-        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
-          getMintingPluginsFor,
-        }),
-      })
-      const caller = createRouter(
-        mockTokenDb,
-        mockObject<Database>({}),
-        mockObject<CoingeckoClient>({}),
-      )
-
-      expect(
-        await caller.getMintingPlugins({ chain: 'base', address: '0xbbb' }),
-      ).toEqual(['canonicalbridge', 'superbridge'])
-      expect(getMintingPluginsFor).toHaveBeenCalledWith({
-        chain: 'base',
-        address: '0xbbb',
-      })
-    })
-  })
-
   describe('getRelationsGraphRelationDetails', () => {
     it('loads transfer evidence only for the selected relation', async () => {
       const primaryKey = {

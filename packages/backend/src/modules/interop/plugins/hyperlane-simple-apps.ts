@@ -69,8 +69,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
     if (priceUpdated) {
       const process = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log, index) => {
           const process = parseProcess(log, null)
           if (!process) return
@@ -96,8 +95,7 @@ export class HyperlaneSimpleAppsPlugIn implements InteropPluginResyncable {
     if (receivedFromBridge) {
       const process = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log, index) => {
           const process = parseProcess(log, null)
           if (!process) return

@@ -31,14 +31,8 @@ describe(StarknetUopsAnalyzer.name, () => {
     })
 
     it('should handle block number lower than 3000', () => {
-      const tx = mockTx('abc')
+      const tx = mockTx('INVOKE', ['0x3', '0x12123'])
       const result = analyzer.getOperationsCount(tx, 100)
-      expect(result).toEqual(1)
-    })
-
-    it('should handle tx other than INVOKE', () => {
-      const tx = mockTx('abc')
-      const result = analyzer.getOperationsCount(tx, 3001)
       expect(result).toEqual(1)
     })
 

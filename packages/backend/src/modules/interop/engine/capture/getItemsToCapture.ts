@@ -1,7 +1,13 @@
 import type { Block, Log } from '@l2beat/shared-pure'
-import type { Log as ViemLog } from 'viem'
-import { toInteropTransaction } from '../../dto/interopTransaction'
-import type { LogToCapture, TxToCapture } from '../../plugins/types'
+import {
+  checksumAddress,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
+import type {
+  CapturedLog,
+  LogToCapture,
+  TxToCapture,
+} from '../../plugins/types'
 
 export interface ItemsToCapture {
   txsToCapture: TxToCapture[]
@@ -37,7 +43,7 @@ function prepareItemsToCapture(
   block: Block,
   logs: Log[],
 ): ItemsToCapture {
-  const logsByTx = new Map<string, ViemLog[]>()
+  const logsByTx = new Map<string, CapturedLog[]>()
   for (const log of logs) {
     const viemLog = logToViemLog(log)
     const txLogs = logsByTx.get(log.transactionHash)
@@ -68,12 +74,12 @@ function prepareItemsToCapture(
   return { txsToCapture, logsToCapture }
 }
 
-export function logToViemLog(log: Log): ViemLog {
+export function logToViemLog(log: Log): CapturedLog {
   return {
     blockNumber: BigInt(log.blockNumber),
     blockHash: log.blockHash as `0x${string}`,
     transactionHash: log.transactionHash as `0x${string}`,
-    address: log.address as `0x${string}`,
+    address: checksumAddress(log.address) as `0x${string}`,
     topics: log.topics as [`0x${string}`, ...`0x${string}`[]] | [],
     data: log.data as `0x${string}`,
     logIndex: log.logIndex,

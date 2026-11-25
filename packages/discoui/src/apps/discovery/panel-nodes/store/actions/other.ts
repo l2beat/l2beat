@@ -4,7 +4,11 @@ import {
   hideItems,
   mapGraphItems,
 } from '../utils/graphProjection'
-import { containerBoxes } from '../utils/renderGraph'
+import { buildRenderGraph, containerBoxes } from '../utils/renderGraph'
+import {
+  focusSecurityPerimeter,
+  getPerimeterFocusBoxes,
+} from '../utils/securityPerimeter'
 import type { NodeLocations } from '../utils/storage'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
@@ -65,6 +69,21 @@ export function withoutHiddenFields(nodes: readonly Node[]): Node[] {
   )
 }
 
+export function syncCriticality(
+  state: State,
+  criticalIds: ReadonlySet<string>,
+): Partial<State> {
+  let changed = false
+  const nodes = mapGraphItems(state.nodes, (node) => {
+    if (node.subnodes.length > 0) return node
+    const isCritical = criticalIds.has(node.id)
+    if (node.isCritical === isCritical) return node
+    changed = true
+    return { ...node, isCritical }
+  })
+  return changed ? { nodes } : {}
+}
+
 export function clear(): Partial<State> {
   return {
     projectId: '',
@@ -81,7 +100,11 @@ export function colorSelected(state: State, color: number): Partial<State> {
   return { nodes }
 }
 
-export function layout(state: State, locations: NodeLocations): Partial<State> {
+export function layout(
+  state: State,
+  locations: NodeLocations,
+  options?: { focusPerimeter?: boolean },
+): Partial<State> {
   // For an open group the location targets its container footprint, so we
   // measure the delta from there and move the whole subtree as one unit.
   const footprints = containerBoxes(state.nodes)
@@ -94,7 +117,20 @@ export function layout(state: State, locations: NodeLocations): Partial<State> {
     return translateNode(node, location.x - origin.x, location.y - origin.y)
   })
 
-  return updateNodePositions(state, { nodes: movedNodes })
+  const updated = updateNodePositions(state, { nodes: movedNodes })
+  if (!options?.focusPerimeter || !updated.nodes) {
+    return updated
+  }
+  const graph = buildRenderGraph(updated.nodes)
+  const focusBoxes = getPerimeterFocusBoxes(graph.nodes, graph.hidden)
+  return {
+    ...updated,
+    transform: focusSecurityPerimeter(
+      focusBoxes,
+      state.transform,
+      state.viewportContainer,
+    ),
+  }
 }
 
 function translateNode(node: Node, dx: number, dy: number): Node {

@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress, type json } from '@l2beat/shared-pure'
+import FakeTimers from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { FetchInit } from '../http/fetchWithTimeout'
 import type { HttpClient } from '../http/HttpClient'
@@ -1008,6 +1009,182 @@ describe(RpcClient.name, () => {
     })
   })
 
+  // Why: batches go around ClientCore.fetch, so a refused batch has to
+  // report to the limiter by itself
+  it('tells the limiter when a batch is refused for the rate', async () => {
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(
+          jsonResponse([
+            { id: '0x1', result: 'one' },
+            { id: '0x2', result: 'two' },
+          ]),
+        ),
+    })
+    const rpc = mockClient({
+      http,
+      stepDownOnThrottle: 0.1,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+
+    await rpc.batchQuery('rpc_method', [['a'], ['b']])
+
+    expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+  })
+
+  // Why: a batch turned away for its size resolves inside the limiter like
+  // an answered one, but says nothing about the rate. Counted as an answer
+  // it would let a provider that is locking us out take a second step.
+  // The batch size is configured, so a rejected batch throws and no single
+  // call is sent in its place.
+  it('does not take a batch rejected for its size as an answer', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(new Response('Payload Too Large', { status: 413 }))
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(new Response('Payload Too Large', { status: 413 })),
+    })
+    const rpc = mockClient({ http, stepDownOnThrottle: 0.1, maxBatchSize: 2 })
+    const refusedThenRejected = async () => {
+      const queried = rpc.batchQuery('rpc_method', [['a'], ['b']])
+      const rejected = expect(queried).toBeRejectedWith(
+        'RPC rejected a batch within the configured maxBatchSize',
+      )
+      await clock.tickAsync(1_000)
+      await rejected
+    }
+
+    try {
+      await refusedThenRejected()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+
+      await clock.tickAsync(60_000)
+      await refusedThenRejected()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // Why: a provider can also turn every call of a batch down inside a 200.
+  // Such a batch served nothing, so it must not count as an answer either.
+  it('does not take a batch with no result in it as an answer', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const refusedInside = () =>
+      jsonResponse([
+        { id: '0x1', error: { code: 429, message: 'Too many requests' } },
+        { id: '0x2', error: { code: 429, message: 'Too many requests' } },
+      ])
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(refusedInside())
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(refusedInside()),
+    })
+    const rpc = mockClient({
+      http,
+      stepDownOnThrottle: 0.1,
+      maxBatchSize: 2,
+      generateId: mockFn()
+        .returnsOnce('0x1')
+        .returnsOnce('0x2')
+        .returnsOnce('0x1')
+        .returnsOnce('0x2'),
+    })
+    const refusedThenRefusedInside = async () => {
+      const queried = rpc.batchQuery('rpc_method', [['a'], ['b']])
+      const settled = queried.catch(() => {})
+      await clock.tickAsync(1_000)
+      await settled
+    }
+
+    try {
+      await refusedThenRefusedInside()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+
+      await clock.tickAsync(60_000)
+      await refusedThenRefusedInside()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+      expect(http.fetchRaw).toHaveBeenCalledTimes(4)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // The same minute apart, with each refused batch answered on its retry:
+  // the first answer is what lets the second refusal count.
+  it('tells the limiter of an answered batch, so a later refusal counts', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const answer = () =>
+      jsonResponse([
+        { id: '0x1', result: 'one' },
+        { id: '0x2', result: 'two' },
+      ])
+    const http = mockObject<HttpClient>({
+      fetchRaw: mockFn<HttpClient['fetchRaw']>()
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(answer())
+        .resolvesToOnce(new Response('Too Many Requests', { status: 429 }))
+        .resolvesToOnce(answer()),
+    })
+    const rpc = mockClient({
+      http,
+      stepDownOnThrottle: 0.1,
+      generateId: mockFn()
+        .returnsOnce('0x1')
+        .returnsOnce('0x2')
+        .returnsOnce('0x1')
+        .returnsOnce('0x2'),
+    })
+    const refusedThenAnswered = async () => {
+      const queried = rpc.batchQuery('rpc_method', [['a'], ['b']])
+      await clock.tickAsync(1_000)
+      await queried
+    }
+
+    try {
+      await refusedThenAnswered()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(90_000)
+
+      await clock.tickAsync(60_000)
+      await refusedThenAnswered()
+      expect(rpc.rateLimiter.effectiveCallsPerMinute).toEqual(81_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // Why: batches go around HttpClient.fetch, so a refused batch has to
+  // keep the provider's headers by itself
+  it('keeps what the provider says about its limit on a refused batch', async () => {
+    const http = mockObject<HttpClient>({
+      fetchRaw: async () =>
+        new Response('Too Many Requests', {
+          status: 429,
+          statusText: 'Too Many Requests',
+          headers: { 'Retry-After': '7' },
+        }),
+    })
+    const rpc = mockClient({
+      http,
+      generateId: mockFn().returnsOnce('0x1').returnsOnce('0x2'),
+    })
+
+    const error = await rpc
+      .batchQuery('rpc_method', [['a'], ['b']])
+      .catch((error) => error)
+
+    expect(error.cause).toEqual({
+      status: 429,
+      statusText: 'Too Many Requests',
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+
   describe('batches', () => {
     const REJECTIONS: Record<string, (request: RpcRequest[]) => Reply> = {
       // dRPC's free plan
@@ -1207,6 +1384,7 @@ function mockClient(deps: {
   url?: string
   generateId?: () => string
   maxBatchSize?: number
+  stepDownOnThrottle?: number
 }) {
   return new RpcClient({
     chain: 'chain',
@@ -1218,6 +1396,7 @@ function mockClient(deps: {
     generateId: deps.generateId,
     rpcMetrics: deps.rpcMetrics,
     maxBatchSize: deps.maxBatchSize,
+    stepDownOnThrottle: deps.stepDownOnThrottle,
   })
 }
 

@@ -405,7 +405,7 @@ describe(LineaRolesModuleHandler.name, () => {
               wildcarded: true,
               parameters: [],
             }),
-          ), // biome-ignore format: readability
+          ),
           ScopeAllowFunction(
             5,
             TARGET_A_R,
@@ -416,7 +416,7 @@ describe(LineaRolesModuleHandler.name, () => {
               wildcarded: false,
               parameters: [],
             }),
-          ), // biome-ignore format: readability
+          ),
           ScopeAllowFunction(
             3,
             TARGET_C_R,
@@ -427,7 +427,7 @@ describe(LineaRolesModuleHandler.name, () => {
               wildcarded: false,
               parameters: [],
             }),
-          ), // biome-ignore format: readability
+          ),
           ScopeAllowFunction(
             4,
             TARGET_B_R,
@@ -438,7 +438,7 @@ describe(LineaRolesModuleHandler.name, () => {
               wildcarded: true,
               parameters: [],
             }),
-          ), // biome-ignore format: readability
+          ),
           ScopeAllowFunction(
             6,
             TARGET_B_R,
@@ -449,11 +449,10 @@ describe(LineaRolesModuleHandler.name, () => {
               wildcarded: true,
               parameters: [],
             }),
-          ), // biome-ignore format: readability
+          ),
           ScopeRevokeFunction(5, TARGET_A_R, FunctionSigA, '0'),
           ScopeRevokeFunction(6, TARGET_B_R, FunctionSigB, '0'),
 
-          // biome-ignore format: readability
           ScopeFunction(
             2,
             TARGET_C_R,
@@ -487,7 +486,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeFunction(
             3,
             TARGET_B_R,
@@ -513,7 +512,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeFunctionExecutionOptions(
             3,
             TARGET_B_R,
@@ -532,7 +531,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeParameter(
             2,
             TARGET_C_R,
@@ -556,7 +555,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeParameter(
             4,
             TARGET_A_R,
@@ -573,7 +572,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeParameterAsOneOf(
             4,
             TARGET_A_R,
@@ -592,7 +591,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeParameterAsOneOf(
             4,
             TARGET_C_R,
@@ -614,7 +613,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           ScopeParameter(
             4,
             TARGET_C_R,
@@ -631,7 +630,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ],
             }),
           ),
-          // biome-ignore format: readability
+
           UnscopeParameter(
             3,
             TARGET_B_R,

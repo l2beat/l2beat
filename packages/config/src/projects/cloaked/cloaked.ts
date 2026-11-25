@@ -1,12 +1,17 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { cloakedAdversaries } from './adversaries'
+import { cloakedRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('cloaked')
 
@@ -53,9 +58,9 @@ export const cloaked: BaseProject = {
       since: '2026-09-16',
       delivery: { type: 'hosted' },
       // Vercel deployment id of the served app (app.clkd.xyz/api/version),
-      // signing vault auth.clkd.xyz/v17.
-      build: 'dpl_Eh8jMZFr7gBpkKE4NDJzg1EyCzo5',
-      checked: '2026-10-30',
+      // signing vault auth.clkd.xyz/v18.
+      build: 'dpl_3UYSbH2uPmN6dQXeR7NKXrnJ6Dfz',
+      checked: '2026-11-18',
       checkedApps: [
         {
           name: 'Cloaked browser extension',
@@ -95,9 +100,7 @@ export const cloaked: BaseProject = {
         'Cloaked sends funds to one-time stealth addresses instead of mixing deposits in a shared pool.',
     },
     exitWindow: {
-      value: 'Infinite',
-      sentiment: 'good',
-      orderHint: Number.MAX_SAFE_INTEGER,
+      ...PRIVACY_EXIT_WINDOW.infinite,
       description:
         "Balances sit in addresses the user's keys control, and the open recovery tool exports their keys from the wallet and PIN or from the backup file saved at setup. Cloaked can spend them only with the user's key material.",
       walkawayTest: {
@@ -107,8 +110,7 @@ export const cloaked: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         'The web app and the browser extension are closed source. The open stealth library and recovery tool derive keys and recover funds without Cloaked. The API, ENS gateway, indexer and relay are closed.',
     },
@@ -117,7 +119,7 @@ export const cloaked: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: cloakedAdversaries,
-    riskSummary: readProjectMarkdown('cloaked', 'riskSummary'),
+    riskSummary: cloakedRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),
     },

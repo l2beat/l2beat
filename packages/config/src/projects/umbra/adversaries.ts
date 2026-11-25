@@ -1,5 +1,4 @@
 import {
-  ADVICE_SNIPPETS as A,
   adviceLink,
   definePrivacyAdversaries,
   toolLink,
@@ -7,7 +6,7 @@ import {
 
 // app.umbra.cash serves this commit and shows it in its footer.
 const UMBRA =
-  'https://github.com/ScopeLift/umbra-protocol/blob/685f710e4e846db3b88f8138e6f78ee82482a391/'
+  'https://github.com/ScopeLift/umbra-protocol/blob/53ed4af5e575919680a4e70c1a090feafe365275/'
 const ANALYSIS = 'https://arxiv.org/html/2308.01703v2'
 
 export function umbraAdversaries(registrants: number) {
@@ -75,7 +74,7 @@ export function umbraAdversaries(registrants: number) {
           },
           {
             title: 'Connecting checks the wallet address through the same RPC',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L280',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L289',
           },
           {
             title: 'Withdrawing checks the destination through the same RPC',
@@ -105,7 +104,7 @@ export function umbraAdversaries(registrants: number) {
           {
             title:
               'The registry read stores no block, so the lookup repeats on every scan',
-            url: UMBRA + 'frontend/src/store/wallet.ts#L612-L622',
+            url: UMBRA + 'frontend/src/store/wallet.ts#L626-L636',
           },
           {
             title:
@@ -146,7 +145,7 @@ export function umbraAdversaries(registrants: number) {
     advice: [
       {
         name: 'Set up',
-        text: `${A.localBuild} Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic, the node's included, through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
+        text: `Build the app from the reviewed source and run it locally instead of the hosted website. Leave its indexer URL empty, point all RPC URLs and your wallet at your own ${toolLink('ethereumNode')}, and block cloudflare-eth.com with ${toolLink('ublockOrigin')}. Send all traffic through an ${adviceLink('IP-hiding route', 'routes')}, so neither the relayer nor the node's peers see your IP.`,
         against: ['networkObserver', 'privilegedInsider'],
         outside: true,
       },

@@ -24,7 +24,7 @@ All keys derive from one signature of the user's wallet. Contract wallets and si
 
 ### App
 
-0xbow hosts the app, built from public source. It reads the chain from Alchemy under 0xbow's key unless the user sets an endpoint per chain. It downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its connection settings can send every request through Tor, with a gateway the user runs, or through Nym. The page, three chain reads and the route's client code, served by jsDelivr, still load directly at each start. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which ETHBEAT does not track.
+The rated app is the website's v1.6.0 release bundle, loaded by its CID. It reads the chain from public endpoints, PublicNode on Ethereum, unless the user sets an endpoint per chain. Its interface caps deposits at $100, and BNB Chain does not load. 0xbow also hosts the app at privacypools.com, which reads the chain from Alchemy under 0xbow's key. The app downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its connection settings route requests through Tor, with a gateway the user runs, or through Nym. Three chain reads and the route's client code, served by jsDelivr, bypass them. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which ETHBEAT does not track.
 
 ### Swaps and yield
 
@@ -44,8 +44,8 @@ The ASP screens each depositor before approving the deposit, under 0xbow's own d
 
 ### Fees
 
-Deposits pay no vetting fee today. The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
+Deposits pay no vetting fee, though the multisig can [set one](#upgrades-and-governance). The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.
 
 ### Anonymity set
 
-One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes still hold at least the withdrawn amount. Notes that transfers and reshields created from them count too. We count every depositor of the asset, approved or not.
+One vault holds every asset, but a withdrawal names its asset. The set is therefore the ASP-approved deposits of that asset whose notes hold at least the withdrawn amount. Notes that transfers and reshields created from them count too. We count every depositor of the asset, approved or not.

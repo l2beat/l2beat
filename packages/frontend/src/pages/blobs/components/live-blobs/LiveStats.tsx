@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
+import { RollingNumber } from '~/components/RollingNumber'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { readableColor } from '~/utils/color'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import {
   BLOB_KIB,
   describeWindow,
@@ -16,7 +18,7 @@ import {
 } from './blocks/format'
 import { LIVE_POSTERS_ID } from './LivePosters'
 import { anyLanding, useLandedTotal } from './landings'
-import { type Arrival, Pop, RollingNumber } from './liveMotion'
+import { type Arrival, Pop } from './liveMotion'
 import { type BlockLimits, type PosterTotals, UNKNOWN_ID } from './model'
 import { NextBlock } from './NextBlock'
 import type { LiveStatus } from './useLiveBlobs'
@@ -285,7 +287,7 @@ function ShareStrip({
       {shares.map((share) => (
         <div
           key={share.id}
-          title={`${share.name} · ${formatPercent(share.share)}`}
+          title={`${share.name}${DOT_SEPARATOR}${formatPercent(share.share)}`}
           className="h-full"
           style={{
             flexGrow: share.share,

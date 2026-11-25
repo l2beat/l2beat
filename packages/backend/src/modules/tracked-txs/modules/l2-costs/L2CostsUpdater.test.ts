@@ -94,9 +94,13 @@ describe(L2CostsUpdater.name, () => {
         blobPriceProvider,
       )
 
-      await expect(updater.update(transactions)).toBeRejectedWith(
-        'Blob base fee not found for block 2',
+      const error = await updater.update(transactions).catch((e: Error) => e)
+
+      expect(error).toBeA(Error)
+      expect((error as Error).message).toEqual(
+        'Blob base fee not found for block',
       )
+      expect((error as Error).cause).toEqual({ blockNumber: 2 })
     })
   })
 
@@ -157,9 +161,17 @@ describe(L2CostsUpdater.name, () => {
       const transactions = getMockTrackedTxResults()
       const blobBaseFeeByBlock = new Map<number, bigint>()
 
-      expect(() => updater.transform(transactions, blobBaseFeeByBlock)).toThrow(
-        'Blob base fee not found for block 2',
+      let error: unknown
+      try {
+        updater.transform(transactions, blobBaseFeeByBlock)
+      } catch (e) {
+        error = e
+      }
+
+      expect((error as Error).message).toEqual(
+        'Blob base fee not found for block',
       )
+      expect((error as Error).cause).toEqual({ blockNumber: 2 })
     })
 
     it('handles multiple blob hashes correctly', () => {

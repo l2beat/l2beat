@@ -70,6 +70,7 @@ const ENTRY: ProjectZkCatalogEntry = {
   header: {
     links: [],
     techStack: {},
+    trustedSetupWarnings: [],
     trustedSetupsByProofSystem: {},
     tvs: { value: 0, change: 0, changePeriod: '7D' },
   },

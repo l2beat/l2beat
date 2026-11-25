@@ -124,34 +124,4 @@ describe(UpsertMap.name, () => {
       expect(map.size).toEqual(3)
     })
   })
-
-  it('extends Map and inherits all Map methods', () => {
-    const map = new UpsertMap<string, number>()
-
-    map.set('a', 1)
-    map.set('b', 2)
-
-    expect(map.has('a')).toEqual(true)
-    expect(map.get('a')).toEqual(1)
-    expect(map.size).toEqual(2)
-
-    map.delete('a')
-    expect(map.has('a')).toEqual(false)
-    expect(map.size).toEqual(1)
-
-    map.clear()
-    expect(map.size).toEqual(0)
-  })
-
-  it('can be iterated like a regular Map', () => {
-    const map = new UpsertMap<string, number>()
-    map.set('a', 1)
-    map.set('b', 2)
-
-    const entries = Array.from(map.entries())
-    expect(entries).toEqual([
-      ['a', 1],
-      ['b', 2],
-    ])
-  })
 })

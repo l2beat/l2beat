@@ -24,6 +24,7 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import type { LiquidStakingTvlSummary } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
@@ -42,6 +43,7 @@ import {
   type LiquidStakingChartSeries,
   LiquidStakingLineChart,
 } from './LiquidStakingLineChart'
+import { LiquidStakingTvlChart } from './tvl/LiquidStakingTvlChart'
 
 export type LiquidStakingChartProject = Pick<
   LiquidStakingEntry,
@@ -64,20 +66,20 @@ export const LIQUID_STAKING_RANGE_OPTIONS: {
 
 export function LiquidStakingCharts({
   projects,
+  tvlSummary,
   defaultRange,
 }: {
   projects: LiquidStakingChartProject[]
+  tvlSummary: LiquidStakingTvlSummary | undefined
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
 
   return (
-    // On phones the range bar drives two stacked cards, so it heads them
-    // instead of trailing the second one. It comes first in the document so
-    // focus order matches the phone layout.
+    // The range bar drives every chart below it, so it heads them.
     <div className="flex flex-col">
-      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:order-last md:mt-4 md:mb-0">
+      <ChartControlsWrapper className="mb-4 justify-end max-md:pr-4 md:mt-4">
         <ChartRangeControls
           name="liquid-staking"
           value={range}
@@ -85,7 +87,13 @@ export function LiquidStakingCharts({
           options={LIQUID_STAKING_RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
-      <div className="grid max-md:divide-y max-md:divide-divider md:mt-4 md:gap-4 lg:grid-cols-2">
+      <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 lg:grid-cols-2">
+        <LiquidStakingTvlChart
+          projects={projects}
+          projectSeries={projectSeries}
+          summary={tvlSummary}
+          range={range}
+        />
         <YieldChart
           projectSeries={projectSeries}
           range={range}
@@ -190,8 +198,8 @@ export function YieldChart({
     title: 'Rate-implied yield',
     description: [
       YIELD_METRIC.tooltip,
-      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days. Validators waiting to enter, or exited and not yet withdrawn, earn nothing and are left out.',
-      'The shaded area is the ETH held by active validators (right axis): rewards per validator shrink as the square root of the total stake, so the yield falls as the stake grows.',
+      'Network average is the return of active Ethereum validators before any protocol fee: consensus rewards plus what proposers earn from blocks, over their balance, for the same 30 days.',
+      'The shaded area is the ETH staked.',
     ].join(' '),
     timeRange: getChartTimeRangeFromData(chartData),
     isPlaceholderData,

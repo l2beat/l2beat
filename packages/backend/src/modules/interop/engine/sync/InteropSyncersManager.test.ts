@@ -99,7 +99,7 @@ describe(InteropSyncersManager.name, () => {
             Logger.SILENT,
             mockAggregator(),
           ),
-      ).toThrow('Missing configuration for chain ethereum')
+      ).toThrow('Missing configuration for chain')
     })
 
     it('throws when rpc config is missing for an enabled chain', () => {
@@ -115,7 +115,7 @@ describe(InteropSyncersManager.name, () => {
             Logger.SILENT,
             mockAggregator(),
           ),
-      ).toThrow('Missing RPC config for chain ethereum')
+      ).toThrow('Missing RPC config for chain')
     })
   })
 
@@ -191,7 +191,7 @@ describe(InteropSyncersManager.name, () => {
   })
 
   describe(InteropSyncersManager.prototype.processNewestBlock.name, () => {
-    it('processes the newest block on all syncers for the target chain', async () => {
+    it('its block processor processes the newest block on all syncers for its chain', async () => {
       const manager = makeManager({
         clusters: [makeCluster('cluster-a'), makeCluster('cluster-b')],
         chains: ['ethereum', 'arbitrum'],
@@ -212,8 +212,10 @@ describe(InteropSyncersManager.name, () => {
       if (bEth) bEth.processNewestBlock = bEthProcess
       if (aArb) aArb.processNewestBlock = aArbProcess
 
-      await manager.processNewestBlock('ethereum', block, logs)
+      const processor = manager.getBlockProcessor('ethereum')
+      await processor.processBlock(block, logs)
 
+      expect(processor.chain).toEqual('ethereum')
       expect(aEthProcess).toHaveBeenCalledWith(block, logs)
       expect(bEthProcess).toHaveBeenCalledWith(block, logs)
       expect(aArbProcess).not.toHaveBeenCalled()
@@ -265,27 +267,6 @@ describe(InteropSyncersManager.name, () => {
       bPending.resolve(undefined)
 
       await expect(promise).toBeRejectedWith('boom')
-    })
-  })
-
-  describe(InteropSyncersManager.prototype.getBlockProcessor.name, () => {
-    it('delegates processing to processNewestBlock', async () => {
-      const manager = makeManager({
-        clusters: [makeCluster('cluster-a')],
-        chains: ['ethereum'],
-      })
-
-      const processNewestBlock = mockFn().resolvesTo(undefined)
-      manager.processNewestBlock = processNewestBlock
-
-      const processor = manager.getBlockProcessor('ethereum')
-      const block = makeBlock(7)
-      const logs: Log[] = []
-
-      await processor.processBlock(block, logs)
-
-      expect(processor.chain).toEqual('ethereum')
-      expect(processNewestBlock).toHaveBeenCalledWith('ethereum', block, logs)
     })
   })
 

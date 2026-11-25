@@ -3,6 +3,7 @@ import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { isTvsSynced } from '~/server/features/layer2s/tvs/utils/isTvsSynced'
+import { pinTvsRange } from '~/server/features/layer2s/tvs/utils/pinTvsRange'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import { ps } from '~/server/projects'
@@ -38,8 +39,9 @@ interface ProjectRange {
 }
 
 export async function getZkCatalogTvsChart({
-  range,
+  range: requestedRange,
 }: ZkCatalogTvsChartParams): Promise<ZkCatalogTvsChartData> {
+  const range = pinTvsRange(requestedRange)
   const resolution = rangeToResolution(range)
   const rangesByProver = await getProjectRangesByProver(resolution)
   const allRanges = [...rangesByProver.values()].flat()

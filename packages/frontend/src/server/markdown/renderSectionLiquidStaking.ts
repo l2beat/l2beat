@@ -1,6 +1,7 @@
 import type { LiquidStakingSectionProps } from '~/components/projects/sections/defi/LiquidStakingSection'
 import {
   ETH_STAKED_TITLE,
+  formatEthStaked,
   formatEthStakedWithUsd,
   formatLatestValue,
   formatStakedEthShare,
@@ -16,7 +17,7 @@ import {
 } from './markdown'
 import { formatUtcDateOrDay, formatUtcDateTime } from './renderSectionParts'
 
-/** The same rows as the HTML table, each protocol linked to its page. */
+/** The same rows as the HTML table, each reviewed protocol linked to its page. */
 export function renderLiquidStakingSection({
   entries,
   ethStaked,
@@ -33,15 +34,13 @@ export function renderLiquidStakingSection({
         ...LIQUID_STAKING_METRICS.map((metric) => metric.title),
       ],
       entries.map((entry) => [
-        `${link(entry.name, entry.href)}${entry.isUnderReview ? ' (under review)' : ''}`,
+        `${entry.href ? link(entry.name, entry.href) : `${entry.name} (not reviewed)`}${entry.isUnderReview ? ' (under review)' : ''}`,
         entry.tokens
           .map((token) =>
             token.href ? link(token.symbol, token.href) : token.symbol,
           )
           .join(', '),
-        entry.totalValueLockedUsd !== undefined
-          ? `${formatUsd(entry.totalValueLockedUsd)}${entry.stakedEthShare ? ` (${formatStakedEthShare(entry.stakedEthShare.value)})` : ''}`
-          : NO_DATA,
+        formatTvl(entry),
         ...LIQUID_STAKING_METRICS.map((metric) => {
           const latest = entry[metric.key]
           return latest
@@ -52,4 +51,19 @@ export function renderLiquidStakingSection({
     ),
     `${link('Compare the risks of liquid staking protocols', '/defi/liquid-staking')}.`,
   ])
+}
+
+function formatTvl(entry: LiquidStakingSectionProps['entries'][number]) {
+  if (entry.totalValueLockedUsd === undefined) return NO_DATA
+  const details = [
+    entry.totalValueLockedEth !== undefined
+      ? withRegularSpaces(formatEthStaked(entry.totalValueLockedEth))
+      : undefined,
+    entry.stakedEthShare
+      ? formatStakedEthShare(entry.stakedEthShare.value)
+      : undefined,
+  ].filter((detail) => detail !== undefined)
+  return details.length > 0
+    ? `${formatUsd(entry.totalValueLockedUsd)} (${details.join(', ')})`
+    : formatUsd(entry.totalValueLockedUsd)
 }

@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1794568019,
+  "timestamp": 1795519471,
   "configHash": "0xfaaf4d86af7375f80e688fd9b504ba28743d6f68669fa085937afe688431f0c0",
   "entries": [
     {
@@ -266,7 +266,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 524,
+        "getFirstUnprocessedPriorityTx": 530,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -275,7 +275,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x2f2db9f2847162fb76cd8cc2b3b8510d52e41883bab70b14bd37db4dab238bd8",
+        "getPriorityTreeRoot": "0x26eb71115c8ced051e453fb6a79ffa2d80237b6ae0cfd12363bdd1959aa04214",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018882,
@@ -283,13 +283,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 16609,
-        "getTotalBatchesExecuted": 16609,
-        "getTotalBatchesVerified": 16609,
-        "getTotalBlocksCommitted": 16609,
-        "getTotalBlocksExecuted": 16609,
-        "getTotalBlocksVerified": 16609,
-        "getTotalPriorityTxs": 524,
+        "getTotalBatchesCommitted": 16887,
+        "getTotalBatchesExecuted": 16887,
+        "getTotalBatchesVerified": 16887,
+        "getTotalBlocksCommitted": 16887,
+        "getTotalBlocksExecuted": 16887,
+        "getTotalBlocksVerified": 16887,
+        "getTotalPriorityTxs": 530,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39",
         "getVerifierParams": {
@@ -471,7 +471,7 @@
         "L1_NULLIFIER": "eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea",
         "owner": "eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x8253F33026c49A430963FE3991441c02175bda95",
         "WETH_TOKEN": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
@@ -704,7 +704,7 @@
         "legacyBridge": "eth:0x0000000000000000000000000000000000000000",
         "owner": "eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711",
         "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+        "pendingOwner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
       "fieldMeta": {
         "owner": { "severity": "MEDIUM" },
@@ -1231,7 +1231,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2754,7 +2754,7 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
-  "usedBlockNumbers": { "ethereum": 26405637 },
+  "usedBlockNumbers": { "ethereum": 26484699 },
   "permissionsConfigHash": "0xafd6dc2fe5b310b75a7c895f78e4eada3861723bf8b93eb53b5b7deb847c9708",
   "permissions": {
     "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8": {

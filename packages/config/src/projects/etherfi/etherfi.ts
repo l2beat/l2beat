@@ -61,7 +61,9 @@ const wholeEth = (contract: string, key: string): string =>
   ).toLocaleString('en-US')
 const pooled = BigInt(value('LiquidityPool', 'getTotalPooledEther'))
 const inLp = BigInt(value('LiquidityPool', 'totalValueInLp'))
-const bufferPercent = `${(Number((inLp * 10000n) / pooled) / 100).toFixed(2)}%`
+const bufferShare = (Number(inLp) / Number(pooled)) * 100
+// Below 0.01%, two significant digits, so a small buffer does not read as 0.00%.
+const bufferPercent = `${bufferShare < 0.01 ? bufferShare.toPrecision(2) : bufferShare.toFixed(2)}%`
 const stethSharePercent = `${(
   Number(
     (BigInt(value('EtherFiRestaker', 'getTotalPooledEther')) * 10000n) / pooled,
@@ -158,7 +160,7 @@ export const etherfi: BaseProject = {
       discoveredDefiToken(
         discovery,
         'eETH',
-        'Rebasing receipt for pooled and restaked ETH: balances follow the oracle report.',
+        'Rebasing receipt for pooled ETH: balances follow the oracle report.',
       ),
       discoveredDefiToken(
         discovery,
@@ -168,41 +170,43 @@ export const etherfi: BaseProject = {
     ],
   },
   liquidStaking: {
-    contracts: {
-      type: 'etherfi',
-      weETH: discovery.getContract('weETH').address,
-      withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
-      redemptionManager: discovery.getContract('EtherFiRedemptionManager')
-        .address,
+    tracking: {
+      contracts: {
+        type: 'etherfi',
+        weETH: discovery.getContract('weETH').address,
+        withdrawRequestNft: discovery.getContract('WithdrawRequestNFT').address,
+        redemptionManager: discovery.getContract('EtherFiRedemptionManager')
+          .address,
+      },
+      // Liquidity moved between these over the period.
+      marketQuotes: [
+        {
+          type: 'fluid',
+          pool: ChainSpecificAddress(
+            'eth:0x86f874212335Af27C41cDb855C2255543d1499cE',
+          ),
+          swap0to1: true,
+        },
+        {
+          type: 'curve',
+          pool: ChainSpecificAddress(
+            'eth:0xDB74dfDD3BB46bE8Ce6C33dC9D82777BCFc3dEd5',
+          ),
+          i: 1,
+          j: 0,
+        },
+        {
+          type: 'curve',
+          pool: ChainSpecificAddress(
+            'eth:0x13947303F63b363876868D070F14dc865C36463b',
+          ),
+          i: 0,
+          j: 1,
+        },
+        { type: 'uniswapV3', fee: 100 },
+        { type: 'uniswapV3', fee: 500 },
+      ],
     },
-    // Liquidity moved between these over the period.
-    marketQuotes: [
-      {
-        type: 'fluid',
-        pool: ChainSpecificAddress(
-          'eth:0x86f874212335Af27C41cDb855C2255543d1499cE',
-        ),
-        swap0to1: true,
-      },
-      {
-        type: 'curve',
-        pool: ChainSpecificAddress(
-          'eth:0xDB74dfDD3BB46bE8Ce6C33dC9D82777BCFc3dEd5',
-        ),
-        i: 1,
-        j: 0,
-      },
-      {
-        type: 'curve',
-        pool: ChainSpecificAddress(
-          'eth:0x13947303F63b363876868D070F14dc865C36463b',
-        ),
-        i: 0,
-        j: 1,
-      },
-      { type: 'uniswapV3', fee: 100 },
-      { type: 'uniswapV3', fee: 500 },
-    ],
     risks: {
       minting: {
         value: 'Permissionless',
@@ -214,7 +218,7 @@ export const etherfi: BaseProject = {
         value: 'Whitelisted',
         secondLine: 'no bond',
         sentiment: 'warning',
-        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Stake is also restaked in EigenLayer, where extra slashing can cut principal.`,
+        description: `Operators are whitelisted by the ${operationsSafe} Safe and post no bond. Holders share slashing losses, up to ${maxNegativeRebaseBps} bps per report. Validators can withdraw through EigenLayer pods, so the stake can be restaked there, where operator slashing can cut principal.`,
       },
       backing: {
         value: 'EigenPods, stETH',
@@ -226,7 +230,7 @@ export const etherfi: BaseProject = {
         value: `${oracleQuorum} of ${oracleMembers}`,
         secondLine: `~${formatSeconds(reportPeriodSeconds)} · ≤${maxPositiveRebase}`,
         sentiment: 'warning',
-        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} of silence, anyone can submit a report.`,
+        description: `All ${oracleMembers} oracle members must agree on each report, every ${formatSeconds(reportPeriodSeconds, { fullUnit: true })}. A report can raise the rate by at most ${maxPositiveRebase}. After ${staleOracleWindow} without a report, anyone can finalize queued withdrawals in order, as far as the pool's ETH covers them, but the rate does not change.`,
       },
       exit: {
         value: 'Oracle-gated',
@@ -238,7 +242,7 @@ export const etherfi: BaseProject = {
         value: `${upgradeThreshold}/${upgradeSigners} Safe`,
         secondLine: `${upgradeDelayDays}d · no veto`,
         sentiment: 'warning',
-        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock tunes parameters within fixed limits. Holders have no veto.`,
+        description: `A ${upgradeThreshold}-of-${upgradeSigners} Safe can change the code after a ${upgradeDelayDays}-day timelock. A separate ${operatingDelayDays}-day timelock changes parameters: it can change the oracle committee and stop deposits and exits. Holders have no veto.`,
       },
     },
   },

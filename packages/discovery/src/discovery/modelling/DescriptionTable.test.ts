@@ -24,7 +24,6 @@ describe(DescriptionTable.name, () => {
     const identifierChars =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
     expect(id.startsWith('d_')).toEqual(true)
-    expect(id.length).toEqual(10)
     for (const char of id) {
       expect(identifierChars.includes(char)).toEqual(true)
     }

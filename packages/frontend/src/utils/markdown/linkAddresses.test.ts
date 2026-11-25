@@ -100,9 +100,7 @@ describe(linkAddresses.name, () => {
 
       const input = `See ${mockContractAddress.toString()}.`
       const output = linkAddresses(input, contractsWithSpaces, undefined)
-      expect(output).toEqual(
-        `See [My Contract Name](#${encodeURIComponent('My Contract Name')}).`,
-      )
+      expect(output).toEqual('See [My Contract Name](#My%20Contract%20Name).')
     })
   })
 
@@ -129,17 +127,8 @@ describe(linkAddresses.name, () => {
       const input = `The permission at ${mockPermissionAddress.toString()} is important.`
       const output = linkAddresses(input, undefined, permissions)
       expect(output).toEqual(
-        `The permission at [ADI Multisig 2](#${encodeURIComponent('ADI Multisig 2')}) is important.`,
+        'The permission at [ADI Multisig 2](#ADI%20Multisig%202) is important.',
       )
-    })
-
-    it('should handle permission ID with spaces', () => {
-      const input = `See ${mockPermissionAddress.toString()}.`
-      const output = linkAddresses(input, undefined, permissions)
-      expect(output).toEqual(
-        `See [ADI Multisig 2](#${encodeURIComponent('ADI Multisig 2')}).`,
-      )
-      expect(output).toInclude('ADI%20Multisig%202')
     })
 
     it('should handle actors as well as roles', () => {

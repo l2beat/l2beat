@@ -12,7 +12,10 @@ import { layer3s } from '../processing/layer3s'
 import { refactored } from '../processing/refactored'
 import type { BaseProject, ProjectContract } from '../types'
 import { getChainNames } from '../utils/chains'
-import { discoveryOrUndefined } from './discovery/fixtures'
+import {
+  discoveryOrUndefined,
+  isDiscoveredAnywhere,
+} from './discovery/fixtures'
 
 describe('verification status', () => {
   const projects = [...layer2s, ...layer3s, ...refactored]
@@ -33,7 +36,13 @@ describe('verification status', () => {
           `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
         )
 
-        const notFound = containsAllAddresses(unverified, discoveries)
+        const notFound = containsAllAddresses(unverified, discoveries).filter(
+          (address) =>
+            !(
+              getEscrowAddresses(project).includes(address) &&
+              isDiscoveredAnywhere(address)
+            ),
+        )
         assert(
           notFound.length === 0,
           `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
@@ -160,6 +169,15 @@ function getProjectContractsForChain(
   }
 
   return [...contracts, ...escrows]
+}
+
+function getEscrowAddresses(project: Project): ChainSpecificAddress[] {
+  if (!('config' in project)) {
+    return []
+  }
+  return project.config.escrows.map((escrow) =>
+    ChainSpecificAddress.from(getChainShortName(escrow.chain), escrow.address),
+  )
 }
 
 function getPermissionedAddressesForChain(

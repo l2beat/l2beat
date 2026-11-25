@@ -9,6 +9,10 @@ import {
 import { utils } from 'ethers'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
+import {
+  PRIVACY_EXIT_WINDOW,
+  PRIVACY_REPRODUCIBILITY,
+} from '../../common/privacySummaryValues'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -17,6 +21,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkApiAdversaries } from './adversaries'
+import { zkApiRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkapi')
 const vault = discovery.getContract('ZkApiVault')
@@ -99,7 +104,7 @@ export const zkapi: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: {
-      text: 'The vault owner can block withdrawals until deposits expire and become sweepable to the treasury. The proofs rely on a single-party trusted setup.',
+      text: 'The vault owner can block withdrawals until deposits expire and become sweepable to the treasury.',
       detailAnchor: 'permissions',
     },
     emergencyWarning: discovery.getContractValue<boolean>(
@@ -176,21 +181,12 @@ export const zkapi: BaseProject = {
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
       delivery: { type: 'hosted' },
-      // build.json of the served build HW2ERHD3 names oa-chat 6c604614, and
-      // 420 served files match it. The landing and sign-in pages and the
-      // Fathom loader come from a private repository, so the app counts as
-      // closed. Sources pin 6c604614.
-      build: 'HW2ERHD3',
-      checked: '2026-11-11',
+      // build.json of the served build SZD7DK34 names oa-chat a20f2e04. The
+      // landing and sign-in pages and the Fathom loader come from a private
+      // repository, so the app counts as closed. Sources pin a20f2e04.
+      build: 'SZD7DK34',
+      checked: '2026-11-18',
       checkedApps: [
-        {
-          name: 'zkapi-clientd',
-          finding:
-            "Sends the note id to the operator's indexer before each request, so the operator can tie requests to their deposit by timing.",
-          fix: "Fetch the whole note tree, as OA Chat does, instead of one note's path.",
-          source:
-            'https://github.com/ethereum/zkapi/blob/20aa542ae98e767c0507133fd34b12a56f5ccd3d/crates/zkapi-clientd/src/indexer.rs#L71-L80',
-        },
         {
           name: 'openzk.app',
           icon: 'openzk-app',
@@ -248,9 +244,7 @@ export const zkapi: BaseProject = {
       },
     ],
     exitWindow: {
-      value: 'None',
-      sentiment: 'bad',
-      orderHint: 0,
+      ...PRIVACY_EXIT_WINDOW.none,
       description: `The owner can immediately pause cooperative closes and the start of escapes. An already pending escape can be finalized after ${values.challengePeriod}, including during a pause. An active note becomes sweepable after its deposit expiry.`,
       walkawayTest: {
         passed: false,
@@ -259,14 +253,13 @@ export const zkapi: BaseProject = {
       },
     },
     reproducibility: {
-      value: 'Partially reproducible',
-      sentiment: 'warning',
+      ...PRIVACY_REPRODUCIBILITY.partial,
       description:
         "The browser app and the local daemon have public source and build instructions. The hosted app adds a private layer for its sign-in pages and analytics, so it does not rebuild from that source. The verifier enclave's attested image rebuilds from public source. The daemon releases and the stations remain unreproduced.",
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
-    riskSummary: readProjectMarkdown('zkapi', 'riskSummary'),
+    riskSummary: zkApiRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
     },

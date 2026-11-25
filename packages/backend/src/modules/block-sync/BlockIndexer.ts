@@ -138,7 +138,14 @@ export class BlockIndexer extends ManagedChildIndexer {
         })
         if (lastProcessedBlock === undefined) {
           throw new Error(
-            `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
+            'Block timestamp is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS',
+            {
+              cause: {
+                blockNumber: block.number,
+                blockTimestampMs,
+                stopBlockIndexerAtTimestampMs,
+              },
+            },
           )
         }
         break

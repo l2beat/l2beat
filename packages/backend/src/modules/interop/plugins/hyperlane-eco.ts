@@ -136,8 +136,7 @@ export class HyperlaneEcoPlugin implements InteropPluginResyncable {
     if (batchSent || intentProvenSource || hyperInstantFulfillment) {
       const dispatch = findParsedAround(
         input.txLogs,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
+        input.log.logIndex,
         (log, index) => {
           const dispatch = parseDispatch(log, null)
           if (!dispatch) return
@@ -171,8 +170,7 @@ export class HyperlaneEcoPlugin implements InteropPluginResyncable {
         input.txLogs,
         // hack to support multicall situations like https://arbiscan.io/tx/0x8006690c841152e495e585bf22843c5ad31d284ce07338d3e7518db53fbf2abe#eventlog
         // we start one index higher because we would otherwise find the wrong processId of the batch first
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex! - 1,
+        input.log.logIndex - 1,
         (log, index) => {
           const process = parseProcess(log, null)
           if (!process) return

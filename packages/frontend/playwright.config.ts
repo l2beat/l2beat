@@ -21,7 +21,6 @@ const PERF = '**/*-perf/**'
  */
 const BLOBS_PERF = '**/blobs-perf/**'
 
-// biome-ignore lint/style/noDefaultExport: Playwright config uses a default export.
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.e2e.ts',

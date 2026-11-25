@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1794569384,
+  "timestamp": 1795438918,
   "configHash": "0xcfd16f890685a9936edce243ac633fd8a183a5fe99edf0ceed09079392f12bab",
   "entries": [
     {
@@ -794,7 +794,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1794569375,
+        "clock": 1795438907,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -846,14 +846,17 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1795126451
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
       "values": {
         "$immutable": true,
         "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
+        "paused": true,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
@@ -904,7 +907,10 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1795126871
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
@@ -1337,12 +1343,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 48785,
-          "lastProposalBlockId": 26405736,
-          "lastFinalizedProposalId": 48779,
-          "lastFinalizedTimestamp": 1794567647,
-          "lastCheckpointTimestamp": 1794567647,
-          "lastFinalizedBlockHash": "0x1101dc0fb0ded5f54f3db878d32dc843b02d85f72f2dc4f9255f5493c83005e6"
+          "nextProposalId": 51049,
+          "lastProposalBlockId": 26477975,
+          "lastFinalizedProposalId": 51044,
+          "lastFinalizedTimestamp": 1795437395,
+          "lastCheckpointTimestamp": 1795437395,
+          "lastFinalizedBlockHash": "0xa0cccdab157c2f1fd8de34042cb0095ddbaca29784460ec2ce867ec3f0f43757"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 4, "tail_": 4 },
@@ -1881,7 +1887,7 @@
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).",
       "critical": {
-        "sinceTimestamp": 1793127383,
+        "sinceTimestamp": 1793115083,
         "untilTimestamp": 1794362951
       },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
@@ -1911,7 +1917,7 @@
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x953814e6dfC46d007557B511Dc4F2954dAaf2c9e that allows pausing (emergency stop) the verifier by its owner.",
       "critical": {
-        "sinceTimestamp": 1793127383,
+        "sinceTimestamp": 1793115083,
         "untilTimestamp": 1794362951
       },
       "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
@@ -2585,14 +2591,17 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1795126871
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
       "values": {
         "$immutable": true,
         "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
+        "paused": true,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
@@ -2705,7 +2714,10 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
-      "critical": { "sinceTimestamp": 1772638115 },
+      "critical": {
+        "sinceTimestamp": 1772638115,
+        "untilTimestamp": 1795126451
+      },
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
@@ -2968,7 +2980,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0xe6BF63dCc936063caD2300f32DaA67d9eE5c57b6",
         "inNonReentrant": false,
-        "nextMessageId": 40628,
+        "nextMessageId": 40644,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -3353,7 +3365,7 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForCurrentEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
         "getOperatorForNextEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
@@ -3466,7 +3478,7 @@
         "GAS_RESERVE": 800000,
         "impl": "taiko:0xF372Db3F06AcaB3347697866d2047a54D1BA8eB3",
         "inNonReentrant": false,
-        "nextMessageId": 10849,
+        "nextMessageId": 10881,
         "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
         "pauser": "taiko:0x0000000000000000000000000000000000000000",
@@ -3827,8 +3839,8 @@
         "ANCHOR_GAS_LIMIT": 1000000,
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
-          "anchorBlockNumber": 26405731,
-          "ancestorsHash": "0x1c103b10e2858cebc5aee5329cded292bc75ea3d85ce404d0703f266d2c3c792"
+          "anchorBlockNumber": 26477970,
+          "ancestorsHash": "0xf7826d76241a3fd74953c8fba1e094a68c5b175e3cb6275937f06efd8f81db2a"
         },
         "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
         "impl": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
@@ -6346,7 +6358,7 @@
     "taiko/TaikoToken": "0x2928a873325e7669bf5aac6837ff54be716e1cb4bbdb4b6edca642762b9d3fff",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 26405749, "taiko": 13962693 },
+  "usedBlockNumbers": { "ethereum": 26478002, "taiko": 14397419 },
   "permissionsConfigHash": "0x9537cfe990d95ba2fc795a7f19598ebda68d2f93b55eb9381b21e98e89cb2356",
   "modelledAgainst": {
     "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"

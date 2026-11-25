@@ -7,5 +7,23 @@
     ],
     "chain": "ethereum",
     "blockNumber": 26376681
+  },
+  "Lighter_November16_2026": {
+    "hash": "0xab7e96eb43f2c53f7e8b2b14eb2a96994fb87c634a21e49c60d658247ded4f0a",
+    "address": [
+      "eth:0x9b4A5f3cf3bc80494fB02Dd2EB5F20F86b27eC4f",
+      "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 26429197
+  },
+  "Lighter_November22_2026": {
+    "hash": "0x1ee76354e1289060084fba1a560431820a1e56bab23959a9308ca827f21a27e8",
+    "address": [
+      "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F",
+      "eth:0xa40ecAFe53Abae5C62014F60819d6f907e58dfE6"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 26484738
   }
 }

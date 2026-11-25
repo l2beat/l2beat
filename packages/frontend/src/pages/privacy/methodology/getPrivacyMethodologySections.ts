@@ -2,6 +2,7 @@ import {
   PRIVACY_ADVERSARIES,
   PRIVACY_ADVERSARY_ORDER,
 } from '@l2beat/config/build/common/privacyAdversaries'
+import { PRIVACY_EXIT_WINDOW_DAYS } from '@l2beat/config/build/common/privacySummaryValues'
 import {
   PRIVACY_TOOLS,
   type PrivacyTool,
@@ -27,7 +28,6 @@ import {
   PRIVACY_REFERENCE_APP_ANCHOR,
   PRIVACY_ROUTES_ANCHOR,
 } from './paths'
-import { FRAMEWORK_ADVERSARY_TEXT } from './privacyFrameworkText'
 
 export type PrivacyMethodologySections = ReturnType<
   typeof getPrivacyMethodologySections
@@ -48,7 +48,7 @@ export function getPrivacyMethodologySections() {
 
     ratings: joinBlocks([
       heading(2, 'Ratings'),
-      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers.`,
+      `The ratings assume a careful user takes the steps a project page lists under [${PRIVACY_ADVICE_TITLE}](#${PRIVACY_ADVICE_ANCHOR}), with settings the reference app offers. They assess technology, not whether using a project is legal where the user lives.`,
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
@@ -56,7 +56,7 @@ export function getPrivacyMethodologySections() {
       ]),
       'Substantial effort is what a non-developer cannot be expected to do, such as a second operating system, a source build or a system-file change. Installing an app or verifying a release by hash is not. Reviewing the release is our work. A local Ethereum node is the only chain node we expect a careful user to run, and needing it together with a route is substantial.',
       "A closed app's delivery risk falls to the privileged insider. When the review reads and pins the code a closed web app or extension serves, the other cells rate that code like open code. A native closed app caps the network observer at yellow.",
-      'When privacy depends on hiding among other users, the size of that group (anonymity set) affects the adversary who sees the later action. Until real use builds that group, ratings rest on what the design allows.',
+      'When privacy depends on hiding among other users, the size of that group (anonymity set) affects the adversary who sees the later action. Under 1,000 members the cell is yellow, under 50 red. For a young protocol, ratings rest on what the design allows.',
     ]),
 
     adversaries: joinBlocks([
@@ -64,14 +64,15 @@ export function getPrivacyMethodologySections() {
       bulletList(
         PRIVACY_ADVERSARY_ORDER.map(
           (id) =>
-            `**${PRIVACY_ADVERSARIES[id].label}**: ${FRAMEWORK_ADVERSARY_TEXT[id]}`,
+            `**${PRIVACY_ADVERSARIES[id].label}**: ${PRIVACY_ADVERSARIES[id].description}`,
         ),
       ),
       'A third party ties requests to one user by content, session or timing. Content is what a request names, like an account or a hash. Session is what requests share, like an IP, a Tor circuit, a fingerprint or a login. Timing narrows the candidates to users active at the same moment. The network observer is green only when no third party ties both sides of the promised field by content or session. Timing must leave many candidates.',
       "Vendors behind an operator's backend are third parties. Each one the backend needs or the operator declares, such as an RPC provider, is presumed to receive what its job needs, grouped by user. Open backend code or a specific public statement from the operator rebuts this.",
       `Bulk downloads and a local node keep content out of requests. An [IP-hiding route](#${PRIVACY_IP_HIDING_ROUTES_ANCHOR}) keeps the IP out. An app that routes its own traffic can also give each step its own session. A mixnet's cover traffic hides when the user is online, but only the app can hide when they act.`,
+      'For the privileged insider, a key that reads the promised field, or custody of the funds, is red. An enclave whose attestation the app checks is yellow. A power to change what the insider learns is green behind a delay of 7 days or more, yellow below it.',
       'Counterparties (e.g. private transfer recipients) also learn what the protocol hands them, such as a received note. We report this under the chain analyst and rate it only when it reaches parties the user never dealt with voluntarily.',
-      'The public observer, chain analyst and future adversary see the same public data with increasing ability.',
+      'The public observer, chain analyst and future adversary see the same public data with increasing ability, so none is rated greener than the one before.',
     ]),
 
     // A raw heading, since markdown headings render without an id to link.
@@ -133,6 +134,7 @@ export function getPrivacyMethodologySections() {
           (source) => `**${source.label}**: ${source.description}`,
         ),
       ),
+      'Hosted public source makes the privileged insider yellow, hosted closed code red.',
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),
 
@@ -147,7 +149,7 @@ export function getPrivacyMethodologySections() {
       bulletList([
         `**Anonymity set**: For link privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS.deposits)} For recipient privacy, ${lowerFirst(ANONYMITY_SET_TOOLTIPS['key-registrations'])}`,
         `**Trusted setup**: ${COLUMNS.trustedSetup} Risks follow the ${TRUSTED_SETUP_FRAMEWORK_LINK}.`,
-        `**Exit window**: ${COLUMNS.exitWindow}`,
+        `**Exit window**: ${COLUMNS.exitWindow} A delay is green from ${PRIVACY_EXIT_WINDOW_DAYS.green} days and red under ${PRIVACY_EXIT_WINDOW_DAYS.yellow}.`,
         `**Walkaway test**: ${COLUMNS.walkawayTest}`,
         `**Reproducibility**: ${COLUMNS.reproducibility}`,
       ]),

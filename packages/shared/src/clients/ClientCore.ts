@@ -12,6 +12,8 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
+  /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
+  stepDownOnThrottle?: number
 }
 
 export abstract class ClientCore {
@@ -21,7 +23,15 @@ export abstract class ClientCore {
 
   constructor(private readonly deps: ClientCoreDependencies) {
     const logger = deps.logger.for(this).tag({ source: deps.sourceName })
-    this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
+    this.rateLimiter = new RateLimiter({
+      callsPerMinute: deps.callsPerMinute,
+      stepDownOnThrottle: deps.stepDownOnThrottle
+        ? {
+            share: deps.stepDownOnThrottle,
+            onStep: (step) => logger.warn('Rate stepped down', step),
+          }
+        : undefined,
+    })
     this.metricsAggregator = new ClientMetricsAggregator({
       logger,
       flushInterval: 30_000,
@@ -67,7 +77,7 @@ export abstract class ClientCore {
   ): Promise<json> {
     const start = Date.now()
 
-    const response = await this.deps.http.fetch(url, init)
+    const response = await this.fetchAndReportThrottling(url, init)
 
     const duration = Date.now() - start
     const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
@@ -80,7 +90,24 @@ export abstract class ClientCore {
       throw new Error(validationInfo.message ?? 'Response validation failed')
     }
 
+    this.rateLimiter.answered(start)
     return response
+  }
+
+  /** A refusal for the rate (HTTP 429) is what the limiter steps down on */
+  private async fetchAndReportThrottling(
+    url: string,
+    init: FetchInit,
+  ): Promise<json> {
+    const sentAt = Date.now()
+    try {
+      return await this.deps.http.fetch(url, init)
+    } catch (error) {
+      if (isThrottled(error)) {
+        this.rateLimiter.throttled(sentAt)
+      }
+      throw error
+    }
   }
 
   /** This method should return false when there are errors in the response, true otherwise */
@@ -88,4 +115,17 @@ export abstract class ClientCore {
     success: boolean
     message?: string
   }
+}
+
+function isThrottled(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false
+  }
+  const cause = error.cause
+  return (
+    typeof cause === 'object' &&
+    cause !== null &&
+    'status' in cause &&
+    cause.status === 429
+  )
 }

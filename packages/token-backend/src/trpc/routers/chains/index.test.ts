@@ -9,52 +9,6 @@ import { createCallerFactory } from '../../trpc'
 import { chainsRouter } from './index'
 
 describe('chainRouter', () => {
-  describe('getAll', () => {
-    it('returns empty array when no chains exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockFn().resolvesTo([]),
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.getAll()
-
-      expect(result).toEqual([])
-    })
-
-    it('returns all chains', async () => {
-      const chains: ChainRecord[] = [
-        {
-          name: 'ethereum',
-          chainId: 1,
-          aliases: ['eth'],
-          explorerUrl: 'https://etherscan.io',
-          apis: [{ type: 'etherscan' }],
-        },
-        {
-          name: 'arbitrum',
-          chainId: 42161,
-          aliases: ['arb'],
-          explorerUrl: 'https://arbiscan.io',
-          apis: [{ type: 'etherscan' }],
-        },
-      ]
-      const mockGetAll = mockFn().resolvesTo(chains)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
-          getAll: mockGetAll,
-        }),
-      })
-
-      const caller = createRouter(mockTokenDb)
-      const result = await caller.getAll()
-
-      expect(result).toEqual(chains)
-      expect(mockGetAll).toHaveBeenCalledWith()
-    })
-  })
-
   describe('getByName', () => {
     it('returns chain when it exists', async () => {
       const chain: ChainRecord = {

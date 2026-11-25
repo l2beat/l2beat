@@ -6,7 +6,6 @@ export function languageJoin(items: string[] | undefined) {
     return items[0]
   }
   items = [...items]
-  // biome-ignore lint/style/noNonNullAssertion: we know it's there
-  const last = items.pop()!
+  const last = items.pop()
   return `${items.join(', ')} and ${last}`
 }

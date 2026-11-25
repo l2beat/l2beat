@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CredibleRegistry",
+  "description": "Records the last block a whitelisted builder marked as credible. isCredibleBlock() returns true from the marker to the end of that block and in calls with a zero gas price. Changes to the builder set and to the delay are timelocked for at least {{ minTimelockDelayFormatted }}.",
+  // eth_call runs with a zero gas price, which isCredibleBlock() always accepts
+  "ignoreMethods": [
+    "isCredibleBlock",
+    "LAST_CREDIBLE_BLOCK_SLOT",
+    "DEFAULT_ADMIN_ROLE",
+    "CREDIBLE_BUILDER_ROLE",
+    "GUARDIAN_ROLE"
+  ],
+  // moves with every marker
+  "ignoreInWatchMode": ["lastCredibleBlock"],
+  "fields": {
+    "minTimelockDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "MIN_TIMELOCK_DELAY",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "timelockDelay": {
+      // getMinDelay of the timelock entry is the watched copy
+      "description": "Minimum delay of the timelock. Operations wait the longer of this and MIN_TIMELOCK_DELAY.",
+      "handler": {
+        "type": "call",
+        "address": "{{ timelock }}",
+        "method": "function getMinDelay() view returns (uint256)",
+        "args": []
+      }
+    },
+    "defaultAdmin": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{ timelockDelay }}",
+          "description": "add or remove builders and change the timelock delay."
+        },
+        {
+          "type": "interact",
+          "description": "grant or revoke the admin and guardian roles."
+        }
+      ]
+    },
+    "guardians": {
+      "severity": "MEDIUM",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GUARDIAN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel scheduled builder and delay changes."
+        }
+      ]
+    },
+    "builders": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CREDIBLE_BUILDER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mark the current block as credible."
+        }
+      ]
+    }
+  }
+}

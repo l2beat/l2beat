@@ -255,6 +255,24 @@ describe(EthRpcClient.name, () => {
     expect(result).toEqual({ reverted: false, data: '0x1234' })
   })
 
+  // Checked on the wire: a call with only `input` reverts on pre-Bedrock
+  // Optimism blocks, because l2geth runs it with empty calldata.
+  it('eth_call sends calldata as both input and data', async () => {
+    const http = new MockHttp()
+    const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1337, result: '0x1234' }),
+    )
+    await client.call(
+      { to: EthereumAddress.random(), input: '0xdeadbeef' },
+      'latest',
+    )
+    const [transaction] = JSON.parse(String(http.lastFetch?.init.body)).params
+    expect(transaction.input).toEqual('0xdeadbeef')
+    expect(transaction.data).toEqual('0xdeadbeef')
+  })
+
   it('eth_call revert #1', async () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
@@ -270,7 +288,10 @@ describe(EthRpcClient.name, () => {
       { to: EthereumAddress.random(), input: '0xdeadbeef' },
       'latest',
     )
-    expect(result).toEqual({ reverted: true })
+    expect(result).toEqual({
+      reverted: true,
+      reason: 'RPC call failed. RPC code: 3, message: execution reverted',
+    })
   })
 
   it('eth_call revert #2', async () => {
@@ -281,7 +302,11 @@ describe(EthRpcClient.name, () => {
       { to: EthereumAddress.random(), input: '0xdeadbeef' },
       'latest',
     )
-    expect(result).toEqual({ reverted: true })
+    expect(result).toEqual({
+      reverted: true,
+      reason:
+        'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
+    })
   })
 
   it('eth_call fail', async () => {

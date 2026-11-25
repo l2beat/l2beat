@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { LiveActivityBlock } from '../kysely/generated/types'
 
@@ -12,6 +12,32 @@ export interface LiveActivityBlockRecord {
   count: number
   uopsCount: number | null
   gasUsed: number
+}
+
+/**
+ * How long a project's blocks are kept. Activity sums an hour an hour after it
+ * ends, so it reads blocks up to two hours old. The rest leaves it time to
+ * catch up before it fetches them itself
+ */
+export const LIVE_BUFFER_SECONDS = 4 * UnixTime.HOUR
+
+/** A project's blocks of one bucket of seconds, summed */
+export interface LiveActivityBucketRecord {
+  /** Of the bucket's first second */
+  timestamp: UnixTime
+  blocks: number
+  count: number
+  /** The transaction count of blocks with no user operations counted */
+  uopsCount: number
+  gasUsed: number
+}
+
+export interface LiveActivityHourRecord {
+  timestamp: UnixTime
+  count: number
+  /** User operations, or transactions for blocks without them counted */
+  uopsCount: number
+  lastTimestamp: UnixTime
 }
 
 function toRecord(row: Selectable<LiveActivityBlock>): LiveActivityBlockRecord {
@@ -70,6 +96,19 @@ export class LiveActivityBlockRepository extends BaseRepository {
     return rows.map(toRecord).reverse()
   }
 
+  async getOldestTimestamp(
+    projectId: ProjectId,
+  ): Promise<UnixTime | undefined> {
+    const row = await this.db
+      .selectFrom('LiveActivityBlock')
+      .select('timestamp')
+      .where('projectId', '=', projectId.toString())
+      .orderBy('number', 'asc')
+      .limit(1)
+      .executeTakeFirst()
+    return row && UnixTime.fromDate(row.timestamp)
+  }
+
   /** Both ends included, oldest first */
   async getByProjectNumberRange(
     projectId: ProjectId,
@@ -85,6 +124,91 @@ export class LiveActivityBlockRepository extends BaseRepository {
       .orderBy('number')
       .execute()
     return rows.map(toRecord)
+  }
+
+  /**
+   * The project's blocks from `from` to `to`, both included, summed in
+   * buckets of `seconds` counted from the epoch, oldest first. Buckets with
+   * no block are left out
+   */
+  async getProjectBuckets(
+    projectId: ProjectId,
+    from: UnixTime,
+    to: UnixTime,
+    seconds: number,
+  ): Promise<LiveActivityBucketRecord[]> {
+    const { rows } = await sql<{
+      timestamp: string
+      blocks: string
+      count: string
+      uopsCount: string
+      gasUsed: string
+    }>`
+      SELECT
+        floor(date_part('epoch', "timestamp") / ${seconds}) * ${seconds} AS "timestamp",
+        count(*) AS "blocks",
+        sum("count") AS "count",
+        sum(coalesce("uopsCount", "count")) AS "uopsCount",
+        sum("gasUsed") AS "gasUsed"
+      FROM "LiveActivityBlock"
+      WHERE "projectId" = ${projectId.toString()}
+        AND "timestamp" >= ${UnixTime.toDate(from)}
+        AND "timestamp" <= ${UnixTime.toDate(to)}
+      GROUP BY 1
+      ORDER BY 1
+    `.execute(this.db)
+    return rows.map((row) => ({
+      timestamp: UnixTime(Number(row.timestamp)),
+      blocks: Number(row.blocks),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      gasUsed: Number(row.gasUsed),
+    }))
+  }
+
+  /**
+   * The project's blocks above the number, oldest hour first. None unless
+   * they run on from it unbroken, as hours missing blocks would undercount
+   */
+  async getContiguousHoursAfter(
+    projectId: ProjectId,
+    number: number,
+  ): Promise<LiveActivityHourRecord[]> {
+    const { rows } = await sql<{
+      timestamp: Date
+      blocks: string
+      count: string
+      uopsCount: string
+      firstNumber: number
+      lastNumber: number
+      lastTimestamp: Date
+    }>`
+      SELECT
+        date_trunc('hour', "timestamp") AS "timestamp",
+        count(*) AS "blocks",
+        sum("count") AS "count",
+        sum(coalesce("uopsCount", "count")) AS "uopsCount",
+        min("number") AS "firstNumber",
+        max("number") AS "lastNumber",
+        max("timestamp") AS "lastTimestamp"
+      FROM "LiveActivityBlock"
+      WHERE "projectId" = ${projectId.toString()} AND "number" > ${number}
+      GROUP BY 1
+      ORDER BY 1
+    `.execute(this.db)
+    const blocks = rows.reduce((sum, row) => sum + Number(row.blocks), 0)
+    if (
+      rows[0]?.firstNumber !== number + 1 ||
+      blocks !== (rows.at(-1)?.lastNumber ?? number) - number
+    ) {
+      return []
+    }
+    return rows.map((row) => ({
+      timestamp: UnixTime.fromDate(row.timestamp),
+      count: Number(row.count),
+      uopsCount: Number(row.uopsCount),
+      lastTimestamp: UnixTime.fromDate(row.lastTimestamp),
+    }))
   }
 
   async deleteByProjectAfter(

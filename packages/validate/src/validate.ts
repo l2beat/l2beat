@@ -752,8 +752,7 @@ function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
 
     const arrayResult: unknown[] = []
     for (let i = 0; i < Math.max(value.length, defaultLength); i++) {
-      // biome-ignore lint/style/noNonNullAssertion: It's there
-      const imp = schema[i]! as Imp<unknown>
+      const imp = schema[i] as Imp<unknown>
       const item = value[i]
       const result = clone ? imp.safeParse(item) : imp.safeValidate(item)
       if (result.success === false) {

@@ -9,7 +9,6 @@ import {
   CLIENT_OUTPUT_DIR,
 } from './src/paths.mts'
 
-// biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build'
 

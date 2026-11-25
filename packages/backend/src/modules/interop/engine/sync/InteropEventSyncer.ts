@@ -82,9 +82,9 @@ function addPluginDataRequests(
       result.addresses = '*'
     } else {
       if (eventRequest.addresses.length === 0) {
-        throw new Error(
-          `Empty address list in data request for ${plugin.name} (${eventRequest.signature})`,
-        )
+        throw new Error('Empty address list in data request', {
+          cause: { plugin: plugin.name, signature: eventRequest.signature },
+        })
       }
 
       let addressesOnThisChain = 0

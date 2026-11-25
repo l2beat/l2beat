@@ -1,17 +1,17 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
-import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
+import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
+import type { ChartUnit } from '~/components/chart/types'
 import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
-import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
-import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -41,6 +41,7 @@ export function DefiTvlSection({
 }: DefiTvlSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
+  const [unit, setUnit] = useState<ChartUnit>('usd')
   const [showEthStaked, setShowEthStaked] = useState(false)
   const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
     trpc.defi.tvlChart,
@@ -49,13 +50,15 @@ export function DefiTvlSection({
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, value, ethStakedUsd, stakedEthShare]) => ({
-        timestamp,
-        value,
-        ethStakedUsd,
-        stakedEthShare,
-      })),
-    [data],
+      data?.chart.map(
+        ([timestamp, valueUsd, ethStakedUsd, stakedEthShare, ethPrice]) => ({
+          timestamp,
+          value: toUnit(valueUsd, unit, ethPrice),
+          ethStaked: toUnit(ethStakedUsd, unit, ethPrice),
+          stakedEthShare,
+        }),
+      ),
+    [data, unit],
   )
   const timeRange = useMemo(
     () => getChartTimeRangeFromData(chartData),
@@ -70,7 +73,7 @@ export function DefiTvlSection({
       : undefined,
   ]
     .filter((value) => value !== undefined)
-    .join(' · ')
+    .join(DOT_SEPARATOR)
 
   return (
     <ProjectSection {...projectSectionProps}>
@@ -91,13 +94,13 @@ export function DefiTvlSection({
           />
         </div>
       )}
-      <ChartControlsWrapper className="mb-4">
-        <ProjectChartTimeRange
-          isPlaceholderData={isPlaceholderData}
-          timeRange={timeRange}
-        />
-        <TvsChartRangeControls range={range} setRange={setRange} />
-      </ChartControlsWrapper>
+      <TvsChartControls
+        className="mb-4"
+        isPlaceholderData={isPlaceholderData}
+        timeRange={timeRange}
+        unit={{ value: unit, setValue: setUnit }}
+        range={{ value: range, setValue: setRange }}
+      />
       <TvsValueChart
         isPlaceholderData={isPlaceholderData}
         resolution={data?.resolution ?? 'day'}
@@ -106,6 +109,7 @@ export function DefiTvlSection({
         isLoading={isLoading}
         project={project}
         withEthStaked={shownInput.withEthStaked}
+        unit={unit}
       />
       {ethStakedToggle && (
         <div className="mt-2 flex justify-end">
@@ -120,4 +124,14 @@ export function DefiTvlSection({
       )}
     </ProjectSection>
   )
+}
+
+/** A point without ETH's price has no value in ETH. */
+function toUnit(
+  usd: number | null,
+  unit: ChartUnit,
+  ethPrice: number | null,
+): number | null {
+  if (usd === null || unit === 'usd') return usd
+  return ethPrice ? usd / ethPrice : null
 }

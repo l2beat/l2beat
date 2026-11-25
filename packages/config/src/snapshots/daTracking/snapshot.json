@@ -1378,9 +1378,20 @@
       "config": {
         "type": "ethereum",
         "daLayer": "ethereum",
+        "sinceBlock": 21314185,
+        "untilBlock": 26449075,
         "inbox": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e",
-        "sequencers": ["0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1"],
-        "sinceBlock": 21314185
+        "sequencers": ["0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1"]
+      }
+    },
+    {
+      "id": "d0b8cce78058",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e",
+        "sequencers": ["0x1C7566fE8FAe38a93BDCb1fBF7D746FD08C11545"],
+        "sinceBlock": 26449075
       }
     }
   ],

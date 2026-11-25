@@ -6,6 +6,7 @@ import type {
   InteropTokenRelationsGraph,
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 
 export interface RelationsPath {
   nodes: InteropTokenRelationsNode[]
@@ -43,7 +44,7 @@ export function describeNode(node: InteropTokenRelationsNode): string {
   const first = node.deployments[0]
   if (!first) return node.id
   return isCluster(node)
-    ? `${first.symbol} · ${node.deployments.length} deployments`
+    ? `${first.symbol}${DOT_SEPARATOR}${node.deployments.length} deployments`
     : `${first.symbol} on ${first.chain.name}`
 }
 

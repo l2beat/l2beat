@@ -71,7 +71,7 @@
         "address": "0x3E29D3A9316dAB217754d13b28646B76607c5f04",
         "chain": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1653955741
+        "sinceTimestamp": 1663113600
       },
       "category": "ether",
       "source": "external",

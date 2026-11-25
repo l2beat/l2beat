@@ -61,6 +61,7 @@ export type {
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'
+export type { EthereumSupplyDailyRecord } from './repositories/EthereumSupplyDailyRepository'
 export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
@@ -142,7 +143,12 @@ export type {
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LiquidStakingSnapshotRecord } from './repositories/LiquidStakingSnapshotRepository'
-export type { LiveActivityBlockRecord } from './repositories/LiveActivityBlockRepository'
+export type {
+  LiveActivityBlockRecord,
+  LiveActivityBucketRecord,
+  LiveActivityHourRecord,
+} from './repositories/LiveActivityBlockRepository'
+export { LIVE_BUFFER_SECONDS } from './repositories/LiveActivityBlockRepository'
 export type {
   LiveBlobBatchRecord,
   LiveBucketRecord,

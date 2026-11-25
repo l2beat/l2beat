@@ -5,15 +5,19 @@ import {
 } from '../../common/privacyAdversaries'
 import type { PrivacyExposureMap } from '../../types'
 
-// zk.money Desktop v0.12.0, the reference client. vendor/oxide holds Oxide
+// zk.money Desktop v0.13.0, the reference client. vendor/oxide holds Oxide
 // dab3d38, the commit the manifest names. The approved enclave image builds
 // from Oxide 3b5e1f7c8 (zkmoney-public f90b3f2). The cited Oxide lines are the
 // same in both.
 const ZKMONEY_REPO =
-  'https://github.com/aztec-labs-eng/zkmoney-public/blob/c055ea1ca641d64256855d03802c927b0b1d3ad1/'
+  'https://github.com/aztec-labs-eng/zkmoney-public/blob/516d90660400aee97166376ba69c5b61ce82a7e4/'
 const OXIDE = `${ZKMONEY_REPO}vendor/oxide/`
+// v6.0.0
+const AZTEC_NODE =
+  'https://github.com/aztec-labs-eng/aztec-node/blob/d2e67c1d938f06a6476dd7d4bd01e73771923dd1/'
 const HANDSHAKE_REGISTRY =
-  'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
+  AZTEC_NODE +
+  'noir-projects/noir-contracts/contracts/standard/handshake_registry_contract/src/main.nr#L75-L94'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'private',
@@ -66,7 +70,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         "A DAI withdrawal hides among the DAI portal's depositors, an sUSDS one among the sUSDS portal's.",
       exposureContinued:
-        "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is still small.",
+        "Each payment shows the payee the payer's Aztec address, and with it any name the payer claimed. The anonymity set is small.",
       interior: {
         ...INTERIOR,
         amount: {
@@ -100,7 +104,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
-        "PublicNode receives each withdrawal recipient as it is entered, through an Optimism endpoint the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
+        "PublicNode receives each withdrawal recipient as it is entered, and Across each withdrawal to another chain, through endpoints the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -120,7 +124,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
         {
           title: 'Every L1 client reads the configured L1 RPC',
-          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L611-L617`,
+          url: `${ZKMONEY_REPO}packages/web-wallet/src/config/env.ts#L651-L657`,
         },
         {
           title: 'Withdrawal recipients are checked on a fixed Optimism RPC',
@@ -137,7 +141,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         'An AWS Nitro enclave reads payments, withdrawals and deposit claims, and wallets accept only one registered with an attestation of the approved image.',
       exposureContinued:
-        "Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs today, derives each deposit address paid through a name, so it knows the recipient.",
+        "Aztec Labs' unsigned contract lists name the portal, and a new portal can approve another image. Aztec Labs' default Aztec nodes, like Alchemy under its key, see an account's deposit addresses and withdrawals in one session. The resolver operator, Aztec Labs, derives each deposit address paid through a name, so it knows the recipient.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -188,7 +192,9 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       sources: [
         {
           title: "Messages are encrypted to the recipient's address",
-          url: 'https://github.com/aztec-labs-eng/aztec-node/blob/v6.0.0/noir-projects/aztec-nr/aztec/src/messages/encryption/aes128.nr#L235-L266',
+          url:
+            AZTEC_NODE +
+            'noir-projects/aztec-nr/aztec/src/messages/encryption/aes128.nr#L235-L266',
         },
         {
           contract: 'AccountMetadataRegistry',

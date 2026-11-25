@@ -180,6 +180,13 @@ export interface ErrorFieldValue {
   error: string
 }
 
+export type ApiCriticalFlag =
+  | true
+  | {
+      sinceTimestamp?: number
+      untilTimestamp?: number
+    }
+
 export interface ApiProjectContract extends ApiAddressEntry {
   template?: {
     id: string
@@ -189,6 +196,7 @@ export interface ApiProjectContract extends ApiAddressEntry {
     }
   }
   proxyType?: string
+  critical?: ApiCriticalFlag
   fields: Field[]
   abis: ApiAbi[]
   implementationNames?: Record<string, string>

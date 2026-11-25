@@ -240,6 +240,13 @@ export const zkCatalogTags = [
     description: "Succinct's Groth16 final wrap circuit for SP1 zkVM v6.1.0",
   },
   {
+    id: 'Risc0_v3_1_0',
+    type: ZkCatalogTagType.Groth16,
+    name: 'Risc0 v3.1.0',
+    description:
+      "RISC Zero's Groth16 final wrap circuit for risc0 v3.1.0, proven with snarkjs.",
+  },
+  {
     id: 'Snarkjs',
     type: ZkCatalogTagType.Groth16,
     name: 'Snarkjs',
