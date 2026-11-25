@@ -11,6 +11,8 @@ interface Props {
   containerClassName?: string
   changeContainerClassName?: string
   changePeriod?: PercentageChangePeriod
+  /** What the change is compared to, where that is no period. */
+  changeTooltip?: ReactNode
   disabledOnTouch?: boolean
 }
 
@@ -22,6 +24,7 @@ export function ValueWithPercentageChange({
   changeClassName,
   changeContainerClassName,
   changePeriod,
+  changeTooltip,
   disabledOnTouch,
 }: Props) {
   return (
@@ -35,6 +38,7 @@ export function ValueWithPercentageChange({
           className={cn('font-medium', changeContainerClassName)}
           textClassName={changeClassName}
           period={changePeriod}
+          tooltip={changeTooltip}
           disabledOnTouch={disabledOnTouch}
         />
       )}

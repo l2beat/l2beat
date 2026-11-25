@@ -1,6 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/ChartContext'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -11,11 +10,14 @@ import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
-import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartStatsPanel } from './ActivityChartStatsPanel'
 import { ActivityRatioChart } from './ActivityRatioChart'
+import {
+  type ActivityChartCounts,
+  useActivityChartPoints,
+} from './useActivityChartPoints'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -23,6 +25,8 @@ interface Props {
   project: ChartProject
   category?: ProjectScalingCategory
   defaultRange: ChartRange
+  metric: ActivityMetric
+  setMetric: (metric: ActivityMetric) => void
 }
 
 export function ProjectActivityChart({
@@ -30,10 +34,11 @@ export function ProjectActivityChart({
   project,
   category,
   defaultRange,
+  metric,
+  setMetric,
 }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('linear')
 
   const {
@@ -52,36 +57,8 @@ export function ProjectActivityChart({
   const type = getChartType(category)
   const resolution = chart?.resolution ?? 'day'
 
-  const chartData = useMemo(() => {
-    const resolutionSeconds = UnixTime.periodToSeconds(resolution)
-    return chart?.data.map(
-      ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
-        const projectMetric = metric === 'tps' ? projectsTx : projectsUops
-        const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-        return {
-          timestamp,
-          projects:
-            projectMetric !== null ? projectMetric / resolutionSeconds : null,
-          ethereum:
-            ethereumMetric !== null ? ethereumMetric / resolutionSeconds : null,
-        }
-      },
-    )
-  }, [chart?.data, metric, resolution])
-
-  const ratioData = useMemo(() => {
-    return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
-      timestamp,
-      ratio:
-        projectsTx !== null && projectsUops !== null
-          ? projectsTx === 0
-            ? 1
-            : projectsUops / projectsTx
-          : null,
-    }))
-  }, [chart?.data])
-
-  const timeRange = getChartTimeRangeFromData(chartData, { bucket: resolution })
+  const { chartData, ratioData, timeRange, formatPeriod } =
+    useActivityChartPoints(chart, toCounts, resolution, metric)
   return (
     <div className="flex flex-col">
       <ChartControlsWrapper>
@@ -115,8 +92,8 @@ export function ProjectActivityChart({
           isPlaceholderData={isPlaceholderData}
           data={ratioData}
           syncedUntil={chart?.syncedUntil}
+          formatPeriod={formatPeriod}
           isLoading={isLoading}
-          resolution={resolution}
         />
       </div>
 
@@ -138,4 +115,24 @@ export function ProjectActivityChart({
       />
     </div>
   )
+}
+
+function toCounts([
+  timestamp,
+  projectsTx,
+  ethereumTx,
+  projectsUops,
+  ethereumUops,
+]: [
+  number,
+  number | null,
+  number | null,
+  number | null,
+  number | null,
+]): ActivityChartCounts {
+  return {
+    timestamp,
+    projects: { tx: projectsTx, uops: projectsUops },
+    ethereum: { tx: ethereumTx, uops: ethereumUops },
+  }
 }
