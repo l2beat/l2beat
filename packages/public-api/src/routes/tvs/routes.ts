@@ -163,7 +163,7 @@ const TVS_QUERY_DESCRIPTIONS = {
   excludeAssociatedTokens:
     'When `true`, leaves out tokens associated with the project, such as its own governance token. Defaults to `false`, like the website.',
   excludeRwaRestrictedTokens:
-    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `false`, which counts them. The website defaults to `true`: pass `true` to match its numbers.',
+    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `false`, which counts them. The website defaults to `true`: pass `true` to filter tokens the way it does.',
 }
 
 function parseTokenExclusions(
