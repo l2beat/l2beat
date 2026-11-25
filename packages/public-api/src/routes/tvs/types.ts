@@ -19,7 +19,6 @@ export const TvsResultItemSchema = v
       publicRwa: v.number(),
       restrictedRwa: v.number(),
     }),
-    ethPrice: nullableNumber,
   })
   .describe('TvsChartDataPoint')
 
