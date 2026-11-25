@@ -12,6 +12,8 @@ import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { AnomalyStatsRepository } from './repositories/AnomalyStatsRepository'
 import { AppStateRepository } from './repositories/AppStateRepository'
 import { BlobsRepository } from './repositories/BlobsRepository'
+import { ChainBlockRepository } from './repositories/ChainBlockRepository'
+import { ChainHeadRepository } from './repositories/ChainHeadRepository'
 import { CropAttestationRepository } from './repositories/CropAttestationRepository'
 import { CurrentPriceRepository } from './repositories/CurrentPriceRepository'
 import { DaBeatStatsRepository } from './repositories/DaBeatStatsRepository'
@@ -72,6 +74,11 @@ export function createDatabase(
     transaction: db.transaction.bind(db),
     close: db.close.bind(db),
     url: config.connectionString,
+
+    // #region Chain head
+    chainBlock: new ChainBlockRepository(db),
+    chainHead: new ChainHeadRepository(db),
+    // #endregion
 
     // #region Activity
     activity: new ActivityRepository(db),
