@@ -29,17 +29,16 @@ const CATEGORY_LABELS: Record<ActivityChangeEvent['category'], string> = {
   others: 'Others',
 }
 
-const PIN_SIZE = 20
+const PIN_SIZE = 16
 /**
  * The chart's top margin with pins: their own row above the top y axis
  * label, so they cover neither the plot nor the label.
  */
-export const CHANGE_PINS_TOP_MARGIN = PIN_SIZE + 16
+export const CHANGE_PINS_TOP_MARGIN = PIN_SIZE + 14
 /** The chart's bottom margin, which holds the x axis labels. */
 const X_AXIS_HEIGHT = 25
-const LOGO_SIZE = 14
 // How far each stacked logo sits from the one before it.
-const LOGO_STEP = 10
+const LOGO_STEP = 11
 const MIN_PIN_SPACING = getPinWidth(2) + 6
 const PLOT_WIDTH_PER_PIN = 160
 const MAX_PINS_HOVER = 6
@@ -203,24 +202,25 @@ function Pin({
       className="group/pin pointer-events-auto absolute top-0 cursor-pointer outline-none"
       style={{ left: group.x - width / 2, width }}
     >
-      {/* Down to the x axis, so the pin stands on its day. First, so the ring covers its top. */}
+      {/* Down to the x axis, so the pin stands on its day. */}
       <span
         aria-hidden
         className={cn(
-          'pointer-events-none absolute left-1/2 w-0 border-l border-dashed opacity-50 transition-opacity',
+          'pointer-events-none absolute left-1/2 w-0 border-l border-dashed opacity-30 transition-opacity',
           'group-hover/pin:opacity-100 group-focus-visible/pin:opacity-100 group-data-[state=open]/pin:opacity-100',
         )}
         style={{ top: PIN_SIZE, height: stemHeight, borderColor: color }}
       />
-      {/* The category's colour rings the logos of the projects behind it,
-          overlapping like an avatar stack when there are two. */}
+      {/* Context for the chart, not an alert: quiet until pointed at. The
+          logos overlap like an avatar stack when there are two. */}
       <span
         className={cn(
-          'relative flex items-center rounded-full border-2 bg-surface-primary p-px',
-          'group-focus-visible/pin:ring-2 group-focus-visible/pin:ring-brand',
-          'group-data-[state=open]/pin:ring-2 group-data-[state=open]/pin:ring-primary/20',
+          'relative flex items-center rounded-full opacity-60 saturate-50 transition-[opacity,filter]',
+          'group-hover/pin:opacity-100 group-hover/pin:saturate-100',
+          'group-focus-visible/pin:opacity-100 group-focus-visible/pin:ring-2 group-focus-visible/pin:ring-brand group-focus-visible/pin:saturate-100',
+          'group-data-[state=open]/pin:opacity-100 group-data-[state=open]/pin:saturate-100',
         )}
-        style={{ width, height: PIN_SIZE, borderColor: color }}
+        style={{ width, height: PIN_SIZE }}
       >
         {logos.length > 0 ? (
           logos.map((project, i) => (
@@ -228,11 +228,9 @@ function Pin({
               key={project.slug}
               src={project.iconUrl}
               alt=""
-              className={cn(
-                'relative size-3.5 shrink-0 rounded-full bg-surface-primary',
-                i > 0 && 'ring-1 ring-surface-primary',
-              )}
-              style={{ marginLeft: i > 0 ? LOGO_STEP - LOGO_SIZE : 0 }}
+              // A thin outline keeps dark logos visible on a dark chart.
+              className="relative size-4 shrink-0 rounded-full bg-surface-primary ring-1 ring-divider"
+              style={{ marginLeft: i > 0 ? LOGO_STEP - PIN_SIZE : 0 }}
             />
           ))
         ) : (
@@ -242,7 +240,7 @@ function Pin({
           />
         )}
         {group.events.length > 1 && (
-          <span className="-top-1.5 -right-2 absolute flex size-3.5 items-center justify-center rounded-full bg-brand font-bold text-[9px] text-primary-invert">
+          <span className="-top-1 -right-1.5 absolute flex size-3 items-center justify-center rounded-full bg-surface-secondary font-bold text-[8px] text-secondary">
             {group.events.length}
           </span>
         )}
@@ -251,7 +249,7 @@ function Pin({
   )
 }
 
-/** A ring around one logo, widened by a step for each logo stacked after it. */
+/** One logo, widened by a step for each logo stacked after it. */
 function getPinWidth(logoCount: number) {
   return PIN_SIZE + Math.max(0, logoCount - 1) * LOGO_STEP
 }
