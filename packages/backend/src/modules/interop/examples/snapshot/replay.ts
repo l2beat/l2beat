@@ -219,6 +219,16 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  getMaxPriorityFeePerGas(): Promise<bigint> {
+    const key = this.buildSnapshotKey(['maxPriorityFeePerGas'])
+    const snapshot = this.$.inputs.readRpc<string>(key)
+    if (snapshot) {
+      return Promise.resolve(BigInt(snapshot))
+    }
+
+    throw new ReplayError(key)
+  }
+
   call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
