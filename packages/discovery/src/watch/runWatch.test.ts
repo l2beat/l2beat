@@ -2,7 +2,7 @@ import { HttpClient } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
 import { expect, mockFn } from 'earl'
 import { runWatch } from './runWatch'
-import type { WatchConfig } from './WatchReader'
+import { hashWatchConfig, type WatchConfig } from './WatchReader'
 import type { WatchTemplate } from './WatchTemplate'
 
 const context = { http: new HttpClient() }
@@ -27,6 +27,7 @@ describe(runWatch.name, () => {
     const before = Math.floor(Date.now() / 1000)
     const run = await runWatch(config, context)
     expect(run.timestamp).toBeGreaterThanOrEqual(before)
+    expect(run.configHash).toEqual(hashWatchConfig(config))
     expect(JSON.stringify(run.values)).toEqual('{"a":{"a":2,"b":1},"b":"x"}')
   })
 

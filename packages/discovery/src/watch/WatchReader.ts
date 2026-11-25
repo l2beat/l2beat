@@ -1,5 +1,5 @@
 import { hashJson } from '@l2beat/shared'
-import { assert, type Hash256, type json } from '@l2beat/shared-pure'
+import { assert, Hash256, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import path from 'path'
@@ -32,6 +32,7 @@ export interface WatchConfig {
 
 export interface Watched {
   timestamp: number
+  configHash?: Hash256
   values: Record<string, json>
 }
 
@@ -45,6 +46,7 @@ const WatchConfigFile = v.strictObject({
 
 const WatchedFile = v.strictObject({
   timestamp: v.number(),
+  configHash: v.string().check(Hash256.check).optional(),
   values: v.record(v.string(), v.unknown()),
 })
 
@@ -168,6 +170,9 @@ export function parseWatched(text: string): Watched {
   }
   return {
     timestamp: parsed.data.timestamp,
+    ...(parsed.data.configHash !== undefined
+      ? { configHash: Hash256(parsed.data.configHash) }
+      : {}),
     values: parsed.data.values as Record<string, json>,
   }
 }

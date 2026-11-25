@@ -1,7 +1,8 @@
+import { Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { hashWatchConfig, WatchReader } from './WatchReader'
+import { hashWatchConfig, parseWatched, WatchReader } from './WatchReader'
 import type { WatchTemplate } from './WatchTemplate'
 
 const Params = v.strictObject({ url: v.string() })
@@ -120,12 +121,32 @@ describe(WatchReader.name, () => {
     )
   })
 
-  it('reads watched.json, and undefined when there is none yet', () => {
+  it('reads watched.json with optional configHash, and rejects malformed configHash', () => {
     expect(reader().readWatched('alpha')).toEqual({
       timestamp: 1,
       values: { a: 'https://a', z: 'https://a' },
     })
     expect(reader().readWatched('near')).toEqual(undefined)
+
+    const hash = Hash256.random()
+    expect(
+      parseWatched(
+        JSON.stringify({
+          timestamp: 2,
+          configHash: hash.toString(),
+          values: { a: 'https://a' },
+        }),
+      ),
+    ).toEqual({
+      timestamp: 2,
+      configHash: hash,
+      values: { a: 'https://a' },
+    })
+    expect(() =>
+      parseWatched(
+        JSON.stringify({ timestamp: 2, configHash: 'not-a-hash', values: {} }),
+      ),
+    ).toThrow('Invalid watched.json')
   })
 
   it('throws for a name that is not a watch', () => {
