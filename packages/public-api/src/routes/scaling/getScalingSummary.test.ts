@@ -190,7 +190,11 @@ describe(toScalingSummary.name, () => {
     const exitWindow = summary.projects[0]?.risks.find(
       (r) => r.name === 'Exit Window',
     )
-    expect(exitWindow?.regular).toEqual({ value: '10d', sentiment: 'warning' })
+    expect(exitWindow?.regular).toEqual({
+      value: '10d',
+      sentiment: 'warning',
+      description: 'Regular upgrades',
+    })
   })
 })
 

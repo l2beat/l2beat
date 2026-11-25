@@ -20,6 +20,7 @@ export const ScalingRiskSchema = v
         sentiment: v
           .enum(['bad', 'warning', 'good', 'neutral', 'UnderReview'])
           .optional(),
+        description: v.string(),
       })
       .optional()
       .describe(

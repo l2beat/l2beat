@@ -141,7 +141,11 @@ function toScalingRisk({
     sentiment,
     description,
     warning: warning && { value: warning.value, sentiment: warning.sentiment },
-    regular: regular && { value: regular.value, sentiment: regular.sentiment },
+    regular: regular && {
+      value: regular.value,
+      sentiment: regular.sentiment,
+      description: regular.description,
+    },
   }
 }
 
