@@ -1,7 +1,7 @@
 {
   "name": "hinkal",
-  "timestamp": 1795509601,
-  "configHash": "0xdf450c976f47c96941ddb567a1a32eb64f34b082bb22729e4859c1f24d2810e3",
+  "timestamp": 1795601480,
+  "configHash": "0xe9d40d414720f24aaeafda6c906af2d41e8e4ea92b77fd08157af489000e25d2",
   "entries": [
     {
       "name": "SwapGroth16VerifierEVM2x2x1",
@@ -60,6 +60,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SwapGroth16VerifierEVM3x6x1",
       "address": "eth:0x0B9efB1e28a570fb930432d542f4Ee5332dc7b11",
       "type": "Contract",
@@ -76,18 +81,28 @@
       }
     },
     {
-      "name": "HinkalDeployer",
+      "name": "HinkalFactory",
       "address": "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/HinkalFactory",
+      "sourceHashes": [
+        "0xe5835af29a68d020ff29e5883b5fd38212c1e7ae90358d5140ab303d743989d4"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified one-time deployer of the Hinkal contract. It still holds DEFAULT_ADMIN_ROLE on Hinkal from the deployment, but its code has no function that could use the role, and it cannot deploy again.",
+      "description": "One-time deployer of the Hinkal contract from creation code stored in chunks. It keeps the DEFAULT_ADMIN_ROLE it received on Hinkal, and no function of it uses the role or deploys again.",
       "deployerAddress": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c",
       "sinceTimestamp": 1784186999,
       "sinceBlock": 25543742,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "bytecodeChunkCount": 2,
+        "bytecodeHash": "0xffd44e770c8707e2c70a20bb41dd603383a3b58e6cbaa104f1870b6c6bf8b08f",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "hinkal": "eth:0x7cb60446d7635C68EDf1c568cac74A1f98c1Cfa4",
+        "owner": "eth:0x0a0e05B6375a61D345173d90Cf7c8bd81E76445c"
+      },
       "implementationNames": {
-        "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": ""
+        "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": "HinkalFactory"
       }
     },
     {
@@ -470,9 +485,12 @@
       "name": "DepositOnChainUtxosExternalAction",
       "address": "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d",
       "type": "Contract",
-      "unverified": true,
+      "template": "hinkal/DepositOnChainUtxosExternalAction",
+      "sourceHashes": [
+        "0xb8f95a349c61360a584a7f4b608356e1aa6bd6ed5e1424d74ea425e7e650b017"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified Hinkal external action registered under the DepositOnChainUtxos ID. Shielded funds are sent to it during external transactions that use this ID.",
+      "description": "Hinkal external action that deposits tokens from the transaction's original sender as one or more notes, pulling them with that sender's approval. Scheduled sends deposit through it.",
       "deployerAddress": "eth:0x7A93Bc3F8E3962Dc32Ea4eE6Fb7eF3Df4355288D",
       "sinceTimestamp": 1787035319,
       "sinceBlock": 25780252,
@@ -481,9 +499,8 @@
         "owner": "eth:0xBdc77a0c69f13207aCB70a6981Cad60B4c1D1942",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": { "owner": { "severity": "MEDIUM", "type": "PERMISSION" } },
       "implementationNames": {
-        "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": ""
+        "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": "DepositOnChainUtxosExternalAction"
       }
     },
     {
@@ -1176,19 +1193,24 @@
       "sinceBlock": 25926522,
       "values": {
         "$admin": "eth:0xBdc77a0c69f13207aCB70a6981Cad60B4c1D1942",
-        "$implementation": "eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd",
+        "$implementation": "eth:0xA8934082A0174ff8C44EE638a35B2c49475af148",
         "$pastUpgrades": [
           [
             "2026-09-07T15:58:35.000Z",
             "0x5183ed2412b5d8998dd5b526452407707b6bd3596d4ee5a42691f335e844d7c2",
             ["eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd"]
+          ],
+          [
+            "2026-11-25T07:57:59.000Z",
+            "0x43fffea2e19f917667f1fbe987fca1bb9a99118a6aa577ab4b0a0ac25d340b77",
+            ["eth:0xA8934082A0174ff8C44EE638a35B2c49475af148"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 2
       },
       "implementationNames": {
         "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": "ERC1967Proxy",
-        "eth:0x8298C210B2ED4CEF45087EB52cBaD51920858CEd": ""
+        "eth:0xA8934082A0174ff8C44EE638a35B2c49475af148": ""
       }
     },
     {
@@ -1533,6 +1555,26 @@
     }
   ],
   "abis": {
+    "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": [
+      "constructor(address admin, bytes32 _bytecodeHash)",
+      "error AlreadyDeployed()",
+      "error BytecodeHashMismatch()",
+      "error FailedToDeploy()",
+      "error ZeroAdmin()",
+      "event HinkalDeployed(address hinkal, tuple(uint128 levels, address poseidon2, address poseidon4) constructorArgs, address _hinkalHelper, address _hinkalHelperManager)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function appendBytecodeChunk(bytes chunk)",
+      "function bytecodeChunkCount() view returns (uint256)",
+      "function bytecodeChunks(uint256) view returns (bytes)",
+      "function bytecodeHash() view returns (bytes32)",
+      "function deployHinkal(tuple(uint128 levels, address poseidon2, address poseidon4) constructorArgs, address _hinkalHelper, address _hinkalHelperManager) returns (address)",
+      "function hinkal() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resetBytecodeChunks()",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0x272738a20d8EC72C3b6CA88f2CDE9FDc09f66634": [
       "constructor(address verifierInstance)",
       "function verifier() view returns (address)",
@@ -1634,6 +1676,23 @@
       "function prooflessDeposit(address[] erc20Addresses, uint256[] amounts, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress)[] stealthAddressStructures, bytes[] onChainEncryptedOutputs, bool createBlockedUtxos, tuple(address feeRecipient, address feeToken, uint256 feeAmount) feeStructure, string orderId) payable",
       "function renounceOwnership() view",
       "function setHinkalAddress(address _hinkal)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": [
+      "constructor(address[] _allowedRecipients)",
+      "event BlockedUtxosCreated()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function runAction(tuple(uint256 rootHashHinkal, uint256 rootHashHinkalIndex, address[] erc20TokenAddresses, int256[] amountChanges, uint256[][] inputNullifiers, uint256[][] outCommitments, bytes[][] encryptedOutputs, bytes onChainEncryptedOutput, bool[] onChainCreation, int256[] slippageValues, tuple(address feeToken, uint256 flatFee, uint256 variableRate) feeStructure, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp, uint256 calldataHash, uint256 emporiumMessage, uint16 publicSignalCount, address relay, tuple(address externalAddress, uint256 externalActionId, bytes externalActionMetadata) externalActionData, tuple(address preHookContract, address postHookContract, bytes preHookMetadata, bytes postHookMetadata) hookData, address originalSender, bytes extraData) circomData, int256[] deltaAmounts) returns (tuple(uint256 amount, address erc20Address, tuple(uint256 H0x, uint256 H0y, uint256 H1x, uint256 H1y, uint256 stealthAddress) stealthAddressStructure, uint256 timeStamp)[] utxoSet)",
+      "function setAllowedRecipients(address[] recipients)",
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
@@ -1875,15 +1934,17 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "hinkal/DepositOnChainUtxosExternalAction": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "hinkal/Groth16VerifierEVM": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "hinkal/Hinkal": "0x4d0fdc8755a7d477567c6d65956cabdde59fdf201138b0b87b988e2531b7d0f2",
+    "hinkal/HinkalFactory": "0x42fa57cc20731a98c076f5d100d6b43386488c3d1185b9b3eca0aa9a71b15515",
     "hinkal/HinkalWallet": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "hinkal/HinkalWrapper": "0xdf31ab640eb208ea5c0e8205f690ccbd7a5497263889689aba082287b2757345",
     "hinkal/LifiExternalAction": "0x71a9166894295c2d79e6035d0cc8c4f2cb763dda854555f05e4bc26f79f1672e",
     "hinkal/VerifierEVM": "0x7a3bc198c665275072df6783fc87111b9a228c8167367b8c884bd7f72acc0170"
   },
-  "usedBlockNumbers": { "ethereum": 26483877 },
-  "permissionsConfigHash": "0xf337bb2e54084e90292bb396241213cd4048e21faeac973d3d33b50a4136a7c6",
+  "usedBlockNumbers": { "ethereum": 26491514 },
+  "permissionsConfigHash": "0x5b85ae23fb9b106637be871b1869bc824866294cb2306c4444cb17eb0dd20505",
   "permissions": {
     "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": {
       "receivedPermissions": [
@@ -2075,7 +2136,7 @@
         {
           "permission": "interact",
           "from": "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d",
-          "description": "add addresses allowed to call runAction.",
+          "description": "add callers of runAction, which can pull approved tokens from any address that approved this contract.",
           "role": ".owner"
         },
         {

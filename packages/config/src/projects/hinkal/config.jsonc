@@ -10,9 +10,7 @@
   ],
   "names": {
     "eth:0x65BA6e273f2f829B6eD14E064D97811580E2b607": "HinkalHelper",
-    "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": "HinkalDeployer",
     "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1": "Emporium",
-    "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": "DepositOnChainUtxosExternalAction",
     "eth:0xB2445b1f2fB462F4cF4EAdb90584ce19DBB0acfd": "ReceiveVaultFactory",
     "eth:0xAEfBA46bbfE44943a36AE42F15EBc8D22Af4C1c9": "PoseidonHasher2",
     "eth:0x07BecBAE072343c08F1cbf0F3Ab682E5873a1026": "PoseidonHasher4",
@@ -75,9 +73,6 @@
       "description": "Unverified Groth16 verifier behind SwapVerifierEVM3x6x1.",
       "critical": true
     },
-    "eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c": {
-      "description": "Unverified one-time deployer of the Hinkal contract. It still holds DEFAULT_ADMIN_ROLE on Hinkal from the deployment, but its code has no function that could use the role, and it cannot deploy again."
-    },
     "eth:0x795884e56c58D4fF1B26Eb1494F39FcfB38917a1": {
       "description": "Upgradeable Hinkal external action with an unverified implementation. Its verified predecessor runs a batch of arbitrary calls with shielded funds, optionally through a user's HinkalWallet, pays the relayer and returns the resulting token balances to Hinkal.",
       "critical": true,
@@ -104,33 +99,6 @@
             "type": "storage",
             "slot": "0xf10f423c12af70b7aa31f6f1bd94310f38d85adab8d26b5c90b7f07c98bf0800",
             "returnType": "address"
-          }
-        }
-      }
-    },
-    "eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d": {
-      "description": "Unverified Hinkal external action registered under the DepositOnChainUtxos ID. Shielded funds are sent to it during external transactions that use this ID.",
-      "fields": {
-        "owner": {
-          "severity": "MEDIUM",
-          "type": "PERMISSION",
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "add addresses allowed to call runAction."
-            }
-          ]
-        },
-        "pendingOwner": {
-          "handler": {
-            "type": "call",
-            "method": "function pendingOwner() view returns (address)",
-            "args": []
           }
         }
       }

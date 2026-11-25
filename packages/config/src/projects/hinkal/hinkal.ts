@@ -64,14 +64,13 @@ assert(
     .every((manager) => manager === TIMELOCK.address),
   'Only the timelock can replace the Hinkal helper',
 )
-// The deployer keeps DEFAULT_ADMIN_ROLE but has no code path that uses it.
-const HINKAL_DEPLOYER = discovery.getContract('HinkalDeployer')
+// The factory keeps DEFAULT_ADMIN_ROLE but has no code path that uses it.
+const HINKAL_FACTORY = discovery.getContract('HinkalFactory')
 assert(
   discovery
     .getContractValue<string[]>('Hinkal', 'defaultAdmins')
     .every(
-      (admin) =>
-        admin === TIMELOCK.address || admin === HINKAL_DEPLOYER.address,
+      (admin) => admin === TIMELOCK.address || admin === HINKAL_FACTORY.address,
     ),
   'Only the timelock can register external actions',
 )

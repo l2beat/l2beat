@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdff91c7bede5c74864b1b4ac11f26a92b91af15a
+Generated with discovered.json: 0xea5c38d99b542779144c349b5fa19e2a5f957030
 
-# Diff at Tue, 24 Nov 2026 08:41:13 GMT:
+# Diff at Wed, 25 Nov 2026 10:12:29 GMT:
 
 - id: dc4f3a79
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1795509601
+- current timestamp: 1795601480
 
 ## Description
 
@@ -38,8 +38,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract HinkalDeployer (eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c) [N/A]
-    +++ description: Unverified one-time deployer of the Hinkal contract. It still holds DEFAULT_ADMIN_ROLE on Hinkal from the deployment, but its code has no function that could use the role, and it cannot deploy again.
+    contract HinkalFactory (eth:0x0c612040C6b4F8E560c68156D27AA12F7f76923c) [hinkal/HinkalFactory]
+    +++ description: One-time deployer of the Hinkal contract from creation code stored in chunks. It keeps the DEFAULT_ADMIN_ROLE it received on Hinkal, and no function of it uses the role or deploys again.
 ```
 
 ```diff
@@ -134,8 +134,8 @@ Initial discovery of Hinkal on Ethereum: the Hinkal escrow, its helper, verifier
 
 ```diff
 +   Status: CREATED
-    contract DepositOnChainUtxosExternalAction (eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d) [N/A]
-    +++ description: Unverified Hinkal external action registered under the DepositOnChainUtxos ID. Shielded funds are sent to it during external transactions that use this ID.
+    contract DepositOnChainUtxosExternalAction (eth:0x6D9e70F10b93a0E81ae643d0365B517D921ed60d) [hinkal/DepositOnChainUtxosExternalAction]
+    +++ description: Hinkal external action that deposits tokens from the transaction's original sender as one or more notes, pulling them with that sender's approval. Scheduled sends deposit through it.
 ```
 
 ```diff

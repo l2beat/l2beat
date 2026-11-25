@@ -17,7 +17,7 @@ export function hinkalRiskSummary({
       `the ${multisigStats} multisig registers a malicious verifier or helper through the [timelock](#upgrades-and-governance), which takes effect after ${timelockDelay}.`,
       'the HinkalHelper, whose deployed code is unverified, builds proof inputs that differ from the transaction.',
       'the Emporium, whose current code is unverified, or an upgrade of it through the timelock moves the funds of public accounts delegated to the HinkalWallet.',
-      "a single Safe signer redirects HinkalWrapper deposits, takes swap output down to the user's minimum, or upgrades the ReceiveVaultFactory, with no delay.",
+      "a single Safe signer redirects wrapper deposits, cuts swap output to the user's minimum, spends approvals for scheduled sends or upgrades the ReceiveVaultFactory.",
     ],
     lost: ['a user loses their recovery phrase.'],
     frozen: [
