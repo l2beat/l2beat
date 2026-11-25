@@ -96,6 +96,24 @@ describe(runWatch.name, () => {
     )
   })
 
+  it('rejects a template with a pending item nested inside another pending item', async () => {
+    const config: WatchConfig = {
+      name: 'alpha',
+      watches: [
+        {
+          key: 'a',
+          template: template(async () => ({
+            outer: { pending: true, inner: { pending: true } },
+          })),
+          params: {},
+        },
+      ],
+    }
+    await expect(runWatch(config, context)).toBeRejectedWith(
+      'Nested pending item',
+    )
+  })
+
   it('stops running templates once the context signal is aborted', async () => {
     const controller = new AbortController()
     const second = mockFn().resolvesTo(1)

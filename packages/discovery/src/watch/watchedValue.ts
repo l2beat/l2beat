@@ -66,28 +66,43 @@ function copyShallow(value: json): json {
 
 // Visits every object inside `root`, parents before children. The visitor may
 // delete keys of the object it is given; deleted children are not visited.
-// Pending items are forbidden anywhere inside an array subtree because diffs
-// treat arrays as a single value.
+// Pending items are forbidden inside array subtrees (arrays diff as one value)
+// and nested inside another pending item (each pending item is one diff path).
 export function visitObjects(
   root: json,
   visit: (object: JsonObject) => void,
 ): void {
-  const stack: { value: json; depth: number; inArray: boolean }[] = [
-    { value: root, depth: 0, inArray: false },
-  ]
+  const stack: {
+    value: json
+    depth: number
+    inArray: boolean
+    inPending: boolean
+  }[] = [{ value: root, depth: 0, inArray: false, inPending: false }]
   for (let item = stack.pop(); item !== undefined; item = stack.pop()) {
-    const { value, depth, inArray } = item
+    const { value, depth, inArray, inPending } = item
     assert(depth <= MAX_WATCHED_DEPTH, 'Watched value too deep')
     if (Array.isArray(value)) {
       for (const element of value) {
         assert(!isPendingItem(element), 'Pending item inside an array')
-        stack.push({ value: element, depth: depth + 1, inArray: true })
+        stack.push({
+          value: element,
+          depth: depth + 1,
+          inArray: true,
+          inPending,
+        })
       }
     } else if (isJsonObject(value)) {
-      assert(!inArray || !isPendingItem(value), 'Pending item inside an array')
+      const pending = isPendingItem(value)
+      assert(!inArray || !pending, 'Pending item inside an array')
+      assert(!inPending || !pending, 'Nested pending item')
       visit(value)
       for (const child of Object.values(value)) {
-        stack.push({ value: child, depth: depth + 1, inArray })
+        stack.push({
+          value: child,
+          depth: depth + 1,
+          inArray,
+          inPending: inPending || pending,
+        })
       }
     }
   }

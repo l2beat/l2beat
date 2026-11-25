@@ -58,4 +58,13 @@ describe(visitObjects.name, () => {
       visitObjects([{ a: { pending: true }, b: { pending: true } }], () => {}),
     ).toThrow('Pending item inside an array')
   })
+
+  it('rejects nested pending items inside another pending item', () => {
+    expect(() =>
+      visitObjects(
+        { outer: { pending: true, inner: { pending: true } } },
+        () => {},
+      ),
+    ).toThrow('Nested pending item')
+  })
 })
