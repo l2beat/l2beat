@@ -6,7 +6,6 @@ import type { EtherscanClient } from '../../third-party/EtherscanClient'
 import type { SignatureService } from '../decoder-module/domain/SignatureService'
 import { createUopsRouter } from './createUopsRouter'
 import { ChainService } from './domain/ChainService'
-import { FallbackBlockClient } from './domain/FallbackBlockClient'
 import { type KnownNames, loadKnownNames } from './domain/KnownNames'
 import { NameService } from './domain/NameService'
 import { RpcCodeClient } from './domain/RpcCodeClient'
@@ -55,19 +54,14 @@ function createChainService(
 
   const callsPerMinute =
     chain.blockchainApi.callsPerMinute ?? RPC_CALLS_PER_MINUTE_DEFAULT
-  const urls = chain.alchemyUrl ? [chain.alchemyUrl, url] : [url]
-  const blockClient = new FallbackBlockClient(
-    urls.map((url) =>
-      RpcClientCompat.create({
-        url,
-        chain: chain.id,
-        http: new HttpClient(),
-        callsPerMinute,
-        logger: Logger.SILENT,
-        retryStrategy: 'RELIABLE',
-      }),
-    ),
-  )
+  const blockClient = RpcClientCompat.create({
+    url,
+    chain: chain.id,
+    http: new HttpClient(),
+    callsPerMinute,
+    logger: Logger.SILENT,
+    retryStrategy: 'RELIABLE',
+  })
   const etherscanChainId = chain.etherscanChainId
   const contractClient =
     etherscanChainId === undefined

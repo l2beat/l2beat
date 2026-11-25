@@ -8,8 +8,6 @@ export interface UopsChain {
     url: string
     callsPerMinute?: number
   }
-  // Tried before `blockchainApi.url`, which then serves as the fallback.
-  alchemyUrl?: string
   etherscanChainId?: number
   explorerUrl?: string
 }

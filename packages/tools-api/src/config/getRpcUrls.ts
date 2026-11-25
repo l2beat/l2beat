@@ -18,9 +18,8 @@ function getRpcUrl(
   alchemyApiKey: string,
   chainConfigs: ChainConfig[],
 ): string {
-  const alchemyUrl = getAlchemyUrl(chain, alchemyApiKey)
-  if (alchemyUrl !== undefined) {
-    return alchemyUrl
+  if (chain.alchemyId !== undefined) {
+    return `https://${chain.alchemyId}.g.alchemy.com/v2/${alchemyApiKey}`
   }
   const chainConfig = chainConfigs.find((x) => x.chainId === chain.chainId)
   const rpc = chainConfig?.apis.find((api) => api.type === 'rpc')
@@ -30,14 +29,4 @@ function getRpcUrl(
     })
   }
   return rpc.url
-}
-
-export function getAlchemyUrl(
-  chain: Chain,
-  alchemyApiKey: string,
-): string | undefined {
-  if (chain.alchemyId === undefined) {
-    return undefined
-  }
-  return `https://${chain.alchemyId}.g.alchemy.com/v2/${alchemyApiKey}`
 }
