@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 226" width="720" height="226" role="img" aria-labelledby="t0a d0a">
+  <title id="t0a">Lamport signature scheme on a 3-bit message</title>
+  <desc id="d0a">Left grid shows the 6 secret values with the 3 values for message 101 revealed. An arrow labeled f maps them to the 6 public-key hashes on the right.</desc>
+  <defs>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
+      .hdr { font-size: 12px; font-weight: 700; fill: #18181b; }
+      .sub { font-size: 11px; fill: #71717a; }
+      .col { font-size: 11px; font-weight: 600; fill: #52525b; }
+      .cell { font-size: 11.5px; font-weight: 600; }
+      .tiny { font-size: 9.5px; font-weight: 600; }
+    </style>
+    <marker id="arr-m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="225" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
+
+  <!-- LEFT: SECRET KEY -->
+  <text x="54" y="30" class="sans hdr">Secret key</text>
+  <text x="126" y="30" class="sans sub">(sign m = 101)</text>
+
+  <text x="94" y="56" text-anchor="middle" class="sans col">Bit 1 (1)</text>
+  <text x="180" y="56" text-anchor="middle" class="sans col">Bit 2 (0)</text>
+  <text x="266" y="56" text-anchor="middle" class="sans col">Bit 3 (1)</text>
+
+  <text x="36" y="96" text-anchor="middle" class="mono sub">0</text>
+  <text x="36" y="160" text-anchor="middle" class="mono sub">1</text>
+
+  <!-- Row 0 secrets -->
+  <rect x="54" y="68" width="80" height="46" rx="8" fill="#f4f4f5" stroke="#d4d4d8" stroke-dasharray="4 3"/>
+  <text x="94" y="95" text-anchor="middle" class="mono cell" fill="#71717a">x₁[0]</text>
+
+  <rect x="140" y="68" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="180" y="90" text-anchor="middle" class="mono cell" fill="#115e59">x₂[0]</text>
+  <text x="180" y="105" text-anchor="middle" class="sans tiny" fill="#0f766e">revealed</text>
+
+  <rect x="226" y="68" width="80" height="46" rx="8" fill="#f4f4f5" stroke="#d4d4d8" stroke-dasharray="4 3"/>
+  <text x="266" y="95" text-anchor="middle" class="mono cell" fill="#71717a">x₃[0]</text>
+
+  <!-- Row 1 secrets -->
+  <rect x="54" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="94" y="154" text-anchor="middle" class="mono cell" fill="#115e59">x₁[1]</text>
+  <text x="94" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">revealed</text>
+
+  <rect x="140" y="132" width="80" height="46" rx="8" fill="#f4f4f5" stroke="#d4d4d8" stroke-dasharray="4 3"/>
+  <text x="180" y="159" text-anchor="middle" class="mono cell" fill="#71717a">x₂[1]</text>
+
+  <rect x="226" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="266" y="154" text-anchor="middle" class="mono cell" fill="#115e59">x₃[1]</text>
+  <text x="266" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">revealed</text>
+
+  <!-- MIDDLE ARROW -->
+  <line x1="324" y1="123" x2="386" y2="123" stroke="#64748b" stroke-width="2" marker-end="url(#arr-m)"/>
+  <text x="355" y="112" text-anchor="middle" class="sans" font-size="13" font-style="italic" font-weight="700" fill="#475569">f</text>
+
+  <!-- RIGHT: PUBLIC KEY -->
+  <text x="414" y="30" class="sans hdr">Public key</text>
+  <text x="486" y="30" class="sans sub">(verify each revealed secret)</text>
+
+  <text x="454" y="56" text-anchor="middle" class="sans col">Bit 1</text>
+  <text x="540" y="56" text-anchor="middle" class="sans col">Bit 2</text>
+  <text x="626" y="56" text-anchor="middle" class="sans col">Bit 3</text>
+
+  <!-- Row 0 pk -->
+  <rect x="414" y="68" width="80" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="454" y="95" text-anchor="middle" class="mono cell" fill="#1e40af">f(x₁[0])</text>
+
+  <rect x="500" y="68" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="540" y="90" text-anchor="middle" class="mono cell" fill="#115e59">f(x₂[0])</text>
+  <text x="540" y="105" text-anchor="middle" class="sans tiny" fill="#0f766e">checked</text>
+
+  <rect x="586" y="68" width="80" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="626" y="95" text-anchor="middle" class="mono cell" fill="#1e40af">f(x₃[0])</text>
+
+  <!-- Row 1 pk -->
+  <rect x="414" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="454" y="154" text-anchor="middle" class="mono cell" fill="#115e59">f(x₁[1])</text>
+  <text x="454" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">checked</text>
+
+  <rect x="500" y="132" width="80" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="540" y="159" text-anchor="middle" class="mono cell" fill="#1e40af">f(x₂[1])</text>
+
+  <rect x="586" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+  <text x="626" y="154" text-anchor="middle" class="mono cell" fill="#115e59">f(x₃[1])</text>
+  <text x="626" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">checked</text>
+
+  <!-- Bottom line -->
+  <text x="360" y="206" text-anchor="middle" class="sans sub">Signature on <tspan class="mono" fill="#18181b">101</tspan> is σ = (<tspan class="mono" fill="#0f766e">x₁[1]</tspan>, <tspan class="mono" fill="#0f766e">x₂[0]</tspan>, <tspan class="mono" fill="#0f766e">x₃[1]</tspan>)</text>
+</svg>

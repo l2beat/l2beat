@@ -1,5 +1,6 @@
 import { cn } from '~/utils/cn'
 import { createMarkdown } from '~/utils/markdown/createMarkdown'
+import { mathPlugin } from '~/utils/markdown/mathPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 
 interface ArticleProps {
@@ -7,7 +8,7 @@ interface ArticleProps {
   className?: string
 }
 
-const markdown = createMarkdown().use(outLinksPlugin)
+const markdown = createMarkdown().use(outLinksPlugin).use(mathPlugin)
 
 export function Article(props: ArticleProps) {
   return (

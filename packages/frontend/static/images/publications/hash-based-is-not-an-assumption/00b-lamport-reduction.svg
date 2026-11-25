@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220" width="720" height="220" role="img" aria-labelledby="t0b d0b">
+  <title id="t0b">Planting the challenge y* in a Lamport public key</title>
+  <desc id="d0b">A 3-by-2 Lamport public key with challenge y* = f(x) planted in slot (Bit 2, 1). Signing query m = 101 misses y*, while forgery m* = 111 flips Bit 2 and lands on y*.</desc>
+  <defs>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
+      .hdr { font-size: 12px; font-weight: 700; fill: #18181b; }
+      .sub { font-size: 11px; fill: #71717a; }
+      .col { font-size: 11px; font-weight: 600; fill: #52525b; }
+      .cell { font-size: 11.5px; font-weight: 600; }
+      .tiny { font-size: 9.5px; font-weight: 600; }
+      .step-t { font-size: 12px; font-weight: 700; }
+      .step-d { font-size: 11.5px; fill: #52525b; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="219" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
+
+  <!-- LEFT: PUBLIC KEY WITH PLANT -->
+  <text x="58" y="30" class="sans hdr">Public key given to forger</text>
+
+  <text x="98" y="56" text-anchor="middle" class="sans col">Bit 1</text>
+  <text x="190" y="56" text-anchor="middle" class="sans col" fill="#b45309">Bit 2</text>
+  <text x="282" y="56" text-anchor="middle" class="sans col">Bit 3</text>
+
+  <text x="38" y="96" text-anchor="middle" class="mono sub">0</text>
+  <text x="38" y="160" text-anchor="middle" class="mono sub">1</text>
+
+  <!-- Row 0 -->
+  <rect x="58" y="68" width="80" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="98" y="95" text-anchor="middle" class="mono cell" fill="#1e40af">f(x₁[0])</text>
+
+  <rect x="150" y="68" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8"/>
+  <text x="190" y="90" text-anchor="middle" class="mono cell" fill="#115e59">f(x₂[0])</text>
+  <text x="190" y="105" text-anchor="middle" class="sans tiny" fill="#0f766e">signed (m)</text>
+
+  <rect x="242" y="68" width="80" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="282" y="95" text-anchor="middle" class="mono cell" fill="#1e40af">f(x₃[0])</text>
+
+  <!-- Row 1 -->
+  <rect x="58" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8"/>
+  <text x="98" y="154" text-anchor="middle" class="mono cell" fill="#115e59">f(x₁[1])</text>
+  <text x="98" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">signed (m)</text>
+
+  <rect x="150" y="132" width="80" height="46" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2.2"/>
+  <text x="190" y="153" text-anchor="middle" class="mono cell" fill="#92400e">y* = f(x)</text>
+  <text x="190" y="169" text-anchor="middle" class="sans tiny" fill="#b45309">planted</text>
+
+  <rect x="242" y="132" width="80" height="46" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8"/>
+  <text x="282" y="154" text-anchor="middle" class="mono cell" fill="#115e59">f(x₃[1])</text>
+  <text x="282" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">signed (m)</text>
+
+  <!-- Divider -->
+  <line x1="354" y1="26" x2="354" y2="194" stroke="#f1f5f9" stroke-width="1.5"/>
+
+  <!-- RIGHT: CLEAN 3-STEP WALKTHROUGH -->
+  <text x="382" y="42" class="sans step-t" fill="#18181b">1. Plant y* in 1 of 2L slots</text>
+  <text x="382" y="60" class="sans step-d">Looks identical to every honest <tspan class="mono" fill="#1e40af">f(random)</tspan> slot.</text>
+
+  <text x="382" y="102" class="sans step-t" fill="#0f766e">2. Forger asks to sign m = 101</text>
+  <text x="382" y="120" class="sans step-d">Misses <tspan class="mono" font-weight="600" fill="#b45309">y*</tspan>, so the inverter signs honestly.</text>
+
+  <text x="382" y="162" class="sans step-t" fill="#b45309">3. Forger outputs m* = 111</text>
+  <text x="382" y="180" class="sans step-d">Flips Bit 2 and reveals a preimage of <tspan class="mono" font-weight="600" fill="#b45309">y*</tspan>.</text>
+</svg>

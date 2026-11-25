@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 196" width="720" height="196" role="img" aria-labelledby="t1 d1">
+  <title id="t1">A single Winternitz hash chain for w = 4</title>
+  <desc id="d1">Four-node hash chain from secret x to public key f3(x), showing signing digit 1 by revealing f(x) and verifying by hashing two more times to reach pk.</desc>
+  <defs>
+    <style>
+      .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
+      .node { font-size: 13px; font-weight: 600; }
+      .sub { font-size: 11px; fill: #71717a; }
+      .f { font-size: 12px; font-style: italic; font-weight: 600; fill: #71717a; }
+    </style>
+    <marker id="arr-s" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arr-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+    </marker>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="195" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
+
+  <!-- Verify arc above f(x) to pk -->
+  <path d="M 262 64 C 262 28, 608 28, 608 64" fill="none" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-t)"/>
+  <rect x="344" y="20" width="182" height="22" rx="4" fill="#ffffff"/>
+  <text x="435" y="35" text-anchor="middle" class="sans" font-size="11.5" font-weight="600" fill="#0f766e">Verify: hash 2 more times</text>
+
+  <!-- Node 0 -->
+  <rect x="34" y="76" width="114" height="46" rx="9" fill="#f4f4f5" stroke="#a1a1aa" stroke-dasharray="4 3"/>
+  <text x="91" y="103" text-anchor="middle" class="mono node" fill="#52525b">x</text>
+  <text x="91" y="144" text-anchor="middle" class="sans sub">digit 0 (secret)</text>
+
+  <line x1="152" y1="99" x2="198" y2="99" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arr-s)"/>
+  <text x="175" y="90" text-anchor="middle" class="sans f">f</text>
+
+  <!-- Node 1 -->
+  <rect x="204" y="76" width="116" height="46" rx="9" fill="#f0fdfa" stroke="#0d9488" stroke-width="2.2"/>
+  <text x="262" y="103" text-anchor="middle" class="mono node" fill="#115e59">f(x)</text>
+  <text x="262" y="144" text-anchor="middle" class="sans" font-size="11" font-weight="700" fill="#0f766e">digit 1 (revealed)</text>
+
+  <line x1="324" y1="99" x2="370" y2="99" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arr-t)"/>
+  <text x="347" y="90" text-anchor="middle" class="sans f" fill="#0f766e">f</text>
+
+  <!-- Node 2 -->
+  <rect x="376" y="76" width="116" height="46" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="434" y="103" text-anchor="middle" class="mono node" fill="#1e40af">f²(x)</text>
+  <text x="434" y="144" text-anchor="middle" class="sans sub">digit 2</text>
+
+  <line x1="496" y1="99" x2="542" y2="99" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arr-t)"/>
+  <text x="519" y="90" text-anchor="middle" class="sans f" fill="#0f766e">f</text>
+
+  <!-- Node 3 -->
+  <rect x="548" y="76" width="138" height="46" rx="9" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="617" y="103" text-anchor="middle" class="mono node" fill="#1e3a8a">f³(x) = pk</text>
+  <text x="617" y="144" text-anchor="middle" class="sans" font-size="11" font-weight="600" fill="#1d4ed8">digit 3 (public key)</text>
+
+  <!-- Subtle bottom caption -->
+  <text x="360" y="176" text-anchor="middle" class="sans sub">Winternitz chain for w = 4 (digits 0 to 3), signing digit 1</text>
+</svg>

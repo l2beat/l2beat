@@ -133,3 +133,32 @@
   @apply text-link underline transition-colors hover:text-blue-550;
   font-weight: 500;
 }
+
+.article img {
+  @apply my-6 w-full rounded-xl;
+}
+
+.article .math-block {
+  @apply my-5 overflow-x-auto overflow-y-hidden py-1;
+}
+
+.article .math-block .katex-display {
+  margin: 0;
+}
+
+.article .katex {
+  font-size: 1.04em;
+}
+
+.article .math-nowrap {
+  white-space: nowrap;
+}
+
+.article blockquote > * + * {
+  margin-top: 0.9em;
+}
+
+.article blockquote ul,
+.article blockquote ol {
+  @apply text-brand-deep;
+}
