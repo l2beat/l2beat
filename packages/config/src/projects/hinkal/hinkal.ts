@@ -293,9 +293,9 @@ export const hinkal: BaseProject = {
           'The relayers decide again at each spend, so a deposit accepted once can be refused later.',
       },
       consequence: {
-        type: 'funds',
+        type: 'privacy',
         detail:
-          "Refused funds stay in the pool, since the extension sends only through the relayers. The contracts accept a spend the user submits from their own address, which takes Hinkal's SDK and publishes that address.",
+          "A refused user must submit each transaction from their own address, which the transaction then publishes. The extension offers no such path, so it takes Hinkal's SDK.",
       },
       voluntaryDisclosure: {
         type: 'none',
