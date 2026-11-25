@@ -54,11 +54,12 @@ export function getMoveEnd(
 ) {
   const end = getTargetEnd(target, buffer)
   if (end === undefined) return undefined
-  // a move up to a bucket, so a key's step back and one forward return to the
-  // newest block
-  return target.exact
-    ? end - (end % bucket)
-    : clampTo(Math.ceil(end / bucket) * bucket, buffer, target.seconds)
+  const down = end - (end % bucket)
+  if (target.exact || buffer === undefined) return down
+  // a move up to a bucket while that stays short of the newest block, so a
+  // key's step back and one forward return to it
+  const up = Math.ceil(end / bucket) * bucket
+  return clampTo(up < buffer.to ? up : down, buffer, target.seconds)
 }
 
 const back = (end: number, _: Edges, seconds: number) =>
