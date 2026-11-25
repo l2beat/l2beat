@@ -9,7 +9,9 @@ function record(
   return {
     timestamp: null,
     values: null,
-    notifiedValues: null,
+    isPublic: false,
+    configHash: null,
+    pendingNotifications: [],
     lastAttemptAt: null,
     lastError: null,
     ...partial,

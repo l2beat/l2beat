@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, WatchPendingNotification } from '@l2beat/database'
 import {
   diffWatched,
+  hashWatchConfig,
   runWatch,
   type WatchConfig,
   type WatchContext,
@@ -15,6 +16,8 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { WorkerPool } from '../update-monitor/createWorkers'
 import { getPendingWatchDiffs } from './pendingWatchDiffs'
 import type { WatchNotifier } from './WatchNotifier'
+
+const MAX_PENDING_NOTIFICATIONS = 20
 
 export type RunWatchFn = (
   config: WatchConfig,
@@ -57,7 +60,7 @@ export class WatchMonitor {
   }
 
   async update(timestamp: UnixTime): Promise<void> {
-    const updateStart = UnixTime.now()
+    const attemptAt = UnixTime.now()
     const allWatches = this.watchReader
       .readAllWatches()
       .map((location) => location.name)
@@ -77,16 +80,28 @@ export class WatchMonitor {
         id: name,
         name: `Watch ${name}`,
       },
-      job: (signal: AbortSignal) => this.updateWatch(name, timestamp, signal),
+      job: (signal: AbortSignal) =>
+        this.updateWatch(name, timestamp, signal, attemptAt),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
+
+    // Persist pool-level failures (including task/run timeouts and skipped
+    // tasks) keyed by this run's originating attemptAt so the API reflects them.
+    for (const taskError of results.errors) {
+      await this.db.watchMonitor.recordFailure(
+        taskError.identity.id,
+        attemptAt,
+        taskError.error.message,
+      )
+    }
+
     const failedWatches = results.errors
       .map((error) => error.identity.id)
       .sort()
 
     this.logger.info('Watch update finished', {
-      duration: UnixTime.now() - updateStart,
+      duration: UnixTime.now() - attemptAt,
       updateTarget: timestamp,
       timedOut: results.timedOut,
       successCount: results.results.length,
@@ -115,10 +130,12 @@ export class WatchMonitor {
     name: string,
     timestamp: UnixTime,
     signal?: AbortSignal,
+    attemptAt: UnixTime = UnixTime.now(),
   ): Promise<void> {
+    let config: WatchConfig
     let result: Watched
     try {
-      const config = this.watchReader.readWatchConfig(name)
+      config = this.watchReader.readWatchConfig(name)
       result = await this.runWatchFn(config, {
         ...this.watchContext,
         signal,
@@ -126,7 +143,7 @@ export class WatchMonitor {
     } catch (error) {
       if (!signal?.aborted) {
         const message = error instanceof Error ? error.message : String(error)
-        await this.db.watchMonitor.recordFailure(name, UnixTime.now(), message)
+        await this.db.watchMonitor.recordFailure(name, attemptAt, message)
       }
       throw error
     }
@@ -141,52 +158,77 @@ export class WatchMonitor {
       throw signal.reason
     }
 
-    // Persist the observation independently of Discord delivery so the API
-    // and daily reminder reflect fresh state even when Discord is degraded.
+    const previousValues = existing?.values ?? committed?.values ?? {}
+    const transitionDiff = diffWatched(previousValues, result.values)
+    const queued: WatchPendingNotification[] = [
+      ...(existing?.pendingNotifications ?? []),
+    ]
+    if (transitionDiff.length > 0) {
+      queued.push({ timestamp, diff: transitionDiff })
+    }
+    const boundedQueue =
+      queued.length > MAX_PENDING_NOTIFICATIONS
+        ? queued.slice(queued.length - MAX_PENDING_NOTIFICATIONS)
+        : queued
+
+    // Persist the observation and queued transitions independently of Discord
+    // delivery so transient changes survive reverts and the API sees fresh state.
     const persisted = await this.db.watchMonitor.upsertObservation({
       name,
       timestamp: result.timestamp,
+      attemptAt,
       values: result.values,
+      isPublic: config.isPublic === true,
+      configHash: hashWatchConfig(config),
+      pendingNotifications: boundedQueue,
     })
-    if (!persisted || signal?.aborted) {
+    if (signal?.aborted) {
+      throw signal.reason
+    }
+    if (!persisted) {
+      return
+    }
+
+    await this.drainNotifications(name, attemptAt, boundedQueue, signal)
+  }
+
+  private async drainNotifications(
+    name: string,
+    attemptAt: UnixTime,
+    queue: WatchPendingNotification[],
+    signal?: AbortSignal,
+  ): Promise<void> {
+    let remaining = queue
+    while (remaining.length > 0) {
       if (signal?.aborted) {
         throw signal.reason
       }
-      return
-    }
-
-    const previousNotified = existing?.notifiedValues ?? committed?.values ?? {}
-    const diff = diffWatched(previousNotified, result.values)
-
-    if (diff.length === 0) {
-      if (existing?.notifiedValues === null || existing === undefined) {
-        await this.db.watchMonitor.markNotified(
-          name,
-          result.timestamp,
-          result.values,
-        )
+      const next = remaining[0]
+      if (next === undefined) {
+        break
       }
-      return
-    }
-
-    const notifyResult = await this.watchNotifier.handleUpdate(
-      name,
-      diff,
-      timestamp,
-    )
-    if (notifyResult === 'failed') {
-      await this.db.watchMonitor.recordFailure(
+      const notifyResult = await this.watchNotifier.handleUpdate(
         name,
-        UnixTime.now(),
-        'Watch notification failed',
+        next.diff,
+        next.timestamp,
       )
-      throw new Error('Watch notification failed', { cause: { name } })
+      if (signal?.aborted) {
+        throw signal.reason
+      }
+      if (notifyResult === 'failed') {
+        await this.db.watchMonitor.recordFailure(
+          name,
+          attemptAt,
+          'Watch notification failed',
+        )
+        throw new Error('Watch notification failed', { cause: { name } })
+      }
+      remaining = remaining.slice(1)
+      await this.db.watchMonitor.updatePendingNotifications(
+        name,
+        attemptAt,
+        remaining,
+      )
     }
-
-    await this.db.watchMonitor.markNotified(
-      name,
-      result.timestamp,
-      result.values,
-    )
   }
 }

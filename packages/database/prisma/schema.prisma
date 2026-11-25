@@ -177,12 +177,14 @@ model UpdateMonitor {
 }
 
 model WatchMonitor {
-  name                   String    @id @db.VarChar(255)
-  timestamp              DateTime? @db.Timestamp(6)
-  valuesJsonBlob         Json?
-  notifiedValuesJsonBlob Json?
-  lastAttemptAt          DateTime? @db.Timestamp(6)
-  lastError              String?
+  name                         String    @id @db.VarChar(255)
+  timestamp                    DateTime? @db.Timestamp(6)
+  valuesJsonBlob               Json?
+  isPublic                     Boolean   @default(false)
+  configHash                   String?   @db.VarChar(255)
+  pendingNotificationsJsonBlob Json?
+  lastAttemptAt                DateTime? @db.Timestamp(6)
+  lastError                    String?
 }
 
 model UpdateNotifier {

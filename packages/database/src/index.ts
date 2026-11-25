@@ -206,5 +206,6 @@ export { mergeTransferTypeStats } from './repositories/utils/mergeTransferTypeSt
 export type {
   WatchMonitorRecord,
   WatchObservation,
+  WatchPendingNotification,
 } from './repositories/WatchMonitorRepository'
 export type { CleanableRepoName } from './utils/deleteArchivedRecords'
