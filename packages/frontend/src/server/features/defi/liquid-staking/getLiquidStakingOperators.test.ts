@@ -13,6 +13,7 @@ describe(getLiquidStakingOperators.name, () => {
     eth: 200,
     validators: 6,
     operatorCount: 12,
+    unit: 'operator',
     operators: [
       { name: 'Kiln', eth: 120, validators: 3 },
       {
@@ -64,6 +65,7 @@ describe(getLargestOperator.name, () => {
       eth: 50,
       validators: 3,
       operatorCount: 20,
+      unit: 'operator',
       operators: [
         {
           name: 'Community Staking Module',

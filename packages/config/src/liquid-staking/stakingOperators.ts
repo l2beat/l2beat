@@ -1,6 +1,7 @@
 import type {
   ProjectLiquidStakingOperators,
   ProjectStakingOperator,
+  ProjectStakingOperatorUnit,
 } from '../types'
 import snapshot from './stakingOperators.json'
 
@@ -27,10 +28,12 @@ export interface ProtocolStakingOperators {
   eth: number
   validators: number
   operatorCount: number
+  unit: ProjectStakingOperatorUnit
   operators: ProjectStakingOperator[]
 }
 
-const STAKING_OPERATORS: StakingOperatorsSnapshot = snapshot
+// The JSON's `unit` reads as a string; the generator only writes the four units.
+const STAKING_OPERATORS = snapshot as StakingOperatorsSnapshot
 
 /** A protocol's operators, as the last snapshot read them. */
 export function getValidatorOperators(

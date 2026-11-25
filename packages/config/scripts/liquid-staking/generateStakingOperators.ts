@@ -11,6 +11,12 @@
  * wBETH and cbETH are run by Binance and Coinbase alone, and their validators
  * carry no onchain marker, so they have no entry.
  *
+ * Names that the protocols' contracts do not give are taken only from what the
+ * operator published about itself: ether.fi accounts from the SSV operators the
+ * account registered and named (SSV Labs' API), StakeWise vaults from the name
+ * the vault's admin set (StakeWise's subgraph), Rocket Pool nodes from their
+ * own ENS name. Anything else stays an address.
+ *
  * Needs ETHEREUM_RPC_URL (an archive node: logs are read from the protocols'
  * deployments on) and ETHEREUM_BEACON_API_URL. The RPC is rate limited by
  * ETHEREUM_RPC_CALLS_PER_MINUTE (300 by default), with at most four calls in
@@ -27,14 +33,18 @@ import {
   RpcClient,
 } from '@l2beat/shared'
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
+import { providers, utils } from 'ethers'
 import { writeFileSync } from 'fs'
 import path from 'path'
 import type {
   ProtocolStakingOperators,
   StakingOperatorsSnapshot,
 } from '../../src/liquid-staking/stakingOperators'
-import type { ProjectStakingOperator as StakingOperator } from '../../src/types'
+import type {
+  ProjectStakingOperatorUnit,
+  ProjectStakingOperator as StakingOperator,
+} from '../../src/types'
+import { sharedName } from './sharedName'
 
 const OUTPUT = path.join(
   __dirname,
@@ -48,6 +58,10 @@ const MAX_ROWS = 40
 const GWEI_PER_ETH = 1e9
 
 const ACTIVE = ['active_ongoing', 'active_exiting', 'active_slashed']
+
+const SSV_API = 'https://api.ssv.network/api/v4/mainnet'
+const STAKEWISE_SUBGRAPH =
+  'https://graphs.stakewise.io/mainnet/subgraphs/name/stakewise/prod'
 
 main().catch((e: unknown) => {
   console.error(e)
@@ -87,11 +101,14 @@ async function main() {
   )
 
   const reader = new ContractReader(rpc, blockNumber)
+  const ens = new providers.StaticJsonRpcProvider(
+    env.string('ETHEREUM_RPC_URL'),
+  )
   const protocols: Record<string, ProtocolStakingOperators> = {
     lido: await readLido(reader, validators),
-    etherfi: await readEtherfi(reader, validators),
-    rocketpool: await readRocketPool(reader, validators),
-    stakewise: await readStakeWise(reader, validators),
+    etherfi: await readEtherfi(reader, validators, http),
+    rocketpool: await readRocketPool(reader, validators, ens),
+    stakewise: await readStakeWise(reader, validators, http),
   }
 
   const snapshot: StakingOperatorsSnapshot = {
@@ -105,7 +122,7 @@ async function main() {
   writeFileSync(OUTPUT, `${JSON.stringify(snapshot, null, 2)}\n`)
   for (const [id, p] of Object.entries(protocols)) {
     console.log(
-      `${id}: ${p.eth} ETH in ${p.validators} validators, ${p.operatorCount} operators`,
+      `${id}: ${p.eth} ETH in ${p.validators} validators, ${p.operatorCount} ${p.unit}s, ${p.operators.filter((o) => o.nameSource).length} named by themselves`,
     )
   }
   console.log(`Wrote ${OUTPUT}`)
@@ -325,7 +342,7 @@ async function readLido(
     companies.size +
       [...groups.values()].reduce((sum, g) => sum + g.ids.size, 0),
     rows,
-    'operators',
+    'operator',
   )
 }
 
@@ -385,6 +402,7 @@ const etherfiEvents = new utils.Interface([
 async function readEtherfi(
   reader: ContractReader,
   validators: Validators,
+  http: HttpClient,
 ): Promise<ProtocolStakingOperators> {
   const logs = (address: string, event: string) =>
     reader.logs(address, etherfiEvents, event, ETHERFI_DEPLOYED_AT)
@@ -435,13 +453,46 @@ async function readEtherfi(
     row.validators++
     operators.set(address, row)
   }
+  for (const row of operators.values()) {
+    const named = await optional(`SSV names of ${row.name}`, () =>
+      ssvCompanyName(http, row.name),
+    )
+    if (named) Object.assign(row, named)
+  }
   return toProtocol(
     gwei,
     count,
     operators.size,
     [...operators.values()],
-    'operators',
+    'account',
   )
+}
+
+/**
+ * The company behind an account, from the SSV operators the account itself
+ * registered: their names ("NodeMonster - EtherFi10", "InfStones 01") share
+ * the company's name. Undefined when the account has none, or their names
+ * share no word.
+ */
+async function ssvCompanyName(http: HttpClient, account: string) {
+  const url = `${SSV_API}/operators/owned_by/${account}`
+  const names: string[] = []
+  for (let page = 1; ; page++) {
+    const res = (await http.fetch(`${url}?perPage=100&page=${page}`, {
+      timeout: 30_000,
+    })) as {
+      operators?: { name?: string; owner_address?: string }[]
+      pagination?: { pages?: number }
+    }
+    for (const op of res.operators ?? []) {
+      if (op.owner_address?.toLowerCase() !== account.toLowerCase()) continue
+      if (op.name?.trim()) names.push(op.name.trim())
+    }
+    if (page >= (res.pagination?.pages ?? 1)) break
+  }
+  const name = sharedName(names)
+  if (name) console.log(`ether.fi ${account}: "${name}" from ${url}`)
+  return name ? { name, nameSource: 'ssv' as const } : undefined
 }
 
 // --- Rocket Pool ---
@@ -472,6 +523,7 @@ const rocketMegapoolFactory = new utils.Interface([
 async function readRocketPool(
   reader: ContractReader,
   validators: Validators,
+  ens: providers.Provider,
 ): Promise<ProtocolStakingOperators> {
   const contract = async (name: string) => {
     const key = utils.keccak256(utils.toUtf8Bytes(`contract.address${name}`))
@@ -557,23 +609,33 @@ async function readRocketPool(
     `Rocket Pool: ${nodes.length} nodes, ${minipoolCalls.length} minipools, ${megapoolNodes.length} megapools.`,
   )
 
-  return byWithdrawalAddress(validators, nodeOf, 'nodes')
+  const protocol = byWithdrawalAddress(validators, nodeOf, 'node')
+  // A node's own ENS name, checked back to the address by lookupAddress.
+  for (const row of protocol.operators) {
+    if (!row.address || row.operatorCount !== undefined) continue
+    const name = await ens.lookupAddress(row.address).catch(() => null)
+    if (name) Object.assign(row, { name, nameSource: 'ens' as const })
+  }
+  return protocol
 }
 
 // --- StakeWise ---
 
 const STAKEWISE_VAULTS_REGISTRY = '0x3a0008a588772446f6e656133C2D5029CC4FC20E'
 const STAKEWISE_DEPLOYED_AT = 18_000_000
-const STAKEWISE_GENESIS_VAULT = '0xac0f906e433d58fa868f936e8a43230473652885'
 
 const stakewiseRegistry = new utils.Interface([
   'event VaultAdded(address indexed caller, address indexed vault)',
 ])
 
-/** A StakeWise validator withdraws to the vault that runs it. */
+/**
+ * A StakeWise validator withdraws to the vault that registered it. A vault is
+ * named by its admin; the name is the vault's, not that of its operators.
+ */
 async function readStakeWise(
   reader: ContractReader,
   validators: Validators,
+  http: HttpClient,
 ): Promise<ProtocolStakingOperators> {
   const added = await reader.logs(
     STAKEWISE_VAULTS_REGISTRY,
@@ -584,12 +646,44 @@ async function readStakeWise(
   const vaults = new Map<string, string>()
   for (const log of added) {
     const vault: string = log.args.vault
-    vaults.set(
-      vault.toLowerCase(),
-      vault.toLowerCase() === STAKEWISE_GENESIS_VAULT ? 'Genesis Vault' : vault,
-    )
+    vaults.set(vault.toLowerCase(), vault)
   }
-  return byWithdrawalAddress(validators, vaults, 'vaults')
+  const protocol = byWithdrawalAddress(validators, vaults, 'vault')
+  const staked = protocol.operators.flatMap((row) =>
+    row.address ? [row.address.toLowerCase()] : [],
+  )
+  const names =
+    (await optional('StakeWise vault names', () =>
+      stakewiseVaultNames(http, staked),
+    )) ?? new Map<string, string>()
+  for (const row of protocol.operators) {
+    const name = row.address && names.get(row.address.toLowerCase())
+    if (name) {
+      Object.assign(row, { name, nameSource: 'vault-metadata' as const })
+    }
+  }
+  return protocol
+}
+
+async function stakewiseVaultNames(http: HttpClient, vaults: string[]) {
+  const names = new Map<string, string>()
+  for (let i = 0; i < vaults.length; i += 100) {
+    const res = (await http.fetch(STAKEWISE_SUBGRAPH, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        query:
+          'query($ids:[String!]){ vaults(where:{id_in:$ids}, first:100){ id displayName } }',
+        variables: { ids: vaults.slice(i, i + 100) },
+      }),
+      timeout: 30_000,
+    })) as { data?: { vaults?: { id: string; displayName?: string }[] } }
+    for (const vault of res.data?.vaults ?? []) {
+      const name = vault.displayName?.trim()
+      if (name) names.set(vault.id.toLowerCase(), name)
+    }
+  }
+  return names
 }
 
 // --- Shared ---
@@ -599,7 +693,7 @@ function byWithdrawalAddress(
   validators: Validators,
   /** Withdrawal address, lowercase, to the operator's name. */
   operatorOf: Map<string, string>,
-  unit: string,
+  unit: ProjectStakingOperatorUnit,
 ): ProtocolStakingOperators {
   const operators = new Map<string, StakingOperator>()
   let gwei = 0
@@ -631,7 +725,7 @@ function toProtocol(
   validators: number,
   operatorCount: number,
   rowsInGwei: StakingOperator[],
-  unit: string,
+  unit: ProjectStakingOperatorUnit,
 ): ProtocolStakingOperators {
   const rows = rowsInGwei
     .map((row) => ({ ...row, eth: toEth(row.eth) }))
@@ -639,16 +733,44 @@ function toProtocol(
   if (rows.length > MAX_ROWS) {
     const rest = rows.splice(MAX_ROWS - 1)
     rows.push({
-      name: `Other ${unit}`,
+      name: `Other ${unit}s`,
       eth: rest.reduce((sum, row) => sum + row.eth, 0),
       validators: rest.reduce((sum, row) => sum + row.validators, 0),
       operatorCount: rest.reduce(
         (sum, row) => sum + (row.operatorCount ?? 1),
         0,
       ),
+      rest: true,
     })
   }
-  return { eth: toEth(gwei), validators, operatorCount, operators: rows }
+  return {
+    eth: toEth(gwei),
+    validators,
+    operatorCount,
+    unit,
+    operators: rows,
+  }
+}
+
+/**
+ * Names come from outside the protocols' contracts, so a source that keeps
+ * failing leaves its rows as addresses instead of failing the run.
+ */
+async function optional<T>(
+  what: string,
+  read: () => Promise<T>,
+): Promise<T | undefined> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await read()
+    } catch (e) {
+      if (attempt === 3) {
+        console.warn(`${what}: left out (${String(e)})`)
+        return undefined
+      }
+      await new Promise((resolve) => setTimeout(resolve, 2_000 * attempt))
+    }
+  }
 }
 
 function toEth(gwei: number) {
