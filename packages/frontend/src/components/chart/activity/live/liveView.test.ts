@@ -55,7 +55,6 @@ describe(getTouchEdges.name, () => {
   })
 
   it('leaves a narrow window at a side its handle and its middle', () => {
-    // Methodology: a live 6 min window on a 300 px strip, and 16 px at the left
     const live = getTouchEdges([292.5, 300], 300, 8)
     expect(getEdgeAt(299, live, 8, 0)).toEqual('to')
     expect(getEdgeAt(296, live, 8, 0)).toEqual(undefined)

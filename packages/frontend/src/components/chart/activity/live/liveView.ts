@@ -173,9 +173,10 @@ export function getResizedTo(
 }
 
 /**
- * Where a finger, reaching edges only from outside the window, finds them: an
- * edge within `reach` of the strip's side is taken as within, so it can be
- * reached, by at most a third of the window, so its middle still moves it
+ * Where a finger, reaching edges only from outside the window, finds them. An
+ * edge within `reach` of the strip's side is moved inside the window, by at
+ * most a third of its width, so it can be reached and the middle still moves
+ * the window
  */
 export function getTouchEdges(
   [left, right]: [number, number],
