@@ -1,5 +1,6 @@
 import type { Chain } from '../../../config/types'
 import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
+import { RpcBudgetExceededError } from '../../../third-party/RpcBudget'
 import type { IAddressService } from './AddressService'
 import type { AddressAlias } from './addressAlias'
 import type { Decoder, Transaction } from './Decoder'
@@ -184,7 +185,12 @@ export class ApiController {
     })
     try {
       return await Promise.any(lookups)
-    } catch {
+    } catch (e) {
+      // Chains that were never asked can't say the transaction is missing.
+      const overBudget =
+        e instanceof AggregateError &&
+        e.errors.find((x) => x instanceof RpcBudgetExceededError)
+      if (overBudget) throw overBudget
       throw new Error('Transaction not found!')
     }
   }

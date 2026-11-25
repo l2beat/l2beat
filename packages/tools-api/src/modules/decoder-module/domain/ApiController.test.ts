@@ -5,6 +5,7 @@ import { encodePacked, keccak256 } from 'viem'
 import chainList from '../../../config/chains.json'
 import { Chain } from '../../../config/types'
 import type { ChainRpcClient } from '../../../third-party/ChainRpcClient'
+import { RpcBudgetExceededError } from '../../../third-party/RpcBudget'
 import type { IAddressService } from './AddressService'
 import { ApiController } from './ApiController'
 import type { Decoder } from './Decoder'
@@ -71,6 +72,22 @@ describe(ApiController.name, () => {
       const controller = createController(mockObject(), chainRpcClient)
 
       expect(await controller.getTx({ hash: HASH })).toEqual(null)
+    })
+
+    it('does not report a transaction as missing when the call budget kept some chains from being asked', async () => {
+      const chainRpcClient = mockObject<ChainRpcClient>({
+        getTransaction: async (_, chain) => {
+          if (chain.chainId === 1) {
+            return undefined
+          }
+          throw new RpcBudgetExceededError({ calls: 1, available: 0 })
+        },
+      })
+      const controller = createController(mockObject(), chainRpcClient)
+
+      await expect(controller.getTx({ hash: HASH })).toBeRejectedWith(
+        RpcBudgetExceededError,
+      )
     })
   })
 

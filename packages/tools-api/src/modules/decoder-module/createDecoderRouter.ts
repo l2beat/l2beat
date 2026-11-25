@@ -1,5 +1,6 @@
 import { v as z } from '@l2beat/validate'
 import express from 'express'
+import { RpcBudgetExceededError } from '../../third-party/RpcBudget'
 import type { Chain } from '../../types'
 import type { ApiController, ApiQuery } from './domain/ApiController'
 
@@ -45,7 +46,8 @@ export function createDecoderRouter(
     }
     try {
       res.json(await controller.getSafeState(query.chainId, query.address))
-    } catch {
+    } catch (e) {
+      if (e instanceof RpcBudgetExceededError) throw e
       res
         .status(502)
         .json({ error: 'Could not read Safe version and nonce from RPC.' })
@@ -67,6 +69,24 @@ export function createDecoderRouter(
   router.get('/api/chains', (_, res) => {
     res.json(chains)
   })
+
+  router.use(
+    (
+      error: unknown,
+      _req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => {
+      if (error instanceof RpcBudgetExceededError) {
+        res
+          .status(429)
+          .set('Retry-After', '10')
+          .json({ error: 'Too many RPC lookups, try again in a moment.' })
+        return
+      }
+      next(error)
+    },
+  )
 
   return router
 }

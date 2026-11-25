@@ -2,6 +2,7 @@ import { v } from '@l2beat/validate'
 import { createPublicClient, http, parseAbi } from 'viem'
 import type { Address, Chain } from '../config/types'
 import { JsonRpcClient } from './JsonRpcClient'
+import type { RpcBudget } from './RpcBudget'
 
 export interface BasicTxInfo {
   to: Address
@@ -11,9 +12,14 @@ export interface BasicTxInfo {
 export class ChainRpcClient {
   private client = new JsonRpcClient()
 
-  constructor(private rpcUrls: Record<number, string>) {}
+  constructor(
+    private rpcUrls: Record<number, string>,
+    private budget: RpcBudget,
+  ) {}
 
   async getSafeState(address: `0x${string}`, chain: Chain) {
+    // The block number and the two contract reads below.
+    this.budget.take(3)
     const client = createPublicClient({
       transport: http(this.url(chain), { timeout: 15_000, retryCount: 1 }),
     })
@@ -39,6 +45,7 @@ export class ChainRpcClient {
   }
 
   async hasNoCode(address: `0x${string}`, chain: Chain): Promise<boolean> {
+    this.budget.take()
     const code = await this.client.call(this.url(chain), {
       method: 'eth_getCode',
       params: [address, 'latest'],
@@ -50,6 +57,7 @@ export class ChainRpcClient {
     hash: `0x${string}`,
     chain: Chain,
   ): Promise<BasicTxInfo | undefined> {
+    this.budget.take()
     const tx = await this.client.call(this.url(chain), {
       method: 'eth_getTransactionByHash',
       params: [hash],

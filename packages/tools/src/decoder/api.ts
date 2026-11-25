@@ -52,6 +52,9 @@ export async function lookupTx(
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(query),
   })
+  if (!res.ok) {
+    throw new Error('HTTP error', { cause: { status: res.status } })
+  }
   const json = await res.json()
   return json as TransactionResult | null
 }
