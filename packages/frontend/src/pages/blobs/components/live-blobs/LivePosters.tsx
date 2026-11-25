@@ -1,4 +1,8 @@
-import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatSeconds,
+  SLOT_SECONDS,
+} from '@l2beat/shared-pure'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -20,6 +24,7 @@ import {
   PINNED_CELL_ATTRIBUTE,
 } from '~/components/table/utils/commonPinningStyles'
 import { getRowClassNamesWithoutOpacity } from '~/components/table/utils/rowType'
+import { EM_DASH } from '~/consts/characters'
 import { useThemeTokens } from '~/hooks/useThemeTokens'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
@@ -91,6 +96,12 @@ const COLUMNS: {
     align: 'right',
     tooltip:
       'Data posted in the window, counting every blob as its full 128 KiB',
+  },
+  {
+    label: 'Paid',
+    align: 'right',
+    tooltip:
+      'What the blobs cost at the blob base fee of their blocks: the blob gas alone, not the batch transactions',
   },
   { label: 'Batches', align: 'right', tooltip: 'Blob transactions sent' },
   {
@@ -192,6 +203,7 @@ export function LivePosters({ live: data, totals }: Props) {
                 head={head}
                 firstBucket={postedWindow.firstBucket}
                 newestBlobs={postedWindow.newestBlobs}
+                ethPriceUsd={postedWindow.ethPriceUsd}
               />
             ))}
           </TableBody>
@@ -253,6 +265,7 @@ const PosterRow = memo(function PosterRow({
   head,
   firstBucket,
   newestBlobs,
+  ethPriceUsd,
 }: {
   row: PosterTotal
   color: string
@@ -263,6 +276,7 @@ const PosterRow = memo(function PosterRow({
   head: number | undefined
   firstBucket: number
   newestBlobs: number
+  ethPriceUsd: number | undefined
 }) {
   const ref = useRef<HTMLTableRowElement>(null)
   const posterId = row.poster.id
@@ -350,6 +364,9 @@ const PosterRow = memo(function PosterRow({
       <TableCell align="right">
         <RollingNumber value={blobs * BLOB_KIB} format={formatKib} />
       </TableCell>
+      <TableCell align="right" className="tabular-nums">
+        {formatPaid(row.feeEth, ethPriceUsd)}
+      </TableCell>
       <TableCell align="right">
         <RollingNumber value={batches} format={formatWhole} />
       </TableCell>
@@ -371,6 +388,15 @@ const PosterRow = memo(function PosterRow({
     </tr>
   )
 })
+
+/** In dollars when the price is known, else in ETH: the sums run from a cent to thousands. A dash while a block's fee is missing, as the sum would be too low */
+function formatPaid(feeEth: number | null, ethPriceUsd: number | undefined) {
+  if (feeEth === null) return EM_DASH
+  if (ethPriceUsd === undefined)
+    return formatCurrency(feeEth, 'eth', { decimals: 4 })
+  const usd = feeEth * ethPriceUsd
+  return formatCurrency(usd, 'usd', { decimals: usd < 1 ? 4 : 2 })
+}
 
 /** `value` as it was before `holding` began, while it lasts */
 function useHeldWhile<T>(holding: boolean, value: T) {
