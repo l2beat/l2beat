@@ -13,6 +13,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getProgramHashesSection } from '~/utils/project/getProgramHashesSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
+import { getSingleParticipantWarnings } from '~/utils/project/getSingleParticipantTrustedSetupWarnings'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import {
@@ -39,6 +40,8 @@ export interface ProjectZkCatalogEntry {
   header: {
     warning?: string
     redWarning?: ProjectRedWarning
+    /** One per trusted setup that rests on a single participant. */
+    trustedSetupWarnings: string[]
     emergencyWarning?: string
     description?: string
     links: ProjectLink[]
@@ -92,6 +95,9 @@ export async function getZkCatalogProjectEntry(
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
+    trustedSetupWarnings: getSingleParticipantWarnings(
+      project.zkCatalogInfo.trustedSetups,
+    ),
     emergencyWarning: project.statuses.emergencyWarning,
     links: getProjectLinks(project.display.links),
     trustedSetupsByProofSystem,
