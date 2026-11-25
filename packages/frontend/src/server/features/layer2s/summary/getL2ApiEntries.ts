@@ -1,5 +1,6 @@
 import type { Badge, ProjectAssociatedToken } from '@l2beat/config'
 import {
+  getDisplayedScalingStageName,
   getL2Risks,
   getUnderReviewStatus,
 } from '@l2beat/config/build/utils/scalingAssessment'
@@ -41,6 +42,7 @@ export async function getL2ApiEntries(): Promise<L2ApiEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvsInfo'],
+      optional: ['scalingStage'],
       whereNot: ['archivedAt'],
     }),
   ])
@@ -66,7 +68,10 @@ export async function getL2ApiEntries(): Promise<L2ApiEntry[]> {
           impactfulChange: !!changes?.impactfulChange,
         }),
         badges: project.display.badges,
-        stage: project.scalingInfo.stage,
+        stage: getDisplayedScalingStageName(
+          project.scalingInfo.type,
+          project.scalingStage,
+        ),
         risks: getL2Risks(
           project.scalingRisks.stacked ?? project.scalingRisks.self,
         ),
