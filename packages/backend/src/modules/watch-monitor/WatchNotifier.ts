@@ -26,6 +26,7 @@ const WARSAW_DATE_FORMAT = new Intl.DateTimeFormat('en-CA', {
 
 const MAX_LIST_LINE_CHARS = 400
 const OVERFLOW_WARNING = '... (message too long)'
+const DEFAULT_SEND_TIMEOUT_MS = 30_000
 
 export class WatchNotifier {
   private loggedDiscordClientMissing = false
@@ -42,11 +43,16 @@ export class WatchNotifier {
     name: string,
     diff: WatchDiff[],
     timestamp: UnixTime,
+    signal?: AbortSignal,
   ): Promise<WatchNotifyResult> {
     const header = `Watch changes: ***${name}*** at timestamp ${timestamp}\n`
     const maxLength = DISCORD_MAX_MESSAGE_LENGTH - header.length
     const body = watchDiffToMarkdown(diff, maxLength)
-    const result = await this.notify(`${header}${body}`, { watch: name })
+    const result = await this.notify(
+      `${header}${body}`,
+      { watch: name },
+      signal,
+    )
     if (result === 'sent') {
       this.logger.info('Watch changes notification sent', {
         watch: name,
@@ -93,6 +99,7 @@ export class WatchNotifier {
   private async notify(
     message: string,
     context: Record<string, unknown>,
+    signal?: AbortSignal,
   ): Promise<WatchNotifyResult> {
     if (!this.discordClient) {
       if (!this.loggedDiscordClientMissing) {
@@ -104,8 +111,13 @@ export class WatchNotifier {
       return 'no-client'
     }
 
+    const timeoutSignal = AbortSignal.timeout(DEFAULT_SEND_TIMEOUT_MS)
+    const effectiveSignal =
+      signal !== undefined
+        ? AbortSignal.any([signal, timeoutSignal])
+        : timeoutSignal
     try {
-      await this.discordClient.sendMessage(message)
+      await this.discordClient.sendMessage(message, effectiveSignal)
       return 'sent'
     } catch (error) {
       this.logger.error('Discord API error', error, {

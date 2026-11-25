@@ -100,10 +100,31 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       }),
     ).toEqual(false)
 
-    // Acknowledge notif-1 without changing lastAttemptId, then write a new
-    // observation with expectedLastAttemptId = 'attempt-1': notif-1 must stay
-    // removed and only notif-2 is appended atomically.
-    await repository.acknowledgePendingNotification('optimism', 'notif-1')
+    // Claim and acknowledge notif-1 without changing lastAttemptId, then write
+    // a new observation with expectedLastAttemptId = 'attempt-1': notif-1 must
+    // stay removed and only notif-2 is appended atomically.
+    const claimed1 = await repository.claimNextPendingNotification(
+      'optimism',
+      'owner-0',
+      1_000,
+      60_000,
+    )
+    expect(claimed1?.id).toEqual('notif-1')
+    // Wrong owner cannot acknowledge owner-0's claim.
+    expect(
+      await repository.acknowledgePendingNotification(
+        'optimism',
+        'notif-1',
+        'wrong-owner',
+      ),
+    ).toEqual(false)
+    expect(
+      await repository.acknowledgePendingNotification(
+        'optimism',
+        'notif-1',
+        'owner-0',
+      ),
+    ).toEqual(true)
     expect(
       await repository.upsertObservation({
         name: 'optimism',
@@ -139,7 +160,19 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       ),
     ).toEqual(undefined)
 
-    // Unchanged observation write preserves active claim on notif-2.
+    // Appending at capacity (maxPendingNotifications: 2) preserves the claimed
+    // head outside backlog eviction so owner-1's alert is never dropped and
+    // owner-2 still cannot claim the next alert concurrently.
+    const notif3 = {
+      id: 'notif-3',
+      timestamp: 1_700_007_200,
+      diff: [{ key: 'v', changes: [{ path: [], before: 'A', after: 'C' }] }],
+    }
+    const notif4 = {
+      id: 'notif-4',
+      timestamp: 1_700_010_800,
+      diff: [{ key: 'v', changes: [{ path: [], before: 'C', after: 'D' }] }],
+    }
     expect(
       await repository.upsertObservation({
         name: 'optimism',
@@ -147,17 +180,39 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
         attemptAt: t3,
         attemptId: 'attempt-3',
         expectedLastAttemptId: 'attempt-2',
-        values: { v: 'A' },
+        values: { v: 'C' },
         isPublic: true,
         configHash: HASH,
-        newNotification: null,
-        maxPendingNotifications: 20,
+        newNotification: notif3,
+        maxPendingNotifications: 2,
       }),
     ).toEqual(true)
     expect(
-      (await repository.findLatest('optimism'))?.pendingNotifications[0]
-        ?.claimedBy,
-    ).toEqual('owner-1')
+      await repository.upsertObservation({
+        name: 'optimism',
+        timestamp: 1_700_010_800,
+        attemptAt: new Date(1_700_010_800 * 1000),
+        attemptId: 'attempt-4',
+        expectedLastAttemptId: 'attempt-3',
+        values: { v: 'D' },
+        isPublic: true,
+        configHash: HASH,
+        newNotification: notif4,
+        maxPendingNotifications: 2,
+      }),
+    ).toEqual(true)
+    const afterCap = (await repository.findLatest('optimism'))
+      ?.pendingNotifications
+    expect(afterCap?.map((item) => item.id)).toEqual(['notif-2', 'notif-4'])
+    expect(afterCap?.[0]?.claimedBy).toEqual('owner-1')
+    expect(
+      await repository.claimNextPendingNotification(
+        'optimism',
+        'owner-2',
+        2_500,
+        60_000,
+      ),
+    ).toEqual(undefined)
 
     // Wrong owner cannot release owner-1's claim; owner-1 can release it.
     await repository.releasePendingNotificationClaim(
@@ -189,7 +244,34 @@ describeDatabase(WatchMonitorRepository.name, (db) => {
       )?.claimedBy,
     ).toEqual('owner-2')
 
-    await repository.acknowledgePendingNotification('optimism', 'notif-2')
+    expect(
+      await repository.acknowledgePendingNotification(
+        'optimism',
+        'notif-2',
+        'owner-1',
+      ),
+    ).toEqual(false)
+    expect(
+      await repository.acknowledgePendingNotification(
+        'optimism',
+        'notif-2',
+        'owner-2',
+      ),
+    ).toEqual(true)
+    const claimed4 = await repository.claimNextPendingNotification(
+      'optimism',
+      'owner-2',
+      4_500,
+      60_000,
+    )
+    expect(claimed4?.id).toEqual('notif-4')
+    expect(
+      await repository.acknowledgePendingNotification(
+        'optimism',
+        'notif-4',
+        'owner-2',
+      ),
+    ).toEqual(true)
     expect(
       (await repository.findLatest('optimism'))?.pendingNotifications,
     ).toEqual([])

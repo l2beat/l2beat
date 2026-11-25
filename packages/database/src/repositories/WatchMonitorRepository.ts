@@ -123,19 +123,40 @@ export class WatchMonitorRepository extends BaseRepository {
             configHash: eb.ref('excluded.configHash'),
             ...(observation.newNotification !== null
               ? {
+                  // Keep an actively claimed head outside backlog eviction so
+                  // capacity capping never drops an in-flight alert or lets a
+                  // second worker claim the next alert concurrently.
                   pendingNotificationsJsonBlob: sql<unknown>`(
                     SELECT COALESCE(jsonb_agg(elem ORDER BY ord), '[]'::jsonb)
                     FROM (
-                      SELECT elem, ord
-                      FROM jsonb_array_elements(
-                        (CASE
-                          WHEN jsonb_typeof("WatchMonitor"."pendingNotificationsJsonBlob") = 'array'
-                          THEN "WatchMonitor"."pendingNotificationsJsonBlob"
-                          ELSE '[]'::jsonb
-                        END) || ${JSON.stringify([observation.newNotification])}::jsonb
-                      ) WITH ORDINALITY AS t(elem, ord)
-                      ORDER BY ord DESC
-                      LIMIT ${observation.maxPendingNotifications}
+                      WITH items AS (
+                        SELECT elem, ord
+                        FROM jsonb_array_elements(
+                          (CASE
+                            WHEN jsonb_typeof("WatchMonitor"."pendingNotificationsJsonBlob") = 'array'
+                            THEN "WatchMonitor"."pendingNotificationsJsonBlob"
+                            ELSE '[]'::jsonb
+                          END) || ${JSON.stringify([observation.newNotification])}::jsonb
+                        ) WITH ORDINALITY AS t(elem, ord)
+                      ),
+                      claimed_head AS (
+                        SELECT elem, ord
+                        FROM items
+                        WHERE ord = 1 AND elem ? 'claimedBy'
+                      ),
+                      tail AS (
+                        SELECT elem, ord
+                        FROM items
+                        WHERE NOT (ord = 1 AND elem ? 'claimedBy')
+                        ORDER BY ord DESC
+                        LIMIT GREATEST(
+                          ${observation.maxPendingNotifications} - (SELECT COUNT(*)::int FROM claimed_head),
+                          0
+                        )
+                      )
+                      SELECT elem, ord FROM claimed_head
+                      UNION ALL
+                      SELECT elem, ord FROM tail
                     ) sub
                   )`,
                 }
@@ -273,26 +294,42 @@ export class WatchMonitorRepository extends BaseRepository {
     })
   }
 
-  // Monotonic per-item removal preserving FIFO order so concurrent drains can
-  // never resurrect an already-acknowledged notification or drop a newer one.
+  // Owner-checked monotonic removal preserving FIFO order: only the active
+  // claim owner can complete and remove the notification, so a late finisher
+  // after lease takeover cannot ack another owner's active delivery.
   async acknowledgePendingNotification(
     name: string,
     notificationId: string,
-  ): Promise<void> {
-    await sql`
-      UPDATE "WatchMonitor"
-      SET "pendingNotificationsJsonBlob" = COALESCE(
-        (
-          SELECT jsonb_agg(elem ORDER BY ord)
-          FROM jsonb_array_elements("pendingNotificationsJsonBlob") WITH ORDINALITY AS t(elem, ord)
-          WHERE elem->>'id' <> ${notificationId}
-        ),
-        '[]'::jsonb
+    ownerId: string,
+  ): Promise<boolean> {
+    return await this.transaction(async () => {
+      const row = await this.db
+        .selectFrom('WatchMonitor')
+        .select('pendingNotificationsJsonBlob')
+        .where('name', '=', name)
+        .forUpdate()
+        .executeTakeFirst()
+      if (!row || !Array.isArray(row.pendingNotificationsJsonBlob)) {
+        return false
+      }
+      const queue =
+        row.pendingNotificationsJsonBlob as WatchPendingNotification[]
+      const matched = queue.some(
+        (item) => item.id === notificationId && item.claimedBy === ownerId,
       )
-      WHERE "name" = ${name}
-        AND "pendingNotificationsJsonBlob" IS NOT NULL
-        AND jsonb_typeof("pendingNotificationsJsonBlob") = 'array'
-    `.execute(this.db)
+      if (!matched) {
+        return false
+      }
+      const updated = queue.filter(
+        (item) => !(item.id === notificationId && item.claimedBy === ownerId),
+      )
+      await this.db
+        .updateTable('WatchMonitor')
+        .set({ pendingNotificationsJsonBlob: JSON.stringify(updated) })
+        .where('name', '=', name)
+        .execute()
+      return true
+    })
   }
 
   async recordFailure(

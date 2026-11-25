@@ -82,12 +82,23 @@ function createMemoryDb() {
         return false
       }
       const liveQueue = prev?.pendingNotifications ?? []
-      const nextQueue =
-        obs.newNotification !== null
-          ? [...liveQueue, obs.newNotification].slice(
-              -obs.maxPendingNotifications,
-            )
-          : liveQueue
+      let nextQueue = liveQueue
+      if (obs.newNotification !== null) {
+        const combined = [...liveQueue, obs.newNotification]
+        if (combined.length > obs.maxPendingNotifications) {
+          const head = combined[0]
+          if (head?.claimedBy !== undefined) {
+            const tailBudget = Math.max(obs.maxPendingNotifications - 1, 0)
+            const tail =
+              tailBudget === 0 ? [] : combined.slice(1).slice(-tailBudget)
+            nextQueue = [head, ...tail]
+          } else {
+            nextQueue = combined.slice(-obs.maxPendingNotifications)
+          }
+        } else {
+          nextQueue = combined
+        }
+      }
       storedAttemptDates.set(obs.name, obs.attemptAt)
       stored.set(obs.name, {
         name: obs.name,
@@ -155,17 +166,25 @@ function createMemoryDb() {
     acknowledgePendingNotification: async (
       name: string,
       notificationId: string,
+      ownerId: string,
     ) => {
       const prev = stored.get(name)
       if (prev === undefined) {
-        return
+        return false
+      }
+      const matched = prev.pendingNotifications.some(
+        (item) => item.id === notificationId && item.claimedBy === ownerId,
+      )
+      if (!matched) {
+        return false
       }
       stored.set(name, {
         ...prev,
         pendingNotifications: prev.pendingNotifications.filter(
-          (item) => item.id !== notificationId,
+          (item) => !(item.id === notificationId && item.claimedBy === ownerId),
         ),
       })
+      return true
     },
     recordFailure: async (
       name: string,
@@ -653,7 +672,17 @@ describe(WatchMonitor.name, () => {
       const row = await originalFindLatest(name)
       if (!ackedDuringRead && queuedId !== undefined) {
         ackedDuringRead = true
-        await db.watchMonitor.acknowledgePendingNotification(name, queuedId)
+        await db.watchMonitor.claimNextPendingNotification(
+          name,
+          'other-owner',
+          Date.now(),
+          60_000,
+        )
+        await db.watchMonitor.acknowledgePendingNotification(
+          name,
+          queuedId,
+          'other-owner',
+        )
       }
       return row
     })
@@ -799,5 +828,63 @@ describe(WatchMonitor.name, () => {
     await expect(firstAttempt).toBeRejectedWith('Task timeout')
     expect(gatedNotifier.handleUpdate).toHaveBeenCalledTimes(1)
     expect(directDb.stored.get('optimism')?.pendingNotifications).toEqual([])
+  })
+
+  it('aborts slow deliveries inside the claim lease without stalling other watches', async () => {
+    const { stored, db } = createMemoryDb()
+    const reader = mockObject<WatchReader>({
+      readAllWatches: () => [
+        { name: 'slow', kind: 'project', path: '/p/slow' },
+        { name: 'fast', kind: 'project', path: '/p/fast' },
+      ],
+      readWatchConfig: (name: string): WatchConfig => ({ name, watches: [] }),
+      readWatched: () => ({ timestamp: 1, values: { v: 'A' } }),
+    })
+
+    let slowAborted = false
+    const notifier = mockObject<WatchNotifier>({
+      handleUpdate: mockFn(async (name, _diff, _ts, signal?: AbortSignal) => {
+        if (name === 'slow') {
+          await new Promise<void>((resolve) => {
+            signal?.addEventListener(
+              'abort',
+              () => {
+                slowAborted = true
+                resolve()
+              },
+              { once: true },
+            )
+          })
+          return 'failed' as const
+        }
+        return 'sent' as const
+      }),
+      sendDailyReminder: mockFn().resolvesTo('sent'),
+    })
+
+    const monitor = new WatchMonitor(
+      reader,
+      CONTEXT,
+      notifier,
+      db,
+      mockObject<Clock>(),
+      Logger.SILENT,
+      false,
+      instantWorkerPool,
+      [],
+      async () => ({ timestamp: TIMESTAMP, values: { v: 'B' } }),
+      40, // 40ms delivery timeout strictly shorter than lease
+      5_000,
+    )
+
+    await monitor.update(TIMESTAMP)
+    expect(slowAborted).toEqual(true)
+    expect(stored.get('fast')?.pendingNotifications).toEqual([])
+    expect(stored.get('fast')?.lastError).toEqual(null)
+    expect(stored.get('slow')?.lastError).toEqual('Watch notification failed')
+    // Claim was released cleanly once the aborted send settled.
+    expect(stored.get('slow')?.pendingNotifications[0]?.claimedBy).toEqual(
+      undefined,
+    )
   })
 })

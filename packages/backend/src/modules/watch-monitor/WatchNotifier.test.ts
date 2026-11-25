@@ -57,6 +57,7 @@ describe(WatchNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        expect.a(AbortSignal),
       )
     })
 

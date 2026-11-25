@@ -15,7 +15,7 @@ export class DiscordClient {
     this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
   }
 
-  async sendMessage(message: string) {
+  async sendMessage(message: string, signal?: AbortSignal) {
     if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
@@ -28,11 +28,15 @@ export class DiscordClient {
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
+        ...(signal !== undefined ? { signal } : {}),
       })
     // Only timeouts and network failures get retried: Discord asks callers not
     // to repeat rejected webhook calls. A timed-out attempt may still have been
     // posted, so a retry can duplicate it; for alerts that beats a loss.
-    const res = await retry(post, SEND_RETRY_OPTIONS)
+    const res = await retry(post, {
+      ...SEND_RETRY_OPTIONS,
+      ...(signal !== undefined ? { signal } : {}),
+    })
 
     if (!res.ok) {
       await res.body?.cancel()

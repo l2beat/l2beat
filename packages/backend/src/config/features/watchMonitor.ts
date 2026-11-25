@@ -27,6 +27,7 @@ export function getWatchMonitorConfig(
       : undefined,
     disabledWatches,
     githubToken: env.optionalString('GITHUB_TOKEN'),
+    publicGithubToken: env.optionalString('WATCH_PUBLIC_GITHUB_TOKEN'),
     discordWebhookUrl: env.optionalString(
       'NOTIFICATIONS_WATCH_MONITOR_DISCORD_WEBHOOK_URL',
     ),

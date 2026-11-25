@@ -9,7 +9,7 @@ import {
   type Watched,
   type WatchReader,
 } from '@l2beat/discovery'
-import { type Hash256, UnixTime } from '@l2beat/shared-pure'
+import { assert, type Hash256, UnixTime } from '@l2beat/shared-pure'
 import { randomUUID } from 'crypto'
 import shuffle from 'lodash/shuffle'
 import type { Clock } from '../../tools/Clock'
@@ -21,6 +21,8 @@ import type { WatchNotifier, WatchNotifyResult } from './WatchNotifier'
 const MAX_PENDING_NOTIFICATIONS = 20
 const MAX_OBSERVATION_CAS_ATTEMPTS = 3
 const NOTIFICATION_CLAIM_LEASE_MS = 5 * 60 * 1000
+const NOTIFICATION_DELIVERY_TIMEOUT_MS = 30 * 1000
+const DRAIN_CONCURRENCY = 4
 
 export type RunWatchFn = (
   config: WatchConfig,
@@ -41,7 +43,14 @@ export class WatchMonitor {
     private readonly workerPool: WorkerPool,
     private readonly disabledWatches: string[] = [],
     private readonly runWatchFn: RunWatchFn = runWatch,
+    private readonly notificationDeliveryTimeoutMs: number = NOTIFICATION_DELIVERY_TIMEOUT_MS,
+    private readonly notificationClaimLeaseMs: number = NOTIFICATION_CLAIM_LEASE_MS,
   ) {
+    assert(
+      this.notificationDeliveryTimeoutMs > 0 &&
+        this.notificationDeliveryTimeoutMs < this.notificationClaimLeaseMs,
+      'Notification delivery timeout must be shorter than claim lease',
+    )
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       (timestamp) => this.update(timestamp),
@@ -121,26 +130,39 @@ export class WatchMonitor {
       )
     }
 
-    // Drain persisted transition alerts once per watch outside the abortable
-    // worker signal so both succeeded watches and timed-out/failed sources
-    // deliver queued alerts cleanly under single-owner claims.
-    for (const name of enabledWatches) {
-      const deliveredAll = await this.drainQueuedNotifications(name)
-      if (!deliveredAll) {
-        if (!failedSet.has(name)) {
-          const attemptId = attemptIds.get(name) ?? randomUUID()
-          const configHash = attemptConfigHashes.get(name) ?? null
-          await this.db.watchMonitor.recordFailure(
-            name,
-            attemptAt,
-            attemptId,
-            'Watch notification failed',
-            configHash,
-          )
+    // Drain persisted transition alerts with bounded concurrency outside the
+    // abortable worker pool so both succeeded watches and timed-out/failed
+    // sources deliver queued alerts cleanly without one slow send stalling
+    // the rest of the hourly run.
+    let nextDrainIndex = 0
+    const drainWorker = async () => {
+      while (nextDrainIndex < enabledWatches.length) {
+        const name = enabledWatches[nextDrainIndex++]
+        if (name === undefined) {
+          return
         }
-        failedSet.add(name)
+        const deliveredAll = await this.drainQueuedNotifications(name)
+        if (!deliveredAll) {
+          if (!failedSet.has(name)) {
+            const attemptId = attemptIds.get(name) ?? randomUUID()
+            const configHash = attemptConfigHashes.get(name) ?? null
+            await this.db.watchMonitor.recordFailure(
+              name,
+              attemptAt,
+              attemptId,
+              'Watch notification failed',
+              configHash,
+            )
+          }
+          failedSet.add(name)
+        }
       }
     }
+    const drainWorkers = Array.from(
+      { length: Math.min(DRAIN_CONCURRENCY, enabledWatches.length) },
+      () => drainWorker(),
+    )
+    await Promise.all(drainWorkers)
 
     const failedWatches = [...failedSet].sort()
 
@@ -323,19 +345,34 @@ export class WatchMonitor {
         name,
         ownerId,
         Date.now(),
-        NOTIFICATION_CLAIM_LEASE_MS,
+        this.notificationClaimLeaseMs,
       )
       if (item === undefined) {
         return true
       }
 
-      let notifyResult: WatchNotifyResult
+      const deliveryController = new AbortController()
+      const onCallerAbort = () => deliveryController.abort(signal?.reason)
+      signal?.addEventListener('abort', onCallerAbort, { once: true })
+
+      let timeoutHandle: ReturnType<typeof setTimeout> | undefined
+      const timeoutPromise = new Promise<'timed-out'>((resolve) => {
+        timeoutHandle = setTimeout(() => {
+          deliveryController.abort(new Error('Watch notification timed out'))
+          resolve('timed-out')
+        }, this.notificationDeliveryTimeoutMs)
+      })
+
+      const sendPromise = this.watchNotifier.handleUpdate(
+        name,
+        item.diff,
+        item.timestamp,
+        deliveryController.signal,
+      )
+
+      let outcome: WatchNotifyResult | 'timed-out'
       try {
-        notifyResult = await this.watchNotifier.handleUpdate(
-          name,
-          item.diff,
-          item.timestamp,
-        )
+        outcome = await Promise.race([sendPromise, timeoutPromise])
       } catch (error) {
         await this.db.watchMonitor.releasePendingNotificationClaim(
           name,
@@ -343,9 +380,50 @@ export class WatchMonitor {
           ownerId,
         )
         throw error
+      } finally {
+        if (timeoutHandle !== undefined) {
+          clearTimeout(timeoutHandle)
+        }
+        signal?.removeEventListener('abort', onCallerAbort)
       }
 
-      if (notifyResult === 'failed') {
+      if (outcome === 'timed-out') {
+        // Leave the claim intact while the underlying promise finishes settling
+        // so another worker cannot double-send before lease expiry; complete or
+        // release with ownerId check once the promise settles.
+        void sendPromise
+          .then(
+            async (lateResult) => {
+              if (lateResult === 'failed') {
+                await this.db.watchMonitor.releasePendingNotificationClaim(
+                  name,
+                  item.id,
+                  ownerId,
+                )
+              } else {
+                await this.db.watchMonitor.acknowledgePendingNotification(
+                  name,
+                  item.id,
+                  ownerId,
+                )
+              }
+            },
+            async () => {
+              await this.db.watchMonitor.releasePendingNotificationClaim(
+                name,
+                item.id,
+                ownerId,
+              )
+            },
+          )
+          .catch(() => {})
+        if (signal?.aborted) {
+          throw signal.reason
+        }
+        return false
+      }
+
+      if (outcome === 'failed') {
         await this.db.watchMonitor.releasePendingNotificationClaim(
           name,
           item.id,
@@ -357,10 +435,13 @@ export class WatchMonitor {
         return false
       }
 
-      // Acknowledge unconditionally once Discord accepted the message (or no
-      // client is configured), even if signal aborted while the request was
-      // already in flight, so the delivered alert cannot be sent again.
-      await this.db.watchMonitor.acknowledgePendingNotification(name, item.id)
+      // Acknowledge with owner check once Discord accepted the message (or no
+      // client is configured), even if caller signal aborted while in flight.
+      await this.db.watchMonitor.acknowledgePendingNotification(
+        name,
+        item.id,
+        ownerId,
+      )
       if (signal?.aborted) {
         throw signal.reason
       }
