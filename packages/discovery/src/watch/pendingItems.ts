@@ -9,6 +9,8 @@ export function stripPendingItems(
 ): Record<string, json> {
   const result: Record<string, json> = {}
   for (const [key, value] of Object.entries(values)) {
+    // Assigning it would set the prototype of result instead of a key.
+    assert(key !== '__proto__', 'Watch key named __proto__')
     assertWatchValueNotPending(key, value)
     const copy = structuredClone(value)
     // Validate the full subtree before deleting outer pending objects, so
