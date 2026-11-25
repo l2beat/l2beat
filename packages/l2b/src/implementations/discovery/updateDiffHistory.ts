@@ -46,6 +46,31 @@ import {
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
+export function assertProjectCanUpdateDiffHistory(
+  projectName: string,
+  configReader: ConfigReader,
+  logger: Logger = getPlainLogger(),
+): void {
+  const discoveryFolder =
+    '.' +
+    path.sep +
+    relative(process.cwd(), configReader.getProjectPath(projectName))
+  const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
+  if (!existsSync(diffHistoryPath) || !statSync(diffHistoryPath).isFile()) {
+    return
+  }
+  const { content: historyFileFromMainBranch } = getFileVersionOnMainBranch(
+    diffHistoryPath,
+    logger,
+  )
+  const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+  assertNoUnmergedWatchEntry(
+    diffHistoryPath,
+    diskDiffHistory,
+    historyFileFromMainBranch,
+  )
+}
+
 export async function updateDiffHistory(
   projectName: string,
   description?: string,

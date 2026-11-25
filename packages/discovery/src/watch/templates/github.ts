@@ -30,7 +30,11 @@ export async function fetchGithubJson(
   if (context.githubToken !== undefined && context.githubToken !== '') {
     headers.authorization = `Bearer ${context.githubToken}`
   }
-  return await context.http.fetch(url, { headers, timeout: GITHUB_TIMEOUT_MS })
+  return await context.http.fetch(url, {
+    headers,
+    timeout: GITHUB_TIMEOUT_MS,
+    ...(context.signal !== undefined ? { signal: context.signal } : {}),
+  })
 }
 
 // A truncated tree lists only part of the repository, and the missing part

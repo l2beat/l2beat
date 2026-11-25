@@ -32,6 +32,21 @@ export interface WatchDiffHistoryEntry {
   diff: WatchDiff[]
 }
 
+export function readAndValidateWatchDiffHistory(
+  diffHistoryPath: string,
+  logger: Logger,
+): string {
+  const { content: fromMain } = getFileVersionOnMainBranch(
+    toGitPath(diffHistoryPath),
+    logger,
+  )
+  if (existsSync(diffHistoryPath)) {
+    const onDisk = readFileSync(diffHistoryPath, 'utf-8')
+    findUnmergedWatchEntry(diffHistoryPath, onDisk, fromMain, logger)
+  }
+  return fromMain
+}
+
 export async function updateWatchDiffHistory(
   diffHistoryPath: string,
   diff: WatchDiff[],

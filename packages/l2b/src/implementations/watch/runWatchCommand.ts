@@ -20,7 +20,10 @@ import { writeFileSync } from 'fs'
 import path from 'path'
 import { getFileVersionOnMainBranch, toGitPath } from '../common/git'
 import { summarizeWatched } from './summarizeWatched'
-import { updateWatchDiffHistory } from './updateWatchDiffHistory'
+import {
+  readAndValidateWatchDiffHistory,
+  writeWatchDiffHistory,
+} from './updateWatchDiffHistory'
 
 export interface WatchCommandOptions {
   dry: boolean
@@ -69,12 +72,20 @@ export async function runWatchCommand(
     return
   }
 
+  const diffHistoryPath = path.join(location.path, 'diffHistory.md')
+  // Check diffHistory.md conflicts and main baseline before mutating watched.json.
+  const historyFromMain = readAndValidateWatchDiffHistory(
+    diffHistoryPath,
+    logger,
+  )
+
   writeFileSync(
     watchedPath,
     formatJson({ timestamp: run.timestamp, values: accepted }),
   )
-  await updateWatchDiffHistory(
-    path.join(location.path, 'diffHistory.md'),
+  await writeWatchDiffHistory(
+    diffHistoryPath,
+    historyFromMain,
     diff,
     run.timestamp,
     options.description,

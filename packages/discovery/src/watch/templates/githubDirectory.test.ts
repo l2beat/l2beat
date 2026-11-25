@@ -103,6 +103,26 @@ describe(githubDirectory.name, () => {
     expect(JSON.stringify(first)).toEqual(JSON.stringify(sortDeep(first)))
   })
 
+  it('forwards context.signal to the HTTP client', async () => {
+    const controller = new AbortController()
+    const fetch = mockFn().resolvesTo(TREE_RESPONSE)
+    await githubDirectory.fetch(
+      { repository: 'org/repo', branch: 'main', path: 'docs/security-reviews' },
+      { http: mockObject<HttpClient>({ fetch }), signal: controller.signal },
+    )
+    expect(fetch).toHaveBeenOnlyCalledWith(
+      'https://api.github.com/repos/org/repo/git/trees/main?recursive=1',
+      {
+        headers: {
+          accept: 'application/vnd.github+json',
+          'x-github-api-version': '2022-11-28',
+        },
+        timeout: 30_000,
+        signal: controller.signal,
+      },
+    )
+  })
+
   it('throws when GitHub reports a truncated tree', async () => {
     const context = {
       http: mockObject<HttpClient>({

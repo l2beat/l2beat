@@ -1,6 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { execSync } from 'child_process'
+import { execSync, type SpawnSyncReturns, spawnSync } from 'child_process'
 import path from 'path'
+
+const BUFFER_SIZE = 10 * 1024 * 1024
 
 export function shellQuote(p: string): string {
   return `'${p.replaceAll("'", "'\\''")}'`
@@ -13,30 +15,53 @@ export function getFileVersionOnMainBranch(
   content: string
   mainBranchHash: string
 } {
-  try {
-    // NOTE(radomski): Node when starting a process reserves a buffer of around
-    // 200KB for STDIO output. This is not enough in cases where the
-    // discovered.json is really big (e.g. transporter). In that case the git
-    // command fails with "ENOBUFS" and we assume that there no old
-    // discovered.json. Which in turn always causes the diffHistory.md to
-    // include "all" the contracts as being created. To solve this problem we
-    // allocate a 10MB buffer upfront so all the data can be stored. At the
-    // time of writing this (21.10.2024) discovered.json of transporter is
-    // around 1.2MB.
-    const BUFFER_SIZE = 10 * 1024 * 1024
-    // Wrap the path in single quotes to avoid the shell interpreting
-    // characters like parentheses or spaces. We also escape any single quotes
-    // inside the path (extremely unlikely in our repo layout).
-    const quotedPath = shellQuote(filePath)
-    const content = execSync(`git show main:${quotedPath} 2>/dev/null`, {
-      maxBuffer: BUFFER_SIZE,
-    }).toString()
-    const mainBranchHash = execSync('git rev-parse main').toString().trim()
-    return { content, mainBranchHash }
-  } catch {
+  // NOTE(radomski): Node when starting a process reserves a buffer of around
+  // 200KB for STDIO output. This is not enough in cases where the
+  // discovered.json is really big (e.g. transporter). Allocate a 10MB buffer
+  // upfront, and propagate real git/buffer errors instead of mistaking them
+  // for a missing file.
+  const result = spawnSync('git', ['show', `main:${filePath}`], {
+    maxBuffer: BUFFER_SIZE,
+    encoding: 'utf-8',
+  })
+  return interpretGitShowResult(filePath, result, logger, getMainBranchHash)
+}
+
+export function interpretGitShowResult(
+  filePath: string,
+  result: Pick<
+    SpawnSyncReturns<string>,
+    'status' | 'stdout' | 'stderr' | 'error'
+  >,
+  logger: Logger,
+  readMainHash: () => string,
+): {
+  content: string
+  mainBranchHash: string
+} {
+  if (result.error !== undefined) {
+    throw new Error('Failed to read file from main branch', {
+      cause: { filePath, error: result.error },
+    })
+  }
+  if (result.status === 0) {
+    return { content: result.stdout, mainBranchHash: readMainHash() }
+  }
+  const stderr = result.stderr ?? ''
+  if (isMissingOnMainError(stderr)) {
     logger.info(`No previous version of ${filePath} found`)
     return { content: '', mainBranchHash: '' }
   }
+  throw new Error('Failed to read file from main branch', {
+    cause: { filePath, status: result.status, stderr: stderr.trim() },
+  })
+}
+
+function isMissingOnMainError(stderr: string): boolean {
+  return (
+    stderr.includes('does not exist in') ||
+    stderr.includes('exists on disk, but not in')
+  )
 }
 
 export function getGitUser(logger: Logger): { name: string; email: string } {
