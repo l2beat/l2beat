@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { formatBytes, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { scaleLog } from 'd3-scale'
 import { useMemo } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
@@ -19,7 +20,9 @@ import {
 } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { BlobFeeChartPoint } from '~/server/features/data-availability/throughput/getBlobFeeChart'
 import { formatRange } from '~/utils/dates'
+import { formatGwei } from '~/utils/formatGwei'
 import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -43,12 +46,19 @@ interface Props {
   hideProjectLogo?: boolean
   /** The hint's extra row would lift this chart's baseline above a hint-less chart beside it */
   disableLegendOnboarding?: boolean
+  /**
+   * The blob base fee over the same buckets, on an axis of its own, hidden
+   * until picked in the legend. Given before its data has loaded, so the
+   * legend lists it from the first paint and does not shift later
+   */
+  blobFee?: { data: BlobFeeChartPoint[] | undefined }
 }
 
-const hiddenDataKeys = ['projectMax'] as const
-
-type SeriesKey = 'project' | 'projectTarget' | 'projectMax'
-type ChartRow = { timestamp: number } & Record<SeriesKey, number | null>
+type SeriesKey = 'project' | 'projectTarget' | 'projectMax' | 'blobFee'
+type ChartRow = { timestamp: number; blobFeeMax: number | null } & Record<
+  SeriesKey,
+  number | null
+>
 
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
@@ -60,10 +70,16 @@ export function ProjectDaAbsoluteThroughputChart({
   resolution,
   hideProjectLogo,
   disableLegendOnboarding,
+  blobFee,
 }: Props) {
+  const withBlobFee = blobFee !== undefined
   const projectChartMeta = useMemo(
-    () => getProjectChartMeta(project.id),
-    [project.id],
+    () => getProjectChartMeta(project.id, withBlobFee),
+    [project.id, withBlobFee],
+  )
+  const hiddenDataKeys = useMemo<SeriesKey[]>(
+    () => (withBlobFee ? ['projectMax', 'blobFee'] : ['projectMax']),
+    [withBlobFee],
   )
 
   const { dataKeys, toggleDataKey } = useChartDataKeys(
@@ -81,18 +97,31 @@ export function ProjectDaAbsoluteThroughputChart({
   }, [dataWithConfiguredThroughputs])
   const { denominator, unit } = getDaDataParams(max)
 
+  // The fee runs from thousandths of a gwei to tens within a month: on a
+  // linear axis a spike flattens the rest into the baseline
+  const feeTicks = useMemo(
+    () => getPowerOfTenTicks(blobFee?.data?.map(([, avg]) => avg) ?? []),
+    [blobFee?.data],
+  )
+
   const chartData = useMemo(() => {
+    const feeByTimestamp = new Map(
+      blobFee?.data?.map(([timestamp, avg, max]) => [timestamp, { avg, max }]),
+    )
     return dataWithConfiguredThroughputs?.map(
-      ([timestamp, value, target, max]) => {
+      ([timestamp, value, target, max]): ChartRow => {
+        const fee = feeByTimestamp.get(timestamp)
         return {
           timestamp,
           project: value !== null ? value / denominator : null,
           projectTarget: target !== null ? target / denominator : null,
           projectMax: max !== null ? max / denominator : null,
+          blobFee: fee?.avg ?? null,
+          blobFeeMax: fee?.max ?? null,
         }
       },
     )
-  }, [dataWithConfiguredThroughputs, denominator])
+  }, [dataWithConfiguredThroughputs, denominator, blobFee?.data])
 
   const series: ChartSeries<SeriesKey, ChartRow>[] = [
     {
@@ -113,6 +142,16 @@ export function ProjectDaAbsoluteThroughputChart({
         projectChartMeta.projectMax?.indicatorType.strokeDasharray,
       curve: 'stepAfter',
     },
+    // without fee data there is no legend item to hide it: it would open an empty right axis
+    ...(withBlobFee
+      ? [
+          {
+            key: 'blobFee' as const,
+            stroke: projectChartMeta.blobFee?.color,
+            axis: 'right' as const,
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -136,6 +175,13 @@ export function ProjectDaAbsoluteThroughputChart({
         ariaLabel="Data throughput"
         syncedUntil={syncedUntil}
         yAxis={{ unit: ` ${unit}`, tickCount: 4 }}
+        rightAxis={{
+          scale: scaleLog,
+          domain: 'auto',
+          ticks: feeTicks,
+          format: formatGwei,
+          unit: ' gwei',
+        }}
         renderTooltip={(row, keys) => (
           <ProjectDaThroughputCustomTooltip
             row={row}
@@ -178,13 +224,15 @@ function ProjectDaThroughputCustomTooltip({
               wrapLabel={false}
             >
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {entry.value !== null
-                  ? formatBytes(entry.value * denominator)
-                  : entry.name === 'project'
-                    ? 'No data'
-                    : entry.name === 'projectMax'
-                      ? 'No cap'
-                      : formatBytes(0)}
+                {entry.name === 'blobFee'
+                  ? formatBlobFee(entry.value, row.blobFeeMax)
+                  : entry.value !== null
+                    ? formatBytes(entry.value * denominator)
+                    : entry.name === 'project'
+                      ? 'No data'
+                      : entry.name === 'projectMax'
+                        ? 'No cap'
+                        : formatBytes(0)}
               </span>
             </ChartTooltipRow>
           )
@@ -194,7 +242,23 @@ function ProjectDaThroughputCustomTooltip({
   )
 }
 
-export function getProjectChartMeta(projectId: ProjectId) {
+/** The average, and the peak when it stands out from it: a spike lasts minutes and an average hides it */
+function formatBlobFee(avg: number | null, max: number | null) {
+  if (avg === null) return 'No data'
+  const peak = max !== null && max > avg * 2 ? ` (peak ${formatGwei(max)})` : ''
+  return `${formatGwei(avg)} gwei${peak}`
+}
+
+/** Every power of ten the values span, the bounds included */
+function getPowerOfTenTicks(values: (number | null)[]): number[] {
+  const present = values.filter((v): v is number => v !== null && v > 0)
+  if (present.length === 0) return []
+  const lo = Math.floor(Math.log10(Math.min(...present)))
+  const hi = Math.ceil(Math.log10(Math.max(...present)))
+  return Array.from({ length: hi - lo + 1 }, (_, i) => 10 ** (lo + i))
+}
+
+export function getProjectChartMeta(projectId: ProjectId, withBlobFee = false) {
   switch (projectId) {
     case 'ethereum':
       return {
@@ -213,6 +277,13 @@ export function getProjectChartMeta(projectId: ProjectId) {
           color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
+        ...(withBlobFee && {
+          blobFee: {
+            label: 'Blob base fee',
+            color: 'var(--chart-orange)',
+            indicatorType: { shape: 'line' },
+          },
+        }),
       } satisfies ChartMeta
     default:
       throw new Error(`Unknown project ID: ${projectId}`)
