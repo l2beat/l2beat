@@ -194,4 +194,16 @@ describe(WatchReader.name, () => {
       'Watch judge prompt too large',
     )
   })
+
+  it('defaults isPublic to false and allows explicit public opt-in', () => {
+    mockFs({
+      '/projects/private-watch/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/projects/public-watch/watch.jsonc': JSON.stringify({
+        public: true,
+        watches: { a: PAGE_WATCH },
+      }),
+    })
+    expect(reader().isPublic('private-watch')).toEqual(false)
+    expect(reader().isPublic('public-watch')).toEqual(true)
+  })
 })

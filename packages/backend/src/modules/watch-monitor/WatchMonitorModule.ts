@@ -56,6 +56,7 @@ export function createWatchMonitorModule({
   const watchMonitorController = new WatchMonitorController(
     db,
     config.watchMonitor.watchReader,
+    config.watchMonitor.disabledWatches,
   )
   const watchMonitorRouter = createWatchMonitorRouter(
     watchMonitorController,

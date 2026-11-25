@@ -36,7 +36,13 @@ export class ApiServer {
         })
         return
       }
-      this.logger.error('Request failed', error, ctx.toJSON())
+      // Log allowlisted request metadata only; ctx.toJSON() includes
+      // Authorization and other sensitive headers.
+      this.logger.error('Request failed', error, {
+        method: ctx.method,
+        url: ctx.originalUrl,
+        status: ctx.status,
+      })
     })
 
     this.app.use(conditional())
