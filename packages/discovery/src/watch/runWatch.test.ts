@@ -65,8 +65,8 @@ describe(runWatch.name, () => {
     )
   })
 
-  it('rejects a template that places a pending item inside an array', async () => {
-    const config: WatchConfig = {
+  it('rejects a template that places a pending item inside an array subtree', async () => {
+    const direct: WatchConfig = {
       name: 'alpha',
       watches: [
         {
@@ -76,7 +76,22 @@ describe(runWatch.name, () => {
         },
       ],
     }
-    await expect(runWatch(config, context)).toBeRejectedWith(
+    const nested: WatchConfig = {
+      name: 'alpha',
+      watches: [
+        {
+          key: 'a',
+          template: template(async () => [
+            { a: { pending: true }, b: { pending: true } },
+          ]),
+          params: {},
+        },
+      ],
+    }
+    await expect(runWatch(direct, context)).toBeRejectedWith(
+      'Pending item inside an array',
+    )
+    await expect(runWatch(nested, context)).toBeRejectedWith(
       'Pending item inside an array',
     )
   })

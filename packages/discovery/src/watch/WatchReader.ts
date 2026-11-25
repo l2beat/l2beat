@@ -1,4 +1,5 @@
-import { assert, type json } from '@l2beat/shared-pure'
+import { hashJson } from '@l2beat/shared'
+import { assert, type Hash256, type json } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import path from 'path'
@@ -6,6 +7,7 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import type { DiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { readJsonc } from '../discovery/utils/readJsonc'
 import type { WatchTemplate } from './WatchTemplate'
+import { sortDeep } from './watchedValue'
 
 export const WATCH_CONFIG_FILE = 'watch.jsonc'
 export const WATCHED_FILE = 'watched.json'
@@ -24,6 +26,7 @@ export interface WatchDefinition {
 
 export interface WatchConfig {
   name: string
+  isPublic?: boolean
   watches: WatchDefinition[]
 }
 
@@ -33,6 +36,7 @@ export interface Watched {
 }
 
 const WatchConfigFile = v.strictObject({
+  public: v.boolean().optional(),
   watches: v.record(
     v.string(),
     v.strictObject({ template: v.string(), params: v.unknown() }),
@@ -98,7 +102,11 @@ export class WatchReader {
       assert(entry !== undefined)
       return this.parseWatchDefinition(name, key, entry)
     })
-    return { name, watches }
+    return { name, isPublic: parsed.data.public ?? false, watches }
+  }
+
+  isPublic(name: string): boolean {
+    return this.readWatchConfig(name).isPublic === true
   }
 
   readWatched(name: string): Watched | undefined {
@@ -130,6 +138,18 @@ export class WatchReader {
     }
     return { key, template, params: params.data }
   }
+}
+
+export function hashWatchConfig(config: WatchConfig): Hash256 {
+  const canonical = sortDeep({
+    isPublic: config.isPublic === true,
+    watches: config.watches.map((watch) => ({
+      key: watch.key,
+      template: watch.template.name,
+      params: watch.params as json,
+    })),
+  })
+  return hashJson(canonical)
 }
 
 export function readWatchedFile(file: string): Watched | undefined {

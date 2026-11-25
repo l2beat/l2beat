@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { WatchReader } from './WatchReader'
+import { hashWatchConfig, WatchReader } from './WatchReader'
 import type { WatchTemplate } from './WatchTemplate'
 
 const Params = v.strictObject({ url: v.string() })
@@ -131,5 +131,22 @@ describe(WatchReader.name, () => {
   it('throws for a name that is not a watch', () => {
     expect(() => reader().getWatchPath('beta')).toThrow('Watch not found')
     expect(reader().findWatch('archived')).toEqual(undefined)
+  })
+
+  it('defaults isPublic to false, supports opt-in, and changes config hash on public/params changes', () => {
+    mockFs({
+      '/projects/private-watch/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/projects/public-watch/watch.jsonc': JSON.stringify({
+        public: true,
+        watches: { a: PAGE_WATCH },
+      }),
+    })
+    expect(reader().isPublic('private-watch')).toEqual(false)
+    expect(reader().isPublic('public-watch')).toEqual(true)
+    const privateHash = hashWatchConfig(
+      reader().readWatchConfig('private-watch'),
+    )
+    const publicHash = hashWatchConfig(reader().readWatchConfig('public-watch'))
+    expect(privateHash).not.toEqual(publicHash)
   })
 })

@@ -1,6 +1,6 @@
 import type { json } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { isPendingItem, sortDeep } from './watchedValue'
+import { isPendingItem, sortDeep, visitObjects } from './watchedValue'
 
 describe(sortDeep.name, () => {
   it('sorts object keys at every level and keeps array order', () => {
@@ -46,5 +46,16 @@ describe(isPendingItem.name, () => {
     expect(isPendingItem({ pending: 'true' })).toEqual(false)
     expect(isPendingItem([{ pending: true }])).toEqual(false)
     expect(isPendingItem(null)).toEqual(false)
+  })
+})
+
+describe(visitObjects.name, () => {
+  it('rejects pending items anywhere inside an array subtree', () => {
+    expect(() => visitObjects([{ pending: true }], () => {})).toThrow(
+      'Pending item inside an array',
+    )
+    expect(() =>
+      visitObjects([{ a: { pending: true }, b: { pending: true } }], () => {}),
+    ).toThrow('Pending item inside an array')
   })
 })
