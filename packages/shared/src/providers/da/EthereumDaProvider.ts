@@ -1,4 +1,4 @@
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, slotAt, slotStart, type UnixTime } from '@l2beat/shared-pure'
 import type {
   BeaconChainBlob,
   BeaconChainClient,
@@ -12,10 +12,13 @@ import type {
   EthereumBlob,
   EthereumBlobBatch,
   EthereumBlobBlock,
+  EthereumBlockFee,
 } from './types'
 
 // each blob is 128 KiB so 131,072 B
 export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
+/** Most blocks eth_feeHistory answers for at once: nodes cap it at 1024 */
+const FEE_HISTORY_BLOCKS = 1000
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
@@ -118,6 +121,79 @@ export class EthereumDaProvider implements DaBlobProvider {
     return block.timestamp
   }
 
+  /** Wei per blob gas of every block of the range, both ends included, by block number */
+  async getBlobBaseFees(
+    from: number,
+    to: number,
+  ): Promise<Map<number, bigint>> {
+    const chunks = await this.getFeeHistory(from, to)
+    return new Map(
+      chunks.flatMap((chunk) =>
+        chunk.blobBaseFee.map((fee, i) => [chunk.from + i, fee] as const),
+      ),
+    )
+  }
+
+  /**
+   * Fees of every block of the range, both ends included. A header is fetched
+   * only at the ends of each chunk of fee history and the timestamps in
+   * between are interpolated, since the history carries none: a call per
+   * block would cost a thousand times the calls
+   */
+  async getBlobFees(from: number, to: number): Promise<EthereumBlockFee[]> {
+    const chunks = await this.getFeeHistory(from, to)
+    return (
+      await Promise.all(
+        chunks.map(async (chunk) => {
+          const [first, last] = await Promise.all([
+            this.getBlockTimestamp(chunk.from),
+            this.getBlockTimestamp(chunk.to),
+          ])
+          const timestampOf = interpolateSlots(
+            chunk.from,
+            chunk.to,
+            first,
+            last,
+          )
+          return chunk.blobBaseFee.map((blobBaseFee, i) => ({
+            blockNumber: chunk.from + i,
+            timestamp: timestampOf(chunk.from + i),
+            blobBaseFee,
+            baseFeePerGas: chunk.baseFeePerGas[i],
+          }))
+        }),
+      )
+    ).flat()
+  }
+
+  private async getFeeHistory(from: number, to: number): Promise<FeeChunk[]> {
+    assert(from <= to, 'Empty block range', { from, to })
+    const ranges: [number, number][] = []
+    for (let start = from; start <= to; start += FEE_HISTORY_BLOCKS) {
+      ranges.push([start, Math.min(start + FEE_HISTORY_BLOCKS - 1, to)])
+    }
+    return await Promise.all(
+      ranges.map(async ([start, end]) => {
+        const count = end - start + 1
+        const history = await this.rpcClient.getFeeHistory(count, end, [])
+        // The history ends with the fees of the block after the range
+        assert(
+          history.oldestBlock === start &&
+            history.baseFeePerBlobGas.length >= count &&
+            history.baseFeePerGas.length >= count,
+          'Fee history does not cover the range',
+          { start, end, oldestBlock: history.oldestBlock },
+        )
+        return {
+          from: start,
+          to: end,
+          blobBaseFee: history.baseFeePerBlobGas.slice(0, count),
+          baseFeePerGas: history.baseFeePerGas.slice(0, count),
+        }
+      }),
+    )
+  }
+
   async getBlobsByVersionedHashesAndBlockNumber(
     blobVersionedHashes: string[],
     blockNumber: number,
@@ -154,6 +230,30 @@ export class EthereumDaProvider implements DaBlobProvider {
   private async getBeaconBlockId(blockNumber: number): Promise<string> {
     return await this.rpcClient.getBlockParentBeaconRoot(blockNumber + 1)
   }
+}
+
+interface FeeChunk {
+  from: number
+  to: number
+  blobBaseFee: bigint[]
+  baseFeePerGas: bigint[]
+}
+
+/**
+ * Blocks sit on the slot grid, so the timestamps between the two known ones
+ * are spread evenly in slots, and a block lands on the slot nearest its share
+ */
+function interpolateSlots(
+  from: number,
+  to: number,
+  first: UnixTime,
+  last: UnixTime,
+): (blockNumber: number) => UnixTime {
+  const firstSlot = slotAt(first)
+  const slotsPerBlock =
+    to === from ? 0 : (slotAt(last) - firstSlot) / (to - from)
+  return (blockNumber) =>
+    slotStart(Math.round(firstSlot + (blockNumber - from) * slotsPerBlock))
 }
 
 /**

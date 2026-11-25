@@ -253,6 +253,26 @@ describe(LiveBlobsIndexer.name, () => {
       await update
     })
 
+    it('waits for the fees of blocks already on the RPC', async () => {
+      // The node answering the fee history has not got the newest block yet
+      const { indexer, db, daProvider } = setup({})
+      daProvider.getBlobBaseFees.rejectsWithOnce(
+        new Error('request beyond head block'),
+      )
+
+      const update = indexer.update(HEAD, HEAD)
+      await time.tickAsync(200)
+
+      expect(await update).toEqual(HEAD)
+      expect(
+        daProvider.getBlocksWithBlobBatchesFromReceipts,
+      ).toHaveBeenCalledTimes(1)
+      expect(daProvider.getBlobBaseFees).toHaveBeenCalledTimes(2)
+      expect(db.liveBlock.upsertMany).toHaveBeenOnlyCalledWith([
+        liveBlock(HEAD, 0),
+      ])
+    })
+
     it('is not waited for when the update fails for another reason', async () => {
       const { indexer, daProvider } = setup({})
       daProvider.getBlocksWithBlobBatchesFromReceipts.rejectsWithOnce(
@@ -364,6 +384,15 @@ describe(LiveBlobsIndexer.name, () => {
       liveBlobBatch,
     })
     const daProvider = mockObject<EthereumDaProvider>({
+      getBlobBaseFees: mockFn(
+        async (from: number, to: number) =>
+          new Map(
+            Array.from({ length: to - from + 1 }, (_, i) => [
+              from + i,
+              feeOf(from + i),
+            ]),
+          ),
+      ),
       getBlocksWithBlobBatchesFromReceipts: mockFn(
         async (from: number, to: number) =>
           Array.from({ length: to - from + 1 }, (_, i) => ({
@@ -402,6 +431,11 @@ function timestampOf(blockNumber: number) {
   return UnixTime(slotStart(blockNumber + SLOT_OFFSET))
 }
 
+/** As the mocked provider prices every block */
+function feeOf(blockNumber: number) {
+  return BigInt(blockNumber) * 1_000n
+}
+
 function liveBlock(blockNumber: number, blobCount: number) {
   return {
     slot: blockNumber + SLOT_OFFSET,
@@ -409,6 +443,7 @@ function liveBlock(blockNumber: number, blobCount: number) {
     hash: `0x${blockNumber}`,
     timestamp: timestampOf(blockNumber),
     blobCount,
+    blobBaseFee: feeOf(blockNumber),
   }
 }
 

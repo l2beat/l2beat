@@ -310,6 +310,7 @@ describe(LiveBlobsFeed.name, () => {
       slot,
       blockNumber: slot + 1000,
       hash: `0x${slot}-${db.reorgs}`,
+      blobBaseFee: null,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: 1,
     })

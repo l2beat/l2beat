@@ -205,6 +205,7 @@ function mockSlot(
       slot,
       blockNumber,
       hash: `0x${slot.toString(16).padStart(64, '0')}`,
+      blobBaseFee: null,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: blobs,
     },

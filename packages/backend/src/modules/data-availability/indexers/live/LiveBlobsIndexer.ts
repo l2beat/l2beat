@@ -104,9 +104,9 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
         const start = Math.max(from, windowStart)
         const end = Math.min(start + this.$.batchSize - 1, to)
 
-        const blocks = await this.fetchWhenOnRpc(start, end)
+        const { blocks, blobBaseFees } = await this.fetchWhenOnRpc(start, end)
         await this.assertBuildsOnStored(start, blocks)
-        const liveBlocks = blocks.map(toLiveBlock)
+        const liveBlocks = blocks.map((b) => toLiveBlock(b, blobBaseFees))
         const liveBatches = blocks.flatMap((b) => this.toLiveBatches(b))
 
         await this.$.db.transaction(async () => {
@@ -130,22 +130,33 @@ export class LiveBlobsIndexer extends ManagedChildIndexer {
    * The target saw the head on one node of a load-balanced RPC, and the node
    * answering here may not have that block or its receipts yet: in production
    * about one block in twenty. Waiting for it is no failure, so this asks
-   * again at a steady pace rather than the update's growing backoff
+   * again at a steady pace rather than the update's growing backoff.
+   *
+   * The fees are asked once the blocks are there. A node without the newest
+   * block answers eth_feeHistory with an error rather than a null, so any
+   * failure of that call is retried the same way until the deadline
    */
   private async fetchWhenOnRpc(
     start: number,
     end: number,
-  ): Promise<EthereumBlobBlock[]> {
+  ): Promise<{
+    blocks: EthereumBlobBlock[]
+    blobBaseFees: Map<number, bigint>
+  }> {
     const deadline = Date.now() + NOT_ON_RPC_MAX_WAIT_MS
+    let blocks: EthereumBlobBlock[] | undefined
     for (;;) {
       try {
-        return await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
+        blocks ??= await this.$.daProvider.getBlocksWithBlobBatchesFromReceipts(
           start,
           end,
         )
+        const blobBaseFees = await this.$.daProvider.getBlobBaseFees(start, end)
+        return { blocks, blobBaseFees }
       } catch (error) {
         const notYet =
-          error instanceof NotFoundOnRpcError && Date.now() < deadline
+          (blocks !== undefined || error instanceof NotFoundOnRpcError) &&
+          Date.now() < deadline
         if (!notYet) throw error
         await sleep(NOT_ON_RPC_RETRY_MS)
       }
@@ -260,13 +271,21 @@ function closestMatch(configs: LiveBlobsConfig[], sender: string) {
   )
 }
 
-function toLiveBlock(block: EthereumBlobBlock): LiveBlockRecord {
+/**
+ * The fee comes by block number, from whichever node answered: after a reorg
+ * it may be the other fork's, which differs by a few percent at most
+ */
+function toLiveBlock(
+  block: EthereumBlobBlock,
+  blobBaseFees: Map<number, bigint>,
+): LiveBlockRecord {
   return {
     slot: slotAt(block.timestamp),
     blockNumber: block.number,
     hash: block.hash,
     timestamp: block.timestamp,
     blobCount: block.batches.reduce((sum, b) => sum + b.blobs, 0),
+    blobBaseFee: blobBaseFees.get(block.number) ?? null,
   }
 }
 
