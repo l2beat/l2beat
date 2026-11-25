@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SequencerInbox",
+  "critical": true,
+  "description": "Batch posters registered in this contract submit transaction batches or commitments here. While `espressoTEEVerifier` is set, each non-empty batch from a batch poster must be signed by a signer valid in that verifier, either as a CAS certificate in front of the batch data or as a signature passed with the batch.",
+  "ignoreMethods": ["inboxAccs"],
+  "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "postsBlobs"],
+  "ignoreRelatives": ["reader4844"],
+  "category": "core",
+  "fields": {
+    "maxTimeVariation": {
+      "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
+      "edit": [
+        "shape",
+        "delayBlocks",
+        "futureBlocks",
+        "delaySeconds",
+        "futureSeconds"
+      ]
+    },
+    "sequencerVersion": {
+      "handler": {
+        "type": "arbitrumSequencerVersion",
+        "includeSeparateBatchEvent": true
+      }
+    },
+    "postsBlobs": {
+      "handler": {
+        "type": "orbitPostsBlobs"
+      }
+    },
+    "espressoTEEVerifier": {
+      "template": "espresso/Sequencing/EspressoTEEVerifier_onlyNitro_v2"
+    },
+    "batchPosterManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
+    },
+    "batchPosters": {
+      "severity": "LOW",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ],
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "batchPoster"
+      }
+    },
+    // when this changes, it means the sequencers have changed
+    "setIsBatchPosterCount": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          // event OwnerFunctionCalled(uint256 indexed id);
+          "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+          // id == 1 is emitted inside setIsBatchPoster()
+          "0x0000000000000000000000000000000000000000000000000000000000000001"
+        ]
+      }
+    },
+    "dacKeyset": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "arbitrumDACKeyset"
+      }
+    },
+    "keySetUpdates": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          // SetValidKeyset(bytes32,bytes)
+          "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+        ]
+      }
+    }
+  }
+}
