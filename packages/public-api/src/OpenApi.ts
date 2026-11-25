@@ -10,7 +10,6 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   description?: string
   tags?: Tags[]
   params?: Validator<P> & { definition?: ImpDefinition }
-  paramDescriptions?: Record<string, string>
   query?: Validator<Q> & { definition?: ImpDefinition }
   result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
@@ -30,7 +29,6 @@ type OpenApiPath = {
 type OpenApiParameter = {
   name: string
   in: 'query' | 'path'
-  description?: string
   required: boolean
   schema: ReturnType<typeof _toJsonSchema>
 }
@@ -211,11 +209,7 @@ export class OpenApi {
             description: route.options.description,
             parameters: [
               ...(route.options.params
-                ? this.schemaToParameters(
-                    'params',
-                    route.options.params,
-                    route.options.paramDescriptions,
-                  )
+                ? this.schemaToParameters('params', route.options.params)
                 : []),
               ...(route.options.query
                 ? this.schemaToParameters('query', route.options.query)
@@ -280,7 +274,6 @@ export class OpenApi {
   private schemaToParameters<T>(
     type: 'params' | 'query',
     schema: Validator<T> & { definition?: ImpDefinition },
-    descriptions: Record<string, string> = {},
   ): OpenApiParameter[] {
     if (!schema.definition) {
       throw new Error('Schema definition is required')
@@ -292,7 +285,6 @@ export class OpenApi {
     return Object.entries(schema.definition.schema).map(([key, value]) => ({
       name: key,
       in: type === 'query' ? 'query' : 'path',
-      ...(descriptions[key] ? { description: descriptions[key] } : {}),
       required: value.definition.type !== 'optional',
       schema: this.toJsonSchemaWithRefs(value),
     }))
