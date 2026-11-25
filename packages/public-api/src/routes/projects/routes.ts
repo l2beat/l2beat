@@ -168,7 +168,7 @@ export function addProjectsRoutes(
       const { projectId } = req.params
 
       const { project, notFoundMessage } = await findProject(ps, projectId, {
-        optional: ['tvsConfig'],
+        optional: ['tvsConfig', 'chainConfig'],
       })
 
       if (!project) {
