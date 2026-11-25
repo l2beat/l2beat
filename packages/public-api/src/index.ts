@@ -12,6 +12,7 @@ import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
 import { addInteropRoutes } from './routes/interop/routes'
 import { addProjectsRoutes } from './routes/projects/routes'
+import { addScalingRoutes } from './routes/scaling/routes'
 import { addTvsRoutes } from './routes/tvs/routes'
 import { createLogger } from './utils/logger/createLogger'
 
@@ -36,6 +37,11 @@ function main() {
         name: 'projects',
         description:
           'Endpoints for listing projects and retrieving detailed information about individual projects.',
+      },
+      {
+        name: 'scaling',
+        description:
+          'Endpoints for retrieving the assessment and TVS of layer 2 and layer 3 projects',
       },
       {
         name: 'tvs',
@@ -121,6 +127,7 @@ function main() {
   app.use(loggerMiddleware(logger))
 
   addProjectsRoutes(openapi, ps, db, cache)
+  addScalingRoutes(openapi, ps, db, cache)
   addTvsRoutes(openapi, ps, db, cache)
   addActivityRoutes(openapi, ps, db, cache)
   addInteropRoutes(openapi, ps, db, cache)

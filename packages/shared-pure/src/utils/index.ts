@@ -1,6 +1,7 @@
 export * from './asciiProgressBar.js'
 export * from './asNumber.js'
 export * from './beaconSlots.js'
+export * from './calculatePercentageChange.js'
 export * from './clamp.js'
 export * from './clampToDayRange.js'
 export * from './dateStrings.js'

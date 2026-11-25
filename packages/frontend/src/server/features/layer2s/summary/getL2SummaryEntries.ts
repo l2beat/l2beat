@@ -10,6 +10,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { getDisplayedScalingStage } from '@l2beat/config/build/utils/scalingAssessment'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { WalkAwayVerdict } from '~/consts/walkAwayProjects'
 import { getWalkAwayVerdict } from '~/consts/walkAwayProjects'
@@ -131,10 +132,10 @@ function getL2SummaryEntry(
       ongoingAnomaly,
       syncWarning: activitySyncWarning,
     }),
-    stage:
-      project.scalingInfo.type === 'Other' || !project.scalingStage
-        ? { stage: 'NotApplicable' as const }
-        : project.scalingStage,
+    stage: getDisplayedScalingStage(
+      project.scalingInfo.type,
+      project.scalingStage,
+    ),
     capability: project.scalingInfo.capability,
     proofSystem: getProofSystemWithName(
       project.scalingInfo.proofSystem,

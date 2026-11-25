@@ -3,6 +3,7 @@ import type {
   ProjectRedWarning,
   ProjectZkCatalogInfo,
 } from '@l2beat/config'
+import { getUnderReviewStatus } from '@l2beat/config/build/utils/scalingAssessment'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -16,10 +17,7 @@ import { PROJECT_PAGE_METADATA_FIELDS } from '~/utils/project/getProjectUrl'
 import { getSingleParticipantWarnings } from '~/utils/project/getSingleParticipantTrustedSetupWarnings'
 import { getTrustedSetupsSection } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
-import {
-  getUnderReviewStatus,
-  type UnderReviewStatus,
-} from '~/utils/project/underReview'
+import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,

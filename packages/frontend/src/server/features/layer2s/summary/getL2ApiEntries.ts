@@ -1,8 +1,10 @@
+import {
+  getL2Risks,
+  getUnderReviewStatus,
+} from '@l2beat/config/build/utils/scalingAssessment'
 import type { Badge, ProjectAssociatedToken } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
-import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
 import { ps } from '~/server/projects'
-import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 
