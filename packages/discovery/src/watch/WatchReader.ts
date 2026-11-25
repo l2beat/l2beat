@@ -11,6 +11,8 @@ import { sortDeep } from './watchedValue'
 
 export const WATCH_CONFIG_FILE = 'watch.jsonc'
 export const WATCHED_FILE = 'watched.json'
+export const WATCH_JUDGE_FILE = 'judge.md'
+export const MAX_WATCH_JUDGE_BYTES = 16 * 1024
 
 export interface WatchLocation {
   name: string
@@ -113,6 +115,20 @@ export class WatchReader {
 
   readWatched(name: string): Watched | undefined {
     return readWatchedFile(path.join(this.getWatchPath(name), WATCHED_FILE))
+  }
+
+  readJudgePrompt(name: string): string | null {
+    const file = path.join(this.getWatchPath(name), WATCH_JUDGE_FILE)
+    if (!existsSync(file)) {
+      return null
+    }
+    const bytes = readFileSync(file)
+    assert(
+      bytes.byteLength <= MAX_WATCH_JUDGE_BYTES,
+      'Watch judge prompt too large',
+      { name, bytes: bytes.byteLength, maxBytes: MAX_WATCH_JUDGE_BYTES },
+    )
+    return bytes.toString('utf-8')
   }
 
   private parseWatchDefinition(

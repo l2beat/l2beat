@@ -2,7 +2,12 @@ import { Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import mockFs from 'mock-fs'
-import { hashWatchConfig, parseWatched, WatchReader } from './WatchReader'
+import {
+  hashWatchConfig,
+  MAX_WATCH_JUDGE_BYTES,
+  parseWatched,
+  WatchReader,
+} from './WatchReader'
 import type { WatchTemplate } from './WatchTemplate'
 
 const Params = v.strictObject({ url: v.string() })
@@ -169,5 +174,24 @@ describe(WatchReader.name, () => {
     )
     const publicHash = hashWatchConfig(reader().readWatchConfig('public-watch'))
     expect(privateHash).not.toEqual(publicHash)
+  })
+
+  it('reads judge.md when present, returns null when absent, and rejects oversized files', () => {
+    mockFs({
+      '/projects/alpha/config.jsonc': configJsonc('alpha'),
+      '/projects/alpha/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/projects/alpha/judge.md': 'Flag any removed audit.\n',
+      '/projects/near/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/projects/huge/watch.jsonc': watchJsonc({ a: PAGE_WATCH }),
+      '/projects/huge/judge.md': 'x'.repeat(MAX_WATCH_JUDGE_BYTES + 1),
+    })
+
+    expect(reader().readJudgePrompt('alpha')).toEqual(
+      'Flag any removed audit.\n',
+    )
+    expect(reader().readJudgePrompt('near')).toEqual(null)
+    expect(() => reader().readJudgePrompt('huge')).toThrow(
+      'Watch judge prompt too large',
+    )
   })
 })

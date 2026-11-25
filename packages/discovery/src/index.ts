@@ -163,9 +163,11 @@ export { runWatch } from './watch/runWatch'
 export { WATCH_TEMPLATES } from './watch/templates'
 export {
   hashWatchConfig,
+  MAX_WATCH_JUDGE_BYTES,
   parseWatched,
   readWatchedFile,
   WATCH_CONFIG_FILE,
+  WATCH_JUDGE_FILE,
   WATCHED_FILE,
   type WatchConfig,
   type WatchDefinition,

@@ -47,6 +47,10 @@ describe('Verify watches', () => {
           })
         }
       })
+
+      it('has a judge.md within the size limit when present', () => {
+        reader.readJudgePrompt(location.name)
+      })
     })
   }
 })

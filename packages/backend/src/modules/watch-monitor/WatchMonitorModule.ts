@@ -1,6 +1,8 @@
 import { DiscordClient, HttpClient } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { createWorkerPool } from '../update-monitor/createWorkers'
+import { WatchMonitorController } from './api/WatchMonitorController'
+import { createWatchMonitorRouter } from './api/WatchMonitorRouter'
 import { WatchMonitor } from './WatchMonitor'
 import { WatchNotifier } from './WatchNotifier'
 
@@ -51,6 +53,15 @@ export function createWatchMonitorModule({
     config.watchMonitor.disabledWatches,
   )
 
+  const watchMonitorController = new WatchMonitorController(
+    db,
+    config.watchMonitor.watchReader,
+  )
+  const watchMonitorRouter = createWatchMonitorRouter(
+    watchMonitorController,
+    config.watchMonitor.readToken,
+  )
+
   const start = () => {
     logger = logger.for('WatchMonitorModule')
     logger.info('Starting')
@@ -58,6 +69,7 @@ export function createWatchMonitorModule({
   }
 
   return {
+    routers: [watchMonitorRouter],
     start,
   }
 }
