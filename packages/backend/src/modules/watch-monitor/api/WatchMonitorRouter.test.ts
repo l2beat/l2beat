@@ -1,7 +1,12 @@
 import type Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, WatchMonitorRecord } from '@l2beat/database'
-import type { Watched, WatchReader } from '@l2beat/discovery'
+import {
+  hashWatchConfig,
+  type WatchConfig,
+  type Watched,
+  type WatchReader,
+} from '@l2beat/discovery'
 import { expect, mockFn, mockObject } from 'earl'
 import { createServer, type Server } from 'http'
 import Koa from 'koa'
@@ -10,13 +15,19 @@ import { ApiServer } from '../../../api/ApiServer'
 import { WatchMonitorController } from './WatchMonitorController'
 import { createWatchMonitorRouter } from './WatchMonitorRouter'
 
+function watchConfig(name: string, isPublic: boolean): WatchConfig {
+  return { name, isPublic, watches: [] }
+}
+
 function record(
   partial: Partial<WatchMonitorRecord> & Pick<WatchMonitorRecord, 'name'>,
 ): WatchMonitorRecord {
   return {
     timestamp: null,
     values: null,
-    notifiedValues: null,
+    isPublic: false,
+    configHash: null,
+    pendingNotifications: [],
     lastAttemptAt: null,
     lastError: null,
     ...partial,
@@ -44,11 +55,31 @@ describe(createWatchMonitorRouter.name, () => {
   }
 
   function createFixture(readToken: string | undefined) {
+    const configs = new Map<string, WatchConfig>([
+      ['disabled-watch', watchConfig('disabled-watch', true)],
+      ['failed-watch', watchConfig('failed-watch', true)],
+      ['never-ran', watchConfig('never-ran', true)],
+      ['newly-public', watchConfig('newly-public', true)],
+      ['optimism', watchConfig('optimism', true)],
+      ['private-repo', watchConfig('private-repo', false)],
+      ['quiet', watchConfig('quiet', true)],
+      ['stale-watch', watchConfig('stale-watch', true)],
+    ])
+    const hashOf = (name: string) => {
+      const cfg = configs.get(name)
+      if (cfg === undefined) {
+        throw new Error('Missing fixture config')
+      }
+      return hashWatchConfig(cfg)
+    }
+
     const stored: WatchMonitorRecord[] = [
       record({
         name: 'optimism',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        isPublic: true,
+        configHash: hashOf('optimism'),
         values: {
           audits: {
             'org/r:a.pdf': { sha: '1', size: 10 },
@@ -56,10 +87,25 @@ describe(createWatchMonitorRouter.name, () => {
           },
         },
       }),
+      // Captured earlier while private; watch.jsonc has since switched to public: true.
+      record({
+        name: 'newly-public',
+        timestamp: 1_700_000_000,
+        lastAttemptAt: 1_700_000_000,
+        isPublic: false,
+        configHash: hashWatchConfig(watchConfig('newly-public', false)),
+        values: {
+          audits: {
+            'private/repo:leaked-secret.pdf': { sha: '999', size: 42 },
+          },
+        },
+      }),
       record({
         name: 'private-repo',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        isPublic: false,
+        configHash: hashOf('private-repo'),
         values: {
           audits: {
             'private/repo:secret-audit.pdf': { sha: '9', size: 99 },
@@ -70,6 +116,8 @@ describe(createWatchMonitorRouter.name, () => {
         name: 'quiet',
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
+        isPublic: true,
+        configHash: hashOf('quiet'),
         values: { version: '1' },
       }),
       record({
@@ -77,6 +125,8 @@ describe(createWatchMonitorRouter.name, () => {
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_003_600,
         lastError: 'HTTP timeout',
+        isPublic: true,
+        configHash: hashOf('stale-watch'),
         values: { version: '1' },
       }),
       record({
@@ -98,6 +148,7 @@ describe(createWatchMonitorRouter.name, () => {
       { name: 'disabled-watch', kind: 'project' as const, path: '/p/disabled' },
       { name: 'failed-watch', kind: 'project' as const, path: '/p/failed' },
       { name: 'never-ran', kind: 'project' as const, path: '/p/never-ran' },
+      { name: 'newly-public', kind: 'project' as const, path: '/p/newly-pub' },
       { name: 'optimism', kind: 'project' as const, path: '/p/optimism' },
       { name: 'private-repo', kind: 'project' as const, path: '/p/private' },
       { name: 'quiet', kind: 'global' as const, path: '/w/quiet' },
@@ -106,7 +157,13 @@ describe(createWatchMonitorRouter.name, () => {
     const reader = mockObject<WatchReader>({
       readAllWatches: () => locations,
       findWatch: (name: string) => locations.find((l) => l.name === name),
-      isPublic: (name: string) => name !== 'private-repo',
+      readWatchConfig: (name: string) => {
+        const cfg = configs.get(name)
+        if (cfg === undefined) {
+          throw new Error('Watch not found')
+        }
+        return cfg
+      },
       readWatched: (name: string): Watched | undefined => {
         if (name === 'optimism') {
           return {
@@ -173,6 +230,7 @@ describe(createWatchMonitorRouter.name, () => {
       }
       expect(typeof body.generatedAt).toEqual('string')
       expect(body.watches.map((w) => w.name)).toEqual([
+        'newly-public',
         'optimism',
         'private-repo',
       ])
@@ -236,7 +294,7 @@ describe(createWatchMonitorRouter.name, () => {
   })
 
   describe('GET /status/watch/llms.txt and :watchName.html.md', () => {
-    it('publishes only public watches and distinguishes errors, never-run, disabled, and clean runs', async () => {
+    it('publishes only public watches and hides snapshots captured before switching to public', async () => {
       const url = await listen(createFixture(undefined))
       const res = await fetch(`${url}/status/watch/llms.txt`)
 
@@ -245,6 +303,10 @@ describe(createWatchMonitorRouter.name, () => {
       const text = await res.text()
       expect(text).toInclude('# ETHBEAT Watch Dashboard')
       expect(text).not.toInclude('private-repo')
+      expect(text).not.toInclude('leaked-secret.pdf')
+      expect(text).toInclude(
+        '- [newly-public](/status/watch/newly-public.html.md) [project]: Not yet run',
+      )
       expect(text).toInclude(
         '- [failed-watch](/status/watch/failed-watch.html.md) [project]: Failed (no successful run) (never succeeded)',
       )
@@ -265,7 +327,7 @@ describe(createWatchMonitorRouter.name, () => {
       )
     })
 
-    it('renders public per-watch markdown and 404s private or unknown watches', async () => {
+    it('renders public per-watch markdown, hides older private snapshots, and 404s private or unknown watches', async () => {
       const url = await listen(createFixture(undefined))
 
       const found = await fetch(`${url}/status/watch/optimism.html.md`)
@@ -277,6 +339,17 @@ describe(createWatchMonitorRouter.name, () => {
       expect(text).toInclude('+     org/r:b.pdf: {"sha":"2","size":20}')
       expect(text).toInclude('## Judge Guidance')
       expect(text).toInclude('Alert on new audit PDFs.')
+
+      // Watch switched from private -> public before a fresh public run:
+      // must NOT leak the previous private snapshot's files or diff.
+      const newlyPublic = await fetch(
+        `${url}/status/watch/newly-public.html.md`,
+      )
+      expect(newlyPublic.status).toEqual(200)
+      const newlyPublicText = await newlyPublic.text()
+      expect(newlyPublicText).toInclude('- **Status**: Not yet run')
+      expect(newlyPublicText).not.toInclude('leaked-secret.pdf')
+      expect(newlyPublicText).not.toInclude('## Changes')
 
       const privateWatch = await fetch(
         `${url}/status/watch/private-repo.html.md`,

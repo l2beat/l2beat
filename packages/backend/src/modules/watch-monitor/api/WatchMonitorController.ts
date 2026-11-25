@@ -1,9 +1,11 @@
 import type { Database, WatchMonitorRecord } from '@l2beat/database'
 import {
+  hashWatchConfig,
   type WatchLocation,
   type WatchReader,
   watchDiffToMarkdown,
 } from '@l2beat/discovery'
+import type { Hash256 } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import {
   computePendingWatchDiff,
@@ -100,12 +102,21 @@ export class WatchMonitorController {
   async getWatchDashboardMarkdown(): Promise<string> {
     const stored = await this.loadStoredMap()
     // Only publish watches explicitly marked `"public": true` in watch.jsonc,
-    // so runs backed by GITHUB_TOKEN can never leak private repositories.
-    const publicLocations = this.watchReader
+    // and only observations captured under the current public configHash so a
+    // private->public switch never leaks an older private snapshot.
+    const publicWatches = this.watchReader
       .readAllWatches()
-      .filter((location) => this.watchReader.isPublic(location.name))
-    const classified = publicLocations.map((location) =>
-      this.classifyWatch(location, stored.get(location.name)),
+      .map((location) => ({
+        location,
+        config: this.watchReader.readWatchConfig(location.name),
+      }))
+      .filter(({ config }) => config.isPublic === true)
+    const classified = publicWatches.map(({ location, config }) =>
+      this.classifyPublicWatch(
+        location,
+        stored.get(location.name),
+        hashWatchConfig(config),
+      ),
     )
 
     const errored = classified.filter(
@@ -126,7 +137,7 @@ export class WatchMonitorController {
       '',
       `Generated: ${new Date().toISOString()}`,
       '',
-      `Monitoring ${publicLocations.length} public watch(es); ${changed.length} with pending changes, ${errored.length} with errors.`,
+      `Monitoring ${publicWatches.length} public watch(es); ${changed.length} with pending changes, ${errored.length} with errors.`,
       '',
     ]
 
@@ -183,14 +194,23 @@ export class WatchMonitorController {
 
   async getWatchMarkdown(watchName: string): Promise<string | null> {
     const location = this.watchReader.findWatch(watchName)
-    if (location === undefined || !this.watchReader.isPublic(location.name)) {
+    if (location === undefined) {
+      return null
+    }
+    const config = this.watchReader.readWatchConfig(location.name)
+    if (config.isPublic !== true) {
       return null
     }
 
     const record = await this.db.watchMonitor.findLatest(location.name)
-    const classified = this.classifyWatch(location, record)
+    const classified = this.classifyPublicWatch(
+      location,
+      record,
+      hashWatchConfig(config),
+    )
     const judge = this.watchReader.readJudgePrompt(location.name)
     const label = statusLabel(classified.status)
+    const publishableRecord = classified.record
 
     const lines = [
       `# ${location.name}`,
@@ -201,14 +221,17 @@ export class WatchMonitorController {
       '',
       `- **Kind**: ${location.kind}`,
       `- **Status**: ${label}`,
-      `- **Last successful run**: ${formatIso(record?.timestamp ?? null)}`,
-      `- **Last attempt**: ${formatIso(record?.lastAttemptAt ?? null)}`,
+      `- **Last successful run**: ${formatIso(publishableRecord?.timestamp ?? null)}`,
+      `- **Last attempt**: ${formatIso(publishableRecord?.lastAttemptAt ?? null)}`,
       `- **Pending items**: ${classified.pending?.pendingItems ?? 0}`,
       `- **Changed paths**: ${classified.pending?.changedPaths ?? 0}`,
     ]
 
-    if (record?.lastError !== null && record?.lastError !== undefined) {
-      lines.push(`- **Last error**: ${record.lastError}`)
+    if (
+      publishableRecord?.lastError !== null &&
+      publishableRecord?.lastError !== undefined
+    ) {
+      lines.push(`- **Last error**: ${publishableRecord.lastError}`)
     }
     lines.push('')
 
@@ -248,15 +271,51 @@ export class WatchMonitorController {
     )
   }
 
-  private classifyWatch(
+  private classifyPublicWatch(
     location: WatchLocation,
     record: WatchMonitorRecord | undefined,
+    expectedConfigHash: Hash256,
   ): ClassifiedWatch {
     if (this.disabledSet.has(location.name)) {
-      return { location, status: 'disabled', record, pending: undefined }
+      return {
+        location,
+        status: 'disabled',
+        record: undefined,
+        pending: undefined,
+      }
     }
     if (record === undefined) {
-      return { location, status: 'never-run', record, pending: undefined }
+      return {
+        location,
+        status: 'never-run',
+        record: undefined,
+        pending: undefined,
+      }
+    }
+    // Never publish a snapshot captured under a private or outdated watch config.
+    const snapshotMatchesCurrentPublicConfig =
+      record.isPublic &&
+      record.configHash !== null &&
+      record.configHash === expectedConfigHash
+    if (!snapshotMatchesCurrentPublicConfig) {
+      if (record.lastError !== null) {
+        return {
+          location,
+          status: 'failed',
+          record: {
+            ...record,
+            timestamp: null,
+            values: null,
+          },
+          pending: undefined,
+        }
+      }
+      return {
+        location,
+        status: 'never-run',
+        record: undefined,
+        pending: undefined,
+      }
     }
     const pending = computePendingWatchDiff(
       location,
