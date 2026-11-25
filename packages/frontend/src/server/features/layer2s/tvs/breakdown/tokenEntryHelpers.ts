@@ -1,11 +1,11 @@
 import type { ChainConfig, Formula, ProjectContract } from '@l2beat/config'
+import type { Address } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import {
   assertUnreachable,
   ChainSpecificAddress,
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
-import type { Address } from './extractAddressesFromTokenConfig'
 
 export type AddressData = {
   address: string

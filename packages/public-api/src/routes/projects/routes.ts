@@ -1,10 +1,14 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
+import {
+  findProject,
+  projectNotFoundDescription,
+} from '../../utils/findProject'
 import { getTokensData } from './getTokensData'
 import {
   ContractSchema,
@@ -52,12 +56,12 @@ export function addProjectsRoutes(
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         optional: [
           'scalingInfo',
           'chainConfig',
@@ -69,9 +73,7 @@ export function addProjectsRoutes(
       })
 
       if (!project) {
-        res
-          .status(404)
-          .json({ message: `Project with id ${projectId} does not exist` })
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
@@ -106,17 +108,17 @@ export function addProjectsRoutes(
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         optional: ['chainConfig', 'contracts'],
       })
 
       if (!project) {
-        res.status(404).json()
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
@@ -156,17 +158,17 @@ export function addProjectsRoutes(
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription() },
     },
     async (req, res) => {
       const { projectId } = req.params
 
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
-        optional: ['tvsConfig'],
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
+        optional: ['tvsConfig', 'chainConfig'],
       })
 
       if (!project) {
-        res.status(404).json()
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
