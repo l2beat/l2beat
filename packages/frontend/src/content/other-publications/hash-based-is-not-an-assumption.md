@@ -31,7 +31,7 @@ To see how quickly new hash assumptions appear, we compare two one-time signatur
 - **One-wayness alone is enough for Lamport.**
 - **One-wayness alone is provably *not* enough for textbook Winternitz.** We'll build an explicit hash function that is one-way whenever SHA-256 is, so Lamport over it stays secure, yet lets an attacker forge Winternitz signatures 100% of the time.
 
-Ethereum already assumes full 256-bit Keccak-256 is collision-resistant, not just one-way. We start at one-wayness because it is the only level where "no new assumptions" holds automatically for every signature scheme, and Lamport vs. textbook Winternitz is the smallest setting where efficiency adds a new assumption. After the counterexample, we cover tweaked variants like WOTS+ and Ethereum's actual PQ stack.
+Ethereum already assumes full 256-bit Keccak-256 is collision-resistant, not just one-way. We start at one-wayness because it is the only level where "no new assumptions" holds automatically for every signature scheme, and Lamport vs. textbook Winternitz is the smallest setting where efficiency adds a new assumption. After the counterexample, we look at what Ethereum's actual PQ stack adds.
 
 ---
 
