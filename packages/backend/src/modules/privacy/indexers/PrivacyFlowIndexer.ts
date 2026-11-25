@@ -7,7 +7,7 @@ import {
   type LogsProvider,
   stringifyPrivacyConfigurationParams,
 } from '@l2beat/shared'
-import { assert, type Log, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -18,14 +18,14 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import type { LivePrivacyFlowCheck } from '../live/LivePrivacyFlowCheck'
 import type { PrivacyFlowIndexerConfig } from '../types'
-import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
-import { adjustPrivacyPoolsV2Flow } from '../utils/extractPrivacyPoolsV2Event'
-import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
 import {
-  extractPrivacyLogMatches,
-  fetchPrivacyLogMatches,
-} from '../utils/privacyLogIndexerUtils'
+  type ExtractedPrivacyFlow,
+  extractPrivacyFlows,
+} from '../utils/extractPrivacyFlows'
+import { getPrivacyBucketIds } from '../utils/getPrivacyBucketIds'
+import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyFlowIndexerDeps
   extends Omit<
@@ -37,6 +37,8 @@ interface PrivacyFlowIndexerDeps
   logsProvider: LogsProvider
   rpcClient: IRpcClient
   db: Database
+  /** Set on a chain whose flows are also stored block by block, at its head */
+  liveCheck?: LivePrivacyFlowCheck
 }
 
 export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerConfig> {
@@ -82,6 +84,15 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       records: records.length,
     })
 
+    // before the flows are saved: saving runs in a transaction, and the check
+    // has to read the live rows in a snapshot of its own
+    await this.$.liveCheck?.run(
+      configurations.map((c) => c.id),
+      from,
+      adjustedTo,
+      records,
+    )
+
     return async () => {
       await this.$.db.privacyFlowEvent.upsertMany(records)
       await this.$.db.syncMetadata.updateSyncedUntil(
@@ -95,7 +106,6 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
         to: adjustedTo,
         records: records.length,
       })
-
       return adjustedTo
     }
   }
@@ -152,21 +162,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       blockProvider: this.$.blockProvider,
       logger: this.logger,
     })
-    const rawRecords = await extractPrivacyLogMatches(
-      matches,
-      this.$.rpcClient,
-      async ({ log, timestamp, configuration }, context) => {
-        const extracted = extractPrivacyFlow(configuration.properties, log)
-        if (!extracted || (extracted.count === 0 && extracted.amount === 0n)) {
-          return undefined
-        }
-        const result = await adjustPrivacyPoolsV2Flow(log, extracted, context)
-        if (!result) {
-          return undefined
-        }
-        return { configuration, log, timestamp, ...result }
-      },
-    )
+    const rawRecords = await extractPrivacyFlows(matches, this.$.rpcClient)
 
     if (rawRecords.length === 0) return []
 
@@ -175,7 +171,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   }
 
   private buildRecords(
-    rawRecords: RawRecord[],
+    rawRecords: ExtractedPrivacyFlow[],
     priceLookup: Map<string, number>,
   ): PrivacyFlowEventRecord[] {
     return rawRecords.map((raw) => {
@@ -253,14 +249,6 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       stringifyPrivacyConfigurationParams(config.params),
     ])
   }
-}
-
-interface RawRecord {
-  configuration: Configuration<PrivacyFlowIndexerConfig>
-  log: Log
-  count: number
-  amount: bigint
-  timestamp: UnixTime
 }
 
 // Splits the bigint into whole/fractional parts before casting to Number to

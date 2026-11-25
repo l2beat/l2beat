@@ -9,7 +9,15 @@ export class ReceiptLogCache {
   private readonly logs = new Map<string, Promise<ReceiptLog[]>>()
   private readonly transactions = new Map<string, Promise<EVMTransaction>>()
 
-  constructor(private readonly rpc: IRpcClient) {}
+  constructor(
+    private readonly rpc: IRpcClient,
+    /**
+     * Whether a receipt's block is one the logs were read from. Needed for
+     * blocks fresh enough to be replaced: a node on another fork serves the
+     * receipt the transaction has there
+     */
+    private readonly isReadBlock?: (blockHash: string | undefined) => boolean,
+  ) {}
 
   get(transactionHash: string): Promise<ReceiptLog[]> {
     const key = transactionHash.toLowerCase()
@@ -18,7 +26,17 @@ export class ReceiptLogCache {
 
     const logs = this.rpc
       .getTransactionReceipt(transactionHash)
-      .then((receipt) => receipt.logs)
+      .then((receipt) => {
+        if (this.isReadBlock && !this.isReadBlock(receipt.blockHash)) {
+          throw new Error(
+            'Receipt is from a block the logs were not read from',
+            {
+              cause: { transactionHash, blockHash: receipt.blockHash },
+            },
+          )
+        }
+        return receipt.logs
+      })
     this.logs.set(key, logs)
     return logs
   }
