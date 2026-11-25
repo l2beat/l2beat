@@ -1,4 +1,9 @@
-import type { Badge, ProjectAssociatedToken } from '@l2beat/config'
+import type {
+  Badge,
+  ProjectAssociatedToken,
+  ProjectScalingCategory,
+  ProjectStageName,
+} from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/layer2s/utils/getL2Risks'
 import { ps } from '~/server/projects'
@@ -64,7 +69,7 @@ export async function getL2ApiEntries(): Promise<L2ApiEntry[]> {
           impactfulChange: !!changes?.impactfulChange,
         }),
         badges: project.display.badges,
-        stage: project.scalingInfo.stage,
+        stage: getShownStage(project.scalingInfo),
         risks: getL2Risks(
           project.scalingRisks.stacked ?? project.scalingRisks.self,
         ),
@@ -81,4 +86,15 @@ export async function getL2ApiEntries(): Promise<L2ApiEntry[]> {
       }
     })
     .sort((a, b) => b.tvs.breakdown.total - a.tvs.breakdown.total)
+}
+
+/**
+ * Stages rate rollups, so the website shows none for an "Other" project even
+ * when its config still carries one from before it was recategorized.
+ */
+export function getShownStage(scalingInfo: {
+  type: ProjectScalingCategory | undefined
+  stage: ProjectStageName
+}): ProjectStageName {
+  return scalingInfo.type === 'Other' ? 'Not applicable' : scalingInfo.stage
 }
