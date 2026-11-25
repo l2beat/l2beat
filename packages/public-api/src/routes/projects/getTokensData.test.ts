@@ -44,7 +44,6 @@ describe(toTokens.name, () => {
         priceUsd: 3000,
         valueUsd: 6000,
         name: 'ETH name',
-        iconUrl: null,
         amount: 2,
         addresses: [{ address, chain: 'ethereum' }],
         isGasToken: true,

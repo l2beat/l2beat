@@ -47,7 +47,6 @@ export function toTokens(
       priceUsd: tokenValue.priceUsd,
       valueUsd: tokenValue.valueForProject,
       name: token.name,
-      iconUrl: token.iconUrl ?? null,
       amount: tokenValue.amount,
       addresses: extractAddressesFromTokenConfig(token),
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()) ?? false,
