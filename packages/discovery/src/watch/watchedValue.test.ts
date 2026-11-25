@@ -19,6 +19,7 @@ describe(sortDeep.name, () => {
 
   it('rejects keys with a newline, undefined and non-finite numbers', () => {
     expect(() => sortDeep({ 'a\nb': 1 })).toThrow('Watched key with a newline')
+    expect(() => sortDeep({ 'a\rb': 1 })).toThrow('Watched key with a newline')
     expect(() => sortDeep(JSON.parse('{"a":{"__proto__":1}}'))).toThrow(
       'Watched key named __proto__',
     )

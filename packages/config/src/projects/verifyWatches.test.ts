@@ -1,5 +1,6 @@
 import {
   getDiscoveryPaths,
+  hashWatchConfig,
   isPendingItem,
   sortDeep,
   visitObjects,
@@ -21,13 +22,15 @@ describe('Verify watches', () => {
         reader.readWatchConfig(location.name)
       })
 
-      it('has a watched.json with a value for every watch key', () => {
+      it('has a watched.json taken under this config, with a value for every watch key', () => {
         const config = reader.readWatchConfig(location.name)
         const watched = reader.readWatched(location.name)
         expect(watched).not.toEqual(undefined)
         expect(Object.keys(watched?.values ?? {}).sort()).toEqual(
           config.watches.map((watch) => watch.key).sort(),
         )
+        // A snapshot taken under other params or templates is stale.
+        expect(watched?.configHash).toEqual(hashWatchConfig(config))
       })
 
       it('has a sorted watched.json without pending items', () => {
