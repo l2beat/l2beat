@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER, RISK_VIEW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -74,7 +74,7 @@ export const megaeth: ScalingProject = opStackL2({
     },
   ],
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   nonTemplateProofSystem: {
@@ -127,6 +127,8 @@ export const megaeth: ScalingProject = opStackL2({
   },
   display: {
     name: 'MegaETH',
+    warning:
+      'The fault proof system is deployed but is not functional. Since 2026-11-25 the RISC Zero verifier router used by the Kailua games has no active route, so no ZK fault or validity proof can be verified until its owner adds one. Security relies entirely on the Vanguard, the only permitted proposer.',
     slug: 'megaeth',
     description:
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
@@ -150,12 +152,11 @@ export const megaeth: ScalingProject = opStackL2({
       ],
     },
   },
-  // override while node is unverified
+  // the RISC Zero router has had no active route since 2026-11-25
   nonTemplateRiskView: {
     stateValidation: {
-      value: 'Fraud proofs (1R, ZK)',
-      description: `Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used. Since the node source is not available, challengers cannot watch the chain independently. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals; faulty proposals can be flagged but not replaced, halting the chain until the Vanguard proposes a correct state root.`,
-      sentiment: 'bad',
+      ...RISK_VIEW.STATE_NONE,
+      description: `State roots are proposed through Kailua games. \`vanguardAdvantage\` applies to every proposal and is set to ${formatSeconds(vanguardAdvantage)}, so only the Vanguard can submit state proposals. The RISC Zero verifier router used by the games has no active route, so no ZK proof can be verified: a faulty proposal cannot be proven wrong and resolves after the challenge period.`,
       permissioned: true,
       executionDelay: discovery.getContractValue<number>(
         'OptimismPortal2',
@@ -173,7 +174,6 @@ export const megaeth: ScalingProject = opStackL2({
           ),
         ),
       },
-      orderHint: Number.NEGATIVE_INFINITY,
     },
   },
   chainConfig: {
