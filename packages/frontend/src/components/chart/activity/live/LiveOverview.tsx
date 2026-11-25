@@ -213,6 +213,8 @@ export function LiveOverview({
         clearTimeout(settle.current)
         const edge = edgeAt(event)
         const at = timeAt(event) ?? 0
+        // as drawn, which a window longer than the buffer is not
+        const shownFrom = Math.max(selection[0], from)
         // where the edge is from the pointer, kept through the drag
         dragging.current = {
           resize:
@@ -221,10 +223,10 @@ export function LiveOverview({
                   edge,
                   end: shownEnd,
                   moved: isMoved(target.current),
-                  grab: selection[0] - at,
+                  grab: shownFrom - at,
                 }
               : edge === 'to'
-                ? { edge, start: selection[0], grab: selection[1] - at }
+                ? { edge, start: shownFrom, grab: selection[1] - at }
                 : undefined,
         }
         event.currentTarget.setPointerCapture(event.pointerId)
