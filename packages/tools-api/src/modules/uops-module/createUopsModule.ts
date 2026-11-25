@@ -84,7 +84,7 @@ function createChainService(
   const nameService = new NameService(
     knownNames,
     signatureService,
-    new RpcCodeClient(chain.alchemyUrl ?? url, callsPerMinute),
+    new RpcCodeClient(url, callsPerMinute),
     contractClient,
     logger,
   )
