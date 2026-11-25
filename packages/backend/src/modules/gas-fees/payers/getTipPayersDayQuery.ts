@@ -22,7 +22,7 @@ const ROUND_TIPS_WEI = [
 
 /**
  * Tips paid in every transaction of every block of the day, private ones
- * included, split as "Who pays the tips" in METHODOLOGY.md, with a check that
+ * included, split for the page's "who pays the tips", with a check that
  * Dune has every block and all of each block's transactions.
  */
 export function getTipPayersDayQuery(input: TipPayersDayQueryInput): string {

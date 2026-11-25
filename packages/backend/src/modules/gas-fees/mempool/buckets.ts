@@ -6,7 +6,7 @@ export interface TipLevel {
 }
 
 /**
- * The price of speed's tip levels, METHODOLOGY.md: 30 per tenfold step from
+ * The page's "price of speed" tip levels: 30 per tenfold step from
  * 0.01 to 0.1 gwei, then every 0.05 gwei up to the 2 gwei level, 2 to 2.05.
  * Bounds in whole wei, so a round tip falls in one level exactly.
  */
