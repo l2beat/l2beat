@@ -1,3 +1,170 @@
+Generated with discovered.json: 0x82165d8209e51f8bc89149ed67bbbc108936ebfc
+
+# Diff at Tue, 24 Nov 2026 15:53:22 GMT:
+
+- id: 313e17cb
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1fd305e2eea77e7ec760c2c26c012938135cdee0 block: 1795177510
+- current timestamp: 1795535453
+
+## Description
+
+Added the No Admin Ether bridge (L1NoAdminEtherBridge, L2NoAdminEtherBridge), an ownerless ETH bridge bound to the current Rollup and linked from facet.org. Extended the facet/L1ETHBridge and facet/L2ERC20Bridge templates with owner permissions, blacklisted roots and field descriptions.
+
+## Watched changes
+
+```diff
+    contract L1NoAdminEtherBridge (eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71) [facet/L1ETHBridge] {
+    +++ description: ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "facet/L1ETHBridge"
+      sourceHashes:
++        ["0x99096204d217f8cbae9eafc6fc9668dd2a6b8ce373e7a4bdc1b7f4e710be8e4f"]
+      description:
++        "ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
+      deployerAddress:
++        "eth:0xcbd1081Eb833a93ACC49CC9633E0A60a79dEae74"
+      sinceTimestamp:
++        1795206131
+      sinceBlock:
++        26458664
+      values:
++        {"$immutable":true,"blacklistedRoots":[],"depositNonce":2,"l2Bridge":"facet:0x4859513aC3026eA49a86e5D1c73194FC69206013","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE","withdrawalDelay":0}
+      fieldMeta:
++        {"rollup":{"severity":"HIGH","description":"Rollup contract whose canonical proposals withdrawals are proven against. It fixes the Facet state transition rules the bridge follows."},"paused":{"severity":"HIGH"},"withdrawalDelay":{"severity":"MEDIUM","description":"Seconds a proven withdrawal waits before it can be finalized, on top of the Rollup challenge period."},"blacklistedRoots":{"severity":"HIGH","description":"State roots that cannot be used to prove or finalize withdrawals."}}
+      implementationNames:
++        {"eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71":"L1Bridge"}
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"facet"}}]
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2NoAdminEtherBridge (facet:0x4859513aC3026eA49a86e5D1c73194FC69206013) [facet/L2ERC20Bridge]
+    +++ description: ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+```
+
+## Source code changes
+
+```diff
+.../projects/facet/.flat/L1NoAdminEtherBridge.sol  | 4518 ++++++++++++++++++++
+ .../projects/facet/.flat/L2NoAdminEtherBridge.sol  | 4518 ++++++++++++++++++++
+ 2 files changed, 9036 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1795177510 (main branch discovery), not current.
+
+```diff
+    contract L1Bridge (eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E) [facet/L1ETHBridge] {
+    +++ description: ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+      description:
+-        "An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
++        "ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
++++ description: State roots that cannot be used to prove or finalize withdrawals.
++++ severity: HIGH
+      values.blacklistedRoots:
++        []
+      fieldMeta:
++        {"rollup":{"severity":"HIGH","description":"Rollup contract whose canonical proposals withdrawals are proven against. It fixes the Facet state transition rules the bridge follows."},"paused":{"severity":"HIGH"},"withdrawalDelay":{"severity":"MEDIUM","description":"Seconds a proven withdrawal waits before it can be finalized, on top of the Rollup challenge period."},"blacklistedRoots":{"severity":"HIGH","description":"State roots that cannot be used to prove or finalize withdrawals."}}
+    }
+```
+
+```diff
+    contract L2Bridge (facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4) [facet/L2ERC20Bridge] {
+    +++ description: ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+      description:
+-        "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1."
++        "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1."
+    }
+```
+
+Generated with discovered.json: 0xa82a78ec86eac3ee4def640b8e9a061c1b203a57
+
+# Diff at Fri, 20 Nov 2026 13:39:03 GMT:
+
+- id: ea449017
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@70eb482e73c71d6052a8738548d44b628a0ca452 block: 1795086039
+- current timestamp: 1795177510
+
+## Description
+
+Facet admins dennounced some more permissions. Disabled immutable contracts removed from the FE.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x615452db5467849689E98a8C5C242A96cF768a94) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","description":"Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.","role":".whitelistedProposers"}
+    }
+```
+
+```diff
+    contract RollupDeprecated (eth:0x686E7d01C7BFCB563721333A007699F154C04eb4) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      values.owner:
+-        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.whitelistedProposers.0:
+-        "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+    }
+```
+
+```diff
+    contract Facet Multisig (eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x686E7d01C7BFCB563721333A007699F154C04eb4","description":"can set the whitelisted proposers.","role":".owner"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1795086039 (main branch discovery), not current.
+
+```diff
+    contract FastExternalBridge (eth:0x0000000000000b07ED001607f5263D85bf28Ce4C) [facet/FacetEtherBridgeShutdown] {
+    +++ description: Settlement implementation of the Facet ETH fast bridge after its shutdown. Deposits are closed and, once locked, signed withdrawals are rejected too: ETH leaves the bridge only through admin-submitted payout batches, each paid at most once, to strictly increasing addresses taken from an offchain payout list. The bridge has no unlock function.
+      sourceHashes.0:
+-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5"
++        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
+      implementationNames.eth:0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        "FacetEtherBridgeV6"
++        "FacetEtherBridgeV6Shutdown"
+      category.name:
+-        "External Bridges"
++        "Spam"
+      category.priority:
+-        1
++        -1
+    }
+```
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xf8785b342cbc1296c01aa7e9a869ee0fbedc38f4
 
 # Diff at Thu, 19 Nov 2026 11:01:42 GMT:

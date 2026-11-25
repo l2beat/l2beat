@@ -79,6 +79,7 @@ export function getCropStatusText(
     return CROP_STATUS_LABELS.fullyTransparent
   }
   if (status === 'partiallyReviewed') {
+    // biome-ignore lint/plugin/dotSeparator: also printed in the .md pages, which stay plain text
     return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
   }
   return CROP_SENTIMENT_LABELS[sentiment]

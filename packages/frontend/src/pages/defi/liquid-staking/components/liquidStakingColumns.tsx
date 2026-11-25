@@ -12,7 +12,7 @@ import {
   formatLatestValue,
   formatMetricDate,
   LIQUID_STAKING_METRICS,
-  TVL_TOOLTIP,
+  TVL_WITH_ETH_TOOLTIP,
 } from '../liquidStakingMetrics'
 import { StakedEthShare } from './StakedEthShare'
 
@@ -27,13 +27,22 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
       id: TVL_COLUMN_ID,
       header: 'TVL',
       cell: (ctx) => {
-        const { totalValueLockedUsd: value, stakedEthShare } = ctx.row.original
+        const {
+          totalValueLockedUsd: value,
+          totalValueLockedEth: valueEth,
+          stakedEthShare,
+        } = ctx.row.original
         return value === undefined ? (
           <NoDataBadge />
         ) : (
           <TwoRowCell className="text-right">
-            <TwoRowCell.First className="text-sm">
+            <TwoRowCell.First className="whitespace-nowrap text-sm">
               {formatCurrency(value, 'usd')}
+              {valueEth !== undefined && (
+                <span className="ml-1 font-medium text-secondary">
+                  ({formatCurrency(valueEth, 'eth')})
+                </span>
+              )}
             </TwoRowCell.First>
             {stakedEthShare && (
               <TwoRowCell.Second>
@@ -46,7 +55,7 @@ export function getLiquidStakingStatColumns<T extends LiquidStakingStatsEntry>(
       sortUndefined: 'last',
       meta: {
         align: 'right',
-        tooltip: TVL_TOOLTIP,
+        tooltip: TVL_WITH_ETH_TOOLTIP,
       },
     }),
     ...LIQUID_STAKING_METRICS.map((metric) =>

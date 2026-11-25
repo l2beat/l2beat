@@ -6,6 +6,7 @@ import { getMarketQuote } from './marketQuotes'
 import { getCbethReads } from './protocols/cbeth'
 import { getEtherFiReads } from './protocols/etherfi'
 import { getLidoReads } from './protocols/lido'
+import { getRateReads } from './protocols/rate'
 import { getRocketPoolReads } from './protocols/rocketpool'
 import { getStakeWiseReads } from './protocols/stakewise'
 import type { LiquidStakingState, ProtocolReads } from './protocols/types'
@@ -104,5 +105,7 @@ function getProtocolReads(
       return getCbethReads(contracts)
     case 'stakewise':
       return getStakeWiseReads(contracts, blockNumber)
+    case 'rate':
+      return getRateReads(contracts)
   }
 }

@@ -54,6 +54,7 @@ async function getOssificationEntries(): Promise<OssificationEntry[]> {
       'privacyInfo',
       'defiInfo',
       'tvsConfig',
+      'liquidStaking',
     ],
     whereNot: ['archivedAt'],
   })

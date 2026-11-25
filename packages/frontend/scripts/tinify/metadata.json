@@ -467,7 +467,7 @@
   "static/images/upgrades-and-governance/op-mainnet.png": "935496940921504f97d91c58d0ec254b",
   "static/images/upgrades-and-governance/polygoncdk.png": "8c469024d5e1743f1314cad1f002f1a0",
   "static/images/upgrades-and-governance/starknet.png": "ddfb753d27214c32ab48fa515036b178",
-  "static/images/upgrades-and-governance/zkstack.png": "aed64289b5ecd66b796bc1c67272cbd5",
+  "static/images/upgrades-and-governance/zkstack.png": "107cff3abd35140b9e51db7816bf3dab",
   "static/logo.png": "483b919ec0f84ba1a4cc3cfeffa06942",
   "static/meta-images/about-us/opengraph-image.png": "91eccf950038eec7cd0619aca72b7b16",
   "static/meta-images/projects/ethereum/opengraph-image.png": "6e7bcac451d5d73ba5039ab1377385f8",
@@ -1631,5 +1631,8 @@
   "static/icons/derivev3.png": "5f92f086afad4f89a19ff955627c6bc8",
   "static/meta-images/layer2s/projects/derivev3/opengraph-image.png": "d07aa59a7c4e19a0073a80680f7fd089",
   "static/meta-images/publications/on-builder-enforced-security.png": "686b1dc52f64e84271f7e55d94dc231b",
-  "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e"
+  "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e",
+  "static/icons/hinkal.png": "cfa0ee568f863b5c6a5ccbd2dc2ca798",
+  "static/meta-images/privacy/projects/hinkal/opengraph-image.png": "4beffa24c585e8603a2509b79355d108",
+  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "bcfc5ae81842d3de14c434ac3f9ea292"
 }

@@ -13,6 +13,8 @@ export function MobileNavTriggerOpen() {
       aria-expanded={openMobile}
       aria-controls={MOBILE_SIDEBAR_ID}
       onClick={() => setOpenMobile(true)}
+      // Dims the moment a finger lands; the sheet only opens on release.
+      className="transition-opacity duration-200 active:opacity-40 active:duration-0"
     >
       <MenuOpenIcon className="size-6" />
     </button>

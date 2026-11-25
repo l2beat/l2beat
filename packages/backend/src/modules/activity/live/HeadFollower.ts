@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import { type Database, LIVE_BUFFER_SECONDS } from '@l2beat/database'
 import { NotFoundOnRpcError } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../tools/TimeLoop'
@@ -8,7 +8,6 @@ import {
   INDEXER_NAMES,
 } from '../../../tools/uif/indexerIdentity'
 import type { ActivityBlock } from '../services/txs/types'
-import { LIVE_BLOCKS_KEPT_FOR } from './LiveActivityCleaner'
 
 /** Shorter than most chains take for a few blocks */
 const INTERVAL_MS = 10_000
@@ -161,7 +160,7 @@ export class HeadFollower extends TimeLoop {
     if (
       tip !== undefined &&
       latest > tip.number &&
-      tip.timestamp < UnixTime.now() - LIVE_BLOCKS_KEPT_FOR
+      tip.timestamp < UnixTime.now() - LIVE_BUFFER_SECONDS
     ) {
       this.remembered = []
     }

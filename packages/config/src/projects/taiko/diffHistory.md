@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x80d4fcdf3d8fee852687c49fae6fae2458b6c3df
+
+# Diff at Mon, 23 Nov 2026 13:15:36 GMT:
+
+- id: 39150044
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cbbd6f48aaf404a6ee31dd19d75c5784adc4ae84 block: 1794569384
+- current timestamp: 1795438918
+
+## Description
+
+RISC Zero's owner EOA eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412 emergency-stopped the RISC0 Groth16 verifier routes 0xbb001d44 (v2.2.0) and 0x73c457ba (v3.0.0). This follows the critical advisory [GHSA-mm6c-35cm-g4x2](https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2): verifiers up to v3.0.0 accept an attacker-chosen claim from any one valid Groth16 receipt. Both routes stayed live for over a week after the advisory.
+
+Taiko's RISC0 proofs now verify only through route 0xe71e6620 (v3.1.0, fixed circuits and a new Groth16 trusted setup). Every proven range also needs a second proof from SGX or SP1, so the bug alone could not finalize invalid state.
+
+## Watched changes
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
++++ description: verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts.
++++ severity: MEDIUM
+      values.paused:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794569384 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical.untilTimestamp:
++        1795126451
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical.untilTimestamp:
++        1795126871
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical.untilTimestamp:
++        1795126871
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical.untilTimestamp:
++        1795126451
+    }
+```
+
 Generated with discovered.json: 0xe6d9edc597a7c8d8381cbe72382ea5ef90a82240
 
 # Diff at Wed, 18 Nov 2026 08:06:37 GMT:

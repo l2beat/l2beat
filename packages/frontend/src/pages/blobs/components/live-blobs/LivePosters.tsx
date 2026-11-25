@@ -2,6 +2,7 @@ import { formatSeconds, SLOT_SECONDS } from '@l2beat/shared-pure'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
+import { RollingNumber } from '~/components/RollingNumber'
 import { BasicTableHeaderDividerRow } from '~/components/table/BasicTable'
 import {
   Table,
@@ -34,13 +35,7 @@ import {
   formatWhole,
 } from './blocks/format'
 import { anyLanding, type Landing, useLandedTotal } from './landings'
-import {
-  FLASH_CLASS_NAME,
-  Pop,
-  RollingNumber,
-  useFlash,
-  useReorder,
-} from './liveMotion'
+import { FLASH_CLASS_NAME, Pop, useFlash, useReorder } from './liveMotion'
 import {
   inRanking,
   type LivePoster,

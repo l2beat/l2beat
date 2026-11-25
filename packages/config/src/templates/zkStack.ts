@@ -230,7 +230,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   )
   // protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
   //       0                21h                7d                 1d         = 8d 21h
-  // assumption: active guardians (2/8)
+  // assumption: the ZK Foundation Multisig extends the legal veto period
   const upgradeDelayWithScApprovalExtendedLegalVotingS =
     protTlMinDelayS + executionDelayS + legalVetoExtendedS + upgradeDelayPeriodS
   const upgradeDelayWithScApprovalS =
@@ -263,19 +263,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'SecurityCouncil',
     'EIP1271_THRESHOLD',
   )
-  const guardiansMemberCount = templateVars.discovery.getContractValue<
-    string[]
-  >('Guardians', '$members').length
-  const guardiansMainThreshold =
-    templateVars.discovery.getContractValue<number>(
-      'Guardians',
-      'EIP1271_THRESHOLD',
-    )
-  const guardiansExtendThreshold =
-    templateVars.discovery.getContractValue<number>(
-      'Guardians',
-      'EXTEND_LEGAL_VETO_THRESHOLD',
-    )
   const protocolStartProposalThresholdM =
     templateVars.discovery.getContractValueBigInt(
       'ZkProtocolGovernor',
@@ -287,7 +274,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
   const scThresholdString = `${scMainThreshold}/${scMemberCount}`
-  const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
   const hasNoProofs = templateVars.reasonsForBeingOther?.some(
     (e) => e.label === REASON_FOR_BEING_OTHER.NO_PROOFS.label,
@@ -554,12 +540,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         protTlMinDelayS: formatSeconds(protTlMinDelayS),
         executionDelay,
         legalVetoStandardS: formatSeconds(legalVetoStandardS),
-        guardiansExtendThreshold,
         legalVetoExtendedS: formatSeconds(legalVetoExtendedS),
         upgradeWaitOrExpireS: formatSeconds(upgradeWaitOrExpireS),
         upgradeDelayPeriodS: formatSeconds(upgradeDelayPeriodS),
         scThresholdString,
-        guardiansThresholdString,
         zkFoundationStats: templateVars.discovery.getMultisigStats(
           'ZK Foundation Multisig',
         ),
@@ -582,7 +566,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       addresses: templateVars.discovery.getDiscoveredContracts(),
       risks: [
         CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
-          // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by Guardians), emergency)
+          // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by the ZK Foundation), emergency)
           `${formatSeconds(upgradeDelayWithScApprovalS)} - ${formatSeconds(
             upgradeDelayWithScApprovalExtendedLegalVotingS,
           )}`,

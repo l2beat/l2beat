@@ -104,7 +104,7 @@ export const zkapi: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: {
-      text: 'The vault owner can block withdrawals until deposits expire and become sweepable to the treasury. The proofs rely on a single-party trusted setup.',
+      text: 'The vault owner can block withdrawals until deposits expire and become sweepable to the treasury.',
       detailAnchor: 'permissions',
     },
     emergencyWarning: discovery.getContractValue<boolean>(

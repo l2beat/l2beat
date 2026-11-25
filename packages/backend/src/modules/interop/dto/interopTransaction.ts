@@ -1,5 +1,5 @@
 import type { EVMTransaction, RpcTransaction } from '@l2beat/shared'
-import type { Transaction } from '@l2beat/shared-pure'
+import { EthereumAddress, type Transaction } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const InteropTransactionData = v.union([v.string(), v.array(v.string())])
@@ -139,8 +139,8 @@ export function getInteropTransactionTargetCallValue(
 function normalizeInteropUpstreamTransaction(tx: InteropUpStreamTransaction) {
   return compactObject({
     hash: tx.hash,
-    from: tx.from?.toString(),
-    to: tx.to?.toString(),
+    from: checksumAddress(tx.from?.toString()),
+    to: checksumAddress(tx.to?.toString()),
     data: getInteropTransactionData(tx),
     type: normalizeTxType(tx.type),
     value: tx.value,
@@ -167,10 +167,16 @@ function normalizeInteropCall(call: {
   input?: string
 }) {
   return compactObject({
-    to: call.to?.toString(),
+    to: checksumAddress(call.to?.toString()),
     value: call.value,
     input: call.input ?? call.data,
   })
+}
+
+// Catching up reads addresses checksummed (EthRpcClient), following the head
+// gets them as the RPC sends them, and plugins compare them with ===
+export function checksumAddress(address: string | undefined) {
+  return address && (EthereumAddress.tryParse(address) ?? address)
 }
 
 function normalizeTxType(

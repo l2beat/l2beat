@@ -104,24 +104,26 @@ export const wbeth: BaseProject = {
     ],
   },
   liquidStaking: {
-    contracts: {
-      type: 'wbeth',
-      wBETH: discovery.getContract('wBETH').address,
-      unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
-    },
-    // Its pools were never deep: each holds a few ETH. Binance redeems
-    // off-chain.
-    marketQuotes: [
-      { type: 'pancakeV3', fee: 500 },
-      {
-        type: 'curve',
-        pool: ChainSpecificAddress(
-          'eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6',
-        ),
-        i: 1,
-        j: 0,
+    tracking: {
+      contracts: {
+        type: 'wbeth',
+        wBETH: discovery.getContract('wBETH').address,
+        unwrapToken: discovery.getContract('UnwrapTokenV1ETH').address,
       },
-    ],
+      // Its pools were never deep: each holds a few ETH. Binance redeems
+      // off-chain.
+      marketQuotes: [
+        { type: 'pancakeV3', fee: 500 },
+        {
+          type: 'curve',
+          pool: ChainSpecificAddress(
+            'eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6',
+          ),
+          i: 1,
+          j: 0,
+        },
+      ],
+    },
     risks: {
       minting: {
         value: 'Permissionless',

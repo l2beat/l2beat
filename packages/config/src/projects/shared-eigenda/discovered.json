@@ -1,6 +1,6 @@
 {
   "name": "shared-eigenda",
-  "timestamp": 1792013664,
+  "timestamp": 1795512257,
   "configHash": "0x15aa0f8d169add84f63cdc402b2a87cfb1bd0fb9e1327e16822fa59fc7c05e60",
   "entries": [
     {
@@ -22,16 +22,16 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8",
-          "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
+          "eth:0x0cD17b1c29eF6C22Fb066988BfC681e9E257B866",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
-          "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
+          "eth:0x50efF9378be47c6B53506168499783b1c287403e"
         ],
         "$threshold": 2,
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 44,
+        "nonce": 45,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -237,8 +237,6 @@
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
-          "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
-          "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
           "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
@@ -338,6 +336,11 @@
         "eth:0x0c431C66F4dE941d089625E5B423D00707977060": "PauserRegistry"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "eth:0x0cD17b1c29eF6C22Fb066988BfC681e9E257B866",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EjectionManager",
@@ -446,11 +449,6 @@
         "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "EigenDACertVerifierRouter",
@@ -614,6 +612,11 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-eigenlayer"
+    },
+    {
+      "address": "eth:0x50efF9378be47c6B53506168499783b1c287403e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5262498E7D4fbbb08425b2a06D91157acDC50aDA",
@@ -896,11 +899,6 @@
         "eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0": "EigenDAServiceManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
@@ -1947,10 +1945,10 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 26193460 },
-  "permissionsConfigHash": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
+  "usedBlockNumbers": { "ethereum": 26484098 },
+  "permissionsConfigHash": "0x5549fc4565cf71aeddaf0ffa181bb5730df4092f0d6dc0225edd288773215150",
   "modelledAgainst": {
-    "shared-eigenlayer": "0x7d4dc86bbe2849d7de33af96e2466d994b8f5133949b99100967a503dd0d98a7"
+    "shared-eigenlayer": "0x2bef01dc8e00c781ea461a20c1af280026502dd4ec39370a9d5cde2b4967a498"
   },
   "permissions": {
     "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {

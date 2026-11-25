@@ -8,18 +8,21 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import type { LiquidStakingTvlSummary } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import type { ChartRange } from '~/utils/range/range'
 import { LiquidStakingCharts } from './components/LiquidStakingCharts'
 import { LiquidStakingTable } from './components/LiquidStakingTable'
 
 interface Props extends AppLayoutProps {
   entries: LiquidStakingEntry[]
+  tvlSummary: LiquidStakingTvlSummary | undefined
   defaultChartRange: ChartRange
   queryState: DehydratedState
 }
 
 export function LiquidStakingPage({
   entries,
+  tvlSummary,
   defaultChartRange,
   queryState,
   ...props
@@ -32,7 +35,8 @@ export function LiquidStakingPage({
             Liquid staking
           </MainPageHeader>
           <LiquidStakingCharts
-            projects={entries}
+            projects={entries.filter((entry) => entry.isTracked)}
+            tvlSummary={tvlSummary}
             defaultRange={defaultChartRange}
           />
           <PrimaryCard className="max-md:border-divider max-md:border-t md:mt-4">

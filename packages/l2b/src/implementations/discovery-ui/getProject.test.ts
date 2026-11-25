@@ -125,6 +125,68 @@ describe(getProject.name, () => {
     const addresses = response.entries.flatMap(addressesOf)
     expect(addresses.length).toEqual(new Set(addresses).size)
   })
+
+  it('includes critical flags from config overrides and templates', () => {
+    const templateContract = ChainSpecificAddress.random()
+    const retiredContract = ChainSpecificAddress.random()
+    const plainContract = ChainSpecificAddress.random()
+
+    const configReader = mockConfigReader(
+      [
+        discovery(PROJECT, [
+          contract('OverrideCritical', PROJECT_CONTRACT),
+          {
+            ...contract('TemplateCritical', templateContract),
+            template: 'my-template',
+          },
+          {
+            ...contract('RetiredCritical', retiredContract),
+            template: 'my-template',
+          },
+          contract('Plain', plainContract),
+        ]),
+      ],
+      {
+        [PROJECT]: {
+          [PROJECT_CONTRACT.toString()]: { critical: true },
+          [retiredContract.toString()]: {
+            critical: { untilTimestamp: 1_700_000_000 },
+          },
+        },
+      },
+    )
+    const templateService = mockObject<TemplateService>({
+      loadContractTemplate: () => ({
+        ignoreDiscovery: false,
+        ignoreMethods: [],
+        ignoreRelatives: [],
+        fields: {},
+        methods: {},
+        manualSourcePaths: {},
+        types: {},
+      }),
+      loadContractTemplateColor: (template?: string) =>
+        template === 'my-template'
+          ? { critical: true, fields: {}, manualSourcePaths: {} }
+          : { fields: {}, manualSourcePaths: {} },
+      getAllShapes: () => ({}),
+    })
+
+    const response = getProject(configReader, templateService, PROJECT)
+    const byAddress = new Map(
+      response.entries[0]?.discoveredContracts.map((c) => [
+        c.address,
+        c.critical,
+      ]),
+    )
+
+    expect(byAddress.get(PROJECT_CONTRACT)).toEqual(true)
+    expect(byAddress.get(templateContract)).toEqual(true)
+    expect(byAddress.get(retiredContract)).toEqual({
+      untilTimestamp: 1_700_000_000,
+    })
+    expect(byAddress.get(plainContract)).toEqual(undefined)
+  })
 })
 
 function addressesOf(chain: {
@@ -139,7 +201,13 @@ function addressesOf(chain: {
   ].map((x) => x.address)
 }
 
-function mockConfigReader(discoveries: DiscoveryOutput[]): ConfigReader {
+function mockConfigReader(
+  discoveries: DiscoveryOutput[],
+  colorOverrides: Record<
+    string,
+    Record<string, { critical?: true | { untilTimestamp: number } }>
+  > = {},
+): ConfigReader {
   const byName = new Map(discoveries.map((x) => [x.name, x]))
   return mockObject<ConfigReader>({
     readDiscoveryWithReferences: () => discoveries,
@@ -152,7 +220,7 @@ function mockConfigReader(discoveries: DiscoveryOutput[]): ConfigReader {
       mockObject<ConfigRegistry>({
         name,
         structure: { name, initialAddresses: [] },
-        color: { name },
+        color: { name, overrides: colorOverrides[name] },
       } as unknown as ConfigRegistry),
   })
 }

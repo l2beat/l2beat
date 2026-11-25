@@ -5,6 +5,7 @@ import { Markdown } from '~/components/markdown/Markdown'
 import { TechStackTag } from '~/pages/zk-catalog/v2/components/TechStackTag'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import { ProjectSection } from './ProjectSection'
+import { RiskList, type TechnologyRisk } from './RiskList'
 import { TrustedSetupParticipants } from './TrustedSetupParticipants'
 import type { ProjectSectionProps } from './types'
 
@@ -17,6 +18,8 @@ export interface TrustedSetupSectionProps extends ProjectSectionProps {
     participantCount?: TrustedSetup['participantCount']
     contributionCount?: TrustedSetup['contributionCount']
     phases?: TrustedSetup['phases']
+    /** Present when one participant alone could have retained the setup's secrets. */
+    risks: TechnologyRisk[]
   }[]
 }
 
@@ -61,6 +64,7 @@ export function TrustedSetupSection({
                     />
                   </div>
                 </div>
+                <RiskList risks={trustedSetup.risks} className="mt-0 md:mt-0" />
                 <div className="space-y-2">
                   <h3 className="font-semibold text-primary text-subtitle-12 uppercase">
                     Detailed description

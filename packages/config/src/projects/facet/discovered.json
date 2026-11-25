@@ -1,7 +1,7 @@
 {
   "name": "facet",
-  "timestamp": 1795086039,
-  "configHash": "0xf137041221e5076cafcf3f7ea3ce175725e7cc3f9cae76c5b846b70e0d96a1ea",
+  "timestamp": 1795535453,
+  "configHash": "0x1888f3c84a7c8ab0da41cdaadc48256000c1102fdfb911d5ed23c0f3ee2f0e46",
   "entries": [
     {
       "name": "Inbox",
@@ -15,7 +15,7 @@
       "type": "Contract",
       "template": "facet/FacetEtherBridgeShutdown",
       "sourceHashes": [
-        "0xa37509935c83abacb0dddca1d4c9d7e5a0c6b014bae5fc0cb709a93581202cd5",
+        "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d",
         "0x97d9122c66a2045a07c8c163882895fb9a24992eae1d46dd20f4c59be49a275d"
       ],
       "proxyType": "EIP1967 proxy",
@@ -49,10 +49,10 @@
         }
       },
       "implementationNames": {
-        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6",
+        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FacetEtherBridgeV6Shutdown",
         "eth:0x0490244C989b73952DeaF2AE075DE2E72e877570": "FacetEtherBridgeV6Shutdown"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Rollup",
@@ -76,15 +76,15 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 5051260,
-        "anchorProposalId": 738,
-        "anchorRoot": "0xb67390aa3ac8cffccebf08b65b2c41244f95af4abc5353523a153bb53b892192",
+        "anchorL2BlockNumber": 5089060,
+        "anchorProposalId": 759,
+        "anchorRoot": "0xfdcf4b419556d27abde134a595414cd81cac1a0fd7684ae8bb6ea67b1a76abef",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "getProposalsLength": 767,
+        "getProposalsLength": 788,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1778518859,
@@ -161,19 +161,35 @@
         "0x99096204d217f8cbae9eafc6fc9668dd2a6b8ce373e7a4bdc1b7f4e710be8e4f"
       ],
       "proxyType": "immutable",
-      "description": "An immutable ETH bridge built on top of a Rollup contract. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
+      "description": "ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
       "ignoreInWatchMode": ["depositNonce"],
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1754512679,
       "sinceBlock": 23084460,
       "values": {
         "$immutable": true,
+        "blacklistedRoots": [],
         "depositNonce": 4,
         "l2Bridge": "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "rollup": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
         "withdrawalDelay": 0
+      },
+      "fieldMeta": {
+        "rollup": {
+          "severity": "HIGH",
+          "description": "Rollup contract whose canonical proposals withdrawals are proven against. It fixes the Facet state transition rules the bridge follows."
+        },
+        "paused": { "severity": "HIGH" },
+        "withdrawalDelay": {
+          "severity": "MEDIUM",
+          "description": "Seconds a proven withdrawal waits before it can be finalized, on top of the Rollup challenge period."
+        },
+        "blacklistedRoots": {
+          "severity": "HIGH",
+          "description": "State roots that cannot be used to prove or finalize withdrawals."
+        }
       },
       "implementationNames": {
         "eth:0x4E2eBa30a786c0643699b92234d74a71e958C08E": "L1Bridge"
@@ -232,9 +248,9 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2",
-        "anchorL2BlockNumber": 3731860,
-        "anchorProposalId": 1146,
-        "anchorRoot": "0x81d753aaee498fc44046c83e10fd4660dd6501687884184f24426cfa7e518e9a",
+        "anchorL2BlockNumber": 3780460,
+        "anchorProposalId": 1173,
+        "anchorRoot": "0x33abf378343548b98e5389d9c47d0904dd9fca753c8e959afd3270bd63cc3ec1",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "10000000000000000000",
@@ -247,7 +263,7 @@
         "l2BlockAge": [],
         "MAX_CHALLENGE_SECS": 604800,
         "MAX_PROVE_SECS": 604800,
-        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSAL_INTERVAL": 1800,
         "PROPOSER_BOND": 5000000000000000,
         "RANGE_VKEY_COMMITMENT": "0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829",
@@ -256,9 +272,7 @@
         "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
         "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
         "version": "1.0.0",
-        "whitelistedProposers": [
-          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
-        ]
+        "whitelistedProposers": []
       },
       "implementationNames": {
         "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4": "Rollup"
@@ -341,7 +355,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SP1VerifierGateway",
@@ -388,6 +403,53 @@
       }
     },
     {
+      "name": "L1NoAdminEtherBridge",
+      "address": "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71",
+      "type": "Contract",
+      "template": "facet/L1ETHBridge",
+      "sourceHashes": [
+        "0x99096204d217f8cbae9eafc6fc9668dd2a6b8ce373e7a4bdc1b7f4e710be8e4f"
+      ],
+      "proxyType": "immutable",
+      "description": "ETH bridge built on top of a Rollup contract. Deposits are forwarded to the L2 bridge as Facet transactions, which mint the L2 token. Withdrawals are proven with a Merkle proof against the L2ToL1MessagePasser storage root committed in a canonical proposal of the Rollup, and can be finalized after the withdrawal delay. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
+      "ignoreInWatchMode": ["depositNonce"],
+      "deployerAddress": "eth:0xcbd1081Eb833a93ACC49CC9633E0A60a79dEae74",
+      "sinceTimestamp": 1795206131,
+      "sinceBlock": 26458664,
+      "values": {
+        "$immutable": true,
+        "blacklistedRoots": [],
+        "depositNonce": 2,
+        "l2Bridge": "facet:0x4859513aC3026eA49a86e5D1c73194FC69206013",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "rollup": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
+        "withdrawalDelay": 0
+      },
+      "fieldMeta": {
+        "rollup": {
+          "severity": "HIGH",
+          "description": "Rollup contract whose canonical proposals withdrawals are proven against. It fixes the Facet state transition rules the bridge follows."
+        },
+        "paused": { "severity": "HIGH" },
+        "withdrawalDelay": {
+          "severity": "MEDIUM",
+          "description": "Seconds a proven withdrawal waits before it can be finalized, on top of the Rollup challenge period."
+        },
+        "blacklistedRoots": {
+          "severity": "HIGH",
+          "description": "State roots that cannot be used to prove or finalize withdrawals."
+        }
+      },
+      "implementationNames": {
+        "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71": "L1Bridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "facet" } }
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "name": "Facet Multisig",
       "address": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
       "type": "Contract",
@@ -417,7 +479,7 @@
           "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 366,
+        "nonce": 367,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -462,7 +524,7 @@
         "0x421f4fa282bab7812077918e0a2469a81dc1f6998cd5d4bd31955dcba0cd4472"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+      "description": "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "facet:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1754512691,
@@ -506,7 +568,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619934",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619936",
         "version": "1.1.0"
       },
       "implementationNames": {
@@ -514,29 +576,78 @@
         "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "L2NoAdminEtherBridge",
+      "address": "facet:0x4859513aC3026eA49a86e5D1c73194FC69206013",
+      "type": "Contract",
+      "template": "facet/L2ERC20Bridge",
+      "sourceHashes": [
+        "0x421f4fa282bab7812077918e0a2469a81dc1f6998cd5d4bd31955dcba0cd4472"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC20 minter counterpart to an L1 bridge. Mints new ERC20 tokens on L2 once a token deposit is made on L1, and burns them to initiate a withdrawal through the L2ToL1MessagePasser. Facet does not designate any single canonical bridge — multiple bridges of this kind can exist in parallel against a given Rollup, and each must be assessed independently. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "facet:0xcbd1081Eb833a93ACC49CC9633E0A60a79dEae74",
+      "sinceTimestamp": 1795206143,
+      "sinceBlock": 5113467,
+      "values": {
+        "$immutable": true,
+        "aliasedL1Bridge": "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71",
+        "decimals": 18,
+        "l1Bridge": "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71",
+        "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
+        "name": "No Admin Ether",
+        "symbol": "naETH",
+        "totalSupply": "50000000000000000"
+      },
+      "implementationNames": {
+        "facet:0x4859513aC3026eA49a86e5D1c73194FC69206013": "L2Bridge"
+      },
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     }
   ],
   "abis": {
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": [
       "constructor()",
+      "error BatchAlreadyPaid(uint256 batchIndex)",
+      "error DepositsClosed()",
+      "error EmptyBatch()",
       "error FeatureDisabled()",
       "error InvalidAmount()",
       "error InvalidInitialization()",
+      "error LengthMismatch()",
       "error NotFactory()",
       "error NotInitializing()",
+      "error NotStrictlyIncreasing()",
+      "error Reentrancy()",
+      "error ZeroAddress()",
       "error ZeroAdminAddress()",
+      "error ZeroAmount()",
+      "event BatchDisbursed(uint256 indexed batchIndex, uint256 count, uint256 totalAmount, address firstAddress, address lastAddress)",
+      "event DepositsClosedEvent()",
       "event Initialized(uint64 version)",
+      "event Locked()",
       "function adminMarkComplete(address recipient, bytes32 withdrawalId)",
-      "function adminWithdraw(address recipient, uint256 amount)",
       "function adminWithdrawFCT(address recipient, uint256 amount)",
       "function bridgeAndCall(address recipient, address dumbContractToCall, bytes functionCalldata, uint64) payable",
+      "function closeDeposits()",
       "function deposit() payable",
+      "function depositsClosed() view returns (bool)",
+      "function disburse(uint256 batchIndex, address[] addresses, uint256[] amounts)",
       "function donateETH() payable",
       "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
       "function getAdmin() view returns (address)",
       "function getDumbContract() pure returns (address)",
+      "function getLastDisbursedAddress() view returns (address)",
       "function getSigner() view returns (address)",
       "function initialize()",
+      "function isBatchPaid(uint256 batchIndex) view returns (bool)",
+      "function isLocked() view returns (bool)",
+      "function lock()",
       "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
       "function setAdmin(address admin)",
       "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
@@ -861,6 +972,61 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71": [
+      "constructor(address _rollup)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidDepositAmount()",
+      "error InvalidDepositParameters()",
+      "error InvalidHeader()",
+      "error InvalidNonce()",
+      "error InvalidOutputRoot()",
+      "error InvalidWithdrawalProof()",
+      "error L2BridgeAlreadySet()",
+      "error L2BridgeNotSet()",
+      "error OnlyCanDepositWithoutTo()",
+      "error ProposalNotCanonical()",
+      "error RootBlacklisted()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error WithdrawalAlreadyFinalized()",
+      "error WithdrawalAlreadyProven()",
+      "error WithdrawalDelayNotMet()",
+      "error WithdrawalNotProven()",
+      "event DepositInitiated(uint256 indexed nonce, address indexed from, address indexed to, uint256 amount)",
+      "event DepositReplayed(uint256 indexed nonce, address indexed to, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RollupUpdated(address indexed oldRollup, address indexed newRollup)",
+      "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
+      "event Unpaused(address account)",
+      "event WithdrawalDelayUpdated(uint256 oldDelay, uint256 newDelay)",
+      "event WithdrawalFinalized(address indexed to, uint256 amount, uint256 nonce)",
+      "event WithdrawalProven(address indexed rollup, address indexed to, uint256 amount, uint256 nonce, uint256 proposalId)",
+      "function depositHashes(uint256) view returns (bytes32)",
+      "function depositNonce() view returns (uint256)",
+      "function finalizeWithdrawal(address to, uint256 amount, uint256 nonce)",
+      "function finalized(bytes32) view returns (bool)",
+      "function initiateDeposit(address to) payable returns (uint256 nonce)",
+      "function l2Bridge() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawal(address to, uint256 amount, uint256 nonce, uint256 proposalId, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) rootProof, bytes[] withdrawalProof)",
+      "function proven(bytes32, address) view returns (uint32 proposalId, uint32 provenAt)",
+      "function renounceOwnership()",
+      "function replayDeposit(tuple(uint256 nonce, address to, uint256 amount) deposit)",
+      "function rollup() view returns (address)",
+      "function rootBlacklisted(bytes32) view returns (bool)",
+      "function setL2Bridge(address _l2Bridge)",
+      "function setRollup(address _rollup)",
+      "function setRootBlacklisted(bytes32 root, bool blacklisted)",
+      "function setWithdrawalDelay(uint256 _withdrawalDelay)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawalDelay() view returns (uint256)"
+    ],
     "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
       "constructor(address _singleton)"
     ],
@@ -955,6 +1121,34 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "facet:0x4859513aC3026eA49a86e5D1c73194FC69206013": [
+      "constructor(string name_, string symbol_, address _l1Bridge)",
+      "error DepositAlreadyFinalized()",
+      "error InvalidL1Bridge()",
+      "error InvalidWithdrawalAmount()",
+      "error UnauthorizedBridge()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DepositFinalized(uint256 indexed nonce, address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event WithdrawalInitiated(address indexed from, address indexed to, uint256 amount)",
+      "function MESSAGE_PASSER() view returns (address)",
+      "function aliasedL1Bridge() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function finalizeDeposit(tuple(uint256 nonce, address to, uint256 amount) deposit)",
+      "function finalizedDeposits(uint256) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initiateWithdrawal(address to, uint256 amount)",
+      "function l1Bridge() view returns (address)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
     "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
       "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
       "event WithdrawerBalanceBurnt(uint256 indexed amount)",
@@ -970,16 +1164,16 @@
     "facet/FacetEtherBridgeShutdown": "0x9c898c5df82c784af2062fdf93e721b33218db2ad56d20194f491161ca494b19",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/L1ETHBridge": "0x4c33368a5efb144b32a82830a1e74856e1473a12ef297ba64108415a1fd77ff7",
-    "facet/L2ERC20Bridge": "0x946306ef0923c7168418307ec3b70cf767c04af72aa1e0e48cdf7a4783a04f19",
+    "facet/L1ETHBridge": "0xb775f8b9e7fc79a184205c677c33a18d87a11bf48d077e195e57f1b57238ba5f",
+    "facet/L2ERC20Bridge": "0xf3ed8eaf0cd011fbc46a9b303972307c1c4854c87ff9e095cc83a1242b22dd71",
     "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x9ed8e373cd1b59d3d84cefce11ae7874152d8bc465fbe2de0480a127abf5b74b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 26448689, "facet": 5103458 },
-  "permissionsConfigHash": "0xc99f1584e6cc2a69c3aa47c6510215a360d90219f6a13baaf2c5f078e8a8330c",
+  "usedBlockNumbers": { "ethereum": 26486027, "facet": 5140909 },
+  "permissionsConfigHash": "0xd039b2f51592bed52828c2fc843b76d318e2147b8101ae15d8c58a6970cd9327",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [
@@ -997,12 +1191,6 @@
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
-          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
-          "role": ".whitelistedProposers"
         }
       ]
     },
@@ -1011,12 +1199,6 @@
         {
           "permission": "interact",
           "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
-          "description": "can set the whitelisted proposers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
           "description": "can set the whitelisted proposers.",
           "role": ".owner"
         }

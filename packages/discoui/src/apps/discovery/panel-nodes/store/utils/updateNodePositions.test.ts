@@ -285,6 +285,7 @@ function buildState(nodes: Node[]): State {
       enableDimming: true,
       hideLargeArrays: false,
       highlightOverlapping: true,
+      showSecurityPerimeter: true,
     },
     transform: {
       offsetX: 0,
@@ -321,6 +322,7 @@ function makeNode(
     id,
     address: `test:${id}`,
     isInitial: false,
+    isCritical: false,
     hasTemplate: false,
     addressType: 'Contract',
     name: id,

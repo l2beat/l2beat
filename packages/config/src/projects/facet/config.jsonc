@@ -8,7 +8,8 @@
     "eth:0x4e2eba30a786c0643699b92234d74a71e958c08e",
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
-    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4"
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4",
+    "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71"
   ],
   "names": {
     "eth:0x026902ef5a0931f25cbb78b5dd7a72ee998569ae": "Rollup",
@@ -18,7 +19,9 @@
     "eth:0x00000000000000000000000000000000000face7": "Inbox",
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ETHLockbox", // deprecated
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "FastExternalBridge",
-    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge" // (L1Bridge counterpart)
+    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": "L2Bridge", // (L1Bridge counterpart)
+    "eth:0xaE00fb77048Af97E40b01aA812c6B4827cca1E71": "L1NoAdminEtherBridge", // bound to Rollup, owner renounced
+    "facet:0x4859513aC3026eA49a86e5D1c73194FC69206013": "L2NoAdminEtherBridge" // naETH, (L1NoAdminEtherBridge counterpart)
   },
 
   "overrides": {
@@ -35,6 +38,8 @@
       "ignoreDiscovery": true
     },
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
+      // hidden from the page: shut down, admins renounced, no longer interacts with the Rollup
+      "category": "spam",
       "fields": {
         // deployed by Solady's ERC1967Factory, which keeps the upgrade admin itself
         // and leaves the EIP-1967 admin slot empty
@@ -57,6 +62,8 @@
       }
     },
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": {
+      // hidden from the page: disabled, immutable, no longer interacts with the Rollup
+      "category": "spam",
       "ignoreMethods": [
         "admin",
         "l2TokenBridge",
@@ -68,18 +75,6 @@
         "superchainConfig",
         "systemConfig"
       ]
-    },
-    "facet:0x016bE6d77b783aBdDccaF3fea49ffa9c1CA660D4": {
-      "ignoreInWatchMode": ["totalSupply"],
-      "fields": {
-        "aliasedL1Bridge": {
-          "edit": [
-            "if",
-            ["=", "facet:0x5F3fbA30A786C0643699b92234d74A71E958D19F"],
-            ["format", "UndoL2Alias"]
-          ]
-        }
-      }
     },
     "facet:0x4200000000000000000000000000000000000016": {
       "ignoreInWatchMode": ["messageNonce"]

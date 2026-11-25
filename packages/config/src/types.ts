@@ -31,6 +31,7 @@ export type ProjectDetailsSectionId =
   | 'program-hashes'
   | 'permissions'
   | 'liveness'
+  | 'trusted-setups'
 
 export interface ProjectRedWarning {
   text: string
@@ -1095,7 +1096,22 @@ export interface ProjectDefiRiskValue extends TableReadyValue {
   description: string
 }
 
+/**
+ * A protocol can be listed before research reviews it: with neither field set,
+ * only its TVL (from `defiInfo.tvl`) is tracked.
+ */
 export interface ProjectLiquidStaking {
+  /** For the yield and cost of exit. Without it, both show as no data. */
+  tracking?: ProjectLiquidStakingTracking
+  /**
+   * The row of the liquid staking risk comparison. Without it, the protocol
+   * is not reviewed: it has no project page, only its row and chart lines on
+   * the liquid staking page.
+   */
+  risks?: ProjectLiquidStakingRisks
+}
+
+export interface ProjectLiquidStakingTracking {
   /** What the liquid staking indexer reads. */
   contracts: ProjectLiquidStakingContracts
   /**
@@ -1103,8 +1119,11 @@ export interface ProjectLiquidStaking {
    * market exit. A pool that doesn't exist yet gives no quote.
    */
   marketQuotes: ProjectLiquidStakingMarketQuote[]
-  /** The row of the liquid staking risk comparison. */
-  risks: ProjectLiquidStakingRisks
+  /**
+   * The first hour to read, for contracts deployed after the start of 2024.
+   * Reads before a contract exists fail, and the indexer retries them forever.
+   */
+  sinceTimestamp?: UnixTime
 }
 
 export interface ProjectLiquidStakingRisks {
@@ -2222,6 +2241,26 @@ export type ProjectLiquidStakingContracts =
        */
       redeemer: ChainSpecificAddress
       previousRedeemer: ChainSpecificAddress
+    }
+  | {
+      /**
+       * Any protocol, without a reader of its own: the rate is its only read,
+       * so selling is the only exit counted. The token must not rebase.
+       */
+      type: 'rate'
+      token: ChainSpecificAddress
+      /** With TVS, the TVL counts the token `<project id>-<symbol>`. */
+      symbol: string
+      rate: {
+        /** Often the token itself, or its Balancer rate provider. */
+        address: ChainSpecificAddress
+        /**
+         * A view that returns the ETH one token is worth, with 18 decimals,
+         * e.g. `function getRate() view returns (uint256)`. One that takes an
+         * amount, like ERC-4626's `convertToAssets(uint256)`, is given 1e18.
+         */
+        method: string
+      }
     }
 
 /** A pool selling the token for ETH or WETH. */

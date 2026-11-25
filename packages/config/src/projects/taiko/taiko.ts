@@ -25,7 +25,7 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getSP1Verifiers } from '../../templates/opStack'
+import { getRisc0Verifiers, getSP1Verifiers } from '../../templates/opStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('taiko')
@@ -114,14 +114,18 @@ assert(
     discovery.isEOA(risc0TimelockProposers[0]),
   'RISC Zero timelock proposer changed, update the governance research.',
 )
-// RISC0 route 0xe71e6620: Groth16 v3.1.0 whose verifying key matches no published RISC Zero setup.
-// Route 0x8b38038c, with the same verifying key, is estopped.
+// GHSA-mm6c-35cm-g4x2: RISC Zero estopped every Groth16 route except v3.1.0 (0xe71e6620).
+const risc0Router = discovery.getContract('RiscZeroVerifierRouter')
+const liveRisc0Routes = Object.entries(risc0Router.values ?? {})
+  .filter(([key]) => key.startsWith('verifier_'))
+  .filter(
+    ([, estop]) =>
+      !discovery.getContractValue<boolean>(estop as string, 'paused'),
+  )
+  .map(([key]) => key)
 assert(
-  discovery.getContractValue<boolean>(
-    'eth:0x9660bD6dCDf455DCFb30c07c642Ab22E7Cb89F50',
-    'paused',
-  ),
-  'RISC0 route 0x8b38038c is live again, update the state validation research.',
+  liveRisc0Routes.join() === 'verifier_e71e6620',
+  'Live RISC0 routes changed, update the state validation research.',
 )
 assert(
   discovery.getContractValue<ChainSpecificAddress>(
@@ -592,12 +596,8 @@ export const taiko: ScalingProject = {
           },
           {
             title:
-              'RiscZeroGroth16Verifier.sol v3.1.0 - Etherscan source code, verifying key',
-            url: 'https://etherscan.io/address/0x8c915b5071206C6E328BC18529586c513408aB3b#code',
-          },
-          {
-            title: 'Groth16Verifier.sol - RISC Zero published verifying key',
-            url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/src/groth16/Groth16Verifier.sol',
+              'GHSA-mm6c-35cm-g4x2 - RISC Zero advisory, stopped Groth16 verifiers',
+            url: 'https://github.com/risc0/risc0-ethereum/security/advisories/GHSA-mm6c-35cm-g4x2',
           },
         ],
         risks: [],
@@ -845,11 +845,6 @@ function getTaikoVKeys(): string[] {
 
 function getVerifiers(): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
-  result.push(
-    ...discovery
-      .getContracts()
-      .filter((contract) => contract.name === 'RiscZeroGroth16Verifier')
-      .map((contract) => contract.address),
-  )
+  result.push(...getRisc0Verifiers(discovery))
   return result
 }

@@ -1,12 +1,13 @@
 import type { Project } from '@l2beat/config'
 import type { ActivitySectionProps } from '~/components/projects/sections/ActivitySection'
+import { getLiveAvailability } from '~/server/features/layer2s/activity/live/getProjectLiveActivity'
 import { checkIfActivityExists } from '~/server/features/layer2s/activity/utils/checkIfActivityExists'
 import { optionToRange } from '~/utils/range/range'
 
 export async function getActivitySection(
   project: Project<never, 'archivedAt' | 'activityConfig'>,
 ): Promise<
-  Pick<ActivitySectionProps, 'defaultRange' | 'dataSource'> | undefined
+  Pick<ActivitySectionProps, 'defaultRange' | 'dataSource' | 'live'> | undefined
 > {
   if (!project.activityConfig) return undefined
 
@@ -23,6 +24,10 @@ export async function getActivitySection(
       project.activityConfig.type === 'day' ||
       project.activityConfig.type === 'hour'
         ? project.activityConfig.dataSource
+        : undefined,
+    live:
+      !project.archivedAt && project.activityConfig.type === 'block'
+        ? await getLiveAvailability(project.id)
         : undefined,
   }
 }

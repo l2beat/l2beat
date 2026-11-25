@@ -392,7 +392,7 @@ export const linea: ScalingProject = {
     ],
     coingeckoPlatform: 'linea',
     apis: [
-      { type: 'rpc', url: 'https://linea-mainnet.infura.io/v3' },
+      { type: 'rpc', url: 'https://rpc.linea.build' },
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://api-explorer.linea.build/api/v2' },
     ],

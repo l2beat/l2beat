@@ -6,6 +6,7 @@ import type {
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
+import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import {
   describeNode,
   getDirectlyBackedNodes,
@@ -127,7 +128,7 @@ function Header({
           </p>
           <p className="mt-1 flex min-w-0 items-center gap-1.5 text-label-value-13 text-secondary">
             {cluster ? (
-              `${node.deployments.length} deployments · burn & mint`
+              `${node.deployments.length} deployments${DOT_SEPARATOR}burn & mint`
             ) : (
               <>
                 <span className="truncate">{first.chain.name}</span>

@@ -140,23 +140,25 @@ export const cbeth: BaseProject = {
     ],
   },
   liquidStaking: {
-    contracts: {
-      type: 'cbeth',
-      cbETH: discovery.getContract('cbETH').address,
-    },
-    // Liquidity moved between these over the period. Coinbase redeems
-    // off-chain, so the market is the only onchain exit.
-    marketQuotes: [
-      { type: 'uniswapV3', fee: 500 },
-      {
-        type: 'curveCrypto',
-        pool: ChainSpecificAddress(
-          'eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A',
-        ),
-        i: 1,
-        j: 0,
+    tracking: {
+      contracts: {
+        type: 'cbeth',
+        cbETH: discovery.getContract('cbETH').address,
       },
-    ],
+      // Liquidity moved between these over the period. Coinbase redeems
+      // off-chain, so the market is the only onchain exit.
+      marketQuotes: [
+        { type: 'uniswapV3', fee: 500 },
+        {
+          type: 'curveCrypto',
+          pool: ChainSpecificAddress(
+            'eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A',
+          ),
+          i: 1,
+          j: 0,
+        },
+      ],
+    },
     risks: {
       minting: {
         value: 'Coinbase only',
