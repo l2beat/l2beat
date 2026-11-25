@@ -31,10 +31,6 @@ Hinkal Wallet also creates a public address for each user, only this public addr
 
 A proof fixes recipient, amount, relayer and fee, so a relayer can change none of them. The contracts accept a withdrawal that users submit from their own address, but the extension only sends through Hinkal's relayers.
 
-### Compliance
-
-Hinkal's [documentation](https://hinkal-team.gitbook.io/hinkal/security-and-compliance/compliance) says it screens every deposit with Chainalysis. The screening runs on Hinkal's servers, and the contracts check no addresses. Each relayed spend sends the relayer the commitments, amounts and nullifiers of its notes, and the relayer can refuse it. With the enclave key Hinkal can group the notes of each account, without the user's consent.
-
 ### Fees
 
 The contracts take no protocol fee. The wallet charges 0.25% on shields, private sends and unshields and 0.35% on swaps and bridges, plus gas, all paid to Hinkal's relayer. A private send adds its 0.25% to the public flat fee.
