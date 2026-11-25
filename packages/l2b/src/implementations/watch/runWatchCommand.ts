@@ -81,7 +81,11 @@ export async function runWatchCommand(
 
   writeFileSync(
     watchedPath,
-    formatJson({ timestamp: run.timestamp, values: accepted }),
+    formatJson({
+      timestamp: run.timestamp,
+      configHash: run.configHash,
+      values: accepted,
+    }),
   )
   await writeWatchDiffHistory(
     diffHistoryPath,
