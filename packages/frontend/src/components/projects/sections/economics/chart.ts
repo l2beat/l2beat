@@ -7,6 +7,7 @@ export const COLORS = {
   burn: 'var(--chart-orange)',
   net: 'var(--primary)',
   price: 'var(--chart-cyan)',
+  staked: 'var(--chart-emerald)',
 }
 
 /** Nullable values grouped into runs without nulls, for gapped lines. */

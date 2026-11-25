@@ -19,6 +19,8 @@ export interface EthSupplyOverview {
     ethStaked: number
     /** Annualised over the previous 30 days */
     networkYield: number | null
+    /** Staked ETH over total supply by day, oldest first */
+    stakedShareHistory: { timestamp: number; share: number }[]
   }
 }
 

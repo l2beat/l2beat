@@ -1,7 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { computeYieldChart } from '~/server/features/defi/liquid-staking/computeLiquidStakingCharts'
+import {
+  computeYieldChart,
+  toEth,
+} from '~/server/features/defi/liquid-staking/computeLiquidStakingCharts'
 import { buildSupplyDays, getDailyIssuance } from './computeEthSupply'
 import dailyBurnSnapshot from './data/dailyBurnSnapshot.json'
 import type { EthSupplyOverview } from './types'
@@ -51,6 +54,7 @@ export async function getEthSupplyOverview(): Promise<EthSupplyOverview> {
       })
     : []
 
+  const supplyByDay = new Map(days.map((d) => [d.timestamp, d.totalSupply]))
   return {
     days,
     staking:
@@ -59,6 +63,17 @@ export async function getEthSupplyOverview(): Promise<EthSupplyOverview> {
             timestamp: staking.timestamp,
             ethStaked: staking.ethStaked,
             networkYield: staking.network,
+            stakedShareHistory: stakingDays.flatMap((d) => {
+              const supply = supplyByDay.get(d.timestamp)
+              return supply
+                ? [
+                    {
+                      timestamp: d.timestamp,
+                      share: toEth(d.activeBalance) / supply,
+                    },
+                  ]
+                : []
+            }),
           }
         : undefined,
   }
@@ -95,7 +110,15 @@ function getMockEthSupplyOverview(
   return {
     days,
     staking: last
-      ? { timestamp: last.timestamp, ethStaked: 36_000_000, networkYield: 0.03 }
+      ? {
+          timestamp: last.timestamp,
+          ethStaked: 36_000_000,
+          networkYield: 0.03,
+          stakedShareHistory: days.map((d) => ({
+            timestamp: d.timestamp,
+            share: 36_000_000 / d.totalSupply,
+          })),
+        }
       : undefined,
   }
 }

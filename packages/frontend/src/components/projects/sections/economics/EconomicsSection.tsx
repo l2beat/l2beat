@@ -23,6 +23,7 @@ import { FlowsTile } from './FlowsTile'
 import { LiquidStakingBlock } from './LiquidStakingBlock'
 import { PriceTile } from './PriceTile'
 import { RecordsTile } from './RecordsTile'
+import { StakedShareTile } from './StakedShareTile'
 import { StakingTile } from './StakingTile'
 import { SupplyTile } from './SupplyTile'
 
@@ -96,6 +97,12 @@ export function EconomicsSection({
               staking={ethSupply.staking}
               liquidStaking={liquidStaking}
               supply={last?.totalSupply ?? 0}
+            />
+            <StakedShareTile
+              staking={ethSupply.staking}
+              from={windowDays[0]?.timestamp ?? 0}
+              supply={last?.totalSupply ?? 0}
+              rangeLabel={label}
             />
             {initialChain && <ChainTile initialChain={initialChain} />}
           </div>

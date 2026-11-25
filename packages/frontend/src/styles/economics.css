@@ -25,10 +25,10 @@
   background-color: var(--divider);
   border-block: 1px solid var(--divider);
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking" "chain";
+  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking" "share" "chain";
 }
 .economics-bento-no-chain {
-  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking";
+  grid-template-areas: "hero" "offset" "rate" "flows" "records" "price" "staking" "share";
 }
 
 /* Two columns: wide tiles span both; narrow ones pair up with a neighbour
@@ -43,7 +43,8 @@
       "rate rate"
       "flows flows"
       "staking staking"
-      "price chain";
+      "share price"
+      "chain chain";
   }
   .economics-bento-no-chain {
     grid-template-areas:
@@ -52,13 +53,13 @@
       "rate rate"
       "flows flows"
       "staking staking"
-      "price price";
+      "share price";
   }
 }
 
 /* Three columns, a zigzag: the supply with the burn beside it on the right,
-   then the flows with records and price on the left, then staking with the
-   chain on the right. */
+   then the flows with records and price on the left, then staking with its
+   share of the supply on the right, then the chain. */
 @container economics (min-width: 740px) {
   .economics-bento {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -67,7 +68,8 @@
       "hero hero rate"
       "records flows flows"
       "price flows flows"
-      "staking staking chain";
+      "staking staking share"
+      "chain chain chain";
   }
   .economics-bento-no-chain {
     grid-template-areas:
@@ -75,7 +77,7 @@
       "hero hero rate"
       "records flows flows"
       "price flows flows"
-      "staking staking staking";
+      "staking staking share";
   }
 }
 
