@@ -106,6 +106,6 @@ async function getActivityProjects(ps: ProjectService): Promise<ProjectId[]> {
 }
 
 const ACTIVITY_CHART_DESCRIPTION = [
-  'One point per day. Counts are `null` for days the data is not synced for yet: they are missing, not zero. A synced day with no transactions is `0`.',
+  'One point per day, up to the last day the data is synced for. Later days are left out: they are missing, not zero. A synced day with no transactions is `0`.',
   'For a sum of many projects, a day counts as synced once any of them is synced for it, so a project that lags behind is left out of the newest days.',
 ].join('\n\n')

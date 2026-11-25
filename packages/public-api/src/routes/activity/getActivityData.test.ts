@@ -9,8 +9,8 @@ import { getActivityData } from './getActivityData'
 
 // Why: the range ends at the newest target of all activity indexers, which
 // moves on with the clock even when a project stops syncing. The days after a
-// project's last synced day used to come back as 0 transactions, which reads
-// as "nobody used it". A synced day with no record really is 0: indexers
+// project's last synced day must not come back as 0 transactions, which reads
+// as "nobody used it", so the chart ends at that day. A synced day with no record really is 0: indexers
 // write a day only when it had blocks.
 // How: getActivityData runs over a fake database with a fixed target and
 // per-project sync metadata; the tests read the counts it returns per day.
@@ -21,7 +21,7 @@ describe(getActivityData.name, () => {
   const ALPHA = ProjectId('alpha')
   const BETA = ProjectId('beta')
 
-  it('returns nulls for days after the project last synced', async () => {
+  it('leaves out the days after the project last synced', async () => {
     const db = mockDb(
       [activity(ALPHA, RANGE_END - 3 * DAY, 5)],
       [sync(ALPHA, { syncedUntil: RANGE_END - 2 * DAY + 10 * UnixTime.HOUR })],
@@ -31,9 +31,6 @@ describe(getActivityData.name, () => {
 
     expect(result).toEqual([
       { timestamp: RANGE_END - 3 * DAY, txCount: 5, uopsCount: 5 },
-      { timestamp: RANGE_END - 2 * DAY, txCount: null, uopsCount: null },
-      { timestamp: RANGE_END - DAY, txCount: null, uopsCount: null },
-      { timestamp: RANGE_END, txCount: null, uopsCount: null },
     ])
   })
 
@@ -70,7 +67,6 @@ describe(getActivityData.name, () => {
 
     expect(result).toEqual([
       { timestamp: RANGE_END - DAY, txCount: 3, uopsCount: 3 },
-      { timestamp: RANGE_END, txCount: null, uopsCount: null },
     ])
   })
 
@@ -113,8 +109,6 @@ describe(getActivityData.name, () => {
     expect(result).toEqual([
       { timestamp: RANGE_END - 3 * DAY, txCount: 4, uopsCount: 4 },
       { timestamp: RANGE_END - 2 * DAY, txCount: 0, uopsCount: 0 },
-      { timestamp: RANGE_END - DAY, txCount: null, uopsCount: null },
-      { timestamp: RANGE_END, txCount: null, uopsCount: null },
     ])
   })
 
