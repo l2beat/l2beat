@@ -57,6 +57,8 @@ export interface ProjectLiveWindow {
     /** Where the buckets start, a little before `from` */
     readFrom: UnixTime
   }
+  /** Whether it was read following the newest block, without a `to` */
+  following: boolean
   /** Those with blocks */
   buckets: LiveActivityBucketRecord[]
   /** Of the oldest stored block, before which nothing is known */
@@ -162,6 +164,7 @@ async function readProjectLiveWindow({
 
   return {
     window,
+    following: to === undefined,
     buckets,
     oldest,
     usual: getUsualRates(hours, firstHour, lastHour),

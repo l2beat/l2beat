@@ -46,11 +46,6 @@ export function useLiveWindow({
     staleTime: refetchInterval,
   })
   const { isLoading, isPlaceholderData, isError } = query
-  // where the data on screen was read to end, undefined at the newest block
-  const [readTo, setReadTo] = useState(to)
-  if (!isPlaceholderData && query.data !== undefined && readTo !== to) {
-    setReadTo(to)
-  }
   // tooltips read where buckets are drawn. Only once this window's data is
   // read, as the pointer can come in before, and for this window alone, as
   // the length or end can change from the keyboard with the pointer still in
@@ -86,10 +81,9 @@ export function useLiveWindow({
   // where the window is asked to end, undefined at the newest block: a move
   // on the overview as it will be read
   const end = seeking && !seekTo.holdsEnd ? getTargetEnd(seekTo, buffer) : to
-  // at the newest block, where the window is drawn while what is on screen
-  // follows it
-  const asked =
-    end ?? (readTo === undefined ? playhead : undefined) ?? buffer?.to
+  // at the newest block, where the window is drawn while the data on screen
+  // was read following it
+  const asked = end ?? (data?.following ? playhead : undefined) ?? buffer?.to
   const selection: [number, number] | undefined =
     asked !== undefined && (seeking || isPlaceholderData)
       ? // as asked for while that is read, not as it was
