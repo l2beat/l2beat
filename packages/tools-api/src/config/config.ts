@@ -17,6 +17,7 @@ export async function getConfig(): Promise<Config> {
     .record(v.string(), v.tuple([v.string(), v.number()]))
     .parse(tokenList)
   const env = getEnv()
+  const alchemyApiKey = env.string('ALCHEMY_API_KEY')
 
   const discovered = getDiscoveredConfig(chains)
   const projects = await new ProjectService().getProjects({
@@ -29,7 +30,7 @@ export async function getConfig(): Promise<Config> {
     chains,
     rpcUrls: getRpcUrls(
       chains,
-      env.string('ALCHEMY_API_KEY'),
+      alchemyApiKey,
       projects.map((project) => project.chainConfig),
     ),
     discovered,
@@ -41,7 +42,7 @@ export async function getConfig(): Promise<Config> {
     ),
     wellKnownAbi,
     hashes: getHashes(discovered.preImages.concat(preImages)),
-    uopsChains: await getUopsChains(),
+    uopsChains: await getUopsChains(chains, alchemyApiKey),
   }
 }
 
