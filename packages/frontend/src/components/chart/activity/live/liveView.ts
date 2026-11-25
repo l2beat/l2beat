@@ -1,4 +1,4 @@
-import { formatRange, parseTimestamp } from '~/utils/dates'
+import { parseTimestamp } from '~/utils/dates'
 import { toLiveLength } from '~/utils/range/liveRanges'
 
 interface Edges {
@@ -21,6 +21,113 @@ export function clampTo(
   if (end === undefined || buffer === undefined) return undefined
   const clamped = Math.max(buffer.from + seconds, end)
   return clamped >= buffer.to ? undefined : clamped
+}
+
+/** What the reads have without a break, in bars of `bucket` seconds */
+interface Read extends Edges {
+  bucket: number
+}
+
+/**
+ * Whether the reads have the whole `view`: both edges, as a read can end well
+ * before the newest block. A bar may be missing on the right, as a read ends
+ * on the last whole one, short of the newest block
+ */
+export function isRead(
+  view: [number, number] | undefined,
+  read: Read | undefined,
+): view is [number, number] {
+  return (
+    view !== undefined &&
+    read !== undefined &&
+    view[0] >= read.from &&
+    view[1] <= read.to + read.bucket
+  )
+}
+
+/**
+ * What the charts show of the window asked for. The window itself when it is
+ * the window read's `own`, which trails its data, or when the reads have it,
+ * then ending no later than they do, as a slow chain's missing bar is wide.
+ * Otherwise where the charts were `last` while the reads have that, and
+ * without that either, the window read's own view, `live`
+ */
+export function getLiveView({
+  asked,
+  own,
+  last,
+  live,
+  read,
+}: {
+  asked: [number, number] | undefined
+  own: boolean
+  last: [number, number] | undefined
+  live: [number, number] | undefined
+  read: Read | undefined
+}): {
+  view: [number, number] | undefined
+  /** Whether the view is the window asked for */
+  covered: boolean
+  /** Whether the charts stay where they were */
+  kept: boolean
+} {
+  if (own) return { view: asked, covered: true, kept: false }
+  if (read && isRead(asked, read)) {
+    const past = Math.min(Math.max(0, asked[1] - read.to), asked[0] - read.from)
+    return {
+      view: [asked[0] - past, asked[1] - past],
+      covered: true,
+      kept: false,
+    }
+  }
+  if (isRead(last, read)) return { view: last, covered: false, kept: true }
+  return { view: live, covered: false, kept: false }
+}
+
+/**
+ * Whether the reads drawn are held as they are. Under the pointer, as
+ * tooltips read where bars are drawn, once this window's data is read. And
+ * looking back while either read is on its way, as a window read alone does
+ * not have the window looked back to, and a new buffer read alone may not
+ * meet the old window read
+ */
+export function holdsReads({
+  hovered,
+  lookingBack,
+  window,
+  whole,
+}: {
+  hovered: boolean
+  lookingBack: boolean
+  window: { isRead: boolean; pending: boolean }
+  whole: { pending: boolean }
+}) {
+  return (
+    (hovered && window.isRead) ||
+    (lookingBack && (!window.isRead || window.pending || whole.pending))
+  )
+}
+
+/** How long the charts take to cover 63% of the way to a window asked for */
+export const CHASE_MS = 80
+
+/**
+ * The charts' view `elapsedMs` later on its way to `goal`: each edge covers
+ * the same share of what it has left, so the view slows as it arrives.
+ * Undefined once there, within a 2000th of the goal, under a pixel
+ */
+export function chase(
+  view: [number, number],
+  goal: [number, number],
+  elapsedMs: number,
+): [number, number] | undefined {
+  const left = Math.exp(-Math.max(0, elapsedMs) / CHASE_MS)
+  const from = goal[0] + (view[0] - goal[0]) * left
+  const to = goal[1] + (view[1] - goal[1]) * left
+  const near = (goal[1] - goal[0]) / 2000
+  return Math.abs(from - goal[0]) < near && Math.abs(to - goal[1]) < near
+    ? undefined
+    : [from, to]
 }
 
 /** A window on the overview, before it is read */
@@ -215,12 +322,6 @@ export function ticksOf(from: number, to: number, step: number) {
   const ticks: number[] = []
   for (let t = Math.ceil(from / step) * step; t <= to; t += step) ticks.push(t)
   return ticks
-}
-
-/** Buckets are counted from the epoch, so any time in one gives its start */
-export function formatBucket(timestamp: number, bucket: number) {
-  const start = Math.floor(timestamp / bucket) * bucket
-  return formatRange(start, start + bucket, { seconds: true })
 }
 
 /** Without "UTC", which the axis would repeat on every tick */

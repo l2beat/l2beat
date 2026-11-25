@@ -20,7 +20,13 @@ import { LiveOverview } from './LiveOverview'
 import { LiveState } from './LiveState'
 import { LiveStats } from './LiveStats'
 import { hasHistory, type LiveMetric } from './liveMetrics'
-import { getUsualRate, getWindowStats, toBuckets } from './liveSteps'
+import {
+  getUsualRate,
+  getWindowStats,
+  toBuckets,
+  withWhole,
+  withWholeUsual,
+} from './liveSteps'
 import { useLiveWindow } from './useLiveWindow'
 
 /**
@@ -47,10 +53,20 @@ export function ProjectLiveActivity({
     projectId: project.id,
     onGlide: (seconds) => chart.current?.glide(seconds),
   })
-  const { data, domain, range, selection } = live
-  const buckets = useMemo(
-    () => data && toBuckets(data.window, data.buckets, metric, data.oldest),
-    [data, metric],
+  const { data, whole, seam, domain, range, selection } = live
+  const buckets = useMemo(() => {
+    const read =
+      data && toBuckets(data.window, data.buckets, metric, data.oldest)
+    if (!read || !whole || seam === undefined) return read
+    return withWhole(
+      read,
+      toBuckets(whole.window, whole.buckets, metric, whole.oldest),
+      seam,
+    )
+  }, [data, whole, seam, metric])
+  const usual = useMemo(
+    () => withWholeUsual(data?.usual ?? [], whole?.usual ?? []),
+    [data, whole],
   )
   const state =
     stateSlot &&
@@ -70,19 +86,26 @@ export function ProjectLiveActivity({
     )
   }
 
-  const bucket = data?.window.bucket ?? 1
-  const stats = buckets && domain && getWindowStats(buckets, bucket, domain)
+  // of the window on the overview, as their label names it, so none while
+  // the charts show another
+  const stats =
+    buckets && selection && live.covered
+      ? getWindowStats(buckets, selection)
+      : undefined
 
   return (
     <div className="flex flex-col">
       {state}
       <ChartControlsWrapper>
         <ProjectChartTimeRange
-          timeRange={domain}
-          isPlaceholderData={live.isPlaceholderData}
+          // where the charts are going, not each frame on the way
+          timeRange={selection}
+          isPlaceholderData={live.stale}
         />
         <RadioGroup
           name="liveActivityRange"
+          onPointerEnter={live.reach}
+          onFocus={live.reach}
           // none of the presets for another length
           value={range ?? ''}
           onValueChange={(value) => {
@@ -103,18 +126,17 @@ export function ProjectLiveActivity({
         category={category}
         metric={metric}
         buckets={buckets}
-        bucket={bucket}
-        usual={data?.usual ?? []}
+        usual={usual}
         domain={domain}
         lookahead={live.lookahead}
-        tick={getLiveTick(live.shown)}
+        tick={getLiveTick(domain ? domain[1] - domain[0] : live.length)}
         head={live.scrolling && !live.stale}
         isLoading={live.isLoading}
         isPlaceholderData={live.stale}
         onHover={live.setHovered}
       />
       {data && selection && (
-        <div className="mb-4">
+        <div className="mb-4" onPointerEnter={live.reach} onFocus={live.reach}>
           <LiveOverview
             overview={data.overview}
             buffer={data.buffer}
@@ -175,12 +197,12 @@ export function ProjectLiveActivity({
         usual={
           hasHistory(metric) && data && stats
             ? // over the buckets the rate is
-              getUsualRate(data.usual, metric, [stats.from, stats.to])
+              getUsualRate(usual, metric, [stats.from, stats.to])
             : undefined
         }
         metric={metric}
         stats={stats}
-        span={live.following ? live.shown : domain}
+        span={live.lookingBack ? selection : live.length}
         isLoading={live.isLoading}
       />
     </div>

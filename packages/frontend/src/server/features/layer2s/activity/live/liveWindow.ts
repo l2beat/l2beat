@@ -62,30 +62,29 @@ export function getLiveBuffer(
 }
 
 /**
- * The window of `seconds` ending before `to`, or at the newest block, within
- * the buffer. A
- * bucket spans a whole number of blocks, so a chain with a fixed block time
- * has as many in each instead of alternating, and only buckets the newest
- * block is past are in, so the live edge does not dip
+ * The window of `seconds` ending at the newest block. A bucket spans a whole
+ * number of blocks, so a chain with a fixed block time has as many in each
+ * instead of alternating, and only buckets the newest block is past are in,
+ * so the live edge does not dip. `whole` reads the buffer from its start, for
+ * a window moved through it
  */
 export function getLiveWindow(
   seconds: number,
   buffer: Pick<LiveBuffer, 'from' | 'to'>,
   blockSeconds: number,
-  to?: UnixTime,
+  whole = false,
 ) {
   // a sparse sample, as a stale block beside a new one, can't empty the window
   const block = Math.min(Math.max(1, blockSeconds), seconds / 10)
   const bucket = Math.ceil(getLiveBucketSeconds(seconds) / block) * block
-  const end =
-    Math.floor(
-      Math.min(Math.max(to ?? buffer.to, buffer.from + seconds), buffer.to) /
-        bucket,
-    ) * bucket
+  const end = Math.floor(buffer.to / bucket) * bucket
   const from = end - seconds
-  const readFrom =
+  const lead =
     Math.floor(from / bucket) * bucket -
     Math.ceil(LEAD_SECONDS / bucket) * bucket
+  const readFrom = whole
+    ? Math.min(lead, Math.floor(buffer.from / bucket) * bucket)
+    : lead
   return { seconds, from, to: end, bucket, readFrom }
 }
 

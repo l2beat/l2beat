@@ -8,9 +8,9 @@ import {
 } from '~/components/core/chart/ChartTooltip'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
 import { PercentChange } from '~/components/PercentChange'
+import { formatRange } from '~/utils/dates'
 import { LIVE_METRICS, type LiveMetric } from './liveMetrics'
 import type { LiveRow } from './liveSteps'
-import { formatBucket } from './liveView'
 
 /**
  * Laid out as the history's: the bucket's rate, with the past days' at this
@@ -18,12 +18,10 @@ import { formatBucket } from './liveView'
  */
 export function LiveTooltip({
   row,
-  bucket,
   metric,
   color,
 }: {
   row: LiveRow
-  bucket: number
   metric: LiveMetric
   color: string
 }) {
@@ -38,7 +36,7 @@ export function LiveTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-48 flex-col sm:w-64">
         <ChartTooltipTitle className="mb-3 whitespace-nowrap">
-          {formatBucket(row.timestamp, bucket)}
+          {formatRange(row.timestamp, row.end, { seconds: true })}
         </ChartTooltipTitle>
         {value === null ? (
           <span className="text-secondary">No blocks stored yet</span>
@@ -92,7 +90,7 @@ export function LiveTooltip({
               <ChartTooltipRow name="value">
                 <span className="flex items-baseline gap-1">
                   <ChartTooltipValue
-                    value={value * bucket}
+                    value={value * (row.end - row.timestamp)}
                     format={formatTotal}
                     className="tabular-nums"
                   />

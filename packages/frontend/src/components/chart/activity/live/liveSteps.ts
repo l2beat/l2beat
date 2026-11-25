@@ -11,6 +11,8 @@ import { hasHistory, LIVE_METRICS, type LiveMetric } from './liveMetrics'
 
 export interface LiveBucket {
   start: number
+  /** Where the next one starts, as the window's and the whole buffer's can differ in width */
+  end: number
   /** Per second, of the metric picked. Null before the oldest stored block */
   value: number | null
   ratio: number | null
@@ -36,6 +38,7 @@ export function toBuckets(
     const record = byTime.get(start)
     buckets.push({
       start,
+      end: start + bucket,
       ratio: record ? getUopsRatio(record.uopsCount, record.count) : null,
       value:
         !record && (oldest === undefined || start < oldest)
@@ -49,19 +52,54 @@ export function toBuckets(
 }
 
 /**
+ * Where the whole buffer's buckets hand over to the window's: where the
+ * window's read starts. None when the two differ in width, as bars of two
+ * sizes are not drawn together, or when the buffer starts no earlier than the
+ * window's read, or ends before it
+ */
+export function getSeam(
+  window: ProjectLiveWindow['window'],
+  whole: ProjectLiveWindow['window'],
+): number | undefined {
+  const joins =
+    whole.bucket === window.bucket &&
+    whole.readFrom < window.readFrom &&
+    whole.to >= window.readFrom
+  return joins ? window.readFrom : undefined
+}
+
+/**
+ * The whole buffer's buckets up to `seam` and the window's from it: what a
+ * window moved through the buffer is drawn from
+ */
+export function withWhole(
+  buckets: LiveBucket[],
+  whole: LiveBucket[],
+  seam: number,
+) {
+  return [
+    ...whole.filter((b) => b.end <= seam),
+    ...buckets.filter((b) => b.start >= seam),
+  ]
+}
+
+/** The hours read with the window, and the whole buffer's others */
+export function withWholeUsual(usual: UsualHour[], whole: UsualHour[]) {
+  const hours = new Set(usual.map((u) => u.hour))
+  return [...usual, ...whole.filter((u) => !hours.has(u.hour))]
+}
+
+/**
  * A row at the start of each bucket the window is in, for a curve that holds
  * a row's value up to the next one. The buckets on its edges are whole, as
  * the chart clips them
  */
-export function toSteps(
-  buckets: LiveBucket[],
-  bucket: number,
-  [from, to]: [number, number],
-) {
+export function toSteps(buckets: LiveBucket[], [from, to]: [number, number]) {
   return buckets
-    .filter(({ start }) => start + bucket > from && start < to)
-    .map(({ start, value, ratio, blocks }) => ({
+    .filter(({ start, end }) => end > from && start < to)
+    .map(({ start, end, value, ratio, blocks }) => ({
       timestamp: start,
+      end,
       value,
       ratio,
       blocks,
@@ -73,15 +111,15 @@ const DRAWN = ['value', 'ratio', 'usualMin', 'usualMedian', 'usualMax'] as const
 /**
  * A step is drawn only up to a next row with a value, so one before a row
  * without, or the last, would not be. Each gets a row closing it where it
- * ends: at the end, the last row again a bucket later, and before a row
- * without a value, that row with the value the step had
+ * ends: at the end, the last row again where its bucket ends, and before a
+ * row without a value, that row with the value the step had
  */
 export function closeSteps<
-  T extends { timestamp: number } & Record<
+  T extends { timestamp: number; end: number } & Record<
     (typeof DRAWN)[number],
     number | null
   >,
->(steps: T[], bucket: number): T[] {
+>(steps: T[]): T[] {
   const last = steps.at(-1)
   if (!last) return steps
   const closed = steps.flatMap((step, i) => {
@@ -94,7 +132,7 @@ export function closeSteps<
     for (const key of ending) closing[key] = previous[key]
     return [closing, step]
   })
-  return [...closed, { ...last, timestamp: last.timestamp + bucket }]
+  return [...closed, { ...last, timestamp: last.end }]
 }
 
 /**
@@ -103,25 +141,24 @@ export function closeSteps<
  */
 export function getWindowStats(
   buckets: LiveBucket[],
-  bucket: number,
   [from, to]: [number, number],
 ) {
   const inWindow = buckets.filter(
-    (b) => b.value !== null && b.start >= from && b.start + bucket <= to,
+    (b) => b.value !== null && b.start >= from && b.end <= to,
   )
   const first = inWindow[0]
   const last = inWindow.at(-1)
   if (!first || !last) return undefined
-  const seconds = inWindow.length * bucket
   const sum = (get: (b: LiveBucket) => number) =>
     inWindow.reduce((total, b) => total + get(b), 0)
+  const seconds = sum((b) => b.end - b.start)
   const blocks = sum((b) => b.blocks)
   const gas = sum((b) => b.gas)
   return {
     /** Where the buckets the figures come from start and end */
     from: first.start,
-    to: last.start + bucket,
-    rate: sum((b) => b.value ?? 0) / inWindow.length,
+    to: last.end,
+    rate: sum((b) => (b.value ?? 0) * (b.end - b.start)) / seconds,
     blocks,
     gas,
     blocksPerMinute: (blocks / seconds) * 60,
@@ -141,7 +178,10 @@ export function withDashAnchor(
   // before the first step too, which can start before the window
   const start = Math.min(from, steps[0]?.timestamp ?? from)
   const hour = Math.floor((start - 1) / UnixTime.HOUR) * UnixTime.HOUR
-  return [{ timestamp: hour, value: null, ratio: null, blocks: 0 }, ...steps]
+  return [
+    { timestamp: hour, end: hour, value: null, ratio: null, blocks: 0 },
+    ...steps,
+  ]
 }
 
 /** Each step with the usual range of the hour it is in, null without one, as for gas */
