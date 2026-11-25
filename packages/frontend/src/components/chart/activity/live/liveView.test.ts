@@ -43,21 +43,36 @@ describe(getResizedFrom.name, () => {
 
   it('holds the end, in whole minutes', () => {
     expect(
-      getResizedFrom(20 * MINUTE + 10, 15 * MINUTE, T - 3600, buffer, false),
+      getResizedFrom(
+        15 * MINUTE,
+        -5 * MINUTE - 10,
+        15 * MINUTE,
+        T - 3600,
+        buffer,
+        false,
+      ),
     ).toEqual({ end: T - 3600, seconds: 20 * MINUTE, holdsEnd: true })
   })
 
   it('holds the end of a window at the newest block', () => {
     expect(
-      getResizedFrom(20 * MINUTE, 15 * MINUTE, undefined, buffer, false),
-    ).toEqual({ end: undefined, seconds: 20 * MINUTE, holdsEnd: true })
+      getResizedFrom(
+        15 * MINUTE,
+        5 * MINUTE,
+        15 * MINUTE,
+        undefined,
+        buffer,
+        false,
+      ),
+    ).toEqual({ end: undefined, seconds: 10 * MINUTE, holdsEnd: true })
   })
 
   it('keeps where a move not yet read put the end', () => {
     // Methodology: ArrowLeft moved the window to end at T - 3690, then a
     // resize came before that was read
     const target = getResizedFrom(
-      20 * MINUTE,
+      15 * MINUTE,
+      -5 * MINUTE,
       15 * MINUTE,
       T - 3690,
       buffer,
@@ -70,7 +85,8 @@ describe(getResizedFrom.name, () => {
   it('stops at the start of the buffer', () => {
     expect(
       getResizedFrom(
-        20 * MINUTE,
+        5 * MINUTE,
+        -15 * MINUTE,
         5 * MINUTE,
         buffer.from + 10 * MINUTE + 30,
         buffer,
@@ -84,13 +100,29 @@ describe(getResizedFrom.name, () => {
     // 12 s early to a bucket, leaves 30 min 48 s to the buffer's start
     expect(
       getResizedFrom(
-        32 * MINUTE,
+        31 * MINUTE,
+        -MINUTE,
         31 * MINUTE,
         buffer.from + 31 * MINUTE - 12,
         buffer,
         false,
       ).seconds,
     ).toEqual(31 * MINUTE)
+  })
+
+  it('does not shorten a window longer than a filling buffer dragged out', () => {
+    // Methodology: 15 min asked, 10 min stored, so 10 min drawn
+    const filling = { from: T - 10 * MINUTE, to: T }
+    expect(
+      getResizedFrom(
+        10 * MINUTE,
+        -MINUTE,
+        15 * MINUTE,
+        undefined,
+        filling,
+        false,
+      ).seconds,
+    ).toEqual(15 * MINUTE)
   })
 })
 

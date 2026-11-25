@@ -146,7 +146,8 @@ export function LiveOverview({
       resize
         ? resize.edge === 'from'
           ? getResizedFrom(
-              resize.drawn - (at - resize.at),
+              resize.drawn,
+              at - resize.at,
               resize.seconds,
               resize.end,
               buffer,

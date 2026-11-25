@@ -133,19 +133,21 @@ export function holdEnd(
 }
 
 /**
- * The window of `seconds` the left edge is dragged to, ending at `end`, or at
- * the newest block for undefined, at the length it is read. Dragged out from
- * `current`, the buffer's start does not shorten it
+ * The window the left edge makes, dragged `by` seconds in (negative out) from
+ * a window drawn `drawn` long, ending at `end`, or at the newest block for
+ * undefined, at the length it is read. Dragged out, the buffer's start does
+ * not shorten it below `current`, the length asked for
  */
 export function getResizedFrom(
-  seconds: number,
+  drawn: number,
+  by: number,
   current: number,
   end: number | undefined,
   buffer: Edges,
   moved: boolean,
 ): LiveTarget {
-  const next = toLiveLength(seconds, (end ?? buffer.to) - buffer.from)
-  return holdEnd(end, seconds > current ? Math.max(next, current) : next, moved)
+  const next = toLiveLength(drawn - by, (end ?? buffer.to) - buffer.from)
+  return holdEnd(end, by < 0 ? Math.max(next, current) : next, moved)
 }
 
 /**
