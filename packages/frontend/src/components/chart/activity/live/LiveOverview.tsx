@@ -60,8 +60,14 @@ export function LiveOverview({
   /** A drag going on: a move, or a resize by an edge with the other held */
   const dragging = useRef<
     | {
-        /** The pointer's x when pressed, and whether it has been dragged since */
+        /**
+         * The pointer's x and time when pressed, and seconds per pixel then,
+         * fixed so the buffer moving on isn't read as a drag
+         */
         x: number
+        at: number
+        scale: number
+        /** Whether the pointer has been dragged since */
         dragged: boolean
         /** Where a window following the newest block was drawn to end */
         live: number | undefined
@@ -72,13 +78,7 @@ export function LiveOverview({
               edge: 'from'
               end: number | undefined
               moved: boolean
-              /**
-               * The pointer's x and seconds per pixel when pressed, fixed so
-               * the buffer moving on isn't read as a drag; the length drawn
-               * and asked for
-               */
-              x: number
-              scale: number
+              /** The length drawn and asked for */
               drawn: number
               seconds: number
             }
@@ -154,21 +154,21 @@ export function LiveOverview({
     )
   }
   const pointTo = (event: PointerEvent) => {
-    const at = timeAt(event)
-    if (at === undefined) return
     const drag = dragging.current
-    const resize = drag?.resize
+    if (drag === undefined) return
+    const at = drag.at + (event.clientX - drag.x) * drag.scale
+    const resize = drag.resize
     // a resize from the keyboard not yet read is kept
     const seconds = target.current?.seconds ?? length
     // drawn behind the newest block, a following window keeps following, and
     // its length, unless dragged back from where it was drawn
     const follows = (end: number | undefined) =>
-      drag?.live !== undefined && end !== undefined && end >= drag.live
+      drag.live !== undefined && end !== undefined && end >= drag.live
     const next: LiveTarget = resize
       ? resize.edge === 'from'
         ? getResizedFrom(
             resize.drawn,
-            (event.clientX - resize.x) * resize.scale,
+            at - drag.at,
             resize.seconds,
             resize.end,
             buffer,
@@ -177,7 +177,7 @@ export function LiveOverview({
         : follows(at + resize.grab)
           ? { end: undefined, seconds: resize.seconds, exact: true }
           : getResizedTo(at + resize.grab, resize.start, buffer)
-      : { end: at + (drag?.grab ?? seconds / 2), seconds }
+      : { end: at + drag.grab, seconds }
     seek(follows(next.end) ? { ...next, end: undefined } : next)
   }
   const onKeyDown = (event: KeyboardEvent) => {
@@ -250,6 +250,8 @@ export function LiveOverview({
         // where the edge is from the pointer, kept through the drag
         dragging.current = {
           x: event.clientX,
+          at,
+          scale: secondsPerPixel(),
           dragged: !edge && !inside,
           live: following ? selection[1] : undefined,
           grab: inside
@@ -261,8 +263,6 @@ export function LiveOverview({
                   edge,
                   end: shownEnd,
                   moved: isMoved(target.current),
-                  x: event.clientX,
-                  scale: secondsPerPixel(),
                   drawn: selection[1] - shownFrom,
                   seconds: target.current?.seconds ?? length,
                 }

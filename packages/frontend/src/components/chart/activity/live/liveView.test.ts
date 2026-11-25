@@ -281,6 +281,9 @@ describe(getMoveEnd.name, () => {
 
   it('stays short of the newest block when rounding up would reach it', () => {
     expect(getMoveEnd({ end: T - 5, seconds: 300 }, buffer, 12)).toEqual(T - 12)
+    expect(getMoveEnd({ end: T - 12, seconds: 3600 }, buffer, 24)).toEqual(
+      T - 24,
+    )
   })
 
   it('returns to the newest block with a key step back and one forward', () => {
