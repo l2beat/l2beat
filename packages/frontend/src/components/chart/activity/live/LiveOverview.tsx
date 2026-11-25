@@ -153,8 +153,8 @@ export function LiveOverview({
     if (drag === undefined) return
     const at = drag.at + (event.clientX - drag.x) * drag.scale
     const box = ref.current?.getBoundingClientRect()
-    // a dragged edge at or past the strip's end is at the newest block, as it
-    // is now, wherever on the edge the pointer took it
+    // a window or edge dragged to the strip's end is at the newest block, as
+    // it is now, wherever on it the pointer took it
     const pastEnd = box !== undefined && event.clientX >= box.right - 1
     const edge = (time: number) => (pastEnd ? Math.max(time, to) : time)
     const resize = drag.resize
@@ -177,7 +177,7 @@ export function LiveOverview({
         : follows(edge(at + resize.grab))
           ? { end: undefined, seconds: resize.seconds, exact: true }
           : getResizedTo(edge(at + resize.grab), resize.start, buffer)
-      : { end: edge(at + drag.grab), seconds }
+      : { end: pastEnd ? undefined : at + drag.grab, seconds }
     seek(follows(next.end) ? { ...next, end: undefined } : next)
   }
   const onKeyDown = (event: KeyboardEvent) => {
