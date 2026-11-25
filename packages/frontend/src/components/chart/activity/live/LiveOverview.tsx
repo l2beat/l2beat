@@ -62,8 +62,12 @@ export function LiveOverview({
               edge: 'from'
               end: number | undefined
               moved: boolean
-              /** Where the pointer was pressed, the length drawn and asked for */
-              at: number
+              /**
+               * Where the pointer was pressed and the strip's scale then, as
+               * the buffer moves on under a drag, the length drawn and asked for
+               */
+              x: number
+              scale: number
               drawn: number
               seconds: number
             }
@@ -152,7 +156,7 @@ export function LiveOverview({
         ? resize.edge === 'from'
           ? getResizedFrom(
               resize.drawn,
-              at - resize.at,
+              (event.clientX - resize.x) * resize.scale,
               resize.seconds,
               resize.end,
               buffer,
@@ -240,7 +244,8 @@ export function LiveOverview({
                   edge,
                   end: shownEnd,
                   moved: isMoved(target.current),
-                  at,
+                  x: event.clientX,
+                  scale: secondsPerPixel(),
                   drawn: selection[1] - shownFrom,
                   seconds: target.current?.seconds ?? length,
                 }
