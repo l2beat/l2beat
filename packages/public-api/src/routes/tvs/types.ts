@@ -5,19 +5,19 @@ const nullableNumber = v.union([v.number(), v.null()])
 export const TvsResultItemSchema = v
   .object({
     timestamp: v.number(),
-    totalTvs: nullableNumber,
+    totalTvs: v.number(),
     bySource: v.object({
-      native: nullableNumber,
-      canonical: nullableNumber,
-      external: nullableNumber,
+      native: v.number(),
+      canonical: v.number(),
+      external: v.number(),
     }),
     byCategory: v.object({
-      stablecoins: nullableNumber,
-      eth: nullableNumber,
-      btc: nullableNumber,
-      other: nullableNumber,
-      publicRwa: nullableNumber,
-      restrictedRwa: nullableNumber,
+      stablecoins: v.number(),
+      eth: v.number(),
+      btc: v.number(),
+      other: v.number(),
+      publicRwa: v.number(),
+      restrictedRwa: v.number(),
     }),
     ethPrice: nullableNumber,
   })

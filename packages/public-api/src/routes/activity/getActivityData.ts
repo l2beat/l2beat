@@ -28,32 +28,20 @@ export async function getActivityData(
 
   const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
 
-  const timestamps = generateTimestamps(
-    [startTimestamp, adjustedRange[1]],
-    'day',
-  )
+  // Past the last synced day the data is missing, not zero, and a day being
+  // synced holds a partial count, so the chart ends at the last synced day
+  if (lastSyncedDay === undefined || lastSyncedDay < startTimestamp) {
+    return []
+  }
+  const timestamps = generateTimestamps([startTimestamp, lastSyncedDay], 'day')
 
   return timestamps.map((timestamp: UnixTime) => {
-    // Past the last synced day the data is missing, not zero, and a day being
-    // synced holds a partial count
-    if (lastSyncedDay === undefined || timestamp > lastSyncedDay) {
-      return { timestamp, txCount: null, uopsCount: null }
-    }
-
     // A synced day without a record had no blocks, so no transactions
     const entry = aggregatedEntries[timestamp]
-    if (!entry) {
-      return {
-        timestamp,
-        txCount: 0,
-        uopsCount: 0,
-      }
-    }
-
     return {
       timestamp,
-      txCount: entry.count ?? 0,
-      uopsCount: entry.uopsCount ?? 0,
+      txCount: entry?.count ?? 0,
+      uopsCount: entry?.uopsCount ?? 0,
     }
   })
 }

@@ -55,25 +55,11 @@ describe('/v1/tvs', () => {
 
   afterEach(() => close())
 
-  it('returns nulls, not zeros, for a timestamp without data', async () => {
+  it('leaves out a timestamp without data, not reporting it as zero', async () => {
     const res = await get('/v1/tvs/alpha')
 
     expect(res.status).toEqual(200)
-    expect(res.body.map((p) => p.timestamp)).toEqual([T0, T1, T2])
-    expect(res.body[1]).toEqual({
-      timestamp: T1,
-      totalTvs: null,
-      bySource: { native: null, canonical: null, external: null },
-      byCategory: {
-        stablecoins: null,
-        eth: null,
-        btc: null,
-        other: null,
-        publicRwa: null,
-        restrictedRwa: null,
-      },
-      ethPrice: null,
-    })
+    expect(res.body.map((p) => p.timestamp)).toEqual([T0, T2])
   })
 
   it('adds the ETH price of each point, null when it is unknown', async () => {
@@ -87,7 +73,7 @@ describe('/v1/tvs', () => {
     expect(res.body[0]).toEqual(
       expect.subset({ totalTvs: 100, ethPrice: 2000 }),
     )
-    expect(res.body[2]).toEqual(
+    expect(res.body[1]).toEqual(
       expect.subset({ totalTvs: 300, ethPrice: null }),
     )
   })
