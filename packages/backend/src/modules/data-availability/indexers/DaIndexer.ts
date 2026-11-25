@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { DaBlob, DaProvider, EthereumDaProvider } from '@l2beat/shared'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
@@ -26,8 +26,11 @@ export interface Dependencies
   projectIds: string[]
   batchSize: number
   blobService: BlobService
-  /** Prices the blobs, on a layer that charges for blob gas */
-  blobFeeProvider?: Pick<EthereumDaProvider, 'getBlobBaseFees'>
+  /**
+   * Prices the blobs from the stored blob base fees, on a layer that charges
+   * for blob gas. Needs the blob fee indexer as a parent
+   */
+  pricesBlobs?: boolean
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -92,7 +95,9 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
 
         const [previousRecords, blobBaseFees] = await Promise.all([
           this.getPreviousRecordsInBlobsRange(blobs),
-          this.$.blobFeeProvider?.getBlobBaseFees(from, adjustedTo),
+          this.$.pricesBlobs
+            ? this.getBlobBaseFees(from, adjustedTo)
+            : undefined,
         ])
 
         this.logger.info('Loaded previous records', {
@@ -126,6 +131,12 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         }
       },
     )
+  }
+
+  /** Wei per blob gas by block number, as the blob fee indexer stored it */
+  private async getBlobBaseFees(from: number, to: number) {
+    const fees = await this.$.db.blobFee.getByBlockRange(from, to)
+    return new Map(fees.map((f) => [f.blockNumber, f.blobBaseFee]))
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {

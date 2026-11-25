@@ -159,19 +159,18 @@ function createIndexers(
     // Every block layer is Ethereum so far, and only Ethereum charges blob gas
     const ethereumDa = providers.ethereumDa
     assert(ethereumDa, 'Ethereum DA provider is required')
-    daIndexers.push(
-      new BlobFeeIndexer(
-        {
-          db: database,
-          provider: ethereumDa,
-          batchSize: daLayer.blobFeeBatchSize,
-          indexerService,
-          minHeight: daLayer.startingBlock,
-          parents: [targetIndexer],
-        },
-        logger,
-      ),
+    const blobFeeIndexer = new BlobFeeIndexer(
+      {
+        db: database,
+        provider: ethereumDa,
+        batchSize: daLayer.blobFeeBatchSize,
+        indexerService,
+        minHeight: daLayer.startingBlock,
+        parents: [targetIndexer],
+      },
+      logger,
     )
+    daIndexers.push(blobFeeIndexer)
 
     if (notifications && notifications.ethereumBlobs) {
       const hourlyIndexer = new HourlyIndexer(logger, clock)
@@ -219,11 +218,12 @@ function createIndexers(
         daLayer: daLayer.name,
         projectIds,
         batchSize: daLayer.batchSize,
-        parents: [blobIndexer],
+        // The fee indexer is a parent so every block is priced before it is indexed here
+        parents: [blobIndexer, blobFeeIndexer],
         indexerService,
         db: database,
         blobService,
-        blobFeeProvider: ethereumDa,
+        pricesBlobs: true,
       },
       logger,
     )

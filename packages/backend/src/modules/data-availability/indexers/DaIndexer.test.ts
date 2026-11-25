@@ -1,6 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { DataAvailabilityRecord, Database } from '@l2beat/database'
-import type { DaBlob, DaProvider, EthereumDaProvider } from '@l2beat/shared'
+import type {
+  BlobFeeRecord,
+  DataAvailabilityRecord,
+  Database,
+} from '@l2beat/database'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { expect, mockFn, mockObject } from 'earl'
@@ -86,14 +90,20 @@ describe(DaIndexer.name, () => {
       expect(safeHeight).toEqual(150)
     })
 
-    it('prices the blobs with the blob base fees of the batch', async () => {
+    it('prices the blobs with the stored blob base fees of the batch', async () => {
       const configurations = [config('project-a')]
       const blobs = [blob(100, 100_000)]
-      const blobBaseFees = new Map([[100, 7n]])
-      const { indexer, daService, blobFeeProvider } = mockIndexer({
+      const { indexer, daService, blobFeeRepository } = mockIndexer({
         configurations,
         blobs,
-        blobBaseFees,
+        blobFees: [
+          {
+            blockNumber: 100,
+            timestamp: UnixTime(1_000),
+            blobBaseFee: 7n,
+            baseFeePerGas: 1n,
+          },
+        ],
         batchSize: 50,
       })
 
@@ -104,12 +114,15 @@ describe(DaIndexer.name, () => {
       )
       await updateCallback()
 
-      expect(blobFeeProvider.getBlobBaseFees).toHaveBeenOnlyCalledWith(100, 150)
+      expect(blobFeeRepository.getByBlockRange).toHaveBeenOnlyCalledWith(
+        100,
+        150,
+      )
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,
         [],
         configurations,
-        blobBaseFees,
+        new Map([[100, 7n]]),
       )
     })
 
@@ -254,7 +267,7 @@ function mockIndexer($: {
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
   blockTimestamps?: Record<number, number>
-  blobBaseFees?: Map<number, bigint>
+  blobFees?: BlobFeeRecord[]
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
@@ -300,8 +313,8 @@ function mockIndexer($: {
   })
 
   const configurations = $.configurations ?? [config('project-a')]
-  const blobFeeProvider = mockObject<EthereumDaProvider>({
-    getBlobBaseFees: mockFn().resolvesTo($.blobBaseFees),
+  const blobFeeRepository = mockObject<Database['blobFee']>({
+    getByBlockRange: mockFn().resolvesTo($.blobFees ?? []),
   })
 
   const indexer = new DaIndexer(
@@ -322,9 +335,10 @@ function mockIndexer($: {
       db: mockDatabase({
         dataAvailability: repository,
         syncMetadata: syncMetadataRepository,
+        blobFee: blobFeeRepository,
       }),
       blobService,
-      blobFeeProvider: $.blobBaseFees && blobFeeProvider,
+      pricesBlobs: $.blobFees !== undefined,
     },
     Logger.SILENT,
   )
@@ -335,7 +349,7 @@ function mockIndexer($: {
     indexer,
     daService,
     blobService,
-    blobFeeProvider,
+    blobFeeRepository,
   }
 }
 
