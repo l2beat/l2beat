@@ -128,12 +128,17 @@ export function LiveOverview({
     if (!box) return
     // where the edges are drawn, which a window longer than the buffer is not
     const px = (t: number) => (xOf(t) / 100) * box.width
+    // a finger covers a narrow window, whose middle still moves it, so it
+    // reaches edges only from outside, and those at the strip's sides from
+    // as far within
+    const touch = event.pointerType === 'touch'
+    const reachable = (x: number) =>
+      touch ? Math.min(Math.max(x, EDGE_REACH), box.width - EDGE_REACH) : x
     return getEdgeAt(
       event.clientX - box.left,
-      [px(selection[0]), px(selection[1])],
+      [reachable(px(selection[0])), reachable(px(selection[1]))],
       EDGE_REACH,
-      // a finger covers a narrow window, whose middle still moves it
-      event.pointerType === 'touch' ? 0 : EDGE_REACH,
+      touch ? 0 : EDGE_REACH,
     )
   }
   const pointTo = (event: PointerEvent) => {

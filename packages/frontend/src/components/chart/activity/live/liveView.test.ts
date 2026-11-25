@@ -110,6 +110,19 @@ describe(getResizedFrom.name, () => {
     ).toEqual(31 * MINUTE)
   })
 
+  it('does not shorten a window drawn shorter than asked, dragged out a little', () => {
+    expect(
+      getResizedFrom(
+        30 * MINUTE + 48,
+        -2,
+        31 * MINUTE,
+        buffer.from + 30 * MINUTE + 48,
+        buffer,
+        false,
+      ).seconds,
+    ).toEqual(31 * MINUTE)
+  })
+
   it('does not shorten a window longer than a filling buffer dragged out', () => {
     // Methodology: 15 min asked, 10 min stored, so 10 min drawn
     const filling = { from: T - 10 * MINUTE, to: T }
