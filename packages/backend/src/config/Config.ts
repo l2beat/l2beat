@@ -7,6 +7,7 @@ import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryPaths,
+  WatchReader,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -43,6 +44,7 @@ export interface Config {
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly watchMonitor: WatchMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
   readonly flatSourceModuleEnabled: boolean
   readonly lzOAppsEnabled: boolean
@@ -173,6 +175,20 @@ export interface UpdateMonitorConfig {
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
   readonly updateMessagesRetentionPeriodDays: number
+  readonly workerPool: {
+    readonly workerCount: number
+    readonly timeoutPerTaskMs: number
+    readonly timeoutPerRunMs: number
+  }
+}
+
+export interface WatchMonitorConfig {
+  readonly paths: DiscoveryPaths
+  readonly watchReader: WatchReader
+  readonly runOnStart?: boolean
+  readonly disabledWatches: string[]
+  readonly githubToken?: string
+  readonly discordWebhookUrl?: string
   readonly workerPool: {
     readonly workerCount: number
     readonly timeoutPerTaskMs: number

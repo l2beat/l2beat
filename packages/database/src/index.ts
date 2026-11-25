@@ -203,4 +203,5 @@ export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
 export { mergeTransferTypeStats } from './repositories/utils/mergeTransferTypeStats'
+export type { WatchMonitorRecord } from './repositories/WatchMonitorRepository'
 export type { CleanableRepoName } from './utils/deleteArchivedRecords'
