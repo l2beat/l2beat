@@ -23,7 +23,7 @@ import type { TvsResultItem } from './types'
 describe('/v1/tvs', () => {
   const SIX_HOURS = 6 * UnixTime.HOUR
   const T0 = UnixTime.toStartOf(UnixTime.now(), 'day') - 3 * UnixTime.DAY
-  const T1 = T0 + SIX_HOURS
+  // One six-hour step between them has no record
   const T2 = T0 + 2 * SIX_HOURS
 
   let baseUrl: string
