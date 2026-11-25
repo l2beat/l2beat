@@ -19,8 +19,7 @@
   <rect x="0.5" y="0.5" width="719" height="225" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
 
   <!-- LEFT: SECRET KEY -->
-  <text x="54" y="30" class="sans hdr">Secret key</text>
-  <text x="126" y="30" class="sans sub">(sign m = 101)</text>
+  <text x="54" y="30" class="sans hdr">Secret key <tspan class="sub" font-weight="400">(sign m = 101)</tspan></text>
 
   <text x="94" y="56" text-anchor="middle" class="sans col">Bit 1 (1)</text>
   <text x="180" y="56" text-anchor="middle" class="sans col">Bit 2 (0)</text>
@@ -53,12 +52,11 @@
   <text x="266" y="169" text-anchor="middle" class="sans tiny" fill="#0f766e">revealed</text>
 
   <!-- MIDDLE ARROW -->
-  <line x1="324" y1="123" x2="386" y2="123" stroke="#64748b" stroke-width="2" marker-end="url(#arr-m)"/>
-  <text x="355" y="112" text-anchor="middle" class="sans" font-size="13" font-style="italic" font-weight="700" fill="#475569">f</text>
+  <line x1="329" y1="123" x2="391" y2="123" stroke="#64748b" stroke-width="2" marker-end="url(#arr-m)"/>
+  <text x="360" y="112" text-anchor="middle" class="sans" font-size="13" font-style="italic" font-weight="700" fill="#475569">f</text>
 
   <!-- RIGHT: PUBLIC KEY -->
-  <text x="414" y="30" class="sans hdr">Public key</text>
-  <text x="486" y="30" class="sans sub">(verify each revealed secret)</text>
+  <text x="414" y="30" class="sans hdr">Public key <tspan class="sub" font-weight="400">(verify each revealed secret)</tspan></text>
 
   <text x="454" y="56" text-anchor="middle" class="sans col">Bit 1</text>
   <text x="540" y="56" text-anchor="middle" class="sans col">Bit 2</text>

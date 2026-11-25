@@ -7,7 +7,7 @@
       .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
       .node { font-size: 12px; font-weight: 600; }
       .sub { font-size: 10.5px; fill: #71717a; }
-      .f { font-size: 12px; font-style: italic; font-weight: 600; fill: #71717a; }
+      .f { font-size: 12px; font-style: italic; font-weight: 600; }
       .tag { font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
     </style>
     <marker id="k-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -59,21 +59,21 @@
   <text x="91" y="193" text-anchor="middle" class="sans sub">pos 0 · unknown</text>
 
   <line x1="154" y1="189" x2="190" y2="189" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#k-slate)"/>
-  <text x="172" y="181" text-anchor="middle" class="sans f">f</text>
+  <text x="172" y="181" text-anchor="middle" class="sans f" fill="#71717a">f</text>
 
   <rect x="196" y="168" width="140" height="42" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
   <text x="266" y="187" text-anchor="middle" class="mono node" fill="#115e59">σ₁ = (tag, r)</text>
   <text x="266" y="202" text-anchor="middle" class="sans" font-size="10" font-weight="700" fill="#0f766e">pos 1 · revealed</text>
 
   <line x1="340" y1="189" x2="380" y2="189" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#k-slate)"/>
-  <text x="360" y="181" text-anchor="middle" class="sans f">f</text>
+  <text x="360" y="181" text-anchor="middle" class="sans f" fill="#71717a">f</text>
 
   <rect x="386" y="168" width="144" height="42" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
   <text x="458" y="187" text-anchor="middle" class="mono node" fill="#1e3a8a">(HASH, g(r))</text>
   <text x="458" y="202" text-anchor="middle" class="sans" font-size="10" fill="#1d4ed8">pos 2 = f(σ₁)</text>
 
   <line x1="534" y1="189" x2="594" y2="189" stroke="#2563eb" stroke-width="1.8" marker-end="url(#k-blue)"/>
-  <text x="564" y="180" text-anchor="middle" class="mono" font-size="11" fill="#1d4ed8">fʷ⁻³</text>
+  <text x="564" y="180" text-anchor="middle" class="mono" font-size="11" fill="#1d4ed8">f<tspan dy="-4" font-size="8.5">w−3</tspan></text>
 
   <rect x="600" y="168" width="88" height="42" rx="8" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
   <text x="644" y="193" text-anchor="middle" class="mono node" fill="#1e3a8a">pk₁</text>
@@ -91,6 +91,7 @@
   <text x="266" y="282" text-anchor="middle" class="sans" font-size="10" fill="#b45309">2nd preimage</text>
 
   <path d="M 336 269 C 408 269, 458 254, 458 216" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#k-red)"/>
+  <text x="414" y="250" text-anchor="middle" class="sans f" fill="#dc2626">f</text>
   <text x="480" y="265" class="sans" font-size="11.5" font-weight="700" fill="#dc2626">f takes normal lane</text>
   <text x="480" y="282" class="sans sub">because BRIDGE ≠ RAMP</text>
 </svg>

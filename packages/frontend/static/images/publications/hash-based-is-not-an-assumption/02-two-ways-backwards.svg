@@ -7,7 +7,7 @@
       .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
       .node { font-size: 13px; font-weight: 600; }
       .sub { font-size: 10.5px; fill: #71717a; }
-      .f { font-size: 12px; font-style: italic; font-weight: 600; fill: #71717a; }
+      .f { font-size: 12px; font-style: italic; font-weight: 600; }
     </style>
     <marker id="m-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
@@ -38,21 +38,21 @@
   <text x="95" y="152" text-anchor="middle" class="sans sub">secret</text>
 
   <line x1="150" y1="138" x2="208" y2="138" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#m-slate)"/>
-  <text x="179" y="129" text-anchor="middle" class="sans f">f</text>
+  <text x="179" y="129" text-anchor="middle" class="sans f" fill="#71717a">f</text>
 
   <rect x="214" y="116" width="104" height="44" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2.2"/>
   <text x="266" y="137" text-anchor="middle" class="mono node" fill="#115e59">v₁</text>
   <text x="266" y="152" text-anchor="middle" class="sans" font-size="10.5" font-weight="700" fill="#0f766e">revealed</text>
 
   <line x1="322" y1="138" x2="380" y2="138" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#m-slate)"/>
-  <text x="351" y="129" text-anchor="middle" class="sans f">f</text>
+  <text x="351" y="129" text-anchor="middle" class="sans f" fill="#71717a">f</text>
 
   <rect x="386" y="116" width="104" height="44" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
   <text x="438" y="137" text-anchor="middle" class="mono node" fill="#1e40af">v₂</text>
   <text x="438" y="152" text-anchor="middle" class="sans" font-size="10.5" fill="#1d4ed8">merge point</text>
 
   <line x1="494" y1="138" x2="552" y2="138" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#m-slate)"/>
-  <text x="523" y="129" text-anchor="middle" class="sans f">f</text>
+  <text x="523" y="129" text-anchor="middle" class="sans f" fill="#71717a">f</text>
 
   <rect x="558" y="116" width="118" height="44" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
   <text x="617" y="142" text-anchor="middle" class="mono node" fill="#1e3a8a">v₃ = pk</text>
@@ -70,6 +70,7 @@
   <text x="266" y="242" text-anchor="middle" class="sans" font-size="10.5" fill="#b45309">2nd preimage</text>
 
   <path d="M 318 228 C 390 228, 438 208, 438 166" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#m-red)"/>
+  <text x="394" y="206" text-anchor="middle" class="sans f" fill="#dc2626">f</text>
 
   <text x="464" y="222" class="sans" font-size="12" font-weight="700" fill="#b91c1c">Case 2: branch &amp; merge</text>
   <text x="464" y="240" class="sans" font-size="11" fill="#7f1d1d">f(u) = f(v₁) = v₂ (never inverts v₁)</text>

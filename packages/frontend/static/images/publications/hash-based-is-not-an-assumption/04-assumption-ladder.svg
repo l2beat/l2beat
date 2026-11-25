@@ -16,14 +16,14 @@
 
   <rect x="0.5" y="0.5" width="719" height="397" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
 
-  <!-- Left cumulative arrow -->
+  <!-- Left axis arrow -->
   <line x1="38" y1="322" x2="38" y2="30" stroke="#a1a1aa" stroke-width="2" marker-end="url(#u-arr)"/>
-  <text x="22" y="176" text-anchor="middle" transform="rotate(-90 22 176)" class="sans" font-size="10" font-weight="700" fill="#71717a" letter-spacing="0.09em">CUMULATIVE STACK</text>
+  <text x="22" y="176" text-anchor="middle" transform="rotate(-90 22 176)" class="sans" font-size="10" font-weight="700" fill="#71717a" letter-spacing="0.09em">ASSUMES MORE</text>
 
   <!-- Tier 3: Ethereum PQ stack -->
   <rect x="62" y="22" width="632" height="52" rx="9" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5"/>
-  <text x="80" y="44" class="sans tier" fill="#581c87">+ Ideal Keccak-f[1600] + Recursive zkVM</text>
-  <text x="80" y="61" class="sans sub" fill="#7e22ce">128-bit outputs · unproved recursive FS · no quantum proof</text>
+  <text x="80" y="44" class="sans tier" fill="#581c87">+ Ideal Keccak-f[1600] + Recursive Fiat-Shamir</text>
+  <text x="80" y="61" class="sans sub" fill="#7e22ce">128-bit digests · recursion unproved · single-key · no quantum bound</text>
   <rect x="424" y="36" width="256" height="24" rx="12" fill="#f3e8ff" stroke="#d8b4fe"/>
   <text x="552" y="51.5" text-anchor="middle" class="mono pill" fill="#6b21a8">leanXMSS · leanSPHINCS · leanVM · LeanDA</text>
 
@@ -41,8 +41,8 @@
 
   <!-- Tier 1: Collision / 2PR (Ethereum today for Keccak) -->
   <rect x="62" y="182" width="632" height="52" rx="9" fill="#f8fafc" stroke="#64748b" stroke-width="1.6"/>
-  <text x="80" y="204" class="sans tier" fill="#0f172a">Collision &amp; Second-Preimage Resistance</text>
-  <text x="80" y="221" class="sans sub" fill="#475569">Covers merge resistance · 256-bit state &amp; tx · 160-bit addresses</text>
+  <text x="80" y="204" class="sans tier" fill="#0f172a">Collision / Second-Preimage Resistance</text>
+  <text x="80" y="221" class="sans sub" fill="#475569">Covers merge resistance at 256 bits · state &amp; tx · 160-bit addresses</text>
   <rect x="504" y="196" width="176" height="24" rx="12" fill="#f1f5f9" stroke="#cbd5e1"/>
   <text x="592" y="211.5" text-anchor="middle" class="mono pill" fill="#334155">state · tx · addresses</text>
 
