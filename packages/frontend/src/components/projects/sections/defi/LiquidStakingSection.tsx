@@ -27,7 +27,7 @@ import {
   ETH_STAKED_TOOLTIP,
   formatEthStaked,
   STAKED_ETH_BAR_NOTE,
-  STAKED_ETH_SHARE_TOOLTIP,
+  STAKED_ETH_BAR_SOURCE,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
 import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
@@ -152,7 +152,7 @@ export function LiquidStakingSection({
                   {formatTimestamp(ethStaked.timestamp, { mode: 'date' })}. The
                   bar splits it between the liquid staking protocols below.
                 </p>
-                <p className="mt-2">{STAKED_ETH_SHARE_TOOLTIP}</p>
+                <p className="mt-2">{STAKED_ETH_BAR_SOURCE}</p>
                 <p className="mt-2">{STAKED_ETH_BAR_NOTE}</p>
               </TooltipContent>
             </Tooltip>

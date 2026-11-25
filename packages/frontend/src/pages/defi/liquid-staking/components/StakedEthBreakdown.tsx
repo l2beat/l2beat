@@ -7,9 +7,12 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingStatsEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
 import {
-  getLargestOperator,
+  formatOperatorUnit,
+  getLargestCompany,
   type LiquidStakingOperator,
   type LiquidStakingOperators,
+  NAME_SOURCES,
+  operatorUnitName,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingOperators'
 import type { LiquidStakingEthStaked } from '~/server/features/defi/liquid-staking/getLiquidStakingSummary'
 import { formatPercent } from '~/utils/calculatePercentageChange'
@@ -23,13 +26,17 @@ import {
   formatEthStaked,
   formatEthStakedWithUsd,
   STAKED_ETH_BAR_NOTE,
-  STAKED_ETH_SHARE_TOOLTIP,
+  STAKED_ETH_BAR_SOURCE,
 } from '../liquidStakingMetrics'
 
 const OTHER_STAKERS_LABEL = 'Other stakers'
+const LIDO_ID = 'lido'
 /** The block under the pointer keeps its colour while the rest of the bar fades. */
 const HIGHLIGHT_ON_HOVER =
   'transition-opacity group-hover/bar:opacity-40 hover:opacity-100'
+/** Marks a share read from a token's supply rather than from validators. */
+const TOKEN_SHARE_HATCH =
+  'repeating-linear-gradient(135deg, transparent 0 3px, rgb(255 255 255 / 0.45) 3px 5px)'
 
 interface Segment {
   id: string
@@ -68,7 +75,7 @@ export function StakedEthBreakdown({
                 {ETH_STAKED_TOOLTIP} The bar splits it between the liquid
                 staking protocols below.
               </p>
-              <p className="mt-2">{STAKED_ETH_SHARE_TOOLTIP}</p>
+              <p className="mt-2">{STAKED_ETH_BAR_SOURCE}</p>
               <p className="mt-2">{STAKED_ETH_BAR_NOTE}</p>
             </TooltipContent>
           </Tooltip>
@@ -101,19 +108,27 @@ export function StakedEthBar({
 }) {
   // Colours by position in the full list, as the charts pick them.
   const colors = generateAccessibleColors(entries.length)
-  const segments: Segment[] = entries.flatMap((entry, i) =>
-    entry.stakedEthShare
-      ? [
-          {
-            id: entry.id,
-            name: entry.shortName ?? entry.name,
-            share: entry.stakedEthShare.value,
-            color: colors[i] ?? 'var(--secondary)',
-            operators: entry.operators,
-          },
-        ]
-      : [],
-  )
+  // Protocols whose validators we can read are sized by those validators'
+  // balance, so the slice equals the sum of its operators; the rest by the ETH
+  // their token stands for.
+  const segments: Segment[] = entries
+    .flatMap((entry, i) => {
+      const share =
+        entry.operators?.stakedEthShare ?? entry.stakedEthShare?.value
+      return share !== undefined
+        ? [
+            {
+              id: entry.id,
+              name: entry.shortName ?? entry.name,
+              share,
+              color: colors[i] ?? 'var(--secondary)',
+              operators: entry.operators,
+            },
+          ]
+        : []
+    })
+    // Lido always starts the bar; the rest keep the charts' order.
+    .sort((a, b) => Number(b.id === LIDO_ID) - Number(a.id === LIDO_ID))
   const trackedShare = Math.min(
     segments.reduce((sum, segment) => sum + segment.share, 0),
     1,
@@ -132,8 +147,12 @@ export function StakedEthBar({
             name={segment.name}
             share={segment.share}
             detail={
-              segment.operators &&
-              `${formatCount(segment.operators.operatorCount)} operators`
+              segment.operators
+                ? formatOperatorUnit(
+                    segment.operators.unit,
+                    segment.operators.operatorCount,
+                  )
+                : 'validators unknown'
             }
           />
         ))}
@@ -216,11 +235,18 @@ function StakeBar({
                   style={{
                     width: `${segment.share * 100}%`,
                     backgroundColor: segment.color,
+                    backgroundImage: TOKEN_SHARE_HATCH,
                   }}
                 />
               </TooltipTrigger>
-              <TooltipContent>
-                {segment.name}: {formatPercent(segment.share)} of staked ETH
+              <TooltipContent className="max-w-72">
+                <p>
+                  {segment.name}: {formatPercent(segment.share)} of staked ETH
+                </p>
+                <p className="text-secondary">
+                  From the token's supply. Its validators cannot be identified
+                  onchain.
+                </p>
               </TooltipContent>
             </Tooltip>
           ),
@@ -313,6 +339,9 @@ function OperatorSegments({
           <TooltipContent className="max-w-72">
             <p className="font-medium">{block.name}</p>
             <p className="text-secondary">{block.description}</p>
+            {block.nameSource && (
+              <p className="text-secondary">{NAME_SOURCES[block.nameSource]}</p>
+            )}
             <p className="mt-1">
               {formatEthStaked(block.eth)} in {formatCount(block.validators)}{' '}
               validators: {formatPercent(block.stakedEthShare)} of staked ETH
@@ -328,17 +357,23 @@ interface OperatorBlock extends LiquidStakingOperator {
   description: string
 }
 
-/** The operators wide enough to draw alone, then the rest as one block. */
+/**
+ * The operators wide enough to draw alone, then the rest as one block,
+ * together with the protocol's own row of its smallest operators.
+ */
 function getOperatorBlocks(
   segment: Segment,
   operators: LiquidStakingOperators,
 ): OperatorBlock[] {
+  const unit = operatorUnitName(operators.unit)
   const describe = (operator: LiquidStakingOperator) =>
     operator.operatorCount
-      ? `${formatCount(operator.operatorCount)} ${segment.name} operators`
-      : `${segment.name} operator`
+      ? `${formatCount(operator.operatorCount)} ${segment.name} operators with active validators`
+      : `${segment.name} ${unit}`
   const wide = operators.operators.filter(
-    (operator) => segment.share * operator.protocolShare >= MIN_OPERATOR_WIDTH,
+    (operator) =>
+      !operator.rest &&
+      segment.share * operator.protocolShare >= MIN_OPERATOR_WIDTH,
   )
   const narrow = operators.operators.filter(
     (operator) => !wide.includes(operator),
@@ -352,14 +387,16 @@ function getOperatorBlocks(
   const sum = (
     key: 'eth' | 'validators' | 'protocolShare' | 'stakedEthShare',
   ) => narrow.reduce((total, operator) => total + operator[key], 0)
+  const plural = operatorUnitName(operators.unit, true)
   return [
     ...blocks,
     {
       name:
         wide.length === 0
-          ? `All ${segment.name} operators`
-          : 'Smaller operators',
-      description: `${formatCount(count)} ${segment.name} operators, too small to show one by one`,
+          ? `All ${segment.name} ${plural}`
+          : `Smaller ${plural}`,
+      description: `${formatOperatorUnit(operators.unit, count)}, too small to show one by one`,
+      named: false,
       eth: sum('eth'),
       validators: sum('validators'),
       protocolShare: sum('protocolShare'),
@@ -369,27 +406,24 @@ function getOperatorBlocks(
   ]
 }
 
-/** When the operators were read, and the largest one. */
+/** When the operators were read, and the largest company across protocols. */
 function OperatorsNote({ segments }: { segments: Segment[] }) {
   const traced = segments.flatMap((segment) =>
     segment.operators
-      ? segment.operators.operators.map((operator) => ({
-          operator,
-          protocol: segment.name,
-          timestamp: segment.operators?.timestamp ?? 0,
-        }))
+      ? [{ name: segment.name, operators: segment.operators }]
       : [],
   )
-  const largest = getLargestOperator(traced.map((t) => t.operator))
+  const largest = getLargestCompany(traced)
   const first = traced[0]
   if (!largest || !first) return null
-  const protocol = traced.find((t) => t.operator === largest)?.protocol
 
   return (
     <p className="mt-2 text-label-value-13 text-secondary leading-5">
       Protocols split by the operators that run their validators, from the
-      beacon chain on {formatTimestamp(first.timestamp, { mode: 'date' })}. The
-      largest single operator, {largest.name} ({protocol}), runs{' '}
+      beacon chain on{' '}
+      {formatTimestamp(first.operators.timestamp, { mode: 'date' })}. The
+      largest named operator across them, {largest.name} (
+      {largest.protocols.join(', ')}), runs{' '}
       {formatPercent(largest.stakedEthShare)} of staked ETH.
     </p>
   )

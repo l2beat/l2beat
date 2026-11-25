@@ -8,7 +8,11 @@ import {
   formatStakedEthShare,
   LIQUID_STAKING_METRICS,
 } from '~/pages/defi/liquid-staking/liquidStakingMetrics'
-import { getLargestOperator } from '../features/defi/liquid-staking/getLiquidStakingOperators'
+import {
+  formatOperatorUnit,
+  getLargestOperator,
+  operatorUnitName,
+} from '../features/defi/liquid-staking/getLiquidStakingOperators'
 import {
   formatUsd,
   joinBlocks,
@@ -80,7 +84,7 @@ function renderOperators(
     `Who runs the validators, from the beacon chain at ${formatUtcDateTime(first.operators.timestamp)}:`,
     ...traced.map(({ entry, operators }) => {
       const largest = getLargestOperator(operators.operators)
-      return `- ${entry.name}: ${operators.operatorCount.toLocaleString('en-US')} operators${largest ? `; the largest, ${largest.name}, runs ${formatStakedEthShare(largest.stakedEthShare)}` : ''}`
+      return `- ${entry.name}: ${formatStakedEthShare(operators.stakedEthShare)} in its validators, ${formatOperatorUnit(operators.unit, operators.operatorCount)}${largest ? `; the largest ${operatorUnitName(operators.unit)}, ${largest.name}, runs ${formatStakedEthShare(largest.stakedEthShare)}` : ''}`
     }),
   ].join('\n')
 }
