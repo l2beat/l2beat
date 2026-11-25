@@ -42,11 +42,12 @@ import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import type { ChartScale } from '../types'
 import {
-  ActivityChangeEventsList,
+  ChangeEventsList,
   getVisibleChangeEvents,
-} from './ActivityChangePins'
+} from '../change-pins/ChangePins'
+import { ACTIVITY_CHANGE_FORMAT } from '../change-pins/formats'
+import type { ChartScale } from '../types'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import {
   L2RecategorizedActivityChart,
@@ -129,9 +130,10 @@ export function L2ActivityChart({ milestones, entries }: Props) {
         // Pins follow the shown chart, not a range still loading.
         changeEvents={isPlaceholderData ? undefined : changeEvents}
       />
-      <ActivityChangeEventsList
+      <ChangeEventsList
         events={getVisibleChangeEvents(changeEvents, metric, dataKeys)}
         projects={changeEvents?.projects ?? {}}
+        format={ACTIVITY_CHANGE_FORMAT}
       />
       <div className="mt-3 mb-2">
         <ActivityRatioChart

@@ -1,4 +1,4 @@
-import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { type ComponentProps, type ReactNode, useMemo, useRef } from 'react'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTooltipTitle } from '~/components/core/chart/ChartTooltip'
@@ -9,21 +9,17 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
+import { CHANGE_CATEGORIES } from '~/server/features/utils/changeEventConstants'
 import type {
-  ActivityChangeEvent,
-  ActivityChangeEventsData,
-  ActivityChangeMetric,
-  ActivityChangeProject,
-} from '~/server/features/layer2s/activity/getActivityChangeEvents'
-import {
-  ACTIVITY_CHANGE_CATEGORIES,
-  BASELINE_DAYS,
-} from '~/server/features/layer2s/activity/utils/activityChangeConstants'
-import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
+  ChangeEvent,
+  ChangeEventsData,
+  ChangeProject,
+} from '~/server/features/utils/changeEvents'
 import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
+import type { ChangeFormat } from './formats'
 
-const CATEGORY_LABELS: Record<ActivityChangeEvent['category'], string> = {
+const CATEGORY_LABELS: Record<ChangeEvent['category'], string> = {
   rollups: 'Rollups',
   validiumsAndOptimiums: 'Validiums & Optimiums',
   others: 'Others',
@@ -49,27 +45,27 @@ const LEADER_MIN_SHARE = 0.5
 // The breakdown lists a project only when it drove a tenth of the change.
 const DRIVER_MIN_SHARE = 0.1
 
-export function getEventKey(event: ActivityChangeEvent) {
+export function getEventKey(event: ChangeEvent) {
   return `${event.timestamp}:${event.category}`
 }
 
-export function getVisibleChangeEvents(
-  data: ActivityChangeEventsData | undefined,
-  metric: ActivityChangeMetric,
+export function getVisibleChangeEvents<M extends string>(
+  data: ChangeEventsData<M> | undefined,
+  metric: M,
   dataKeys: string[],
-): ActivityChangeEvent[] {
+): ChangeEvent<M>[] {
   return (data?.events ?? []).filter(
     (e) =>
       e.metric === metric &&
       dataKeys.includes(e.category) &&
-      ACTIVITY_CHANGE_CATEGORIES.includes(e.category),
+      CHANGE_CATEGORIES.includes(e.category),
   )
 }
 
 interface PinGroup {
   key: string
   /** Strongest first. */
-  events: ActivityChangeEvent[]
+  events: ChangeEvent[]
   x: number
 }
 
@@ -79,16 +75,18 @@ interface PinGroup {
  * tap opens it. Rendered inside the chart's plot box, whose width the x axis
  * spans like the milestones under it.
  */
-export function ActivityChangePins({
+export function ChangePins({
   events,
   projects,
   chartData,
   chartMeta,
+  format,
 }: {
-  events: ActivityChangeEvent[]
-  projects: Record<string, ActivityChangeProject>
+  events: ChangeEvent[]
+  projects: Record<string, ChangeProject>
   chartData: { timestamp: number }[] | undefined
   chartMeta: ChartMeta
+  format: ChangeFormat
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref })
@@ -103,7 +101,7 @@ export function ActivityChangePins({
   return (
     <div
       ref={ref}
-      data-role="activity-change-pins"
+      data-role="change-pins"
       className="pointer-events-none absolute inset-0 z-10"
     >
       {groups.map((group) => (
@@ -113,6 +111,7 @@ export function ActivityChangePins({
               group={group}
               projects={projects}
               chartMeta={chartMeta}
+              format={format}
               stemHeight={Math.max(0, (height ?? 0) - PIN_SIZE - X_AXIS_HEIGHT)}
             />
           </TooltipTrigger>
@@ -121,6 +120,7 @@ export function ActivityChangePins({
               events={group.events}
               projects={projects}
               chartMeta={chartMeta}
+              format={format}
             />
           </TooltipContent>
         </Tooltip>
@@ -135,7 +135,7 @@ export function ActivityChangePins({
  * up slots.
  */
 function getPinGroups(
-  events: ActivityChangeEvent[],
+  events: ChangeEvent[],
   chartData: { timestamp: number }[] | undefined,
   width: number | undefined,
   canHover: boolean,
@@ -177,15 +177,17 @@ function Pin({
   group,
   projects,
   chartMeta,
+  format,
   stemHeight,
   ...props
 }: ComponentProps<'button'> & {
   group: PinGroup
-  projects: Record<string, ActivityChangeProject>
+  projects: Record<string, ChangeProject>
   chartMeta: ChartMeta
+  format: ChangeFormat
   stemHeight: number
 }) {
-  const event = group.events[0] as ActivityChangeEvent
+  const event = group.events[0] as ChangeEvent
   const color = chartMeta[event.category]?.color
   const logos = getPinProjects(event, projects)
   const width = getPinWidth(logos.length)
@@ -197,7 +199,7 @@ function Pin({
       type="button"
       aria-label={[...group.events]
         .sort((a, b) => a.timestamp - b.timestamp)
-        .map((e) => getEventLabel(e, projects))
+        .map((e) => getEventLabel(e, projects, format))
         .join('; ')}
       className="group/pin pointer-events-auto absolute top-0 cursor-pointer outline-none"
       style={{ left: group.x - width / 2, width }}
@@ -259,10 +261,12 @@ function ChangeBreakdown({
   events: groupEvents,
   projects,
   chartMeta,
+  format,
 }: {
-  events: ActivityChangeEvent[]
-  projects: Record<string, ActivityChangeProject>
+  events: ChangeEvent[]
+  projects: Record<string, ChangeProject>
   chartMeta: ChartMeta
+  format: ChangeFormat
 }) {
   const events = [...groupEvents].sort((a, b) => a.timestamp - b.timestamp)
   const timestamps = events.map((e) => e.timestamp)
@@ -283,6 +287,7 @@ function ChangeBreakdown({
             event={event}
             showDate={!isOneDay}
             projects={projects}
+            format={format}
             label={chartMeta[event.category]?.label}
             color={chartMeta[event.category]?.color}
           />
@@ -300,16 +305,17 @@ function EventDetails({
   event,
   showDate,
   projects,
+  format,
   label,
   color,
 }: {
-  event: ActivityChangeEvent
+  event: ChangeEvent
   showDate: boolean
-  projects: Record<string, ActivityChangeProject>
+  projects: Record<string, ChangeProject>
+  format: ChangeFormat
   label: ReactNode
   color: string | undefined
 }) {
-  const unit = event.metric === 'uops' ? 'UOPS' : 'TPS'
   const drivers = getDrivers(event)
   const others = event.contributors.filter((c) => !drivers.includes(c))
   const otherCount = event.restCount + others.length
@@ -342,11 +348,7 @@ function EventDetails({
         </span>
       </div>
       <p className="mt-1 pl-5.5 text-label-value-13 text-secondary tabular-nums">
-        <span className="font-medium text-primary">
-          {formatActivityCount(countPerSecond(event.observed))} {unit}
-        </span>{' '}
-        vs {formatActivityCount(countPerSecond(event.baseline))} usual (past{' '}
-        {BASELINE_DAYS} days)
+        {format.levels(event)}
       </p>
       {/* One grid for all rows, so the values line up and the share sits
           right after them, as wide as its widest entry. */}
@@ -359,7 +361,7 @@ function EventDetails({
               label={
                 project ? (
                   <a
-                    href={`/layer2s/projects/${project.slug}#activity`}
+                    href={`/layer2s/projects/${project.slug}#${format.section}`}
                     className="flex min-w-0 items-baseline gap-1.5 hover:underline"
                   >
                     <img
@@ -373,7 +375,7 @@ function EventDetails({
                   projectId
                 )
               }
-              delta={delta}
+              delta={format.delta(delta)}
               share={formatShare(delta, event)}
             />
           )
@@ -387,7 +389,7 @@ function EventDetails({
                   : `${otherCount} other ${otherCount === 1 ? 'project' : 'projects'}`}
               </span>
             }
-            delta={otherDelta}
+            delta={format.delta(otherDelta)}
             share={undefined}
             muted
           />
@@ -404,7 +406,7 @@ function ContributorRow({
   muted,
 }: {
   label: ReactNode
-  delta: number
+  delta: string
   share: string | undefined
   /** The leftover row, quieter than the projects that drove the change. */
   muted?: boolean
@@ -418,7 +420,7 @@ function ContributorRow({
           muted ? 'text-secondary' : 'font-medium',
         )}
       >
-        {formatSignedRate(delta)}
+        {delta}
       </span>
       <span className="whitespace-nowrap text-right text-2xs text-secondary tabular-nums">
         {share ?? ''}
@@ -428,12 +430,14 @@ function ContributorRow({
 }
 
 /** Who is behind a change and how it compares with the usual level. */
-function ActivityChangeSummary({
+function ChangeSummary({
   event,
   projects,
+  format,
 }: {
-  event: ActivityChangeEvent
-  projects: Record<string, ActivityChangeProject>
+  event: ChangeEvent
+  projects: Record<string, ChangeProject>
+  format: ChangeFormat
 }) {
   const leader = getLeader(event)
   const project = leader && projects[leader.projectId]
@@ -460,33 +464,37 @@ function ActivityChangeSummary({
           {event.contributors.length + event.restCount} projects
         </span>
       )}
-      <span>({formatVsBaseline(event)})</span>
+      <span>({format.vsBaseline(event)})</span>
     </span>
   )
 }
 
 /** The summary under a category that changed, in the chart's hover tooltip. */
-export function ActivityChangeTooltipLine({
+export function ChangeTooltipLine({
   event,
   projects,
+  format,
 }: {
-  event: ActivityChangeEvent
-  projects: Record<string, ActivityChangeProject>
+  event: ChangeEvent
+  projects: Record<string, ChangeProject>
+  format: ChangeFormat
 }) {
   return (
     <div className="-mt-1 pl-5">
-      <ActivityChangeSummary event={event} projects={projects} />
+      <ChangeSummary event={event} projects={projects} format={format} />
     </div>
   )
 }
 
 /** A text list of the pins for screen readers. */
-export function ActivityChangeEventsList({
+export function ChangeEventsList({
   events,
   projects,
+  format,
 }: {
-  events: ActivityChangeEvent[]
-  projects: Record<string, ActivityChangeProject>
+  events: ChangeEvent[]
+  projects: Record<string, ChangeProject>
+  format: ChangeFormat
 }) {
   const peaks = events
     .filter((e) => e.isPeak)
@@ -495,15 +503,17 @@ export function ActivityChangeEventsList({
   return (
     <ul className="sr-only" aria-label="Notable changes (automated)">
       {peaks.map((event) => (
-        <li key={getEventKey(event)}>{getEventLabel(event, projects)}</li>
+        <li key={getEventKey(event)}>
+          {getEventLabel(event, projects, format)}
+        </li>
       ))}
     </ul>
   )
 }
 
 function getPinProjects(
-  event: ActivityChangeEvent,
-  projects: Record<string, ActivityChangeProject>,
+  event: ChangeEvent,
+  projects: Record<string, ChangeProject>,
 ) {
   const leader = getLeader(event)
   const ids = leader
@@ -516,16 +526,17 @@ function getPinProjects(
 }
 
 function getEventLabel(
-  event: ActivityChangeEvent,
-  projects: Record<string, ActivityChangeProject>,
+  event: ChangeEvent,
+  projects: Record<string, ChangeProject>,
+  format: ChangeFormat,
 ) {
   const leader = getLeader(event)
   const name = leader && (projects[leader.projectId]?.name ?? leader.projectId)
-  const direction = event.observed < event.baseline ? 'fell' : 'rose'
-  return `${formatDay(event.timestamp).replace(/\s+/g, ' ')}: ${CATEGORY_LABELS[event.category]} ${direction} ${formatRelative(event)} vs ${BASELINE_DAYS}-day baseline${name ? `, mostly ${name}` : ''}`
+  const date = formatDay(event.timestamp).replace(/\s+/g, ' ')
+  return `${date}: ${CATEGORY_LABELS[event.category]} ${format.vsBaseline(event)}${name ? `, mostly ${name}` : ''}`
 }
 
-function getLeader(event: ActivityChangeEvent) {
+function getLeader(event: ChangeEvent) {
   const change = event.observed - event.baseline
   const top = event.contributors[0]
   if (!top || change === 0) return undefined
@@ -538,19 +549,19 @@ function isOverWhole(share: number) {
   return share > 1.005
 }
 
-function getChangeWord(event: ActivityChangeEvent) {
+function getChangeWord(event: ChangeEvent) {
   return event.observed < event.baseline ? 'drop' : 'rise'
 }
 
 /** The listed projects that moved with the change and drove enough of it. */
-function getDrivers(event: ActivityChangeEvent) {
+function getDrivers(event: ChangeEvent) {
   const change = event.observed - event.baseline
   return event.contributors.filter(
     ([, delta]) => change !== 0 && delta / change >= DRIVER_MIN_SHARE,
   )
 }
 
-function isSameDirection(delta: number, event: ActivityChangeEvent) {
+function isSameDirection(delta: number, event: ChangeEvent) {
   return Math.sign(delta) === Math.sign(event.observed - event.baseline)
 }
 
@@ -559,7 +570,7 @@ function formatDay(timestamp: number) {
 }
 
 /** A driver's part of the change, e.g. "91% of rise". */
-function formatShare(delta: number, event: ActivityChangeEvent) {
+function formatShare(delta: number, event: ChangeEvent) {
   const share = delta / (event.observed - event.baseline)
   const value = isOverWhole(share) ? '>100%' : `${Math.round(share * 100)}%`
   return `${value} of ${getChangeWord(event)}`
@@ -569,7 +580,7 @@ function formatShare(delta: number, event: ActivityChangeEvent) {
  * Signed like the tables' changes, "+8%" or "−8%". Past 3× a multiple reads
  * better than a four-digit percentage, and only a rise gets there.
  */
-function formatRelative(event: ActivityChangeEvent) {
+function formatRelative(event: ChangeEvent) {
   if (event.baseline <= 0) return 'up from zero'
   const ratio = event.observed / event.baseline
   if (ratio >= 3) return `${Math.round(ratio)}×`
@@ -579,22 +590,8 @@ function formatRelative(event: ActivityChangeEvent) {
 }
 
 /** The tables' colours: green up, red down, grey when it rounds to 0%. */
-function getChangeColor(event: ActivityChangeEvent) {
+function getChangeColor(event: ChangeEvent) {
   const pct = Math.round(Math.abs(event.observed / event.baseline - 1) * 100)
   if (event.baseline > 0 && pct === 0) return 'text-secondary'
   return event.observed > event.baseline ? 'text-positive' : 'text-negative'
-}
-
-function formatVsBaseline(event: ActivityChangeEvent) {
-  const period = `the previous ${BASELINE_DAYS} days`
-  if (event.baseline <= 0) return `up from no activity in ${period}`
-  const ratio = event.observed / event.baseline
-  if (ratio >= 3) return `${Math.round(ratio)}× its usual level over ${period}`
-  const pct = Math.round(Math.abs(ratio - 1) * 100)
-  return `${pct}% ${ratio >= 1 ? 'above' : 'below'} its usual level over ${period}`
-}
-
-function formatSignedRate(delta: number) {
-  const sign = delta > 0 ? '+' : delta < 0 ? '−' : ''
-  return `${sign}${formatActivityCount(Math.abs(countPerSecond(delta)))}`
 }

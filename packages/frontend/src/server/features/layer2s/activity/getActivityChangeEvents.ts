@@ -3,23 +3,33 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import { manifest } from '~/utils/Manifest'
 import type { ChartRange } from '~/utils/range/range'
-import { generateTimestamps } from '../../utils/generateTimestamps'
 import {
-  ACTIVITY_CHANGE_CATEGORIES,
   BASELINE_DAYS,
-} from './utils/activityChangeConstants'
+  CHANGE_CATEGORIES,
+  type ChangeCategory,
+} from '../../utils/changeEventConstants'
+import {
+  type CategoryDay,
+  type ChangeEvent,
+  type ChangeEventsData,
+  createChangeEvent,
+  getChangeProjects,
+  getRobustZ,
+  MIN_HISTORY_DAYS,
+  markEpisodePeaks,
+  median,
+} from '../../utils/changeEvents'
+import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
 
-export type ActivityChangeCategory = (typeof ACTIVITY_CHANGE_CATEGORIES)[number]
 export type ActivityChangeMetric = 'uops' | 'tps'
+export type ActivityChangeEvent = ChangeEvent<ActivityChangeMetric>
+export type ActivityChangeEventsData = ChangeEventsData<ActivityChangeMetric>
 
-const MIN_BASELINE_OBSERVATIONS = 21
-const MAX_CONTRIBUTORS = 3
 // A change is notable only when it clears every bar: unusual for the category
 // (robust z), big for the category (relative), and big for the whole chart
 // (absolute and share of all L2 activity), so small series don't fire on noise.
@@ -27,41 +37,8 @@ const MIN_ROBUST_Z = 4
 const MIN_RELATIVE_CHANGE = 0.2
 const MIN_ABSOLUTE_CHANGE = 5 * UnixTime.DAY
 const MIN_SHARE_OF_ALL_L2 = 0.01
-// Flat histories give huge z-scores; cap it so ranking follows size.
-const MAX_RANKING_Z = 50
-// A calm day or two inside a surge shouldn't split it into two events.
-const MAX_EPISODE_GAP = 3 * UnixTime.DAY
 
 const cache = new FrontendInMemoryCache('getActivityChangeEvents')
-
-export interface ActivityChangeProject {
-  name: string
-  slug: string
-  iconUrl: string
-}
-
-/** [projectId, observed - baseline, hasShortHistory] */
-export type ActivityChangeContributor = [string, number, boolean]
-
-export interface ActivityChangeEvent {
-  timestamp: number
-  category: ActivityChangeCategory
-  metric: ActivityChangeMetric
-  /** Daily counts; the category's baseline is the sum of project medians. */
-  observed: number
-  baseline: number
-  score: number
-  contributors: ActivityChangeContributor[]
-  restDelta: number
-  restCount: number
-  /** The strongest day of its episode; only peaks get a pin. */
-  isPeak: boolean
-}
-
-export interface ActivityChangeEventsData {
-  projects: Record<string, ActivityChangeProject>
-  events: ActivityChangeEvent[]
-}
 
 export function getActivityChangeEvents(
   filter: ActivityProjectFilter,
@@ -104,7 +81,7 @@ async function computeForFilter(
   const projects = (await getActivityProjects()).filter(
     createActivityProjectsFilter(filter),
   )
-  const categoryByProject = new Map<string, ActivityChangeCategory>()
+  const categoryByProject = new Map<string, ChangeCategory>()
   for (const project of projects) {
     const category = getCategory(project.scalingInfo.type)
     if (category) categoryByProject.set(project.id, category)
@@ -117,26 +94,10 @@ async function computeForFilter(
   )
 
   const events = computeActivityChangeEvents(records, categoryByProject, from)
-
-  const usedProjectIds = new Set(
-    events.flatMap((e) => e.contributors.map(([projectId]) => projectId)),
-  )
-  const projectsInfo: Record<string, ActivityChangeProject> = {}
-  for (const project of projects) {
-    if (!usedProjectIds.has(project.id)) continue
-    projectsInfo[project.id] = {
-      name: project.name,
-      slug: project.slug,
-      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    }
-  }
-
-  return { projects: projectsInfo, events }
+  return { projects: getChangeProjects(projects, events), events }
 }
 
-function getCategory(
-  type: string | undefined,
-): ActivityChangeCategory | undefined {
+function getCategory(type: string | undefined): ChangeCategory | undefined {
   switch (type) {
     case 'ZK Rollup':
     case 'Optimistic Rollup':
@@ -156,7 +117,7 @@ function getCategory(
  */
 export function computeActivityChangeEvents(
   records: ActivityRecord[],
-  categoryByProject: Map<string, ActivityChangeCategory>,
+  categoryByProject: Map<string, ChangeCategory>,
   visibleFrom: number | null,
 ): ActivityChangeEvent[] {
   const first = records[0]
@@ -186,8 +147,8 @@ export function computeActivityChangeEvents(
   const candidates: ActivityChangeEvent[] = []
 
   for (const metric of ['uops', 'tps'] as const) {
-    const categoryTotals = new Map<ActivityChangeCategory, number[]>(
-      ACTIVITY_CHANGE_CATEGORIES.map((c) => [c, []]),
+    const categoryTotals = new Map<ChangeCategory, number[]>(
+      CHANGE_CATEGORIES.map((c) => [c, []]),
     )
 
     for (const timestamp of timestamps) {
@@ -218,22 +179,9 @@ export function computeActivityChangeEvents(
           Math.abs(change) >= MIN_SHARE_OF_ALL_L2 * allL2Baseline
         if (!isNotable) continue
 
-        day.deltas.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
-        const rest = day.deltas.slice(MAX_CONTRIBUTORS)
-        candidates.push({
-          timestamp,
-          category,
-          metric,
-          observed: day.observed,
-          baseline: day.baseline,
-          score: Math.abs(change) * Math.min(Math.abs(robustZ), MAX_RANKING_Z),
-          contributors: day.deltas
-            .slice(0, MAX_CONTRIBUTORS)
-            .filter(([, delta]) => delta !== 0),
-          restDelta: rest.reduce((sum, [, delta]) => sum + delta, 0),
-          restCount: rest.filter(([, delta]) => delta !== 0).length,
-          isPeak: false,
-        })
+        candidates.push(
+          createChangeEvent(timestamp, category, metric, day, robustZ),
+        )
       }
     }
   }
@@ -246,14 +194,11 @@ function getCategoryDay(
     string,
     Map<number, Record<ActivityChangeMetric, number>>
   >,
-  categoryByProject: Map<string, ActivityChangeCategory>,
+  categoryByProject: Map<string, ChangeCategory>,
   timestamp: number,
   metric: ActivityChangeMetric,
 ) {
-  const perCategory = new Map<
-    ActivityChangeCategory,
-    { observed: number; baseline: number; deltas: ActivityChangeContributor[] }
-  >()
+  const perCategory = new Map<ChangeCategory, CategoryDay>()
 
   for (const [projectId, values] of valuesByProject) {
     const category = categoryByProject.get(projectId)
@@ -277,60 +222,8 @@ function getCategoryDay(
     day.deltas.push([
       projectId,
       value - baseline,
-      history.length < MIN_BASELINE_OBSERVATIONS,
+      history.length < MIN_HISTORY_DAYS,
     ])
   }
   return perCategory
-}
-
-/**
- * Notable days in the same direction, at most a few days apart, are one
- * episode: its day with the largest change is the peak. The other days stay,
- * so a multi-day surge is explained on every day it covers.
- */
-function markEpisodePeaks(
-  candidates: ActivityChangeEvent[],
-): ActivityChangeEvent[] {
-  const events = [...candidates].sort((a, b) => a.timestamp - b.timestamp)
-  const episodeByKey = new Map<
-    string,
-    { lastTimestamp: number; peak: ActivityChangeEvent }
-  >()
-
-  for (const event of events) {
-    const change = event.observed - event.baseline
-    const key = `${event.metric}:${event.category}:${Math.sign(change)}`
-    const episode = episodeByKey.get(key)
-
-    if (episode && event.timestamp - episode.lastTimestamp <= MAX_EPISODE_GAP) {
-      episode.lastTimestamp = event.timestamp
-      const { peak } = episode
-      if (Math.abs(change) > Math.abs(peak.observed - peak.baseline)) {
-        peak.isPeak = false
-        event.isPeak = true
-        episode.peak = event
-      }
-    } else {
-      event.isPeak = true
-      episodeByKey.set(key, { lastTimestamp: event.timestamp, peak: event })
-    }
-  }
-  return events
-}
-
-function getRobustZ(value: number, history: number[]): number | undefined {
-  if (history.length < MIN_BASELINE_OBSERVATIONS) return undefined
-  const center = median(history)
-  const mad = median(history.map((h) => Math.abs(h - center)))
-  // Flat histories have MAD = 0; fall back to a 1% band so z stays finite.
-  const scale = Math.max(1.4826 * mad, 0.01 * center, 1)
-  return (value - center) / scale
-}
-
-function median(values: number[]): number {
-  const sorted = [...values].sort((a, b) => a - b)
-  const mid = Math.floor(sorted.length / 2)
-  return sorted.length % 2 === 0
-    ? ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2
-    : (sorted[mid] ?? 0)
 }

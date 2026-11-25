@@ -792,9 +792,9 @@ export class TokenValueRepository extends BaseRepository {
   }
 
   /**
-   * Sums `valueForProject` per project at each `resolution` step in the range,
-   * and at every timestamp after the last step, so a chart can end on the
-   * latest hour. It skips the rows in between, which a chart would drop: a
+   * Sums `valueForProject` (`valueForSummary` with `forSummary`) per project
+   * at each `resolution` step in the range, and at every timestamp after the
+   * last step, so a chart can end on the latest hour. It skips the rows in between, which a chart would drop: a
    * daily chart would otherwise sum 90 days of six-hourly and 7 days of hourly
    * rows too.
    */
@@ -802,7 +802,7 @@ export class TokenValueRepository extends BaseRepository {
     projectIds: string[],
     [from, to]: [UnixTime | null, UnixTime],
     resolution: 'hour' | 'six hours' | 'day',
-    opts: { excludeRwaRestrictedTokens: boolean },
+    opts: { excludeRwaRestrictedTokens: boolean; forSummary?: boolean },
   ): Promise<{ projectId: string; timestamp: UnixTime; value: number }[]> {
     if (projectIds.length === 0) {
       return []
@@ -815,7 +815,12 @@ export class TokenValueRepository extends BaseRepository {
       .select((eb) => [
         'TokenValue.projectId',
         'TokenValue.timestamp',
-        eb.cast(eb.fn.sum('valueForProject'), 'double precision').as('value'),
+        eb
+          .cast(
+            eb.fn.sum(opts.forSummary ? 'valueForSummary' : 'valueForProject'),
+            'double precision',
+          )
+          .as('value'),
       ])
       .where('TokenValue.projectId', 'in', projectIds)
       .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))

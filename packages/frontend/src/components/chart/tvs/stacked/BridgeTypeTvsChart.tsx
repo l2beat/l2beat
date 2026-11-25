@@ -1,5 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
+import type { ReactNode } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type {
   ChartMeta,
@@ -32,6 +33,9 @@ interface Props {
   toggleDataKey: (dataKey: string) => void
   tickCount?: number
   project?: ChartProject
+  /** Drawn over the plot, e.g. change pins, with room above it if needed. */
+  overlay?: ReactNode
+  marginTop?: number
 }
 
 export const bridgeTypeTvsChartMeta = {
@@ -66,6 +70,8 @@ export function BridgeTypeTvsChart({
   dataKeys,
   toggleDataKey,
   project,
+  overlay,
+  marginTop,
 }: Props) {
   // Bottom of the stack first.
   const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = (
@@ -98,6 +104,7 @@ export function BridgeTypeTvsChart({
         series={series}
         ariaLabel="Value secured by bridge type"
         syncedUntil={syncedUntil}
+        margin={marginTop !== undefined ? { top: marginTop } : undefined}
         yAxis={{
           domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),
@@ -112,6 +119,7 @@ export function BridgeTypeTvsChart({
           />
         )}
       />
+      {overlay}
     </ChartContainer>
   )
 }
