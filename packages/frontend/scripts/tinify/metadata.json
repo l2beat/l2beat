@@ -1634,5 +1634,9 @@
   "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e",
   "static/icons/hinkal.png": "cfa0ee568f863b5c6a5ccbd2dc2ca798",
   "static/meta-images/privacy/projects/hinkal/opengraph-image.png": "4beffa24c585e8603a2509b79355d108",
-  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "bcfc5ae81842d3de14c434ac3f9ea292"
+  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "bcfc5ae81842d3de14c434ac3f9ea292",
+  "static/icons/ambire.png": "ae5f7e6807b4ad16cbc8d739707050f3",
+  "static/icons/metamask.png": "e0df92e93330c8adf083af450e025786",
+  "static/icons/rabby.png": "d65ca9aed37561f5923572a851ac028a",
+  "static/meta-images/gas-fees/opengraph-image.png": "3f2203988358090cf86bec583dd9ebcc"
 }

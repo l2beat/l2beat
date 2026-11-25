@@ -73,7 +73,9 @@ export type {
   GasFeesMempoolDayRecord,
   GasFeesMempoolDayStatus,
   GasFeesTierWaitRecord,
+  GasFeesTierWaitTotal,
   GasFeesTipLevelWaitRecord,
+  GasFeesTipLevelWaitTotal,
   GasFeesWaitBucket,
 } from './repositories/GasFeesMempoolRepository'
 export type {
