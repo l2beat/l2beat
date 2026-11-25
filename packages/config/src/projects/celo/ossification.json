@@ -156,6 +156,14 @@
       "transaction": "0x1c00d778e4dd672637b88583dbced60a95898f4b1599ba51d29fb9086a0b203f",
       "updateId": "49f509dc",
       "reason": "Registered the OPSuccinct celo/v2.1.0 game implementation (SP1 Hypercube), rotating the aggregation and range verification keys."
+    },
+    {
+      "timestamp": 1795536647,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "transaction": "0x7062571bc63ab4b6ad763036f3c15803c72b84e47c47ea84d5f5ea89c0f6b079",
+      "updateId": "d25e09ba",
+      "reason": "Registered the OPSuccinct celo/v2.2.0 game implementation, rotating the aggregation and range verification keys and the rollup config hash, with a new AccessManager holding the same proposers and challengers. The same transaction removed the permissionless Cannon game (type 0)."
     }
   ],
   "ignoredTransactions": [

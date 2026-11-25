@@ -18,6 +18,15 @@
     "eth:0xd9c4da492c60e92e2b53abb5bea7aa4b8aa5b181": "EigenDACertVerifier"
   },
   "overrides": {
+    "eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7": {
+      // rootClaimByChainId(uint256) reads clone args and reverts on the implementation
+      "ignoreMethods": [
+        "getNumToResolve",
+        "resolutionCheckpoints",
+        "resolvedSubgames",
+        "rootClaimByChainId"
+      ]
+    },
     // L2 predeploys: critical from the L2 migration (chainStart). They were
     // written into state by the migration, but discovery dates them at the Celo L1
     // genesis (2020-04-22); harmless, they are older than every other row.

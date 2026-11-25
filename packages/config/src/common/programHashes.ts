@@ -475,6 +475,18 @@ Verify:
 4. From the \`op-succinct\` dir run \`cargo run --bin config --release --features eigenda\` to print the verification key hashes.
     `,
   },
+  '0x006e44fdc80f40316d3ac6d7b09a8675996a9f54c18fd1d290c5026d86544850': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.2.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.2.0/programs/aggregation',
+    verificationStatus: 'notVerified',
+  },
+  '0x543e17e82c4bf2064558a6c56d7e373e6fcb824900c9816d53272ca32b321746': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.2.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.2.0/programs/range/eigenda',
+    verificationStatus: 'notVerified',
+  },
   '0x0061b26157718f96a20ea50c52a485dea3b6967139328dc7e07fece56f557bda': {
     ...OP_SUCCINCT_FDP_AGG_EIGENDA('v3.4.1-rise.7'), // Rise
     programUrl:
