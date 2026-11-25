@@ -44,9 +44,7 @@ async function getProjectsChangeReportWithFns() {
   const updateDiffs = await db.updateDiff.getAll()
 
   const projects = await ps.getProjects({
-    ids: [...new Set(updateDiffs.map((diff) => diff.projectId))].map(
-      ProjectId,
-    ),
+    ids: [...new Set(updateDiffs.map((diff) => diff.projectId))].map(ProjectId),
     select: ['discoveryInfo'],
     where: ['discoveryInfo'],
   })

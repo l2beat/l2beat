@@ -166,10 +166,7 @@ describe(getLatestTvsByProject.name, () => {
   // breakdown comes from the latest row and change7d is latest/old - 1.
   it('takes the breakdown from the latest row and the change from both', () => {
     const result = getLatestTvsByProject(
-      [
-        tvsRow('arbitrum', SEVEN_DAYS_AGO, 80),
-        tvsRow('arbitrum', NOW, 100),
-      ],
+      [tvsRow('arbitrum', SEVEN_DAYS_AGO, 80), tvsRow('arbitrum', NOW, 100)],
       ['arbitrum-USDC'],
     )
 

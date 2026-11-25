@@ -38,7 +38,9 @@ export async function getScalingSummary(
   const tvsProjectIds = new Set(projectsWithTvs.map((p) => p.id.toString()))
   const [tvsRows, tvsSyncMetadata] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
-      projects.map((p) => p.id.toString()).filter((id) => tvsProjectIds.has(id)),
+      projects
+        .map((p) => p.id.toString())
+        .filter((id) => tvsProjectIds.has(id)),
       [getTvsRangeStart(UnixTime.now()), tvsTimestamp],
       // The same token filters the website's scaling summary uses
       { excludeAssociatedTokens: false, excludeRwaRestrictedTokens: true },
@@ -201,4 +203,3 @@ async function getLatestTvsTimestamp(db: Database): Promise<UnixTime> {
     UnixTime.toStartOf(UnixTime.now() - TVS_BACKEND_DELAY, 'hour')
   )
 }
-
