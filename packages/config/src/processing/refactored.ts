@@ -56,6 +56,7 @@ import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { rocketpool } from '../projects/rocketpool/rocketpool'
+import { rsweth } from '../projects/rsweth/rsweth'
 import { safe } from '../projects/safe/safe'
 import { sfrxeth } from '../projects/sfrxeth/sfrxeth'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
@@ -67,6 +68,7 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { sweth } from '../projects/sweth/sweth'
 import { tacitPay } from '../projects/tacit-pay/tacit-pay'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
@@ -166,6 +168,8 @@ export const refactored: BaseProject[] = [
   stader,
   sfrxeth,
   ankr,
+  sweth,
+  rsweth,
   // privacy
   cloaked,
   fluidkey,
