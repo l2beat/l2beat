@@ -462,5 +462,36 @@ describe('DiffHistoryParser', () => {
         { kind: 'offchain-changes', body: body.join('\n') },
       ])
     })
+
+    it('keeps the discovered.json hash for the discovery entry below an offchain one', () => {
+      const md = [
+        'Generated with discovered.json: 0xabc',
+        '',
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+        '## Offchain changes',
+        '',
+        '```diff',
+        '+     a',
+        '```',
+        '',
+        '# Diff at Mon, 04 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777907888',
+        '',
+        '## Description',
+        '',
+        'discovery update',
+        '',
+      ].join('\n')
+
+      const entries = parser.parse(md)
+      expect(entries.map((entry) => entry.discoveryHash)).toEqual([
+        null,
+        '0xabc',
+      ])
+    })
   })
 })
