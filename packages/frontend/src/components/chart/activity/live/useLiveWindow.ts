@@ -5,6 +5,7 @@ import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import {
   DEFAULT_LIVE_RANGE,
+  formatLiveLength,
   getLiveBucketSeconds,
   getLiveRange,
   LIVE_RANGES,
@@ -111,7 +112,7 @@ export function useLiveWindow({
     /** The same, as a screen reader says it */
     selectionText:
       end === undefined || !selection
-        ? 'Live'
+        ? `Live, last ${formatLiveLength(length)}`
         : formatRange(selection[0], selection[1], { seconds: true }),
     /** Whether the overview's window is off the newest block, or being moved off it */
     lookingBack: end !== undefined,
