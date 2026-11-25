@@ -198,12 +198,10 @@ export const zcashNearIntents: BaseProject = {
         detail:
           'The operator [holds apart](https://docs.near-intents.org/security-compliance/withdrawals-to-exchanges) funds that fail its screening. A user refused at the quote keeps their shielded ZEC and can sell it elsewhere.',
       },
-      dataAccess:
-        'the operator, which can attribute any payout to the account that started it',
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'key',
         detail:
-          "Vizor exports a full viewing key, which shows the account's incoming and outgoing transactions.",
+          "Vizor [exports](https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/lib/src/features/settings/screens/settings_viewing_key_screen.dart#L25-L30) a full viewing key, which shows the account's incoming and outgoing transactions, or an incoming-only key.",
       },
       content: readProjectMarkdown('zcash-near-intents', 'compliance'),
     },

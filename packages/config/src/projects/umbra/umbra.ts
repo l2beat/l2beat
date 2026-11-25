@@ -168,7 +168,7 @@ export const umbra: BaseProject = {
     ),
     compliance: {
       tradeoff:
-        "Only the app's SDK screens, so a direct contract call or a build without the check passes. Every payment's sender is public, so its origin needs no proof.",
+        "Only the app's SDK screens, so a direct contract call or a build without the check passes. The check stops only users who stay on the hosted app.",
       gatekeeper: {
         type: 'relayer',
         detail:
@@ -185,9 +185,7 @@ export const umbra: BaseProject = {
         detail:
           "A refused user keeps the keys, which the app's advanced mode shows for any wallet to use. A user whose own wallet is listed cannot connect and needs a build without the check.",
       },
-      dataAccess:
-        "ScopeLift, whose hosted app receives the user's wallet address on every scan",
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'public',
         detail: "A payment's sender, token and amount are public.",
       },

@@ -138,7 +138,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
       exposureShort:
         "The operator custodies both legs in transit and can freeze any account or deposit, setting the terms on which the user's funds return.",
       exposureContinued:
-        "Its 1Click API receives each quote's addresses and amount through Vizor's server, with a fresh shielded address per swap. It holds no key into the shielded pool.",
+        "Its 1Click API receives each quote's addresses and amount through Vizor's server, with a fresh shielded address per swap. It can pass those addresses to its four screening vendors. It holds no key into the shielded pool.",
       interior: {
         sender: 'private',
         recipient: 'private',

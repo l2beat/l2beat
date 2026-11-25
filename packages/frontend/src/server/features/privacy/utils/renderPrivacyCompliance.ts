@@ -1,11 +1,12 @@
-import type { PrivacyCompliance } from '@l2beat/config'
+import type { PrivacyCompliance, PrivacyNoCompliance } from '@l2beat/config'
 import {
-  PRIVACY_CLEAN_ORIGIN_TOOLS,
   PRIVACY_COMPLIANCE_CONSEQUENCES,
   PRIVACY_COMPLIANCE_GATEKEEPERS,
   type PRIVACY_COMPLIANCE_HEADINGS,
   PRIVACY_COMPLIANCE_RULES,
   PRIVACY_COMPLIANCE_TIMINGS,
+  PRIVACY_NO_COMPLIANCE,
+  PRIVACY_VOLUNTARY_DISCLOSURES,
 } from '@l2beat/config/build/common/privacyCompliance'
 import upperFirst from 'lodash/upperFirst'
 import { bulletList, heading, joinBlocks } from '~/server/markdown/markdown'
@@ -13,12 +14,19 @@ import { bulletList, heading, joinBlocks } from '~/server/markdown/markdown'
 type Part = (typeof PRIVACY_COMPLIANCE_HEADINGS)[number]
 
 /**
- * The compliance section as markdown: the design tradeoff, then three parts
+ * The compliance section as markdown: the design tradeoff, then two parts
  * every project shares, so that pages compare part by part. Each part opens
- * with its typed facts, and the project's prose for it follows.
+ * with its typed facts, and the project's prose for it follows. A project
+ * without a compliance design gets one line that says so.
  */
-export function renderPrivacyCompliance(compliance: PrivacyCompliance): string {
-  const { gatekeeper, rules, timing, consequence, cleanOrigin } = compliance
+export function renderPrivacyCompliance(
+  compliance: PrivacyCompliance | PrivacyNoCompliance,
+): string {
+  if ('none' in compliance) {
+    return `**${upperFirst(PRIVACY_NO_COMPLIANCE)}.** ${compliance.none}`
+  }
+  const { gatekeeper, rules, timing, consequence, voluntaryDisclosure } =
+    compliance
   const prose = splitByHeading(compliance.content)
   const part = (title: Part, facts: string) =>
     joinBlocks([heading(3, title), facts, prose.get(title) ?? ''])
@@ -37,15 +45,9 @@ export function renderPrivacyCompliance(compliance: PrivacyCompliance): string {
     compliance.tradeoff,
     part('Enforcement', bulletList(enforcement)),
     part(
-      'Access to private data',
-      `**${upperFirst(compliance.dataAccess ?? 'nobody')}.**`,
+      'Voluntary disclosure',
+      `**${upperFirst(PRIVACY_VOLUNTARY_DISCLOSURES[voluntaryDisclosure.type])}.** ${voluntaryDisclosure.detail}`,
     ),
-    cleanOrigin
-      ? part(
-          'Proof of clean origin',
-          `**${upperFirst(PRIVACY_CLEAN_ORIGIN_TOOLS[cleanOrigin.type])}.** ${cleanOrigin.detail}`,
-        )
-      : '',
   ])
 }
 

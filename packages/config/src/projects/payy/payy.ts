@@ -300,10 +300,10 @@ export const payy: ScalingProject = {
     adversaries: payyAdversaries,
     compliance: {
       tradeoff:
-        'Payy runs the only validator, so it can refuse any transaction and no exit works without it. The only known check is identity verification for the card and the fiat ramps.',
+        'Payy can freeze any user because it runs the only validator, not because a rule says so.',
       gatekeeper: {
         type: 'operator',
-        detail: 'Payy, which runs the only validator',
+        detail: 'Payy',
       },
       rules: {
         type: 'closed',
@@ -313,11 +313,10 @@ export const payy: ScalingProject = {
       timing: { type: 'anytime' },
       consequence: {
         type: 'funds',
-        detail: 'A user Payy refuses can neither transfer nor withdraw.',
+        detail:
+          'A user Payy refuses can neither transfer nor withdraw, since no exit works without its validator.',
       },
-      dataAccess:
-        "Payy, whose backend keeps each wallet's KYC record and the owner of every note the app reports",
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'public',
         detail:
           'Which notes fund which is public, so every withdrawal traces back to its deposits.',

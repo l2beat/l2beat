@@ -270,10 +270,10 @@ export const privacyPools: BaseProject = {
         detail:
           'A revoked deposit can only be withdrawn in public, back to the address that made it.',
       },
-      cleanOrigin: {
-        type: 'proof',
+      voluntaryDisclosure: {
+        type: 'none',
         detail:
-          "Every private withdrawal proves that it comes from a deposit on 0xbow's approved list.",
+          'The app has no tool that shows which deposit a withdrawal comes from.',
       },
       content: readProjectMarkdown('privacy-pools', 'compliance'),
     },

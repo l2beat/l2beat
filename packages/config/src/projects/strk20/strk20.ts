@@ -249,12 +249,10 @@ export const strk20: BaseProject = {
         detail:
           "A refused deposit never starts. The tokens stay in the user's public account.",
       },
-      dataAccess:
-        "the holder of the auditor key, which opens every user's whole history",
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'key',
         detail:
-          "It opens the user's past and future activity and cannot be rotated.",
+          'It opens past and future activity and cannot be rotated. The SDK has no proof for a single payment.',
       },
       content: readProjectMarkdown('strk20', 'compliance'),
     },

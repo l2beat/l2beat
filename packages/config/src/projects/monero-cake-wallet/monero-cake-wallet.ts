@@ -166,11 +166,10 @@ export const moneroCakeWallet: BaseProject = {
         detail:
           "A service that holds a deposit keeps it until the user passes its checks or it refunds. XMR that reached the wallet is out of every service's reach.",
       },
-      dataAccess: 'each swap service, for the swaps it handled',
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'payment',
         detail:
-          'The wallet shows a transaction key per payment and a private view key for all incoming ones.',
+          'The wallet shows a [transaction key](https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/lib/view_model/transaction_details_view_model.dart#L174-L175) that proves one payment, and a [private view key](https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/lib/view_model/wallet_keys_view_model.dart#L268-L272) that opens all incoming ones.',
       },
       content: readProjectMarkdown('monero-cake-wallet', 'compliance'),
     },

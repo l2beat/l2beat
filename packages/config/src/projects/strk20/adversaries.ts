@@ -119,7 +119,7 @@ export const strk20Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Every user's viewing key is escrowed onchain, encrypted to one auditor key that a role holder can replace at any time with no delay.",
       exposureContinued:
-        "Starknet Holdings' gateway gets the account and viewing key at every unlock, and each proof carries the viewing key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor.",
+        "Starknet Holdings' gateway gets the account and viewing key at every unlock, and each proof carries the viewing key. Apps that drive a shadow account or a swap through the pool get the user's main address from the wallet connection. The holder of the screener key can block any screened depositor. StarkWare says Financial Privacy Inc holds the auditor key in an enclave and reviews lawful requests.",
       interior: {
         sender: 'exposed',
         recipient: 'exposed',
@@ -172,6 +172,11 @@ export const strk20Adversaries = definePrivacyAdversaries({
           url: SNP + 'packages/privacy/src/objects.cairo#L43-L53',
         },
         { title: 'Auditor public key in pool storage', url: POOL },
+        {
+          title: 'StarkWare on who holds the auditor key',
+          checked: '2026-11-20',
+          url: 'https://www.starknet.io/blog/compliance-layer-onchain-privacy-strk20/',
+        },
       ],
     },
   },

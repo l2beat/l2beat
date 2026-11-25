@@ -1,9 +1,9 @@
 import type {
-  PrivacyCleanOriginTool,
   PrivacyComplianceConsequence,
   PrivacyComplianceGatekeeper,
   PrivacyComplianceRules,
   PrivacyComplianceTiming,
+  PrivacyVoluntaryDisclosure,
 } from '../types'
 
 // What the Compliance section prints for each fact type.
@@ -37,17 +37,18 @@ export const PRIVACY_COMPLIANCE_CONSEQUENCES = {
 } as const satisfies Record<PrivacyComplianceConsequence, string>
 
 /** Least revealing first. */
-export const PRIVACY_CLEAN_ORIGIN_TOOLS = {
-  proof: 'a proof against a list',
-  payment: 'disclosure of one payment',
-  key: 'a viewing key for the whole history',
+export const PRIVACY_VOLUNTARY_DISCLOSURES = {
+  payment: 'one payment at a time',
+  key: 'the whole history, by viewing key',
   public: 'not needed, the origin is public',
   none: 'none',
-} as const satisfies Record<PrivacyCleanOriginTool, string>
+} as const satisfies Record<PrivacyVoluntaryDisclosure, string>
 
-/** The section's three parts, in page order. */
+/** The section's two parts, in page order. */
 export const PRIVACY_COMPLIANCE_HEADINGS = [
   'Enforcement',
-  'Access to private data',
-  'Proof of clean origin',
+  'Voluntary disclosure',
 ] as const
+
+/** What the section opens with for a PrivacyNoCompliance. */
+export const PRIVACY_NO_COMPLIANCE = 'no compliance tools'

@@ -161,7 +161,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
       exposureShort:
         'The ASP postman can publish a new approved list at any time with no delay, and every private spend must prove against the latest one.',
       exposureContinued:
-        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. A multisig can upgrade the four core contracts without delay.",
+        "A list without a deposit's label freezes every note descending from it, and a list with few labels narrows the set to them. 0xbow's ASP feeds see every session's IP and its relayer every exit's IP and recipient, so 0xbow can pair deposit and exit sessions. Its ASP key opens each deposit's label, so 0xbow can tie every label to its deposit. A multisig can upgrade the four core contracts without delay.",
       interior: {
         sender: 'private',
         recipient: {

@@ -493,12 +493,10 @@ export const zkmoneyv6: BaseProject = {
         detail:
           "The user must submit a refused withdrawal themselves. A payment the resolver blocks needs the recipient's own tooling to find, and a signature from their Ethereum account.",
       },
-      dataAccess:
-        'Aztec Labs, whose name resolver knows the recipient of every payment sent to a name',
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'none',
         detail:
-          'Names, deposits and withdrawals are public. No proof covers what happens between them.',
+          'Names, deposits and withdrawals are public. No tool shows what happens between them.',
       },
       content: readProjectMarkdown('zkmoneyv6', 'compliance'),
     },

@@ -425,21 +425,18 @@ export const privacyBoost: BaseProject = {
         type: 'privacy',
         detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. Refused funds inside can only be withdrawn in public, after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}.`,
       },
-      dataAccess:
-        'Sunnyside Labs, whose enclave holds a key to every note, and any auditor the admin multisig appoints',
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'none',
         detail:
-          "The wallet exports the account's activity as an unsigned CSV file.",
+          "The wallet only exports the account's activity as an unsigned CSV file. The SDK has no viewing key for the user and no proof for a single payment.",
       },
-      content: readProjectMarkdown('privacy-boost', 'compliance', {
-        auditorCount,
-      }),
+      content: readProjectMarkdown('privacy-boost', 'compliance'),
     },
     riskSummary: privacyBoostRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
         adminMultisigStats,
+        auditorCount,
       }),
     },
   },

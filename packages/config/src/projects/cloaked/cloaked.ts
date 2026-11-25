@@ -121,15 +121,15 @@ export const cloaked: BaseProject = {
     adversaries: cloakedAdversaries,
     compliance: {
       tradeoff:
-        "Cloaked's servers quote and submit every send, so Cloaked can refuse a user. The only declared check is on the user's IP address, and a refused user keeps the keys.",
+        'Cloaked can refuse any user because its servers sit in every send, not because a rule says so.',
       gatekeeper: {
         type: 'operator',
-        detail: 'Cloaked, whose servers quote and submit every send',
+        detail: 'Cloaked',
       },
       rules: {
         type: 'closed',
         detail:
-          "Cloaked checks the user's IP address for sanctions and geographic limits. Whether it also screens addresses is not public.",
+          "Cloaked [declares](https://clkd.xyz/docs/privacy) a check of the user's IP address for sanctions and geographic limits. Whether it also screens addresses is not public.",
       },
       timing: { type: 'everyUse' },
       consequence: {
@@ -137,8 +137,7 @@ export const cloaked: BaseProject = {
         detail:
           'A refused user exports their keys with the open recovery tool and moves the funds from any wallet.',
       },
-      dataAccess: "Cloaked, whose key shows all of a user's addresses",
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'public',
         detail:
           "Each payment's sender is public at the address that received it.",

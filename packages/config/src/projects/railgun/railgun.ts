@@ -364,17 +364,17 @@ export const railgun: BaseProject = {
       timing: {
         type: 'entry',
         detail:
-          'Broadcasters then verify the proof of that decision on every transaction.',
+          'Every later transaction carries a PPoI, a proof that its funds descend only from accepted shields.',
       },
       consequence: {
         type: 'access',
         detail:
           'RailOxide [refunds a blocked shield](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/desktop/private_tx.rs#L427-L470) to the address that shielded it, in public.',
       },
-      cleanOrigin: {
-        type: 'proof',
+      voluntaryDisclosure: {
+        type: 'key',
         detail:
-          'Every transaction a broadcaster submits carries a PPoI, a proof that its funds descend only from accepted shields.',
+          "RailOxide [exports a view-only key](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/bins/wallet/src/root/key_export.rs#L534-L546), which opens the wallet's history and future activity and cannot be revoked.",
       },
       content: readProjectMarkdown('railgun', 'compliance'),
     },

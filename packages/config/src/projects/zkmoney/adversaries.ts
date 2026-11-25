@@ -110,7 +110,7 @@ export const zkMoneyAdversaries = definePrivacyAdversaries({
       exposureShort:
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
-        "Desktop has no Tor setting. Routing all of the computer's traffic through Tor works, but Chrome's QUIC traffic to WalletConnect bypasses Tor unless UDP is blocked.",
+        "The wallet's screening names the Ethereum addresses it checks to zk.money and Predicate. Desktop has no Tor setting. Routing all of the computer's traffic through Tor works, but Chrome's QUIC traffic to WalletConnect bypasses Tor unless UDP is blocked.",
       interior: {
         ...INTERIOR,
         sender: {

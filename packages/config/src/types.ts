@@ -1230,7 +1230,7 @@ export interface ProjectPrivacyInfo {
   /** Author with definePrivacyRisks. */
   riskSummary?: PrivacyRiskGroup[]
   /** Who checks users or funds, what it costs and how to prove a clean origin. */
-  compliance?: PrivacyCompliance
+  compliance?: PrivacyCompliance | PrivacyNoCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1511,23 +1511,35 @@ export type PrivacyComplianceTiming =
 /** What a refusal takes from a user, mildest first. */
 export type PrivacyComplianceConsequence = 'access' | 'privacy' | 'funds'
 
-/** How a user shows where funds came from, least revealing first. */
-export type PrivacyCleanOriginTool =
-  /** A proof against a list. */
-  | 'proof'
-  /** Disclosure of one payment. */
+/** What a user can choose to show about their own activity, least revealing first. */
+export type PrivacyVoluntaryDisclosure =
+  /** One payment, and nothing about the others. */
   | 'payment'
   /** A viewing key for the whole history. */
   | 'key'
-  /** The origin is public without any tool. */
+  /** Nothing to disclose: the origin is public without any tool. */
   | 'public'
   | 'none'
 
 /**
- * The Compliance section of a privacy project. The page shows `tradeoff`,
- * then three parts: Enforcement (gatekeeper, rules, timing, consequence),
- * Access to private data and Proof of clean origin. Each fact is a `type`
- * from a shared list plus a `detail` in the project's own words.
+ * A project that runs no compliance check and ships no disclosure tool. The
+ * page shows "No compliance tools." and this text, so that a reader can tell
+ * it apart from a project nobody looked at.
+ */
+export interface PrivacyNoCompliance {
+  /** At most two sentences: what was looked for and is absent. */
+  none: string
+}
+
+/**
+ * The Compliance section of a privacy project: who can refuse a user, by
+ * which rule and at what cost, and what the user can show for themselves.
+ * Who can read users without their consent belongs to the adversaries. A
+ * project without any compliance design is a PrivacyNoCompliance instead.
+ *
+ * The page shows `tradeoff`, then two parts: Enforcement (gatekeeper, rules,
+ * timing, consequence) and Voluntary disclosure. Each fact is a `type` from a
+ * shared list plus a `detail` in the project's own words.
  */
 export interface PrivacyCompliance {
   /** At most two sentences: what the design chose, then what that costs the user. */
@@ -1540,10 +1552,8 @@ export interface PrivacyCompliance {
   timing?: { type: PrivacyComplianceTiming; detail?: string }
   /** `detail` says what a refused user is left with. Absent without a gatekeeper. */
   consequence?: { type: PrivacyComplianceConsequence; detail: string }
-  /** Who can read a user's private data without them, as a noun phrase. Absent means nobody. */
-  dataAccess?: string
-  /** `detail` names whose list or key it is and what using it reveals. Absent where no funds move. */
-  cleanOrigin?: { type: PrivacyCleanOriginTool; detail: string }
+  /** `detail` names the tool and what using it reveals. A proof that every spend must carry is enforcement, not this. */
+  voluntaryDisclosure: { type: PrivacyVoluntaryDisclosure; detail: string }
   /**
    * Markdown that extends the facts, under the headings of
    * PRIVACY_COMPLIANCE_HEADINGS. The page puts each part's facts above its

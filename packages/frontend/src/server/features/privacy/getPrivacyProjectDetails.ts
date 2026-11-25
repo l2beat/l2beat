@@ -4,6 +4,7 @@ import type {
   PrivacyCategory,
   PrivacyCompliance,
   PrivacyExitWindow,
+  PrivacyNoCompliance,
   PrivacyRiskGroup,
   PrivacySummaryValue,
   ProjectContracts,
@@ -86,7 +87,7 @@ export interface PrivacyProjectDetails {
   hasTvl: boolean
   detailedDescription?: string
   riskSummary?: PrivacyRiskGroup[]
-  compliance?: PrivacyCompliance
+  compliance?: PrivacyCompliance | PrivacyNoCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
   milestones: Milestone[]

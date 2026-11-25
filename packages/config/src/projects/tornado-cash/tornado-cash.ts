@@ -367,10 +367,10 @@ export const tornadoCash: BaseProject = {
         type: 'none',
         detail: 'The immutable pools and the app check no list.',
       },
-      cleanOrigin: {
+      voluntaryDisclosure: {
         type: 'payment',
         detail:
-          "The app's report links one withdrawal to its deposit, for whoever the user gives it to.",
+          "The app's [report](https://github.com/torndao777-eng/classic-ui/blob/8af0abd14d7eeb734f943b968ce687cb5946eac6/pages/compliance.vue) links one withdrawal to its deposit, for whoever the user gives it to.",
       },
       content: readProjectMarkdown('tornado-cash', 'compliance'),
     },

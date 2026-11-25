@@ -288,11 +288,10 @@ export const privacyPoolsV2: BaseProject = {
         detail:
           "Funds from a revoked deposit, payees' included, can only be withdrawn in public to their holder's address. The published label often points to the deposit.",
       },
-      dataAccess: '0xbow, which can tie every label to its deposit',
-      cleanOrigin: {
-        type: 'proof',
+      voluntaryDisclosure: {
+        type: 'payment',
         detail:
-          "Every private spend proves that its funds come from deposits on 0xbow's approved list.",
+          'The user shares a receipt for one payment, or the viewing key for every incoming note.',
       },
       content: readProjectMarkdown('privacy-pools-v2', 'compliance'),
     },

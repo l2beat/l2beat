@@ -692,7 +692,7 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
-    // The compliance section is the one home of these facts, and pages compare heading by heading.
+    // Every project states its compliance design or that it has none. The section is the one home of these facts, and pages compare heading by heading.
     it('every compliance section uses the shared headings and owns its facts', () => {
       const problems: string[] = []
       for (const { project, privacyInfo } of privacyProjects) {
@@ -707,6 +707,16 @@ describe('getProjects', () => {
           problems.push(`${project.id}: no compliance section`)
           continue
         }
+        const lead =
+          'none' in compliance ? compliance.none : compliance.tradeoff
+        const sentences = lead.split(/(?<=[.!?])\s+/)
+        if (
+          sentences.length > 2 ||
+          sentences.some((sentence) => sentence.split(/\s+/).length > 25)
+        ) {
+          problems.push(`${project.id}: lead exceeds two sentences of 25 words`)
+        }
+        if ('none' in compliance) continue
         const headings = [...compliance.content.matchAll(/^### (.*)$/gm)].map(
           ([, heading]) => heading,
         )
@@ -727,15 +737,6 @@ describe('getProjects', () => {
         }
         if (!hasGatekeeper && compliance.rules.type !== 'none') {
           problems.push(`${project.id}: rules without a gatekeeper`)
-        }
-        const sentences = compliance.tradeoff.split(/(?<=[.!?])\s+/)
-        if (
-          sentences.length > 2 ||
-          sentences.some((sentence) => sentence.split(/\s+/).length > 25)
-        ) {
-          problems.push(
-            `${project.id}: tradeoff exceeds two sentences of 25 words`,
-          )
         }
       }
       expect(problems).toEqual([])

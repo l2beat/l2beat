@@ -15,9 +15,12 @@ describe(renderPrivacyCompliance.name, () => {
         type: 'access',
         detail: 'The user submits it themselves.',
       },
-      cleanOrigin: { type: 'proof', detail: 'Every spend carries one.' },
+      voluntaryDisclosure: {
+        type: 'key',
+        detail: 'The wallet exports one.',
+      },
       content:
-        '### Enforcement\n\nRelayers check a list.\n\n### Proof of clean origin\n\nAnyone can verify it.',
+        '### Enforcement\n\nRelayers check a list.\n\n### Voluntary disclosure\n\nIt cannot be revoked.',
     })
 
     expect(markdown).toEqual(
@@ -33,25 +36,21 @@ describe(renderPrivacyCompliance.name, () => {
         '',
         'Relayers check a list.',
         '',
-        '### Access to private data',
+        '### Voluntary disclosure',
         '',
-        '**Nobody.**',
+        '**The whole history, by viewing key.** The wallet exports one.',
         '',
-        '### Proof of clean origin',
-        '',
-        '**A proof against a list.** Every spend carries one.',
-        '',
-        'Anyone can verify it.',
+        'It cannot be revoked.',
       ].join('\n'),
     )
   })
 
-  it('leaves out what a project without a gatekeeper or funds has no answer to', () => {
+  it('leaves out timing and consequence without a gatekeeper', () => {
     const markdown = renderPrivacyCompliance({
       tradeoff: 'Nothing is checked.',
       gatekeeper: { type: 'none' },
       rules: { type: 'none', detail: 'The contracts check no list.' },
-      dataAccess: 'the committee, which can decrypt every ballot',
+      voluntaryDisclosure: { type: 'none', detail: 'The app has no report.' },
       content: '',
     })
 
@@ -64,10 +63,20 @@ describe(renderPrivacyCompliance.name, () => {
         '- **Gatekeeper:** nobody.',
         '- **Rules:** none. The contracts check no list.',
         '',
-        '### Access to private data',
+        '### Voluntary disclosure',
         '',
-        '**The committee, which can decrypt every ballot.**',
+        '**None.** The app has no report.',
       ].join('\n'),
+    )
+  })
+
+  it('says in one line that a project has no compliance design', () => {
+    const markdown = renderPrivacyCompliance({
+      none: 'The contracts and the app check no list.',
+    })
+
+    expect(markdown).toEqual(
+      '**No compliance tools.** The contracts and the app check no list.',
     )
   })
 })
