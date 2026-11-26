@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
-  "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time ({{withdrawRequestMinimum}} to {{withdrawRequestMaximum}} tokens per request); while its whitelist is on, only whitelisted addresses can request (whitelist enabled: {{whitelistEnabled}}). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
+  "description": "Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time ({{withdrawRequestMinimum}} to {{withdrawRequestMaximum}} tokens per request). While its whitelist is on, only whitelisted addresses can request (whitelist enabled: {{whitelistEnabled}}). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager. A claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.",
   "ignoreMethods": [
     "getProcessedRateForTokenId",
     "tokenByIndex",

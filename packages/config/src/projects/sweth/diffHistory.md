@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x975349f23a5673a215cc0bea88f37d0c66fb757b
+Generated with discovered.json: 0x37eb9a48f2458da3de33c51be1b1a20d3ea18785
 
-# Diff at Thu, 19 Nov 2026 17:19:56 GMT:
+# Diff at Thu, 26 Nov 2026 15:44:16 GMT:
 
 - id: 5bf27dc9
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -33,25 +33,25 @@ Initial discovery of Swell's swETH liquid staking: the token, its exit queue, de
 ```diff
 +   Status: CREATED
     contract RepricingOracle (eth:0x289d600447A74B952AD16F0BD53b8eaAac2d2D71) [sweth/RepricingOracle]
-    +++ description: Entry point for the bot's balance reports. A report must be recent (at most 150 blocks old) and its new rate within 10000000000000000 (1e18 = 100%) of a reference rate computed from the same report's balances and on-chain supply, so the reported validator balances themselves are not verified on-chain. The external proof-of-reserves feed is eth:0x0000000000000000000000000000000000000000 (zero address = disabled). A falling rate pauses the whole system. Each report also processes the exit queue up to a request chosen by the bot.
+    +++ description: Entry point for the bot's balance reports. A report must be recent (at most 150 blocks old) and its new rate within 10000000000000000 (1e18 = 100%) of a reference rate computed from the same report's balances and onchain supply, so the reported validator balances themselves are not verified onchain. The external proof-of-reserves feed is eth:0x0000000000000000000000000000000000000000 (zero address = disabled). A falling rate pauses the whole system. Each report also processes the exit queue up to a request chosen by the bot.
 ```
 
 ```diff
 +   Status: CREATED
     contract NodeOperatorRegistry (eth:0x46DdC39E780088B1B146Aba8cBBe15DC321A1A1d) [sweth/NodeOperatorRegistry]
-    +++ description: Registry of node operators and their validator keys (8 operators). The platform admin adds, disables and edits operators; each operator registers keys from its controlling address, and keys are used in order when the bot funds validators. Operators post no bond, so slashing losses fall on all token holders. Deposit signatures are not checked on-chain.
+    +++ description: Registry of node operators and their validator keys (8 operators). The platform admin adds, disables and edits operators. Each operator registers keys from its controlling address, and keys are used in order when the bot funds validators. Operators post no bond, so slashing losses fall on all token holders. Deposit signatures are not checked onchain.
 ```
 
 ```diff
 +   Status: CREATED
     contract swEXIT (eth:0x48C11b86807627AF70a34662D4865cF854251663) [sweth/ExitQueue]
-    +++ description: Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request); while its whitelist is on, only whitelisted addresses can request (whitelist enabled: false). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager; a claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.
+    +++ description: Exit queue of the token. A holder burns tokens for an NFT claim that records the rate at request time (0.005 to 500 tokens per request). While its whitelist is on, only whitelisted addresses can request (whitelist enabled: false). Requests are processed in order only by the oracle during a bot report, with ETH pulled from the deposit manager. A claim pays the lower of the request-time and processing-time rate. New requests and claims revert while withdrawals are paused.
 ```
 
 ```diff
 +   Status: CREATED
     contract SwETHProxyOFT (eth:0x5C6392A69dc11f254457716c682F70e4B2ed7B05) [sweth/ProxyOFT]
-    +++ description: LayerZero v1 proxy OFT. It locks the token on Ethereum when it is sent to another chain and releases it when it comes back; tokens on other chains are backed only by this lockbox. Its owner sets the trusted remote contracts and LayerZero configuration.
+    +++ description: LayerZero v1 proxy OFT. It locks the token on Ethereum when it is sent to another chain and releases it when it comes back. Its tokens on other chains are backed only by this lockbox. Its owner sets the trusted remote contracts and LayerZero configuration.
 ```
 
 ```diff
@@ -81,7 +81,7 @@ Initial discovery of Swell's swETH liquid staking: the token, its exit queue, de
 ```diff
 +   Status: CREATED
     contract Timelock (eth:0xbA829003e6b5dD858fbed3945719939a6DC3073b) [sweth/Timelock]
-    +++ description: Compound-style timelock. Its admin queues transactions that can execute after 7d and within a grace period; the delay and admin can only be changed through the timelock itself.
+    +++ description: Compound-style timelock. Its admin queues transactions that can execute after 7d and within a grace period. The delay and admin can only be changed through the timelock itself.
 ```
 
 ```diff
@@ -93,5 +93,5 @@ Initial discovery of Swell's swETH liquid staking: the token, its exit queue, de
 ```diff
 +   Status: CREATED
     contract swETH (eth:0xf951E335afb289353dc249e82926178EaC7DEd78) [sweth/swETH]
-    +++ description: Liquid staking token. Anyone can deposit ETH unless deposits are paused or the whitelist is on (whitelist enabled: false); tokens are minted at the current rate and the ETH is forwarded to the deposit manager in the same call. The ETH value per token changes only when the oracle reprices it: each update may move it by at most 10000000000000000 (1e18 = 100%), at least 3600 seconds apart. Each reprice mints a share of the reported rewards as new tokens for node operators and the treasury.
+    +++ description: Liquid staking token. Anyone can deposit ETH unless deposits are paused or the whitelist is on (whitelist enabled: false). Tokens are minted at the current rate, and the ETH is forwarded to the deposit manager in the same call. The ETH value per token changes only when the oracle reprices it: each update may move it by at most 10000000000000000 (1e18 = 100%), at least 3600 seconds apart. Each reprice mints a share of the reported rewards as new tokens for node operators and the treasury.
 ```

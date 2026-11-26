@@ -14,7 +14,7 @@ const value = (contract: string, key: string): string =>
 const number = (contract: string, key: string): number =>
   Number(discovery.getContractValue<string | number>(contract, key))
 
-// Fractions are stored on-chain in 1e18 = 100%.
+// Fractions are stored onchain in 1e18 = 100%.
 const percent = (contract: string, key: string): string =>
   `${Number.parseFloat(((number(contract, key) / 1e18) * 100).toFixed(2))}%`
 
@@ -99,7 +99,7 @@ export const sweth: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `${swETH} is Swell's liquid staking token, backed by Ethereum validators. Its rate comes from Swell's reports, and Swell's multisigs and timelock control its contracts.`,
+    description: `${swETH} is Swell's liquid staking token. Its rate comes from Swell's reports, and Swell's multisigs and timelock control its contracts.`,
     detailedDescription: readProjectMarkdown('sweth', 'detailedDescription', {
       swETH,
       repriceCap,
@@ -218,7 +218,7 @@ export const sweth: BaseProject = {
       },
       {
         category: 'Funds can lose value if',
-        text: 'the bot role reports false validator balances; each report can move the rate within the reprice bound and nothing on-chain checks the balances.',
+        text: 'the bot role reports false validator balances. Each report can move the rate within the reprice bound, and nothing onchain checks the balances.',
       },
       {
         category: 'Funds can be frozen if',
