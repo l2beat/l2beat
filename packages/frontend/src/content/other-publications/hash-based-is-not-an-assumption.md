@@ -228,7 +228,7 @@ The counterexample proves a **logical gap**: even *one-wayness, second-preimage 
 
 Standard-model proofs for Winternitz and [WOTS+](https://huelsing.net/wordpress/wp-content/uploads/2013/05/wotsspr.pdf) get there by assuming **undetectability** (or pseudorandomness), meaning $f(\text{random})$ is computationally indistinguishable from uniform random so iterated outputs look random too. That condition is sufficient, not strictly required: a one-way permutation padded with a fixed `0` bit fails undetectability, yet still prevents forging a new Winternitz message. Either way, every known proof assumes something outside collision and preimage resistance, or models the hash in the [Random Oracle Model](https://en.wikipedia.org/wiki/Random_oracle).
 
-Standard-model chain requirements were spelled out between 2002 and 2013, and the EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines them explicitly. The gap we want to show here is only with the *"adds no new assumptions"* shorthand in public debate.
+The EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines these standard-model chain requirements explicitly. The gap we want to show here is only with the *"adds no new assumptions"* shorthand in public debate.
 
 ### Tweaks and target-sum encodings
 
