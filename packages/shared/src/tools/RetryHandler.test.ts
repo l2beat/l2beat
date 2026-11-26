@@ -64,6 +64,7 @@ describe(RetryHandler.name, () => {
       'Scheduling retry',
       expect.subset({
         error: 'HTTP error: 429 Too Many Requests',
+        status: 429,
         rateLimit: { 'retry-after': '10', 'x-ratelimit-limit': '200' },
       }),
     )

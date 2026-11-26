@@ -1,3 +1,4 @@
+import { redactUrls } from './redactUrls'
 import type { LogEntry } from './types'
 import { safeToJSON, tagService } from './utils'
 
@@ -91,5 +92,9 @@ function truncate(str: unknown): string {
   if (typeof str !== 'string') {
     return ''
   }
-  return str.length > MAX_LENGTH ? `${str.slice(0, MAX_LENGTH)}...` : str
+  // Before the cut, which can leave a URL that no longer reads as one
+  const redacted = redactUrls(str)
+  return redacted.length > MAX_LENGTH
+    ? `${redacted.slice(0, MAX_LENGTH)}...`
+    : redacted
 }

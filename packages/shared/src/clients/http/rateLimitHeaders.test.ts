@@ -1,5 +1,9 @@
 import { expect } from 'earl'
-import { readRateLimit, readRateLimitHeaders } from './rateLimitHeaders'
+import {
+  readRateLimit,
+  readRateLimitHeaders,
+  readStatus,
+} from './rateLimitHeaders'
 
 describe(readRateLimitHeaders.name, () => {
   // Why: these values are written by the provider and end up in our logs,
@@ -47,5 +51,18 @@ describe(readRateLimit.name, () => {
       readRateLimit(new Error('HTTP error', { cause: { status: 429 } })),
     ).toEqual(undefined)
     expect(readRateLimit(new Error('HTTP timeout'))).toEqual(undefined)
+  })
+})
+
+describe(readStatus.name, () => {
+  it('reads the status from the cause', () => {
+    expect(readStatus(new Error('x', { cause: { status: 403 } }))).toEqual(403)
+  })
+
+  it('is undefined without a numeric status', () => {
+    expect(readStatus(new Error('x', { cause: { status: '403' } }))).toEqual(
+      undefined,
+    )
+    expect(readStatus(new Error('HTTP timeout'))).toEqual(undefined)
   })
 })
