@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x395af1d500d819ad8e3fce117d34c6cb7094a61d
+
+# Diff at Thu, 26 Nov 2026 11:17:59 GMT:
+
+- id: 321eba71
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3b475876fb5d8d57231ef4725c99e8ee6d056615 block: 1795519505
+- current timestamp: 1795691813
+
+## Description
+
+L2 upgrade transaction submitted: https://tools.ethbeat.org/decoder?hash=0xf98a6ae74c31d3f69708c55521d100feba05479a9118797bcc17918418651e6f.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        59
++        60
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        59
++        60
+    }
+```
+
 Generated with discovered.json: 0x858ce0eb922b78178f01d901e410a8517db2fb6c
 
 # Diff at Tue, 24 Nov 2026 11:26:43 GMT:

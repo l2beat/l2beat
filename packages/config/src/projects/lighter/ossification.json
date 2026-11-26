@@ -7,6 +7,14 @@
       "updateId": "fcf90a17",
       "transaction": "0x5f793c7f171322041b01227219045e97b9884393658962513c63c8a9f4b0e287",
       "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 76 -> 77, new target eth:0x2F7FC37b104d25a420A761c16ee515c2e23B9200)."
+    },
+    {
+      "timestamp": 1795638527,
+      "type": "state",
+      "contract": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+      "updateId": "559acaf2",
+      "transaction": "0xb71300cc742c08e9355bfbf260b018a48c921a3124ec62e417ec4876a96f60c6",
+      "reason": "Added L1CoreMessaging (eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D) to the UpgradeGatekeeper managed contracts (version 82), so the previously non-upgradeable contract can now be upgraded through the gatekeeper."
     }
   ],
   "ignoredTransactions": [],
