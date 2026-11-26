@@ -234,7 +234,7 @@ Standard-model chain requirements were spelled out between 2002 and 2013, and th
 
 Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` mix per-step tweaks into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a target-sum encoding where a hash output fixes the digits. Tweaks let proofs drop full collision resistance in favor of tweaked second-preimage resistance. When tweaks are fed in as hash inputs (as in SPHINCS+ and the lean specs), the same 2-tag shortcut still works; random XOR bitmasks (as in RFC 8391) scramble the tag. Target-sum encoding turns the single-shot forgery into a search, yet free backward steps still sharply degrade security.
 
-All proofs in this article — the Lamport reduction, the Checksum Lemma, Claims 1 and 2, the padded permutation remark, and the tweaks, bitmask, and target-sum results above — are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
+All proofs in this article (the Lamport reduction, the Checksum Lemma, Claims 1 and 2, the padded permutation remark, and the tweaks, bitmask, and target-sum results above) are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
 
 ---
 
@@ -259,6 +259,6 @@ The PQ stack adds two shifts:
 
 A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
 
-Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs — pairing BLS or ECDSA with a hash-based scheme so a forgery must break both — hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity. That hedge only holds if the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
+Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity. That hedge only holds if the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
 
 Ethereum's post-quantum and post-AI debate should move past treating "hash-based" as shorthand for "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.

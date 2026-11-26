@@ -37,7 +37,7 @@
 
   <!-- ZONE 1: STANDARD MODEL -->
   <text x="22" y="56" class="sans zone" fill="#0f766e">STANDARD MODEL</text>
-  <text x="129" y="56" class="sans zonesub">— concrete, falsifiable hash properties</text>
+  <text x="129" y="56" class="sans zonesub">· concrete, falsifiable hash properties</text>
 
   <!-- Row 1: Lamport -->
   <rect x="20" y="66" width="680" height="48" rx="8" fill="#fafafa" stroke="#e4e4e7" stroke-width="1"/>
@@ -76,7 +76,7 @@
 
   <!-- ZONE 2: IDEALIZED MODELS -->
   <text x="22" y="275" class="sans zone" fill="#1d4ed8">IDEALIZED MODELS (ROM / RPM)</text>
-  <text x="206" y="275" class="sans zonesub">— hash or permutation treated as an ideal random black box</text>
+  <text x="206" y="275" class="sans zonesub">· hash or permutation treated as an ideal random black box</text>
 
   <!-- Row 4: Ethereum today (consensus / SHA-256) -->
   <rect x="20" y="285" width="680" height="50" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
