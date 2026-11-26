@@ -1,185 +1,180 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { CoinMarketChartRangeData } from '@l2beat/shared'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import type { Database, EthereumStakingDailyRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { EthereumSupplyIndexer, toDailySupplies } from './EthereumSupplyIndexer'
+import type { BurnDay } from './dune/readDuneBurns'
+import {
+  EthereumSupplyIndexer,
+  getIssuance,
+  SUPPLY_ANCHOR,
+} from './EthereumSupplyIndexer'
 
-const { DAY, HOUR, MINUTE } = UnixTime
-const day = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+const { DAY } = UnixTime
+const ETH = 10n ** 18n
+const first = SUPPLY_ANCHOR.timestamp
+const day = (n: number) => UnixTime(first + n * DAY)
 
 describe(EthereumSupplyIndexer.name, () => {
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 
-  it('stores the start of each ended day, and moves past the last one stored', async () => {
-    const { indexer, daily, coingecko } = createIndexer(
-      chart([day + DAY, day + 2 * DAY]),
-    )
+  it('stores the anchor, then adds each day its issuance less its burn', async () => {
+    const { indexer, supplyDaily, readBurns } = createIndexer({
+      // Issuance: 4 ETH on day 0, 3 ETH on day 1
+      staking: [staking(0, 100n), staking(1, 104n), staking(2, 107n)],
+      burns: [burn(0, 1n), burn(1, 5n)],
+    })
 
-    // The previous height is the end of `day`, already stored. The day that
-    // started at the end of the range has ended too, but has no point yet.
-    expect(await indexer.update(day + DAY + 1, day + 4 * DAY)).toEqual(
-      day + 3 * DAY,
-    )
+    expect(await indexer.update(day(1), day(3))).toEqual(day(3))
 
-    expect(coingecko.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
-      CoingeckoId('ethereum'),
-      'usd',
-      UnixTime(day + DAY - HOUR),
-      UnixTime(day + 3 * DAY + HOUR),
-    )
-    expect(daily.upsertMany).toHaveBeenOnlyCalledWith([
-      { timestamp: UnixTime(day + DAY), supply: 120_000_000 },
-      { timestamp: UnixTime(day + 2 * DAY), supply: 120_000_000 },
+    expect(readBurns).toHaveBeenOnlyCalledWith(day(0), day(1))
+    expect(supplyDaily.upsertMany).toHaveBeenOnlyCalledWith([
+      SUPPLY_ANCHOR,
+      { timestamp: day(1), supply: SUPPLY_ANCHOR.supply + 3 },
+      { timestamp: day(2), supply: SUPPLY_ANCHOR.supply + 1 },
     ])
   })
 
-  it('stores the first day on the first update', async () => {
-    const { indexer, daily } = createIndexer(chart([day]))
-    const { minHeight } = indexer.options
+  it('stores only the anchor while its day is the last ended one', async () => {
+    const { indexer, supplyDaily, readBurns } = createIndexer({})
 
-    expect(await indexer.update(minHeight, minHeight)).toEqual(minHeight)
-    expect(daily.upsertMany).toHaveBeenOnlyCalledWith([
-      { timestamp: day, supply: 120_000_000 },
+    expect(await indexer.update(day(1), day(1))).toEqual(day(1))
+
+    expect(readBurns).not.toHaveBeenCalled()
+    expect(supplyDaily.upsertMany).toHaveBeenOnlyCalledWith([SUPPLY_ANCHOR])
+  })
+
+  it('continues from the stored day before', async () => {
+    const { indexer, supplyDaily } = createIndexer({
+      stored: { timestamp: day(4), supply: 1_000 },
+      staking: [staking(4, 100n), staking(5, 102n)],
+      burns: [burn(4, 1n)],
+    })
+
+    expect(await indexer.update(day(5) + 1, day(6))).toEqual(day(6))
+
+    expect(supplyDaily.upsertMany).toHaveBeenOnlyCalledWith([
+      { timestamp: day(5), supply: 1_001 },
     ])
   })
 
-  it('leaves a day without a point empty for good once a later day has one', async () => {
-    const { indexer, daily } = createIndexer(chart([day + DAY, day + 3 * DAY]))
+  it("throws when Dune's day has another number of blocks than the staking day", async () => {
+    const { indexer, supplyDaily } = createIndexer({
+      staking: [staking(0, 100n), staking(1, 104n)],
+      burns: [[day(0), { burn: ETH, blockCount: 7_199 }]],
+    })
 
-    expect(await indexer.update(day + DAY + 1, day + 4 * DAY)).toEqual(
-      day + 4 * DAY,
+    await expect(indexer.update(day(1), day(2))).toBeRejectedWith(
+      'ETH supply inputs missing',
     )
-    expect(daily.upsertMany).toHaveBeenOnlyCalledWith([
-      { timestamp: UnixTime(day + DAY), supply: 120_000_000 },
-      { timestamp: UnixTime(day + 3 * DAY), supply: 120_000_000 },
-    ])
+    expect(supplyDaily.upsertMany).not.toHaveBeenCalled()
   })
 
-  it('asks again later when CoinGecko has no day yet', async () => {
-    const { indexer, daily } = createIndexer(chart([]))
+  it('throws when the next staking day is not stored', async () => {
+    const { indexer } = createIndexer({
+      staking: [staking(0, 100n)],
+      burns: [burn(0, 1n)],
+    })
 
-    await expect(indexer.update(day + DAY, day + 2 * DAY)).toBeRejectedWith(
-      'No ETH supply from CoinGecko',
+    await expect(indexer.update(day(1), day(2))).toBeRejectedWith(
+      'ETH supply inputs missing',
     )
-    expect(daily.upsertMany).not.toHaveBeenCalled()
+  })
+
+  it('throws when the day before is not stored', async () => {
+    const { indexer } = createIndexer({})
+
+    await expect(indexer.update(day(5) + 1, day(6))).toBeRejectedWith(
+      'ETH supply of the previous day missing',
+    )
   })
 
   it('keeps the days that end by the invalidated height', async () => {
-    const { indexer, daily } = createIndexer(chart([]))
+    const { indexer, supplyDaily } = createIndexer({})
 
-    expect(await indexer.invalidate(day + 3 * DAY)).toEqual(day + 3 * DAY)
-    expect(daily.deleteAfter).toHaveBeenOnlyCalledWith(UnixTime(day + 2 * DAY))
+    expect(await indexer.invalidate(day(3))).toEqual(day(3))
+    expect(supplyDaily.deleteAfter).toHaveBeenOnlyCalledWith(day(2))
+  })
+
+  it('refuses a first day other than the anchor', () => {
+    expect(() => createIndexer({ firstDay: day(1) })).toThrow(
+      'ETH supply must start on its anchor day',
+    )
   })
 })
 
-describe(toDailySupplies.name, () => {
-  it('takes the point nearest midnight within an hour, from its own price and market cap', () => {
-    const data: CoinMarketChartRangeData = {
-      prices: [
-        { date: date(day - 50 * MINUTE), value: 2_000 },
-        { date: date(day + 10 * MINUTE), value: 3_000 },
-        { date: date(day + DAY + 2 * HOUR), value: 3_000 },
-      ],
-      marketCaps: [
-        { date: date(day - 50 * MINUTE), value: 240_000_000_000 },
-        { date: date(day + 10 * MINUTE), value: 360_000_000_000 },
-        { date: date(day + DAY + 2 * HOUR), value: 360_000_000_000 },
-      ],
+describe(getIssuance.name, () => {
+  it('counts withdrawals and pending deposits as held, and leaves out deposits', () => {
+    const start = {
+      ...staking(0, 100n),
+      pendingDeposits: null,
+      withdrawals: 7n * ETH,
+      deposits: 32n * ETH,
     }
+    const end = { ...staking(1, 120n), pendingDeposits: 10n * ETH }
 
-    expect(toDailySupplies(data, day, UnixTime(day + DAY))).toEqual([
-      { timestamp: day, supply: 120_000_000 },
-    ])
-  })
-
-  it('never pairs a price with a market cap from another time', () => {
-    const data: CoinMarketChartRangeData = {
-      prices: [{ date: date(day), value: 3_300 }],
-      marketCaps: [{ date: date(day - 2 * DAY), value: 360_000_000_000 }],
-    }
-
-    expect(toDailySupplies(data, day, day)).toEqual([])
-  })
-
-  it('pairs a price with the market cap of the same time, even when one series skips a point', () => {
-    const data: CoinMarketChartRangeData = {
-      prices: [
-        { date: date(day - HOUR), value: 3_000 },
-        { date: date(day), value: 3_000 },
-      ],
-      marketCaps: [{ date: date(day), value: 360_000_000_000 }],
-    }
-
-    expect(toDailySupplies(data, day, day)).toEqual([
-      { timestamp: day, supply: 120_000_000 },
-    ])
-  })
-
-  it('takes a valid point within the hour when the one at midnight is invalid', () => {
-    const data: CoinMarketChartRangeData = {
-      prices: [
-        { date: date(day), value: 3_000 },
-        { date: date(day + HOUR), value: 3_000 },
-      ],
-      marketCaps: [
-        { date: date(day), value: 0 },
-        { date: date(day + HOUR), value: 360_000_000_000 },
-      ],
-    }
-
-    expect(toDailySupplies(data, day, day)).toEqual([
-      { timestamp: day, supply: 120_000_000 },
-    ])
-  })
-
-  it('leaves out a day whose point gives no positive supply', () => {
-    const data: CoinMarketChartRangeData = {
-      prices: [{ date: date(day), value: 3_000 }],
-      marketCaps: [{ date: date(day), value: 0 }],
-    }
-
-    expect(toDailySupplies(data, day, day)).toEqual([])
+    // Held 100 → 130, 7 withdrawn, 32 deposited
+    expect(getIssuance(start, end)).toEqual(5n * ETH)
   })
 })
 
-function date(timestamp: number) {
-  return UnixTime.toDate(UnixTime(timestamp))
-}
-
-/** A point at each timestamp worth 120M ETH. */
-function chart(timestamps: number[]): CoinMarketChartRangeData {
+function staking(n: number, balanceEth: bigint): EthereumStakingDailyRecord {
   return {
-    prices: timestamps.map((t) => ({ date: date(t), value: 3_000 })),
-    marketCaps: timestamps.map((t) => ({
-      date: date(t),
-      value: 360_000_000_000,
-    })),
+    timestamp: day(n),
+    slot: 0,
+    totalBalance: balanceEth * ETH,
+    activeBalance: balanceEth * ETH,
+    pendingDeposits: 0n,
+    withdrawals: 0n,
+    deposits: 0n,
+    builderPayments: 0n,
+    priorityFees: 0n,
+    directTransfers: 0n,
+    blockCount: 7_200,
+    builderBlockCount: 0,
   }
 }
 
-function createIndexer(data: CoinMarketChartRangeData) {
-  const daily = mockObject<Database['ethereumSupplyDaily']>({
+function burn(n: number, eth: bigint): [UnixTime, BurnDay] {
+  return [day(n), { burn: eth * ETH, blockCount: 7_200 }]
+}
+
+function createIndexer({
+  firstDay = first,
+  stored,
+  staking = [],
+  burns = [],
+}: {
+  firstDay?: UnixTime
+  stored?: { timestamp: UnixTime; supply: number }
+  staking?: EthereumStakingDailyRecord[]
+  burns?: [UnixTime, BurnDay][]
+}) {
+  const supplyDaily = mockObject<Database['ethereumSupplyDaily']>({
     upsertMany: mockFn().resolvesTo(1),
     deleteAfter: mockFn().resolvesTo(0),
+    getInRange: mockFn().resolvesTo(stored ? [stored] : []),
   })
-  const coingecko = {
-    getCoinMarketChartRange: mockFn().resolvesTo(data),
-  }
+  const stakingDaily = mockObject<Database['ethereumStakingDaily']>({
+    getInRange: mockFn().resolvesTo(staking),
+  })
+  const readBurns = mockFn().resolvesTo(new Map(burns))
   const indexer = new EthereumSupplyIndexer(
     {
       parents: [],
       indexerService: mockObject<IndexerService>(),
-      firstDay: day,
-      db: mockDatabase({ ethereumSupplyDaily: daily }),
-      coingecko,
+      firstDay,
+      db: mockDatabase({
+        ethereumSupplyDaily: supplyDaily,
+        ethereumStakingDaily: stakingDaily,
+      }),
+      readBurns,
     },
     Logger.SILENT,
   )
-  return { indexer, daily, coingecko }
+  return { indexer, supplyDaily, readBurns }
 }

@@ -1,10 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  getLiquidStakingTvlSummary,
-  getYearChange,
+  getLatestComplete,
+  getTvlChanges,
   isComplete,
-  type TvlBreakdown,
   toBreakdown,
 } from './liquidStakingTvlBreakdown'
 
@@ -50,74 +49,104 @@ describe(toBreakdown.name, () => {
   })
 })
 
-describe(getLiquidStakingTvlSummary.name, () => {
+describe(getLatestComplete.name, () => {
   it('takes the latest complete day', () => {
-    const summary = getLiquidStakingTvlSummary([
+    const latest = getLatestComplete([
       day(1, { lido: 8, rocketpool: 2 }, 40, null),
       day(2, { lido: 10, rocketpool: null }, 50),
       day(3, { lido: 10, rocketpool: 2 }, null),
     ])
-    expect(summary?.latest.timestamp).toEqual(1)
-    expect(summary?.latest.others).toEqual(30)
-  })
-
-  it('ends the yearly changes on the same day, not on a later partial one', () => {
-    const summary = getLiquidStakingTvlSummary([
-      day(0, { lido: 8 }, 40, 100),
-      day(UnixTime.DAY, { lido: 8 }, 50, 110),
-      day(2 * UnixTime.DAY, { lido: null }, 60, 120),
-    ])
-    expect(summary?.stakeChange?.until).toEqual(UnixTime.DAY)
-    expect(summary?.supplyChange?.eth).toEqual(10)
-  })
-
-  it('starts the supply change after a day whose supply is below its stake', () => {
-    const summary = getLiquidStakingTvlSummary([
-      day(0, { lido: 8 }, 40, 30),
-      day(UnixTime.DAY, { lido: 8 }, 45, 100),
-      day(2 * UnixTime.DAY, { lido: 8 }, 50, 110),
-    ])
-    expect(summary?.supplyChange?.since).toEqual(UnixTime.DAY)
-  })
-
-  it('has no supply change when the latest day has no supply', () => {
-    const summary = getLiquidStakingTvlSummary([
-      day(0, { lido: 8 }, 40, 100),
-      day(UnixTime.DAY, { lido: 8 }, 50, null),
-    ])
-    expect(summary?.stakeChange).not.toEqual(undefined)
-    expect(summary?.supplyChange).toEqual(undefined)
-  })
-
-  it('has nothing without a complete day', () => {
-    expect(getLiquidStakingTvlSummary([day(1, { lido: 8 }, null)])).toEqual(
-      undefined,
-    )
+    expect(latest?.timestamp).toEqual(1)
+    expect(latest?.others).toEqual(30)
   })
 })
 
-describe(getYearChange.name, () => {
+describe(getTvlChanges.name, () => {
   const n = (days: number) => days * UnixTime.DAY
-  const staked = (b: TvlBreakdown) => b.staked
-  const withStake = (days: number, value: number | null) =>
-    day(n(days), {}, value)
 
-  it('compares the latest value with the first within the year', () => {
-    expect(
-      getYearChange(
-        [
-          withStake(0, 30),
-          withStake(2, null),
-          withStake(3, 40),
-          withStake(367, 50),
-          withStake(368, null),
-        ],
-        staked,
-      ),
-    ).toEqual({ value: 0.25, eth: 10, since: n(3), until: n(367) })
+  it('ends the changes on the latest complete day, not on a later partial one', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, 110),
+      day(n(2), { lido: null }, 60, 120),
+    ]
+    const changes = getTvlChanges(days, getLatestComplete(days)!)
+    expect(changes.stake).toEqual({
+      value: 0.25,
+      eth: 10,
+      since: n(0),
+      until: n(1),
+    })
+    expect(changes.supply?.eth).toEqual(10)
+  })
+
+  it('starts the supply change after a day whose supply is below its stake', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 30),
+      day(n(1), { lido: 8 }, 45, 100),
+      day(n(2), { lido: 8 }, 50, 110),
+    ]
+    expect(getTvlChanges(days, getLatestComplete(days)!).supply?.since).toEqual(
+      n(1),
+    )
+  })
+
+  it('has no supply change when the latest day has no supply', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, null),
+    ]
+    const changes = getTvlChanges(days, getLatestComplete(days)!)
+    expect(changes.stake).not.toEqual(undefined)
+    expect(changes.supply).toEqual(undefined)
+  })
+
+  it('drops the supply change on a historical range whose final day has no supply', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 45, 105),
+      day(n(2), { lido: 8 }, 50, null),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, 120)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(2))
+    expect(changes.supply).toEqual(undefined)
+  })
+
+  it('keeps the supply change on a historical range even when the server latest day has no supply', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, 125),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, null)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(1))
+    expect(changes.supply).toEqual({
+      value: 0.25,
+      eth: 25,
+      since: n(0),
+      until: n(1),
+    })
+  })
+
+  it('ends the supply change on the same day as the stake change on a historical range', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, 110),
+      day(n(2), { lido: 8 }, null, 120),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, 130)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(1))
+    expect(changes.supply?.until).toEqual(n(1))
+    expect(changes.supply?.eth).toEqual(10)
   })
 
   it('has no change from a single day', () => {
-    expect(getYearChange([withStake(1, 40)], staked)).toEqual(undefined)
+    const days = [day(n(0), { lido: 8 }, 40, 100)]
+    expect(getTvlChanges(days, getLatestComplete(days)!)).toEqual({
+      stake: undefined,
+      supply: undefined,
+    })
   })
 })

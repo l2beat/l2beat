@@ -3,6 +3,7 @@ import { DailyIndexer } from '../../tools/DailyIndexer'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { readDuneBurns } from './network/dune/readDuneBurns'
 import { EthereumStakingIndexer } from './network/EthereumStakingIndexer'
 import { EthereumSupplyIndexer } from './network/EthereumSupplyIndexer'
 import { readExecutionDay } from './network/executionDay'
@@ -80,11 +81,11 @@ export function createLiquidStakingModule({
   )
   const ethereumSupplyIndexer = new EthereumSupplyIndexer(
     {
-      parents: [dailyIndexer],
+      parents: [ethereumStakingIndexer],
       indexerService,
       firstDay: sinceTimestamp,
       db,
-      coingecko: providers.clients.coingecko,
+      readBurns: (fromDay, toDay) => readDuneBurns(dune, rpc, fromDay, toDay),
     },
     logger,
   )

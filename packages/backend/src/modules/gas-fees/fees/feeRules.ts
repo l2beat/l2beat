@@ -1,3 +1,10 @@
+import {
+  BLOB_UPDATE_FRACTIONS,
+  ethereumBlobGasPrice,
+} from '../../../tools/ethereumBlobGasPrice'
+
+export { BLOB_UPDATE_FRACTIONS }
+
 /**
  * What a chain's transactions pay, as Trino SQL over its Dune tables: `t` is a
  * row of its `transactions`, `b` that transaction's row of its `blocks`.
@@ -35,39 +42,7 @@ const L1_FEE = 'coalesce(cast(t.l1_fee as double), 0)'
 // A deposit from Ethereum (type 126) uses gas and pays nothing
 const unlessDeposit = (fee: string) => `if(t.type = '126', 0e0, ${fee})`
 
-// EIP-4844's price of blob gas: its fake_exponential(1, excess_blob_gas, fraction),
-// in whole numbers as the protocol computes it: floor(exp()) is a wei off on
-// some blocks. 128 terms cover prices past 1e16 wei.
-
-/** The blob update fraction from each fork's first block, latest first */
-export const BLOB_UPDATE_FRACTIONS = [
-  { fork: 'BPO2', fromBlock: 24179383, fraction: 11684671 },
-  { fork: 'BPO1', fromBlock: 23975778, fraction: 8346193 },
-  { fork: 'Pectra', fromBlock: 22431084, fraction: 5007716 },
-  { fork: 'Cancun', fromBlock: 19426587, fraction: 3338477 },
-] as const
-
-const BLOB_FRACTION = `cast(case
-      ${BLOB_UPDATE_FRACTIONS.map(
-        ({ fromBlock, fraction }) =>
-          `when b.number >= ${fromBlock} then ${fraction}`,
-      ).join('\n      ')}
-    end as decimal(38, 0))`
-const BLOB_EXCESS = 'cast(b.excess_blob_gas as decimal(38, 0))'
-const TERMS = 'row(output decimal(38, 0), term decimal(38, 0))'
-// Decimal division rounds, so the remainder is taken off first
-const wholeDivide = (x: string, y: string) =>
-  `(${x} - mod(${x}, ${y})) / (${y})`
-const BLOB_GAS_PRICE = `reduce(
-      sequence(1, 128),
-      cast(row(0, ${BLOB_FRACTION}) as ${TERMS}),
-      (s, k) -> cast(row(
-        s.output + s.term,
-        ${wholeDivide(`s.term * ${BLOB_EXCESS}`, `${BLOB_FRACTION} * k`)}
-      ) as ${TERMS}),
-      s -> ${wholeDivide('s.output', BLOB_FRACTION)}
-    )`
-const BLOB_FEE = `if(t.type = '3', cardinality(t.blob_versioned_hashes) * 131072e0 * cast(${BLOB_GAS_PRICE} as double), 0e0)`
+const BLOB_FEE = `if(t.type = '3', cardinality(t.blob_versioned_hashes) * 131072e0 * cast(${ethereumBlobGasPrice('b')} as double), 0e0)`
 
 // Mantle changed how it charges on 22 April 2026. Until block 94,355,695 the
 // gas held the cost of posting data to Ethereum, and l1_fee only reported it.

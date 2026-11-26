@@ -385,7 +385,7 @@ model EthereumStakingDaily {
 model EthereumSupplyDaily {
   /// Start of the day.
   timestamp DateTime @id @db.Timestamp(6)
-  /// In ETH; an estimate, rounded like the circulating supplies TVS uses.
+  /// In ETH; a known supply on the first day, plus issuance and less burn since.
   supply    Float
 }
 

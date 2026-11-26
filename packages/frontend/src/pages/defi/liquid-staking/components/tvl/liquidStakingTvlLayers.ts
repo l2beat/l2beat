@@ -38,7 +38,7 @@ export function getProtocolLayers(
 const OTHERS_LAYER: TvlLayer = {
   key: 'others',
   role: 'others',
-  label: 'Others',
+  label: 'Other stakers',
   fill: 'color-mix(in oklab, var(--secondary) 28%, transparent)',
   stroke: 'var(--secondary)',
   strokeDasharray: '3 3',
@@ -50,7 +50,7 @@ const NOT_STAKED_LAYER: TvlLayer = {
   key: 'notStaked',
   role: 'notStaked',
   label: 'Not staked',
-  // Fainter than Others, so the staked layers stand out inside the supply.
+  // Fainter than Other stakers, so the staked layers stand out inside the supply.
   fill: 'color-mix(in oklab, var(--secondary) 10%, transparent)',
   stroke: 'var(--secondary)',
   value: (row) => row.notStaked,

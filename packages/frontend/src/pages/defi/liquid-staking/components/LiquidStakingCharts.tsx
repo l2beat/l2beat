@@ -9,6 +9,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import {
   ChartRangeControls,
   type ChartRangeOptionValue,
+  rangeToOption,
 } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -24,7 +25,7 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import type { LiquidStakingTvlSummary } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import type { CompleteTvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
@@ -66,15 +67,23 @@ export const LIQUID_STAKING_RANGE_OPTIONS: {
 
 export function LiquidStakingCharts({
   projects,
-  tvlSummary,
+  tvlLatest,
   defaultRange,
 }: {
   projects: LiquidStakingChartProject[]
-  tvlSummary: LiquidStakingTvlSummary | undefined
+  tvlLatest: CompleteTvlBreakdown | undefined
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
+  const rangePreset = useMemo(
+    () =>
+      rangeToOption(
+        range,
+        LIQUID_STAKING_RANGE_OPTIONS.map((option) => option.value),
+      ),
+    [range],
+  )
 
   return (
     // The range bar drives every chart below it, so it heads them.
@@ -91,8 +100,9 @@ export function LiquidStakingCharts({
         <LiquidStakingTvlChart
           projects={projects}
           projectSeries={projectSeries}
-          summary={tvlSummary}
+          latest={tvlLatest}
           range={range}
+          rangePreset={rangePreset}
         />
         <YieldChart
           projectSeries={projectSeries}

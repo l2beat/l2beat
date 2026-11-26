@@ -7,7 +7,7 @@ import type { EthereumSupplyDaily } from '../kysely/generated/types'
 export interface EthereumSupplyDailyRecord {
   /** Start of the day. */
   timestamp: UnixTime
-  /** In ETH; CoinGecko's market cap over its price, so an estimate. */
+  /** In ETH; a known supply on the first day, plus issuance and less burn since. */
   supply: number
 }
 
