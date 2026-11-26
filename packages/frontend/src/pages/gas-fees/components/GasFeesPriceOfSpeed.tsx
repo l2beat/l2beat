@@ -59,7 +59,7 @@ function SpeedCurve({ speed }: { speed: PriceOfSpeed }) {
   const [hovered, setHovered] = useState<number>()
   const point = hovered === undefined ? undefined : speed.dots[hovered]
   const { xMax, xTicks, yMin, yMax, yTicks } = getAxes(speed)
-  const left = (usd: number) => (usd / xMax) * 100
+  const left = (usd: number) => (xMax > 0 ? (usd / xMax) * 100 : 0)
   const top = (wait: number) => (1 - (wait - yMin) / (yMax - yMin)) * 100
 
   const onMove = (event: React.PointerEvent<HTMLDivElement>) => {

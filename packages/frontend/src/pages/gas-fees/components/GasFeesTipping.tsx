@@ -115,13 +115,17 @@ function SplitBar({
     <div className="flex flex-col gap-1.5">
       <ShareBar
         className="h-11 gap-[3px] rounded-lg font-semibold text-black text-sm tabular-nums"
-        parts={parts.map((p) => ({
-          key: p.label,
-          value: p.value,
-          color: p.color,
-          className: 'px-3',
-          inside: share(p.value) >= NARROWEST_LABELLED && usd(p.value),
-        }))}
+        parts={parts.map((p) => {
+          const labelled = share(p.value) >= NARROWEST_LABELLED
+          return {
+            key: p.label,
+            value: p.value,
+            color: p.color,
+            // Padding would hold a thin part wider than its share
+            className: labelled ? 'px-3' : undefined,
+            inside: labelled && usd(p.value),
+          }
+        })}
       />
       <div className="flex justify-between gap-3 text-xs">
         {parts.map((p) => (
