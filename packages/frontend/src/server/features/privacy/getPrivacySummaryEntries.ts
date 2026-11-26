@@ -15,6 +15,7 @@ import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
+import { getListedGardenProjectIds } from '../garden/getListedGardenProjectIds'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import {
   getPrivacyAnonymitySetSummaries,
@@ -69,6 +70,22 @@ type PrivacySummaryBaseEntry = Omit<
 >
 
 export async function getPrivacySummaryEntries(
+  projects: PrivacyProject[],
+): Promise<PrivacySummaryEntry[]> {
+  const [entries, inGarden] = await Promise.all([
+    getEntries(projects),
+    getListedGardenProjectIds(),
+  ])
+  // A project the garden lists gets the CROPS meadow, unless a warning
+  // already colours its row.
+  return entries.map((entry) =>
+    inGarden.has(entry.id) && !entry.backgroundColor
+      ? { ...entry, backgroundColor: 'crops' }
+      : entry,
+  )
+}
+
+async function getEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
   const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')

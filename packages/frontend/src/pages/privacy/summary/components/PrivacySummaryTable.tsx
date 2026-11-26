@@ -7,6 +7,7 @@ import {
 import { useMemo } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { CropsMeadow } from '~/components/garden/CropsMeadow'
 import { BasicTable } from '~/components/table/BasicTable'
 import {
   ProjectNameCell,
@@ -91,7 +92,7 @@ function getColumns(anonymitySetTooltip: string | undefined) {
       cell: (ctx) => {
         const project = toPrivacyProjectCellProject(ctx.row.original)
 
-        return (
+        const nameCell = (
           <ProjectNameInfoTooltip project={project}>
             <TableLink href={ctx.row.original.href}>
               <TwoRowCell>
@@ -104,6 +105,15 @@ function getColumns(anonymitySetTooltip: string | undefined) {
               </TwoRowCell>
             </TableLink>
           </ProjectNameInfoTooltip>
+        )
+        if (ctx.row.original.backgroundColor !== 'crops') {
+          return nameCell
+        }
+        return (
+          <>
+            <CropsMeadow seed={ctx.row.original.id} />
+            {nameCell}
+          </>
         )
       },
       enableSorting: false,

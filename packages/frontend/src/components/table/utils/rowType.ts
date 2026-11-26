@@ -2,7 +2,8 @@ import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
-export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
+/** `crops` marks the row of a project the CROPS guide lists, see `CropsMeadow`. */
+export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | 'crops' | undefined
 export function getRowBackgroundColor(statuses: {
   redWarning?: ProjectRedWarning
   verificationWarnings?: ProjectVerificationWarnings
@@ -33,6 +34,10 @@ export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
       return 'bg-red-100/70 dark:bg-red-900/70'
     case 'yellow':
       return 'bg-yellow-200/10'
+    case 'crops':
+      // Positioned and isolated, so the meadow can sit behind the cells.
+      // See-through, so a column group's band still shows under the tint.
+      return 'relative isolate bg-crop-good/7'
     default:
       return undefined
   }
@@ -53,6 +58,8 @@ export function getRowClassNamesWithoutOpacity(
       return 'bg-[color-mix(in_srgb,var(--color-red-100)_70%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,var(--color-red-900)_70%,var(--surface-primary))]'
     case 'yellow':
       return 'bg-[color-mix(in_srgb,var(--color-yellow-200)_10%,var(--surface-primary))]'
+    case 'crops':
+      return 'bg-[color-mix(in_srgb,var(--crop-good)_7%,var(--surface-primary))]'
     default:
       return 'bg-surface-primary'
   }
