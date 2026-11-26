@@ -3251,6 +3251,63 @@
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      // Fixed 750M supply minted once, only on Robinhood Chain. Most of the rest sits
+      // in Sablier vesting, which CoinGecko's circulating supply leaves out.
+      "symbol": "RYFT",
+      "address": "0xb0007D59fE4050A1636c2fa19038973d16481337",
+      "coingeckoId": "neuralai-2",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      // manual override: robinhood public RPC is non-archival. Creation block 105123870.
+      "deploymentTimestamp": 1793715631
+    },
+    {
+      // A Meme Coin (CoinGecko ticker AMC), a Doppler launch with no vesting, only on
+      // Robinhood Chain. Unrelated to the AMC Entertainment stock token.
+      "symbol": "MEME",
+      "address": "0x385F4f8ae47651ce5F58F5265395a669f8281e18",
+      "coingeckoId": "a-meme-coin",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply",
+      // manual override: robinhood public RPC is non-archival. Creation block 53697172.
+      "deploymentTimestamp": 1788467405
+    },
+    {
+      // Robinhood Stock Token for Anthropic (Nasdaq: ANT), same beacon and Stock
+      // implementation as the other Robinhood stock tokens.
+      "symbol": "ANT",
+      "address": "0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373",
+      "coingeckoId": "anthropic-pbc-robinhood-token",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply",
+      // manual override: robinhood public RPC is non-archival. Creation block 58748161.
+      "deploymentTimestamp": 1788977229
+    },
+    {
+      // Minted only by a CCIP BurnMintTokenPool whose single lane is Base, where the
+      // VIRTUAL it bridges is locked. Separate from the canonically bridged VIRTUAL.
+      // Base already counts the locked VIRTUAL, so tvs.json keeps it out of the summary.
+      "symbol": "VIRTUAL",
+      "address": "0xc6911796042b15d7Fa4F6CDe69e245DdCd3d9c31",
+      "coingeckoId": "virtual-protocol",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      },
+      // manual override: robinhood public RPC is non-archival. Creation block 151939.
+      "deploymentTimestamp": 1782206747
     }
   ],
   "galxegravity": [
@@ -5366,6 +5423,24 @@
           }
         ]
       }
+    },
+    {
+      // ether.fi PAXG, a LayerZero OFT minted against PAXG locked in the Ethereum
+      // adapter 0xb20a9c1fce74ec335f5dbf30720e3b628bde49f9.
+      "symbol": "iPAXG",
+      "address": "0x41a7f2bb9789199654c206f09392674c1Af6676c",
+      "coingeckoId": "pax-gold",
+      "category": "rwaPublic",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     }
   ],
   "base": [
@@ -7197,6 +7272,153 @@
       "category": "other",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      // Open USD, issued by Bridge for Open Standard against offchain reserves. A B20
+      // precompile minted on Base against reserve ledger tokens Bridge mints on Base.
+      "symbol": "OUSD",
+      "address": "0xB2000000000000000000002fEb517dFeC7415344",
+      "coingeckoId": "open-usd",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      // Kelp's CCIP rsETH, minted only by a CCIP pool whose single lane is Ethereum. It
+      // replaced the LayerZero rsETH in the wrsETH wrapper, which must not be counted too.
+      "symbol": "rsETH",
+      "address": "0xe2110d5a2722ABd8c8002646C645Af15f5E9Db1F",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Citrea's CTR, native on Citrea. LayerZero OFT whose only peer is the Citrea
+      // adapter lockbox. About a quarter of the Base supply sits in a Citrea Safe and vester.
+      "symbol": "CTR",
+      "address": "0x11030f79109269d796fd0FB956D6244e502757f7",
+      "coingeckoId": "citrea",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      // Base native, 10B preminted with most of it in a MerkleVester. The Etherlink copy is
+      // backed by a LayerZero lockbox on Base, so circulating supply caps the Base supply.
+      "symbol": "SOGNI",
+      "address": "0xE014d2A4da6E450f21b5050120D291e63c8940FD",
+      "coingeckoId": "sogni-ai",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Threshold's tBTC, minted only by the L2WormholeGateway against the Wormhole wrapped
+      // L1 tBTC it holds.
+      "symbol": "tBTC",
+      "category": "btc",
+      "address": "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      // Chainlink's LINK on Base, minted only by CCIP pools. The OP bridge escrow holds a few
+      // LINK deposited to this token, which the bridge cannot mint.
+      "symbol": "LINK",
+      "address": "0x88Fb150BDc53A65fe94Dea0c9BA0a6dAf8C6e196",
+      "coingeckoId": "chainlink",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Ethos reputation token, only on Base. Capped and owner renounced, most of the
+      // supply sits in allocation Safes.
+      "symbol": "WHUF",
+      "address": "0xeeee77bC7e82c0d4166d52F58239D4c5Bf41eeee",
+      "coingeckoId": "whuffie",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      // Coinbase Tokenized Stock for Anthropic (Nasdaq: ANT), same B20 precompile as the
+      // other Coinbase stocks above.
+      "symbol": "ANTc",
+      "address": "0xb20000000000000000000016e38FD364d271Ba28",
+      "coingeckoId": "anthropic-pbc-coinbase-tokenized-stock",
+      "category": "rwaPublic",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      // Cambria token, locked on Ethereum in a CCIP lockbox and minted on Base. Most of the
+      // supply sits in the Cambria Safe. The generated circulating-supply formula is
+      // overridden in tvs.json by Base totalSupply minus the Safe's Base balance.
+      "symbol": "RSGP",
+      "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
+      "coingeckoId": "cambria",
+      "category": "other",
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      // Wormhole wrapped VELVET, native on BSC and locked in the BSC Wormhole Token Bridge.
+      "symbol": "VELVET",
+      "address": "0xbF927b841994731C573BDF09ceB0c6B0Aa887cDd",
+      "coingeckoId": "velvet",
+      "category": "other",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
     }
   ],
   "cyber": [

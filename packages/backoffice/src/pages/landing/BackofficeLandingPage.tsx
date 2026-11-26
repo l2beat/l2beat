@@ -42,6 +42,24 @@ export function BackofficeLandingPage() {
 
           <Card className="gap-4">
             <CardHeader>
+              <CardTitle>Token DB</CardTitle>
+              <CardDescription>
+                Browse and edit tokens, chains and their relations in the Token
+                DB.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link
+                to="/token-db"
+                className="text-primary underline underline-offset-4 hover:text-primary/80"
+              >
+                Go to Token DB →
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="gap-4">
+            <CardHeader>
               <CardTitle>Website</CardTitle>
               <CardDescription>
                 Website management tools and dashboards.

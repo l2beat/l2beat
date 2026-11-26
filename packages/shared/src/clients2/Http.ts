@@ -11,6 +11,8 @@ export interface HttpOptions {
   metricsEnabled: boolean
   metricsFlushIntervalMs: number
   logger: Logger
+  /** See `share` in `RateLimiterOptions.stepDownOnThrottle`. */
+  stepDownOnThrottle?: number
 }
 
 export interface HttpResponse {
@@ -21,6 +23,8 @@ export interface HttpResponse {
   // Ideally it's Record<string, string>, but converting is unnecessary overhead
   // since realistically nobody even uses the headers
   headers: Headers
+  /** When the request left the rate limiter, for `Http.answered` */
+  sentAt: number
 }
 
 interface Metrics {
@@ -31,7 +35,7 @@ interface Metrics {
 
 export class Http {
   private timeoutMs: number
-  private rateLimiter?: RateLimiter
+  protected rateLimiter?: RateLimiter
   private metrics: Record<string, Metrics> = {}
   private metricsEnabled = false
   private logger: Logger = Logger.SILENT
@@ -39,8 +43,15 @@ export class Http {
   constructor(options?: Partial<HttpOptions>) {
     this.timeoutMs = options?.timeoutMs ?? 10_000
     if (options?.maxCallsPerMinute !== undefined) {
+      const logger = options.logger ?? Logger.SILENT
       this.rateLimiter = new RateLimiter({
         callsPerMinute: options.maxCallsPerMinute,
+        stepDownOnThrottle: options.stepDownOnThrottle
+          ? {
+              share: options.stepDownOnThrottle,
+              onStep: (step) => logger.warn('Rate stepped down', step),
+            }
+          : undefined,
       })
     }
     if (options?.metricsEnabled !== undefined) {
@@ -67,13 +78,17 @@ export class Http {
     // the context is not reliable inside `_fetch`.
     const label = getRpcMetricsLabel()
     const request: FetchInit = { timeout: this.timeoutMs, ...init }
-    if (this.rateLimiter) {
-      return await this.rateLimiter.call(
-        () => this._fetch(url, request, label),
-        label,
-      )
+    const response = this.rateLimiter
+      ? await this.rateLimiter.call(
+          () => this._fetch(url, request, label),
+          label,
+        )
+      : await this._fetch(url, request, label)
+    // A refusal for the rate is what the limiter steps down on
+    if (response.status === 429) {
+      this.rateLimiter?.throttled(response.sentAt)
     }
-    return await this._fetch(url, request, label)
+    return response
   }
 
   protected async _fetch(
@@ -87,12 +102,15 @@ export class Http {
     // and we need to actually consume the response body not just the headers
     const body = await res.text()
     this._trackMetrics(label, Date.now() - start, Buffer.byteLength(body))
-    return {
-      body,
-      ok: res.ok,
-      status: res.status,
-      headers: res.headers,
-    }
+    return makeHttpResponse(res.status, body, res.headers, start)
+  }
+
+  /**
+   * Reports that the provider served a request sent at `sentAt`. Only the
+   * caller can tell, since a refusal can also come inside an HTTP 200.
+   */
+  answered(sentAt: number) {
+    this.rateLimiter?.answered(sentAt)
   }
 
   protected _trackMetrics(label: string, durationMs: number, size: number) {
@@ -143,6 +161,7 @@ export class Http {
           limiter && {
             limiterInFlightMax: limiter.inFlightMax,
             callsPerMinute: rateLimiter.callsPerMinute,
+            effectiveCallsPerMinute: rateLimiter.effectiveCallsPerMinute,
           }),
       })
     }
@@ -154,9 +173,10 @@ export function makeHttpResponse(
   status: number,
   body: string,
   headers: Headers = new Headers(),
+  sentAt: number = Date.now(),
 ): HttpResponse {
   const ok = status >= 200 && status < 300
-  return { body, ok, status, headers }
+  return { body, ok, status, headers, sentAt }
 }
 
 export class MockHttp extends Http {

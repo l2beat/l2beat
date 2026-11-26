@@ -10,6 +10,7 @@ import { existsSync, readdirSync, readFileSync } from 'fs'
 import uniq from 'lodash/uniq'
 import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import { DiffHistoryParser } from '../output/DiffHistoryParser'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
 import { ConfigLayer, mergeConfigLayer } from './ConfigLayer'
@@ -185,19 +186,16 @@ export class ConfigReader {
       path.join(projectPath, 'diffHistory.md'),
       'utf-8',
     )
-    const lines = content.split('\n')
-    const index = lines.findIndex((l) => l === '## Description')
-    if (index < 0) {
+    const entries = new DiffHistoryParser().parse(content)
+    const latestDiscovery = entries.find(
+      (entry) =>
+        entry.sections.length === 0 ||
+        entry.sections.some((section) => section.kind !== 'offchain-changes'),
+    )
+    if (latestDiscovery === undefined || latestDiscovery.description === '') {
       return undefined
     }
-
-    const followingLines = lines.slice(index + 1)
-    const lastIndex = followingLines.findIndex((l) => l.startsWith('## '))
-    if (lastIndex < 0) {
-      return followingLines.join('\n').trim()
-    }
-
-    return followingLines.slice(0, lastIndex).join('\n').trim()
+    return latestDiscovery.description
   }
 
   getProjectPath(project: string): string {

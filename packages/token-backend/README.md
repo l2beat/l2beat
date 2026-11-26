@@ -13,7 +13,7 @@ and their relations, e.g. finding all related tokens (even if relations are not 
 | `TOKEN_INGESTION_MAX_PROCESSED_PER_RUN` | No | `1000` | Prevents infinite-loop. Maximum number of pending queue entries processed in one ingestion run before the drain stops and leaves the rest pending. |
 | `COINGECKO_API_KEY` | No | — | CoinGecko API key. If present, token-backend uses the Pro API URL. |
 | `COINGECKO_API_URL` | No | the Pro API URL with `COINGECKO_API_KEY`, otherwise the public one | Replaces the CoinGecko API root, e.g. with a CoinGecko-compatible proxy. |
-| `COINGECKO_CALLS_PER_MINUTE` | No | `400` with `COINGECKO_API_KEY`, otherwise `10` | CoinGecko client rate limit for automatic ingestion and token UI checks. |
+| `COINGECKO_CALLS_PER_MINUTE` | No | `400` with `COINGECKO_API_KEY`, otherwise `10` | CoinGecko client rate limit for automatic ingestion and the back office's Token DB checks. |
 | `CF_TEAM_DOMAIN` | Yes* | — | Cloudflare Access team domain (e.g. `https://myteam.cloudflareaccess.com`). Required when `DEPLOYMENT_ENV` is `staging` or `production`. |
 | `CF_ACCESS_AUD` | Yes* | — | Cloudflare Access application AUD. Required when `DEPLOYMENT_ENV` is `staging` or `production`. |
 | `TOKEN_BACKEND_READONLY_AUTH_TOKEN` | No | — | Static bearer token that grants read-only access to the API. |
@@ -46,7 +46,7 @@ These documents MUST be kept up to date when their subjects change:
   their ingestion is separate from the token ingestion queue, and why
   `TokenRelation` has no foreign keys to `DeployedToken`.
 - [Intent / Plan / Execute](../../docs/mdbook/specs/l2b_specs/token_db/intent_plan_execute.md) —
-  the pipeline behind every human-driven write from token-UI (intents →
+  the pipeline behind every human-driven write from the back office (intents →
   plans → commands), and the rationale (visible blast radius +
   concurrency safety).
 - [Abstract token merging](../../docs/mdbook/specs/l2b_specs/token_db/abstract_token_merging.md) —

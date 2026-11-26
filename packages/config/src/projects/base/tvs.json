@@ -268,6 +268,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-ANTc",
+      "priceId": "anthropic-pbc-coinbase-tokenized-stock",
+      "symbol": "ANTc",
+      "name": "Anthropic, PBC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102180335/large/ANTc-official.png?1795105161",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb20000000000000000000016e38FD364d271Ba28",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1795046400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-APW",
       "priceId": "apwine",
       "symbol": "APW",
@@ -1206,6 +1224,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-CTR",
+      "priceId": "citrea",
+      "symbol": "CTR",
+      "name": "CTR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102173169/large/CTR.png?1778226916",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x11030f79109269d796fd0FB956D6244e502757f7",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1779753600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2648,7 +2692,33 @@
     },
     {
       "mode": "auto",
-      "id": "base-LINK",
+      "id": "base-LINK-1",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/Chainlink_Logo_500.png?1760023405",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x88Fb150BDc53A65fe94Dea0c9BA0a6dAf8C6e196",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1692023889
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "base-LINK-2",
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
@@ -3355,6 +3425,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-OUSD-1",
+      "priceId": "open-usd",
+      "symbol": "OUSD",
+      "name": "OpenUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102174264/large/open_standard.png?1782864430",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB2000000000000000000002fEb517dFeC7415344",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1790726400
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-oUSDT",
       "priceId": "openusdt",
       "symbol": "oUSDT",
@@ -4019,7 +4107,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-rsETH",
+      "id": "base-rsETH-1",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -4039,6 +4127,72 @@
           {
             "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "base-rsETH-2",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe2110d5a2722ABd8c8002646C645Af15f5E9Db1F",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1779215379
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
+      "id": "base-RSGP",
+      "priceId": "cambria",
+      "symbol": "RSGP",
+      "name": "Cambria",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102172274/large/cambria-logo.png?1793295821",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
+            "chain": "base",
+            "decimals": 18,
+            "sinceTimestamp": 1794528000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
+            "chain": "base",
+            "escrowAddress": "0x1ae605B51bb36be453De15cad9a63eBD2cf8aC82",
+            "decimals": 18,
+            "sinceTimestamp": 1794528000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -4446,6 +4600,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SOGNI",
+      "priceId": "sogni-ai",
+      "symbol": "SOGNI",
+      "name": "Sogni AI",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67008/large/sogni.jpg?1751450446",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "sogni-ai",
+        "decimals": 18,
+        "sinceTimestamp": 1751414400,
+        "address": "0xE014d2A4da6E450f21b5050120D291e63c8940FD",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -4884,7 +5057,33 @@
     },
     {
       "mode": "auto",
-      "id": "base-tBTC",
+      "id": "base-tBTC-1",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "Base tBTC v2",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x236aa50979D5f3De3Bd1Eeb40E81137F22ab794b",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1691042081
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "base-tBTC-2",
       "priceId": "tbtc",
       "symbol": "tBTC",
       "name": "tBTC v2",
@@ -5562,6 +5761,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-VELVET",
+      "priceId": "velvet",
+      "symbol": "VELVET",
+      "name": "Velvet",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67194/large/velvet.jpg?1752054592",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbF927b841994731C573BDF09ceB0c6B0Aa887cDd",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1754650681
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-VERI",
       "priceId": "veritaseum",
       "symbol": "VERI",
@@ -5807,6 +6032,25 @@
       },
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-WHUF",
+      "priceId": "whuffie",
+      "symbol": "WHUF",
+      "name": "Whuffie",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176882/large/whuf-logo-250.png?1793249228",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "whuffie",
+        "decimals": 18,
+        "sinceTimestamp": 1791590400,
+        "address": "0xeeee77bC7e82c0d4166d52F58239D4c5Bf41eeee",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {

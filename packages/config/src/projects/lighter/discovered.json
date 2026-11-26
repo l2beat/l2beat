@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1795519933,
+  "timestamp": 1795691872,
   "configHash": "0xb9d6fb62fa33ae3d7d0c180d6d8c2c7f8f2f54af58e6cf54a4feb3fe26a5ab1f",
   "entries": [
     {
@@ -278,8 +278,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 275963,
-        "committedPriorityRequestCount": 1997022,
+        "committedBatchesCount": 277979,
+        "committedPriorityRequestCount": 1998882,
         "coreMessaging": "eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D",
         "createdMarketsPostSpot": [
           "ETH/USDC",
@@ -476,17 +476,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0xEC6B495B02F506FD3027E9235465f3d163C06FDc",
-        "executedBatchesCount": 275951,
-        "executedOnChainBatchesCount": 157231,
-        "executedPriorityRequestCount": 1997006,
+        "executedBatchesCount": 277975,
+        "executedOnChainBatchesCount": 157605,
+        "executedPriorityRequestCount": 1998878,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x94E1f6d3e0c6fC3966747879299A089baF76A80F",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 771847,
-        "lastVerifiedEndBlockNumber": 400638151,
-        "lastVerifiedStateRoot": "0x8a4188dbdd4c9e81d999315e8c5ce70ca07ec97e414c21fad037dad9ba72d444",
-        "lastVerifiedValidiumRoot": "0x5f55f752e520ed22ac69c610985e80169381636559ecd492300d2412826fad98",
+        "lastAccountIndex": 772455,
+        "lastVerifiedEndBlockNumber": 403876551,
+        "lastVerifiedStateRoot": "0xff2b4f6e5b7e886f32d1d59f71ca935070b0eb364c56b7e1fa289cc20872cb98",
+        "lastVerifiedValidiumRoot": "0xb4488543f5461dd136f6fbcc5e57c440b38deeb77f90ac61fae9fa2334f06b3a",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -510,7 +510,7 @@
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
         "NIL_PUBLIC_MARKET_INDEX": 255,
-        "openPriorityRequestCount": 28,
+        "openPriorityRequestCount": 6,
         "pendingOnChainBatchesCount": 1,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
@@ -567,13 +567,13 @@
             "tokenAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
           }
         ],
-        "stateRoot": "0x8a4188dbdd4c9e81d999315e8c5ce70ca07ec97e414c21fad037dad9ba72d444",
+        "stateRoot": "0xff2b4f6e5b7e886f32d1d59f71ca935070b0eb364c56b7e1fa289cc20872cb98",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x5f55f752e520ed22ac69c610985e80169381636559ecd492300d2412826fad98",
-        "verifiedBatchesCount": 275951,
-        "verifiedPriorityRequestCount": 1997006,
+        "validiumRoot": "0xb4488543f5461dd136f6fbcc5e57c440b38deeb77f90ac61fae9fa2334f06b3a",
+        "verifiedBatchesCount": 277975,
+        "verifiedPriorityRequestCount": 1998878,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -738,7 +738,8 @@
         "managedContracts": [
           "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
           "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7"
+          "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D"
         ],
         "nextTargets": [],
         "noticePeriodFinishTimestamp": 0,
@@ -797,7 +798,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 256,
+        "nonce": 258,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1930,7 +1931,7 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithCoreMessaging": "0x557fce146526c6fd859e5d8ec58a0d624c2c2d1d2372e1d433f3d132136f6ba7"
   },
-  "usedBlockNumbers": { "ethereum": 26484738 },
+  "usedBlockNumbers": { "ethereum": 26499022 },
   "permissionsConfigHash": "0xf3c42b18a69388da9b5780ff6c16201c4793f85a51b8c9b0a36bfaf9ea347996",
   "permissions": {
     "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {

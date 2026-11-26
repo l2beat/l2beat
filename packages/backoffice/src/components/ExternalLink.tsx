@@ -5,8 +5,12 @@ export function ExternalLink({
   href,
   className,
   children,
+  showIcon = true,
   ...rest
-}: React.ComponentProps<'a'>) {
+}: React.ComponentProps<'a'> & {
+  /** Turn off for links styled as icon buttons, which bring their own icon. */
+  showIcon?: boolean
+}) {
   return (
     <a
       href={href}
@@ -18,8 +22,14 @@ export function ExternalLink({
       )}
       {...rest}
     >
-      <span>{children}</span>
-      <ArrowUpRightIcon aria-hidden="true" className="size-3 shrink-0" />
+      {showIcon ? (
+        <>
+          <span>{children}</span>
+          <ArrowUpRightIcon aria-hidden="true" className="size-3 shrink-0" />
+        </>
+      ) : (
+        children
+      )}
     </a>
   )
 }

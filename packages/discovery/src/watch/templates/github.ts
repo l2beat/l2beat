@@ -1,0 +1,60 @@
+import type { json } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
+import type { WatchContext } from '../WatchTemplate'
+
+const GITHUB_TIMEOUT_MS = 30_000
+
+export const GithubTreeEntry = v.object({
+  path: v.string(),
+  type: v.string(),
+  sha: v.string(),
+  size: v.number().optional(),
+})
+export type GithubTreeEntry = v.infer<typeof GithubTreeEntry>
+
+export const GithubTree = v.object({
+  truncated: v.boolean(),
+  tree: v.array(GithubTreeEntry),
+})
+export type GithubTree = v.infer<typeof GithubTree>
+
+// Anonymous GitHub allows 60 requests an hour per IP; the token lifts that for
+// private watches. Public watches always run anonymously so a newly-private
+// repository can never be fetched and published without TOCTOU races.
+export async function fetchGithubJson(
+  context: WatchContext,
+  url: string,
+): Promise<json> {
+  const headers: Record<string, string> = {
+    accept: 'application/vnd.github+json',
+    'x-github-api-version': '2022-11-28',
+  }
+  if (
+    context.publicOnly !== true &&
+    context.githubToken !== undefined &&
+    context.githubToken !== ''
+  ) {
+    headers.authorization = `Bearer ${context.githubToken}`
+  }
+  return await context.http.fetch(url, {
+    headers,
+    timeout: GITHUB_TIMEOUT_MS,
+    ...(context.signal !== undefined ? { signal: context.signal } : {}),
+  })
+}
+
+// A truncated tree lists only part of the repository, and the missing part
+// would read as removed files.
+export async function fetchGithubTree(
+  context: WatchContext,
+  repository: string,
+  branch: string,
+): Promise<GithubTree> {
+  const encodedBranch = branch.split('/').map(encodeURIComponent).join('/')
+  const url = `https://api.github.com/repos/${repository}/git/trees/${encodedBranch}?recursive=1`
+  const tree = GithubTree.validate(await fetchGithubJson(context, url))
+  if (tree.truncated) {
+    throw new Error('GitHub tree truncated', { cause: { repository, branch } })
+  }
+  return tree
+}

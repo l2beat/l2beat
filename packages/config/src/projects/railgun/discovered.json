@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1792756093,
+  "timestamp": 1795691822,
   "configHash": "0x0c3e2877cc5b1aa4ebc5f6e5230b6f5144d679fb900c5e4cb51a9c220462f2d1",
   "entries": [
     {
@@ -782,7 +782,7 @@
         "EXECUTION_END_OFFSET": 1209600,
         "EXECUTION_START_OFFSET": 604800,
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
-        "proposalCount": 33,
+        "proposalCount": 34,
         "QUORUM": "2000000000000000000000000",
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
@@ -998,7 +998,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,026,604.203074334105502209",
+        "RAILBalance": "1,862,330.182704974627728398",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1072,7 +1072,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "42,527,262.006558543126287672",
+        "RAILStaked": "42,025,249.695348851746307935",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1796,7 +1796,7 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 26255125 },
+  "usedBlockNumbers": { "ethereum": 26499018 },
   "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
