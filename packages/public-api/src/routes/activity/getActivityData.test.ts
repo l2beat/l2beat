@@ -34,6 +34,14 @@ describe(getActivityData.name, () => {
     ])
   })
 
+  it('returns no points for a project the backend has never synced', async () => {
+    const db = mockDb([activity(ALPHA, RANGE_END - DAY, 7)], [])
+
+    const result = await getActivityData(db, '30d', [ALPHA])
+
+    expect(result).toEqual([])
+  })
+
   it('keeps zero for a synced day without a record', async () => {
     const db = mockDb(
       [activity(ALPHA, RANGE_END - 2 * DAY, 5), activity(ALPHA, RANGE_END, 7)],
