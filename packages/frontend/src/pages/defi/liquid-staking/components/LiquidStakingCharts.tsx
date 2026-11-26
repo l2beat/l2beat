@@ -9,6 +9,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import {
   ChartRangeControls,
   type ChartRangeOptionValue,
+  rangeToOption,
 } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
@@ -75,6 +76,14 @@ export function LiquidStakingCharts({
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
+  const rangePreset = useMemo(
+    () =>
+      rangeToOption(
+        range,
+        LIQUID_STAKING_RANGE_OPTIONS.map((option) => option.value),
+      ),
+    [range],
+  )
 
   return (
     // The range bar drives every chart below it, so it heads them.
@@ -93,6 +102,7 @@ export function LiquidStakingCharts({
           projectSeries={projectSeries}
           latest={tvlLatest}
           range={range}
+          rangePreset={rangePreset}
         />
         <YieldChart
           projectSeries={projectSeries}

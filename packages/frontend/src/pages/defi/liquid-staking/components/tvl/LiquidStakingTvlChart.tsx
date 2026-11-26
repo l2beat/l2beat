@@ -13,6 +13,7 @@ import {
 } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
+import type { ChartRangeOptionValue } from '~/components/core/chart/utils/rangeToOption'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -58,12 +59,14 @@ export function LiquidStakingTvlChart({
   projectSeries,
   latest,
   range,
+  rangePreset,
 }: {
   projects: LiquidStakingChartProject[]
   projectSeries: LiquidStakingChartSeries[]
   /** The latest day, from the server, whatever the chart's range. */
   latest: CompleteTvlBreakdown | undefined
   range: ChartRange
+  rangePreset?: ChartRangeOptionValue | 'custom'
 }) {
   const trpc = useTRPC()
   const isClient = useIsClient()
@@ -159,6 +162,7 @@ export function LiquidStakingTvlChart({
         projects={projects}
         latest={latest}
         changes={changes}
+        rangePreset={rangePreset}
       />
 
       <div className="grid min-w-0 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">

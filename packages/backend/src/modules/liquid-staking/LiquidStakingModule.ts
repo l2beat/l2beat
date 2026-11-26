@@ -85,7 +85,7 @@ export function createLiquidStakingModule({
       indexerService,
       firstDay: sinceTimestamp,
       db,
-      readBurns: (fromDay, toDay) => readDuneBurns(dune, fromDay, toDay),
+      readBurns: (fromDay, toDay) => readDuneBurns(dune, rpc, fromDay, toDay),
     },
     logger,
   )

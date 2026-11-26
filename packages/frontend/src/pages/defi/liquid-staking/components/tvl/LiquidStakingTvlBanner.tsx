@@ -1,6 +1,7 @@
 import { formatNumber } from '@l2beat/shared-pure'
 import maxBy from 'lodash/maxBy'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import type { ChartRangeOptionValue } from '~/components/core/chart/utils/rangeToOption'
 import {
   Tooltip,
   TooltipContent,
@@ -26,11 +27,13 @@ export function LiquidStakingTvlBanner({
   projects,
   latest,
   changes,
+  rangePreset,
 }: {
   projects: LiquidStakingChartProject[]
   latest: CompleteTvlBreakdown | undefined
   /** Over the chart's period. */
   changes: TvlChanges | undefined
+  rangePreset?: ChartRangeOptionValue | 'custom'
 }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-divider border-b px-4 py-4 md:px-6 md:py-5">
@@ -46,13 +49,27 @@ export function LiquidStakingTvlBanner({
           {(changes?.stake || changes?.supply) && (
             <div className="flex shrink-0 items-center gap-5 tabular-nums">
               {changes.stake && (
-                <ChangeStat label="Staked" change={changes.stake} />
+                <ChangeStat
+                  label="Staked"
+                  change={changes.stake}
+                  period={formatChangePeriod(changes.stake, {
+                    preset: rangePreset,
+                    latestTimestamp: latest.timestamp,
+                  })}
+                />
               )}
               {changes.stake && changes.supply && (
                 <div className="h-8 w-px bg-divider" />
               )}
               {changes.supply && (
-                <ChangeStat label="Supply" change={changes.supply} />
+                <ChangeStat
+                  label="Supply"
+                  change={changes.supply}
+                  period={formatChangePeriod(changes.supply, {
+                    preset: rangePreset,
+                    latestTimestamp: latest.timestamp,
+                  })}
+                />
               )}
             </div>
           )}
@@ -133,15 +150,25 @@ function LiquidSentence({
   )
 }
 
-function ChangeStat({ label, change }: { label: string; change: EthChange }) {
+function ChangeStat({
+  label,
+  change,
+  period,
+}: {
+  label: string
+  change: EthChange
+  period: string
+}) {
   return (
     <div className="text-left sm:text-right" title={formatChangeDates(change)}>
-      <div className="font-bold text-heading-20 text-primary leading-tight">
-        {formatSigned(change.value, formatPercent)}
+      <div className="whitespace-nowrap font-bold text-heading-20 text-primary leading-tight">
+        {formatSigned(change.value, formatPercent)}{' '}
+        <span className="font-medium text-label-value-13 text-secondary">
+          / {period}
+        </span>
       </div>
       <div className="font-medium text-label-value-12 text-secondary">
-        {label} · {formatChangePeriod(change)} (
-        {formatSigned(change.eth, formatEthStaked)})
+        {label} ({formatSigned(change.eth, formatEthStaked)})
       </div>
     </div>
   )
