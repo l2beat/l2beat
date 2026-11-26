@@ -1634,5 +1634,6 @@
   "static/icons/zodl.png": "c0635cdba1122fc6c6ffbd23e275038e",
   "static/icons/hinkal.png": "cfa0ee568f863b5c6a5ccbd2dc2ca798",
   "static/meta-images/privacy/projects/hinkal/opengraph-image.png": "4beffa24c585e8603a2509b79355d108",
-  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "bcfc5ae81842d3de14c434ac3f9ea292"
+  "static/meta-images/zk-catalog/projects/hinkal/opengraph-image.png": "bcfc5ae81842d3de14c434ac3f9ea292",
+  "static/icons/kohaku-cli.png": "9b3eab1517f58b9cce65497e2cbf996c"
 }
