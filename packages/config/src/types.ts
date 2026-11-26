@@ -2223,8 +2223,14 @@ export type ProjectLiquidStakingMarketQuote =
         i: number
         j: number
       }
-      /** Ways to sell `token` for WETH; the best one counts. */
-      then: Exclude<ProjectLiquidStakingMarketQuote, { type: 'via' }>[]
+      /**
+       * Ways to sell `token` for WETH; the best one counts. Not Balancer: its
+       * `untilBlock` and quote version apply only to top-level quotes.
+       */
+      then: Extract<
+        ProjectLiquidStakingMarketQuote,
+        { type: 'curve' | 'curveCrypto' | 'uniswapV3' | 'pancakeV3' | 'fluid' }
+      >[]
     }
 
 export interface ProjectLivenessInfo {
