@@ -2206,6 +2206,26 @@ export type ProjectLiquidStakingMarketQuote =
       /** Whether the token sold is the pool's token0. */
       swap0to1: boolean
     }
+  | {
+      /**
+       * Two steps, for a token whose only deep market pays another token:
+       * a Curve pool sells it for `token`, then `token` sells for WETH. The
+       * second step is quoted for one `token` and scaled to what the first
+       * step paid.
+       */
+      type: 'via'
+      /** The token the first step pays. */
+      token: ChainSpecificAddress
+      /** `j` is `token`'s index in the pool. */
+      first: {
+        type: 'curve' | 'curveCrypto'
+        pool: ChainSpecificAddress
+        i: number
+        j: number
+      }
+      /** Ways to sell `token` for WETH; the best one counts. */
+      then: Exclude<ProjectLiquidStakingMarketQuote, { type: 'via' }>[]
+    }
 
 export interface ProjectLivenessInfo {
   explanation?: string

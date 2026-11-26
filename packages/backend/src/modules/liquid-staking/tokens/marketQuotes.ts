@@ -141,6 +141,28 @@ export function getMarketQuote(
         },
       }
     }
+    case 'via': {
+      const first = getMarketQuote(soldToken, quote.first)
+      const then = quote.then.map((step) => getMarketQuote(quote.token, step))
+      return {
+        calls: [...first.calls, ...then.flatMap((step) => step.calls)],
+        decode: (responses) => {
+          const paid = first.decode(responses.slice(0, first.calls.length))
+          if (paid === undefined || paid === 0n) return undefined
+          let next = first.calls.length
+          let best: bigint | undefined
+          for (const step of then) {
+            const out = step.decode(
+              responses.slice(next, next + step.calls.length),
+            )
+            next += step.calls.length
+            if (out !== undefined && out > 0n && (best ?? 0n) < out) best = out
+          }
+          // The second step sold one token; scale it to what the first paid.
+          return best === undefined ? undefined : (paid * best) / MARKET_SALE
+        },
+      }
+    }
     case 'fluid':
       return single(
         encodeCall(abi, quote.pool, 'swapIn', [

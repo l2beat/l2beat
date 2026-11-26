@@ -100,6 +100,53 @@ describe(getMarketQuote.name, () => {
     expect(decode([{ success: false, data: revert }])).toEqual(OUT)
     expect(decode([FAILED])).toEqual(undefined)
   })
+
+  describe('via another token', () => {
+    const VIA = ChainSpecificAddress(
+      'eth:0x4444444444444444444444444444444444444444',
+    )
+    const QUOTER = new utils.Interface([
+      'function quoteExactInputSingle((address tokenIn, address tokenOut, uint256 amountIn, uint24 fee, uint160 sqrtPriceLimitX96) params)',
+    ])
+    const via = getMarketQuote(TOKEN, {
+      type: 'via',
+      token: VIA,
+      first: { type: 'curve', pool: POOL, i: 0, j: 1 },
+      then: [
+        { type: 'uniswapV3', fee: 100 },
+        { type: 'uniswapV3', fee: 500 },
+      ],
+    })
+    const ONE = 10n ** 18n
+
+    it('sells the other token in the second step', () => {
+      expect(via.calls.length).toEqual(3)
+      expect(via.calls[0]?.to).toEqual(ChainSpecificAddress.address(POOL))
+      const [params] = QUOTER.decodeFunctionData(
+        'quoteExactInputSingle',
+        via.calls[1]?.input.toString() ?? '',
+      )
+      expect(params.tokenIn).toEqual(ChainSpecificAddress.address(VIA))
+    })
+
+    it('scales the best second step to what the first paid', () => {
+      const paid = (ONE * 96n) / 100n
+      const result = via.decode([
+        words(paid),
+        words((ONE * 110n) / 100n, 1n, 2n, 3n),
+        words((ONE * 112n) / 100n, 1n, 2n, 3n),
+      ])
+
+      expect(result).toEqual((paid * 112n) / 100n)
+    })
+
+    it('gives nothing when either step cannot be quoted', () => {
+      const quoted = words(ONE, 1n, 2n, 3n)
+
+      expect(via.decode([FAILED, quoted, quoted])).toEqual(undefined)
+      expect(via.decode([words(ONE), FAILED, FAILED])).toEqual(undefined)
+    })
+  })
 })
 
 function swapOut(amount: bigint): MulticallV3Response {
