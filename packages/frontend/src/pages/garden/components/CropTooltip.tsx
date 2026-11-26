@@ -137,16 +137,18 @@ export function CropTooltip({
 }
 
 /**
- * A good verdict in one sentence per crop. Censorship resistance and
+ * A good verdict in one sentence per crop. Censorship resistance, Privacy and
  * Security describe what we checked rather than promise an outcome: a
- * permission model cannot rule out censorship by Ethereum itself, and a
- * security review is not a guarantee.
+ * permission model cannot rule out censorship by Ethereum itself, a future
+ * break of today's cryptography can weaken privacy, and a security review is
+ * not a guarantee.
  */
 const GOOD_MEANING: Record<CropKey, string> = {
   censorshipResistance:
     'Users can use the protocol and withdraw without approval from its team, operators or governance.',
   openSource: CROP_CRITERIA.openSource.summary,
-  privacy: CROP_CRITERIA.privacy.summary,
+  privacy:
+    'Privacy is enforced by cryptography, not by policy: no provider, list or approval decides who gets it.',
   security:
     'It passes our checks on upgrade safeguards and external dependencies.',
 }

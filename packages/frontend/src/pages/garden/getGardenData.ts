@@ -169,13 +169,9 @@ function isBaseLayer(project: GardenProject): boolean {
   return !project.scalingInfo && project.daLayer !== undefined
 }
 
+// A project with unverified contracts is unscored, so the garden never lists it.
 function formatOssificationScore(
   ossification: ProjectOssificationView | undefined,
 ): string | undefined {
-  if (!ossification) {
-    return undefined
-  }
-  return ossification.isUnverified
-    ? 'No score, unverified contracts'
-    : `${ossification.score} of 100`
+  return ossification && `${ossification.score} of 100`
 }
