@@ -23,6 +23,7 @@ import {
   PRIVACY_ADVERSARY_ORDER,
   PRIVACY_METHODOLOGY_URL,
 } from '../common/privacyAdversaries'
+import { PRIVACY_COMPLIANCE_HEADINGS } from '../common/privacyCompliance'
 import { PRIVACY_TOOLS, type PrivacyTool } from '../common/privacyTools'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
@@ -665,6 +666,7 @@ describe('getProjects', () => {
       const sections = [
         'upgrades-and-governance',
         'trusted-setups',
+        'compliance',
         'contracts',
         'permissions',
         'verifiers',
@@ -709,6 +711,56 @@ describe('getProjects', () => {
           !risks.some((risk) => risk.text.includes('](#trusted-setups)'))
         ) {
           problems.push(`${project.id}: trusted setup not linked`)
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
+    // Every project states its compliance design or that it has none. The section is the one home of these facts, and pages compare heading by heading.
+    it('every compliance section uses the shared headings and owns its facts', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const description =
+          privacyInfo.detailedDescription ??
+          project.display?.detailedDescription
+        if (/^#+ Compliance$/m.test(description ?? '')) {
+          problems.push(`${project.id}: description has a Compliance heading`)
+        }
+        const compliance = privacyInfo.compliance
+        if (!compliance) {
+          problems.push(`${project.id}: no compliance section`)
+          continue
+        }
+        const lead =
+          'none' in compliance ? compliance.none : compliance.tradeoff
+        const sentences = lead.split(/(?<=[.!?])\s+/)
+        if (
+          sentences.length > 2 ||
+          sentences.some((sentence) => sentence.split(/\s+/).length > 25)
+        ) {
+          problems.push(`${project.id}: lead exceeds two sentences of 25 words`)
+        }
+        if ('none' in compliance) continue
+        const headings = [...compliance.content.matchAll(/^### (.*)$/gm)].map(
+          ([, heading]) => heading,
+        )
+        const expected = PRIVACY_COMPLIANCE_HEADINGS.filter((heading) =>
+          headings.includes(heading),
+        )
+        if (headings.join() !== expected.join()) {
+          problems.push(`${project.id}: headings ${headings.join(', ')}`)
+        }
+        const hasGatekeeper = compliance.gatekeeper.type !== 'none'
+        const gatekeeperFacts = [compliance.timing, compliance.consequence]
+        if (
+          gatekeeperFacts.some((fact) => (fact !== undefined) !== hasGatekeeper)
+        ) {
+          problems.push(
+            `${project.id}: timing and consequence go with a gatekeeper`,
+          )
+        }
+        if (!hasGatekeeper && compliance.rules.type !== 'none') {
+          problems.push(`${project.id}: rules without a gatekeeper`)
         }
       }
       expect(problems).toEqual([])

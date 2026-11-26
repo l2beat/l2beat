@@ -99,7 +99,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         sentiment: 'good',
         exposureShort: `Only the user holds viewing keys, and DAO upgrades wait ${upgradeDelay}.`,
         exposureContinued:
-          "PPoI list providers can refuse a shield, which leaves a self-broadcast exit. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
+          "A PPoI list provider can refuse a shield, which RailOxide then refunds only to the shielding address. RailOxide builds PPoIs from a local copy of the lists. After each transaction it sends the PPoI node only that transaction's new notes with their proofs.",
         interior: {
           ...INTERIOR,
           linkage: {
@@ -109,6 +109,7 @@ export function railgunAdversaries(upgradeDelay: string) {
         },
         sources: [
           { section: 'upgrades-and-governance' },
+          { section: 'compliance' },
           {
             title: 'RailOxide builds PPoIs locally',
             url: `${RAILOXIDE}crates/wallet-ops/src/poi_contexts.rs#L116-L152`,

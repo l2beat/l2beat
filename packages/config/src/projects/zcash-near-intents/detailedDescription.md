@@ -18,10 +18,6 @@ The ratings cover Vizor's Linux desktop release 0.0.64 with Tor and Private quer
 
 The Ethereum leg is custodial. The operator's deposit and treasury addresses are EOAs, and the operator mints the wrapped tokens on NEAR. The Verifier lets the NEAR Intents multisig and one single-key account freeze any account, which the operator uses for compliance holds. On Zcash, the connector holds funds at MPC-derived addresses and checks deposits against the light client. Relayers post Zcash block headers, credit deposits and request withdrawals. Anyone can become one by staking 1,000 NEAR and waiting seven days, unless the Rainbow Bridge multisig rejects them. The roles are listed under [upgrades and governance](#upgrades-and-governance).
 
-### Compliance
-
-Intents Technology Ltd. (British Virgin Islands) screens every quote against the NEAR Intents AML portal, Binance AML, AMLBot, PureFi and TRM Labs. Its [terms](https://docs.near-intents.org/security-compliance/terms-of-service) let it delay, block or freeze bridged funds and collect IP and wallet addresses. Market makers pass KYB, end users swap without an account.
-
 ### Fees
 
 The Verifier charges 1 pip (0.0001%) per swap. Vizor's server adds a 0.67% app fee to each quote, which Vizor [shares with the 1Click API](https://docs.near-intents.org/resources/fees). Each leg also pays a bridge withdrawal fee, 0.000035 ETH on Ethereum and 0.00047 ZEC on Zcash on 2026-10-08.

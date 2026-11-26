@@ -104,7 +104,7 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
       exposureShort:
         "Alchemy, called under Aztec Labs' key, sees an account's deposit addresses and withdrawals in one session unless the user sets their own Ethereum node.",
       exposureContinued:
-        "PublicNode receives each withdrawal recipient as it is entered, and Across each withdrawal to another chain, through endpoints the settings do not replace. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
+        "PublicNode receives each withdrawal recipient as it is entered, and Across each withdrawal to another chain, through endpoints the settings do not replace. The wallet's screening names each withdrawal recipient to zk.money and Predicate before the withdrawal exists. Desktop has no Tor setting, and Chrome's WalletConnect traffic uses UDP, which bypasses a Tor route unless UDP is blocked.",
       interior: {
         ...INTERIOR,
         sender: {
@@ -117,6 +117,10 @@ export const zkMoneyV6Adversaries = definePrivacyAdversaries({
         },
       },
       sources: [
+        {
+          title: 'The wallet asks Predicate about each withdrawal recipient',
+          url: `${ZKMONEY_REPO}packages/front-core/src/core/services/screening/PredicateScreeningService.ts#L28-L53`,
+        },
         {
           title:
             'Endpoint settings: Aztec node, old-network node, L1 RPC and enclave',

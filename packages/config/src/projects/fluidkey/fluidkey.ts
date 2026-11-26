@@ -103,6 +103,9 @@ export const fluidkey: BaseProject = {
         description: 'Interop with DeFi vaults through stealth Safes.',
       },
     ],
+    compliance: {
+      none: "No check on onchain payments is known, and each payment's sender is public. Bank transfers need identity verification by Noah and Sumsub.",
+    },
     riskSummary: fluidkeyRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),

@@ -148,6 +148,31 @@ export const moneroCakeWallet: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: moneroCakeWalletAdversaries,
+    compliance: {
+      tradeoff:
+        'Compliance sits at the swap services on both ends of the route, Monero and the wallet check nothing. A service can hold a deposit until the user identifies themselves.',
+      gatekeeper: {
+        type: 'operator',
+        detail: "meaning each swap service while it holds a swap's funds",
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          'Each swap service screens by its own rules, which only its own policy describes.',
+      },
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'funds',
+        detail:
+          "A service that holds a deposit keeps it until the user passes its checks or it refunds. XMR that reached the wallet is out of every service's reach.",
+      },
+      voluntaryDisclosure: {
+        type: 'payment',
+        detail:
+          'The wallet shows a [transaction key](https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/lib/view_model/transaction_details_view_model.dart#L174-L175) that proves one payment, and a [private view key](https://github.com/cake-tech/cake_wallet/blob/ae2765659afce6b353d20504830b81198b2fc5e2/lib/view_model/wallet_keys_view_model.dart#L268-L272) that opens all incoming ones.',
+      },
+      content: readProjectMarkdown('monero-cake-wallet', 'compliance'),
+    },
     riskSummary: moneroCakeWalletRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

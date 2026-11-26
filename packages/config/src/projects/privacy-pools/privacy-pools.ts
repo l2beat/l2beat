@@ -252,6 +252,31 @@ export const privacyPools: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
+    compliance: {
+      tradeoff:
+        '0xbow must approve every deposit and can withdraw the approval until the funds have left. Funds never change hands inside the pool, so a removal costs only the depositor a public exit.',
+      gatekeeper: {
+        type: 'contract',
+        detail: 'on every private withdrawal',
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          'As association set provider (ASP), 0xbow approves each deposit by criteria it does not publish, and lists the approved deposits.',
+      },
+      timing: { type: 'anytime' },
+      consequence: {
+        type: 'privacy',
+        detail:
+          'A revoked deposit can only be withdrawn in public, back to the address that made it.',
+      },
+      voluntaryDisclosure: {
+        type: 'none',
+        detail:
+          'The app has no tool that shows which deposit a withdrawal comes from.',
+      },
+      content: readProjectMarkdown('privacy-pools', 'compliance'),
+    },
     riskSummary: privacyPoolsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {

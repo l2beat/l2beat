@@ -79,6 +79,8 @@ export const zcashNearIntents: BaseProject = {
           file: 'Vizor-linux-x86_64.AppImage',
           hash: 'f325fc38917fcce2c22460145980abb9231e9d732810de621fba3d247a8f782c',
         },
+        rebuild:
+          'https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/fastlane/linux/Fastfile',
       },
       version: '0.0.64',
       source: {
@@ -168,7 +170,7 @@ export const zcashNearIntents: BaseProject = {
     reproducibility: {
       ...PRIVACY_REPRODUCIBILITY.partial,
       description:
-        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's desktop releases do not claim byte-for-byte rebuilds. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
+        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's Linux release rebuilds from its tag. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,
@@ -177,6 +179,32 @@ export const zcashNearIntents: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: zcashNearIntentsAdversaries,
+    compliance: {
+      tradeoff:
+        "Compliance sits at both ends of the route, where one operator runs the swaps and screens every quote. Zcash's shielded pool in between checks nothing, and the operator can hold funds only while a swap is in transit.",
+      gatekeeper: {
+        type: 'operator',
+        detail:
+          'Intents Technology Ltd., which runs NEAR Intents and the Ethereum side of both swaps',
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          "The operator screens the addresses in every swap quote against its own AML database and four vendors' data. No published rule says which match blocks a swap.",
+      },
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'funds',
+        detail:
+          'The operator [holds apart](https://docs.near-intents.org/security-compliance/withdrawals-to-exchanges) funds that fail its screening. A user refused at the quote keeps their shielded ZEC and can sell it elsewhere.',
+      },
+      voluntaryDisclosure: {
+        type: 'key',
+        detail:
+          "Vizor [exports](https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/lib/src/features/settings/screens/settings_viewing_key_screen.dart#L25-L30) a full viewing key, which shows the account's incoming and outgoing transactions, or an incoming-only key.",
+      },
+      content: readProjectMarkdown('zcash-near-intents', 'compliance'),
+    },
     riskSummary: zcashNearIntentsRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

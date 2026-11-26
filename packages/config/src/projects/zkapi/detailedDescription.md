@@ -36,10 +36,6 @@ OpenRouter and the model provider can read prompts and responses and link reques
 
 **Escape.** Without a cooperative close, the user starts an escape with their latest signed balance and finalizes it after {{challengePeriod}}. The operator can cancel it with a request proof for that balance, which publishes that request's link. While the owner pauses the vault, no one can start an escape, but one already started still finalizes.
 
-### Compliance
-
-The vault has no onchain screening. The operator can refuse keys or clearance.
-
 ### Fees
 
 Usage is billed in USD and converted to ETH through a Chainlink feed, with no fee on top of the provider's price. The unused balance returns at withdrawal.

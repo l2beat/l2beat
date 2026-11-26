@@ -215,6 +215,9 @@ export const interfold: BaseProject = {
       minimumCommittee.decryptionThreshold,
       minimumCommittee.members,
     ),
+    compliance: {
+      none: 'No list decides who votes, and a vote moves no funds.',
+    },
     riskSummary: interfoldRiskSummary({
       committeeMembers: voteCommittee.members,
       decryptionThreshold: voteCommittee.decryptionThreshold,

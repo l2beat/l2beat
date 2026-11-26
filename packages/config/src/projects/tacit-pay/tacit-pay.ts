@@ -261,6 +261,9 @@ export const tacitPay: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: tacitPayAdversaries,
+    compliance: {
+      none: 'The ownerless contracts, the app and the relay check no list. No tool lets a user show which deposit a withdrawal comes from.',
+    },
     riskSummary: tacitPayRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),

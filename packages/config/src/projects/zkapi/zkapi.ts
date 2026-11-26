@@ -259,6 +259,9 @@ export const zkapi: BaseProject = {
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
+    compliance: {
+      none: 'No compliance check is known, and the vault checks no list. Every withdrawal names its deposit in public.',
+    },
     riskSummary: zkApiRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),

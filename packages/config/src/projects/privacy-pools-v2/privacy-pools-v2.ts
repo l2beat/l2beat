@@ -270,6 +270,31 @@ export const privacyPoolsV2: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyPoolsV2Adversaries,
+    compliance: {
+      tradeoff:
+        "0xbow can revoke a deposit's approval at any time, also after its funds were paid on. For this, every payment carries the deposit's label, a private ID that each payee learns and can often trace.",
+      gatekeeper: {
+        type: 'contract',
+        detail: 'on every private spend',
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          'As association set provider (ASP), 0xbow approves each deposit by criteria it does not publish, and lists the approved deposits.',
+      },
+      timing: { type: 'anytime' },
+      consequence: {
+        type: 'privacy',
+        detail:
+          "Funds from a revoked deposit, payees' included, can only be withdrawn in public to their holder's address. The published label often points to the deposit.",
+      },
+      voluntaryDisclosure: {
+        type: 'payment',
+        detail:
+          'The user shares a receipt for one payment, or the viewing key for every incoming note.',
+      },
+      content: readProjectMarkdown('privacy-pools-v2', 'compliance'),
+    },
     riskSummary: privacyPoolsV2RiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown(

@@ -1248,6 +1248,8 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   /** Author with definePrivacyRisks. */
   riskSummary?: PrivacyRiskGroup[]
+  /** Who checks users or funds, what it costs and how to prove a clean origin. */
+  compliance?: PrivacyCompliance | PrivacyNoCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1489,6 +1491,96 @@ export interface PrivacyRisk {
   see?: PrivacyAdversaryId[]
 }
 
+/**
+ * The hardest layer at which someone can refuse a user, whether or not a
+ * check uses that power. A service the released app replaces from its own
+ * settings, such as one relayer among several or the user's own wallet, holds
+ * no such power.
+ */
+export type PrivacyComplianceGatekeeper =
+  /** The contracts enforce it, so no client or relayer skips it. */
+  | 'contract'
+  /** A party every ordinary use passes through. Only an exit goes around it. */
+  | 'operator'
+  /** Relayers and wallets enforce it, and the contracts do not. */
+  | 'relayer'
+  /** The app enforces it, and another client skips it. */
+  | 'app'
+  | 'none'
+
+/**
+ * The check that actually runs, apart from the power to refuse. A power
+ * without a check is a design choice that compliance does not explain.
+ */
+export type PrivacyComplianceRules =
+  /** Anyone can look up beforehand whether an address passes. */
+  | 'public'
+  /** A check runs or is declared, and only the gatekeeper's answer tells. */
+  | 'closed'
+  | 'none'
+
+export type PrivacyComplianceTiming =
+  /** Decided once and final. An accepted user stays accepted. */
+  | 'entry'
+  /** The decision can change over funds that are already inside. */
+  | 'anytime'
+  /** Checked per action, through a service the funds do not sit in. */
+  | 'everyUse'
+
+/** What a refusal takes from a user, mildest first. */
+export type PrivacyComplianceConsequence = 'access' | 'privacy' | 'funds'
+
+/** What a user can choose to show about their own activity, least revealing first. */
+export type PrivacyVoluntaryDisclosure =
+  /** One payment, and nothing about the others. */
+  | 'payment'
+  /** A viewing key for the whole history. */
+  | 'key'
+  /** Nothing to disclose: the origin is public without any tool. */
+  | 'public'
+  | 'none'
+
+/**
+ * A project that runs no compliance check and ships no disclosure tool. The
+ * page shows "No compliance tools." and this text, so that a reader can tell
+ * it apart from a project nobody looked at.
+ */
+export interface PrivacyNoCompliance {
+  /** At most two sentences: what was looked for and is absent. */
+  none: string
+}
+
+/**
+ * The Compliance section of a privacy project: who can refuse a user, by
+ * which rule and at what cost, and what the user can show for themselves.
+ * Who can read users without their consent belongs to the adversaries. A
+ * project without any compliance design is a PrivacyNoCompliance instead.
+ *
+ * The page shows `tradeoff`, then two parts: Enforcement (gatekeeper, rules,
+ * timing, consequence) and Voluntary disclosure. Each fact is a `type` from a
+ * shared list plus a `detail` in the project's own words.
+ */
+export interface PrivacyCompliance {
+  /** At most two sentences: what the design chose, then what that costs the user. */
+  tradeoff: string
+  /** `detail` is a clause that names who holds the power. */
+  gatekeeper: { type: PrivacyComplianceGatekeeper; detail?: string }
+  /** `detail` says who checks what against what. */
+  rules: { type: PrivacyComplianceRules; detail: string }
+  /** When the decision is made. Absent without a gatekeeper. */
+  timing?: { type: PrivacyComplianceTiming; detail?: string }
+  /** `detail` says what a refused user is left with. Absent without a gatekeeper. */
+  consequence?: { type: PrivacyComplianceConsequence; detail: string }
+  /** `detail` names the tool and what using it reveals. A proof that every spend must carry is enforcement, not this. */
+  voluntaryDisclosure: { type: PrivacyVoluntaryDisclosure; detail: string }
+  /**
+   * Markdown that extends the facts, under the headings of
+   * PRIVACY_COMPLIANCE_HEADINGS. The page puts each part's facts above its
+   * prose, so a heading without prose is left out.
+   */
+  content: string
+}
+
 export interface PrivacyAttribute {
   id: string
   label: string
@@ -1640,6 +1732,7 @@ export type PrivacySource =
         | 'verifiers'
         | 'trusted-setups'
         | 'upgrades-and-governance'
+        | 'compliance'
       title?: string
     }
 

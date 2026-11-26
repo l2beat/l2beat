@@ -56,6 +56,7 @@ export type SectionId =
   | 'detailed-description'
   | 'milestones-and-incidents'
   | 'risk-summary'
+  | 'compliance'
   | 'risk-analysis'
   | 'l3-risk-analysis'
   | 'stage'

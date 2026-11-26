@@ -439,6 +439,31 @@ export const zamaCw: BaseProject = {
       },
     ],
     adversaries: zamaCwAdversaries(kmsKeyThreshold, kmsSignerCount),
+    compliance: {
+      tradeoff:
+        'Addresses stay public, so each token screens senders and recipients like a public token does. Its owner can also freeze any balance at any time and appoint an observer that reads every amount.',
+      gatekeeper: {
+        type: 'contract',
+        detail: 'on every wrap, transfer and unwrap',
+      },
+      rules: {
+        type: 'public',
+        detail:
+          "Each token [checks](https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol#L420-L495) sender, recipient and operator against its onchain block list, which its owner edits freely. Five tokens also check their issuer's denylist.",
+      },
+      timing: { type: 'anytime' },
+      consequence: {
+        type: 'funds',
+        detail:
+          'A blocked balance can be neither sent nor unwrapped until the block is lifted. No function seizes it.',
+      },
+      voluntaryDisclosure: {
+        type: 'payment',
+        detail:
+          'The user [grants](https://etherscan.io/address/0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6#code) one party the decryption of a single balance or transfer, or of all their amounts in one token until a set date.',
+      },
+      content: readProjectMarkdown('zama-cw', 'compliance'),
+    },
     riskSummary: zamaCwRiskSummary({
       kmsSignerCount,
       kmsKeyThreshold,

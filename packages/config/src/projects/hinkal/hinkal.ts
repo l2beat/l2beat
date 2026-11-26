@@ -274,6 +274,36 @@ export const hinkal: BaseProject = {
     adversaries: hinkalAdversaries(
       formatSeconds(timelockDelay, { fullUnit: true }),
     ),
+    compliance: {
+      tradeoff:
+        'Hinkal screens at its own relayers, and the contracts enforce no list. To judge a spend the relayers learn which notes it uses, and the extension has no path around them.',
+      gatekeeper: {
+        type: 'relayer',
+        detail:
+          "Hinkal's allowlisted relayers, which submit every transaction the extension sends",
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          "Hinkal's relayers check the notes of each spend against deposit addresses Hinkal has flagged. Its [documentation](https://hinkal-team.gitbook.io/hinkal/security-and-compliance/compliance) names Merkle Science and Chainalysis as sources, and the flagged addresses are not public.",
+      },
+      timing: {
+        type: 'anytime',
+        detail:
+          'The relayers decide again at each spend, so a deposit accepted once can be refused later.',
+      },
+      consequence: {
+        type: 'privacy',
+        detail:
+          "A refused user must submit each transaction from their own address, which the transaction then publishes. The extension offers no such path, so it takes Hinkal's SDK.",
+      },
+      voluntaryDisclosure: {
+        type: 'none',
+        detail:
+          "The extension only exports the account's transactions of a chosen timeframe as an unsigned CSV file. It offers no proof for a single payment.",
+      },
+      content: readProjectMarkdown('hinkal', 'compliance'),
+    },
     riskSummary: hinkalRiskSummary({
       multisigStats,
       timelockDelay: formatSeconds(timelockDelay, { fullUnit: true }),

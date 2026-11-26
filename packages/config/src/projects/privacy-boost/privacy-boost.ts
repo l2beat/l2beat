@@ -38,6 +38,13 @@ const PRIVACY_BOOST_SINCE_TIMESTAMP = UnixTime(pool.sinceTimestamp ?? 0)
 const forcedWithdrawalDelay =
   discovery.getContractValue<number>('PrivacyBoost', 'forcedWithdrawalDelay') /
   BASE_BLOCKS_PER_SECOND
+const cancelDelay =
+  discovery.getContractValue<number>('PrivacyBoost', 'cancelDelay') /
+  BASE_BLOCKS_PER_SECOND
+const auditorCount = discovery.getContractValue<string[]>(
+  'AuditGateway',
+  'getAllAuditors',
+).length
 const epochAuthStaleness =
   discovery.getContractValue<number>(
     'PrivacyBoost',
@@ -184,10 +191,6 @@ export const privacyBoost: BaseProject = {
         withdrawFee: formatBasisPoints(withdrawFeeBps),
         portalSweepFee: formatBasisPoints(portalSweepFeeBps),
         maxForcedInputs: String(maxForcedInputs),
-        auditorCount: discovery.getContractValue<string[]>(
-          'AuditGateway',
-          'getAllAuditors',
-        ).length,
       },
     ),
     links: {
@@ -404,10 +407,36 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: privacyBoostAdversaries,
+    compliance: {
+      tradeoff:
+        'All compliance runs offchain at Sunnyside Labs, whose enclave holds every transfer in plaintext. The pool hides users from the public, not from the company that screens them.',
+      gatekeeper: {
+        type: 'operator',
+        detail:
+          'Sunnyside Labs, whose relay settles every deposit and whose enclave proves every spend',
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          'Sunnyside Labs screens deposits and transfers by rules it does not publish.',
+      },
+      timing: { type: 'anytime' },
+      consequence: {
+        type: 'privacy',
+        detail: `A refused deposit is refunded after ${formatSeconds(cancelDelay, { fullUnit: true })} unless the relay settled it. Refused funds inside can only be withdrawn in public, after ${formatSeconds(forcedWithdrawalDelay, { fullUnit: true })}.`,
+      },
+      voluntaryDisclosure: {
+        type: 'none',
+        detail:
+          "The wallet only exports the account's activity as an unsigned CSV file. The SDK has no viewing key for the user and no proof for a single payment.",
+      },
+      content: readProjectMarkdown('privacy-boost', 'compliance'),
+    },
     riskSummary: privacyBoostRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
         adminMultisigStats,
+        auditorCount,
       }),
     },
   },

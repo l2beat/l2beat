@@ -20,8 +20,8 @@ export function hinkalRiskSummary({
       "a single Safe signer redirects wrapper deposits, cuts swap output to the user's minimum, spends approvals for scheduled sends or upgrades the ReceiveVaultFactory.",
     ],
     lost: ['a user loses their recovery phrase.'],
-    frozen: [
-      "Hinkal's relayers refuse a withdrawal, since the extension submits only through them.",
+    stopped: [
+      "Hinkal's relayers refuse a user, since the extension submits only through them.",
     ],
     privacy: [
       {

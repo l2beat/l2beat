@@ -119,6 +119,31 @@ export const cloaked: BaseProject = {
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: cloakedAdversaries,
+    compliance: {
+      tradeoff:
+        'Cloaked can refuse any user because its servers sit in every send, not because a rule says so.',
+      gatekeeper: {
+        type: 'operator',
+        detail: 'Cloaked',
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          "Cloaked [declares](https://clkd.xyz/docs/privacy) a check of the user's IP address for sanctions and geographic limits. Whether it also screens addresses is not public.",
+      },
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
+        detail:
+          'A refused user exports their keys with the open recovery tool and moves the funds from any wallet.',
+      },
+      voluntaryDisclosure: {
+        type: 'public',
+        detail:
+          "Each payment's sender is public at the address that received it.",
+      },
+      content: readProjectMarkdown('cloaked', 'compliance'),
+    },
     riskSummary: cloakedRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),

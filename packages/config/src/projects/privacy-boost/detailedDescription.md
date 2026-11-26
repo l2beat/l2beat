@@ -25,10 +25,6 @@ Apps integrate the Privacy Boost SDK, whose core is closed source. The operator'
 
 **Forced withdrawal.** If the operator turns malicious or stops processing withdrawals, a user can prove a forced withdrawal of up to {{maxForcedInputs}} notes locally. The contract checks the authorization at request time, and anyone can execute the withdrawal {{forcedWithdrawalDelay}} later if the notes are still unspent. The account owner can cancel it. It publishes the spent notes and exposes the linked account.
 
-### Compliance
-
-Auditors appointed by the admin multisig can query the TEE's Audit API for the balance and history of any address, without the user's consent. The AuditGateway lists {{auditorCount}} auditors. The TEE is meant to record each access on that contract, but with its code unpublished this is unverifiable.
-
 ### Fees
 
 Standard deposits pay no protocol fee. Portal deposits pay a sweeper fee of {{portalSweepFee}}, capped at 10%, and have token-specific minimum sweep amounts. Withdrawals, forced withdrawals and public gift exits pay {{withdrawFee}} to the treasury. A forced withdrawal fixes its fee at request time.

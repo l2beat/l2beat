@@ -267,6 +267,8 @@ export const railgun: BaseProject = {
           file: 'RailOxide-v0.3.0-rc.2-x86_64.flatpak',
           hash: 'c174d43b0aca21e46ca505b48715fd9e58796acee89af0ac5dd6fd4e6a49a4bb',
         },
+        rebuild:
+          'https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/.github/workflows/flatpak-release.yml',
       },
       version: '0.3.0-rc.2',
       source: {
@@ -336,7 +338,7 @@ export const railgun: BaseProject = {
     reproducibility: {
       ...PRIVACY_REPRODUCIBILITY.full,
       description:
-        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+        "The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally. RailOxide's release rebuilds from its tag.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
@@ -347,6 +349,35 @@ export const railgun: BaseProject = {
     adversaries: railgunAdversaries(
       formatSeconds(executionStartOffset, { fullUnit: true }),
     ),
+    compliance: {
+      tradeoff:
+        'A screening service, the list provider, accepts or blocks each shield once, and wallets and broadcasters enforce that. Accepted funds cannot be frozen later, the contracts enforce no list.',
+      gatekeeper: {
+        type: 'relayer',
+        detail: "Railgun's broadcasters, together with wallets",
+      },
+      rules: {
+        type: 'closed',
+        detail:
+          'The list provider that a wallet requires judges the address behind each shield. What the default provider runs is not public.',
+      },
+      timing: {
+        type: 'entry',
+        detail:
+          'Every later transaction carries a PPoI, a proof that its funds descend only from accepted shields.',
+      },
+      consequence: {
+        type: 'access',
+        detail:
+          'RailOxide [refunds a blocked shield](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/crates/wallet-ops/src/desktop/private_tx.rs#L427-L470) to the address that shielded it, in public.',
+      },
+      voluntaryDisclosure: {
+        type: 'key',
+        detail:
+          "RailOxide [exports a view-only key](https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/bins/wallet/src/root/key_export.rs#L534-L546), which opens the wallet's history and future activity and cannot be revoked.",
+      },
+      content: readProjectMarkdown('railgun', 'compliance'),
+    },
     riskSummary: railgunRiskSummary({
       executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),

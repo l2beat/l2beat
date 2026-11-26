@@ -166,6 +166,31 @@ export const umbra: BaseProject = {
         'registeredAddresses',
       ),
     ),
+    compliance: {
+      tradeoff:
+        "Only the app's SDK screens, so a direct contract call or a build without the check passes. The check stops only users who stay on the hosted app.",
+      gatekeeper: {
+        type: 'relayer',
+        detail:
+          "ScopeLift's closed relayer for token withdrawals, together with the app. A direct contract call skips both",
+      },
+      rules: {
+        type: 'public',
+        detail:
+          "The app refuses a wallet, payee or withdrawal address on ScopeLift's list or Chainalysis's sanctions oracle. Both lists are public.",
+      },
+      timing: { type: 'everyUse' },
+      consequence: {
+        type: 'access',
+        detail:
+          "A refused user keeps the keys, which the app's advanced mode shows for any wallet to use. A user whose own wallet is listed cannot connect and needs a build without the check.",
+      },
+      voluntaryDisclosure: {
+        type: 'public',
+        detail: "A payment's sender, token and amount are public.",
+      },
+      content: readProjectMarkdown('umbra', 'compliance'),
+    },
     riskSummary: umbraRiskSummary,
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
