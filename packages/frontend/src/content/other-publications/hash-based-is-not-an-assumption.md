@@ -230,6 +230,8 @@ Standard-model proofs for Winternitz and [WOTS+](https://huelsing.net/wordpress/
 
 Standard-model chain requirements were spelled out between 2002 and 2013, and the EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines them explicitly alongside the recursion paradox. The gap we want to show here is only with the *"adds no new assumptions"* shorthand in public debate.
 
+All proofs in this article, including the Lamport reduction, the Checksum Lemma, Claims 1 and 2, and the padded permutation remark, are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
+
 ### Tweaks and target-sum encodings
 
 Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` mix per-step tweaks into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a target-sum encoding where a hash output fixes the digits. Tweaks let proofs drop full collision resistance in favor of tweaked second-preimage resistance, yet tweaks fed in as hash inputs, as in SPHINCS+ and the lean specs, still fall to the same 2-tag shortcut, though random XOR bitmasks, as in RFC 8391, scramble the tag. Target-sum encoding turns the single-shot forgery into a search, yet free backward steps still sharply degrade security.
