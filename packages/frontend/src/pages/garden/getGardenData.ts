@@ -3,14 +3,16 @@ import type { ResolvedCrops } from '~/components/garden/crops'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTotalValueLockedByProject } from '~/server/features/defi/getDefiTotalValueLocked'
-import { describeOssification } from '~/server/features/garden/describeOssification'
 import {
   type GardenProject,
   getListedGardenProjects,
 } from '~/server/features/garden/getListedGardenProjects'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
-import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
+import {
+  getProjectOssification,
+  type ProjectOssificationView,
+} from '~/server/features/projects/ossification/getProjectOssification'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -31,8 +33,8 @@ export interface GardenEntry {
   subtitle: string
   iconUrl: string
   crops: ResolvedCrops
-  /** The measured ossification, listed under Security. */
-  ossification: string[]
+  /** The ossification score shown under Security, e.g. "99 of 100". Undefined while the feature is off. */
+  ossificationScore: string | undefined
   /** Undefined when we track nothing for the project. */
   metric: GardenMetric | undefined
 }
@@ -69,7 +71,9 @@ export async function getGardenData(
       crops: verdict.crops,
       // One value-series read per listed project, as on the ossification
       // page. The garden lists a handful, so it is not worth a batched query.
-      ossification: describeOssification(await getProjectOssification(project)),
+      ossificationScore: formatOssificationScore(
+        await getProjectOssification(project),
+      ),
       metric: getMetric(project, tvsBreakdown, depositCounts, defiTvl),
     })),
   )
@@ -163,4 +167,15 @@ function getSubtitle(project: GardenProject): string {
 
 function isBaseLayer(project: GardenProject): boolean {
   return !project.scalingInfo && project.daLayer !== undefined
+}
+
+function formatOssificationScore(
+  ossification: ProjectOssificationView | undefined,
+): string | undefined {
+  if (!ossification) {
+    return undefined
+  }
+  return ossification.isUnverified
+    ? 'No score, unverified contracts'
+    : `${ossification.score} of 100`
 }
