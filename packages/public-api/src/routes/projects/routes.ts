@@ -1,7 +1,7 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
@@ -9,13 +9,9 @@ import {
   findProject,
   projectNotFoundDescription,
 } from '../../utils/findProject'
+import { getProjectsData } from './getProjectsData'
 import { getTokensData } from './getTokensData'
-import {
-  ContractSchema,
-  DetailedProjectSchema,
-  ProjectSchema,
-  TokenSchema,
-} from './types'
+import { ContractSchema, ProjectSchema, TokenSchema } from './types'
 
 export function addProjectsRoutes(
   openapi: OpenApi,
@@ -23,24 +19,39 @@ export function addProjectsRoutes(
   db: Database,
   cache: InMemoryCache,
 ) {
+  const listProjects = () =>
+    cache.get(
+      {
+        key: ['projects'],
+        ttl: 5 * UnixTime.MINUTE,
+        staleWhileRevalidate: 5 * UnixTime.MINUTE,
+      },
+      () => getProjectsData(ps, db),
+    )
+
   openapi.get(
     '/v1/projects',
     {
       summary: 'List all projects',
+      description: PROJECT_DESCRIPTION,
       tags: ['projects'],
+      query: v.object({
+        isArchived: v.enum(['true', 'false']).optional(),
+      }),
+      queryDescriptions: {
+        isArchived:
+          'When `false`, lists only active projects; when `true`, only archived ones. Lists both when left out.',
+      },
       result: v.array(ProjectSchema),
     },
-    async (_, res) => {
-      const projects = await ps.getProjects({
-        optional: ['chainConfig'],
-      })
-      const response = projects.map((project) => ({
-        id: project.id,
-        slug: project.slug,
-        name: project.name,
-        chainId: project.chainConfig?.chainId,
-      }))
-      res.json(response)
+    async (req, res) => {
+      const { isArchived } = req.query
+      const projects = await listProjects()
+      res.json(
+        isArchived === undefined
+          ? projects
+          : projects.filter((p) => p.isArchived === (isArchived === 'true')),
+      )
     },
   )
 
@@ -48,11 +59,12 @@ export function addProjectsRoutes(
     '/v1/project/:projectId',
     {
       summary: 'Get a project by ID',
+      description: PROJECT_DESCRIPTION,
       tags: ['projects'],
       params: v.object({
         projectId: v.string(),
       }),
-      result: DetailedProjectSchema,
+      result: ProjectSchema,
       errors: {
         404: GenericErrorResponse,
       },
@@ -61,38 +73,16 @@ export function addProjectsRoutes(
     async (req, res) => {
       const { projectId } = req.params
 
-      const { project, notFoundMessage } = await findProject(ps, projectId, {
-        optional: [
-          'scalingInfo',
-          'chainConfig',
-          'bridgeInfo',
-          'ecosystemInfo',
-          'display',
-          'archivedAt',
-        ],
-      })
+      const { project, notFoundMessage } = await findProject(ps, projectId, {})
 
       if (!project) {
         res.status(404).json({ message: notFoundMessage })
         return
       }
 
-      res.json({
-        id: project.id,
-        slug: project.slug,
-        name: project.name,
-        chainId: project.chainConfig?.chainId,
-        type: project.scalingInfo?.type,
-        isArchived: project.archivedAt !== undefined,
-        category: project.bridgeInfo?.category,
-        hostChain: project.scalingInfo?.hostChain.name,
-        stacks: project.scalingInfo?.stacks ?? [],
-        ecosystem: project.ecosystemInfo?.id,
-        gasTokens: project.chainConfig?.gasTokens ?? [],
-        stage: project.scalingInfo?.stage,
-        purposes: project.scalingInfo?.purposes ?? [],
-        badges: project.display?.badges.map((badge) => badge.name) ?? [],
-      })
+      const data = (await listProjects()).find((p) => p.id === project.id)
+      assert(data, 'Project missing from the projects list')
+      res.json(data)
     },
   )
 
@@ -190,3 +180,8 @@ export function addProjectsRoutes(
     },
   )
 }
+
+const PROJECT_DESCRIPTION = [
+  '`stage`, `risks` and `isUnderReview` are the assessment the ETHBEAT website shows. Only layer 2 and layer 3 projects have a stage and risks.',
+  '`tvs` is `null` when we do not track TVS for the project or have not synced it yet. It leaves out restricted RWA tokens, like the website; `/v1/tvs/{projectId}` counts them unless you pass `excludeRwaRestrictedTokens=true`.',
+].join('\n\n')

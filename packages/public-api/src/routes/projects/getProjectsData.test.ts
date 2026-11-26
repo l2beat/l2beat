@@ -1,76 +1,15 @@
-import { type Project, ProjectService } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect } from 'earl'
 import {
   getLatestTvsByProject,
-  getScalingSummary,
   getTvsRangeStart,
-  toScalingSummary,
-} from './getScalingSummary'
+  toProjectsData,
+} from './getProjectsData'
 
 const NOW = UnixTime.fromDate(new Date('2026-11-25T12:30:00Z'))
 const SEVEN_DAYS_AGO = NOW - 7 * UnixTime.DAY
 
-describe(getScalingSummary.name, () => {
-  // Why: the endpoint promises every active L2 and L3 and nothing archived,
-  // and the archived filter lives in the ProjectService query, so only the
-  // real project database can show it holds.
-  // How: run the whole route against the real config and an empty database,
-  // and compare the returned ids with the archived and active scaling sets.
-  it('returns every active scaling project and no archived one', async () => {
-    const ps = new ProjectService()
-    const summary = await getScalingSummary(ps, emptyDatabase())
-
-    const returned = new Set(summary.projects.map((p) => p.id))
-    const archived = await ps.getProjects({
-      where: ['scalingInfo', 'archivedAt'],
-    })
-    const active = await ps.getProjects({
-      where: ['scalingInfo'],
-      whereNot: ['archivedAt'],
-    })
-
-    expect(archived.length).toBeGreaterThan(0)
-    expect(archived.filter((p) => returned.has(p.id))).toEqual([])
-    expect([...returned].sort()).toEqual(active.map((p) => p.id).sort())
-  })
-
-  // Why: with no TVS data at all, the API must not claim projects secure $0.
-  // How: the same empty database; every project's tvs must be null.
-  it('reports missing TVS as null, not zero', async () => {
-    const summary = await getScalingSummary(
-      new ProjectService(),
-      emptyDatabase(),
-    )
-    expect(summary.projects.every((p) => p.tvs === null)).toEqual(true)
-  })
-})
-
-describe(toScalingSummary.name, () => {
-  // Why: a project without TVS data must come back as null and sort below
-  // every project with data, so the list order matches the website.
-  // How: two projects, only one has TVS; check order and the null.
-  it('maps TVS and sorts projects without data last', () => {
-    const tvs = {
-      timestamp: NOW,
-      breakdown: { total: 100, ether: 40, stablecoin: 50, associated: 10 },
-      change7d: 0.1,
-    }
-    const summary = toScalingSummary({
-      projects: [scalingProject('no-data'), scalingProject('with-data')],
-      tvs: new Map([['with-data', tvs]]),
-      changeReport: {},
-      tvsTimestamp: NOW,
-    })
-
-    expect(summary.tvsTimestamp).toEqual(NOW)
-    expect(summary.projects.map((p) => [p.id, p.tvs])).toEqual([
-      ['with-data', tvs],
-      ['no-data', null],
-    ])
-  })
-
+describe(toProjectsData.name, () => {
   // Why: the website shows "Not applicable" for an Other project even when
   // its config still carries a stage, and the API must not disagree.
   // How: an Other project configured as Stage 1 against a rollup that is.
@@ -80,17 +19,16 @@ describe(toScalingSummary.name, () => {
       downgradePending: undefined,
       summary: [],
     }
-    const summary = toScalingSummary({
+    const projects = toProjectsData({
       projects: [
         scalingProject('other', { type: 'Other', scalingStage: stage1 }),
         scalingProject('rollup', { scalingStage: stage1 }),
       ],
       tvs: new Map(),
       changeReport: {},
-      tvsTimestamp: NOW,
     })
 
-    expect(summary.projects.map((p) => [p.id, p.stage])).toEqual([
+    expect(projects.map((p) => [p.id, p.stage])).toEqual([
       ['other', 'Not applicable'],
       ['rollup', 'Stage 1'],
     ])
@@ -100,7 +38,7 @@ describe(toScalingSummary.name, () => {
   // impactful contract change, and either one must raise it.
   // How: one project per source and one with neither.
   it('flags review status from the config and from impactful changes', () => {
-    const summary = toScalingSummary({
+    const projects = toProjectsData({
       projects: [
         scalingProject('config', { reviewStatus: 'initialReview' }),
         scalingProject('changed'),
@@ -117,10 +55,9 @@ describe(toScalingSummary.name, () => {
           },
         },
       },
-      tvsTimestamp: NOW,
     })
 
-    expect(summary.projects.map((p) => [p.id, p.isUnderReview])).toEqual([
+    expect(projects.map((p) => [p.id, p.isUnderReview])).toEqual([
       ['config', true],
       ['changed', true],
       ['clean', false],
@@ -131,7 +68,7 @@ describe(toScalingSummary.name, () => {
   // reads the stacked risks when they exist; the API must read the same.
   // How: a project with different self and stacked risks.
   it('prefers stacked risks over the project own risks', () => {
-    const summary = toScalingSummary({
+    const projects = toProjectsData({
       projects: [
         scalingProject('l3', {
           stacked: riskView('stacked'),
@@ -140,17 +77,16 @@ describe(toScalingSummary.name, () => {
       ],
       tvs: new Map(),
       changeReport: {},
-      tvsTimestamp: NOW,
     })
 
-    expect(summary.projects[0]?.risks.map((r) => r.value)).toEqual([
+    expect(projects[0]?.risks?.map((r) => r.value)).toEqual([
       'stacked',
       'stacked',
       'stacked',
       'stacked',
       'stacked',
     ])
-    expect(summary.projects[0]?.risks.map((r) => r.name)).toEqual([
+    expect(projects[0]?.risks?.map((r) => r.name)).toEqual([
       'Sequencer Failure',
       'State Validation',
       'Data Availability',
@@ -170,7 +106,7 @@ describe(toScalingSummary.name, () => {
       description: 'Regular upgrades',
     }
     const view = riskView('None')
-    const summary = toScalingSummary({
+    const projects = toProjectsData({
       projects: [
         scalingProject('arbitrum', {
           self: {
@@ -184,12 +120,9 @@ describe(toScalingSummary.name, () => {
       ],
       tvs: new Map(),
       changeReport: {},
-      tvsTimestamp: NOW,
     })
 
-    const exitWindow = summary.projects[0]?.risks.find(
-      (r) => r.name === 'Exit Window',
-    )
+    const exitWindow = projects[0]?.risks?.find((r) => r.name === 'Exit Window')
     expect(exitWindow?.regular).toEqual({
       value: '10d',
       sentiment: 'warning',
@@ -266,21 +199,6 @@ describe(getTvsRangeStart.name, () => {
   })
 })
 
-function emptyDatabase() {
-  return mockObject<Database>({
-    tvsTokenValue: mockObject<Database['tvsTokenValue']>({
-      getSummedByProjectAtLatestAndSevenDaysBefore: async () => [],
-    }),
-    syncMetadata: mockObject<Database['syncMetadata']>({
-      getByFeature: async () => [],
-      getMaxTargetForFeature: async () => NOW,
-    }),
-    updateDiff: mockObject<Database['updateDiff']>({
-      getAll: async () => [],
-    }),
-  })
-}
-
 function tvsRow(project: string, timestamp: UnixTime, value: number) {
   return {
     project,
@@ -341,8 +259,5 @@ function scalingProject(
     },
     scalingStage: options.scalingStage,
     tvsInfo: { associatedTokens: [] },
-  } as unknown as Project<
-    'display' | 'statuses' | 'scalingInfo' | 'scalingRisks' | 'tvsInfo',
-    'scalingStage'
-  >
+  } as unknown as Parameters<typeof toProjectsData>[0]['projects'][number]
 }

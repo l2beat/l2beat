@@ -121,6 +121,8 @@ function project(opts: { id: string; activity: boolean }) {
 // Mirrors ProjectDatabase.getProject: every `select` key must be present.
 function fakeProjectService(projects: FakeProject[]) {
   return mockObject<ProjectService>({
+    getProjects: (async () =>
+      projects) as unknown as ProjectService['getProjects'],
     getProject: (async (query: {
       id?: string
       select?: (keyof FakeProject)[]
@@ -150,6 +152,13 @@ function mockDatabase(
     syncMetadata: mockObject<Database['syncMetadata']>({
       getMaxTargetForFeature: mockFn().resolvesTo(UnixTime.now()),
       getByFeatureAndIds: mockFn().resolvesTo([]),
+      getByFeature: mockFn().resolvesTo([]),
+    }),
+    tvsTokenValue: mockObject<Database['tvsTokenValue']>({
+      getSummedByProjectAtLatestAndSevenDaysBefore: mockFn().resolvesTo([]),
+    }),
+    updateDiff: mockObject<Database['updateDiff']>({
+      getAll: mockFn().resolvesTo([]),
     }),
   })
 }

@@ -13,34 +13,45 @@ import {
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import type {
-  ScalingRisk,
-  ScalingSummary,
-  ScalingSummaryProject,
-  ScalingSummaryTvs,
-} from './types'
+import {
+  getLatestTvsTimestamp,
+  TVS_BACKEND_DELAY,
+} from '../../utils/getLatestTvsTimestamp'
+import type { ProjectData, ProjectTvs, ScalingRisk } from './types'
 
-/** The backend targets the previous full hour and gets 15 minutes to sync. */
-const TVS_BACKEND_DELAY = UnixTime.HOUR + 15 * UnixTime.MINUTE
+const PROJECT_KEYS = [
+  'archivedAt',
+  'chainConfig',
+  'bridgeInfo',
+  'ecosystemInfo',
+  'display',
+  'statuses',
+  'scalingInfo',
+  'scalingRisks',
+  'scalingStage',
+  'tvsInfo',
+  'discoveryInfo',
+] as const
 
-export async function getScalingSummary(
+type ListedProject = Project<never, (typeof PROJECT_KEYS)[number]>
+
+/** Every project, as `/v1/projects` lists it and `/v1/project/:id` returns it. */
+export async function getProjectsData(
   ps: ProjectService,
   db: Database,
-): Promise<ScalingSummary> {
+): Promise<ProjectData[]> {
   const [projects, projectsWithTvs, updateDiffs, tvsTimestamp] =
     await Promise.all([
-      getActiveScalingProjects(ps),
+      ps.getProjects({ optional: [...PROJECT_KEYS] }),
+      // Only the ids: a tvsConfig is far larger than the rest of a project
       ps.getProjects({ where: ['tvsConfig'] }),
       db.updateDiff.getAll(),
       getLatestTvsTimestamp(db),
     ])
 
-  const tvsProjectIds = new Set(projectsWithTvs.map((p) => p.id.toString()))
   const [tvsRows, tvsSyncMetadata] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectAtLatestAndSevenDaysBefore(
-      projects
-        .map((p) => p.id.toString())
-        .filter((id) => tvsProjectIds.has(id)),
+      projectsWithTvs.map((p) => p.id.toString()),
       [getTvsRangeStart(UnixTime.now()), tvsTimestamp],
       // The same token filters the website's scaling summary uses
       { excludeAssociatedTokens: false, excludeRwaRestrictedTokens: true },
@@ -55,76 +66,62 @@ export async function getScalingSummary(
     baseTimestamps.get(projectId),
   )
 
-  return toScalingSummary({
+  return toProjectsData({
     projects,
     tvs: getLatestTvsByProject(
       tvsRows,
       tvsSyncMetadata.map((r) => r.id),
     ),
     changeReport,
-    tvsTimestamp,
   })
 }
 
-export function toScalingSummary({
+export function toProjectsData({
   projects,
   tvs,
   changeReport,
-  tvsTimestamp,
 }: {
-  projects: Project<
-    'display' | 'statuses' | 'scalingInfo' | 'scalingRisks' | 'tvsInfo',
-    'scalingStage'
-  >[]
-  tvs: Map<string, ScalingSummaryTvs>
+  projects: ListedProject[]
+  tvs: Map<string, ProjectTvs>
   changeReport: ProjectsChangeReportData
-  tvsTimestamp: UnixTime
-}): ScalingSummary {
-  const entries = projects.map(
-    (project): ScalingSummaryProject => ({
-      id: project.id.toString(),
+}): ProjectData[] {
+  return projects.map(
+    (project): ProjectData => ({
+      id: project.id,
       slug: project.slug,
       name: project.name,
       shortName: project.shortName,
-      layer: project.scalingInfo.layer,
-      type: project.scalingInfo.type,
-      hostChain: project.scalingInfo.hostChain.name,
-      stacks: project.scalingInfo.stacks ?? [],
-      purposes: project.scalingInfo.purposes,
-      badges: project.display.badges.map((badge) => badge.name),
-      stage: getDisplayedScalingStageName(
-        project.scalingInfo.type,
-        project.scalingStage,
-      ),
+      chainId: project.chainConfig?.chainId,
+      layer: project.scalingInfo?.layer,
+      type: project.scalingInfo?.type,
+      isArchived: project.archivedAt !== undefined,
+      category: project.bridgeInfo?.category,
+      hostChain: project.scalingInfo?.hostChain.name,
+      stacks: project.scalingInfo?.stacks ?? [],
+      ecosystem: project.ecosystemInfo?.id,
+      gasTokens: project.chainConfig?.gasTokens ?? [],
+      stage:
+        project.scalingInfo &&
+        getDisplayedScalingStageName(
+          project.scalingInfo.type,
+          project.scalingStage,
+        ),
+      purposes: project.scalingInfo?.purposes ?? [],
+      badges: project.display?.badges.map((badge) => badge.name) ?? [],
       isUnderReview: !!getUnderReviewStatus({
-        isUnderReview: !!project.statuses.reviewStatus,
+        isUnderReview: !!project.statuses?.reviewStatus,
         impactfulChange: hasImpactfulChange(changeReport, project.id),
       }),
-      risks: getL2Risks(
-        project.scalingRisks.stacked ?? project.scalingRisks.self,
-      ).map(toScalingRisk),
+      risks:
+        project.scalingRisks &&
+        getL2Risks(
+          project.scalingRisks.stacked ?? project.scalingRisks.self,
+        ).map(toScalingRisk),
       tvs: tvs.get(project.id.toString()) ?? null,
-      associatedTokens: project.tvsInfo.associatedTokens.map((token) => ({
-        symbol: token.symbol,
-        icon: token.icon,
-      })),
+      associatedTokens:
+        project.tvsInfo?.associatedTokens.map((token) => token.symbol) ?? [],
     }),
   )
-
-  return {
-    tvsTimestamp,
-    projects: entries.sort(
-      (a, b) => (b.tvs?.breakdown.total ?? -1) - (a.tvs?.breakdown.total ?? -1),
-    ),
-  }
-}
-
-function getActiveScalingProjects(ps: ProjectService) {
-  return ps.getProjects({
-    select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvsInfo'],
-    optional: ['scalingStage', 'discoveryInfo'],
-    whereNot: ['archivedAt'],
-  })
 }
 
 function toScalingRisk({
@@ -156,16 +153,17 @@ type TvsRow = Awaited<
 >[number]
 
 /**
- * Mirrors the frontend's get7dTvsBreakdown, which the old /api/scaling/summary
- * reads, so a consumer moving over sees the same numbers. A project with no
- * rows, or that the TVS backend has never synced, gets no entry: the caller
- * reports it as null rather than as a zero that reads as "secures nothing".
+ * Mirrors the frontend's get7dTvsBreakdown, which the website's
+ * /api/scaling/summary reads, so a consumer moving over sees the same
+ * numbers. A project with no rows, or that the TVS backend has never synced,
+ * gets no entry: the caller reports it as null rather than as a zero that
+ * reads as "secures nothing".
  */
 export function getLatestTvsByProject(
   rows: TvsRow[],
   syncMetadataIds: string[],
-): Map<string, ScalingSummaryTvs> {
-  const result = new Map<string, ScalingSummaryTvs>()
+): Map<string, ProjectTvs> {
+  const result = new Map<string, ProjectTvs>()
   // The query returns at most two rows per project, sorted by timestamp:
   // the one seven days before (optional) followed by the latest.
   for (const [projectId, projectRows] of Object.entries(
@@ -208,12 +206,4 @@ function getRelativeChange(now: number, then: number): number | null {
 export function getTvsRangeStart(now: UnixTime): UnixTime {
   const end = UnixTime.toStartOf(now - TVS_BACKEND_DELAY, 'hour')
   return UnixTime.toStartOf(end, 'day') - 3 * UnixTime.DAY
-}
-
-/** The hour the backend is syncing TVS towards, as the frontend reads it. */
-async function getLatestTvsTimestamp(db: Database): Promise<UnixTime> {
-  return (
-    (await db.syncMetadata.getMaxTargetForFeature('tvs')) ??
-    UnixTime.toStartOf(UnixTime.now() - TVS_BACKEND_DELAY, 'hour')
-  )
 }
