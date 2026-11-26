@@ -22,19 +22,19 @@ import {
   type ActivityMetric,
   useActivityMetricContext,
 } from '~/pages/layer2s/activity/components/ActivityMetricContext'
-import type {
-  ActivityChangeEvent,
-  ActivityChangeEventsData,
-} from '~/server/features/layer2s/activity/getActivityChangeEvents'
+import type { ActivityChangeEventsData } from '~/server/features/layer2s/activity/getActivityChangeEvents'
 import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 import { formatRange } from '~/utils/dates'
 import {
   CHANGE_PINS_TOP_MARGIN,
   ChangePins,
   ChangeTooltipLine,
-  getVisibleChangeEvents,
+  getChangeEventsAt,
+  useChangeEvents,
+  usePlotHeightScale,
 } from '../change-pins/ChangePins'
 import { ACTIVITY_CHANGE_FORMAT } from '../change-pins/formats'
+import type { ChangeEvent } from '../change-pins/selectChangeEvents'
 import type { ChartScale } from '../types'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {
@@ -98,20 +98,13 @@ export function L2RecategorizedActivityChart({
   changeEvents,
 }: Props) {
   const { metric } = useActivityMetricContext()
-  const events = useMemo(
-    () => getVisibleChangeEvents(changeEvents, metric, dataKeys),
-    [changeEvents, metric, dataKeys],
-  )
-  const eventsByTimestamp = useMemo(() => {
-    const result = new Map<number, ActivityChangeEvent[]>()
-    for (const event of events) {
-      result.set(event.timestamp, [
-        ...(result.get(event.timestamp) ?? []),
-        event,
-      ])
-    }
-    return result
-  }, [events])
+  const { toPlotHeight, onYScale } = usePlotHeightScale()
+  const events = useChangeEvents(changeEvents, {
+    metric,
+    dataKeys,
+    format: ACTIVITY_CHANGE_FORMAT,
+    toPlotHeight,
+  })
 
   const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
   const chartData = useMemo(() => {
@@ -179,6 +172,7 @@ export function L2RecategorizedActivityChart({
           format: (value) => formatActivityCount(value),
         }}
         syncedUntil={data?.syncedUntil}
+        onYScale={onYScale}
         renderTooltip={(row, keys) => (
           <CustomTooltip
             row={row}
@@ -188,7 +182,7 @@ export function L2RecategorizedActivityChart({
             metric={metric}
             changes={
               changeEvents && {
-                events: eventsByTimestamp.get(row.timestamp) ?? [],
+                events: getChangeEventsAt(events, row.timestamp),
                 projects: changeEvents.projects,
               }
             }
@@ -222,7 +216,7 @@ function CustomTooltip({
   resolutionSeconds: number
   metric: ActivityMetric
   changes?: {
-    events: ActivityChangeEvent[]
+    events: ChangeEvent[]
     projects: ActivityChangeEventsData['projects']
   }
 }) {

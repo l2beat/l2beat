@@ -5,21 +5,22 @@ import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { ChartRange } from '~/utils/range/range'
 import {
-  BASELINE_DAYS,
   CHANGE_CATEGORIES,
   type ChangeCategory,
 } from '../../utils/changeEventConstants'
 import {
-  type CategoryDay,
-  type ChangeEvent,
+  type ChangeCandidate,
   type ChangeEventsData,
-  createChangeEvent,
+  type ChangeLevel,
+  type ChangeStep,
+  getBreakdown,
   getChangeProjects,
-  getRobustZ,
-  MIN_HISTORY_DAYS,
-  markEpisodePeaks,
-  median,
 } from '../../utils/changeEvents'
+import {
+  findPeakRises,
+  RISE_HISTORY_DAYS,
+  type RiseLevel,
+} from '../../utils/findPeakRises'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -27,16 +28,8 @@ import type { ActivityProjectFilter } from './utils/projectFilterUtils'
 import { createActivityProjectsFilter } from './utils/projectFilterUtils'
 
 export type ActivityChangeMetric = 'uops' | 'tps'
-export type ActivityChangeEvent = ChangeEvent<ActivityChangeMetric>
+export type ActivityChangeCandidate = ChangeCandidate<ActivityChangeMetric>
 export type ActivityChangeEventsData = ChangeEventsData<ActivityChangeMetric>
-
-// A change is notable only when it clears every bar: unusual for the category
-// (robust z), big for the category (relative), and big for the whole chart
-// (absolute and share of all L2 activity), so small series don't fire on noise.
-const MIN_ROBUST_Z = 4
-const MIN_RELATIVE_CHANGE = 0.2
-const MIN_ABSOLUTE_CHANGE = 5 * UnixTime.DAY
-const MIN_SHARE_OF_ALL_L2 = 0.01
 
 const cache = new FrontendInMemoryCache('getActivityChangeEvents')
 
@@ -44,7 +37,6 @@ export function getActivityChangeEvents(
   filter: ActivityProjectFilter,
   range: ChartRange,
 ): Promise<ActivityChangeEventsData> {
-  // Every day of every project gets a 28-day median, so MAX takes seconds.
   // Ranges end on the hour, but only fully synced days count, so keying by
   // day lets one result serve every hour.
   const dayRange: ChartRange = [
@@ -74,7 +66,7 @@ async function computeForFilter(
   range: ChartRange,
 ): Promise<ActivityChangeEventsData> {
   if (env.MOCK) {
-    return { projects: {}, events: [] }
+    return { projects: {}, candidates: [] }
   }
 
   const db = getDb()
@@ -90,11 +82,15 @@ async function computeForFilter(
   const [from, to] = await getFullySyncedActivityRange(range)
   const records = await db.activity.getByProjectsAndTimeRange(
     [...categoryByProject.keys()].map((id) => ProjectId(id)),
-    [from === null ? null : from - BASELINE_DAYS * UnixTime.DAY, to],
+    [from === null ? null : from - RISE_HISTORY_DAYS * UnixTime.DAY, to],
   )
 
-  const events = computeActivityChangeEvents(records, categoryByProject, from)
-  return { projects: getChangeProjects(projects, events), events }
+  const candidates = computeActivityChangeCandidates(
+    records,
+    categoryByProject,
+    from,
+  )
+  return { projects: getChangeProjects(projects, candidates), candidates }
 }
 
 function getCategory(type: string | undefined): ChangeCategory | undefined {
@@ -111,119 +107,117 @@ function getCategory(type: string | undefined): ChangeCategory | undefined {
 }
 
 /**
- * Compares each project's day with the median of its previous 28 days, so a
- * category's change splits exactly into per-project contributions. Days with
- * no record for a project leave it out of both sides instead of counting zero.
+ * Finds each category's rises in the visible days (from `visibleFrom`),
+ * with how each splits across projects. A project's part is its value at
+ * the peak minus its own mean over the days the category is compared with,
+ * so the parts add up to the category's rise.
  */
-export function computeActivityChangeEvents(
+export function computeActivityChangeCandidates(
   records: ActivityRecord[],
   categoryByProject: Map<string, ChangeCategory>,
   visibleFrom: number | null,
-): ActivityChangeEvent[] {
+): ActivityChangeCandidate[] {
   const first = records[0]
   const last = records.at(-1)
   if (!first || !last) return []
-
-  const valuesByProject = new Map<
-    string,
-    Map<number, Record<ActivityChangeMetric, number>>
-  >()
-  for (const record of records) {
-    let values = valuesByProject.get(record.projectId)
-    if (!values) {
-      values = new Map()
-      valuesByProject.set(record.projectId, values)
-    }
-    values.set(record.timestamp, {
-      uops: record.uopsCount ?? record.count,
-      tps: record.count,
-    })
-  }
 
   const timestamps = generateTimestamps(
     [UnixTime(first.timestamp), UnixTime(last.timestamp)],
     'day',
   )
-  const candidates: ActivityChangeEvent[] = []
+  const indexByTimestamp = new Map(timestamps.map((t, i) => [t, i]))
+  const visibleIndex = timestamps.findIndex(
+    (t) => visibleFrom === null || t >= visibleFrom,
+  )
+  const start = visibleIndex === -1 ? timestamps.length : visibleIndex
 
+  const candidates: ActivityChangeCandidate[] = []
   for (const metric of ['uops', 'tps'] as const) {
-    const categoryTotals = new Map<ChangeCategory, number[]>(
-      CHANGE_CATEGORIES.map((c) => [c, []]),
-    )
+    // Per project, its value on each day; undefined where it has no record.
+    const valuesByProject = new Map<string, (number | undefined)[]>()
+    for (const record of records) {
+      const index = indexByTimestamp.get(UnixTime(record.timestamp))
+      if (index === undefined) continue
+      let values = valuesByProject.get(record.projectId)
+      if (!values) {
+        values = new Array(timestamps.length)
+        valuesByProject.set(record.projectId, values)
+      }
+      values[index] =
+        metric === 'uops' ? (record.uopsCount ?? record.count) : record.count
+    }
 
-    for (const timestamp of timestamps) {
-      const perCategory = getCategoryDay(
-        valuesByProject,
-        categoryByProject,
-        timestamp,
-        metric,
+    for (const category of CHANGE_CATEGORIES) {
+      const members = [...valuesByProject].filter(
+        ([projectId]) => categoryByProject.get(projectId) === category,
       )
-      const allL2Baseline = [...perCategory.values()].reduce(
-        (sum, day) => sum + day.baseline,
-        0,
-      )
-      const isVisible = visibleFrom === null || timestamp >= visibleFrom
+      // A day without any record is missing, not zero.
+      const totals = timestamps.map((_, i) => {
+        let sum: number | null = null
+        for (const [, values] of members) {
+          const value = values[i]
+          if (value !== undefined) sum = (sum ?? 0) + value
+        }
+        return sum
+      })
 
-      for (const [category, day] of perCategory) {
-        const totals = categoryTotals.get(category) ?? []
-        const robustZ = getRobustZ(day.observed, totals.slice(-BASELINE_DAYS))
-        totals.push(day.observed)
-        if (!isVisible || robustZ === undefined) continue
-
-        const change = day.observed - day.baseline
-        const isNotable =
-          Math.abs(robustZ) >= MIN_ROBUST_Z &&
-          Math.sign(robustZ) === Math.sign(change) &&
-          Math.abs(change) >= MIN_RELATIVE_CHANGE * day.baseline &&
-          Math.abs(change) >= MIN_ABSOLUTE_CHANGE &&
-          Math.abs(change) >= MIN_SHARE_OF_ALL_L2 * allL2Baseline
-        if (!isNotable) continue
-
-        candidates.push(
-          createChangeEvent(timestamp, category, metric, day, robustZ),
-        )
+      for (const rise of findPeakRises(totals, start)) {
+        const observed = totals[rise.peak] as number
+        const levels: ChangeLevel[] = rise.levels.map((level) => ({
+          onset: timestamps[level.onset] as number,
+          baseline: level.baseline,
+          ...getBreakdown(
+            members.map(([projectId, values]) => [
+              projectId,
+              (values[rise.peak] ?? 0) - getMean(values, level),
+            ]),
+          ),
+        }))
+        candidates.push({
+          category,
+          metric,
+          peak: timestamps[rise.peak] as number,
+          observed,
+          levels,
+          steps: getSteps(rise.levels, members),
+        })
       }
     }
   }
-
-  return markEpisodePeaks(candidates)
+  return candidates
 }
 
-function getCategoryDay(
-  valuesByProject: Map<
-    string,
-    Map<number, Record<ActivityChangeMetric, number>>
-  >,
-  categoryByProject: Map<string, ChangeCategory>,
-  timestamp: number,
-  metric: ActivityChangeMetric,
-) {
-  const perCategory = new Map<ChangeCategory, CategoryDay>()
+/**
+ * Between each tighter level and each wider one that starts earlier, how
+ * each project moved from the wider's usual highs to the tighter's.
+ */
+function getSteps(
+  levels: RiseLevel[],
+  members: [string, (number | undefined)[]][],
+): ChangeStep[] {
+  const steps: ChangeStep[] = []
+  levels.forEach((tighter, to) => {
+    levels.forEach((wider, from) => {
+      if (from <= to || wider.baseline >= tighter.baseline) return
+      steps.push({
+        from,
+        to,
+        ...getBreakdown(
+          members.map(([projectId, values]) => [
+            projectId,
+            getMean(values, tighter) - getMean(values, wider),
+          ]),
+        ),
+      })
+    })
+  })
+  return steps
+}
 
-  for (const [projectId, values] of valuesByProject) {
-    const category = categoryByProject.get(projectId)
-    const value = values.get(timestamp)?.[metric]
-    if (!category || value === undefined) continue
-
-    const history: number[] = []
-    for (let i = 1; i <= BASELINE_DAYS; i++) {
-      const past = values.get(timestamp - i * UnixTime.DAY)?.[metric]
-      if (past !== undefined) history.push(past)
-    }
-    const baseline = history.length > 0 ? median(history) : 0
-
-    let day = perCategory.get(category)
-    if (!day) {
-      day = { observed: 0, baseline: 0, deltas: [] }
-      perCategory.set(category, day)
-    }
-    day.observed += value
-    day.baseline += baseline
-    day.deltas.push([
-      projectId,
-      value - baseline,
-      history.length < MIN_HISTORY_DAYS,
-    ])
-  }
-  return perCategory
+/** A project's mean over a level's usual highs, counting no record as zero. */
+function getMean(values: (number | undefined)[], level: RiseLevel) {
+  return (
+    level.highs.reduce((sum, i) => sum + (values[i] ?? 0), 0) /
+    level.highs.length
+  )
 }

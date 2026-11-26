@@ -1,0 +1,115 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import type { ChangeCategory } from '~/server/features/utils/changeEventConstants'
+import type {
+  ChangeBreakdown,
+  ChangeCandidate,
+} from '~/server/features/utils/changeEvents'
+
+/** A change big enough on the chart to pin, from `start` to `end`. */
+export interface ChangeEvent<M extends string = string>
+  extends ChangeBreakdown {
+  category: ChangeCategory
+  metric: M
+  start: number
+  end: number
+  /** The category's value at the end and the value it is compared with. */
+  observed: number
+  baseline: number
+  /** Its height as a share of the plot's. */
+  size: number
+}
+
+/** Maps a value to its height on the chart, 0 at the bottom, 1 at the top. */
+export type ToPlotHeight = (value: number) => number
+
+/**
+ * The candidates that look big on the chart as drawn: their height from
+ * baseline to value is at least `minSize` of the plot's, on its own scale.
+ * Each candidate's levels are tried tightest first. A wider level that
+ * starts earlier adds a pin for the step before the tighter rise, when that
+ * step is big enough by itself. Rises that start on the same day are one.
+ */
+export function selectChangeEvents<M extends string>(
+  candidates: ChangeCandidate<M>[],
+  {
+    metric,
+    categories,
+    toPlotHeight,
+    minSize,
+  }: {
+    metric: M
+    categories: readonly string[]
+    toPlotHeight: ToPlotHeight
+    minSize: number
+  },
+): ChangeEvent<M>[] {
+  const byStart = new Map<string, ChangeEvent<M>>()
+  const height = (from: number, to: number) =>
+    Math.abs(toPlotHeight(to) - toPlotHeight(from))
+
+  for (const candidate of candidates) {
+    if (
+      candidate.metric !== metric ||
+      !categories.includes(candidate.category)
+    ) {
+      continue
+    }
+    const found: { index: number; event: ChangeEvent<M> }[] = []
+    candidate.levels.forEach((level, index) => {
+      const last = found.at(-1)
+      if (!last) {
+        const size = height(level.baseline, candidate.observed)
+        if (size < minSize) return
+        found.push({
+          index,
+          event: {
+            ...pickBreakdown(level),
+            category: candidate.category,
+            metric,
+            start: level.onset,
+            end: candidate.peak,
+            observed: candidate.observed,
+            baseline: level.baseline,
+            size,
+          },
+        })
+        return
+      }
+      const later = candidate.levels[last.index]
+      const step = candidate.steps.find(
+        (s) => s.from === index && s.to === last.index,
+      )
+      if (!later || !step || level.onset >= later.onset) return
+      const size = height(level.baseline, later.baseline)
+      if (size < minSize) return
+      found.push({
+        index,
+        event: {
+          ...pickBreakdown(step),
+          category: candidate.category,
+          metric,
+          start: level.onset,
+          end: Math.max(level.onset, later.onset - UnixTime.DAY),
+          observed: later.baseline,
+          baseline: level.baseline,
+          size,
+        },
+      })
+    })
+
+    for (const { event } of found) {
+      const key = `${event.category}:${event.start}`
+      const existing = byStart.get(key)
+      if (!existing || event.size > existing.size) byStart.set(key, event)
+    }
+  }
+  return [...byStart.values()]
+}
+
+function pickBreakdown({
+  contributors,
+  restDelta,
+  restCount,
+}: ChangeBreakdown): ChangeBreakdown {
+  return { contributors, restDelta, restCount }
+}

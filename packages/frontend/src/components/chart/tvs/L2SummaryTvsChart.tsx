@@ -17,10 +17,7 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { TimeSeriesChart } from '~/components/core/chart/TimeSeriesChart'
 import { tinted } from '~/components/core/chart/tint'
 import { TooltipHeader } from '~/components/core/tooltip/TooltipParts'
-import type {
-  TvsChangeEvent,
-  TvsChangeEventsData,
-} from '~/server/features/layer2s/tvs/getTvsChangeEvents'
+import type { TvsChangeEventsData } from '~/server/features/layer2s/tvs/getTvsChangeEvents'
 import { useTRPC } from '~/trpc/React'
 import { formatSnapshotTimestamp } from '~/utils/dates'
 import {
@@ -30,12 +27,14 @@ import {
 } from '~/utils/range/range'
 import {
   CHANGE_PINS_TOP_MARGIN,
-  ChangeEventsList,
   ChangePins,
   ChangeTooltipLine,
-  getVisibleChangeEvents,
+  getChangeEventsAt,
+  useChangeEvents,
+  usePlotHeightScale,
 } from '../change-pins/ChangePins'
 import { TVS_CHANGE_FORMAT } from '../change-pins/formats'
+import type { ChangeEvent } from '../change-pins/selectChangeEvents'
 import type { ChartUnit } from '../types'
 
 /** The L2 categories, which change pins on any TVS chart are coloured by. */
@@ -95,10 +94,13 @@ export function L2SummaryTvsChart({
     }),
     enabled: hasChangePins,
   })
-  const changeEvents = useMemo(
-    () => getVisibleChangeEvents(changeData, 'usd', dataKeys),
-    [changeData, dataKeys],
-  )
+  const { toPlotHeight, onYScale } = usePlotHeightScale()
+  const changeEvents = useChangeEvents(changeData, {
+    metric: 'usd',
+    dataKeys,
+    format: TVS_CHANGE_FORMAT,
+    toPlotHeight,
+  })
 
   const chartData = useMemo(() => toChartData(data), [data])
   const stats = getStats(chartData, dataKeys)
@@ -152,6 +154,7 @@ export function L2SummaryTvsChart({
             format: (value: number) => formatCurrency(value, unit),
           }}
           syncedUntil={data?.syncedUntil}
+          onYScale={onYScale}
           renderTooltip={(row, keys) => (
             <CustomTooltip
               row={row}
@@ -159,9 +162,7 @@ export function L2SummaryTvsChart({
               resolution={rangeToResolution(range)}
               changes={
                 changeData && {
-                  events: changeEvents.filter(
-                    (e) => e.timestamp === row.timestamp,
-                  ),
+                  events: getChangeEventsAt(changeEvents, row.timestamp),
                   projects: changeData.projects,
                 }
               }
@@ -178,11 +179,6 @@ export function L2SummaryTvsChart({
           />
         )}
       </ChartContainer>
-      <ChangeEventsList
-        events={changeEvents}
-        projects={changeData?.projects ?? {}}
-        format={TVS_CHANGE_FORMAT}
-      />
     </div>
   )
 }
@@ -199,7 +195,7 @@ function CustomTooltip({
   visibleKeys: (keyof typeof chartMeta)[]
   resolution: ChartResolution
   changes?: {
-    events: TvsChangeEvent[]
+    events: ChangeEvent[]
     projects: TvsChangeEventsData['projects']
   }
 }) {

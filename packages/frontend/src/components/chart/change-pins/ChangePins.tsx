@@ -1,5 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type ComponentProps, type ReactNode, useMemo, useRef } from 'react'
+import {
+  type ComponentProps,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTooltipTitle } from '~/components/core/chart/ChartTooltip'
 import {
@@ -11,13 +18,17 @@ import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CHANGE_CATEGORIES } from '~/server/features/utils/changeEventConstants'
 import type {
-  ChangeEvent,
   ChangeEventsData,
   ChangeProject,
 } from '~/server/features/utils/changeEvents'
 import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import type { ChangeFormat } from './formats'
+import {
+  type ChangeEvent,
+  selectChangeEvents,
+  type ToPlotHeight,
+} from './selectChangeEvents'
 
 const CATEGORY_LABELS: Record<ChangeEvent['category'], string> = {
   rollups: 'Rollups',
@@ -46,20 +57,60 @@ const LEADER_MIN_SHARE = 0.5
 const DRIVER_MIN_SHARE = 0.1
 
 export function getEventKey(event: ChangeEvent) {
-  return `${event.timestamp}:${event.category}`
+  return `${event.start}:${event.category}`
 }
 
-export function getVisibleChangeEvents<M extends string>(
-  data: ChangeEventsData<M> | undefined,
-  metric: M,
-  dataKeys: string[],
-): ChangeEvent<M>[] {
-  return (data?.events ?? []).filter(
-    (e) =>
-      e.metric === metric &&
-      dataKeys.includes(e.category) &&
-      CHANGE_CATEGORIES.includes(e.category),
+/**
+ * The chart's y scale as it draws it, for `TimeSeriesChart`'s `onYScale`:
+ * whether a change is pinned depends on how tall it looks.
+ */
+export function usePlotHeightScale() {
+  const [toPlotHeight, setToPlotHeight] = useState<ToPlotHeight>()
+  // Wrapped, or the state setter would call the scale as an updater.
+  const onYScale = useCallback(
+    (scale: ToPlotHeight | undefined) => setToPlotHeight(() => scale),
+    [],
   )
+  return { toPlotHeight, onYScale }
+}
+
+/** The changes big enough on the chart as drawn, in its shown categories. */
+export function useChangeEvents<M extends string>(
+  data: ChangeEventsData<M> | undefined,
+  {
+    metric,
+    dataKeys,
+    format,
+    toPlotHeight,
+  }: {
+    metric: M
+    dataKeys: readonly string[]
+    format: ChangeFormat
+    toPlotHeight: ToPlotHeight | undefined
+  },
+): ChangeEvent<M>[] {
+  return useMemo(() => {
+    if (!data || !toPlotHeight) return []
+    const { toChartValue, minSize } = format
+    return selectChangeEvents(data.candidates, {
+      metric,
+      categories: dataKeys.filter((k) =>
+        (CHANGE_CATEGORIES as readonly string[]).includes(k),
+      ),
+      toPlotHeight: toChartValue
+        ? (value) => toPlotHeight(toChartValue(value))
+        : toPlotHeight,
+      minSize,
+    })
+  }, [data, metric, dataKeys, format, toPlotHeight])
+}
+
+/** The changes a day falls in, for the chart's hover tooltip. */
+export function getChangeEventsAt<M extends string>(
+  events: ChangeEvent<M>[],
+  timestamp: number,
+) {
+  return events.filter((e) => e.start <= timestamp && timestamp <= e.end)
 }
 
 interface PinGroup {
@@ -104,6 +155,18 @@ export function ChangePins({
       data-role="change-pins"
       className="pointer-events-none absolute inset-0 z-10"
     >
+      {groups.length > 0 && (
+        <ul className="sr-only" aria-label="Notable changes (automated)">
+          {groups
+            .flatMap((g) => g.events)
+            .sort((a, b) => a.start - b.start)
+            .map((event) => (
+              <li key={getEventKey(event)}>
+                {getEventLabel(event, projects, format)}
+              </li>
+            ))}
+        </ul>
+      )}
       {groups.map((group) => (
         <Tooltip key={group.key} delayDuration={0}>
           <TooltipTrigger asChild>
@@ -130,9 +193,8 @@ export function ChangePins({
 }
 
 /**
- * Peaks only, strongest first. Pins closer than a pin's width merge before
- * the budget is spent, so overlapping changes share one pin instead of using
- * up slots.
+ * Tallest first. Pins closer than a pin's width merge before the budget is
+ * spent, so overlapping changes share one pin instead of using up slots.
  */
 function getPinGroups(
   events: ChangeEvent[],
@@ -148,9 +210,8 @@ function getPinGroups(
   )
 
   const result: PinGroup[] = []
-  const peaks = events.filter((e) => e.isPeak).sort((a, b) => b.score - a.score)
-  for (const event of peaks) {
-    const index = indexByTimestamp.get(event.timestamp)
+  for (const event of [...events].sort((a, b) => b.size - a.size)) {
+    const index = indexByTimestamp.get(event.start)
     if (index === undefined) continue
     const x = (index / (chartData.length - 1)) * width
     const near = result.find((g) => Math.abs(g.x - x) < MIN_PIN_SPACING)
@@ -164,10 +225,10 @@ function getPinGroups(
   // A pin only carries changes strong enough to have earned a pin of their
   // own; on long ranges one pin's width spans weeks of weaker changes.
   const shown = result.slice(0, budget)
-  const minScore = shown.at(-1)?.events[0]?.score ?? 0
+  const minSize = shown.at(-1)?.events[0]?.size ?? 0
   for (const group of shown) {
     group.events = group.events
-      .filter((e, i) => i === 0 || e.score >= minScore)
+      .filter((e, i) => i === 0 || e.size >= minSize)
       .slice(0, MAX_EVENTS_PER_PIN)
   }
   return shown.sort((a, b) => a.x - b.x)
@@ -198,7 +259,7 @@ function Pin({
       {...props}
       type="button"
       aria-label={[...group.events]
-        .sort((a, b) => a.timestamp - b.timestamp)
+        .sort((a, b) => a.start - b.start)
         .map((e) => getEventLabel(e, projects, format))
         .join('; ')}
       className="group/pin pointer-events-auto absolute top-0 cursor-pointer outline-none"
@@ -268,12 +329,11 @@ function ChangeBreakdown({
   chartMeta: ChartMeta
   format: ChangeFormat
 }) {
-  const events = [...groupEvents].sort((a, b) => a.timestamp - b.timestamp)
-  const timestamps = events.map((e) => e.timestamp)
-  const from = Math.min(...timestamps)
-  const to = Math.max(...timestamps)
-  // A merged pin can hold changes days apart; then each one shows its date.
-  const isOneDay = from === to
+  const events = [...groupEvents].sort((a, b) => a.start - b.start)
+  const from = Math.min(...events.map((e) => e.start))
+  const to = Math.max(...events.map((e) => e.end))
+  // A merged pin can hold changes days apart; then each one shows its dates.
+  const isOneChange = events.length === 1
 
   return (
     <div className="flex flex-col text-left">
@@ -285,7 +345,7 @@ function ChangeBreakdown({
           <EventDetails
             key={getEventKey(event)}
             event={event}
-            showDate={!isOneDay}
+            showDate={!isOneChange}
             projects={projects}
             format={format}
             label={chartMeta[event.category]?.label}
@@ -326,7 +386,7 @@ function EventDetails({
     <div className="flex flex-col py-2.5 first:pt-1 last:pb-0">
       {showDate && (
         <span className="mb-1 text-2xs text-secondary">
-          {formatDay(event.timestamp)}
+          {formatDays(event)}
         </span>
       )}
       <div className="flex items-baseline gap-1.5">
@@ -486,31 +546,6 @@ export function ChangeTooltipLine({
   )
 }
 
-/** A text list of the pins for screen readers. */
-export function ChangeEventsList({
-  events,
-  projects,
-  format,
-}: {
-  events: ChangeEvent[]
-  projects: Record<string, ChangeProject>
-  format: ChangeFormat
-}) {
-  const peaks = events
-    .filter((e) => e.isPeak)
-    .sort((a, b) => a.timestamp - b.timestamp)
-  if (peaks.length === 0) return null
-  return (
-    <ul className="sr-only" aria-label="Notable changes (automated)">
-      {peaks.map((event) => (
-        <li key={getEventKey(event)}>
-          {getEventLabel(event, projects, format)}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 function getPinProjects(
   event: ChangeEvent,
   projects: Record<string, ChangeProject>,
@@ -532,7 +567,7 @@ function getEventLabel(
 ) {
   const leader = getLeader(event)
   const name = leader && (projects[leader.projectId]?.name ?? leader.projectId)
-  const date = formatDay(event.timestamp).replace(/\s+/g, ' ')
+  const date = formatDays(event).replace(/\s+/g, ' ')
   return `${date}: ${CATEGORY_LABELS[event.category]} ${format.vsBaseline(event)}${name ? `, mostly ${name}` : ''}`
 }
 
@@ -565,8 +600,8 @@ function isSameDirection(delta: number, event: ChangeEvent) {
   return Math.sign(delta) === Math.sign(event.observed - event.baseline)
 }
 
-function formatDay(timestamp: number) {
-  return formatRange(timestamp, timestamp + UnixTime.DAY)
+function formatDays(event: ChangeEvent) {
+  return formatRange(event.start, event.end + UnixTime.DAY)
 }
 
 /** A driver's part of the change, e.g. "91% of rise". */

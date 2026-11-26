@@ -1,14 +1,17 @@
 import { formatActivityCount, formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { countPerSecond } from '~/server/features/layer2s/activity/utils/countPerSecond'
-import { BASELINE_DAYS } from '~/server/features/utils/changeEventConstants'
-import type { ChangeEvent } from '~/server/features/utils/changeEvents'
+import type { ChangeEvent } from './selectChangeEvents'
 
-/** How one metric's change pins write their numbers. */
+/** How one metric's change pins pick changes and write their numbers. */
 export interface ChangeFormat {
-  /** The category's value that day against what it is compared with. */
+  /** How tall a change must look, as a share of the plot's height. */
+  minSize: number
+  /** A value as the chart plots it, when the chart's unit differs. */
+  toChartValue?: (value: number) => number
+  /** The category's value against what it is compared with. */
   levels: (event: ChangeEvent) => ReactNode
-  /** The change in words, e.g. "98× its usual level over the past 28 days". */
+  /** The change in words, e.g. "46% above the usual highs before the rise". */
   vsBaseline: (event: ChangeEvent) => string
   /** A project's signed part of the change. */
   delta: (value: number) => string
@@ -16,24 +19,27 @@ export interface ChangeFormat {
   section: string
 }
 
+const USUAL_HIGHS = 'the usual highs before the rise'
+
 export const ACTIVITY_CHANGE_FORMAT: ChangeFormat = {
+  // Daily activity is noisy, so a rise must stand well clear of it.
+  minSize: 0.15,
+  // Changes are found in daily counts; the chart plots per-second rates.
+  toChartValue: countPerSecond,
   levels: (event) => (
     <>
       <Primary>
         {formatActivityCount(countPerSecond(event.observed))}{' '}
         {event.metric === 'uops' ? 'UOPS' : 'TPS'}
       </Primary>{' '}
-      vs {formatActivityCount(countPerSecond(event.baseline))} usual (past{' '}
-      {BASELINE_DAYS} days)
+      vs {formatActivityCount(countPerSecond(event.baseline))}, {USUAL_HIGHS}
     </>
   ),
   vsBaseline: (event) => {
-    const period = `the previous ${BASELINE_DAYS} days`
-    if (event.baseline <= 0) return `up from no activity in ${period}`
+    if (event.baseline <= 0) return 'up from no activity'
     const ratio = event.observed / event.baseline
-    if (ratio >= 3)
-      return `${Math.round(ratio)}× its usual level over ${period}`
-    return `${formatPercent(ratio)} ${ratio >= 1 ? 'above' : 'below'} its usual level over ${period}`
+    if (ratio >= 3) return `${Math.round(ratio)}× ${USUAL_HIGHS}`
+    return `${formatPercent(ratio)} above ${USUAL_HIGHS}`
   },
   delta: (value) =>
     `${sign(value)}${formatActivityCount(Math.abs(countPerSecond(value)))}`,
@@ -41,15 +47,16 @@ export const ACTIVITY_CHANGE_FORMAT: ChangeFormat = {
 }
 
 export const TVS_CHANGE_FORMAT: ChangeFormat = {
+  minSize: 0.05,
   levels: (event) => (
     <>
       <Primary>{formatCurrency(event.observed, 'usd')}</Primary> vs{' '}
-      {formatCurrency(event.baseline, 'usd')} the day before
+      {formatCurrency(event.baseline, 'usd')} 3 days before
     </>
   ),
   vsBaseline: (event) => {
     const ratio = event.observed / event.baseline
-    return `${formatPercent(ratio)} ${ratio >= 1 ? 'up' : 'down'} on the day before`
+    return `${formatPercent(ratio)} ${ratio >= 1 ? 'up' : 'down'} in 3 days`
   },
   delta: (value) => `${sign(value)}${formatCurrency(Math.abs(value), 'usd')}`,
   section: 'tvs',

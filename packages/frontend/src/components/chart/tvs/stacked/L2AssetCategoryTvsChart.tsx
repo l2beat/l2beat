@@ -89,17 +89,28 @@ export function L2AssetCategoryTvsChart({
     [data, unit],
   )
 
-  const { pins, marginTop } = useL2TvsChangePins({
+  const { pins, marginTop, onYScale } = useL2TvsChangePins({
     range,
     unit,
     filter,
     excludeRwaRestrictedTokens,
     chartData,
+    allBandsShown: (
+      [
+        'ether',
+        'stablecoin',
+        'btc',
+        'other',
+        'rwaPublic',
+        ...(excludeRwaRestrictedTokens ? [] : ['rwaRestricted' as const]),
+      ] as const
+    ).every((key) => assetCategoryDataKeys.includes(key)),
   })
 
   return (
     <AssetCategoryTvsChart
       overlay={pins}
+      onYScale={onYScale}
       marginTop={marginTop}
       isPlaceholderData={isPlaceholderData}
       resolution={rangeToResolution(shownInput.range)}

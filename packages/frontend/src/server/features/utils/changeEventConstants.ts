@@ -7,6 +7,3 @@ export const CHANGE_CATEGORIES = [
 ] as const
 
 export type ChangeCategory = (typeof CHANGE_CATEGORIES)[number]
-
-/** How many past days a change is compared with. */
-export const BASELINE_DAYS = 28

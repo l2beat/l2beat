@@ -19,6 +19,7 @@ import { curveMonotoneX, curveStep, curveStepAfter } from 'd3-shape'
 import {
   type ReactNode,
   type Ref,
+  useEffect,
   useId,
   useImperativeHandle,
   useMemo,
@@ -134,6 +135,14 @@ export interface ChartReferenceArea {
   fillOpacity?: number
 }
 
+/**
+ * Gets the left axis' scale as drawn, mapping a value to its height in the
+ * plot from 0 (bottom) to 1 (top); undefined while nothing is drawn on it.
+ */
+export type YScaleListener = (
+  toPlotHeight: ((value: number) => number) | undefined,
+) => void
+
 /** For animating a chart between its renders, without one. */
 export interface TimeSeriesChartHandle {
   /** The plot's box in px within the chart's; undefined before it renders. */
@@ -183,6 +192,8 @@ interface Props<T, K extends string> {
    */
   hover?: 'nearest' | 'before'
   handleRef?: Ref<TimeSeriesChartHandle>
+  /** Called whenever the left axis' scale changes. */
+  onYScale?: YScaleListener
   renderTooltip: (row: T, visibleKeys: K[]) => ReactNode
 }
 
@@ -241,6 +252,7 @@ export function TimeSeriesChart<T, K extends string>({
   clip,
   hover,
   handleRef,
+  onYScale,
   renderTooltip,
 }: Props<T, K>) {
   const { meta, interactiveLegend } = useChart()
@@ -336,6 +348,26 @@ export function TimeSeriesChart<T, K extends string>({
     yAxis.scale,
     rightAxis?.scale,
   ])
+
+  const onYScaleRef = useRef(onYScale)
+  onYScaleRef.current = onYScale
+  const [yMin, yMax] = left.domain
+  const hasLeftSeries = visible.some((s) => s.axis !== 'right')
+  const yScaleFactory = yAxis.scale
+  useEffect(() => {
+    if (!hasLeftSeries) {
+      onYScaleRef.current?.(undefined)
+      return
+    }
+    const scale = (yScaleFactory ?? scaleLinear)().domain([yMin, yMax])
+    const bottom = scale(yMin) ?? 0
+    const top = scale(yMax) ?? 1
+    onYScaleRef.current?.(
+      top === bottom
+        ? undefined
+        : (value) => ((scale(value) ?? bottom) - bottom) / (top - bottom),
+    )
+  }, [yMin, yMax, yScaleFactory, hasLeftSeries])
 
   const optionsKey = JSON.stringify([
     seriesKey,

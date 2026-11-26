@@ -11,6 +11,7 @@ import type {
 import {
   type ChartSeries,
   TimeSeriesChart,
+  type YScaleListener,
 } from '~/components/core/chart/TimeSeriesChart'
 import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
@@ -39,6 +40,7 @@ interface Props {
   /** Drawn over the plot, e.g. change pins, with room above it if needed. */
   overlay?: ReactNode
   marginTop?: number
+  onYScale?: YScaleListener
   excludeRwaRestrictedTokens: boolean
 }
 
@@ -92,6 +94,7 @@ export function AssetCategoryTvsChart({
   excludeRwaRestrictedTokens,
   overlay,
   marginTop,
+  onYScale,
 }: Props) {
   const meta = useMemo(
     () =>
@@ -143,6 +146,7 @@ export function AssetCategoryTvsChart({
         ariaLabel="Value secured by asset category"
         syncedUntil={syncedUntil}
         margin={marginTop !== undefined ? { top: marginTop } : undefined}
+        onYScale={onYScale}
         yAxis={{
           domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),

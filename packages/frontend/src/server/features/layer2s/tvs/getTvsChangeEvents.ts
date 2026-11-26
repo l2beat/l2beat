@@ -4,20 +4,13 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { ChartRange } from '~/utils/range/range'
+import type { ChangeCategory } from '../../utils/changeEventConstants'
 import {
-  BASELINE_DAYS,
-  CHANGE_CATEGORIES,
-  type ChangeCategory,
-} from '../../utils/changeEventConstants'
-import {
-  type CategoryDay,
-  type ChangeEvent,
+  type ChangeCandidate,
+  type ChangeContributor,
   type ChangeEventsData,
-  createChangeEvent,
+  getBreakdown,
   getChangeProjects,
-  getRobustZ,
-  MIN_HISTORY_DAYS,
-  markEpisodePeaks,
   median,
 } from '../../utils/changeEvents'
 import { getTvsProjects } from './utils/getTvsProjects'
@@ -27,7 +20,7 @@ import {
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
 
-export type TvsChangeEvent = ChangeEvent<'usd'>
+export type TvsChangeCandidate = ChangeCandidate<'usd'>
 export type TvsChangeEventsData = ChangeEventsData<'usd'>
 
 export const TvsChangeEventsParams = v.object({
@@ -37,18 +30,14 @@ export const TvsChangeEventsParams = v.object({
 })
 export type TvsChangeEventsParams = v.infer<typeof TvsChangeEventsParams>
 
-// TVS is a balance, so a notable day is a jump: the day's change against the
-// category's usual daily changes. Prices move every project's TVS together,
-// so only the part of a change beyond the market's move counts. It must also
-// be big for the category and for all L2s, so a small category's noise
-// doesn't fire.
-const MIN_ROBUST_Z = 4
-// The change beyond the market, and the category's whole change, which the
-// pin shows, against the category.
-const MIN_RELATIVE_EXCESS = 0.03
-const MIN_RELATIVE_CHANGE = 0.05
-// The chart stacks all L2s, so this is what a jump must be to show on it.
-const MIN_SHARE_OF_ALL_L2 = 0.03
+// TVS is a balance, so a change is a step: the value against a few days
+// earlier. Prices move every project's TVS together, so a step counts only
+// when at least this much of it is beyond the market's move.
+const STEP_DAYS = 3
+const MIN_SHARE_BEYOND_MARKET = 0.5
+// Steps this small can't reach the chart's bar on any axis that shows the
+// category, so they aren't sent.
+const MIN_SHARE_OF_CATEGORY_MAX = 0.01
 
 const cache = new FrontendInMemoryCache('getTvsChangeEvents')
 
@@ -85,7 +74,7 @@ async function computeForFilter(
   excludeRwaRestrictedTokens: boolean,
 ): Promise<TvsChangeEventsData> {
   if (env.MOCK) {
-    return { projects: {}, events: [] }
+    return { projects: {}, candidates: [] }
   }
 
   const projects = await getTvsProjects(createTvsProjectsFilter(filter), {
@@ -97,9 +86,8 @@ async function computeForFilter(
       categoryByProject.set(project.projectId, project.category)
   }
 
-  // A day's change needs the day before, and its z needs the days before that.
-  const loadFrom =
-    from === null ? null : from - (BASELINE_DAYS + 1) * UnixTime.DAY
+  // A step at the range's start compares with days before it.
+  const loadFrom = from === null ? null : from - STEP_DAYS * UnixTime.DAY
   const records = await getDb().tvsTokenValue.getSummedByProjectAtResolution(
     [...categoryByProject.keys()],
     [loadFrom === null ? null : UnixTime(loadFrom), UnixTime(to)],
@@ -108,7 +96,11 @@ async function computeForFilter(
     { excludeRwaRestrictedTokens, forSummary: true },
   )
 
-  const events = computeTvsChangeEvents(records, categoryByProject, from)
+  const candidates = computeTvsChangeCandidates(
+    records,
+    categoryByProject,
+    from,
+  )
   return {
     projects: getChangeProjects(
       projects.map((p) => ({
@@ -116,23 +108,24 @@ async function computeForFilter(
         name: p.details.name,
         slug: p.details.slug,
       })),
-      events,
+      candidates,
     ),
-    events,
+    candidates,
   }
 }
 
 /**
- * Compares each day's TVS with the day before, per project, so a category's
- * change splits exactly into per-project changes. A project missing either
- * day is left out of both. Detection uses the change beyond the market's move
- * that day, so a rally that lifts every project is not an event.
+ * Each category's steps over `STEP_DAYS` days in the visible range, per
+ * project, so a step splits exactly into projects' changes. A project
+ * missing either day is left out of both. Steps mostly made of the market's
+ * move are dropped, and of overlapping steps the same way only the largest
+ * stays.
  */
-export function computeTvsChangeEvents(
+export function computeTvsChangeCandidates(
   records: { projectId: string; timestamp: number; value: number }[],
   categoryByProject: Map<string, ChangeCategory>,
   visibleFrom: number | null,
-): TvsChangeEvent[] {
+): TvsChangeCandidate[] {
   const valuesByProject = new Map<string, Map<number, number>>()
   const days = new Set<number>()
   for (const record of records) {
@@ -147,102 +140,135 @@ export function computeTvsChangeEvents(
     days.add(record.timestamp)
   }
 
-  const timestamps = [...days].sort((a, b) => a - b)
-  const changesByCategory = new Map<ChangeCategory, number[]>(
-    CHANGE_CATEGORIES.map((c) => [c, []]),
-  )
-  const candidates: TvsChangeEvent[] = []
-
-  for (const timestamp of timestamps) {
-    const perCategory = getCategoryDay(
+  const steps: Step[] = []
+  const categoryMax = new Map<ChangeCategory, number>()
+  for (const timestamp of [...days].sort((a, b) => a - b)) {
+    const start = timestamp - (STEP_DAYS - 1) * UnixTime.DAY
+    if (visibleFrom !== null && start < visibleFrom) continue
+    for (const step of getSteps(
       valuesByProject,
       categoryByProject,
       timestamp,
-    )
-    const allL2Baseline = [...perCategory.values()].reduce(
-      (sum, day) => sum + day.baseline,
-      0,
-    )
-    const isVisible = visibleFrom === null || timestamp >= visibleFrom
-
-    for (const [category, day] of perCategory) {
-      const changes = changesByCategory.get(category) ?? []
-      const { excess } = day
-      const change = day.observed - day.baseline
-      const robustZ = getRobustZ(excess, changes.slice(-BASELINE_DAYS))
-      changes.push(excess)
-      if (!isVisible || robustZ === undefined) continue
-
-      const isNotable =
-        Math.abs(robustZ) >= MIN_ROBUST_Z &&
-        Math.sign(robustZ) === Math.sign(excess) &&
-        Math.abs(excess) >= MIN_RELATIVE_EXCESS * day.baseline &&
-        Math.sign(change) === Math.sign(excess) &&
-        Math.abs(change) >= MIN_RELATIVE_CHANGE * day.baseline &&
-        Math.abs(excess) >= MIN_SHARE_OF_ALL_L2 * allL2Baseline
-      if (!isNotable) continue
-
-      candidates.push(
-        createChangeEvent(timestamp, category, 'usd', day, robustZ, excess),
+    )) {
+      categoryMax.set(
+        step.category,
+        Math.max(categoryMax.get(step.category) ?? 0, step.observed),
       )
+      const change = step.observed - step.baseline
+      if (
+        change !== 0 &&
+        Math.sign(step.excess) === Math.sign(change) &&
+        Math.abs(step.excess) >= MIN_SHARE_BEYOND_MARKET * Math.abs(change)
+      ) {
+        steps.push(step)
+      }
     }
   }
 
-  return markEpisodePeaks(candidates)
+  const byKey = new Map(steps.map((s) => [`${s.category}:${s.timestamp}`, s]))
+  return steps
+    .filter(
+      (step) =>
+        Math.abs(step.observed - step.baseline) >=
+          MIN_SHARE_OF_CATEGORY_MAX * (categoryMax.get(step.category) ?? 0) &&
+        isLargestOverlapping(step, byKey),
+    )
+    .map((step) => ({
+      category: step.category,
+      metric: 'usd',
+      peak: step.timestamp,
+      observed: step.observed,
+      levels: [
+        {
+          onset: step.timestamp - (STEP_DAYS - 1) * UnixTime.DAY,
+          baseline: step.baseline,
+          ...getBreakdown(step.deltas),
+        },
+      ],
+      steps: [],
+    }))
 }
 
-interface TvsCategoryDay extends CategoryDay {
-  /** The change beyond what the market's move that day explains. */
+interface Step {
+  category: ChangeCategory
+  timestamp: number
+  observed: number
+  baseline: number
+  /** The change beyond what the market's move explains. */
   excess: number
+  deltas: ChangeContributor[]
 }
 
-function getCategoryDay(
+function getSteps(
   valuesByProject: Map<string, Map<number, number>>,
   categoryByProject: Map<string, ChangeCategory>,
   timestamp: number,
 ) {
-  const perCategory = new Map<ChangeCategory, TvsCategoryDay>()
-  const days: {
+  const pairs: {
     projectId: string
     category: ChangeCategory
-    values: Map<number, number>
     value: number
     previous: number
   }[] = []
   for (const [projectId, values] of valuesByProject) {
     const category = categoryByProject.get(projectId)
     const value = values.get(timestamp)
-    const previous = values.get(timestamp - UnixTime.DAY)
+    const previous = values.get(timestamp - STEP_DAYS * UnixTime.DAY)
     if (!category || value === undefined || previous === undefined) continue
-    days.push({ projectId, category, values, value, previous })
+    pairs.push({ projectId, category, value, previous })
   }
-  const marketMove = getMarketMove(days)
+  const marketMove = getMarketMove(pairs)
 
-  for (const { projectId, category, values, value, previous } of days) {
-    let history = 0
-    for (let i = 1; i <= BASELINE_DAYS; i++) {
-      if (values.has(timestamp - i * UnixTime.DAY)) history++
+  const result = new Map<ChangeCategory, Step>()
+  for (const { projectId, category, value, previous } of pairs) {
+    let step = result.get(category)
+    if (!step) {
+      step = {
+        category,
+        timestamp,
+        observed: 0,
+        baseline: 0,
+        excess: 0,
+        deltas: [],
+      }
+      result.set(category, step)
     }
-
-    let day = perCategory.get(category)
-    if (!day) {
-      day = { observed: 0, baseline: 0, deltas: [], excess: 0 }
-      perCategory.set(category, day)
-    }
-    day.observed += value
-    day.baseline += previous
-    day.excess += value - previous * (1 + marketMove)
-    day.deltas.push([projectId, value - previous, history < MIN_HISTORY_DAYS])
+    step.observed += value
+    step.baseline += previous
+    step.excess += value - previous * (1 + marketMove)
+    step.deltas.push([projectId, value - previous])
   }
-  return perCategory
+  return result.values()
+}
+
+/** Overlapping steps the same way are one move; the largest stands for it. */
+function isLargestOverlapping(step: Step, byKey: Map<string, Step>) {
+  const change = step.observed - step.baseline
+  for (let d = 1 - STEP_DAYS; d < STEP_DAYS; d++) {
+    if (d === 0) continue
+    const other = byKey.get(
+      `${step.category}:${step.timestamp + d * UnixTime.DAY}`,
+    )
+    if (!other) continue
+    const otherChange = other.observed - other.baseline
+    if (Math.sign(otherChange) !== Math.sign(change)) continue
+    // Ties go to the earlier step.
+    if (
+      Math.abs(otherChange) > Math.abs(change) ||
+      (Math.abs(otherChange) === Math.abs(change) && d < 0)
+    ) {
+      return false
+    }
+  }
+  return true
 }
 
 /**
- * The market's move that day: the median project's relative change. Not
- * weighted by TVS, so the largest project's own jump isn't the market.
+ * The market's move over the step: the median project's relative change.
+ * Not weighted by TVS, so the largest project's own jump isn't the market.
  */
-function getMarketMove(days: { value: number; previous: number }[]) {
-  const moves = days
+function getMarketMove(pairs: { value: number; previous: number }[]) {
+  const moves = pairs
     .filter((d) => d.previous > 0)
     .map((d) => d.value / d.previous - 1)
   return moves.length === 0 ? 0 : median(moves)

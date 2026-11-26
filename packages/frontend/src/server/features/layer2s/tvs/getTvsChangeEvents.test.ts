@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ChangeCategory } from '../../utils/changeEventConstants'
-import { computeTvsChangeEvents } from './getTvsChangeEvents'
+import { computeTvsChangeCandidates } from './getTvsChangeEvents'
 
-describe(computeTvsChangeEvents.name, () => {
-  // Projects with slowly drifting TVS for 40 days; tests bend one day (35)
-  // and check what gets reported. Days 0-29 only build the history.
+describe(computeTvsChangeCandidates.name, () => {
+  // Projects with slowly drifting TVS for 40 days; tests bend them from day
+  // 35 and check what gets reported.
   const START = UnixTime(1_700_006_400)
   const VISIBLE_FROM = START + 30 * UnixTime.DAY
   const DAY_35 = START + 35 * UnixTime.DAY
@@ -34,16 +34,20 @@ describe(computeTvsChangeEvents.name, () => {
       ...series('c', drift(1e9)),
     ]
 
-    const events = computeTvsChangeEvents(records, categories, VISIBLE_FROM)
+    const candidates = computeTvsChangeCandidates(
+      records,
+      categories,
+      VISIBLE_FROM,
+    )
 
-    expect(events.length).toEqual(1)
-    const [event] = events
-    expect(event?.timestamp).toEqual(DAY_35)
-    expect(event?.category).toEqual('rollups')
-    expect(event?.isPeak).toEqual(true)
-    expect(event?.contributors[0]?.[0]).toEqual('a')
-    // The day after the jump TVS stays up, which is not a change.
-    expect(events.some((e) => e.timestamp > DAY_35)).toEqual(false)
+    // Each of the three-day steps that cover the jump sees it; one stays.
+    expect(candidates.length).toEqual(1)
+    const [candidate] = candidates
+    const level = candidate?.levels[0]
+    expect(candidate?.category).toEqual('rollups')
+    expect((level?.onset ?? 0) <= DAY_35).toEqual(true)
+    expect((candidate?.peak ?? 0) >= DAY_35).toEqual(true)
+    expect(level?.contributors[0]?.[0]).toEqual('a')
   })
 
   it('reports drops too', () => {
@@ -53,10 +57,16 @@ describe(computeTvsChangeEvents.name, () => {
       ...series('c', (day) => drift(1e9)(day) - (day >= 35 ? 6e8 : 0)),
     ]
 
-    const [event] = computeTvsChangeEvents(records, categories, VISIBLE_FROM)
+    const [candidate] = computeTvsChangeCandidates(
+      records,
+      categories,
+      VISIBLE_FROM,
+    )
 
-    expect(event?.category).toEqual('others')
-    expect((event?.observed ?? 0) < (event?.baseline ?? 0)).toEqual(true)
+    expect(candidate?.category).toEqual('others')
+    expect(
+      (candidate?.observed ?? 0) < (candidate?.levels[0]?.baseline ?? 0),
+    ).toEqual(true)
   })
 
   it('ignores a market move that lifts every project alike', () => {
@@ -68,36 +78,23 @@ describe(computeTvsChangeEvents.name, () => {
       ...series('c', rally(1e9)),
     ]
 
-    expect(computeTvsChangeEvents(records, categories, VISIBLE_FROM)).toEqual(
-      [],
-    )
+    expect(
+      computeTvsChangeCandidates(records, categories, VISIBLE_FROM),
+    ).toEqual([])
   })
 
-  it('ignores a jump too small to see next to all L2 TVS', () => {
-    // A fifth of its category, but about 1% of all L2 TVS.
-    const records = [
-      ...series('a', drift(100e9)),
-      ...series('b', drift(50e9)),
-      ...series('c', (day) => drift(10e9)(day) + (day >= 35 ? 2e9 : 0)),
-    ]
-
-    expect(computeTvsChangeEvents(records, categories, VISIBLE_FROM)).toEqual(
-      [],
-    )
-  })
-
-  it('leaves out a project missing the day before', () => {
+  it('leaves out a project missing the day a step starts from', () => {
     const records = [
       ...series('a', drift(10e9)),
       ...series('b', drift(5e9)),
-      // A new project appears on day 35 with 3B: not a change of any day.
+      // A new project appears on day 35 with 3B: not a change of any step.
       ...series('c', (day) => (day >= 35 ? 3e9 : Number.NaN)).filter(
         (r) => !Number.isNaN(r.value),
       ),
     ]
 
-    expect(computeTvsChangeEvents(records, categories, VISIBLE_FROM)).toEqual(
-      [],
-    )
+    expect(
+      computeTvsChangeCandidates(records, categories, VISIBLE_FROM),
+    ).toEqual([])
   })
 })
