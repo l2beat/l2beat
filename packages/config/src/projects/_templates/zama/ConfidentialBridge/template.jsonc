@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConfidentialBridge",
+  "description": "LayerZero application that moves ciphertext handles between FHEVM host chains. A sender needs ACL rights on every handle it sends, and the receiving bridge derives new handles on its chain. The bridge holds no tokens and exchanges messages only with the peers its owner sets. Its owner is always the ACL owner.",
+  "category": "core",
+  "ignoreRelatives": ["endpoint"],
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the Zama ACL contract, which this bridge reads as its own owner.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the peer bridge and chain id of each destination, point the LayerZero delegate that configures message libraries and verifiers, and assign a cleartext value to a handle that arrived over the bridge."
+        }
+      ]
+    },
+    "peers": {
+      "description": "Peer bridges set per LayerZero endpoint id. Without a peer the bridge can neither send to nor receive from that chain.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": ["eid", "peer"],
+        "add": { "event": "PeerSet" }
+      }
+    },
+    "destinationChainIds": {
+      "description": "Chain id registered per destination endpoint id.",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": ["dstEid", "dstChainId"],
+        "add": { "event": "DstChainIdSet" }
+      }
+    },
+    "fallbackPlaintexts": {
+      "description": "Handles to which the owner assigned a cleartext value after they arrived over the bridge.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": ["dstHandle", "plaintext"],
+        "add": { "event": "FallbackGrantedPlaintext" }
+      }
+    }
+  }
+}

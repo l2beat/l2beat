@@ -1,5 +1,6 @@
 import {
   ADVICE_SNIPPETS as A,
+  adviceLink,
   definePrivacyAdversaries,
 } from '../../common/privacyAdversaries'
 import type { PrivacyFieldExposure } from '../../types'
@@ -9,7 +10,7 @@ const INTENTS =
 const BRIDGE =
   'https://github.com/Near-One/btc-bridge/blob/66d239120981ba58ae92f73dc6860e0369b4ad28/contracts/satoshi-bridge/src/'
 const VIZOR =
-  'https://github.com/chainapsis/vizor-wallet/blob/43c1b3467fc00c630fcd7eb8e8070b8b4d409596/'
+  'https://github.com/chainapsis/vizor-wallet/blob/c4d01dc120299d9456505c3340ee7fa9520c9285/'
 const DOCS = 'https://docs.near-intents.org/'
 
 const PAYOUT_RECIPIENT: PrivacyFieldExposure = {
@@ -57,7 +58,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
           title: 'Vizor creates a fresh shielded address for every quote',
           url:
             VIZOR +
-            'lib/src/features/swap/providers/swap_zec_staging_address_service.dart#L58-L67',
+            'lib/src/features/swap/providers/swap_zec_staging_address_service.dart#L186-L205',
         },
       ],
     },
@@ -120,7 +121,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
           title: 'Each PIR request takes its own Tor circuit',
           url:
             VIZOR +
-            'rust/src/wallet/sync_engine/enhancement/transport/mod.rs#L175-L176',
+            'rust/src/wallet/sync_engine/enhancement/transport/mod.rs#L186-L187',
         },
         {
           title: 'PIR leaks: active block ranges and status timing',
@@ -207,7 +208,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: 'Turn on Tor and Private queries in Vizor before its first sync.',
+      text: `Turn on Tor and Private queries in Vizor before its first sync. When you restore a wallet older than seven months, run that sync through an ${adviceLink('IP-hiding route', 'routes')}.`,
       against: ['networkObserver'],
     },
     {

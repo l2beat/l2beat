@@ -231,7 +231,7 @@ export const hinkal: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: REFERENCE_APP,
     trackedOn: ['ethereum'],
-    // Scaling projects where the extension 0.0.64 serves the pool (its chain
+    // Scaling projects where the extension 0.0.65 serves the pool (its chain
     // list). BNB Chain, Arc and Solana are served too but are not projects
     // here. The SDK still lists an Optimism pool, which the extension does not
     // serve.

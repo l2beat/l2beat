@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x5070e72c287caf3f363feff33c856992f9b151d8
+
+# Diff at Thu, 26 Nov 2026 11:09:48 GMT:
+
+- id: dc023a8c
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0e6984f6c8df82c5ddf570afe05e751c33796300 block: 1792756093
+- current timestamp: 1795691323
+
+## Description
+
+Proposal 33 was published on 2026-11-25 by eth:0x3926d7A58c82e2eFF77Ae307447d3d631f9AAce0, with the document "ipfs://neo-drain-railgun-relay-2026". Its actions mint 2,500,000 RAIL to the proposer, upgrade RailgunSmartWallet and Treasury to the unverified eth:0xb4f66b9a17ecd409502b1c029a3555deee9eed53, call `drain()` on both and transfer the Delegator to the proposer. It has no sponsorship. It reaches a vote only with 500,000 RAIL of sponsorship before 2026-12-25. The new `recentProposals` field tracks sponsorship and vote calls of proposals from id 33 on.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ description: Number of governance proposals published. Proposals are updates, but do not change the system until executed.
+      values.proposalCount:
+-        33
++        34
++++ description: Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed.
+      values.recentProposals.0:
++        {"executed":false,"proposer":"eth:0x3926d7A58c82e2eFF77Ae307447d3d631f9AAce0","proposalDocument":"ipfs://neo-drain-railgun-relay-2026","publishTime":1795599503,"voteCallTime":0,"sponsorship":0,"yayVotes":0,"nayVotes":0,"sponsorInterval":1966,"votingInterval":0}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1792756093 (main branch discovery), not current.
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ description: Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed.
+      values.recentProposals:
++        []
+      fieldMeta.recentProposals:
++        {"description":"Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed."}
+    }
+```
+
 Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
 
 # Diff at Sat, 24 Oct 2026 16:41:07 GMT:

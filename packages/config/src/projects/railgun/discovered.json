@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1792756093,
+  "timestamp": 1795691323,
   "configHash": "0x0c3e2877cc5b1aa4ebc5f6e5230b6f5144d679fb900c5e4cb51a9c220462f2d1",
   "entries": [
     {
@@ -782,8 +782,22 @@
         "EXECUTION_END_OFFSET": 1209600,
         "EXECUTION_START_OFFSET": 604800,
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
-        "proposalCount": 33,
+        "proposalCount": 34,
         "QUORUM": "2000000000000000000000000",
+        "recentProposals": [
+          {
+            "executed": false,
+            "proposer": "eth:0x3926d7A58c82e2eFF77Ae307447d3d631f9AAce0",
+            "proposalDocument": "ipfs://neo-drain-railgun-relay-2026",
+            "publishTime": 1795599503,
+            "voteCallTime": 0,
+            "sponsorship": 0,
+            "yayVotes": 0,
+            "nayVotes": 0,
+            "sponsorInterval": 1966,
+            "votingInterval": 0
+          }
+        ],
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
         "STAKING_CONTRACT": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
@@ -794,6 +808,9 @@
       "fieldMeta": {
         "proposalCount": {
           "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
+        },
+        "recentProposals": {
+          "description": "Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed."
         },
         "DELEGATOR_CONTRACT": {
           "description": "Delegator contract that executes successful proposal actions."
@@ -998,7 +1015,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,026,604.203074334105502209",
+        "RAILBalance": "1,862,330.182704974627728398",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1072,7 +1089,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "42,527,262.006558543126287672",
+        "RAILStaked": "42,025,249.695348851746307935",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1794,9 +1811,9 @@
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0x4221ed0e8307ee2ffd52d7bd83b3f6805d2cd431814543ed36f5dc42b7d77988",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
-    "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
+    "railgun/Voting": "0x685ff8bfc428be49aea11ebb895d0fe3a034dba5442d99c12b7ab9876aae418f"
   },
-  "usedBlockNumbers": { "ethereum": 26255125 },
+  "usedBlockNumbers": { "ethereum": 26498976 },
   "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {

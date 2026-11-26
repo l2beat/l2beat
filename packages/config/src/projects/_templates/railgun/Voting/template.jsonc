@@ -15,6 +15,15 @@
         ]
       }
     },
+    "recentProposals": {
+      "description": "Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed.",
+      "handler": {
+        "type": "array",
+        "method": "function proposals(uint256) view returns (bool executed, address proposer, string proposalDocument, uint256 publishTime, uint256 voteCallTime, uint256 sponsorship, uint256 yayVotes, uint256 nayVotes, uint256 sponsorInterval, uint256 votingInterval)",
+        "startIndex": 33,
+        "ignoreRelative": true
+      }
+    },
     "DELEGATOR_CONTRACT": {
       "description": "Delegator contract that executes successful proposal actions."
     },
