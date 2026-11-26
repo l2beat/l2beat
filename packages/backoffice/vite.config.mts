@@ -23,6 +23,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/trpc\/production/, '/trpc'),
       },
+      '/trpc/tokens': {
+        target: process.env.TOKEN_BACKEND_URL ?? 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/trpc\/tokens/, '/trpc'),
+      },
     },
   },
   resolve: {

@@ -15,7 +15,7 @@
 This document describes how user-driven edits to TokenDB flow through the
 `token-backend` package. It is the model that sits behind every "Add
 token", "Update token", "Delete token", and token-relation edit coming
-from the token-UI.
+from the back office's Token DB pages.
 
 If you're looking for how tokens are added *automatically* from interop
 transfers, that's a different subsystem — see
@@ -50,7 +50,7 @@ Intent   ─►   Plan   ─►   Commands  ─►  TokenDB
 The two tRPC procedures that expose this are `plan.generate` (intent → plan)
 and `plan.execute` (plan → success/error), wired up in
 [trpc/routers/plan/index.ts](../../../../../packages/token-backend/src/trpc/routers/plan/index.ts).
-On the frontend, [PlanConfirmationDialog.tsx](../../../../../packages/token-ui/src/components/PlanConfirmationDialog.tsx)
+On the frontend, [PlanConfirmationDialog.tsx](../../../../../packages/backoffice/src/pages/token-db/components/PlanConfirmationDialog.tsx)
 shows the plan to the user, and only on **Confirm** does it call
 `plan.execute`.
 
@@ -87,7 +87,7 @@ abstract token. The dialog already knows how to render the full command list.
 
 ### 2. Make concurrent edits safe without manual locking
 
-Multiple researchers can be editing tokens in token-UI at the same time.
+Multiple researchers can be editing tokens in the back office at the same time.
 Without protection, the classic race is:
 
 1. Alice opens token X, makes a change, gets a plan, takes a coffee.

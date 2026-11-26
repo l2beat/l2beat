@@ -1,12 +1,15 @@
 import {
   ChevronRightIcon,
   ClipboardCheckIcon,
+  CoinsIcon,
   LayersIcon,
+  LinkIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
   RefreshCwIcon,
   ShieldCheckIcon,
   SigmaIcon,
+  TablePropertiesIcon,
 } from 'lucide-react'
 import { Link, matchPath, useLocation } from 'react-router'
 import {
@@ -25,6 +28,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from '~/components/core/Sidebar'
+import { SidebarSearch } from '~/pages/token-db/components/SidebarSearch'
 import { DAILY_CHECKS_DASHBOARD_URL } from '~/pages/website/daily-checks/DailyChecksRedirect'
 import {
   Collapsible,
@@ -35,6 +39,8 @@ import {
 type NavigationGroup = {
   title: string
   matcher: string
+  /** Rendered above the group's items. */
+  header?: React.ComponentType
   items: Item[]
 }
 
@@ -159,6 +165,65 @@ const navGroups: NavigationGroup[] = [
     ],
   },
   {
+    title: 'Token DB',
+    matcher: '/token-db',
+    header: SidebarSearch,
+    items: [
+      {
+        type: 'collapsible',
+        title: 'Tokens',
+        icon: CoinsIcon,
+        items: [
+          {
+            title: 'Summary',
+            url: '/token-db/tokens',
+          },
+          {
+            title: 'Add',
+            url: '/token-db/tokens/new',
+          },
+          {
+            title: 'Suggestions',
+            url: '/token-db/tokens/suggestions',
+          },
+          {
+            title: 'Queue',
+            url: '/token-db/tokens/ingestion-queue',
+          },
+          {
+            title: 'History',
+            url: '/token-db/tokens/history',
+          },
+          {
+            title: 'Graph',
+            url: '/token-db/tokens/relations-graph',
+          },
+        ],
+      },
+      {
+        type: 'collapsible',
+        title: 'Chains',
+        icon: LinkIcon,
+        items: [
+          {
+            title: 'Summary',
+            url: '/token-db/chains',
+          },
+          {
+            title: 'Add',
+            url: '/token-db/chains/new',
+          },
+        ],
+      },
+      {
+        type: 'single',
+        title: 'TVS gaps',
+        icon: TablePropertiesIcon,
+        url: '/token-db/tokens/tvs-coverage',
+      },
+    ],
+  },
+  {
     title: 'Website',
     matcher: '/website',
     items: [
@@ -215,6 +280,7 @@ export function AppSidebar() {
             <SidebarGroup key={group.title}>
               <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
               <SidebarMenu>
+                {group.header && <group.header />}
                 {group.items.map((item) => {
                   if (item.type === 'single') {
                     const isExternal = item.url.startsWith('http')

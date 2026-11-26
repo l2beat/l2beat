@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x43a18c81fb35866d1c8e955bf819c212e54426f3
+
+# Diff at Thu, 26 Nov 2026 11:18:51 GMT:
+
+- id: 5b13adee
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3b475876fb5d8d57231ef4725c99e8ee6d056615 block: 1792756093
+- current timestamp: 1795691822
+
+## Description
+
+New malicious proposal 33 (not sponsored, proposer has no voting power). It would upgrade RailgunSmartWallet and Treasury to an unverified drainer (eth:0xb4f66b9a17ecd409502b1c029a3555deee9eed53) that sends all funds to the proposer, mint 2.5M RAIL to the proposer and transfer Delegator ownership to them.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ description: Number of governance proposals published. Proposals are updates, but do not change the system until executed.
+      values.proposalCount:
+-        33
++        34
+    }
+```
+
 Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
 
 # Diff at Sat, 24 Oct 2026 16:41:07 GMT:

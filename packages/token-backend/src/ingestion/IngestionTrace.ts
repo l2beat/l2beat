@@ -72,7 +72,7 @@ export type IngestionOutcome =
       message: string
       /** Present only for the resolvable conflict kind: a newly materialized
        * CoinGecko abstract token whose symbol genuinely differs from the
-       * deployed token symbol. Carries the data the token-UI resolve dialog
+       * deployed token symbol. Carries the data the Token DB resolve dialog
        * needs to offer symbol choices and prefill the manual abstract-token
        * creation that resolves the conflict. */
       symbolConflict?: {

@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "meth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "meth-mETH",
+      "priceId": "mantle-staked-ether",
+      "symbol": "mETH",
+      "name": "mETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1701993600
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

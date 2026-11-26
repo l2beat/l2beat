@@ -1,0 +1,955 @@
+import type {
+  AbstractTokenRecord,
+  ChainApi,
+  ChainRecord,
+  RouterOutputs,
+} from '@l2beat/token-backend'
+import { v } from '@l2beat/validate'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  CircleAlertIcon,
+  PlusIcon,
+  SettingsIcon,
+  TrashIcon,
+} from 'lucide-react'
+import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { useFieldArray } from 'react-hook-form'
+import { Link } from 'react-router'
+import { toast } from 'sonner'
+import { Badge } from '~/components/core/Badge'
+import { Button, buttonVariants } from '~/components/core/Button'
+import { Card, CardContent } from '~/components/core/Card'
+import { Checkbox } from '~/components/core/Checkbox'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/Command'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '~/components/core/Form'
+import { Input } from '~/components/core/Input'
+import { Label } from '~/components/core/Label'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/Popover'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/Select'
+import { Spinner } from '~/components/core/Spinner'
+import { Textarea } from '~/components/core/TextArea'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/Tooltip'
+import { AutoFillIndicator } from '~/pages/token-db/components/AutoFillIndicator'
+import {
+  CardActionButton,
+  CardActionButtons,
+} from '~/pages/token-db/components/CardActionButtons'
+import { ExplorerLinkButton } from '~/pages/token-db/components/ExplorerLink'
+import { buildUrlWithParams } from '~/pages/token-db/utils/buildUrlWithParams'
+import { minLengthCheck, minNumberCheck } from '~/pages/token-db/utils/checks'
+import { getAbstractTokenDisplayId } from '~/pages/token-db/utils/getDisplayId'
+import { parseDateTimePaste } from '~/pages/token-db/utils/parseDate'
+import { cn } from '~/utils/cn'
+
+export type DataSource = 'coingecko' | ChainApi['type']
+
+export const fieldToDataSource: Record<
+  'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
+  DataSource[]
+> = {
+  symbol: ['rpc', 'coingecko'],
+  decimals: ['rpc'],
+  deploymentTimestamp: ['etherscan', 'blockscout'],
+  abstractTokenId: ['coingecko'],
+}
+
+export const dataSourceToLabel: Record<DataSource, string> = {
+  coingecko: 'CoinGecko',
+  rpc: 'RPC',
+  etherscan: 'Etherscan',
+  blockscout: 'Blockscout',
+  blockscoutV2: 'Blockscout V2',
+  routescan: 'Routescan',
+}
+
+const symbolSourceToLabel = {
+  rpc: 'On-chain (RPC)',
+  coingecko: 'CoinGecko',
+} as const
+
+type AutofillWarning =
+  RouterOutputs['deployedTokens']['checks']['warnings'][number]
+type AutofillWarningField = AutofillWarning['field']
+
+const TvsMetadata = v.object({
+  includeInCalculations: v.boolean(),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
+  supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
+  excludeFromTotal: v.boolean(),
+  bridgedUsing: v.array(
+    v.object({
+      name: v.string(),
+      slug: v.string().optional(),
+    }),
+  ),
+})
+
+const Metadata = v.object({
+  tvs: TvsMetadata.optional(),
+})
+
+export type DeployedTokenSchema = v.infer<typeof DeployedTokenSchema>
+export const DeployedTokenSchema = v.object({
+  chain: v.string(),
+  address: v.string(),
+  decimals: v.number().check(minNumberCheck(1)),
+  symbol: v.string().check(minLengthCheck(1)),
+  abstractTokenId: v.string().optional(),
+  deploymentTimestamp: v.string(),
+  comment: v.string().optional(),
+  ignored: v.boolean(),
+  metadata: Metadata.optional(),
+})
+
+interface Props {
+  form: UseFormReturn<DeployedTokenSchema, unknown, DeployedTokenSchema>
+  onSubmit: SubmitHandler<DeployedTokenSchema>
+  isFormDisabled: boolean
+  tokenDetails: {
+    data: RouterOutputs['deployedTokens']['checks'] | undefined
+    loading: boolean
+  }
+  abstractTokens: {
+    data: AbstractTokenRecord[] | undefined
+    loading: boolean
+  }
+  chains: {
+    data: ChainRecord[] | undefined
+    loading: boolean
+  }
+  autofill:
+    | {
+        symbol: boolean
+        decimals: boolean
+        deploymentTimestamp: boolean
+        abstractTokenId: boolean
+      }
+    | undefined
+  children: React.ReactNode
+}
+
+export function DeployedTokenForm({
+  form,
+  onSubmit,
+  isFormDisabled,
+  tokenDetails,
+  abstractTokens,
+  chains,
+  autofill,
+  children,
+}: Props) {
+  const abstractTokenId = form.watch('abstractTokenId')
+  const abstractToken = abstractTokens.data?.find(
+    (abstractToken) => abstractToken.id === abstractTokenId,
+  )
+  const chainValue = form.watch('chain')
+  const addressValue = form.watch('address')
+  const symbolValue = form.watch('symbol')
+
+  const chainFieldSuccess =
+    tokenDetails.data &&
+    tokenDetails.data?.error?.type !== 'chain-not-found' &&
+    tokenDetails.data?.error?.type !== 'already-exists'
+  const addressFieldSuccess =
+    tokenDetails.data &&
+    tokenDetails.data?.error?.type !== 'already-exists' &&
+    tokenDetails.data?.error?.type !== 'not-a-token'
+  const fetchedSymbol = tokenDetails.data?.data?.symbol
+  const symbolSource = tokenDetails.data?.data?.symbolSource as
+    | keyof typeof symbolSourceToLabel
+    | undefined
+  const shouldShowSymbolSourceIndicator =
+    symbolSource !== undefined &&
+    fetchedSymbol !== undefined &&
+    symbolValue === fetchedSymbol
+  const symbolSourceLabel = symbolSource
+    ? symbolSourceToLabel[symbolSource]
+    : undefined
+
+  const metadata = form.watch('metadata')
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
+        <fieldset disabled={isFormDisabled} className="space-y-8">
+          <div className="grid grid-cols-3 items-start gap-2">
+            <FormField
+              control={form.control}
+              name="chain"
+              success={chainFieldSuccess}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === field.value,
+                )
+
+                return (
+                  <FormItem>
+                    <FormLabel>
+                      Chain{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl className="flex-1">
+                            <Button
+                              disabled={chains.loading}
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                'justify-between',
+                                !field.value && 'text-muted-foreground',
+                              )}
+                            >
+                              {field.value
+                                ? (chains.data?.find(
+                                    (chain) => chain.name === field.value,
+                                  )?.name ??
+                                  form.formState.defaultValues?.chain)
+                                : 'Select chain'}
+                              <ChevronsUpDownIcon className="opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-0" align="start">
+                          <Command>
+                            <CommandInput
+                              placeholder="Search chain..."
+                              className="h-9"
+                            />
+                            <CommandList>
+                              <CommandEmpty>No chain found.</CommandEmpty>
+                              <CommandGroup>
+                                {chains.data?.map((chain) => (
+                                  <CommandItem
+                                    value={chain.name}
+                                    key={chain.name}
+                                    onSelect={() => {
+                                      form.setValue('chain', chain.name, {
+                                        shouldDirty: true,
+                                      })
+                                    }}
+                                  >
+                                    {chain.name}
+                                    <CheckIcon
+                                      className={cn(
+                                        'ml-auto',
+                                        chain.name === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0',
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      {chainRecord && (
+                        <Link
+                          to={`/token-db/chains/${chainValue}`}
+                          target="_blank"
+                          className={buttonVariants({
+                            variant: 'outline',
+                            className: 'shrink-0',
+                            size: 'icon',
+                          })}
+                        >
+                          <ArrowRightIcon />
+                        </Link>
+                      )}
+                    </div>
+                    <FormMessage>
+                      {tokenDetails.data?.error?.type === 'chain-not-found' && (
+                        <Link
+                          to={buildUrlWithParams('/token-db/chains/new', {
+                            name: field.value,
+                            redirectTo: 'deployed',
+                            address: addressValue,
+                            abstractTokenId,
+                          })}
+                          className="underline"
+                        >
+                          Add chain
+                        </Link>
+                      )}
+                    </FormMessage>
+                  </FormItem>
+                )
+              }}
+            />
+
+            <FormField
+              control={form.control}
+              name="address"
+              success={addressFieldSuccess}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === chainValue,
+                )
+
+                return (
+                  <FormItem className="col-span-2">
+                    <FormLabel>
+                      Address{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                      <AutofillWarningIndicator
+                        warnings={tokenDetails.data?.warnings}
+                        fields={['contractCode']}
+                      />
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <Input {...field} placeholder="0xd33db33f" />
+                      </FormControl>
+                      {field.value?.startsWith('0x') ? (
+                        !chainRecord ? null : chainRecord.explorerUrl ? (
+                          <ExplorerLinkButton
+                            explorerUrl={chainRecord.explorerUrl}
+                            value={field.value}
+                            type="address"
+                          />
+                        ) : (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                to={`/token-db/chains/${chainValue}`}
+                                target="_blank"
+                                className={buttonVariants({
+                                  variant: 'outline',
+                                  className: 'shrink-0',
+                                })}
+                              >
+                                <SettingsIcon />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              No explorer URL configured for this chain. Click
+                              to configure.
+                            </TooltipContent>
+                          </Tooltip>
+                        )
+                      ) : null}
+                    </div>
+                    <FormMessage>
+                      {tokenDetails.data?.error?.type === 'already-exists' && (
+                        <Link
+                          to={`/token-db/tokens/${chainValue}/${field.value}`}
+                          className="underline"
+                        >
+                          View
+                        </Link>
+                      )}
+                    </FormMessage>
+                  </FormItem>
+                )
+              }}
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name="symbol"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Symbol{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.symbol.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.symbol}
+                      chainName={chainValue}
+                    />
+                  )}
+                  {shouldShowSymbolSourceIndicator && symbolSourceLabel && (
+                    <Badge variant="outline" className="ml-1 text-[10px]">
+                      {symbolSourceLabel}
+                    </Badge>
+                  )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['symbol']}
+                  />
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={tokenDetails.loading} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="decimals"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Decimals
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.decimals.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.decimals}
+                      chainName={chainValue}
+                    />
+                  )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['decimals']}
+                  />
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="number"
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value !== ''
+                          ? Number(e.target.value)
+                          : undefined,
+                      )
+                    }
+                    disabled={tokenDetails.loading}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="deploymentTimestamp"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Deployment Timestamp{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.deploymentTimestamp.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.deploymentTimestamp}
+                      chainName={chainValue}
+                    />
+                  )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={['deploymentTimestamp', 'contractCode']}
+                  />
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="datetime-local"
+                    {...field}
+                    disabled={tokenDetails.loading}
+                    onPaste={(e) => {
+                      e.preventDefault()
+                      const pastedText = e.clipboardData.getData('text')
+                      const parsedDate = parseDateTimePaste(pastedText)
+                      if (parsedDate) {
+                        field.onChange(parsedDate)
+                      } else {
+                        toast.error(
+                          `Invalid date format. If you think it's correct, please report to dev team.`,
+                        )
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="abstractTokenId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Abstract Token ID{' '}
+                  {autofill && chainValue && (
+                    <AutoFillIndicator
+                      sources={fieldToDataSource.abstractTokenId.map(
+                        (dS) => dataSourceToLabel[dS],
+                      )}
+                      available={autofill.abstractTokenId}
+                      chainName={chainValue}
+                    />
+                  )}
+                  <AutofillWarningIndicator
+                    warnings={tokenDetails.data?.warnings}
+                    fields={[
+                      'abstractTokenId',
+                      'abstractTokenSuggestions',
+                      'coingeckoId',
+                    ]}
+                  />
+                </FormLabel>
+                <div className="flex items-center gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl className="w-[300px]">
+                        <Button
+                          disabled={abstractTokens.loading}
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'justify-between',
+                            !field.value && 'text-muted-foreground',
+                          )}
+                        >
+                          {abstractTokens.loading
+                            ? 'Loading...'
+                            : field.value
+                              ? getAbstractTokenDisplayId(
+                                  // biome-ignore lint/style/noNonNullAssertion: it's there
+                                  abstractTokens.data?.find(
+                                    (abstractToken) =>
+                                      abstractToken.id === field.value,
+                                  )!,
+                                )
+                              : 'Select abstract token'}
+                          <ChevronsUpDownIcon className="opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0" align="start">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search abstract token..."
+                          className="h-9"
+                        />
+                        <CommandList>
+                          <CommandEmpty>No abstract token found.</CommandEmpty>
+                          <CommandGroup>
+                            {abstractTokens.data?.map((abstractToken) => {
+                              const displayId =
+                                getAbstractTokenDisplayId(abstractToken)
+                              return (
+                                <CommandItem
+                                  value={displayId}
+                                  key={displayId}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      'abstractTokenId',
+                                      abstractToken.id,
+                                      { shouldDirty: true },
+                                    )
+                                  }}
+                                >
+                                  {displayId}
+                                  <CheckIcon
+                                    className={cn(
+                                      'ml-auto',
+                                      abstractToken.id === field.value
+                                        ? 'opacity-100'
+                                        : 'opacity-0',
+                                    )}
+                                  />
+                                </CommandItem>
+                              )
+                            })}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+
+                  {abstractToken && (
+                    <Link
+                      to={`/token-db/tokens/${field.value}`}
+                      target="_blank"
+                      className={buttonVariants({
+                        variant: 'outline',
+                        className: 'shrink-0',
+                        size: 'icon',
+                      })}
+                    >
+                      <ArrowRightIcon />
+                    </Link>
+                  )}
+                  {!abstractToken && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          to={buildUrlWithParams('/token-db/tokens/new', {
+                            tab: 'abstract',
+                            redirectTo: 'deployed',
+                            coingeckoId: tokenDetails.data?.data?.coingeckoId,
+                          })}
+                          className={buttonVariants({
+                            variant: 'outline',
+                            className: 'shrink-0',
+                          })}
+                        >
+                          <PlusIcon />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        No abstract token found for this token. Click to add
+                        one.
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+                {tokenDetails.data?.data?.abstractTokenSuggestions &&
+                  tokenDetails.data.data.abstractTokenSuggestions.length >
+                    0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-muted-foreground text-xs">
+                        Suggested:
+                      </span>
+                      {tokenDetails.data.data.abstractTokenSuggestions.map(
+                        (suggestion) => (
+                          <button
+                            key={suggestion.id}
+                            type="button"
+                            className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs transition-colors hover:bg-accent"
+                            onClick={() => {
+                              form.setValue('abstractTokenId', suggestion.id, {
+                                shouldDirty: true,
+                              })
+                            }}
+                          >
+                            {getAbstractTokenDisplayId(suggestion)}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Comment</FormLabel>
+                <FormControl>
+                  <Textarea {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ignored"
+            render={({ field }) => (
+              <FormItem className="grid gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked === true)
+                      }
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-sm">Ignored</FormLabel>
+                </div>
+                <FormDescription>
+                  When ignoring, put reason in the comment. Ignored tokens stay
+                  in TokenDB but are excluded from graphs and calculations. You
+                  may need to refresh financials after ignoring a token.
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+          {metadata?.tvs && (
+            <div className="grid gap-2">
+              <Label>TVS</Label>
+              <Card className="relative overflow-hidden">
+                <CardActionButtons>
+                  <CardActionButton
+                    onClick={() => {
+                      form.setValue('metadata.tvs', undefined, {
+                        shouldDirty: true,
+                      })
+                    }}
+                  >
+                    <TrashIcon className="size-4" />
+                  </CardActionButton>
+                </CardActionButtons>
+
+                <CardContent className="space-y-6">
+                  <TvsMetadataFields form={form} />
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          {!metadata?.tvs && (
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                form.setValue(
+                  'metadata.tvs',
+                  {
+                    includeInCalculations: true,
+                    source: 'canonical',
+                    supply: undefined,
+                    excludeFromTotal: false,
+                    bridgedUsing: [],
+                  },
+                  { shouldDirty: true },
+                )
+              }}
+            >
+              <PlusIcon />
+              TVS
+            </Button>
+          )}
+          {children}
+        </fieldset>
+      </form>
+    </Form>
+  )
+}
+
+export function setDeployedTokenExistsError(
+  form: UseFormReturn<DeployedTokenSchema>,
+) {
+  form.setError('address', {
+    type: 'already-exists',
+    message: 'Deployed token with given address and chain already exists',
+  })
+}
+
+function AutofillWarningIndicator({
+  warnings,
+  fields,
+}: {
+  warnings: AutofillWarning[] | undefined
+  fields: AutofillWarningField[]
+}) {
+  const filteredWarnings =
+    warnings?.filter((warning) => fields.includes(warning.field)) ?? []
+  if (filteredWarnings.length === 0) {
+    return null
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <span className="ml-1 inline-flex cursor-help align-middle text-muted-foreground">
+          <CircleAlertIcon className="size-lh stroke-red-500" />
+        </span>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-80 space-y-1">
+        {filteredWarnings.map((warning) => (
+          <p key={`${warning.field}:${warning.message}`}>{warning.message}</p>
+        ))}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function TvsMetadataFields({
+  form,
+}: {
+  form: UseFormReturn<DeployedTokenSchema>
+}) {
+  const {
+    fields: bridgedUsingFields,
+    append: appendBridgedUsing,
+    remove: removeBridgedUsing,
+  } = useFieldArray({
+    control: form.control,
+    name: 'metadata.tvs.bridgedUsing',
+  })
+  return (
+    <>
+      <FormField
+        control={form.control}
+        name="metadata.tvs.includeInCalculations"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center gap-2 space-y-0">
+            <FormControl>
+              <Checkbox
+                checked={field.value ?? false}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked === true)
+                }}
+              />
+            </FormControl>
+            <FormLabel className="font-normal text-sm">
+              Include in calculations
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="metadata.tvs.source"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Source</FormLabel>
+            <Select onValueChange={field.onChange} value={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select source" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="canonical">canonical</SelectItem>
+                <SelectItem value="external">external</SelectItem>
+                <SelectItem value="native">native</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="metadata.tvs.supply"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Supply</FormLabel>
+            <Select
+              onValueChange={(value) => {
+                field.onChange(value === '' ? undefined : value)
+              }}
+              value={field.value ?? ''}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select supply" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectItem value="totalSupply">totalSupply</SelectItem>
+                <SelectItem value="circulatingSupply">
+                  circulatingSupply
+                </SelectItem>
+                <SelectItem value="zero">zero</SelectItem>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="metadata.tvs.excludeFromTotal"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center gap-2 space-y-0">
+            <FormControl>
+              <Checkbox
+                checked={field.value ?? false}
+                onCheckedChange={(checked) => {
+                  field.onChange(checked === true)
+                }}
+              />
+            </FormControl>
+            <FormLabel className="font-normal text-sm">
+              Exclude from total
+            </FormLabel>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <FormLabel>Bridged Using</FormLabel>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              appendBridgedUsing({
+                name: '',
+                slug: undefined,
+              })
+            }
+          >
+            <PlusIcon className="size-4" />
+          </Button>
+        </div>
+        {bridgedUsingFields.map((field, index) => (
+          <Card key={field.id} className="relative overflow-hidden">
+            <CardActionButtons>
+              <CardActionButton onClick={() => removeBridgedUsing(index)}>
+                <TrashIcon className="size-4" />
+              </CardActionButton>
+            </CardActionButtons>
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name={`metadata.tvs.bridgedUsing.${index}.name`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Bridge name" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`metadata.tvs.bridgedUsing.${index}.slug`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Slug (optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Bridge slug"
+                        value={field.value ?? ''}
+                        onChange={(e) => {
+                          const value = e.target.value
+                          field.onChange(value === '' ? undefined : value)
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
+  )
+}

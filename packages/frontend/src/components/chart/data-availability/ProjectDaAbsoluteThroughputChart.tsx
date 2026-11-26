@@ -27,7 +27,6 @@ export type ProjectChartDataWithConfiguredThroughput = [
   number,
   number | null,
   number | null,
-  number | null,
 ]
 interface Props {
   dataWithConfiguredThroughputs:
@@ -45,9 +44,7 @@ interface Props {
   disableLegendOnboarding?: boolean
 }
 
-const hiddenDataKeys = ['projectMax'] as const
-
-type SeriesKey = 'project' | 'projectTarget' | 'projectMax'
+type SeriesKey = 'project' | 'projectTarget'
 type ChartRow = { timestamp: number } & Record<SeriesKey, number | null>
 
 export function ProjectDaAbsoluteThroughputChart({
@@ -66,10 +63,7 @@ export function ProjectDaAbsoluteThroughputChart({
     [project.id],
   )
 
-  const { dataKeys, toggleDataKey } = useChartDataKeys(
-    projectChartMeta,
-    hiddenDataKeys,
-  )
+  const { dataKeys, toggleDataKey } = useChartDataKeys(projectChartMeta)
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
       ? Math.max(
@@ -82,16 +76,13 @@ export function ProjectDaAbsoluteThroughputChart({
   const { denominator, unit } = getDaDataParams(max)
 
   const chartData = useMemo(() => {
-    return dataWithConfiguredThroughputs?.map(
-      ([timestamp, value, target, max]) => {
-        return {
-          timestamp,
-          project: value !== null ? value / denominator : null,
-          projectTarget: target !== null ? target / denominator : null,
-          projectMax: max !== null ? max / denominator : null,
-        }
-      },
-    )
+    return dataWithConfiguredThroughputs?.map(([timestamp, value, target]) => {
+      return {
+        timestamp,
+        project: value !== null ? value / denominator : null,
+        projectTarget: target !== null ? target / denominator : null,
+      }
+    })
   }, [dataWithConfiguredThroughputs, denominator])
 
   const series: ChartSeries<SeriesKey, ChartRow>[] = [
@@ -104,13 +95,6 @@ export function ProjectDaAbsoluteThroughputChart({
       stroke: projectChartMeta.projectTarget?.color,
       strokeDasharray:
         projectChartMeta.projectTarget?.indicatorType.strokeDasharray,
-      curve: 'stepAfter',
-    },
-    {
-      key: 'projectMax',
-      stroke: projectChartMeta.projectMax?.color,
-      strokeDasharray:
-        projectChartMeta.projectMax?.indicatorType.strokeDasharray,
       curve: 'stepAfter',
     },
   ]
@@ -182,9 +166,7 @@ function ProjectDaThroughputCustomTooltip({
                   ? formatBytes(entry.value * denominator)
                   : entry.name === 'project'
                     ? 'No data'
-                    : entry.name === 'projectMax'
-                      ? 'No cap'
-                      : formatBytes(0)}
+                    : formatBytes(0)}
               </span>
             </ChartTooltipRow>
           )
@@ -207,11 +189,6 @@ export function getProjectChartMeta(projectId: ProjectId) {
           label: 'Target capacity',
           color: 'var(--chart-ethereum-secondary)',
           indicatorType: { shape: 'line', strokeDasharray: '9 3' },
-        },
-        projectMax: {
-          label: 'Max capacity',
-          color: 'var(--chart-ethereum)',
-          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
     default:

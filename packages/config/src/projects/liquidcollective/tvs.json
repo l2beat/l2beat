@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "liquidcollective",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "liquidcollective-LsETH",
+      "priceId": "liquid-staked-ethereum",
+      "symbol": "LsETH",
+      "name": "Liquid Staked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1678147200
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
