@@ -128,7 +128,7 @@ const megaethTemplate = opStackL2({
   display: {
     name: 'MegaETH',
     warning:
-      'The fault proof system is deployed but is not functional. Since 2026-11-25 the RISC Zero verifier router used by the Kailua games has no active route, so no ZK fault or validity proof can be verified until its owner adds one. Security relies entirely on the Vanguard, the only permitted proposer.',
+      'The fault proof system is deployed but is not functional. The RISC Zero verifier router used by the Kailua games has no active route, so no ZK fault or validity proof can be verified until its owner adds one. Security relies entirely on the Vanguard, the only permitted proposer.',
     slug: 'megaeth',
     description:
       'MegaETH is a real-time blockchain based on the OP Stack architecture and the hybrid Kailua proof system, targeting sub-millisecond latency and over 100,000 transactions per second.',
@@ -298,6 +298,6 @@ export const megaeth: ScalingProject = {
   stateValidation: megaethTemplate.stateValidation && {
     ...megaethTemplate.stateValidation,
     description:
-      'Since 2026-11-25 the RISC Zero verifier router used by the Kailua games has no active route, so the ZK validity and fault proofs described below (`proveValidity`, `proveOutputFault`) revert. A faulty proposal by the Vanguard cannot be eliminated and resolves after the challenge period; only the Guardian can still blacklist it during the finality delay.',
+      'The RISC Zero verifier router used by the Kailua games has no active route, so the ZK validity and fault proofs described below (`proveValidity`, `proveOutputFault`) revert. A faulty proposal by the Vanguard cannot be eliminated and resolves after the challenge period; only the Guardian can still blacklist it during the finality delay.',
   },
 }
