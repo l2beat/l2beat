@@ -297,7 +297,7 @@ export const tacitPay: BaseProject = {
         'Privacy is unconditional: nothing screens users, only the user holds viewing keys, and proofs are made on the device.',
       ],
       missing: [
-        "anon.wei's transactions differ in shape from other apps', so its withdrawals hide among fewer than 50 depositors, and timing and amounts can pair the two ends.",
+        "anon.wei's transactions differ in shape from other apps', so its withdrawals hide among its own deposits and sweeps, from fewer than 1,000 wallets, and timing and amounts can pair the two ends.",
         "Tacit's relay, the default, sees the recipient of every exit with the user's IP.",
       ],
     },
