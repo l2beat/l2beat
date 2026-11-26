@@ -59,10 +59,20 @@ export function Colored({
 }
 
 /** A small (i) that explains the label it follows */
-export function Info({ children }: { children: React.ReactNode }) {
+export function Info({
+  about,
+  children,
+}: {
+  /** What it explains, for screen readers: the icon has no text */
+  about: string
+  children: React.ReactNode
+}) {
   return (
     <Tooltip>
-      <TooltipTrigger className="ml-1.5 inline-flex align-[-1px]">
+      <TooltipTrigger
+        aria-label={`About ${about}`}
+        className="ml-1.5 inline-flex align-[-1px]"
+      >
         <InfoIcon className="size-3 fill-link" />
       </TooltipTrigger>
       <TooltipContent className="max-w-64 font-normal text-xs normal-case tracking-normal">

@@ -57,7 +57,7 @@ export function GasFeesOvertipping({
       label={
         <>
           Overtipping
-          <Info>
+          <Info about="overtipping">
             Ordinary transactions, {formatPeriod(payers.period)}. Ordinary means
             a tip under 2.5 gwei. Higher tips buy a place near the front of the
             block, which our estimated fast tip doesn’t aim for.
@@ -144,7 +144,7 @@ export function GasFeesTipPayers({
           {[...TIP_BANDS].reverse().map((band) => (
             <span key={band.key} className="flex items-center gap-1.5">
               <KeyItem color={band.color}>{band.label}</KeyItem>
-              <span className="ml-auto text-secondary tabular-nums">
+              <span className="ml-auto tabular-nums">
                 {percent(payers.txShares[band.key])} of txs
               </span>
               <b className="w-24 text-right tabular-nums">

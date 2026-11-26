@@ -35,6 +35,8 @@ describe(buildGasFeesSummary.name, () => {
     )
     expect(lacking.rows[1]?.erc20).toEqual(5)
     expect(lacking.rows[1]?.timesCheaper?.erc20).toEqual(10)
+    // Ethereum on day 1 alone, where base cost 1
+    expect(lacking.rows[1]?.ethereumSameDays?.erc20).toEqual(10)
   })
 
   it('has no cost for a chain without transactions, and lists one without data', () => {

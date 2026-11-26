@@ -20,10 +20,10 @@ export function getCostAxis(
   rows: GasFeesSummaryRow[],
   action: GasFeesPeriodMetric,
 ): CostAxis {
-  const logs = rows.flatMap((row) => {
-    const cost = row[action]
-    return cost !== null && cost > 0 ? [Math.log10(cost)] : []
-  })
+  // The references too, so none is drawn at the axis end for a cost beyond it
+  const logs = rows
+    .flatMap((row) => [row[action], row.ethereumSameDays?.[action]])
+    .flatMap((cost) => (cost ? [Math.log10(cost)] : []))
   let lo = logs.length > 0 ? Math.floor(Math.min(...logs)) : -4
   let hi = logs.length > 0 ? Math.ceil(Math.max(...logs)) : 0
   // One cost, on a power of ten
@@ -37,11 +37,8 @@ export function getCostAxis(
     ticks.push({ exponent: e, at: (e - lo) / (hi - lo) })
   }
   const ethereumCost = rows.find((row) => row.id === 'ethereum')?.[action]
-  const sameDaysCost = (row: GasFeesSummaryRow) => {
-    const cost = row[action]
-    const times = row.timesCheaper?.[action]
-    return cost && times ? cost * times : undefined
-  }
+  const sameDaysCost = (row: GasFeesSummaryRow) =>
+    row.ethereumSameDays?.[action] || undefined
   return {
     ticks,
     at,

@@ -34,9 +34,9 @@ export function GasFeesPriceOfSpeed({
         <Label>
           Price of speed{DOT_SEPARATOR}
           {formatPeriodDays(speed.period)}
-          <Info>
-            Seconds until you can be 99% sure you’re in, against the cost of an
-            ERC-20 transfer.
+          <Info about="the price of speed">
+            Seconds until you can be 99% sure you’re in, against what the tip
+            adds to the cost of an ERC-20 transfer.
           </Info>
         </Label>
         {versus && (
@@ -72,7 +72,8 @@ function Sooner({ from, to }: { from: number; to: number }) {
   if (to >= from) {
     return (
       <>
-        <b className="text-primary">no sooner</b>: {from}s either way
+        <b className="text-primary">no sooner</b>:{' '}
+        {to === from ? `${from}s either way` : `${from}s against ${to}s`}
       </>
     )
   }
@@ -144,7 +145,7 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
       </div>
       <div className="pb-5 pl-8">
         <div
-          className="relative h-64 touch-none md:h-[340px]"
+          className="relative h-64 touch-pan-y md:h-[340px]"
           onPointerMove={onMove}
           onPointerLeave={() => setHovered(undefined)}
           role="img"
@@ -230,7 +231,7 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
           </div>
           {/* A thin tip range can sit minutes off the line: hovering still reads it out */}
           {speed.dots
-            .filter((dot) => dot.seconds <= yMax)
+            .filter((dot) => dot.seconds >= yMin && dot.seconds <= yMax)
             .map((dot) => (
               <span
                 key={dot.fromGwei}
@@ -296,7 +297,7 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
         </div>
       </div>
       <span className="text-center text-2xs text-secondary">
-        Cost of an ERC-20 transfer
+        What the tip adds to an ERC-20 transfer
       </span>
     </div>
   )
