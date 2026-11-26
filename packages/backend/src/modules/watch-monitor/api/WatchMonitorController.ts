@@ -381,23 +381,13 @@ export class WatchMonitorController {
         : undefined
     // Until the next run, a baseline committed after the stored snapshot
     // would diff backwards: its new values would read as removed.
-    if (
+    const baselineIsNewer =
       publishableCommitted !== undefined &&
       publicRecord.timestamp !== null &&
       publishableCommitted.timestamp > publicRecord.timestamp
-    ) {
-      return {
-        location,
-        status: 'awaiting-refresh',
-        record: publicRecord,
-        pending: undefined,
-      }
-    }
-    const pending = computePendingWatchDiff(
-      location,
-      publicRecord,
-      publishableCommitted,
-    )
+    const pending = baselineIsNewer
+      ? undefined
+      : computePendingWatchDiff(location, publicRecord, publishableCommitted)
     // A failed Discord delivery leaves the observation fresh.
     const sourceFailed =
       record.lastError !== null &&
@@ -408,6 +398,14 @@ export class WatchMonitorController {
         status: publicRecord.timestamp === null ? 'failed' : 'stale',
         record: publicRecord,
         pending,
+      }
+    }
+    if (baselineIsNewer) {
+      return {
+        location,
+        status: 'awaiting-refresh',
+        record: publicRecord,
+        pending: undefined,
       }
     }
     if (publicRecord.timestamp === null) {

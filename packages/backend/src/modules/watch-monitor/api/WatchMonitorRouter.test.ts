@@ -245,7 +245,16 @@ describe(createWatchMonitorRouter.name, () => {
             values: { version: '2' },
           }
         }
-        if (name === 'quiet' || name === 'stale-watch') {
+        // Newer than the stored snapshot, and the source is failing: the
+        // failure must still show.
+        if (name === 'stale-watch') {
+          return {
+            timestamp: 1_700_000_001,
+            configHash: hashOf(name),
+            values: { version: '2' },
+          }
+        }
+        if (name === 'quiet') {
           return {
             timestamp: 1,
             configHash: hashOf(name),
