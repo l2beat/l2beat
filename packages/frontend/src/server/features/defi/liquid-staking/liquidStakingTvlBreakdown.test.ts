@@ -101,6 +101,47 @@ describe(getTvlChanges.name, () => {
     expect(changes.supply).toEqual(undefined)
   })
 
+  it('drops the supply change on a historical range whose final day has no supply', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 45, 105),
+      day(n(2), { lido: 8 }, 50, null),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, 120)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(2))
+    expect(changes.supply).toEqual(undefined)
+  })
+
+  it('keeps the supply change on a historical range even when the server latest day has no supply', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, 125),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, null)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(1))
+    expect(changes.supply).toEqual({
+      value: 0.25,
+      eth: 25,
+      since: n(0),
+      until: n(1),
+    })
+  })
+
+  it('ends the supply change on the same day as the stake change on a historical range', () => {
+    const days = [
+      day(n(0), { lido: 8 }, 40, 100),
+      day(n(1), { lido: 8 }, 50, 110),
+      day(n(2), { lido: 8 }, null, 120),
+    ]
+    const latest = day(n(10), { lido: 8 }, 60, 130)
+    const changes = getTvlChanges(days, getLatestComplete([latest])!)
+    expect(changes.stake?.until).toEqual(n(1))
+    expect(changes.supply?.until).toEqual(n(1))
+    expect(changes.supply?.eth).toEqual(10)
+  })
+
   it('has no change from a single day', () => {
     const days = [day(n(0), { lido: 8 }, 40, 100)]
     expect(getTvlChanges(days, getLatestComplete(days)!)).toEqual({

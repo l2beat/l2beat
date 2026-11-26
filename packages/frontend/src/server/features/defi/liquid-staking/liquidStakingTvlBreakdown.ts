@@ -85,11 +85,14 @@ export function getLatestComplete(
 
 export interface TvlChanges {
   stake?: EthChange
-  /** None when `latest` has no supply. */
+  /** None when the period's end day has no supply. */
   supply?: EthChange
 }
 
-/** The changes over the chart's period, up to `latest`, so both end that day. */
+/**
+ * The changes over the chart's period, never past `latest`, ending on the
+ * period's last day with stake so both end the same day.
+ */
 export function getTvlChanges(
   breakdowns: TvlBreakdown[],
   latest: CompleteTvlBreakdown,
@@ -97,11 +100,23 @@ export function getTvlChanges(
   const upToLatest = breakdowns.filter(
     (breakdown) => breakdown.timestamp <= latest.timestamp,
   )
+  const end = upToLatest.findLast(
+    (breakdown) => breakdown.staked !== null && breakdown.staked > 0,
+  )
+  if (!end) {
+    return {
+      stake: undefined,
+      supply: getChange(upToLatest, (b) => b.supply),
+    }
+  }
+  const period = upToLatest.filter(
+    (breakdown) => breakdown.timestamp <= end.timestamp,
+  )
   return {
-    stake: getChange(upToLatest, (b) => b.staked),
+    stake: getChange(period, (b) => b.staked),
     supply:
-      latest.supply !== null
-        ? getChange(upToLatest, (b) => b.supply)
+      end.supply !== null && end.supply > 0
+        ? getChange(period, (b) => b.supply)
         : undefined,
   }
 }
