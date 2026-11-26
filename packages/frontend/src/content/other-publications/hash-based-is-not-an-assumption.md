@@ -224,7 +224,7 @@ On this same $f$:
 
 ## Scope of the proof
 
-This counterexample does *not* mean Winternitz with Keccak-256 or SHA-256 is broken. It proves a **logical gap**: even *one-wayness, second-preimage resistance, and collision resistance together* do not imply *"Winternitz($f$) is secure."* Iterated chain values $f^d(\text{random})$ must also stay hard to invert.
+The counterexample proves a **logical gap**: even *one-wayness, second-preimage resistance, and collision resistance together* do not imply *"Winternitz($f$) is secure."* Iterated chain values $f^d(\text{random})$ must also stay hard to invert.
 
 Standard-model proofs for Winternitz and [WOTS+](https://huelsing.net/wordpress/wp-content/uploads/2013/05/wotsspr.pdf) get there by assuming **undetectability** (or pseudorandomness), meaning $f(\text{random})$ is computationally indistinguishable from uniform random so iterated outputs look random too. That condition is sufficient, not strictly required: a one-way permutation padded with a fixed `0` bit fails undetectability, yet still prevents forging a new Winternitz message. Either way, every known proof assumes something outside collision and preimage resistance, or models the hash in the [Random Oracle Model](https://en.wikipedia.org/wiki/Random_oracle).
 
