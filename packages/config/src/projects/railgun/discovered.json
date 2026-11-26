@@ -784,23 +784,12 @@
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
         "proposalCount": 34,
         "QUORUM": "2000000000000000000000000",
-        "recentProposals": [
-          {
-            "executed": false,
-            "proposer": "eth:0x3926d7A58c82e2eFF77Ae307447d3d631f9AAce0",
-            "proposalDocument": "ipfs://neo-drain-railgun-relay-2026",
-            "publishTime": 1795599503,
-            "voteCallTime": 0,
-            "sponsorship": 0,
-            "yayVotes": 0,
-            "nayVotes": 0,
-            "sponsorInterval": 1966,
-            "votingInterval": 0
-          }
-        ],
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
         "STAKING_CONTRACT": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
+        "voteCalls": [
+          0, 1, 3, 4, 5, 7, 10, 13, 14, 15, 16, 17, 21, 24, 25, 26, 27
+        ],
         "VOTING_NAY_END_OFFSET": 518400,
         "VOTING_START_OFFSET": 172800,
         "VOTING_YAY_END_OFFSET": 432000
@@ -809,8 +798,8 @@
         "proposalCount": {
           "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed."
         },
-        "recentProposals": {
-          "description": "Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed."
+        "voteCalls": {
+          "description": "Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD."
         },
         "DELEGATOR_CONTRACT": {
           "description": "Delegator contract that executes successful proposal actions."
@@ -1811,7 +1800,7 @@
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0x4221ed0e8307ee2ffd52d7bd83b3f6805d2cd431814543ed36f5dc42b7d77988",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
-    "railgun/Voting": "0x685ff8bfc428be49aea11ebb895d0fe3a034dba5442d99c12b7ab9876aae418f"
+    "railgun/Voting": "0x2c9784ea79e56e7d6c04ef354eecf5dbaff706a0080648be0967770bf5fa9368"
   },
   "usedBlockNumbers": { "ethereum": 26499018 },
   "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",

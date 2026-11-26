@@ -1,15 +1,15 @@
-Generated with discovered.json: 0xd074c9e12684d5f7f57e12e5765c85844e4c7077
+Generated with discovered.json: 0xf52a1dc6fd21863a8a62fe8b9cdb650001e542c1
 
-# Diff at Thu, 26 Nov 2026 12:06:42 GMT:
+# Diff at Thu, 26 Nov 2026 12:52:25 GMT:
 
 - id: bda5c5ea
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@912cb81998ff20b8298548771e7587b7b99263a6 block: 1795691822
+- comparing to: main@51a89338cb38dec6fd744e915f723cd06823f851 block: 1795691822
 - current timestamp: 1795691822
 
 ## Description
 
-The new `recentProposals` field tracks sponsorship and vote calls of proposals from id 33 on. It reads proposal 33 unsponsored, with no vote called.
+The new `voteCalls` field lists the proposals called to a vote, so a proposal that reaches the sponsor threshold shows up before it can execute. Proposal 33 is not among them.
 
 ## Config/verification related changes
 
@@ -20,11 +20,11 @@ discovery. Values are for block 1795691822 (main branch discovery), not current.
 ```diff
     contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
     +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
-+++ description: Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed.
-      values.recentProposals:
-+        [{"executed":false,"proposer":"eth:0x3926d7A58c82e2eFF77Ae307447d3d631f9AAce0","proposalDocument":"ipfs://neo-drain-railgun-relay-2026","publishTime":1795599503,"voteCallTime":0,"sponsorship":0,"yayVotes":0,"nayVotes":0,"sponsorInterval":1966,"votingInterval":0}]
-      fieldMeta.recentProposals:
-+        {"description":"Proposals from id 33 on. Every earlier proposal is executed or past its sponsor window. A proposal can be called to a vote once its sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD, which sets voteCallTime. A published proposal changes nothing until it is executed."}
++++ description: Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD.
+      values.voteCalls:
++        [0,1,3,4,5,7,10,13,14,15,16,17,21,24,25,26,27]
+      fieldMeta.voteCalls:
++        {"description":"Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD."}
     }
 ```
 
