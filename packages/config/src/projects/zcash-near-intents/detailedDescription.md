@@ -16,7 +16,7 @@ The ratings cover Vizor's Linux desktop release 0.0.66 with Tor and Private quer
 
 ### Network
 
-Private queries, marked experimental, send the account's transparent lookups and transaction fetches to Valar Group's private information retrieval (PIR) servers. Lightwalletd serves blocks and broadcasts. By default Vizor picks one from a fixed list of public servers. With Tor on, connections go over Tor, each PIR request and 1Click call on its own circuit. The exception is a block download of 256 MiB or more, about seven months of chain, which runs directly and shows lightwalletd the user's IP.
+Private queries, marked experimental, send the account's transparent lookups and transaction fetches to Valar Group's private information retrieval (PIR) servers. Lightwalletd serves blocks and broadcasts. By default Vizor picks one from a fixed list of public servers. With Tor on, connections go over Tor, each PIR request and 1Click call on its own circuit. The exception is a sync with 256 MiB or more of blocks to fetch, about seven months of chain. It downloads them directly and shows lightwalletd the user's IP.
 
 ### Custody
 

@@ -80,6 +80,36 @@
       "description": "Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
+    },
+    "allowlisters": {
+      "description": "Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": ["account", "deadline"],
+        "dedupBy": "account",
+        "add": { "event": "AllowlisterAdded" },
+        "remove": { "event": "AllowlisterRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add callers to the computation allowlist until the deadline of the grant."
+        }
+      ]
+    },
+    "allowlist": {
+      "description": "Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "AllowlistAdded" },
+        "remove": { "event": "AllowlistRemoved" },
+        "ignoreRelative": true
+      }
     }
   }
 }

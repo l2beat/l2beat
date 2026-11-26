@@ -861,7 +861,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "destinationChainIds": [],
+        "destinationChainIds": {},
         "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
         "fallbackPlaintexts": [],
         "getACLAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
@@ -872,7 +872,7 @@
         "MAX_HANDLES": 32,
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "peers": [],
+        "peers": {},
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
@@ -883,11 +883,11 @@
         },
         "peers": {
           "severity": "HIGH",
-          "description": "Peer bridges set per LayerZero endpoint id. Without a peer the bridge can neither send to nor receive from that chain.",
+          "description": "Current peer bridge per LayerZero endpoint id. Without a peer the bridge can neither send to nor receive from that chain.",
           "type": "RISK_PARAMETER"
         },
         "destinationChainIds": {
-          "description": "Chain id registered per destination endpoint id.",
+          "description": "Current chain id registered per destination endpoint id.",
           "type": "RISK_PARAMETER"
         },
         "fallbackPlaintexts": {
@@ -989,6 +989,8 @@
         "$upgradeCount": 5,
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "allowlist": [],
+        "allowlisters": [],
         "blockHCUWhitelist": [],
         "getBlockMeter": { "blockNumber": 26498816, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
@@ -1039,6 +1041,16 @@
         "isAllowlistActivated": {
           "severity": "HIGH",
           "description": "Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.",
+          "type": "RISK_PARAMETER"
+        },
+        "allowlisters": {
+          "severity": "HIGH",
+          "description": "Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.",
+          "type": "PERMISSION"
+        },
+        "allowlist": {
+          "severity": "HIGH",
+          "description": "Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.",
           "type": "RISK_PARAMETER"
         }
       },
@@ -5930,6 +5942,36 @@
             "softwareVersion": "v0.14.2"
           }
         ],
+        "definedKmsContextSigners": [
+          "eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
+          "eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
+          "eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
+          "eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
+          "eth:0x41b19EB4585450db79ac03ba9503106EC7895905",
+          "eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
+          "eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
+          "eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
+          "eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
+          "eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
+          "eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
+          "eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
+          "eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
+        ],
+        "definedKmsContextTxSenders": [
+          "eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
+          "eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
+          "eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
+          "eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
+          "eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
+          "eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
+          "eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
+          "eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
+          "eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
+          "eth:0xC105B5933446658D226582f7A112F49a70b54364",
+          "eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
+          "eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
+          "eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"
+        ],
         "destroyedKmsContexts": [],
         "getCurrentKmsContextAndEpoch": {
           "contextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
@@ -6023,8 +6065,17 @@
         },
         "mirroredKmsContexts": {
           "severity": "HIGH",
-          "description": "KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee.",
+          "description": "KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.",
           "type": "RISK_PARAMETER"
+        },
+        "definedKmsContextSigners": {
+          "severity": "HIGH",
+          "description": "KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.",
+          "type": "PERMISSION"
+        },
+        "definedKmsContextTxSenders": {
+          "description": "KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.",
+          "type": "PERMISSION"
         },
         "kmsContextConfirmations": {
           "description": "Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.",
@@ -14898,7 +14949,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zama/CiphertextCommits_v0_5_0": "0xbfbbe0b15495b3c42c17e7c8e561c7775e98fc63d8e4ac7464a7d323289cf450",
-    "zama/ConfidentialBridge": "0x710f32b34a888f4888373d7036cbd72a700865bdc15ebb9a12cbf1c69df20e4c",
+    "zama/ConfidentialBridge": "0xf6174b059517f5f1335434828cdf9d4d34a4500a6943c9c281301023193d9683",
     "zama/ConfidentialSwap": "0x8f26d076138fef93e7565b7d6f209dfd737cb7bbcdbe9f60a4a91132fca24f9c",
     "zama/ConfidentialTokenWrappersRegistry": "0xac7a7734ed9250117928dfe3b5bdaa390094970c3f558cedb2517606460b3e4f",
     "zama/ConfidentialWrapper": "0x57e01b7e4c9067638a4f67dcf88aab11f4877fb81dec977bfd59b118f02d444e",
@@ -14916,12 +14967,12 @@
     "zama/VaultBatcherConfidentialRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "zama/ZamaACL_v0_5_0": "0x8a956c01dcc8a5c5a46fe942d15f429d57249be27d6d6f56f385973b9cdb6898",
     "zama/ZamaFHEVMExecutor_v0_6_0": "0x19e0e0c6abc98a3d3155c52e9fe91114df722bb21026ae0222ca38c1262f48b1",
-    "zama/ZamaHCULimit_v0_5_0": "0x639fcd346feba05bce4eb91ec6af7c3c7b1f3e05cffb3066a424f41e350e1e4d",
+    "zama/ZamaHCULimit_v0_5_0": "0xea8b61b395aab3123943e1ab1bdc7503f8c6a4a737cb4d8d94310b599fb7bfc0",
     "zama/ZamaInputVerifier": "0x43b46c0d8e79fddc961f34a1100e3586d9bd9d8ed3f8f0a482edd52f5cd3ca8f",
     "zama/ZamaKMSGeneration_v0_2_0": "0x52f6b327e755c6664ffb2dde79d1d445eaeaead3c3ea8eafa3fce0571d7f16b2",
     "zama/ZamaKMSVerifier_v0_4_0": "0xb6ee539513c4d62eb8be5efd97fe0fa54b029119846f926be2af971a64ff1da3",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f",
-    "zama/ZamaProtocolConfig_v0_2_0": "0xaac80116ecc455db4b5bd0083a96e9ac6a3b9c06b040d840b22875ecae23d185"
+    "zama/ZamaProtocolConfig_v0_2_0": "0x7f8a1ee090861c2371d0205a652994f5d7be8d637a9a323e8e3a59a2238ef4c5"
   },
   "usedBlockNumbers": { "ethereum": 26498816, "zama": 4536006 },
   "permissionsConfigHash": "0xf9c000bc6c048006daa6ae84a82a550d81176e8cdd43f47c4f29caef94f2d1d1",

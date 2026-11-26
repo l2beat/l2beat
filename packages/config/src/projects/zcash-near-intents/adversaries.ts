@@ -208,7 +208,7 @@ export const zcashNearIntentsAdversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Set up',
-      text: `Turn on Tor and Private queries in Vizor before its first sync. When you restore a wallet older than seven months, run that sync through an ${adviceLink('IP-hiding route', 'routes')}.`,
+      text: `Turn on Tor and Private queries in Vizor before its first sync. Run any sync that catches up more than seven months of blocks, such as a restore, through an ${adviceLink('IP-hiding route', 'routes')}.`,
       against: ['networkObserver'],
     },
     {

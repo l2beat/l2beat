@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf159abfb6d83911c7f2f78563059cac27e58454c
+Generated with discovered.json: 0x9a1672987221c0dab8978ce198970bdda1e0070e
 
-# Diff at Thu, 26 Nov 2026 10:38:07 GMT:
+# Diff at Thu, 26 Nov 2026 12:05:46 GMT:
 
 - id: cc1c9768
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@0e6984f6c8df82c5ddf570afe05e751c33796300 block: 1794986224
+- comparing to: main@912cb81998ff20b8298548771e7587b7b99263a6 block: 1794986224
 - current timestamp: 1795689399
 
 ## Description
@@ -19,7 +19,7 @@ Protocol upgrade of 2026-11-25, on Ethereum and the Gateway:
 - Decryption v0.6.0 on the Gateway: adds a unified user decryption request whose signature the contract does not check. [diff](https://disco.l2beat.com/diff/zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8/zama:0x00546fC6d6467704B749760D9bDc1b24881cbbF9)
 - ConfidentialBridge v0.1.0 is new: a LayerZero application for ciphertext handles, owned by the ACL owner, with no peer set.
 
-Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026-11-23. ZamaGovMultisigB and ZamaDeFiMultisig replaced their six members with the same six new addresses. CiphertextCommits and MultichainACL stay deployed on the Gateway and left discovery because the new Decryption template no longer references them.
+Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026-11-23. ZamaGovMultisigB and ZamaDeFiMultisig replaced their six members with the same six new addresses.
 
 ## Watched changes
 
@@ -298,12 +298,24 @@ Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026
       values.getVersion:
 -        "HCULimit v0.3.0"
 +        "HCULimit v0.5.0"
++++ description: Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.
++++ severity: HIGH
+      values.allowlist:
++        []
++++ description: Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.
++++ severity: HIGH
+      values.allowlisters:
++        []
 +++ description: Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.
 +++ severity: HIGH
       values.isAllowlistActivated:
 +        false
       fieldMeta.isAllowlistActivated:
 +        {"severity":"HIGH","description":"Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.","type":"RISK_PARAMETER"}
+      fieldMeta.allowlisters:
++        {"severity":"HIGH","description":"Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.","type":"PERMISSION"}
+      fieldMeta.allowlist:
++        {"severity":"HIGH","description":"Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.","type":"RISK_PARAMETER"}
       implementationNames.eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837:
 -        "HCULimit"
       implementationNames.eth:0xE1d75FC9dA3a7d11a32a4FE2Ac94fBFD8335d8B9:
@@ -820,6 +832,13 @@ Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026
 +++ severity: HIGH
       values.definedKmsContexts:
 +        [{"contextId":"3166189940082864718613269121331309980362851143201109172953918312716374638593","previousContextId":"3166189940082864718613269121331309980362851143201109172953918312716374638592","thresholds":[7,9,7,4],"softwareVersion":"v0.14.2"}]
++++ description: KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.
++++ severity: HIGH
+      values.definedKmsContextSigners:
++        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
++++ description: KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.
+      values.definedKmsContextTxSenders:
++        ["eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890","eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB","eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1","eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236","eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a","eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D","eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04","eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0","eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340","eth:0xC105B5933446658D226582f7A112F49a70b54364","eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E","eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D","eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"]
       values.getCurrentKmsContextAndEpoch:
 +        {"contextId":"3166189940082864718613269121331309980362851143201109172953918312716374638593","epochId":"3618502788666131106986593281521497120414687020801267626233049500247285301249"}
       values.getCurrentKmsContextIdCounter:
@@ -827,7 +846,7 @@ Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026
 +++ description: Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.
       values.kmsContextConfirmations:
 +        []
-+++ description: KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee.
++++ description: KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.
 +++ severity: HIGH
       values.mirroredKmsContexts:
 +        []
@@ -843,7 +862,11 @@ Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026
       fieldMeta.definedKmsContexts:
 +        {"severity":"HIGH","description":"KMS contexts the ACL owner defined through defineNewKmsContextAndEpoch, with the context they replace, their thresholds and software version. A defined context is pending until its nodes and the previous committee's quorum confirm it.","type":"RISK_PARAMETER"}
       fieldMeta.mirroredKmsContexts:
-+        {"severity":"HIGH","description":"KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee.","type":"RISK_PARAMETER"}
++        {"severity":"HIGH","description":"KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.","type":"RISK_PARAMETER"}
+      fieldMeta.definedKmsContextSigners:
++        {"severity":"HIGH","description":"KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.","type":"PERMISSION"}
+      fieldMeta.definedKmsContextTxSenders:
++        {"description":"KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.","type":"PERMISSION"}
       fieldMeta.kmsContextConfirmations:
 +        {"description":"Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.","type":"RISK_PARAMETER"}
       implementationNames.eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7:

@@ -104,14 +104,57 @@
       }
     },
     "mirroredKmsContexts": {
-      "description": "KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee.",
+      "description": "KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER",
       "handler": {
         "type": "event",
-        "select": ["contextId", "epochId", "thresholds", "softwareVersion"],
+        "select": [
+          "contextId",
+          "epochId",
+          "kmsNodeParams",
+          "thresholds",
+          "softwareVersion"
+        ],
         "add": { "event": "MirrorKmsContextAndEpoch" }
       }
+    },
+    "definedKmsContextSigners": {
+      "description": "KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "kmsNodeParams",
+        "flatten": true,
+        "add": { "event": "NewKmsContext" }
+      },
+      "edit": ["map", ["get", 1]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsSigners",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+        }
+      ]
+    },
+    "definedKmsContextTxSenders": {
+      "description": "KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "kmsNodeParams",
+        "flatten": true,
+        "add": { "event": "NewKmsContext" }
+      },
+      "edit": ["map", ["get", 0]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".currentKmsTxSenders",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration."
+        }
+      ]
     },
     "kmsContextConfirmations": {
       "description": "Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.",

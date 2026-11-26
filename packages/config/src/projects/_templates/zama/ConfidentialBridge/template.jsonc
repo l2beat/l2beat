@@ -18,22 +18,24 @@
       ]
     },
     "peers": {
-      "description": "Peer bridges set per LayerZero endpoint id. Without a peer the bridge can neither send to nor receive from that chain.",
+      "description": "Current peer bridge per LayerZero endpoint id. Without a peer the bridge can neither send to nor receive from that chain.",
       "severity": "HIGH",
       "type": "RISK_PARAMETER",
       "handler": {
         "type": "event",
-        "select": ["eid", "peer"],
-        "add": { "event": "PeerSet" }
+        "select": "peer",
+        "set": { "event": "PeerSet" },
+        "groupBy": "eid"
       }
     },
     "destinationChainIds": {
-      "description": "Chain id registered per destination endpoint id.",
+      "description": "Current chain id registered per destination endpoint id.",
       "type": "RISK_PARAMETER",
       "handler": {
         "type": "event",
-        "select": ["dstEid", "dstChainId"],
-        "add": { "event": "DstChainIdSet" }
+        "select": "dstChainId",
+        "set": { "event": "DstChainIdSet" },
+        "groupBy": "dstEid"
       }
     },
     "fallbackPlaintexts": {

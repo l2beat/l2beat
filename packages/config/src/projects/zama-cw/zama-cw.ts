@@ -374,7 +374,7 @@ export const zamaCw: BaseProject = {
       since: '2026-10-09',
       delivery: { type: 'hosted' },
       // Vercel deployment id of the served app, the data-dpl-id of its served HTML.
-      build: 'dpl_7uVCvvp4gTruFRLWNRrUNBLHMbLk',
+      build: 'dpl_J348Y8oRddmUswJ1jstn91JMNeLe',
       checked: '2026-11-26',
       checkedApps: [
         {
