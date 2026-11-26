@@ -86,7 +86,7 @@ export const sweth: BaseProject = {
   slug: 'sweth',
   name: 'Swell swETH',
   shortName: 'swETH',
-  addedAt: UnixTime(0),
+  addedAt: UnixTime(1795564800), // 2026-11-25
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: paused('coreMethodsPaused')
