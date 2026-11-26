@@ -48,6 +48,19 @@ const dailyMax = `${Math.round(
 )}%`
 const operatorFee = percent('swETH', 'nodeOperatorRewardPercentage')
 const treasuryFee = percent('swETH', 'swellTreasuryRewardPercentage')
+// Fee shares are sized on the reported rewards and supply, so one report can
+// mint up to f / (1 - f) of a reported supply that may exceed the real one.
+const feeShare =
+  (number('swETH', 'nodeOperatorRewardPercentage') +
+    number('swETH', 'swellTreasuryRewardPercentage')) /
+  1e18
+const feeMintCap = `${Number.parseFloat(
+  (
+    (feeShare / (1 - feeShare)) *
+    (1 + number('swETH', 'maximumRepriceswETHDifferencePercentage') / 1e18) *
+    100
+  ).toFixed(1),
+)}%`
 const timelockDelay = duration(number('Timelock', 'delay'))
 const adminSafe = safe('Swell Multisig')
 const pauserSafe = safe('Swell Pauser Multisig')
@@ -186,7 +199,7 @@ export const sweth: BaseProject = {
       type: 'not-tracked',
       name: 'LayerZero',
       icon: 'layerzero',
-      description: `${swETH} on other chains is a LayerZero OFT backed by ${swETH} locked in the Ethereum OFT contract. A compromise of LayerZero or of the OFT owner, Swell's multisig, could release the locked tokens.`,
+      description: `${swETH} bridged through the Ethereum OFT contract is backed by ${swETH} locked in it. A compromise of LayerZero or of the OFT owner, Swell's multisig, could release the locked tokens.`,
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
@@ -197,6 +210,10 @@ export const sweth: BaseProject = {
         category: 'Funds can be stolen if',
         text: `the timelock admin upgrades a contract or repoints the registry addresses, after ${timelockDelay}.`,
         isCritical: true,
+      },
+      {
+        category: 'Funds can be stolen if',
+        text: `the bot role over-reports rewards, minting unbacked fee shares worth up to ${feeMintCap} of supply per report, which the reprice bound does not limit.`,
       },
       {
         category: 'Funds can lose value if',
