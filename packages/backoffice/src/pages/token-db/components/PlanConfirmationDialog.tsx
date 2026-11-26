@@ -1,0 +1,382 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
+import type { Command, Plan } from '@l2beat/token-backend'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
+import { Link, useNavigate } from 'react-router'
+import { toast } from 'sonner'
+import { Button } from '~/components/core/Button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/Tooltip'
+import { ButtonWithSpinner } from '~/pages/token-db/components/ButtonWithSpinner'
+import { Diff } from '~/pages/token-db/components/Diff'
+import { useInvalidateAbstractTokenQueries } from '~/pages/token-db/hooks/useInvalidateAbstractTokenQueries'
+import { diff } from '~/pages/token-db/utils/getDiff'
+import { extractAbstractTokenId } from '~/pages/token-db/utils/getDisplayId'
+import { useTokenDbTrpc } from '~/react-query/trpc'
+
+export function PlanConfirmationDialog({
+  plan,
+  setPlan,
+  onSuccess,
+  note,
+}: {
+  plan: Plan | undefined
+  setPlan: (plan: Plan | undefined) => void
+  onSuccess?: () => void
+  note?: ReactNode
+}) {
+  const trpc = useTokenDbTrpc()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const invalidateAbstractTokenQueries = useInvalidateAbstractTokenQueries()
+
+  function invalidateDeployedTokenQueries() {
+    invalidateAbstractTokenQueries()
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.findByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.checkIfExists.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getByChainAndAddress.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getRelations.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getMintingPlugins.queryFilter(),
+    )
+    // The relations graph takes seconds to lay out and must never redraw
+    // under a user who is looking at it (e.g. right after deleting a
+    // relation from the graph page, which handles the disappearing edge
+    // itself). Mark the query stale without refetching active instances;
+    // the next mount of the graph page fetches fresh data.
+    queryClient.invalidateQueries({
+      ...trpc.deployedTokens.getRelationsGraph.queryFilter(),
+      refetchType: 'none',
+    })
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getRelationsGraphNodeDetails.queryFilter(),
+    )
+    // Refetching active instances would hit the backend for a relation that
+    // may have just been deleted (the graph panel is still mounted at this
+    // point) and the endpoint throws for missing relations. Reopening the
+    // panel refetches, so marking stale is enough.
+    queryClient.invalidateQueries({
+      ...trpc.deployedTokens.getRelationsGraphRelationDetails.queryFilter(),
+      refetchType: 'none',
+    })
+    queryClient.invalidateQueries(trpc.deployedTokens.checks.queryFilter())
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getSuggestionsByCoingeckoId.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getCoingeckoSuggestions.queryFilter(),
+    )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getSuggestionsByPartialTransfers.queryFilter(),
+    )
+  }
+
+  const { mutate: executePlan, isPending } = useMutation(
+    trpc.plan.execute.mutationOptions({
+      onSuccess: (data) => {
+        if (!plan) return
+        if (data.outcome === 'error') {
+          toast.error(data.error)
+          setPlan(undefined)
+          return
+        }
+        onSuccess?.()
+        queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
+        switch (plan.intent.type) {
+          case 'AddAbstractTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/token-db/tokens/${plan.intent.record.id}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateAbstractTokenQueries()
+            break
+          case 'AddDeployedTokenIntent':
+            toast.success(
+              <span>
+                Token added successfully.{' '}
+                <Link
+                  to={`/token-db/tokens/${plan.intent.record.chain}/${plan.intent.record.address}`}
+                  className="underline"
+                >
+                  View token
+                </Link>
+              </span>,
+            )
+            invalidateDeployedTokenQueries()
+            break
+          case 'DeleteAbstractTokenIntent':
+            toast.success('Abstract token deleted successfully')
+            invalidateAbstractTokenQueries()
+            void navigate('/token-db')
+            break
+          case 'MergeAbstractTokenIntent':
+            toast.success('Abstract token merged successfully')
+            invalidateDeployedTokenQueries()
+            void navigate(
+              `/token-db/tokens/${extractAbstractTokenId(plan.intent.targetId)}`,
+            )
+            break
+          case 'DeleteDeployedTokenIntent':
+            toast.success('Deployed token deleted successfully')
+            invalidateDeployedTokenQueries()
+            void navigate('/token-db')
+            break
+          case 'UpdateAbstractTokenIntent':
+            toast.success('Abstract token updated successfully')
+            invalidateAbstractTokenQueries()
+            break
+          case 'UpdateDeployedTokenIntent':
+            toast.success('Deployed token updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'AddTokenRelationIntent':
+            toast.success('Token relation added successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'UpdateTokenRelationIntent':
+            toast.success('Token relation updated successfully')
+            invalidateDeployedTokenQueries()
+            break
+          case 'DeleteTokenRelationIntent':
+            toast.success('Token relation deleted successfully')
+            invalidateDeployedTokenQueries()
+            break
+          default:
+            assertUnreachable(plan.intent)
+        }
+
+        setPlan(undefined)
+      },
+    }),
+  )
+
+  if (!plan) {
+    return null
+  }
+
+  return (
+    <Dialog open={true} onOpenChange={(open) => !open && setPlan(undefined)}>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogDescription asChild>
+            <div>
+              This plan assumes the following actions will be taken:
+              <ul className="list-inside list-decimal pl-4">
+                {plan?.commands.map((command, index) => (
+                  <CommandItem key={index} command={command} />
+                ))}
+              </ul>
+              {note !== undefined && <div className="mt-2">{note}</div>}
+            </div>
+          </DialogDescription>
+          <DialogFooter>
+            <ButtonWithSpinner
+              onClick={() => executePlan(plan)}
+              isLoading={isPending}
+            >
+              Confirm
+            </ButtonWithSpinner>
+            <Button variant="outline" onClick={() => setPlan(undefined)}>
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function CommandItem({ command }: { command: Command }) {
+  switch (command.type) {
+    case 'AddAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.record, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added
+        </li>
+      )
+    case 'AddDeployedTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.record, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added
+        </li>
+      )
+    case 'DeleteAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {/* TODO: Fix this */}
+              {JSON.stringify(command, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    case 'DeleteDeployedTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {/* TODO: Fix this */}
+              {JSON.stringify(command, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    case 'UpdateAbstractTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Abstract token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'UpdateDeployedTokenCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Deployed token
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'AddTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.record, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added
+        </li>
+      )
+    case 'UpdateTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be{' '}
+          <Tooltip>
+            <TooltipTrigger className="underline">updated</TooltipTrigger>
+            <TooltipContent className="p-0">
+              <Diff
+                differences={diff(command.existing, {
+                  ...command.existing,
+                  ...command.update,
+                })}
+              />
+            </TooltipContent>
+          </Tooltip>
+        </li>
+      )
+    case 'DeleteTokenRelationCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Token relation
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted
+        </li>
+      )
+    default:
+      assertUnreachable(command)
+  }
+}

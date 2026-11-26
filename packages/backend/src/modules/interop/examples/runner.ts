@@ -6,11 +6,12 @@ import {
 } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
+  type EVMTransaction,
   type HttpClient,
   MulticallV3Client,
   RpcClientCompat,
 } from '@l2beat/shared'
-import { assert, unique } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, unique } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { toInteropTransaction } from '../dto/interopTransaction'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
@@ -103,14 +104,15 @@ export class ExampleRunner {
 
     for (const txEntry of this.$.example.txs) {
       const rpc = await this.getRpcClient(txEntry.chain)
-      const tx = await rpc.getTransaction(txEntry.tx)
+      const tx = asInProduction(await rpc.getTransaction(txEntry.tx))
       assert(tx.blockNumber)
 
       const block = await rpc.getBlockWithTransactions(tx.blockNumber)
       const logs = await rpc.getLogs(block.number, block.number)
       const txLogs = logs
         .filter((l) => l.transactionHash === tx.hash)
-        .map(logToViemLog)
+        // Checksummed, see asInProduction
+        .map((l) => logToViemLog({ ...l, address: EthereumAddress(l.address) }))
       const newEvents: InteropEvent[] = []
       const fulfilledCreatorEvents: InteropEvent[] = []
 
@@ -343,4 +345,21 @@ function createExampleDb(): Database {
       updateDerivedFulfilled: async () => undefined,
     },
   } as unknown as Database
+}
+
+/**
+ * Checksummed addresses, as InteropEventSyncer reads them from EthRpcClient
+ * in production: IRpcClient gives them lowercase, and some plugins compare
+ * them with ===
+ */
+function asInProduction(tx: EVMTransaction): EVMTransaction {
+  return {
+    ...tx,
+    from: EthereumAddress(tx.from),
+    to: tx.to && EthereumAddress(tx.to),
+    calls: tx.calls?.map((call) => ({
+      ...call,
+      to: call.to && EthereumAddress(call.to),
+    })),
+  }
 }

@@ -1,9 +1,31 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { ChevronDownIcon } from 'lucide-react'
+import { matchPath, useLocation } from 'react-router'
 import { cn } from '~/utils/cn'
 import { type Environment, useEnvironment } from './EnvironmentContext'
 
+const BANNER_CLASS_NAME =
+  'sticky top-0 z-999 flex h-environment-banner w-full items-center justify-center gap-1.5 font-medium font-mono text-sm text-white uppercase leading-none'
+
 export function EnvironmentBanner() {
+  const { pathname } = useLocation()
+  if (matchPath({ path: '/token-db', end: false }, pathname)) {
+    return <TokenDbBanner />
+  }
+  return <EnvironmentSwitcherBanner />
+}
+
+// Token DB pages always talk to the single production Token DB, whatever
+// environment is selected, so the banner must not suggest otherwise.
+function TokenDbBanner() {
+  return (
+    <div className={cn(BANNER_CLASS_NAME, 'bg-environment-production')}>
+      Token DB · Production
+    </div>
+  )
+}
+
+function EnvironmentSwitcherBanner() {
   const { environment, setEnvironment, config, allConfigs } = useEnvironment()
 
   return (
@@ -13,7 +35,8 @@ export function EnvironmentBanner() {
     >
       <SelectPrimitive.Trigger
         className={cn(
-          'group sticky top-0 z-999 flex h-environment-banner w-full items-center justify-center gap-1.5 font-medium font-mono text-sm text-white uppercase leading-none outline-none transition-opacity hover:opacity-90 focus-visible:opacity-90',
+          BANNER_CLASS_NAME,
+          'group outline-none transition-opacity hover:opacity-90 focus-visible:opacity-90',
           config.classNames.dot,
         )}
       >

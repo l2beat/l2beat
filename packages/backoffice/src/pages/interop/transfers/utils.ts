@@ -155,7 +155,7 @@ export function getAddTokenLinkOptions(options: AddTokenLinkOptions): {
   }
 
   return {
-    href: `https://tokens.l2beat.com/tokens/new?${params.toString()}`,
+    href: `/token-db/tokens/new?${params.toString()}`,
     label: options.otherSideAbstractTokenId
       ? 'add (same abstract)'
       : 'add token',

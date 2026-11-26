@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Emporium",
+  "critical": true,
+  "description": "Upgradeable Hinkal external action. It runs a batch of calls with shielded funds, or through a public account's HinkalWallet when that account signed the batch, pays the relayer and returns the resulting token balances to Hinkal.",
+  "fields": {
+    "owner": {
+      "description": "Owner of the Emporium logic. Ownership moves in two steps and cannot be renounced.",
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the helper that computes relayer fees and add addresses allowed to call runAction."
+        }
+      ]
+    },
+    "hinkalHelper": {
+      "description": "Helper used to compute relayer fees, read from the EmporiumStorage namespace.",
+      "handler": {
+        "type": "storage",
+        "slot": "0xf10f423c12af70b7aa31f6f1bd94310f38d85adab8d26b5c90b7f07c98bf0800",
+        "returnType": "address"
+      }
+    }
+  }
+}
