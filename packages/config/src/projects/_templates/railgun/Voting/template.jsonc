@@ -15,6 +15,14 @@
         ]
       }
     },
+    "voteCalls": {
+      "description": "Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD.",
+      "handler": {
+        "type": "event",
+        "select": "id",
+        "add": { "event": "VoteCall" }
+      }
+    },
     "DELEGATOR_CONTRACT": {
       "description": "Delegator contract that executes successful proposal actions."
     },

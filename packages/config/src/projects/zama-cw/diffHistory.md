@@ -1,3 +1,1155 @@
+Generated with discovered.json: 0x9a1672987221c0dab8978ce198970bdda1e0070e
+
+# Diff at Thu, 26 Nov 2026 12:05:46 GMT:
+
+- id: cc1c9768
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@912cb81998ff20b8298548771e7587b7b99263a6 block: 1794986224
+- current timestamp: 1795689399
+
+## Description
+
+Protocol upgrade of 2026-11-25, on Ethereum and the Gateway:
+
+- ProtocolConfig v0.2.0: a KMS context the ACL owner defines now starts pending. It activates after all of its nodes and 9 of the 13 previous transaction senders confirm it and its signers attest the reshared keys. The ACL owner can still store a context as active at once through `mirrorKmsContextAndEpoch`. Expected PCR values are emitted per context and no contract checks them. Thresholds and the 13 signers are unchanged. [diff](https://disco.l2beat.com/diff/eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7/eth:0x4b66f6cA0Aeab874d0c1824A92A19384cB7A69B2)
+- KMSVerifier v0.4.0 and KMSGeneration v0.2.0: proofs and requests can name a key epoch beside the context. [KMSVerifier](https://disco.l2beat.com/diff/eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4/eth:0x920E494Dda62C2e07fdc23434c6B5084C218da43), [KMSGeneration](https://disco.l2beat.com/diff/eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940/eth:0xa31991Fb9123C0f836c45b03D2724D00641b95e6)
+- ACL v0.5.0: the new ConfidentialBridge can grant transient access to handles, and accounts can record a cutoff for their earlier decryption signatures. [diff](https://disco.l2beat.com/diff/eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418/eth:0x2E198C41b17D421F02506193110Da50EC181776e)
+- HCULimit v0.5.0: a computation allowlist the ACL owner can switch on, currently off. [diff](https://disco.l2beat.com/diff/eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837/eth:0xE1d75FC9dA3a7d11a32a4FE2Ac94fBFD8335d8B9)
+- FHEVMExecutor v0.6.0: adds the fheMulDiv operation. [diff](https://disco.l2beat.com/diff/eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B/eth:0x43Bc564dFFcc50610ac78E3D5334328436b8fD8F)
+- Decryption v0.6.0 on the Gateway: adds a unified user decryption request whose signature the contract does not check. [diff](https://disco.l2beat.com/diff/zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8/zama:0x00546fC6d6467704B749760D9bDc1b24881cbbF9)
+- ConfidentialBridge v0.1.0 is new: a LayerZero application for ciphertext handles, owned by the ACL owner, with no peer set.
+
+Governance: all vault batchers moved from ZamaDeFiGovCore to ZamaGovCore on 2026-11-23. ZamaGovMultisigB and ZamaDeFiMultisig replaced their six members with the same six new addresses.
+
+## Watched changes
+
+```diff
+    contract RoxcUSDCDepositBatcher (eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract PendleUSDCDepositBatcher (eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDCpRedeemBatcher (eth:0x2B5eB25dA24dcd00A825487c60401F9736091006) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract RoxUSDCyDepositBatcher (eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract BbqTGBPRedeemBatcher (eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ZamaDeFiGovCore (eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      directlyReceivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.8:
+-        {"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.9:
+-        {"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.12:
+-        {"permission":"interact","from":"eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.13:
+-        {"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.14:
+-        {"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.16:
+-        {"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.17:
+-        {"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.18:
+-        {"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.19:
+-        {"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.20:
+-        {"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.21:
+-        {"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.22:
+-        {"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.25:
+-        {"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.26:
+-        {"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.27:
+-        {"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.28:
+-        {"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.29:
+-        {"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.30:
+-        {"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.31:
+-        {"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.32:
+-        {"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.33:
+-        {"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.34:
+-        {"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.35:
+-        {"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.36:
+-        {"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.37:
+-        {"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.38:
+-        {"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.39:
+-        {"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.40:
+-        {"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+    }
+```
+
+```diff
+    contract BbqUSDCDepositBatcher (eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakcUSDCDepositBatcherV1 (eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ZamaDeFiMultisig (eth:0x37c8bfa303f173350eefCB6D4a995E68FFbdF3FD) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.0:
+-        "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71"
++        "eth:0x9D8A92198b295eB9b19d299E81a784E94eF19C89"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.1:
+-        "eth:0xf299Cd189498D7d0F0FfACd4DdC94166f614fBBE"
++        "eth:0x9223C23Be793Ac415af60c58E97a4A03f479112c"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.2:
+-        "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874"
++        "eth:0x9ce6896A192CD969dd96FE548a24B156C078b5Cf"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.3:
+-        "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8"
++        "eth:0xA689839d1F59aAE1c312eF3C68E5756562c34Ea2"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.4:
+-        "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3"
++        "eth:0x8eE4A30A4F75484549fBf84092986173b0202a0a"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.5:
+-        "eth:0x8aA8D71520d88a1Ed2B4257348134b94e00A9978"
++        "eth:0x7D4627Ed0479786c606200E79d68802022E4dFfe"
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.11:
+-        {"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.12:
+-        {"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.13:
+-        {"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.14:
+-        {"permission":"interact","from":"eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.15:
+-        {"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.16:
+-        {"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.18:
+-        {"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.19:
+-        {"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.20:
+-        {"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.21:
+-        {"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.22:
+-        {"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.23:
+-        {"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.24:
+-        {"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.27:
+-        {"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.28:
+-        {"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.29:
+-        {"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.30:
+-        {"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.31:
+-        {"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.32:
+-        {"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.33:
+-        {"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.34:
+-        {"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.35:
+-        {"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.36:
+-        {"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.37:
+-        {"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.38:
+-        {"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.39:
+-        {"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.40:
+-        {"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.41:
+-        {"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+      receivedPermissions.42:
+-        {"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"}]}
+    }
+```
+
+```diff
+    contract SteakcUSDCRedeemBatcher (eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract HCULimit (eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2) [zama/ZamaHCULimit_v0_5_0] {
+    +++ description: Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations. v0.5.0 adds a computation allowlist: while it is activated, FHE operations revert for callers that are not listed.
+      template:
+-        "zama/ZamaHCULimit_v0_3_0"
++        "zama/ZamaHCULimit_v0_5_0"
+      sourceHashes.1:
+-        "0x7ca7880da7a551111a41d9a1673890e2a6c1dd27c3cdf51a82f893b410b2d038"
++        "0x697a097274b09ff2e554fc12f989e73903702c3ca3b1be81421e573e057173f8"
+      description:
+-        "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations."
++        "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations. v0.5.0 adds a computation allowlist: while it is activated, FHE operations revert for callers that are not listed."
+      values.$implementation:
+-        "eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837"
++        "eth:0xE1d75FC9dA3a7d11a32a4FE2Ac94fBFD8335d8B9"
+      values.$pastUpgrades.4:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0xE1d75FC9dA3a7d11a32a4FE2Ac94fBFD8335d8B9"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "HCULimit v0.3.0"
++        "HCULimit v0.5.0"
++++ description: Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.
++++ severity: HIGH
+      values.allowlist:
++        []
++++ description: Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.
++++ severity: HIGH
+      values.allowlisters:
++        []
++++ description: Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.
++++ severity: HIGH
+      values.isAllowlistActivated:
++        false
+      fieldMeta.isAllowlistActivated:
++        {"severity":"HIGH","description":"Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.","type":"RISK_PARAMETER"}
+      fieldMeta.allowlisters:
++        {"severity":"HIGH","description":"Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.","type":"PERMISSION"}
+      fieldMeta.allowlist:
++        {"severity":"HIGH","description":"Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837:
+-        "HCULimit"
+      implementationNames.eth:0xE1d75FC9dA3a7d11a32a4FE2Ac94fBFD8335d8B9:
++        "HCULimit"
+    }
+```
+
+```diff
+    contract RoxcUSDCRedeemBatcher (eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakcUSDCRedeemBatcherV2 (eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDCsRedeemBatcher (eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract PAPYRedeemBatcher (eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract Safe (eth:0x69E55790880d0ABa56E48Ee1f7fc3834b0F5c223) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x30B8A70bede994f141E704B198F57f73e5E06531"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract SteakcUSDCDepositBatcherV2 (eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDTsDepositBatcher (eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakUSDTDepositBatcher (eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [zama/ZamaKMSVerifier_v0_4_0] {
+    +++ description: Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context. v0.4.0 also accepts proofs whose extra data names a key epoch beside the KMS context.
+      template:
+-        "zama/ZamaKMSVerifier_v0_3_0"
++        "zama/ZamaKMSVerifier_v0_4_0"
+      sourceHashes.1:
+-        "0x83222b4971c6b79adbd52cb7d500d84b7d2d59886f828b6a1cdc128dcd2bb9d1"
++        "0xaee30d0900a704554229bb1b08b221f997c7a8f98e21b927a354a80b16454ac3"
+      description:
+-        "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context."
++        "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context. v0.4.0 also accepts proofs whose extra data names a key epoch beside the KMS context."
+      values.$implementation:
+-        "eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4"
++        "eth:0x920E494Dda62C2e07fdc23434c6B5084C218da43"
+      values.$pastUpgrades.4:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0x920E494Dda62C2e07fdc23434c6B5084C218da43"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "KMSVerifier v0.3.0"
++        "KMSVerifier v0.4.0"
+      values.getProtocolConfigAddress:
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+      implementationNames.eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4:
+-        "KMSVerifier"
+      implementationNames.eth:0x920E494Dda62C2e07fdc23434c6B5084C218da43:
++        "KMSVerifier"
+    }
+```
+
+```diff
+    contract ArmUSDTsRedeemBatcher (eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakUSDTRedeemBatcher (eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract BbqUSDCRedeemBatcher (eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmcWBTCRedeemBatcher (eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDCsDepositBatcher (eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakcUSDCRedeemBatcherV1 (eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDTpRedeemBatcher (eth:0x99384d982399a9D890873E402EC04DEE7dad8737) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract SteakcUSDCDepositBatcher (eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmcWBTCDepositBatcher (eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract FAUSDeDepositBatcher (eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ZamaGovCore (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/GovCore] {
+    +++ description: Aragon governance contract that stores permissions and executes action batches for whoever holds its execute permission.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.8:
++        {"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","description":"set the peer bridge and chain id of each destination, point the LayerZero delegate that configures message libraries and verifiers, and assign a cleartext value to a handle that arrived over the bridge.","role":".owner"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.11:
++        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits, manage callers that bypass the per-block limit, activate the computation allowlist, appoint time-limited allowlisters and remove allowlisted callers.","role":".aclOwner"}
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.2.role:
+-        ".aclOwner"
++        ".owner"
+      directlyReceivedPermissions.2.description:
+-        "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit."
++        "pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit."
+      directlyReceivedPermissions.2.from:
+-        "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2"
++        "eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400"
+      directlyReceivedPermissions.15:
++        {"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.18:
++        {"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.21:
++        {"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.25:
++        {"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.26:
++        {"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.30:
++        {"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.31:
++        {"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.32:
++        {"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.35:
++        {"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.37:
++        {"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.39:
++        {"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.40:
++        {"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.42:
++        {"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.46:
++        {"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.48:
++        {"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.57:
++        {"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.62:
++        {"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.63:
++        {"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.64:
++        {"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.35.description:
+-        "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
++        "define a KMS context with an arbitrary node set and thresholds, which activates once its nodes and a quorum of the previous committee confirm it, or store one as active at once through mirrorKmsContextAndEpoch. Start a resharing epoch, destroy non-current contexts and epochs, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
+      directlyReceivedPermissions.68:
++        {"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.69:
++        {"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.70:
++        {"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.78:
++        {"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.80:
++        {"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.81:
++        {"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.83:
++        {"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner"}
+      directlyReceivedPermissions.86:
++        {"permission":"upgrade","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","role":"admin"}
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.0:
+-        "eth:0x9b828219ad863491eb9b5225aE2d133eEDEa9B71"
++        "eth:0x9D8A92198b295eB9b19d299E81a784E94eF19C89"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.1:
+-        "eth:0xf299Cd189498D7d0F0FfACd4DdC94166f614fBBE"
++        "eth:0x9223C23Be793Ac415af60c58E97a4A03f479112c"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.2:
+-        "eth:0x6dd470B50BbC1Ec03bf2B13B30c7d864F2025874"
++        "eth:0x9ce6896A192CD969dd96FE548a24B156C078b5Cf"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.3:
+-        "eth:0x8edFb885a32C72aF32943D4db13D319181d18CB8"
++        "eth:0xA689839d1F59aAE1c312eF3C68E5756562c34Ea2"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.4:
+-        "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3"
++        "eth:0x8eE4A30A4F75484549fBf84092986173b0202a0a"
++++ description: Current multisig members reconstructed from MembersAdded and MembersRemoved events.
+      values.$members.5:
+-        "eth:0x8aA8D71520d88a1Ed2B4257348134b94e00A9978"
++        "eth:0x7D4627Ed0479786c606200E79d68802022E4dFfe"
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","description":"set the peer bridge and chain id of each destination, point the LayerZero delegate that configures message libraries and verifiers, and assign a cleartext value to a handle that arrived over the bridge.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits, manage callers that bypass the per-block limit, activate the computation allowlist, appoint time-limited allowlisters and remove allowlisted callers.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.2.role:
+-        ".aclOwner"
++        ".owner"
+      receivedPermissions.2.description:
+-        "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit."
++        "pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit."
+      receivedPermissions.2.from:
+-        "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2"
++        "eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400"
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.21:
++        {"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.42:
++        {"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37.description:
+-        "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
++        "define a KMS context with an arbitrary node set and thresholds, which activates once its nodes and a quorum of the previous committee confirm it, or store one as active at once through mirrorKmsContextAndEpoch. Start a resharing epoch, destroy non-current contexts and epochs, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.71:
++        {"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.72:
++        {"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.80:
++        {"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.88:
++        {"permission":"upgrade","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract FcUSDTDepositBatcher (eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ACL (eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6) [zama/ZamaACL_v0_5_0] {
+    +++ description: Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation. Since v0.5.0 the ConfidentialBridge can grant transient access to handles like the FHEVMExecutor, and an account can record a cutoff that invalidates its earlier decryption signatures, which no contract here reads.
+      template:
+-        "zama/ZamaACL_v0_4_0"
++        "zama/ZamaACL_v0_5_0"
+      sourceHashes.1:
+-        "0xa69c606dd333427d22d0b664b3c7b39118934dd95a2b7b37c737e37b39bba7e5"
++        "0x537fca985afdfbeae400050861d3fcc291d4b0293f0e29775a5c4acfee986e4d"
+      description:
+-        "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation."
++        "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation. Since v0.5.0 the ConfidentialBridge can grant transient access to handles like the FHEVMExecutor, and an account can record a cutoff that invalidates its earlier decryption signatures, which no contract here reads."
+      values.$implementation:
+-        "eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418"
++        "eth:0x2E198C41b17D421F02506193110Da50EC181776e"
+      values.$pastUpgrades.5:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0x2E198C41b17D421F02506193110Da50EC181776e"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getVersion:
+-        "ACL v0.4.0"
++        "ACL v0.5.0"
+      values.getConfidentialBridgeAddress:
++        "eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7"
+      implementationNames.eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418:
+-        "ACL"
+      implementationNames.eth:0x2E198C41b17D421F02506193110Da50EC181776e:
++        "ACL"
+    }
+```
+
+```diff
+    contract ArmUSDCpDepositBatcher (eth:0xd26F1546e7aFD5881F132967637957416802865A) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract FcUSDTRedeemBatcher (eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract PendleUSDCRedeemBatcher (eth:0xD671b562fdecE574da12295D1680F6a7a0af2963) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ProtocolConfig (eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4) [zama/ZamaProtocolConfig_v0_2_0] {
+    +++ description: Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. Since v0.2.0 a context the ACL owner defines starts pending: it activates only after all of its own node transaction senders and n - t transaction senders of the previous committee confirm it, and all of its signers attest the reshared keys of its first epoch. The same owner can instead store a context as active at once through mirrorKmsContextAndEpoch, a path written for replica chains that nothing disables on Ethereum. Older contexts remain selectable for public decryption proofs until destroyed. Expected enclave measurements (PCR values) are emitted with a new context and hashed into its anchor, and no contract checks them.
+      template:
+-        "zama/ZamaProtocolConfig"
++        "zama/ZamaProtocolConfig_v0_2_0"
+      sourceHashes.1:
+-        "0x3ded50e4089de288e1a23ff043bc49ad1ab743d9c4d68dff679355192bc0edbd"
++        "0x5e19a2838d34c5d875805f600102d2ce436e80cf6a64c3f6cda4d5914af0c7a0"
+      description:
+-        "Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. A newly created context becomes current immediately; older contexts remain selectable for public decryption proofs until destroyed."
++        "Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. Since v0.2.0 a context the ACL owner defines starts pending: it activates only after all of its own node transaction senders and n - t transaction senders of the previous committee confirm it, and all of its signers attest the reshared keys of its first epoch. The same owner can instead store a context as active at once through mirrorKmsContextAndEpoch, a path written for replica chains that nothing disables on Ethereum. Older contexts remain selectable for public decryption proofs until destroyed. Expected enclave measurements (PCR values) are emitted with a new context and hashed into its anchor, and no contract checks them."
+      values.$implementation:
+-        "eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7"
++        "eth:0x4b66f6cA0Aeab874d0c1824A92A19384cB7A69B2"
+      values.$pastUpgrades.2:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0x4b66f6cA0Aeab874d0c1824A92A19384cB7A69B2"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.createdKmsContexts:
+-        []
+      values.createdKmsContextSigners:
+-        []
+      values.createdKmsContextTxSenders:
+-        []
+      values.getVersion:
+-        "ProtocolConfig v0.1.0"
++        "ProtocolConfig v0.2.0"
++++ description: KMS contexts the ACL owner defined through defineNewKmsContextAndEpoch, with the context they replace, their thresholds and software version. A defined context is pending until its nodes and the previous committee's quorum confirm it.
++++ severity: HIGH
+      values.definedKmsContexts:
++        [{"contextId":"3166189940082864718613269121331309980362851143201109172953918312716374638593","previousContextId":"3166189940082864718613269121331309980362851143201109172953918312716374638592","thresholds":[7,9,7,4],"softwareVersion":"v0.14.2"}]
++++ description: KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.
++++ severity: HIGH
+      values.definedKmsContextSigners:
++        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
++++ description: KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.
+      values.definedKmsContextTxSenders:
++        ["eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890","eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB","eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1","eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236","eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a","eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D","eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04","eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0","eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340","eth:0xC105B5933446658D226582f7A112F49a70b54364","eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E","eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D","eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"]
+      values.getCurrentKmsContextAndEpoch:
++        {"contextId":"3166189940082864718613269121331309980362851143201109172953918312716374638593","epochId":"3618502788666131106986593281521497120414687020801267626233049500247285301249"}
+      values.getCurrentKmsContextIdCounter:
++        "3166189940082864718613269121331309980362851143201109172953918312716374638593"
++++ description: Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.
+      values.kmsContextConfirmations:
++        []
++++ description: KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.
++++ severity: HIGH
+      values.mirroredKmsContexts:
++        []
+      fieldMeta.getMpcThreshold.description:
+-        "MPC threshold recorded for the current context. The KMS SDK derives its effective MPC threshold from the nodes it knows about instead of reading this value."
++        "MPC fault threshold t recorded for the current context: the number of nodes assumed faulty. A new context needs n - t confirmations from this committee."
+      fieldMeta.createdKmsContexts:
+-        {"severity":"HIGH","description":"KMS contexts created after the ProtocolConfig migration, reconstructed from NewKmsContext and KmsContextDestroyed events with their node sets and creation thresholds. The context created by initializeFromMigration does not emit this event and is indexed through the live getters and project overrides. Thresholds can be retuned per context after creation.","type":"RISK_PARAMETER"}
+      fieldMeta.createdKmsContextSigners:
+-        {"severity":"HIGH","description":"KMS signers from contexts created after the ProtocolConfig migration. They remain authorized for public decryption proofs that select their context until the ACL owner destroys that context.","type":"PERMISSION"}
+      fieldMeta.createdKmsContextTxSenders:
+-        {"description":"KMS transaction senders from contexts created after the ProtocolConfig migration. They remain authorized to submit key- and CRS-generation responses for their context until the ACL owner destroys that context.","type":"PERMISSION"}
+      fieldMeta.definedKmsContexts:
++        {"severity":"HIGH","description":"KMS contexts the ACL owner defined through defineNewKmsContextAndEpoch, with the context they replace, their thresholds and software version. A defined context is pending until its nodes and the previous committee's quorum confirm it.","type":"RISK_PARAMETER"}
+      fieldMeta.mirroredKmsContexts:
++        {"severity":"HIGH","description":"KMS contexts the ACL owner stored as active at once through mirrorKmsContextAndEpoch, without confirmations from any committee, with their node sets.","type":"RISK_PARAMETER"}
+      fieldMeta.definedKmsContextSigners:
++        {"severity":"HIGH","description":"KMS signers of every context defined through defineNewKmsContextAndEpoch. They stay authorized for proofs that select their context until it is destroyed. The list also keeps the signers of pending and of destroyed contexts, which definedKmsContexts, kmsContextConfirmations and destroyedKmsContexts tell apart.","type":"PERMISSION"}
+      fieldMeta.definedKmsContextTxSenders:
++        {"description":"KMS transaction senders of every context defined through defineNewKmsContextAndEpoch, pending and destroyed contexts included.","type":"PERMISSION"}
+      fieldMeta.kmsContextConfirmations:
++        {"description":"Confirmations of a pending KMS context by transaction senders of the previous and of the new committee.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7:
+-        "ProtocolConfig"
+      implementationNames.eth:0x4b66f6cA0Aeab874d0c1824A92A19384cB7A69B2:
++        "ProtocolConfig"
+    }
+```
+
+```diff
+    contract FHEVMExecutor (eth:0xD82385dADa1ae3E969447f20A3164F6213100e75) [zama/ZamaFHEVMExecutor_v0_6_0] {
+    +++ description: FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.5.0 rejects plaintext scalar operands and trivial-encryption inputs that do not fit their FHE type, checks division by zero in the shared binary-operation path, and adds a checkHandleType view that asserts the type of an initialized handle. v0.6.0 adds the fheMulDiv operation.
+      template:
+-        "zama/ZamaFHEVMExecutor_v0_5_0"
++        "zama/ZamaFHEVMExecutor_v0_6_0"
+      sourceHashes.1:
+-        "0x270ee2b9f564ae13a2f925f057cc5baca30e031fab0362ab7ce086bdd2cd1a01"
++        "0x74c6a6e081ebafb398538c73b3a6d33a34c56303e3af157a8fffd527ef59ece5"
+      description:
+-        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.5.0 rejects plaintext scalar operands and trivial-encryption inputs that do not fit their FHE type, checks division by zero in the shared binary-operation path, and adds a checkHandleType view that asserts the type of an initialized handle."
++        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.5.0 rejects plaintext scalar operands and trivial-encryption inputs that do not fit their FHE type, checks division by zero in the shared binary-operation path, and adds a checkHandleType view that asserts the type of an initialized handle. v0.6.0 adds the fheMulDiv operation."
+      values.$implementation:
+-        "eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B"
++        "eth:0x43Bc564dFFcc50610ac78E3D5334328436b8fD8F"
+      values.$pastUpgrades.6:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0x43Bc564dFFcc50610ac78E3D5334328436b8fD8F"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.getVersion:
+-        "FHEVMExecutor v0.5.0"
++        "FHEVMExecutor v0.6.0"
+      implementationNames.eth:0x0675c7BFA34aF170C49e6590A2cBf845c3029d7B:
+-        "FHEVMExecutor"
+      implementationNames.eth:0x43Bc564dFFcc50610ac78E3D5334328436b8fD8F:
++        "FHEVMExecutor"
+    }
+```
+
+```diff
+    contract BbqUSDTDepositBatcher (eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract PAPYDepositBatcher (eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x084fd3a517D6DaE1f8E3E5481b65107fd7e5eEc1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x1B731EC615165094Ec4d695b0a1c8eE31366Cf84","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x2B5eB25dA24dcd00A825487c60401F9736091006","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x2dEAFB36F3B118d434CDE4708e8350eae918724d","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x2FB51a8fe20D9cc830b9CA5251f8d845eb5BAAa7","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x321C9AaB1390100f6e7fE1735a928ec0F16252f0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x324EA89FD3784036673BfE6Ffee2334A088F40Cc","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","description":"set the peer bridge and chain id of each destination, point the LayerZero delegate that configures message libraries and verifiers, and assign a cleartext value to a handle that arrived over the bridge.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0x3a906d6509EB4171Ee9fC71D083fb1638BaF083D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits, manage callers that bypass the per-block limit, activate the computation allowlist, appoint time-limited allowlisters and remove allowlisted callers.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x43e8f7B280B19637d2A7e3008657282AaF2C0E4b","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.2.role:
+-        ".aclOwner"
++        ".owner"
+      receivedPermissions.2.description:
+-        "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit."
++        "pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit."
+      receivedPermissions.2.from:
+-        "eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2"
++        "eth:0x4Ad6368aD783644F1BB780F0A0F00cD77ca06400"
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x4f555b54842E609bA62843E0Ab4Ff184A436772e","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0x52FfC3Aa2372D42d1cB413C0E36659ffF1e58EC1","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.21:
++        {"permission":"interact","from":"eth:0x6e05F3bE50c7890Ba10B30e9492b20683d5cC707","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0x7320830992a924e6D2f3D3E9A74fbd103E9A20AE","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x737F4558c0cC7C29b56dd13c34B68e967C91E399","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x79e621c35B93329bbB6F06D9635981B9a5f4a255","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0x7Afb2CD6D41C379e3d8B46f206346b63A67F4d43","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0x807C367dA7B9228643b06390e199E33ccA7Cc533","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x83540Af3adFc4d3133139D57D4BAB17828902F05","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37:
++        {"permission":"interact","from":"eth:0x87356ade88315aed3aC61B42caCC3a263730B1BD","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.39:
++        {"permission":"interact","from":"eth:0x96Cd3Faa7483783Ac2Eb715f6333361500F1eec9","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.40:
++        {"permission":"interact","from":"eth:0x99384d982399a9D890873E402EC04DEE7dad8737","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.42:
++        {"permission":"interact","from":"eth:0xA07c00A3b955B805B3Ea76b086f95a3e793715D5","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.46:
++        {"permission":"interact","from":"eth:0xAC82e75FBA31122c1FEb575ebc371aA2EF78604D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.48:
++        {"permission":"interact","from":"eth:0xae09d50C6B6E91D9FBE50D168eA6567759e930f8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.59:
++        {"permission":"interact","from":"eth:0xbEbee65445dAD2F31628ADd14535fd0B3fC915b4","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.64:
++        {"permission":"interact","from":"eth:0xd26F1546e7aFD5881F132967637957416802865A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.65:
++        {"permission":"interact","from":"eth:0xd2f3f554F995c12e2BfE5E155397cB6272643744","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xD671b562fdecE574da12295D1680F6a7a0af2963","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37.description:
+-        "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
++        "define a KMS context with an arbitrary node set and thresholds, which activates once its nodes and a quorum of the previous committee confirm it, or store one as active at once through mirrorKmsContextAndEpoch. Start a resharing epoch, destroy non-current contexts and epochs, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xe1Bc291CF6fD71173dB73D58f1b25fC371B9Aa6D","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.71:
++        {"permission":"interact","from":"eth:0xe396FD82a7Aa2F89C16505c1AD46e91F3bc7d3b0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.72:
++        {"permission":"interact","from":"eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.80:
++        {"permission":"interact","from":"eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.83:
++        {"permission":"interact","from":"eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xfD899e481C7349d107005feFb1d19F33923b481A","description":"pause joins and dispatches, and set the minimum batch age, the callback deadline and the slippage limit.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.88:
++        {"permission":"upgrade","from":"eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7","role":"admin","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    contract FAUSDeRedeemBatcher (eth:0xE7761e3864b077728cafE4E18e9c8C23B6F896D0) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract KMSGeneration (eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa) [zama/ZamaKMSGeneration_v0_2_0] {
+    +++ description: Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached. v0.2.0 binds each request to the current KMS context and epoch and lists the completed key and CRS ids.
+      template:
+-        "zama/ZamaKMSGeneration"
++        "zama/ZamaKMSGeneration_v0_2_0"
+      sourceHashes.1:
+-        "0x265ec46d9bb4498caf973d6a60d3cbbe1f3ceff12597fcd3140bdff9e6322f76"
++        "0xa62c2946afeb8337bb47e1d3e949f4ae7938e5dc00bca54bf13a7151eaa48843"
+      description:
+-        "Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached."
++        "Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached. v0.2.0 binds each request to the current KMS context and epoch and lists the completed key and CRS ids."
+      values.$implementation:
+-        "eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940"
++        "eth:0xa31991Fb9123C0f836c45b03D2724D00641b95e6"
+      values.$pastUpgrades.2:
++        ["2026-11-25T17:46:59.000Z","0xd89e2d7a3ac00675c42cc5cdcb2197470eac4865e55382eff1285f0c1fcf0c97",["eth:0xa31991Fb9123C0f836c45b03D2724D00641b95e6"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getVersion:
+-        "KMSGeneration v0.1.0"
++        "KMSGeneration v0.2.0"
+      values.getCompletedCrsIds:
++        ["2261564242916331941866620800950935700259179388000792266395655937654553313281"]
+      values.getCompletedKeyIds:
++        ["1809251394333065553493296640760748560207343510400633813116524750123642650625"]
+      values.getKeyInfo:
++        []
+      implementationNames.eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940:
+-        "KMSGeneration"
+      implementationNames.eth:0xa31991Fb9123C0f836c45b03D2724D00641b95e6:
++        "KMSGeneration"
+    }
+```
+
+```diff
+    contract RoxUSDCyRedeemBatcher (eth:0xf18Ad9F94a7EA994FdCbC5fD5C5Da326a341d8a8) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract ArmUSDTpDepositBatcher (eth:0xFb21951F291E742f24aB4F5c0c11e7BC8864142A) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract BbqUSDTRedeemBatcher (eth:0xFc659Fa98AC62970cAe2C594Be32fe4F8b844Ea3) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract BbqTGBPDepositBatcher (eth:0xfD899e481C7349d107005feFb1d19F33923b481A) [zama/VaultBatcherConfidential] {
+    +++ description: Batches confidential deposits into, or redemptions from, an ERC-4626 vault. Users join the current batch with an encrypted amount. A dispatched batch unwraps its total publicly, routes it through the vault and wraps the result, and each user claims an encrypted share of it.
+      values.owner:
+-        "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C"
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+    }
+```
+
+```diff
+    contract Decryption (zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24) [zama/Decryption_v0_6_0] {
+    +++ description: Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain. v0.6.0 adds a unified user decryption request that covers direct and delegated access: the contract checks its format and no signature, and leaves the signature and ACL checks to the KMS nodes.
+      template:
+-        "zama/Decryption_v0_5_0"
++        "zama/Decryption_v0_6_0"
+      sourceHashes.1:
+-        "0x1dd2af26cc2be12ff30232e8df9c95ec66fcbc987f40372ad56a9d8f1073260c"
++        "0xac47a87464509a3437e769a57f2c99608d1a580b5c000584d5426ac7094aa435"
+      description:
+-        "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain."
++        "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain. v0.6.0 adds a unified user decryption request that covers direct and delegated access: the contract checks its format and no signature, and leaves the signature and ACL checks to the KMS nodes."
+      values.$implementation:
+-        "zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8"
++        "zama:0x00546fC6d6467704B749760D9bDc1b24881cbbF9"
+      values.$pastUpgrades.5:
++        ["2026-11-25T13:00:52.000Z","0x8203915da2efde0da3a43518b109671c0d57075873e9edf2431f7a87f8eb8174",["zama:0x00546fC6d6467704B749760D9bDc1b24881cbbF9"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.getVersion:
+-        "Decryption v0.5.0"
++        "Decryption v0.6.0"
+      implementationNames.zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8:
+-        "Decryption"
+      implementationNames.zama:0x00546fC6d6467704B749760D9bDc1b24881cbbF9:
++        "Decryption"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ConfidentialBridge (eth:0x38Ee554f5D9018e802814fD3A1EAF0BE904537C7) [zama/ConfidentialBridge]
+    +++ description: LayerZero application that moves ciphertext handles between FHEVM host chains. A sender needs ACL rights on every handle it sends, and the receiving bridge derives new handles on its chain. The bridge holds no tokens and exchanges messages only with the peers its owner sets. Its owner is always the ACL owner.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1794986224 => .flat}/ACL/ACL.sol        |   92 +-
+ .../ConfidentialBridge/ConfidentialBridge.sol      | 7540 ++++++++++++++++++++
+ .../.flat/ConfidentialBridge/ERC1967Proxy.p.sol    |  612 ++
+ .../Decryption/Decryption.sol                      |  488 +-
+ .../FHEVMExecutor/FHEVMExecutor.sol                |  449 +-
+ .../HCULimit/HCULimit.sol                          |  266 +-
+ .../KMSGeneration.sol                              |  869 ++-
+ .../KMSVerifier/KMSVerifier.sol                    |  904 ++-
+ .../ProtocolConfig/ProtocolConfig.sol              | 2005 +++++-
+ 9 files changed, 12735 insertions(+), 490 deletions(-)
+```
+
 Generated with discovered.json: 0xbdedd278430ddf132e6cfa83c86216f7c4ce2813
 
 # Diff at Wed, 18 Nov 2026 08:06:43 GMT:

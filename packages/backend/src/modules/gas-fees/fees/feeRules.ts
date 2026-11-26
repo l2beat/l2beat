@@ -1,4 +1,9 @@
-import { ethereumBlobGasPrice } from '../../../tools/ethereumBlobGasPrice'
+import {
+  BLOB_UPDATE_FRACTIONS,
+  ethereumBlobGasPrice,
+} from '../../../tools/ethereumBlobGasPrice'
+
+export { BLOB_UPDATE_FRACTIONS }
 
 /**
  * What a chain's transactions pay, as Trino SQL over its Dune tables: `t` is a

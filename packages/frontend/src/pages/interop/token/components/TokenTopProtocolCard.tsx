@@ -132,7 +132,7 @@ function TopProtocolIdentity({
   apiSelection: InteropSelection
   isLoading: boolean
 }) {
-  const href = topProtocol
+  const href = topProtocol?.slug
     ? buildInteropUrl(`/interop/protocols/${topProtocol.slug}`, apiSelection)
     : undefined
   const content = isLoading ? (

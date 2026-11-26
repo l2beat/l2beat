@@ -28,6 +28,7 @@ import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsCo
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { CarriedForwardNotice } from '../../CarriedForwardNotice'
 import { getTransferColumns, type TransferRow } from './columns'
+import { useTransfersSorting } from './useTransfersSorting'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
 
@@ -118,6 +119,9 @@ export function TransferDetailsDialog({
   const trpc = useTRPC()
   const breakpoint = useBreakpoint()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const { sort, sorting, tableOptions } = useTransfersSorting({
+    onChange: () => scrollContainerRef.current?.scrollTo({ top: 0 }),
+  })
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
@@ -128,6 +132,7 @@ export function TransferDetailsDialog({
           type,
           tokenId,
           snapshotTimestamp: snapshotTimestamp ?? 0,
+          sort,
         },
         {
           enabled: isOpen && snapshotTimestamp !== undefined,
@@ -174,6 +179,8 @@ export function TransferDetailsDialog({
     columns: getTransferColumns(selectedChains),
     getCoreRowModel: getCoreRowModel(),
     manualFiltering: true,
+    ...tableOptions,
+    state: { sorting },
   })
 
   const isMobile = breakpoint === 'xs' || breakpoint === 'sm'

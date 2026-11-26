@@ -24,7 +24,7 @@ All keys derive from one signature of the user's wallet. Contract wallets and si
 
 ### App
 
-The rated app is the website's v1.6.0 release bundle, loaded by its CID. It reads the chain from public endpoints, PublicNode on Ethereum, unless the user sets an endpoint per chain. Its interface caps deposits at $100, and BNB Chain does not load. 0xbow also hosts the app at privacypools.com, which reads the chain from Alchemy under 0xbow's key. The app downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its connection settings route requests through Tor, with a gateway the user runs, or through Nym. Three chain reads and the route's client code, served by jsDelivr, bypass them. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which ETHBEAT does not track.
+The rated app is the website's v1.7.0 release bundle, loaded by its CID. It reads the chain from public endpoints, PublicNode on Ethereum, unless the user sets an endpoint per chain. Its interface caps deposits at $100, and BNB Chain does not load. 0xbow also hosts the app at privacypools.com, which reads the chain from Alchemy under 0xbow's key. The app downloads the pool's events whole from the ASP but offers only 0xbow's relayer. Its connection settings route requests through Tor, with a gateway the user runs, or through Nym. Three chain reads and the route's client code, served by jsDelivr, bypass them. Privacy Pools v2 is deployed on BNB Chain, Citrea, Optimism, Base, Arbitrum and Robinhood Chain, which ETHBEAT does not track.
 
 ### Swaps and yield
 

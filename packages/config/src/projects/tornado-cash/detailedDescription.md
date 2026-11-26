@@ -25,4 +25,4 @@ The pools charge no fee. Relayers take their fee from the withdrawal. Registered
 
 ### Anonymity set
 
-Each pool has its own set: the deposits of that token and amount not yet withdrawn. Pools differ widely in size, and the ETH pools on Ethereum are by far the largest.
+Each pool has its own set: the deposits of that token and amount not yet withdrawn. Pools differ widely in size, and the ETH pools on Ethereum are by far the largest. Five ETH pools from 0.01 to 30 ETH run the same code outside the router's list. They were deployed in 2026 without a governance vote, the pinned app does not offer them, and few deposits use them.

@@ -1,31 +1,9 @@
 import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
-import { CROP_TITLE } from './cropPalette'
-import type { CropEntry, ResolvedCropEvaluation } from './crops'
-import { getCropStatusText } from './crops'
+import type { ResolvedCropEvaluation } from './crops'
 
-/** The verdict in the crop's colour, the standing caveat, then the findings. */
-export function CropEvaluationDetails({ entry }: { entry: CropEntry }) {
-  const { definition, evaluation, ossification } = entry
-  return (
-    <>
-      <p
-        className={cn(
-          'font-medium text-base',
-          CROP_TITLE[evaluation.sentiment],
-        )}
-      >
-        {definition.label}:{' '}
-        {getCropStatusText(evaluation.status, evaluation.sentiment)}
-      </p>
-      <CropNote note={definition.note} />
-      <CropFindings evaluation={evaluation} ossification={ossification} />
-    </>
-  )
-}
-
-/** Shared by the garden tooltip and the project page, so the two cannot drift. */
+/** The findings in full, as the project page lists them. */
 export function CropFindings({
   evaluation,
   ossification,
@@ -112,7 +90,7 @@ function CropLicenseText({ license }: { license: OsiLicense }) {
   )
 }
 
-function CropBullet({ children }: { children: ReactNode }) {
+export function CropBullet({ children }: { children: ReactNode }) {
   return (
     <li className="flex gap-2 text-primary">
       <span

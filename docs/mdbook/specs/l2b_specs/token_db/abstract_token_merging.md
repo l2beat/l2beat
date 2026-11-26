@@ -43,7 +43,7 @@ abstract token — only the deployed token changes across it. So a
 non-swapping relation between deployed tokens assigned to two
 *different* abstract tokens contradicts the invariant. These show up as
 `conflict` entries in the ingestion queue and as red edges in the
-token-UI relations graph (see [token relations](./token_relations.md)).
+Token DB relations graph in the back office (see [token relations](./token_relations.md)).
 Occasionally the plugin misclassified the transfer and it should have
 been a swap — then the plugin is what needs fixing. But usually the
 diagnosis is: two abstract tokens that should be one. Merging is how a

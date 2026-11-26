@@ -14,7 +14,7 @@ TokenDB is the system that holds ETHBEAT's canonical token catalogue —
 **Abstract Tokens** (the asset, e.g. "USDC") and **Deployed Tokens**
 (individual `(chain, address)` instances of an asset), plus the
 relations between deployed tokens. It is served by the `token-backend` package and
-edited through the `token-ui` package.
+edited through the Token DB section of the back office (`packages/backoffice`).
 
 The docs in this folder describe how TokenDB is kept correct:
 
@@ -28,7 +28,7 @@ The docs in this folder describe how TokenDB is kept correct:
   queue, and why the table has no foreign keys to `DeployedToken`.
 - [Intent / Plan / Execute](./intent_plan_execute.md) — the
   intent → plan → commands pipeline behind every human-driven write
-  from token-UI, and why it exists (visible blast radius + concurrency
+  from the back office's Token DB pages, and why it exists (visible blast radius + concurrency
   safety).
 - [Abstract token merging](./abstract_token_merging.md) — why duplicate
   abstract tokens arise (CoinGecko splits, ingestion fallback), why an
@@ -110,7 +110,7 @@ What stays exactly the same for an ignored token:
 - Ordinary read endpoints (tokens by key, relations) keep returning it,
   and raw transfer lists on ethbeat.org keep showing its transfers. The
   observations exist and stay inspectable — e.g. to look at minters.
-- token-ui keeps showing the token (marked as ignored), because
+- the back office's Token DB pages keep showing the token (marked as ignored), because
   operators must be able to audit it and un-ignore it. Generic
   repository getters must therefore never filter on the flag.
 
@@ -129,7 +129,7 @@ What changes — each a deliberate, named interpretation boundary:
 - **Presentation**: ethbeat.org reads that list deployed tokens straight
   from TokenDB skip ignored rows (currently one such read: the "Onchain
   deployments" section of an interop token page).
-- **Graph clustering**: the token-ui relations graph omits the node and
+- **Graph clustering**: the Token DB relations graph omits the node and
   every edge touching it, so an ignored token cannot merge two clusters
   (see [token relations](./token_relations.md)).
 

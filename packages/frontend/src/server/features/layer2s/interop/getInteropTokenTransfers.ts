@@ -21,6 +21,7 @@ export async function getInteropTokenTransfers({
   to,
   snapshotTimestamp,
   limit,
+  sort,
   cursor,
 }: InteropTokenTransfersParams): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
@@ -28,7 +29,7 @@ export async function getInteropTokenTransfers({
   }
 
   if (env.MOCK) {
-    return getMockInteropTransfers({ tokenId, from, to })
+    return getMockInteropTransfers({ tokenId, from, to, sort })
   }
 
   const interopProjects = await ps.getProjects({
@@ -63,6 +64,7 @@ export async function getInteropTokenTransfers({
     pluginIds,
     matcher,
     limit,
+    sort,
     cursor,
   })
   const tokensDetailsMap = await buildTokensDetailsMap(

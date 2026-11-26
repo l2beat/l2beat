@@ -19,7 +19,7 @@ The wallet derives its public accounts and one private account from a recovery p
 
 ### App
 
-The [Hinkal Wallet](https://chromewebstore.google.com/detail/khfjgapjfcdoffmklchibpepboholpbe) Chrome extension, version 0.0.64, has closed source. By default it sends the nullifying key to Hinkal's enclave seconds after the wallet is created. The enclave then finds the user's notes and builds the proofs. With Remote Proving off in Settings, the wallet downloads the pool's notes and proves on the device. The wallet checks that the enclave is a Confidential Space VM under Hinkal's account, but not which code it runs. It reads the chain through fixed public RPC nodes and Hinkal's servers, which also store the list of the user's public accounts.
+The [Hinkal Wallet](https://chromewebstore.google.com/detail/khfjgapjfcdoffmklchibpepboholpbe) Chrome extension, version 0.0.65, has closed source. By default it sends the nullifying key to Hinkal's enclave seconds after the wallet is created. The enclave then finds the user's notes and builds the proofs. With Remote Proving off in Settings, the wallet downloads the pool's notes and proves on the device. The wallet checks that the enclave is a Confidential Space VM under Hinkal's account, but not which code it runs. It reads the chain through fixed public RPC nodes and Hinkal's servers, which also store the list of the user's public accounts.
 
 ### Swaps and public accounts
 

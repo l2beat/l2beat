@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xf52a1dc6fd21863a8a62fe8b9cdb650001e542c1
+
+# Diff at Thu, 26 Nov 2026 12:52:25 GMT:
+
+- id: bda5c5ea
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51a89338cb38dec6fd744e915f723cd06823f851 block: 1795691822
+- current timestamp: 1795691822
+
+## Description
+
+The new `voteCalls` field lists the proposals called to a vote, so a proposal that reaches the sponsor threshold shows up before it can execute. Proposal 33 is not among them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1795691822 (main branch discovery), not current.
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ description: Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD.
+      values.voteCalls:
++        [0,1,3,4,5,7,10,13,14,15,16,17,21,24,25,26,27]
+      fieldMeta.voteCalls:
++        {"description":"Ids of the proposals called to a vote. A vote can be called once a proposal's sponsorship reaches PROPOSAL_SPONSOR_THRESHOLD."}
+    }
+```
+
+Generated with discovered.json: 0x43a18c81fb35866d1c8e955bf819c212e54426f3
+
+# Diff at Thu, 26 Nov 2026 11:18:51 GMT:
+
+- id: 5b13adee
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3b475876fb5d8d57231ef4725c99e8ee6d056615 block: 1792756093
+- current timestamp: 1795691822
+
+## Description
+
+New malicious proposal 33 (not sponsored, proposer has no voting power). It would upgrade RailgunSmartWallet and Treasury to an unverified drainer (eth:0xb4f66b9a17ecd409502b1c029a3555deee9eed53) that sends all funds to the proposer, mint 2.5M RAIL to the proposer and transfer Delegator ownership to them.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ description: Number of governance proposals published. Proposals are updates, but do not change the system until executed.
+      values.proposalCount:
+-        33
++        34
+    }
+```
+
 Generated with discovered.json: 0x037d8f0d34e1ca4c2e88637bf5ac5d7dc4053ef0
 
 # Diff at Sat, 24 Oct 2026 16:41:07 GMT:

@@ -6,6 +6,7 @@ export type DiffHistorySectionKind =
   | 'initial-discovery'
   | 'source-code-changes'
   | 'config-related-changes'
+  | 'offchain-changes'
 
 export interface DiffHistorySection {
   kind: DiffHistorySectionKind
@@ -53,6 +54,7 @@ const SECTION_HEADERS: Record<string, DiffHistorySectionKind> = {
   '## Config/verification related changes': 'config-related-changes',
   // Older diff histories used a shorter heading; recognize it too.
   '## Config related changes': 'config-related-changes',
+  '## Offchain changes': 'offchain-changes',
 }
 
 export class DiffHistoryParser {
@@ -97,7 +99,13 @@ export class DiffHistoryParser {
         assert(!seenIds.has(entry.id), `duplicate diffHistory id ${entry.id}`)
         seenIds.add(entry.id)
         entries.push(entry)
-        pendingHash = null
+        // l2b watch puts its entry right under the hash line, which still
+        // describes the discovery entry below it.
+        if (entry.sections.some((s) => s.kind === 'offchain-changes')) {
+          entry.discoveryHash = null
+        } else {
+          pendingHash = null
+        }
         i = j
         continue
       }
