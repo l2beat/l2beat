@@ -310,6 +310,7 @@ export class RpcClientCompat implements IRpcClient {
       baseFeePerBlobGas: feeHistory.baseFeePerBlobGas,
       blobGasUsedRatio: feeHistory.blobGasUsedRatio,
       oldestBlock: Number(feeHistory.oldestBlock),
+      ...(feeHistory.reward && { reward: feeHistory.reward }),
     }
   }
 
