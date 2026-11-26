@@ -90,7 +90,7 @@ export const ETH_STAKED_TOOLTIP = 'Balance of all active Ethereum validators.'
 
 /** Where the ETH supply comes from, as a sentence. */
 export const SUPPLY_SOURCE =
-  "ultrasound.money's figure for 1 January 2024, plus the ETH issued to validators and less the ETH burned since."
+  'ETH in existence on 1 January 2024, plus the ETH issued to validators and less the ETH burned since.'
 
 export function formatEthStaked(value: number): string {
   return `${formatNumber(value)} ETH`
