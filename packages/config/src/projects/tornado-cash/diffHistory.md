@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x685a8cce2024d4875ab843d0f30a2473c28fdf78
+
+# Diff at Wed, 25 Nov 2026 15:48:08 GMT:
+
+- id: 72add764
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0e6984f6c8df82c5ddf570afe05e751c33796300 block: 1794568077
+- current timestamp: 1795621431
+
+## Description
+
+Added five ETH pools (0.01, 0.03, 0.3, 3 and 30 ETH) that the EOA 0xCBF64e88…0eef deployed on 2026-10-15 without a governance vote. They run the classic pool code with the same verifier and hasher and have no operator. The InstanceRegistry does not list them, so the router and the app pinned on tornadocash.eth do not offer them. The kohaku-cli wallet deposits into them by default.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794568077 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract Pool_0.01_ETH (eth:0x199112Eb461ea7eeC1D75B33343542e1d069B41c) [tornado-cash/TornadoCash_eth]
+    +++ description: Fixed-denomination pool for 0.01 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_0.03_ETH (eth:0x398971a7Ae0FeD4ae435F353eF00D3d4e4c18fD4) [tornado-cash/TornadoCash_eth]
+    +++ description: Fixed-denomination pool for 0.03 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_3_ETH (eth:0x74185A3f30b873c0ce1F4257298D1CdA61be2f9f) [tornado-cash/TornadoCash_eth]
+    +++ description: Fixed-denomination pool for 3 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_30_ETH (eth:0xC11197f71C7730C8B5dB7C84191E07575F1DB896) [tornado-cash/TornadoCash_eth]
+    +++ description: Fixed-denomination pool for 30 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry.
+```
+
+```diff
++   Status: CREATED
+    contract Pool_0.3_ETH (eth:0xf22487b84A618192aa68C0E1da24e9Bbd892f774) [tornado-cash/TornadoCash_eth]
+    +++ description: Fixed-denomination pool for 0.3 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry.
+```
+
 Generated with discovered.json: 0x946a43ba5ba56f4efae02675a470b2d5a11e0392
 
 # Diff at Fri, 13 Nov 2026 13:04:14 GMT:

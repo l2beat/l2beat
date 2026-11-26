@@ -70,20 +70,22 @@ export const zcashNearIntents: BaseProject = {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     referenceApp: {
       name: 'Vizor for Linux',
-      url: 'https://github.com/chainapsis/vizor-wallet/releases/tag/release/v0.0.64',
+      url: 'https://github.com/chainapsis/vizor-wallet/releases/tag/release/v0.0.66',
       since: '2026-11-18',
       delivery: {
         type: 'pinned',
         pin: {
           type: 'sha256',
           file: 'Vizor-linux-x86_64.AppImage',
-          hash: 'f325fc38917fcce2c22460145980abb9231e9d732810de621fba3d247a8f782c',
+          hash: 'a454901c5f0e565c76f274fc6f2881e732b9504d0410b368a55c0d101c9c4244',
         },
+        rebuild:
+          'https://github.com/chainapsis/vizor-wallet/blob/c4d01dc120299d9456505c3340ee7fa9520c9285/fastlane/linux/Fastfile',
       },
-      version: '0.0.64',
+      version: '0.0.66',
       source: {
         repository: 'https://github.com/chainapsis/vizor-wallet',
-        commit: '43c1b3467fc00c630fcd7eb8e8070b8b4d409596',
+        commit: 'c4d01dc120299d9456505c3340ee7fa9520c9285',
       },
       checkedApps: [
         {
@@ -168,7 +170,7 @@ export const zcashNearIntents: BaseProject = {
     reproducibility: {
       ...PRIVACY_REPRODUCIBILITY.partial,
       description:
-        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's desktop releases do not claim byte-for-byte rebuilds. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
+        "The Verifier, the bridge token, the Zcash bridge and Vizor are open source. Vizor's Linux release rebuilds from its tag. The bridge backend, the 1Click API and the solver relay that every Ethereum leg needs are closed.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.bridged,

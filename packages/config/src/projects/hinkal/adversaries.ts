@@ -25,8 +25,8 @@ export const REFERENCE_APP = {
   name: 'Hinkal Wallet',
   url: 'https://chromewebstore.google.com/detail/hinkal-wallet/khfjgapjfcdoffmklchibpepboholpbe',
   since: '2026-11-20',
-  version: '0.0.64',
-  checked: '2026-11-20',
+  version: '0.0.65',
+  checked: '2026-11-26',
   delivery: { type: 'latestOnly', store: 'Chrome Web Store' },
   checkedApps: [
     {
@@ -143,9 +143,9 @@ export function hinkalAdversaries(upgradeDelay: string) {
         sources: [
           {
             title:
-              'Hinkal Wallet 0.0.64 reads the balance of every public account at publicnode.com every 10 seconds',
+              'Hinkal Wallet 0.0.65 reads the balance of every public account at publicnode.com every 10 seconds',
             url: REFERENCE_APP.url,
-            checked: '2026-11-20',
+            checked: '2026-11-26',
           },
           {
             title:
@@ -176,9 +176,9 @@ export function hinkalAdversaries(upgradeDelay: string) {
           },
           {
             title:
-              'Hinkal Wallet 0.0.64 posts the sealed nullifying key to enclave-server.hinkal.io 14 seconds after wallet creation',
+              'Hinkal Wallet 0.0.65 posts the sealed nullifying key to enclave-server.hinkal.io 6 seconds after wallet setup',
             url: REFERENCE_APP.url,
-            checked: '2026-11-19',
+            checked: '2026-11-26',
           },
           { section: 'upgrades-and-governance' },
         ],

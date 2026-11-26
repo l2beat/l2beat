@@ -3,7 +3,14 @@
   "name": "tornado-cash",
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 80,
-  "initialAddresses": ["eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5"],
+  "initialAddresses": [
+    "eth:0x4B6C07B8940a7602fE4332AFa915b366e56eAce5",
+    "eth:0x199112Eb461ea7eeC1D75B33343542e1d069B41c",
+    "eth:0x398971a7Ae0FeD4ae435F353eF00D3d4e4c18fD4",
+    "eth:0xf22487b84A618192aa68C0E1da24e9Bbd892f774",
+    "eth:0x74185A3f30b873c0ce1F4257298D1CdA61be2f9f",
+    "eth:0xC11197f71C7730C8B5dB7C84191E07575F1DB896"
+  ],
   "names": {
     "eth:0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e": "ENSRegistry",
     "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643": "cDAI",
@@ -16,6 +23,11 @@
     "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": "Pool_1_ETH",
     "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": "Pool_10_ETH",
     "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": "Pool_100_ETH",
+    "eth:0x199112Eb461ea7eeC1D75B33343542e1d069B41c": "Pool_0.01_ETH",
+    "eth:0x398971a7Ae0FeD4ae435F353eF00D3d4e4c18fD4": "Pool_0.03_ETH",
+    "eth:0xf22487b84A618192aa68C0E1da24e9Bbd892f774": "Pool_0.3_ETH",
+    "eth:0x74185A3f30b873c0ce1F4257298D1CdA61be2f9f": "Pool_3_ETH",
+    "eth:0xC11197f71C7730C8B5dB7C84191E07575F1DB896": "Pool_30_ETH",
     "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": "Pool_100_DAI",
     "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": "Pool_1000_DAI",
     "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": "Pool_10K_DAI",
@@ -37,8 +49,9 @@
     "eth:0xbFA347D89Ac54F7C2De2433458cb98A85fc03CEd": "WithdrawalTree",
     "eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79": "PoseidonHasher2"
   },
-  // Ossification perimeter: the 19 immutable pools, their Verifier and the
-  // MiMCHasher. The pools have no admin (the legacy operator renounced in May
+  // Ossification perimeter: the 19 immutable pools of the InstanceRegistry,
+  // five unregistered ETH pools with the same code (deployed 2026-10-15 without
+  // an operator), their Verifier and the MiMCHasher. The pools have no admin (the legacy operator renounced in May
   // 2020), so verifier and hasher can no longer change. Governance (TORN, Governance,
   // InstanceRegistry, RelayerRegistry, TornadoRouter, trees and mining) can only
   // gate the optional router path and relayers, never pool funds, proofs or
@@ -129,6 +142,21 @@
     },
     "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": {
       "description": "Fixed-denomination Tornado Cash pool for 100 ETH deposits."
+    },
+    "eth:0x199112Eb461ea7eeC1D75B33343542e1d069B41c": {
+      "description": "Fixed-denomination pool for 0.01 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry."
+    },
+    "eth:0x398971a7Ae0FeD4ae435F353eF00D3d4e4c18fD4": {
+      "description": "Fixed-denomination pool for 0.03 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry."
+    },
+    "eth:0xf22487b84A618192aa68C0E1da24e9Bbd892f774": {
+      "description": "Fixed-denomination pool for 0.3 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry."
+    },
+    "eth:0x74185A3f30b873c0ce1F4257298D1CdA61be2f9f": {
+      "description": "Fixed-denomination pool for 3 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry."
+    },
+    "eth:0xC11197f71C7730C8B5dB7C84191E07575F1DB896": {
+      "description": "Fixed-denomination pool for 30 ETH deposits with the classic Tornado Cash pool code, deployed in October 2026 and absent from the InstanceRegistry."
     },
     "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": {
       "description": "Fixed-denomination Tornado Cash pool for 100 DAI deposits."

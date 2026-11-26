@@ -6,25 +6,25 @@ import {
 } from '../../common/privacyAdversaries'
 import type { ProjectPrivacyReferenceApp } from '../../types'
 
-// The v1.6.0 release bundle of the web app, loaded by its CID. It differs
+// The v1.7.0 release bundle of the web app, loaded by its CID. It differs
 // from privacypools.com in its build env: no Alchemy key, public endpoints.
 export const REFERENCE_APP = {
   name: 'Privacy Pools release bundle',
-  url: 'https://github.com/0xbow-io/privacy-pools-website-v2/releases/tag/v1.6.0',
+  url: 'https://github.com/0xbow-io/privacy-pools-website-v2/releases/tag/v1.7.0',
   since: '2026-11-18',
-  version: '1.6.0',
+  version: '1.7.0',
   delivery: {
     type: 'pinned',
     pin: {
       type: 'ipfs',
-      cid: 'bafybeif7cfytgswbv6rdv4arclle2xrhzullzay4qhl7wuj3h2idpf5cfa',
+      cid: 'bafybeigfl4mmsqt3f3mqs6hlwmldrdttvdahivrekkjbbrvfkrl2bkbd3i',
     },
     rebuild:
-      'https://github.com/0xbow-io/privacy-pools-website-v2/blob/5dc5434b443b10aa33c7db5421824d84b71a08b4/docs/static-releases.md',
+      'https://github.com/0xbow-io/privacy-pools-website-v2/blob/c7e5470e0e96ba750d6ce2e7fcf19cca9eb56f28/docs/static-releases.md',
   },
   source: {
     repository: 'https://github.com/0xbow-io/privacy-pools-website-v2',
-    commit: '5dc5434b443b10aa33c7db5421824d84b71a08b4',
+    commit: 'c7e5470e0e96ba750d6ce2e7fcf19cca9eb56f28',
   },
   checkedApps: [
     {
@@ -39,8 +39,7 @@ export const REFERENCE_APP = {
 } satisfies ProjectPrivacyReferenceApp
 const WEBSITE = `${REFERENCE_APP.source.repository}/blob/${REFERENCE_APP.source.commit}/`
 // v1.0.2 of the monorepo: the circuits behind the live verifiers. The app
-// vendors SDK 1.0.3-prerelease.00f84368, which the monorepo lacks. Its source
-// maps differ from 1.0.2 only in the LI.FI quote provider.
+// vendors the released SDK 1.2.0 as a tarball.
 export const MONOREPO_REPOSITORY =
   'https://github.com/0xbow-io/privacy-pools-v2-monorepo'
 export const MONOREPO_COMMIT = '61fac03acd1fc306164ddc234f7fac4147d04493'
@@ -152,7 +151,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
         },
         {
           title: "The deposit screen polls a connected wallet's balances",
-          url: WEBSITE + 'components/home/action-hub.tsx#L2250-L2265',
+          url: WEBSITE + 'components/home/action-hub.tsx#L2329-L2344',
         },
       ],
     },
@@ -227,7 +226,7 @@ export const privacyPoolsV2Adversaries = definePrivacyAdversaries({
   advice: [
     {
       name: 'Load',
-      text: `Install ${toolLink('ipfsDesktop')} and use Import CAR on \`site.car\` from the [v1.6.0 release](${REFERENCE_APP.url}). Open the app at \`http://localhost:8080/ipfs/${REFERENCE_APP.delivery.pin.cid}\`. A [rebuild](${REFERENCE_APP.delivery.rebuild}) from the reviewed source gives the same CID.`,
+      text: `Install ${toolLink('ipfsDesktop')} and use Import CAR on \`site.car\` from the [v${REFERENCE_APP.version} release](${REFERENCE_APP.url}). Open the app at \`http://localhost:8080/ipfs/${REFERENCE_APP.delivery.pin.cid}\`. A [rebuild](${REFERENCE_APP.delivery.rebuild}) from the reviewed source gives the same CID.`,
       against: ['privilegedInsider'],
       outside: true,
     },

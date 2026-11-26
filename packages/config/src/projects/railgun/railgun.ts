@@ -311,6 +311,15 @@ export const railgun: BaseProject = {
           source: 'https://facelessprivacy.eth.limo',
           checked: '2026-10-30',
         },
+        {
+          name: 'kohaku-cli',
+          icon: 'kohaku-cli',
+          finding:
+            'Unshields only through its own paymaster contract, which marks each unshield onchain as made with this app, among few others.',
+          fix: 'Offer the public broadcasters as an unshield path, as RailOxide does.',
+          source:
+            'https://github.com/kassandraoftroy/kohaku-cli/blob/0b5835ea05fc1c19ae676ba73502aad5cb1646c3/src/utils/plugins.ts#L341-L357',
+        },
       ],
     },
     trackedOn: ['ethereum'],
