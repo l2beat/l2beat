@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -78,8 +77,11 @@ export function TextSkeleton({
 }) {
   return (
     <span className={cn('relative inline-block', className)}>
-      <span className="invisible">{sizedAs}</span>
-      <Skeleton className="absolute inset-0" />
+      <span aria-hidden className="invisible">
+        {sizedAs}
+      </span>
+      {/* Skeleton's own look, as a span: it sits inside text, where a div may not */}
+      <span className="absolute inset-0 animate-pulse rounded-md bg-black/10 dark:bg-white/10" />
     </span>
   )
 }

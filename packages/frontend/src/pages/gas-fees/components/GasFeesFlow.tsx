@@ -3,7 +3,7 @@ import { useId, useRef } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 import { percent, usd } from './format'
-import { ETH, L2, Label } from './parts'
+import { ETH, Info, L2, Label } from './parts'
 
 interface Totals {
   txCount: number
@@ -72,6 +72,7 @@ export function GasFeesFlow({
     >
       <Head
         name="Transactions"
+        info="Transactions that paid a fee. A chain’s own system transactions, such as an OP Stack chain’s deposits and Taiko’s anchors, pay none and are left out."
         total={formatNumber(l2s.txCount + ethereum.txCount, 1)}
       />
       <Head
@@ -129,10 +130,13 @@ function fitLabel(
 
 function Head({
   name,
+  info,
   total,
   className,
 }: {
   name: string
+  /** What the total counts, when the name alone could mislead */
+  info?: string
   total: string
   className?: string
 }) {
@@ -143,7 +147,10 @@ function Head({
         className,
       )}
     >
-      <Label>{name}</Label>
+      <Label>
+        {name}
+        {info && <Info about={name.toLowerCase()}>{info}</Info>}
+      </Label>
       <span className="whitespace-nowrap font-bold text-sm tabular-nums">
         {total}
       </span>

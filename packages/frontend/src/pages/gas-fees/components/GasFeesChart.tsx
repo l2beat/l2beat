@@ -294,7 +294,13 @@ export function GasFeesChart({
                 isolatedDots: {},
               },
             ]}
-            highlight={highlightedChainId}
+            // A hidden chain has no line to bring out, and would only fade the rest
+            highlight={
+              highlightedChainId !== undefined &&
+              shownKeys.includes(highlightedChainId)
+                ? highlightedChainId
+                : undefined
+            }
             yAxis={yAxis}
             referenceAreas={upgradeMarks}
             renderTooltip={(row, keys) => (

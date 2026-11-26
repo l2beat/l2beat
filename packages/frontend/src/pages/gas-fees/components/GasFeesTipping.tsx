@@ -10,7 +10,7 @@ import { formatMultiple, formatPeriod, usd } from './format'
 import { GasFeesPriceOfSpeed } from './GasFeesPriceOfSpeed'
 import { GasFeesOvertipping, GasFeesTipPayers } from './GasFeesTipPayers'
 import { GasFeesTipTracks } from './GasFeesTipTracks'
-import { Label } from './parts'
+import { Label, TextSkeleton } from './parts'
 import type { GasFeesWalletIcons } from './types'
 import { type LiveTipsStatus, useLiveTips } from './useLiveTips'
 
@@ -28,7 +28,10 @@ export function GasFeesTipping({
   const live = useLiveTips()
   const { payers, speed } = tipping
   const overtip = payers ? payers.ordinaryUsd - payers.atFastUsd : 0
+  const overtipped =
+    payers && overtip > 0 ? { usd: overtip, period: payers.period } : undefined
   const range = live.fastRange
+  const pending = live.status.kind === 'pending'
   return (
     <div ref={live.ref} className="flex flex-col gap-6">
       <header className="flex flex-col gap-2.5">
@@ -38,27 +41,39 @@ export function GasFeesTipping({
           </h2>
           <LiveStatus status={live.status} />
         </div>
-        <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
-          {range ? (
-            <>
-              You can pay up to{' '}
-              <span className="text-brand-deep">
-                {formatMultiple(range.highest)} less
-              </span>{' '}
-              by using our estimated tip.
-            </>
-          ) : (
-            'Our estimated fast tip gets you into the next block.'
-          )}
-          {payers && overtip > 0 && (
-            <>
-              {' '}
-              <br className="max-md:hidden" />
-              {getPeriodOpening(payers.period)}, ordinary transactions tipped{' '}
-              <span className="text-brand-deep">{usd(overtip)}</span> above it.
-            </>
-          )}
-        </p>
+        {/* Without a live read there is no claim to make about the tip now */}
+        {(range || overtipped || pending) && (
+          <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
+            {pending && (
+              <>
+                <TextSkeleton sizedAs="You can pay up to 00× less by using our estimated tip." />{' '}
+                <br className="max-md:hidden" />
+              </>
+            )}
+            {range && (
+              <>
+                You can pay up to{' '}
+                <span className="text-brand-deep">
+                  {formatMultiple(range.highest)} less
+                </span>{' '}
+                by using our estimated tip. <br className="max-md:hidden" />
+              </>
+            )}
+            {overtipped && (
+              <>
+                {getPeriodOpening(overtipped.period)}, ordinary transactions
+                tipped{' '}
+                <span className="text-brand-deep">{usd(overtipped.usd)}</span>{' '}
+                above {range ? 'it' : 'our estimated fast tip'}.
+              </>
+            )}
+          </p>
+        )}
+        {pending && (
+          <p className="text-sm">
+            <TextSkeleton sizedAs="Fast, for the next block: wallets suggest 00× our estimated tip right now." />
+          </p>
+        )}
         {range && (
           <p className="text-secondary text-sm">
             Fast, for the next block: wallets suggest{' '}
@@ -78,7 +93,7 @@ export function GasFeesTipping({
 
       <GasFeesTipTracks
         rows={live.rows}
-        pending={live.status.kind === 'pending'}
+        pending={pending}
         wallets={live.wallets}
         walletIcons={walletIcons}
       />
