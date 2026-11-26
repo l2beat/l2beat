@@ -55,6 +55,8 @@ export const TVS_CHANGE_FORMAT: ChangeFormat = {
     </>
   ),
   vsBaseline: (event) => {
+    // A category's first projects arrive from nothing.
+    if (event.baseline <= 0) return 'up from zero in 3 days'
     const ratio = event.observed / event.baseline
     return `${formatPercent(ratio)} ${ratio >= 1 ? 'up' : 'down'} in 3 days`
   },
