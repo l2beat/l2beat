@@ -2,9 +2,11 @@ import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { getTopProtocols } from './getTopProtocols'
 import {
   aggregateTransferSize,
   aggregateTransferType,
+  getTransferSizeChartData,
 } from './getTransferSizeChartData'
 
 const TIMESTAMP = UnixTime(1700000000)
@@ -118,5 +120,35 @@ describe(aggregateTransferType.name, () => {
       lockAndMint: 500,
       burnAndMint: 5000,
     })
+  })
+})
+
+// Method: a record whose id has no project in config, as in snapshots taken
+// before that project was removed. The helpers must label it, not throw.
+describe('records of projects removed from config', () => {
+  const removed = record({
+    id: 'squid',
+    transferCount: 3,
+    countUnder100: 3,
+    identifiedCount: 3,
+    srcValueUsd: 30,
+  })
+
+  it(`${getTopProtocols.name} labels them as unknown without a link`, () => {
+    const [protocol] = getTopProtocols(
+      [{ ...removed, tokens: [] }],
+      [],
+      new Set(),
+    )
+
+    expect(protocol?.name).toEqual('Unknown (squid)')
+    expect(protocol?.slug).toEqual(undefined)
+    expect(protocol?.transfers).toEqual({ value: 3, share: 100 })
+  })
+
+  it(`${getTransferSizeChartData.name} labels them as unknown`, () => {
+    const result = getTransferSizeChartData([removed], [])
+
+    expect(result?.map((p) => p.name)).toEqual(['Unknown (squid)'])
   })
 })

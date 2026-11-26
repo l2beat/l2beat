@@ -9,7 +9,10 @@ import {
   modelPermissionsCommand,
   type TemplateService,
 } from '@l2beat/discovery'
-import { updateDiffHistory } from './updateDiffHistory'
+import {
+  assertProjectCanUpdateDiffHistory,
+  updateDiffHistory,
+} from './updateDiffHistory'
 
 export interface Options {
   logger: Logger
@@ -24,6 +27,14 @@ export async function discoverAndUpdateDiffHistory(
   config: DiscoveryModuleConfig,
   options: Options,
 ) {
+  if (config.maxDepth === undefined) {
+    // Reject unmerged watch entries before mutating discovered.json on disk.
+    assertProjectCanUpdateDiffHistory(
+      config.project,
+      options.configReader,
+      options.logger,
+    )
+  }
   await discover(config, getChainConfigs(), options.logger)
   await modelPermissionsCommand(
     config.project,

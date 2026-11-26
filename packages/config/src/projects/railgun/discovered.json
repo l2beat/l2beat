@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1795691323,
+  "timestamp": 1795691822,
   "configHash": "0x0c3e2877cc5b1aa4ebc5f6e5230b6f5144d679fb900c5e4cb51a9c220462f2d1",
   "entries": [
     {
@@ -1813,7 +1813,7 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x685ff8bfc428be49aea11ebb895d0fe3a034dba5442d99c12b7ab9876aae418f"
   },
-  "usedBlockNumbers": { "ethereum": 26498976 },
+  "usedBlockNumbers": { "ethereum": 26499018 },
   "permissionsConfigHash": "0x0ad4b020142c6516aa3fd10a1e068768851caebfa05399eafcf07058109f09cc",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {

@@ -121,6 +121,7 @@ export type ApiDiffHistorySectionKind =
   | 'initial-discovery'
   | 'source-code-changes'
   | 'config-related-changes'
+  | 'offchain-changes'
 
 export interface ApiDiffHistorySection {
   kind: ApiDiffHistorySectionKind

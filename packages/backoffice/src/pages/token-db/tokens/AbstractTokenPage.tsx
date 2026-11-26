@@ -1,0 +1,504 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  CoinsIcon,
+  GitMergeIcon,
+  PlusIcon,
+  TrashIcon,
+  TriangleAlertIcon,
+} from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, Navigate, useParams } from 'react-router'
+import { toast } from 'sonner'
+import { Badge } from '~/components/core/Badge'
+import { Button } from '~/components/core/Button'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/Command'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import {
+  Empty,
+  EmptyContent,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '~/components/core/Empty'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '~/components/core/Popover'
+import { LoadingState } from '~/components/LoadingState'
+import { AppLayout } from '~/layouts/AppLayout'
+import { ButtonWithSpinner } from '~/pages/token-db/components/ButtonWithSpinner'
+import {
+  AbstractTokenForm,
+  AbstractTokenSchema,
+} from '~/pages/token-db/components/forms/AbstractTokenForm'
+import { PlanConfirmationDialog } from '~/pages/token-db/components/PlanConfirmationDialog'
+import type {
+  AbstractToken,
+  AbstractTokenWithDeployedTokens,
+} from '~/pages/token-db/types'
+import { buildUrlWithParams } from '~/pages/token-db/utils/buildUrlWithParams'
+import { getAbstractTokenDisplayId } from '~/pages/token-db/utils/getDisplayId'
+import { validateResolver } from '~/pages/token-db/utils/validateResolver'
+import { useTokenDbTrpc } from '~/react-query/trpc'
+import { cn } from '~/utils/cn'
+
+export function AbstractTokenPage() {
+  const trpc = useTokenDbTrpc()
+  const { id } = useParams()
+  const { data } = useQuery(
+    trpc.abstractTokens.getById.queryOptions(id ?? '', {
+      enabled: id !== '',
+    }),
+  )
+
+  if (!id || data === null) {
+    return <Navigate to="/token-db/not-found" replace />
+  }
+
+  return (
+    <AppLayout>
+      {data ? (
+        <AbstractTokenView token={data} />
+      ) : (
+        <LoadingState className="h-full" />
+      )}
+    </AppLayout>
+  )
+}
+
+function AbstractTokenView({
+  token,
+}: {
+  token: AbstractTokenWithDeployedTokens
+}) {
+  const trpc = useTokenDbTrpc()
+  const [plan, setPlan] = useState<Plan | undefined>(undefined)
+  const [isMergeDialogOpen, setIsMergeDialogOpen] = useState(false)
+  const [mergeTargetId, setMergeTargetId] = useState('')
+
+  const form = useForm<AbstractTokenSchema>({
+    resolver: validateResolver(AbstractTokenSchema),
+    defaultValues: {
+      ...token,
+      issuer: token.issuer ?? undefined,
+      category: token.category,
+      coingeckoId: token.coingeckoId ?? undefined,
+      iconUrl: token.iconUrl ?? undefined,
+      comment: token.comment ?? undefined,
+      additionalCoingeckoEntries:
+        token.additionalCoingeckoEntries?.map((entry) => ({
+          coingeckoId: entry.coingeckoId,
+          iconUrl: entry.iconUrl ?? undefined,
+          coingeckoListingTimestamp: entry.coingeckoListingTimestamp
+            ? UnixTime.toYYYYMMDD(entry.coingeckoListingTimestamp)
+            : undefined,
+        })) ?? [],
+      coingeckoListingTimestamp: token.coingeckoListingTimestamp
+        ? UnixTime.toYYYYMMDD(token.coingeckoListingTimestamp)
+        : undefined,
+    },
+  })
+
+  const { mutate: planMutate, isPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+          setIsMergeDialogOpen(false)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
+
+  const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
+
+  const { data: suggestions, isLoading: isLoadingSuggestions } = useQuery(
+    trpc.deployedTokens.getSuggestionsByCoingeckoId.queryOptions(
+      token.coingeckoId ?? '',
+      {
+        enabled: !!token.coingeckoId,
+      },
+    ),
+  )
+
+  const sortedSuggestions = [...(suggestions ?? [])].sort(
+    (a, b) => Number(b.isInterop) - Number(a.isInterop),
+  )
+
+  return (
+    <>
+      <PlanConfirmationDialog
+        plan={plan}
+        setPlan={setPlan}
+        onSuccess={() => {
+          const values = form.getValues()
+          form.reset(values)
+        }}
+      />
+      <MergeAbstractTokenDialog
+        isOpen={isMergeDialogOpen}
+        setIsOpen={setIsMergeDialogOpen}
+        source={token}
+        targetId={mergeTargetId}
+        setTargetId={setMergeTargetId}
+        tokens={abstractTokens ?? []}
+        isLoading={areAbstractTokensLoading}
+        isPending={isPending}
+        onMerge={() => {
+          const target = (abstractTokens ?? []).find(
+            (t) => t.id === mergeTargetId,
+          )
+          if (!target) {
+            toast.error('Select target abstract token')
+            return
+          }
+          planMutate({
+            type: 'MergeAbstractTokenIntent',
+            sourceId: getAbstractTokenDisplayId(token),
+            targetId: getAbstractTokenDisplayId(target),
+          })
+        }}
+      />
+      <div className="mx-auto flex max-w-3xl gap-2">
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                Abstract Token
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AbstractTokenForm
+                form={form}
+                onSubmit={(values) => {
+                  planMutate({
+                    type: 'UpdateAbstractTokenIntent',
+                    id: token.id,
+                    update: {
+                      ...values,
+                      issuer: values.issuer || null,
+                      category: values.category ?? null,
+                      iconUrl: values.iconUrl || null,
+                      coingeckoId: values.coingeckoId || null,
+                      comment: values.comment || null,
+                      additionalCoingeckoEntries:
+                        values.additionalCoingeckoEntries &&
+                        values.additionalCoingeckoEntries.length > 0
+                          ? values.additionalCoingeckoEntries.map((entry) => ({
+                              coingeckoId: entry.coingeckoId,
+                              iconUrl: entry.iconUrl || null,
+                              coingeckoListingTimestamp:
+                                entry.coingeckoListingTimestamp
+                                  ? UnixTime.fromDate(
+                                      new Date(entry.coingeckoListingTimestamp),
+                                    )
+                                  : null,
+                            }))
+                          : null,
+                      coingeckoListingTimestamp:
+                        values.coingeckoListingTimestamp
+                          ? UnixTime.fromDate(
+                              new Date(values.coingeckoListingTimestamp),
+                            )
+                          : null,
+                    },
+                  })
+                }}
+                isFormDisabled={isPending}
+              >
+                <ButtonWithSpinner
+                  isLoading={false}
+                  disabled={
+                    Object.keys(form.formState.dirtyFields).length === 0
+                  }
+                  className="w-full"
+                  type="submit"
+                >
+                  Update
+                </ButtonWithSpinner>
+              </AbstractTokenForm>
+            </CardContent>
+          </Card>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Suggestions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isLoadingSuggestions ? (
+                <LoadingState />
+              ) : suggestions && suggestions.length !== 0 ? (
+                <div className="-mx-6 flex flex-col">
+                  {sortedSuggestions.map((suggestion) => (
+                    <SuggestionRow
+                      key={`${suggestion.chain}-${suggestion.address}`}
+                      suggestion={suggestion}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No suggestions found</EmptyTitle>
+                  </EmptyHeader>
+                </Empty>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                Deployed Tokens
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-1 p-0">
+              {token.deployedTokens.length !== 0 ? (
+                token.deployedTokens.map((token) => (
+                  <div
+                    key={`${token.chain}+${token.address}`}
+                    className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
+                  >
+                    <span>
+                      {token.chain} ({token.symbol}){' '}
+                      {token.ignored && (
+                        <span title="Ignored deployed token">⛔</span>
+                      )}
+                    </span>
+                    <Button asChild variant="link" size="icon">
+                      <Link
+                        to={`/token-db/tokens/${token.chain}/${token.address}`}
+                      >
+                        <ArrowRightIcon />
+                      </Link>
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <CoinsIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No Deployed Tokens</EmptyTitle>
+                    <EmptyContent>
+                      <Button asChild>
+                        <Link to="/token-db/tokens/new?tab=deployed">
+                          Add new
+                        </Link>
+                      </Button>
+                    </EmptyContent>
+                  </EmptyHeader>
+                </Empty>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        <div className="mt-2 flex flex-col gap-2">
+          <ButtonWithSpinner
+            variant="outline"
+            size="icon"
+            title="Merge into another abstract token"
+            aria-label="Merge into another abstract token"
+            onClick={() => {
+              setMergeTargetId('')
+              setIsMergeDialogOpen(true)
+            }}
+            isLoading={false}
+            disabled={isPending}
+          >
+            <GitMergeIcon />
+          </ButtonWithSpinner>
+          <ButtonWithSpinner
+            variant="destructive"
+            size="icon"
+            title="Delete abstract token"
+            aria-label="Delete abstract token"
+            onClick={() => {
+              planMutate({
+                type: 'DeleteAbstractTokenIntent',
+                id: token.id,
+              })
+            }}
+            isLoading={isPending}
+          >
+            <TrashIcon />
+          </ButtonWithSpinner>
+        </div>
+      </div>
+    </>
+  )
+}
+
+function MergeAbstractTokenDialog({
+  isOpen,
+  setIsOpen,
+  source,
+  targetId,
+  setTargetId,
+  tokens,
+  isLoading,
+  isPending,
+  onMerge,
+}: {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  source: AbstractToken
+  targetId: string
+  setTargetId: (id: string) => void
+  tokens: AbstractToken[]
+  isLoading: boolean
+  isPending: boolean
+  onMerge: () => void
+}) {
+  const target = tokens.find((token) => token.id === targetId)
+  const targetOptions = tokens.filter((token) => token.id !== source.id)
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogHeader>
+          <DialogTitle>Merge abstract token</DialogTitle>
+          <DialogDescription>
+            Move deployed tokens from {source.id} and copy its CoinGecko entries
+            into another abstract token.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex items-start gap-2 rounded border border-destructive bg-destructive/10 p-3 text-destructive text-sm">
+          <TriangleAlertIcon className="mt-0.5 size-4 shrink-0" />
+          <span>
+            This operation is difficult to revert. Proceed with caution.
+          </span>
+        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              disabled={isLoading || isPending}
+              variant="outline"
+              role="combobox"
+              className={cn(
+                'justify-between',
+                !target && 'text-muted-foreground',
+              )}
+            >
+              {isLoading
+                ? 'Loading...'
+                : target
+                  ? getAbstractTokenDisplayId(target)
+                  : 'Select target abstract token'}
+              <ChevronsUpDownIcon className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0" align="start">
+            <Command>
+              <CommandInput placeholder="Search abstract token..." />
+              <CommandList>
+                <CommandEmpty>No abstract token found.</CommandEmpty>
+                <CommandGroup>
+                  {targetOptions.map((token) => {
+                    const displayId = getAbstractTokenDisplayId(token)
+                    return (
+                      <CommandItem
+                        value={displayId}
+                        key={displayId}
+                        onSelect={() => setTargetId(token.id)}
+                      >
+                        {displayId}
+                        <CheckIcon
+                          className={cn(
+                            'ml-auto',
+                            token.id === targetId ? 'opacity-100' : 'opacity-0',
+                          )}
+                        />
+                      </CommandItem>
+                    )
+                  })}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+        <DialogFooter>
+          <ButtonWithSpinner onClick={onMerge} isLoading={isPending}>
+            Merge
+          </ButtonWithSpinner>
+          <Button
+            variant="outline"
+            onClick={() => setIsOpen(false)}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function SuggestionRow({
+  suggestion,
+}: {
+  suggestion: { chain: string; address: string; isInterop: boolean }
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 px-6 py-2 odd:bg-muted">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{suggestion.chain}</span>
+          {suggestion.isInterop && (
+            <Badge variant="outline" className="text-[10px] uppercase">
+              Interop
+            </Badge>
+          )}
+        </div>
+        <p className="truncate font-mono text-muted-foreground text-xs">
+          {suggestion.address}
+        </p>
+      </div>
+      <Button variant="link" asChild size="icon">
+        <Link
+          to={buildUrlWithParams('/token-db/tokens/new', {
+            tab: 'deployed',
+            chain: suggestion.chain,
+            address: suggestion.address,
+          })}
+          target="_blank"
+        >
+          <PlusIcon />
+        </Link>
+      </Button>
+    </div>
+  )
+}

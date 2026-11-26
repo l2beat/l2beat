@@ -1,6 +1,6 @@
 {
   "name": "grvt",
-  "timestamp": 1795519505,
+  "timestamp": 1795691813,
   "configHash": "0x2084c1e51035868baf0c9a414d9ff9295ca19404533437794a0eacdebaec6748",
   "entries": [
     {
@@ -169,8 +169,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 18272704270462,
-        "totalExposureStrict": 18272704270462,
+        "totalExposure": 18277120198706,
+        "totalExposureStrict": 18277120198706,
         "tvlTokens": [
           "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -426,7 +426,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 97,
+        "nonce": 98,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -822,19 +822,19 @@
         "positionBreakdown": [
           {
             "token": "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a",
-            "amount": 49685125,
+            "amount": 49693296,
             "kind": 0
           }
         ],
-        "totalExposure": 49685125,
-        "totalExposureStrict": 49685125,
+        "totalExposure": 49693296,
+        "totalExposureStrict": 49693296,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x23878914EFE38d27C4D67Ab83ed1b93A74D4086a"
         ],
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "withdrawableExposure": 49685125
+        "withdrawableExposure": 49693296
       },
       "implementationNames": {
         "eth:0x646123424BEcBF14a7542bc44340AdB241BA32b3": "BeaconProxy",
@@ -1006,8 +1006,8 @@
           }
         ],
         "sGhoToken": "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d",
-        "totalExposure": 10948711957399,
-        "totalExposureStrict": 10948711957399,
+        "totalExposure": 10951404268103,
+        "totalExposureStrict": 10951404268103,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
@@ -1017,7 +1017,7 @@
         "vault": "eth:0xC95Fedb8Bdc763e4ef093D14e8196afafBB48f45",
         "vaultToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "vaultTokenDecimals": 6,
-        "withdrawableExposure": 10948711957399
+        "withdrawableExposure": 10951404268103
       },
       "implementationNames": {
         "eth:0x89D76f493AECaEe10caBbC1a67dbdC92E947b85E": "BeaconProxy",
@@ -1142,12 +1142,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 59,
+        "executedCount": 60,
         "minDelay": 0,
         "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 59,
+        "scheduledTransparentCount": 60,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1367,8 +1367,8 @@
             },
             {
               "idle": 0,
-              "strategy": 49732259,
-              "total": 49732259,
+              "strategy": 49740438,
+              "total": 49740438,
               "skippedStrategies": 0
             },
             {
@@ -2003,7 +2003,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           1
         ],
-        "getFirstUnprocessedPriorityTx": 5372,
+        "getFirstUnprocessedPriorityTx": 5412,
         "getL2BootloaderBytecodeHash": "0x01000945a9e6fdfce3580e953a64ba79e437b579f8cff02cae89fbbf50886a37",
         "getL2DefaultAccountBytecodeHash": "0x010005d9ae0fb8ab4bc73a1b9934c344139a2ea02894394fe79633cdd0463f29",
         "getL2EvmEmulatorBytecodeHash": "0x01000c07b3db6af3a645759f181ee49ddba1a89e501796de176dde6b980d2a60",
@@ -2011,8 +2011,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0x1b8ea449cb2f9699a841637ae7da797cfb158bf3ca250e31fee90d13242c2f0f",
+        "getPriorityQueueSize": 0,
+        "getPriorityTreeRoot": "0x8c236136d65298862816aea7e4b2603d686af26bd8f8021df0f7b188ebbe6c80",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 141733920768,
@@ -2020,13 +2020,13 @@
         "getRollupDAManager": "eth:0xc16161C7f704388285fE58db287F6216a350dAFA",
         "getSemverProtocolVersion": [0, 33, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 135389,
-        "getTotalBatchesExecuted": 135337,
-        "getTotalBatchesVerified": 135368,
-        "getTotalBlocksCommitted": 135389,
-        "getTotalBlocksExecuted": 135337,
-        "getTotalBlocksVerified": 135368,
-        "getTotalPriorityTxs": 5373,
+        "getTotalBatchesCommitted": 136069,
+        "getTotalBatchesExecuted": 136031,
+        "getTotalBatchesVerified": 136060,
+        "getTotalBlocksCommitted": 136069,
+        "getTotalBlocksExecuted": 136031,
+        "getTotalBlocksVerified": 136060,
+        "getTotalPriorityTxs": 5412,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0x5D5d33B16D9e79d9d9b8196ec760e70a31A44711",
         "getVerifierParams": {
@@ -2243,8 +2243,8 @@
           "eth:0xE1753F2e00940cC31213dd92013cF019DFE4ca1d"
         ],
         "swapsPaused": false,
-        "totalExposure": 1318521961971,
-        "totalExposureStrict": 1318521961971,
+        "totalExposure": 1318786954435,
+        "totalExposureStrict": 1318786954435,
         "tvlTokens": [
           "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
           "eth:0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
@@ -3940,7 +3940,7 @@
     "shared-zk-stack/ValidatorTimelock_v31": "0xc571d18f4183eb072d6806cece41853993e1559b69d2a903b1d707b05ad8385f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 26484702 },
+  "usedBlockNumbers": { "ethereum": 26499017 },
   "permissionsConfigHash": "0xa522041f7a0f7c787c9bdf8f7edcecca73466699f280183aec30c2b8cff3f10c",
   "modelledAgainst": {
     "shared-zk-stack": "0x3fb496558cb38b611ac21921ee3033ba85c0b8722d97b61cf76cc89852c2a763"

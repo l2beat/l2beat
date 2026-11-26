@@ -117,7 +117,8 @@ function formatTopProtocol({
     volume && `volume ${formatUsd(volume.value)}`,
     formatTransferCount(transfers.value),
   ])
-  return `${link(name, interopProtocolUrl(slug))} (${stats.join(', ')})`
+  const label = slug ? link(name, interopProtocolUrl(slug)) : name
+  return `${label} (${stats.join(', ')})`
 }
 
 /**
