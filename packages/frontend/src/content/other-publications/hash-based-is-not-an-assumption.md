@@ -16,7 +16,7 @@ In [PQAI #0](https://blog.ethereum.org/2026/11/23/pqai-0), the Ethereum Foundati
 
 Even so, that pragmatic framing easily slips into the stronger claim that replacing elliptic curves with hash-based signatures adds **no new assumptions**. In PQAI #0, the EF writes: *"The Ethereum protocol already relies on hashes being secure, so importantly this does not add a new assumption."* The same shorthand shows up in core dev discussions: in the [ACDE #249](https://forkcast.org/calls/acde/249) call chat, SPHINCS was defended with *"SPHINCS does not add new crypto assumptions (we already have [Keccak]), while Lattices would."*
 
-The problem is that **"hash-based" names a building block, not an assumption.** Saying a hash function $f$ is secure can mean very different things, starting with three classic properties:
+**"Hash-based" names a building block, not an assumption.** Saying a hash function $f$ is secure can mean very different things, starting with three classic properties:
 
 1. **One-wayness (preimage resistance):** Given only the output $f(x)$ for a random input $x$, nobody can find *any* input that hashes to it.
 2. **Second-preimage resistance:** Given a random input $x$, nobody can find a *different* input $x' \neq x$ with $f(x') = f(x)$.
@@ -24,7 +24,7 @@ The problem is that **"hash-based" names a building block, not an assumption.** 
 
 These are not equivalent, and even all three together do not cover everything hash-based schemes rely on.
 
-Elliptic curves will not survive large quantum computers, so adding post-quantum signatures is not in question. What is not free is dropping elliptic curves at the same time. Whenever a hash-based scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks while elliptic curves are still standing, dropping them leaves you worse off.**
+Elliptic curves will not survive large quantum computers, so adding post-quantum signatures is not in question. Dropping elliptic curves at the same time is not free. Whenever a hash-based scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks while elliptic curves are still standing, dropping them leaves you worse off.**
 
 We compare two one-time signature schemes on the same hash function $f$. **Lamport** is the minimal hash-based signature scheme. **Winternitz** is the standard efficiency optimization on top of it, and the core building block inside [XMSS](https://datatracker.ietf.org/doc/html/rfc8391), [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`. The result:
 
@@ -53,7 +53,7 @@ Take $f: \{0,1\}^n \to \{0,1\}^n$ and an attacker limited to $t$ basic operation
 
 We say $f$ is **$(t, \varepsilon)$-one-way** if no attacker within budget $t$ wins with probability greater than $\varepsilon$. Intuitively, 128-bit security means budget $t$ buys a winning probability of at most roughly $t / 2^{128}$, so a high chance of success takes roughly $2^{128}$ operations.
 
-One detail matters later: **one-wayness is average-case over random inputs.** If a tiny sliver of inputs, say one in $2^{128}$, is trivially invertible, $f$ is *still* one-way. A random $x$ almost never lands there, so it only nudges the winning probability up by $2^{-128}$. Real hashes have such slivers too: anyone can precompute billions of hashes and invert them instantly.
+**One-wayness is average-case over random inputs.** If a tiny sliver of inputs, say one in $2^{128}$, is trivially invertible, $f$ is *still* one-way. A random $x$ almost never lands there, so it only nudges the winning probability up by $2^{-128}$. Real hashes have such slivers too: anyone can precompute billions of hashes and invert them instantly.
 
 ---
 
@@ -82,7 +82,7 @@ The forger picks *both* $m$ and $m^*$. Real attackers can often influence what g
 
 Because $m^* \neq m$, they differ at some bit where the forger never saw the secret for $m^*$, only its hash in $\mathsf{pk}$. To prove security formally, we use a **reduction**: any algorithm that forges Lamport can be turned into an algorithm that inverts $f$.
 
-> **How a cryptographic reduction proves security**
+> **Cryptographic reductions**
 >
 > If breaking into a house forces you to break the door, then as long as the door holds, the house holds. Showing that breaking Lamport lets you invert $f$ proves that one-wayness of $f$ protects Lamport.
 >
@@ -103,7 +103,7 @@ Suppose a forger wins the Lamport game with probability $p$. We wrap it into an 
 4. The forger asks to sign some message $m$. If $m$ uses the planted slot, give up, since that secret is unknown. Otherwise, sign $m$ honestly.
 5. Conditioned on surviving step 4, the forger sees a real Lamport game, so with probability $p$ it outputs a valid forgery $(m^*, \sigma^*)$. Let $j$ be the first bit where $m^*$ differs from $m$. Slot $(j,\, m^*_j)$ was not used by $m$, and if $y^*$ sits there, $\sigma^*$'s component at position $j$ is a preimage of $y^*$, which the inverter outputs to win.
 
-**Why this succeeds with probability $p / (2L)$.** Step 4 succeeds with probability $1 / 2$, since $m$ uses half of the $2L$ slots. Because $\sigma$ reveals only the slots $m$ used, the planted slot stays hidden after signing: conditioned on surviving step 4, it is equally likely to be any of the $L$ unused slots, including $(j,\, m^*_j)$. So the plant hits $(j,\, m^*_j)$ with probability $1 / L$, giving $(1 / 2) \cdot (1 / L) = 1 / (2L)$ whenever the forger succeeds.
+**Success probability: $p / (2L)$.** Step 4 succeeds with probability $1 / 2$, since $m$ uses half of the $2L$ slots. Because $\sigma$ reveals only the slots $m$ used, the planted slot stays hidden after signing: conditioned on surviving step 4, it is equally likely to be any of the $L$ unused slots, including $(j,\, m^*_j)$. So the plant hits $(j,\, m^*_j)$ with probability $1 / L$, giving $(1 / 2) \cdot (1 / L) = 1 / (2L)$ whenever the forger succeeds.
 
 ![Planting the challenge y* in a Lamport public key](/images/publications/hash-based-is-not-an-assumption/00b-lamport-reduction.svg)
 
@@ -126,7 +126,7 @@ Write $f^j(x)$ for $f$ applied $j$ times, with $f^0(x) = x$. A chain starts from
 - To sign digit $d$, reveal position $d$: $f^d(x)$.
 - To verify digit $d$, hash the revealed value $w - 1 - d$ more times and check you land on $\mathsf{pk} = f^{w - 1}(x)$.
 
-There's a catch: **hashing forward is free.** If you sign digit $1$ by revealing $f(x)$, anyone can apply $f$ once to get $f^2(x)$ and forge digit $2$. Digit $3$ is also $\mathsf{pk}$, which is already public, so across a multi-digit message anyone could forge the all-3s message without seeing a signature at all.
+**Hashing forward is free.** If you sign digit $1$ by revealing $f(x)$, anyone can apply $f$ once to get $f^2(x)$ and forge digit $2$. Digit $3$ is also $\mathsf{pk}$, which is already public, so across a multi-digit message anyone could forge the all-3s message without seeing a signature at all.
 
 Winternitz plugs both holes with a **checksum**. Write your message $m$ in base $w$ as digits $d_1, d_2, \dots, d_k$, and compute:
 
@@ -170,8 +170,6 @@ $$f(\mathsf{tag}, x) = \begin{cases}
 (\mathsf{STEP2},\, x) & \text{if } \mathsf{tag} = \mathsf{STEP1} \\
 (\mathsf{STEP1},\, H(\mathsf{tag} \parallel x)) & \text{if } \mathsf{tag} \neq \mathsf{STEP1}
 \end{cases}$$
-
-How $f$ works:
 
 - **Disjoint output tags:** Normal inputs ($\mathsf{tag} \neq \mathsf{STEP1}$) always output tag $\mathsf{STEP1}$, while shortcut inputs ($\mathsf{tag} = \mathsf{STEP1}$) always output tag $\mathsf{STEP2}$. Because $\mathsf{STEP1} \neq \mathsf{STEP2}$, the two lanes can never collide with each other, and the shortcut lane can never invert a normal output.
 - **A free step back at position 2:** Hashing a random secret once lands on tag $\mathsf{STEP1}$. Hashing it a second time hits the shortcut lane and simply swaps $\mathsf{STEP1}$ to $\mathsf{STEP2}$ without touching the 256-bit payload.
@@ -224,7 +222,7 @@ On this same $f$:
 
 ---
 
-## What this proves
+## Scope of the proof
 
 This counterexample does *not* mean Winternitz with Keccak-256 or SHA-256 is broken. It proves a **logical gap**: even *one-wayness, second-preimage resistance, and collision resistance together* do not imply *"Winternitz($f$) is secure."* Iterated chain values $f^d(\text{random})$ must also stay hard to invert.
 
