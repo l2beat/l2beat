@@ -1,78 +1,130 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 334" width="720" height="334" role="img" aria-labelledby="t4 d4">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 472" width="720" height="472" role="img" aria-labelledby="t4 d4">
   <title id="t4">Hash assumptions across Ethereum today, standard-model signatures, and the proposed PQ stack</title>
-  <desc id="d4">Five-row comparison table separating Ethereum today (Keccak-256 and SHA-256), standard-model Lamport and WOTS+/XMSS/SPHINCS+, and Ethereum's proposed leanXMSS/leanSPHINCS (128-bit digests, no Fiat-Shamir) versus leanVM/LeanDA (256-bit digests, recursive Fiat-Shamir in leanVM).</desc>
+  <desc id="d4">Two-zone comparison separating standard-model hash assumptions (Lamport, WOTS+/XMSS/SPHINCS+, and Ethereum today Keccak-256) from idealized random-oracle and random-permutation models (Ethereum today SHA-256, leanXMSS/leanSPHINCS, and leanVM/LeanDA).</desc>
   <defs>
     <style>
       .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
       .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace; }
-      .hdr { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; fill: #64748b; }
-      .name { font-size: 11.5px; font-weight: 700; }
-      .cell { font-size: 10.5px; }
-      .chip { font-size: 9.5px; font-weight: 600; }
+      .colhdr { font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; fill: #71717a; }
+      .zone { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; }
+      .zonesub { font-size: 10px; font-weight: 400; fill: #71717a; }
+      .name { font-size: 11.8px; font-weight: 700; fill: #0f172a; }
+      .namemono { font-size: 11.2px; font-weight: 700; fill: #0f172a; }
+      .primary { font-size: 11px; font-weight: 600; fill: #0f172a; }
+      .sub { font-size: 10px; fill: #52525b; }
+      .hash { font-size: 9.8px; font-weight: 600; }
+      .tag { font-size: 9px; font-weight: 600; }
     </style>
   </defs>
 
-  <rect x="0.5" y="0.5" width="719" height="333" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
+  <!-- Outer card -->
+  <rect x="0.5" y="0.5" width="719" height="471" rx="12" fill="#ffffff" stroke="#e4e4e7"/>
 
   <!-- Column headers -->
-  <text x="24" y="28" class="sans hdr">COMPONENT</text>
-  <text x="206" y="28" class="sans hdr">HASH &amp; DIGEST</text>
-  <text x="334" y="28" class="sans hdr">ASSUMED IN PROOFS</text>
-  <text x="538" y="28" class="sans hdr">NOTES / OPEN GAPS</text>
-  <line x1="18" y1="38" x2="702" y2="38" stroke="#e4e4e7" stroke-width="1"/>
+  <text x="34" y="27" class="sans colhdr">COMPONENT &amp; HASH</text>
+  <text x="252" y="27" class="sans colhdr">ASSUMED IN PROOFS</text>
+  <text x="468" y="27" class="sans colhdr">NOTES &amp; GAPS</text>
 
-  <!-- Row 1: Ethereum today Keccak -->
-  <rect x="18" y="46" width="684" height="48" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
-  <text x="30" y="67" class="sans name" fill="#0f172a">Ethereum today</text>
-  <text x="30" y="83" class="sans cell" fill="#475569">state · tx · addresses</text>
-  <text x="206" y="67" class="mono cell" font-weight="600" fill="#334155">Keccak-256</text>
-  <text x="206" y="83" class="sans cell" fill="#64748b">256-bit (160 addr)</text>
-  <text x="334" y="67" class="sans cell" font-weight="600" fill="#0f172a">Collision &amp; preimage</text>
-  <text x="334" y="83" class="sans cell" fill="#475569">core protocol uses</text>
-  <text x="538" y="67" class="sans cell" fill="#475569">Solidity storage offsets</text>
-  <text x="538" y="83" class="sans cell" fill="#475569">assume more at app layer</text>
+  <!-- Compact legend aligned to x=700 -->
+  <rect x="556" y="18.5" width="7" height="7" rx="2" fill="#0d9488"/>
+  <text x="566" y="25.5" class="sans" font-size="9" font-weight="600" fill="#52525b">Baseline</text>
+  <rect x="611" y="18.5" width="7" height="7" rx="2" fill="#d97706"/>
+  <text x="621" y="25.5" class="sans" font-size="9" font-weight="600" fill="#52525b">Today</text>
+  <rect x="655" y="18.5" width="7" height="7" rx="2" fill="#2563eb"/>
+  <text x="665" y="25.5" class="sans" font-size="9" font-weight="600" fill="#52525b">PQ draft</text>
 
-  <!-- Row 2: Ethereum today SHA-256 -->
-  <rect x="18" y="102" width="684" height="48" rx="8" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.2"/>
-  <text x="30" y="123" class="sans name" fill="#78350f">Ethereum today</text>
-  <text x="30" y="139" class="sans cell" fill="#92400e">BLS · KZG · RANDAO</text>
-  <text x="206" y="123" class="mono cell" font-weight="600" fill="#78350f">SHA-256</text>
-  <text x="206" y="139" class="sans cell" fill="#92400e">256-bit</text>
-  <text x="334" y="123" class="sans cell" font-weight="600" fill="#78350f">Random oracle + PRNG</text>
-  <text x="334" y="139" class="sans cell" fill="#92400e">BLS (RFC 9380), 1-round KZG</text>
-  <text x="538" y="123" class="sans cell" fill="#92400e">Paired with elliptic curves</text>
-  <text x="538" y="139" class="sans cell" fill="#92400e">and KZG trusted setup</text>
+  <line x1="20" y1="37" x2="700" y2="37" stroke="#e4e4e7" stroke-width="1"/>
 
-  <!-- Row 3: Lamport / WOTS+ / SPHINCS+ -->
-  <rect x="18" y="158" width="684" height="48" rx="8" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.2"/>
-  <text x="30" y="179" class="sans name" fill="#064e3b">Lamport / WOTS+</text>
-  <text x="30" y="195" class="sans cell" fill="#047857">XMSS · SPHINCS+</text>
-  <text x="206" y="179" class="mono cell" font-weight="600" fill="#065f46">Standard model</text>
-  <text x="206" y="195" class="sans cell" fill="#047857">128–256-bit</text>
-  <text x="334" y="179" class="sans cell" font-weight="600" fill="#064e3b">OWF (Lamport)</text>
-  <text x="334" y="195" class="sans cell" fill="#047857">2PR + undetectability</text>
-  <text x="538" y="179" class="sans cell" fill="#047857">WOTS+ avoids collision</text>
-  <text x="538" y="195" class="sans cell" fill="#047857">resistance via tweaks</text>
+  <!-- ZONE 1: STANDARD MODEL -->
+  <text x="22" y="56" class="sans zone" fill="#0f766e">STANDARD MODEL</text>
+  <text x="129" y="56" class="sans zonesub">— concrete, falsifiable hash properties</text>
 
-  <!-- Row 4: leanXMSS / leanSPHINCS -->
-  <rect x="18" y="214" width="684" height="48" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.4"/>
-  <text x="30" y="235" class="mono" font-size="10.5" font-weight="700" fill="#1e3a8a">leanXMSS · leanSPHINCS</text>
-  <text x="30" y="251" class="sans cell" fill="#1d4ed8">PQ signatures (draft)</text>
-  <text x="206" y="235" class="mono cell" font-weight="600" fill="#1e3a8a">Keccak-f[1600]</text>
-  <text x="206" y="251" class="sans cell" fill="#1d4ed8">128-bit digests</text>
-  <text x="334" y="235" class="sans cell" font-weight="600" fill="#1e3a8a">Ideal permutation (RPM)</text>
-  <text x="334" y="251" class="sans cell" fill="#1d4ed8">no Fiat-Shamir (direct verify)</text>
-  <text x="538" y="235" class="sans cell" fill="#1d4ed8">No 256-bit CR fallback ·</text>
-  <text x="538" y="251" class="sans cell" fill="#1d4ed8">single-key · no quantum proof</text>
+  <!-- Row 1: Lamport -->
+  <rect x="20" y="66" width="680" height="48" rx="8" fill="#fafafa" stroke="#e4e4e7" stroke-width="1"/>
+  <path d="M 20 74 A 8 8 0 0 1 25 66.5 L 25 113.5 A 8 8 0 0 1 20 106 Z" fill="#0d9488"/>
+  <text x="35" y="86" class="sans name">Lamport</text>
+  <text x="35" y="102" class="sans sub">one-time signature · any hash</text>
+  <text x="252" y="86" class="sans primary">One-wayness (OWF)</text>
+  <text x="252" y="102" class="sans sub">theoretical floor (minimal)</text>
+  <text x="468" y="86" class="sans sub">Single hash per secret; no chains</text>
+  <text x="468" y="102" class="sans sub">or extra assumptions needed</text>
 
-  <!-- Row 5: leanVM / LeanDA -->
-  <rect x="18" y="270" width="684" height="48" rx="8" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5"/>
-  <text x="30" y="291" class="mono" font-size="10.5" font-weight="700" fill="#581c87">leanVM · LeanDA</text>
-  <text x="30" y="307" class="sans cell" fill="#7e22ce">aggregation · DA (draft)</text>
-  <text x="206" y="291" class="mono cell" font-weight="600" fill="#581c87">Keccak-f[1600]</text>
-  <text x="206" y="307" class="sans cell" fill="#7e22ce">256-bit digests</text>
-  <text x="334" y="291" class="sans cell" font-weight="600" fill="#581c87">Ideal permutation (RPM)</text>
-  <text x="334" y="307" class="sans cell" fill="#7e22ce">+ recursive FS (leanVM)</text>
-  <text x="538" y="291" class="sans cell" fill="#7e22ce">Recursion unproved ·</text>
-  <text x="538" y="307" class="sans cell" fill="#7e22ce">quantum · Rust impl · DA bind</text>
+  <!-- Row 2: WOTS+ / XMSS / SPHINCS+ -->
+  <rect x="20" y="122" width="680" height="48" rx="8" fill="#fafafa" stroke="#e4e4e7" stroke-width="1"/>
+  <path d="M 20 130 A 8 8 0 0 1 25 122.5 L 25 169.5 A 8 8 0 0 1 20 162 Z" fill="#0d9488"/>
+  <text x="35" y="142" class="sans name">WOTS+ · XMSS · SPHINCS+</text>
+  <text x="35" y="158" class="sans sub">standard-model proofs · 128–256-bit</text>
+  <text x="252" y="142" class="sans primary">2PR + undetectability</text>
+  <text x="252" y="158" class="sans sub">beyond collision &amp; preimage</text>
+  <text x="468" y="142" class="sans sub">Tweaks let proofs drop collision</text>
+  <text x="468" y="158" class="sans sub">resistance</text>
+
+  <!-- Row 3: Ethereum today (core / Keccak-256) -->
+  <rect x="20" y="178" width="680" height="50" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <path d="M 20 186 A 8 8 0 0 1 25 178.5 L 25 227.5 A 8 8 0 0 1 20 220 Z" fill="#d97706"/>
+  <text x="35" y="198" class="sans name">Ethereum today <tspan font-weight="500" fill="#92400e">· core</tspan></text>
+  <text x="35" y="215" class="sans sub"><tspan class="mono hash" fill="#92400e">Keccak-256</tspan> · 256-bit (160 addr)</text>
+  <text x="252" y="198" class="sans primary">Collision &amp; preimage</text>
+  <text x="252" y="215" class="sans sub">state, tx, addresses</text>
+  <text x="468" y="198" class="sans sub">Core protocol uses; Solidity storage</text>
+  <text x="468" y="215" class="sans sub">offsets assume more at app layer</text>
+
+  <!-- BOUNDARY DIVIDER -->
+  <line x1="20" y1="248" x2="700" y2="248" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <rect x="224" y="237" width="272" height="22" rx="11" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="360" y="251.5" text-anchor="middle" class="sans" font-size="9.5" font-weight="700" letter-spacing="0.05em" fill="#475569">CROSSING INTO IDEALIZED HASH MODELS</text>
+
+  <!-- ZONE 2: IDEALIZED MODELS -->
+  <text x="22" y="275" class="sans zone" fill="#1d4ed8">IDEALIZED MODELS (ROM / RPM)</text>
+  <text x="206" y="275" class="sans zonesub">— hash or permutation treated as an ideal random black box</text>
+
+  <!-- Row 4: Ethereum today (consensus / SHA-256) -->
+  <rect x="20" y="285" width="680" height="50" rx="8" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+  <path d="M 20 293 A 8 8 0 0 1 25 285.5 L 25 334.5 A 8 8 0 0 1 20 327 Z" fill="#d97706"/>
+  <text x="35" y="305" class="sans name">Ethereum today <tspan font-weight="500" fill="#92400e">· consensus</tspan></text>
+  <text x="35" y="322" class="sans sub"><tspan class="mono hash" fill="#92400e">SHA-256</tspan> · 256-bit</text>
+  <text x="252" y="305" class="sans primary">Random oracle + PRNG</text>
+  <text x="252" y="322" class="sans sub">BLS (RFC 9380), 1-round KZG, RANDAO</text>
+  <text x="468" y="305" class="sans sub">Paired with elliptic curves and</text>
+  <text x="468" y="322" class="sans sub">KZG trusted setup</text>
+
+  <!-- Row 5: leanXMSS · leanSPHINCS -->
+  <rect x="20" y="343" width="680" height="54" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2"/>
+  <path d="M 20 351 A 8 8 0 0 1 25 343.5 L 25 396.5 A 8 8 0 0 1 20 389 Z" fill="#2563eb"/>
+  <text x="35" y="363" class="mono namemono">leanXMSS<tspan class="sans" fill="#64748b"> · </tspan>leanSPHINCS</text>
+  <text x="35" y="381" class="mono hash" fill="#1d4ed8">Keccak-f[1600]</text>
+  <rect x="128" y="369.5" width="52" height="16" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="154" y="380.5" text-anchor="middle" class="mono" font-size="8.8" font-weight="700" fill="#1e40af">128-bit</text>
+  <text x="186" y="381" class="sans" font-size="9.2" fill="#64748b">PQ sigs</text>
+
+  <text x="252" y="363" class="sans primary">Ideal permutation (RPM)</text>
+  <text x="252" y="381" class="sans sub">no Fiat-Shamir (direct verify)</text>
+
+  <rect x="468" y="351" width="122" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="529" y="362.5" text-anchor="middle" class="sans tag" fill="#1e40af">No 256-bit CR fallback</text>
+  <rect x="596" y="351" width="92" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="642" y="362.5" text-anchor="middle" class="sans tag" fill="#1e40af">Single-key only</text>
+  <rect x="468" y="373" width="102" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="519" y="384.5" text-anchor="middle" class="sans tag" fill="#1e40af">No quantum proof</text>
+
+  <!-- Row 6: leanVM · LeanDA -->
+  <rect x="20" y="405" width="680" height="54" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.3"/>
+  <path d="M 20 413 A 8 8 0 0 1 25 405.5 L 25 458.5 A 8 8 0 0 1 20 451 Z" fill="#2563eb"/>
+  <text x="35" y="425" class="mono namemono">leanVM<tspan class="sans" fill="#64748b"> · </tspan>LeanDA</text>
+  <text x="35" y="443" class="mono hash" fill="#1d4ed8">Keccak-f[1600]</text>
+  <rect x="128" y="431.5" width="52" height="16" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="154" y="442.5" text-anchor="middle" class="mono" font-size="8.8" font-weight="700" fill="#1e40af">256-bit</text>
+  <text x="186" y="443" class="sans" font-size="9.2" fill="#64748b">agg · DA</text>
+
+  <text x="252" y="425" class="sans primary">Ideal permutation (RPM)</text>
+  <text x="252" y="443" class="sans sub">+ recursive Fiat-Shamir (leanVM)</text>
+
+  <rect x="468" y="413" width="110" height="17" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="0.9"/>
+  <text x="523" y="424.5" text-anchor="middle" class="sans tag" fill="#991b1b">Recursion unproved</text>
+  <rect x="584" y="413" width="102" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="635" y="424.5" text-anchor="middle" class="sans tag" fill="#1e40af">No quantum proof</text>
+  <rect x="468" y="435" width="88" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="512" y="446.5" text-anchor="middle" class="sans tag" fill="#1e40af">Rust impl gap</text>
+  <rect x="562" y="435" width="96" height="17" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="0.9"/>
+  <text x="610" y="446.5" text-anchor="middle" class="sans tag" fill="#1e40af">LeanDA binding</text>
 </svg>
