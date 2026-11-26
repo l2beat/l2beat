@@ -6,8 +6,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import {
   getLiveBucketSeconds,
   LIVE_JUMP_SECONDS,
-  LIVE_RANGES,
-  type LiveRange,
 } from '~/utils/range/liveRanges'
 
 /** The minute the rate right now is taken over starts on a multiple of it */
@@ -64,21 +62,21 @@ export function getLiveBuffer(
 }
 
 /**
- * The range ending before `to`, or at the newest block, within the buffer. A
+ * The window of `seconds` ending before `to`, or at the newest block, within
+ * the buffer. A
  * bucket spans a whole number of blocks, so a chain with a fixed block time
  * has as many in each instead of alternating, and only buckets the newest
  * block is past are in, so the live edge does not dip
  */
 export function getLiveWindow(
-  range: LiveRange,
+  seconds: number,
   buffer: Pick<LiveBuffer, 'from' | 'to'>,
   blockSeconds: number,
   to?: UnixTime,
 ) {
-  const { seconds } = LIVE_RANGES[range]
   // a sparse sample, as a stale block beside a new one, can't empty the window
   const block = Math.min(Math.max(1, blockSeconds), seconds / 10)
-  const bucket = Math.ceil(getLiveBucketSeconds(range) / block) * block
+  const bucket = Math.ceil(getLiveBucketSeconds(seconds) / block) * block
   const end =
     Math.floor(
       Math.min(Math.max(to ?? buffer.to, buffer.from + seconds), buffer.to) /
@@ -88,7 +86,7 @@ export function getLiveWindow(
   const readFrom =
     Math.floor(from / bucket) * bucket -
     Math.ceil(LEAD_SECONDS / bucket) * bucket
-  return { range, from, to: end, bucket, readFrom }
+  return { seconds, from, to: end, bucket, readFrom }
 }
 
 /**

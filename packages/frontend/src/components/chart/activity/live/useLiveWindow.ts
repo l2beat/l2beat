@@ -5,16 +5,17 @@ import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import {
   DEFAULT_LIVE_RANGE,
+  formatLiveLength,
   getLiveBucketSeconds,
+  getLiveRange,
   LIVE_RANGES,
-  type LiveRange,
 } from '~/utils/range/liveRanges'
-import { clampTo, getMoveEnd } from './liveView'
+import { clampTo, getMoveEnd, getTargetEnd, type LiveTarget } from './liveView'
 import { LOOKAHEAD_DRAWINGS, useLivePlayhead } from './useLivePlayhead'
 
 /**
- * The live view's window: the range picked, where it ends, the data read for
- * it and where that is on screen. Following the newest block it scrolls with
+ * The live view's window: its length, where it ends, the data read for it
+ * and where that is on screen. Following the newest block it scrolls with
  * the clock, while the charts are hovered it holds still on the data it was
  * drawn from, and while it is moved on the overview it stays as read until
  * the move stops
@@ -28,17 +29,17 @@ export function useLiveWindow({
   onGlide: (seconds: number) => void
 }) {
   const trpc = useTRPC()
-  const [range, setRange] = useState<LiveRange>(DEFAULT_LIVE_RANGE)
+  const [seconds, setSeconds] = useState(LIVE_RANGES[DEFAULT_LIVE_RANGE])
   /** Where the window ends, undefined while following the newest block */
   const [to, setTo] = useState<number>()
-  /** Where the overview's window is moved to, before that is read */
-  const [seekTo, setSeekTo] = useState<number>()
+  /** Where the overview's window is moved or resized to, before that is read */
+  const [seekTo, setSeekTo] = useState<LiveTarget>()
   const [hovered, setHovered] = useState(false)
   const still = usePrefersReducedMotion()
 
   const refetchInterval = (to === undefined ? 5 : 30) * 1000
   const query = useQuery({
-    ...trpc.activity.liveWindow.queryOptions({ projectId, range, to }),
+    ...trpc.activity.liveWindow.queryOptions({ projectId, seconds, to }),
     placeholderData: keepPreviousData,
     refetchInterval,
     // what was read ahead of opening the view may be older
@@ -47,21 +48,21 @@ export function useLiveWindow({
   const { isLoading, isPlaceholderData, isError } = query
   // tooltips read where buckets are drawn. Only once this window's data is
   // read, as the pointer can come in before, and for this window alone, as
-  // the range or end can change from the keyboard with the pointer still in
+  // the length or end can change from the keyboard with the pointer still in
   const [{ data, dataUpdatedAt }, holding] = useHeld(
     { data: query.data, dataUpdatedAt: query.dataUpdatedAt },
     hovered && !isPlaceholderData && query.data !== undefined,
-    `${range}:${to}`,
+    `${seconds}:${to}`,
   )
 
-  // a new range's placeholder is drawn as the range it was read for, rather
-  // than squeezed into the new one, until the new range's data comes
-  const shown = data?.window.range ?? range
+  // a new length's placeholder is drawn at the length it was read for,
+  // rather than squeezed into the new one, until the new length's data comes
+  const shown = data?.window.seconds ?? seconds
   // drawn every 1/300 of the window, about 2.5 pixels, and slid in between
-  const redrawEvery = LIVE_RANGES[shown].seconds / 300
+  const redrawEvery = shown / 300
   const playhead = useLivePlayhead({
     dataEnd: to === undefined ? data?.window.to : undefined,
-    earliestEnd: data && data.window.readFrom + LIVE_RANGES[shown].seconds,
+    earliestEnd: data && data.window.readFrom + shown,
     readAtMs: dataUpdatedAt,
     redrawEvery,
     onGlide,
@@ -70,21 +71,23 @@ export function useLiveWindow({
   })
   const domain: [number, number] | undefined = data
     ? playhead !== undefined
-      ? [playhead - LIVE_RANGES[shown].seconds, playhead]
+      ? [playhead - shown, playhead]
       : [data.window.from, data.window.to]
     : undefined
 
-  const { seconds } = LIVE_RANGES[range]
   const buffer = data?.buffer
   const seeking = seekTo !== undefined && buffer !== undefined
+  const length = seeking ? seekTo.seconds : seconds
   // where the window is asked to end, undefined at the newest block: a move
   // on the overview as it will be read
-  const end = seeking ? clampTo(seekTo, buffer, seconds) : to
-  const selection: [number, number] | undefined = seeking
-    ? [(end ?? buffer.to) - seconds, end ?? buffer.to]
-    : // as asked for while that is read, not as it was
-      to !== undefined && isPlaceholderData
-      ? [to - seconds, to]
+  const end = seeking && !seekTo.holdsEnd ? getTargetEnd(seekTo, buffer) : to
+  // at the newest block, where the window is drawn while the data on screen
+  // was read following it
+  const asked = end ?? (data?.following ? playhead : undefined) ?? buffer?.to
+  const selection: [number, number] | undefined =
+    asked !== undefined && (seeking || isPlaceholderData)
+      ? // as asked for while that is read, not as it was
+        [asked - length, asked]
       : domain
 
   return {
@@ -92,8 +95,11 @@ export function useLiveWindow({
     isLoading,
     isPlaceholderData,
     isError,
-    range,
-    /** The range the data is for */
+    /** The length asked for */
+    seconds,
+    /** Its preset, none for another length */
+    range: getLiveRange(seconds),
+    /** The length the data is for */
     shown,
     domain,
     /** Whether the window scrolls with the clock */
@@ -109,25 +115,28 @@ export function useLiveWindow({
     /** The same, as a screen reader says it */
     selectionText:
       end === undefined || !selection
-        ? 'Live'
+        ? `Live, last ${formatLiveLength(length)}`
         : formatRange(selection[0], selection[1], { seconds: true }),
     /** Whether the overview's window is off the newest block, or being moved off it */
     lookingBack: end !== undefined,
     setHovered,
-    setRange: (next: LiveRange) => {
-      setRange(next)
-      setTo(clampTo(to, buffer, LIVE_RANGES[next].seconds))
+    setLength: (next: number) => {
+      setSeconds(next)
+      setTo(clampTo(to, buffer, next))
     },
     follow: () => setTo(undefined),
     seek: setSeekTo,
-    moveTo: (end: number) => {
-      // the range's own bucket until it is read: a move rounded to another
-      // range's would be read again once rounded to this one's
+    moveTo: (target: LiveTarget) => {
+      setSeconds(target.seconds)
+      // rounded to another length's bucket, a held end would move
+      if (target.holdsEnd) return
+      // the length's own bucket until it is read: a move rounded to another
+      // length's would be read again once rounded to this one's
       const bucket =
-        data?.window.range === range
+        data?.window.seconds === target.seconds
           ? data.window.bucket
-          : getLiveBucketSeconds(range)
-      setTo(getMoveEnd(end, buffer, seconds, bucket))
+          : getLiveBucketSeconds(target.seconds)
+      setTo(getMoveEnd(target, buffer, bucket))
     },
   }
 }

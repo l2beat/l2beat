@@ -81,7 +81,7 @@ describe(toBuckets.name, () => {
   it('has every bucket, empty ones at zero and none before the oldest block', () => {
     const buckets = toBuckets(
       {
-        range: '5m',
+        seconds: 300,
         from: UnixTime(24),
         to: UnixTime(48),
         bucket: 12,
@@ -118,7 +118,7 @@ describe(toBuckets.name, () => {
   it('takes the count of the metric picked', () => {
     const [bucket] = toBuckets(
       {
-        range: '5m',
+        seconds: 300,
         from: UnixTime(0),
         to: UnixTime(12),
         bucket: 12,

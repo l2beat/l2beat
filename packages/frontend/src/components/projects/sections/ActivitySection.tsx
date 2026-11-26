@@ -21,7 +21,7 @@ import { useQueryParam } from '~/hooks/useQueryParam'
 import { InfoIcon } from '~/icons/Info'
 import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
 import { useTRPC } from '~/trpc/React'
-import { DEFAULT_LIVE_RANGE } from '~/utils/range/liveRanges'
+import { DEFAULT_LIVE_RANGE, LIVE_RANGES } from '~/utils/range/liveRanges'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
 import { ProjectSection } from './ProjectSection'
@@ -75,7 +75,7 @@ export function ActivitySection({
     void queryClient.prefetchQuery({
       ...trpc.activity.liveWindow.queryOptions({
         projectId: project.id,
-        range: DEFAULT_LIVE_RANGE,
+        seconds: LIVE_RANGES[DEFAULT_LIVE_RANGE],
       }),
       staleTime: 5_000,
     })
