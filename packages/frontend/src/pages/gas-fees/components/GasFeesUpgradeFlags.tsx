@@ -4,15 +4,13 @@ import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrad
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
+import type { UpgradeSelection } from './useUpgradeSelection'
 
 interface Props {
   upgrades: GasFeesUpgrade[]
   /** The first and last timestamps on the chart's x axis */
   domain: [number, number] | undefined
-  highlightedUpgradeId: string | undefined
-  setHighlightedUpgradeId: (id: string | undefined) => void
-  selectedUpgradeId: string | undefined
-  setSelectedUpgradeId: (id: string | undefined) => void
+  selection: UpgradeSelection
 }
 
 /** The gap from the flags' bottom edge to the plot's top, which the stems cross */
@@ -37,14 +35,7 @@ interface Flag {
  * name on a stem that runs down to the plot. A name takes a free lane, and
  * one that fits none keeps only its dot. Gas limit raises are dots.
  */
-export function GasFeesUpgradeFlags({
-  upgrades,
-  domain,
-  highlightedUpgradeId,
-  setHighlightedUpgradeId,
-  selectedUpgradeId,
-  setSelectedUpgradeId,
-}: Props) {
+export function GasFeesUpgradeFlags({ upgrades, domain, selection }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref })
   const flags = useMemo(() => {
@@ -62,17 +53,16 @@ export function GasFeesUpgradeFlags({
     <div ref={ref} className="relative" style={{ height }}>
       {flags.map((flag) => {
         const { upgrade } = flag
-        const isSelected = selectedUpgradeId === upgrade.id
-        const isActive = isSelected || highlightedUpgradeId === upgrade.id
+        const isSelected = selection.isSelected(upgrade.id)
+        const isActive = selection.isActive(upgrade.id)
         const isGasLimit = upgrade.kind === 'gasLimit'
         const name = `${upgrade.title}${DOT_SEPARATOR}${formatTimestamp(upgrade.timestamp)}`
         const handlers = {
-          onMouseEnter: () => setHighlightedUpgradeId(upgrade.id),
-          onMouseLeave: () => setHighlightedUpgradeId(undefined),
-          onFocus: () => setHighlightedUpgradeId(upgrade.id),
-          onBlur: () => setHighlightedUpgradeId(undefined),
-          onClick: () =>
-            setSelectedUpgradeId(isSelected ? undefined : upgrade.id),
+          onMouseEnter: () => selection.highlight(upgrade.id),
+          onMouseLeave: () => selection.highlight(undefined),
+          onFocus: () => selection.highlight(upgrade.id),
+          onBlur: () => selection.highlight(undefined),
+          onClick: () => selection.select(isSelected ? undefined : upgrade.id),
           'aria-pressed': isSelected,
           'aria-label': name,
           title: name,
@@ -121,7 +111,12 @@ export function GasFeesUpgradeFlags({
                 )}
                 style={{ left: flag.left + 1.5, top }}
               >
-                <span className="size-[5px] shrink-0 rounded-full bg-brand" />
+                <span
+                  className={cn(
+                    'size-[5px] shrink-0 rounded-full',
+                    isActive ? 'bg-brand' : 'bg-brand/60',
+                  )}
+                />
                 {upgrade.title}
               </button>
             )}

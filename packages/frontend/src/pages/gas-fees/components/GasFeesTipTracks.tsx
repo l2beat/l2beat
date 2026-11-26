@@ -10,34 +10,24 @@ import { EM_DASH } from '~/consts/characters'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
+import { formatFee, formatGwei, formatMultiple } from './format'
 import { GasFeesMethodology } from './GasFeesMethodology'
-import { formatFee, logShare } from './metrics'
-import { ACCENT, TextSkeleton } from './parts'
+import { type DecadeDomain, DecadeGrid, getDecades, logShare } from './logScale'
+import { Label, TextSkeleton } from './parts'
 import {
-  formatGwei,
-  formatMultiple,
+  BandStrip,
   Gwei,
   OURS,
   OVER,
   RollingGwei,
-  TIP_BANDS,
   WalletIcon,
 } from './tipParts'
 import type { GasFeesWalletIcons } from './types'
-import type { TipTierRow } from './useLiveTips'
+import type { TipTierRow, WalletSuggestion } from './useLiveTips'
 
 /** Seven powers of ten, from a millionth of a gwei to 10 */
-const LO = -6
-const HI = 1
-const DECADES = Array.from({ length: HI - LO + 1 }, (_, i) => LO + i)
-const toX = (gwei: number) => logShare(gwei, LO, HI) * 100
-
-/** Where each band starts and ends on a track, in percent */
-const BAND_SPANS = TIP_BANDS.map((band, i) => ({
-  ...band,
-  from: i === 0 ? 0 : toX(TIP_BANDS[i - 1]?.maxGwei ?? 0),
-  to: i === TIP_BANDS.length - 1 ? 100 : toX(band.maxGwei),
-}))
+const TRACK: DecadeDomain = { lo: -6, hi: 1 }
+const toX = (gwei: number) => logShare(gwei, TRACK) * 100
 
 /** The tier, then its track, then how far above ours the wallets sit. On phones the track goes under. */
 const ROW_GRID =
@@ -59,14 +49,14 @@ export function GasFeesTipTracks({
   return (
     <div className="flex flex-col">
       <div className={cn(ROW_GRID, 'gap-y-2 pb-2 text-xs')}>
-        <span className="whitespace-nowrap">
-          Tier{DOT_SEPARATOR}gwei{DOT_SEPARATOR}$ per transfer
-        </span>
+        <Label className="whitespace-nowrap">
+          Tier{DOT_SEPARATOR}tip in gwei
+        </Label>
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 max-md:order-3 max-md:col-span-2">
           <TrackKey wallets={wallets} walletIcons={walletIcons} />
           <GasFeesMethodology />
         </div>
-        <span className="text-right">Wallets suggest</span>
+        <Label className="text-right">Wallets suggest</Label>
       </div>
       {rows.map((row) => (
         <div
@@ -91,8 +81,8 @@ export function GasFeesTipTracks({
             </span>
             <span className="text-2xs text-secondary tabular-nums">
               {row.usd !== undefined
-                ? formatFee(row.usd)
-                : pending && <TextSkeleton sizedAs="$0.000" />}
+                ? `+${formatFee(row.usd)} per transfer`
+                : pending && <TextSkeleton sizedAs="+$0.000 per transfer" />}
             </span>
           </div>
           <Track
@@ -100,7 +90,7 @@ export function GasFeesTipTracks({
             walletIcons={walletIcons}
             className="max-md:order-3 max-md:col-span-2"
           />
-          <Above row={row} pending={pending} />
+          <HighestSuggestion row={row} pending={pending} />
         </div>
       ))}
       <div className="grid grid-cols-1 gap-x-6 border-divider border-t pt-1 md:grid-cols-[180px_minmax(0,1fr)_120px]">
@@ -118,7 +108,7 @@ interface Chip {
   gwei: number
   usd: number | undefined
   /** A wallet's suggestion, or our estimate when undefined */
-  wallet: TipTierRow['wallets'][number] | undefined
+  wallet: WalletSuggestion | undefined
 }
 
 interface PlacedChip extends Chip {
@@ -180,26 +170,16 @@ function Track({
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref })
   const placed = width ? placeChips(row, width) : []
-  const top = placed.find((chip) => chip.wallet)
+  const top = row.highest
   const tier = row.name.toLowerCase()
 
   return (
     <div ref={ref} className={cn('relative h-[84px]', className)}>
-      {DECADES.map((power) => (
-        <span
-          key={power}
-          className="absolute inset-y-0 border-divider border-l border-dashed opacity-70"
-          style={{ left: `${toX(10 ** power)}%` }}
-        />
-      ))}
-      <div className="-translate-y-1/2 absolute inset-x-0 top-1/2 flex h-[3px] overflow-hidden rounded-full opacity-45">
-        {BAND_SPANS.map((band) => (
-          <span
-            key={band.key}
-            style={{ width: `${band.to - band.from}%`, background: band.color }}
-          />
-        ))}
-      </div>
+      <DecadeGrid domain={TRACK} />
+      <BandStrip
+        toX={toX}
+        className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-[3px] opacity-45"
+      />
       {/* From our estimate up to the highest suggestion */}
       {row.gwei !== undefined && top && top.gwei > row.gwei && (
         <span
@@ -224,7 +204,7 @@ function Track({
         <Tooltip key={chip.key}>
           <TooltipTrigger
             className={cn(
-              '-translate-x-1/2 absolute flex h-6 items-center gap-1 rounded-full py-0.5 pr-2 pl-1 font-bold text-xs tabular-nums shadow-xs',
+              '-translate-x-1/2 absolute flex h-6 items-center gap-1 rounded-full py-0.5 pr-2 pl-1 font-bold text-xs tabular-nums',
               chip.wallet
                 ? 'border border-divider bg-surface-primary'
                 : 'bg-primary text-primary-invert',
@@ -259,7 +239,7 @@ function Track({
             <span className="tabular-nums">
               {formatGwei(chip.gwei)} gwei
               {chip.usd !== undefined &&
-                `, ${formatFee(chip.usd)} per transfer`}
+                `, adds ${formatFee(chip.usd)} to a transfer`}
             </span>
             {chip.wallet?.multiple !== undefined && (
               <span className="text-secondary tabular-nums">
@@ -279,11 +259,15 @@ function Track({
   )
 }
 
-/** The highest suggestion as a multiple of our estimate, and what it adds to a transfer */
-function Above({ row, pending }: { row: TipTierRow; pending: boolean }) {
-  const top = row.wallets
-    .filter((wallet) => wallet.multiple !== undefined)
-    .sort((a, b) => (b.multiple ?? 0) - (a.multiple ?? 0))[0]
+/** The highest suggestion as a multiple of our estimate, and what it adds to a transfer on top of ours */
+function HighestSuggestion({
+  row,
+  pending,
+}: {
+  row: TipTierRow
+  pending: boolean
+}) {
+  const top = row.highest
   const extra =
     top && row.gwei && row.usd !== undefined
       ? ((top.gwei - row.gwei) / row.gwei) * row.usd
@@ -294,7 +278,7 @@ function Above({ row, pending }: { row: TipTierRow; pending: boolean }) {
         <span className="whitespace-nowrap font-bold text-lg tabular-nums leading-none tracking-tight">
           <span className="font-normal text-secondary text-xs">up to </span>
           {/* Fast is the headline's number */}
-          <span style={row.key === 'fast' ? { color: ACCENT } : undefined}>
+          <span className={cn(row.key === 'fast' && 'text-brand-deep')}>
             {formatMultiple(top.multiple)}
           </span>
         </span>
@@ -350,15 +334,15 @@ function TrackKey({
 function TrackAxis() {
   return (
     <div className="relative h-5">
-      {DECADES.map((power) => (
+      {getDecades(TRACK).map((power) => (
         <span
           key={power}
           className={cn(
             'absolute top-0.5 text-2xs text-secondary',
-            power === HI
+            power === TRACK.hi
               ? '-translate-x-full'
-              : power !== LO && '-translate-x-1/2',
-            power % 2 !== 0 && power !== HI && 'max-md:hidden',
+              : power !== TRACK.lo && '-translate-x-1/2',
+            power % 2 !== 0 && power !== TRACK.hi && 'max-md:hidden',
           )}
           style={{ left: `${toX(10 ** power)}%` }}
         >

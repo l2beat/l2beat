@@ -1,52 +1,61 @@
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ProjectIconList } from '~/components/ProjectIconList'
 import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
-import { GasFeesFlow } from './GasFeesFlow'
 import {
   compareWithEthereum,
   formatFee,
   formatFeeTick,
-  getPeriodLabel,
-  logShare,
-} from './metrics'
+  percent,
+  usd,
+} from './format'
+import { GasFeesFlow } from './GasFeesFlow'
 import {
-  ACCENT,
-  Colored,
+  type DecadeDomain,
+  DecadeGrid,
+  getDecadeDomain,
+  getDecades,
+  logShare,
+} from './logScale'
+import { getPeriodLabel } from './metrics'
+import {
   DataGaps,
   ETH,
   KeyItem,
   L2,
   Label,
   NoDataYet,
-  percent,
   ShareBar,
   SPLIT,
   StoredUntil,
-  usd,
 } from './parts'
 import type { GasFeesChain } from './types'
 
 interface Props {
   chains: GasFeesChain[]
-  summary: GasFeesSummary | undefined
+  /** The period the figures are of */
   range: ChartRange
-  isLoading: boolean
 }
 
 /** Where transactions happen and who collects the fees, and what one costs on either side */
-export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
+export function GasFeesStats({ chains, range }: Props) {
+  const trpc = useTRPC()
+  const { data: summary, isLoading } = useChartQuery(trpc.gasFees.summary, {
+    range,
+  })
   const period = getPeriodLabel(range)
   const ready = !isLoading && summary !== undefined
   // The figures compare the two, so both need transactions in the period
-  const f =
+  const figures =
     ready && summary.stats.ethereum.txCount > 0 && summary.stats.l2s.txCount > 0
       ? getFigures(summary.stats)
       : undefined
-  const transfer = f?.erc20 && compareWithEthereum(f.erc20.times)
+  const transfer = figures?.erc20 && compareWithEthereum(figures.erc20.times)
   return (
     <>
       <div className="flex flex-col gap-3">
@@ -57,7 +66,7 @@ export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
               {period}
             </Label>
           </h2>
-          <GasFeesComparedL2s chains={chains} summary={summary} />
+          <ComparedL2s chains={chains} summary={summary} />
         </div>
         {!ready && (
           <div className="flex flex-col gap-3">
@@ -66,11 +75,12 @@ export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
             <Skeleton className="h-11 w-full" />
           </div>
         )}
-        {ready && !f && <NoDataYet />}
-        {f && (
+        {ready && !figures && <NoDataYet />}
+        {figures && (
           <p className="max-w-[920px] font-bold text-2xl leading-[1.15] tracking-tight md:text-3xl">
-            L2s process <Figure>{percent(f.txShare)}</Figure> of transactions
-            and collect <Figure>{percent(f.feeShare)}</Figure> of the fees.
+            L2s process <Figure>{percent(figures.txShare)}</Figure> of
+            transactions and collect{' '}
+            <Figure>{percent(figures.feeShare)}</Figure> of the fees.
             {transfer && (
               <>
                 <br className="@max-5xl:hidden" /> A transfer there costs{' '}
@@ -82,21 +92,21 @@ export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
         <StoredUntil lastDay={summary?.lastDay} />
         <DataGaps summary={summary} chains={chains} />
       </div>
-      {f && (
+      {figures && (
         <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
           {/* The flow fills what the tracks beside it leave, so the row is only as tall as they are */}
           <div className={cn(SPLIT.main, 'flex flex-col gap-5')}>
             <GasFeesFlow
-              txShare={f.txShare}
-              feeShare={f.feeShare}
-              ethereum={f.ethereum}
-              l2s={f.l2s}
+              txShare={figures.txShare}
+              feeShare={figures.feeShare}
+              ethereum={figures.ethereum}
+              l2s={figures.l2s}
               className="@3xl:h-auto h-[260px] @3xl:min-h-[230px] @3xl:flex-1"
             />
-            <PaidIn f={f} />
+            <PaidIn l2s={figures.l2s} />
           </div>
           <div className={cn(SPLIT.side, SPLIT.sidePad, '@container')}>
-            <CostTracks f={f} period={period} />
+            <CostTracks figures={figures} period={period} />
           </div>
         </div>
       )}
@@ -105,11 +115,7 @@ export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
 }
 
 function Figure({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="tabular-nums">
-      <Colored color={ACCENT}>{children}</Colored>
-    </span>
-  )
+  return <span className="text-brand-deep tabular-nums">{children}</span>
 }
 
 type Figures = ReturnType<typeof getFigures>
@@ -118,7 +124,6 @@ function getFigures(stats: GasFeesSummary['stats']) {
   const { ethereum, l2s, latestErc20 } = stats
   const txCount = ethereum.txCount + l2s.txCount
   const fees = ethereum.fees + l2s.fees
-  const ethFees = l2s.feesByToken.find((t) => t.token === 'ETH')?.fees ?? 0
   const avgFee = {
     ethereum: ethereum.fees / ethereum.txCount,
     l2s: l2s.fees / l2s.txCount,
@@ -128,7 +133,6 @@ function getFigures(stats: GasFeesSummary['stats']) {
     l2s,
     txShare: l2s.txCount / txCount,
     feeShare: fees > 0 ? l2s.fees / fees : 0,
-    ethShare: l2s.fees > 0 ? ethFees / l2s.fees : 0,
     avgFee: { ...avgFee, times: avgFee.ethereum / avgFee.l2s },
     erc20: latestErc20 && {
       ...latestErc20,
@@ -138,7 +142,7 @@ function getFigures(stats: GasFeesSummary['stats']) {
 }
 
 /** The L2s the section compares, beside its title, with the full list behind "+N" */
-function GasFeesComparedL2s({
+function ComparedL2s({
   chains,
   summary,
 }: {
@@ -166,34 +170,34 @@ function GasFeesComparedL2s({
 }
 
 /** The share of the L2s' fees paid in ETH, and the split by gas token as a bar */
-function PaidIn({ f }: { f: Figures }) {
+function PaidIn({ l2s }: { l2s: Figures['l2s'] }) {
   const tokenColor = (token: string) =>
     token === 'ETH' ? ETH : 'var(--chart-stacked-pink)'
+  const share = (fees: number) => (l2s.fees > 0 ? fees / l2s.fees : 0)
+  const inEth = l2s.feesByToken.find((t) => t.token === 'ETH')?.fees ?? 0
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <span className="flex items-baseline gap-2 whitespace-nowrap">
         <Label>L2 fees paid in ETH</Label>
         <span className="font-bold text-base tabular-nums tracking-tight">
-          {percent(f.ethShare)}
+          {percent(share(inEth))}
         </span>
       </span>
       <ShareBar
         className="h-2.5 min-w-24 flex-1 gap-[2px] rounded-full"
-        parts={f.l2s.feesByToken.map((t) => ({
+        parts={l2s.feesByToken.map((t) => ({
           key: t.token,
           value: t.fees,
           color: tokenColor(t.token),
         }))}
       />
       <div className="flex flex-wrap gap-x-3 gap-y-1 text-2xs">
-        {f.l2s.feesByToken.map((t) => (
+        {l2s.feesByToken.map((t) => (
           <KeyItem key={t.token} color={tokenColor(t.token)}>
             <span>
               {t.token} {usd(t.fees)}
             </span>
-            <b className="tabular-nums">
-              {percent(f.l2s.fees > 0 ? t.fees / f.l2s.fees : 0)}
-            </b>
+            <b className="tabular-nums">{percent(share(t.fees))}</b>
           </KeyItem>
         ))}
       </div>
@@ -216,18 +220,20 @@ interface CostRow {
  * Ethereum's cost and the L2s' as dots on one log scale, a row per measure,
  * with the gap between them shaded and its multiple as the row's figure
  */
-function CostTracks({ f, period }: { f: Figures; period: string }) {
+function CostTracks({ figures, period }: { figures: Figures; period: string }) {
+  const { erc20, avgFee } = figures
   const rows: CostRow[] = [
-    ...(f.erc20
+    ...(erc20
       ? [
           {
             key: 'erc20',
             name: 'ERC-20 transfer',
-            when: formatTimestamp(f.erc20.timestamp),
-            ethereum: f.erc20.ethereum,
-            l2s: f.erc20.l2s,
-            l2Name: 'Median L2',
-            times: f.erc20.times,
+            when: formatTimestamp(erc20.timestamp),
+            ethereum: erc20.ethereum,
+            l2s: erc20.l2s,
+            // A chain's day can be stored later, so not always all of them
+            l2Name: `Median of ${erc20.l2Count} L2s`,
+            times: erc20.times,
           },
         ]
       : []),
@@ -235,20 +241,16 @@ function CostTracks({ f, period }: { f: Figures; period: string }) {
       key: 'avgFee',
       name: 'Average transaction',
       when: period,
-      ethereum: f.avgFee.ethereum,
-      l2s: f.avgFee.l2s,
+      ethereum: avgFee.ethereum,
+      l2s: avgFee.l2s,
       l2Name: 'L2s',
-      times: f.avgFee.times,
+      times: avgFee.times,
     },
     // A log scale has no place for a cost of zero
   ].filter((row) => row.ethereum > 0 && row.l2s > 0)
-  if (rows.length === 0) return <NoDataYet />
-
-  const logs = rows.flatMap((row) => [row.ethereum, row.l2s]).map(Math.log10)
-  const lo = Math.floor(Math.min(...logs))
-  const hi = Math.max(lo + 1, Math.ceil(Math.max(...logs)))
-  const decades = Array.from({ length: hi - lo + 1 }, (_, i) => lo + i)
-  const toX = (value: number) => logShare(value, lo, hi) * 100
+  const domain = getDecadeDomain(rows.flatMap((row) => [row.ethereum, row.l2s]))
+  if (!domain) return <NoDataYet />
+  const toX = (value: number) => logShare(value, domain) * 100
 
   return (
     <div className="grid @xl:grid-cols-[180px_minmax(0,1fr)] grid-cols-1">
@@ -268,26 +270,15 @@ function CostTracks({ f, period }: { f: Figures; period: string }) {
               </span>
               {compared && (
                 <span className="@xl:ml-0 ml-auto flex items-baseline gap-1.5">
-                  <span
-                    className="font-bold text-2xl tabular-nums tracking-tight"
-                    style={{ color: ACCENT }}
-                  >
+                  <span className="font-bold text-2xl text-brand-deep tabular-nums tracking-tight">
                     {compared.times}
                   </span>
-                  <span className="text-secondary text-xs">
-                    {compared.amount} on L2s
-                  </span>
+                  <span className="text-xs">{compared.amount} on L2s</span>
                 </span>
               )}
             </div>
             <div className="relative h-[60px]">
-              {decades.map((power) => (
-                <span
-                  key={power}
-                  className="absolute inset-y-0 border-divider border-l border-dashed opacity-70"
-                  style={{ left: `${toX(10 ** power)}%` }}
-                />
-              ))}
+              <DecadeGrid domain={domain} />
               <span className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-[3px] rounded-full bg-surface-tertiary opacity-60" />
               <Gap l2s={toX(row.l2s)} ethereum={toX(row.ethereum)} />
               <Dot
@@ -308,29 +299,37 @@ function CostTracks({ f, period }: { f: Figures; period: string }) {
       })}
       <div className="col-span-full grid grid-cols-subgrid pt-1.5 text-2xs text-secondary">
         <span className="max-@xl:hidden">USD, log scale</span>
-        <div className="relative h-4">
-          {decades.map((power) => (
-            <span
-              key={power}
-              className={cn(
-                'absolute tabular-nums',
-                power === lo
-                  ? 'left-0'
-                  : power === hi
-                    ? 'right-0'
-                    : '-translate-x-1/2',
-              )}
-              style={
-                power === lo || power === hi
-                  ? undefined
-                  : { left: `${toX(10 ** power)}%` }
-              }
-            >
-              {formatFeeTick(10 ** power)}
-            </span>
-          ))}
-        </div>
+        <DecadeTicks domain={domain} />
       </div>
+    </div>
+  )
+}
+
+/** The scale's powers of ten, the first and the last kept inside its ends */
+function DecadeTicks({ domain }: { domain: DecadeDomain }) {
+  return (
+    <div className="relative h-4">
+      {getDecades(domain).map((power) => {
+        const isEnd = power === domain.lo || power === domain.hi
+        return (
+          <span
+            key={power}
+            className={cn(
+              'absolute tabular-nums',
+              power === domain.lo && 'left-0',
+              power === domain.hi && 'right-0',
+              !isEnd && '-translate-x-1/2',
+            )}
+            style={
+              isEnd
+                ? undefined
+                : { left: `${logShare(10 ** power, domain) * 100}%` }
+            }
+          >
+            {formatFeeTick(10 ** power)}
+          </span>
+        )
+      })}
     </div>
   )
 }

@@ -1,15 +1,6 @@
 import type { GasFeesTipPayers as TipPayers } from '~/server/features/gas-fees/getGasFeesTipping'
-import {
-  ACCENT,
-  formatPeriod,
-  Info,
-  KeyItem,
-  Label,
-  NoDataYet,
-  percent,
-  ShareBar,
-  usd,
-} from './parts'
+import { formatPeriod, percent, usd } from './format'
+import { Info, KeyItem, Label, NoDataYet, ShareBar } from './parts'
 import { OVER, TIP_BANDS } from './tipParts'
 
 /** What our fast tip covers: ink, a step back so the pink reads first */
@@ -117,7 +108,14 @@ export function GasFeesTipPayers({
   ]
   return (
     <Block
-      label="Who pays the tips"
+      label={
+        <>
+          Who pays the tips
+          <Info about="who pays the tips">
+            Ordinary transactions, {formatPeriod(payers.period)}.
+          </Info>
+        </>
+      }
       value={percent(payers.tipShares.high)}
       note={`of tips come from the ${percent(payers.txShares.high)} of transactions tipping 1 to 2.5 gwei`}
     >
@@ -174,10 +172,7 @@ function Block({
     <div className="flex flex-col gap-3">
       <Label>{label}</Label>
       <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
-        <span
-          className="font-bold text-3xl tabular-nums leading-none tracking-tight"
-          style={{ color: ACCENT }}
-        >
+        <span className="font-bold text-3xl text-brand-deep tabular-nums leading-none tracking-tight">
           {value}
         </span>
         <span className="text-secondary text-xs leading-snug">{note}</span>

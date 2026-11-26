@@ -2,7 +2,8 @@ import { formatNumber } from '@l2beat/shared-pure'
 import { useId, useRef } from 'react'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
-import { ETH, L2, Label, percent, usd } from './parts'
+import { percent, usd } from './format'
+import { ETH, L2, Label } from './parts'
 
 interface Totals {
   txCount: number

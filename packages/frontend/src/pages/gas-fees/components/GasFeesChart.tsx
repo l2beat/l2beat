@@ -36,21 +36,25 @@ import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
-import { GasFeesUpgradeFlags } from './GasFeesUpgradeFlags'
 import {
   compareWithEthereum,
-  DEFAULT_GAS_FEES_GAS_METRIC,
-  DEFAULT_GAS_FEES_METRIC,
   formatFee,
   formatFeeTick,
   formatGasNumber,
   formatGasPrice,
   formatGasPriceTick,
+} from './format'
+import { GasFeesUpgradeFlags } from './GasFeesUpgradeFlags'
+import { getDecadeDomain, getDecades } from './logScale'
+import {
+  DEFAULT_GAS_FEES_GAS_METRIC,
+  DEFAULT_GAS_FEES_METRIC,
   GAS_FEES_METRIC_LABELS,
   GAS_FEES_RANGE_LABELS,
   GAS_FEES_RANGE_OPTIONS,
 } from './metrics'
 import type { GasFeesChain } from './types'
+import type { UpgradeSelection } from './useUpgradeSelection'
 
 /** Every L2 as one line */
 const L2S_KEY = 'l2s'
@@ -71,11 +75,7 @@ interface Props {
   range: ChartRange
   setRange: (range: ChartRange) => void
   highlightedChainId: string | undefined
-  highlightedUpgradeId: string | undefined
-  setHighlightedUpgradeId: (id: string | undefined) => void
-  /** Clicked: marked on the plot until clicked again */
-  selectedUpgradeId: string | undefined
-  setSelectedUpgradeId: (id: string | undefined) => void
+  selection: UpgradeSelection
 }
 
 type Scale = 'log' | 'lin'
@@ -87,10 +87,7 @@ export function GasFeesChart({
   range,
   setRange,
   highlightedChainId,
-  highlightedUpgradeId,
-  setHighlightedUpgradeId,
-  selectedUpgradeId,
-  setSelectedUpgradeId,
+  selection,
 }: Props) {
   const trpc = useTRPC()
   const [unit, setUnit] = useState<GasFeesUnit>('usd')
@@ -189,13 +186,8 @@ export function GasFeesChart({
   }, [points])
   const upgradeMarks = useMemo(
     () =>
-      domain
-        ? getUpgradeMarks(upgrades, domain, plotWidth, {
-            selected: selectedUpgradeId,
-            highlighted: highlightedUpgradeId,
-          })
-        : [],
-    [upgrades, domain, plotWidth, selectedUpgradeId, highlightedUpgradeId],
+      domain ? getUpgradeMarks(upgrades, domain, plotWidth, selection) : [],
+    [upgrades, domain, plotWidth, selection],
   )
   const timeRange = useMemo(() => getChartTimeRangeFromData(points), [points])
 
@@ -262,10 +254,7 @@ export function GasFeesChart({
       <GasFeesUpgradeFlags
         upgrades={upgrades}
         domain={isLoading ? undefined : domain}
-        highlightedUpgradeId={highlightedUpgradeId}
-        setHighlightedUpgradeId={setHighlightedUpgradeId}
-        selectedUpgradeId={selectedUpgradeId}
-        setSelectedUpgradeId={setSelectedUpgradeId}
+        selection={selection}
       />
       <div ref={plotRef}>
         <ChartContainer
@@ -418,25 +407,14 @@ function getYAxis(
   if (scale === 'lin') {
     return { tickCount: 4, format: isGas ? formatGasNumber : formatFee }
   }
-  let min = Number.POSITIVE_INFINITY
-  let max = 0
-  for (const point of points ?? []) {
-    for (const key of keys) {
-      const value = point[key]
-      if (typeof value === 'number' && value > 0) {
-        min = Math.min(min, value)
-        max = Math.max(max, value)
-      }
-    }
-  }
-  if (max === 0) return { tickCount: 4 }
-  const lo = Math.floor(Math.log10(min))
-  const hi = Math.ceil(Math.log10(max))
-  const ticks = Array.from({ length: hi - lo + 1 }, (_, i) => 10 ** (lo + i))
+  const domain = getDecadeDomain(
+    (points ?? []).flatMap((point) => keys.flatMap((key) => point[key] ?? [])),
+  )
+  if (!domain) return { tickCount: 4 }
   return {
     scale: scaleLog,
-    domain: [10 ** lo, 10 ** hi] as const,
-    ticks,
+    domain: [10 ** domain.lo, 10 ** domain.hi] as const,
+    ticks: getDecades(domain).map((power) => 10 ** power),
     format: isGas ? formatGasPriceTick : formatFeeTick,
   }
 }
@@ -450,7 +428,7 @@ function getUpgradeMarks(
   upgrades: GasFeesUpgrade[],
   [first, last]: [number, number],
   plotWidth: number | undefined,
-  active: { selected: string | undefined; highlighted: string | undefined },
+  selection: UpgradeSelection,
 ): ChartReferenceArea[] {
   const pixel = (last - first) / Math.max(1, plotWidth ?? 900)
   const lines: ChartReferenceArea[] = []
@@ -458,15 +436,14 @@ function getUpgradeMarks(
   for (const upgrade of upgrades) {
     const at = upgrade.timestamp
     if (at === null || at < first || at > last) continue
-    const isSelected = upgrade.id === active.selected
-    const isActive = isSelected || upgrade.id === active.highlighted
+    const isActive = selection.isActive(upgrade.id)
     lines.push({
       x1: at,
       x2: at + pixel,
       fill: isActive ? 'var(--brand)' : 'var(--secondary)',
       fillOpacity: isActive ? 0.85 : upgrade.kind === 'gasLimit' ? 0.15 : 0.2,
     })
-    if (isSelected) {
+    if (selection.isSelected(upgrade.id)) {
       since.push({ x1: at, x2: last, fill: 'var(--brand)', fillOpacity: 0.06 })
     }
   }

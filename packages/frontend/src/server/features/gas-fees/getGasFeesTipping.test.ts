@@ -103,13 +103,12 @@ describe(buildGasFeesTipping.name, () => {
         seconds: 9.9,
       },
     ])
-    expect(speed?.marks.map((mark) => [mark.name, mark.seconds])).toEqual([
-      ['Our estimated fast tip', 19.8],
-      ['2 gwei', 9.9],
+    expect(speed?.roundTips).toEqual([
+      { gwei: 2, usd: tipToUsd(2, 2_000), seconds: 9.9 },
     ])
     // Each hour's tip at that hour's price, not the average tip at the average price
     const fastUsd = (tipToUsd(0.5, 1_000) + tipToUsd(1.5, 3_000)) / 2
-    expect(speed?.marks[0]?.usd).toEqual(fastUsd)
+    expect(speed?.fastTip).toEqual({ usd: fastUsd, seconds: 19.8 })
     expect(speed?.fastVsTwoGwei).toEqual({
       extraUsd: tipToUsd(2, 2_000) - fastUsd,
       fastSeconds: 19.8,

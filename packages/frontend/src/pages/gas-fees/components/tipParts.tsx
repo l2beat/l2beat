@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { writeText } from '~/components/RollingNumber'
 import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { cn } from '~/utils/cn'
-import { formatSignificant } from './metrics'
+import { formatGwei } from './format'
 
 /** Our estimate is ink, and what is paid above it is brand pink */
 export const OURS = 'var(--primary)'
@@ -33,10 +33,30 @@ export const TIP_BANDS = [
   },
 ] as const
 
-export const formatGwei = (value: number) => formatSignificant(value, 2)
-
-export const formatMultiple = (value: number) =>
-  `${Number(value.toPrecision(2)).toLocaleString('en-US')}×`
+/** The bands side by side along a scale, each from its lower tip to its upper one */
+export function BandStrip({
+  toX,
+  className,
+}: {
+  /** Where a tip sits on the scale, in percent */
+  toX: (gwei: number) => number
+  className?: string
+}) {
+  return (
+    <div className={cn('flex overflow-hidden rounded-full', className)}>
+      {TIP_BANDS.map((band, i) => {
+        const from = i === 0 ? 0 : toX(TIP_BANDS[i - 1]?.maxGwei ?? 0)
+        const to = i === TIP_BANDS.length - 1 ? 100 : toX(band.maxGwei)
+        return (
+          <span
+            key={band.key}
+            style={{ width: `${to - from}%`, background: band.color }}
+          />
+        )
+      })}
+    </div>
+  )
+}
 
 /** "0.0000093" → the zeros, then the digits that matter */
 function splitZeros(text: string): [string, string] {

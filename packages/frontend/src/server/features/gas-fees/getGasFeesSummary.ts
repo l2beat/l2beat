@@ -30,10 +30,17 @@ export interface GasFeesSummaryRow
     priority: number | null
     l1Data: number
   }
-  /** Ethereum's value over the same days divided by this chain's, null for Ethereum */
-  timesCheaper: Record<GasFeesPeriodMetric, number | null> | null
-  /** Ethereum's value over those same days: what timesCheaper is against. null for Ethereum */
-  ethereumSameDays: Record<GasFeesPeriodMetric, number | null> | null
+  /**
+   * This chain's value and Ethereum's over the days both have one, so neither
+   * side counts a day the other lacks. null for Ethereum, and for a metric
+   * the two have no such day for.
+   */
+  sameDays: Record<GasFeesPeriodMetric, GasFeesSameDays | null> | null
+}
+
+export interface GasFeesSameDays {
+  chain: number
+  ethereum: number
 }
 
 export interface GasFeesSummary {
@@ -59,6 +66,8 @@ export interface GasFeesSummary {
           ethereum: number
           /** The median of the L2s' costs that day */
           l2s: number
+          /** How many L2s have a cost that day: a chain's day can be stored later */
+          l2Count: number
         }
       | undefined
   }
@@ -113,9 +122,7 @@ export function buildGasFeesSummary(
         priority: totals.priorityFees,
         l1Data: totals.l1DataFees,
       },
-      ...(chain.id === 'ethereum'
-        ? { timesCheaper: null, ethereumSameDays: null }
-        : compareOverSharedDays(ethereum, days)),
+      sameDays: chain.id === 'ethereum' ? null : getSameDays(ethereum, days),
     })
   }
 
@@ -139,36 +146,26 @@ export function buildGasFeesSummary(
   }
 }
 
-/** Each metric over the days both have a value for, so neither side counts a day the other lacks */
-function compareOverSharedDays(
-  ethereum: GasFeesRecord[],
-  days: GasFeesRecord[],
-) {
+function getSameDays(ethereum: GasFeesRecord[], days: GasFeesRecord[]) {
   const theirDays = new Map(ethereum.map((r) => [r.timestamp, r]))
-  const nothing = { avgFee: null, transfer: null, erc20: null, swap: null }
-  const timesCheaper: Record<GasFeesPeriodMetric, number | null> = {
-    ...nothing,
-  }
-  const ethereumSameDays: Record<GasFeesPeriodMetric, number | null> = {
-    ...nothing,
-  }
-  for (const metric of GAS_FEES_PERIOD_METRICS) {
-    const hasValue = (r: GasFeesRecord) =>
-      metric === 'avgFee' ? r.txCount > 0 : r[metric] !== null
-    const ours: GasFeesRecord[] = []
-    const theirs: GasFeesRecord[] = []
-    for (const day of days) {
-      const their = theirDays.get(day.timestamp)
-      if (!their || !hasValue(day) || !hasValue(their)) continue
-      ours.push(day)
-      theirs.push(their)
-    }
-    const our = summarize(ours)?.[metric]
-    const their = summarize(theirs)?.[metric]
-    ethereumSameDays[metric] = their ?? null
-    timesCheaper[metric] = our && their ? their / our : null
-  }
-  return { timesCheaper, ethereumSameDays }
+  return Object.fromEntries(
+    GAS_FEES_PERIOD_METRICS.map((metric) => {
+      const hasValue = (r: GasFeesRecord) =>
+        metric === 'avgFee' ? r.txCount > 0 : r[metric] !== null
+      const ours: GasFeesRecord[] = []
+      const theirs: GasFeesRecord[] = []
+      for (const day of days) {
+        const their = theirDays.get(day.timestamp)
+        if (!their || !hasValue(day) || !hasValue(their)) continue
+        ours.push(day)
+        theirs.push(their)
+      }
+      const chain = summarize(ours)?.[metric]
+      const ethereum = summarize(theirs)?.[metric]
+      // A cost of zero has no multiple
+      return [metric, chain && ethereum ? { chain, ethereum } : null]
+    }),
+  ) as Record<GasFeesPeriodMetric, GasFeesSameDays | null>
 }
 
 function getLatestErc20(
@@ -184,5 +181,10 @@ function getLatestErc20(
   }
   const l2Median = median(l2s)
   if (l2Median === undefined) return undefined
-  return { timestamp: latest.timestamp, ethereum: latest.erc20, l2s: l2Median }
+  return {
+    timestamp: latest.timestamp,
+    ethereum: latest.erc20,
+    l2s: l2Median,
+    l2Count: l2s.length,
+  }
 }

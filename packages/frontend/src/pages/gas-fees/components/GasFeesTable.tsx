@@ -1,4 +1,7 @@
 import { useMemo, useState } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
+import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   Select,
   SelectContent,
@@ -23,45 +26,42 @@ import {
   TableRow,
 } from '~/components/table/Table'
 import { EM_DASH } from '~/consts/characters'
-import type {
-  GasFeesSummary,
-  GasFeesSummaryRow,
-} from '~/server/features/gas-fees/getGasFeesSummary'
+import type { FeeSplitPartKey } from '~/server/features/gas-fees/chains'
+import type { GasFeesSummaryRow } from '~/server/features/gas-fees/getGasFeesSummary'
 import {
   GAS_FEES_PERIOD_METRICS,
   type GasFeesPeriodMetric,
 } from '~/server/features/gas-fees/types'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import {
   FEE_SPLIT_COLORS,
   FEE_SPLIT_LABELS,
   FeeSplitBar,
   FeeSplitKey,
-  type FeeSplitPart,
 } from './FeeSplitBar'
+import { compareWithEthereum, formatFee, percent, usd } from './format'
 import {
   CostAxisHead,
   CostAxisKey,
   CostAxisRow,
   getCostAxis,
 } from './GasFeesCostAxis'
+import { getDecadeDomain, logShare } from './logScale'
 import {
-  compareWithEthereum,
-  formatFee,
   GAS_FEES_METRIC_LABELS,
-  logShare,
+  GAS_FEES_RANGE_LABELS,
+  GAS_FEES_RANGE_OPTIONS,
+  getPeriodLabel,
 } from './metrics'
-import { DataGaps, percent, usd } from './parts'
+import { DataGaps } from './parts'
 import type { GasFeesChain } from './types'
 
 interface Props {
   chains: GasFeesChain[]
-  summary: GasFeesSummary | undefined
-  isLoading: boolean
-  /** Picks the range every value in the table is for */
-  rangeControl: React.ReactNode
-  /** The picked range in words, e.g. "past 30 days" */
-  period: string
+  /** The range every value in the table is for, until another is picked */
+  initialRange: ChartRange
   highlightedChainId: string | undefined
   setHighlightedChainId: (id: string | undefined) => void
 }
@@ -74,13 +74,17 @@ const COLUMNS = 7
 
 export function GasFeesTable({
   chains,
-  summary,
-  isLoading,
-  rangeControl,
-  period,
+  initialRange,
   highlightedChainId,
   setHighlightedChainId,
 }: Props) {
+  const trpc = useTRPC()
+  const [range, setRange] = useState(initialRange)
+  const {
+    data: summary,
+    isLoading,
+    shownInput,
+  } = useChartQuery(trpc.gasFees.summary, { range })
   const [action, setAction] = useState<GasFeesPeriodMetric>('erc20')
   const [sort, setSort] = useState<Sort>({ id: 'cost', desc: false })
 
@@ -89,7 +93,7 @@ export function GasFeesTable({
     const sortValue: Record<SortId, (row: GasFeesSummaryRow) => number | null> =
       {
         cost: (row) => row[action],
-        cheaper: (row) => row.timesCheaper?.[action] ?? null,
+        cheaper: (row) => getTimesCheaper(row, action),
         total: (row) => row.totalFees,
       }
     const value = sortValue[sort.id]
@@ -109,7 +113,7 @@ export function GasFeesTable({
     ]
   }, [summary, action, sort])
   const axis = useMemo(() => getCostAxis(rows, action), [rows, action])
-  const feesScale = getLogScale(rows.map((row) => row.totalFees))
+  const feesDomain = getDecadeDomain(rows.map((row) => row.totalFees))
 
   const sortable = (id: SortId, label: string) => {
     const direction = sort.id === id && (sort.desc ? 'desc' : 'asc')
@@ -132,13 +136,28 @@ export function GasFeesTable({
             What one transaction costs
           </h2>
           <p className="text-secondary text-xs leading-snug">
-            {GAS_FEES_METRIC_LABELS[action].title}, {period}. Log scale, each
-            gridline 10× the last. L2 costs include their L1 fee.
+            {GAS_FEES_METRIC_LABELS[action].title},{' '}
+            {getPeriodLabel(shownInput.range)}. Log scale. L2 costs include
+            their L1 fee.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <ActionPicker value={action} onChange={setAction} />
-          {rangeControl}
+          <RadioGroup
+            name="gasFeesTableRange"
+            value={rangeToOption(range, GAS_FEES_RANGE_OPTIONS)}
+            onValueChange={(value) =>
+              setRange(
+                optionToRange(value as (typeof GAS_FEES_RANGE_OPTIONS)[number]),
+              )
+            }
+          >
+            {GAS_FEES_RANGE_OPTIONS.map((option) => (
+              <RadioGroupItem key={option} value={option}>
+                {GAS_FEES_RANGE_LABELS[option]}
+              </RadioGroupItem>
+            ))}
+          </RadioGroup>
         </div>
       </div>
       <Table
@@ -220,7 +239,7 @@ export function GasFeesTable({
                       {isEthereum ? (
                         <span className="text-xs">1×</span>
                       ) : (
-                        <Cheaper times={row.timesCheaper?.[action] ?? null} />
+                        <Cheaper times={getTimesCheaper(row, action)} />
                       )}
                     </TableCell>
                     <TableCell
@@ -230,12 +249,15 @@ export function GasFeesTable({
                       <span className="inline-flex items-center gap-2">
                         {usd(row.totalFees)}
                         <span className="flex h-2 w-16 overflow-hidden rounded-[2px] bg-divider/40 md:w-20">
-                          <span
-                            className="h-full rounded-[2px] bg-secondary/55"
-                            style={{
-                              width: `${Math.max(0.04, feesScale(row.totalFees)) * 100}%`,
-                            }}
-                          />
+                          {/* A chain with no fees has no bar, and the smallest still shows */}
+                          {feesDomain && row.totalFees > 0 && (
+                            <span
+                              className="h-full rounded-[2px] bg-secondary/55"
+                              style={{
+                                width: `${Math.max(0.04, logShare(row.totalFees, feesDomain)) * 100}%`,
+                              }}
+                            />
+                          )}
                         </span>
                       </span>
                     </TableCell>
@@ -287,13 +309,10 @@ function Cheaper({ times }: { times: number | null }) {
   )
 }
 
-/** Where a value sits between the powers of ten around the values, 0 to 1 */
-function getLogScale(values: number[]) {
-  const logs = values.filter((value) => value > 0).map(Math.log10)
-  if (logs.length === 0) return () => 0
-  const lo = Math.floor(Math.min(...logs))
-  const hi = Math.max(lo + 1, Math.ceil(Math.max(...logs)))
-  return (value: number) => logShare(value, lo, hi)
+/** Ethereum's cost over the chain's, over the days both have one */
+function getTimesCheaper(row: GasFeesSummaryRow, action: GasFeesPeriodMetric) {
+  const sameDays = row.sameDays?.[action]
+  return sameDays ? sameDays.ethereum / sameDays.chain : null
 }
 
 function ActionPicker({
@@ -332,7 +351,7 @@ function FeeSplit({
 }) {
   const { base, priority, l1Data } = row.split
   // Ethereum is the L1, so it has no L1 fee to list
-  const parts: { key: FeeSplitPart['key']; value: number | null }[] = [
+  const parts: { key: FeeSplitPartKey; value: number | null }[] = [
     { key: 'base', value: base },
     { key: 'priority', value: priority },
     ...(row.id === 'ethereum'
@@ -377,10 +396,7 @@ function FeeSplit({
                   </span>
                 ) : (
                   <span>
-                    {formatFee(p.value)}{' '}
-                    <span className="text-secondary">
-                      {percent(sum > 0 ? p.value / sum : 0)}
-                    </span>
+                    {formatFee(p.value)} {percent(sum > 0 ? p.value / sum : 0)}
                   </span>
                 )}
               </span>

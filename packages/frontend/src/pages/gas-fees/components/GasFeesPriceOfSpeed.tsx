@@ -1,17 +1,10 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import type { GasFeesPriceOfSpeed as PriceOfSpeed } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
-import { formatFee } from './metrics'
-import {
-  ACCENT,
-  formatPeriod,
-  formatPeriodDays,
-  Info,
-  Label,
-  NoDataYet,
-} from './parts'
-import { OURS, OVER, TIP_BANDS } from './tipParts'
+import { formatFee, formatPeriod, formatPeriodDays } from './format'
+import { Info, Label, NoDataYet } from './parts'
+import { BandStrip, OURS, OVER, TIP_BANDS } from './tipParts'
 
 /** What paying more buys: one transaction moves in 12 second jumps, so the seconds are about how soon you can be sure */
 export function GasFeesPriceOfSpeed({
@@ -41,10 +34,7 @@ export function GasFeesPriceOfSpeed({
         </Label>
         {versus && (
           <span className="flex flex-wrap items-baseline gap-x-3">
-            <span
-              className="whitespace-nowrap font-bold text-4xl tabular-nums tracking-tight"
-              style={{ color: ACCENT }}
-            >
+            <span className="whitespace-nowrap font-bold text-4xl text-brand-deep tabular-nums tracking-tight">
               +{formatFee(versus.extraUsd)}
             </span>
             <span className="text-secondary text-sm">
@@ -100,16 +90,11 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
   const left = (usd: number) =>
     xMax > 0 ? Math.min(100, (usd / xMax) * 100) : 0
   const top = (wait: number) => (1 - (wait - yMin) / (yMax - yMin)) * 100
-  const ours = speed.marks.find((mark) => mark.ours)
-  // Our name goes under the line, clear of a round tip close to it. The line
-  // keeps falling past our mark, so under it as far along as the name runs.
+  const ours = speed.fastTip
+  // The line keeps falling past our mark, so our name goes under it as far along as the name runs
   const pastOurName =
     ours &&
     (lineFrom(speed.line, ours.usd + xMax * 0.3)[0] ?? speed.line.at(-1))
-  const oursLabelTop = Math.max(
-    ours ? top(ours.seconds) : 0,
-    pastOurName ? top(pastOurName.seconds) : 0,
-  )
   const toPoints = (line: PriceOfSpeed['line']) =>
     line.map((p) => `${left(p.usd)},${top(p.seconds)}`).join(' ')
 
@@ -159,10 +144,7 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
                 background: `linear-gradient(90deg, color-mix(in oklab, ${OVER} 9%, transparent), color-mix(in oklab, ${OVER} 3%, transparent))`,
               }}
             >
-              <span
-                className="absolute top-2 left-3 font-semibold text-2xs uppercase tracking-wider"
-                style={{ color: ACCENT }}
-              >
+              <span className="absolute top-2 left-3 font-semibold text-2xs text-brand-deep uppercase tracking-wider">
                 Above our estimated fast tip
               </span>
             </div>
@@ -218,17 +200,10 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
             )}
           </svg>
           {/* The tip bands along the floor, in the colours of the marks */}
-          <div className="absolute inset-x-0 bottom-0 flex h-1 translate-y-1/2 overflow-hidden rounded-full">
-            {getBandSpans(speed.usdPerGwei, left).map((band) => (
-              <span
-                key={band.key}
-                style={{
-                  width: `${band.to - band.from}%`,
-                  background: band.color,
-                }}
-              />
-            ))}
-          </div>
+          <BandStrip
+            toX={(gwei) => left(gwei * speed.usdPerGwei)}
+            className="absolute inset-x-0 bottom-0 h-1 translate-y-1/2"
+          />
           {/* A thin tip range can sit minutes off the line: hovering still reads it out */}
           {speed.dots
             .filter((dot) => dot.seconds >= yMin && dot.seconds <= yMax)
@@ -251,49 +226,46 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
               style={{ left: `${left(point.usd)}%` }}
             />
           )}
-          {speed.marks.map((mark, i) => (
-            <Fragment key={mark.name}>
-              <span
-                className={cn(
-                  '-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute rounded-full ring-[3px] ring-surface-primary',
-                  mark.ours ? 'size-[18px]' : 'size-4',
-                )}
-                style={{
-                  left: `${left(mark.usd)}%`,
-                  top: `${top(mark.seconds)}%`,
-                  background: mark.ours
-                    ? OURS
-                    : bandUpTo(mark.usd / speed.usdPerGwei).color,
-                }}
-              />
-              <div
-                className="pointer-events-none absolute"
-                style={{
-                  left: `${left(mark.usd)}%`,
-                  top: `${mark.ours ? oursLabelTop : top(mark.seconds)}%`,
-                }}
-              >
-                <span
-                  className={cn(
-                    'absolute flex flex-col whitespace-nowrap text-xs tabular-nums leading-tight',
-                    mark.ours ? 'top-4' : 'bottom-4',
-                    i === 0 || mark.ours
-                      ? '-left-2'
-                      : i === speed.marks.length - 1
-                        ? '-right-2 items-end'
-                        : '-translate-x-1/2 items-center',
-                  )}
-                >
-                  <b>{mark.name}</b>
-                  <span className="text-2xs text-secondary max-md:hidden">
-                    {formatFee(mark.usd)}
-                    {DOT_SEPARATOR}
-                    {Math.round(mark.seconds)}s
-                  </span>
-                </span>
-              </div>
-            </Fragment>
+          {speed.roundTips.map((tip, i) => (
+            <Mark
+              key={tip.gwei}
+              name={`${tip.gwei} gwei`}
+              point={tip}
+              left={left(tip.usd)}
+              top={top(tip.seconds)}
+              // The band a round tip closes: 0.1 gwei is the top of the lowest
+              color={
+                (
+                  TIP_BANDS.find((band) => tip.gwei <= band.maxGwei) ??
+                  TIP_BANDS[2]
+                ).color
+              }
+              className="size-4"
+              labelClassName={cn(
+                'bottom-4',
+                i === 0
+                  ? '-left-2'
+                  : i === speed.roundTips.length - 1
+                    ? '-right-2 items-end'
+                    : '-translate-x-1/2 items-center',
+              )}
+            />
           ))}
+          {ours && (
+            <Mark
+              name="Our estimated fast tip"
+              point={ours}
+              left={left(ours.usd)}
+              top={top(ours.seconds)}
+              labelTop={Math.max(
+                top(ours.seconds),
+                pastOurName ? top(pastOurName.seconds) : 0,
+              )}
+              color={OURS}
+              className="size-[18px]"
+              labelClassName="top-4 -left-2"
+            />
+          )}
         </div>
       </div>
       <span className="text-center text-2xs text-secondary">
@@ -303,18 +275,56 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
   )
 }
 
-/** The band a round tip closes: 0.1 gwei is the top of the lowest */
-function bandUpTo(gwei: number) {
-  // A tip of exactly a band's top is a rounding error away from it
-  return TIP_BANDS.find((band) => gwei <= band.maxGwei * 1.001) ?? TIP_BANDS[2]
-}
-
-function getBandSpans(usdPerGwei: number, left: (usd: number) => number) {
-  return TIP_BANDS.map((band, i) => ({
-    ...band,
-    from: i === 0 ? 0 : left((TIP_BANDS[i - 1]?.maxGwei ?? 0) * usdPerGwei),
-    to: i === TIP_BANDS.length - 1 ? 100 : left(band.maxGwei * usdPerGwei),
-  }))
+/** A dot on the plot and its name, which sits at the dot unless given its own height */
+function Mark({
+  name,
+  point,
+  left,
+  top,
+  labelTop = top,
+  color,
+  className,
+  labelClassName,
+}: {
+  name: string
+  point: PriceOfSpeed['line'][number]
+  /** In percent of the plot */
+  left: number
+  top: number
+  labelTop?: number
+  color: string
+  className: string
+  labelClassName: string
+}) {
+  return (
+    <>
+      <span
+        className={cn(
+          '-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute rounded-full ring-[3px] ring-surface-primary',
+          className,
+        )}
+        style={{ left: `${left}%`, top: `${top}%`, background: color }}
+      />
+      <div
+        className="pointer-events-none absolute"
+        style={{ left: `${left}%`, top: `${labelTop}%` }}
+      >
+        <span
+          className={cn(
+            'absolute flex flex-col whitespace-nowrap text-xs tabular-nums leading-tight',
+            labelClassName,
+          )}
+        >
+          <b>{name}</b>
+          <span className="text-2xs text-secondary max-md:hidden">
+            {formatFee(point.usd)}
+            {DOT_SEPARATOR}
+            {Math.round(point.seconds)}s
+          </span>
+        </span>
+      </div>
+    </>
+  )
 }
 
 /** The line from a cost on, starting exactly there */
@@ -337,9 +347,9 @@ function lineFrom(line: PriceOfSpeed['line'], usd: number) {
  * don't set the waits shown: one thin tip range can sit minutes off the line.
  */
 function getAxes(speed: PriceOfSpeed) {
-  const xMax =
-    Math.max(...[...speed.dots, ...speed.marks].map((p) => p.usd)) * 1.05
-  const waits = [...speed.line, ...speed.marks].map((p) => p.seconds)
+  const marks = [...speed.roundTips, ...(speed.fastTip ? [speed.fastTip] : [])]
+  const xMax = Math.max(...[...speed.dots, ...marks].map((p) => p.usd)) * 1.05
+  const waits = [...speed.line, ...marks].map((p) => p.seconds)
   const yStep = Math.max(
     10,
     getRoundStep((Math.max(...waits) - Math.min(...waits)) / 5),

@@ -1,4 +1,4 @@
-import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
@@ -7,16 +7,12 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { InfoIcon } from '~/icons/Info'
 import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
-import type { GasFeesPeriod } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import type { GasFeesChain } from './types'
 
 export const ETH = 'var(--chart-ethereum)'
 export const L2 = 'var(--chart-ethereum-secondary)'
-/** Brand pink as text, readable on a card in both themes: the figures a headline is about */
-export const ACCENT = 'var(--brand-deep)'
-
 /** One two-column split for the stats and the chart, so their dividers line up. Needs an `@container` ancestor. */
 export const SPLIT = {
   grid: 'grid grid-cols-1 gap-6 @3xl:grid-cols-[minmax(0,1fr)_340px] @3xl:gap-0',
@@ -46,16 +42,6 @@ export function Label({
       {children}
     </span>
   )
-}
-
-export function Colored({
-  color,
-  children,
-}: {
-  color: string
-  children: React.ReactNode
-}) {
-  return <span style={{ color }}>{children}</span>
 }
 
 /** A small (i) that explains the label it follows */
@@ -153,33 +139,6 @@ export function KeyItem({
       {children}
     </span>
   )
-}
-
-export function usd(value: number) {
-  return formatCurrency(value, 'usd', { decimals: 1 })
-}
-
-/**
- * Whole percents from 10% to 99%, one decimal outside that, so 99.7% never
- * rounds up to a 100% that sits beside a 0.3%
- */
-export function percent(share: number) {
-  const pct = share * 100
-  if (pct === 0 || pct === 100) return `${pct}%`
-  if (pct < 0.1) return '<0.1%'
-  if (pct > 99.9) return '>99.9%'
-  return `${pct >= 10 && pct <= 99 ? Math.round(pct) : pct.toFixed(1)}%`
-}
-
-export function formatPeriodDays(period: GasFeesPeriod) {
-  return `${formatTimestamp(period.from)} to ${formatTimestamp(period.to)}`
-}
-
-/** The days a figure covers, and how many of them are left out because Dune doesn't have them whole */
-export function formatPeriod(period: GasFeesPeriod) {
-  const days = formatPeriodDays(period)
-  if (period.missingDays === 0) return days
-  return `${days}, without ${period.missingDays} ${period.missingDays === 1 ? 'day' : 'days'} of incomplete data`
 }
 
 /** The chains whose figures leave days out, and how many */

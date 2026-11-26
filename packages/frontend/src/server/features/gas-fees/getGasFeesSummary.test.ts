@@ -21,7 +21,7 @@ describe(buildGasFeesSummary.name, () => {
     expect(row('base')?.erc20).toEqual(1.5)
     expect(row('base')?.missingDays).toEqual(1)
     // Ethereum's days 1 and 3 average 15, not the 20 of all three
-    expect(row('base')?.timesCheaper?.erc20).toEqual(10)
+    expect(row('base')?.sameDays?.erc20).toEqual({ chain: 1.5, ethereum: 15 })
   })
 
   it('leaves out of the comparison a day Ethereum has no price for', () => {
@@ -34,14 +34,13 @@ describe(buildGasFeesSummary.name, () => {
       { range: [null, 10 * DAY] },
     )
     expect(lacking.rows[1]?.erc20).toEqual(5)
-    expect(lacking.rows[1]?.timesCheaper?.erc20).toEqual(10)
-    // Ethereum on day 1 alone, where base cost 1
-    expect(lacking.rows[1]?.ethereumSameDays?.erc20).toEqual(10)
+    // Day 1 alone, on both sides
+    expect(lacking.rows[1]?.sameDays?.erc20).toEqual({ chain: 1, ethereum: 10 })
   })
 
   it('has no cost for a chain without transactions, and lists one without data', () => {
     expect(row('taiko')?.erc20).toEqual(null)
-    expect(row('taiko')?.timesCheaper?.erc20).toEqual(null)
+    expect(row('taiko')?.sameDays?.erc20).toEqual(null)
     expect(summary.noDataIds.includes('ink')).toEqual(true)
     expect(summary.lastDay).toEqual(3 * DAY)
   })
@@ -51,6 +50,7 @@ describe(buildGasFeesSummary.name, () => {
       timestamp: 3 * DAY,
       ethereum: 20,
       l2s: 2,
+      l2Count: 1,
     })
   })
 })

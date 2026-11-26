@@ -6,11 +6,11 @@ import type {
 } from '~/server/features/gas-fees/getGasFeesTipping'
 import { formatTimestamp } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
+import { formatMultiple, formatPeriod, usd } from './format'
 import { GasFeesPriceOfSpeed } from './GasFeesPriceOfSpeed'
 import { GasFeesOvertipping, GasFeesTipPayers } from './GasFeesTipPayers'
 import { GasFeesTipTracks } from './GasFeesTipTracks'
-import { ACCENT, Colored, Label, usd } from './parts'
-import { formatMultiple } from './tipParts'
+import { Label } from './parts'
 import type { GasFeesWalletIcons } from './types'
 import { type LiveTipsStatus, useLiveTips } from './useLiveTips'
 
@@ -28,11 +28,7 @@ export function GasFeesTipping({
   const live = useLiveTips()
   const { payers, speed } = tipping
   const overtip = payers ? payers.ordinaryUsd - payers.atFastUsd : 0
-  const { fastMin, fastMax } = live
-  const wallets =
-    fastMin !== undefined && fastMax !== undefined && fastMax > 1
-      ? { fastMin, fastMax }
-      : undefined
+  const range = live.fastRange
   return (
     <div ref={live.ref} className="flex flex-col gap-6">
       <header className="flex flex-col gap-2.5">
@@ -43,12 +39,12 @@ export function GasFeesTipping({
           <LiveStatus status={live.status} />
         </div>
         <p className="font-bold text-2xl leading-tight tracking-tight md:text-3xl">
-          {wallets ? (
+          {range ? (
             <>
               You can pay up to{' '}
-              <Colored color={ACCENT}>
-                {formatMultiple(wallets.fastMax)} less
-              </Colored>{' '}
+              <span className="text-brand-deep">
+                {formatMultiple(range.highest)} less
+              </span>{' '}
               by using our estimated tip.
             </>
           ) : (
@@ -59,17 +55,23 @@ export function GasFeesTipping({
               {' '}
               <br className="max-md:hidden" />
               {getPeriodOpening(payers.period)}, ordinary transactions tipped{' '}
-              <Colored color={ACCENT}>{usd(overtip)}</Colored> above it.
+              <span className="text-brand-deep">{usd(overtip)}</span> above it.
             </>
           )}
         </p>
-        {wallets && (
+        {range && (
           <p className="text-secondary text-sm">
             Fast, for the next block: wallets suggest{' '}
-            {wallets.fastMin === wallets.fastMax
-              ? formatMultiple(wallets.fastMax)
-              : `${formatMultiple(wallets.fastMin)} to ${formatMultiple(wallets.fastMax)}`}{' '}
+            {range.lowest === range.highest
+              ? formatMultiple(range.highest)
+              : `${formatMultiple(range.lowest)} to ${formatMultiple(range.highest)}`}{' '}
             our estimated tip right now.
+          </p>
+        )}
+        {/* A total over fewer days than its period reads as more than it is */}
+        {payers && payers.period.missingDays > 0 && (
+          <p className="text-secondary text-sm">
+            Tips: {formatPeriod(payers.period)}.
           </p>
         )}
       </header>

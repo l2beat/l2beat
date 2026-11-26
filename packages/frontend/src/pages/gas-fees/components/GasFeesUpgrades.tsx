@@ -5,14 +5,13 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
+import type { UpgradeSelection } from './useUpgradeSelection'
 
 interface Props {
   upgrades: GasFeesUpgrade[]
   /** The chart's range: stepping to an upgrade outside it shows the whole history */
   range: ChartRange
-  highlightedUpgradeId: string | undefined
-  selectedUpgradeId: string | undefined
-  setSelectedUpgradeId: (id: string | undefined) => void
+  selection: UpgradeSelection
   showWholeHistory: () => void
 }
 
@@ -23,9 +22,7 @@ interface Props {
 export function GasFeesUpgrades({
   upgrades,
   range,
-  highlightedUpgradeId,
-  selectedUpgradeId,
-  setSelectedUpgradeId,
+  selection,
   showWholeHistory,
 }: Props) {
   // Oldest first, so the arrows read left to right like the chart
@@ -42,10 +39,10 @@ export function GasFeesUpgrades({
     (from === null || u.timestamp >= from) &&
     u.timestamp < to
   const shown =
-    upgrades.find((u) => u.id === highlightedUpgradeId) ??
-    upgrades.find((u) => u.id === selectedUpgradeId) ??
+    upgrades.find((u) => u.id === selection.highlightedId) ??
+    upgrades.find((u) => u.id === selection.selectedId) ??
     upgrades.find((u) => u.timestamp === null)
-  const selectedIndex = dated.findIndex((u) => u.id === selectedUpgradeId)
+  const selectedIndex = dated.findIndex((u) => selection.isSelected(u.id))
   const outOfRange = dated.filter((u) => !isInRange(u)).length
 
   const step = (by: number) => {
@@ -53,7 +50,7 @@ export function GasFeesUpgrades({
     const start = selectedIndex === -1 ? dated.length : selectedIndex
     const target = dated[Math.min(dated.length - 1, Math.max(0, start + by))]
     if (!target) return
-    setSelectedUpgradeId(target.id)
+    selection.select(target.id)
     if (!isInRange(target)) showWholeHistory()
   }
 

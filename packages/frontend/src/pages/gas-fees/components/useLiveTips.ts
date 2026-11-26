@@ -16,7 +16,15 @@ const TIERS: { key: GasFeesTier; name: string; promise: string }[] = [
   { key: 'fast', name: 'Fast', promise: '95% next block' },
 ]
 
-export const WALLETS: GasFeesWallet[] = ['Ambire', 'MetaMask', 'Rabby']
+const WALLETS: GasFeesWallet[] = ['Ambire', 'MetaMask', 'Rabby']
+
+export interface WalletSuggestion {
+  name: GasFeesWallet
+  option: string
+  gwei: number
+  /** Of our estimate, undefined when ours is zero or missing */
+  multiple: number | undefined
+}
 
 export interface TipTierRow {
   key: GasFeesTier
@@ -27,13 +35,9 @@ export interface TipTierRow {
   /** What it adds to an ERC-20 transfer */
   usd: number | undefined
   /** What the wallets suggest beside this tier, as the backend last read them */
-  wallets: {
-    name: GasFeesWallet
-    option: string
-    gwei: number
-    /** Of our estimate, undefined when ours is zero or missing */
-    multiple: number | undefined
-  }[]
+  wallets: WalletSuggestion[]
+  /** The highest of them */
+  highest: WalletSuggestion | undefined
 }
 
 export type LiveTipsStatus =
@@ -65,18 +69,21 @@ export function useLiveTips() {
 
   const rows: TipTierRow[] = TIERS.map((tier) => {
     const ours = tips?.tips.find((tip) => tip.key === tier.key)
+    const wallets = (tips?.wallets ?? [])
+      .filter((row) => row.beside === tier.key)
+      .map((row) => ({
+        name: row.wallet,
+        option: row.option,
+        gwei: row.gwei,
+        multiple: ours && ours.gwei > 0 ? row.gwei / ours.gwei : undefined,
+      }))
+      .sort((a, b) => b.gwei - a.gwei)
     return {
       ...tier,
       gwei: ours?.gwei,
       usd: ours?.usd,
-      wallets: (tips?.wallets ?? [])
-        .filter((row) => row.beside === tier.key)
-        .map((row) => ({
-          name: row.wallet,
-          option: row.option,
-          gwei: row.gwei,
-          multiple: ours && ours.gwei > 0 ? row.gwei / ours.gwei : undefined,
-        })),
+      wallets,
+      highest: wallets[0],
     }
   })
   const status: LiveTipsStatus = isPending
@@ -87,11 +94,9 @@ export function useLiveTips() {
         ? { kind: 'none' }
         : { kind: 'stale', updatedAt }
   // Only a live read says what wallets suggest right now
-  const fastMultiples = isLive
-    ? (rows.find((row) => row.key === 'fast')?.wallets ?? []).flatMap((w) =>
-        w.multiple === undefined ? [] : [w.multiple],
-      )
-    : []
+  const fast = isLive ? rows.find((row) => row.key === 'fast') : undefined
+  const highest = fast?.highest?.multiple
+  const lowest = fast?.wallets.at(-1)?.multiple
   return {
     ref,
     rows,
@@ -100,7 +105,10 @@ export function useLiveTips() {
     wallets: WALLETS.filter((wallet) =>
       tips?.wallets.some((row) => row.wallet === wallet),
     ),
-    fastMin: fastMultiples.length > 0 ? Math.min(...fastMultiples) : undefined,
-    fastMax: fastMultiples.length > 0 ? Math.max(...fastMultiples) : undefined,
+    /** How many times our fast estimate the wallets' suggestions are, when some are above it */
+    fastRange:
+      highest !== undefined && lowest !== undefined && highest > 1
+        ? { lowest, highest }
+        : undefined,
   }
 }

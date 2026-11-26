@@ -1,18 +1,14 @@
+import type { FeeSplitPartKey } from '~/server/features/gas-fees/chains'
 import { cn } from '~/utils/cn'
 import { KeyItem, ShareBar } from './parts'
 
-export interface FeeSplitPart {
-  key: 'base' | 'priority' | 'l1Data'
-  value: number
-}
-
-export const FEE_SPLIT_COLORS: Record<FeeSplitPart['key'], string> = {
+export const FEE_SPLIT_COLORS: Record<FeeSplitPartKey, string> = {
   base: 'var(--chart-stacked-blue)',
   priority: 'var(--chart-stacked-pink)',
   l1Data: 'var(--chart-stacked-yellow)',
 }
 
-export const FEE_SPLIT_LABELS: Record<FeeSplitPart['key'], string> = {
+export const FEE_SPLIT_LABELS: Record<FeeSplitPartKey, string> = {
   base: 'Base fee',
   priority: 'Priority fee',
   l1Data: 'L1 data',
@@ -26,7 +22,7 @@ export function FeeSplitBar({
   parts,
   className,
 }: {
-  parts: FeeSplitPart[]
+  parts: { key: FeeSplitPartKey; value: number }[]
   className?: string
 }) {
   const sum = parts.reduce((total, part) => total + part.value, 0)
@@ -51,7 +47,7 @@ export function FeeSplitBar({
   )
 }
 
-export function FeeSplitKey({ keys }: { keys: FeeSplitPart['key'][] }) {
+export function FeeSplitKey({ keys }: { keys: FeeSplitPartKey[] }) {
   return keys.map((key) => (
     <KeyItem key={key} color={FEE_SPLIT_COLORS[key]}>
       {FEE_SPLIT_LABELS[key]}

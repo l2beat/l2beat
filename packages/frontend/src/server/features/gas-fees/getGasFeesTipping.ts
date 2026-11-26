@@ -62,8 +62,10 @@ export interface GasFeesPriceOfSpeed {
   })[]
   /** The best fit through the dots that never rises with the tip, weighted by their transactions */
   line: GasFeesSpeedPoint[]
-  /** Round tips on the line, and our fast tip at its own average cost and wait, cheapest first */
-  marks: (GasFeesSpeedPoint & { name: string; ours: boolean })[]
+  /** Round tips on the line, cheapest first */
+  roundTips: (GasFeesSpeedPoint & { gwei: number })[]
+  /** Our fast tip at its own average cost and wait, undefined when no transaction near it was seen */
+  fastTip: GasFeesSpeedPoint | undefined
   /** Our fast tip against 2 gwei, undefined without both or when ours is the dearer one */
   fastVsTwoGwei:
     | { extraUsd: number; fastSeconds: number; twoGweiSeconds: number }
@@ -211,27 +213,12 @@ function buildPriceOfSpeed(
   const fastSeconds = getSureWait(
     input.tierWaits.filter((row) => row.tier === 'fast'),
   )
-  const marks = MARKED_GWEI.flatMap((gwei) => {
+  const roundTips = MARKED_GWEI.flatMap((gwei) => {
     const seconds = onLine(gwei)
     return seconds === undefined
       ? []
-      : [
-          {
-            name: `${gwei} gwei`,
-            ours: false,
-            usd: tipToUsd(gwei, ethUsd),
-            seconds,
-          },
-        ]
+      : [{ gwei, usd: tipToUsd(gwei, ethUsd), seconds }]
   })
-  if (fastSeconds !== undefined) {
-    marks.push({
-      name: 'Our estimated fast tip',
-      ours: true,
-      usd: fastUsd,
-      seconds: fastSeconds,
-    })
-  }
   const twoGweiSeconds = onLine(2)
   const extraUsd = tipToUsd(2, ethUsd) - fastUsd
 
@@ -240,7 +227,11 @@ function buildPriceOfSpeed(
     usdPerGwei: tipToUsd(1, ethUsd),
     dots,
     line,
-    marks: marks.sort((a, b) => a.usd - b.usd),
+    roundTips,
+    fastTip:
+      fastSeconds === undefined
+        ? undefined
+        : { usd: fastUsd, seconds: fastSeconds },
     fastVsTwoGwei:
       fastSeconds === undefined || twoGweiSeconds === undefined || extraUsd <= 0
         ? undefined
