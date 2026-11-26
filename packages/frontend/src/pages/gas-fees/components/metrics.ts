@@ -62,7 +62,12 @@ export function formatFee(value: number) {
 /** For log axis ticks, which are powers of ten: "$0.001", not "$0.0010" */
 export function formatFeeTick(value: number) {
   if (value >= 1) return formatCurrency(value, 'usd', { decimals: 0 })
-  return `$${Number(value.toPrecision(1))}`
+  return `$${formatSignificant(value, 1)}`
+}
+
+/** Never in e-notation: a tip or an L2's gas price can be 1e-8 gwei */
+export function formatSignificant(value: number, digits: number) {
+  return value.toLocaleString('en-US', { maximumSignificantDigits: digits })
 }
 
 /** Per gas: "24 gwei", "0.012 gwei" */
@@ -80,11 +85,11 @@ export function formatGasNumber(value: number) {
   if (value >= 100) return value.toFixed(0)
   if (value >= 10) return value.toFixed(1)
   if (value >= 1) return value.toFixed(2)
-  return `${Number(value.toPrecision(2))}`
+  return formatSignificant(value, 2)
 }
 
 export function formatGasPriceTick(value: number) {
-  return `${Number(value.toPrecision(1))}`
+  return formatSignificant(value, 1)
 }
 
 export function formatTimes(value: number) {
@@ -100,6 +105,11 @@ export function compareWithEthereum(times: number) {
 }
 
 export const GAS_FEES_RANGE_OPTIONS = ['7d', '30d', '90d', '1y', 'max'] as const
+
+export const GAS_FEES_RANGE_LABELS: Record<
+  (typeof GAS_FEES_RANGE_OPTIONS)[number],
+  string
+> = { '7d': '7D', '30d': '30D', '90d': '90D', '1y': '1Y', max: 'MAX' }
 
 /** How the selected range reads in a sentence: "past year", "all time" */
 export function getPeriodLabel(range: ChartRange) {

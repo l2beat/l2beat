@@ -1,18 +1,10 @@
 import { useCallback, useState } from 'react'
-import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { GasFeesTipping as Tipping } from '~/server/features/gas-fees/getGasFeesTipping'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
-import {
-  type GasFeesGasMetric,
-  type GasFeesMetric,
-  type GasFeesUnit,
-  type GasFeesUsdMetric,
-  isGasMetric,
-} from '~/server/features/gas-fees/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
@@ -22,30 +14,21 @@ import { GasFeesTable } from './GasFeesTable'
 import { GasFeesTipping } from './GasFeesTipping'
 import { GasFeesUpgrades } from './GasFeesUpgrades'
 import {
-  DEFAULT_GAS_FEES_GAS_METRIC,
-  DEFAULT_GAS_FEES_METRIC,
+  GAS_FEES_RANGE_LABELS,
   GAS_FEES_RANGE_OPTIONS,
   getPeriodLabel,
 } from './metrics'
 import { SPLIT, StoredUntil } from './parts'
 import type { GasFeesChain, GasFeesWalletIcons } from './types'
 
-export type GasFeesScale = 'log' | 'lin'
-
-const RANGE_LABELS: Record<(typeof GAS_FEES_RANGE_OPTIONS)[number], string> = {
-  '7d': '7D',
-  '30d': '30D',
-  '90d': '90D',
-  '1y': '1Y',
-  max: 'MAX',
-}
-
 interface Props {
   chains: GasFeesChain[]
   upgrades: GasFeesUpgrade[]
   tipping: Tipping
   walletIcons: GasFeesWalletIcons
+  /** The chart opens on everything stored, the table on recent fees */
   initialRange: ChartRange
+  initialTableRange: ChartRange
   /** The past year, fixed: the stats don't follow the chart's range */
   statsRange: ChartRange
 }
@@ -56,49 +39,22 @@ export function GasFeesView({
   tipping,
   walletIcons,
   initialRange,
+  initialTableRange,
   statsRange,
 }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState(initialRange)
-  // The chart opens on everything stored, the stats cover the past year and
-  // the table opens on recent fees
-  const [tableRange, setTableRange] = useState(() => optionToRange('30d'))
-  const [unit, setUnit] = useState<GasFeesUnit>('usd')
-  // Each unit keeps its own metric, so switching back restores it
-  const [usdMetric, setUsdMetric] = useState<GasFeesUsdMetric>(
-    DEFAULT_GAS_FEES_METRIC,
-  )
-  const [gasMetric, setGasMetric] = useState<GasFeesGasMetric>(
-    DEFAULT_GAS_FEES_GAS_METRIC,
-  )
-  const metric = unit === 'usd' ? usdMetric : gasMetric
-  const setMetric = (m: GasFeesMetric) =>
-    isGasMetric(m) ? setGasMetric(m) : setUsdMetric(m)
-  const [scale, setScale] = useState<GasFeesScale>('log')
+  const [tableRange, setTableRange] = useState(initialTableRange)
   // The chain hovered in the table is highlighted on the chart
   const [highlightedChainId, setHighlightedChainId] = useState<string>()
   const [highlightedUpgradeId, setHighlightedUpgradeId] = useState<string>()
   const [selectedUpgradeId, setSelectedUpgradeId] = useState<string>()
 
-  const chart = useChartQuery(trpc.gasFees.chart, { range, metric })
   const summary = useChartQuery(trpc.gasFees.summary, { range: statsRange })
   const tableSummary = useChartQuery(trpc.gasFees.summary, {
     range: tableRange,
   })
   const showWholeHistory = useCallback(() => setRange(optionToRange('max')), [])
-  const shownMetric = chart.shownInput.metric
-
-  const rangeControls = (
-    <ChartRangeControls
-      name="gasFeesRange"
-      value={range}
-      setValue={setRange}
-      options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
-        value,
-        label: RANGE_LABELS[value],
-      }))}
-    />
-  )
 
   return (
     // On mobile the sections run edge to edge, split by a line
@@ -106,7 +62,6 @@ export function GasFeesView({
       <PrimaryCard>
         <GasFeesTipping tipping={tipping} walletIcons={walletIcons} />
       </PrimaryCard>
-      {/* The split, the fee history and the upgrades behind it, as one section */}
       <PrimaryCard>
         <div className="@container flex flex-col gap-6">
           <div className="flex flex-col gap-1">
@@ -121,6 +76,7 @@ export function GasFeesView({
             <StoredUntil lastDay={summary.data?.lastDay} />
           </div>
           <GasFeesStats
+            chains={chains}
             summary={summary.data}
             range={summary.shownInput.range}
             isLoading={summary.isLoading}
@@ -132,27 +88,18 @@ export function GasFeesView({
               <GasFeesChart
                 chains={chains}
                 upgrades={upgrades}
-                data={chart.data}
-                isLoading={chart.isLoading}
-                isPlaceholderData={chart.isPlaceholderData}
-                shownMetric={shownMetric}
-                metric={metric}
-                setMetric={setMetric}
-                scale={scale}
-                setScale={setScale}
+                range={range}
+                setRange={setRange}
                 highlightedChainId={highlightedChainId}
                 highlightedUpgradeId={highlightedUpgradeId}
                 selectedUpgradeId={selectedUpgradeId}
-                unit={unit}
-                setUnit={setUnit}
-                rangeControl={rangeControls}
               />
             </div>
             <div className={cn(SPLIT.side, 'relative @max-3xl:h-[480px]')}>
               <div className={cn(SPLIT.sidePad, 'absolute inset-0')}>
                 <GasFeesUpgrades
                   upgrades={upgrades}
-                  range={chart.shownInput.range}
+                  range={range}
                   highlightedUpgradeId={highlightedUpgradeId}
                   setHighlightedUpgradeId={setHighlightedUpgradeId}
                   selectedUpgradeId={selectedUpgradeId}
@@ -184,7 +131,7 @@ export function GasFeesView({
             >
               {GAS_FEES_RANGE_OPTIONS.map((option) => (
                 <RadioGroupItem key={option} value={option}>
-                  {option === 'max' ? 'ALL' : RANGE_LABELS[option]}
+                  {GAS_FEES_RANGE_LABELS[option]}
                 </RadioGroupItem>
               ))}
             </RadioGroup>

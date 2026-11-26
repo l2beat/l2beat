@@ -12,6 +12,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import {
   Table,
   TableBody,
@@ -44,6 +45,7 @@ import {
   GAS_FEES_METRIC_LABELS,
 } from './metrics'
 
+import { DataGaps, percent } from './parts'
 import type { GasFeesChain } from './types'
 
 interface Props {
@@ -82,12 +84,8 @@ export function GasFeesTable({
 }: Props) {
   const [action, setAction] = useState<GasFeesPeriodMetric>('erc20')
   const [sort, setSort] = useState<Sort>({ id: 'cost', desc: false })
-  const nameOf = (id: string) => chains.find((c) => c.id === id)?.name ?? id
-  const noData = summary?.noDataIds.map(nameOf) ?? []
-  const missingDays =
-    summary?.rows
-      .filter((row) => row.missingDays > 0)
-      .map((row) => `${nameOf(row.id)} ${row.missingDays}`) ?? []
+  const sortedBy = (id: string) =>
+    sort.id === id && (sort.desc ? 'desc' : 'asc')
   const ethereum = summary?.rows.find((r) => r.id === 'ethereum')
 
   const columns: Column[] = [
@@ -162,18 +160,20 @@ export function GasFeesTable({
                   className={column.className}
                 >
                   {column.sortValue ? (
-                    <SortableHead
-                      align={column.align}
-                      sort={sort.id === column.id ? sort : undefined}
-                      onSort={() =>
-                        setSort((s) => ({
+                    <SortingArrows
+                      direction={sortedBy(column.id)}
+                      nextDirection={
+                        sortedBy(column.id) === 'asc' ? 'desc' : 'asc'
+                      }
+                      onClick={() =>
+                        setSort({
                           id: column.id,
-                          desc: s.id === column.id ? !s.desc : false,
-                        }))
+                          desc: sortedBy(column.id) === 'asc',
+                        })
                       }
                     >
                       {column.head}
-                    </SortableHead>
+                    </SortingArrows>
                   ) : (
                     column.head
                   )}
@@ -225,14 +225,7 @@ export function GasFeesTable({
       </Table>
       <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
         <FeeSplitKey keys={['base', 'priority', 'l1Data']} />
-        <div className="flex flex-col gap-1 text-2xs text-secondary md:items-end">
-          {missingDays.length > 0 && (
-            <span>Days without data: {missingDays.join(', ')}</span>
-          )}
-          {noData.length > 0 && (
-            <span>No data in this period: {noData.join(', ')}</span>
-          )}
-        </div>
+        <DataGaps summary={summary} chains={chains} className="md:items-end" />
       </div>
     </div>
   )
@@ -264,7 +257,7 @@ function getCostColumns(
       tooltip:
         "Each chain's cost to scale, with Ethereum's as the full track, and how many times cheaper it is than Ethereum over the same days.",
       className: 'pl-6!',
-      sortValue: (row) => row.timesCheaper?.[action] ?? 1,
+      sortValue: (row) => row.timesCheaper?.[action] ?? null,
       cell: (row, chain) => {
         const base = ethereum?.[action]
         const cost = row[action]
@@ -283,15 +276,13 @@ function getCostColumns(
               />
             </span>
             {row.id === 'ethereum' ? (
-              <span className="whitespace-nowrap text-secondary text-xs">
-                baseline
-              </span>
+              <span className="whitespace-nowrap text-xs">baseline</span>
             ) : !compared ? (
               <span className="text-secondary">{EM_DASH}</span>
             ) : (
               <span className="whitespace-nowrap text-xs">
                 <span className="font-bold">{compared.times}</span>{' '}
-                <span className="text-secondary">{compared.word}</span>
+                {compared.word}
               </span>
             )}
           </span>
@@ -324,37 +315,6 @@ function ActionPicker({
         ))}
       </SelectContent>
     </Select>
-  )
-}
-
-function SortableHead({
-  sort,
-  onSort,
-  align,
-  children,
-}: {
-  sort: Sort | undefined
-  onSort: () => void
-  align?: 'right'
-  children: React.ReactNode
-}) {
-  return (
-    <span
-      className={cn('flex items-end gap-1', align === 'right' && 'justify-end')}
-    >
-      {children}
-      <button
-        type="button"
-        onClick={onSort}
-        aria-label="Sort"
-        className={cn(
-          'cursor-pointer text-xs leading-none hover:text-primary',
-          sort ? 'text-primary' : 'text-secondary opacity-50',
-        )}
-      >
-        {sort?.desc ? '↓' : '↑'}
-      </button>
-    </span>
   )
 }
 
@@ -408,10 +368,8 @@ function getSplitColumn(): Column {
                     <span className="flex items-center gap-1.5 whitespace-nowrap">
                       {hasNotes && (
                         <span
-                          className={cn(
-                            'size-2 rounded-xs',
-                            FEE_SPLIT_COLORS[p.key],
-                          )}
+                          className="size-2 rounded-xs"
+                          style={{ backgroundColor: FEE_SPLIT_COLORS[p.key] }}
                         />
                       )}
                       {FEE_SPLIT_LABELS[p.key]}
@@ -424,7 +382,7 @@ function getSplitColumn(): Column {
                       <span>
                         {formatFee(p.value)}{' '}
                         <span className="text-secondary">
-                          {sum > 0 ? Math.round((p.value / sum) * 100) : 0}%
+                          {percent(sum > 0 ? p.value / sum : 0)}
                         </span>
                       </span>
                     )}

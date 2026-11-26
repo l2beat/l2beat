@@ -1,10 +1,10 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ChartRange } from '~/utils/range/range'
 import { GAS_FEES_CHAINS, type GasFeesChainId } from './chains'
 import {
   type GasFeesRecords,
   getGasFeesRecords,
+  getRangeDays,
   getStoredDays,
 } from './getGasFeesRecords'
 import { type GasFeesTotals, inRange, median, summarize } from './summarize'
@@ -73,7 +73,7 @@ export function buildGasFeesSummary(
   { range }: GasFeesSummaryParams,
 ): GasFeesSummary {
   const ethereum = records.get('ethereum') ?? []
-  const expectedDays = countStoredDays(records, range)
+  const expectedDays = getRangeDays(records, range).length
 
   const rows: GasFeesSummaryRow[] = []
   const noDataIds: GasFeesChainId[] = []
@@ -134,18 +134,6 @@ export function buildGasFeesSummary(
       latestErc20: getLatestErc20(records),
     },
   }
-}
-
-/** The days of the range between the first and the last day stored for any chain */
-function countStoredDays(records: GasFeesRecords, [from, to]: ChartRange) {
-  const stored = getStoredDays(records)
-  if (!stored) return 0
-  const first = Math.max(
-    stored.first,
-    from === null ? stored.first : UnixTime.toStartOf(from, 'day'),
-  )
-  const last = Math.min(stored.last, UnixTime.toStartOf(to - 1, 'day'))
-  return Math.max(0, (last - first) / UnixTime.DAY + 1)
 }
 
 /** Compared over the days both have data for, so neither side counts a day the other lacks */

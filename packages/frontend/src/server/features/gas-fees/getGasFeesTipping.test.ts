@@ -1,13 +1,13 @@
 import type { GasFeesTipPayersDailyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { tipToUsd } from './getGasFeesLiveTips'
 import {
   buildGasFeesTipping,
   fitNeverRising,
   type GasFeesTippingInput,
   getSureWait,
 } from './getGasFeesTipping'
+import { tipToUsd } from './types'
 
 const DAY = UnixTime.DAY
 const NOTHING: GasFeesTippingInput = {

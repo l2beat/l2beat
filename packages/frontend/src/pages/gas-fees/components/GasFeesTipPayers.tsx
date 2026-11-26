@@ -1,6 +1,6 @@
 import type { GasFeesTipPayers as TipPayers } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
-import { formatPeriod, NoDataYet } from './parts'
+import { formatPeriod, KeyItem, NoDataYet, percent, ShareBar } from './parts'
 
 type Shares = TipPayers['txShares']
 
@@ -25,10 +25,8 @@ const GROUPS = [
   },
 ] as const
 
-/** Below this a slice can't hold its number. The last slice shows it beside the bar instead */
-const THINNEST_LABELLED = 6
-
-const percent = (share: number) => Math.round(share * 100)
+/** Below this share a slice can't hold its number. The last slice shows it beside the bar instead */
+const THINNEST_LABELLED = 0.06
 
 export function GasFeesTipPayers({
   payers,
@@ -42,8 +40,8 @@ export function GasFeesTipPayers({
         {payers ? (
           <>
             <p className="font-medium text-base">
-              The {percent(payers.txShares.high)}% of transactions that tip 1 to
-              2.5 gwei pay {percent(payers.tipShares.high)}% of the tips.
+              The {percent(payers.txShares.high)} of transactions that tip 1 to
+              2.5 gwei pay {percent(payers.tipShares.high)} of the tips.
             </p>
             <p className="text-secondary text-xs">
               Ordinary transactions, {formatPeriod(payers.period)}.
@@ -55,21 +53,17 @@ export function GasFeesTipPayers({
       </div>
       {payers && (
         <>
-          <div className="flex flex-col gap-3 pr-8">
+          <div className="flex flex-col gap-3 pr-11">
             <Split label="Transactions" shares={payers.txShares} />
             <Split label="Tips paid" shares={payers.tipShares} />
           </div>
-          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-xs">
+          <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs">
             {GROUPS.map((group) => (
-              <li key={group.key} className="flex items-center gap-1.5">
-                <span
-                  className="size-2.5 rounded-xs"
-                  style={{ backgroundColor: group.color }}
-                />
+              <KeyItem key={group.key} color={group.color}>
                 {group.label}
-              </li>
+              </KeyItem>
             ))}
-          </ul>
+          </div>
         </>
       )}
     </div>
@@ -77,33 +71,27 @@ export function GasFeesTipPayers({
 }
 
 function Split({ label, shares }: { label: string; shares: Shares }) {
-  const last = percent(shares[GROUPS[GROUPS.length - 1]?.key ?? 'low'])
+  const last = shares[GROUPS[GROUPS.length - 1]?.key ?? 'low']
   return (
     <div className="flex flex-col gap-1">
       <span className="text-xs">{label}</span>
-      <div className="relative flex h-11 gap-0.5 font-semibold text-sm tabular-nums">
-        {GROUPS.map((group) => {
-          const share = percent(shares[group.key])
-          return (
-            <span
-              key={group.key}
-              className={cn(
-                'flex min-w-0 items-center overflow-hidden first:rounded-l-lg last:rounded-r-lg',
-                group.text,
-                share >= THINNEST_LABELLED && 'px-3',
-              )}
-              style={{
-                width: `${shares[group.key] * 100}%`,
-                backgroundColor: group.color,
-              }}
-            >
-              {share >= THINNEST_LABELLED && `${share}%`}
-            </span>
-          )
-        })}
+      <div className="relative font-semibold text-sm tabular-nums">
+        <ShareBar
+          className="h-11 gap-0.5 rounded-lg"
+          parts={GROUPS.map((group) => {
+            const labelled = shares[group.key] >= THINNEST_LABELLED
+            return {
+              key: group.key,
+              value: shares[group.key],
+              color: group.color,
+              className: cn(group.text, labelled && 'px-3'),
+              inside: labelled && percent(shares[group.key]),
+            }
+          })}
+        />
         {last < THINNEST_LABELLED && (
           <span className="-translate-y-1/2 absolute top-1/2 left-full ml-2">
-            {last}%
+            {percent(last)}
           </span>
         )}
       </div>

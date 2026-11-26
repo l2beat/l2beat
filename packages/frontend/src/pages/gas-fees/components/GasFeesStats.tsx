@@ -13,21 +13,31 @@ import {
   getPeriodLabel,
 } from './metrics'
 
-import { ETH, L2, Label, NoDataYet, percent, SPLIT, usd } from './parts'
+import {
+  Colored,
+  DataGaps,
+  ETH,
+  Headed,
+  KeyItem,
+  L2,
+  Label,
+  NoDataYet,
+  percent,
+  ShareBar,
+  SPLIT,
+  usd,
+} from './parts'
 import { TxFeesBreakdown } from './TxFeesBreakdown'
 import type { GasFeesChain } from './types'
 
 interface Props {
+  chains: GasFeesChain[]
   summary: GasFeesSummary | undefined
   range: ChartRange
   isLoading: boolean
 }
 
-/**
- * The headline over the transactions-to-fees split on the left, with the
- * transfer cost beside the headline and the gas token beside the split
- */
-export function GasFeesStats({ summary, range, isLoading }: Props) {
+export function GasFeesStats({ chains, summary, range, isLoading }: Props) {
   if (isLoading || !summary) {
     return (
       <div className="flex flex-col gap-3">
@@ -47,6 +57,7 @@ export function GasFeesStats({ summary, range, isLoading }: Props) {
     <div className={cn(SPLIT.grid, '@3xl:grid-rows-[auto_1fr]')}>
       <div className={cn(SPLIT.main, '@3xl:col-start-1 @3xl:row-start-1')}>
         <Headline f={f} />
+        <DataGaps summary={summary} chains={chains} className="mt-2" />
       </div>
       <div
         className={cn(
@@ -55,10 +66,10 @@ export function GasFeesStats({ summary, range, isLoading }: Props) {
         )}
       >
         <TxFeesBreakdown
-          split={{
-            tx: { l2s: f.l2s.txCount, ethereum: f.ethereum.txCount },
-            fees: { l2s: f.l2s.fees, ethereum: f.ethereum.fees },
-          }}
+          txShare={f.txShare}
+          feeShare={f.feeShare}
+          ethereum={f.ethereum}
+          l2s={f.l2s}
         />
       </div>
       <div
@@ -130,7 +141,7 @@ function Headline({ f }: { f: Figures }) {
         L2s process <Colored color={L2}>{percent(f.txShare)}</Colored> of
         transactions
         <br className="max-md:hidden" /> and collect{' '}
-        <Colored color={ETH}>{percent(f.feeShare)}</Colored> of the total fees
+        <Colored color={L2}>{percent(f.feeShare)}</Colored> of the total fees
         paid by users.
       </p>
       {avgFeeRatio(f) > 1 && f.feeShare < 0.5 && (
@@ -219,29 +230,8 @@ function TransferCost({ f }: { f: Figures }) {
   )
 }
 
-export function Colored({
-  color,
-  children,
-}: {
-  color: string
-  children: React.ReactNode
-}) {
-  return <span style={{ color }}>{children}</span>
-}
-
-export function Headed({ value, note }: { value: string; note?: string }) {
-  return (
-    <span className="flex items-baseline gap-2">
-      <span className="whitespace-nowrap font-bold text-2xl tabular-nums tracking-tight">
-        {value}
-      </span>
-      {note && <span className="text-secondary text-xs">{note}</span>}
-    </span>
-  )
-}
-
 /** Parts of a whole with a key under each end */
-export function KeyedBar({
+function KeyedBar({
   parts,
 }: {
   parts: { label: string; value: number; color: string }[]
@@ -249,32 +239,18 @@ export function KeyedBar({
   const total = parts.reduce((sum, p) => sum + p.value, 0)
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex h-4 gap-0.5 overflow-hidden rounded-md">
-        {parts.map((p) => (
-          <span
-            key={p.label}
-            style={{
-              width: `${total > 0 ? (p.value / total) * 100 : 0}%`,
-              backgroundColor: p.color,
-            }}
-          />
-        ))}
-      </div>
+      <ShareBar
+        className="h-4 gap-0.5 rounded-md"
+        parts={parts.map((p) => ({ ...p, key: p.label }))}
+      />
       <div className="flex flex-wrap justify-between gap-x-3 gap-y-0.5 text-xs">
         {parts.map((p) => (
-          <span
-            key={p.label}
-            className="flex items-center gap-1 whitespace-nowrap"
-          >
-            <span
-              className="size-2 rounded-xs"
-              style={{ backgroundColor: p.color }}
-            />
+          <KeyItem key={p.label} color={p.color}>
             <span>{p.label}</span>
             <span className="font-medium tabular-nums">
               {percent(total > 0 ? p.value / total : 0)}
             </span>
-          </span>
+          </KeyItem>
         ))}
       </div>
     </div>

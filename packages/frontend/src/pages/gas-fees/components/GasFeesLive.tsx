@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useReducer, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { Logo } from '~/components/Logo'
 import { RollingNumber } from '~/components/RollingNumber'
 import { EM_DASH } from '~/consts/characters'
@@ -12,7 +13,7 @@ import type { GasFeesLiveTips } from '~/server/features/gas-fees/getGasFeesLiveT
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { formatFee } from './metrics'
+import { formatFee, formatSignificant } from './metrics'
 import type { GasFeesWalletIcons } from './types'
 
 /** The backend reads a block every 12 seconds, and the server shares a read for 3 */
@@ -28,9 +29,7 @@ const TIERS: { key: GasFeesTier; name: string; promise: string }[] = [
 
 const WALLETS: GasFeesWallet[] = ['Ambire', 'MetaMask', 'Rabby']
 
-/** Two significant digits, never in e-notation: slow tips can be 1e-8 gwei */
-const gwei = (value: number) =>
-  value.toLocaleString('en-US', { maximumSignificantDigits: 2 })
+const gwei = (value: number) => formatSignificant(value, 2)
 const multiple = (value: number) =>
   `${Number(value.toPrecision(2)).toLocaleString('en-US')}×`
 
@@ -67,13 +66,7 @@ export function GasFeesLive({
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
         <h3 className="font-bold text-lg">Tips now</h3>
         <span className="flex items-center gap-2 font-medium text-sm">
-          <span
-            className={
-              isLive
-                ? 'size-2 animate-pulse rounded-full bg-negative motion-reduce:animate-none'
-                : 'size-2 rounded-full bg-divider'
-            }
-          />
+          <LiveIndicator disabled={!isLive} />
           {getStatus(tips, isPending, isLive)}
         </span>
         {isLive && <NextBlock hidden={false} />}

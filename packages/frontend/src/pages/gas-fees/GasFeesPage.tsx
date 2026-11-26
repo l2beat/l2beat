@@ -15,6 +15,7 @@ interface Props extends AppLayoutProps {
   tipping: GasFeesTipping
   walletIcons: GasFeesWalletIcons
   initialRange: ChartRange
+  initialTableRange: ChartRange
   statsRange: ChartRange
   queryState: DehydratedState
 }
@@ -25,6 +26,7 @@ export function GasFeesPage({
   tipping,
   walletIcons,
   initialRange,
+  initialTableRange,
   statsRange,
   queryState,
   ...props
@@ -40,6 +42,7 @@ export function GasFeesPage({
             tipping={tipping}
             walletIcons={walletIcons}
             initialRange={initialRange}
+            initialTableRange={initialTableRange}
             statsRange={statsRange}
           />
         </SideNavLayout>

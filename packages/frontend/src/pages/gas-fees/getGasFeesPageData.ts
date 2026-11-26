@@ -3,7 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   FEE_SPLIT_NOTES,
   GAS_FEES_CHAINS,
-  NO_PRIORITY_FEE_NOTES,
+  type GasFeesChainConfig,
 } from '~/server/features/gas-fees/chains'
 import { getGasFeesTipping } from '~/server/features/gas-fees/getGasFeesTipping'
 import { getGasFeesUpgrades } from '~/server/features/gas-fees/getGasFeesUpgrades'
@@ -63,11 +63,12 @@ async function getCachedData(manifest: Manifest) {
   const initialRange = optionToRange('max')
   // The Ethereum vs L2s headline is about today's split, not the history
   const statsRange = optionToRange('1y')
+  const initialTableRange = optionToRange('30d')
 
   const [projects, tipping] = await Promise.all([
     ps.getProjects({
       ids: GAS_FEES_CHAINS.map((c) => ProjectId(c.id)),
-      optional: [...PROJECT_PAGE_METADATA_FIELDS],
+      optional: [...PROJECT_PAGE_METADATA_FIELDS, 'scalingInfo', 'milestones'],
     }),
     getGasFeesTipping(),
     helpers.queryClient.prefetchQuery(
@@ -76,8 +77,10 @@ async function getCachedData(manifest: Manifest) {
         metric: DEFAULT_GAS_FEES_METRIC,
       }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.gasFees.summary.queryOptions({ range: statsRange }),
+    ...[statsRange, initialTableRange].map((range) =>
+      helpers.queryClient.prefetchQuery(
+        helpers.trpc.gasFees.summary.queryOptions({ range }),
+      ),
     ),
   ])
 
@@ -86,25 +89,30 @@ async function getCachedData(manifest: Manifest) {
   const chains: GasFeesChain[] = GAS_FEES_CHAINS.map((chain, i) => {
     const project = projects.find((p) => p.id === chain.id)
     assert(project, `Project ${chain.id} not found`)
+    const { noPriorityFees }: GasFeesChainConfig = chain
     return {
       id: chain.id,
       name: project.name,
       shortName: project.shortName,
-      type: chain.type,
+      type: project.scalingInfo?.type ?? 'Layer 1',
       href: getProjectUrl(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       color:
         chain.id === 'ethereum'
           ? 'var(--chart-ethereum)'
           : (l2Colors[i - 1] ?? 'var(--secondary)'),
-      noPriorityFeeNote: NO_PRIORITY_FEE_NOTES[chain.id],
+      noPriorityFeeNote:
+        noPriorityFees &&
+        `${project.name} has no priority fees: ${noPriorityFees.reason}.`,
       feeSplitNotes: FEE_SPLIT_NOTES[chain.id] ?? {},
     }
   })
 
   return {
     chains,
-    upgrades: getGasFeesUpgrades(),
+    upgrades: getGasFeesUpgrades(
+      projects.find((p) => p.id === 'ethereum')?.milestones ?? [],
+    ),
     tipping,
     walletIcons: {
       Ambire: manifest.getUrl('/icons/ambire.png'),
@@ -113,6 +121,7 @@ async function getCachedData(manifest: Manifest) {
     },
     initialRange,
     statsRange,
+    initialTableRange,
     queryState: helpers.dehydrate(),
   }
 }

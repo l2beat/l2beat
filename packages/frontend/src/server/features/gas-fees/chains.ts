@@ -5,7 +5,6 @@ export type GasFeesChainId = (typeof GAS_FEES_CHAINS)[number]['id']
 export interface GasFeesChainConfig {
   /** The chain's id in the backend's GasFeesDaily, and its project id */
   id: string
-  type: string
   gasToken: 'ETH' | 'MNT'
   /**
    * The gas a transaction is charged for holds the gas for posting its data to
@@ -14,9 +13,13 @@ export interface GasFeesChainConfig {
    */
   l1FeeInGas?: true | { until: UnixTime }
   /** The sequencer takes no tips, so all that is not the L1 fee is the chain's own fee */
-  noPriorityFees?: true
+  noPriorityFees?: { reason: string }
   /** A charge per gas the chain sets on top of its base fee, in gwei of its gas token */
   operatorFee?: { from: UnixTime; gweiPerGas: number }
+}
+
+const FIRST_COME_FIRST_SERVED = {
+  reason: 'the sequencer orders transactions first come, first served',
 }
 
 const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
@@ -27,39 +30,29 @@ const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
  * (packages/backend/src/modules/gas-fees/fees/feeRules.ts).
  */
 export const GAS_FEES_CHAINS = [
-  { id: 'ethereum', type: 'Layer 1', gasToken: 'ETH' },
+  { id: 'ethereum', gasToken: 'ETH' },
   {
     id: 'arbitrum',
-    type: 'Optimistic rollup',
     gasToken: 'ETH',
     l1FeeInGas: true,
   },
-  { id: 'base', type: 'Optimistic rollup', gasToken: 'ETH' },
-  { id: 'optimism', type: 'Optimistic rollup', gasToken: 'ETH' },
-  { id: 'zksync2', type: 'ZK rollup', gasToken: 'ETH', noPriorityFees: true },
-  { id: 'linea', type: 'ZK rollup', gasToken: 'ETH' },
-  { id: 'scroll', type: 'ZK rollup', gasToken: 'ETH' },
-  { id: 'unichain', type: 'Optimistic rollup', gasToken: 'ETH' },
-  { id: 'ink', type: 'Optimistic rollup', gasToken: 'ETH' },
-  { id: 'abstract', type: 'ZK rollup', gasToken: 'ETH', noPriorityFees: true },
-  { id: 'taiko', type: 'Based rollup', gasToken: 'ETH' },
+  { id: 'base', gasToken: 'ETH' },
+  { id: 'optimism', gasToken: 'ETH' },
+  { id: 'zksync2', gasToken: 'ETH', noPriorityFees: FIRST_COME_FIRST_SERVED },
+  { id: 'linea', gasToken: 'ETH' },
+  { id: 'scroll', gasToken: 'ETH' },
+  { id: 'unichain', gasToken: 'ETH' },
+  { id: 'ink', gasToken: 'ETH' },
+  { id: 'abstract', gasToken: 'ETH', noPriorityFees: FIRST_COME_FIRST_SERVED },
+  { id: 'taiko', gasToken: 'ETH' },
   // Mantle changed how it charges during 22 April 2026, so that day's split is approximate
   {
     id: 'mantle',
-    type: 'Optimium',
     gasToken: 'MNT',
     l1FeeInGas: { until: day('2026-04-22') },
     operatorFee: { from: day('2026-04-23'), gweiPerGas: 10 },
   },
 ] as const satisfies readonly GasFeesChainConfig[]
-
-/** Why a chain has no priority fees, shown wherever its split is */
-export const NO_PRIORITY_FEE_NOTES: Partial<Record<GasFeesChainId, string>> = {
-  zksync2:
-    'ZKsync Era has no priority fees: the sequencer orders transactions first come, first served.',
-  abstract:
-    'Abstract has no priority fees: the sequencer orders transactions first come, first served.',
-}
 
 export type FeeSplitPartKey = 'base' | 'priority' | 'l1Data'
 

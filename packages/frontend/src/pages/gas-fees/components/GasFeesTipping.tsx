@@ -5,9 +5,17 @@ import type {
 import { GasFeesLive } from './GasFeesLive'
 import { GasFeesMethodology } from './GasFeesMethodology'
 import { GasFeesPriceOfSpeed } from './GasFeesPriceOfSpeed'
-import { Colored } from './GasFeesStats'
 import { GasFeesTipPayers } from './GasFeesTipPayers'
-import { formatPeriod, Label, NoDataYet } from './parts'
+import {
+  Colored,
+  formatPeriod,
+  KeyItem,
+  Label,
+  NoDataYet,
+  percent,
+  ShareBar,
+  usd,
+} from './parts'
 import type { GasFeesWalletIcons } from './types'
 
 const FAST = 'var(--chart-stacked-blue)'
@@ -105,48 +113,27 @@ function SplitBar({
   const share = (value: number) => (total > 0 ? value / total : 0)
   return (
     <div className="flex flex-col gap-1.5">
-      <div className="flex h-11 gap-[3px] overflow-hidden rounded-lg font-semibold text-black text-sm tabular-nums">
-        {parts
-          .filter((p) => p.value > 0)
-          .map((p) => (
-            <span
-              key={p.label}
-              className="flex items-center overflow-hidden whitespace-nowrap px-3"
-              style={{
-                width: `${share(p.value) * 100}%`,
-                backgroundColor: p.color,
-              }}
-            >
-              {share(p.value) >= NARROWEST_LABELLED && usd(p.value)}
-            </span>
-          ))}
-      </div>
+      <ShareBar
+        className="h-11 gap-[3px] rounded-lg font-semibold text-black text-sm tabular-nums"
+        parts={parts.map((p) => ({
+          key: p.label,
+          value: p.value,
+          color: p.color,
+          className: 'px-3',
+          inside: share(p.value) >= NARROWEST_LABELLED && usd(p.value),
+        }))}
+      />
       <div className="flex justify-between gap-3 text-xs">
         {parts.map((p) => (
-          <span
-            key={p.label}
-            className="flex items-center gap-1 whitespace-nowrap"
-          >
-            <span
-              className="size-2 rounded-xs"
-              style={{ backgroundColor: p.color }}
-            />
+          <KeyItem key={p.label} color={p.color}>
             <span>{p.label}</span>
             <span className="font-medium tabular-nums">
               {share(p.value) < NARROWEST_LABELLED && `${usd(p.value)}, `}
-              {Math.round(share(p.value) * 100)}%
+              {percent(share(p.value))}
             </span>
-          </span>
+          </KeyItem>
         ))}
       </div>
     </div>
   )
-}
-
-/** "$52M", or "$1.2M" and "$340K" while only some days are stored */
-function usd(value: number) {
-  return `$${Intl.NumberFormat('en-US', {
-    notation: 'compact',
-    maximumSignificantDigits: value >= 1e7 ? 2 : 3,
-  }).format(value)}`
 }

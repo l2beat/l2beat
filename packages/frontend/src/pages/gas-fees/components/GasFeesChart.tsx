@@ -1,11 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { scaleLog } from 'd3-scale'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
+import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import {
   ChartTooltipRow,
@@ -18,28 +19,35 @@ import {
   type ChartReferenceDot,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import type { GasFeesChartData } from '~/server/features/gas-fees/getGasFeesChart'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import {
   GAS_FEES_GAS_METRICS,
   GAS_FEES_USD_METRICS,
+  type GasFeesGasMetric,
   type GasFeesMetric,
   type GasFeesUnit,
+  type GasFeesUsdMetric,
   isGasMetric,
 } from '~/server/features/gas-fees/types'
+import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
-import type { GasFeesScale } from './GasFeesView'
+import type { ChartRange } from '~/utils/range/range'
 import {
   compareWithEthereum,
+  DEFAULT_GAS_FEES_GAS_METRIC,
+  DEFAULT_GAS_FEES_METRIC,
   formatFee,
   formatFeeTick,
   formatGasNumber,
   formatGasPrice,
   formatGasPriceTick,
   GAS_FEES_METRIC_LABELS,
+  GAS_FEES_RANGE_LABELS,
+  GAS_FEES_RANGE_OPTIONS,
 } from './metrics'
 import type { GasFeesChain } from './types'
 
@@ -59,44 +67,45 @@ const DEFAULT_VISIBLE_CHAINS = [
 interface Props {
   chains: GasFeesChain[]
   upgrades: GasFeesUpgrade[]
-  data: GasFeesChartData | undefined
-  isLoading: boolean
-  isPlaceholderData: boolean
-  /** The metric of the data on screen, which lags `metric` while it loads */
-  shownMetric: GasFeesMetric
-  metric: GasFeesMetric
-  setMetric: (metric: GasFeesMetric) => void
-  scale: GasFeesScale
-  setScale: (scale: GasFeesScale) => void
+  range: ChartRange
+  setRange: (range: ChartRange) => void
   highlightedChainId: string | undefined
   highlightedUpgradeId: string | undefined
   /** Clicked in the upgrades list: marked with a band around it as well */
-  selectedUpgradeId?: string
-  unit: GasFeesUnit
-  setUnit: (unit: GasFeesUnit) => void
-  rangeControl: React.ReactNode
+  selectedUpgradeId: string | undefined
 }
 
+type Scale = 'log' | 'lin'
 type Point = { timestamp: number } & Record<string, number | null>
 
 export function GasFeesChart({
   chains,
   upgrades,
-  data,
-  isLoading,
-  isPlaceholderData,
-  shownMetric,
-  metric,
-  setMetric,
-  scale,
-  setScale,
+  range,
+  setRange,
   highlightedChainId,
   highlightedUpgradeId,
   selectedUpgradeId,
-  unit,
-  setUnit,
-  rangeControl,
 }: Props) {
+  const trpc = useTRPC()
+  const [unit, setUnit] = useState<GasFeesUnit>('usd')
+  // Each unit keeps its own metric, so switching back restores it
+  const [usdMetric, setUsdMetric] = useState<GasFeesUsdMetric>(
+    DEFAULT_GAS_FEES_METRIC,
+  )
+  const [gasMetric, setGasMetric] = useState<GasFeesGasMetric>(
+    DEFAULT_GAS_FEES_GAS_METRIC,
+  )
+  const metric = unit === 'usd' ? usdMetric : gasMetric
+  const setMetric = (m: GasFeesMetric) =>
+    isGasMetric(m) ? setGasMetric(m) : setUsdMetric(m)
+  const [scale, setScale] = useState<Scale>('log')
+  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
+    trpc.gasFees.chart,
+    { range, metric },
+  )
+  // The metric of the data on screen, which lags `metric` while it loads
+  const shownMetric = shownInput.metric
   const isGas = isGasMetric(shownMetric)
   const meta = useMemo<ChartMeta>(() => {
     const entries: [string, ChartMeta[string]][] = chains.map((chain) => [
@@ -207,7 +216,7 @@ export function GasFeesChart({
           <RadioGroup
             name="gasFeesScale"
             value={scale}
-            onValueChange={(value) => setScale(value as GasFeesScale)}
+            onValueChange={(value) => setScale(value as Scale)}
           >
             <RadioGroupItem value="log">Log</RadioGroupItem>
             <RadioGroupItem value="lin">Lin</RadioGroupItem>
@@ -229,7 +238,15 @@ export function GasFeesChart({
             ),
           )}
         </RadioGroup>
-        {rangeControl}
+        <ChartRangeControls
+          name="gasFeesRange"
+          value={range}
+          setValue={setRange}
+          options={GAS_FEES_RANGE_OPTIONS.map((value) => ({
+            value,
+            label: GAS_FEES_RANGE_LABELS[value],
+          }))}
+        />
       </div>
       <ChartContainer
         data={points}
@@ -287,7 +304,7 @@ export function GasFeesChart({
 function getYAxis(
   points: Point[] | undefined,
   keys: string[],
-  scale: GasFeesScale,
+  scale: Scale,
   isGas: boolean,
 ) {
   if (scale === 'lin') {
@@ -343,11 +360,7 @@ function getUpgradeMarkers(
   }
 }
 
-/**
- * A line at the upgrade, named above the plot, where no line crosses the
- * label. A clicked upgrade also gets a light band around it, so it stays
- * easy to find while the pointer is on the lines.
- */
+/** Named above the plot, where no line crosses the label. A clicked upgrade also gets a band, to stay easy to find. */
 function getUpgradeMarker(
   points: Point[] | undefined,
   upgrade: GasFeesUpgrade | undefined,

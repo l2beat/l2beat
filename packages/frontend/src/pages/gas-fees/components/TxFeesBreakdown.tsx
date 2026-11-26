@@ -3,10 +3,9 @@ import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { ETH, L2, Label, percent, usd } from './parts'
 
-/** Transactions and fees on each side, over the same period */
-export interface TxFeesSplit {
-  tx: { l2s: number; ethereum: number }
-  fees: { l2s: number; ethereum: number }
+interface Amounts {
+  txCount: number
+  fees: number
 }
 
 interface Side {
@@ -16,39 +15,34 @@ interface Side {
   value: string
 }
 
-/**
- * Transactions and fees as two upright 100% bars, L2s on top in both, joined
- * by a light band per side: L2s' large share of transactions narrows to a
- * small share of fees. The bands share one edge and never overlap.
- *
- * It fills its parent's height, so the parent sets how tall it is.
- */
-export function TxFeesBreakdown({ split }: { split: TxFeesSplit }) {
-  const txShare = share(split.tx.l2s, split.tx.ethereum)
-  const feeShare = share(split.fees.l2s, split.fees.ethereum)
-  const transactions: [Side, Side] = [
-    {
-      name: 'L2s',
-      color: L2,
-      share: txShare,
-      value: `${formatNumber(split.tx.l2s, 1)} txs`,
-    },
-    {
-      name: 'Ethereum',
-      color: ETH,
-      share: 1 - txShare,
-      value: `${formatNumber(split.tx.ethereum, 1)} txs`,
-    },
-  ]
-  const fees: [Side, Side] = [
-    { name: 'L2s', color: L2, share: feeShare, value: usd(split.fees.l2s) },
-    {
-      name: 'Ethereum',
-      color: ETH,
-      share: 1 - feeShare,
-      value: usd(split.fees.ethereum),
-    },
-  ]
+/** Two upright 100% bars, L2s on top in both, joined by a band per side. Fills its parent's height. */
+export function TxFeesBreakdown({
+  txShare,
+  feeShare,
+  ethereum,
+  l2s,
+}: {
+  /** The L2s' share of transactions and of fees */
+  txShare: number
+  feeShare: number
+  ethereum: Amounts
+  l2s: Amounts
+}) {
+  const sides = (share: number, format: (amounts: Amounts) => string) =>
+    [
+      { name: 'L2s', color: L2, share, value: format(l2s) },
+      {
+        name: 'Ethereum',
+        color: ETH,
+        share: 1 - share,
+        value: format(ethereum),
+      },
+    ] satisfies [Side, Side]
+  const transactions = sides(
+    txShare,
+    (a) => `${formatNumber(a.txCount, 1)} txs`,
+  )
+  const fees = sides(feeShare, (a) => usd(a.fees))
   return (
     <div className="grid size-full grid-cols-[auto_32px_minmax(24px,1fr)_32px_auto] grid-rows-[auto_minmax(0,1fr)] gap-x-2 gap-y-3 md:grid-cols-[auto_44px_minmax(40px,1fr)_44px_auto] md:gap-x-3">
       <Label className="col-span-2 justify-self-end">Transactions</Label>
@@ -60,10 +54,6 @@ export function TxFeesBreakdown({ split }: { split: TxFeesSplit }) {
       <SideValues sides={fees} align="left" />
     </div>
   )
-}
-
-function share(part: number, other: number) {
-  return part + other > 0 ? part / (part + other) : 0
 }
 
 function StackBar({ sides }: { sides: [Side, Side] }) {

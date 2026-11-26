@@ -1,17 +1,14 @@
 import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
 import type { GasFeesPeriod } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import type { GasFeesChain } from './types'
 
 export const ETH = 'var(--chart-ethereum)'
 export const L2 = 'var(--chart-ethereum-secondary)'
 
-/**
- * The Ethereum vs L2s section's two-column split, used by the stats and by
- * the chart with its upgrades, so the side column has the same width and its
- * divider sits at the same place in both. It needs an `@container` ancestor
- * as wide as the section.
- */
+/** One two-column split for the stats and the chart, so their dividers line up. Needs an `@container` ancestor. */
 export const SPLIT = {
   grid: 'grid grid-cols-1 gap-6 @3xl:grid-cols-[minmax(0,1fr)_340px] @3xl:gap-0',
   main: 'min-w-0 @3xl:pr-8',
@@ -42,6 +39,84 @@ export function Label({
   )
 }
 
+export function Colored({
+  color,
+  children,
+}: {
+  color: string
+  children: React.ReactNode
+}) {
+  return <span style={{ color }}>{children}</span>
+}
+
+export function Headed({ value, note }: { value: string; note?: string }) {
+  return (
+    <span className="flex items-baseline gap-2">
+      <span className="whitespace-nowrap font-bold text-2xl tabular-nums tracking-tight">
+        {value}
+      </span>
+      {note && <span className="text-secondary text-xs">{note}</span>}
+    </span>
+  )
+}
+
+export interface SharePart {
+  key: string
+  value: number
+  color: string
+  /** Shown inside the part, which clips it */
+  inside?: React.ReactNode
+  className?: string
+}
+
+/** Parts of a whole side by side, each as wide as its share. A part of zero is left out. */
+export function ShareBar({
+  parts,
+  className,
+}: {
+  parts: SharePart[]
+  className?: string
+}) {
+  const total = parts.reduce((sum, p) => sum + p.value, 0)
+  return (
+    <div className={cn('flex overflow-hidden', className)}>
+      {parts
+        .filter((p) => p.value > 0)
+        .map((p) => (
+          <span
+            key={p.key}
+            className={cn(
+              'flex min-w-0 items-center overflow-hidden whitespace-nowrap',
+              p.className,
+            )}
+            style={{
+              width: `${(p.value / total) * 100}%`,
+              backgroundColor: p.color,
+            }}
+          >
+            {p.inside}
+          </span>
+        ))}
+    </div>
+  )
+}
+
+/** A colour swatch and what it stands for */
+export function KeyItem({
+  color,
+  children,
+}: {
+  color: string
+  children: React.ReactNode
+}) {
+  return (
+    <span className="flex items-center gap-1 whitespace-nowrap">
+      <span className="size-2 rounded-xs" style={{ backgroundColor: color }} />
+      {children}
+    </span>
+  )
+}
+
 export function usd(value: number) {
   return formatCurrency(value, 'usd', { decimals: 1 })
 }
@@ -63,6 +138,37 @@ export function formatPeriod(period: GasFeesPeriod) {
   const days = `${formatTimestamp(period.from)} to ${formatTimestamp(period.to)}`
   if (period.missingDays === 0) return days
   return `${days}, without ${period.missingDays} ${period.missingDays === 1 ? 'day' : 'days'} of incomplete data`
+}
+
+/** The chains whose figures leave days out, and how many */
+export function DataGaps({
+  summary,
+  chains,
+  className,
+}: {
+  summary: GasFeesSummary | undefined
+  chains: GasFeesChain[]
+  className?: string
+}) {
+  const nameOf = (id: string) => chains.find((c) => c.id === id)?.name ?? id
+  const missingDays =
+    summary?.rows
+      .filter((row) => row.missingDays > 0)
+      .map((row) => `${nameOf(row.id)} ${row.missingDays}`) ?? []
+  const noData = summary?.noDataIds.map(nameOf) ?? []
+  if (missingDays.length === 0 && noData.length === 0) return null
+  return (
+    <div
+      className={cn('flex flex-col gap-1 text-2xs text-secondary', className)}
+    >
+      {missingDays.length > 0 && (
+        <span>Days without data: {missingDays.join(', ')}</span>
+      )}
+      {noData.length > 0 && (
+        <span>No data in this period: {noData.join(', ')}</span>
+      )}
+    </div>
+  )
 }
 
 /** In place of a figure the backend hasn't stored a day for yet */

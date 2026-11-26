@@ -5,7 +5,7 @@ import { GAS_FEES_CHAINS } from './chains'
 import {
   type GasFeesRecords,
   getGasFeesRecords,
-  getStoredDays,
+  getRangeDays,
 } from './getGasFeesRecords'
 import { mean } from './summarize'
 import { GasFeesMetric, type GasFeesRecord, isGasMetric } from './types'
@@ -42,7 +42,7 @@ export function buildGasFeesChart(
   records: GasFeesRecords,
   { range, metric }: GasFeesChartParams,
 ): GasFeesChartData {
-  const days = getDays(records, range)
+  const days = getRangeDays(records, range)
   const smoothed = days.length > SMOOTHING_THRESHOLD_DAYS
 
   const series = GAS_FEES_CHAINS.map((chain) =>
@@ -78,21 +78,6 @@ export function buildGasFeesChart(
     ]),
     smoothed,
   }
-}
-
-/** Every day of the range that could be stored, so a day no chain has still shows as a gap */
-function getDays(records: GasFeesRecords, [from, to]: ChartRange) {
-  const stored = getStoredDays(records)
-  if (!stored) return []
-  const first = Math.max(
-    stored.first,
-    from === null ? stored.first : UnixTime.toStartOf(from, 'day'),
-  )
-  const days: number[] = []
-  for (let day = first; day <= stored.last && day < to; day += UnixTime.DAY) {
-    days.push(day)
-  }
-  return days
 }
 
 /**

@@ -7,7 +7,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
-import { GAS_PER_ACTION } from './types'
+import { tipToUsd } from './types'
 
 export interface GasFeesTip {
   key: GasFeesTier
@@ -72,11 +72,6 @@ export function toTips(reading: GasFeesTipsReading): GasFeesTip[] {
     tip('medium', reading.mediumTipGwei),
     tip('fast', reading.fastTipGwei),
   ]
-}
-
-/** What a tip adds to the cost of an ERC-20 transfer */
-export function tipToUsd(gwei: number, ethUsd: number) {
-  return gwei * GAS_PER_ACTION.erc20 * 1e-9 * ethUsd
 }
 
 function getMockLiveTips(): GasFeesLiveTips {

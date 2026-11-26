@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import type { ChartRange } from '~/utils/range/range'
 import { GAS_FEES_CHAINS, type GasFeesChainId } from './chains'
 import { getMockGasFeesRows } from './mock/getMockGasFeesRows'
 import { toGasFeesRecord } from './toGasFeesRecord'
@@ -52,4 +53,19 @@ export function getStoredDays(
     last = Math.max(last, chain.at(-1)?.timestamp ?? last)
   }
   return Number.isFinite(first) ? { first, last } : undefined
+}
+
+/** Every day of the range that could be stored, so a day no chain has still counts */
+export function getRangeDays(records: GasFeesRecords, [from, to]: ChartRange) {
+  const stored = getStoredDays(records)
+  if (!stored) return []
+  const first = Math.max(
+    stored.first,
+    from === null ? stored.first : UnixTime.toStartOf(from, 'day'),
+  )
+  const days: number[] = []
+  for (let day = first; day <= stored.last && day < to; day += UnixTime.DAY) {
+    days.push(day)
+  }
+  return days
 }

@@ -7,8 +7,8 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { tipToUsd } from './getGasFeesLiveTips'
 import { getMockTippingInput } from './mock/getMockTippingInput'
+import { tipToUsd } from './types'
 
 const PERIOD_DAYS = 365
 /** With fewer transactions than this, fewer than ten of them place the 99th percentile */
@@ -62,7 +62,7 @@ export interface GasFeesPriceOfSpeed {
   line: GasFeesSpeedPoint[]
   /** Round tips on the line, and our fast tip at its own average cost and wait, cheapest first */
   marks: (GasFeesSpeedPoint & { name: string; ours: boolean })[]
-  /** Our fast tip against 2 gwei, undefined without both */
+  /** Our fast tip against 2 gwei, undefined without both or when ours is the dearer one */
   fastVsTwoGwei:
     | { extraUsd: number; fastSeconds: number; twoGweiSeconds: number }
     | undefined
@@ -231,6 +231,7 @@ function buildPriceOfSpeed(
     })
   }
   const twoGweiSeconds = onLine(2)
+  const extraUsd = tipToUsd(2, ethUsd) - fastUsd
 
   return {
     period,
@@ -238,13 +239,9 @@ function buildPriceOfSpeed(
     line,
     marks: marks.sort((a, b) => a.usd - b.usd),
     fastVsTwoGwei:
-      fastSeconds === undefined || twoGweiSeconds === undefined
+      fastSeconds === undefined || twoGweiSeconds === undefined || extraUsd <= 0
         ? undefined
-        : {
-            extraUsd: tipToUsd(2, ethUsd) - fastUsd,
-            fastSeconds,
-            twoGweiSeconds,
-          },
+        : { extraUsd, fastSeconds, twoGweiSeconds },
   }
 }
 

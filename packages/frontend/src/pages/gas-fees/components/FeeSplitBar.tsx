@@ -1,4 +1,5 @@
 import { cn } from '~/utils/cn'
+import { KeyItem, ShareBar } from './parts'
 
 export interface FeeSplitPart {
   key: 'base' | 'priority' | 'l1Data'
@@ -6,9 +7,9 @@ export interface FeeSplitPart {
 }
 
 export const FEE_SPLIT_COLORS: Record<FeeSplitPart['key'], string> = {
-  base: 'bg-chart-stacked-blue',
-  priority: 'bg-chart-stacked-pink',
-  l1Data: 'bg-chart-stacked-yellow',
+  base: 'var(--chart-stacked-blue)',
+  priority: 'var(--chart-stacked-pink)',
+  l1Data: 'var(--chart-stacked-yellow)',
 }
 
 export const FEE_SPLIT_LABELS: Record<FeeSplitPart['key'], string> = {
@@ -24,25 +25,17 @@ export function FeeSplitBar({
   parts: FeeSplitPart[]
   className?: string
 }) {
-  const total = parts.reduce((sum, p) => sum + p.value, 0)
   return (
-    <div
+    <ShareBar
       className={cn(
-        'flex h-1.5 w-full gap-px overflow-hidden rounded-full bg-surface-tertiary',
+        'h-1.5 w-full gap-px rounded-full bg-surface-tertiary',
         className,
       )}
-    >
-      {total > 0 &&
-        parts.map((part) =>
-          part.value > 0 ? (
-            <span
-              key={part.key}
-              className={FEE_SPLIT_COLORS[part.key]}
-              style={{ width: `${(part.value / total) * 100}%` }}
-            />
-          ) : null,
-        )}
-    </div>
+      parts={parts.map((part) => ({
+        ...part,
+        color: FEE_SPLIT_COLORS[part.key],
+      }))}
+    />
   )
 }
 
@@ -56,10 +49,9 @@ export function FeeSplitKey({
   return (
     <span className={cn('flex items-center gap-3 text-2xs', className)}>
       {keys.map((key) => (
-        <span key={key} className="flex items-center gap-1">
-          <span className={cn('size-2 rounded-xs', FEE_SPLIT_COLORS[key])} />
+        <KeyItem key={key} color={FEE_SPLIT_COLORS[key]}>
           {FEE_SPLIT_LABELS[key]}
-        </span>
+        </KeyItem>
       ))}
     </span>
   )

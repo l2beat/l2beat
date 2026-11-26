@@ -5,7 +5,7 @@ import type { GasFeesChainConfig } from './chains'
 import { toGasFeesRecord } from './toGasFeesRecord'
 
 const DAY = UnixTime(100 * UnixTime.DAY)
-const chain: GasFeesChainConfig = { id: 'l2', type: 'L2', gasToken: 'ETH' }
+const chain: GasFeesChainConfig = { id: 'l2', gasToken: 'ETH' }
 
 describe(toGasFeesRecord.name, () => {
   it('splits a day into the base fee, tips and the L1 fee on top', () => {
@@ -40,7 +40,10 @@ describe(toGasFeesRecord.name, () => {
   })
 
   it('counts everything but the L1 fee as the base fee where there are no tips', () => {
-    const record = toGasFeesRecord(row({}), { ...chain, noPriorityFees: true })
+    const record = toGasFeesRecord(row({}), {
+      ...chain,
+      noPriorityFees: { reason: '' },
+    })
 
     expect(record.baseFees).toEqual(1_500)
     expect(record.priorityFees).toEqual(null)

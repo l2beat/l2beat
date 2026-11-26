@@ -9,11 +9,7 @@ import {
 } from '~/components/core/Dialog'
 import { InfoIcon } from '~/icons/Info'
 
-/**
- * The rule as the backend runs it (its gas-fees module's estimateTips), and
- * its record replayed on Aug 2023 to Nov 2026: the worst 26 weeks in a row
- * and the worst week
- */
+/** The backend's rule (estimateTips in its gas-fees module) and its record replayed on Aug 2023 to Nov 2026 */
 const TIERS = [
   {
     name: 'Slow',
@@ -41,10 +37,6 @@ const TIERS = [
   },
 ]
 
-/**
- * The estimator's methodology, kept out of the way behind a quiet link beside
- * the estimate's column heading
- */
 export function GasFeesMethodology() {
   return (
     <Dialog>

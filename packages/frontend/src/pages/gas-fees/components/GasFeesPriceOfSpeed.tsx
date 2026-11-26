@@ -77,8 +77,8 @@ function SpeedCurve({ speed }: { speed: PriceOfSpeed }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap justify-between gap-x-4 text-secondary text-xs tabular-nums">
-        <span>99% sure within</span>
+      <div className="flex flex-wrap justify-between gap-x-4 text-xs tabular-nums">
+        <span className="text-secondary">99% sure within</span>
         <span className={cn(!point && 'invisible')}>
           {point
             ? `${rangeEdge(point.fromGwei)} to ${rangeEdge(point.toGwei)} gwei (${transactions.format(point.txCount)} transactions): ${formatFee(point.usd)}, ${point.seconds}s`

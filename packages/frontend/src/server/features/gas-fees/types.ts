@@ -77,3 +77,8 @@ export const GAS_PER_ACTION = {
   erc20: 46_109,
   swap: 123_119,
 } as const
+
+/** What a tip adds to the cost of an ERC-20 transfer */
+export function tipToUsd(gwei: number, ethUsd: number) {
+  return gwei * GAS_PER_ACTION.erc20 * 1e-9 * ethUsd
+}
