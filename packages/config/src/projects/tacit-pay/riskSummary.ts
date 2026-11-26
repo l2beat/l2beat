@@ -12,7 +12,7 @@ export const tacitPayRiskSummary = definePrivacyRisks({
   ],
   privacy: [
     {
-      text: 'few depositors use the pool, so timing and amounts can pair a withdrawal with its deposit.',
+      text: "few depositors use anon.wei, whose transactions look unlike other apps', so timing and amounts can pair a withdrawal with its deposit.",
       see: ['chainAnalyst'],
     },
     {

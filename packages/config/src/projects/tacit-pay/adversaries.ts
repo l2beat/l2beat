@@ -93,7 +93,7 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
     chainAnalyst: {
       sentiment: 'bad',
       exposureShort:
-        'About 50 wallets deposited into the Ethereum pool, besides wallets that only cycle funds back, so timing and amounts can pair the two ends.',
+        'anon.wei fills every unused output with a dummy note, which other apps leave empty, so its withdrawals hide only among the fewer than 50 wallets whose deposits have the same shape.',
       exposureContinued: `Any amount is allowed, so an unusual amount pairs the two ends. ${S.walletFingerprint('relay')}`,
       interior: {
         ...INTERIOR,
@@ -101,9 +101,18 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       },
       sources: [
         {
+          title: 'anon.wei fills an unused output with a zero-value note',
+          url: PAGE + '#L2685-L2691',
+        },
+        {
           title:
-            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded',
-          checked: '2026-11-13',
+            "Tacit's wallet library, which tacit.finance uses, leaves an unused output empty",
+          url: TACIT + 'dapp/evm-pool-wallet.js#L933',
+        },
+        {
+          title:
+            'Two-output transactions: 139 of 581 withdrawals, and 109 of 653 deposits from 40 wallets',
+          checked: '2026-11-26',
           url: 'https://etherscan.io/address/0x000000c2A20657CE25f2Ba99737933D031AFBEE9',
         },
         {

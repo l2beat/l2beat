@@ -1,18 +1,13 @@
-Circuit-specific Phase 2 trusted setup for the single Groth16 circuit, `transact.circom`
-(2 inputs, 2 outputs, 44,414 constraints), over the BN254 curve. It builds on the Hermez ceremony as
+Circuit-specific Phase 2 trusted setup for the single Groth16 circuit, `transact.circom` over the BN254 curve. It builds on the Hermez ceremony as
 Phase 1, using `powersOfTau28_hez_final_16.ptau`, which contains 54 Perpetual Powers of Tau participant
 contributions and one public randomness beacon.
 
-Tacit's own server coordinated Phase 2 from its website, open to everyone. It took contributions from
-26 September 2026 18:05 UTC, an hour after the circuit's first commit, until 27 September 12:00 UTC.
-We found no announcement by the organizer. One contributor's post, 12 hours in, links the ceremony page. The hash of Bitcoin block 968840 sealed it as a beacon.
+Tacit's own server coordinated Phase 2 from its website, claimed to be open to everyone. It took contributions from
+26 September 2026 18:05 UTC until 27 September 12:00 UTC.
+We found no public announcement by the organizer. One contributor's post, 12 hours in, links the ceremony page. The hash of Bitcoin block 968840 sealed it as a beacon.
 
 The transcript lists 176 contributions. 171 are named "anonymous" and 5 are Tacit test entries. The coordinator's records, which the sealed bundle does not contain, assign
-the contributions to 120 public keys. One key contributed 20 times. A key is the contributor's Tacit wallet
-key or one made in the browser. It signed the place in the queue, not the contribution, and the signatures
-are not published. The final key
-verifies against the circuit and the Phase 1 file with snarkjs, and its contribution hashes equal the
-transcript's.
+the contributions to 120 public keys. One key contributed 20 times. Since there was no public ceremony announcement and no identities associated with keys, it is impossible to verify whether ceremony participants were distinct entities.
 
 - Phase 1 file description (54 contributions and a beacon): <https://github.com/iden3/snarkjs#7-prepare-phase-2>.
 - Ceremony bundle with transcript, keys and verifier: [IPFS bafybeia4yvn…ypfy](https://ipfs.filebase.io/ipfs/bafybeia4yvn2zoggvgpjwg5vpwpt6aivjbcm6tgzxoxsukao2nm5yyypfy)
