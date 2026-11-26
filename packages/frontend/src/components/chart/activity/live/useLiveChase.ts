@@ -22,13 +22,9 @@ export function useLiveChase({
   /** Seconds the target has moved on since it was drawn */
   ahead: () => number
 }) {
-  // where it set off from and when, so a render the pointer or keys bring
-  // about draws where the view has got to as well, not only the next frame
-  const [chasing, setChasing] = useState<{
-    key: string
-    from: View
-    at: number
-  }>()
+  // where it set off from and when, so renders the pointer or keys bring
+  // about, however often, draw where the view has got to
+  const [chasing, setChasing] = useState<Chasing>()
   const [, setFrame] = useState(0)
   const shown = useRef<{ key: string; view: View }>(undefined)
   const goal = useRef({ target, ahead })
@@ -38,11 +34,17 @@ export function useLiveChase({
   let next = chasing
   if (!animate || !target) next = undefined
   else if (before && before.key !== windowKey && chasing?.key !== windowKey) {
-    next = { key: windowKey, from: before.view, at: performance.now() }
+    const at = performance.now()
+    const from = chasing
+      ? (chaseFrom(chasing, chasing.target, ahead(), at) ?? chasing.target)
+      : before.view
+    next = { key: windowKey, from, target, at }
   }
   if (next !== chasing) setChasing(next)
   const moving = next !== undefined
-  const view = (next && target && chaseFrom(next, target, ahead())) ?? target
+  const view =
+    (next && target && chaseFrom(next, target, ahead(), performance.now())) ??
+    target
 
   useLayoutEffect(() => {
     shown.current = view && { key: windowKey, view }
@@ -54,7 +56,9 @@ export function useLiveChase({
     const step = () => {
       const { target, ahead } = goal.current
       setChasing((current) =>
-        current && target && chaseFrom(current, target, ahead())
+        current &&
+        target &&
+        chaseFrom(current, target, ahead(), performance.now())
           ? current
           : undefined,
       )
@@ -68,14 +72,19 @@ export function useLiveChase({
   return { view, moving }
 }
 
+interface Chasing {
+  key: string
+  from: View
+  /** The window chased, as it was when it set off */
+  target: View
+  at: number
+}
+
 function chaseFrom(
-  { from, at }: { from: View; at: number },
+  { from, at }: Chasing,
   target: View,
   ahead: number,
+  now: number,
 ) {
-  return chase(
-    from,
-    [target[0] + ahead, target[1] + ahead],
-    performance.now() - at,
-  )
+  return chase(from, [target[0] + ahead, target[1] + ahead], now - at)
 }
