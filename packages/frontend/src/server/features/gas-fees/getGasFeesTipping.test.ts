@@ -104,7 +104,7 @@ describe(buildGasFeesTipping.name, () => {
       },
     ])
     expect(speed?.marks.map((mark) => [mark.name, mark.seconds])).toEqual([
-      ['Our fast tip', 19.8],
+      ['Our estimated fast tip', 19.8],
       ['2 gwei', 9.9],
     ])
     // Each hour's tip at that hour's price, not the average tip at the average price

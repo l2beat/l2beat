@@ -1,4 +1,11 @@
 import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { InfoIcon } from '~/icons/Info'
 import type { GasFeesSummary } from '~/server/features/gas-fees/getGasFeesSummary'
 import type { GasFeesPeriod } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
@@ -7,6 +14,8 @@ import type { GasFeesChain } from './types'
 
 export const ETH = 'var(--chart-ethereum)'
 export const L2 = 'var(--chart-ethereum-secondary)'
+/** Brand pink as text, readable on a card in both themes: the figures a headline is about */
+export const ACCENT = 'var(--brand-deep)'
 
 /** One two-column split for the stats and the chart, so their dividers line up. Needs an `@container` ancestor. */
 export const SPLIT = {
@@ -49,13 +58,32 @@ export function Colored({
   return <span style={{ color }}>{children}</span>
 }
 
-export function Headed({ value, note }: { value: string; note?: string }) {
+/** A small (i) that explains the label it follows */
+export function Info({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex items-baseline gap-2">
-      <span className="whitespace-nowrap font-bold text-2xl tabular-nums tracking-tight">
-        {value}
-      </span>
-      {note && <span className="text-secondary text-xs">{note}</span>}
+    <Tooltip>
+      <TooltipTrigger className="ml-1.5 inline-flex align-[-1px]">
+        <InfoIcon className="size-3 fill-link" />
+      </TooltipTrigger>
+      <TooltipContent className="max-w-64 font-normal text-xs normal-case tracking-normal">
+        {children}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+/** Holds the space of what is coming, so nothing moves when it does */
+export function TextSkeleton({
+  sizedAs,
+  className,
+}: {
+  sizedAs: string
+  className?: string
+}) {
+  return (
+    <span className={cn('relative inline-block', className)}>
+      <span className="invisible">{sizedAs}</span>
+      <Skeleton className="absolute inset-0" />
     </span>
   )
 }
@@ -133,9 +161,13 @@ export function percent(share: number) {
   return `${pct >= 10 && pct <= 99 ? Math.round(pct) : pct.toFixed(1)}%`
 }
 
+export function formatPeriodDays(period: GasFeesPeriod) {
+  return `${formatTimestamp(period.from)} to ${formatTimestamp(period.to)}`
+}
+
 /** The days a figure covers, and how many of them are left out because Dune doesn't have them whole */
 export function formatPeriod(period: GasFeesPeriod) {
-  const days = `${formatTimestamp(period.from)} to ${formatTimestamp(period.to)}`
+  const days = formatPeriodDays(period)
   if (period.missingDays === 0) return days
   return `${days}, without ${period.missingDays} ${period.missingDays === 1 ? 'day' : 'days'} of incomplete data`
 }

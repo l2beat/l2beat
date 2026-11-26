@@ -6,10 +6,9 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { GasFeesTipping as Tipping } from '~/server/features/gas-fees/getGasFeesTipping'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import { useTRPC } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { GasFeesChart } from './GasFeesChart'
-import { GasFeesComparedL2s, GasFeesStats } from './GasFeesStats'
+import { GasFeesStats } from './GasFeesStats'
 import { GasFeesTable } from './GasFeesTable'
 import { GasFeesTipping } from './GasFeesTipping'
 import { GasFeesUpgrades } from './GasFeesUpgrades'
@@ -18,7 +17,6 @@ import {
   GAS_FEES_RANGE_OPTIONS,
   getPeriodLabel,
 } from './metrics'
-import { SPLIT, StoredUntil } from './parts'
 import type { GasFeesChain, GasFeesWalletIcons } from './types'
 
 interface Props {
@@ -64,50 +62,33 @@ export function GasFeesView({
       </PrimaryCard>
       <PrimaryCard>
         <div className="@container flex flex-col gap-6">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2.5">
-              <h2 className="font-bold text-xl md:text-2xl">Ethereum vs L2s</h2>
-              <GasFeesComparedL2s chains={chains} summary={summary.data} />
-            </div>
-            <p className="mt-1 text-secondary text-sm">
-              Where transactions happen and who collects the fees, what fees
-              have cost over time, and the Ethereum upgrades along the way.
-            </p>
-            <StoredUntil lastDay={summary.data?.lastDay} />
-          </div>
           <GasFeesStats
             chains={chains}
             summary={summary.data}
             range={summary.shownInput.range}
             isLoading={summary.isLoading}
           />
-          {/* The upgrades sit beside the chart, cut to its height, in the
-              same columns as the stats above */}
-          <div className={cn(SPLIT.grid, 'border-divider border-t pt-6')}>
-            <div className={SPLIT.main}>
-              <GasFeesChart
-                chains={chains}
-                upgrades={upgrades}
-                range={range}
-                setRange={setRange}
-                highlightedChainId={highlightedChainId}
-                highlightedUpgradeId={highlightedUpgradeId}
-                selectedUpgradeId={selectedUpgradeId}
-              />
-            </div>
-            <div className={cn(SPLIT.side, 'relative @max-3xl:h-[480px]')}>
-              <div className={cn(SPLIT.sidePad, 'absolute inset-0')}>
-                <GasFeesUpgrades
-                  upgrades={upgrades}
-                  range={range}
-                  highlightedUpgradeId={highlightedUpgradeId}
-                  setHighlightedUpgradeId={setHighlightedUpgradeId}
-                  selectedUpgradeId={selectedUpgradeId}
-                  setSelectedUpgradeId={setSelectedUpgradeId}
-                  showWholeHistory={showWholeHistory}
-                />
-              </div>
-            </div>
+          {/* The fee history across the whole card, its upgrades flagged on it */}
+          <div className="flex flex-col gap-4 border-divider border-t pt-6">
+            <GasFeesChart
+              chains={chains}
+              upgrades={upgrades}
+              range={range}
+              setRange={setRange}
+              highlightedChainId={highlightedChainId}
+              highlightedUpgradeId={highlightedUpgradeId}
+              setHighlightedUpgradeId={setHighlightedUpgradeId}
+              selectedUpgradeId={selectedUpgradeId}
+              setSelectedUpgradeId={setSelectedUpgradeId}
+            />
+            <GasFeesUpgrades
+              upgrades={upgrades}
+              range={range}
+              highlightedUpgradeId={highlightedUpgradeId}
+              selectedUpgradeId={selectedUpgradeId}
+              setSelectedUpgradeId={setSelectedUpgradeId}
+              showWholeHistory={showWholeHistory}
+            />
           </div>
         </div>
       </PrimaryCard>

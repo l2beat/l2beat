@@ -18,6 +18,10 @@ export const FEE_SPLIT_LABELS: Record<FeeSplitPart['key'], string> = {
   l1Data: 'L1 data',
 }
 
+/** A narrower part can't hold its share */
+const NARROWEST_LABELLED = 0.17
+
+/** The parts of a chain's fees as one bar, each share written in where it fits */
 export function FeeSplitBar({
   parts,
   className,
@@ -25,34 +29,32 @@ export function FeeSplitBar({
   parts: FeeSplitPart[]
   className?: string
 }) {
+  const sum = parts.reduce((total, part) => total + part.value, 0)
   return (
     <ShareBar
       className={cn(
-        'h-1.5 w-full gap-px rounded-full bg-surface-tertiary',
+        'h-4 w-full gap-px rounded-[3px] bg-surface-secondary font-semibold text-3xs tabular-nums leading-none',
         className,
       )}
       parts={parts.map((part) => ({
         ...part,
         color: FEE_SPLIT_COLORS[part.key],
+        className: cn(
+          'justify-center',
+          part.key === 'base' ? 'text-white' : 'text-black/75',
+        ),
+        inside:
+          part.value / sum >= NARROWEST_LABELLED &&
+          `${Math.round((part.value / sum) * 100)}%`,
       }))}
     />
   )
 }
 
-export function FeeSplitKey({
-  keys,
-  className,
-}: {
-  keys: FeeSplitPart['key'][]
-  className?: string
-}) {
-  return (
-    <span className={cn('flex items-center gap-3 text-2xs', className)}>
-      {keys.map((key) => (
-        <KeyItem key={key} color={FEE_SPLIT_COLORS[key]}>
-          {FEE_SPLIT_LABELS[key]}
-        </KeyItem>
-      ))}
-    </span>
-  )
+export function FeeSplitKey({ keys }: { keys: FeeSplitPart['key'][] }) {
+  return keys.map((key) => (
+    <KeyItem key={key} color={FEE_SPLIT_COLORS[key]}>
+      {FEE_SPLIT_LABELS[key]}
+    </KeyItem>
+  ))
 }

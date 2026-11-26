@@ -52,6 +52,8 @@ export interface GasFeesSpeedPoint {
 
 export interface GasFeesPriceOfSpeed {
   period: GasFeesPeriod
+  /** What a tip of one gwei adds to an ERC-20 transfer, at the period's average ETH price */
+  usdPerGwei: number
   /** One per tip level, at the average tip paid in it */
   dots: (GasFeesSpeedPoint & {
     fromGwei: number
@@ -224,7 +226,7 @@ function buildPriceOfSpeed(
   })
   if (fastSeconds !== undefined) {
     marks.push({
-      name: 'Our fast tip',
+      name: 'Our estimated fast tip',
       ours: true,
       usd: fastUsd,
       seconds: fastSeconds,
@@ -235,6 +237,7 @@ function buildPriceOfSpeed(
 
   return {
     period,
+    usdPerGwei: tipToUsd(1, ethUsd),
     dots,
     line,
     marks: marks.sort((a, b) => a.usd - b.usd),

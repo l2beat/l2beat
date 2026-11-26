@@ -100,8 +100,8 @@ export function formatTimes(value: number) {
 export function compareWithEthereum(times: number) {
   if (!Number.isFinite(times) || times <= 0) return undefined
   return times >= 1
-    ? { times: formatTimes(times), word: 'cheaper' }
-    : { times: formatTimes(1 / times), word: 'more expensive' }
+    ? { times: formatTimes(times), word: 'cheaper', amount: 'less' }
+    : { times: formatTimes(1 / times), word: 'more expensive', amount: 'more' }
 }
 
 export const GAS_FEES_RANGE_OPTIONS = ['7d', '30d', '90d', '1y', 'max'] as const
