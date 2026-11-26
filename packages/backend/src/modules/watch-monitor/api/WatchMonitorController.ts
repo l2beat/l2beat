@@ -372,22 +372,20 @@ export class WatchMonitorController {
       lastError: null,
     }
     const committed = this.watchReader.readWatched(location.name)
-    // Apply the same public-config provenance check to the committed baseline
-    // so an older private watched.json never leaks private paths as removals
-    // after a watch is repointed and switched to public.
-    const publishableCommitted =
-      committed !== undefined && committed.configHash === expectedConfigHash
-        ? committed
-        : undefined
-    // Until the next run, a baseline committed after the stored snapshot
-    // would diff backwards: its new values would read as removed.
+    // No diff is shown against a baseline that cannot be compared. One taken
+    // under another config may hold private paths from before the watch was
+    // repointed and made public. One committed after the stored snapshot
+    // would diff backwards, with its new values reading as removed.
+    const baselineIsStale =
+      committed !== undefined && committed.configHash !== expectedConfigHash
     const baselineIsNewer =
-      publishableCommitted !== undefined &&
+      committed !== undefined &&
       publicRecord.timestamp !== null &&
-      publishableCommitted.timestamp > publicRecord.timestamp
-    const pending = baselineIsNewer
+      committed.timestamp > publicRecord.timestamp
+    const awaitingRefresh = baselineIsStale || baselineIsNewer
+    const pending = awaitingRefresh
       ? undefined
-      : computePendingWatchDiff(location, publicRecord, publishableCommitted)
+      : computePendingWatchDiff(location, publicRecord, committed)
     // A failed Discord delivery leaves the observation fresh.
     const sourceFailed =
       record.lastError !== null &&
@@ -400,7 +398,7 @@ export class WatchMonitorController {
         pending,
       }
     }
-    if (baselineIsNewer) {
+    if (awaitingRefresh) {
       return {
         location,
         status: 'awaiting-refresh',
@@ -456,7 +454,7 @@ function statusLabel(status: WatchStatusKind): string {
     case 'stale':
       return 'Stale (last run failed)'
     case 'awaiting-refresh':
-      return 'Awaiting refresh (baseline newer than last run)'
+      return 'Awaiting refresh (baseline and last run do not match)'
     case 'never-run':
       return 'Not yet run'
     case 'changes':

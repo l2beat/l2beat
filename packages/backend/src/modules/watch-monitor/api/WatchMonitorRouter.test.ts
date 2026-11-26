@@ -466,7 +466,7 @@ describe(createWatchMonitorRouter.name, () => {
         '- [disabled-watch](/status/watch/disabled-watch.html.md) [project]: Disabled',
       )
       expect(text).toInclude(
-        '- [older-snapshot](/status/watch/older-snapshot.html.md) [project]: Awaiting refresh (baseline newer than last run)',
+        '- [older-snapshot](/status/watch/older-snapshot.html.md) [project]: Awaiting refresh (baseline and last run do not match)',
       )
       expect(text).toInclude(
         '- [never-ran](/status/watch/never-ran.html.md) [project]: Not yet run',
@@ -536,7 +536,9 @@ describe(createWatchMonitorRouter.name, () => {
       )
       expect(repointed.status).toEqual(200)
       const repointedText = await repointed.text()
-      expect(repointedText).toInclude('public/repo:new.pdf')
+      // The committed baseline is from the old config, so no diff is shown.
+      expect(repointedText).toInclude('Awaiting refresh')
+      expect(repointedText).not.toInclude('public/repo:new.pdf')
       expect(repointedText).not.toInclude('private-org/secret-baseline')
       expect(repointedText).not.toInclude('old.pdf')
 
