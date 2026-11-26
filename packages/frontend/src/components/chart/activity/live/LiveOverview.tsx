@@ -25,8 +25,8 @@ const KEYS_SETTLE_MS = 400
  * The whole buffer, a bar a bucket, with the window the chart below shows.
  * Pressing or dragging on it, or the arrow keys, move the window, and
  * dragging its edges, or the arrow keys with Shift, resize it. While they go
- * on only the strip's window changes, and the chart reads it once they stop,
- * rather than every window passed on the way
+ * on the window is only asked for, and it is set once they stop, rather than
+ * with every window passed on the way
  */
 export function LiveOverview({
   overview,

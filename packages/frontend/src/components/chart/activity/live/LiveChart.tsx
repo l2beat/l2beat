@@ -14,6 +14,7 @@ import { tinted } from '~/components/core/chart/tint'
 import { getYAxisTicks } from '~/components/core/chart/utils/yAxisTicks'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import type { UsualHour } from '~/server/features/layer2s/activity/live/liveWindow'
+import { formatRange } from '~/utils/dates'
 import { typeToColor } from '../ActivityChart'
 import { ActivityRatioChart } from '../ActivityRatioChart'
 import { getChartType } from '../utils/getChartType'
@@ -27,7 +28,7 @@ import {
   withDashAnchor,
   withUsual,
 } from './liveSteps'
-import { formatBucket, formatTick, ticksOf } from './liveView'
+import { formatTick, ticksOf } from './liveView'
 
 const USUAL_MEDIAN = {
   label: 'Usual at this hour',
@@ -51,7 +52,6 @@ export function LiveChart({
   category,
   metric,
   buckets,
-  bucket,
   usual,
   domain,
   lookahead,
@@ -66,15 +66,13 @@ export function LiveChart({
   category: ProjectScalingCategory | undefined
   metric: LiveMetric
   buckets: LiveBucket[] | undefined
-  /** Seconds per bucket */
-  bucket: number
   usual: UsualHour[]
   domain: [number, number] | undefined
   /** Seconds drawn past the domain, for `glide` to bring in */
   lookahead: number
   /** Seconds between time ticks */
   tick: number
-  /** Whether the dot shows */
+  /** Whether the window scrolls with the clock at its own bars: the dot shows and the axis' top is held */
   head: boolean
   isLoading: boolean
   isPlaceholderData: boolean
@@ -90,19 +88,20 @@ export function LiveChart({
     closeSteps(
       withUsual(
         withDashAnchor(
-          toSteps(buckets, bucket, [domain[0], domain[1] + lookahead]),
+          toSteps(buckets, [domain[0], domain[1] + lookahead]),
           domain[0],
         ),
         usual,
         metric,
       ),
-      bucket,
     )
+  const bar = buckets?.at(-1)
   const top = useSteadyTop(
     rows &&
       Math.max(
         ...rows.map((row) => Math.max(row.value ?? 0, row.usualMax ?? 0)),
       ),
+    head && bar ? bar.end - bar.start : undefined,
   )
   const color =
     project.id === ProjectId.ETHEREUM
@@ -188,12 +187,7 @@ export function LiveChart({
             hover="before"
             handleRef={main}
             renderTooltip={(row) => (
-              <LiveTooltip
-                row={row}
-                bucket={bucket}
-                metric={metric}
-                color={color}
-              />
+              <LiveTooltip row={row} metric={metric} color={color} />
             )}
           />
           {head && (
@@ -217,7 +211,12 @@ export function LiveChart({
             isPlaceholderData={isPlaceholderData}
             syncedUntil={undefined}
             xAxis={xAxis}
-            formatPeriod={(timestamp) => formatBucket(timestamp, bucket)}
+            formatPeriod={(timestamp) => {
+              const row = rows?.findLast((r) => r.timestamp === timestamp)
+              return row
+                ? formatRange(row.timestamp, row.end, { seconds: true })
+                : ''
+            }}
             curve="stepAfter"
             clip
             hover="before"
@@ -253,18 +252,27 @@ function placeDot(
 }
 
 /**
- * Holds the axis' top, the chart's own for the values, while they fit well
- * under it, so the chart does not rescale on every read
+ * The axis' top, the chart's own for the values. Held while they fit well
+ * under it for as long as `steady` stays the same, so a window scrolling
+ * with the clock does not rescale on every read. Fitted to each drawing
+ * without one, as of a window on its way to another
  */
-function useSteadyTop(max: number | undefined) {
-  const committed = useRef<number | undefined>(undefined)
-  const held = committed.current
+function useSteadyTop(max: number | undefined, steady: number | undefined) {
+  const committed = useRef<{ top: number | undefined; steady?: number }>({
+    top: undefined,
+  })
+  const held =
+    steady !== undefined && committed.current.steady === steady
+      ? committed.current.top
+      : undefined
   const top =
-    max !== undefined && (held === undefined || max > held || max < held * 0.4)
-      ? getYAxisTicks([0, max], {}, 1).domain[1]
-      : held
+    max === undefined
+      ? committed.current.top
+      : held === undefined || max > held || max < held * 0.4
+        ? getYAxisTicks([0, max], {}, 1).domain[1]
+        : held
   useLayoutEffect(() => {
-    committed.current = top
+    committed.current = { top, steady }
   })
   return top
 }

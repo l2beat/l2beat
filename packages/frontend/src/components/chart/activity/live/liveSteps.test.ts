@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import type { UsualHour } from '~/server/features/layer2s/activity/live/liveWindow'
 import {
   closeSteps,
+  getSeam,
   getUsualRate,
   getWindowStats,
   type LiveBucket,
@@ -11,30 +12,112 @@ import {
   valueAt,
   withDashAnchor,
   withUsual,
+  withWhole,
+  withWholeUsual,
 } from './liveSteps'
 
 describe(toSteps.name, () => {
   const buckets: LiveBucket[] = [
-    { start: 0, value: 1, ratio: 1, blocks: 1, gas: 0 },
-    { start: 12, value: 2, ratio: 1, blocks: 1, gas: 0 },
-    { start: 24, value: 3, ratio: 1, blocks: 1, gas: 0 },
-    { start: 36, value: 4, ratio: 1, blocks: 1, gas: 0 },
+    { start: 0, end: 12, value: 1, ratio: 1, blocks: 1, gas: 0 },
+    { start: 12, end: 24, value: 2, ratio: 1, blocks: 1, gas: 0 },
+    { start: 24, end: 36, value: 3, ratio: 1, blocks: 1, gas: 0 },
+    { start: 36, end: 48, value: 4, ratio: 1, blocks: 1, gas: 0 },
   ]
 
   it('has a row at the start of each bucket the window is in', () => {
     // Methodology: the window starts and ends inside buckets, as one
     // scrolling with the clock does
-    const steps = toSteps(buckets, 12, [17, 29.5])
+    const steps = toSteps(buckets, [17, 29.5])
 
     expect(steps).toEqual([
-      { timestamp: 12, value: 2, ratio: 1, blocks: 1 },
-      { timestamp: 24, value: 3, ratio: 1, blocks: 1 },
+      { timestamp: 12, end: 24, value: 2, ratio: 1, blocks: 1 },
+      { timestamp: 24, end: 36, value: 3, ratio: 1, blocks: 1 },
     ])
   })
 
+  it('keeps a wider bucket of the whole buffer that reaches into the window', () => {
+    // Methodology: a 12 s bucket of the buffer, before 6 s ones of the window
+    const mixed = [
+      { start: 0, end: 12, value: 1, ratio: 1, blocks: 1, gas: 0 },
+      { start: 12, end: 18, value: 2, ratio: 1, blocks: 1, gas: 0 },
+    ]
+    expect(toSteps(mixed, [8, 18]).map((s) => s.timestamp)).toEqual([0, 12])
+  })
+
   it('leaves out the buckets that only touch the window', () => {
-    expect(toSteps(buckets, 12, [12, 36]).map((s) => s.timestamp)).toEqual([
-      12, 24,
+    expect(toSteps(buckets, [12, 36]).map((s) => s.timestamp)).toEqual([12, 24])
+  })
+})
+
+describe(getSeam.name, () => {
+  const read = (readFrom: number, to: number, bucket: number) => ({
+    seconds: 300,
+    from: UnixTime(readFrom),
+    to: UnixTime(to),
+    bucket,
+    readFrom: UnixTime(readFrom),
+  })
+
+  it('is where the window read starts, at buckets of one width', () => {
+    expect(getSeam(read(120, 240, 12), read(0, 240, 12))).toEqual(120)
+  })
+
+  it('has none at buckets of different widths', () => {
+    // Methodology: the buffer still at another length's 12 s buckets after
+    // the window is read at 6 s: bars of two sizes are not drawn together
+    expect(getSeam(read(24, 60, 6), read(0, 48, 12))).toEqual(undefined)
+    expect(getSeam(read(24, 72, 12), read(0, 48, 6))).toEqual(undefined)
+  })
+
+  it('has none when the buffer ends before the window read starts', () => {
+    // Methodology: the buffer was read up to 48, and the window read has
+    // since moved on to start at 60: 48 to 60 is not read
+    expect(getSeam(read(60, 120, 12), read(0, 48, 12))).toEqual(undefined)
+  })
+
+  it('has none when the buffer starts no earlier', () => {
+    expect(getSeam(read(0, 120, 12), read(0, 120, 12))).toEqual(undefined)
+  })
+})
+
+describe(withWhole.name, () => {
+  const buckets = (from: number, to: number, width: number, value: number) =>
+    Array.from(
+      { length: (to - from) / width },
+      (_, i): LiveBucket => ({
+        start: from + i * width,
+        end: from + (i + 1) * width,
+        value,
+        ratio: 1,
+        blocks: 1,
+        gas: 0,
+      }),
+    )
+  const spans = (merged: LiveBucket[]) =>
+    merged.map((b) => [b.start, b.end, b.value])
+
+  it('takes the whole buffer up to the seam and the buckets read from it', () => {
+    expect(
+      spans(withWhole(buckets(24, 48, 12, 2), buckets(0, 48, 12, 1), 24)),
+    ).toEqual([
+      [0, 12, 1],
+      [12, 24, 1],
+      [24, 36, 2],
+      [36, 48, 2],
+    ])
+  })
+})
+
+describe(withWholeUsual.name, () => {
+  it('adds the hours not read with the window', () => {
+    const usual = withWholeUsual(
+      [usualHour(7200, 5)],
+      [usualHour(3600, 1), usualHour(7200, 2)],
+    )
+
+    expect(usual.map((u) => [u.hour, u.tps.median])).toEqual([
+      [7200, 5],
+      [3600, 1],
     ])
   })
 })
@@ -42,38 +125,39 @@ describe(toSteps.name, () => {
 describe(closeSteps.name, () => {
   const none = { usualMin: null, usualMedian: null, usualMax: null }
 
-  it('ends the last step a bucket after it starts', () => {
+  it('ends the last step where its bucket ends', () => {
+    // Methodology: a wider bucket of the whole buffer after the window's
     const steps = [
-      { timestamp: 0, value: 1, ratio: 1, ...none },
-      { timestamp: 12, value: 2, ratio: 1, ...none },
+      { timestamp: 0, end: 6, value: 1, ratio: 1, ...none },
+      { timestamp: 6, end: 18, value: 2, ratio: 1, ...none },
     ]
 
-    expect(closeSteps(steps, 12)).toEqual([
+    expect(closeSteps(steps)).toEqual([
       ...steps,
-      { timestamp: 24, value: 2, ratio: 1, ...none },
+      { timestamp: 18, end: 18, value: 2, ratio: 1, ...none },
     ])
   })
 
   it('ends a step before a row without a value where that row starts', () => {
     // Methodology: a bucket without blocks has a rate of zero but no ratio
     const steps = [
-      { timestamp: 0, value: 1, ratio: 1.5, ...none },
-      { timestamp: 12, value: 0, ratio: null, ...none },
-      { timestamp: 24, value: 2, ratio: 1, ...none },
+      { timestamp: 0, end: 12, value: 1, ratio: 1.5, ...none },
+      { timestamp: 12, end: 24, value: 0, ratio: null, ...none },
+      { timestamp: 24, end: 36, value: 2, ratio: 1, ...none },
     ]
 
-    expect(closeSteps(steps, 12).map((s) => [s.timestamp, s.ratio])).toEqual([
+    expect(closeSteps(steps).map((s) => [s.timestamp, s.ratio])).toEqual([
       [0, 1.5],
       [12, 1.5],
       [12, null],
       [24, 1],
       [36, 1],
     ])
-    expect(closeSteps(steps, 12).map((s) => s.value)).toEqual([1, 0, 0, 2, 2])
+    expect(closeSteps(steps).map((s) => s.value)).toEqual([1, 0, 0, 2, 2])
   })
 
   it('has nothing to close without steps', () => {
-    expect(closeSteps([], 12)).toEqual([])
+    expect(closeSteps([])).toEqual([])
   })
 })
 
@@ -108,10 +192,10 @@ describe(toBuckets.name, () => {
     )
 
     expect(buckets).toEqual([
-      { start: 0, value: null, ratio: null, blocks: 0, gas: 0 },
-      { start: 12, value: 3, ratio: 1.5, blocks: 2, gas: 300 },
-      { start: 24, value: 0, ratio: null, blocks: 0, gas: 0 },
-      { start: 36, value: 1, ratio: 1, blocks: 1, gas: 100 },
+      { start: 0, end: 12, value: null, ratio: null, blocks: 0, gas: 0 },
+      { start: 12, end: 24, value: 3, ratio: 1.5, blocks: 2, gas: 300 },
+      { start: 24, end: 36, value: 0, ratio: null, blocks: 0, gas: 0 },
+      { start: 36, end: 48, value: 1, ratio: 1, blocks: 1, gas: 100 },
     ])
   })
 
@@ -147,14 +231,13 @@ describe(getWindowStats.name, () => {
     // so the ones at 24, 36 and 48 count, 36 seconds in all
     const result = getWindowStats(
       [
-        { start: 0, value: null, ratio: null, blocks: 0, gas: 0 },
-        { start: 12, value: 9, ratio: 1, blocks: 9, gas: 999 },
-        { start: 24, value: 3, ratio: 1, blocks: 3, gas: 360 },
-        { start: 36, value: 4, ratio: 1, blocks: 2, gas: 360 },
-        { start: 48, value: 2, ratio: 1, blocks: 1, gas: 0 },
-        { start: 60, value: 9, ratio: 1, blocks: 9, gas: 999 },
+        { start: 0, end: 12, value: null, ratio: null, blocks: 0, gas: 0 },
+        { start: 12, end: 24, value: 9, ratio: 1, blocks: 9, gas: 999 },
+        { start: 24, end: 36, value: 3, ratio: 1, blocks: 3, gas: 360 },
+        { start: 36, end: 48, value: 4, ratio: 1, blocks: 2, gas: 360 },
+        { start: 48, end: 60, value: 2, ratio: 1, blocks: 1, gas: 0 },
+        { start: 60, end: 72, value: 9, ratio: 1, blocks: 9, gas: 999 },
       ],
-      12,
       [14, 66],
     )
 
@@ -169,11 +252,24 @@ describe(getWindowStats.name, () => {
     })
   })
 
+  it('weighs buckets of different widths by their seconds', () => {
+    // Methodology: 2/s over 12 s and 5/s over 6 s: 54 in 18 s
+    const result = getWindowStats(
+      [
+        { start: 0, end: 12, value: 2, ratio: 1, blocks: 4, gas: 0 },
+        { start: 12, end: 18, value: 5, ratio: 1, blocks: 2, gas: 0 },
+      ],
+      [0, 18],
+    )
+
+    expect(result?.rate).toEqual(3)
+    expect(result?.blocksPerMinute).toEqual(20)
+  })
+
   it('has none before any stored block', () => {
     expect(
       getWindowStats(
-        [{ start: 0, value: null, ratio: null, blocks: 0, gas: 0 }],
-        12,
+        [{ start: 0, end: 12, value: null, ratio: null, blocks: 0, gas: 0 }],
         [0, 12],
       ),
     ).toEqual(undefined)
@@ -242,11 +338,12 @@ function usualHour(hour: number, median: number): UsualHour {
 }
 
 describe(withDashAnchor.name, () => {
-  const step = { timestamp: 4000, value: 1, ratio: 1, blocks: 1 }
+  const step = { timestamp: 4000, end: 4012, value: 1, ratio: 1, blocks: 1 }
 
   it('starts with an empty step at the hour before the window', () => {
     expect(withDashAnchor([step], 4000)[0]).toEqual({
       timestamp: 3600,
+      end: 3600,
       value: null,
       ratio: null,
       blocks: 0,

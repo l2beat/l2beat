@@ -31,8 +31,8 @@ export const ProjectLiveWindowParams = v.object({
   projectId: v.string(),
   /** The window's length, read rounded and clamped as `toLiveLength` does */
   seconds: v.number().check(Number.isFinite),
-  /** Where the window ends, excluded. Left out, it follows the newest block */
-  to: v.number().optional(),
+  /** Read from the buffer's start, for a window moved through it */
+  whole: v.boolean().optional(),
 })
 export type ProjectLiveWindowParams = v.infer<typeof ProjectLiveWindowParams>
 
@@ -54,11 +54,9 @@ export interface ProjectLiveWindow {
     to: UnixTime
     /** Seconds per bucket */
     bucket: number
-    /** Where the buckets start, a little before `from` */
+    /** Where the buckets start: a little before `from`, or with the buffer */
     readFrom: UnixTime
   }
-  /** Whether it was read following the newest block, without a `to` */
-  following: boolean
   /** Those with blocks */
   buckets: LiveActivityBucketRecord[]
   /** Of the oldest stored block, before which nothing is known */
@@ -71,6 +69,9 @@ export interface ProjectLiveWindow {
 }
 
 const cache = new FrontendInMemoryCache('getProjectLiveActivity')
+
+/** A whole buffer is kept longer: the window's own read has its newest buckets */
+const WHOLE_TTL_SECONDS = 30
 
 export function getProjectLiveStatus(
   projectId: string,
@@ -90,9 +91,9 @@ export function getProjectLiveWindow(
         'project-live-window',
         params.projectId,
         seconds.toString(),
-        params.to?.toString(),
+        params.whole ? 'whole' : 'window',
       ],
-      ttl: 2,
+      ttl: params.whole ? WHOLE_TTL_SECONDS : 2,
     },
     () => readProjectLiveWindow({ ...params, seconds }),
   )
@@ -124,7 +125,7 @@ async function readProjectLiveStatus(
 async function readProjectLiveWindow({
   projectId,
   seconds,
-  to,
+  whole,
 }: ProjectLiveWindowParams): Promise<ProjectLiveWindow> {
   // not found without stored blocks: the status says so first, and the
   // client leaves the live view on it
@@ -143,7 +144,7 @@ async function readProjectLiveWindow({
     seconds,
     buffer,
     getBlockSeconds(latest.map((b) => b.timestamp)),
-    to,
+    whole,
   )
   // from where it is read, as the window following live trails the data
   const firstHour = UnixTime.toStartOf(window.readFrom, 'hour')
@@ -164,7 +165,6 @@ async function readProjectLiveWindow({
 
   return {
     window,
-    following: to === undefined,
     buckets,
     oldest,
     usual: getUsualRates(hours, firstHour, lastHour),

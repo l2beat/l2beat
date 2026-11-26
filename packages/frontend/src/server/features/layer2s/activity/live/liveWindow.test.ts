@@ -101,22 +101,25 @@ describe(getLiveWindow.name, () => {
     expect(window.readFrom <= window.from - LEAD_SECONDS).toEqual(true)
   })
 
-  it('ends where looked back to, but not past the newest block', () => {
-    expect(getLiveWindow(900, buffer, 2, T - 3600 + 5).to).toEqual(T - 3600)
-    expect(getLiveWindow(900, buffer, 2, T + 600).to).toEqual(T)
-  })
-
-  it('starts no earlier than the buffer', () => {
-    const window = getLiveWindow(900, buffer, 2, T - 5 * UnixTime.HOUR)
-
-    expect(window.from).toEqual(buffer.from)
-  })
-
   it('ends at the newest block while the buffer is shorter than the range', () => {
     const filling = { from: T - 600, to: T + 4 }
 
     expect(getLiveWindow(3600, filling, 2).to).toEqual(T)
-    expect(getLiveWindow(3600, filling, 2, T - 300).to).toEqual(T)
+  })
+
+  it('reads the whole buffer at the same bucket', () => {
+    expect(getLiveWindow(900, buffer, 2, true)).toEqual({
+      ...getLiveWindow(900, buffer, 2),
+      readFrom: buffer.from,
+    })
+  })
+
+  it('reads the whole of a buffer shorter than the range from before the window', () => {
+    const filling = { from: T - 600, to: T + 4 }
+
+    expect(getLiveWindow(3600, filling, 2, true).readFrom).toEqual(
+      getLiveWindow(3600, filling, 2).readFrom,
+    )
   })
 })
 
