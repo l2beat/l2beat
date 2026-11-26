@@ -25,9 +25,20 @@ import {
 import type { GasFeesWalletIcons } from './types'
 import type { TipTierRow, WalletSuggestion } from './useLiveTips'
 
-/** Seven powers of ten, from a millionth of a gwei to 10 */
-const TRACK: DecadeDomain = { lo: -6, hi: 1 }
-const toX = (gwei: number) => logShare(gwei, TRACK) * 100
+/**
+ * From a millionth of a gwei to 10, and further up when a tip is above that:
+ * in a fee spike the suggestions would otherwise all sit on the track's end
+ */
+function getTrackDomain(rows: TipTierRow[]): DecadeDomain {
+  const highest = Math.max(
+    10,
+    ...rows.flatMap((row) => [
+      row.gwei ?? 0,
+      ...row.wallets.map((wallet) => wallet.gwei),
+    ]),
+  )
+  return { lo: -6, hi: Math.ceil(Math.log10(highest)) }
+}
 
 /** The tier, then its track, then how far above ours the wallets sit. On phones the track goes under. */
 const ROW_GRID =
@@ -46,6 +57,7 @@ export function GasFeesTipTracks({
   wallets: GasFeesWallet[]
   walletIcons: GasFeesWalletIcons
 }) {
+  const domain = getTrackDomain(rows)
   return (
     <div className="flex flex-col">
       <div className={cn(ROW_GRID, 'gap-y-2 pb-2 text-xs')}>
@@ -87,6 +99,7 @@ export function GasFeesTipTracks({
           </div>
           <Track
             row={row}
+            domain={domain}
             walletIcons={walletIcons}
             className="max-md:order-3 max-md:col-span-2"
           />
@@ -97,7 +110,7 @@ export function GasFeesTipTracks({
         <span className="text-2xs text-secondary max-md:hidden">
           gwei, log scale
         </span>
-        <TrackAxis />
+        <TrackAxis domain={domain} />
       </div>
     </div>
   )
@@ -127,7 +140,11 @@ const chipWidth = (gwei: number) => 38 + formatGwei(gwei).length * 7.7
  * From the right, where the wallets crowd against the edge: each chip takes
  * the lane that moves it least without overlapping the chip after it
  */
-function placeChips(row: TipTierRow, width: number): PlacedChip[] {
+function placeChips(
+  row: TipTierRow,
+  width: number,
+  toX: (gwei: number) => number,
+): PlacedChip[] {
   const usdPerGwei =
     row.usd !== undefined && row.gwei ? row.usd / row.gwei : undefined
   const chips: Chip[] = row.wallets.map((wallet) => ({
@@ -160,22 +177,25 @@ function placeChips(row: TipTierRow, width: number): PlacedChip[] {
 
 function Track({
   row,
+  domain,
   walletIcons,
   className,
 }: {
   row: TipTierRow
+  domain: DecadeDomain
   walletIcons: GasFeesWalletIcons
   className?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useResizeObserver({ ref })
-  const placed = width ? placeChips(row, width) : []
+  const toX = (gwei: number) => logShare(gwei, domain) * 100
+  const placed = width ? placeChips(row, width, toX) : []
   const top = row.highest
   const tier = row.name.toLowerCase()
 
   return (
     <div ref={ref} className={cn('relative h-[84px]', className)}>
-      <DecadeGrid domain={TRACK} />
+      <DecadeGrid domain={domain} />
       <BandStrip
         toX={toX}
         className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-[3px] opacity-45"
@@ -331,20 +351,20 @@ function TrackKey({
 }
 
 /** Powers of ten under the tracks, every other one on phones */
-function TrackAxis() {
+function TrackAxis({ domain }: { domain: DecadeDomain }) {
   return (
     <div className="relative h-5">
-      {getDecades(TRACK).map((power) => (
+      {getDecades(domain).map((power) => (
         <span
           key={power}
           className={cn(
             'absolute top-0.5 text-2xs text-secondary',
-            power === TRACK.hi
+            power === domain.hi
               ? '-translate-x-full'
-              : power !== TRACK.lo && '-translate-x-1/2',
-            power % 2 !== 0 && power !== TRACK.hi && 'max-md:hidden',
+              : power !== domain.lo && '-translate-x-1/2',
+            power % 2 !== 0 && power !== domain.hi && 'max-md:hidden',
           )}
-          style={{ left: `${toX(10 ** power)}%` }}
+          style={{ left: `${logShare(10 ** power, domain) * 100}%` }}
         >
           <Gwei value={10 ** power} zerosClassName="opacity-50" />
         </span>

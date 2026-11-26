@@ -33,11 +33,14 @@ export function toGasFeesRecord(
   const forGas = row.totalFeeNative - row.blobFeeNative - (l1InGas ? 0 : l1)
   const hasPrices = row.txCount > 0 && row.gasUsed > 0
   const perGas = hasPrices ? forGas / row.gasUsed : null
-  const basePerGas = hasPrices ? (row.baseFeeNative ?? 0) / row.gasUsed : null
+  // With the operator fee, as in the split: both are set by the chain
+  const basePerGas = hasPrices
+    ? ((row.baseFeeNative ?? 0) + operatorFee) / row.gasUsed
+    : null
   const tipPerGas =
     perGas === null || basePerGas === null || chain.noPriorityFees
       ? null
-      : Math.max(0, perGas - basePerGas - operatorFee / row.gasUsed)
+      : Math.max(0, perGas - basePerGas)
   const action = (gas: number) =>
     perGas === null ? null : (gas * perGas + l1 / row.txCount) * tokenUsd
 

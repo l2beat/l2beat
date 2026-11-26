@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { GasFeesUpgrade } from '~/server/features/gas-fees/getGasFeesUpgrades'
 import { cn } from '~/utils/cn'
@@ -81,7 +82,9 @@ export function GasFeesUpgrades({
                 shown.kind === 'next' && 'border border-brand border-dashed',
               )}
             />
-            <b className="text-sm">{shown.title}</b>
+            <CustomLink href={shown.url} className="font-bold text-sm">
+              {shown.title}
+            </CustomLink>
             <span className="mx-1.5">
               {shown.timestamp === null
                 ? 'next, no date set yet'

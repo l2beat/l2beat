@@ -137,8 +137,8 @@ export function GasFeesTable({
           </h2>
           <p className="text-secondary text-xs leading-snug">
             {GAS_FEES_METRIC_LABELS[action].title},{' '}
-            {getPeriodLabel(shownInput.range)}. Log scale. L2 costs include
-            their L1 fee.
+            {getPeriodLabel(shownInput.range)}. Log scale. L2 costs add the
+            chain’s average L1 fee per transaction.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

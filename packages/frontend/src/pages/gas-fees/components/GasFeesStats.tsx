@@ -50,6 +50,8 @@ export function GasFeesStats({ chains, range }: Props) {
   })
   const period = getPeriodLabel(range)
   const ready = !isLoading && summary !== undefined
+  // The shares are of these chains, not of every L2 there is
+  const l2Count = summary?.rows.filter((row) => row.id !== 'ethereum').length
   // The figures compare the two, so both need transactions in the period
   const figures =
     ready && summary.stats.ethereum.txCount > 0 && summary.stats.l2s.txCount > 0
@@ -62,7 +64,7 @@ export function GasFeesStats({ chains, range }: Props) {
         <div className="flex items-center justify-between gap-3">
           <h2>
             <Label>
-              Ethereum vs L2s{DOT_SEPARATOR}
+              Ethereum vs {l2Count ?? ''} L2s{DOT_SEPARATOR}
               {period}
             </Label>
           </h2>

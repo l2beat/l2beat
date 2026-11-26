@@ -59,6 +59,9 @@ describe(toGasFeesRecord.name, () => {
     // 1 ETH of base fee, 0.125 of blobs, 0.125 gwei on 1e9 gas
     expectClose(record.baseFees, 1_250)
     expectClose(record.priorityFees, 250)
+    // Per gas the operator fee is part of the base fee too, and blobs are not paid per gas
+    expectClose(record.baseFeePerGas, 1.125)
+    expectClose(record.priorityFeePerGas, 0.25)
   })
 
   it('has no prices on a day without transactions', () => {
