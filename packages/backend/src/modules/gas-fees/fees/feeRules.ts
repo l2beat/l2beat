@@ -38,12 +38,13 @@ const unlessDeposit = (fee: string) => `if(t.type = '126', 0e0, ${fee})`
 // EIP-4844's price of blob gas: its fake_exponential(1, excess_blob_gas, fraction),
 // in whole numbers as the protocol computes it: floor(exp()) is a wei off on
 // some blocks. 128 terms cover prices past 1e16 wei.
-// Two forks changed the update fraction: BPO1 from block 23,975,778 and BPO2
-// from block 24,179,383
+// Three forks changed the update fraction: Pectra from block 22,431,084, BPO1
+// from block 23,975,778 and BPO2 from block 24,179,383
 const BLOB_FRACTION = `cast(case
       when b.number >= 24179383 then 11684671
       when b.number >= 23975778 then 8346193
-      else 5007716
+      when b.number >= 22431084 then 5007716
+      else 3338477
     end as decimal(38, 0))`
 const BLOB_EXCESS = 'cast(b.excess_blob_gas as decimal(38, 0))'
 const TERMS = 'row(output decimal(38, 0), term decimal(38, 0))'
