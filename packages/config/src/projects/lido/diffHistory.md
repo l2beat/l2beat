@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x3f67ab9a2f30e60316d89722070e2998b553eeb0
+
+# Diff at Thu, 26 Nov 2026 18:15:04 GMT:
+
+- id: e1e4d842
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@19a3e421c28364d0b3fbae939e5b34aa5bea4896 block: 1795457619
+- current timestamp: 1795716090
+
+## Description
+
+DelegationContract: an oracle committee seat changed delegate, effective after the 2-day cooldown.
+
+## Watched changes
+
+```diff
+    contract DelegationContract (eth:0xc77d0Bf3AA4778E36a89CDC8bbc9c34d8060637d) [lido/DelegationContract] {
+    +++ description: Execution Delegation Framework contract that holds a Lido protocol role, such as an oracle committee seat or a Deposit Security Module guardian seat, on behalf of one entity. Its current delegate can make arbitrary calls from this contract and produce ERC-1271 signatures for it. The immutable owner can nominate a new delegate, which becomes effective only after the immutable cooldown, revoke the delegate immediately, or irreversibly terminate the contract.
+      values.getDelegate:
+-        "eth:0x82A821E8a2585D1AC8f346BE7Da6995490d21Ca6"
++        "eth:0x2d79aBE30287636408dD14B2a3175D37FA4cC9FE"
+    }
+```
+
 Generated with discovered.json: 0xf53d2a771b573ebf8eded2e316f40724e1e31aa5
 
 # Diff at Mon, 23 Nov 2026 18:15:01 GMT:
