@@ -42,7 +42,7 @@ export function FlowsStatsPanel({
   })
 
   return (
-    <div className="@container rounded-lg bg-surface-secondary px-4 pt-3 pb-4 dark:bg-header-secondary">
+    <div className="@container">
       <div className="mb-2.5 text-balance font-bold text-label-value-14 uppercase leading-5">
         {label}
       </div>
