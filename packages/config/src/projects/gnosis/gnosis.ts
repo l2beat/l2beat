@@ -140,11 +140,12 @@ export const gnosis: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         // xDAI bridge escrow, currently accepting USDS and still supporting DAI withdrawals.
+        // It invests most of its USDS in sUSDS.
         address: ChainSpecificAddress(
           'eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016',
         ),
         sinceTimestamp: UnixTime(1573689600),
-        tokens: ['DAI', 'USDS', 'sDAI'],
+        tokens: ['DAI', 'USDS', 'sDAI', 'sUSDS'],
         ...bridgeGovernance,
       }),
       discovery.getEscrowDetails({
@@ -153,7 +154,7 @@ export const gnosis: ScalingProject = {
           'eth:0x88ad09518695c6c3712AC10a214bE5109a655671',
         ),
         tokens: '*',
-        excludedTokens: ['DAI', 'USDS', 'sDAI'],
+        excludedTokens: ['DAI', 'USDS', 'sDAI', 'sUSDS'],
         ...bridgeGovernance,
       }),
     ],

@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "rsweth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "rsweth-rswETH",
+      "priceId": "restaked-swell-eth",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1706572800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

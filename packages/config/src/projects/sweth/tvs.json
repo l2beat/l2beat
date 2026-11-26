@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "sweth",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "sweth-swETH",
+      "priceId": "sweth",
+      "symbol": "swETH",
+      "name": "swETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf951E335afb289353dc249e82926178EaC7DEd78",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1684108800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}
