@@ -1,6 +1,5 @@
 import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { CropBadge } from '~/components/garden/CropBadge'
-import { CropEvaluationDetails } from '~/components/garden/CropFindings'
 import {
   CROP_COLUMNS,
   type CropEntry,
@@ -21,6 +20,7 @@ import {
 import { stickyTableColumnRowProps } from '~/components/table/useStickyTableHeader'
 import { cn } from '~/utils/cn'
 import type { GardenEntry } from '../getGardenData'
+import { CropTooltip } from './CropTooltip'
 
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   const entranceHold = useEntranceHold()
@@ -129,16 +129,15 @@ function EvaluatedCrops({
 }) {
   return (
     <div className={className}>
-      {toCropEntries(entry.crops, entry.ossification).map(
-        (crop, columnIndex) => (
-          <EvaluatedCrop
-            key={crop.definition.key}
-            crop={crop}
-            delay={entranceDelay(rowIndex, columnIndex)}
-            jitterKey={`${entry.slug}:${crop.definition.key}`}
-          />
-        ),
-      )}
+      {toCropEntries(entry.crops).map((crop, columnIndex) => (
+        <EvaluatedCrop
+          key={crop.definition.key}
+          crop={crop}
+          project={entry}
+          delay={entranceDelay(rowIndex, columnIndex)}
+          jitterKey={`${entry.slug}:${crop.definition.key}`}
+        />
+      ))}
     </div>
   )
 }
@@ -151,10 +150,12 @@ function entranceDelay(rowIndex: number, columnIndex: number) {
 
 function EvaluatedCrop({
   crop,
+  project,
   delay,
   jitterKey,
 }: {
   crop: CropEntry
+  project: GardenEntry
   delay: number
   jitterKey: string
 }) {
@@ -168,7 +169,7 @@ function EvaluatedCrop({
       jitterKey={jitterKey}
       label={`${definition.label}: ${statusText}`}
     >
-      <CropEvaluationDetails entry={crop} />
+      <CropTooltip crop={crop} project={project} />
     </CropBadge>
   )
 }
