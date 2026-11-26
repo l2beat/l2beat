@@ -4,7 +4,10 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { ChartRange } from '~/utils/range/range'
-import type { ChangeCategory } from '../../utils/changeEventConstants'
+import {
+  CHANGE_CATEGORIES,
+  type ChangeCategory,
+} from '../../utils/changeEventConstants'
 import {
   type ChangeCandidate,
   type ChangeContributor,
@@ -13,6 +16,7 @@ import {
   getChangeProjects,
   median,
 } from '../../utils/changeEvents'
+import { getLocalMax } from '../../utils/findPeakRises'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { pinTvsRange } from './utils/pinTvsRange'
 import {
@@ -35,42 +39,40 @@ export type TvsChangeEventsParams = v.infer<typeof TvsChangeEventsParams>
 // when at least this much of it is beyond the market's move.
 const STEP_DAYS = 3
 const MIN_SHARE_BEYOND_MARKET = 0.5
-// Steps this small can't reach the chart's bar on any axis that shows the
-// category, so they aren't sent.
-const MIN_SHARE_OF_CATEGORY_MAX = 0.01
+// Steps this small can't reach the chart's bar, so they aren't sent.
+const MIN_SHARE_OF_SCALE = 0.01
 
 const cache = new FrontendInMemoryCache('getTvsChangeEvents')
 
+/**
+ * Changes are found over the whole history, so a range shows the same ones
+ * as any other range that covers them; only the range's end matters.
+ */
 export function getTvsChangeEvents({
   range,
   filter,
   excludeRwaRestrictedTokens,
 }: TvsChangeEventsParams): Promise<TvsChangeEventsData> {
   // Only whole days count, so keying by day lets one result serve every hour.
-  const pinned = pinTvsRange(range)
-  const dayRange: ChartRange = [
-    pinned[0],
-    UnixTime.toStartOf(UnixTime(pinned[1]), 'day'),
-  ]
+  const to = UnixTime.toStartOf(UnixTime(pinTvsRange(range)[1]), 'day')
   return cache.get(
     {
       key: [
         'tvs-change-events',
         JSON.stringify(filter),
         String(excludeRwaRestrictedTokens),
-        String(dayRange[0]),
-        String(dayRange[1]),
+        String(to),
       ],
       ttl: 10 * 60,
       staleWhileRevalidate: 60 * 60,
     },
-    () => computeForFilter(filter, dayRange, excludeRwaRestrictedTokens),
+    () => computeForFilter(filter, to, excludeRwaRestrictedTokens),
   )
 }
 
 async function computeForFilter(
   filter: TvsProjectFilter,
-  [from, to]: ChartRange,
+  to: number,
   excludeRwaRestrictedTokens: boolean,
 ): Promise<TvsChangeEventsData> {
   if (env.MOCK) {
@@ -86,21 +88,15 @@ async function computeForFilter(
       categoryByProject.set(project.projectId, project.category)
   }
 
-  // A step at the range's start compares with days before it.
-  const loadFrom = from === null ? null : from - STEP_DAYS * UnixTime.DAY
   const records = await getDb().tvsTokenValue.getSummedByProjectAtResolution(
     [...categoryByProject.keys()],
-    [loadFrom === null ? null : UnixTime(loadFrom), UnixTime(to)],
+    [null, UnixTime(to)],
     'day',
     // Matches the values the summary charts sum.
     { excludeRwaRestrictedTokens, forSummary: true },
   )
 
-  const candidates = computeTvsChangeCandidates(
-    records,
-    categoryByProject,
-    from,
-  )
+  const candidates = computeTvsChangeCandidates(records, categoryByProject)
   return {
     projects: getChangeProjects(
       projects.map((p) => ({
@@ -115,8 +111,8 @@ async function computeForFilter(
 }
 
 /**
- * Each category's steps over `STEP_DAYS` days in the visible range, per
- * project, so a step splits exactly into projects' changes. A project
+ * Each category's steps over `STEP_DAYS` days, per project, so a step
+ * splits exactly into projects' changes. A project
  * missing either day is left out of both. Steps mostly made of the market's
  * move are dropped, and of overlapping steps the same way only the largest
  * stays.
@@ -124,7 +120,6 @@ async function computeForFilter(
 export function computeTvsChangeCandidates(
   records: { projectId: string; timestamp: number; value: number }[],
   categoryByProject: Map<string, ChangeCategory>,
-  visibleFrom: number | null,
 ): TvsChangeCandidate[] {
   const valuesByProject = new Map<string, Map<number, number>>()
   const days = new Set<number>()
@@ -140,20 +135,41 @@ export function computeTvsChangeCandidates(
     days.add(record.timestamp)
   }
 
+  const timestamps = [...days].sort((a, b) => a - b)
+  const totals = new Map(
+    CHANGE_CATEGORIES.map((category) => [
+      category,
+      timestamps.map((timestamp) => {
+        let sum: number | null = null
+        for (const [projectId, values] of valuesByProject) {
+          const value = values.get(timestamp)
+          if (
+            categoryByProject.get(projectId) === category &&
+            value !== undefined
+          )
+            sum = (sum ?? 0) + value
+        }
+        return sum
+      }),
+    ]),
+  )
+  const getScale = (timestamp: number) => {
+    const index = timestamps.indexOf(timestamp)
+    return Object.fromEntries(
+      CHANGE_CATEGORIES.map((c) => [
+        c,
+        getLocalMax(totals.get(c) ?? [], index),
+      ]),
+    )
+  }
+
   const steps: Step[] = []
-  const categoryMax = new Map<ChangeCategory, number>()
-  for (const timestamp of [...days].sort((a, b) => a - b)) {
-    const start = timestamp - (STEP_DAYS - 1) * UnixTime.DAY
-    if (visibleFrom !== null && start < visibleFrom) continue
+  for (const timestamp of timestamps) {
     for (const step of getSteps(
       valuesByProject,
       categoryByProject,
       timestamp,
     )) {
-      categoryMax.set(
-        step.category,
-        Math.max(categoryMax.get(step.category) ?? 0, step.observed),
-      )
       const change = step.observed - step.baseline
       if (
         change !== 0 &&
@@ -167,13 +183,14 @@ export function computeTvsChangeCandidates(
 
   const byKey = new Map(steps.map((s) => [`${s.category}:${s.timestamp}`, s]))
   return steps
+    .filter((step) => isLargestOverlapping(step, byKey))
+    .map((step) => ({ step, scale: getScale(step.timestamp) }))
     .filter(
-      (step) =>
+      ({ step, scale }) =>
         Math.abs(step.observed - step.baseline) >=
-          MIN_SHARE_OF_CATEGORY_MAX * (categoryMax.get(step.category) ?? 0) &&
-        isLargestOverlapping(step, byKey),
+        MIN_SHARE_OF_SCALE * (scale[step.category] ?? 0),
     )
-    .map((step) => ({
+    .map(({ step, scale }) => ({
       category: step.category,
       metric: 'usd',
       peak: step.timestamp,
@@ -186,6 +203,7 @@ export function computeTvsChangeCandidates(
         },
       ],
       steps: [],
+      scale,
     }))
 }
 

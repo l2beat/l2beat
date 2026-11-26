@@ -4,8 +4,8 @@ import type { ChangeCategory } from './changeEventConstants'
 /**
  * Pieces shared by the chart pins that mark notable changes (activity, TVS).
  * The server finds candidate changes and how each splits across projects;
- * the chart decides which to pin, because that depends on how big a change
- * looks on its y axis (see `selectChangeEvents`).
+ * the chart decides which to pin, because that depends on which series it
+ * shows (see `selectChangeEvents`).
  */
 
 export interface ChangeProject {
@@ -52,6 +52,8 @@ export interface ChangeCandidate<M extends string = string> {
   /** Tightest first. */
   levels: ChangeLevel[]
   steps: ChangeStep[]
+  /** Each category's highest value around the peak; see `getLocalMax`. */
+  scale: Partial<Record<ChangeCategory, number>>
 }
 
 export interface ChangeEventsData<M extends string = string> {

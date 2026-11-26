@@ -63,21 +63,17 @@ export function L2BridgeTypeTvsChart({
     [data, unit],
   )
 
-  const { pins, marginTop, onYScale } = useL2TvsChangePins({
+  const { pins, marginTop } = useL2TvsChangePins({
     range,
     unit,
     filter,
     excludeRwaRestrictedTokens,
     chartData,
-    allBandsShown: (['canonical', 'native', 'external'] as const).every((key) =>
-      tokenBridgeTypeDataKeys.includes(key),
-    ),
   })
 
   return (
     <BridgeTypeTvsChart
       overlay={pins}
-      onYScale={onYScale}
       marginTop={marginTop}
       isPlaceholderData={isPlaceholderData}
       resolution={rangeToResolution(shownInput.range)}

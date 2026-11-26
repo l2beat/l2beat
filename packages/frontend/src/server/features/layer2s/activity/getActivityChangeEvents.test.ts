@@ -2,16 +2,13 @@ import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ChangeCategory } from '../../utils/changeEventConstants'
-import { RISE_HISTORY_DAYS } from '../../utils/findPeakRises'
 import { computeActivityChangeCandidates } from './getActivityChangeEvents'
 
 describe(computeActivityChangeCandidates.name, () => {
-  // Days before VISIBLE are baseline history; one project spikes on SPIKE.
+  // Steady projects; one spikes on SPIKE, with 8 weeks of history before.
   const START = UnixTime(1_700_006_400)
-  const HISTORY = RISE_HISTORY_DAYS + 10
-  const DAYS = HISTORY + 60
-  const VISIBLE_FROM = START + HISTORY * UnixTime.DAY
-  const SPIKE = HISTORY + 30
+  const DAYS = 130
+  const SPIKE = 100
   const categories = new Map<string, ChangeCategory>([
     ['a', 'rollups'],
     ['b', 'rollups'],
@@ -41,14 +38,12 @@ describe(computeActivityChangeCandidates.name, () => {
 
   function compute(...parts: ActivityRecord[][]) {
     const records = parts.flat().sort((x, y) => x.timestamp - y.timestamp)
-    return computeActivityChangeCandidates(
-      records,
-      categories,
-      VISIBLE_FROM,
-    ).filter((c) => c.metric === 'tps')
+    return computeActivityChangeCandidates(records, categories).filter(
+      (c) => c.metric === 'tps',
+    )
   }
 
-  it('splits a rise across the projects that drove it', () => {
+  it("splits a rise across the projects that drove it, with each category's scale", () => {
     const candidates = compute(
       series('a', () => 10_000),
       series('b', (d) => (d === SPIKE ? 9_000 : 1_000)),
@@ -68,6 +63,7 @@ describe(computeActivityChangeCandidates.name, () => {
             restDelta: 0,
           }),
         ],
+        scale: { rollups: 19_000, validiumsAndOptimiums: 0, others: 500 },
       }),
     ])
   })

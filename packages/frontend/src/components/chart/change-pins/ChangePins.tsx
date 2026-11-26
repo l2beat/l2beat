@@ -1,12 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  type ComponentProps,
-  type ReactNode,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { type ComponentProps, type ReactNode, useMemo, useRef } from 'react'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartTooltipTitle } from '~/components/core/chart/ChartTooltip'
 import {
@@ -14,9 +7,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { useCanHover } from '~/hooks/useCanHover'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
-import { CHANGE_CATEGORIES } from '~/server/features/utils/changeEventConstants'
+import {
+  CHANGE_CATEGORIES,
+  type ChangeCategory,
+} from '~/server/features/utils/changeEventConstants'
 import type {
   ChangeEventsData,
   ChangeProject,
@@ -24,11 +19,7 @@ import type {
 import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import type { ChangeFormat } from './formats'
-import {
-  type ChangeEvent,
-  selectChangeEvents,
-  type ToPlotHeight,
-} from './selectChangeEvents'
+import { type ChangeEvent, selectChangeEvents } from './selectChangeEvents'
 
 const CATEGORY_LABELS: Record<ChangeEvent['category'], string> = {
   rollups: 'Rollups',
@@ -47,10 +38,6 @@ const X_AXIS_HEIGHT = 25
 // How far each stacked logo sits from the one before it.
 const LOGO_STEP = 11
 const MIN_PIN_SPACING = getPinWidth(2) + 6
-const PLOT_WIDTH_PER_PIN = 160
-const MAX_PINS_HOVER = 6
-const MAX_PINS_TOUCH = 3
-const MAX_EVENTS_PER_PIN = 3
 // A pin names one project only when it explains at least half the change.
 const LEADER_MIN_SHARE = 0.5
 // The breakdown lists a project only when it drove a tenth of the change.
@@ -60,49 +47,32 @@ export function getEventKey(event: ChangeEvent) {
   return `${event.start}:${event.category}`
 }
 
-/**
- * The chart's y scale as it draws it, for `TimeSeriesChart`'s `onYScale`:
- * whether a change is pinned depends on how tall it looks.
- */
-export function usePlotHeightScale() {
-  const [toPlotHeight, setToPlotHeight] = useState<ToPlotHeight>()
-  // Wrapped, or the state setter would call the scale as an updater.
-  const onYScale = useCallback(
-    (scale: ToPlotHeight | undefined) => setToPlotHeight(() => scale),
-    [],
-  )
-  return { toPlotHeight, onYScale }
-}
-
-/** The changes big enough on the chart as drawn, in its shown categories. */
+/** The changes big enough next to the chart's shown categories. */
 export function useChangeEvents<M extends string>(
   data: ChangeEventsData<M> | undefined,
   {
     metric,
     dataKeys,
     format,
-    toPlotHeight,
   }: {
     metric: M
     dataKeys: readonly string[]
     format: ChangeFormat
-    toPlotHeight: ToPlotHeight | undefined
   },
 ): ChangeEvent<M>[] {
-  return useMemo(() => {
-    if (!data || !toPlotHeight) return []
-    const { toChartValue, minSize } = format
-    return selectChangeEvents(data.candidates, {
-      metric,
-      categories: dataKeys.filter((k) =>
-        (CHANGE_CATEGORIES as readonly string[]).includes(k),
-      ),
-      toPlotHeight: toChartValue
-        ? (value) => toPlotHeight(toChartValue(value))
-        : toPlotHeight,
-      minSize,
-    })
-  }, [data, metric, dataKeys, format, toPlotHeight])
+  return useMemo(
+    () =>
+      data
+        ? selectChangeEvents(data.candidates, {
+            metric,
+            categories: dataKeys.filter((k): k is ChangeCategory =>
+              (CHANGE_CATEGORIES as readonly string[]).includes(k),
+            ),
+            minSize: format.minSize,
+          })
+        : [],
+    [data, metric, dataKeys, format],
+  )
 }
 
 /** The changes a day falls in, for the chart's hover tooltip. */
@@ -141,12 +111,10 @@ export function ChangePins({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref })
-  // Undefined while hydrating: render what the server did, as for a mouse.
-  const canHover = useCanHover() !== false
 
   const groups = useMemo(
-    () => getPinGroups(events, chartData, width, canHover),
-    [events, chartData, width, canHover],
+    () => getPinGroups(events, chartData, width),
+    [events, chartData, width],
   )
 
   return (
@@ -193,21 +161,16 @@ export function ChangePins({
 }
 
 /**
- * Tallest first. Pins closer than a pin's width merge before the budget is
- * spent, so overlapping changes share one pin instead of using up slots.
+ * Every change in the chart's range gets a pin. Pins closer than a pin's
+ * width merge into one, which leads with the largest change.
  */
 function getPinGroups(
   events: ChangeEvent[],
   chartData: { timestamp: number }[] | undefined,
   width: number | undefined,
-  canHover: boolean,
 ): PinGroup[] {
   if (!chartData || chartData.length < 2 || !width) return []
   const indexByTimestamp = new Map(chartData.map((p, i) => [p.timestamp, i]))
-  const budget = Math.min(
-    canHover ? MAX_PINS_HOVER : MAX_PINS_TOUCH,
-    Math.max(1, Math.floor(width / PLOT_WIDTH_PER_PIN)),
-  )
 
   const result: PinGroup[] = []
   for (const event of [...events].sort((a, b) => b.size - a.size)) {
@@ -221,17 +184,7 @@ function getPinGroups(
     }
     result.push({ key: getEventKey(event), events: [event], x })
   }
-
-  // A pin only carries changes strong enough to have earned a pin of their
-  // own; on long ranges one pin's width spans weeks of weaker changes.
-  const shown = result.slice(0, budget)
-  const minSize = shown.at(-1)?.events[0]?.size ?? 0
-  for (const group of shown) {
-    group.events = group.events
-      .filter((e, i) => i === 0 || e.size >= minSize)
-      .slice(0, MAX_EVENTS_PER_PIN)
-  }
-  return shown.sort((a, b) => a.x - b.x)
+  return result.sort((a, b) => a.x - b.x)
 }
 
 function Pin({

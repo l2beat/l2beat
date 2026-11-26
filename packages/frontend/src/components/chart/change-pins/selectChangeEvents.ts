@@ -15,16 +15,15 @@ export interface ChangeEvent<M extends string = string>
   /** The category's value at the end and the value it is compared with. */
   observed: number
   baseline: number
-  /** Its height as a share of the plot's. */
+  /** Its height as a share of the shown series' scale around it. */
   size: number
 }
 
-/** Maps a value to its height on the chart, 0 at the bottom, 1 at the top. */
-export type ToPlotHeight = (value: number) => number
-
 /**
- * The candidates that look big on the chart as drawn: their height from
- * baseline to value is at least `minSize` of the plot's, on its own scale.
+ * The candidates that look big next to the shown series: the change is at
+ * least `minSize` of the highest value they reach around it, as a year-long
+ * chart of them would draw it. That doesn't depend on the range shown, so a
+ * change is pinned on every range that covers it.
  * Each candidate's levels are tried tightest first. A wider level that
  * starts earlier adds a pin for the step before the tighter rise, when that
  * step is big enough by itself. Rises that start on the same day are one.
@@ -34,18 +33,14 @@ export function selectChangeEvents<M extends string>(
   {
     metric,
     categories,
-    toPlotHeight,
     minSize,
   }: {
     metric: M
-    categories: readonly string[]
-    toPlotHeight: ToPlotHeight
+    categories: readonly ChangeCategory[]
     minSize: number
   },
 ): ChangeEvent<M>[] {
   const byStart = new Map<string, ChangeEvent<M>>()
-  const height = (from: number, to: number) =>
-    Math.abs(toPlotHeight(to) - toPlotHeight(from))
 
   for (const candidate of candidates) {
     if (
@@ -54,6 +49,10 @@ export function selectChangeEvents<M extends string>(
     ) {
       continue
     }
+    const scale = Math.max(...categories.map((c) => candidate.scale[c] ?? 0))
+    if (scale <= 0) continue
+    const height = (from: number, to: number) => Math.abs(to - from) / scale
+
     const found: { index: number; event: ChangeEvent<M> }[] = []
     candidate.levels.forEach((level, index) => {
       const last = found.at(-1)

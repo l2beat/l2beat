@@ -1,10 +1,10 @@
 import { expect } from 'earl'
-import { findPeakRises, RISE_HISTORY_DAYS } from './findPeakRises'
+import { findPeakRises } from './findPeakRises'
 
 describe(findPeakRises.name, () => {
-  // A weekday level with weekends 40% lower, like daily L2 activity. Days
-  // before HISTORY are baseline history, the rest is the visible range.
-  const HISTORY = RISE_HISTORY_DAYS + 10
+  // A weekday level with weekends 40% lower, like daily L2 activity. A rise
+  // needs 8 weeks of data before it for its baseline.
+  const HISTORY = 66
   const DAYS = HISTORY + 200
   const week = (level: number) => (day: number) =>
     day % 7 >= 5 ? level * 0.6 : level
@@ -14,7 +14,7 @@ describe(findPeakRises.name, () => {
   }
 
   function peaks(series: number[]) {
-    return findPeakRises(series, HISTORY).map((rise) => ({
+    return findPeakRises(series).map((rise) => ({
       peak: rise.peak,
       onsets: rise.levels.map((l) => l.onset),
       baselines: rise.levels.map((l) => Math.round(l.baseline)),
@@ -64,10 +64,8 @@ describe(findPeakRises.name, () => {
     expect(rise?.baselines.at(-1)).toEqual(2_400)
   })
 
-  it('leaves out a rise that began before the visible range', () => {
-    const result = peaks(
-      totals((d) => week(d >= HISTORY - 20 ? 3_800 : 2_400)(d)),
-    )
+  it('leaves out a rise without the history to compare it with', () => {
+    const result = peaks(totals((d) => week(d >= 20 ? 3_800 : 2_400)(d)))
 
     expect(result).toEqual([])
   })

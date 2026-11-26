@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import type { ChangeCategory } from '~/server/features/utils/changeEventConstants'
 import type {
   ChangeCandidate,
   ChangeLevel,
@@ -8,6 +9,8 @@ import { selectChangeEvents } from './selectChangeEvents'
 describe(selectChangeEvents.name, () => {
   const DAY = 86_400
   const none = { contributors: [], restDelta: 0, restCount: 0 }
+  // Around every candidate here, rollups reach 5K and others 10K.
+  const scale = { rollups: 5_000, others: 10_000 }
 
   function level(onset: number, baseline: number): ChangeLevel {
     return { onset: onset * DAY, baseline, ...none }
@@ -26,15 +29,17 @@ describe(selectChangeEvents.name, () => {
       observed,
       levels,
       steps,
+      scale,
     }
   }
 
-  // A linear axis from 0 to `top`.
-  function select(candidates: ChangeCandidate[], top: number) {
+  function select(
+    candidates: ChangeCandidate[],
+    categories: ChangeCategory[] = ['rollups'],
+  ) {
     return selectChangeEvents(candidates, {
       metric: 'uops',
-      categories: ['rollups'],
-      toPlotHeight: (value) => value / top,
+      categories,
       minSize: 0.15,
     }).map((e) => ({
       start: e.start / DAY,
@@ -42,12 +47,12 @@ describe(selectChangeEvents.name, () => {
     }))
   }
 
-  it('pins a rise only when it looks big on the drawn axis', () => {
+  it('pins a rise only when it is big next to the shown series', () => {
     const rise = candidate(10, 3_500, [level(10, 2_500)])
 
-    // 1,000 is 20% of a 5K axis, but 10% of a 10K one.
-    expect(select([rise], 5_000)).toEqual([{ start: 10, size: 0.2 }])
-    expect(select([rise], 10_000)).toEqual([])
+    // 1,000 is 20% of rollups' 5K, but 10% once others' 10K is shown too.
+    expect(select([rise])).toEqual([{ start: 10, size: 0.2 }])
+    expect(select([rise], ['rollups', 'others'])).toEqual([])
   })
 
   it('describes a rise with its tightest level that is big enough', () => {
@@ -58,8 +63,8 @@ describe(selectChangeEvents.name, () => {
       [{ from: 1, to: 0, ...none }],
     )
 
-    // The spike alone is 2% of the axis; the whole rise from 2,400 is 46%.
-    expect(select([rise], 5_000)).toEqual([{ start: 5, size: 0.46 }])
+    // The spike alone is 2% of the scale; the whole rise from 2,400 is 46%.
+    expect(select([rise])).toEqual([{ start: 5, size: 0.46 }])
   })
 
   it('adds a pin for a step under a spike when the step is big by itself', () => {
@@ -70,7 +75,7 @@ describe(selectChangeEvents.name, () => {
       [{ from: 1, to: 0, ...none }],
     )
 
-    expect(select([rise], 5_000)).toEqual([
+    expect(select([rise])).toEqual([
       { start: 30, size: 0.18 },
       { start: 5, size: 0.28 },
     ])
@@ -80,6 +85,6 @@ describe(selectChangeEvents.name, () => {
     const smaller = candidate(20, 3_500, [level(10, 2_400)])
     const larger = candidate(40, 3_900, [level(10, 2_400)])
 
-    expect(select([smaller, larger], 5_000)).toEqual([{ start: 10, size: 0.3 }])
+    expect(select([smaller, larger])).toEqual([{ start: 10, size: 0.3 }])
   })
 })

@@ -5,10 +5,8 @@ import type { ChangeEvent } from './selectChangeEvents'
 
 /** How one metric's change pins pick changes and write their numbers. */
 export interface ChangeFormat {
-  /** How tall a change must look, as a share of the plot's height. */
+  /** How big a change must be next to the shown series' scale around it. */
   minSize: number
-  /** A value as the chart plots it, when the chart's unit differs. */
-  toChartValue?: (value: number) => number
   /** The category's value against what it is compared with. */
   levels: (event: ChangeEvent) => ReactNode
   /** The change in words, e.g. "46% above the usual highs before the rise". */
@@ -24,8 +22,6 @@ const USUAL_HIGHS = 'the usual highs before the rise'
 export const ACTIVITY_CHANGE_FORMAT: ChangeFormat = {
   // Daily activity is noisy, so a rise must stand well clear of it.
   minSize: 0.15,
-  // Changes are found in daily counts; the chart plots per-second rates.
-  toChartValue: countPerSecond,
   levels: (event) => (
     <>
       <Primary>

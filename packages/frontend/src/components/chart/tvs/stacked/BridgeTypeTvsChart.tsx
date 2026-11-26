@@ -9,7 +9,6 @@ import type {
 import {
   type ChartSeries,
   TimeSeriesChart,
-  type YScaleListener,
 } from '~/components/core/chart/TimeSeriesChart'
 import type { ChartResolution } from '~/utils/range/range'
 import type { ChartUnit } from '../../types'
@@ -37,7 +36,6 @@ interface Props {
   /** Drawn over the plot, e.g. change pins, with room above it if needed. */
   overlay?: ReactNode
   marginTop?: number
-  onYScale?: YScaleListener
 }
 
 export const bridgeTypeTvsChartMeta = {
@@ -74,7 +72,6 @@ export function BridgeTypeTvsChart({
   project,
   overlay,
   marginTop,
-  onYScale,
 }: Props) {
   // Bottom of the stack first.
   const series: ChartSeries<SeriesKey, BridgeTypeChartDataPoint>[] = (
@@ -108,7 +105,6 @@ export function BridgeTypeTvsChart({
         ariaLabel="Value secured by bridge type"
         syncedUntil={syncedUntil}
         margin={marginTop !== undefined ? { top: marginTop } : undefined}
-        onYScale={onYScale}
         yAxis={{
           domain: 'autoIfSingle',
           format: (value) => formatCurrency(value, unit),

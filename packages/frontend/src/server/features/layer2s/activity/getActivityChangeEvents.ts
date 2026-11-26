@@ -18,7 +18,7 @@ import {
 } from '../../utils/changeEvents'
 import {
   findPeakRises,
-  RISE_HISTORY_DAYS,
+  getLocalMax,
   type RiseLevel,
 } from '../../utils/findPeakRises'
 import { generateTimestamps } from '../../utils/generateTimestamps'
@@ -33,16 +33,17 @@ export type ActivityChangeEventsData = ChangeEventsData<ActivityChangeMetric>
 
 const cache = new FrontendInMemoryCache('getActivityChangeEvents')
 
+/**
+ * Changes are found over the whole history, so a range shows the same ones
+ * as any other range that covers them; only the range's end matters.
+ */
 export function getActivityChangeEvents(
   filter: ActivityProjectFilter,
   range: ChartRange,
 ): Promise<ActivityChangeEventsData> {
   // Ranges end on the hour, but only fully synced days count, so keying by
   // day lets one result serve every hour.
-  const dayRange: ChartRange = [
-    range[0],
-    UnixTime.toStartOf(UnixTime(range[1]), 'day'),
-  ]
+  const to = UnixTime.toStartOf(UnixTime(range[1]), 'day')
   return cache.get(
     {
       key: [
@@ -51,19 +52,18 @@ export function getActivityChangeEvents(
         filter.type === 'projects'
           ? [...filter.projectIds].sort().join(',')
           : '',
-        String(dayRange[0]),
-        String(dayRange[1]),
+        String(to),
       ],
       ttl: 10 * 60,
       staleWhileRevalidate: 60 * 60,
     },
-    () => computeForFilter(filter, dayRange),
+    () => computeForFilter(filter, to),
   )
 }
 
 async function computeForFilter(
   filter: ActivityProjectFilter,
-  range: ChartRange,
+  to: number,
 ): Promise<ActivityChangeEventsData> {
   if (env.MOCK) {
     return { projects: {}, candidates: [] }
@@ -79,17 +79,13 @@ async function computeForFilter(
     if (category) categoryByProject.set(project.id, category)
   }
 
-  const [from, to] = await getFullySyncedActivityRange(range)
+  const [, syncedTo] = await getFullySyncedActivityRange([null, to])
   const records = await db.activity.getByProjectsAndTimeRange(
     [...categoryByProject.keys()].map((id) => ProjectId(id)),
-    [from === null ? null : from - RISE_HISTORY_DAYS * UnixTime.DAY, to],
+    [null, syncedTo],
   )
 
-  const candidates = computeActivityChangeCandidates(
-    records,
-    categoryByProject,
-    from,
-  )
+  const candidates = computeActivityChangeCandidates(records, categoryByProject)
   return { projects: getChangeProjects(projects, candidates), candidates }
 }
 
@@ -107,15 +103,13 @@ function getCategory(type: string | undefined): ChangeCategory | undefined {
 }
 
 /**
- * Finds each category's rises in the visible days (from `visibleFrom`),
- * with how each splits across projects. A project's part is its value at
- * the peak minus its own mean over the days the category is compared with,
- * so the parts add up to the category's rise.
+ * Finds each category's rises, with how each splits across projects. A
+ * project's part is its value at the peak minus its own mean over the days
+ * the category is compared with, so the parts add up to the category's rise.
  */
 export function computeActivityChangeCandidates(
   records: ActivityRecord[],
   categoryByProject: Map<string, ChangeCategory>,
-  visibleFrom: number | null,
 ): ActivityChangeCandidate[] {
   const first = records[0]
   const last = records.at(-1)
@@ -126,10 +120,6 @@ export function computeActivityChangeCandidates(
     'day',
   )
   const indexByTimestamp = new Map(timestamps.map((t, i) => [t, i]))
-  const visibleIndex = timestamps.findIndex(
-    (t) => visibleFrom === null || t >= visibleFrom,
-  )
-  const start = visibleIndex === -1 ? timestamps.length : visibleIndex
 
   const candidates: ActivityChangeCandidate[] = []
   for (const metric of ['uops', 'tps'] as const) {
@@ -147,7 +137,7 @@ export function computeActivityChangeCandidates(
         metric === 'uops' ? (record.uopsCount ?? record.count) : record.count
     }
 
-    for (const category of CHANGE_CATEGORIES) {
+    const byCategory = CHANGE_CATEGORIES.map((category) => {
       const members = [...valuesByProject].filter(
         ([projectId]) => categoryByProject.get(projectId) === category,
       )
@@ -160,9 +150,11 @@ export function computeActivityChangeCandidates(
         }
         return sum
       })
+      return { category, members, totals }
+    })
 
-      for (const rise of findPeakRises(totals, start)) {
-        const observed = totals[rise.peak] as number
+    for (const { category, members, totals } of byCategory) {
+      for (const rise of findPeakRises(totals)) {
         const levels: ChangeLevel[] = rise.levels.map((level) => ({
           onset: timestamps[level.onset] as number,
           baseline: level.baseline,
@@ -177,9 +169,15 @@ export function computeActivityChangeCandidates(
           category,
           metric,
           peak: timestamps[rise.peak] as number,
-          observed,
+          observed: totals[rise.peak] as number,
           levels,
           steps: getSteps(rise.levels, members),
+          scale: Object.fromEntries(
+            byCategory.map((c) => [
+              c.category,
+              getLocalMax(c.totals, rise.peak),
+            ]),
+          ),
         })
       }
     }

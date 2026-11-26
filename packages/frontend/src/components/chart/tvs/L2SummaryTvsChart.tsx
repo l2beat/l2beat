@@ -31,7 +31,6 @@ import {
   ChangeTooltipLine,
   getChangeEventsAt,
   useChangeEvents,
-  usePlotHeightScale,
 } from '../change-pins/ChangePins'
 import { TVS_CHANGE_FORMAT } from '../change-pins/formats'
 import type { ChangeEvent } from '../change-pins/selectChangeEvents'
@@ -94,12 +93,10 @@ export function L2SummaryTvsChart({
     }),
     enabled: hasChangePins,
   })
-  const { toPlotHeight, onYScale } = usePlotHeightScale()
   const changeEvents = useChangeEvents(changeData, {
     metric: 'usd',
     dataKeys,
     format: TVS_CHANGE_FORMAT,
-    toPlotHeight,
   })
 
   const chartData = useMemo(() => toChartData(data), [data])
@@ -154,7 +151,6 @@ export function L2SummaryTvsChart({
             format: (value: number) => formatCurrency(value, unit),
           }}
           syncedUntil={data?.syncedUntil}
-          onYScale={onYScale}
           renderTooltip={(row, keys) => (
             <CustomTooltip
               row={row}

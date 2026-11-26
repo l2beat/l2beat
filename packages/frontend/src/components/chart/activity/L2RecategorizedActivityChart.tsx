@@ -31,7 +31,6 @@ import {
   ChangeTooltipLine,
   getChangeEventsAt,
   useChangeEvents,
-  usePlotHeightScale,
 } from '../change-pins/ChangePins'
 import { ACTIVITY_CHANGE_FORMAT } from '../change-pins/formats'
 import type { ChangeEvent } from '../change-pins/selectChangeEvents'
@@ -98,12 +97,10 @@ export function L2RecategorizedActivityChart({
   changeEvents,
 }: Props) {
   const { metric } = useActivityMetricContext()
-  const { toPlotHeight, onYScale } = usePlotHeightScale()
   const events = useChangeEvents(changeEvents, {
     metric,
     dataKeys,
     format: ACTIVITY_CHANGE_FORMAT,
-    toPlotHeight,
   })
 
   const resolutionSeconds = UnixTime.periodToSeconds(data?.resolution ?? 'day')
@@ -172,7 +169,6 @@ export function L2RecategorizedActivityChart({
           format: (value) => formatActivityCount(value),
         }}
         syncedUntil={data?.syncedUntil}
-        onYScale={onYScale}
         renderTooltip={(row, keys) => (
           <CustomTooltip
             row={row}

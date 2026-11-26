@@ -7,7 +7,6 @@ describe(computeTvsChangeCandidates.name, () => {
   // Projects with slowly drifting TVS for 40 days; tests bend them from day
   // 35 and check what gets reported.
   const START = UnixTime(1_700_006_400)
-  const VISIBLE_FROM = START + 30 * UnixTime.DAY
   const DAY_35 = START + 35 * UnixTime.DAY
   const categories = new Map<string, ChangeCategory>([
     ['a', 'rollups'],
@@ -34,11 +33,7 @@ describe(computeTvsChangeCandidates.name, () => {
       ...series('c', drift(1e9)),
     ]
 
-    const candidates = computeTvsChangeCandidates(
-      records,
-      categories,
-      VISIBLE_FROM,
-    )
+    const candidates = computeTvsChangeCandidates(records, categories)
 
     // Each of the three-day steps that cover the jump sees it; one stays.
     expect(candidates.length).toEqual(1)
@@ -57,11 +52,7 @@ describe(computeTvsChangeCandidates.name, () => {
       ...series('c', (day) => drift(1e9)(day) - (day >= 35 ? 6e8 : 0)),
     ]
 
-    const [candidate] = computeTvsChangeCandidates(
-      records,
-      categories,
-      VISIBLE_FROM,
-    )
+    const [candidate] = computeTvsChangeCandidates(records, categories)
 
     expect(candidate?.category).toEqual('others')
     expect(
@@ -78,9 +69,7 @@ describe(computeTvsChangeCandidates.name, () => {
       ...series('c', rally(1e9)),
     ]
 
-    expect(
-      computeTvsChangeCandidates(records, categories, VISIBLE_FROM),
-    ).toEqual([])
+    expect(computeTvsChangeCandidates(records, categories)).toEqual([])
   })
 
   it('leaves out a project missing the day a step starts from', () => {
@@ -93,8 +82,6 @@ describe(computeTvsChangeCandidates.name, () => {
       ),
     ]
 
-    expect(
-      computeTvsChangeCandidates(records, categories, VISIBLE_FROM),
-    ).toEqual([])
+    expect(computeTvsChangeCandidates(records, categories)).toEqual([])
   })
 })

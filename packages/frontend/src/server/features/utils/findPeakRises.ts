@@ -1,10 +1,11 @@
 import { percentile } from './changeEvents'
 
 /**
- * Finds the rises a viewer sees on a daily line: each local peak, where the
- * rise up to it began, and the usual highs before that, which it is compared
- * with. Whether a rise is big enough to pin depends on the chart's y axis,
- * so that is left to the chart.
+ * Finds the rises on a daily line: each local peak, where the rise up to it
+ * began, and the usual highs before that, which it is compared with. They
+ * are found over the whole history, so a rise is the same whatever range a
+ * chart shows. Whether one is big enough to pin depends on which series the
+ * chart shows, so that is left to the chart (see `getLocalMax`).
  *
  * A peak is measured against up to three levels, tightest first: the peak
  * itself, the level of the days around it, and the level of its whole
@@ -12,10 +13,8 @@ import { percentile } from './changeEvents'
  * plateau needs a wider one to reach back to where the step began.
  */
 
-// A candidate peak is its category's highest day within this window, which
-// grows with the visible range so a long range gets fewer, bigger peaks.
-const MIN_WINDOW_DAYS = 7
-const RANGE_DAYS_PER_WINDOW = 8
+// A candidate peak is its category's highest day within this window.
+const WINDOW_DAYS = 46
 const NEAR_DAYS = 7
 const LEVEL_PERCENTILE = 0.75
 // A rise runs back as long as days stay this close to its level. A day below
@@ -29,9 +28,9 @@ const BRIDGE_MIN_DAYS = 2
 const BASELINE_DAYS = 42
 const BASELINE_GAP_DAYS = 14
 const USUAL_HIGH_PERCENTILE = 0.9
-
-/** How many days before the visible range the baselines can need. */
-export const RISE_HISTORY_DAYS = BASELINE_DAYS + BASELINE_GAP_DAYS
+// A rise is judged against the series' scale around it, as a year-long
+// chart centred on it would draw it.
+const SCALE_DAYS = 182
 
 export interface RiseLevel {
   /** Index of the day the rise began. */
@@ -48,43 +47,23 @@ export interface PeakRise {
   levels: RiseLevel[]
 }
 
-/**
- * `totals` holds one value per day, null where there is no data; days before
- * `start` are history for the baselines, not candidates.
- */
-export function findPeakRises(
-  totals: (number | null)[],
-  start: number,
-): PeakRise[] {
-  const end = totals.length - 1
-  const window = Math.max(
-    MIN_WINDOW_DAYS,
-    Math.round((end - start + 1) / RANGE_DAYS_PER_WINDOW),
-  )
+/** `totals` holds one value per day, null where there is no data. */
+export function findPeakRises(totals: (number | null)[]): PeakRise[] {
   const result: PeakRise[] = []
 
-  for (let i = start; i <= end; i++) {
+  for (let i = 0; i < totals.length; i++) {
     const value = totals[i]
     if (value === null || value === undefined) continue
-    const lo = Math.max(start, i - window)
-    const hi = Math.min(end, i + window)
-    if (!isWindowPeak(totals, i, lo, hi)) continue
+    if (!isWindowPeak(totals, i)) continue
 
     const levels: RiseLevel[] = []
     for (const level of [
       value,
-      percentile(
-        values(
-          totals,
-          Math.max(start, i - NEAR_DAYS),
-          Math.min(end, i + NEAR_DAYS),
-        ),
-        LEVEL_PERCENTILE,
-      ),
-      percentile(values(totals, lo, hi), LEVEL_PERCENTILE),
+      percentile(values(totals, i, NEAR_DAYS), LEVEL_PERCENTILE),
+      percentile(values(totals, i, WINDOW_DAYS), LEVEL_PERCENTILE),
     ]) {
       if (level === undefined) continue
-      const measured = measureRise(totals, i, start, level)
+      const measured = measureRise(totals, i, level)
       // A level that ends at the same onset adds nothing new.
       if (!measured || levels.some((l) => l.onset <= measured.onset)) continue
       if (measured.baseline >= value) continue
@@ -95,14 +74,16 @@ export function findPeakRises(
   return result
 }
 
+/** The highest value within `SCALE_DAYS` of day `i`. */
+export function getLocalMax(totals: (number | null)[], i: number) {
+  return Math.max(0, ...values(totals, i, SCALE_DAYS))
+}
+
 /** The window's highest day; ties go to the earliest. */
-function isWindowPeak(
-  totals: (number | null)[],
-  i: number,
-  lo: number,
-  hi: number,
-) {
+function isWindowPeak(totals: (number | null)[], i: number) {
   const value = totals[i] as number
+  const lo = Math.max(0, i - WINDOW_DAYS)
+  const hi = Math.min(totals.length - 1, i + WINDOW_DAYS)
   for (let j = lo; j <= hi; j++) {
     const other = totals[j]
     if (other === null || other === undefined) continue
@@ -114,18 +95,11 @@ function isWindowPeak(
 function measureRise(
   totals: (number | null)[],
   peak: number,
-  start: number,
   level: number,
 ): RiseLevel | undefined {
   const threshold = ONSET_SHARE * level
   let onset = peak
-  while (onset - 1 >= start && continuesBefore(totals, onset, threshold)) {
-    onset--
-  }
-  // Still going at the range's start: the rise began off-screen.
-  if (onset === start && continuesBefore(totals, start, threshold)) {
-    return undefined
-  }
+  while (onset > 0 && continuesBefore(totals, onset, threshold)) onset--
   while ((totals[onset] ?? 0) < threshold) onset++
 
   const from = onset - BASELINE_GAP_DAYS - BASELINE_DAYS
@@ -159,8 +133,11 @@ function continuesBefore(
   return close >= BRIDGE_MIN_DAYS
 }
 
-function values(totals: (number | null)[], lo: number, hi: number) {
+/** The values within `days` of day `i`. */
+function values(totals: (number | null)[], i: number, days: number) {
   const result: number[] = []
+  const lo = Math.max(0, i - days)
+  const hi = Math.min(totals.length - 1, i + days)
   for (let j = lo; j <= hi; j++) {
     const value = totals[j]
     if (value !== null && value !== undefined) result.push(value)
