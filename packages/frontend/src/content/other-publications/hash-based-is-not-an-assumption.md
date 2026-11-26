@@ -257,7 +257,7 @@ The PQ stack adds two shifts:
 
 ### Post-AI and hybrid implications
 
-A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU. Historically, preimage-type hash properties have also held up better than collision resistance, as seen with [MD5](https://en.wikipedia.org/wiki/MD5#Collision_vulnerabilities) and [SHA-1](https://eprint.iacr.org/2017/190).
+A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
 
 Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity, provided the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
 
