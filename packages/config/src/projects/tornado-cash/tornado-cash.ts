@@ -144,6 +144,17 @@ interface TornadoBucket {
   withdrawalEvent: string
 }
 
+// ETH pools with the classic pool code, deployed on 2026-10-15 by an EOA
+// without a governance vote. The InstanceRegistry does not list them, so the
+// router and the pinned app do not offer them.
+const UNREGISTERED_POOLS = [
+  'Pool_0.01_ETH',
+  'Pool_0.03_ETH',
+  'Pool_0.3_ETH',
+  'Pool_3_ETH',
+  'Pool_30_ETH',
+]
+
 const BUCKETS = getTornadoBuckets()
 const TORNADO_CASH_SINCE_TIMESTAMP = UnixTime(
   Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
@@ -326,6 +337,15 @@ export const tornadoCash: BaseProject = {
           fix: 'Send the fee checks through the Tor proxy like every other request.',
           source:
             'https://github.com/tornado-dao/tornado-cli/blob/662dc0ea769bc72a785c29faa0269c866d34757f/cli.js#L1726',
+        },
+        {
+          name: 'kohaku-cli',
+          icon: 'kohaku-cli',
+          finding:
+            'Withdraws only through its own paymaster contract, which marks each withdrawal onchain as made with this app, among few others.',
+          fix: 'Offer the registered relayers as a withdrawal path, as the classic app does.',
+          source:
+            'https://github.com/kassandraoftroy/kohaku-cli/blob/0b5835ea05fc1c19ae676ba73502aad5cb1646c3/src/utils/plugins.ts#L408-L441',
         },
       ],
     },
@@ -522,8 +542,20 @@ function getTornadoBuckets(): TornadoBucket[] {
     'InstanceRegistry',
     'getAllInstanceAddresses',
   )
+  const unregistered = UNREGISTERED_POOLS.map((name) =>
+    discovery.getContract(name),
+  )
+  for (const pool of unregistered) {
+    assert(
+      !poolAddresses.includes(pool.address),
+      `${pool.name} is in the InstanceRegistry now, recheck the texts that call it unregistered`,
+    )
+  }
 
-  const pools = poolAddresses.map((address) => discovery.getContract(address))
+  const pools = [
+    ...poolAddresses.map((address) => discovery.getContract(address)),
+    ...unregistered,
+  ]
 
   return pools.map((pool) => {
     const token = pool.values?.token?.toString()
