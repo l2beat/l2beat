@@ -116,7 +116,7 @@ function combineL2s(records: GasFeesRecords): GasFeesRecord[] {
     .map(([timestamp, chains]) => {
       const sum = (key: 'txCount' | 'totalFees' | 'baseFees' | 'l1DataFees') =>
         chains.reduce((total, r) => total + r[key], 0)
-      const perTx = (key: 'medianFee' | 'transfer' | 'erc20' | 'swap') =>
+      const perTx = (key: 'transfer' | 'erc20' | 'swap') =>
         weightedMean(chains, key, 'txCount')
       const inEth = chains.filter((r) => ethPriced.has(r.id))
       return {
@@ -127,7 +127,8 @@ function combineL2s(records: GasFeesRecords): GasFeesRecord[] {
         baseFees: sum('baseFees'),
         priorityFees: null,
         l1DataFees: sum('l1DataFees'),
-        medianFee: perTx('medianFee'),
+        // Chains' medians don't make a median of all their transactions
+        medianFee: null,
         transfer: perTx('transfer'),
         erc20: perTx('erc20'),
         swap: perTx('swap'),

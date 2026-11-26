@@ -112,7 +112,7 @@ export function buildGasFeesSummary(
         l1Data: totals.l1DataFees,
       },
       timesCheaper:
-        chain.id === 'ethereum' ? null : timesCheaper(ethereum, days, totals),
+        chain.id === 'ethereum' ? null : timesCheaper(ethereum, days),
     })
   }
 
@@ -148,19 +148,16 @@ function countStoredDays(records: GasFeesRecords, [from, to]: ChartRange) {
   return Math.max(0, (last - first) / UnixTime.DAY + 1)
 }
 
-/** Compared over the days the chain has data for, not Ethereum's whole range */
-function timesCheaper(
-  ethereum: GasFeesRecord[],
-  days: GasFeesRecord[],
-  totals: GasFeesTotals,
-) {
+/** Compared over the days both have data for, so neither side counts a day the other lacks */
+function timesCheaper(ethereum: GasFeesRecord[], days: GasFeesRecord[]) {
   const timestamps = new Set(days.map((r) => r.timestamp))
-  const sameDays = summarize(
-    ethereum.filter((r) => timestamps.has(r.timestamp)),
-  )
+  const theirDays = ethereum.filter((r) => timestamps.has(r.timestamp))
+  const common = new Set(theirDays.map((r) => r.timestamp))
+  const sameDays = summarize(theirDays)
+  const ourDays = summarize(days.filter((r) => common.has(r.timestamp)))
   return Object.fromEntries(
     GAS_FEES_PERIOD_METRICS.map((metric) => {
-      const ours = totals[metric]
+      const ours = ourDays?.[metric] ?? null
       const theirs = sameDays?.[metric] ?? null
       return [metric, ours && theirs ? theirs / ours : null]
     }),

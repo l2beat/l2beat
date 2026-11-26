@@ -1,5 +1,5 @@
 import type { GasFeesDailyRecord } from '@l2beat/database'
-import type { GasFeesChainConfig } from './chains'
+import { type GasFeesChainConfig, hasL1FeeInGas } from './chains'
 import { GAS_PER_ACTION, type GasFeesRecord } from './types'
 
 /**
@@ -14,9 +14,7 @@ export function toGasFeesRecord(
   // Dune's price of the gas token, weighted by the fees paid in each hour
   const tokenUsd =
     row.totalFeeNative > 0 ? row.totalFeeUsd / row.totalFeeNative : 0
-  const l1InGas =
-    chain.l1FeeInGas === true ||
-    (chain.l1FeeInGas !== undefined && row.timestamp < chain.l1FeeInGas.until)
+  const l1InGas = hasL1FeeInGas(chain, row.timestamp)
   const operatorFee =
     chain.operatorFee && row.timestamp >= chain.operatorFee.from
       ? row.gasUsed * chain.operatorFee.gweiPerGas * 1e-9

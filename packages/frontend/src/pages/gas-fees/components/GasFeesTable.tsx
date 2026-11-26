@@ -38,7 +38,12 @@ import {
   FeeSplitBar,
   FeeSplitKey,
 } from './FeeSplitBar'
-import { formatFee, formatTimes, GAS_FEES_METRIC_LABELS } from './metrics'
+import {
+  compareWithEthereum,
+  formatFee,
+  GAS_FEES_METRIC_LABELS,
+} from './metrics'
+
 import type { GasFeesChain } from './types'
 
 interface Props {
@@ -59,7 +64,8 @@ interface Column {
   tooltip?: string
   align?: 'right'
   className?: string
-  sortValue?: (row: GasFeesSummaryRow) => number
+  /** null sorts last in either direction */
+  sortValue?: (row: GasFeesSummaryRow) => number | null
   cell: (row: GasFeesSummaryRow, chain: GasFeesChain) => React.ReactNode
 }
 
@@ -103,7 +109,7 @@ export function GasFeesTable({
           className={cn(
             'rounded border px-1 font-medium text-2xs',
             row.gasToken === 'ETH'
-              ? 'border-divider text-secondary'
+              ? 'border-divider'
               : 'border-chart-stacked-pink text-chart-stacked-pink',
           )}
         >
@@ -119,9 +125,12 @@ export function GasFeesTable({
     const ethereum = all.filter((r) => r.id === 'ethereum')
     const l2s = all
       .filter((r) => r.id !== 'ethereum')
-      .sort((a, b) =>
-        sort.desc ? sortValue(b) - sortValue(a) : sortValue(a) - sortValue(b),
-      )
+      .sort((a, b) => {
+        const [x, y] = [sortValue(a), sortValue(b)]
+        if (x === null || y === null)
+          return Number(x === null) - Number(y === null)
+        return sort.desc ? y - x : x - y
+      })
     return [...ethereum, ...l2s]
   }, [summary, sortValue, sort.desc])
 
@@ -238,8 +247,8 @@ function getCostColumns(
       id: 'cost',
       head: `${GAS_FEES_METRIC_LABELS[action].short} cost`,
       align: 'right',
-      // A chain that had no transactions has no cost, and sorts last
-      sortValue: (row) => row[action] ?? Number.POSITIVE_INFINITY,
+      // A chain that had no transactions has no cost
+      sortValue: (row) => row[action],
       cell: (row) => {
         const cost = row[action]
         return cost === null ? (
@@ -261,7 +270,7 @@ function getCostColumns(
         const cost = row[action]
         if (!base || cost === null) return null
         const share = cost / base
-        const times = row.timesCheaper?.[action]
+        const compared = compareWithEthereum(row.timesCheaper?.[action] ?? 0)
         return (
           <span className="flex items-center gap-3">
             <span className="flex h-2.5 w-28 shrink-0 overflow-hidden rounded-full bg-surface-secondary lg:w-44">
@@ -277,12 +286,12 @@ function getCostColumns(
               <span className="whitespace-nowrap text-secondary text-xs">
                 baseline
               </span>
-            ) : times === undefined || times === null ? (
+            ) : !compared ? (
               <span className="text-secondary">{EM_DASH}</span>
             ) : (
               <span className="whitespace-nowrap text-xs">
-                <span className="font-bold">{formatTimes(times)}</span>{' '}
-                <span className="text-secondary">cheaper</span>
+                <span className="font-bold">{compared.times}</span>{' '}
+                <span className="text-secondary">{compared.word}</span>
               </span>
             )}
           </span>

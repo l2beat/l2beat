@@ -86,3 +86,10 @@ export const FEE_SPLIT_NOTES: Partial<
     base: "Mantle's base fee and, since 22 April 2026, its operator fee: a fixed charge per gas.",
   },
 }
+
+export function hasL1FeeInGas(chain: GasFeesChainConfig, timestamp: number) {
+  return (
+    chain.l1FeeInGas === true ||
+    (chain.l1FeeInGas !== undefined && timestamp < chain.l1FeeInGas.until)
+  )
+}

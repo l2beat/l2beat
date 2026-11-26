@@ -106,18 +106,20 @@ function SplitBar({
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex h-11 gap-[3px] overflow-hidden rounded-lg font-semibold text-black text-sm tabular-nums">
-        {parts.map((p) => (
-          <span
-            key={p.label}
-            className="flex items-center overflow-hidden whitespace-nowrap px-3"
-            style={{
-              width: `${share(p.value) * 100}%`,
-              backgroundColor: p.color,
-            }}
-          >
-            {share(p.value) >= NARROWEST_LABELLED && usd(p.value)}
-          </span>
-        ))}
+        {parts
+          .filter((p) => p.value > 0)
+          .map((p) => (
+            <span
+              key={p.label}
+              className="flex items-center overflow-hidden whitespace-nowrap px-3"
+              style={{
+                width: `${share(p.value) * 100}%`,
+                backgroundColor: p.color,
+              }}
+            >
+              {share(p.value) >= NARROWEST_LABELLED && usd(p.value)}
+            </span>
+          ))}
       </div>
       <div className="flex justify-between gap-3 text-xs">
         {parts.map((p) => (

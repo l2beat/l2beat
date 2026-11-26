@@ -33,12 +33,12 @@ import { formatRange } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { GasFeesScale } from './GasFeesView'
 import {
+  compareWithEthereum,
   formatFee,
   formatFeeTick,
   formatGasNumber,
   formatGasPrice,
   formatGasPriceTick,
-  formatTimes,
   GAS_FEES_METRIC_LABELS,
 } from './metrics'
 import type { GasFeesChain } from './types'
@@ -130,6 +130,16 @@ export function GasFeesChart({
     ])
     return Object.fromEntries(entries)
   }, [chains])
+  // The L2s have no median fee as one chain, so no line to key
+  const legendMeta = useMemo(
+    () =>
+      shownMetric === 'medianFee'
+        ? Object.fromEntries(
+            Object.entries(meta).filter(([key]) => key !== L2S_KEY),
+          )
+        : meta,
+    [meta, shownMetric],
+  )
   const hidden = useMemo(
     () =>
       chains
@@ -223,7 +233,7 @@ export function GasFeesChart({
       </div>
       <ChartContainer
         data={points}
-        meta={meta}
+        meta={legendMeta}
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         interactiveLegend={{ dataKeys: shownKeys, onItemClick: toggleDataKey }}
@@ -246,8 +256,14 @@ export function GasFeesChart({
               key: chain.id,
               stroke: chain.color,
               strokeWidth: chain.id === 'ethereum' ? 2.5 : 1.75,
+              isolatedDots: {},
             })),
-            { key: L2S_KEY, stroke: 'var(--primary)', strokeWidth: 2.5 },
+            {
+              key: L2S_KEY,
+              stroke: 'var(--primary)',
+              strokeWidth: 2.5,
+              isolatedDots: {},
+            },
           ]}
           highlight={highlightedChainId}
           yAxis={yAxis.options}
@@ -435,11 +451,11 @@ function GasFeesTooltip({
         <div className="mt-2 flex flex-col gap-2">
           {entries.map((entry) => {
             // Gas is priced differently per chain, so only fees compare
-            const times =
+            const compared =
               !isGas &&
               entry.name !== 'ethereum' &&
               typeof ethereum === 'number'
-                ? ethereum / entry.value
+                ? compareWithEthereum(ethereum / entry.value)
                 : undefined
             return (
               <ChartTooltipRow
@@ -449,9 +465,9 @@ function GasFeesTooltip({
                 wrapLabel={false}
               >
                 <span className="flex items-baseline gap-1.5 whitespace-nowrap">
-                  {times !== undefined && (
+                  {compared && (
                     <span className="text-2xs text-secondary tabular-nums">
-                      {formatTimes(times)} cheaper
+                      {compared.times} {compared.word}
                     </span>
                   )}
                   <span className="font-medium text-label-value-15 text-primary tabular-nums">

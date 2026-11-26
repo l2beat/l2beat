@@ -231,6 +231,8 @@ function getRoundStep(smallest: number) {
 }
 
 function getTicks(from: number, to: number, step: number) {
+  // Costs that are all zero leave no step to walk
+  if (step <= 0) return [from]
   const ticks: number[] = []
   // Whole steps, so that sums of a step like 0.05 don't drift
   for (let i = 0; from + i * step <= to; i++) {

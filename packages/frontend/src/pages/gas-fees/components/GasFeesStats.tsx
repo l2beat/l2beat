@@ -6,7 +6,13 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
-import { formatFee, formatTimes, getPeriodLabel } from './metrics'
+import {
+  compareWithEthereum,
+  formatFee,
+  formatTimes,
+  getPeriodLabel,
+} from './metrics'
+
 import { ETH, L2, Label, NoDataYet, percent, SPLIT, usd } from './parts'
 import { TxFeesBreakdown } from './TxFeesBreakdown'
 import type { GasFeesChain } from './types'
@@ -31,7 +37,9 @@ export function GasFeesStats({ summary, range, isLoading }: Props) {
       </div>
     )
   }
-  if (summary.rows.length === 0) return <NoDataYet />
+  // The figures compare the two, so both need transactions in the period
+  const { ethereum, l2s } = summary.stats
+  if (ethereum.txCount === 0 || l2s.txCount === 0) return <NoDataYet />
   const f = getFigures(summary.stats, getPeriodLabel(range))
   return (
     // Two rows on wide cards: the headline beside the transfer cost, then
@@ -125,10 +133,12 @@ function Headline({ f }: { f: Figures }) {
         <Colored color={ETH}>{percent(f.feeShare)}</Colored> of the total fees
         paid by users.
       </p>
-      <p className="text-secondary text-sm">
-        An L2 transaction pays {formatTimes(avgFeeRatio(f))} less on average, so
-        Ethereum still collects most of the fees.
-      </p>
+      {avgFeeRatio(f) > 1 && f.feeShare < 0.5 && (
+        <p className="text-secondary text-sm">
+          An L2 transaction pays {formatTimes(avgFeeRatio(f))} less on average,
+          so Ethereum still collects most of the fees.
+        </p>
+      )}
     </div>
   )
 }
@@ -172,6 +182,7 @@ function TransferCost({ f }: { f: Figures }) {
     )
   }
   const max = Math.max(f.erc20.ethereum, f.erc20.l2s)
+  const compared = compareWithEthereum(f.erc20.ethereum / f.erc20.l2s)
   const rows = [
     { label: 'Ethereum', value: f.erc20.ethereum, color: ETH },
     { label: 'Median L2', value: f.erc20.l2s, color: L2 },
@@ -182,12 +193,9 @@ function TransferCost({ f }: { f: Figures }) {
         ERC-20 transfer{DOT_SEPARATOR}
         {formatTimestamp(f.erc20.timestamp)}
       </Label>
-      <Headed
-        value={formatTimes(
-          f.erc20.l2s > 0 ? f.erc20.ethereum / f.erc20.l2s : 0,
-        )}
-        note="cheaper on L2s"
-      />
+      {compared && (
+        <Headed value={compared.times} note={`${compared.word} on L2s`} />
+      )}
       <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 gap-y-1.5 text-xs">
         {rows.map((row) => (
           <Fragment key={row.label}>

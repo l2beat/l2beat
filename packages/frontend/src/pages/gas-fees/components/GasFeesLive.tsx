@@ -1,7 +1,7 @@
 import type { GasFeesTier, GasFeesWallet } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { useRef } from 'react'
+import { useEffect, useReducer, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
 import { RollingNumber } from '~/components/RollingNumber'
@@ -52,6 +52,16 @@ export function GasFeesLive({
     refetchInterval: POLL_MS,
   })
   const isLive = !!tips && UnixTime.now() - tips.updatedAt < STALE_AFTER_SECONDS
+  // A poll that brings the same read renders nothing, so the clock has to
+  const [, rerender] = useReducer((count: number) => count + 1, 0)
+  const updatedAt = tips?.updatedAt
+  useEffect(() => {
+    if (updatedAt === undefined) return
+    const left = updatedAt + STALE_AFTER_SECONDS - UnixTime.now()
+    if (left <= 0) return
+    const timer = setTimeout(rerender, left * 1000)
+    return () => clearTimeout(timer)
+  }, [updatedAt])
   return (
     <div ref={rootRef} className="flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1">

@@ -169,7 +169,10 @@ function buildPriceOfSpeed(
   )
   if (hours.length === 0) return undefined
   const ethUsd = average(hours.map((hour) => hour.ethUsd))
-  const fastGwei = average(hours.map((hour) => hour.fastTipGwei))
+  // Hour by hour: our tip is high in the hours when ETH is too
+  const fastUsd = average(
+    hours.map((hour) => tipToUsd(hour.fastTipGwei, hour.ethUsd)),
+  )
 
   const levels = new Map<number, GasFeesTipLevelWaitTotal[]>()
   for (const row of input.tipLevelWaits) {
@@ -223,7 +226,7 @@ function buildPriceOfSpeed(
     marks.push({
       name: 'Our fast tip',
       ours: true,
-      usd: tipToUsd(fastGwei, ethUsd),
+      usd: fastUsd,
       seconds: fastSeconds,
     })
   }
@@ -238,7 +241,7 @@ function buildPriceOfSpeed(
       fastSeconds === undefined || twoGweiSeconds === undefined
         ? undefined
         : {
-            extraUsd: tipToUsd(2 - fastGwei, ethUsd),
+            extraUsd: tipToUsd(2, ethUsd) - fastUsd,
             fastSeconds,
             twoGweiSeconds,
           },

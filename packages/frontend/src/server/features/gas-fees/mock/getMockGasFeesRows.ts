@@ -1,6 +1,6 @@
 import type { GasFeesDailyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_CHAINS } from '../chains'
+import { GAS_FEES_CHAINS, hasL1FeeInGas } from '../chains'
 
 const DAYS = 400
 /** Nothing like the real prices: only the gap between Ethereum and the L2s is kept */
@@ -22,6 +22,7 @@ export function getMockGasFeesRows(): GasFeesDailyRecord[] {
       ((isEthereum ? 4e-10 : 2e-11) * TOKEN_USD.ETH) / TOKEN_USD[chain.gasToken]
     for (let d = DAYS - 1; d >= 0; d--) {
       if (d === 0 && i === GAS_FEES_CHAINS.length - 1) continue
+      const timestamp = UnixTime(lastDay - d * UnixTime.DAY)
       const txCount = Math.round((1 + Math.random()) * (1_000_000 / (i + 1)))
       const gasUsed = txCount * gasPerTx
       const baseFeeNative = gasUsed * baseFeePerGas * (0.5 + Math.random())
@@ -30,7 +31,7 @@ export function getMockGasFeesRows(): GasFeesDailyRecord[] {
       const totalFeeNative = baseFeeNative + tips + l1FeeNative
       const totalFeeUsd = totalFeeNative * TOKEN_USD[chain.gasToken]
       rows.push({
-        timestamp: UnixTime(lastDay - d * UnixTime.DAY),
+        timestamp,
         chain: chain.id,
         txCount,
         totalFeeNative,
@@ -38,8 +39,9 @@ export function getMockGasFeesRows(): GasFeesDailyRecord[] {
         l1FeeNative,
         blobFeeNative: 0,
         // As the backend stores it where the gas holds the L1 fee
-        baseFeeNative:
-          'l1FeeInGas' in chain ? baseFeeNative + l1FeeNative : baseFeeNative,
+        baseFeeNative: hasL1FeeInGas(chain, timestamp)
+          ? baseFeeNative + l1FeeNative
+          : baseFeeNative,
         gasUsed,
         medianFeeUsd: (totalFeeUsd / txCount) * 0.4,
       })

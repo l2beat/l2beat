@@ -88,6 +88,7 @@ describe(buildGasFeesTipping.name, () => {
       tierWaits: [{ ...wait, tier: 'fast', waitToMs: 20_000 }],
       hourlyTips: [
         { timestamp: DAY, fastTipGwei: 0.5, ethUsd: 1_000 },
+        { timestamp: DAY + 3_600, fastTipGwei: 1.5, ethUsd: 3_000 },
         // Not a day the waits are from
         { timestamp: 2 * DAY, fastTipGwei: 9, ethUsd: 9_000 },
       ],
@@ -98,7 +99,7 @@ describe(buildGasFeesTipping.name, () => {
         fromGwei: 2,
         toGwei: 2.05,
         txCount: 2_000,
-        usd: tipToUsd(2.02, 1_000),
+        usd: tipToUsd(2.02, 2_000),
         seconds: 9.9,
       },
     ])
@@ -106,8 +107,11 @@ describe(buildGasFeesTipping.name, () => {
       ['Our fast tip', 19.8],
       ['2 gwei', 9.9],
     ])
+    // Each hour's tip at that hour's price, not the average tip at the average price
+    const fastUsd = (tipToUsd(0.5, 1_000) + tipToUsd(1.5, 3_000)) / 2
+    expect(speed?.marks[0]?.usd).toEqual(fastUsd)
     expect(speed?.fastVsTwoGwei).toEqual({
-      extraUsd: tipToUsd(1.5, 1_000),
+      extraUsd: tipToUsd(2, 2_000) - fastUsd,
       fastSeconds: 19.8,
       twoGweiSeconds: 9.9,
     })

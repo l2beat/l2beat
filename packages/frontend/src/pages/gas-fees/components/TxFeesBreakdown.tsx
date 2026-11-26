@@ -103,9 +103,7 @@ function SideValues({
           <span className="whitespace-nowrap font-bold text-sm md:text-base">
             {side.name} {percent(side.share)}
           </span>
-          <span className="whitespace-nowrap text-2xs text-secondary">
-            {side.value}
-          </span>
+          <span className="whitespace-nowrap text-2xs">{side.value}</span>
         </span>
       ))}
     </div>

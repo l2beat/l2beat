@@ -91,6 +91,14 @@ export function formatTimes(value: number) {
   return `${value >= 10 ? Math.round(value).toLocaleString('en-US') : value.toFixed(1)}×`
 }
 
+/** Ethereum's cost over a chain's, worded by which of the two is lower */
+export function compareWithEthereum(times: number) {
+  if (!Number.isFinite(times) || times <= 0) return undefined
+  return times >= 1
+    ? { times: formatTimes(times), word: 'cheaper' }
+    : { times: formatTimes(1 / times), word: 'more expensive' }
+}
+
 export const GAS_FEES_RANGE_OPTIONS = ['7d', '30d', '90d', '1y', 'max'] as const
 
 /** How the selected range reads in a sentence: "past year", "all time" */

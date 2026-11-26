@@ -24,6 +24,18 @@ describe(buildGasFeesSummary.name, () => {
     expect(row('base')?.timesCheaper?.erc20).toEqual(10)
   })
 
+  it('leaves out of the comparison a day Ethereum lacks', () => {
+    const lacking = buildGasFeesSummary(
+      new Map([
+        ['ethereum', [record(1, 10)]],
+        ['base', [record(1, 1), record(2, 9)]],
+      ]),
+      { range: [null, 10 * DAY] },
+    )
+    expect(lacking.rows[1]?.erc20).toEqual(5)
+    expect(lacking.rows[1]?.timesCheaper?.erc20).toEqual(10)
+  })
+
   it('has no cost for a chain without transactions, and lists one without data', () => {
     expect(row('taiko')?.erc20).toEqual(null)
     expect(row('taiko')?.timesCheaper?.erc20).toEqual(null)
