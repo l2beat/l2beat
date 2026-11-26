@@ -540,7 +540,7 @@ describe(TokenIngestionProcessor.name, () => {
       )
     })
 
-    it('returns pending with new-coingecko abstract without calling CoinGecko coin endpoints', async () => {
+    it('skips an invalid CoinGecko platform address and plans a valid match without fetching coin details', async () => {
       const address = token('ethereum', '0xaaa')
       const getCoinDataById = mockFn().resolvesTo(undefined)
       const getCoinMarketChartRange = mockFn().resolvesTo(undefined)
@@ -568,6 +568,12 @@ describe(TokenIngestionProcessor.name, () => {
         }),
         coingeckoClient: mockObject<CoingeckoClient>({
           getCoinList: mockFn().resolvesTo([
+            {
+              id: 'invalid-coin',
+              name: 'Invalid Coin',
+              symbol: 'invalid',
+              platforms: { eth: '0xnothex' },
+            },
             {
               id: 'usd-coin',
               name: 'USD Coin',
