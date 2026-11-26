@@ -7385,8 +7385,9 @@
       "supply": "totalSupply"
     },
     {
-      // Cambria token, locked on Ethereum in a CCIP lockbox and minted on Base. The float
-      // exists only on Base, most of the supply sits in the Cambria Safe.
+      // Cambria token, locked on Ethereum in a CCIP lockbox and minted on Base. Most of the
+      // supply sits in the Cambria Safe. The generated circulating-supply formula is
+      // overridden in tvs.json by Base totalSupply minus the Safe's Base balance.
       "symbol": "RSGP",
       "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
       "coingeckoId": "cambria",

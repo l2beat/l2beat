@@ -4158,19 +4158,32 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "base-RSGP",
       "priceId": "cambria",
       "symbol": "RSGP",
       "name": "Cambria",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/102172274/large/cambria-logo.png?1793295821",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "cambria",
-        "decimals": 18,
-        "sinceTimestamp": 1794528000,
-        "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
-        "chain": "base"
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
+            "chain": "base",
+            "decimals": 18,
+            "sinceTimestamp": 1794528000
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x44B63aF715D5ef02CC3646a6CE96875e11d69E85",
+            "chain": "base",
+            "escrowAddress": "0x1ae605B51bb36be453De15cad9a63eBD2cf8aC82",
+            "decimals": 18,
+            "sinceTimestamp": 1794528000
+          }
+        ]
       },
       "category": "other",
       "source": "external",
