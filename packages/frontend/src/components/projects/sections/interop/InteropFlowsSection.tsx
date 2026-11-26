@@ -127,7 +127,7 @@ function Content({
   )
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="@container flex flex-col gap-4">
       <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
         <div className="flex gap-2 max-md:w-full md:contents">
           <FlowsChainsSelector allChains={interopChains} />
@@ -143,55 +143,59 @@ function Content({
           />
         )}
       </div>
-      <div className="flex h-full min-w-0 flex-col">
-        <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4">
-          <FlowsGraphPanel
-            activeChains={activeChains}
-            data={data}
-            hasEnoughChains={hasEnoughChains}
-            hasEnoughProtocols={hasEnoughProtocols}
-            isLoading={isLoading}
-            topChainId={defaultStatsChainId}
-          />
-        </div>
-        {!isLoading && data && (
-          <FlowsParticleLegend
-            layout="inline"
-            className="mt-2 justify-center text-center text-label-value-13"
-            totalVolume={data.stats.totalVolume}
-            dollarsPerParticle={dollarsPerParticle}
-          />
-        )}
-        {(isLoading || showInactiveChainsInfo) && (
-          <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
-            {isLoading ? (
-              <Skeleton className="h-4 w-40 md:h-5" />
-            ) : (
-              <>
-                <span className="text-label-value-13 text-secondary">
-                  No transfers in the last 24 hours for
-                  {inactiveChains.length <= 3 &&
-                    ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
-                </span>
-                {inactiveChains.length > 3 && (
-                  <ProjectIconList
-                    projects={inactiveChains}
-                    title="Chains without transfers"
-                  />
-                )}
-              </>
-            )}
+      {/* Stats sit beside the graph when the section has room, so a click on
+          the graph changes something the reader can see. */}
+      <div className="grid @min-[720px]:grid-cols-[minmax(0,1fr)_300px] @min-[880px]:grid-cols-[minmax(0,1fr)_340px] grid-cols-1 @min-[720px]:items-start gap-4">
+        <div className="flex h-full min-w-0 flex-col">
+          <div className="group/flows flex h-full w-full min-w-0 flex-col items-center gap-10 pb-4">
+            <FlowsGraphPanel
+              activeChains={activeChains}
+              data={data}
+              hasEnoughChains={hasEnoughChains}
+              hasEnoughProtocols={hasEnoughProtocols}
+              isLoading={isLoading}
+              topChainId={defaultStatsChainId}
+            />
           </div>
-        )}
+          {!isLoading && data && (
+            <FlowsParticleLegend
+              layout="inline"
+              className="mt-2 justify-center text-center text-label-value-13"
+              totalVolume={data.stats.totalVolume}
+              dollarsPerParticle={dollarsPerParticle}
+            />
+          )}
+          {(isLoading || showInactiveChainsInfo) && (
+            <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
+              {isLoading ? (
+                <Skeleton className="h-4 w-40 md:h-5" />
+              ) : (
+                <>
+                  <span className="text-label-value-13 text-secondary">
+                    No transfers in the last 24 hours for
+                    {inactiveChains.length <= 3 &&
+                      ` ${inactiveChains.map((chain) => chain.name).join(', ')}`}
+                  </span>
+                  {inactiveChains.length > 3 && (
+                    <ProjectIconList
+                      projects={inactiveChains}
+                      title="Chains without transfers"
+                    />
+                  )}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        <FlowsStatsPanel
+          data={data}
+          protocols={protocols}
+          canonicalProtocolId={canonicalProtocolId}
+          statsChainA={statsChainA}
+          statsChainB={statsChainB}
+          hasRouteSelection={hasRouteSelection}
+        />
       </div>
-      <FlowsStatsPanel
-        data={data}
-        protocols={protocols}
-        canonicalProtocolId={canonicalProtocolId}
-        statsChainA={statsChainA}
-        statsChainB={statsChainB}
-        hasRouteSelection={hasRouteSelection}
-      />
       <InteropBridgeSubsections
         protocolIds={selectedProtocols}
         chains={detailChains}

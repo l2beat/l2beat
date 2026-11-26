@@ -40,14 +40,14 @@ export function FlowsStatsPanel({
   })
 
   return (
-    <div className="rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
+    <div className="@container rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
       <div className="mb-3 font-bold text-label-value-12 uppercase">
         {label}
       </div>
       {singleProtocolId && !hasRouteSelection ? (
         data && <BridgeFlowStats data={data} chainId={statsChainA} />
       ) : (
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 lg:[&>*:first-child]:row-span-3 lg:[&>*]:col-span-2">
+        <div className="grid @min-[640px]:grid-cols-2 grid-cols-1 gap-2 @min-[640px]:[&>*:first-child]:row-span-3">
           {hasRouteSelection && statsChainB ? (
             <MultipleChainsStats
               chainIdA={statsChainA}

@@ -73,7 +73,7 @@ export function BridgeFlowStats({
       <div className="mb-1.5 font-bold text-label-value-12 uppercase">
         Stats
       </div>
-      <div className="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+      <div className="grid @min-[520px]:grid-cols-2 grid-cols-1 gap-x-12 gap-y-1.5">
         {columns.map((column, i) => (
           <div key={i} className="flex flex-col gap-1.5">
             {column.map((item) => (
