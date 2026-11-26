@@ -30,6 +30,7 @@ export function getWatchMonitorConfig(
     discordWebhookUrl: env.optionalString(
       'NOTIFICATIONS_WATCH_MONITOR_DISCORD_WEBHOOK_URL',
     ),
+    readToken: env.optionalString('WATCH_READ_TOKEN'),
     workerPool: {
       workerCount: env.integer(['WATCH_MONITOR_WORKER_POOL_COUNT'], 3),
       timeoutPerTaskMs: env.integer(

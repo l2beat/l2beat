@@ -18,6 +18,9 @@ import type { WorkerPool } from '../update-monitor/createWorkers'
 import { getPendingWatchDiffs } from './pendingWatchDiffs'
 import type { WatchNotifier, WatchNotifyResult } from './WatchNotifier'
 
+// Recorded when the fetch and the observation succeeded but Discord did not
+// take the alert, so readers can tell it from a source failure.
+export const WATCH_NOTIFICATION_FAILED = 'Watch notification failed'
 const MAX_PENDING_NOTIFICATIONS = 20
 const MAX_OBSERVATION_CAS_ATTEMPTS = 3
 const NOTIFICATION_CLAIM_LEASE_MS = 5 * 60 * 1000
@@ -146,7 +149,7 @@ export class WatchMonitor {
           continue
         }
         if (!failedSet.has(name)) {
-          await recordFailure(name, 'Watch notification failed')
+          await recordFailure(name, WATCH_NOTIFICATION_FAILED)
         }
         failedSet.add(name)
       }
@@ -229,10 +232,10 @@ export class WatchMonitor {
         name,
         attemptAt,
         attemptId,
-        'Watch notification failed',
+        WATCH_NOTIFICATION_FAILED,
         configHash,
       )
-      throw new Error('Watch notification failed', { cause: { name } })
+      throw new Error(WATCH_NOTIFICATION_FAILED, { cause: { name } })
     }
   }
 
