@@ -352,4 +352,79 @@ describe('config and discovery resolution', () => {
       expect(discovery.abis).toEqual({})
     })
   })
+
+  describe('readDiffLastDescription', () => {
+    it('selects the latest discovery entry and skips prepended offchain-only entries', () => {
+      mockFs({
+        '/base/usdc/config.jsonc': JSON.stringify({ initialAddresses: [] }),
+        '/base/usdc/diffHistory.md': [
+          'Generated with discovered.json: 0x0000000000000000000000000000000000000001',
+          '',
+          '# Diff at Wed, 25 Nov 2026 10:00:00 GMT:',
+          '',
+          '- id: offchain1',
+          '- author: Alice (<alice@example.com>)',
+          '- comparing to: main@abc1234',
+          '- current timestamp: 1700000000',
+          '',
+          '## Description',
+          '',
+          'Provide description of changes. This section will be preserved.',
+          '',
+          '## Offchain changes',
+          '',
+          '```diff',
+          '+     org/r:new.pdf: {"sha":"1","size":10}',
+          '```',
+          '',
+          '# Diff at Tue, 24 Nov 2026 10:00:00 GMT:',
+          '',
+          '- id: disc1',
+          '- author: Bob (<bob@example.com>)',
+          '- comparing to: main@def5678',
+          '- current timestamp: 1699900000',
+          '',
+          '## Description',
+          '',
+          'Updated sequencer address.',
+          '',
+          '## Watched changes',
+          '',
+          '```diff',
+          '- old',
+          '+ new',
+          '```',
+        ].join('\n'),
+      })
+
+      const reader = new ConfigReader('/base')
+      expect(reader.readDiffLastDescription('usdc')).toEqual(
+        'Updated sequencer address.',
+      )
+    })
+
+    it('returns undefined when diffHistory.md only contains offchain entries', () => {
+      mockFs({
+        '/base/usdc/config.jsonc': JSON.stringify({ initialAddresses: [] }),
+        '/base/usdc/diffHistory.md': [
+          '# Diff at Wed, 25 Nov 2026 10:00:00 GMT:',
+          '',
+          '- id: offchain1',
+          '',
+          '## Description',
+          '',
+          'Provide description of changes. This section will be preserved.',
+          '',
+          '## Offchain changes',
+          '',
+          '```diff',
+          '+     a: 1',
+          '```',
+        ].join('\n'),
+      })
+
+      const reader = new ConfigReader('/base')
+      expect(reader.readDiffLastDescription('usdc')).toEqual(undefined)
+    })
+  })
 })
