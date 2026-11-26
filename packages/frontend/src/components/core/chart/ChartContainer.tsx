@@ -37,7 +37,6 @@ export function ChartContainer<T extends { timestamp: number }>({
   interactiveLegend,
   legend = false,
   legendLeading,
-  legendAlign,
   project,
   loaderClassName,
   logoClassName,
@@ -51,8 +50,6 @@ export function ChartContainer<T extends { timestamp: number }>({
   legend?: boolean
   /** Rendered before the legend items, e.g. a show/hide-all toggle. */
   legendLeading?: React.ReactNode
-  /** `start` when the chart sits under a left-aligned section title. */
-  legendAlign?: 'center' | 'start'
   project?: ChartProject
   loaderClassName?: string
   logoClassName?: string
@@ -122,7 +119,7 @@ export function ChartContainer<T extends { timestamp: number }>({
             {legend &&
               shouldMountChart &&
               (hasData || isLoading || noDataSourcesSelected) && (
-                <ChartLegend leading={legendLeading} align={legendAlign} />
+                <ChartLegend leading={legendLeading} />
               )}
           </div>
         </ChartSettledSize>
