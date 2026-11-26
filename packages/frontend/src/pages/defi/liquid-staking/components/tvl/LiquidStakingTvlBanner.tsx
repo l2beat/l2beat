@@ -47,7 +47,7 @@ export function LiquidStakingTvlBanner({
             <LiquidSentence projects={projects} latest={latest} />
           </div>
           {(changes?.stake || changes?.supply) && (
-            <div className="flex shrink-0 items-center gap-5 tabular-nums">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3 tabular-nums">
               {changes.stake && (
                 <ChangeStat
                   label="Staked"
@@ -59,7 +59,7 @@ export function LiquidStakingTvlBanner({
                 />
               )}
               {changes.stake && changes.supply && (
-                <div className="h-8 w-px bg-divider" />
+                <div className="hidden h-8 w-px bg-divider sm:block" />
               )}
               {changes.supply && (
                 <ChangeStat
@@ -161,8 +161,10 @@ function ChangeStat({
 }) {
   return (
     <div className="text-left sm:text-right" title={formatChangeDates(change)}>
-      <div className="whitespace-nowrap font-bold text-heading-20 text-primary leading-tight">
-        {formatSigned(change.value, formatPercent)}{' '}
+      <div className="font-bold text-heading-20 text-primary leading-tight">
+        <span className="whitespace-nowrap">
+          {formatSigned(change.value, formatPercent)}
+        </span>{' '}
         <span className="font-medium text-label-value-13 text-secondary">
           / {period}
         </span>

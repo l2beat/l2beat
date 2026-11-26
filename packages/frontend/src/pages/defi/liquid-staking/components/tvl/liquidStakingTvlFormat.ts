@@ -49,7 +49,7 @@ export function formatChangePeriod(
     opts?.latestTimestamp !== undefined &&
     change.until !== opts.latestTimestamp
   ) {
-    return formatRange(change.since, change.until).replace('\n', ' ')
+    return formatRange(change.since, change.until).replaceAll('\n', ' ')
   }
   const days = Math.round((change.until - change.since) / UnixTime.DAY)
   const preset = opts?.preset
