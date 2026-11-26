@@ -44,7 +44,7 @@ For digital signatures, one-wayness is the theoretical floor: **secure signature
 
 Rompel's construction is far too slow and large to deploy, so practical schemes buy efficiency by assuming more.
 
-Take $f: \{0,1\}^n \to \{0,1\}^n$ and an attacker limited to $t$ basic operations playing this game:
+To make one-wayness precise, take $f: \{0,1\}^n \to \{0,1\}^n$ and an attacker limited to $t$ basic operations playing this game:
 
 1. Pick $x$ uniformly at random from $\{0,1\}^n$.
 2. Compute $y = f(x)$ and give $y$ to the attacker.
@@ -153,7 +153,7 @@ With 32-byte hashes and $w = 4$, a 256-bit message takes 128 base-4 digits plus 
 
 So, as with Lamport, forging a Winternitz signature forces the attacker to **go backwards** on at least one chain.
 
-Going backwards on a chain can happen in two ways. An attacker could branch off and merge back into the chain higher up, which collision resistance already blocks at 256 bits. Or an attacker could step directly backwards from a value already hashed multiple times, $v_d = f^d(x)$ for $d \geq 2$. One-wayness only guarantees that a *single* hash $f(x)$ of a random input $x$ is hard to invert. Neither one-wayness nor collision resistance guarantees that *iterated* chain values stay hard to invert.
+Going backwards on a chain can happen in two ways. An attacker could branch off and merge back into the chain higher up, which collision resistance already blocks. Or an attacker could step directly backwards from a value already hashed multiple times, $v_d = f^d(x)$ for $d \geq 2$. One-wayness only guarantees that a *single* hash $f(x)$ of a random input $x$ is hard to invert. Neither one-wayness nor collision resistance guarantees that *iterated* chain values stay hard to invert.
 
 ---
 
@@ -204,7 +204,7 @@ where $z = H(\mathsf{tag}_0 \parallel x_0)$.
 **Attack.**
 
 1. **Choose $m$ to sign:** Set $d_1 = 2$ and every other message digit to $w - 1$. Then $C(m) = w - 3$, so every checksum digit is $0$ except the lowest, which is $w - 3$. For every $w \geq 3$, that sits below $w - 1$, leaving room to add 1 without a carry.
-2. **Read $v_2$ on chain 1:** The signature on $m$ reveals $v_2 = (\mathsf{STEP2}, z)$ at position $2$. For $w = 3$, $v_2 = \mathsf{pk}_1$ is already in the public key.
+2. **Read $v_2$ on chain 1:** The signature on $m$ reveals $v_2 = (\mathsf{STEP2}, z)$ at position $2$.
 3. **Forge $m^*$, identical to $m$ except $d_1$ drops from $2$ to $1$:**
    - On chain 1, swap the tag back and output $\sigma_1^* = (\mathsf{STEP1}, z)$.
    - Lowering $d_1$ by 1 raises the lowest checksum digit from $w - 3$ to $w - 2$ while keeping higher checksum digits at $0$. Hash that checksum component forward once with $f$.
@@ -226,21 +226,21 @@ On this same $f$:
 
 This counterexample does *not* mean Winternitz with Keccak-256 or SHA-256 is broken. It proves a **logical gap**: even *one-wayness, second-preimage resistance, and collision resistance together* do not imply *"Winternitz($f$) is secure."* Iterated chain values $f^d(\text{random})$ must also stay hard to invert.
 
-Standard-model proofs for Winternitz and [WOTS+](https://huelsing.net/wordpress/wp-content/uploads/2013/05/wotsspr.pdf) get there by assuming **undetectability**, meaning $f(\text{random})$ is computationally indistinguishable from uniform random so iterated outputs look random too, or pseudorandomness. That condition is sufficient, not strictly required: a one-way permutation padded with a fixed `0` bit fails undetectability, yet still prevents forging a new Winternitz message. Either way, every known proof assumes something outside collision and preimage resistance, or models the hash in the [Random Oracle Model](https://en.wikipedia.org/wiki/Random_oracle).
+Standard-model proofs for Winternitz and [WOTS+](https://huelsing.net/wordpress/wp-content/uploads/2013/05/wotsspr.pdf) get there by assuming **undetectability** (or pseudorandomness), meaning $f(\text{random})$ is computationally indistinguishable from uniform random so iterated outputs look random too. That condition is sufficient, not strictly required: a one-way permutation padded with a fixed `0` bit fails undetectability, yet still prevents forging a new Winternitz message. Either way, every known proof assumes something outside collision and preimage resistance, or models the hash in the [Random Oracle Model](https://en.wikipedia.org/wiki/Random_oracle).
 
-Standard-model chain requirements were spelled out between 2002 and 2013, and the EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines them explicitly alongside the recursion paradox. The gap we want to show here is only with the *"adds no new assumptions"* shorthand in public debate.
-
-All proofs in this article, including the Lamport reduction, the Checksum Lemma, Claims 1 and 2, and the padded permutation remark, are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
+Standard-model chain requirements were spelled out between 2002 and 2013, and the EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines them explicitly. The gap we want to show here is only with the *"adds no new assumptions"* shorthand in public debate.
 
 ### Tweaks and target-sum encodings
 
-Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` mix per-step tweaks into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a target-sum encoding where a hash output fixes the digits. Tweaks let proofs drop full collision resistance in favor of tweaked second-preimage resistance, yet tweaks fed in as hash inputs, as in SPHINCS+ and the lean specs, still fall to the same 2-tag shortcut, though random XOR bitmasks, as in RFC 8391, scramble the tag. Target-sum encoding turns the single-shot forgery into a search, yet free backward steps still sharply degrade security.
+Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` mix per-step tweaks into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a target-sum encoding where a hash output fixes the digits. Tweaks let proofs drop full collision resistance in favor of tweaked second-preimage resistance. When tweaks are fed in as hash inputs (as in SPHINCS+ and the lean specs), the same 2-tag shortcut still works; random XOR bitmasks (as in RFC 8391) scramble the tag. Target-sum encoding turns the single-shot forgery into a search, yet free backward steps still sharply degrade security.
+
+All proofs in this article — the Lamport reduction, the Checksum Lemma, Claims 1 and 2, the padded permutation remark, and the tweaks, bitmask, and target-sum results above — are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
 
 ---
 
 ## Beyond Winternitz: Ethereum's PQ stack
 
-Real schemes hash many one-time Winternitz keys into a Merkle tree to get a reusable key. Ethereum's draft proposals build two such schemes on 4-position chains: [leanXMSS](https://github.com/leanEthereum/leanVM/blob/main/doc/lean_xmss/main.tex) for validators and [leanSPHINCS](https://github.com/leanEthereum/leanVM/blob/main/doc/lean_sphincs/main.tex) for user accounts, alongside a hash-based blob commitment, [LeanDA](https://github.com/leanEthereum/leanVM/blob/main/doc/leanvm/body/10-ethereum.tex). Because these signatures are several kilobytes each, [leanVM](https://github.com/leanEthereum/leanVM) aggregates them inside a hash-based zkVM that also certifies `LeanDA`'s blob encoding.
+Real schemes hash many one-time Winternitz keys into a Merkle tree to get a reusable key. Ethereum's draft proposals build two such schemes on $w = 4$ chains: [leanXMSS](https://github.com/leanEthereum/leanVM/blob/main/doc/lean_xmss/main.tex) for validators and [leanSPHINCS](https://github.com/leanEthereum/leanVM/blob/main/doc/lean_sphincs/main.tex) for user accounts, alongside a hash-based blob commitment, [LeanDA](https://github.com/leanEthereum/leanVM/blob/main/doc/leanvm/body/10-ethereum.tex). Because these signatures are several kilobytes each, [leanVM](https://github.com/leanEthereum/leanVM) aggregates them inside a hash-based zkVM that also certifies `LeanDA`'s blob encoding.
 
 Today, Ethereum's core uses of Keccak-256 in state, transactions, and 160-bit addresses rely primarily on collision and preimage resistance, while application patterns like Solidity storage offsets assume more. Consensus also models **SHA-256** as an idealized random hash in BLS ([RFC 9380](https://datatracker.ietf.org/doc/html/rfc9380#section-10.6)) and single-round KZG checks ([EIP-4844](https://eips.ethereum.org/EIPS/eip-4844) and [EIP-7594](https://eips.ethereum.org/EIPS/eip-7594)), plus public pseudorandomness in RANDAO and shuffling.
 
@@ -249,9 +249,9 @@ The PQ stack adds two shifts:
 1. **Multi-round and recursive Fiat-Shamir inside `leanVM` (aggregation only).**
    Today, consensus uses Fiat-Shamir, deriving verifier challenges from a hash, only in single-round KZG checks. Aggregating thousands of signatures per slot instead runs many rounds of Fiat-Shamir inside a zkVM, and stacks them **recursively**: a `leanVM` proof verifies child `leanVM` proofs inside itself. That recursion introduces a proof gap: `leanVM`'s security proof treats Keccak as an external random black box, yet inside recursion the program runs the *real* Keccak function. Its [formal statement](https://github.com/leanEthereum/leanVM/blob/main/formal/statement.tex) lists soundness across recursion under **"What is not proved"**, noting the model excludes programs evaluating their own Fiat-Shamir hash. Every deployed recursive Fiat-Shamir system shares this gap.
 2. **Idealizing `Keccak-f[1600]` as a random permutation, with 128-bit signature digests.**
-   While [ePrint 2025/055](https://eprint.iacr.org/2025/055) explored standard-model requirements, the current Lean 4 proofs model Keccak's internal permutation, [`Keccak-f[1600]`](https://keccak.team/keccak.html), as an ideal random permutation, known as the Random Permutation Model. As [PQAI #1](https://blog.ethereum.org/2026/11/24/pqai-1) notes, *"The security proofs for hash-based signatures, and the Fiat–Shamir step in the SNARGs that aggregate them, treat the hash as a random oracle,"* and once Ethereum migrates, *"if it is broken, everything else is broken."* Under that model, `leanXMSS` and `leanSPHINCS` truncate digests to 16 bytes (128 bits) while deriving ~127-bit classical forgery security (~64-bit conjectured quantum), whereas `leanVM` and `LeanDA` keep full 256-bit digests. The 128-bit truncation is not a separate assumption in the EF's proofs, yet it means 256-bit collision resistance cannot act as a fallback for the signatures.
+   While [ePrint 2025/055](https://eprint.iacr.org/2025/055) explored standard-model requirements, the EF's current Lean 4 proofs model Keccak's internal permutation, [`Keccak-f[1600]`](https://keccak.team/keccak.html), as an ideal random permutation, known as the Random Permutation Model. As [PQAI #1](https://blog.ethereum.org/2026/11/24/pqai-1) notes, *"The security proofs for hash-based signatures, and the Fiat–Shamir step in the SNARGs that aggregate them, treat the hash as a random oracle,"* and once Ethereum migrates, *"if it is broken, everything else is broken."* Under that model, `leanXMSS` and `leanSPHINCS` truncate digests to 16 bytes (128 bits) while deriving ~127-bit classical forgery security (~64-bit conjectured quantum), whereas `leanVM` and `LeanDA` keep full 256-bit digests. The 128-bit truncation is not a separate assumption in the EF's proofs, yet it means 256-bit collision resistance cannot act as a fallback for the signatures.
 
-`leanVM`'s [formal statement](https://github.com/leanEthereum/leanVM/blob/main/formal/statement.tex) also lists a wider set of unproved items alongside its classical Lean 4 proofs, including quantum security bounds, multi-key signature security, `LeanDA` code binding for the deployed argument, and verifying the Rust prover and verifier implementations against the spec.
+`leanVM`'s formal statement also lists a wider set of unproved items alongside its classical Lean 4 proofs, including quantum security bounds, multi-key signature security, `LeanDA` code binding for the deployed argument, and verifying the Rust prover and verifier implementations against the spec.
 
 ![Hash assumptions across Ethereum today, standard-model signatures, and the proposed PQ stack](/images/publications/hash-based-is-not-an-assumption/04-assumption-comparison.svg)
 
@@ -259,6 +259,6 @@ The PQ stack adds two shifts:
 
 A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
 
-Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity, provided the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
+Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs — pairing BLS or ECDSA with a hash-based scheme so a forgery must break both — hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity. That hedge only holds if the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
 
 Ethereum's post-quantum and post-AI debate should move past treating "hash-based" as shorthand for "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
