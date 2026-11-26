@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc5149170f969f7496bb01e8061a961b467d58dc9
+Generated with discovered.json: 0x793e4c49a0af86597ad549f3633cc5532a844431
 
-# Diff at Wed, 25 Nov 2026 14:10:35 GMT:
+# Diff at Thu, 26 Nov 2026 12:32:45 GMT:
 
 - id: d25e09ba
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
@@ -9,7 +9,7 @@ Generated with discovered.json: 0xc5149170f969f7496bb01e8061a961b467d58dc9
 
 ## Description
 
-Same proof system, new ZK programs. Celo's OP Succinct v2.2.0 release (SP1 6.10.0, updated Kona and Hokulea) rebuilt the aggregation and range programs, so game type 42 now uses a new OPSuccinctFaultDisputeGame (2.0.0 → 2.1.0) with the programs' new verification keys and a new rollup config hash. The game code only adds two getters ([diff](https://disco.l2beat.com/diff/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF/eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7)); the SP1 verifier, durations and bond are unchanged. Its new AccessManager has the same owner, proposers and challengers. The permissionless Cannon game (type 0) was removed.
+Same proof system, new ZK programs. Celo's OP Succinct v2.2.0 release (SP1 6.10.0, updated Kona and Hokulea) rebuilt the aggregation and range programs, so game type 42 now uses a new OPSuccinctFaultDisputeGame (2.0.0 → 2.1.0) with the programs' new verification keys and a new rollup config hash. The game code only adds two getters ([diff](https://disco.l2beat.com/diff/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF/eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7)); the SP1 verifier, durations and bond are unchanged. Its new AccessManager has the same owner, proposers and challengers; its 14-day fallback to permissionless proposing now counts from no earlier than its own deployment ([diff](https://disco.l2beat.com/diff/eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816/eth:0x2c4e8F333224139193790fB27Fc99b926061d889)). The permissionless Cannon game (type 0) was removed.
 
 ## Watched changes
 
@@ -172,6 +172,30 @@ Same proof system, new ZK programs. Celo's OP Succinct v2.2.0 release (SP1 6.10.
  .../FaultDisputeGame.sol => /dev/null              | 5715 --------------------
  .../OPSuccinctFaultDisputeGame.sol                 |   17 +-
  7 files changed, 114 insertions(+), 8203 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794994625 (main branch discovery), not current.
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      critical:
+-        true
++        {"untilTimestamp":1795536647}
+    }
+```
+
+```diff
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      critical:
+-        true
++        {"untilTimestamp":1795536647}
+    }
 ```
 
 Generated with discovered.json: 0x03b1e14f393557a45a9459b0e7a17a60a4e55d93

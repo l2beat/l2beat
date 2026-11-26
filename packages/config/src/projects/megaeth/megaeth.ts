@@ -41,7 +41,7 @@ const vanguardAdvantage = discovery.getContractValue<number>(
   'vanguardAdvantage',
 )
 
-export const megaeth: ScalingProject = opStackL2({
+const megaethTemplate = opStackL2({
   addedAt: UnixTime(1764143601),
   discovery,
   daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
@@ -291,3 +291,13 @@ export const megaeth: ScalingProject = opStackL2({
     },
   ],
 })
+
+export const megaeth: ScalingProject = {
+  ...megaethTemplate,
+  // the template's Kailua sections describe proofs the empty router cannot verify
+  stateValidation: megaethTemplate.stateValidation && {
+    ...megaethTemplate.stateValidation,
+    description:
+      'Since 2026-11-25 the RISC Zero verifier router used by the Kailua games has no active route, so the ZK validity and fault proofs described below (`proveValidity`, `proveOutputFault`) revert. A faulty proposal by the Vanguard cannot be eliminated and resolves after the challenge period; only the Guardian can still blacklist it during the finality delay.',
+  },
+}

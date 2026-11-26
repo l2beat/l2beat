@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1795614996,
-  "configHash": "0xacb35805ecd011c86f510f437790ce68d9ed0bdc7a90a3f9bc9e665895f3dbbd",
+  "configHash": "0x3f6b9bd3bd7e09a327ab8ff3d495e350074991c179e7957af1a1edc691f7d40f",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",
@@ -295,6 +295,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "critical": true,
       "deployerAddress": "eth:0x3bec6009e5b9611b7765BC245A4Bb420817483E2",
       "sinceTimestamp": 1794828887,
       "sinceBlock": 26427324,
@@ -568,6 +569,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+      "critical": true,
       "ignoreInWatchMode": ["getLastProposalTimestamp"],
       "deployerAddress": "eth:0x3bec6009e5b9611b7765BC245A4Bb420817483E2",
       "sinceTimestamp": 1794828779,
