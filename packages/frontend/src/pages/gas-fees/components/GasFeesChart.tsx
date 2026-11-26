@@ -141,16 +141,29 @@ export function GasFeesChart({
     ])
     return Object.fromEntries(entries)
   }, [chains])
-  // The L2s have no median fee as one chain, so no line to key
-  const legendMeta = useMemo(
-    () =>
-      shownMetric === 'medianFee'
-        ? Object.fromEntries(
-            Object.entries(meta).filter(([key]) => key !== L2S_KEY),
-          )
-        : meta,
-    [meta, shownMetric],
-  )
+  // Only the lines the metric has. The L2s have no median fee as one chain,
+  // and gwei of another gas token doesn't share the axis, so per gas the
+  // combined line is of the L2s priced in ETH, and says so.
+  const legendMeta = useMemo(() => {
+    const otherTokens = chains
+      .filter((chain) => chain.gasToken !== 'ETH')
+      .map((chain): string => chain.id)
+    const shown: ChartMeta = {}
+    // In the legend's own order: Ethereum, the L2s combined, then each L2
+    for (const [key, entry] of Object.entries(meta)) {
+      if (!entry) continue
+      if (key === L2S_KEY) {
+        if (shownMetric === 'medianFee') continue
+        shown[key] =
+          isGas && otherTokens.length > 0
+            ? { ...entry, label: 'L2s combined, ETH gas' }
+            : entry
+      } else if (!(isGas && otherTokens.includes(key))) {
+        shown[key] = entry
+      }
+    }
+    return shown
+  }, [meta, chains, shownMetric, isGas])
   const hidden = useMemo(
     () =>
       chains

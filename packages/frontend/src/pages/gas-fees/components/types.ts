@@ -9,6 +9,7 @@ export interface GasFeesChain {
   name: string
   shortName: string | undefined
   type: string
+  gasToken: string
   href: string | undefined
   iconUrl: string
   color: string

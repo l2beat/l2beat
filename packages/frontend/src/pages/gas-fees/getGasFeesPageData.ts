@@ -95,6 +95,7 @@ async function getCachedData(manifest: Manifest) {
       name: project.name,
       shortName: project.shortName,
       type: project.scalingInfo?.type ?? 'Layer 1',
+      gasToken: chain.gasToken,
       href: getProjectUrl(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       color:
