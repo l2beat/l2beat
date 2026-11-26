@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { Button } from '~/components/core/Button'
 
-export function NotFoundPage() {
+export function NotFoundPage({ home = '/' }: { home?: string }) {
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-3">
       <div className="flex flex-col items-center justify-center gap-2">
@@ -9,7 +9,7 @@ export function NotFoundPage() {
       </div>
 
       <Button>
-        <Link to="/">Go back to the home page</Link>
+        <Link to={home}>Go back to the home page</Link>
       </Button>
     </div>
   )

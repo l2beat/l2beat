@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositOnChainUtxosExternalAction",
+  "description": "Hinkal external action that deposits tokens from the transaction's original sender as one or more notes, pulling them with that sender's approval. Scheduled sends deposit through it.",
+  "fields": {
+    "owner": {
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add callers of runAction, which can pull approved tokens from any address that approved this contract."
+        }
+      ]
+    }
+  }
+}

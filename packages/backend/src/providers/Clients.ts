@@ -65,7 +65,12 @@ export function initClients(config: Config, logger: Logger): Clients {
     maxBatchSize?: number
   }): IRpcClient {
     return config.newClientsEnabled
-      ? RpcClientCompat.create({ ...options, http, rpcMetricsAggregator })
+      ? RpcClientCompat.create({
+          ...options,
+          http,
+          stepDownOnThrottle: config.rpcStepDownOnThrottle,
+          rpcMetricsAggregator,
+        })
       : new RpcClient({
           ...options,
           http,

@@ -41,6 +41,18 @@ const FEATURES: Record<string, string[]> = {
     'EthereumStakingDaily',
     'EthereumSupplyDaily',
   ],
+  'gas-fees': [
+    'IndexerState',
+    'IndexerConfiguration',
+    'GasFeesDaily',
+    'GasFeesTipHourly',
+    'GasFeesLiveTips',
+    'GasFeesWalletTip',
+    'GasFeesMempoolDay',
+    'GasFeesTipLevelWait',
+    'GasFeesTierWait',
+    'GasFeesTipPayersDaily',
+  ],
   activity: [
     'IndexerState',
     'IndexerConfiguration',

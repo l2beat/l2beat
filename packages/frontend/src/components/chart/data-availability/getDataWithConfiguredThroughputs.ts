@@ -20,7 +20,6 @@ export function getDataWithConfiguredThroughputs(
         untilTimestamp: nextConfig
           ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
           : Number.POSITIVE_INFINITY,
-        maxDaily: config.size === 'NO_CAP' ? null : config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,
       }
     })
@@ -34,7 +33,6 @@ export function getDataWithConfiguredThroughputs(
       timestamp,
       value,
       adjustThoughputToRange(resolution, config?.targetDaily),
-      adjustThoughputToRange(resolution, config?.maxDaily),
     ]
   })
 }

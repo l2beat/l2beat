@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HinkalHelper",
+  "critical": true,
+  "category": "core",
+  "description": "Helper that the Hinkal contract calls on every transaction. It checks that a relayed transaction is sent by a whitelisted relayer, that the calldata hash and the transaction dimensions are consistent, and builds the public inputs of the proof from the transaction data. It also holds the relayer list.",
+  "ignoreMethods": ["relayStore", "getRelayStore"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the helper.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove whitelisted relayers, and change the Hinkal address the helper accepts calls from and binds proofs to."
+        }
+      ]
+    },
+    "hinkalAddress": {
+      "description": "Hinkal contract that may call the helper. Its address is part of the public inputs of every proof.",
+      "severity": "HIGH"
+    },
+    "relayers": {
+      "description": "Whitelisted relayers. A relayed transaction must be sent by one of them.",
+      "severity": "MEDIUM",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getRelayStore() view returns (address[])",
+        "args": []
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit relayed private transactions and withdrawals for users and collect the relayer fee, and settle deposit addresses of the ReceiveVaultFactory with a flat fee of their choice."
+        }
+      ]
+    },
+    "MAX_LEAVES_PD": {
+      "description": "Maximum number of commitments in one proofless deposit."
+    }
+  }
+}
