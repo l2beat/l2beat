@@ -5,6 +5,7 @@ export interface RetryOptions {
   maxAttempts: number
   maxTimeoutMs?: number
   logger?: Logger
+  signal?: AbortSignal
 }
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000
@@ -17,20 +18,45 @@ export async function retry<T>(
   const maxTimeoutMs = options.maxTimeoutMs ?? ONE_DAY_MS
   let nextTimeout = options.initialTimeoutMs
   for (let attempt = 1; ; attempt++) {
+    if (options.signal?.aborted) {
+      // The eager first call already runs; its rejection must not go unhandled.
+      firstResult?.catch(() => {})
+      throw options.signal.reason
+    }
     try {
       if (attempt === 1 && firstResult) {
         return await firstResult
       }
       return await callback()
     } catch (error) {
-      if (attempt >= options.maxAttempts) {
+      if (options.signal?.aborted || attempt >= options.maxAttempts) {
         throw error
       }
       options.logger?.warn('Retrying', { attempt, error })
-      await new Promise((resolve) => setTimeout(resolve, nextTimeout))
+      await sleepWithSignal(nextTimeout, options.signal)
       nextTimeout = Math.min(maxTimeoutMs, nextTimeout * 2)
     }
   }
+}
+
+function sleepWithSignal(ms: number, signal?: AbortSignal): Promise<void> {
+  if (signal === undefined) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+  }
+  if (signal.aborted) {
+    return Promise.reject(signal.reason)
+  }
+  return new Promise((resolve, reject) => {
+    const onAbort = () => {
+      clearTimeout(timer)
+      reject(signal.reason)
+    }
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', onAbort)
+      resolve()
+    }, ms)
+    signal.addEventListener('abort', onAbort, { once: true })
+  })
 }
 
 function wrapRetry<T>(

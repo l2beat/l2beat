@@ -16,6 +16,7 @@ import { getPrivacyConfig } from './features/privacy'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
+import { getWatchMonitorConfig } from './features/watchMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 import { getRpcStepDownOnThrottle } from './getRpcStepDownOnThrottle'
 
@@ -140,6 +141,9 @@ export async function makeConfig(
     updateMonitor:
       flags.isEnabled('updateMonitor') &&
       getUpdateMonitorConfig(env, flags, chains, isLocal),
+    watchMonitor:
+      flags.isEnabled('watchMonitor') &&
+      getWatchMonitorConfig(env, flags, isLocal),
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),

@@ -20,6 +20,7 @@ import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
+import { createWatchMonitorModule } from './modules/watch-monitor/WatchMonitorModule'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
 
@@ -78,6 +79,7 @@ export class Application {
       initActivityModule(deps),
       dataAvailabilityModule,
       createUpdateMonitorModule(deps),
+      createWatchMonitorModule(deps),
       createFlatSourcesModule(deps),
       trackedTxsModule,
       initTvsModule(deps),
