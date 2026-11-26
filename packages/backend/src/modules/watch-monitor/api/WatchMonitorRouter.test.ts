@@ -66,7 +66,7 @@ describe(createWatchMonitorRouter.name, () => {
         'newly-public-failed-private',
         watchConfig('newly-public-failed-private', true),
       ],
-      ['older-snapshot', watchConfig('older-snapshot', false)],
+      ['older-snapshot', watchConfig('older-snapshot', true)],
       ['optimism', watchConfig('optimism', true)],
       ['private-repo', watchConfig('private-repo', false)],
       ['quiet', watchConfig('quiet', true)],
@@ -102,6 +102,7 @@ describe(createWatchMonitorRouter.name, () => {
         timestamp: 1_700_000_000,
         lastAttemptAt: 1_700_000_000,
         lastAttemptConfigHash: hashOf('older-snapshot'),
+        isPublic: true,
         configHash: hashOf('older-snapshot'),
         values: { version: '1' },
       }),
@@ -154,6 +155,8 @@ describe(createWatchMonitorRouter.name, () => {
         isPublic: true,
         configHash: hashOf('quiet'),
         values: { version: '1' },
+        // The observation is fresh; only the Discord alert did not go out.
+        lastError: 'Watch notification failed',
       }),
       // Fresh public run after repointing from a private repo, while watched.json
       // on disk still holds the earlier private baseline.
@@ -308,6 +311,11 @@ describe(createWatchMonitorRouter.name, () => {
         headers: { authorization: 'Bearer top-secret' },
       })
 
+      const lowercase = await fetch(`${url}/watch/pending`, {
+        headers: { authorization: 'bearer top-secret' },
+      })
+      expect(lowercase.status).toEqual(200)
+
       expect(res.status).toEqual(200)
       expect(res.headers.get('access-control-allow-origin')).toEqual(null)
       const body = (await res.json()) as {
@@ -352,6 +360,13 @@ describe(createWatchMonitorRouter.name, () => {
           lastSuccessAt: null,
           lastError:
             'Stored watch snapshot is stale (watch.jsonc changed); awaiting refresh',
+        },
+        {
+          name: 'quiet',
+          kind: 'global',
+          lastAttemptAt: 1_700_000_000,
+          lastSuccessAt: 1_700_000_000,
+          lastError: 'Watch notification failed',
         },
         {
           name: 'repointed-public',
@@ -440,6 +455,9 @@ describe(createWatchMonitorRouter.name, () => {
       )
       expect(text).toInclude(
         '- [disabled-watch](/status/watch/disabled-watch.html.md) [project]: Disabled',
+      )
+      expect(text).toInclude(
+        '- [older-snapshot](/status/watch/older-snapshot.html.md) [project]: Awaiting refresh (baseline newer than last run)',
       )
       expect(text).toInclude(
         '- [never-ran](/status/watch/never-ran.html.md) [project]: Not yet run',

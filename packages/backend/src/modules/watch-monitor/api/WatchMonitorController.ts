@@ -11,6 +11,7 @@ import {
   computePendingWatchDiff,
   type PendingWatchDiff,
 } from '../pendingWatchDiffs'
+import { WATCH_NOTIFICATION_FAILED } from '../WatchMonitor'
 
 export interface PendingWatchApiEntry extends PendingWatchDiff {
   judge: string | null
@@ -36,6 +37,7 @@ type WatchStatusKind =
   | 'disabled'
   | 'failed'
   | 'stale'
+  | 'awaiting-refresh'
   | 'never-run'
   | 'changes'
   | 'up-to-date'
@@ -174,7 +176,10 @@ export class WatchMonitorController {
       .filter((c) => c.status === 'changes')
       .sort(compareByPendingCount)
     const inactive = classified.filter(
-      (c) => c.status === 'never-run' || c.status === 'disabled',
+      (c) =>
+        c.status === 'never-run' ||
+        c.status === 'disabled' ||
+        c.status === 'awaiting-refresh',
     )
     const clean = classified.filter((c) => c.status === 'up-to-date')
 
@@ -374,12 +379,30 @@ export class WatchMonitorController {
       committed !== undefined && committed.configHash === expectedConfigHash
         ? committed
         : undefined
+    // Until the next run, a baseline committed after the stored snapshot
+    // would diff backwards: its new values would read as removed.
+    if (
+      publishableCommitted !== undefined &&
+      publicRecord.timestamp !== null &&
+      publishableCommitted.timestamp > publicRecord.timestamp
+    ) {
+      return {
+        location,
+        status: 'awaiting-refresh',
+        record: publicRecord,
+        pending: undefined,
+      }
+    }
     const pending = computePendingWatchDiff(
       location,
       publicRecord,
       publishableCommitted,
     )
-    if (attemptMatches && record.lastError !== null) {
+    // A failed Discord delivery leaves the observation fresh.
+    const sourceFailed =
+      record.lastError !== null &&
+      record.lastError !== WATCH_NOTIFICATION_FAILED
+    if (attemptMatches && sourceFailed) {
       return {
         location,
         status: publicRecord.timestamp === null ? 'failed' : 'stale',
@@ -434,6 +457,8 @@ function statusLabel(status: WatchStatusKind): string {
       return 'Failed (no successful run)'
     case 'stale':
       return 'Stale (last run failed)'
+    case 'awaiting-refresh':
+      return 'Awaiting refresh (baseline newer than last run)'
     case 'never-run':
       return 'Not yet run'
     case 'changes':

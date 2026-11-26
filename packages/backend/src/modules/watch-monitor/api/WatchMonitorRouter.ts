@@ -44,7 +44,9 @@ export function createWatchMonitorRouter(
 }
 
 function isAuthorized(header: string, expectedToken: string): boolean {
-  if (!header.startsWith(BEARER_PREFIX)) {
+  // HTTP authentication scheme names are case-insensitive.
+  const scheme = header.slice(0, BEARER_PREFIX.length)
+  if (scheme.toLowerCase() !== BEARER_PREFIX.toLowerCase()) {
     return false
   }
   const provided = header.slice(BEARER_PREFIX.length)
