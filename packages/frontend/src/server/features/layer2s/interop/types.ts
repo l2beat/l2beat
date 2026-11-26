@@ -192,6 +192,14 @@ export type InteropProtocolTransfersCursor = v.infer<
 export const InteropProtocolTransfersCursor = v.object({
   timestamp: v.number(),
   transferId: v.string(),
+  /** The last transfer's value, null when it has none. Read by a value sort. */
+  valueUsd: v.union([v.number(), v.null()]).optional(),
+})
+/** Newest first when omitted. */
+export type InteropTransfersSort = v.infer<typeof InteropTransfersSort>
+export const InteropTransfersSort = v.object({
+  by: v.enum(['timestamp', 'valueUsd']),
+  desc: v.boolean(),
 })
 export const InteropProtocolTransfersParams = v.object({
   scope: InteropScope,
@@ -200,6 +208,7 @@ export const InteropProtocolTransfersParams = v.object({
   tokenId: v.string().optional(),
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
+  sort: InteropTransfersSort.optional(),
   cursor: InteropProtocolTransfersCursor.optional(),
 })
 
@@ -211,6 +220,7 @@ export const InteropTokenTransfersParams = v.object({
   ...InteropSelectionInputShape,
   snapshotTimestamp: v.number(),
   limit: v.number().optional(),
+  sort: InteropTransfersSort.optional(),
   cursor: InteropProtocolTransfersCursor.optional(),
 })
 

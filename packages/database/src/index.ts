@@ -120,10 +120,12 @@ export type {
   InteropRecentPricesRecord,
 } from './repositories/InteropRecentPricesRepository'
 export {
+  getInteropTransferValueUsd,
   hasAnyInteropTransferFinancialsFilter,
   INTEROP_TRANSFER_RETENTION,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
+  type InteropTransferCursor,
   type InteropTransferDeployedTokenPairStats,
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
@@ -135,6 +137,7 @@ export {
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
   type InteropTransferUpdate,
+  toInteropTransferCursor,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,

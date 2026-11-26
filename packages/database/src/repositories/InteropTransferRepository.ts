@@ -335,9 +335,41 @@ export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
   valueDifferencePercent: number
 }
 
+/**
+ * Transfers without a value come last in both directions. Rows equal on
+ * `by` are ordered by timestamp, then transferId, in the same direction.
+ */
+export interface InteropTransferSort {
+  by: 'timestamp' | 'valueUsd'
+  desc: boolean
+}
+
+/** The last row of a page. Build it with `toInteropTransferCursor`. */
 export interface InteropTransferCursor {
   timestamp: UnixTime
   transferId: string
+  valueUsd: number | null
+}
+
+/**
+ * The value a transfer is listed and sorted by: what was sent, or what was
+ * received when the sent side has no price. `getProjectTransfersPage` sorts
+ * by the same rule in SQL.
+ */
+export function getInteropTransferValueUsd(
+  transfer: Pick<InteropTransferRecord, 'srcValueUsd' | 'dstValueUsd'>,
+): number | undefined {
+  return transfer.srcValueUsd ?? transfer.dstValueUsd
+}
+
+export function toInteropTransferCursor(
+  transfer: InteropTransferRecord,
+): InteropTransferCursor {
+  return {
+    timestamp: transfer.timestamp,
+    transferId: transfer.transferId,
+    valueUsd: getInteropTransferValueUsd(transfer) ?? null,
+  }
 }
 
 export class InteropTransferRepository extends BaseRepository {
@@ -653,6 +685,9 @@ export class InteropTransferRepository extends BaseRepository {
     sourceChains: string[]
     destinationChains: string[]
     abstractTokenId?: string
+    /** Newest first when omitted. */
+    sort?: InteropTransferSort
+    /** The last row of the previous page, read under the same `sort`. */
     cursor?: InteropTransferCursor
     limit: number
   }): Promise<InteropTransferRecord[]> {
@@ -686,23 +721,41 @@ export class InteropTransferRepository extends BaseRepository {
       )
     }
 
+    const sort = options.sort ?? { by: 'timestamp', desc: true }
+    const direction = sort.desc ? 'desc' : 'asc'
+    // A transfer without a value sorts as the lowest value when the highest
+    // come first, and as the highest when the lowest do: last either way.
+    const noValue = sort.desc ? '-Infinity' : 'Infinity'
+    const valueUsd = sql<number>`coalesce("srcValueUsd", "dstValueUsd", ${noValue}::real)`
+
     const cursor = options.cursor
     if (cursor) {
-      const cursorDate = UnixTime.toDate(cursor.timestamp)
+      const after = sort.desc ? '<' : '>'
+      const timestamp = UnixTime.toDate(cursor.timestamp)
+      // Compared as `real`, the column's type: as a double the value read
+      // from a row would not equal that row's own value.
+      const cursorValueUsd = sql<number>`${cursor.valueUsd ?? noValue}::real`
       query = query.where((eb) =>
-        eb.or([
-          eb('timestamp', '<', cursorDate),
-          eb.and([
-            eb('timestamp', '=', cursorDate),
-            eb('transferId', '<', cursor.transferId),
-          ]),
-        ]),
+        sort.by === 'valueUsd'
+          ? eb(
+              eb.refTuple(valueUsd, 'timestamp', 'transferId'),
+              after,
+              eb.tuple(cursorValueUsd, timestamp, cursor.transferId),
+            )
+          : eb(
+              eb.refTuple('timestamp', 'transferId'),
+              after,
+              eb.tuple(timestamp, cursor.transferId),
+            ),
       )
     }
 
+    if (sort.by === 'valueUsd') {
+      query = query.orderBy(valueUsd, direction)
+    }
     const rows = await query
-      .orderBy('timestamp', 'desc')
-      .orderBy('transferId', 'desc')
+      .orderBy('timestamp', direction)
+      .orderBy('transferId', direction)
       .limit(options.limit)
       .execute()
 
