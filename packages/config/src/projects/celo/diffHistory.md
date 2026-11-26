@@ -9,7 +9,7 @@ Generated with discovered.json: 0xc5149170f969f7496bb01e8061a961b467d58dc9
 
 ## Description
 
-DisputeGameFactory: game type 42 now uses a new OPSuccinctFaultDisputeGame (2.0.0 → 2.1.0, Celo's OP Succinct v2.2.0 release) with new aggregation and range verification keys and a new rollup config hash ([diff](https://disco.l2beat.com/diff/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF/eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7)). Its new AccessManager has the same owner, proposers and challengers. The permissionless Cannon game (type 0) was removed.
+Same proof system, new ZK programs. Celo's OP Succinct v2.2.0 release (SP1 6.10.0, updated Kona and Hokulea) rebuilt the aggregation and range programs, so game type 42 now uses a new OPSuccinctFaultDisputeGame (2.0.0 → 2.1.0) with the programs' new verification keys and a new rollup config hash. The game code only adds two getters ([diff](https://disco.l2beat.com/diff/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF/eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7)); the SP1 verifier, durations and bond are unchanged. Its new AccessManager has the same owner, proposers and challengers. The permissionless Cannon game (type 0) was removed.
 
 ## Watched changes
 

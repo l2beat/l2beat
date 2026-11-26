@@ -9,7 +9,7 @@ Generated with discovered.json: 0x8426475531b40a371b21513557bf764605391d1e
 
 ## Description
 
-The owner EOA of MegaETH's RISC Zero router removed route 0xe71e6620, its last one. The router now has no route, so Kailua games cannot verify any RISC Zero proof until the EOA adds a new one.
+No path through RISC Zero is left: the owner EOA of MegaETH's RISC Zero router removed route 0xe71e6620, the last of the two routes it ever added. Every Kailua ZK proof (validity or output fault) is verified through this router, so none can be verified until the EOA adds a new route.
 Config: the router's `verifier` field, which read route 0xe71e6620, is removed.
 
 ## Watched changes

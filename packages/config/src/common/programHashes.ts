@@ -152,7 +152,7 @@ Prepare:
 
 1. Install sp1 toolchain version \`v6.10.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v v6.10.0\`.
 2. Install docker https://docs.docker.com/get-started/get-docker/.
-3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+3. Install \`clang\` / \`libclang\`, \`make\` and Go, required by the host-side vkey printing command.
 
 Verify:
 
