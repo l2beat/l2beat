@@ -136,18 +136,24 @@ export function buildGasFeesSummary(
   }
 }
 
-/** Compared over the days both have data for, so neither side counts a day the other lacks */
+/** Each metric over the days both have a value for, so neither side counts a day the other lacks */
 function timesCheaper(ethereum: GasFeesRecord[], days: GasFeesRecord[]) {
-  const timestamps = new Set(days.map((r) => r.timestamp))
-  const theirDays = ethereum.filter((r) => timestamps.has(r.timestamp))
-  const common = new Set(theirDays.map((r) => r.timestamp))
-  const sameDays = summarize(theirDays)
-  const ourDays = summarize(days.filter((r) => common.has(r.timestamp)))
+  const theirDays = new Map(ethereum.map((r) => [r.timestamp, r]))
   return Object.fromEntries(
     GAS_FEES_PERIOD_METRICS.map((metric) => {
-      const ours = ourDays?.[metric] ?? null
-      const theirs = sameDays?.[metric] ?? null
-      return [metric, ours && theirs ? theirs / ours : null]
+      const hasValue = (r: GasFeesRecord) =>
+        metric === 'avgFee' ? r.txCount > 0 : r[metric] !== null
+      const ours: GasFeesRecord[] = []
+      const theirs: GasFeesRecord[] = []
+      for (const day of days) {
+        const their = theirDays.get(day.timestamp)
+        if (!their || !hasValue(day) || !hasValue(their)) continue
+        ours.push(day)
+        theirs.push(their)
+      }
+      const our = summarize(ours)?.[metric]
+      const their = summarize(theirs)?.[metric]
+      return [metric, our && their ? their / our : null]
     }),
   ) as Record<GasFeesPeriodMetric, number | null>
 }

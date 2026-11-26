@@ -86,10 +86,9 @@ export function GasFeesTable({
   const [sort, setSort] = useState<Sort>({ id: 'cost', desc: false })
   const sortedBy = (id: string) =>
     sort.id === id && (sort.desc ? 'desc' : 'asc')
-  const ethereum = summary?.rows.find((r) => r.id === 'ethereum')
 
   const columns: Column[] = [
-    ...getCostColumns(action, ethereum),
+    ...getCostColumns(action),
     {
       id: 'total',
       head: 'Total fees',
@@ -231,10 +230,7 @@ export function GasFeesTable({
   )
 }
 
-function getCostColumns(
-  action: GasFeesPeriodMetric,
-  ethereum: GasFeesSummaryRow | undefined,
-): Column[] {
+function getCostColumns(action: GasFeesPeriodMetric): Column[] {
   return [
     {
       id: 'cost',
@@ -259,31 +255,33 @@ function getCostColumns(
       className: 'pl-6!',
       sortValue: (row) => row.timesCheaper?.[action] ?? null,
       cell: (row, chain) => {
-        const base = ethereum?.[action]
-        const cost = row[action]
-        if (!base || cost === null) return null
-        const share = cost / base
-        const compared = compareWithEthereum(row.timesCheaper?.[action] ?? 0)
+        // The bar and the words are one comparison, over the same days
+        const times =
+          row.id === 'ethereum' ? 1 : (row.timesCheaper?.[action] ?? null)
+        if (times === null) {
+          return <span className="text-secondary">{EM_DASH}</span>
+        }
+        const compared = compareWithEthereum(times)
         return (
           <span className="flex items-center gap-3">
             <span className="flex h-2.5 w-28 shrink-0 overflow-hidden rounded-full bg-surface-secondary lg:w-44">
               <span
                 className="block h-full rounded-full"
                 style={{
-                  width: `max(4px, ${Math.min(100, share * 100)}%)`,
+                  width: `max(4px, ${Math.min(100, 100 / times)}%)`,
                   backgroundColor: chain.color,
                 }}
               />
             </span>
             {row.id === 'ethereum' ? (
               <span className="whitespace-nowrap text-xs">baseline</span>
-            ) : !compared ? (
-              <span className="text-secondary">{EM_DASH}</span>
             ) : (
-              <span className="whitespace-nowrap text-xs">
-                <span className="font-bold">{compared.times}</span>{' '}
-                {compared.word}
-              </span>
+              compared && (
+                <span className="whitespace-nowrap text-xs">
+                  <span className="font-bold">{compared.times}</span>{' '}
+                  {compared.word}
+                </span>
+              )
             )}
           </span>
         )

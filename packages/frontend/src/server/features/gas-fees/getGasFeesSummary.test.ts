@@ -24,11 +24,12 @@ describe(buildGasFeesSummary.name, () => {
     expect(row('base')?.timesCheaper?.erc20).toEqual(10)
   })
 
-  it('leaves out of the comparison a day Ethereum lacks', () => {
+  it('leaves out of the comparison a day Ethereum has no price for', () => {
     const lacking = buildGasFeesSummary(
       new Map([
-        ['ethereum', [record(1, 10)]],
-        ['base', [record(1, 1), record(2, 9)]],
+        // No row for day 2, no transactions on day 3
+        ['ethereum', [record(1, 10), record(3, null)]],
+        ['base', [record(1, 1), record(2, 9), record(3, 5)]],
       ]),
       { range: [null, 10 * DAY] },
     )
