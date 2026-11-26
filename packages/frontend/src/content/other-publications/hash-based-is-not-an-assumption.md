@@ -37,7 +37,7 @@ Ethereum's core protocol uses of Keccak-256 rely primarily on collision and prei
 
 ## One-wayness
 
-For digital signatures, one-wayness is the theoretical floor: **secure signatures exist if and only if one-way functions exist.** Proving one-way functions exist is at least as hard as proving $\mathsf{P} \neq \mathsf{NP}$, and in [Impagliazzo's five worlds](https://en.wikipedia.org/wiki/Russell_Impagliazzo#Five_worlds_of_complexity_theory) there are worlds where $\mathsf{P} \neq \mathsf{NP}$ holds yet no one-way functions exist.
+For digital signatures, one-wayness is the theoretical floor: **secure signatures exist if and only if one-way functions exist.** Proving one-way functions exist is at least as hard as proving $\mathsf{P} \neq \mathsf{NP}$, and even if $\mathsf{P} \neq \mathsf{NP}$ is true, one-way functions still might not exist (see [Impagliazzo's five worlds](https://en.wikipedia.org/wiki/Russell_Impagliazzo#Five_worlds_of_complexity_theory)).
 
 - **Necessary:** Every signature scheme maps random secret bits to a public key. If that mapping weren't one-way, anyone seeing your public key could invert it and forge signatures at will.
 - **Sufficient in theory:** [Rompel (1990)](https://doi.org/10.1145/100216.100269) showed how to build a full signature scheme from *any* one-way function, with zero extra assumptions.
