@@ -18,13 +18,14 @@ import { getCreatorLine } from '../components/zkCatalogUi'
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
 export const zkCatalogColumns = [
-  ...getCommonProjectColumns(columnHelper, (p) => `/zk-catalog/${p.slug}`),
+  ...getCommonProjectColumns(columnHelper, (p) => p.href),
   columnHelper.accessor((row) => row.name, {
     id: 'name',
     header: 'Name',
     cell: (ctx) => {
       const project = {
         ...ctx.row.original,
+        detailsHref: ctx.row.original.href,
         nameSecondLine: getCreatorLine(ctx.row.original),
         quantumResistance: ctx.row.original.quantumResistant
           ? ('prover' as const)
@@ -33,7 +34,7 @@ export const zkCatalogColumns = [
       return (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={project}>
-            <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
+            <TableLink href={ctx.row.original.href}>
               <ProjectNameCell project={project} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>

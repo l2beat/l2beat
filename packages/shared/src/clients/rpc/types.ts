@@ -161,6 +161,10 @@ export const EVMBalanceResponse = z.object({
   result: Quantity.decode,
 })
 
+export const MaxPriorityFeePerGasResponse = z.object({
+  result: Quantity.decode,
+})
+
 export const BlockNumberResponse = z.object({
   result: Quantity.decode.transform((n) => Number(n)),
 })
@@ -172,6 +176,8 @@ export const EVMFeeHistory = z.object({
   baseFeePerBlobGas: z.array(Quantity.decode),
   blobGasUsedRatio: z.array(z.number()),
   oldestBlock: Quantity.decode.transform((n) => Number(n)),
+  /** Per block, the tips at the requested percentiles; absent when none were requested */
+  reward: z.array(z.array(Quantity.decode)).optional(),
 })
 
 export const EVMFeeHistoryResponse = z.object({

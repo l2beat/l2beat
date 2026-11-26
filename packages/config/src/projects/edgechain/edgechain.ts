@@ -59,7 +59,7 @@ export const edgechain: ScalingProject = orbitStackL3({
     apis: [
       {
         type: 'rpc',
-        url: 'https://edge-mainnet.g.alchemy.com/v2/p7XZ9PmQlUFoTRxwIeB38',
+        url: 'https://edge-mainnet.g.alchemy.com/public',
         callsPerMinute: 300,
       },
       { type: 'sourcify', chainId: 3343 },
