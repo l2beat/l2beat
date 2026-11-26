@@ -10,12 +10,12 @@ describe(formatChangePeriod.name, () => {
     until: days * UnixTime.DAY,
   })
 
-  it('reads a year, or a day short of one, as 1y', () => {
-    expect(formatChangePeriod(change(365))).toEqual('1y')
-    expect(formatChangePeriod(change(364))).toEqual('1y')
+  it('gives a period shorter than about a year in days', () => {
+    expect(formatChangePeriod(change(29))).toEqual('29d')
   })
 
-  it('gives a shorter history in days', () => {
-    expect(formatChangePeriod(change(90))).toEqual('90d')
+  it('gives a longer one in years to a tenth', () => {
+    expect(formatChangePeriod(change(363))).toEqual('1y')
+    expect(formatChangePeriod(change(1_059))).toEqual('2.9y')
   })
 })

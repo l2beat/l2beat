@@ -24,7 +24,7 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
-import type { LiquidStakingTvlSummary } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import type { CompleteTvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
@@ -66,11 +66,11 @@ export const LIQUID_STAKING_RANGE_OPTIONS: {
 
 export function LiquidStakingCharts({
   projects,
-  tvlSummary,
+  tvlLatest,
   defaultRange,
 }: {
   projects: LiquidStakingChartProject[]
-  tvlSummary: LiquidStakingTvlSummary | undefined
+  tvlLatest: CompleteTvlBreakdown | undefined
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
@@ -91,7 +91,7 @@ export function LiquidStakingCharts({
         <LiquidStakingTvlChart
           projects={projects}
           projectSeries={projectSeries}
-          summary={tvlSummary}
+          latest={tvlLatest}
           range={range}
         />
         <YieldChart

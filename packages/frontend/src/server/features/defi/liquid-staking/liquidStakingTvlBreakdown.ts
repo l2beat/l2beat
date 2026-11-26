@@ -1,5 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
-
 /**
  * A day of the value locked chart, split up. Amounts are in ETH (or another
  * unit, see `inUnit` on the page); each is null when it is unknown, and a part
@@ -70,9 +68,6 @@ function difference(total: number | null, part: number | null) {
   return total !== null && part !== null && total >= part ? total - part : null
 }
 
-/** How far back a yearly change looks. */
-export const YEAR_CHANGE_DAYS = 365
-
 /** A change in ETH, relative and absolute, between two days. */
 export interface EthChange {
   value: number
@@ -81,40 +76,38 @@ export interface EthChange {
   until: number
 }
 
-/** The numbers beside the value locked chart. */
-export interface LiquidStakingTvlSummary {
-  /** The latest complete day, so its parts add up; the supply can be missing. */
-  latest: CompleteTvlBreakdown
-  /** Over the year to `latest`. */
-  stakeChange?: EthChange
-  /** Over the year to `latest`; none when `latest` has no supply. */
-  supplyChange?: EthChange
+/** The latest complete day, so its parts add up; the supply can be missing. */
+export function getLatestComplete(
+  breakdowns: TvlBreakdown[],
+): CompleteTvlBreakdown | undefined {
+  return breakdowns.findLast(isComplete)
 }
 
-export function getLiquidStakingTvlSummary(
+export interface TvlChanges {
+  stake?: EthChange
+  /** None when `latest` has no supply. */
+  supply?: EthChange
+}
+
+/** The changes over the chart's period, up to `latest`, so both end that day. */
+export function getTvlChanges(
   breakdowns: TvlBreakdown[],
-): LiquidStakingTvlSummary | undefined {
-  const latest = breakdowns.findLast(isComplete)
-  if (!latest) return undefined
-  // Up to the same day, so the whole summary is as of one date.
+  latest: CompleteTvlBreakdown,
+): TvlChanges {
   const upToLatest = breakdowns.filter(
     (breakdown) => breakdown.timestamp <= latest.timestamp,
   )
   return {
-    latest,
-    stakeChange: getYearChange(upToLatest, (b) => b.staked),
-    supplyChange:
+    stake: getChange(upToLatest, (b) => b.staked),
+    supply:
       latest.supply !== null
-        ? getYearChange(upToLatest, (b) => b.supply)
+        ? getChange(upToLatest, (b) => b.supply)
         : undefined,
   }
 }
 
-/**
- * From the first day within a year of the latest value to that value, so a
- * history a day short of a year still has a change, dated by its first day.
- */
-export function getYearChange(
+/** From the first known value to the last. */
+export function getChange(
   breakdowns: TvlBreakdown[],
   pick: (breakdown: TvlBreakdown) => number | null,
 ): EthChange | undefined {
@@ -124,11 +117,9 @@ export function getYearChange(
       ? [{ timestamp: breakdown.timestamp, value }]
       : []
   })
+  const first = known.at(0)
   const latest = known.at(-1)
-  if (!latest) return undefined
-  const from = latest.timestamp - YEAR_CHANGE_DAYS * UnixTime.DAY
-  const first = known.find((day) => day.timestamp >= from)
-  if (!first || first === latest) return undefined
+  if (!first || !latest || first === latest) return undefined
   return {
     value: latest.value / first.value - 1,
     eth: latest.value - first.value,

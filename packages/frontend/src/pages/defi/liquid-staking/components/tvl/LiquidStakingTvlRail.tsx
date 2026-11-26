@@ -42,23 +42,12 @@ export function LiquidStakingTvlRail({
       {latest && latest.supply !== null && (
         <div>
           <Heading>ETH supply share</Heading>
-          <div
-            className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-surface-secondary"
-            role="img"
-            aria-label={`ETH supply breakdown: ${formatShare(latest.liquid, latest.supply)} liquid staking, ${formatShare(latest.others, latest.supply)} others, ${formatShare(latest.notStaked, latest.supply)} not staked`}
-          >
-            {protocolLayers.map((layer) => (
-              <Segment
-                key={layer.key}
-                share={shareOf(layer.value(latest), latest.supply)}
-                color={layer.fill}
-              />
-            ))}
-            <Segment
-              share={shareOf(latest.others, latest.supply)}
-              color={OTHER_STAKED_COLOR}
-            />
-          </div>
+          <ShareBar
+            label={`ETH supply breakdown: ${formatShare(latest.liquid, latest.supply)} liquid staking, ${formatShare(latest.others, latest.supply)} other stakers, ${formatShare(latest.notStaked, latest.supply)} not staked`}
+            layers={protocolLayers}
+            latest={latest}
+            total={latest.supply}
+          />
           <div className="mt-2 flex flex-col gap-0.5">
             <ShareRow
               swatch={<Swatch style={{ background: liquidSwatch }} />}
@@ -71,7 +60,7 @@ export function LiquidStakingTvlRail({
               swatch={
                 <Swatch style={{ backgroundColor: OTHER_STAKED_COLOR }} />
               }
-              label="Others"
+              label="Other stakers"
               value={inChosenUnit?.others}
               unit={unit}
               share={formatShare(latest.others, latest.supply)}
@@ -89,7 +78,7 @@ export function LiquidStakingTvlRail({
 
       <div className="flex flex-col border-divider border-t pt-3 lg:flex-1">
         <div className="mb-2 flex items-center justify-between gap-2">
-          <Heading className="mb-0">Staked breakdown</Heading>
+          <Heading className="mb-0">Staked ETH share</Heading>
           <button
             type="button"
             onClick={onToggleAll}
@@ -99,7 +88,15 @@ export function LiquidStakingTvlRail({
           </button>
         </div>
 
-        <div className="flex flex-col gap-0.5 md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:gap-x-8">
+        {latest && (
+          <ShareBar
+            label={`Staked ETH breakdown: ${formatShare(latest.liquid, latest.staked)} liquid staking, ${formatShare(latest.others, latest.staked)} other stakers`}
+            layers={protocolLayers}
+            latest={latest}
+            total={latest.staked}
+          />
+        )}
+        <div className="mt-2 flex flex-col gap-0.5 md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:gap-x-8">
           {layers.map((layer) => (
             <ShareRow
               key={layer.key}
@@ -144,6 +141,39 @@ function Heading({
       )}
     >
       {children}
+    </div>
+  )
+}
+
+/** The protocols, then the other stakers, as shares of `total`. */
+function ShareBar({
+  label,
+  layers,
+  latest,
+  total,
+}: {
+  label: string
+  layers: TvlLayer[]
+  latest: CompleteTvlBreakdown
+  total: number
+}) {
+  return (
+    <div
+      className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-surface-secondary"
+      role="img"
+      aria-label={label}
+    >
+      {layers.map((layer) => (
+        <Segment
+          key={layer.key}
+          share={shareOf(layer.value(latest), total)}
+          color={layer.fill}
+        />
+      ))}
+      <Segment
+        share={shareOf(latest.others, total)}
+        color={OTHER_STAKED_COLOR}
+      />
     </div>
   )
 }

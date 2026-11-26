@@ -1,8 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import {
-  type EthChange,
-  YEAR_CHANGE_DAYS,
-} from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
+import type { EthChange } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -28,11 +25,11 @@ export function formatSigned(value: number, format: (abs: number) => string) {
 
 /**
  * The period a change covers, as the site writes it after a percent change
- * ("/ 1y"); a year short by a few days still reads as one.
+ * ("/ 90d"); from about a year on, in years to a tenth.
  */
 export function formatChangePeriod(change: EthChange): string {
   const days = Math.round((change.until - change.since) / UnixTime.DAY)
-  return days >= YEAR_CHANGE_DAYS - 5 ? '1y' : `${days}d`
+  return days >= 360 ? `${Number((days / 365).toFixed(1))}y` : `${days}d`
 }
 
 export function formatChangeDates(change: EthChange): string {

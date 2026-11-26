@@ -1,46 +1,63 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, EthereumSupplyDailyRecord } from '@l2beat/database'
-import {
-  approximateCirculatingSupply,
-  type CoingeckoClient,
-  type CoinMarketChartRangeData,
-} from '@l2beat/shared'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  Database,
+  EthereumStakingDailyRecord,
+  EthereumSupplyDailyRecord,
+} from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
+import type { BurnDay } from './dune/readDuneBurns'
 
-const ETHEREUM = CoingeckoId('ethereum')
 const DAY = UnixTime.DAY
-/** A day's start takes the nearest point at most this far from midnight. */
-const MAX_DISTANCE = UnixTime.HOUR
-/** CoinGecko serves hourly points for ranges of up to 90 days. */
+/** Days burned per Dune query. */
 const MAX_DAYS = 60
 
+/**
+ * ETH in existence at the start of 1 January 2024, from ultrasound.money's
+ * supply series (https://ultrasound.money/api/v2/fees/supply-over-time,
+ * `since_merge`): the balances of every execution account and validator, less
+ * the ETH sent to the deposit contract.
+ */
+export const SUPPLY_ANCHOR: EthereumSupplyDailyRecord = {
+  timestamp: UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
+  supply: 120_181_893.908,
+}
+
 /** Bump it when a fix changes what past days store. */
-const STORED_DATA_VERSION = '1'
+const STORED_DATA_VERSION = '2'
 
 interface EthereumSupplyIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name' | 'minHeight'> {
-  /** The first day stored. */
+  /** The first day stored; the anchor's day. */
   firstDay: UnixTime
   db: Database
-  coingecko: Pick<CoingeckoClient, 'getCoinMarketChartRange'>
+  readBurns: (
+    fromDay: UnixTime,
+    toDay: UnixTime,
+  ) => Promise<Map<UnixTime, BurnDay>>
 }
 
 /**
- * ETH's supply as each UTC day starts: CoinGecko's market cap over its price,
- * both read at one time near midnight. Like the staking indexer, a day is
- * stored once it has ended and a height is the end of the last stored day.
+ * ETH's supply as each UTC day starts: SUPPLY_ANCHOR, plus what validators
+ * earned and less what blocks burned since. Since the Merge nothing else
+ * creates or destroys ETH. A child of the staking indexer, as a day's
+ * issuance is read from its rows: a height is the end of the last stored day.
  */
 export class EthereumSupplyIndexer extends ManagedChildIndexer {
   constructor(
     private readonly $: EthereumSupplyIndexerDeps,
     logger: Logger,
   ) {
+    if ($.firstDay !== SUPPLY_ANCHOR.timestamp) {
+      throw new Error('ETH supply must start on its anchor day', {
+        cause: { firstDay: $.firstDay, anchor: SUPPLY_ANCHOR.timestamp },
+      })
+    }
     super(
       {
         ...$,
@@ -57,34 +74,57 @@ export class EthereumSupplyIndexer extends ManagedChildIndexer {
     const first = UnixTime(UnixTime.toEndOf(UnixTime(from), 'day') - DAY)
     const last = UnixTime(Math.min(to - DAY, first + (MAX_DAYS - 1) * DAY))
 
-    const data = await this.$.coingecko.getCoinMarketChartRange(
-      ETHEREUM,
-      'usd',
-      UnixTime(first - MAX_DISTANCE),
-      UnixTime(last + MAX_DISTANCE),
-    )
-    const records = toDailySupplies(data, first, last)
-    const lastStored = records.at(-1)?.timestamp
-    // None yet, or CoinGecko is down: ask again rather than skip ahead.
-    if (lastStored === undefined) {
-      throw new Error('No ETH supply from CoinGecko', {
-        cause: { first, last },
-      })
-    }
-    // A day before a stored one without a point stays empty for good, as
-    // CoinGecko's history won't change.
-    const missing = (lastStored - first) / DAY + 1 - records.length
-    if (missing > 0) {
-      this.logger.error('ETH supply missing on some days', {
-        first,
-        lastStored,
-        missing,
-      })
-    }
+    const records =
+      first === SUPPLY_ANCHOR.timestamp
+        ? [SUPPLY_ANCHOR, ...(await this.readDays(SUPPLY_ANCHOR, last))]
+        : await this.readDays(await this.getStored(first - DAY), last)
 
     await this.$.db.ethereumSupplyDaily.upsertMany(records)
-    this.logger.info('Saved ETH supply', { first, lastStored })
-    return lastStored + DAY
+    this.logger.info('Saved ETH supply', { first, last })
+    return last + DAY
+  }
+
+  /** The days after `previous`, up to `last`. */
+  private async readDays(
+    previous: EthereumSupplyDailyRecord,
+    last: UnixTime,
+  ): Promise<EthereumSupplyDailyRecord[]> {
+    if (last <= previous.timestamp) return []
+    const lastBurned = UnixTime(last - DAY)
+    const [stakingDays, burns] = await Promise.all([
+      this.$.db.ethereumStakingDaily.getInRange(previous.timestamp, last),
+      this.$.readBurns(previous.timestamp, lastBurned),
+    ])
+    const staking = new Map(stakingDays.map((day) => [day.timestamp, day]))
+
+    const records: EthereumSupplyDailyRecord[] = []
+    let change = 0n
+    for (let day = previous.timestamp; day <= lastBurned; day += DAY) {
+      const start = staking.get(day)
+      const end = staking.get(UnixTime(day + DAY))
+      const burn = burns.get(day)
+      if (!start || !end || !burn || burn.blockCount !== start.blockCount) {
+        throw new Error('ETH supply inputs missing', {
+          cause: { day, start, end, burn },
+        })
+      }
+      change += getIssuance(start, end) - burn.burn
+      records.push({
+        timestamp: UnixTime(day + DAY),
+        supply: previous.supply + Number(change) / 1e18,
+      })
+    }
+    return records
+  }
+
+  private async getStored(day: UnixTime): Promise<EthereumSupplyDailyRecord> {
+    const [record] = await this.$.db.ethereumSupplyDaily.getInRange(day, day)
+    if (!record) {
+      throw new Error('ETH supply of the previous day missing', {
+        cause: { day },
+      })
+    }
+    return record
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
@@ -96,35 +136,15 @@ export class EthereumSupplyIndexer extends ManagedChildIndexer {
 }
 
 /**
- * For each day from `first` to `last`, the supply at the point nearest its
- * start, within MAX_DISTANCE, from that point's own price and market cap. A
- * day without such a point, or whose point gives no positive supply, has no
- * record.
+ * What validators earned over the day `start` begins, net of penalties, wei:
+ * the change in what they hold, plus what they withdrew, less the deposits
+ * credited to them.
  */
-export function toDailySupplies(
-  data: CoinMarketChartRangeData,
-  first: UnixTime,
-  last: UnixTime,
-): EthereumSupplyDailyRecord[] {
-  const marketCaps = new Map(
-    data.marketCaps.map((point) => [point.date.getTime(), point.value]),
-  )
-  const points = data.prices.flatMap((price) => {
-    const marketCap = marketCaps.get(price.date.getTime())
-    if (marketCap === undefined) return []
-    const supply = approximateCirculatingSupply(marketCap, price.value)
-    return Number.isFinite(supply) && supply > 0
-      ? [{ timestamp: UnixTime.fromDate(price.date), supply }]
-      : []
-  })
-  const records: EthereumSupplyDailyRecord[] = []
-  for (let day = first; day <= last; day = UnixTime(day + DAY)) {
-    const nearest = points
-      .filter((point) => Math.abs(point.timestamp - day) <= MAX_DISTANCE)
-      .sort(
-        (a, b) => Math.abs(a.timestamp - day) - Math.abs(b.timestamp - day),
-      )[0]
-    if (nearest) records.push({ timestamp: day, supply: nearest.supply })
-  }
-  return records
+export function getIssuance(
+  start: EthereumStakingDailyRecord,
+  end: EthereumStakingDailyRecord,
+): bigint {
+  const held = (day: EthereumStakingDailyRecord) =>
+    day.totalBalance + (day.pendingDeposits ?? 0n)
+  return held(end) - held(start) + start.withdrawals - start.deposits
 }

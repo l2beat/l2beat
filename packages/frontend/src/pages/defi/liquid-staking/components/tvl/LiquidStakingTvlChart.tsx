@@ -23,13 +23,15 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
 import { InfoIcon } from '~/icons/Info'
-import type {
-  LiquidStakingTvlSummary,
-  TvlBreakdown,
+import {
+  type CompleteTvlBreakdown,
+  getTvlChanges,
+  type TvlBreakdown,
 } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import type { ChartRange } from '~/utils/range/range'
+import { SUPPLY_SOURCE } from '../../liquidStakingMetrics'
 import type { LiquidStakingChartProject } from '../LiquidStakingCharts'
 import type { LiquidStakingChartSeries } from '../LiquidStakingLineChart'
 import { LiquidStakingTvlBanner } from './LiquidStakingTvlBanner'
@@ -45,22 +47,22 @@ import {
 } from './liquidStakingTvlLayers'
 
 const DESCRIPTION = [
-  "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. In Staked view, the layers add up to the balance of all active Ethereum validators: Others is the rest, staked solo, through exchanges or through protocols not listed here.",
+  "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. In Staked view, the layers add up to the balance of all active Ethereum validators: Other stakers is the rest, staked solo, through exchanges or through protocols not listed here.",
   "USD values are that ETH at the day's ETH price, so they can differ slightly from the TVL in the table, which prices the tokens themselves.",
-  'A protocol also holds ETH not yet staked, or exited but not yet withdrawn, so Others can read slightly low. Days on which a protocol has no data show no Others.',
-  "In vs. Supply view, Not staked is the rest of ETH's supply, which is CoinGecko's market cap over its price. Above a protocol without data for a day, the stack shows nothing that day.",
+  'A protocol also holds ETH not yet staked, or exited but not yet withdrawn, so Other stakers can read slightly low. Days on which a protocol has no data show no Other stakers.',
+  `In vs. Supply view, Not staked is the rest of ETH's supply: ${SUPPLY_SOURCE} Above a protocol without data for a day, the stack shows nothing that day.`,
 ].join(' ')
 
 export function LiquidStakingTvlChart({
   projects,
   projectSeries,
-  summary,
+  latest,
   range,
 }: {
   projects: LiquidStakingChartProject[]
   projectSeries: LiquidStakingChartSeries[]
-  /** The latest numbers, from the server, whatever the chart's range. */
-  summary: LiquidStakingTvlSummary | undefined
+  /** The latest day, from the server, whatever the chart's range. */
+  latest: CompleteTvlBreakdown | undefined
   range: ChartRange
 }) {
   const trpc = useTRPC()
@@ -73,6 +75,11 @@ export function LiquidStakingTvlChart({
   const { data, isLoading, isPlaceholderData } = useChartQuery(
     trpc.defi.liquidStakingTvlChart,
     { range },
+  )
+
+  const changes = useMemo(
+    () => (data && latest ? getTvlChanges(data, latest) : undefined),
+    [data, latest],
   )
 
   const view = VIEWS[scope]
@@ -148,12 +155,16 @@ export function LiquidStakingTvlChart({
 
   return (
     <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
-      <LiquidStakingTvlBanner projects={projects} summary={summary} />
+      <LiquidStakingTvlBanner
+        projects={projects}
+        latest={latest}
+        changes={changes}
+      />
 
       <div className="grid min-w-0 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">
         <LiquidStakingTvlRail
           layers={stakedLayers}
-          latest={summary?.latest}
+          latest={latest}
           unit={unit}
           visibleKeys={visibleKeys}
           showAllSelected={showAllSelected}

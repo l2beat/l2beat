@@ -7,12 +7,13 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type {
+  CompleteTvlBreakdown,
   EthChange,
-  LiquidStakingTvlSummary,
+  TvlChanges,
 } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { formatEthStaked } from '../../liquidStakingMetrics'
+import { formatEthStaked, SUPPLY_SOURCE } from '../../liquidStakingMetrics'
 import type { LiquidStakingChartProject } from '../LiquidStakingCharts'
 import {
   formatChangeDates,
@@ -23,33 +24,35 @@ import {
 
 export function LiquidStakingTvlBanner({
   projects,
-  summary,
+  latest,
+  changes,
 }: {
   projects: LiquidStakingChartProject[]
-  summary: LiquidStakingTvlSummary | undefined
+  latest: CompleteTvlBreakdown | undefined
+  /** Over the chart's period. */
+  changes: TvlChanges | undefined
 }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-divider border-b px-4 py-4 md:px-6 md:py-5">
-      {summary ? (
+      {latest ? (
         <>
           <div className="min-w-0 flex-1">
             <div className="mb-1 font-medium text-label-value-12 text-secondary">
-              As of{' '}
-              {formatTimestamp(summary.latest.timestamp, { mode: 'date' })}
+              As of {formatTimestamp(latest.timestamp, { mode: 'date' })}
             </div>
-            <StakeSentence summary={summary} />
-            <LiquidSentence projects={projects} summary={summary} />
+            <StakeSentence latest={latest} />
+            <LiquidSentence projects={projects} latest={latest} />
           </div>
-          {(summary.stakeChange || summary.supplyChange) && (
+          {(changes?.stake || changes?.supply) && (
             <div className="flex shrink-0 items-center gap-5 tabular-nums">
-              {summary.stakeChange && (
-                <ChangeStat label="Staked" change={summary.stakeChange} />
+              {changes.stake && (
+                <ChangeStat label="Staked" change={changes.stake} />
               )}
-              {summary.stakeChange && summary.supplyChange && (
+              {changes.stake && changes.supply && (
                 <div className="h-8 w-px bg-divider" />
               )}
-              {summary.supplyChange && (
-                <ChangeStat label="Supply" change={summary.supplyChange} />
+              {changes.supply && (
+                <ChangeStat label="Supply" change={changes.supply} />
               )}
             </div>
           )}
@@ -61,8 +64,8 @@ export function LiquidStakingTvlBanner({
   )
 }
 
-function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
-  const { staked, supply, timestamp } = summary.latest
+function StakeSentence({ latest }: { latest: CompleteTvlBreakdown }) {
+  const { staked, supply, timestamp } = latest
   const supplyShare = shareOf(staked, supply)
   return (
     <p className="text-pretty font-semibold text-heading-20 text-primary tabular-nums leading-tight tracking-[-0.02em] md:text-heading-24">
@@ -74,8 +77,8 @@ function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
             </TooltipTrigger>
             <TooltipContent>
               The balance of all active validators as a share of ETH's supply,{' '}
-              {formatNumber(supply)} ETH: CoinGecko's market cap over its price,
-              at the start of {formatTimestamp(timestamp, { mode: 'date' })}.
+              {formatNumber(supply)} ETH at the start of{' '}
+              {formatTimestamp(timestamp, { mode: 'date' })}: {SUPPLY_SOURCE}
             </TooltipContent>
           </Tooltip>{' '}
           of all ETH is staked:{' '}
@@ -99,12 +102,12 @@ function StakeSentence({ summary }: { summary: LiquidStakingTvlSummary }) {
 
 function LiquidSentence({
   projects,
-  summary,
+  latest,
 }: {
   projects: LiquidStakingChartProject[]
-  summary: LiquidStakingTvlSummary
+  latest: CompleteTvlBreakdown
 }) {
-  const { liquid, staked, projects: ethByProject } = summary.latest
+  const { liquid, staked, projects: ethByProject } = latest
   const [largestId, largestEth] =
     maxBy(Object.entries(ethByProject), ([, eth]) => eth) ?? []
   const largest = projects.find((project) => project.id === largestId)
