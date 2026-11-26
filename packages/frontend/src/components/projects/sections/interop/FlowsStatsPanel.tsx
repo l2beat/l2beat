@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { MultipleChainsStats } from '~/pages/interop/components/flows/selection-panel/MultipleChainsStats'
 import { SingleChainStats } from '~/pages/interop/components/flows/selection-panel/SingleChainStats'
@@ -40,14 +42,15 @@ export function FlowsStatsPanel({
   })
 
   return (
-    <div className="@container rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
-      <div className="mb-3 font-bold text-label-value-12 uppercase">
+    <div className="@container rounded-lg bg-surface-secondary px-4 pt-3 pb-4 dark:bg-header-secondary">
+      <div className="mb-2.5 text-balance font-bold text-label-value-14 uppercase leading-5">
         {label}
       </div>
       {singleProtocolId && !hasRouteSelection ? (
         data && <BridgeFlowStats data={data} chainId={statsChainA} />
       ) : (
-        <div className="grid @min-[640px]:grid-cols-2 grid-cols-1 gap-2 @min-[640px]:[&>*:first-child]:row-span-3">
+        <div className="grid @min-[640px]:grid-cols-2 grid-cols-1 gap-2 max-sm:gap-0 @min-[640px]:[&>*:first-child]:row-span-3 max-sm:[&>*:not(:first-child)]:rounded-t-none max-sm:[&>*:not(:first-child)]:border-t-0 max-sm:[&>*:not(:last-child)]:rounded-b-none">
+          {/* On phones the sub-cards join into one stack split by dividers. */}
           {hasRouteSelection && statsChainB ? (
             <MultipleChainsStats
               chainIdA={statsChainA}
@@ -86,13 +89,28 @@ function getStatsLabel({
   statsChainA: string
   statsChainB: string | undefined
   hasRouteSelection: boolean
-}): string {
+}): ReactNode {
   const chainName = (chainId: string | undefined) =>
     interopChains.find((c) => c.id === chainId)?.name ?? chainId ?? ''
 
-  const baseLabel = hasRouteSelection
-    ? `${chainName(statsChainA)} <> ${chainName(statsChainB)} route stats`
-    : 'Chain stats'
+  // The icon, not a "↔" glyph: Roboto draws that as a hairline next to bold caps.
+  const baseLabel = hasRouteSelection ? (
+    <>
+      {chainName(statsChainA)}{' '}
+      {/* Keeps the arrow on the line of the chain it points to. */}
+      <span className="whitespace-nowrap">
+        <BidirectionalArrowIcon
+          aria-hidden
+          className="mr-1 inline size-3.5 fill-current align-[-0.125em]"
+        />
+        <span className="sr-only">{' and '}</span>
+        {chainName(statsChainB)}
+      </span>{' '}
+      route{'\u00a0'}stats
+    </>
+  ) : (
+    'Chain stats'
+  )
 
   if (selectedProtocols.length === protocols.length) {
     return baseLabel
@@ -105,5 +123,11 @@ function getStatsLabel({
         : (protocols.find((p) => p.id === singleProtocolId)?.name ?? 'protocol')
       : `${selectedProtocols.length} protocols`
 
-  return `${baseLabel}${DOT_SEPARATOR}${protocolSuffix}`
+  return (
+    <>
+      {baseLabel}
+      {DOT_SEPARATOR}
+      {protocolSuffix}
+    </>
+  )
 }

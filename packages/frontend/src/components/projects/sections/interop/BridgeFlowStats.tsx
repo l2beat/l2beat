@@ -3,6 +3,8 @@ import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { AvgDurationStatValue } from '~/pages/interop/components/flows/selection-panel/AvgDurationStatValue'
 import { getChainFlowStatItems } from '~/pages/interop/components/flows/selection-panel/getChainFlowStatItems'
+import { StatsCardHeader } from '~/pages/interop/components/flows/selection-panel/StatsCardHeader'
+import { describeChainScope } from '~/pages/interop/components/flows/utils/describeChainScope'
 import { useInteropFlows } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
@@ -21,7 +23,8 @@ export function BridgeFlowStats({
   data: InteropFlowsData
   chainId: string
 }) {
-  const { allChains, setHighlightedChainPair } = useInteropFlows()
+  const { allChains, selectedChains, setHighlightedChainPair } =
+    useInteropFlows()
 
   const chainData = data.chainData.find((c) => c.chainId === chainId)
   if (!chainData) return null
@@ -55,7 +58,7 @@ export function BridgeFlowStats({
       value: (
         <span className="flex items-center gap-1">
           {src && <img src={src.iconUrl} alt={src.name} className="size-4" />}
-          <ArrowRightIcon className="size-3 fill-brand" />
+          <ArrowRightIcon className="size-4 fill-brand" />
           {dst && <img src={dst.iconUrl} alt={dst.name} className="size-4" />}
           <span className="ml-1">{formatCurrency(topFlow.volume, 'usd')}</span>
         </span>
@@ -70,12 +73,12 @@ export function BridgeFlowStats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
-        Stats
-      </div>
-      <div className="grid @min-[520px]:grid-cols-2 grid-cols-1 gap-x-12 gap-y-1.5">
+      <StatsCardHeader
+        scope={describeChainScope(selectedChains.length, allChains.length)}
+      />
+      <div className="grid @min-[520px]:grid-cols-2 grid-cols-1 gap-x-12 gap-y-1">
         {columns.map((column, i) => (
-          <div key={i} className="flex flex-col gap-1.5">
+          <div key={i} className="flex flex-col gap-1">
             {column.map((item) => (
               <StatRow key={item.label} item={item} />
             ))}
@@ -89,13 +92,20 @@ export function BridgeFlowStats({
 function StatRow({ item }: { item: StatItem }) {
   const content = (
     <>
-      <span className="font-normal leading-none">{item.label}</span>
-      <div className={cn('font-semibold leading-[1.15]', item.valueClassName)}>
+      <span className="whitespace-nowrap font-normal leading-4">
+        {item.label}
+      </span>
+      <div
+        className={cn(
+          'text-right font-semibold leading-4',
+          item.valueClassName,
+        )}
+      >
         {item.value}
       </div>
     </>
   )
-  const className = 'flex items-center justify-between gap-2 text-[13px]'
+  const className = 'flex items-start justify-between gap-2 text-label-value-13'
   return item.onClick ? (
     <button
       type="button"

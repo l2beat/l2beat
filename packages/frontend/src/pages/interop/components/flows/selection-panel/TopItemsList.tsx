@@ -20,7 +20,7 @@ export function TopItemsList({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
+      <div className="mb-2 font-bold text-label-value-12 uppercase">
         {label}
       </div>
       <div className="space-y-1">
@@ -33,20 +33,23 @@ export function TopItemsList({
 }
 
 function TopItemRow({ item }: { item: TopItem }) {
-  const className = 'flex items-center justify-between gap-2 text-[13px]'
+  const className =
+    'flex items-center justify-between gap-2 text-label-value-13'
 
   if (item.href) {
     return (
       <a href={item.href} className={`${className} group`}>
-        <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
+        <span className="flex min-w-0 items-center gap-2 font-normal leading-4">
           <img
             src={item.iconUrl}
             alt={item.title}
             className="size-4 shrink-0"
           />
-          <span className="truncate group-hover:underline">{item.title}</span>
+          <span className="truncate group-hover:underline group-focus-visible:underline">
+            {item.title}
+          </span>
         </span>
-        <span className="shrink-0 font-semibold leading-[1.15]">
+        <span className="shrink-0 font-semibold leading-4">
           {formatCurrency(item.volume, 'usd')}
         </span>
       </a>
@@ -55,11 +58,11 @@ function TopItemRow({ item }: { item: TopItem }) {
 
   return (
     <div className={className}>
-      <span className="flex min-w-0 items-center gap-1 font-normal leading-none">
+      <span className="flex min-w-0 items-center gap-2 font-normal leading-4">
         <img src={item.iconUrl} alt={item.title} className="size-4 shrink-0" />
         <span className="truncate">{item.title}</span>
       </span>
-      <span className="shrink-0 font-semibold leading-[1.15]">
+      <span className="shrink-0 font-semibold leading-4">
         {formatCurrency(item.volume, 'usd')}
       </span>
     </div>

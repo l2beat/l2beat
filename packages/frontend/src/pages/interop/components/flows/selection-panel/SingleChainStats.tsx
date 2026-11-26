@@ -6,13 +6,13 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { describeChainScope } from '../utils/describeChainScope'
 import { getChainFlowDerivedStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { getChainFlowStatItems } from './getChainFlowStatItems'
+import { StatsCardHeader } from './StatsCardHeader'
 import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
@@ -101,15 +101,10 @@ function Stats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 flex items-baseline justify-between gap-2">
-        <span className="font-bold text-label-value-12 uppercase">Stats</span>
-        <span className="font-medium text-label-value-12 text-secondary">
-          Last 24h
-          {DOT_SEPARATOR}
-          {describeChainScope(selectedChainCount, chainCount)}
-        </span>
-      </div>
-      <div className="space-y-1.5">
+      <StatsCardHeader
+        scope={describeChainScope(selectedChainCount, chainCount)}
+      />
+      <div className="space-y-1">
         {getChainFlowStatItems(chainData).map((item) => (
           <StatRow
             key={item.label}
@@ -163,7 +158,7 @@ function TopRoutes({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12 uppercase">
+      <div className="mb-2 font-bold text-label-value-12 uppercase">
         Top routes
       </div>
       <div className="space-y-1">
@@ -219,20 +214,15 @@ function StatRow({
   onClick?: () => void
 }) {
   const baseClassName =
-    'flex w-full items-start justify-between gap-2 text-[13px]'
+    'flex w-full items-start justify-between gap-2 text-label-value-13'
   const content = (
     <>
-      <span className="whitespace-nowrap font-normal leading-none">
-        {label}
-      </span>
+      <span className="whitespace-nowrap font-normal leading-4">{label}</span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
         <div
-          className={cn(
-            'text-right font-semibold leading-[1.15]',
-            valueClassName,
-          )}
+          className={cn('text-right font-semibold leading-4', valueClassName)}
         >
           {value}
         </div>
