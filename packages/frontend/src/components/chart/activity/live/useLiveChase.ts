@@ -22,7 +22,14 @@ export function useLiveChase({
   /** Seconds the target has moved on since it was drawn */
   ahead: () => number
 }) {
-  const [chasing, setChasing] = useState<{ key: string; view: View }>()
+  // where it set off from and when, so a render the pointer or keys bring
+  // about draws where the view has got to as well, not only the next frame
+  const [chasing, setChasing] = useState<{
+    key: string
+    from: View
+    at: number
+  }>()
+  const [, setFrame] = useState(0)
   const shown = useRef<{ key: string; view: View }>(undefined)
   const goal = useRef({ target, ahead })
   goal.current = { target, ahead }
@@ -31,11 +38,11 @@ export function useLiveChase({
   let next = chasing
   if (!animate || !target) next = undefined
   else if (before && before.key !== windowKey && chasing?.key !== windowKey) {
-    next = { key: windowKey, view: before.view }
+    next = { key: windowKey, from: before.view, at: performance.now() }
   }
   if (next !== chasing) setChasing(next)
-  const view = next?.view ?? target
   const moving = next !== undefined
+  const view = (next && target && chaseFrom(next, target, ahead())) ?? target
 
   useLayoutEffect(() => {
     shown.current = view && { key: windowKey, view }
@@ -44,22 +51,14 @@ export function useLiveChase({
   useLayoutEffect(() => {
     if (!moving) return
     let frame = 0
-    let at = performance.now()
     const step = () => {
-      const now = performance.now()
-      const elapsed = now - at
-      at = now
-      setChasing((current) => {
-        const { target, ahead } = goal.current
-        if (!current || !target) return undefined
-        const by = ahead()
-        const view = chase(
-          current.view,
-          [target[0] + by, target[1] + by],
-          elapsed,
-        )
-        return view && { ...current, view }
-      })
+      const { target, ahead } = goal.current
+      setChasing((current) =>
+        current && target && chaseFrom(current, target, ahead())
+          ? current
+          : undefined,
+      )
+      setFrame((frame) => frame + 1)
       frame = requestAnimationFrame(step)
     }
     frame = requestAnimationFrame(step)
@@ -67,4 +66,16 @@ export function useLiveChase({
   }, [moving])
 
   return { view, moving }
+}
+
+function chaseFrom(
+  { from, at }: { from: View; at: number },
+  target: View,
+  ahead: number,
+) {
+  return chase(
+    from,
+    [target[0] + ahead, target[1] + ahead],
+    performance.now() - at,
+  )
 }
