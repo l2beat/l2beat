@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
   getLatestTvsByProject,
+  getSyncedProjectIds,
   getTvsRangeStart,
   toProjectsData,
 } from './getProjectsData'
@@ -138,7 +139,7 @@ describe(getLatestTvsByProject.name, () => {
   it('takes the breakdown from the latest row and the change from both', () => {
     const result = getLatestTvsByProject(
       [tvsRow('arbitrum', SEVEN_DAYS_AGO, 80), tvsRow('arbitrum', NOW, 100)],
-      ['arbitrum-USDC'],
+      new Set(['arbitrum']),
     )
 
     expect(result.get('arbitrum')).toEqual({
@@ -154,7 +155,7 @@ describe(getLatestTvsByProject.name, () => {
   it('reports change7d as null without a value from seven days before', () => {
     const result = getLatestTvsByProject(
       [tvsRow('base', NOW, 100)],
-      ['base-ETH'],
+      new Set(['base']),
     )
     expect(result.get('base')?.change7d).toEqual(null)
   })
@@ -171,7 +172,7 @@ describe(getLatestTvsByProject.name, () => {
         tvsRow('emptied', SEVEN_DAYS_AGO, 100),
         tvsRow('emptied', NOW, 0),
       ],
-      ['rising-ETH', 'emptied-ETH'],
+      new Set(['rising', 'emptied']),
     )
     expect(result.get('rising')?.change7d).toEqual(null)
     expect(result.get('emptied')?.change7d).toEqual(-1)
@@ -182,9 +183,27 @@ describe(getLatestTvsByProject.name, () => {
   it('skips projects the TVS backend has no sync metadata for', () => {
     const result = getLatestTvsByProject(
       [tvsRow('stale', NOW, 100)],
-      ['other-ETH'],
+      new Set(['other']),
     )
     expect(result.has('stale')).toEqual(false)
+  })
+})
+
+describe(getSyncedProjectIds.name, () => {
+  // Why: sync records are named after tokens, and one project's id can start
+  // another's ("arbitrum", "arbitrum-orbit"). A prefix match would let the
+  // longer project's record vouch for the shorter one's stale TVS.
+  // How: two such projects, with a sync record only for the longer one's token.
+  it('does not count a sync record of a project whose id only starts the same', () => {
+    const synced = getSyncedProjectIds(
+      [
+        { id: 'arbitrum', tvsConfig: [{ id: 'arbitrum-USDC' }] },
+        { id: 'arbitrum-orbit', tvsConfig: [{ id: 'arbitrum-orbit-ETH' }] },
+      ],
+      ['arbitrum-orbit-ETH'],
+    )
+
+    expect([...synced]).toEqual(['arbitrum-orbit'])
   })
 })
 

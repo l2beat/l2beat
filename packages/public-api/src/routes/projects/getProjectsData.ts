@@ -43,8 +43,7 @@ export async function getProjectsData(
   const [projects, projectsWithTvs, updateDiffs, tvsTimestamp] =
     await Promise.all([
       ps.getProjects({ optional: [...PROJECT_KEYS] }),
-      // Only the ids: a tvsConfig is far larger than the rest of a project
-      ps.getProjects({ where: ['tvsConfig'] }),
+      ps.getProjects({ select: ['tvsConfig'] }),
       db.updateDiff.getAll(),
       getLatestTvsTimestamp(db),
     ])
@@ -70,7 +69,10 @@ export async function getProjectsData(
     projects,
     tvs: getLatestTvsByProject(
       tvsRows,
-      tvsSyncMetadata.map((r) => r.id),
+      getSyncedProjectIds(
+        projectsWithTvs,
+        tvsSyncMetadata.map((r) => r.id),
+      ),
     ),
     changeReport,
   })
@@ -161,7 +163,7 @@ type TvsRow = Awaited<
  */
 export function getLatestTvsByProject(
   rows: TvsRow[],
-  syncMetadataIds: string[],
+  syncedProjectIds: Set<string>,
 ): Map<string, ProjectTvs> {
   const result = new Map<string, ProjectTvs>()
   // The query returns at most two rows per project, sorted by timestamp:
@@ -169,8 +171,7 @@ export function getLatestTvsByProject(
   for (const [projectId, projectRows] of Object.entries(
     groupBy(rows, (r) => r.project),
   )) {
-    // Sync metadata ids are <projectId>-<tokenId>, e.g. "arbitrum-USDC"
-    if (!syncMetadataIds.some((id) => id.startsWith(`${projectId}-`))) {
+    if (!syncedProjectIds.has(projectId)) {
       continue
     }
     const latest = projectRows.at(-1)
@@ -192,6 +193,24 @@ export function getLatestTvsByProject(
     })
   }
   return result
+}
+
+/**
+ * The projects with a sync record for at least one of their tokens. TVS sync
+ * records are kept per token, under the token's id. The ids are matched whole
+ * and not by their project prefix, as "arbitrum-" also starts the tokens of
+ * arbitrum-orbit.
+ */
+export function getSyncedProjectIds(
+  projects: { id: string; tvsConfig: { id: string }[] }[],
+  syncMetadataIds: string[],
+): Set<string> {
+  const syncedTokenIds = new Set(syncMetadataIds)
+  return new Set(
+    projects
+      .filter((p) => p.tvsConfig.some((token) => syncedTokenIds.has(token.id)))
+      .map((p) => p.id),
+  )
 }
 
 /**
