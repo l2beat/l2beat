@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x8fe272f956cb75fcd337d0e407841ac791d526ff
+
+# Diff at Thu, 26 Nov 2026 11:18:55 GMT:
+
+- id: 559acaf2
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3b475876fb5d8d57231ef4725c99e8ee6d056615 block: 1795519933
+- current timestamp: 1795691872
+
+## Description
+
+L1CoreMessaging is added to UpgradeGatekeeper's managed contracts, so it can now be upgraded through the gatekeeper.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
++++ description: The proxies whose implementations this gatekeeper can upgrade.
++++ severity: HIGH
+      values.managedContracts.3:
++        "eth:0x183ef7195d443a3dA7EC1d7003BaCa1ff490757D"
+    }
+```
+
 Generated with discovered.json: 0x58c916ace1cf5552d3eca5920d4a6c969459a1b7
 
 # Diff at Tue, 24 Nov 2026 11:39:31 GMT:

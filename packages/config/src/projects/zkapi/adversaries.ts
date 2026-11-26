@@ -7,7 +7,7 @@ import type { PrivacyExposureMap } from '../../types'
 const SRC =
   'https://github.com/ethereum/zkapi/blob/045b444ea1b52538d1b40273c7cb6ed09468a052/'
 const OA_CHAT =
-  'https://github.com/OpenAnonymity/oa-chat/blob/a20f2e043a7f43758b0fbfc521b01f63a3b98cb9/'
+  'https://github.com/OpenAnonymity/oa-chat/blob/50d39b852c7967e9f72c04f38ec417f08b6a607f/'
 
 // Linkage here is deposit-to-request. Deposits and withdrawals of one note are
 // publicly linked by note id, which the promise says.

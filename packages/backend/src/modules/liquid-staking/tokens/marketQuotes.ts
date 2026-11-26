@@ -141,6 +141,22 @@ export function getMarketQuote(
         },
       }
     }
+    case 'via': {
+      const first = getMarketQuote(soldToken, quote.first)
+      const then = bestOf(
+        quote.then.map((step) => getMarketQuote(quote.token, step)),
+      )
+      return {
+        calls: [...first.calls, ...then.calls],
+        decode: (responses) => {
+          const paid = first.decode(responses.slice(0, first.calls.length))
+          if (paid === undefined || paid === 0n) return undefined
+          const out = then.decode(responses.slice(first.calls.length))
+          // The second step sold one token; scale it to what the first paid.
+          return out === undefined ? undefined : (paid * out) / MARKET_SALE
+        },
+      }
+    }
     case 'fluid':
       return single(
         encodeCall(abi, quote.pool, 'swapIn', [
@@ -157,6 +173,27 @@ export function getMarketQuote(
           )
         },
       )
+  }
+}
+
+/** The quotes' calls in order, decoded to the most ETH any of them pays. */
+export function bestOf(quotes: MarketQuote[]): MarketQuote {
+  return {
+    calls: quotes.flatMap((quote) => quote.calls),
+    decode: (responses) => {
+      let next = 0
+      let best: bigint | undefined
+      for (const quote of quotes) {
+        const out = quote.decode(
+          responses.slice(next, next + quote.calls.length),
+        )
+        next += quote.calls.length
+        // A sale that pays nothing wasn't filled.
+        if (out !== undefined && out > 0n && (best === undefined || out > best))
+          best = out
+      }
+      return best
+    },
   }
 }
 

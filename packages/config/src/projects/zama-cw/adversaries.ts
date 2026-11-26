@@ -10,9 +10,9 @@ const WRAPPER =
   'https://github.com/zama-ai/protocol-apps/blob/85eef95c797da20875fe7eeae7f8d212d760486f/contracts/confidential-wrapper/contracts/ConfidentialWrapper.sol'
 const FHEVM =
   'https://github.com/zama-ai/fhevm/blob/e3a7d1e263655f2b0dbd6230c3b00a7693fb8609/'
-// @zama-fhe/sdk v3.7.1, the version the app bundles.
+// @zama-fhe/sdk v3.8.0, the version the app bundles.
 const SDK =
-  'https://github.com/zama-ai/sdk/blob/cc1d5589a242987ceb1ca083bb0b4523b08e3d21/packages/sdk/src/'
+  'https://github.com/zama-ai/sdk/blob/c908f7709007fd501fa0afb50c43bbeabbc96266/packages/sdk/src/'
 
 const INTERIOR: PrivacyExposureMap = {
   sender: 'exposed',

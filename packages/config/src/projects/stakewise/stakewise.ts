@@ -250,6 +250,26 @@ export const stakewise: BaseProject = {
           ),
           swap0to1: false,
         },
+        // Curve's osETH/rETH pool is the other deep market. It quotes in the
+        // hours Fluid's pool is out of range and Balancer can't pay its WETH.
+        {
+          type: 'via',
+          token: ChainSpecificAddress(
+            'eth:0xae78736Cd615f374D3085123A210448E74Fc6393',
+          ),
+          first: {
+            type: 'curve',
+            pool: ChainSpecificAddress(
+              'eth:0xe080027Bd47353b5D1639772b4a75E9Ed3658A0d',
+            ),
+            i: 0,
+            j: 1,
+          },
+          then: [
+            { type: 'uniswapV3', fee: 100 },
+            { type: 'uniswapV3', fee: 500 },
+          ],
+        },
       ],
     },
     risks: {

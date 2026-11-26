@@ -1150,6 +1150,32 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-iPAXG",
+      "priceId": "pax-gold",
+      "symbol": "iPAXG",
+      "name": "EtherFi PAXG",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9519/large/asset-paxg.png?1785284785",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x41a7f2bb9789199654c206f09392674c1Af6676c",
+        "chain": "optimism",
+        "decimals": 18,
+        "sinceTimestamp": 1786030791
+      },
+      "category": "rwaPublic",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "optimism-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",

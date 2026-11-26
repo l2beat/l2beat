@@ -58,9 +58,9 @@ export const cloaked: BaseProject = {
       since: '2026-09-16',
       delivery: { type: 'hosted' },
       // Vercel deployment id of the served app (app.clkd.xyz/api/version),
-      // signing vault auth.clkd.xyz/v18.
-      build: 'dpl_3UYSbH2uPmN6dQXeR7NKXrnJ6Dfz',
-      checked: '2026-11-18',
+      // signing vault auth.clkd.xyz/v22.
+      build: 'dpl_Ga3LL7q8rmX6p7NEF8jyPmMDHjDT',
+      checked: '2026-11-26',
       checkedApps: [
         {
           name: 'Cloaked browser extension',

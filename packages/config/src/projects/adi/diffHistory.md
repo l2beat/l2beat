@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2985f9057f196e479e4c7257d8e97d6391e89e52
+
+# Diff at Thu, 26 Nov 2026 11:17:48 GMT:
+
+- id: cbfcaa5c
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3b475876fb5d8d57231ef4725c99e8ee6d056615 block: 1795519471
+- current timestamp: 1795691804
+
+## Description
+
+Scheduled (not executed) Governance proposals to upgrade to protocol v0.31.2 and to accept ownership of ValidatorTimelock, L1NativeTokenVault and L1Nullifier. ValidatorTimelock gets upgraded to MultisigCommitter (signature threshold 0, so no change to committing).
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        15
++        20
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8253F33026c49A430963FE3991441c02175bda95"
+    }
+```
+
 Generated with discovered.json: 0x925c3c09d91148425e245d29a6151e06778433ba
 
 # Diff at Tue, 24 Nov 2026 11:26:05 GMT:

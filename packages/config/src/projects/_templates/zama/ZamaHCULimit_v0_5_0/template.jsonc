@@ -1,0 +1,115 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HCULimit",
+  "description": "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations. v0.5.0 adds a computation allowlist: while it is activated, FHE operations revert for callers that are not listed.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": ["getBlockMeter"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for HCULimit administration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ aclAddress }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the HCULimit implementation."
+        },
+        {
+          "type": "interact",
+          "description": "change the per-block and per-transaction HCU limits, manage callers that bypass the per-block limit, activate the computation allowlist, appoint time-limited allowlisters and remove allowlisted callers."
+        }
+      ]
+    },
+    "getFHEVMExecutorAddress": {
+      "description": "FHEVMExecutor contract allowed to report operation HCU usage to this contract.",
+      "type": "EXTERNAL"
+    },
+    "aclAddress": {
+      "description": "ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "call",
+        "method": "function getACLAddress() view returns (address)",
+        "args": [],
+        "address": "{{ getFHEVMExecutorAddress }}"
+      }
+    },
+    "getGlobalHCUCapPerBlock": {
+      "description": "Maximum HCU consumed by non-whitelisted callers in one block.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getMaxHCUDepthPerTx": {
+      "description": "Maximum sequential HCU depth allowed in one transaction.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getMaxHCUPerTx": {
+      "description": "Maximum total HCU allowed in one transaction.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockHCUWhitelist": {
+      "description": "Callers that bypass the global per-block HCU cap, reconstructed from whitelist events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "BlockHCUWhitelistAdded" },
+        "remove": { "event": "BlockHCUWhitelistRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit FHE operations without being subject to the global per-block HCU cap."
+        }
+      ]
+    },
+    "getBlockMeter": {
+      "description": "HCU consumed by non-whitelisted callers in the current block."
+    },
+    "isAllowlistActivated": {
+      "description": "Whether the computation allowlist is enforced. While true, FHE operations revert for callers the ACL owner or an allowlister has not listed.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "allowlisters": {
+      "description": "Accounts the ACL owner appointed to add callers to the computation allowlist, each until its deadline (Unix seconds). An expired grant stays listed until it is removed.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": ["account", "deadline"],
+        "dedupBy": "account",
+        "add": { "event": "AllowlisterAdded" },
+        "remove": { "event": "AllowlisterRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add callers to the computation allowlist until the deadline of the grant."
+        }
+      ]
+    },
+    "allowlist": {
+      "description": "Callers on the computation allowlist. While the allowlist is activated, only they can request FHE operations.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "AllowlistAdded" },
+        "remove": { "event": "AllowlistRemoved" },
+        "ignoreRelative": true
+      }
+    }
+  }
+}

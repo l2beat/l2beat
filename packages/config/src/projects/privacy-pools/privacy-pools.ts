@@ -219,6 +219,15 @@ export const privacyPools: BaseProject = {
           source:
             'https://github.com/microprivacy/moneysurfer/blob/36c0e82e3a6bd5c452806f9b32786208fb8aad55/src/v1/chain.ts#L458-L495',
         },
+        {
+          name: 'kohaku-cli',
+          icon: 'kohaku-cli',
+          finding:
+            'Withdraws only through its own paymaster contract, which marks each withdrawal onchain as made with this app, among few others.',
+          fix: 'Offer the relayers v1.privacypools.com uses as a withdrawal path.',
+          source:
+            'https://github.com/kassandraoftroy/kohaku-cli/blob/0b5835ea05fc1c19ae676ba73502aad5cb1646c3/src/utils/plugins.ts#L251-L255',
+        },
       ],
     },
     trackedOn: ['ethereum'],

@@ -1,5 +1,6 @@
 import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
+import { ankr } from '../projects/ankr/ankr'
 import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
@@ -38,10 +39,12 @@ import { lido } from '../projects/lido/lido'
 import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
+import { liquidcollective } from '../projects/liquidcollective/liquidcollective'
 import { liquityv2 } from '../projects/liquityv2/liquityv2'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { meson } from '../projects/meson/meson'
+import { meth } from '../projects/meth/meth'
 import { monad } from '../projects/monad/monad'
 import { moneroCakeWallet } from '../projects/monero-cake-wallet/monero-cake-wallet'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
@@ -53,15 +56,19 @@ import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { rocketpool } from '../projects/rocketpool/rocketpool'
+import { rsweth } from '../projects/rsweth/rsweth'
 import { safe } from '../projects/safe/safe'
+import { sfrxeth } from '../projects/sfrxeth/sfrxeth'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
 import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { splitsv2 } from '../projects/splitsv2/splitsv2'
+import { stader } from '../projects/stader/stader'
 import { stakewise } from '../projects/stakewise/stakewise'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { strk20 } from '../projects/strk20/strk20'
 import { stwo } from '../projects/stwo/stwo'
+import { sweth } from '../projects/sweth/sweth'
 import { tacitPay } from '../projects/tacit-pay/tacit-pay'
 import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
@@ -155,6 +162,14 @@ export const refactored: BaseProject[] = [
   safe,
   splitsv2,
   eas,
+  // liquid staking, not reviewed
+  liquidcollective,
+  meth,
+  stader,
+  sfrxeth,
+  ankr,
+  sweth,
+  rsweth,
   // privacy
   cloaked,
   fluidkey,

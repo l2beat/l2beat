@@ -814,7 +814,13 @@ export class TokenIngestionProcessor {
       )
 
       for (const address of addresses) {
-        const normalizedAddress = normalizeInteropTokenAddress(address.address)
+        let normalizedAddress: string | undefined
+        try {
+          normalizedAddress = normalizeInteropTokenAddress(address.address)
+        } catch {
+          // Skip an unparseable platform address without discarding the coin map.
+          continue
+        }
         if (!normalizedAddress) continue
 
         coinMap.set(

@@ -26,8 +26,10 @@ export interface CropDefinition {
   /** The chip under the plant. */
   letter: string
   label: string
-  /** A standing caveat, shown above the findings wherever the crop is explained. */
+  /** A standing caveat, shown above the findings wherever the crop is explained in full. */
   note?: string
+  /** The caveat in one line, for the garden tooltip. */
+  shortNote?: string
 }
 
 export const CROP_COLUMNS: CropDefinition[] = [
@@ -51,6 +53,8 @@ export const CROP_COLUMNS: CropDefinition[] = [
     letter: 'S',
     label: 'Security',
     note: "Security is a complex property. We evaluate if the projects follow best practices. This is not an audit or an endorsement of a protocol's security, and never a guarantee that funds are safe.",
+    shortNote:
+      'This review is not an audit or an endorsement, and never a guarantee that funds are safe.',
   },
 ]
 
@@ -95,7 +99,7 @@ export interface CropEntry {
 
 export function toCropEntries(
   crops: ResolvedCrops,
-  ossification: string[],
+  ossification: string[] = [],
 ): CropEntry[] {
   return CROP_COLUMNS.map((definition) => ({
     definition,

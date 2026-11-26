@@ -181,11 +181,11 @@ export const zkapi: BaseProject = {
       url: 'https://chat.openanonymity.ai',
       since: '2026-10-12',
       delivery: { type: 'hosted' },
-      // build.json of the served build SZD7DK34 names oa-chat a20f2e04. The
+      // build.json of the served build B725JITC names oa-chat 50d39b85. The
       // landing and sign-in pages and the Fathom loader come from a private
-      // repository, so the app counts as closed. Sources pin a20f2e04.
-      build: 'SZD7DK34',
-      checked: '2026-11-18',
+      // repository, so the app counts as closed. Sources pin 50d39b85.
+      build: 'B725JITC',
+      checked: '2026-11-26',
       checkedApps: [
         {
           name: 'openzk.app',
