@@ -102,7 +102,7 @@ export function hinkalAdversaries(upgradeDelay: string) {
       chainAnalyst: {
         sentiment: 'warning',
         exposureShort:
-          "A withdrawal hides among its token's depositors who left funds in the pool: about 120 for ETH, 55 each for USDT and USDC.",
+          "A withdrawal hides among its token's depositors who left funds in the pool, fewer than 1,000 for every token.",
         exposureContinued:
           'Most USDT deposits are followed within ten minutes by a withdrawal of about the same amount, which pairs the two. An unusual amount withdrawn whole links a deposit to its withdrawal.',
         interior: {

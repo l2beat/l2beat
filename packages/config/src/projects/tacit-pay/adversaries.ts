@@ -91,19 +91,36 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       ],
     },
     chainAnalyst: {
-      sentiment: 'bad',
+      sentiment: 'warning',
       exposureShort:
-        'About 50 wallets deposited into the Ethereum pool, besides wallets that only cycle funds back, so timing and amounts can pair the two ends.',
+        'anon.wei fills every unused output with a dummy note, which other apps leave empty, so its withdrawals hide only among its own deposits and sweeps of deposit addresses, from fewer than 1,000 wallets.',
       exposureContinued: `Any amount is allowed, so an unusual amount pairs the two ends. ${S.walletFingerprint('relay')}`,
       interior: {
         ...INTERIOR,
-        linkage: 'exposed',
+        linkage: {
+          verdict: 'atRisk',
+          note: 'Private only with a common amount and a wait, among few candidate deposits.',
+        },
       },
       sources: [
         {
+          title: 'anon.wei fills an unused output with a zero-value note',
+          url: PAGE + '#L2685-L2691',
+        },
+        {
           title:
-            'Pool deposits: 44 direct depositors and at most 13 more through deposit addresses and zaps, self-cycling wallets excluded',
-          checked: '2026-11-13',
+            "anon.wei's sweep of a deposit address fills one output and leaves the other empty",
+          url: PAGE + '#L3098-L3110',
+        },
+        {
+          title:
+            "Tacit's wallet library, which tacit.finance uses, leaves an unused output empty",
+          url: TACIT + 'dapp/evm-pool-wallet.js#L933',
+        },
+        {
+          title:
+            'Two-output transactions: 139 of 581 withdrawals, and 109 of 653 deposits from 40 wallets. 22 sweeps of deposit addresses add 11 wallets',
+          checked: '2026-11-26',
           url: 'https://etherscan.io/address/0x000000c2A20657CE25f2Ba99737933D031AFBEE9',
         },
         {
@@ -235,9 +252,15 @@ export const tacitPayAdversaries = definePrivacyAdversaries({
       against: ['networkObserver', 'publicObserver'],
     },
     {
+      name: 'Wait',
+      text: A.wait,
+      against: ['chainAnalyst'],
+      randomWait: true,
+    },
+    {
       name: 'Withdraw',
-      text: A.relayer('relay'),
-      against: ['publicObserver'],
+      text: `${A.relayer('relay')} ${A.commonAmounts}`,
+      against: ['publicObserver', 'chainAnalyst'],
     },
   ],
 })

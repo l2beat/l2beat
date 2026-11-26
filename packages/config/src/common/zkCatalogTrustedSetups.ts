@@ -310,11 +310,11 @@ export const TRUSTED_SETUPS = {
         count: 176,
         unit: 'contributions',
         description:
-          'From 120 keys, 171 named "anonymous" and 5 operator test entries. One contribution is tied to a public account.',
+          'From 120 keys, 171 named "anonymous" and 5 operator test entries.',
       },
     },
     shortDescription:
-      'Circuit-specific trusted setup for the Groth16 transact circuit over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions from 120 keys, and one is tied to a public account, so the number of independent participants is unknown. Proving system could be broken if either phase 1 or 2 is compromised.',
+      'Circuit-specific trusted setup for the Groth16 transact circuit over BN254. Phase 1 used 54 participant contributions and a public randomness beacon. Phase 2 counts 176 contributions from 120 keys, however there are no public identifiers and no public ceremony announcement, so it impossible to verify whether Phase 2 participants were distinct entities.',
     longDescription: readMarkdown('common/trustedSetups/TacitPay.md'),
   },
   Hinkal: {

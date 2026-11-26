@@ -1,6 +1,6 @@
 {
   "name": "fluidkey",
-  "timestamp": 1792144252,
+  "timestamp": 1795702398,
   "configHash": "0x71d98b475cc05d2f3897c2b044b30e83e4e60ea0725c6b691d9b83dd4ee5dd36",
   "entries": [
     {
@@ -100,7 +100,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -220,7 +220,7 @@
         ],
         "$upgradeCount": 1,
         "decimals": 18,
-        "holders": 2204,
+        "holders": 4670,
         "name": "Fluidkey Score",
         "owner": "base:0x9E3eba321427941868cB4123De97DAB145C9e7CD",
         "symbol": "FKS",
@@ -266,7 +266,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -435,7 +435,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 6,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -482,7 +482,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -597,7 +597,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -717,7 +717,7 @@
         "getChainId": 137,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -837,7 +837,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1664,12 +1664,12 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 515339592,
-    "base": 52677452,
-    "ethereum": 26204309,
-    "gnosis": 48784392,
-    "optimism": 158272737,
-    "polygonpos": 95625944
+    "arbitrum": 527746809,
+    "base": 62560116,
+    "ethereum": 26499896,
+    "gnosis": 49479974,
+    "optimism": 160051810,
+    "polygonpos": 97997949
   },
   "permissionsConfigHash": "0x371809e28349e048c51f6e732bb69ecf4593111970edb74312c87cb44f07946e",
   "permissions": {
