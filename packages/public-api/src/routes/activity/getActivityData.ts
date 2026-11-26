@@ -60,9 +60,14 @@ async function getFullySyncedActivityRange(
 }
 
 /**
- * The last day whose count is complete for at least one of the projects,
- * the same rule the website uses for a project's activity chart. A sum of
- * many projects is cut at its most synced project.
+ * The last day whose count is complete for at least one of the projects. A
+ * sum of many projects is cut at its most synced project.
+ *
+ * Like the website's project chart, a project with no sync record gets no
+ * points. Unlike it, a project synced by day or by hour (no block target)
+ * that fell behind ends at the last day it read: the website's
+ * isFeatureSynced takes it as synced up to its target, and draws the days
+ * in between as 0.
  */
 function getLastSyncedDay(
   records: SyncMetadataRecord[],
