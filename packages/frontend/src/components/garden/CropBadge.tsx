@@ -27,7 +27,8 @@ export function CropBadge({
   children: ReactNode
 }) {
   return (
-    <Tooltip>
+    // The tooltip holds links, so the pointer must be able to move into it.
+    <Tooltip disableHoverableContent={false}>
       <TooltipTrigger asChild>
         <span className="hover:-translate-y-0.5 transition-transform duration-200">
           <CropPlant

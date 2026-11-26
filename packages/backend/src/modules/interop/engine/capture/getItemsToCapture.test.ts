@@ -1,5 +1,7 @@
-import type { Block, Log } from '@l2beat/shared-pure'
+import { type Block, EthereumAddress, type Log } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { GasZipPlugin } from '../../plugins/gaszip/gaszip.plugin'
+import { InteropConfigStore } from '../config/InteropConfigStore'
 import { getItemsToCapture } from './getItemsToCapture'
 
 describe(getItemsToCapture.name, () => {
@@ -58,6 +60,26 @@ describe(getItemsToCapture.name, () => {
     expect(otherChain).not.toExactlyEqual(first)
     expect(otherBlock).not.toExactlyEqual(first)
     expect(otherLogs).toEqual(first)
+  })
+
+  it('checksums addresses the RPC sends lowercase', () => {
+    const depositEoa = '0x391e7c679d29bd940d63be94ad22a25d25b5a604'
+    const block = makeBlock([
+      { hash: '0xa', to: depositEoa, data: '0x010037', value: 1n },
+    ])
+    const logs = [{ ...makeLog('0xa', 0), address: depositEoa }]
+
+    const { txsToCapture, logsToCapture } = getItemsToCapture(
+      'ethereum',
+      block,
+      logs,
+    )
+
+    expect(logsToCapture[0]?.log.address).toEqual(
+      EthereumAddress(depositEoa) as `0x${string}`,
+    )
+    const plugin = new GasZipPlugin(new InteropConfigStore(undefined))
+    expect(plugin.captureTx(txsToCapture[0]!)?.length).toEqual(1)
   })
 })
 

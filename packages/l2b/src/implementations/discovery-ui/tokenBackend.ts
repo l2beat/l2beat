@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const TOKENS_URL =
-  'https://tokens.l2beat.com/trpc/abstractTokens.getAllWithDeployedTokens,chains.getAll?batch=1'
+  'https://tb-prod.l2beat.com/trpc/abstractTokens.getAllWithDeployedTokens,chains.getAll?batch=1'
 
 // Addresses stay as plain strings here: the backend serves ~173 chains and only
 // the ones discovery knows about can be turned into a ChainSpecificAddress.

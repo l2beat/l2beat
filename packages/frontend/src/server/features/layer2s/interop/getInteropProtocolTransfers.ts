@@ -1,4 +1,7 @@
-import type { InteropTransferRecord } from '@l2beat/database'
+import {
+  getInteropTransferValueUsd,
+  type InteropTransferRecord,
+} from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
@@ -35,6 +38,7 @@ export async function getInteropProtocolTransfers({
   tokenId,
   snapshotTimestamp,
   limit,
+  sort,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
   const empty: InteropProtocolTransfersResponse = {
@@ -45,7 +49,7 @@ export async function getInteropProtocolTransfers({
   if (from.length === 0 || to.length === 0) return empty
 
   if (env.MOCK) {
-    return getMockInteropTransfers({ from, to })
+    return getMockInteropTransfers({ from, to, sort })
   }
 
   const ids =
@@ -87,6 +91,7 @@ export async function getInteropProtocolTransfers({
     pluginIds,
     matcher,
     limit,
+    sort,
     cursor,
   })
   const tokensDetailsMap = await buildTokensDetailsMap(
@@ -143,7 +148,7 @@ export function toInteropProtocolTransferDetailsItem(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
     ),
-    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    valueUsd: getInteropTransferValueUsd(transfer),
     bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,

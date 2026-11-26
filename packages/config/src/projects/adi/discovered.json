@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1795519471,
+  "timestamp": 1795691804,
   "configHash": "0xfaaf4d86af7375f80e688fd9b504ba28743d6f68669fa085937afe688431f0c0",
   "entries": [
     {
@@ -266,7 +266,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 530,
+        "getFirstUnprocessedPriorityTx": 532,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -275,7 +275,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x26eb71115c8ced051e453fb6a79ffa2d80237b6ae0cfd12363bdd1959aa04214",
+        "getPriorityTreeRoot": "0xca19266937466e51f0b19df6ccedae7c6bc4ae68f4b03a8e5d1ad93a7e4d47a0",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018882,
@@ -283,13 +283,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 16887,
-        "getTotalBatchesExecuted": 16887,
-        "getTotalBatchesVerified": 16887,
-        "getTotalBlocksCommitted": 16887,
-        "getTotalBlocksExecuted": 16887,
-        "getTotalBlocksVerified": 16887,
-        "getTotalPriorityTxs": 530,
+        "getTotalBatchesCommitted": 16951,
+        "getTotalBatchesExecuted": 16951,
+        "getTotalBatchesVerified": 16951,
+        "getTotalBlocksCommitted": 16951,
+        "getTotalBlocksExecuted": 16951,
+        "getTotalBlocksVerified": 16951,
+        "getTotalPriorityTxs": 532,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xccbdfd7f9A8e60d0C1e79fa620205d14121e7a39",
         "getVerifierParams": {
@@ -884,7 +884,7 @@
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 15,
+        "scheduledTransparentCount": 20,
         "securityCouncil": "eth:0x95f0c748f60624ddAd536d979993fA23FD86021a"
       },
       "fieldMeta": {
@@ -1071,7 +1071,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 13,
+        "nonce": 20,
         "VERSION": "1.4.1"
       },
       "fieldMeta": {
@@ -1284,7 +1284,7 @@
         "OPTIONAL_PROVER_ADMIN_ROLE": "0xd596cfca9f98786bbbcc61c1506316fd2ff44c96f6a4771a1e13e2cf7df55318",
         "OPTIONAL_REVERTER_ADMIN_ROLE": "0x5db23a41c9125bb814d45889d5f3f62adb67c27242e6ad726210a337aa8d65b7",
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x8253F33026c49A430963FE3991441c02175bda95",
         "PRECOMMITTER_ROLE": "0x3353dfbbf9a3ed2a5be49cd3bd3a51ee03c3751d409cccac7723c4907332afee",
         "precommitterVTL": ["eth:0x76e8D4618fc6a05368CcDAAf7357E1F20e493053"],
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
@@ -2754,7 +2754,7 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0xe85d88e60922135d7ddda6e3c8d3105129f43fe9e3cc4c4d689a891bfeb14c8e"
   },
-  "usedBlockNumbers": { "ethereum": 26484699 },
+  "usedBlockNumbers": { "ethereum": 26499016 },
   "permissionsConfigHash": "0xafd6dc2fe5b310b75a7c895f78e4eada3861723bf8b93eb53b5b7deb847c9708",
   "permissions": {
     "eth:0x057652d63873405fcc26701fcc7fB7AA3d7df6C8": {

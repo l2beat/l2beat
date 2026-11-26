@@ -1,6 +1,6 @@
 {
   "name": "soneium",
-  "timestamp": 1794994625,
+  "timestamp": 1795457619,
   "configHash": "0x4daa03491d6bdc99b90371f47a19b6aa48d4f996a92a86ba3709d8383b2c1d62",
   "entries": [
     {
@@ -171,6 +171,11 @@
       }
     },
     {
+      "address": "eth:0x1C7566fE8FAe38a93BDCb1fBF7D746FD08C11545",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LivenessGuard",
       "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
       "type": "Contract",
@@ -292,7 +297,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8",
+      "address": "eth:0x3cDacd9da979ab023a9f2D16C42AFA062CCF33F5",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -383,14 +388,14 @@
           ]
         ],
         "$upgradeCount": 13,
-        "anchorGame": "eth:0xaDA849f8DBF38bD0FDC0db504E1B9Cdf09939FB8",
+        "anchorGame": "eth:0x4365e43da5fA99606C267DEC0ccc207fBEF74692",
         "blacklistedGames": [],
         "disputeGameFactory": "eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
         "disputeGameFinalityDelaySeconds": 302400,
         "ethLockbox": "eth:0x67B4de6FfA66EF201Ea6099A89cA397D56622E31",
         "getAnchorRoot": [
-          "0xbf3c83350cd157affd05551b9fccbba58672cf1c9d6dec80d1c42c3f954f0b2d",
-          1794684687
+          "0x4a4f25b417b5b5fc3fffaee40831b4e48b979c8ecdffc1c216549a405fb04acb",
+          1795153287
         ],
         "getStartingAnchorRoot": {
           "root": "0x08a53686fd0b1671ff7b89c3a994582503f15f7be00f0f2e7c9f0d3b187ab124",
@@ -431,6 +436,11 @@
           }
         }
       ]
+    },
+    {
+      "address": "eth:0x49Cc743aE58FB4ae6cb8F72f000960da5b299B37",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
@@ -554,8 +564,8 @@
         "game42": "eth:0x0000000000000000000000000000000000000000",
         "game5": "eth:0x5C3eb47cB0174aea522a2a9Ae79487139A53D691",
         "game5AnchorStateRegistry": "eth:0x4890928941e62e273dA359374b105F803329F473",
-        "game5Args": "0x4890928941e62e273da359374b105f803329f473400c164c4a8ca84385b70eed6eb03ea847c8e1b8",
-        "game5Proposer": "eth:0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8",
+        "game5Args": "0x4890928941e62e273da359374b105f803329f47349cc743ae58fb4ae6cb8f72f000960da5b299b37",
+        "game5Proposer": "eth:0x49Cc743aE58FB4ae6cb8F72f000960da5b299B37",
         "game621": "eth:0x0000000000000000000000000000000000000000",
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8AbsolutePrestate": "UNRESOLVED",
@@ -570,7 +580,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 8545,
+        "gameCount": 8655,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -805,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 49,
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -858,11 +868,6 @@
     },
     {
       "address": "eth:0x652BC529E171847E2fFddCeA13567643C84ccB5f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1128,7 +1133,7 @@
         ],
         "$upgradeCount": 20,
         "basefeeScalar": 9736,
-        "batcherHash": "eth:0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1",
+        "batcherHash": "eth:0x1C7566fE8FAe38a93BDCb1fBF7D746FD08C11545",
         "blobbasefeeScalar": 1540079,
         "daFootprintGasScalar": 0,
         "DELAYED_WETH_SLOT": "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff",
@@ -1195,7 +1200,7 @@
         "startBlock": 21314185,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "eth:0x7c2Bd59ee2a2C7391c9A240132f26071e9546262",
+        "unsafeBlockSigner": "eth:0x3cDacd9da979ab023a9f2D16C42AFA062CCF33F5",
         "version": "4.3.0",
         "VERSION": 0
       },
@@ -1221,11 +1226,6 @@
         "eth:0xADe27248542c0F3E89b49e4eB76155e267F14377": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x7c2Bd59ee2a2C7391c9A240132f26071e9546262",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
@@ -1265,7 +1265,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 80,
+        "nonce": 83,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1390,7 +1390,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26441033
+          "prevBlockNum": 26479465
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1686,7 +1686,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698712",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698991",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1913,7 +1913,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 76,
+        "nonce": 78,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3173,8 +3173,8 @@
     "opstack/SuperPermissionedDisputeGame": "0xa146247ae93d5a2d8d731791462cda682c3558bd36eceef57df055c8d7cfdfd9",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26441088 },
-  "permissionsConfigHash": "0x0328789be8fdcd238264fdab82f3fb89970695b851007acfc722ad3efc68abae",
+  "usedBlockNumbers": { "ethereum": 26479552 },
+  "permissionsConfigHash": "0x3ded3012ddac8456a2c28877b3f4c3a0378ccc66d2b01ad984db499ea52cdfe1",
   "permissions": {
     "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
       "directlyReceivedPermissions": [
@@ -3192,6 +3192,16 @@
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
+        }
+      ]
+    },
+    "eth:0x1C7566fE8FAe38a93BDCb1fBF7D746FD08C11545": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
         }
       ]
     },
@@ -3370,16 +3380,6 @@
           "permission": "act",
           "from": "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a",
           "role": ".owner"
-        }
-      ]
-    },
-    "eth:0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
         }
       ]
     },

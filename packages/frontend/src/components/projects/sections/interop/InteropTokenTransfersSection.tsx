@@ -17,6 +17,7 @@ import {
   getTransferColumns,
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
+import { useTransfersSorting } from '~/pages/interop/components/table/transfer-count-cell/useTransfersSorting'
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -44,6 +45,9 @@ export function InteropTokenTransfersSection({
   )
   const [selectedFrom, setSelectedFrom] = useState<string[]>(allInteropChainIds)
   const [selectedTo, setSelectedTo] = useState<string[]>(allInteropChainIds)
+  const { sort, sorting, tableOptions } = useTransfersSorting({
+    onChange: () => table.setPageIndex(0),
+  })
 
   const {
     data: transfersData,
@@ -59,6 +63,7 @@ export function InteropTokenTransfersSection({
         tokenId,
         snapshotTimestamp: data?.snapshotTimestamp ?? 0,
         limit: TRANSFERS_PER_PAGE,
+        sort,
       },
       {
         enabled:
@@ -92,6 +97,8 @@ export function InteropTokenTransfersSection({
     autoResetPageIndex: false,
     manualFiltering: true,
     pageCount,
+    ...tableOptions,
+    state: { sorting },
     initialState: {
       pagination: {
         pageSize: TRANSFERS_PER_PAGE,

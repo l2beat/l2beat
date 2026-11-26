@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HinkalWrapper",
+  "description": "Periphery contract for proofless deposits into Hinkal. It takes the deposit fee in ETH or a token, pulls the deposited tokens from the user and forwards them to the configured Hinkal contract.",
+  "fields": {
+    "hinkal": {
+      "description": "Hinkal contract that receives the deposits. The owner can change it.",
+      "severity": "MEDIUM",
+      "handler": { "type": "storage", "slot": 2, "returnType": "address" }
+    },
+    "owner": {
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the Hinkal contract that receives proofless deposits made through the wrapper."
+        }
+      ]
+    }
+  }
+}

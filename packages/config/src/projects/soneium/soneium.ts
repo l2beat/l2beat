@@ -18,7 +18,21 @@ export const soneium = opStackL2({
   },
   addedAt: UnixTime(1736812800), // 14.01.2025
   discovery,
-  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21314185 })],
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21314185,
+      untilBlock: 26449075, // batcherHash rotation
+      inbox: EthereumAddress('0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e'),
+      sequencers: [
+        EthereumAddress('0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1'),
+      ],
+    },
+    getOpStackDaTracking(discovery, {
+      sinceBlock: 26449075, // batcherHash rotation
+    }),
+  ],
   genesisTimestamp,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

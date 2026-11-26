@@ -37,6 +37,15 @@ export function readRateLimit(error: unknown): RateLimitHeaders | undefined {
   )
 }
 
+/** The HTTP status a thrown error carries in its cause, if any. */
+export function readStatus(error: unknown): number | undefined {
+  if (!(error instanceof Error) || !isRecord(error.cause)) {
+    return undefined
+  }
+  const { status } = error.cause
+  return typeof status === 'number' ? status : undefined
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }

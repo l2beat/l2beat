@@ -61,10 +61,35 @@ export type {
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'
+export type { EthereumSupplyDailyRecord } from './repositories/EthereumSupplyDailyRepository'
 export type {
   FlatSourcesJsonRecord,
   FlatSourcesRecord,
 } from './repositories/FlatSourcesRepository'
+export type { GasFeesDailyRecord } from './repositories/GasFeesDailyRepository'
+export type { GasFeesLiveTipsRecord } from './repositories/GasFeesLiveTipsRepository'
+export type {
+  GasFeesMempoolDayData,
+  GasFeesMempoolDayRecord,
+  GasFeesMempoolDayStatus,
+  GasFeesTierWaitRecord,
+  GasFeesTipLevelWaitRecord,
+  GasFeesWaitBucket,
+} from './repositories/GasFeesMempoolRepository'
+export type {
+  GasFeesTier,
+  GasFeesTipHourlyRecord,
+  GasFeesTipsReading,
+} from './repositories/GasFeesTipHourlyRepository'
+export type {
+  GasFeesTipGroup,
+  GasFeesTipPayersDailyRecord,
+  GasFeesTipPayersStats,
+} from './repositories/GasFeesTipPayersDailyRepository'
+export type {
+  GasFeesWallet,
+  GasFeesWalletTipRecord,
+} from './repositories/GasFeesWalletTipRepository'
 export type { HourlyActivityRecord } from './repositories/HourlyActivityRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
@@ -95,10 +120,12 @@ export type {
   InteropRecentPricesRecord,
 } from './repositories/InteropRecentPricesRepository'
 export {
+  getInteropTransferValueUsd,
   hasAnyInteropTransferFinancialsFilter,
   INTEROP_TRANSFER_RETENTION,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
+  type InteropTransferCursor,
   type InteropTransferDeployedTokenPairStats,
   type InteropTransferDeployedTokenPairStatsByToken,
   type InteropTransferFinancialsFilter,
@@ -110,6 +137,7 @@ export {
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
   type InteropTransferUpdate,
+  toInteropTransferCursor,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,
@@ -118,7 +146,12 @@ export type {
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LiquidStakingSnapshotRecord } from './repositories/LiquidStakingSnapshotRepository'
-export type { LiveActivityBlockRecord } from './repositories/LiveActivityBlockRepository'
+export type {
+  LiveActivityBlockRecord,
+  LiveActivityBucketRecord,
+  LiveActivityHourRecord,
+} from './repositories/LiveActivityBlockRepository'
+export { LIVE_BUFFER_SECONDS } from './repositories/LiveActivityBlockRepository'
 export type {
   LiveBlobBatchRecord,
   LiveBucketRecord,

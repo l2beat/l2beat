@@ -1,7 +1,10 @@
+import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import FakeTimers from '@sinonjs/fake-timers'
+import { expect, mockObject } from 'earl'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import type { RpcMetricsRecorder } from '../clients/rpc/RpcMetricsAggregator'
+import { RetryHandler } from '../tools/RetryHandler'
 import { EthRpcClient } from './EthRpcClient'
 import { Http, type HttpResponse, MockHttp, makeHttpResponse } from './Http'
 
@@ -31,7 +34,7 @@ describe(EthRpcClient.name, () => {
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(503, 'Oops, our server is down')
     await expect(client.getBlockNumber()).toBeRejectedWith(
-      'RPC call failed. HTTP status: 503, body: Oops, our server is down',
+      'RPC call failed. HTTP error',
     )
   })
 
@@ -83,6 +86,37 @@ describe(EthRpcClient.name, () => {
         id: 2,
         method: 'eth_getTransactionReceipt',
         params: [HASH_B],
+      },
+    ])
+  })
+
+  it('asks for block headers in one batch and answers in the asked order', async () => {
+    const http = new MockHttp()
+    let id = 0
+    const client = new EthRpcClient(http, 'https://rpc.url', () => ++id)
+    http.queueResponse(
+      200,
+      JSON.stringify([
+        { jsonrpc: '2.0', id: 2, result: null },
+        { jsonrpc: '2.0', id: 1, result: header(0x10) },
+      ]),
+    )
+
+    const blocks = await client.getBlocksByNumber([0x10n, 0x11n])
+
+    expect(blocks.map((b) => b?.number ?? null)).toEqual([0x10n, null])
+    expect(JSON.parse(http.lastFetch?.init.body as string)).toEqual([
+      {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'eth_getBlockByNumber',
+        params: ['0x10', false],
+      },
+      {
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'eth_getBlockByNumber',
+        params: ['0x11', false],
       },
     ])
   })
@@ -294,19 +328,17 @@ describe(EthRpcClient.name, () => {
     })
   })
 
-  it('eth_call revert #2', async () => {
+  // A failed request is not a revert, whatever its body says, as in RpcClient
+  it('eth_call refused with a revert in the body', async () => {
     const http = new MockHttp()
     const client = new EthRpcClient(http, 'https://rpc.url', () => 1337)
     http.queueResponse(400, 'invalid opcode: INVALID')
-    const result = await client.call(
-      { to: EthereumAddress.random(), input: '0xdeadbeef' },
-      'latest',
-    )
-    expect(result).toEqual({
-      reverted: true,
-      reason:
-        'RPC call failed. HTTP status: 400, body: invalid opcode: INVALID',
-    })
+    await expect(
+      client.call(
+        { to: EthereumAddress.random(), input: '0xdeadbeef' },
+        'latest',
+      ),
+    ).toBeRejectedWith('RPC call failed. HTTP error')
   })
 
   it('eth_call fail', async () => {
@@ -608,6 +640,343 @@ for (const url of URLS) {
   })
 }
 
+describe(`${EthRpcClient.name} with a retry handler`, () => {
+  // Why: the retry is logged with the error's message, and a provider can
+  // echo a key into its JSON-RPC error
+  it('retries a refusal under its status only, as RpcClient did', async () => {
+    const http = new MockHttp()
+    http.queueResponse(
+      401,
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        error: { code: -32001, message: 'bad key secret-in-body' },
+      }),
+    )
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x7b' }),
+    )
+    const retried: unknown[] = []
+    const retryHandler = mockObject<RetryHandler>({
+      retry: async (fn, metadata) => {
+        retried.push(metadata?.error)
+        return await fn()
+      },
+    })
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      retryHandler,
+    )
+
+    expect(await client.getBlockNumber()).toEqual(123n)
+    expect(retried.map((e) => (e as Error).message)).toEqual([
+      'RPC call failed. HTTP error',
+    ])
+  })
+
+  // Why: the message is the same for every refusal, and the status tells a
+  // throttled chain (429) from a blocked one (403)
+  it('logs the status of a refused request with its retry', async () => {
+    const http = new MockHttp()
+    http.queueResponse(403, 'Forbidden')
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x7b' }),
+    )
+    let self: Logger = Logger.SILENT
+    const logger = mockObject<Logger>({ for: () => self, warn: () => {} })
+    self = logger
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      new RetryHandler({
+        maxRetries: 1,
+        initialRetryDelayMs: 1,
+        maxRetryDelayMs: 1,
+        logger,
+      }),
+    )
+
+    expect(await client.getBlockNumber()).toEqual(123n)
+    expect(logger.warn).toHaveBeenOnlyCalledWith(
+      'Scheduling retry',
+      expect.subset({ error: 'RPC call failed. HTTP error', status: 403 }),
+    )
+  })
+})
+
+describe(`${EthRpcClient.name} retries`, () => {
+  // Why: the answer is matched to the calls as first sent, as in RpcClient
+  it('sends the same calls on a retry, though the caller changed them', async () => {
+    const http = new MockHttp()
+    http.queueResponse(503, 'Service Unavailable')
+    http.queueResponse(
+      200,
+      JSON.stringify({ jsonrpc: '2.0', id: 1, result: '0x1' }),
+    )
+    const params = ['0xaa', 'latest']
+    const bodies: unknown[] = []
+    const retryHandler = mockObject<RetryHandler>({
+      retry: async (fn) => {
+        bodies.push(http.lastFetch?.init.body)
+        params[0] = '0xbb'
+        const result = await fn()
+        bodies.push(http.lastFetch?.init.body)
+        return result
+      },
+    })
+    const client = new EthRpcClient(
+      http,
+      'https://rpc.url',
+      () => 1,
+      undefined,
+      undefined,
+      undefined,
+      retryHandler,
+    )
+
+    await client.rawCall('eth_getBalance', params)
+
+    expect(bodies[1]).toEqual(bodies[0])
+  })
+})
+
+describe(`${EthRpcClient.name} rate limit`, () => {
+  // Why: the limiter steps down on HTTP 429, so the rate a provider takes
+  // can be read off the logs (RPC_STEP_DOWN_ON_THROTTLE)
+  it('steps the rate down when the RPC refuses a call for the rate', async () => {
+    const node = new LimitedNode([
+      tooManyRequests(),
+      ok({ jsonrpc: '2.0', id: 2, result: '0x1' }),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+    await expect(client.getBlockNumber()).toBeRejected()
+    await client.getBlockNumber()
+
+    expect(node.rate).toEqual(90_000)
+  })
+
+  // Why: a provider can turn every call of a batch down inside a 200. Such a
+  // batch served nothing, so it must not let a second refusal count.
+  it('does not take a batch with no result in it as an answer', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const refusedInside = () =>
+      ok([rpcError(1, 'Too many requests'), rpcError(2, 'Too many requests')])
+    const node = new LimitedNode([
+      tooManyRequests(),
+      refusedInside(),
+      tooManyRequests(),
+      refusedInside(),
+    ])
+    const client = batchingClient(node)
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client
+          .getTransactionReceipts([HASH_A, HASH_B])
+          .catch(() => {})
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(90_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // The same minute apart, with each refusal followed by an answer: the
+  // first answer is what lets the second refusal count
+  it('tells the limiter of an answered batch, so a later refusal counts', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    // Each batch takes the next two ids
+    const answered = (firstId: number) =>
+      ok([
+        { jsonrpc: '2.0', id: firstId, result: null },
+        { jsonrpc: '2.0', id: firstId + 1, result: null },
+      ])
+    const node = new LimitedNode([
+      tooManyRequests(),
+      answered(3),
+      tooManyRequests(),
+      answered(7),
+    ])
+    const client = batchingClient(node)
+    const outcomes: unknown[] = []
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client.getTransactionReceipts([HASH_A, HASH_B]).then(
+          (receipts) => outcomes.push(receipts),
+          () => outcomes.push('refused'),
+        )
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(81_000)
+      expect(outcomes).toEqual([
+        'refused',
+        [null, null],
+        'refused',
+        [null, null],
+      ])
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // Why: a log-limit answer at 200 is served, and RpcClient's limiter took
+  // it as an answer, which lets a later refusal step the rate down again
+  it('takes a log-limit answer as an answer, so a later refusal counts', async () => {
+    const clock = FakeTimers.install({ now: 10_000 })
+    const limit = () => ok(rpcError(null, 'Log response size exceeded'))
+    const node = new LimitedNode([
+      tooManyRequests(),
+      limit(),
+      tooManyRequests(),
+      limit(),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
+    const twice = async () => {
+      for (let i = 0; i < 2; i++) {
+        const settled = client
+          .getLogs({ fromBlock: 1n, toBlock: 1n })
+          .catch(() => {})
+        await clock.tickAsync(1_000)
+        await settled
+      }
+    }
+
+    try {
+      await twice()
+      expect(node.rate).toEqual(90_000)
+      await clock.tickAsync(60_000)
+      await twice()
+      expect(node.rate).toEqual(81_000)
+    } finally {
+      clock.uninstall()
+    }
+  })
+
+  // Why: a refusal can carry a JSON-RPC error too, and must keep the headers
+  // and not count as an answer, as with RpcClient
+  for (const [name, body] of Object.entries({
+    'an error': {
+      jsonrpc: '2.0',
+      id: 1,
+      error: { code: -32005, message: 'Rate limited' },
+    },
+    'a result': { jsonrpc: '2.0', id: 1, result: '0x1' },
+  })) {
+    it(`fails a refusal that carries ${name}, keeping its headers`, async () => {
+      const node = new LimitedNode([
+        makeHttpResponse(
+          429,
+          JSON.stringify(body),
+          new Headers({ 'Retry-After': '7' }),
+        ),
+      ])
+      const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+      const error = await client.getBlockNumber().catch((e: Error) => e)
+
+      expect(error).toBeA(Error)
+      const cause = (error as Error).cause as Record<string, unknown>
+      expect(cause.status).toEqual(429)
+      expect(cause.rateLimit).toEqual({ 'retry-after': '7' })
+    })
+  }
+
+  it('keeps what the provider says about its limit on a refused batch', async () => {
+    const node = new LimitedNode([
+      makeHttpResponse(
+        429,
+        JSON.stringify([
+          rpcError(1, 'Rate limited'),
+          rpcError(2, 'Rate limited'),
+        ]),
+        new Headers({ 'Retry-After': '7' }),
+      ),
+    ])
+    const client = batchingClient(node)
+
+    const error = await client
+      .getTransactionReceipts([HASH_A, HASH_B])
+      .catch((e: Error) => e)
+
+    expect((error as Error).cause).toEqual({
+      status: 429,
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+
+  it('keeps what the provider says about its limit on a refusal', async () => {
+    const node = new LimitedNode([
+      makeHttpResponse(
+        429,
+        'Too Many Requests',
+        new Headers({ 'Retry-After': '7' }),
+      ),
+    ])
+    const client = new EthRpcClient(node, 'https://rpc.url', counter())
+
+    const error = await client.getBlockNumber().catch((e: Error) => e)
+
+    expect((error as Error).cause).toEqual({
+      status: 429,
+      rateLimit: { 'retry-after': '7' },
+    })
+  })
+})
+
+/** Answers in turn, behind a limiter of 100k calls a minute that steps down */
+class LimitedNode extends Http {
+  constructor(private answers: HttpResponse[]) {
+    super({ maxCallsPerMinute: 100_000, stepDownOnThrottle: 0.1 })
+  }
+
+  get rate() {
+    return this.rateLimiter?.effectiveCallsPerMinute
+  }
+
+  protected override async _fetch(): Promise<HttpResponse> {
+    const answer = this.answers.shift()
+    if (!answer) throw new Error('No answer queued')
+    return { ...answer, sentAt: Date.now() }
+  }
+}
+
+function tooManyRequests() {
+  return makeHttpResponse(429, 'Too Many Requests')
+}
+
+function counter() {
+  let id = 0
+  return () => ++id
+}
+
 const HASH_A = `0x${'a'.repeat(64)}`
 const HASH_B = `0x${'b'.repeat(64)}`
 const HASHES = [1, 2, 3, 4, 5].map((i) => `0x${i.toString().repeat(64)}`)
@@ -693,5 +1062,24 @@ function receipt(transactionHash: string) {
     logsBloom: `0x${'0'.repeat(512)}`,
     type: '0x3',
     status: '0x1',
+  }
+}
+
+function header(number: number) {
+  return {
+    hash: `0x${'ab'.repeat(32)}`,
+    parentHash: `0x${'cd'.repeat(32)}`,
+    number: `0x${number.toString(16)}`,
+    timestamp: '0x64',
+    gasUsed: '0x0',
+    gasLimit: '0x0',
+    size: '0x0',
+    logsBloom: `0x${'00'.repeat(256)}`,
+    transactionsRoot: `0x${'00'.repeat(32)}`,
+    stateRoot: `0x${'00'.repeat(32)}`,
+    receiptsRoot: `0x${'00'.repeat(32)}`,
+    miner: `0x${'00'.repeat(20)}`,
+    extraData: '0x',
+    transactions: [],
   }
 }

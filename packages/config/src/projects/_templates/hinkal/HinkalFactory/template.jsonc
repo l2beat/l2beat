@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HinkalFactory",
+  "description": "One-time deployer of the Hinkal contract from creation code stored in chunks. It keeps the DEFAULT_ADMIN_ROLE it received on Hinkal, and no function of it uses the role or deploys again.",
+  "ignoreMethods": ["bytecodeChunks"]
+}

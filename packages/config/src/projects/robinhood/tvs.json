@@ -128,6 +128,24 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-ANT-1",
+      "priceId": "anthropic-pbc-robinhood-token",
+      "symbol": "ANT",
+      "name": "Anthropic, PBC Class A Common Stock • Robinhood Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102180312/large/ANT.png?1794954793",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xbbB6c29bCc3a1028A2B54310DF73F4F7A3bcB373",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1795046400
+      },
+      "category": "rwaPublic",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-ASML",
       "priceId": "asml-holding-nv-robinhood-tokenized-stock",
       "symbol": "ASML",
@@ -1025,6 +1043,25 @@
     },
     {
       "mode": "auto",
+      "id": "robinhood-MEME",
+      "priceId": "a-meme-coin",
+      "symbol": "MEME",
+      "name": "A Meme Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102176700/large/amc.jpg?1788511294",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "a-meme-coin",
+        "decimals": 18,
+        "sinceTimestamp": 1788480000,
+        "address": "0x385F4f8ae47651ce5F58F5265395a669f8281e18",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "robinhood-META",
       "priceId": "meta-platforms-robinhood-tokenized-stock",
       "symbol": "META",
@@ -1681,6 +1718,25 @@
         "decimals": 18,
         "sinceTimestamp": 1788220800,
         "address": "0xded852De9fe9bA9b6f27f39e8e81CF851A5C79cc",
+        "chain": "robinhood"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "robinhood-RYFT",
+      "priceId": "neuralai-2",
+      "symbol": "RYFT",
+      "name": "RYFT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102180091/large/RYFT.png?1793850418",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "neuralai-2",
+        "decimals": 18,
+        "sinceTimestamp": 1794096000,
+        "address": "0xb0007D59fE4050A1636c2fa19038973d16481337",
         "chain": "robinhood"
       },
       "category": "other",
@@ -2479,8 +2535,44 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "robinhood-VIRTUAL-1",
+      "priceId": "virtual-protocol",
+      "symbol": "VIRTUAL",
+      "name": "Virtuals Protocol",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34057/large/LOGOMARK.png?1708356054",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc6911796042b15d7Fa4F6CDe69e245DdCd3d9c31",
+        "chain": "robinhood",
+        "decimals": 18,
+        "sinceTimestamp": 1782206747
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1782206747
+        },
+        "priceId": "virtual-protocol"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "mode": "auto",
-      "id": "robinhood-VIRTUAL",
+      "id": "robinhood-VIRTUAL-2",
       "priceId": "virtual-protocol",
       "symbol": "VIRTUAL",
       "name": "Virtual Protocol",

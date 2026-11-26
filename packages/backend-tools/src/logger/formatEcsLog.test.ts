@@ -2,6 +2,21 @@ import { expect } from 'earl'
 import { formatEcsLog } from './formatEcsLog'
 
 describe(formatEcsLog.name, () => {
+  it('redacts a url in an error before cutting it', () => {
+    const url = 'https://user:secretpass@rpc.example.com'
+    const cut = url.indexOf('@')
+    const error = `${'x'.repeat(999 - cut)} ${url}`
+
+    const message = formatEcsLog({
+      time: new Date(0),
+      level: 'WARN',
+      message: 'Scheduling retry',
+      parameters: { error },
+    })
+
+    expect(message).not.toInclude('secretpass')
+  })
+
   it('module', () => {
     const message = formatEcsLog({
       time: new Date(0),

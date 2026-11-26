@@ -6,7 +6,7 @@ import { v } from '@l2beat/validate'
  * Interop plugins are observers — kebab-case identifiers declared by plugin
  * classes in the backend — and a relation's `plugin` column names the observer
  * whose transfer evidence produced it. A relation a human added through
- * token-UI has no such observer, so it carries this sentinel instead. Never
+ * the back office has no such observer, so it carries this sentinel instead. Never
  * name a real interop plugin `manual`.
  *
  * The sentinel is a row-level marker: any reader can select or exclude manual
@@ -33,7 +33,7 @@ export const ManualRelationBridge = v.object({
  * What the `transfer` evidence column holds for a relation whose plugin is
  * `MANUAL_RELATION_PLUGIN` — a human attestation instead of a sample interop
  * transfer. The planner writes this shape (stamping `user` itself; clients
- * submit the evidence without it) and the token-UI graph panel parses it back
+ * submit the evidence without it) and the Token DB graph panel parses it back
  * for display.
  *
  * Nullable rather than optional fields: the object is stored verbatim as the

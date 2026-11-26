@@ -39,9 +39,9 @@ interface Props {
   isLoading: boolean
   isPlaceholderData: boolean
   customColors: Record<string, string> | undefined
-  /** Target and max capacity lines, drawn over the stacked projects */
+  /** Target capacity line, drawn over the stacked projects */
   capacity?: {
-    /** Whose capacity, for its line colors and labels */
+    /** Whose capacity, for its line color and label */
     projectId: ProjectId
     data: ProjectChartDataWithConfiguredThroughput[] | undefined
   }
@@ -53,7 +53,7 @@ interface Props {
 
 type ChartRow = { timestamp: number; [key: string]: number | null }
 
-const CAPACITY_KEYS = ['projectTarget', 'projectMax'] as const
+const CAPACITY_KEY = 'projectTarget'
 
 const colorsCache = new Map<string, string>()
 
@@ -82,8 +82,8 @@ export function DaThroughputByProjectChart({
   const capacityData = capacity?.data
   const capacityMeta = useMemo(() => {
     if (!capacityProjectId) return undefined
-    const { projectTarget, projectMax } = getProjectChartMeta(capacityProjectId)
-    return { projectTarget, projectMax } satisfies ChartMeta
+    const { projectTarget } = getProjectChartMeta(capacityProjectId)
+    return { projectTarget } satisfies ChartMeta
   }, [capacityProjectId])
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
@@ -158,25 +158,19 @@ export function DaThroughputByProjectChart({
     } as ChartMeta
   }, [colors, customColors, allProjects, capacityMeta])
 
+  // Off projects are drawn inside Others
   const hiddenDataKeys = useMemo(
-    () => [
-      // Off projects are drawn inside Others
-      ...allProjects
+    () =>
+      allProjects
         .filter((project) => project !== UNKNOWN_KEY)
         .slice(SHOWN_PROJECTS),
-      // Max capacity starts hidden, as on the total chart
-      'projectMax',
-    ],
     [allProjects],
   )
 
   const capacityByTimestamp = useMemo(
     () =>
       new Map(
-        capacityData?.map(([timestamp, _, target, max]) => [
-          timestamp,
-          { projectTarget: target, projectMax: max },
-        ]),
+        capacityData?.map(([timestamp, _, target]) => [timestamp, target]),
       ),
     [capacityData],
   )
@@ -217,12 +211,7 @@ export function DaThroughputByProjectChart({
               }),
             ),
           ),
-          ...[...capacityByTimestamp.values()].flatMap(
-            ({ projectTarget, projectMax }) => [
-              projectTarget ?? 0,
-              projectMax ?? 0,
-            ],
-          ),
+          ...[...capacityByTimestamp.values()].map((target) => target ?? 0),
         )
       : undefined
   }, [data, allProjects, capacityByTimestamp])
@@ -269,11 +258,8 @@ export function DaThroughputByProjectChart({
         result[OTHERS_KEY] = others
 
         if (capacityMeta) {
-          const capacity = capacityByTimestamp.get(timestamp)
-          for (const key of CAPACITY_KEYS) {
-            const value = capacity?.[key]
-            result[key] = value != null ? value / denominator : null
-          }
+          const target = capacityByTimestamp.get(timestamp)
+          result[CAPACITY_KEY] = target != null ? target / denominator : null
         }
 
         return result
@@ -299,16 +285,17 @@ export function DaThroughputByProjectChart({
         activeDot: false,
       }),
     ),
-    // After the projects, so the lines are drawn over the stack
+    // After the projects, so the line is drawn over the stack
     ...(capacityMeta
-      ? CAPACITY_KEYS.map(
-          (key): ChartSeries<string, ChartRow> => ({
-            key,
-            stroke: capacityMeta[key].color,
-            strokeDasharray: capacityMeta[key].indicatorType.strokeDasharray,
+      ? [
+          {
+            key: CAPACITY_KEY,
+            stroke: capacityMeta.projectTarget.color,
+            strokeDasharray:
+              capacityMeta.projectTarget.indicatorType.strokeDasharray,
             curve: 'stepAfter',
-          }),
-        )
+          } satisfies ChartSeries<string, ChartRow>,
+        ]
       : []),
   ]
 
@@ -369,9 +356,9 @@ function CustomTooltip({
   const label = row.timestamp
   // Hidden series are not in `keys`.
   const entries = getTooltipEntries(row, keys)
-  const capacityPayload = entries.filter((entry) => isCapacityKey(entry.name))
+  const capacityPayload = entries.filter((entry) => entry.name === CAPACITY_KEY)
   const actualPayload = entries
-    .filter((entry) => !isCapacityKey(entry.name))
+    .filter((entry) => entry.name !== CAPACITY_KEY)
     .sort((a, b) => {
       // Unknown, then Others, close the list
       for (const key of [OTHERS_KEY, UNKNOWN_KEY]) {
@@ -406,11 +393,7 @@ function CustomTooltip({
             wrapLabel={false}
           >
             <span className="font-medium text-label-value-15 text-primary tabular-nums">
-              {entry.value !== null
-                ? formatBytes(entry.value * mainDenominator)
-                : entry.name === 'projectMax'
-                  ? 'No cap'
-                  : formatBytes(0)}
+              {formatBytes((entry.value ?? 0) * mainDenominator)}
             </span>
           </ChartTooltipRow>
         ))}
@@ -448,8 +431,4 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function isCapacityKey(key: string): key is (typeof CAPACITY_KEYS)[number] {
-  return (CAPACITY_KEYS as readonly string[]).includes(key)
 }

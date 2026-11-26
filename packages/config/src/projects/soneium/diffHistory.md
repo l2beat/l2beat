@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xae685302dbb3615891c5308368aff23779fc5be7
+
+# Diff at Mon, 23 Nov 2026 18:15:09 GMT:
+
+- id: 05e02374
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@61d019c4faea98684600f451671e92cf57c548a9 block: 1794994625
+- current timestamp: 1795457619
+
+## Description
+
+SystemConfig: batcher and unsafe block signer rotated.
+DisputeGameFactory: permissioned proposer rotated.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      values.game5Args:
+-        "0x4890928941e62e273da359374b105f803329f473400c164c4a8ca84385b70eed6eb03ea847c8e1b8"
++        "0x4890928941e62e273da359374b105f803329f47349cc743ae58fb4ae6cb8f72f000960da5b299b37"
+      values.game5Proposer:
+-        "eth:0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8"
++        "eth:0x49Cc743aE58FB4ae6cb8F72f000960da5b299B37"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ severity: LOW
+      values.batcherHash:
+-        "eth:0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1"
++        "eth:0x1C7566fE8FAe38a93BDCb1fBF7D746FD08C11545"
+      values.unsafeBlockSigner:
+-        "eth:0x7c2Bd59ee2a2C7391c9A240132f26071e9546262"
++        "eth:0x3cDacd9da979ab023a9f2D16C42AFA062CCF33F5"
+    }
+```
+
 Generated with discovered.json: 0x0fa9265febfa86e36178ff6946aebcaa673e4492
 
 # Diff at Wed, 18 Nov 2026 12:36:34 GMT:

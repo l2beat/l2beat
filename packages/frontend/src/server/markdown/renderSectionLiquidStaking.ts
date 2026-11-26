@@ -1,6 +1,7 @@
 import type { LiquidStakingSectionProps } from '~/components/projects/sections/defi/LiquidStakingSection'
 import {
   ETH_STAKED_TITLE,
+  formatEthStaked,
   formatEthStakedWithUsd,
   formatLatestValue,
   formatStakedEthShare,
@@ -39,9 +40,7 @@ export function renderLiquidStakingSection({
             token.href ? link(token.symbol, token.href) : token.symbol,
           )
           .join(', '),
-        entry.totalValueLockedUsd !== undefined
-          ? `${formatUsd(entry.totalValueLockedUsd)}${entry.stakedEthShare ? ` (${formatStakedEthShare(entry.stakedEthShare.value)})` : ''}`
-          : NO_DATA,
+        formatTvl(entry),
         ...LIQUID_STAKING_METRICS.map((metric) => {
           const latest = entry[metric.key]
           return latest
@@ -52,4 +51,19 @@ export function renderLiquidStakingSection({
     ),
     `${link('Compare the risks of liquid staking protocols', '/defi/liquid-staking')}.`,
   ])
+}
+
+function formatTvl(entry: LiquidStakingSectionProps['entries'][number]) {
+  if (entry.totalValueLockedUsd === undefined) return NO_DATA
+  const details = [
+    entry.totalValueLockedEth !== undefined
+      ? withRegularSpaces(formatEthStaked(entry.totalValueLockedEth))
+      : undefined,
+    entry.stakedEthShare
+      ? formatStakedEthShare(entry.stakedEthShare.value)
+      : undefined,
+  ].filter((detail) => detail !== undefined)
+  return details.length > 0
+    ? `${formatUsd(entry.totalValueLockedUsd)} (${details.join(', ')})`
+    : formatUsd(entry.totalValueLockedUsd)
 }

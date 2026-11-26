@@ -4,6 +4,7 @@ import {
 } from '~/server/features/defi/getDefiTvlChart'
 import {
   getLiquidStakingCostOfExitChart,
+  getLiquidStakingTvlChart,
   getLiquidStakingYieldChart,
   LiquidStakingChartsParams,
 } from '~/server/features/defi/liquid-staking/getLiquidStakingCharts'
@@ -19,4 +20,7 @@ export const defiRouter = router({
   liquidStakingCostOfExitChart: procedure
     .input(LiquidStakingChartsParams)
     .query(({ input }) => getLiquidStakingCostOfExitChart(input)),
+  liquidStakingTvlChart: procedure
+    .input(LiquidStakingChartsParams)
+    .query(({ input }) => getLiquidStakingTvlChart(input)),
 })

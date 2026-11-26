@@ -31,6 +31,7 @@ export type ProjectDetailsSectionId =
   | 'program-hashes'
   | 'permissions'
   | 'liveness'
+  | 'trusted-setups'
 
 export interface ProjectRedWarning {
   text: string

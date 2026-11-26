@@ -59,7 +59,7 @@ Rules for any agent or person building or changing ETHBEAT's UI in this package.
 - **On phones, stacked cards and blocks are separated by a divider, with no grey gap between them.**
   Why (*inferred*): grey gaps break a phone page into islands.
 
-- **A single control over a centred chart or graph is centred on its axis. A toolbar of several controls is left-aligned. Legends under a left-aligned title stay left.**
+- **A single control over a centred chart or graph is centred on its axis. A toolbar of several controls is left-aligned. Chart legends are centred under the chart, even under a left-aligned title.**
   Why (*inferred*): a lone control belongs to the graph it sits on. A toolbar belongs to the section.
 
 ## Components

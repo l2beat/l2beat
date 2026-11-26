@@ -1,5 +1,6 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import {
+  ChartTooltipNote,
   ChartTooltipRow,
   ChartTooltipTitle,
   ChartTooltipValue,
@@ -63,9 +64,9 @@ export function StackedTvsChartTooltip<
                   format={(value) => formatCurrency(value, unit)}
                 />
                 {entry.value !== null && total !== null && (
-                  <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
+                  <ChartTooltipNote>
                     ({formatPercent(total !== 0 ? entry.value / total : 0)})
-                  </span>
+                  </ChartTooltipNote>
                 )}
               </div>
             </ChartTooltipRow>

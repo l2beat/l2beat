@@ -70,6 +70,16 @@ describe(RpcCounter.name, () => {
 
       expect(() => JSON.stringify(result)).not.toThrow()
     })
+
+    // Why: nodes that predate EIP-2718, such as Metis, leave `type` out of
+    // legacy transactions, and the block view must still load for them.
+    it('labels a transaction without a type as legacy', () => {
+      const tx = { from: 'tx.from', to: 'tx.to', hash: 'tx.hash', data: '0x' }
+
+      const result = new RpcCounter().mapTransaction(tx)
+
+      expect(result.type).toEqual('Legacy')
+    })
   })
 
   describe(RpcCounter.prototype.countForBlocks.name, () => {

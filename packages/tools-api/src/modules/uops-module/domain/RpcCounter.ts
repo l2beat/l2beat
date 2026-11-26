@@ -37,6 +37,10 @@ import { type Counter, getOperationsRatio } from './Counter'
 import { rankBlocks } from './rankBlocks'
 import { traverseOperationTree } from './traverseOperationTree'
 
+// Nodes that predate EIP-2718, such as Metis, leave `type` out of legacy
+// transactions.
+const LEGACY_TX_TYPE = '0'
+
 export class RpcCounter implements Counter {
   countForBlock(block: Block): CountedBlock {
     return {
@@ -131,13 +135,16 @@ export class RpcCounter implements Counter {
         tx,
       )
 
-      assert(tx.type, 'Tx type should be defined')
       assert(tx.from !== undefined, 'From should be defined')
       assert(tx.hash !== undefined, 'Hash should be defined')
 
       return {
         from: tx.from,
-        type: this.getTransactionType(tx.type, tx.to, tx.data),
+        type: this.getTransactionType(
+          tx.type ?? LEGACY_TX_TYPE,
+          tx.to,
+          tx.data,
+        ),
         hash: tx.hash,
         operationsCount: countedOperation.count,
         details: countedOperation,
@@ -146,13 +153,12 @@ export class RpcCounter implements Counter {
       }
     }
 
-    assert(tx.type !== undefined, 'Tx type should be defined')
     assert(tx.from !== undefined, 'From should be defined')
     assert(tx.hash !== undefined, 'Hash should be defined')
 
     return {
       from: tx.from,
-      type: this.getTransactionType(tx.type, tx.to, tx.data),
+      type: this.getTransactionType(tx.type ?? LEGACY_TX_TYPE, tx.to, tx.data),
       hash: tx.hash,
       operationsCount: 1,
       includesBatch: false,

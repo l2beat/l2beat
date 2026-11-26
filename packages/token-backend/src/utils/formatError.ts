@@ -1,5 +1,5 @@
 // Error messages are static and carry their details in `cause`. People read
-// these strings in the token UI, so the cause has to be part of the text.
+// these strings in the back office, so the cause has to be part of the text.
 export function formatError(error: unknown): string {
   if (!(error instanceof Error)) {
     return String(error)

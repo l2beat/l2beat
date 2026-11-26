@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 import * as React from 'react'
 import { Button } from '~/components/core/Button'
+import { Input } from '~/components/core/Input'
 import { Separator } from '~/components/core/Separator'
 import {
   Sheet,
@@ -266,6 +267,20 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
         'md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2 md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm',
         className,
       )}
+      {...props}
+    />
+  )
+}
+
+function SidebarInput({
+  className,
+  ...props
+}: React.ComponentProps<typeof Input>) {
+  return (
+    <Input
+      data-slot="sidebar-input"
+      data-sidebar="input"
+      className={cn('h-8 w-full bg-background shadow-none', className)}
       {...props}
     />
   )
@@ -535,6 +550,7 @@ export {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
+  SidebarInput,
   SidebarInset,
   SidebarMenu,
   SidebarMenuAction,

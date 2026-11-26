@@ -59,6 +59,7 @@ model LiveActivityBlock {
 
   @@id([projectId, number])
   @@index([timestamp])
+  @@index([projectId, timestamp])
 }
 
 model AggregatedL2Cost {
@@ -378,6 +379,14 @@ model EthereumStakingDaily {
   blockCount        Int
   /// Blocks counted as builder blocks: the fee recipient's last transaction pays the proposer.
   builderBlockCount Int
+}
+
+/// ETH in existence as each UTC day starts, from CoinGecko: its market cap over its price.
+model EthereumSupplyDaily {
+  /// Start of the day.
+  timestamp DateTime @id @db.Timestamp(6)
+  /// In ETH; an estimate, rounded like the circulating supplies TVS uses.
+  supply    Float
 }
 
 model TokenMetadata {
@@ -969,4 +978,171 @@ model AppState {
   value     String   @db.Text
   updatedAt DateTime @db.Timestamp(6)
   updatedBy String   @db.VarChar(255)
+}
+
+/// One UTC day of fees on one chain, computed from the chain's transactions and blocks on Dune.
+/// Raw sums, so per-transaction and per-gas figures are derived when read.
+/// A chain's day has a row only once Dune has all of it, so there is no status: a missing row for a day
+/// the fees indexer has passed is a day Dune hasn't got whole. It is read again for 30 days, then stays missing.
+model GasFeesDaily {
+  /// Start of the day.
+  timestamp      DateTime @db.Timestamp(6)
+  /// The gas fees page's chain id: ethereum, arbitrum, base, optimism, zksync2, linea, scroll, unichain, ink, abstract, taiko, mantle.
+  chain          String   @db.VarChar(32)
+  /// Transactions that paid a fee; system transactions (an OP Stack chain's deposits, Taiko's anchors) pay none and are left out.
+  txCount        Int
+  /// Fees paid, in the chain's gas token (ETH, MNT on Mantle).
+  totalFeeNative Float
+  /// Fees paid in USD, each transaction at Dune's price of the gas token for its hour. A day with a fee Dune has no price for is not stored.
+  totalFeeUsd    Float
+  /// The part of the fees paid for posting data to Ethereum, gas token. 0 where the chain reports none (Ethereum, Linea, ZKsync Era, Abstract, Taiko).
+  l1FeeNative    Float
+  /// The part of the fees paid for blobs, gas token. Ethereum only.
+  blobFeeNative  Float
+  /// Each block's base fee per gas times the gas of its transactions that paid a fee, gas token. null where the chain had no base fee (Ethereum before London).
+  /// On Arbitrum, and on Mantle until 22 April 2026, a transaction's gas includes the gas it is charged for posting data to Ethereum, so there this already contains l1FeeNative: don't add the two.
+  baseFeeNative  Float?
+  /// Gas used by the day's transactions that paid a fee: those that use gas for free are left out.
+  gasUsed        Float
+  /// Median fee in USD of the transactions that paid one, approximate (Dune's approx_percentile). null when none did.
+  medianFeeUsd   Float?
+
+  @@id([chain, timestamp])
+}
+
+/// Our estimator's tips as of the start of each UTC hour, from the Ethereum
+/// blocks before it, with Chainlink's ETH/USD at the last of those blocks.
+model GasFeesTipHourly {
+  /// Start of the hour.
+  timestamp     DateTime @id @db.Timestamp(6)
+  /// The newest block read: the last one before the hour.
+  blockNumber   Int
+  slowTipGwei   Float
+  mediumTipGwei Float
+  fastTipGwei   Float
+  /// Chainlink ETH/USD at blockNumber.
+  ethUsd        Float
+}
+
+/// Our estimator's tips at the newest Ethereum block the backend has read.
+/// Holds at most one row: the backend replaces it as blocks arrive.
+model GasFeesLiveTips {
+  /// The newest block read.
+  blockNumber   Int      @id
+  slowTipGwei   Float
+  mediumTipGwei Float
+  fastTipGwei   Float
+  /// Chainlink ETH/USD at blockNumber.
+  ethUsd        Float
+  updatedAt     DateTime @db.Timestamp(6)
+}
+
+/// The tips wallets suggest now, read from their fee services or computed from
+/// their public code. A wallet with no good read for 30 minutes is deleted.
+model GasFeesWalletTip {
+  /// MetaMask, Rabby or Ambire.
+  wallet  String   @db.VarChar(32)
+  /// The wallet's own name for this option.
+  option  String   @db.VarChar(32)
+  /// The tier it is shown beside: slow, medium or fast. Not a match: wallets make their own promises.
+  tier    String   @db.VarChar(16)
+  tipGwei Float
+  readAt  DateTime @db.Timestamp(6)
+
+  @@id([wallet, option])
+}
+
+/// One UTC day of Flashbots mempool data on Dune, by the block a transaction
+/// landed in. Says whether the day's waits in GasFeesTipLevelWait and
+/// GasFeesTierWait are complete, as Dune's copy drops whole days.
+model GasFeesMempoolDay {
+  /// Start of the day.
+  timestamp            DateTime @id @db.Timestamp(6)
+  /// complete: Dune has at least 99% of the landed transactions in Flashbots' daily summary.
+  /// partial: fewer, or there was no summary to check against.
+  /// missing: Dune has none; the day has no waits.
+  status               String   @db.VarChar(16)
+  /// Mempool transactions that landed in the day's blocks, on Dune.
+  duneLandedCount      Int
+  /// "Included on-chain" in Flashbots' summary of the day; null when it has none.
+  flashbotsLandedCount Int?
+  /// Landed transactions kept by the methodology's filters, so the tip decides the wait. At any tip: more than the tip levels of GasFeesTipLevelWait hold.
+  keptCount            Int
+}
+
+/// Waits of the kept mempool transactions of a day, by tip level. Additive:
+/// sum days, then take percentiles. Only tips within the levels, 0.01 to 2.05
+/// gwei: a transaction tipping less or more is in no row here.
+model GasFeesTipLevelWait {
+  /// Start of the day.
+  timestamp      DateTime @db.Timestamp(6)
+  /// The tip level's lower bound, inclusive, wei. The tip is the effective gas price minus the base fee.
+  tipFromWei     BigInt
+  /// The tip level's upper bound, exclusive, wei.
+  tipToWei       BigInt
+  /// The wait bucket's lower bound, inclusive, milliseconds from first seen to the timestamp of the block it landed in.
+  waitFromMs     Int
+  /// The wait bucket's upper bound, exclusive, milliseconds; null for the last bucket.
+  waitToMs       Int?
+  txCount        Int
+  /// Of txCount, those that landed in the next block.
+  nextBlockCount Int
+  /// The tips of txCount added up, gwei, for the level's average tip.
+  tipSumGwei     Float
+
+  @@id([timestamp, tipFromWei, waitFromMs])
+}
+
+/// Waits of the kept mempool transactions of a day that tipped 1× to 1.26× what
+/// our estimator's tier said in the hour they were first seen (GasFeesTipHourly).
+model GasFeesTierWait {
+  /// Start of the day.
+  timestamp          DateTime @db.Timestamp(6)
+  /// slow, medium or fast.
+  tier               String   @db.VarChar(16)
+  /// The wait bucket's lower bound, inclusive, milliseconds from first seen to the timestamp of the block it landed in.
+  waitFromMs         Int
+  /// The wait bucket's upper bound, exclusive, milliseconds; null for the last bucket.
+  waitToMs           Int?
+  txCount            Int
+  /// Of txCount, those that landed in the next block.
+  nextBlockCount     Int
+  /// Of txCount, those that landed in the next block or the one after.
+  within2BlocksCount Int
+  /// Of txCount, those that landed within the next 5 blocks. Those that landed within a minute of being seen can be counted from the wait buckets.
+  within5BlocksCount Int
+
+  @@id([timestamp, tier, waitFromMs])
+}
+
+/// Tips paid on Ethereum in one UTC day, by every transaction in every block,
+/// private ones included. Ordinary: a tip under 2.5 gwei, not sent by the
+/// block's fee recipient, not sent to the forwarder 0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc.
+/// Amounts are in ETH only: multiply by ethUsd for USD.
+model GasFeesTipPayersDaily {
+  /// Start of the day.
+  timestamp          DateTime @id @db.Timestamp(6)
+  /// complete: Dune had every block of the day and all of each block's transactions.
+  /// missing: it never did; every column below is null.
+  status             String   @db.VarChar(16)
+  /// The day's mean of our hourly Chainlink ETH/USD reads (GasFeesTipHourly).
+  ethUsd             Float?
+  /// The day's mean of our hourly fast tips (GasFeesTipHourly), the cap in atFastTipEth.
+  fastTipGwei        Float?
+  /// Ordinary transactions tipping under 0.1 gwei, zero included.
+  lowTxCount         Int?
+  lowTipEth          Float?
+  /// Ordinary transactions tipping 0.1 gwei to under 1 gwei.
+  middleTxCount      Int?
+  middleTipEth       Float?
+  /// Ordinary transactions tipping 1 gwei to under 2.5 gwei.
+  highTxCount        Int?
+  highTipEth         Float?
+  /// Ordinary transactions tipping 1.000 or 2.000 gwei, to three decimals.
+  roundTipTxCount    Int?
+  /// Ordinary transactions' tips, each capped at fastTipGwei.
+  atFastTipEth       Float?
+  /// The other transactions: tips from 2.5 gwei, to the forwarder, or from the fee recipient.
+  nonOrdinaryTxCount Int?
+  nonOrdinaryTipEth  Float?
 }

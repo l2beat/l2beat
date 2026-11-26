@@ -219,7 +219,7 @@ function TokenCell(props: {
   symbol: string | undefined
 }) {
   const label = getTokenLabel(props.symbol, props.address)
-  const href = getTokenUiHref(props.chain, props.address)
+  const href = getTokenDbHref(props.chain, props.address)
 
   if (!href) {
     return label
@@ -232,7 +232,7 @@ function TokenCell(props: {
   )
 }
 
-function getTokenUiHref(chain: string, address: string | undefined) {
+function getTokenDbHref(chain: string, address: string | undefined) {
   if (!chain || !address) {
     return undefined
   }
@@ -242,7 +242,7 @@ function getTokenUiHref(chain: string, address: string | undefined) {
       ? address
       : Address32.cropToEthereumAddress(Address32(address))
 
-  return `https://tokens.l2beat.com/tokens/${chain}/${normalizedAddress}`
+  return `/token-db/tokens/${chain}/${normalizedAddress}`
 }
 
 function getTokenLabel(

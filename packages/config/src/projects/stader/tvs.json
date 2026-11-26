@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "stader",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "stader-ETHx",
+      "priceId": "stader-ethx",
+      "symbol": "ETHx",
+      "name": "ETHx",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1688688000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,12 +1,11 @@
 import type { Project } from '@l2beat/config'
 import type { AggregatedInteropTransferRecord } from '@l2beat/database'
 import {
-  assert,
   getInteropTransferValue,
   type InteropBridgeType,
 } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import { manifest } from '~/utils/Manifest'
+import { getInteropProtocolDisplay } from './getInteropProtocolDisplay'
 
 export interface TransferSizeDistribution {
   countUnder100: number
@@ -157,11 +156,13 @@ export function getTransferSizeChartData(
   for (const record of records) {
     let entry = byProject.get(record.id)
     if (!entry) {
-      const project = interopProjects.find((p) => p.id === record.id)
-      assert(project, `Project not found: ${record.id}`)
+      const { name, iconUrl } = getInteropProtocolDisplay(
+        record.id,
+        interopProjects,
+      )
       entry = {
-        name: project.interopConfig.name ?? project.name,
-        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        name,
+        iconUrl,
         acc: createTransferSizeAccumulator(),
       }
       byProject.set(record.id, entry)

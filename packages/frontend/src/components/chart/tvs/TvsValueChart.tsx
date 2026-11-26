@@ -83,9 +83,6 @@ export function TvsValueChart({
       project={project}
       milestones={milestones}
       legend
-      // A single key under a left-aligned section title (DESIGN.md: legends
-      // under left titles stay left)
-      legendAlign="start"
     >
       <TimeSeriesChart
         data={data}
