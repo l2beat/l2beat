@@ -49,6 +49,7 @@ import {
   compareWithEthereum,
   formatFee,
   GAS_FEES_METRIC_LABELS,
+  logShare,
 } from './metrics'
 import { DataGaps, percent, usd } from './parts'
 import type { GasFeesChain } from './types'
@@ -292,10 +293,7 @@ function getLogScale(values: number[]) {
   if (logs.length === 0) return () => 0
   const lo = Math.floor(Math.min(...logs))
   const hi = Math.max(lo + 1, Math.ceil(Math.max(...logs)))
-  return (value: number) =>
-    value > 0
-      ? Math.min(1, Math.max(0, (Math.log10(value) - lo) / (hi - lo)))
-      : 0
+  return (value: number) => logShare(value, lo, hi)
 }
 
 function ActionPicker({

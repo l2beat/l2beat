@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import type { GasFeesPriceOfSpeed as PriceOfSpeed } from '~/server/features/gas-fees/getGasFeesTipping'
 import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
@@ -100,6 +100,15 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
     xMax > 0 ? Math.min(100, (usd / xMax) * 100) : 0
   const top = (wait: number) => (1 - (wait - yMin) / (yMax - yMin)) * 100
   const ours = speed.marks.find((mark) => mark.ours)
+  // Our name goes under the line, clear of a round tip close to it. The line
+  // keeps falling past our mark, so under it as far along as the name runs.
+  const pastOurName =
+    ours &&
+    (lineFrom(speed.line, ours.usd + xMax * 0.3)[0] ?? speed.line.at(-1))
+  const oursLabelTop = Math.max(
+    ours ? top(ours.seconds) : 0,
+    pastOurName ? top(pastOurName.seconds) : 0,
+  )
   const toPoints = (line: PriceOfSpeed['line']) =>
     line.map((p) => `${left(p.usd)},${top(p.seconds)}`).join(' ')
 
@@ -242,45 +251,47 @@ function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
             />
           )}
           {speed.marks.map((mark, i) => (
-            <div
-              key={mark.name}
-              className="pointer-events-none absolute"
-              style={{
-                left: `${left(mark.usd)}%`,
-                top: `${top(mark.seconds)}%`,
-              }}
-            >
+            <Fragment key={mark.name}>
               <span
                 className={cn(
-                  '-translate-x-1/2 -translate-y-1/2 absolute rounded-full ring-[3px] ring-surface-primary',
+                  '-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute rounded-full ring-[3px] ring-surface-primary',
                   mark.ours ? 'size-[18px]' : 'size-4',
                 )}
                 style={{
+                  left: `${left(mark.usd)}%`,
+                  top: `${top(mark.seconds)}%`,
                   background: mark.ours
                     ? OURS
                     : bandUpTo(mark.usd / speed.usdPerGwei).color,
                 }}
               />
-              <span
-                className={cn(
-                  'absolute flex flex-col whitespace-nowrap text-xs tabular-nums leading-tight',
-                  // Ours goes under the line, so it stays clear of a round tip close to it
-                  mark.ours ? 'top-4' : 'bottom-4',
-                  i === 0 || mark.ours
-                    ? '-left-2'
-                    : i === speed.marks.length - 1
-                      ? '-right-2 items-end'
-                      : '-translate-x-1/2 items-center',
-                )}
+              <div
+                className="pointer-events-none absolute"
+                style={{
+                  left: `${left(mark.usd)}%`,
+                  top: `${mark.ours ? oursLabelTop : top(mark.seconds)}%`,
+                }}
               >
-                <b>{mark.name}</b>
-                <span className="text-2xs text-secondary max-md:hidden">
-                  {formatFee(mark.usd)}
-                  {DOT_SEPARATOR}
-                  {Math.round(mark.seconds)}s
+                <span
+                  className={cn(
+                    'absolute flex flex-col whitespace-nowrap text-xs tabular-nums leading-tight',
+                    mark.ours ? 'top-4' : 'bottom-4',
+                    i === 0 || mark.ours
+                      ? '-left-2'
+                      : i === speed.marks.length - 1
+                        ? '-right-2 items-end'
+                        : '-translate-x-1/2 items-center',
+                  )}
+                >
+                  <b>{mark.name}</b>
+                  <span className="text-2xs text-secondary max-md:hidden">
+                    {formatFee(mark.usd)}
+                    {DOT_SEPARATOR}
+                    {Math.round(mark.seconds)}s
+                  </span>
                 </span>
-              </span>
-            </div>
+              </div>
+            </Fragment>
           ))}
         </div>
       </div>

@@ -92,6 +92,17 @@ export function formatGasPriceTick(value: number) {
   return formatSignificant(value, 1)
 }
 
+/**
+ * Where a value sits between two powers of ten on a log scale, from 0 to 1.
+ * Rounded, because Math.log10 can differ in its last digit between the server
+ * and a browser, which React reports as a hydration mismatch.
+ */
+export function logShare(value: number, lo: number, hi: number) {
+  if (value <= 0) return 0
+  const share = (Math.log10(value) - lo) / (hi - lo)
+  return Math.round(Math.min(1, Math.max(0, share)) * 1e6) / 1e6
+}
+
 export function formatTimes(value: number) {
   return `${value >= 10 ? Math.round(value).toLocaleString('en-US') : value.toFixed(1)}×`
 }

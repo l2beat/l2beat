@@ -11,7 +11,7 @@ import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { cn } from '~/utils/cn'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { GasFeesMethodology } from './GasFeesMethodology'
-import { formatFee } from './metrics'
+import { formatFee, logShare } from './metrics'
 import { ACCENT, TextSkeleton } from './parts'
 import {
   formatGwei,
@@ -30,8 +30,7 @@ import type { TipTierRow } from './useLiveTips'
 const LO = -6
 const HI = 1
 const DECADES = Array.from({ length: HI - LO + 1 }, (_, i) => LO + i)
-const toX = (gwei: number) =>
-  Math.min(1, Math.max(0, (Math.log10(gwei) - LO) / (HI - LO))) * 100
+const toX = (gwei: number) => logShare(gwei, LO, HI) * 100
 
 /** Where each band starts and ends on a track, in percent */
 const BAND_SPANS = TIP_BANDS.map((band, i) => ({

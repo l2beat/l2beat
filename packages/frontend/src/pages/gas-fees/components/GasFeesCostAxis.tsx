@@ -1,6 +1,7 @@
 import type { GasFeesSummaryRow } from '~/server/features/gas-fees/getGasFeesSummary'
 import type { GasFeesPeriodMetric } from '~/server/features/gas-fees/types'
 import { cn } from '~/utils/cn'
+import { logShare } from './metrics'
 
 /** One log scale for every row's cost, so the chains line up under each other */
 export interface CostAxis {
@@ -30,8 +31,7 @@ export function getCostAxis(
     lo -= 0.5
     hi += 0.5
   }
-  const at = (cost: number) =>
-    Math.min(1, Math.max(0, (Math.log10(cost) - lo) / (hi - lo)))
+  const at = (cost: number) => logShare(cost, lo, hi)
   const ticks: CostAxis['ticks'] = []
   for (let e = Math.ceil(lo); e <= Math.floor(hi); e++) {
     ticks.push({ exponent: e, at: (e - lo) / (hi - lo) })

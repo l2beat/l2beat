@@ -11,6 +11,7 @@ import {
   formatFee,
   formatFeeTick,
   getPeriodLabel,
+  logShare,
 } from './metrics'
 import {
   ACCENT,
@@ -247,7 +248,7 @@ function CostTracks({ f, period }: { f: Figures; period: string }) {
   const lo = Math.floor(Math.min(...logs))
   const hi = Math.max(lo + 1, Math.ceil(Math.max(...logs)))
   const decades = Array.from({ length: hi - lo + 1 }, (_, i) => lo + i)
-  const toX = (value: number) => ((Math.log10(value) - lo) / (hi - lo)) * 100
+  const toX = (value: number) => logShare(value, lo, hi) * 100
 
   return (
     <div className="grid @xl:grid-cols-[180px_minmax(0,1fr)] grid-cols-1">
