@@ -232,9 +232,9 @@ The EF's own paper ([ePrint 2025/055](https://eprint.iacr.org/2025/055)) defines
 
 ### Tweaks and target-sum encodings
 
-Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` mix per-step tweaks into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a target-sum encoding where a hash output fixes the digits. Tweaks let proofs drop full collision resistance in favor of tweaked second-preimage resistance. When tweaks are fed in as hash inputs (as in SPHINCS+ and the lean specs), the same 2-tag shortcut still works; random XOR bitmasks (as in RFC 8391) scramble the tag. Target-sum encoding turns the single-shot forgery into a search, yet free backward steps still sharply degrade security.
+Real deployments like [WOTS+](https://datatracker.ietf.org/doc/html/rfc8391#section-3.1), `leanXMSS`, and `leanSPHINCS` modify textbook Winternitz in two ways: they mix a unique **tweak** (a per-chain, per-step salt) into each hash, and `leanXMSS` and `leanSPHINCS` replace the checksum with a **target-sum encoding** (hashing the message until its digits add up to a fixed total). Tweaks let proofs avoid full collision resistance, yet neither change removes the need for extra assumptions on iterated chains: tweaks passed as hash inputs (as in SPHINCS+ and the lean specs) still fall to the same shortcut, and target-sum encoding only forces the attacker to search rather than blocking the forgery.
 
-All proofs in this article (the Lamport reduction, the Checksum Lemma, Claims 1 and 2, the padded permutation remark, and the tweaks, bitmask, and target-sum results above) are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
+All proofs in this article (the Lamport reduction, the Checksum Lemma, Claims 1 and 2, the padded permutation remark, and the tweaks and target-sum results above) are machine-checked in [Lean 4](https://github.com/lucadonnoh/hash-based-not-an-assumption-lean).
 
 ---
 
