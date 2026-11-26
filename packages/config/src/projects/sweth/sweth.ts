@@ -214,6 +214,7 @@ export const sweth: BaseProject = {
       {
         category: 'Funds can be stolen if',
         text: `the bot role over-reports rewards, minting unbacked fee shares worth up to ${feeMintCap} of supply per report, which the reprice bound does not limit.`,
+        isCritical: true,
       },
       {
         category: 'Funds can lose value if',
