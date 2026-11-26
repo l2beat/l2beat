@@ -1,8 +1,8 @@
-{{swETH}} is Swell's liquid staking token.
+{{swETH}} is Swell's liquid staking token. Anyone can deposit ETH for {{swETH}}, and Swell stakes it through {{swOperators}} whitelisted staking providers. The bot role, held by {{bot}}, sets the rate through reports, and exits wait in a queue that only those reports process. Swell's multisigs control the contracts, and upgrades wait {{timelockDelay}} in a timelock.
 
 ### Deposits and staking
 
-Anyone can deposit ETH and receive {{swETH}} at the current rate, unless deposits are paused or the whitelist is on. The ETH goes in the same call to the deposit manager, the Swell contract that holds unstaked ETH, funds validators and pays exits. Swell's bot role, held by {{bot}}, decides when that ETH is staked and with which providers. Each provider's keys are used in the order it registered them. Keys come from a registry of {{swOperators}} staking providers chosen by Swell. Providers post no bond, so slashing losses fall on all holders. Validators withdraw to the deposit manager.
+Anyone can deposit ETH and receive {{swETH}} at the current rate, unless deposits are paused or the deposit whitelist is on. The ETH goes in the same call to the deposit manager, the Swell contract that holds unstaked ETH, funds validators and pays exits. Swell's bot role, held by {{bot}}, decides when that ETH is staked and with which providers. Each provider's keys are used in the order it registered them. Keys come from a registry of {{swOperators}} staking providers chosen by Swell. Providers post no bond, so slashing losses fall on all holders. Validators' withdrawal credentials point to the deposit manager, so exits and rewards come back to it.
 
 ![Swell deposits](/images/architecture/sweth-deposits.png#center)
 
