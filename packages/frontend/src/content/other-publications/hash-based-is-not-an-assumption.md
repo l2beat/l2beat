@@ -259,4 +259,4 @@ A hash-based stack still has a strong case as the most **practically minimal** p
 
 Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity, provided the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
 
-Hopefully this helps move Ethereum's post-quantum and post-AI debate past shorthand like "hash-based" or "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
+Ethereum's post-quantum and post-AI debate should move past shorthand like "hash-based" or "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
