@@ -1,3 +1,5 @@
+import { ProjectId } from '@l2beat/shared-pure'
+import { PUBLIC_API_URL } from '~/consts/publicApi'
 import type { EthereumProjectPageEntry } from '~/server/features/data-availability/project/getEthereumProjectEntry'
 import { withRegularSpaces } from '~/server/markdown/markdown'
 import {
@@ -53,7 +55,7 @@ export function renderEthereumProjectMarkdown(
       activity: [
         {
           title: 'Activity chart (JSON)',
-          url: `/api/scaling/activity/${entry.slug}`,
+          url: `${PUBLIC_API_URL}/v1/activity/${ProjectId.ETHEREUM}`,
         },
       ],
     },

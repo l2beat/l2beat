@@ -33,15 +33,10 @@ describe(createRobotsRouter.name, () => {
       }
     })
 
-    it('allows the site and the public scaling API, hides the rest of the API and /dev', async () => {
+    it('allows the site, hides the API and /dev', async () => {
       const rules = parseRobotsTxt(await getRobotsTxt('production')).get('*')
 
-      expect(rules).toEqual([
-        'Allow: /',
-        'Allow: /api/scaling/',
-        'Disallow: /api/',
-        'Disallow: /dev/',
-      ])
+      expect(rules).toEqual(['Allow: /', 'Disallow: /api/', 'Disallow: /dev/'])
     })
 
     it('declares Content Signals allowing search, AI input and AI training in the `*` group', async () => {

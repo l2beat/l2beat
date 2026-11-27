@@ -1,3 +1,4 @@
+import { API_MIGRATION_GUIDE_PATH } from '~/consts/publicApi'
 import { env } from '~/env'
 import type { STATIC_PAGE_PATHS } from '~/server/pagePaths'
 
@@ -62,7 +63,11 @@ type ListPagePath =
   | '/defi/liquid-staking'
   | '/ossification'
 
+/** Single documents that are neither a list of projects nor a project. */
+export const DOCUMENT_PAGES_WITH_MARKDOWN = [API_MIGRATION_GUIDE_PATH] as const
+
 const PAGES_WITH_MARKDOWN: readonly string[] = [
+  ...DOCUMENT_PAGES_WITH_MARKDOWN,
   ...LIST_PAGES_WITH_MARKDOWN,
   ...PROJECT_PAGES_WITH_MARKDOWN,
 ]

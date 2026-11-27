@@ -4,13 +4,8 @@ import type { env } from '~/env'
 
 type DeploymentEnv = typeof env.DEPLOYMENT_ENV
 
-/** `/api/scaling/` is the public JSON API; the more specific Allow wins over `Disallow: /api/`. */
-const PRODUCTION_RULES = [
-  'Allow: /',
-  'Allow: /api/scaling/',
-  'Disallow: /api/',
-  'Disallow: /dev/',
-]
+/** `/api/` holds no public data: the public JSON API is on its own host, api.ethbeat.org. */
+const PRODUCTION_RULES = ['Allow: /', 'Disallow: /api/', 'Disallow: /dev/']
 
 /**
  * Content Signals (contentsignals.org): ETHBEAT is a public good, so search,

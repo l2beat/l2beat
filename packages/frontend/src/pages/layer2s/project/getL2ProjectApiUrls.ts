@@ -1,18 +1,17 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { toProductionUrl } from '~/consts/productionOrigin'
+import { PUBLIC_API_URL } from '~/consts/publicApi'
 
-/** The project's public JSON endpoints. */
+/** The project's endpoints in the public JSON API, which names projects by id. */
 export function getL2ProjectApiUrls(project: {
-  slug: string
+  id: string
   archivedAt: UnixTime | undefined
 }) {
-  const api = toProductionUrl('/api/scaling')
   // The chart endpoints default to 30d, which holds no points for a project
-  // archived before then, so they would answer "Missing data."
+  // archived before then, so they would answer with an empty chart
   const range = project.archivedAt ? '?range=max' : ''
   return {
-    tvs: `${api}/tvs/${project.slug}${range}`,
-    tvsBreakdown: `${api}/tvs/${project.slug}/breakdown`,
-    activity: `${api}/activity/${project.slug}${range}`,
+    tvs: `${PUBLIC_API_URL}/v1/tvs/${project.id}${range}`,
+    tvsBreakdown: `${PUBLIC_API_URL}/v1/project/${project.id}/tokens`,
+    activity: `${PUBLIC_API_URL}/v1/activity/${project.id}${range}`,
   }
 }
