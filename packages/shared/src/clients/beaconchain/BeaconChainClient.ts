@@ -4,6 +4,7 @@ import { Readable } from 'stream'
 import { chain } from 'stream-chain'
 import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
+import { streamArray } from 'stream-json/streamers/StreamArray'
 import { streamValues } from 'stream-json/streamers/StreamValues'
 
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
@@ -12,9 +13,18 @@ import {
   type Blob as BlobSchema,
   BlobsSchema,
   ForkSchema,
+  HeaderSchema,
+  ValidatorSchema,
 } from './types'
 
 export type BeaconChainBlob = v.infer<typeof BlobSchema>
+
+export interface BeaconValidator {
+  pubkey: string
+  /** For 0x01 and 0x02 credentials, the address withdrawals go to. */
+  withdrawalAddress: string | undefined
+  balanceGwei: bigint
+}
 
 export type BeaconStateId =
   | 'head'
@@ -134,6 +144,58 @@ export class BeaconChainClient extends ClientCore {
     })
   }
 
+  /** The slot of a block, and the execution block it carries. */
+  async getBlockNumbers(
+    blockId: BeaconStateId,
+  ): Promise<{ slot: number; blockNumber: number }> {
+    const endpoint = `eth/v1/beacon/headers/${blockId}`
+    const parsed = HeaderSchema.safeParse(await this.call(endpoint))
+    if (!parsed.success) {
+      throw new Error('Invalid BeaconChain header', { cause: { endpoint } })
+    }
+    const slot = Number(parsed.data.data.header.message.slot)
+    // Only the number is read, so the rest of the block is never downloaded.
+    for await (const value of this.stream(
+      `eth/v2/beacon/blocks/${parsed.data.data.root}`,
+      'data.message.body.execution_payload.block_number',
+    )) {
+      return { slot, blockNumber: Number(value) }
+    }
+    throw new Error('BeaconChain block has no execution payload', {
+      cause: { blockId },
+    })
+  }
+
+  /**
+   * Every validator at a state with the given statuses. The list runs to
+   * hundreds of megabytes, so each validator is yielded as it arrives.
+   */
+  async *getValidators(
+    stateId: BeaconStateId,
+    status: string[],
+  ): AsyncGenerator<BeaconValidator> {
+    const endpoint = `eth/v1/beacon/states/${stateId}/validators?status=${status.join(',')}`
+    for await (const item of this.streamItems(endpoint, 'data')) {
+      const parsed = ValidatorSchema.safeParse(item)
+      if (!parsed.success) {
+        throw new Error('Invalid BeaconChain validator', {
+          cause: { endpoint },
+        })
+      }
+      const credentials = parsed.data.validator.withdrawal_credentials
+      // 0x01 and 0x02 credentials end in the address; 0x00 ones hold a key hash.
+      const withdrawalAddress =
+        credentials.startsWith('0x01') || credentials.startsWith('0x02')
+          ? `0x${credentials.slice(26)}`
+          : undefined
+      yield {
+        pubkey: parsed.data.validator.pubkey,
+        withdrawalAddress,
+        balanceGwei: BigInt(parsed.data.balance),
+      }
+    }
+  }
+
   /** Sums the gwei amounts at `data[i].<field>` into wei, and counts them. */
   private async sumGwei(
     endpoint: string,
@@ -161,6 +223,46 @@ export class BeaconChainClient extends ClientCore {
     endpoint: string,
     filter: string | ((stack: readonly (number | string | null)[]) => boolean),
   ): AsyncGenerator<string> {
+    // Native fetch returns a Web stream; stream-chain only accepts Node streams
+    const source = Readable.fromWeb(await this.fetchBody(endpoint))
+    const pipeline = chain([source, parser(), pick({ filter }), streamValues()])
+    try {
+      for await (const { value } of pipeline) {
+        if (typeof value !== 'string') {
+          throw new Error('BeaconChain value is not a string', {
+            cause: { endpoint, value },
+          })
+        }
+        yield value
+      }
+    } finally {
+      pipeline.destroy()
+      source.destroy()
+    }
+  }
+
+  /** Streams the items of the array at `path`, like `stream` does values. */
+  private async *streamItems(
+    endpoint: string,
+    path: string,
+  ): AsyncGenerator<unknown> {
+    const response = await this.fetchBody(endpoint)
+    const source = Readable.fromWeb(response)
+    const pipeline = chain([
+      source,
+      parser(),
+      pick({ filter: path }),
+      streamArray(),
+    ])
+    try {
+      for await (const { value } of pipeline) yield value
+    } finally {
+      pipeline.destroy()
+      source.destroy()
+    }
+  }
+
+  private async fetchBody(endpoint: string) {
     const response = await this.$.http.fetchRaw(
       `${this.$.beaconApiUrl}${endpoint}`,
       { timeout: this.$.timeout },
@@ -182,23 +284,7 @@ export class BeaconChainClient extends ClientCore {
         cause: { endpoint },
       })
     }
-
-    // Native fetch returns a Web stream; stream-chain only accepts Node streams
-    const source = Readable.fromWeb(response.body)
-    const pipeline = chain([source, parser(), pick({ filter }), streamValues()])
-    try {
-      for await (const { value } of pipeline) {
-        if (typeof value !== 'string') {
-          throw new Error('BeaconChain value is not a string', {
-            cause: { endpoint, value },
-          })
-        }
-        yield value
-      }
-    } finally {
-      pipeline.destroy()
-      source.destroy()
-    }
+    return response.body
   }
 
   async call(endpoint: string): Promise<unknown> {

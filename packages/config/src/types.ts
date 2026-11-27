@@ -1105,6 +1105,68 @@ export interface ProjectLiquidStaking {
   marketQuotes: ProjectLiquidStakingMarketQuote[]
   /** The row of the liquid staking risk comparison. */
   risks: ProjectLiquidStakingRisks
+  /**
+   * Who runs the protocol's validators, read from the beacon chain and the
+   * protocol's contracts. Absent where one company runs them all.
+   */
+  validatorOperators?: ProjectLiquidStakingOperators
+}
+
+export interface ProjectLiquidStakingOperators {
+  /** The finalized beacon slot the validators were read at. */
+  slot: number
+  /** Unix seconds of that slot's block. */
+  timestamp: number
+  /** Balance of every active validator on Ethereum, in ETH. */
+  totalEth: number
+  /** Balance of the protocol's active validators, in ETH. */
+  eth: number
+  validators: number
+  /** Every operator with an active validator, counted one by one. */
+  operatorCount: number
+  /** What one row stands for. */
+  unit: ProjectStakingOperatorUnit
+  /** The largest first. Small operators may be summed into one row. */
+  operators: ProjectStakingOperator[]
+}
+
+/**
+ * - `operator`: a company named in the protocol's own registry (Lido)
+ * - `account`: the account the protocol assigns validators to (ether.fi)
+ * - `node`: a node account that runs its own validators (Rocket Pool)
+ * - `vault`: a vault; its name is the vault's, not that of whoever runs its
+ *   validators (StakeWise)
+ */
+export type ProjectStakingOperatorUnit =
+  | 'operator'
+  | 'account'
+  | 'node'
+  | 'vault'
+
+/**
+ * Where a name not read from the protocol's own contracts comes from, always a
+ * name the operator gave itself:
+ * - `ssv`: the SSV operators the account registered and named
+ * - `vault-metadata`: the name the vault's admin set
+ * - `ens`: the account's own ENS name, checked back to the address
+ */
+export type ProjectStakingOperatorNameSource = 'ssv' | 'vault-metadata' | 'ens'
+
+export interface ProjectStakingOperator {
+  /**
+   * The name the protocol's contracts give, a name the operator gave itself
+   * (see `nameSource`), or the address when neither exists.
+   */
+  name: string
+  /** Set when the protocol knows the operator by an address. */
+  address?: string
+  nameSource?: ProjectStakingOperatorNameSource
+  eth: number
+  validators: number
+  /** Set when the row sums several operators, such as a module's. */
+  operatorCount?: number
+  /** Set on the one row that sums the smallest operators. */
+  rest?: boolean
 }
 
 export interface ProjectLiquidStakingRisks {

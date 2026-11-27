@@ -127,5 +127,8 @@ export const CONSENSUS_THRESHOLDS = [
 ] as const
 
 /** The note on the bar's split and marks, for the tooltip beside it. */
+export const STAKED_ETH_BAR_SOURCE =
+  "Lido, ether.fi, Rocket Pool and StakeWise are sized by the balance of their own validators, read from the beacon chain, so they can differ from the table's share, which counts the ETH each token stands for. wBETH and cbETH, hatched, are sized by their tokens: nothing onchain links them to validators."
+
 export const STAKED_ETH_BAR_NOTE =
   "The marks show the shares of stake that change what validators acting together can do. A protocol's validators are run by its node operators, so its share is not one party's stake: it is how much rests on the protocol's contracts and governance. In practice the ⅓ and ½ marks sit slightly lower, because honest validators that are offline also count against finality and the fork choice; at usual uptime that is a fraction of a percentage point. No share lets validators make nodes accept an invalid block."

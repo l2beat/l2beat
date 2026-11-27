@@ -1,0 +1,842 @@
+{
+  "slot": 15732416,
+  "blockNumber": 26492472,
+  "timestamp": 1795613015,
+  "totalEth": 44422499,
+  "validators": 770789,
+  "protocols": {
+    "lido": {
+      "eth": 9535751,
+      "validators": 183787,
+      "operatorCount": 473,
+      "unit": "operator",
+      "operators": [
+        {
+          "name": "Community Staking Module",
+          "eth": 771384,
+          "validators": 24101,
+          "operatorCount": 430
+        },
+        {
+          "name": "Launchnodes",
+          "eth": 274607,
+          "validators": 1551
+        },
+        {
+          "name": "MAVAN",
+          "eth": 274593,
+          "validators": 643
+        },
+        {
+          "name": "RockLogic",
+          "eth": 274429,
+          "validators": 420
+        },
+        {
+          "name": "stakefish",
+          "eth": 274125,
+          "validators": 643
+        },
+        {
+          "name": "Ebunker",
+          "eth": 273303,
+          "validators": 1260
+        },
+        {
+          "name": "Stakely",
+          "eth": 271659,
+          "validators": 680
+        },
+        {
+          "name": "Everstake",
+          "eth": 271249,
+          "validators": 1100
+        },
+        {
+          "name": "HashKey Cloud",
+          "eth": 270491,
+          "validators": 4196
+        },
+        {
+          "name": "Blockdaemon",
+          "eth": 262985,
+          "validators": 7548
+        },
+        {
+          "name": "Twinstake",
+          "eth": 261416,
+          "validators": 140
+        },
+        {
+          "name": "ChainSafe",
+          "eth": 261281,
+          "validators": 8055
+        },
+        {
+          "name": "Develp",
+          "eth": 261254,
+          "validators": 7994
+        },
+        {
+          "name": "Solstice",
+          "eth": 261176,
+          "validators": 7997
+        },
+        {
+          "name": "Allnodes",
+          "eth": 261175,
+          "validators": 8060
+        },
+        {
+          "name": "P2P.org",
+          "eth": 260930,
+          "validators": 819
+        },
+        {
+          "name": "Gateway FM",
+          "eth": 260902,
+          "validators": 8006
+        },
+        {
+          "name": "Figment",
+          "eth": 260759,
+          "validators": 8053
+        },
+        {
+          "name": "DSRV",
+          "eth": 258780,
+          "validators": 8085
+        },
+        {
+          "name": "Blockscape",
+          "eth": 257853,
+          "validators": 8056
+        },
+        {
+          "name": "Kukis Global",
+          "eth": 257138,
+          "validators": 6924
+        },
+        {
+          "name": "ParaFi Technologies",
+          "eth": 257111,
+          "validators": 6953
+        },
+        {
+          "name": "Stakin by The Tie",
+          "eth": 256928,
+          "validators": 5034
+        },
+        {
+          "name": "RockawayX Infra",
+          "eth": 256872,
+          "validators": 6683
+        },
+        {
+          "name": "Staking Facilities",
+          "eth": 255913,
+          "validators": 4344
+        },
+        {
+          "name": "Simply Staking",
+          "eth": 255119,
+          "validators": 3031
+        },
+        {
+          "name": "Prysm by Offchain",
+          "eth": 255038,
+          "validators": 6937
+        },
+        {
+          "name": "SenseiNode",
+          "eth": 253478,
+          "validators": 3965
+        },
+        {
+          "name": "RockX",
+          "eth": 253477,
+          "validators": 7920
+        },
+        {
+          "name": "Chainlayer",
+          "eth": 253472,
+          "validators": 720
+        },
+        {
+          "name": "Sigma Prime",
+          "eth": 253297,
+          "validators": 5208
+        },
+        {
+          "name": "Attestant",
+          "eth": 250378,
+          "validators": 3415
+        },
+        {
+          "name": "Galaxy",
+          "eth": 246741,
+          "validators": 5790
+        },
+        {
+          "name": "InfStones",
+          "eth": 246386,
+          "validators": 4456
+        },
+        {
+          "name": "Simple DVT Module",
+          "eth": 160050,
+          "validators": 5000,
+          "operatorCount": 10
+        }
+      ]
+    },
+    "etherfi": {
+      "eth": 1791893,
+      "validators": 24550,
+      "operatorCount": 16,
+      "unit": "account",
+      "operators": [
+        {
+          "name": "0xF905168FB8Df460F2eBcD2eb35773BA8cdFD9087",
+          "address": "0xF905168FB8Df460F2eBcD2eb35773BA8cdFD9087",
+          "eth": 258679,
+          "validators": 1801
+        },
+        {
+          "name": "0x6A410216CfaCfE943E97A905C8CF92dEaAb43FF6",
+          "address": "0x6A410216CfaCfE943E97A905C8CF92dEaAb43FF6",
+          "eth": 190661,
+          "validators": 439
+        },
+        {
+          "name": "0xf92204022cdf7ee0763Ef794f69427A9dD9A7834",
+          "address": "0xf92204022cdf7ee0763Ef794f69427A9dD9A7834",
+          "eth": 160593,
+          "validators": 2069
+        },
+        {
+          "name": "InfStones",
+          "address": "0xe2F8CeFcDee51F48e3CE5c4Deea3095c43369b36",
+          "eth": 156485,
+          "validators": 3000,
+          "nameSource": "ssv"
+        },
+        {
+          "name": "NodeMonster",
+          "address": "0x6916487F0c4553B9EE2f401847B6C58341B76991",
+          "eth": 145318,
+          "validators": 1792,
+          "nameSource": "ssv"
+        },
+        {
+          "name": "0x6A54cF0befD629A8F74348Bb622a84A63f944532",
+          "address": "0x6A54cF0befD629A8F74348Bb622a84A63f944532",
+          "eth": 129998,
+          "validators": 1656
+        },
+        {
+          "name": "0x5bEA039DB7A516A2f1c258Fe002C9ec9aC75730D",
+          "address": "0x5bEA039DB7A516A2f1c258Fe002C9ec9aC75730D",
+          "eth": 124042,
+          "validators": 3875
+        },
+        {
+          "name": "Chainnodes",
+          "address": "0xAfBD66706F90BC56D29c39A260930b34B2757ed8",
+          "eth": 103397,
+          "validators": 3230,
+          "nameSource": "ssv"
+        },
+        {
+          "name": "0xcA2e28756379f660d15f1113dB5Cf34A73CbE89b",
+          "address": "0xcA2e28756379f660d15f1113dB5Cf34A73CbE89b",
+          "eth": 84542,
+          "validators": 683
+        },
+        {
+          "name": "0x78cA32Ac90D7F99225a3B9288D561E0cB3744899",
+          "address": "0x78cA32Ac90D7F99225a3B9288D561E0cB3744899",
+          "eth": 82429,
+          "validators": 840
+        },
+        {
+          "name": "0x7C0576343975A1360CEb91238e7B7985B8d71BF4",
+          "address": "0x7C0576343975A1360CEb91238e7B7985B8d71BF4",
+          "eth": 79312,
+          "validators": 1871
+        },
+        {
+          "name": "Nethermind",
+          "address": "0x771A428b865a3984085eD49A0ca550Dd222bb60b",
+          "eth": 75063,
+          "validators": 56,
+          "nameSource": "ssv"
+        },
+        {
+          "name": "0xA8304775e435146650A7Ae65aa39B2a38F0152AE",
+          "address": "0xA8304775e435146650A7Ae65aa39B2a38F0152AE",
+          "eth": 74426,
+          "validators": 60
+        },
+        {
+          "name": "0x74B44741EFbC3EDc7f0cdAdE165eAb1AfE9c65ca",
+          "address": "0x74B44741EFbC3EDc7f0cdAdE165eAb1AfE9c65ca",
+          "eth": 54350,
+          "validators": 1494
+        },
+        {
+          "name": "Finoa CS",
+          "address": "0xB8db44e12eacc48F7C2224a248c8990289556fAe",
+          "eth": 53587,
+          "validators": 1674,
+          "nameSource": "ssv"
+        },
+        {
+          "name": "0x791Bcaf97b2b091852A8A5492eDFEc4a4B55DEbD",
+          "address": "0x791Bcaf97b2b091852A8A5492eDFEc4a4B55DEbD",
+          "eth": 19011,
+          "validators": 10
+        }
+      ]
+    },
+    "rocketpool": {
+      "eth": 419640,
+      "validators": 13114,
+      "operatorCount": 1331,
+      "unit": "node",
+      "operators": [
+        {
+          "name": "rp2.thomasg.eth",
+          "address": "0x287A041489A735e51224229A9f997620c4f48c6B",
+          "eth": 25540,
+          "validators": 798,
+          "nameSource": "ens"
+        },
+        {
+          "name": "behoove.eth",
+          "address": "0x1f92eE8cf6483677C0c6381C48e2Bf272764f0CC",
+          "eth": 13249,
+          "validators": 414,
+          "nameSource": "ens"
+        },
+        {
+          "name": "0xca317A4ecCbe0Dd5832dE2A7407e3c03F88b2CdD",
+          "address": "0xca317A4ecCbe0Dd5832dE2A7407e3c03F88b2CdD",
+          "eth": 11328,
+          "validators": 354
+        },
+        {
+          "name": "0xb8ed9ea221bf33d37360A76DDD52bA7b1E66AA5C",
+          "address": "0xb8ed9ea221bf33d37360A76DDD52bA7b1E66AA5C",
+          "eth": 10849,
+          "validators": 339
+        },
+        {
+          "name": "0x66283163ACAb1BB1aF6b6cE7E05e1C81E1328e32",
+          "address": "0x66283163ACAb1BB1aF6b6cE7E05e1C81E1328e32",
+          "eth": 9571,
+          "validators": 299
+        },
+        {
+          "name": "0xD91EEcc267ff626399798040d88DE62c9e70Acf0",
+          "address": "0xD91EEcc267ff626399798040d88DE62c9e70Acf0",
+          "eth": 8259,
+          "validators": 258
+        },
+        {
+          "name": "0x84ba027280cC6cc1e592a01270c5f21A494F46Cb",
+          "address": "0x84ba027280cC6cc1e592a01270c5f21A494F46Cb",
+          "eth": 7296,
+          "validators": 228
+        },
+        {
+          "name": "0x5B2C08Eb8533e537119ECBA829BB0Dc4E100DC2c",
+          "address": "0x5B2C08Eb8533e537119ECBA829BB0Dc4E100DC2c",
+          "eth": 7170,
+          "validators": 224
+        },
+        {
+          "name": "nextblock.eth",
+          "address": "0x2d2BfE2389B7b3779fa04d101f75a89F6A62DcD6",
+          "eth": 6945,
+          "validators": 217,
+          "nameSource": "ens"
+        },
+        {
+          "name": "0xc1A95D5F674F809b80D768c12cAd12fbEB5c370c",
+          "address": "0xc1A95D5F674F809b80D768c12cAd12fbEB5c370c",
+          "eth": 6049,
+          "validators": 189
+        },
+        {
+          "name": "0x86C4c582215Bb0eC70310C6AE971f33772cB0e59",
+          "address": "0x86C4c582215Bb0eC70310C6AE971f33772cB0e59",
+          "eth": 4865,
+          "validators": 152
+        },
+        {
+          "name": "0xab331A3cCfA7C5d3b42eDb522FC6878b9D3D9c1d",
+          "address": "0xab331A3cCfA7C5d3b42eDb522FC6878b9D3D9c1d",
+          "eth": 4738,
+          "validators": 148
+        },
+        {
+          "name": "0xD93aeF2867144297802B41E7887C5C0d5b853fED",
+          "address": "0xD93aeF2867144297802B41E7887C5C0d5b853fED",
+          "eth": 4512,
+          "validators": 141
+        },
+        {
+          "name": "0x665dd495742e25BFd5778E40d44A8C70303f7CEe",
+          "address": "0x665dd495742e25BFd5778E40d44A8C70303f7CEe",
+          "eth": 4417,
+          "validators": 138
+        },
+        {
+          "name": "0xf0e52218A721bec51cFfC3AFC8E3bBb9EfBC8293",
+          "address": "0xf0e52218A721bec51cFfC3AFC8E3bBb9EfBC8293",
+          "eth": 4257,
+          "validators": 133
+        },
+        {
+          "name": "0xB984b9492b80325e09E7ddAd1b52Ac49d5808e9E",
+          "address": "0xB984b9492b80325e09E7ddAd1b52Ac49d5808e9E",
+          "eth": 4161,
+          "validators": 130
+        },
+        {
+          "name": "0x1De3626d6fc2d7c14AF8020B5E8A0c3371D9195D",
+          "address": "0x1De3626d6fc2d7c14AF8020B5E8A0c3371D9195D",
+          "eth": 4000,
+          "validators": 125
+        },
+        {
+          "name": "0x24a9db8f232948c2f64A4BBD68AC52A2694efa9F",
+          "address": "0x24a9db8f232948c2f64A4BBD68AC52A2694efa9F",
+          "eth": 3840,
+          "validators": 120
+        },
+        {
+          "name": "0x174E0b45C03318B0C9bc03573028605B26764931",
+          "address": "0x174E0b45C03318B0C9bc03573028605B26764931",
+          "eth": 3553,
+          "validators": 111
+        },
+        {
+          "name": "0xF6fd4eC926d83AdaDd725E67D4005763832f4679",
+          "address": "0xF6fd4eC926d83AdaDd725E67D4005763832f4679",
+          "eth": 3424,
+          "validators": 107
+        },
+        {
+          "name": "0xc23B28337896AB92d7e8Ed0303cec0609A58143B",
+          "address": "0xc23B28337896AB92d7e8Ed0303cec0609A58143B",
+          "eth": 3394,
+          "validators": 107
+        },
+        {
+          "name": "0x64627611655C8CdcaFaE7607589b4483a1578f4A",
+          "address": "0x64627611655C8CdcaFaE7607589b4483a1578f4A",
+          "eth": 3328,
+          "validators": 104
+        },
+        {
+          "name": "💥💥🚀.eth",
+          "address": "0x7818614Ff330B1c5C0C00f10710412f48927D1c6",
+          "eth": 3200,
+          "validators": 100,
+          "nameSource": "ens"
+        },
+        {
+          "name": "0x2A3ff5cA414bD3cE6e6B625e0e718B6A02E98Fe3",
+          "address": "0x2A3ff5cA414bD3cE6e6B625e0e718B6A02E98Fe3",
+          "eth": 3073,
+          "validators": 96
+        },
+        {
+          "name": "0xED8Da4DAF5B1b112fD27123ca414496cf033A3bb",
+          "address": "0xED8Da4DAF5B1b112fD27123ca414496cf033A3bb",
+          "eth": 3072,
+          "validators": 96
+        },
+        {
+          "name": "0x1959eE824A1523A2264adA2eAF9839b0B8EdEDbB",
+          "address": "0x1959eE824A1523A2264adA2eAF9839b0B8EdEDbB",
+          "eth": 2849,
+          "validators": 89
+        },
+        {
+          "name": "0x21f3e66382bC47D46E9D28331561dBDCDf34ff1B",
+          "address": "0x21f3e66382bC47D46E9D28331561dBDCDf34ff1B",
+          "eth": 2816,
+          "validators": 88
+        },
+        {
+          "name": "0xDDcBFa9234D1E6943dD6707223Ef089fcb965a87",
+          "address": "0xDDcBFa9234D1E6943dD6707223Ef089fcb965a87",
+          "eth": 2752,
+          "validators": 86
+        },
+        {
+          "name": "0x0aFE84a5445117B9EFfd0F4C085085438E36Fec5",
+          "address": "0x0aFE84a5445117B9EFfd0F4C085085438E36Fec5",
+          "eth": 2721,
+          "validators": 85
+        },
+        {
+          "name": "0x33E1593232a4EA27e7CdE4733D000b53B47bA392",
+          "address": "0x33E1593232a4EA27e7CdE4733D000b53B47bA392",
+          "eth": 2561,
+          "validators": 80
+        },
+        {
+          "name": "0xDB21B164A38a5eF18bA33E6A61BA192B3649f879",
+          "address": "0xDB21B164A38a5eF18bA33E6A61BA192B3649f879",
+          "eth": 2528,
+          "validators": 79
+        },
+        {
+          "name": "0x9e43d1a488a2b3E0d5Bf8e0f4201b057f5Bb4391",
+          "address": "0x9e43d1a488a2b3E0d5Bf8e0f4201b057f5Bb4391",
+          "eth": 2401,
+          "validators": 75
+        },
+        {
+          "name": "0x135Fc07e43DFc021d1dc95bBC4A4EDf77BCC685c",
+          "address": "0x135Fc07e43DFc021d1dc95bBC4A4EDf77BCC685c",
+          "eth": 2304,
+          "validators": 72
+        },
+        {
+          "name": "0xaCfAd9f0D80F74aD7E280A55eA025f4f09844B0F",
+          "address": "0xaCfAd9f0D80F74aD7E280A55eA025f4f09844B0F",
+          "eth": 2273,
+          "validators": 71
+        },
+        {
+          "name": "0x8990D7555Fee1e164b8CB09A6fA51Aa616f32618",
+          "address": "0x8990D7555Fee1e164b8CB09A6fA51Aa616f32618",
+          "eth": 2176,
+          "validators": 68
+        },
+        {
+          "name": "so-stake-we-all.eth",
+          "address": "0x30039AeAAa203B660db1e09388550341523f854d",
+          "eth": 2112,
+          "validators": 66,
+          "nameSource": "ens"
+        },
+        {
+          "name": "0x3b6fC5cC2feeFc357212617930AEDAc9493288aF",
+          "address": "0x3b6fC5cC2feeFc357212617930AEDAc9493288aF",
+          "eth": 2017,
+          "validators": 63
+        },
+        {
+          "name": "0x90E0E78E259Ae3525BEaC2331Af9Fc6b86D7b9eF",
+          "address": "0x90E0E78E259Ae3525BEaC2331Af9Fc6b86D7b9eF",
+          "eth": 2016,
+          "validators": 63
+        },
+        {
+          "name": "0x8e827814d5d86bE1dc648A2E5fe9ab4872046aBD",
+          "address": "0x8e827814d5d86bE1dc648A2E5fe9ab4872046aBD",
+          "eth": 1984,
+          "validators": 62
+        },
+        {
+          "name": "Other nodes",
+          "eth": 222010,
+          "validators": 6939,
+          "operatorCount": 1292,
+          "rest": true
+        }
+      ]
+    },
+    "stakewise": {
+      "eth": 321037,
+      "validators": 3285,
+      "operatorCount": 40,
+      "unit": "vault",
+      "operators": [
+        {
+          "name": "Genesis Vault",
+          "address": "0xAC0F906E433d58FA868F936E8A43230473652885",
+          "eth": 159616,
+          "validators": 88,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Bitwise Vault (fka Chorus One)",
+          "address": "0xe6d8d8aC54461b1C5eD15740EEe322043F696C08",
+          "eth": 58186,
+          "validators": 1267,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "0x4FEF9D741011476750A243aC70b9789a63dd47Df",
+          "address": "0x4FEF9D741011476750A243aC70b9789a63dd47Df",
+          "eth": 26052,
+          "validators": 814
+        },
+        {
+          "name": "NodeSet Private Vault",
+          "address": "0xB266274F55e784689e97b7E363B0666d92e6305B",
+          "eth": 24454,
+          "validators": 764,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "CCM GigaVault",
+          "address": "0x663a8C9e88c5cdc565Cc4bF0b2BEC8d862D744a6",
+          "eth": 8671,
+          "validators": 6,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Nodz",
+          "address": "0x4AafdB911085dd7703e57951279744DD713f744d",
+          "eth": 7879,
+          "validators": 6,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "CCM TokenVault",
+          "address": "0xB144B3b2D2a7d82e53BC70659Be03Bcd21CD94e8",
+          "eth": 5581,
+          "validators": 4,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Easy Stake - Powered by SSV",
+          "address": "0xA8cB2e35F594b308726b242136f0a8995BF19E97",
+          "eth": 5335,
+          "validators": 3,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Stakin Private Vault 1",
+          "address": "0x47fd7ac6C6bc73F2D419a18D0692F37Df3f48034",
+          "eth": 5137,
+          "validators": 3,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "P2P & Tangem",
+          "address": "0x4c09BC47db288F998b33CD63BCc1b6ddCCe13F33",
+          "eth": 2965,
+          "validators": 10,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Dream vault",
+          "address": "0x4425Bb38D4CA95e522F9308175eC7D8188E8284e",
+          "eth": 2337,
+          "validators": 73,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "EACSW1",
+          "address": "0xdBAe74906DCdbFe4FE7c296ADEc58863C16EFbdf",
+          "eth": 2091,
+          "validators": 65,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "0x579ECfE4270Ce23589D8b0A41DD234316018c11C",
+          "address": "0x579ECfE4270Ce23589D8b0A41DD234316018c11C",
+          "eth": 1953,
+          "validators": 61
+        },
+        {
+          "name": "Data Nexus DA",
+          "address": "0x729970a33B1680B763F941aa2Da9fA46c5DBDf5A",
+          "eth": 1922,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Serenita - Powered by Vero",
+          "address": "0xB36Fc5e542cb4fC562a624912f55dA2758998113",
+          "eth": 1640,
+          "validators": 14,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Stakingverse - Max MEV Boost",
+          "address": "0x8A93A876912c9F03F88Bc9114847cf5b63c89f56",
+          "eth": 1630,
+          "validators": 50,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Data Nexus",
+          "address": "0x8216e50b1dD76FAEb1ff4caFABA6790EA71910df",
+          "eth": 943,
+          "validators": 2,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "CCM LeverVault",
+          "address": "0xb1E3Ca426d3A3810EdB58017a4D6a71fc6221f44",
+          "eth": 768,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "onchainaustria.at",
+          "address": "0x663580B3edAd914D0b59CeA88616F06278D42bb2",
+          "eth": 493,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Allnodes",
+          "address": "0x1B3CE55dDE0e0D4b9A200855406e7b14334C10B0",
+          "eth": 448,
+          "validators": 7,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "SenseiNode",
+          "address": "0x5610297Eb32542B8f13378Fe7d783DCB1AC3B1a1",
+          "eth": 441,
+          "validators": 11,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "validator service",
+          "address": "0x089A97A8bC0C0F016f89F9CF42181Ff06afB2Daf",
+          "eth": 384,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Stakely",
+          "address": "0x99510bFc5D420cd3c41458F4692B1C3321908734",
+          "eth": 300,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Stakin by The Tie - No MEV",
+          "address": "0x05E393ec11D0197a88D84457908EDD4FF235f323",
+          "eth": 256,
+          "validators": 8,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Blockdaemon",
+          "address": "0x5799BE451eE9fddD171c23bf5BE86eCcFE1f062F",
+          "eth": 250,
+          "validators": 2,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Stakesaurus SEA Home Nodes",
+          "address": "0x649955f4189c3921df60e25F58Cb1E81070fEdb0",
+          "eth": 240,
+          "validators": 5,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Sun and Moon Capital",
+          "address": "0x9f246c7D0EF39FffaF4101C073D3a3615e80E842",
+          "eth": 166,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Blockshard DVT Explorers",
+          "address": "0x579684ECEF8EA89224F1898D69FDcc820eE12431",
+          "eth": 158,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Meria",
+          "address": "0x3F2f7424074bac9337DDCA38E83e1518436e0ED0",
+          "eth": 132,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "CommonWealth",
+          "address": "0xB0fd1783826Ce1A254BA8d5C409B267238FAA9Cd",
+          "eth": 93,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Peer Ventures",
+          "address": "0x907660805FB78aE4E8419f76537671CC4df2D4ab",
+          "eth": 88,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "brazilpracima",
+          "address": "0x3102B4013cB506481e959c8F4500B994D2bFF22e",
+          "eth": 66,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Solo Staker",
+          "address": "0x4e0A83509f5D0EF2e55B6F08dbF2462b72BcD30a",
+          "eth": 64,
+          "validators": 2,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Verse ETH Staking",
+          "address": "0x91211A4965e75152Cb549b308f8ba398c3aB337e",
+          "eth": 64,
+          "validators": 2,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "This Vault is deprecated",
+          "address": "0xB46DBA422BCF7F113dA2EEB41c0E2CC6298d6Bba",
+          "eth": 64,
+          "validators": 2,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "VincentTaglia.eth",
+          "address": "0x2ca762ed936e48c23B8a32403dD754020b07E86f",
+          "eth": 43,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "Illus Capital",
+          "address": "0x0aF0a2671Bb19D4be5D6c6899EC712341E472D4B",
+          "eth": 33,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "NodeHeart - Max MEV - 2% Fee",
+          "address": "0x745847818a5790CB406c3040A386907559869be2",
+          "eth": 32,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        },
+        {
+          "name": "0xA071D03D96554e185a86ab178ea3d76C9cAaaAD8",
+          "address": "0xA071D03D96554e185a86ab178ea3d76C9cAaaAD8",
+          "eth": 32,
+          "validators": 1
+        },
+        {
+          "name": "GlobalStake",
+          "address": "0xCF8357E5D8d90aA3c86EEbA3C494947DAb28bfaF",
+          "eth": 32,
+          "validators": 1,
+          "nameSource": "vault-metadata"
+        }
+      ]
+    }
+  }
+}
