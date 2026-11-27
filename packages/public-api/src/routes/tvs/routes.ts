@@ -123,10 +123,22 @@ export function addTvsRoutes(
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: 'No token has this id.' },
     },
     async (req, res) => {
       const { tokenId } = req.params
       const { range = '30d' } = req.query
+
+      // Anyone can call this, so an id is checked before it costs a query
+      // and a cache entry
+      const tokenIds = await cache.get(
+        { key: ['tvs', 'token-ids'], ttl: UnixTime.DAY },
+        () => getTvsTokenIds(ps),
+      )
+      if (!tokenIds.has(tokenId)) {
+        res.status(404).json({ message: `No token has the id "${tokenId}"` })
+        return
+      }
 
       const data = await cache.get(
         {
@@ -149,6 +161,13 @@ async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
   })
 
   return projects.map((p) => p.id)
+}
+
+/** The ids of the tokens in any project's TVS config, archived ones too. */
+async function getTvsTokenIds(ps: ProjectService): Promise<Set<string>> {
+  const projects = await ps.getProjects({ select: ['tvsConfig'] })
+
+  return new Set(projects.flatMap((p) => p.tvsConfig.map((token) => token.id)))
 }
 
 const TVS_CHART_DESCRIPTION = [

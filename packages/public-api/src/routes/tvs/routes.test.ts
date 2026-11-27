@@ -30,15 +30,18 @@ describe('/v1/tvs', () => {
   let close: () => void
   let getSummed: ReturnType<typeof mockGetSummed>
   let getEthPrices: ReturnType<typeof mockGetEthPrices>
+  let getTokenValues: ReturnType<typeof mockGetTokenValues>
   let cache: ReturnType<typeof mockCache>
 
   beforeEach(async () => {
     getSummed = mockGetSummed([record(T0, 100), record(T2, 300)])
     getEthPrices = mockGetEthPrices([price(T0, 2000)])
+    getTokenValues = mockGetTokenValues()
     cache = mockCache()
     const db = mockObject<Database>({
       tvsTokenValue: mockObject<Database['tvsTokenValue']>({
         getSummedByTimestampByProjects: getSummed,
+        getByTokenIdInTimeRange: getTokenValues,
       }),
       tvsPrice: mockObject<Database['tvsPrice']>({
         getPricesInRangeByPriceId: getEthPrices,
@@ -147,6 +150,33 @@ describe('/v1/tvs', () => {
     })
   }
 
+  // Why: the API is open, so a caller can send any string as a token id. Each
+  // one must not cost a database query and a cache entry of its own.
+  describe('/v1/tvs/token/:tokenId', () => {
+    it('answers 404 for an id no project has, without a query or a cache entry', async () => {
+      const res = await get<{ message: string }>('/v1/tvs/token/made-up')
+
+      expect(res.status).toEqual(404)
+      expect(res.body).toEqual({ message: 'No token has the id "made-up"' })
+      expect(getTokenValues).not.toHaveBeenCalled()
+      expect(cache.get).toHaveBeenOnlyCalledWith(
+        expect.subset({ key: ['tvs', 'token-ids'] }),
+        expect.anything(),
+      )
+    })
+
+    it('reads the values of a token from a project config', async () => {
+      const res = await get('/v1/tvs/token/alpha-ETH')
+
+      expect(res.status).toEqual(200)
+      expect(getTokenValues).toHaveBeenCalledWith(
+        'alpha-ETH',
+        expect.anything(),
+        expect.anything(),
+      )
+    })
+  })
+
   async function get<T = TvsResultItem[]>(path: string) {
     const res = await fetch(`${baseUrl}${path}`)
     return { status: res.status, body: (await res.json()) as T }
@@ -189,8 +219,18 @@ function mockGetEthPrices(prices: TvsPriceRecord[]) {
   )
 }
 
+function mockGetTokenValues() {
+  return mockFn<
+    Database['tvsTokenValue']['getByTokenIdInTimeRange']
+  >().resolvesTo([])
+}
+
 function fakeProjectService() {
-  const alpha = { id: ProjectId('alpha'), slug: 'alpha', tvsConfig: [] }
+  const alpha = {
+    id: ProjectId('alpha'),
+    slug: 'alpha',
+    tvsConfig: [{ id: 'alpha-ETH' }],
+  }
   return mockObject<ProjectService>({
     getProject: (async () =>
       alpha as unknown as Project) as ProjectService['getProject'],

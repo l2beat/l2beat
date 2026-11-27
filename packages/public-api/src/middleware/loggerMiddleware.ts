@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
-import { getContext } from '../context/context'
+import { getRequestHops, getRequestIp } from '../utils/getRequestIp'
 
 export function loggerMiddleware(logger: Logger) {
   logger = logger.for('Http')
@@ -9,7 +9,8 @@ export function loggerMiddleware(logger: Logger) {
       return next()
     }
 
-    const context = getContext()
+    const ip = getRequestIp(req)
+    const hops = getRequestHops(req)
     const { queryParams, url } = getParamsWithoutApiKey(req.originalUrl)
     logger.info('Processing request', {
       method: req.method,
@@ -17,7 +18,8 @@ export function loggerMiddleware(logger: Logger) {
       queryParams,
       referer: req.headers.referer ?? 'unknown',
       userAgent: req.headers['user-agent'] ?? 'unknown',
-      user: context.user,
+      ip,
+      ...hops,
     })
 
     const start = process.hrtime.bigint()
@@ -35,7 +37,8 @@ export function loggerMiddleware(logger: Logger) {
         size: contentLength ? Number(contentLength) : undefined,
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
-        user: context.user,
+        ip,
+        ...hops,
       })
     })
 
@@ -44,6 +47,11 @@ export function loggerMiddleware(logger: Logger) {
 }
 
 const dummyUrl = 'https://api.l2beat.com'
+
+/**
+ * Keys are no longer checked, but partners who were given one may still send
+ * it, and a secret must not end up in the logs.
+ */
 export function getParamsWithoutApiKey(url: string) {
   const urlObj = new URL(`${dummyUrl}${url}`)
   urlObj.searchParams.delete('apiKey')

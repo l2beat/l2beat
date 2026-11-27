@@ -1,7 +1,6 @@
 import type { ImpDefinition, Validator } from '@l2beat/validate'
 import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
 import type { Application, Request, RequestHandler } from 'express'
-import { GenericErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
@@ -66,6 +65,7 @@ export interface BaseOpenApiSchema {
   info: {
     title: string
     version: string
+    description?: string
   }
   servers: { url: string }[]
   tags: { name: Tags; description: string }[]
@@ -73,16 +73,6 @@ export interface BaseOpenApiSchema {
     description: string
     url: string
   }
-  components: {
-    securitySchemes: {
-      apiKeyAuth: {
-        type: 'apiKey'
-        in: 'query'
-        name: 'apiKey'
-      }
-    }
-  }
-  security: { apiKeyAuth: [] }[]
 }
 
 export class OpenApi {
@@ -141,14 +131,10 @@ export class OpenApi {
   }
 
   getOpenApiSchema() {
-    const { components, ...rest } = this.baseSchema
     return {
-      ...rest,
+      ...this.baseSchema,
       paths: this.getPaths(),
-      components: {
-        ...components,
-        ...this.getComponents(),
-      },
+      components: this.getComponents(),
     }
   }
 
@@ -255,7 +241,6 @@ export class OpenApi {
 
     // Add custom error responses if specified
     for (const [statusCode, errorValidator] of Object.entries({
-      401: GenericErrorResponse,
       ...route.options.errors,
     })) {
       const code = Number.parseInt(statusCode, 10)
