@@ -6,11 +6,9 @@ import {
 } from '~/server/markdown/markdownAlternate'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getApiMigrationGuide } from './apiMigrationGuide'
 import { getApiMigrationData } from './getApiMigrationData'
-import {
-  API_MIGRATION_GUIDE_TITLE,
-  getApiMigrationGuideMarkdown,
-} from './getApiMigrationGuideMarkdown'
+import { renderApiMigrationGuideMarkdown } from './renderApiMigrationGuideMarkdown'
 
 /**
  * The guide for moving off the old public API. Its readers are mostly
@@ -24,7 +22,7 @@ export function createApiMigrationRouter(
   const router = express.Router()
   const getMarkdown = () =>
     Promise.resolve(
-      `# ${API_MIGRATION_GUIDE_TITLE}\n\n${getApiMigrationGuideMarkdown()}\n`,
+      `${renderApiMigrationGuideMarkdown(getApiMigrationGuide())}\n`,
     )
 
   router.get(`${API_MIGRATION_GUIDE_PATH}.md`, serveMarkdown(getMarkdown))
