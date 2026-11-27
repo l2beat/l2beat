@@ -237,7 +237,7 @@ Today, Ethereum's core uses of Keccak-256 (state, transactions, and 160-bit addr
 
 ![Hash assumptions across Ethereum today, standard-model signatures, and the proposed PQ stack](/images/publications/hash-based-is-not-an-assumption/04-assumption-comparison.svg)
 
-### Post-AI and hybrid implications
+### Implications for post-AI and hybrid designs
 
 A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
 
