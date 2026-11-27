@@ -75,6 +75,7 @@ const schema = {
   discoveryUpdates: 'TEXT',
   ossificationHistory: 'TEXT',
   auditCoverage: 'TEXT',
+  auditScope: 'TEXT',
   versions: 'TEXT',
 
   archivedAt: 'INTEGER',
@@ -172,7 +173,7 @@ export class ProjectDatabase {
     }
     if (query.slugs) {
       parameters.push(...query.slugs)
-      where.push(`id IN (${query.slugs.map((_) => '?').join(', ')})`)
+      where.push(`slug IN (${query.slugs.map((_) => '?').join(', ')})`)
     }
     for (const key of query.whereNull) {
       where.push(`${key} IS NULL`)

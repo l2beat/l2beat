@@ -93,6 +93,9 @@ export type SectionId =
   | 'liquid-staking'
   | 'yield-and-exit'
   | 'crops'
+  | 'audit-timeline'
+  | 'audit-reports'
+  | 'audit-diff'
 
 type GroupId = 'da-layer'
 

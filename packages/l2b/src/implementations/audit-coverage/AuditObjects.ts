@@ -18,7 +18,8 @@ export function parseAuditObjects(
   })
   const json = JSON.parse(decompressed.toString('utf8'))
   const objects = new Map(Object.entries(AuditObjectsJson.parse(json)))
-  for (const object of referencedObjects(index)) {
+  const referenced = referencedObjects(index)
+  for (const object of referenced) {
     const content = objects.get(object)
     assert(content !== undefined, `Object ${object} is missing from bundle`)
     assert(
@@ -26,7 +27,8 @@ export function parseAuditObjects(
       `Object ${object} does not hash to its id`,
     )
   }
-  return objects
+  // The bundle also holds files no audit covers: excluded, or only visible.
+  return new Map([...objects].filter(([object]) => referenced.has(object)))
 }
 
 function referencedObjects(index: AuditIndex): Set<string> {

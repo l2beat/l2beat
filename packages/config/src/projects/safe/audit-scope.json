@@ -1,0 +1,4839 @@
+{
+  "schema_version": "0.1.0",
+  "project": "safe",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
+  },
+  "reports": {
+    "akhunov-gnosis-safe-2018": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "b1a80f23b99c4983229dbb678c9f77895c9d2b70",
+          "nodes": [
+            {
+              "name": "Extension",
+              "kind": "contract",
+              "path": "contracts/Extension.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "Migrations",
+              "kind": "contract",
+              "path": "contracts/Migrations.sol",
+              "state": "included"
+            },
+            {
+              "name": "Proxy",
+              "kind": "contract",
+              "path": "contracts/Proxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "ProxyFactory",
+              "kind": "contract",
+              "path": "contracts/ProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "DailyLimitExtension",
+              "kind": "contract",
+              "path": "contracts/extensions/DailyLimitExtension.sol",
+              "state": "included"
+            },
+            {
+              "name": "SocialRecoveryExtension",
+              "kind": "contract",
+              "path": "contracts/extensions/SocialRecoveryExtension.sol",
+              "state": "included"
+            },
+            {
+              "name": "WhitelistExtension",
+              "kind": "contract",
+              "path": "contracts/extensions/WhitelistExtension.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateAndAddExtension",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateAndAddExtension.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 1, "uses"],
+            [1, 0, "uses"],
+            [4, 3, "uses"],
+            [5, 0, "inherits"],
+            [5, 1, "uses"],
+            [6, 0, "inherits"],
+            [6, 1, "uses"],
+            [7, 0, "inherits"],
+            [7, 1, "uses"],
+            [8, 0, "uses"]
+          ],
+          "interfaces": 0,
+          "explicitness": {
+            "own": { "named": 10, "total": 10 },
+            "external": { "named": 0, "total": 0 }
+          }
+        },
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "942968d66a4fa200fe9757d02b377dbfc3c88636",
+          "nodes": [
+            {
+              "name": "DelegateConstructorProxy",
+              "kind": "contract",
+              "path": "contracts/DelegateConstructorProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafePersonalEdition",
+              "kind": "contract",
+              "path": "contracts/GnosisSafePersonalEdition.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeTeamEdition",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeTeamEdition.sol",
+              "state": "included"
+            },
+            {
+              "name": "MasterCopy",
+              "kind": "contract",
+              "path": "contracts/MasterCopy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Migrations",
+              "kind": "contract",
+              "path": "contracts/Migrations.sol",
+              "state": "included"
+            },
+            {
+              "name": "Module",
+              "kind": "contract",
+              "path": "contracts/Module.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "PayingProxy",
+              "kind": "contract",
+              "path": "contracts/PayingProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Proxy",
+              "kind": "contract",
+              "path": "contracts/Proxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "ProxyFactory",
+              "kind": "contract",
+              "path": "contracts/ProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureValidator",
+              "kind": "contract",
+              "path": "contracts/SignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ERC20Token",
+              "kind": "contract",
+              "path": "contracts/interfaces/ERC20Token.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateAndAddModules",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateAndAddModules.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "StateChannelModule",
+              "kind": "contract",
+              "path": "contracts/modules/StateChannelModule.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 11, "inherits"],
+            [2, 8, "inherits"],
+            [2, 9, "inherits"],
+            [3, 5, "inherits"],
+            [3, 2, "inherits"],
+            [3, 14, "inherits"],
+            [3, 1, "uses"],
+            [3, 15, "uses"],
+            [4, 5, "inherits"],
+            [4, 2, "inherits"],
+            [4, 1, "uses"],
+            [5, 13, "inherits"],
+            [7, 5, "inherits"],
+            [7, 8, "uses"],
+            [8, 13, "inherits"],
+            [8, 7, "uses"],
+            [8, 1, "uses"],
+            [9, 13, "inherits"],
+            [10, 0, "inherits"],
+            [10, 15, "uses"],
+            [12, 11, "uses"],
+            [16, 7, "uses"],
+            [18, 7, "inherits"],
+            [18, 14, "inherits"],
+            [18, 1, "uses"],
+            [18, 9, "uses"]
+          ],
+          "interfaces": 0,
+          "explicitness": {
+            "own": { "named": 19, "total": 19 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "g0-safe-1-1-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "1a9e5ce768e134c556770ea50e114fd83666b8a8",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Module",
+              "kind": "contract",
+              "path": "contracts/base/Module.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "MasterCopy",
+              "kind": "contract",
+              "path": "contracts/common/MasterCopy.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateAndAddModules",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateAndAddModules.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "DailyLimitModule",
+              "kind": "contract",
+              "path": "contracts/modules/DailyLimitModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "SocialRecoveryModule",
+              "kind": "contract",
+              "path": "contracts/modules/SocialRecoveryModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "StateChannelModule",
+              "kind": "contract",
+              "path": "contracts/modules/StateChannelModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "WhitelistModule",
+              "kind": "contract",
+              "path": "contracts/modules/WhitelistModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "DelegateConstructorProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/DelegateConstructorProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "PayingProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/PayingProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Proxy",
+              "kind": "contract",
+              "path": "contracts/proxies/Proxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "ProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/ProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 8, "inherits"],
+            [0, 4, "inherits"],
+            [0, 5, "inherits"],
+            [0, 11, "inherits"],
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 2, "inherits"],
+            [0, 26, "uses"],
+            [0, 6, "uses"],
+            [0, 14, "uses"],
+            [1, 6, "uses"],
+            [2, 10, "inherits"],
+            [3, 8, "inherits"],
+            [3, 4, "uses"],
+            [4, 10, "inherits"],
+            [4, 1, "inherits"],
+            [4, 3, "uses"],
+            [4, 6, "uses"],
+            [5, 10, "inherits"],
+            [8, 10, "inherits"],
+            [14, 13, "inherits"],
+            [15, 3, "uses"],
+            [18, 3, "inherits"],
+            [18, 5, "uses"],
+            [18, 6, "uses"],
+            [19, 3, "inherits"],
+            [19, 6, "uses"],
+            [20, 3, "inherits"],
+            [20, 11, "inherits"],
+            [20, 6, "uses"],
+            [20, 5, "uses"],
+            [21, 3, "inherits"],
+            [21, 5, "uses"],
+            [21, 6, "uses"],
+            [22, 24, "inherits"],
+            [23, 22, "inherits"],
+            [23, 9, "inherits"],
+            [25, 24, "uses"]
+          ],
+          "interfaces": 3,
+          "explicitness": {
+            "own": { "named": 26, "total": 27 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "g0-safe-1-1-1": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "1a9e5ce768e134c556770ea50e114fd83666b8a8",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Module",
+              "kind": "contract",
+              "path": "contracts/base/Module.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "MasterCopy",
+              "kind": "contract",
+              "path": "contracts/common/MasterCopy.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateAndAddModules",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateAndAddModules.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "DailyLimitModule",
+              "kind": "contract",
+              "path": "contracts/modules/DailyLimitModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "SocialRecoveryModule",
+              "kind": "contract",
+              "path": "contracts/modules/SocialRecoveryModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "StateChannelModule",
+              "kind": "contract",
+              "path": "contracts/modules/StateChannelModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "WhitelistModule",
+              "kind": "contract",
+              "path": "contracts/modules/WhitelistModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "DelegateConstructorProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/DelegateConstructorProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "PayingProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/PayingProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Proxy",
+              "kind": "contract",
+              "path": "contracts/proxies/Proxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "ProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/ProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 8, "inherits"],
+            [0, 4, "inherits"],
+            [0, 5, "inherits"],
+            [0, 11, "inherits"],
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 2, "inherits"],
+            [0, 26, "uses"],
+            [0, 6, "uses"],
+            [0, 14, "uses"],
+            [1, 6, "uses"],
+            [2, 10, "inherits"],
+            [3, 8, "inherits"],
+            [3, 4, "uses"],
+            [4, 10, "inherits"],
+            [4, 1, "inherits"],
+            [4, 3, "uses"],
+            [4, 6, "uses"],
+            [5, 10, "inherits"],
+            [8, 10, "inherits"],
+            [14, 13, "inherits"],
+            [15, 3, "uses"],
+            [18, 3, "inherits"],
+            [18, 5, "uses"],
+            [18, 6, "uses"],
+            [19, 3, "inherits"],
+            [19, 6, "uses"],
+            [20, 3, "inherits"],
+            [20, 11, "inherits"],
+            [20, 6, "uses"],
+            [20, 5, "uses"],
+            [21, 3, "inherits"],
+            [21, 5, "uses"],
+            [21, 6, "uses"],
+            [22, 24, "inherits"],
+            [23, 22, "inherits"],
+            [23, 9, "inherits"],
+            [25, 24, "uses"]
+          ],
+          "interfaces": 3,
+          "explicitness": {
+            "own": { "named": 26, "total": 27 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "g0-safe-gas-validation-1-2-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "271921f4b37613b3d49bf33452dbcd81be219247",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "MasterCopy",
+              "kind": "contract",
+              "path": "contracts/common/MasterCopy.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "GnosisSafeMath",
+              "kind": "library",
+              "path": "contracts/external/GnosisSafeMath.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Module",
+              "kind": "contract",
+              "path": "contracts/base/Module.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 2, "inherits"],
+            [0, 1, "inherits"],
+            [0, 3, "inherits"],
+            [0, 4, "inherits"],
+            [0, 5, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 8, "uses"],
+            [0, 9, "uses"],
+            [0, 10, "uses"],
+            [1, 11, "inherits"],
+            [1, 12, "inherits"],
+            [1, 13, "uses"],
+            [1, 9, "uses"],
+            [2, 11, "inherits"],
+            [3, 11, "inherits"],
+            [7, 11, "inherits"],
+            [10, 6, "inherits"],
+            [12, 9, "uses"],
+            [13, 2, "inherits"],
+            [13, 1, "uses"]
+          ],
+          "interfaces": 0,
+          "explicitness": {
+            "own": { "named": 2, "total": 14 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "g0-safe-1-3-0-initial": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "4bfc0c8519f1893015d7edfd2c2780fca163c364",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeL2",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "contract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "contract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "contract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeMath",
+              "kind": "library",
+              "path": "contracts/external/GnosisSafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "DelegateCallTransactionGuard",
+              "kind": "contract",
+              "path": "contracts/guards/DelegateCallTransactionGuard.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "contract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "Migration",
+              "kind": "contract",
+              "path": "contracts/libraries/Migrate_1_3_0_to_1_2_0.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxyFactory.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 12, "inherits"],
+            [0, 10, "inherits"],
+            [0, 20, "inherits"],
+            [0, 4, "inherits"],
+            [0, 14, "inherits"],
+            [0, 5, "inherits"],
+            [0, 15, "uses"],
+            [0, 8, "uses"],
+            [0, 21, "uses"],
+            [1, 0, "inherits"],
+            [1, 8, "uses"],
+            [2, 3, "inherits"],
+            [2, 8, "uses"],
+            [3, 8, "uses"],
+            [4, 11, "inherits"],
+            [5, 11, "inherits"],
+            [6, 11, "inherits"],
+            [6, 3, "inherits"],
+            [6, 8, "uses"],
+            [7, 11, "inherits"],
+            [16, 8, "uses"],
+            [17, 18, "inherits"],
+            [17, 21, "inherits"],
+            [17, 0, "uses"],
+            [21, 20, "inherits"],
+            [27, 26, "uses"]
+          ],
+          "interfaces": 8,
+          "explicitness": {
+            "own": { "named": 28, "total": 28 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "g0-safe-1-3-0-final": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "ad6c7355d5bdf4f7fa348fbfcb9f07431769a3c9",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeL2",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "contract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "contract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "contract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "DebugTransactionGuard",
+              "kind": "contract",
+              "path": "contracts/examples/guards/DebugTransactionGuard.sol",
+              "state": "included"
+            },
+            {
+              "name": "DelegateCallTransactionGuard",
+              "kind": "contract",
+              "path": "contracts/examples/guards/DelegateCallTransactionGuard.sol",
+              "state": "included"
+            },
+            {
+              "name": "ReentrencyTransactionGuard",
+              "kind": "contract",
+              "path": "contracts/examples/guards/ReentrencyTransactionGuard.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeStorage",
+              "kind": "contract",
+              "path": "contracts/examples/libraries/GnosisSafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "Migration",
+              "kind": "contract",
+              "path": "contracts/examples/libraries/Migrate_1_3_0_to_1_2_0.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/examples/libraries/SignMessage.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeMath",
+              "kind": "library",
+              "path": "contracts/external/GnosisSafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "contract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxyFactory.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 12, "inherits"],
+            [0, 10, "inherits"],
+            [0, 25, "inherits"],
+            [0, 4, "inherits"],
+            [0, 14, "inherits"],
+            [0, 5, "inherits"],
+            [0, 21, "uses"],
+            [0, 8, "uses"],
+            [0, 26, "uses"],
+            [1, 0, "inherits"],
+            [1, 8, "uses"],
+            [2, 3, "inherits"],
+            [2, 8, "uses"],
+            [3, 8, "uses"],
+            [4, 11, "inherits"],
+            [5, 11, "inherits"],
+            [6, 11, "inherits"],
+            [6, 3, "inherits"],
+            [6, 8, "uses"],
+            [7, 11, "inherits"],
+            [15, 8, "uses"],
+            [15, 0, "uses"],
+            [16, 8, "uses"],
+            [17, 8, "uses"],
+            [19, 18, "inherits"],
+            [20, 18, "inherits"],
+            [20, 0, "uses"],
+            [22, 23, "inherits"],
+            [22, 26, "inherits"],
+            [22, 0, "uses"],
+            [26, 25, "inherits"],
+            [31, 30, "uses"]
+          ],
+          "interfaces": 8,
+          "explicitness": {
+            "own": { "named": 32, "total": 32 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "certora-safe-1-3-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeL2",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "contract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "contract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "contract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeMath",
+              "kind": "library",
+              "path": "contracts/external/GnosisSafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "contract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/GnosisSafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/libraries/SignMessageLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxyFactory.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 12, "inherits"],
+            [0, 10, "inherits"],
+            [0, 19, "inherits"],
+            [0, 4, "inherits"],
+            [0, 14, "inherits"],
+            [0, 5, "inherits"],
+            [0, 15, "uses"],
+            [0, 8, "uses"],
+            [0, 20, "uses"],
+            [1, 0, "inherits"],
+            [1, 8, "uses"],
+            [2, 3, "inherits"],
+            [2, 8, "uses"],
+            [3, 8, "uses"],
+            [4, 11, "inherits"],
+            [5, 11, "inherits"],
+            [6, 11, "inherits"],
+            [6, 3, "inherits"],
+            [6, 8, "uses"],
+            [7, 11, "inherits"],
+            [16, 17, "inherits"],
+            [16, 20, "inherits"],
+            [16, 0, "uses"],
+            [20, 19, "inherits"],
+            [25, 22, "inherits"],
+            [25, 0, "uses"],
+            [27, 26, "uses"]
+          ],
+          "interfaces": 8,
+          "explicitness": {
+            "own": { "named": 28, "total": 28 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "nethermind-safe-1-3-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+          "nodes": [
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeL2",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "contract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "contract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "contract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "EtherPaymentFallback",
+              "kind": "contract",
+              "path": "contracts/common/EtherPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "contract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "contract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "contract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "contract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeMath",
+              "kind": "library",
+              "path": "contracts/external/GnosisSafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "DefaultCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/DefaultCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "contract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/GnosisSafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/libraries/SignMessageLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/GnosisSafeProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 12, "inherits"],
+            [0, 10, "inherits"],
+            [0, 26, "inherits"],
+            [0, 4, "inherits"],
+            [0, 14, "inherits"],
+            [0, 5, "inherits"],
+            [0, 15, "uses"],
+            [0, 8, "uses"],
+            [0, 27, "uses"],
+            [1, 0, "inherits"],
+            [1, 8, "uses"],
+            [2, 3, "inherits"],
+            [2, 8, "uses"],
+            [3, 8, "uses"],
+            [4, 11, "inherits"],
+            [5, 11, "inherits"],
+            [6, 11, "inherits"],
+            [6, 3, "inherits"],
+            [6, 8, "uses"],
+            [7, 11, "inherits"],
+            [16, 17, "inherits"],
+            [16, 27, "inherits"],
+            [16, 0, "uses"],
+            [23, 20, "inherits"],
+            [23, 0, "uses"],
+            [25, 24, "uses"],
+            [27, 26, "inherits"]
+          ],
+          "interfaces": 7,
+          "explicitness": {
+            "own": { "named": 26, "total": 28 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "ackee-safe-1-4-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+          "nodes": [
+            {
+              "name": "Safe",
+              "kind": "contract",
+              "path": "contracts/Safe.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeL2",
+              "kind": "contract",
+              "path": "contracts/SafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "abstract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "abstract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "BaseGuard",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "abstract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "abstract",
+              "path": "contracts/common/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "NativeCurrencyPaymentFallback",
+              "kind": "abstract",
+              "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "abstract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "abstract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "abstract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "abstract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "abstract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "TokenCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/TokenCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/libraries/SignMessageLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxyFactory.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 13, "inherits"],
+            [0, 9, "inherits"],
+            [0, 6, "inherits"],
+            [0, 7, "inherits"],
+            [0, 12, "inherits"],
+            [0, 10, "inherits"],
+            [0, 18, "inherits"],
+            [0, 3, "inherits"],
+            [0, 14, "inherits"],
+            [0, 5, "inherits"],
+            [0, 15, "uses"],
+            [0, 8, "uses"],
+            [0, 19, "uses"],
+            [1, 0, "inherits"],
+            [1, 8, "uses"],
+            [2, 8, "uses"],
+            [3, 11, "inherits"],
+            [5, 11, "inherits"],
+            [6, 11, "inherits"],
+            [6, 2, "inherits"],
+            [6, 8, "uses"],
+            [7, 11, "inherits"],
+            [16, 17, "inherits"],
+            [16, 19, "inherits"],
+            [16, 0, "uses"],
+            [19, 18, "inherits"],
+            [22, 21, "inherits"],
+            [22, 0, "uses"],
+            [24, 23, "uses"]
+          ],
+          "interfaces": 7,
+          "explicitness": {
+            "own": { "named": 25, "total": 25 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "ackee-safe-1-5-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+          "nodes": [
+            {
+              "name": "Safe",
+              "kind": "contract",
+              "path": "contracts/Safe.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeL2",
+              "kind": "contract",
+              "path": "contracts/SafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "abstract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "abstract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "BaseTransactionGuard",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "BaseModuleGuard",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "abstract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "NativeCurrencyPaymentFallback",
+              "kind": "abstract",
+              "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "abstract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "abstract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "abstract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "abstract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "abstract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ExtensibleFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/ExtensibleFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "abstract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "TokenCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/TokenCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ERC165Handler",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/ERC165Handler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ExtensibleBase",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/ExtensibleBase.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackHandler",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/FallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "MarshalLib",
+              "kind": "library",
+              "path": "contracts/handler/extensible/MarshalLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureVerifierMuxer",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/SignatureVerifierMuxer.sol",
+              "state": "included"
+            },
+            {
+              "name": "EIP712",
+              "kind": "library",
+              "path": "contracts/handler/extensible/SignatureVerifierMuxer.sol",
+              "state": "included"
+            },
+            {
+              "name": "TokenCallbacks",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/TokenCallbacks.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "library",
+              "path": "contracts/libraries/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "ErrorMessage",
+              "kind": "abstract",
+              "path": "contracts/libraries/ErrorMessage.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMigration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeMigration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Migration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Migration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Setup",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Setup.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/libraries/SignMessageLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxyFactory.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 14, "inherits"],
+            [0, 10, "inherits"],
+            [0, 8, "inherits"],
+            [0, 6, "inherits"],
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 11, "inherits"],
+            [0, 28, "inherits"],
+            [0, 4, "inherits"],
+            [0, 15, "inherits"],
+            [0, 16, "uses"],
+            [0, 31, "uses"],
+            [0, 29, "uses"],
+            [1, 0, "inherits"],
+            [1, 31, "uses"],
+            [2, 3, "inherits"],
+            [2, 31, "uses"],
+            [3, 31, "uses"],
+            [4, 12, "inherits"],
+            [6, 12, "inherits"],
+            [8, 12, "inherits"],
+            [8, 3, "inherits"],
+            [8, 31, "uses"],
+            [9, 12, "inherits"],
+            [12, 32, "inherits"],
+            [17, 20, "inherits"],
+            [17, 29, "inherits"],
+            [17, 19, "inherits"],
+            [18, 23, "inherits"],
+            [18, 25, "inherits"],
+            [18, 27, "inherits"],
+            [18, 21, "inherits"],
+            [21, 22, "inherits"],
+            [21, 24, "uses"],
+            [22, 19, "inherits"],
+            [22, 24, "uses"],
+            [23, 22, "inherits"],
+            [25, 22, "inherits"],
+            [25, 26, "uses"],
+            [27, 22, "inherits"],
+            [29, 28, "inherits"],
+            [35, 36, "inherits"],
+            [37, 36, "inherits"],
+            [37, 31, "uses"],
+            [38, 36, "inherits"],
+            [39, 36, "inherits"],
+            [41, 40, "uses"]
+          ],
+          "interfaces": 21,
+          "explicitness": {
+            "own": { "named": 42, "total": 42 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "akhunov-audit-results-note": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "942968d66a4fa200fe9757d02b377dbfc3c88636",
+          "nodes": [
+            {
+              "name": "DelegateConstructorProxy",
+              "kind": "contract",
+              "path": "contracts/DelegateConstructorProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "contract",
+              "path": "contracts/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafe",
+              "kind": "contract",
+              "path": "contracts/GnosisSafe.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafePersonalEdition",
+              "kind": "contract",
+              "path": "contracts/GnosisSafePersonalEdition.sol",
+              "state": "included"
+            },
+            {
+              "name": "GnosisSafeTeamEdition",
+              "kind": "contract",
+              "path": "contracts/GnosisSafeTeamEdition.sol",
+              "state": "included"
+            },
+            {
+              "name": "MasterCopy",
+              "kind": "contract",
+              "path": "contracts/MasterCopy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Migrations",
+              "kind": "contract",
+              "path": "contracts/Migrations.sol",
+              "state": "included"
+            },
+            {
+              "name": "Module",
+              "kind": "contract",
+              "path": "contracts/Module.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "contract",
+              "path": "contracts/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "contract",
+              "path": "contracts/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "PayingProxy",
+              "kind": "contract",
+              "path": "contracts/PayingProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "Proxy",
+              "kind": "contract",
+              "path": "contracts/Proxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "ProxyFactory",
+              "kind": "contract",
+              "path": "contracts/ProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "contract",
+              "path": "contracts/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureValidator",
+              "kind": "contract",
+              "path": "contracts/SignatureValidator.sol",
+              "state": "included"
+            },
+            {
+              "name": "ERC20Token",
+              "kind": "contract",
+              "path": "contracts/interfaces/ERC20Token.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateAndAddModules",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateAndAddModules.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "DailyLimitModule",
+              "kind": "contract",
+              "path": "contracts/modules/DailyLimitModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "SocialRecoveryModule",
+              "kind": "contract",
+              "path": "contracts/modules/SocialRecoveryModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "StateChannelModule",
+              "kind": "contract",
+              "path": "contracts/modules/StateChannelModule.sol",
+              "state": "included"
+            },
+            {
+              "name": "WhitelistModule",
+              "kind": "contract",
+              "path": "contracts/modules/WhitelistModule.sol",
+              "state": "included"
+            }
+          ],
+          "edges": [
+            [0, 11, "inherits"],
+            [2, 8, "inherits"],
+            [2, 9, "inherits"],
+            [3, 5, "inherits"],
+            [3, 2, "inherits"],
+            [3, 14, "inherits"],
+            [3, 1, "uses"],
+            [3, 15, "uses"],
+            [4, 5, "inherits"],
+            [4, 2, "inherits"],
+            [4, 1, "uses"],
+            [5, 13, "inherits"],
+            [7, 5, "inherits"],
+            [7, 8, "uses"],
+            [8, 13, "inherits"],
+            [8, 7, "uses"],
+            [8, 1, "uses"],
+            [9, 13, "inherits"],
+            [10, 0, "inherits"],
+            [10, 15, "uses"],
+            [12, 11, "uses"],
+            [16, 7, "uses"],
+            [18, 7, "inherits"],
+            [18, 9, "uses"],
+            [18, 1, "uses"],
+            [19, 7, "inherits"],
+            [19, 1, "uses"],
+            [20, 7, "inherits"],
+            [20, 14, "inherits"],
+            [20, 1, "uses"],
+            [20, 9, "uses"],
+            [21, 7, "inherits"],
+            [21, 9, "uses"],
+            [21, 1, "uses"]
+          ],
+          "interfaces": 0,
+          "explicitness": {
+            "own": { "named": 22, "total": 22 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "runtime-verification-safe-1-0-0": {
+      "status": "partial",
+      "unlisted": "not-mentioned",
+      "snapshots": []
+    },
+    "certora-safe-1-5-0": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "834e798aa51291cccaf0594921194928716e9892",
+          "nodes": [
+            {
+              "name": "Safe",
+              "kind": "contract",
+              "path": "contracts/Safe.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeL2",
+              "kind": "contract",
+              "path": "contracts/SafeL2.sol",
+              "state": "included"
+            },
+            {
+              "name": "SimulateTxAccessor",
+              "kind": "contract",
+              "path": "contracts/accessors/SimulateTxAccessor.sol",
+              "state": "included"
+            },
+            {
+              "name": "Executor",
+              "kind": "abstract",
+              "path": "contracts/base/Executor.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "abstract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "BaseTransactionGuard",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "BaseModuleGuard",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "abstract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "included"
+            },
+            {
+              "name": "NativeCurrencyPaymentFallback",
+              "kind": "abstract",
+              "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+              "state": "included"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "abstract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "included"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "abstract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "abstract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "included"
+            },
+            {
+              "name": "Singleton",
+              "kind": "abstract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "included"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "abstract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "included"
+            },
+            {
+              "name": "CompatibilityFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ExtensibleFallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/ExtensibleFallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "HandlerContext",
+              "kind": "abstract",
+              "path": "contracts/handler/HandlerContext.sol",
+              "state": "included"
+            },
+            {
+              "name": "TokenCallbackHandler",
+              "kind": "contract",
+              "path": "contracts/handler/TokenCallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ERC165Handler",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/ERC165Handler.sol",
+              "state": "included"
+            },
+            {
+              "name": "ExtensibleBase",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/ExtensibleBase.sol",
+              "state": "included"
+            },
+            {
+              "name": "FallbackHandler",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/FallbackHandler.sol",
+              "state": "included"
+            },
+            {
+              "name": "MarshalLib",
+              "kind": "library",
+              "path": "contracts/handler/extensible/MarshalLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignatureVerifierMuxer",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/SignatureVerifierMuxer.sol",
+              "state": "included"
+            },
+            {
+              "name": "EIP712",
+              "kind": "library",
+              "path": "contracts/handler/extensible/SignatureVerifierMuxer.sol",
+              "state": "included"
+            },
+            {
+              "name": "TokenCallbacks",
+              "kind": "abstract",
+              "path": "contracts/handler/extensible/TokenCallbacks.sol",
+              "state": "included"
+            },
+            {
+              "name": "CreateCall",
+              "kind": "contract",
+              "path": "contracts/libraries/CreateCall.sol",
+              "state": "included"
+            },
+            {
+              "name": "Enum",
+              "kind": "library",
+              "path": "contracts/libraries/Enum.sol",
+              "state": "included"
+            },
+            {
+              "name": "ErrorMessage",
+              "kind": "abstract",
+              "path": "contracts/libraries/ErrorMessage.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSend",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSend.sol",
+              "state": "included"
+            },
+            {
+              "name": "MultiSendCallOnly",
+              "kind": "contract",
+              "path": "contracts/libraries/MultiSendCallOnly.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeMigration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeMigration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeStorage.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Migration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Migration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Setup",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Setup.sol",
+              "state": "included"
+            },
+            {
+              "name": "SignMessageLib",
+              "kind": "contract",
+              "path": "contracts/libraries/SignMessageLib.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxy",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxy.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeProxyFactory",
+              "kind": "contract",
+              "path": "contracts/proxies/SafeProxyFactory.sol",
+              "state": "included"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 14, "inherits"],
+            [0, 10, "inherits"],
+            [0, 8, "inherits"],
+            [0, 6, "inherits"],
+            [0, 9, "inherits"],
+            [0, 13, "inherits"],
+            [0, 11, "inherits"],
+            [0, 40, "inherits"],
+            [0, 4, "inherits"],
+            [0, 15, "inherits"],
+            [0, 16, "uses"],
+            [0, 29, "uses"],
+            [0, 41, "uses"],
+            [1, 0, "inherits"],
+            [1, 29, "uses"],
+            [2, 3, "inherits"],
+            [2, 29, "uses"],
+            [3, 29, "uses"],
+            [4, 12, "inherits"],
+            [6, 12, "inherits"],
+            [8, 12, "inherits"],
+            [8, 3, "inherits"],
+            [8, 29, "uses"],
+            [9, 12, "inherits"],
+            [12, 30, "inherits"],
+            [17, 20, "inherits"],
+            [17, 41, "inherits"],
+            [17, 19, "inherits"],
+            [18, 23, "inherits"],
+            [18, 25, "inherits"],
+            [18, 27, "inherits"],
+            [18, 21, "inherits"],
+            [21, 22, "inherits"],
+            [21, 24, "uses"],
+            [22, 19, "inherits"],
+            [22, 24, "uses"],
+            [23, 22, "inherits"],
+            [25, 22, "inherits"],
+            [25, 26, "uses"],
+            [27, 22, "inherits"],
+            [33, 34, "inherits"],
+            [35, 34, "inherits"],
+            [35, 29, "uses"],
+            [36, 34, "inherits"],
+            [37, 34, "inherits"],
+            [39, 38, "uses"],
+            [41, 40, "inherits"]
+          ],
+          "interfaces": 20,
+          "explicitness": {
+            "own": { "named": 40, "total": 42 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    },
+    "certora-safe-library-contracts-1-4-1": {
+      "status": "graph",
+      "unlisted": "not-mentioned",
+      "snapshots": [
+        {
+          "repository": "safe-fndn/safe-smart-account",
+          "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+          "nodes": [
+            {
+              "name": "SafeMigration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeMigration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Migration",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Migration.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeToL2Setup",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeToL2Setup.sol",
+              "state": "included"
+            },
+            {
+              "name": "SafeStorage",
+              "kind": "contract",
+              "path": "contracts/libraries/SafeStorage.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Safe",
+              "kind": "contract",
+              "path": "contracts/Safe.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Enum",
+              "kind": "abstract",
+              "path": "contracts/common/Enum.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Singleton",
+              "kind": "abstract",
+              "path": "contracts/common/Singleton.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "NativeCurrencyPaymentFallback",
+              "kind": "abstract",
+              "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ModuleManager",
+              "kind": "abstract",
+              "path": "contracts/base/ModuleManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "OwnerManager",
+              "kind": "abstract",
+              "path": "contracts/base/OwnerManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SignatureDecoder",
+              "kind": "abstract",
+              "path": "contracts/common/SignatureDecoder.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SecuredTokenTransfer",
+              "kind": "abstract",
+              "path": "contracts/common/SecuredTokenTransfer.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidatorConstants",
+              "kind": "contract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "FallbackManager",
+              "kind": "abstract",
+              "path": "contracts/base/FallbackManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "StorageAccessible",
+              "kind": "abstract",
+              "path": "contracts/common/StorageAccessible.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "GuardManager",
+              "kind": "abstract",
+              "path": "contracts/base/GuardManager.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SafeMath",
+              "kind": "library",
+              "path": "contracts/external/SafeMath.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "ISignatureValidator",
+              "kind": "abstract",
+              "path": "contracts/interfaces/ISignatureValidator.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "SelfAuthorized",
+              "kind": "abstract",
+              "path": "contracts/common/SelfAuthorized.sol",
+              "state": "not-mentioned"
+            },
+            {
+              "name": "Executor",
+              "kind": "abstract",
+              "path": "contracts/base/Executor.sol",
+              "state": "not-mentioned"
+            }
+          ],
+          "edges": [
+            [0, 3, "inherits"],
+            [0, 4, "uses"],
+            [1, 3, "inherits"],
+            [1, 5, "uses"],
+            [2, 3, "inherits"],
+            [4, 6, "inherits"],
+            [4, 7, "inherits"],
+            [4, 8, "inherits"],
+            [4, 9, "inherits"],
+            [4, 10, "inherits"],
+            [4, 11, "inherits"],
+            [4, 12, "inherits"],
+            [4, 13, "inherits"],
+            [4, 14, "inherits"],
+            [4, 15, "inherits"],
+            [4, 16, "uses"],
+            [4, 5, "uses"],
+            [4, 17, "uses"],
+            [8, 18, "inherits"],
+            [8, 19, "inherits"],
+            [8, 5, "uses"],
+            [9, 18, "inherits"],
+            [13, 18, "inherits"],
+            [15, 18, "inherits"],
+            [17, 12, "inherits"],
+            [19, 5, "uses"]
+          ],
+          "interfaces": 2,
+          "explicitness": {
+            "own": { "named": 3, "total": 20 },
+            "external": { "named": 0, "total": 0 }
+          }
+        }
+      ]
+    }
+  },
+  "reportInfo": {
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "akhunov-audit-results-note": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Audit Results",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-early__docs__alexey_audit.md"
+    },
+    "akhunov-gnosis-safe-2018": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Audit Report",
+      "auditor": "Alexey Akhunov",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report.pdf"
+    },
+    "certora-safe-1-3-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.3.0 Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-07-29",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Certora.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Assessment",
+      "auditor": "Certora",
+      "date": "2026-02-16",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-certora.pdf"
+    },
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
+      "auditor": "Certora",
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
+    },
+    "g0-safe-1-1-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_0.pdf"
+    },
+    "g0-safe-1-1-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Security Review of Gnosis Safe v1.1.0 and v1.1.1",
+      "auditor": "G0 Group",
+      "date": "2019-11-11",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_1_1.pdf"
+    },
+    "g0-safe-1-3-0-final": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Final)",
+      "auditor": "G0 Group",
+      "date": "2021-05-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Final.pdf"
+    },
+    "g0-safe-1-3-0-initial": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Security Review of Gnosis Safe 1.3.0 (Initial)",
+      "auditor": "G0 Group",
+      "date": "2021-04-01",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_3_0_Initial.pdf"
+    },
+    "g0-safe-gas-validation-1-2-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Gnosis Safe Gas Validation Adjustment",
+      "auditor": "G0 Group",
+      "date": "2020-05-04",
+      "document": "_libs/safe/reports/safe-core__docs__Gnosis_Safe_Audit_Report_1_2_0.pdf"
+    },
+    "nethermind-safe-1-3-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.3.0 Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_3_0_Nethermind.pdf"
+    },
+    "nethermind-safe-allowance-v1-0-0": {
+      "collections": ["_libs/safe"],
+      "title": "Safe Allowance Module Security Review",
+      "auditor": "Nethermind Security",
+      "date": "2026-08-17",
+      "document": "_libs/safe/reports/safe-modules__modules__allowances__docs__v1.0.0__audit-report-nethermind.pdf"
+    },
+    "runtime-verification-safe-1-0-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Formal Verification Report: GnosisSafe Contract",
+      "auditor": "Runtime Verification",
+      "date": "2019-02-27",
+      "document": "_libs/safe/reports/safe-verification__docs__Gnosis_Safe_Formal_Verification_Report_1_0_0.pdf"
+    }
+  },
+  "collections": {
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
+    "safe": { "name": "Safe", "kind": "project" }
+  },
+  "auditedFiles": {
+    "0045b2bbd612": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/GnosisSafe.sol",
+      "blob": "0045b2bbd61230dbb61abbddfefb0bef6f366d84"
+    },
+    "036c52b02735": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17",
+      "upstream": true
+    },
+    "0681f1239d0c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/ISafe.sol",
+      "blob": "0681f1239d0c0f6a3f2c427703acd67b93819448"
+    },
+    "0acd2cf2ad54": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/Enum.sol",
+      "blob": "0acd2cf2ad54cec14966747cd4a9261819b010ec"
+    },
+    "0b651b3b4051": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/libraries/SignMessageLib.sol",
+      "blob": "0b651b3b40516c45036a56d249045c375f23f101"
+    },
+    "0b72714bacc7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852"
+    },
+    "0b8ab296c0f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/Executor.sol",
+      "blob": "0b8ab296c0f951e04b18400891a007fb78620462"
+    },
+    "0ff76ac782ee": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+      "blob": "0ff76ac782ee039b702be8ecfe385331e09bd236"
+    },
+    "12c1224836b6": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "12c1224836b6937fb210091c668cb8f64bec7de3"
+    },
+    "14619c204d8f": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/proxies/SafeProxyFactory.sol",
+      "blob": "14619c204d8f21ebdd0d1e70893754098bb6c102"
+    },
+    "152717774164": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "1527177741648a1932d8ac4e37bb9d786ee7367d"
+    },
+    "16bc91daa4f9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/ERC1155TokenReceiver.sol",
+      "blob": "16bc91daa4f98ffe6e4c35d7bbad1979dfa7a4b1"
+    },
+    "1a56eb43bd1e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "1a56eb43bd1e25dff33868bade27b3a8e8f7fc4e"
+    },
+    "1ba2faa6c37e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/GnosisSafeL2.sol",
+      "blob": "1ba2faa6c37efb5dd674932a890f28eeab84dbae"
+    },
+    "1e67fa067d1d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "1e67fa067d1d24febb335bb0fe37eb6fe390f9ea"
+    },
+    "216eea02fb9b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/GnosisSafeProxyFactory.sol",
+      "blob": "216eea02fb9bcf53ca73ef87c5a32d025e93ce2b"
+    },
+    "2361cac32a6c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IStorageAccessible.sol",
+      "blob": "2361cac32a6cbc08e4ca2e31944b1c640609071c"
+    },
+    "24349400e7fd": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "24349400e7fd271c27fb6c89946ac1b8e0bbc753"
+    },
+    "24fd7138040c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+      "blob": "24fd7138040ce8fc873a55637151b54cc1b0df7b"
+    },
+    "26358c83bb22": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/ErrorMessage.sol",
+      "blob": "26358c83bb22fe1309a1e32b181b2cdce7896373"
+    },
+    "3139bb5b79ae": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/handler/TokenCallbackHandler.sol",
+      "blob": "3139bb5b79ae4701bda522912671f375b3a7aa91"
+    },
+    "3e495e23a818": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "3e495e23a8180919ac81f85395c71f783ed469c0"
+    },
+    "42a30e48481d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "baf307a6c3bebea6fb446eb4a62fc95f1fe27730",
+      "upstream": true
+    },
+    "45e317597828": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/libraries/CreateCall.sol",
+      "blob": "45e3175978285a768ab80b4ae57348b01377a1cf"
+    },
+    "4c7a7fb6c35c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "ecc3938adaee3f7f13f93712f45bb0045368d28b",
+      "upstream": true
+    },
+    "4caf3d1a2055": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/proxies/SafeProxy.sol",
+      "blob": "4caf3d1a20553596a28cc19d4d9081d488970688"
+    },
+    "4d47b26ef41d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/MultiSend.sol",
+      "blob": "4d47b26ef41dcadad45c4302e46cc7eff5f80860"
+    },
+    "4e60bb9d6ba0": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0"
+    },
+    "54aacdf59bff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/SafeL2.sol",
+      "blob": "54aacdf59bffb47f8d0d193830647edf10937eed"
+    },
+    "581876131478": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "58187613147869af977503c35f9e2e7caa7b2ff2"
+    },
+    "5903ba1d7b26": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/common/NativeCurrencyPaymentFallback.sol",
+      "blob": "5903ba1d7b2604d83e023273a135acf87fa78caa"
+    },
+    "6061c64f3dd9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/SignMessageLib.sol",
+      "blob": "6061c64f3dd9dacd5af494c9a77415aefb361823"
+    },
+    "62a4ee973483": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "62a4ee97348305cd83c45d8d489f35e8d97e5484"
+    },
+    "64912b8890ef": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/INativeCurrencyPaymentFallback.sol",
+      "blob": "64912b8890efba36034c5bc366aceafd7573cd0b"
+    },
+    "668700b0b04b": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/Safe.sol",
+      "blob": "668700b0b04ba1a29b9777695f29c5896700bdde"
+    },
+    "676100587e8e": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/handler/TokenCallbackHandler.sol",
+      "blob": "676100587e8e43dc6232ee86e2e9b2bf2eb96fd2"
+    },
+    "6b8aa55c7950": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "4bd3cc0d327dd0581eb3bb50e2302ef75680b787",
+      "upstream": true
+    },
+    "6c665f0476a7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/common/StorageAccessible.sol",
+      "blob": "0b72714bacc7c6ebe6d72585672b2230e3024852",
+      "upstream": true
+    },
+    "6cde97105d80": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IFallbackManager.sol",
+      "blob": "6cde97105d80fef046dc681e2bfb2325cfacb3f5"
+    },
+    "72437bc34ce4": {
+      "repository": "safe-fndn/safe-modules",
+      "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+      "path": "modules/allowances/contracts/SignatureDecoder.sol",
+      "blob": "72437bc34ce4e1463c4105a513d6edca451e147c"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "752a7ce57466": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "752a7ce57466a20537ffa7d0d89796b70ab5dd06"
+    },
+    "763455f04af3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/external/GnosisSafeMath.sol",
+      "blob": "763455f04af3b886884a3d9ee56f325ea9ffa2b1"
+    },
+    "7709dc6776ef": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/IProxyCreationCallback.sol",
+      "blob": "7709dc6776ef99ac2c88b755ad2f317a34027777"
+    },
+    "7737e794dd8d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IOwnerManager.sol",
+      "blob": "7737e794dd8d32253d6a75b6e3c20d097ce2f38e"
+    },
+    "7822b07bd7a0": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+      "blob": "7822b07bd7a0f243a6ebe7dabd63aa5cd2bde28e"
+    },
+    "7cb353614c7c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17",
+      "upstream": true
+    },
+    "7ef02c80d744": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SignatureDecoder.sol",
+      "blob": "7ef02c80d744e602713c90e4f44891d15fc0d6c4"
+    },
+    "82fa53b0cf17": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "82fa53b0cf17d10cfb3f05dd59626a66ed97e7ab"
+    },
+    "83f881fefd0d": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/libraries/GnosisSafeStorage.sol",
+      "blob": "83f881fefd0d55b68457a159b918b4388f4c0136"
+    },
+    "8699afc9d67a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/common/EtherPaymentFallback.sol",
+      "blob": "8699afc9d67a512502ebf5beae4a812a28957627"
+    },
+    "86f95fc68dd9": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "b115c4c5fe23dca6aefeeccc73d312ddd23322c2",
+      "path": "contracts/proxies/IProxyCreationCallback.sol",
+      "blob": "86f95fc68dd98562824f6869c6f24b39fd83e97a"
+    },
+    "8a630a6d1025": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/ERC721TokenReceiver.sol",
+      "blob": "8a630a6d102543f36f4dc8a38658565e08686949"
+    },
+    "8e8d0ea1aff5": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/libraries/SignMessageLib.sol",
+      "blob": "8e8d0ea1aff50a02dc6c3f596bd10f7c994382a4"
+    },
+    "92e7cf993927": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "834e798aa51291cccaf0594921194928716e9892",
+      "path": "contracts/libraries/CreateCall.sol",
+      "blob": "92e7cf99392791e2ac764e1d1862cf3ae29a252e"
+    },
+    "9606062e1fd6": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "29a5a4880d2257fa08a82c6fa13a4920c354b8a9",
+      "upstream": true
+    },
+    "971498409cb7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/accessors/SimulateTxAccessor.sol",
+      "blob": "971498409cb7532807bb4a0f4878c9a47dbcf8e3"
+    },
+    "9c421d7aa0fb": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/ModuleManager.sol",
+      "blob": "9c421d7aa0fb31e3e58b27bf827520b148963b59"
+    },
+    "9fafeba8c058": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/Singleton.sol",
+      "blob": "9fafeba8c0589b764fe558a913411217e9420a9a"
+    },
+    "a03b5c68f6ab": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/OwnerManager.sol",
+      "blob": "a03b5c68f6ab858adc50da74746e74dca7b9b6a7"
+    },
+    "a90b143934dc": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IModuleManager.sol",
+      "blob": "a90b143934dc894f67c24e120b430d32f9eaba63"
+    },
+    "ac790c9f8d20": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/ERC777TokensRecipient.sol",
+      "blob": "ac790c9f8d20d3d433c3fb9a0dab38502f1d0509"
+    },
+    "b1666eea7477": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/SafeStorage.sol",
+      "blob": "b1666eea7477e397b5827616280095c5f5a074fb"
+    },
+    "b234bbf123b8": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/handler/CompatibilityFallbackHandler.sol",
+      "blob": "b234bbf123b891e5be1829cb9345f4c11baf51bb"
+    },
+    "b23df9e81bc5": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/common/SelfAuthorized.sol",
+      "blob": "4e60bb9d6ba0e46aab3d2167e776930f12e8d6a0",
+      "upstream": true
+    },
+    "b622c052c0f7": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/MultiSendCallOnly.sol",
+      "blob": "b622c052c0f7497ca4516af1ef8d1b1246bb6136"
+    },
+    "b918471dce21": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/handler/HandlerContext.sol",
+      "blob": "b918471dce21b396d608b400a80ccdb687de06e9"
+    },
+    "bde03a4749a8": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/proxies/SafeProxyFactory.sol",
+      "blob": "bde03a4749a89493dd3ea5cdc2f7ca5c3dc8b491"
+    },
+    "c4ca0b59c0d3": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "c4ca0b59c0d38000f1110b4ab7faebba89b34565"
+    },
+    "c66dc10ef367": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/accessors/SimulateTxAccessor.sol",
+      "blob": "c66dc10ef367345efa6b0700ebe9a4ae50599744"
+    },
+    "c7272dcae560": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "eb93dbb0f62e2dc1b308ac4c110038062df0a8c9",
+      "path": "contracts/base/FallbackManager.sol",
+      "blob": "c7272dcae5607debf788d5059e833734435e024d"
+    },
+    "c8f243d15377": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/common/SecuredTokenTransfer.sol",
+      "blob": "c8f243d15377b3066c7857e8c9e3459ec8405881"
+    },
+    "c9ed9c0487ff": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "c9ed9c0487ffad8099f10a986c677a69ffa1f6f8"
+    },
+    "d0d036bf8dba": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/base/GuardManager.sol",
+      "blob": "d0d036bf8dba824e74d2fdc1e97ae7d9bee8ff13"
+    },
+    "d2cd2e5fed06": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/interfaces/ISignatureValidator.sol",
+      "blob": "d2cd2e5fed06065c7792f9de07d9e1c7d1fbfb17"
+    },
+    "d7877ddb3d4c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "cb4b2b19b3e336b8defd3b8c9e0e6a2ae130598c",
+      "path": "contracts/libraries/MultiSendCallOnly.sol",
+      "blob": "d7877ddb3d4c03c41581775fc5104570d43db890"
+    },
+    "dc1b664d41ac": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/libraries/CreateCall.sol",
+      "blob": "dc1b664d41ac2b4a2ec8a189364c4652e3957761"
+    },
+    "dfe0c7df02b1": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/handler/DefaultCallbackHandler.sol",
+      "blob": "dfe0c7df02b15105c7ce20d66b12b276ae38834a"
+    },
+    "e0b6d24c7b5c": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/SafeL2.sol",
+      "blob": "e0b6d24c7b5c972f27a71dc818e809182f4b1167"
+    },
+    "e30e198e2983": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/Safe.sol",
+      "blob": "e30e198e2983054d5f544993f3ea735426c6db33"
+    },
+    "e60171eac28a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/proxies/GnosisSafeProxy.sol",
+      "blob": "e60171eac28ab42852376215e7b78ec351b2e400"
+    },
+    "ecfd00b77f72": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+      "path": "contracts/libraries/MultiSend.sol",
+      "blob": "ecfd00b77f728bf5260d85308e44409d6ddaaada"
+    },
+    "f1a429735583": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "07d4fc7b298a69226bfdfd260bed7d92557cfd26",
+      "path": "contracts/Safe.sol",
+      "blob": "3bd2ed9e9693838db0fb21960d00b78427a63c87",
+      "upstream": true
+    },
+    "f3b8944f25b1": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/external/SafeMath.sol",
+      "blob": "f3b8944f25b1f8efcf9bf3451dc023602f223206"
+    },
+    "f5f12542408f": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IGuardManager.sol",
+      "blob": "f5f12542408fa49fefed2be47354f02d8a889d16"
+    }
+  },
+  "units": {
+    "78a1f1116e21": {
+      "strict": {
+        "name": "Enum",
+        "kind": "library",
+        "lines": 6,
+        "status": "identical",
+        "audited": { "object": "0acd2cf2ad54", "lines": [8, 13] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "a8b2362ebc57": {
+      "strict": {
+        "name": "Executor",
+        "kind": "abstract",
+        "lines": 36,
+        "status": "identical",
+        "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "dfaea07a9471": {
+      "strict": {
+        "name": "SimulateTxAccessor",
+        "kind": "contract",
+        "lines": 58,
+        "status": "identical",
+        "audited": { "object": "c66dc10ef367", "lines": [11, 67] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "3475eaf50906": {
+      "strict": {
+        "name": "SafeProxy",
+        "kind": "contract",
+        "lines": 55,
+        "status": "identical",
+        "audited": { "object": "4caf3d1a2055", "lines": [18, 70] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "063760d21f9b": {
+      "strict": {
+        "name": "SafeProxyFactory",
+        "kind": "contract",
+        "lines": 138,
+        "status": "identical",
+        "audited": { "object": "14619c204d8f", "lines": [10, 156] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "fd24fd4ff57b": {
+      "strict": {
+        "name": "MultiSend",
+        "kind": "contract",
+        "lines": 66,
+        "status": "identical",
+        "audited": { "object": "4d47b26ef41d", "lines": [11, 72] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "150878a81f46": {
+      "strict": {
+        "name": "Singleton",
+        "kind": "abstract",
+        "lines": 5,
+        "status": "identical",
+        "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0"
+        ]
+      },
+      "relaxed": {
+        "name": "Singleton",
+        "kind": "abstract",
+        "lines": 5,
+        "status": "identical",
+        "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0",
+          "certora-safe-library-contracts-1-4-1"
+        ],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "447d1057dc7c": {
+      "strict": {
+        "name": "NativeCurrencyPaymentFallback",
+        "kind": "abstract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0"
+        ]
+      },
+      "relaxed": {
+        "name": "NativeCurrencyPaymentFallback",
+        "kind": "abstract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "5903ba1d7b26", "lines": [8, 18] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0",
+          "certora-safe-library-contracts-1-4-1"
+        ],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "aa97dd1bf3f1": {
+      "strict": {
+        "name": "SelfAuthorized",
+        "kind": "abstract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "SelfAuthorized",
+        "kind": "abstract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "b23df9e81bc5", "lines": [8, 18] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "40ce0b25499c": {
+      "strict": {
+        "name": "Enum",
+        "kind": "interface",
+        "lines": 6,
+        "status": "none"
+      }
+    },
+    "06a60947381e": {
+      "strict": {
+        "name": "Executor",
+        "kind": "abstract",
+        "lines": 32,
+        "status": "identical",
+        "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "af0af37b8cfc": {
+      "strict": {
+        "name": "ModuleManager",
+        "kind": "abstract",
+        "lines": 176,
+        "status": "differs",
+        "audited": { "object": "9c421d7aa0fb", "lines": [17, 196] },
+        "reports": ["ackee-safe-1-4-0"],
+        "added": [[22, 22]],
+        "removed": [[22, 22, 22]],
+        "covered": 175
+      },
+      "relaxed": {
+        "name": "ModuleManager",
+        "kind": "abstract",
+        "lines": 176,
+        "status": "identical",
+        "audited": { "object": "4c7a7fb6c35c", "lines": [16, 191] },
+        "reports": ["certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "f1b466f7c6f6": {
+      "strict": {
+        "name": "OwnerManager",
+        "kind": "abstract",
+        "lines": 150,
+        "status": "identical",
+        "audited": { "object": "82fa53b0cf17", "lines": [13, 169] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "OwnerManager",
+        "kind": "abstract",
+        "lines": 150,
+        "status": "identical",
+        "audited": { "object": "9606062e1fd6", "lines": [12, 161] },
+        "reports": ["certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "13e5d12afa8b": {
+      "strict": {
+        "name": "SignatureDecoder",
+        "kind": "abstract",
+        "lines": 29,
+        "status": "identical",
+        "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+        "reports": [
+          "certora-safe-allowance-v1-0-0",
+          "nethermind-safe-allowance-v1-0-0"
+        ]
+      }
+    },
+    "844a8fe51e4f": {
+      "strict": {
+        "name": "SecuredTokenTransfer",
+        "kind": "abstract",
+        "lines": 31,
+        "status": "identical",
+        "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "de59e343d914": {
+      "strict": {
+        "name": "ISignatureValidatorConstants",
+        "kind": "contract",
+        "lines": 4,
+        "status": "identical",
+        "audited": { "object": "d2cd2e5fed06", "lines": [4, 7] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "certora-safe-1-3-0",
+          "g0-safe-1-1-0",
+          "g0-safe-1-1-1",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial"
+        ]
+      },
+      "relaxed": {
+        "name": "ISignatureValidatorConstants",
+        "kind": "contract",
+        "lines": 4,
+        "status": "identical",
+        "audited": { "object": "036c52b02735", "lines": [4, 7] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "certora-safe-1-3-0",
+          "certora-safe-library-contracts-1-4-1",
+          "g0-safe-1-1-0",
+          "g0-safe-1-1-1",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ],
+        "impliedBy": [
+          "certora-safe-library-contracts-1-4-1",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "f44a94390330": {
+      "strict": {
+        "name": "FallbackManager",
+        "kind": "abstract",
+        "lines": 73,
+        "status": "identical",
+        "audited": { "object": "62a4ee973483", "lines": [10, 79] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "FallbackManager",
+        "kind": "abstract",
+        "lines": 73,
+        "status": "identical",
+        "audited": { "object": "42a30e48481d", "lines": [10, 82] },
+        "reports": ["certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "e213c56fc229": {
+      "strict": {
+        "name": "StorageAccessible",
+        "kind": "abstract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "StorageAccessible",
+        "kind": "abstract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "6c665f0476a7", "lines": [10, 51] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "b3dc850565d8": {
+      "strict": {
+        "name": "IERC165",
+        "kind": "interface",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "051f4e0bd8fb": {
+      "strict": {
+        "name": "Guard",
+        "kind": "interface",
+        "lines": 17,
+        "status": "identical",
+        "audited": { "object": "d0d036bf8dba", "lines": [8, 24] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "d63eef9ff914": {
+      "strict": {
+        "name": "GuardManager",
+        "kind": "abstract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "d0d036bf8dba", "lines": [37, 78] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "GuardManager",
+        "kind": "abstract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "6b8aa55c7950", "lines": [38, 79] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "6cd3fcc5ec00": {
+      "strict": {
+        "name": "SafeMath",
+        "kind": "library",
+        "lines": 57,
+        "status": "identical",
+        "audited": { "object": "f3b8944f25b1", "lines": [8, 64] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "d1308f86f627": {
+      "strict": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "7cb353614c7c", "lines": [9, 20] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "268c431cb6b0": {
+      "strict": {
+        "name": "Safe",
+        "kind": "contract",
+        "lines": 409,
+        "status": "differs",
+        "audited": { "object": "668700b0b04b", "lines": [36, 467] },
+        "reports": ["ackee-safe-1-4-0"],
+        "added": [[14, 14]],
+        "removed": [[14, 14, 14]],
+        "covered": 408
+      },
+      "relaxed": {
+        "name": "Safe",
+        "kind": "contract",
+        "lines": 409,
+        "status": "identical",
+        "audited": { "object": "f1a429735583", "lines": [33, 441] },
+        "reports": ["certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "88d4a08d8eb5": {
+      "strict": {
+        "name": "SafeL2",
+        "kind": "contract",
+        "lines": 63,
+        "status": "identical",
+        "audited": { "object": "54aacdf59bff", "lines": [12, 75] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "5e4172c84099": {
+      "strict": {
+        "name": "CreateCall",
+        "kind": "contract",
+        "lines": 39,
+        "status": "identical",
+        "audited": { "object": "dc1b664d41ac", "lines": [10, 51] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "e41858d8cd1d": {
+      "strict": {
+        "name": "MultiSend",
+        "kind": "contract",
+        "lines": 60,
+        "status": "identical",
+        "audited": { "object": "ecfd00b77f72", "lines": [9, 60] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "7df5d88804e1": {
+      "strict": {
+        "name": "SimulateTxAccessor",
+        "kind": "contract",
+        "lines": 56,
+        "status": "identical",
+        "audited": { "object": "971498409cb7", "lines": [8, 43] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "48db7077d4ee": {
+      "strict": {
+        "name": "EtherPaymentFallback",
+        "kind": "contract",
+        "lines": 8,
+        "status": "identical",
+        "audited": { "object": "8699afc9d67a", "lines": [6, 13] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "ded673ea29c4": {
+      "strict": {
+        "name": "Singleton",
+        "kind": "contract",
+        "lines": 5,
+        "status": "identical",
+        "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0"
+        ]
+      },
+      "relaxed": {
+        "name": "Singleton",
+        "kind": "contract",
+        "lines": 5,
+        "status": "identical",
+        "audited": { "object": "9fafeba8c058", "lines": [9, 13] },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "certora-safe-1-5-0",
+          "certora-safe-library-contracts-1-4-1"
+        ],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "16eb9f2e8752": {
+      "strict": {
+        "name": "SelfAuthorized",
+        "kind": "contract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "4e60bb9d6ba0", "lines": [8, 18] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "SelfAuthorized",
+        "kind": "contract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "b23df9e81bc5", "lines": [8, 18] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "68dd4bd4433d": {
+      "strict": {
+        "name": "Executor",
+        "kind": "contract",
+        "lines": 21,
+        "status": "identical",
+        "audited": { "object": "0b8ab296c0f9", "lines": [10, 42] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "1d5fc2d9e00d": {
+      "strict": {
+        "name": "ModuleManager",
+        "kind": "contract",
+        "lines": 124,
+        "status": "identical",
+        "audited": { "object": "1a56eb43bd1e", "lines": [11, 139] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "95294331afbc": {
+      "strict": {
+        "name": "OwnerManager",
+        "kind": "contract",
+        "lines": 142,
+        "status": "identical",
+        "audited": { "object": "a03b5c68f6ab", "lines": [13, 169] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "2ec005ea16b3": {
+      "strict": {
+        "name": "SignatureDecoder",
+        "kind": "contract",
+        "lines": 31,
+        "status": "identical",
+        "audited": { "object": "72437bc34ce4", "lines": [7, 33] },
+        "reports": [
+          "certora-safe-allowance-v1-0-0",
+          "nethermind-safe-allowance-v1-0-0"
+        ]
+      }
+    },
+    "fd10ad67f878": {
+      "strict": {
+        "name": "SecuredTokenTransfer",
+        "kind": "contract",
+        "lines": 30,
+        "status": "identical",
+        "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "37dc539ed622": {
+      "strict": {
+        "name": "FallbackManager",
+        "kind": "contract",
+        "lines": 46,
+        "status": "identical",
+        "audited": { "object": "c7272dcae560", "lines": [10, 63] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "bc18eb3148bc": {
+      "strict": {
+        "name": "StorageAccessible",
+        "kind": "contract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "0b72714bacc7", "lines": [10, 51] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "StorageAccessible",
+        "kind": "contract",
+        "lines": 42,
+        "status": "identical",
+        "audited": { "object": "6c665f0476a7", "lines": [10, 51] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "bd90fb921f2d": {
+      "strict": {
+        "name": "GuardManager",
+        "kind": "contract",
+        "lines": 24,
+        "status": "identical",
+        "audited": { "object": "c9ed9c0487ff", "lines": [27, 51] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "c067b1aa9040": {
+      "strict": {
+        "name": "GnosisSafeMath",
+        "kind": "library",
+        "lines": 45,
+        "status": "identical",
+        "audited": { "object": "763455f04af3", "lines": [10, 54] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "09399b61d7eb": {
+      "strict": {
+        "name": "Guard",
+        "kind": "interface",
+        "lines": 17,
+        "status": "identical",
+        "audited": { "object": "c9ed9c0487ff", "lines": [7, 23] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "b2400038371b": {
+      "strict": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "d2cd2e5fed06", "lines": [9, 20] },
+        "reports": ["ackee-safe-1-4-0"]
+      },
+      "relaxed": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "7cb353614c7c", "lines": [9, 20] },
+        "reports": ["ackee-safe-1-4-0", "certora-safe-library-contracts-1-4-1"],
+        "impliedBy": ["certora-safe-library-contracts-1-4-1"]
+      }
+    },
+    "3e84ad780965": {
+      "strict": {
+        "name": "GnosisSafe",
+        "kind": "contract",
+        "lines": 404,
+        "status": "identical",
+        "audited": { "object": "0045b2bbd612", "lines": [22, 434] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "5d824c0b4563": {
+      "strict": {
+        "name": "GnosisSafeL2",
+        "kind": "contract",
+        "lines": 78,
+        "status": "identical",
+        "audited": { "object": "1ba2faa6c37e", "lines": [9, 87] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "cf31255e74b9": {
+      "strict": {
+        "name": "INativeCurrencyPaymentFallback",
+        "kind": "interface",
+        "lines": 9,
+        "status": "identical",
+        "audited": { "object": "64912b8890ef", "lines": [9, 17] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "c22a1d53330f": {
+      "strict": {
+        "name": "IModuleManager",
+        "kind": "interface",
+        "lines": 81,
+        "status": "identical",
+        "audited": { "object": "a90b143934dc", "lines": [14, 91] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "3923d837db2f": {
+      "strict": {
+        "name": "IGuardManager",
+        "kind": "interface",
+        "lines": 14,
+        "status": "identical",
+        "audited": { "object": "f5f12542408f", "lines": [9, 22] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "2c1d2c592263": {
+      "strict": {
+        "name": "IOwnerManager",
+        "kind": "interface",
+        "lines": 56,
+        "status": "identical",
+        "audited": { "object": "7737e794dd8d", "lines": [8, 63] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "27197a94b85e": {
+      "strict": {
+        "name": "IFallbackManager",
+        "kind": "interface",
+        "lines": 25,
+        "status": "identical",
+        "audited": { "object": "6cde97105d80", "lines": [8, 32] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "7ca6e56924e9": {
+      "strict": {
+        "name": "IStorageAccessible",
+        "kind": "interface",
+        "lines": 20,
+        "status": "identical",
+        "audited": { "object": "2361cac32a6c", "lines": [8, 27] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "f514411e3e12": {
+      "strict": {
+        "name": "ISafe",
+        "kind": "interface",
+        "lines": 163,
+        "status": "identical",
+        "audited": { "object": "0681f1239d0c", "lines": [16, 190] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "203203a58f76": {
+      "strict": {
+        "name": "HandlerContext",
+        "kind": "abstract",
+        "lines": 57,
+        "status": "identical",
+        "audited": { "object": "b918471dce21", "lines": [13, 70] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "93742ac315cf": {
+      "strict": {
+        "name": "ERC1155TokenReceiver",
+        "kind": "interface",
+        "lines": 43,
+        "status": "identical",
+        "audited": { "object": "16bc91daa4f9", "lines": [5, 43] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "f5600fb3eefd": {
+      "strict": {
+        "name": "ERC777TokensRecipient",
+        "kind": "interface",
+        "lines": 19,
+        "status": "identical",
+        "audited": { "object": "ac790c9f8d20", "lines": [9, 27] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "f694daf8ae76": {
+      "strict": {
+        "name": "ERC721TokenReceiver",
+        "kind": "interface",
+        "lines": 17,
+        "status": "identical",
+        "audited": { "object": "8a630a6d1025", "lines": [5, 23] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "c1159590bf55": {
+      "strict": {
+        "name": "TokenCallbackHandler",
+        "kind": "contract",
+        "lines": 54,
+        "status": "identical",
+        "audited": { "object": "676100587e8e", "lines": [18, 91] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "db51d55e8c36": {
+      "strict": {
+        "name": "ISignatureValidatorConstants",
+        "kind": "abstract",
+        "lines": 4,
+        "status": "identical",
+        "audited": { "object": "c4ca0b59c0d3", "lines": [5, 8] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "18cb2d0d50a1": {
+      "strict": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "c4ca0b59c0d3", "lines": [10, 21] },
+        "reports": ["ackee-safe-1-5-0"]
+      },
+      "relaxed": {
+        "name": "ISignatureValidator",
+        "kind": "abstract",
+        "lines": 12,
+        "status": "identical",
+        "audited": { "object": "c4ca0b59c0d3", "lines": [10, 21] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"],
+        "impliedBy": ["certora-safe-1-5-0"]
+      }
+    },
+    "5e68d2b3fa16": {
+      "strict": {
+        "name": "CompatibilityFallbackHandler",
+        "kind": "contract",
+        "lines": 214,
+        "status": "identical",
+        "audited": { "object": "7822b07bd7a0", "lines": [16, 229] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "717fef25018b": {
+      "strict": {
+        "name": "MultiSendCallOnly",
+        "kind": "contract",
+        "lines": 54,
+        "status": "identical",
+        "audited": { "object": "d7877ddb3d4c", "lines": [10, 59] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "477fadda0baa": {
+      "strict": {
+        "name": "SafeProxy",
+        "kind": "contract",
+        "lines": 34,
+        "status": "identical",
+        "audited": { "object": "1e67fa067d1d", "lines": [17, 48] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "9ca46a4af290": {
+      "strict": {
+        "name": "IProxyCreationCallback",
+        "kind": "interface",
+        "lines": 10,
+        "status": "identical",
+        "audited": { "object": "86f95fc68dd9", "lines": [10, 20] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "ef34d9038e86": {
+      "strict": {
+        "name": "SafeProxyFactory",
+        "kind": "contract",
+        "lines": 115,
+        "status": "identical",
+        "audited": { "object": "bde03a4749a8", "lines": [11, 130] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "44f82569da3f": {
+      "strict": {
+        "name": "SafeStorage",
+        "kind": "abstract",
+        "lines": 16,
+        "status": "identical",
+        "audited": { "object": "b1666eea7477", "lines": [9, 24] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "b03fe692345c": {
+      "strict": {
+        "name": "SignMessageLib",
+        "kind": "contract",
+        "lines": 27,
+        "status": "identical",
+        "audited": { "object": "6061c64f3dd9", "lines": [11, 41] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "6e753571b4dd": {
+      "strict": {
+        "name": "SimulateTxAccessor",
+        "kind": "contract",
+        "lines": 45,
+        "status": "differs",
+        "audited": { "object": "971498409cb7", "lines": [8, 43] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ],
+        "added": [[19, 19]],
+        "removed": [[19, 14, 14]],
+        "covered": 44
+      }
+    },
+    "8498ebb9afb2": {
+      "strict": {
+        "name": "CreateCall",
+        "kind": "contract",
+        "lines": 25,
+        "status": "identical",
+        "audited": { "object": "45e317597828", "lines": [6, 29] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "2c8cae40255c": {
+      "strict": {
+        "name": "MultiSendCallOnly",
+        "kind": "contract",
+        "lines": 56,
+        "status": "identical",
+        "audited": { "object": "d7877ddb3d4c", "lines": [10, 59] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "b98481e6f710": {
+      "strict": {
+        "name": "CreateCall",
+        "kind": "contract",
+        "lines": 35,
+        "status": "identical",
+        "audited": { "object": "92e7cf993927", "lines": [10, 51] },
+        "reports": ["certora-safe-1-5-0"]
+      }
+    },
+    "8dc2b762bf9e": {
+      "strict": {
+        "name": "MultiSend",
+        "kind": "contract",
+        "lines": 58,
+        "status": "identical",
+        "audited": { "object": "ecfd00b77f72", "lines": [9, 60] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "86dc25d5bba4": {
+      "strict": {
+        "name": "GnosisSafeStorage",
+        "kind": "contract",
+        "lines": 16,
+        "status": "identical",
+        "audited": { "object": "83f881fefd0d", "lines": [6, 21] },
+        "reports": ["certora-safe-1-3-0", "nethermind-safe-1-3-0"]
+      }
+    },
+    "7a446fc5430e": {
+      "strict": {
+        "name": "SignMessageLib",
+        "kind": "contract",
+        "lines": 26,
+        "status": "identical",
+        "audited": { "object": "8e8d0ea1aff5", "lines": [9, 37] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "6b8b61778726": {
+      "strict": {
+        "name": "GnosisSafeProxy",
+        "kind": "contract",
+        "lines": 32,
+        "status": "identical",
+        "audited": { "object": "e60171eac28a", "lines": [13, 42] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "41a267cf4259": {
+      "strict": {
+        "name": "IProxyCreationCallback",
+        "kind": "interface",
+        "lines": 8,
+        "status": "identical",
+        "audited": { "object": "7709dc6776ef", "lines": [6, 9] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "e067e74bed87": {
+      "strict": {
+        "name": "GnosisSafeProxyFactory",
+        "kind": "contract",
+        "lines": 99,
+        "status": "identical",
+        "audited": { "object": "216eea02fb9b", "lines": [9, 104] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "9eebb25e91b7": {
+      "strict": {
+        "name": "MultiSendCallOnly",
+        "kind": "contract",
+        "lines": 62,
+        "status": "identical",
+        "audited": { "object": "b622c052c0f7", "lines": [10, 67] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "5747fa20dd07": {
+      "strict": {
+        "name": "SafeStorage",
+        "kind": "contract",
+        "lines": 16,
+        "status": "identical",
+        "audited": { "object": "b1666eea7477", "lines": [9, 24] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "24baca27b90d": {
+      "strict": {
+        "name": "SignMessageLib",
+        "kind": "contract",
+        "lines": 27,
+        "status": "identical",
+        "audited": { "object": "0b651b3b4051", "lines": [11, 41] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    },
+    "83b598e60402": {
+      "strict": {
+        "name": "NativeCurrencyPaymentFallback",
+        "kind": "abstract",
+        "lines": 8,
+        "status": "identical",
+        "audited": { "object": "0ff76ac782ee", "lines": [10, 17] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "b91a9739c84b": {
+      "strict": {
+        "name": "ErrorMessage",
+        "kind": "abstract",
+        "lines": 20,
+        "status": "identical",
+        "audited": { "object": "26358c83bb22", "lines": [10, 29] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "75ea6b72ae5a": {
+      "strict": {
+        "name": "SelfAuthorized",
+        "kind": "abstract",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "12c1224836b6", "lines": [10, 22] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "785c21da16aa": {
+      "strict": {
+        "name": "IModuleGuard",
+        "kind": "interface",
+        "lines": 27,
+        "status": "identical",
+        "audited": { "object": "24349400e7fd", "lines": [14, 40] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "0fa1eda5856b": {
+      "strict": {
+        "name": "ModuleManager",
+        "kind": "abstract",
+        "lines": 237,
+        "status": "identical",
+        "audited": { "object": "24349400e7fd", "lines": [58, 323] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "e4fbd24c875f": {
+      "strict": {
+        "name": "ITransactionGuard",
+        "kind": "interface",
+        "lines": 38,
+        "status": "identical",
+        "audited": { "object": "3e495e23a818", "lines": [13, 50] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "71304f17d427": {
+      "strict": {
+        "name": "GuardManager",
+        "kind": "abstract",
+        "lines": 35,
+        "status": "identical",
+        "audited": { "object": "3e495e23a818", "lines": [63, 98] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "19c431d1f721": {
+      "strict": {
+        "name": "OwnerManager",
+        "kind": "abstract",
+        "lines": 135,
+        "status": "identical",
+        "audited": { "object": "752a7ce57466", "lines": [14, 183] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "5bb260935b68": {
+      "strict": {
+        "name": "SignatureDecoder",
+        "kind": "abstract",
+        "lines": 25,
+        "status": "identical",
+        "audited": { "object": "7ef02c80d744", "lines": [8, 36] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "270a1eb27268": {
+      "strict": {
+        "name": "SecuredTokenTransfer",
+        "kind": "abstract",
+        "lines": 33,
+        "status": "identical",
+        "audited": { "object": "c8f243d15377", "lines": [8, 34] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "86d41acd18cb": {
+      "strict": {
+        "name": "FallbackManager",
+        "kind": "abstract",
+        "lines": 78,
+        "status": "identical",
+        "audited": { "object": "152717774164", "lines": [11, 87] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "d1637da5a367": {
+      "strict": {
+        "name": "StorageAccessible",
+        "kind": "abstract",
+        "lines": 37,
+        "status": "identical",
+        "audited": { "object": "581876131478", "lines": [12, 48] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "3ecd5a045087": {
+      "strict": {
+        "name": "SafeMath",
+        "kind": "library",
+        "lines": 57,
+        "status": "identical",
+        "audited": { "object": "f3b8944f25b1", "lines": [8, 64] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "0b563921714a": {
+      "strict": {
+        "name": "Safe",
+        "kind": "contract",
+        "lines": 458,
+        "status": "identical",
+        "audited": { "object": "e30e198e2983", "lines": [37, 533] },
+        "reports": ["ackee-safe-1-5-0"]
+      }
+    },
+    "a9b9f3a41785": {
+      "strict": {
+        "name": "SafeL2",
+        "kind": "contract",
+        "lines": 60,
+        "status": "identical",
+        "audited": { "object": "e0b6d24c7b5c", "lines": [16, 78] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "65771ae4dd32": {
+      "strict": {
+        "name": "ERC1155TokenReceiver",
+        "kind": "interface",
+        "lines": 43,
+        "status": "identical",
+        "audited": { "object": "16bc91daa4f9", "lines": [5, 43] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "96fc8854e148": {
+      "strict": {
+        "name": "ERC777TokensRecipient",
+        "kind": "interface",
+        "lines": 10,
+        "status": "identical",
+        "audited": { "object": "ac790c9f8d20", "lines": [9, 27] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "c02d41e85fca": {
+      "strict": {
+        "name": "ERC721TokenReceiver",
+        "kind": "interface",
+        "lines": 20,
+        "status": "identical",
+        "audited": { "object": "8a630a6d1025", "lines": [5, 23] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "f98775a7d0f9": {
+      "strict": {
+        "name": "IERC165",
+        "kind": "interface",
+        "lines": 11,
+        "status": "identical",
+        "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+        "reports": ["ackee-safe-1-4-0", "ackee-safe-1-5-0"]
+      }
+    },
+    "2b55700404cc": {
+      "strict": {
+        "name": "DefaultCallbackHandler",
+        "kind": "contract",
+        "lines": 51,
+        "status": "identical",
+        "audited": { "object": "dfe0c7df02b1", "lines": [11, 49] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "g0-safe-1-3-0-initial",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "3b1c44c91f13": {
+      "strict": {
+        "name": "CompatibilityFallbackHandler",
+        "kind": "contract",
+        "lines": 135,
+        "status": "identical",
+        "audited": { "object": "24fd7138040c", "lines": [10, 145] },
+        "reports": [
+          "certora-safe-1-3-0",
+          "g0-safe-1-3-0-final",
+          "nethermind-safe-1-3-0"
+        ]
+      }
+    },
+    "1e73aba14eaf": {
+      "strict": {
+        "name": "TokenCallbackHandler",
+        "kind": "contract",
+        "lines": 51,
+        "status": "identical",
+        "audited": { "object": "3139bb5b79ae", "lines": [13, 72] },
+        "reports": ["ackee-safe-1-5-0", "certora-safe-1-5-0"]
+      }
+    },
+    "1723ad13aef2": {
+      "strict": {
+        "name": "CompatibilityFallbackHandler",
+        "kind": "contract",
+        "lines": 159,
+        "status": "identical",
+        "audited": { "object": "b234bbf123b8", "lines": [12, 171] },
+        "reports": ["ackee-safe-1-4-0"]
+      }
+    }
+  }
+}

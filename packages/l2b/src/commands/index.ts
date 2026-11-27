@@ -1,6 +1,7 @@
 import { AddShape } from './AddShape'
 import { Analyze } from './Analyze'
 import { AuditCoverage } from './AuditCoverage'
+import { AuditScope } from './AuditScope'
 import { BlobSenders } from './BlobSenders'
 import { CheckRpc } from './CheckRpc'
 import { ClientDrift } from './ClientDrift'
@@ -49,6 +50,7 @@ export function getSubcommands() {
     AddShape,
     Analyze,
     AuditCoverage,
+    AuditScope,
     BlobSenders,
     CheckRpc,
     ClientDrift,

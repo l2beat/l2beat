@@ -1,0 +1,5095 @@
+{
+  "schema_version": "1.0.0",
+  "project": "aztecnetwork",
+  "dataset": {
+    "repository": "sergeyshemyakov/audit-dataset",
+    "commit": "650d02b956d5b489c7b2cdb0c019724ea0addd29"
+  },
+  "discoveredAt": 1794568254,
+  "collections": {
+    "_libs/openzeppelin": { "name": "OpenZeppelin", "kind": "library" },
+    "_libs/safe": { "name": "Safe (library)", "kind": "library" },
+    "aztecnetwork": { "name": "Aztec Network", "kind": "project" },
+    "safe": { "name": "Safe", "kind": "project" }
+  },
+  "reports": {
+    "ackee-safe-1-4-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Contracts 1.4.0 Security Review",
+      "auditor": "Ackee Blockchain",
+      "date": "2023-03-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_4_0.pdf"
+    },
+    "ackee-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account Security Review",
+      "auditor": "Ackee Blockchain Security",
+      "date": "2025-05-28",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Audit_Report_1_5_0_Ackee.pdf"
+    },
+    "cantina-barretenberg-bigfield-2024-10-04": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Packages Security Review (Barretenberg bigfield)",
+      "auditor": "Cantina",
+      "date": "2024-10-04",
+      "document": "aztecnetwork/reports/Cantina - Barretenberg Bigfield.pdf"
+    },
+    "cantina-barretenberg-bool-bytearray-2025-11-10": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Barretenberg Proof System Security Review",
+      "auditor": "Cantina",
+      "date": "2025-11-10",
+      "document": "aztecnetwork/reports/Cantina - Barretenberg Bool and Bytearray.pdf"
+    },
+    "cantina-barretenberg-stdlib-field-2025-12-16": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec stdlib field Security Review",
+      "auditor": "Cantina",
+      "date": "2025-12-16",
+      "document": "aztecnetwork/reports/Cantina - Barretenberg Field.pdf"
+    },
+    "cantina-coinissuer-2025-11-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Coinissuer Security Review",
+      "auditor": "Cantina",
+      "date": "2025-11-12",
+      "document": "aztecnetwork/reports/Cantina - Coinissuer.pdf"
+    },
+    "cantina-escape-hatch-2026-02-24": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec: Hatch Security Review",
+      "auditor": "Cantina",
+      "date": "2026-02-24",
+      "document": "aztecnetwork/reports/Cantina - Escape Hatch.pdf"
+    },
+    "cantina-governance-2025-11-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec: Governance Contracts Security Review",
+      "auditor": "Cantina",
+      "date": "2025-11-12",
+      "document": "aztecnetwork/reports/Cantina - Governance.pdf"
+    },
+    "cantina-payload-2026-03-05": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec PR 20865 Security Review (Alpha Upgrade Payload)",
+      "auditor": "Cantina",
+      "date": "2026-03-05",
+      "document": "aztecnetwork/reports/Cantina - Payload 2025.03.05.pdf"
+    },
+    "cantina-rollup-contracts-2025-11-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Rollup Contracts Security Review",
+      "auditor": "Cantina",
+      "date": "2025-11-12",
+      "document": "aztecnetwork/reports/Cantina - Rollup Contracts.pdf"
+    },
+    "certora-safe-1-5-0": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Smart Account v1.5.0 Formal Verification and Audit",
+      "auditor": "Certora",
+      "date": "2025-01-14",
+      "document": "_libs/safe/reports/safe-verification__docs__Safe_Audit_Report_1_5_0_Certora.pdf"
+    },
+    "certora-safe-library-contracts-1-4-1": {
+      "collections": ["_libs/safe", "safe"],
+      "title": "Safe Library Contracts Security Assessment and Formal Verification",
+      "auditor": "Certora",
+      "date": "2024-08-23",
+      "document": "_libs/safe/reports/safe-core__docs__Safe_Library_Contracts_Audit_Report_1_4_1.pdf"
+    },
+    "consensys-diligence-aztec-protocol-2019-04-08": {
+      "collections": ["aztecnetwork"],
+      "title": "AZTEC Protocol Audit",
+      "auditor": "ConsenSys Diligence",
+      "date": "2019-04-08",
+      "document": "aztecnetwork/reports/ConsenSys Diligence - Aztec Protocol v1.md"
+    },
+    "contracts__audits__2023-10-v5.0": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "Contracts 5.0 Release",
+      "auditor": "OpenZeppelin",
+      "date": "2023-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2023-10-v5.0.pdf"
+    },
+    "contracts__audits__2024-10-v5.1": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.1 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-10-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-10-v5.1.pdf"
+    },
+    "contracts__audits__2024-12-v5.2": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.2 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2024-12-04",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2024-12-v5.2.pdf"
+    },
+    "contracts__audits__2025-04-v5.3": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.3 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-04-03",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-04-v5.3.pdf"
+    },
+    "contracts__audits__2025-07-v5.4": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts Release v5.4 Diff Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-07-17",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-07-v5.4.pdf"
+    },
+    "contracts__audits__2025-11-RLP": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OIF Broadcaster Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2025-11-26",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2025-11-RLP.pdf"
+    },
+    "contracts__audits__2026-02-v5.6": {
+      "collections": ["_libs/openzeppelin"],
+      "title": "OpenZeppelin Contracts v5.6 Audit",
+      "auditor": "OpenZeppelin",
+      "date": "2026-02-27",
+      "document": "_libs/openzeppelin/reports/contracts__audits__2026-02-v5.6.pdf"
+    },
+    "cyfrin-barretenberg-logic-module-2026-04-06": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Logic Module Audit Report",
+      "auditor": "Cyfrin",
+      "date": "2026-04-06",
+      "document": "aztecnetwork/reports/Cyfrin - Barretenberg Logic.pdf"
+    },
+    "konnov-pani-governance-formal-verification-2025-09-15": {
+      "collections": ["aztecnetwork"],
+      "title": "Formal Verification Report: Aztec Governance Contracts",
+      "auditor": "Igor Konnov, Thomas Pani (blltprf.xyz / konnov.phd)",
+      "date": "2025-09-15",
+      "document": "aztecnetwork/reports/Igor Konnov, Thomas Pani - Governance Formal Verification.pdf"
+    },
+    "sentnl-barretenberg-fuzzing-2022-03-26": {
+      "collections": ["aztecnetwork"],
+      "title": "Spilsbury Holdings Ltd Audit Results (AUD461) - Barretenberg",
+      "auditor": "Sentnl",
+      "date": "2022-03-26",
+      "document": "aztecnetwork/reports/Sentnl - Barretenberg.pdf"
+    },
+    "sherlock-barretenberg-cycle-group-rom-ram-2026-01-28": {
+      "collections": ["aztecnetwork"],
+      "title": "Security Review For Aztec Network (cycle_group and ROM/RAM memory modules)",
+      "auditor": "Sherlock",
+      "date": "2026-01-28",
+      "document": "aztecnetwork/reports/Sherlock - Barretenberg RAM ROM.pdf"
+    },
+    "solidified-aztec-aave-bridge-2022-05-18": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Aave Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-18",
+      "document": "aztecnetwork/reports/Solidified - Aztec Aave Bridge.pdf"
+    },
+    "solidified-aztec-compound-bridge-2022-06-17": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Compound Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-06-17",
+      "document": "aztecnetwork/reports/Solidified - Aztec Compound Bridge.pdf"
+    },
+    "solidified-aztec-curve-bridge-2022-07-05": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Curve Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-07-05",
+      "document": "aztecnetwork/reports/Solidified - Aztec Curve Bridge.pdf"
+    },
+    "solidified-aztec-dca-bridge-2022-09-21": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec DCA Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-09-21",
+      "document": "aztecnetwork/reports/Solidified - Aztec DCA Bridge.pdf"
+    },
+    "solidified-aztec-element-bridge-2022-05-11": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Element Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-11",
+      "document": "aztecnetwork/reports/Solidified - Aztec Element Bridge.pdf"
+    },
+    "solidified-aztec-lido-bridge-2022-04-12": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Lido Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-04-12",
+      "document": "aztecnetwork/reports/Solidified - Aztec Lido Bridge.pdf"
+    },
+    "solidified-aztec-liquity-bridge-2022-06-14": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Liquity Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-06-14",
+      "document": "aztecnetwork/reports/Solidified - Aztec Liquity Bridge.pdf"
+    },
+    "solidified-aztec-liquity-trove-bridge-ii-2022-11-21": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Liquity Trove Bridge Re-Audit",
+      "auditor": "Solidified",
+      "date": "2022-11-21",
+      "document": "aztecnetwork/reports/Solidified - Aztec Liquity Trove Bridge II.pdf"
+    },
+    "solidified-aztec-set-bridge-2022-05-11": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Set Bridge Audit",
+      "auditor": "Solidified",
+      "date": "2022-05-11",
+      "document": "aztecnetwork/reports/Solidified - Aztec Set Bridge.pdf"
+    },
+    "solidified-aztec-subsidy-contract-2022-08-10": {
+      "collections": ["aztecnetwork"],
+      "title": "Aztec Subsidy Contract Audit",
+      "auditor": "Solidified",
+      "date": "2022-08-10",
+      "document": "aztecnetwork/reports/Solidified - Aztec Subsidy Contract.pdf"
+    },
+    "veridise-barretenberg-bigfield-2025-09-18": {
+      "collections": ["aztecnetwork"],
+      "title": "Veridise Auditing Report: Barretenberg Bigfield",
+      "auditor": "Veridise",
+      "date": "2025-09-18",
+      "document": "aztecnetwork/reports/Veridise - Barretenberg Bigfield.pdf"
+    },
+    "veridise-governance-2025-10-13": {
+      "collections": ["aztecnetwork"],
+      "title": "Veridise Auditing Report: Aztec Governance",
+      "auditor": "Veridise",
+      "date": "2025-10-13",
+      "document": "aztecnetwork/reports/Veridise - Governance.pdf"
+    },
+    "zellic-barretenberg-bigfield-2024-07-25": {
+      "collections": ["aztecnetwork"],
+      "title": "Barretenberg Bigfield Proof Circuit Security Assessment",
+      "auditor": "Zellic",
+      "date": "2024-07-25",
+      "document": "aztecnetwork/reports/Zellic - Barretenberg Bigfield.pdf"
+    },
+    "zksecurity-barretenberg-bigfield-2024-07-01": {
+      "collections": ["aztecnetwork"],
+      "title": "Audit of Aztec Foreign Field Arithmetic (Bigfield)",
+      "auditor": "zkSecurity",
+      "date": "2024-07-01",
+      "document": "aztecnetwork/reports/ZKSecurity - Barretenberg Bigfield.pdf"
+    }
+  },
+  "auditedFiles": {
+    "00f60464b7d3": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/ISlasher.sol",
+      "blob": "00f60464b7d34116925fc30c7dbaeccc95323e49"
+    },
+    "02de22859973": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC1363.sol",
+      "blob": "02de22859973a398a699ba415a57054c659ec78a"
+    },
+    "042c33a76a57": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/messagebridge/FeeJuicePortal.sol",
+      "blob": "042c33a76a572bd9b9d17909ed3cd7fa842629b9"
+    },
+    "093bc17accb5": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/GSE.sol",
+      "blob": "093bc17accb5fe24a7a67b9b9134d708bcc93ab5"
+    },
+    "0a76bbd52e26": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/slashing/Slasher.sol",
+      "blob": "0a76bbd52e26fa052b011a1962caf560e83d46dd"
+    },
+    "0c139d518cdb": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+      "path": "l1-contracts/src/periphery/SlashPayloadCloneable.sol",
+      "blob": "0c139d518cdb77818ec5d839e4b41487406108fa"
+    },
+    "0db7f4bd0326": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+      "blob": "0db7f4bd03260c2ea02d1a584b7dd0bd25a43835"
+    },
+    "0de878b7fb96": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/messagebridge/IInbox.sol",
+      "blob": "0de878b7fb9693dd4aeedc56e0028de2c7f8a0f7"
+    },
+    "0dfb2c31eb2a": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/utils/ReentrancyGuardTransient.sol",
+      "blob": "0dfb2c31eb2ae20adc7687227ef978263482c799"
+    },
+    "0efdf1eb88d4": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/messagebridge/Outbox.sol",
+      "blob": "0efdf1eb88d40fd5d13048967325649c7e69ad52"
+    },
+    "1648f27f3de1": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/utils/Strings.sol",
+      "blob": "1648f27f3de1e5130793ebcd92fe6021a9146096"
+    },
+    "175db7358095": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/cryptography/ECDSA.sol",
+      "blob": "175db73580957df1d5d5d4729dfc150e0436bf74"
+    },
+    "178c0f0f95ce": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/DepositDelegationLib.sol",
+      "blob": "178c0f0f95ce4bbb62fce7e128952b1de6e4516e"
+    },
+    "1d3a83dd0f27": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/cryptography/EIP712.sol",
+      "blob": "1d3a83dd0f27fcd9ef5ad35357e436758734acab"
+    },
+    "2503904a6615": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/crypto/MerkleLib.sol",
+      "blob": "2503904a6615fec0dc9e32fc841caf3d0cb17c87"
+    },
+    "2a6c93829734": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IVerifier.sol",
+      "blob": "2a6c93829734ee76fe45f527c1d2d9c2ca7ed59d"
+    },
+    "2ba13dfc1b38": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/shared/libraries/TimeMath.sol",
+      "blob": "2ba13dfc1b38095accc41cb92dbd16669950b6fc"
+    },
+    "2c5690569a8b": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/SlashRoundLib.sol",
+      "blob": "2c5690569a8b60a1f2baca95eaeb15a1eda3f64b"
+    },
+    "3144d8407eca": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/messagebridge/IOutbox.sol",
+      "blob": "3144d8407ecaa629949c4129fcc53a9d5ac2ab2c"
+    },
+    "32ddd787a076": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/proposer/GovernanceProposer.sol",
+      "blob": "32ddd787a0765fd42af5c376bbdeef7ae23ed699"
+    },
+    "398853ee11f0": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
+      "blob": "398853ee11f04f77ba2e851e4f7403d233e6e537"
+    },
+    "40564d6a5cad": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/TimeLib.sol",
+      "blob": "40564d6a5cadb57007939d59bb0a5b61b91d5d9e"
+    },
+    "425876d19c7c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "a0b1e9c064be8d0746fca663799a650b8d3d7031",
+      "path": "contracts/utils/structs/EnumerableSet.sol",
+      "blob": "425876d19c7cc82182285c89e997caa9751a69d0"
+    },
+    "43c6fe5f3a57": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeConfig.sol",
+      "blob": "43c6fe5f3a576ed7e1bb5f1eb16096a254bb99a5"
+    },
+    "442fc18920f8": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/Errors.sol",
+      "blob": "442fc18920f87e8d8923e8e86c4b3de6b529d01c"
+    },
+    "45b9993e244d": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IGovernance.sol",
+      "blob": "45b9993e244d841030de851072acbc48c60c7640"
+    },
+    "467b04df1bbf": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/STFLib.sol",
+      "blob": "467b04df1bbf69e6a1fab2cc9454ebb5152af702"
+    },
+    "47a9fd588556": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/interfaces/IERC5267.sol",
+      "blob": "47a9fd5885563f1d65a77f0847bdd91bfed9d17a"
+    },
+    "48105c55dcce": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/ConstantsGen.sol",
+      "blob": "48105c55dcceabc01a6e6404df13f1d9ee3c5fce"
+    },
+    "489450335702": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+      "path": "l1-contracts/src/core/libraries/SlashPayloadLib.sol",
+      "blob": "489450335702f7ddb5b82b06671d86dd25d2dfa9"
+    },
+    "4a2549a7a677": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IInstance.sol",
+      "blob": "4a2549a7a6772afeb668f697b317f7810816e013"
+    },
+    "4e535fe03c24": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d4b2e98c737f54a21961b39d6bba13b839f3b6f4",
+      "path": "contracts/utils/Context.sol",
+      "blob": "4e535fe03c243f864568b8f4430c17c25dbadb47"
+    },
+    "4e870eaf7b06": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/compressed-data/Proposal.sol",
+      "blob": "4e870eaf7b064cd67338fb08e401e55fb58e1253"
+    },
+    "539d576ee794": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
+      "blob": "539d576ee794dd210d6a5e9b956839f5cb7ea5e3"
+    },
+    "581cc32880ef": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+      "blob": "581cc32880ef0231fa4391fbd1d2a683f5c9debf"
+    },
+    "58b1c7b687fb": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/proposer/EmpireBase.sol",
+      "blob": "58b1c7b687fb601e247ff5326b370f7dfbf65197"
+    },
+    "5b62d2f077c0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+      "path": "contracts/utils/structs/BitMaps.sol",
+      "blob": "5b62d2f077c04f9748c489395c32c8a01c093247"
+    },
+    "5cfcd9c596bc": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/StakingLib.sol",
+      "blob": "5cfcd9c596bcbbaa4679f413cc8cd9cb586b9f4f"
+    },
+    "5d41be5fa7f3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/SlotDerivation.sol",
+      "blob": "5d41be5fa7f36cf6649f49384f41b107c1fef3a9"
+    },
+    "5db7800e2bdf": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/AttestationLib.sol",
+      "blob": "5db7800e2bdfda083016d1df5378279f758502eb"
+    },
+    "5dbfabc2ad17": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d4b2e98c737f54a21961b39d6bba13b839f3b6f4",
+      "path": "contracts/utils/structs/Checkpoints.sol",
+      "blob": "5dbfabc2ad178e01780f6a6c7368e584313cf36c"
+    },
+    "5dd03d5b11ed": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
+      "blob": "5dd03d5b11ed1c5a811ba5c5dd69a545508c4289"
+    },
+    "5f0c9eecd0f4": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/GSEPayload.sol",
+      "blob": "5f0c9eecd0f4a6ba39223523c06bd725c9f75449"
+    },
+    "5f30940dd61c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IFeeJuicePortal.sol",
+      "blob": "5f30940dd61c6d1a03787a91660946ef1a2225e4"
+    },
+    "62f2fb18750b": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/DataStructures.sol",
+      "blob": "62f2fb18750b9dd1dd5de3ac9e155c4f0f82f7cd"
+    },
+    "631e1a428444": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
+      "blob": "631e1a428444b6b21c9d3b45a1c93b4e0983ac75"
+    },
+    "641a77f3cbd1": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/mock/libraries/BlobLib.sol",
+      "blob": "641a77f3cbd109a38edbef344577329c9a222243"
+    },
+    "653ff4c18123": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/FeeLib.sol",
+      "blob": "653ff4c18123f8d0bbf1dc40094682cae9d87595"
+    },
+    "728892e5b245": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "44e3f64839b6f60aa4f3443f60fb45fcf744e586",
+      "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+      "blob": "728892e5b245adf71a0fe0d02b1804dac707ca39"
+    },
+    "732cc02b109a": {
+      "repository": "safe-fndn/safe-smart-account",
+      "commit": "5d26505388e9ee014ad9ac497aa48e3a13426eb1",
+      "path": "contracts/interfaces/IERC165.sol",
+      "blob": "732cc02b109aec16f55b6851bbdc1aaea463a5f5"
+    },
+    "74071d09b64e": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/HatchMath.sol",
+      "blob": "74071d09b64ea24d457ea461735d37cb7275aaef"
+    },
+    "7654772edad0": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/messagebridge/Inbox.sol",
+      "blob": "7654772edad02dd188ad653bb824f1219abf8fc2"
+    },
+    "7c97aa4c22da": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/utils/math/SignedMath.sol",
+      "blob": "7c97aa4c22da6567126a82c6949ec39e363ea891"
+    },
+    "7cf08e18f3df": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/shared/libraries/CompressedTimeMath.sol",
+      "blob": "7cf08e18f3dfba1e42697fd111d0ee65b80c745e"
+    },
+    "7d1019563f5a": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/token/ERC20/IERC20.sol",
+      "blob": "7d1019563f5af1dfe72a771bc4d5fac1ffc8afd9"
+    },
+    "7ed828535483": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
+      "blob": "7ed8285354834e23f999a9c52bfbba8068e6fbe5"
+    },
+    "80196d8b3d81": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/crypto/Hash.sol",
+      "blob": "80196d8b3d8150e98539ed09042b9a2f5609dc99"
+    },
+    "81d713d4bed0": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/ShortStrings.sol",
+      "blob": "81d713d4bed045f5f83f431ef60dfb1c51012f40"
+    },
+    "85a420b1a7b2": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/utils/math/Math.sol",
+      "blob": "85a420b1a7b262af6555743fc0a0b2d485f2bde7"
+    },
+    "8cfc6f04e45b": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/compressed-data/StakingQueueConfig.sol",
+      "blob": "8cfc6f04e45bee53ea6556f48e68cf93b9aff242"
+    },
+    "8d37ae362f3e": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/EscapeHatch.sol",
+      "blob": "8d37ae362f3eab97e471db01ee0d27804ec233cf"
+    },
+    "91332ab9f765": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "ff30cd42fcb791d62e9a94341495eb82b28f140f",
+      "path": "contracts/proxy/Clones.sol",
+      "blob": "91332ab9f7657e9dfd374e1ee5c4676e1facaf47"
+    },
+    "9c803c445b8c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IBn254LibWrapper.sol",
+      "blob": "9c803c445b8c4b9256dac6a56c6c196256734a62"
+    },
+    "a0897d0d8051": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IStaking.sol",
+      "blob": "a0897d0d80517bf4f5c662548db634eaad4ddea5"
+    },
+    "a0a58660049b": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/reward-boost/RewardBooster.sol",
+      "blob": "a0a58660049b3b372a2268871bd99903b1295e27"
+    },
+    "a13ef2adff77": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/StakingQueue.sol",
+      "blob": "a13ef2adff770d7145044c4c59bc8249c55a9b66"
+    },
+    "a2c10f081f48": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IRegistry.sol",
+      "blob": "a2c10f081f48db1f673bb81311fbc533d4314c56"
+    },
+    "abaf7a34e29c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/CheckpointedUintLib.sol",
+      "blob": "abaf7a34e29cd5afc3bc1e240b7fbeb1b0ef6062"
+    },
+    "aebb10524a2c": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+      "path": "contracts/utils/StorageSlot.sol",
+      "blob": "aebb10524a2c82aa78ceb8394e5f3c1b0e5abeea"
+    },
+    "b06d085951ff": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/RollupCore.sol",
+      "blob": "b06d085951ff338e69d16d760746e0a883f00fce"
+    },
+    "b6404ae0d889": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/crypto/FrontierLib.sol",
+      "blob": "b6404ae0d889d4b97a66fda4c2a742849831bb7a"
+    },
+    "bb92716ec513": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "b2742ee480de17eb6683413811251123c54c1d43",
+      "path": "l1-contracts/src/core/slashing/TallySlashingProposer.sol",
+      "blob": "bb92716ec513abf09432d40bbff55f6084ee9e5b"
+    },
+    "bd96f6661dcb": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/access/Ownable.sol",
+      "blob": "bd96f6661dcbf7b2d4948823ac0e7bfb4ba31fb1"
+    },
+    "c2e987200675": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/compressed-data/Tips.sol",
+      "blob": "c2e987200675d330635c9ad8a2ed12eee50334bf"
+    },
+    "c31178b86de1": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/ValidatorOperationsExtLib.sol",
+      "blob": "c31178b86de1e78ba35461011656327f9e19ff62"
+    },
+    "ccb979f61c95": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+      "path": "contracts/utils/math/SafeCast.sol",
+      "blob": "ccb979f61c9577e6338276cff49625d5a2191eb3"
+    },
+    "d45bf5daf7a3": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IEmpire.sol",
+      "blob": "d45bf5daf7a3f45adf587694d82d67130d8c15da"
+    },
+    "d67377fb0412": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/shared/libraries/SignatureLib.sol",
+      "blob": "d67377fb041235da12c5abb72ecee9670c77a04a"
+    },
+    "d6df278c23b7": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/shared/libraries/BN254Lib.sol",
+      "blob": "d6df278c23b7c16df7046a284426a3e2dbe6705d"
+    },
+    "d8a4624825b8": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/ProposalLib.sol",
+      "blob": "d8a4624825b82ba9a831c7add66d4d826db156b4"
+    },
+    "d8c056c72974": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "474754f58e7ce6a6e0350306f4c144d0a9ee8d14",
+      "path": "l1-contracts/src/core/interfaces/IValidatorSelection.sol",
+      "blob": "d8c056c72974dca1d32d91c81f88d6d512b09e7c"
+    },
+    "dd164aeb8cf5": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/interfaces/IRollup.sol",
+      "blob": "dd164aeb8cf5f39a249142839db7aefca1a79ab2"
+    },
+    "df0339b42dd3": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/Bn254LibWrapper.sol",
+      "blob": "df0339b42dd387afea1d94ae57ae8b4d7486cc29"
+    },
+    "df3ecc28fd41": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IProposerPayload.sol",
+      "blob": "df3ecc28fd41dd08244235591399ebab56b6165d"
+    },
+    "dfe71d68ce5c": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/Rollup.sol",
+      "blob": "dfe71d68ce5cbc0f2102f4d839b4f6bed2fcdefe"
+    },
+    "e07ff65394a6": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/Errors.sol",
+      "blob": "e07ff65394a601e2b0c394836f6dd1f33a5bca29"
+    },
+    "e168824d34b3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "d9f966fc3f7c4eec7f565c2442cc64481e7fb499",
+      "path": "contracts/utils/Panic.sol",
+      "blob": "e168824d34b3f0ba0be33317fb34b9e74fc148b6"
+    },
+    "e1cbccb65ecc": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/utils/cryptography/MessageHashUtils.sol",
+      "blob": "e1cbccb65ecc7b8870462651e7f0878ee4d1fc5c"
+    },
+    "e2e5fa99ba44": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/Errors.sol",
+      "blob": "e2e5fa99ba449d12cd24141f017a02d50d79d66c"
+    },
+    "f0dd0f262385": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/InvalidateLib.sol",
+      "blob": "f0dd0f262385317212a3a21d646a02a5e3ea22c7"
+    },
+    "f0f9137bc8d5": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+      "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+      "blob": "f0f9137bc8d5d7bd45aea1a7feb2940081fca8da"
+    },
+    "f1eec3a0910a": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IPayload.sol",
+      "blob": "f1eec3a0910af2d764f63717cf6707219a980c2a"
+    },
+    "f21f006a33de": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/crypto/SampleLib.sol",
+      "blob": "f21f006a33dee2ed7303ebdd03e573e4728e0846"
+    },
+    "f6fd3e4ae100": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/AddressSnapshotLib.sol",
+      "blob": "f6fd3e4ae1001ecdf21fa3239b56f6a88fd56afd"
+    },
+    "f87c7b201902": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/interfaces/IGovernanceProposer.sol",
+      "blob": "f87c7b20190280198403b1779a4bdb77ce126f56"
+    },
+    "f8f992c1d5ae": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/governance/libraries/compressed-data/Ballot.sol",
+      "blob": "f8f992c1d5ae3e55a7f3cafbcc4a98b53ff4cb1e"
+    },
+    "faf1299a90e6": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/RewardExtLib.sol",
+      "blob": "faf1299a90e65f82845ac509e90b36c7b10e5b67"
+    },
+    "fb5d1e926ca2": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/EpochProofLib.sol",
+      "blob": "fb5d1e926ca21ba35c7f4df5d9e498865f13a1d9"
+    },
+    "fbafe8cf31f3": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/RollupOperationsExtLib.sol",
+      "blob": "fbafe8cf31f3f00ecc649ba1dd702f94ecbf12d3"
+    },
+    "fc84444885ee": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/compressed-data/CheckpointLog.sol",
+      "blob": "fc84444885ee3590279b958edeca98cf961b0537"
+    },
+    "fdb8a87fe0f7": {
+      "repository": "AztecProtocol/aztec-packages",
+      "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+      "path": "l1-contracts/src/core/libraries/rollup/BlobLib.sol",
+      "blob": "fdb8a87fe0f77e90f30360f3247ffd1fca1f7dae"
+    },
+    "ffd39d9a46c3": {
+      "repository": "OpenZeppelin/openzeppelin-contracts",
+      "commit": "98d28f926121b2d7cfa4b375fd859b44c8d9a6d5",
+      "path": "contracts/utils/Create2.sol",
+      "blob": "ffd39d9a46c31000386060d027d8ac757691edcf"
+    }
+  },
+  "units": {
+    "60ede42d4490": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2a6c93829734", "lines": [5, 7] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "22fb8ae5b1ae": {
+      "name": "HonkVerifier",
+      "kind": "contract",
+      "lines": 5643,
+      "status": "none"
+    },
+    "a71c051041d9": {
+      "name": "IBoosterCore",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "a0a58660049b", "lines": [30, 33] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "f870caca1701": {
+      "name": "addEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [91, 93] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "7e1fa856bc5f": {
+      "name": "subEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [87, 89] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "13ba900d72e0": {
+      "name": "eqEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [79, 81] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "eefe898dbc7d": {
+      "name": "neqEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [83, 85] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "1991df21f4be": {
+      "name": "gteEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [95, 97] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "7ce5410e6b9b": {
+      "name": "gtEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [99, 101] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "9ad1495848b6": {
+      "name": "lteEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [103, 105] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "53bd2864a5a8": {
+      "name": "ltEpoch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [107, 109] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "42fb3a072cf5": {
+      "name": "IBooster",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "a0a58660049b", "lines": [35, 38] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "a1ed768de02b": {
+      "name": "SafeCast",
+      "kind": "library",
+      "lines": 1144,
+      "status": "identical",
+      "audited": { "object": "ccb979f61c95", "lines": [19, 1162] },
+      "reports": ["contracts__audits__2026-02-v5.6"]
+    },
+    "64fecd329377": {
+      "name": "addTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [11, 13] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "8d11a696cbf8": {
+      "name": "subTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [15, 17] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "892246b03e79": {
+      "name": "ltTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [19, 21] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "5238708147b3": {
+      "name": "gtTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [27, 29] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "7b188f7e6a79": {
+      "name": "lteTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [23, 25] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "8cc2a5795b58": {
+      "name": "gteTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [31, 33] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "eb515a898ac2": {
+      "name": "neqTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [35, 37] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "1fa3a0900a64": {
+      "name": "eqTimestamp",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [39, 41] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "2110e29aba10": {
+      "name": "eqSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [53, 55] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "263d383b45ae": {
+      "name": "neqSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [57, 59] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "d1cd285da94b": {
+      "name": "gteSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [73, 75] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "c12c1b03d1eb": {
+      "name": "gtSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [69, 71] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "ca2b9400e554": {
+      "name": "lteSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [65, 67] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "241c29092124": {
+      "name": "ltSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [61, 63] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "df4e899bb231": {
+      "name": "addSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [45, 47] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "e0b508d99109": {
+      "name": "subSlot",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2ba13dfc1b38", "lines": [49, 51] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "f1b786366047": {
+      "name": "CompressedTimeMath",
+      "kind": "library",
+      "lines": 25,
+      "status": "identical",
+      "audited": { "object": "7cf08e18f3df", "lines": [14, 38] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "62a1e2badf10": {
+      "name": "IValidatorSelectionCore",
+      "kind": "interface",
+      "lines": 7,
+      "status": "differs",
+      "audited": { "object": "d8c056c72974", "lines": [17, 20] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [[1, 2], [5, 5]],
+      "removed": [],
+      "covered": 5
+    },
+    "165074b2dcaf": {
+      "name": "IEmperor",
+      "kind": "interface",
+      "lines": 7,
+      "status": "identical",
+      "audited": { "object": "d45bf5daf7a3", "lines": [10, 16] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "a06a97752192": {
+      "name": "addHatch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "74071d09b64e", "lines": [13, 15] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "3331c6c632ca": {
+      "name": "subHatch",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "74071d09b64e", "lines": [17, 19] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "32112fc74f3b": {
+      "name": "IEscapeHatchCore",
+      "kind": "interface",
+      "lines": 15,
+      "status": "identical",
+      "audited": { "object": "539d576ee794", "lines": [38, 52] },
+      "reports": ["cantina-payload-2026-03-05"]
+    },
+    "dd4a1f28d9c8": {
+      "name": "IEscapeHatch",
+      "kind": "interface",
+      "lines": 26,
+      "status": "identical",
+      "audited": { "object": "539d576ee794", "lines": [54, 79] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "1b18b17b7de0": {
+      "name": "IValidatorSelection",
+      "kind": "interface",
+      "lines": 35,
+      "status": "identical",
+      "audited": { "object": "581cc32880ef", "lines": [31, 65] },
+      "reports": ["cantina-payload-2026-03-05"]
+    },
+    "a9c82fbc73d8": {
+      "name": "addSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [9, 11] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "da302801fe67": {
+      "name": "subSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [13, 15] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "dc5a287f86ab": {
+      "name": "eqSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [17, 19] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "9005ac959bda": {
+      "name": "neqSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [21, 23] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "e996358fa881": {
+      "name": "ltSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [25, 27] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "951f791a4bc2": {
+      "name": "lteSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [29, 31] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "974d17ba61c9": {
+      "name": "gtSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [33, 35] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "f2933da2f16b": {
+      "name": "gteSlashRound",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [37, 39] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "0c3db8e8788b": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 262,
+      "status": "differs",
+      "audited": { "object": "e07ff65394a6", "lines": [19, 262] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [32, 32],
+        [38, 39],
+        [82, 82],
+        [119, 121],
+        [158, 164],
+        [179, 179],
+        [182, 185],
+        [199, 199],
+        [202, 229]
+      ],
+      "removed": [[12, 12, 12], [74, 72, 73], [202, 185, 211]],
+      "covered": 216
+    },
+    "eb9e54433d2a": {
+      "name": "Panic",
+      "kind": "library",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "e168824d34b3", "lines": [26, 57] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2",
+        "contracts__audits__2025-07-v5.4",
+        "contracts__audits__2025-11-RLP"
+      ]
+    },
+    "e452e90ca218": {
+      "name": "Math",
+      "kind": "library",
+      "lines": 678,
+      "status": "differs",
+      "audited": { "object": "85a420b1a7b2", "lines": [12, 685] },
+      "reports": ["contracts__audits__2024-12-v5.2"],
+      "added": [[528, 536], [538, 566]],
+      "removed": [[528, 528, 562]],
+      "covered": 668
+    },
+    "5801f970036e": {
+      "name": "RewardBooster",
+      "kind": "contract",
+      "lines": 98,
+      "status": "differs",
+      "audited": { "object": "a0a58660049b", "lines": [45, 133] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[20, 30]],
+      "removed": [],
+      "covered": 94
+    },
+    "11a266636eff": {
+      "name": "TimeLib",
+      "kind": "library",
+      "lines": 111,
+      "status": "identical",
+      "audited": { "object": "40564d6a5cad", "lines": [22, 132] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "f4f354424b7c": {
+      "name": "ECDSA",
+      "kind": "library",
+      "lines": 169,
+      "status": "identical",
+      "audited": { "object": "175db7358095", "lines": [12, 180] },
+      "reports": ["contracts__audits__2025-07-v5.4"]
+    },
+    "b7e470aa4499": {
+      "name": "SignatureLib",
+      "kind": "library",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "d67377fb0412", "lines": [16, 33] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "978c3451ca8d": {
+      "name": "CoordinationSignatureLib",
+      "kind": "library",
+      "lines": 68,
+      "status": "none"
+    },
+    "a3b6f777c5ad": {
+      "name": "AttestationLib",
+      "kind": "library",
+      "lines": 204,
+      "status": "differs",
+      "audited": { "object": "5db7800e2bdf", "lines": [35, 230] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[5, 5], [8, 8], [10, 19]],
+      "removed": [[5, 190, 190], [8, 193, 193]],
+      "covered": 193
+    },
+    "d79e5038d2f3": {
+      "name": "FeeHeaderLib",
+      "kind": "library",
+      "lines": 69,
+      "status": "identical",
+      "audited": { "object": "631e1a428444", "lines": [74, 142] },
+      "reports": ["cantina-payload-2026-03-05"]
+    },
+    "efc06fb4d1f1": {
+      "name": "ChainTipsLib",
+      "kind": "library",
+      "lines": 44,
+      "status": "identical",
+      "audited": { "object": "c2e987200675", "lines": [14, 57] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "96e217d9b9c0": {
+      "name": "CompressedTempCheckpointLogLib",
+      "kind": "library",
+      "lines": 34,
+      "status": "identical",
+      "audited": { "object": "fc84444885ee", "lines": [50, 87] },
+      "reports": ["cantina-payload-2026-03-05"]
+    },
+    "e730ab060eed": {
+      "name": "IERC20",
+      "kind": "interface",
+      "lines": 71,
+      "status": "identical",
+      "audited": { "object": "7d1019563f5a", "lines": [9, 79] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
+    },
+    "bf1e6b11fc8d": {
+      "name": "DataStructures",
+      "kind": "library",
+      "lines": 62,
+      "status": "identical",
+      "audited": { "object": "62f2fb18750b", "lines": [10, 71] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "bfa0b41d1854": {
+      "name": "IInbox",
+      "kind": "interface",
+      "lines": 60,
+      "status": "differs",
+      "audited": { "object": "0de878b7fb96", "lines": [12, 75] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[48, 48]],
+      "removed": [[20, 20, 21], [48, 50, 52]],
+      "covered": 60
+    },
+    "ed7f1e682c82": {
+      "name": "addEthValue",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "43c6fe5f3a57", "lines": [31, 33] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "d935d55ad8d5": {
+      "name": "subEthValue",
+      "kind": "function",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "43c6fe5f3a57", "lines": [35, 37] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "68779d2b7dce": {
+      "name": "IRollupCore",
+      "kind": "interface",
+      "lines": 51,
+      "status": "differs",
+      "audited": { "object": "dd164aeb8cf5", "lines": [108, 160] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[10, 10], [13, 13], [45, 45]],
+      "removed": [[10, 10, 10], [13, 13, 15], [45, 47, 47]],
+      "covered": 49
+    },
+    "99c720498edf": {
+      "name": "IHaveVersion",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "a2c10f081f48", "lines": [6, 8] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "8c93ac3dc245": {
+      "name": "IRewardDistributor",
+      "kind": "interface",
+      "lines": 20,
+      "status": "none"
+    },
+    "e02e162c77e9": {
+      "name": "IOutbox",
+      "kind": "interface",
+      "lines": 82,
+      "status": "differs",
+      "audited": { "object": "3144d8407eca", "lines": [14, 67] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[1, 1], [7, 7], [24, 24], [44, 44], [69, 80]],
+      "removed": [[1, 1, 1], [24, 12, 12], [69, 52, 52]],
+      "covered": 76
+    },
+    "77c91093cc8b": {
+      "name": "IVerifier",
+      "kind": "interface",
+      "lines": 3,
+      "status": "identical",
+      "audited": { "object": "2a6c93829734", "lines": [5, 7] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "ca9ed2069da5": {
+      "name": "IRollup",
+      "kind": "interface",
+      "lines": 86,
+      "status": "differs",
+      "audited": { "object": "dd164aeb8cf5", "lines": [162, 248] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[31, 31], [78, 81]],
+      "removed": [[31, 31, 31], [85, 84, 85]],
+      "covered": 82
+    },
+    "e6c4061572a5": {
+      "name": "IFeeJuicePortal",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "5f30940dd61c", "lines": [9, 28] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "009e77a9cf32": {
+      "name": "Constants",
+      "kind": "library",
+      "lines": 21,
+      "status": "differs",
+      "audited": { "object": "48105c55dcce", "lines": [11, 31] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[12, 12], [15, 15]],
+      "removed": [[12, 12, 12], [15, 15, 15]],
+      "covered": 19
+    },
+    "4c76a9ff8e4c": {
+      "name": "FieldLib",
+      "kind": "library",
+      "lines": 6,
+      "status": "none"
+    },
+    "6c520d43cfa7": {
+      "name": "STFLib",
+      "kind": "library",
+      "lines": 321,
+      "status": "differs",
+      "audited": { "object": "467b04df1bbf", "lines": [81, 402] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[30, 33]],
+      "removed": [[30, 30, 30]],
+      "covered": 320
+    },
+    "684cb89721da": {
+      "name": "IERC165",
+      "kind": "interface",
+      "lines": 11,
+      "status": "identical",
+      "audited": { "object": "732cc02b109a", "lines": [5, 15] },
+      "reports": [
+        "ackee-safe-1-4-0",
+        "ackee-safe-1-5-0",
+        "certora-safe-1-5-0",
+        "certora-safe-library-contracts-1-4-1"
+      ]
+    },
+    "ba18d750e681": {
+      "name": "IERC1363",
+      "kind": "interface",
+      "lines": 71,
+      "status": "identical",
+      "audited": { "object": "02de22859973", "lines": [16, 86] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
+    },
+    "f555a7706b9d": {
+      "name": "SafeERC20",
+      "kind": "library",
+      "lines": 181,
+      "status": "identical",
+      "audited": { "object": "f0f9137bc8d5", "lines": [19, 181] },
+      "reports": ["contracts__audits__2024-10-v5.1"]
+    },
+    "2596672c34cf": {
+      "name": "BitMaps",
+      "kind": "library",
+      "lines": 43,
+      "status": "differs",
+      "audited": { "object": "5b62d2f077c0", "lines": [18, 60] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[2, 2]],
+      "removed": [[2, 2, 2]],
+      "covered": 42
+    },
+    "b51d1eddb3e3": {
+      "name": "BpsLib",
+      "kind": "library",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "0db7f4bd0326", "lines": [24, 28] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "f8f04fd651e0": {
+      "name": "RewardLib",
+      "kind": "library",
+      "lines": 231,
+      "status": "differs",
+      "audited": { "object": "728892e5b245", "lines": [65, 282] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [14, 34],
+        [82, 82],
+        [98, 104],
+        [113, 139],
+        [142, 158],
+        [161, 165],
+        [200, 203]
+      ],
+      "removed": [
+        [14, 14, 19],
+        [82, 68, 68],
+        [139, 94, 122],
+        [142, 125, 144],
+        [162, 147, 148],
+        [200, 183, 186],
+        [230, 213, 216]
+      ],
+      "covered": 179
+    },
+    "a6d7568d470d": {
+      "name": "EnumerableSet",
+      "kind": "library",
+      "lines": 335,
+      "status": "differs",
+      "audited": { "object": "425876d19c7c", "lines": [41, 378] },
+      "reports": ["contracts__audits__2023-10-v5.0"],
+      "added": [[182, 182], [255, 255], [328, 328]],
+      "removed": [[182, 183, 183], [255, 257, 257], [328, 331, 331]],
+      "covered": 332
+    },
+    "15bb2ebdffb9": {
+      "name": "Checkpoints",
+      "kind": "library",
+      "lines": 615,
+      "status": "identical",
+      "audited": { "object": "5dbfabc2ad17", "lines": [16, 621] },
+      "reports": ["contracts__audits__2025-04-v5.3"]
+    },
+    "e15fae7e3a24": {
+      "name": "TransientSlot",
+      "kind": "library",
+      "lines": 151,
+      "status": "none"
+    },
+    "243ba84ebc5a": {
+      "name": "SlotDerivation",
+      "kind": "library",
+      "lines": 115,
+      "status": "identical",
+      "audited": { "object": "5d41be5fa7f3", "lines": [41, 155] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "17b2fa77c49d": {
+      "name": "StakingQueueLib",
+      "kind": "library",
+      "lines": 46,
+      "status": "identical",
+      "audited": { "object": "a13ef2adff77", "lines": [33, 78] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "7b8f1bb1765a": {
+      "name": "BallotLib",
+      "kind": "library",
+      "lines": 47,
+      "status": "identical",
+      "audited": { "object": "f8f992c1d5ae", "lines": [14, 60] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "eb89808c392d": {
+      "name": "IPayload",
+      "kind": "interface",
+      "lines": 18,
+      "status": "identical",
+      "audited": { "object": "f1eec3a0910a", "lines": [5, 22] },
+      "reports": [
+        "cantina-coinissuer-2025-11-12",
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "cdcfb0473aee": {
+      "name": "CompressedProposalLib",
+      "kind": "library",
+      "lines": 110,
+      "status": "identical",
+      "audited": { "object": "4e870eaf7b06", "lines": [44, 153] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "023c99ea7c6b": {
+      "name": "ProposalLib",
+      "kind": "library",
+      "lines": 102,
+      "status": "identical",
+      "audited": { "object": "d8a4624825b8", "lines": [91, 192] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "a2ad74296a0d": {
+      "name": "StakingQueueConfigLib",
+      "kind": "library",
+      "lines": 32,
+      "status": "identical",
+      "audited": { "object": "8cfc6f04e45b", "lines": [37, 68] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "6d944e2ce127": {
+      "name": "IGovernance",
+      "kind": "interface",
+      "lines": 42,
+      "status": "identical",
+      "audited": { "object": "45b9993e244d", "lines": [66, 107] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "151d207ad744": {
+      "name": "Errors_1",
+      "kind": "library",
+      "lines": 76,
+      "status": "differs",
+      "audited": {
+        "object": "e2e5fa99ba44",
+        "lines": [15, 87],
+        "name": "Errors"
+      },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[53, 55]],
+      "removed": [],
+      "covered": 73
+    },
+    "bd8af08caf35": {
+      "name": "CheckpointedUintLib",
+      "kind": "library",
+      "lines": 68,
+      "status": "differs",
+      "audited": { "object": "abaf7a34e29c", "lines": [15, 84] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ],
+      "added": [[37, 37], [64, 64]],
+      "removed": [[37, 37, 39], [64, 66, 66]],
+      "covered": 66
+    },
+    "f02ca608c7c9": {
+      "name": "Governance",
+      "kind": "interface",
+      "lines": 12,
+      "status": "none"
+    },
+    "d78b3ed7ec73": {
+      "name": "IGSECore",
+      "kind": "interface",
+      "lines": 27,
+      "status": "identical",
+      "audited": { "object": "093bc17accb5", "lines": [38, 64] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "77ea4f2839c5": {
+      "name": "IGSE",
+      "kind": "interface",
+      "lines": 26,
+      "status": "identical",
+      "audited": { "object": "093bc17accb5", "lines": [66, 91] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "bb24b365b687": {
+      "name": "Context",
+      "kind": "abstract",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "4e535fe03c24", "lines": [16, 28] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2",
+        "contracts__audits__2025-04-v5.3"
+      ]
+    },
+    "31e42eba5b0a": {
+      "name": "Ownable",
+      "kind": "abstract",
+      "lines": 81,
+      "status": "identical",
+      "audited": { "object": "bd96f6661dcb", "lines": [20, 100] },
+      "reports": [
+        "contracts__audits__2023-10-v5.0",
+        "contracts__audits__2024-10-v5.1"
+      ]
+    },
+    "6ea232651c72": {
+      "name": "IBn254LibWrapper",
+      "kind": "interface",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "9c803c445b8c", "lines": [7, 15] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "b4a0691d8abe": {
+      "name": "BN254Lib",
+      "kind": "library",
+      "lines": 272,
+      "status": "identical",
+      "audited": { "object": "d6df278c23b7", "lines": [29, 311] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "171d5461997b": {
+      "name": "Bn254LibWrapper",
+      "kind": "contract",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "df0339b42dd3", "lines": [8, 20] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "2d98fe65ac00": {
+      "name": "AddressSnapshotLib",
+      "kind": "library",
+      "lines": 213,
+      "status": "identical",
+      "audited": { "object": "f6fd3e4ae100", "lines": [44, 260] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "534921f91550": {
+      "name": "DepositDelegationLib",
+      "kind": "library",
+      "lines": 270,
+      "status": "differs",
+      "audited": { "object": "178c0f0f95ce", "lines": [39, 309] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ],
+      "added": [[87, 87]],
+      "removed": [[87, 87, 88]],
+      "covered": 269
+    },
+    "647dde5b3f58": {
+      "name": "GSECore",
+      "kind": "contract",
+      "lines": 538,
+      "status": "differs",
+      "audited": { "object": "093bc17accb5", "lines": [121, 659] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [112, 112],
+        [136, 136],
+        [160, 161],
+        [211, 211],
+        [215, 215],
+        [221, 221],
+        [235, 235],
+        [299, 299],
+        [302, 302],
+        [314, 314],
+        [410, 410],
+        [412, 412],
+        [438, 438],
+        [511, 511],
+        [519, 519],
+        [528, 528]
+      ],
+      "removed": [
+        [112, 112, 112],
+        [136, 136, 136],
+        [160, 160, 161],
+        [211, 211, 211],
+        [215, 215, 215],
+        [221, 221, 221],
+        [235, 235, 236],
+        [299, 300, 300],
+        [302, 303, 303],
+        [314, 315, 315],
+        [410, 411, 411],
+        [412, 413, 413],
+        [438, 439, 439],
+        [511, 512, 512],
+        [519, 520, 520],
+        [528, 529, 529]
+      ],
+      "covered": 521
+    },
+    "5adeaf508ac8": {
+      "name": "GSE",
+      "kind": "contract",
+      "lines": 210,
+      "status": "differs",
+      "audited": { "object": "093bc17accb5", "lines": [661, 870] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[192, 192], [203, 203]],
+      "removed": [[192, 192, 192], [203, 203, 203]],
+      "covered": 208
+    },
+    "e43243b77c2b": {
+      "name": "ISlasher",
+      "kind": "interface",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "00f60464b7d3", "lines": [13, 21] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "598e0407bba6": {
+      "name": "Slasher",
+      "kind": "interface",
+      "lines": 3,
+      "status": "none"
+    },
+    "5e6ccb107f0c": {
+      "name": "IStakingCore",
+      "kind": "interface",
+      "lines": 48,
+      "status": "differs",
+      "audited": { "object": "a0897d0d8051", "lines": [13, 59] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[2, 4], [25, 28]],
+      "removed": [[2, 2, 4], [25, 25, 27]],
+      "covered": 42
+    },
+    "9a482ed87104": {
+      "name": "IEmpire",
+      "kind": "interface",
+      "lines": 13,
+      "status": "identical",
+      "audited": { "object": "d45bf5daf7a3", "lines": [18, 30] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "436f5cdc2d52": {
+      "name": "IGovernanceProposer",
+      "kind": "interface",
+      "lines": 4,
+      "status": "identical",
+      "audited": { "object": "f87c7b201902", "lines": [8, 11] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "4f1674fb5377": {
+      "name": "IERC5267",
+      "kind": "interface",
+      "lines": 23,
+      "status": "identical",
+      "audited": { "object": "47a9fd588556", "lines": [6, 28] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
+    },
+    "ed25952f120e": {
+      "name": "StorageSlot",
+      "kind": "library",
+      "lines": 110,
+      "status": "identical",
+      "audited": { "object": "aebb10524a2c", "lines": [34, 143] },
+      "reports": [
+        "contracts__audits__2024-12-v5.2",
+        "contracts__audits__2025-07-v5.4"
+      ]
+    },
+    "4bcc576af38c": {
+      "name": "ShortStrings",
+      "kind": "library",
+      "lines": 83,
+      "status": "identical",
+      "audited": { "object": "81d713d4bed0", "lines": [40, 122] },
+      "reports": ["contracts__audits__2025-07-v5.4"]
+    },
+    "ecccefa39d54": {
+      "name": "SignedMath",
+      "kind": "library",
+      "lines": 58,
+      "status": "identical",
+      "audited": { "object": "7c97aa4c22da", "lines": [11, 68] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2"
+      ]
+    },
+    "136bafeaf3ca": {
+      "name": "Strings",
+      "kind": "library",
+      "lines": 388,
+      "status": "identical",
+      "audited": { "object": "1648f27f3de1", "lines": [13, 421] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
+    },
+    "30dfd0bf4e73": {
+      "name": "MessageHashUtils",
+      "kind": "library",
+      "lines": 70,
+      "status": "identical",
+      "audited": { "object": "e1cbccb65ecc", "lines": [15, 84] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
+    },
+    "84e56c4762be": {
+      "name": "EIP712",
+      "kind": "abstract",
+      "lines": 127,
+      "status": "identical",
+      "audited": { "object": "1d3a83dd0f27", "lines": [34, 160] },
+      "reports": [
+        "contracts__audits__2025-07-v5.4",
+        "contracts__audits__2026-02-v5.6"
+      ]
+    },
+    "3d3f3d908f1e": {
+      "name": "EmpireBase",
+      "kind": "abstract",
+      "lines": 212,
+      "status": "differs",
+      "audited": { "object": "58b1c7b687fb", "lines": [109, 325] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [28, 29],
+        [33, 33],
+        [74, 74],
+        [83, 83],
+        [87, 87],
+        [91, 91],
+        [96, 96],
+        [98, 98],
+        [106, 106],
+        [170, 170],
+        [180, 180],
+        [186, 186],
+        [191, 191]
+      ],
+      "removed": [
+        [28, 28, 31],
+        [33, 35, 35],
+        [74, 76, 76],
+        [83, 85, 85],
+        [87, 89, 90],
+        [91, 94, 94],
+        [96, 99, 99],
+        [98, 101, 101],
+        [106, 109, 109],
+        [170, 173, 173],
+        [180, 183, 185],
+        [186, 191, 191],
+        [191, 196, 196]
+      ],
+      "covered": 198
+    },
+    "e7524af4fcb0": {
+      "name": "IProposerPayload",
+      "kind": "interface",
+      "lines": 5,
+      "status": "identical",
+      "audited": { "object": "df3ecc28fd41", "lines": [7, 11] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "c6cdf6f948c8": {
+      "name": "IRegistry",
+      "kind": "interface",
+      "lines": 25,
+      "status": "identical",
+      "audited": { "object": "a2c10f081f48", "lines": [10, 34] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "644b84d03028": {
+      "name": "GSEPayload",
+      "kind": "contract",
+      "lines": 96,
+      "status": "differs",
+      "audited": { "object": "5f0c9eecd0f4", "lines": [37, 132] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-governance-2025-11-12",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ],
+      "added": [[92, 92]],
+      "removed": [[92, 92, 92]],
+      "covered": 95
+    },
+    "db88cb191641": {
+      "name": "GovernanceProposer",
+      "kind": "contract",
+      "lines": 72,
+      "status": "identical",
+      "audited": { "object": "32ddd787a076", "lines": [24, 95] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "a5ada04a2ce7": {
+      "name": "StakingLib",
+      "kind": "library",
+      "lines": 636,
+      "status": "differs",
+      "audited": { "object": "5cfcd9c596bc", "lines": [96, 642] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [13, 23],
+        [42, 100],
+        [183, 183],
+        [428, 428],
+        [494, 494],
+        [498, 498],
+        [500, 500],
+        [502, 502],
+        [568, 594],
+        [602, 616]
+      ],
+      "removed": [
+        [42, 31, 48],
+        [183, 132, 132],
+        [494, 449, 449],
+        [498, 453, 453],
+        [500, 455, 455],
+        [502, 457, 457]
+      ],
+      "covered": 572
+    },
+    "80a31804f0df": {
+      "name": "SampleLib",
+      "kind": "library",
+      "lines": 95,
+      "status": "identical",
+      "audited": { "object": "f21f006a33de", "lines": [14, 108] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "940020c39208": {
+      "name": "ValidatorSelectionLib",
+      "kind": "library",
+      "lines": 634,
+      "status": "differs",
+      "audited": { "object": "7ed828535483", "lines": [100, 727] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[55, 85], [194, 195], [197, 197], [201, 201], [279, 279]],
+      "removed": [
+        [2, 2, 2],
+        [55, 58, 72],
+        [194, 183, 185],
+        [197, 187, 187],
+        [201, 191, 192],
+        [253, 244, 245],
+        [279, 272, 272]
+      ],
+      "covered": 619
+    },
+    "598fd7a47f3d": {
+      "name": "Hash",
+      "kind": "library",
+      "lines": 40,
+      "status": "identical",
+      "audited": { "object": "80196d8b3d81", "lines": [13, 52] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "2584d9fd6f30": {
+      "name": "ProposedHeaderLib",
+      "kind": "library",
+      "lines": 32,
+      "status": "differs",
+      "audited": { "object": "398853ee11f0", "lines": [39, 69] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[27, 27]],
+      "removed": [],
+      "covered": 31
+    },
+    "b3ad43537d50": {
+      "name": "BlobLib",
+      "kind": "library",
+      "lines": 175,
+      "status": "identical",
+      "audited": { "object": "fdb8a87fe0f7", "lines": [37, 212] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "4fba165b9676": {
+      "name": "BlobLib_1",
+      "kind": "library",
+      "lines": 87,
+      "status": "identical",
+      "audited": {
+        "object": "641a77f3cbd1",
+        "lines": [33, 119],
+        "name": "BlobLib"
+      },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "4abfcc206cd4": {
+      "name": "EpochProofLib",
+      "kind": "library",
+      "lines": 420,
+      "status": "differs",
+      "audited": { "object": "fb5d1e926ca2", "lines": [62, 453] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [71, 75],
+        [101, 101],
+        [104, 105],
+        [160, 161],
+        [163, 165],
+        [167, 167],
+        [273, 295],
+        [376, 376],
+        [379, 379]
+      ],
+      "removed": [
+        [75, 71, 72],
+        [101, 98, 98],
+        [160, 156, 157],
+        [163, 159, 160],
+        [167, 162, 162],
+        [376, 348, 348],
+        [379, 351, 351]
+      ],
+      "covered": 396
+    },
+    "a6dcbe54d9bc": {
+      "name": "PriceLib",
+      "kind": "library",
+      "lines": 37,
+      "status": "identical",
+      "audited": { "object": "43c6fe5f3a57", "lines": [51, 87] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "17e415aa156e": {
+      "name": "FeeStructsLib",
+      "kind": "library",
+      "lines": 27,
+      "status": "identical",
+      "audited": { "object": "631e1a428444", "lines": [46, 72] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "13198b23ab88": {
+      "name": "FeeConfigLib",
+      "kind": "library",
+      "lines": 36,
+      "status": "identical",
+      "audited": { "object": "43c6fe5f3a57", "lines": [89, 124] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "667143727f68": {
+      "name": "FeeLib",
+      "kind": "library",
+      "lines": 370,
+      "status": "differs",
+      "audited": { "object": "653ff4c18123", "lines": [90, 452] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [31, 45],
+        [62, 62],
+        [86, 103],
+        [106, 106],
+        [122, 122],
+        [141, 141],
+        [232, 232],
+        [250, 250]
+      ],
+      "removed": [
+        [62, 47, 47],
+        [122, 89, 89],
+        [139, 106, 107],
+        [141, 110, 110],
+        [163, 132, 135],
+        [217, 194, 198],
+        [232, 214, 216]
+      ],
+      "covered": 342
+    },
+    "85eb0004d833": {
+      "name": "ProposeLib",
+      "kind": "library",
+      "lines": 291,
+      "status": "differs",
+      "audited": { "object": "5dd03d5b11ed", "lines": [109, 411] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [70, 71],
+        [76, 76],
+        [79, 82],
+        [101, 103],
+        [151, 162],
+        [182, 186],
+        [220, 225],
+        [283, 284],
+        [286, 289]
+      ],
+      "removed": [
+        [70, 74, 81],
+        [76, 86, 86],
+        [101, 107, 113],
+        [151, 161, 176],
+        [182, 196, 207],
+        [283, 299, 300]
+      ],
+      "covered": 266
+    },
+    "fa9cc4c257a0": {
+      "name": "RollupOperationsExtLib",
+      "kind": "library",
+      "lines": 66,
+      "status": "differs",
+      "audited": { "object": "fbafe8cf31f3", "lines": [36, 101] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[48, 48], [51, 51], [59, 59], [63, 63]],
+      "removed": [[48, 48, 48], [51, 51, 51], [59, 59, 59], [63, 63, 63]],
+      "covered": 62
+    },
+    "ddf0e3817b55": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 21,
+      "status": "identical",
+      "audited": { "object": "442fc18920f8", "lines": [14, 34] },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2",
+        "contracts__audits__2025-07-v5.4"
+      ]
+    },
+    "ed45c021b6bb": {
+      "name": "Create2",
+      "kind": "library",
+      "lines": 76,
+      "status": "identical",
+      "audited": { "object": "ffd39d9a46c3", "lines": [17, 92] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
+    },
+    "eaafae4a5d71": {
+      "name": "Clones",
+      "kind": "library",
+      "lines": 243,
+      "status": "identical",
+      "audited": { "object": "91332ab9f765", "lines": [20, 260] },
+      "reports": ["contracts__audits__2024-12-v5.2"]
+    },
+    "86d8d3b84fb4": {
+      "name": "SlashPayloadCloneable",
+      "kind": "contract",
+      "lines": 80,
+      "status": "identical",
+      "audited": { "object": "0c139d518cdb", "lines": [18, 98] },
+      "reports": ["cantina-escape-hatch-2026-02-24"]
+    },
+    "6c2039de365e": {
+      "name": "MerkleLib",
+      "kind": "library",
+      "lines": 44,
+      "status": "identical",
+      "audited": { "object": "2503904a6615", "lines": [13, 56] },
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "216630140d41": {
+      "name": "Outbox",
+      "kind": "contract",
+      "lines": 163,
+      "status": "differs",
+      "audited": { "object": "0efdf1eb88d4", "lines": [28, 148] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [3, 16],
+        [20, 20],
+        [23, 29],
+        [51, 51],
+        [53, 56],
+        [58, 58],
+        [60, 60],
+        [81, 81],
+        [94, 98],
+        [100, 101],
+        [109, 109],
+        [115, 115],
+        [117, 117],
+        [131, 131],
+        [143, 147],
+        [149, 161]
+      ],
+      "removed": [
+        [3, 3, 12],
+        [20, 16, 16],
+        [51, 32, 32],
+        [58, 35, 35],
+        [60, 37, 37],
+        [100, 69, 69],
+        [101, 71, 71],
+        [109, 78, 78],
+        [115, 84, 84],
+        [117, 86, 86],
+        [131, 105, 105],
+        [143, 116, 118]
+      ],
+      "covered": 128
+    },
+    "5afadb22e226": {
+      "name": "FeeJuicePortal",
+      "kind": "contract",
+      "lines": 64,
+      "status": "identical",
+      "audited": { "object": "042c33a76a57", "lines": [16, 79] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "31b74aff65b6": {
+      "name": "FrontierLib",
+      "kind": "library",
+      "lines": 80,
+      "status": "identical",
+      "audited": { "object": "b6404ae0d889", "lines": [12, 91] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "9186d354b480": {
+      "name": "Inbox",
+      "kind": "contract",
+      "lines": 160,
+      "status": "differs",
+      "audited": { "object": "7654772edad0", "lines": [22, 201] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [],
+      "removed": [[63, 65, 65], [139, 144, 158]],
+      "covered": 160
+    },
+    "abbd7aac31d7": {
+      "name": "CompressedSlashRoundMath",
+      "kind": "library",
+      "lines": 9,
+      "status": "identical",
+      "audited": { "object": "2c5690569a8b", "lines": [54, 62] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "f8cb77d09c59": {
+      "name": "Errors_1",
+      "kind": "library",
+      "lines": 262,
+      "status": "differs",
+      "audited": {
+        "object": "e07ff65394a6",
+        "lines": [19, 262],
+        "name": "Errors"
+      },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [32, 32],
+        [38, 39],
+        [82, 82],
+        [119, 121],
+        [158, 164],
+        [179, 179],
+        [182, 185],
+        [199, 199],
+        [202, 229]
+      ],
+      "removed": [[12, 12, 12], [74, 72, 73], [202, 185, 211]],
+      "covered": 216
+    },
+    "773ab2e838bf": {
+      "name": "SlashPayloadLib",
+      "kind": "library",
+      "lines": 57,
+      "status": "differs",
+      "audited": { "object": "489450335702", "lines": [14, 71] },
+      "reports": ["cantina-escape-hatch-2026-02-24"],
+      "added": [[17, 17]],
+      "removed": [[17, 17, 18]],
+      "covered": 56
+    },
+    "479186b328cd": {
+      "name": "SlashingProposer",
+      "kind": "contract",
+      "lines": 1118,
+      "status": "differs",
+      "audited": {
+        "object": "bb92716ec513",
+        "lines": [87, 1251],
+        "name": "TallySlashingProposer"
+      },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [215, 215],
+        [233, 233],
+        [237, 237],
+        [239, 244],
+        [247, 247],
+        [251, 251],
+        [254, 254],
+        [256, 257],
+        [263, 263],
+        [267, 267],
+        [274, 276],
+        [306, 306],
+        [313, 313],
+        [317, 317],
+        [323, 323],
+        [360, 360],
+        [363, 363],
+        [380, 380],
+        [545, 545],
+        [547, 547],
+        [624, 624],
+        [693, 693],
+        [983, 983],
+        [1029, 1029]
+      ],
+      "removed": [
+        [70, 70, 74],
+        [215, 220, 220],
+        [233, 239, 240],
+        [237, 244, 244],
+        [239, 246, 251],
+        [247, 254, 256],
+        [251, 260, 260],
+        [254, 263, 264],
+        [256, 266, 269],
+        [263, 275, 275],
+        [267, 279, 279],
+        [274, 286, 288],
+        [306, 318, 318],
+        [313, 325, 325],
+        [317, 329, 332],
+        [323, 338, 338],
+        [360, 375, 375],
+        [363, 378, 378],
+        [380, 395, 396],
+        [545, 565, 565],
+        [547, 567, 568],
+        [624, 645, 645],
+        [693, 714, 714],
+        [983, 1013, 1015],
+        [1029, 1061, 1061]
+      ],
+      "covered": 1086
+    },
+    "620ceb6953e3": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 76,
+      "status": "differs",
+      "audited": { "object": "e2e5fa99ba44", "lines": [15, 87] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[53, 55]],
+      "removed": [],
+      "covered": 73
+    },
+    "db1a97ec3267": {
+      "name": "CheckpointedUintLib",
+      "kind": "library",
+      "lines": 68,
+      "status": "identical",
+      "audited": { "object": "abaf7a34e29c", "lines": [15, 84] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "93049fc2b900": {
+      "name": "DepositDelegationLib",
+      "kind": "library",
+      "lines": 270,
+      "status": "identical",
+      "audited": { "object": "178c0f0f95ce", "lines": [39, 309] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "1c8b0bed2165": {
+      "name": "GSECore",
+      "kind": "contract",
+      "lines": 538,
+      "status": "identical",
+      "audited": { "object": "093bc17accb5", "lines": [121, 659] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "a6a375dd83bb": {
+      "name": "GSE",
+      "kind": "contract",
+      "lines": 210,
+      "status": "identical",
+      "audited": { "object": "093bc17accb5", "lines": [661, 870] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "e7d982b63910": {
+      "name": "IStaking",
+      "kind": "interface",
+      "lines": 23,
+      "status": "differs",
+      "audited": { "object": "a0897d0d8051", "lines": [61, 79] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[5, 6], [8, 9]],
+      "removed": [],
+      "covered": 19
+    },
+    "64afbceec720": {
+      "name": "Errors_1",
+      "kind": "library",
+      "lines": 262,
+      "status": "differs",
+      "audited": {
+        "object": "e07ff65394a6",
+        "lines": [19, 262],
+        "name": "Errors"
+      },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [32, 32],
+        [38, 39],
+        [82, 82],
+        [87, 87],
+        [119, 121],
+        [158, 164],
+        [179, 179],
+        [182, 185],
+        [199, 199],
+        [202, 229]
+      ],
+      "removed": [[12, 12, 12], [74, 72, 73], [87, 86, 86], [202, 185, 211]],
+      "covered": 215
+    },
+    "728ceae930e4": {
+      "name": "FeeJuicePortal",
+      "kind": "contract",
+      "lines": 64,
+      "status": "differs",
+      "audited": { "object": "042c33a76a57", "lines": [16, 79] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
+      "added": [[58, 58]],
+      "removed": [[58, 58, 58]],
+      "covered": 63
+    },
+    "b7a055a249a5": {
+      "name": "Inbox",
+      "kind": "contract",
+      "lines": 160,
+      "status": "differs",
+      "audited": { "object": "7654772edad0", "lines": [22, 201] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[59, 62], [121, 121], [124, 124]],
+      "removed": [
+        [59, 61, 65],
+        [121, 127, 127],
+        [124, 130, 130],
+        [139, 144, 158]
+      ],
+      "covered": 154
+    },
+    "f5953f41b0a8": {
+      "name": "MerkleLib",
+      "kind": "library",
+      "lines": 44,
+      "status": "differs",
+      "audited": { "object": "2503904a6615", "lines": [13, 56] },
+      "reports": [
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
+      "added": [[40, 41]],
+      "removed": [[40, 40, 41]],
+      "covered": 42
+    },
+    "2baf645d3da6": {
+      "name": "Outbox",
+      "kind": "contract",
+      "lines": 163,
+      "status": "differs",
+      "audited": { "object": "0efdf1eb88d4", "lines": [28, 148] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [3, 16],
+        [20, 20],
+        [23, 29],
+        [51, 56],
+        [58, 58],
+        [60, 60],
+        [81, 81],
+        [85, 87],
+        [89, 91],
+        [93, 93],
+        [95, 98],
+        [100, 101],
+        [104, 104],
+        [109, 109],
+        [115, 115],
+        [117, 117],
+        [131, 131],
+        [143, 147],
+        [149, 161]
+      ],
+      "removed": [
+        [3, 3, 12],
+        [20, 16, 16],
+        [51, 32, 33],
+        [58, 35, 35],
+        [60, 37, 37],
+        [86, 58, 60],
+        [93, 62, 65],
+        [95, 67, 67],
+        [100, 69, 69],
+        [101, 71, 71],
+        [104, 73, 73],
+        [109, 78, 78],
+        [115, 84, 84],
+        [117, 86, 86],
+        [131, 105, 105],
+        [143, 116, 118]
+      ],
+      "covered": 119
+    },
+    "7f21f51746eb": {
+      "name": "StakingQueueLib",
+      "kind": "library",
+      "lines": 46,
+      "status": "differs",
+      "audited": { "object": "a13ef2adff77", "lines": [33, 78] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
+      "added": [[31, 31]],
+      "removed": [[31, 31, 31]],
+      "covered": 45
+    },
+    "1efac07af271": {
+      "name": "Slasher",
+      "kind": "contract",
+      "lines": 67,
+      "status": "identical",
+      "audited": { "object": "0a76bbd52e26", "lines": [8, 74] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "c7eabe65ba33": {
+      "name": "EmpireBase",
+      "kind": "abstract",
+      "lines": 212,
+      "status": "identical",
+      "audited": { "object": "58b1c7b687fb", "lines": [109, 325] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ]
+    },
+    "41efa614f0df": {
+      "name": "GSEPayload",
+      "kind": "contract",
+      "lines": 96,
+      "status": "identical",
+      "audited": { "object": "5f0c9eecd0f4", "lines": [37, 132] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-governance-2025-11-12",
+        "cantina-payload-2026-03-05",
+        "veridise-governance-2025-10-13"
+      ]
+    },
+    "a303a5122915": {
+      "name": "StakingLib",
+      "kind": "library",
+      "lines": 636,
+      "status": "differs",
+      "audited": { "object": "5cfcd9c596bc", "lines": [96, 642] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [13, 23],
+        [42, 100],
+        [116, 116],
+        [120, 120],
+        [124, 124],
+        [150, 151],
+        [154, 154],
+        [183, 183],
+        [188, 188],
+        [204, 204],
+        [257, 257],
+        [261, 261],
+        [348, 348],
+        [386, 386],
+        [394, 394],
+        [397, 397],
+        [405, 405],
+        [408, 408],
+        [411, 411],
+        [428, 428],
+        [568, 594],
+        [602, 616]
+      ],
+      "removed": [
+        [42, 31, 48],
+        [116, 64, 64],
+        [120, 68, 69],
+        [124, 73, 73],
+        [150, 99, 100],
+        [154, 103, 103],
+        [183, 132, 132],
+        [188, 137, 139],
+        [204, 155, 155],
+        [257, 208, 208],
+        [261, 212, 212],
+        [348, 304, 304],
+        [386, 342, 342],
+        [394, 350, 350],
+        [397, 353, 353],
+        [405, 361, 361],
+        [408, 364, 364],
+        [411, 367, 367]
+      ],
+      "covered": 559
+    },
+    "41b904128f29": {
+      "name": "AttestationLib",
+      "kind": "library",
+      "lines": 204,
+      "status": "differs",
+      "audited": { "object": "5db7800e2bdf", "lines": [35, 230] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [5, 5],
+        [8, 8],
+        [10, 19],
+        [60, 60],
+        [94, 94],
+        [137, 137],
+        [185, 185],
+        [189, 189],
+        [199, 199]
+      ],
+      "removed": [
+        [5, 190, 190],
+        [8, 193, 193],
+        [60, 42, 42],
+        [94, 76, 76],
+        [137, 119, 119],
+        [185, 167, 167],
+        [189, 171, 173],
+        [199, 183, 183]
+      ],
+      "covered": 187
+    },
+    "ce6895a99054": {
+      "name": "FieldLib",
+      "kind": "library",
+      "lines": 6,
+      "status": "none"
+    },
+    "f9591884bf51": {
+      "name": "STFLib",
+      "kind": "library",
+      "lines": 321,
+      "status": "differs",
+      "audited": { "object": "467b04df1bbf", "lines": [81, 402] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[30, 33], [168, 168], [256, 256]],
+      "removed": [[30, 30, 30], [168, 169, 169], [256, 257, 257]],
+      "covered": 318
+    },
+    "1fba7fd40ecc": {
+      "name": "SampleLib",
+      "kind": "library",
+      "lines": 95,
+      "status": "differs",
+      "audited": { "object": "f21f006a33de", "lines": [14, 108] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ],
+      "added": [[23, 23]],
+      "removed": [[23, 23, 23]],
+      "covered": 94
+    },
+    "79117ac7fb1d": {
+      "name": "ValidatorSelectionLib",
+      "kind": "library",
+      "lines": 634,
+      "status": "differs",
+      "audited": { "object": "7ed828535483", "lines": [100, 727] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [46, 46],
+        [55, 85],
+        [179, 179],
+        [191, 195],
+        [197, 197],
+        [201, 201],
+        [279, 279],
+        [293, 293],
+        [299, 299],
+        [313, 313],
+        [444, 444],
+        [448, 448],
+        [451, 451],
+        [579, 579],
+        [608, 608],
+        [618, 618]
+      ],
+      "removed": [
+        [2, 2, 2],
+        [46, 49, 49],
+        [55, 58, 72],
+        [179, 166, 168],
+        [191, 180, 185],
+        [197, 187, 187],
+        [201, 191, 192],
+        [253, 244, 245],
+        [279, 272, 272],
+        [293, 286, 286],
+        [299, 292, 292],
+        [313, 306, 306],
+        [444, 438, 438],
+        [448, 442, 442],
+        [451, 445, 445],
+        [579, 573, 573],
+        [608, 602, 602],
+        [618, 612, 612]
+      ],
+      "covered": 605
+    },
+    "506d4fb5cfa3": {
+      "name": "InvalidateLib",
+      "kind": "library",
+      "lines": 213,
+      "status": "differs",
+      "audited": { "object": "f0dd0f262385", "lines": [56, 270] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [40, 40],
+        [58, 58],
+        [103, 103],
+        [147, 147],
+        [150, 150],
+        [157, 157],
+        [170, 170],
+        [179, 179],
+        [183, 183]
+      ],
+      "removed": [
+        [6, 6, 6],
+        [40, 42, 42],
+        [58, 60, 60],
+        [103, 105, 105],
+        [147, 149, 149],
+        [150, 152, 152],
+        [157, 159, 159],
+        [170, 172, 172],
+        [179, 181, 181],
+        [183, 185, 185]
+      ],
+      "covered": 204
+    },
+    "7f703a857e17": {
+      "name": "ValidatorOperationsExtLib",
+      "kind": "library",
+      "lines": 178,
+      "status": "differs",
+      "audited": { "object": "c31178b86de1", "lines": [33, 206] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[2, 13], [65, 68]],
+      "removed": [[2, 2, 9], [65, 61, 64]],
+      "covered": 166
+    },
+    "51022833b47b": {
+      "name": "BlobLib",
+      "kind": "library",
+      "lines": 175,
+      "status": "differs",
+      "audited": { "object": "fdb8a87fe0f7", "lines": [37, 212] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[52, 52], [69, 69], [114, 114]],
+      "removed": [[52, 52, 52], [69, 69, 69], [114, 114, 114]],
+      "covered": 172
+    },
+    "d37bd018027f": {
+      "name": "FeeLib",
+      "kind": "library",
+      "lines": 370,
+      "status": "differs",
+      "audited": { "object": "653ff4c18123", "lines": [90, 452] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [31, 45],
+        [51, 51],
+        [62, 62],
+        [86, 103],
+        [106, 106],
+        [122, 122],
+        [136, 136],
+        [141, 141],
+        [232, 232],
+        [250, 250],
+        [254, 254]
+      ],
+      "removed": [
+        [51, 36, 36],
+        [62, 47, 47],
+        [122, 89, 89],
+        [136, 103, 103],
+        [139, 106, 107],
+        [141, 110, 110],
+        [163, 132, 135],
+        [217, 194, 198],
+        [232, 214, 216],
+        [254, 238, 238]
+      ],
+      "covered": 339
+    },
+    "0f4c3d62e2fe": {
+      "name": "RewardBooster",
+      "kind": "contract",
+      "lines": 98,
+      "status": "differs",
+      "audited": { "object": "a0a58660049b", "lines": [45, 133] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[15, 15], [20, 30]],
+      "removed": [[15, 15, 15]],
+      "covered": 93
+    },
+    "c1288a3781f3": {
+      "name": "RewardLib",
+      "kind": "library",
+      "lines": 231,
+      "status": "differs",
+      "audited": { "object": "728892e5b245", "lines": [65, 282] },
+      "reports": ["cantina-rollup-contracts-2025-11-12"],
+      "added": [
+        [14, 34],
+        [59, 59],
+        [82, 82],
+        [93, 93],
+        [98, 104],
+        [113, 139],
+        [142, 158],
+        [161, 165],
+        [200, 203]
+      ],
+      "removed": [
+        [14, 14, 19],
+        [59, 45, 45],
+        [82, 68, 68],
+        [93, 81, 81],
+        [139, 94, 122],
+        [142, 125, 144],
+        [162, 147, 148],
+        [200, 183, 186],
+        [230, 213, 216]
+      ],
+      "covered": 177
+    },
+    "dde6d1f7f4de": {
+      "name": "ProposeLib",
+      "kind": "library",
+      "lines": 291,
+      "status": "differs",
+      "audited": { "object": "5dd03d5b11ed", "lines": [109, 411] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [70, 71],
+        [76, 76],
+        [79, 82],
+        [101, 103],
+        [126, 126],
+        [151, 162],
+        [182, 186],
+        [220, 227],
+        [237, 237],
+        [242, 242],
+        [245, 245],
+        [248, 248],
+        [250, 250],
+        [254, 254],
+        [257, 257],
+        [260, 260],
+        [283, 284],
+        [286, 289]
+      ],
+      "removed": [
+        [70, 74, 81],
+        [76, 86, 86],
+        [101, 107, 113],
+        [126, 136, 136],
+        [151, 161, 176],
+        [182, 196, 207],
+        [226, 242, 243],
+        [237, 253, 253],
+        [242, 258, 258],
+        [245, 261, 261],
+        [248, 264, 264],
+        [250, 266, 266],
+        [254, 270, 270],
+        [257, 273, 273],
+        [260, 276, 276],
+        [283, 299, 300]
+      ],
+      "covered": 255
+    },
+    "8ee162f515fd": {
+      "name": "RewardExtLib",
+      "kind": "library",
+      "lines": 102,
+      "status": "differs",
+      "audited": { "object": "faf1299a90e6", "lines": [24, 137] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[1, 7]],
+      "removed": [[1, 1, 11], [51, 55, 62]],
+      "covered": 96
+    },
+    "25b9ec08493f": {
+      "name": "EpochProofLib",
+      "kind": "library",
+      "lines": 420,
+      "status": "differs",
+      "audited": { "object": "fb5d1e926ca2", "lines": [62, 453] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [57, 57],
+        [71, 75],
+        [101, 101],
+        [104, 105],
+        [114, 114],
+        [121, 121],
+        [160, 161],
+        [163, 165],
+        [167, 167],
+        [247, 247],
+        [251, 251],
+        [273, 295],
+        [326, 326],
+        [332, 332],
+        [339, 339],
+        [342, 342],
+        [345, 345],
+        [350, 350],
+        [376, 376],
+        [379, 379],
+        [381, 381]
+      ],
+      "removed": [
+        [57, 57, 57],
+        [75, 71, 72],
+        [101, 98, 98],
+        [114, 109, 109],
+        [121, 116, 117],
+        [160, 156, 157],
+        [163, 159, 160],
+        [167, 162, 162],
+        [247, 242, 242],
+        [251, 246, 246],
+        [326, 298, 298],
+        [332, 304, 304],
+        [339, 311, 311],
+        [342, 314, 314],
+        [345, 317, 317],
+        [350, 322, 322],
+        [376, 348, 348],
+        [379, 351, 351],
+        [381, 353, 353]
+      ],
+      "covered": 384
+    },
+    "9d6217743ef1": {
+      "name": "RollupOperationsExtLib",
+      "kind": "library",
+      "lines": 66,
+      "status": "differs",
+      "audited": { "object": "fbafe8cf31f3", "lines": [36, 101] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[40, 40], [48, 48], [51, 51], [59, 59], [63, 63]],
+      "removed": [
+        [40, 40, 40],
+        [48, 48, 48],
+        [51, 51, 51],
+        [59, 59, 59],
+        [63, 63, 63]
+      ],
+      "covered": 61
+    },
+    "0a55a1c7b621": {
+      "name": "Errors_2",
+      "kind": "library",
+      "lines": 21,
+      "status": "identical",
+      "audited": {
+        "object": "442fc18920f8",
+        "lines": [14, 34],
+        "name": "Errors"
+      },
+      "reports": [
+        "contracts__audits__2024-10-v5.1",
+        "contracts__audits__2024-12-v5.2",
+        "contracts__audits__2025-07-v5.4"
+      ]
+    },
+    "5fd2958faea4": {
+      "name": "Create2",
+      "kind": "library",
+      "lines": 76,
+      "status": "differs",
+      "audited": { "object": "ffd39d9a46c3", "lines": [17, 92] },
+      "reports": ["contracts__audits__2024-12-v5.2"],
+      "added": [[22, 22], [37, 37]],
+      "removed": [[22, 22, 22], [37, 37, 37]],
+      "covered": 74
+    },
+    "aaca6a24d299": {
+      "name": "Clones",
+      "kind": "library",
+      "lines": 243,
+      "status": "differs",
+      "audited": { "object": "91332ab9f765", "lines": [20, 260] },
+      "reports": ["contracts__audits__2024-12-v5.2"],
+      "added": [[21, 21], [32, 32], [60, 60], [71, 71], [129, 129], [136, 136]],
+      "removed": [
+        [21, 21, 21],
+        [32, 32, 32],
+        [60, 59, 59],
+        [71, 70, 70],
+        [129, 128, 128],
+        [136, 135, 135]
+      ],
+      "covered": 237
+    },
+    "d326bf3960a4": {
+      "name": "SlasherDeploymentExtLib",
+      "kind": "library",
+      "lines": 28,
+      "status": "none"
+    },
+    "7fa3b7df4b78": {
+      "name": "RollupCore",
+      "kind": "contract",
+      "lines": 454,
+      "status": "differs",
+      "audited": { "object": "b06d085951ff", "lines": [184, 657] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [
+        [46, 46],
+        [53, 54],
+        [60, 61],
+        [74, 75],
+        [79, 79],
+        [92, 93],
+        [106, 106],
+        [111, 134],
+        [153, 165],
+        [410, 452]
+      ],
+      "removed": [
+        [46, 49, 49],
+        [53, 51, 51],
+        [60, 57, 92],
+        [75, 105, 112],
+        [78, 115, 133],
+        [79, 135, 135],
+        [92, 145, 146],
+        [106, 159, 159],
+        [108, 161, 166],
+        [111, 170, 199],
+        [153, 218, 228]
+      ],
+      "covered": 399
+    },
+    "61e623168ab5": {
+      "name": "Rollup",
+      "kind": "contract",
+      "lines": 681,
+      "status": "differs",
+      "audited": { "object": "dfe71d68ce5c", "lines": [60, 727] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[152, 161], [240, 240], [243, 243], [501, 512], [545, 552]],
+      "removed": [[240, 239, 239], [243, 242, 242], [533, 520, 527]],
+      "covered": 656
+    },
+    "67aa18e10ea9": {
+      "name": "OxideConstants",
+      "kind": "library",
+      "lines": 17,
+      "status": "none"
+    },
+    "77c7ed94c5d9": {
+      "name": "Errors",
+      "kind": "library",
+      "lines": 68,
+      "status": "none"
+    },
+    "01bf0cca6c4e": {
+      "name": "Caps",
+      "kind": "abstract",
+      "lines": 29,
+      "status": "none"
+    },
+    "f1a8d5f28349": {
+      "name": "ReentrancyGuardTransient",
+      "kind": "abstract",
+      "lines": 47,
+      "status": "differs",
+      "audited": { "object": "0dfb2c31eb2a", "lines": [13, 59] },
+      "reports": ["contracts__audits__2024-10-v5.1"],
+      "added": [[1, 1]],
+      "removed": [[1, 1, 1]],
+      "covered": 46
+    },
+    "19baa7e01ff0": {
+      "name": "ProverClaimLib",
+      "kind": "library",
+      "lines": 124,
+      "status": "none"
+    },
+    "77253d45b75e": {
+      "name": "IProverSubsidy",
+      "kind": "interface",
+      "lines": 5,
+      "status": "none"
+    },
+    "89458595fdd3": {
+      "name": "IOxidePortal",
+      "kind": "interface",
+      "lines": 124,
+      "status": "none"
+    },
+    "dd81e0c03a74": {
+      "name": "ICertManager",
+      "kind": "interface",
+      "lines": 13,
+      "status": "none"
+    },
+    "fe4101bce7a3": {
+      "name": "LibCborElement",
+      "kind": "library",
+      "lines": 42,
+      "status": "none"
+    },
+    "774dca79c899": {
+      "name": "INitroValidator",
+      "kind": "interface",
+      "lines": 22,
+      "status": "none"
+    },
+    "36fa7b3d28e0": {
+      "name": "TEERegistrationLib",
+      "kind": "library",
+      "lines": 216,
+      "status": "none"
+    },
+    "284e6de4631d": {
+      "name": "IExecutor",
+      "kind": "interface",
+      "lines": 14,
+      "status": "none"
+    },
+    "dfefe93afc3e": {
+      "name": "OxidePortal",
+      "kind": "contract",
+      "lines": 609,
+      "status": "none"
+    },
+    "f7e7cba2d0c1": {
+      "name": "OxideConstants",
+      "kind": "library",
+      "lines": 16,
+      "status": "none"
+    },
+    "9d4d8dc12026": {
+      "name": "InvalidateLib",
+      "kind": "library",
+      "lines": 213,
+      "status": "differs",
+      "audited": { "object": "f0dd0f262385", "lines": [56, 270] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[183, 183]],
+      "removed": [[6, 6, 6], [183, 185, 185]],
+      "covered": 212
+    },
+    "c5c188fa9c2b": {
+      "name": "ValidatorOperationsExtLib",
+      "kind": "library",
+      "lines": 178,
+      "status": "differs",
+      "audited": { "object": "c31178b86de1", "lines": [33, 206] },
+      "reports": ["cantina-payload-2026-03-05"],
+      "added": [[2, 13], [65, 68], [150, 150]],
+      "removed": [[2, 2, 9], [65, 61, 64], [150, 146, 146]],
+      "covered": 165
+    },
+    "2063238985a8": {
+      "name": "Governance",
+      "kind": "interface",
+      "lines": 10,
+      "status": "none"
+    },
+    "ac9dbbf01ac8": {
+      "name": "IStaking",
+      "kind": "interface",
+      "lines": 23,
+      "status": "differs",
+      "audited": { "object": "a0897d0d8051", "lines": [61, 79] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [[5, 6], [8, 9], [16, 16]],
+      "removed": [[16, 12, 12]],
+      "covered": 18
+    },
+    "f76b8aaafe82": {
+      "name": "IInstance",
+      "kind": "interface",
+      "lines": 1,
+      "status": "identical",
+      "audited": { "object": "4a2549a7a677", "lines": [9, 9] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05",
+        "cantina-rollup-contracts-2025-11-12"
+      ]
+    },
+    "19e90eda3f82": {
+      "name": "EscapeHatch",
+      "kind": "contract",
+      "lines": 675,
+      "status": "differs",
+      "audited": { "object": "8d37ae362f3e", "lines": [32, 711] },
+      "reports": [
+        "cantina-escape-hatch-2026-02-24",
+        "cantina-payload-2026-03-05"
+      ],
+      "added": [
+        [66, 66],
+        [68, 68],
+        [73, 73],
+        [78, 78],
+        [80, 80],
+        [83, 83],
+        [86, 86],
+        [89, 89],
+        [91, 91],
+        [119, 119],
+        [122, 122],
+        [157, 157],
+        [160, 160],
+        [193, 193],
+        [195, 195],
+        [226, 226],
+        [249, 249],
+        [252, 252],
+        [255, 255],
+        [257, 257],
+        [417, 417],
+        [447, 447],
+        [572, 572],
+        [636, 636],
+        [639, 639],
+        [656, 656],
+        [660, 660]
+      ],
+      "removed": [
+        [66, 66, 66],
+        [68, 68, 68],
+        [73, 73, 73],
+        [78, 78, 78],
+        [80, 80, 80],
+        [83, 83, 83],
+        [86, 86, 86],
+        [89, 89, 89],
+        [91, 91, 91],
+        [119, 119, 119],
+        [122, 122, 122],
+        [157, 157, 157],
+        [160, 160, 160],
+        [193, 193, 193],
+        [195, 195, 197],
+        [226, 228, 228],
+        [249, 251, 251],
+        [252, 254, 254],
+        [255, 257, 257],
+        [257, 259, 261],
+        [417, 421, 421],
+        [447, 451, 451],
+        [572, 576, 576],
+        [636, 641, 641],
+        [639, 644, 644],
+        [656, 661, 661],
+        [660, 665, 665]
+      ],
+      "covered": 648
+    }
+  },
+  "flats": {
+    "3e0cbb7f3634d344c58d185ce5d6e537c20e6e4bdf441fbe28fe1e5759661673": [
+      ["60ede42d4490", 3],
+      ["22fb8ae5b1ae", 21]
+    ],
+    "15c8f1ce153723ae278cfa0e76f5551996bd27f027ff27ab3012e9607cd89e26": [
+      ["a71c051041d9", 1],
+      ["f870caca1701", 14],
+      ["7e1fa856bc5f", 18],
+      ["13ba900d72e0", 24],
+      ["eefe898dbc7d", 28],
+      ["1991df21f4be", 32],
+      ["7ce5410e6b9b", 36],
+      ["9ad1495848b6", 40],
+      ["53bd2864a5a8", 44],
+      ["42fb3a072cf5", 66],
+      ["a1ed768de02b", 83],
+      ["64fecd329377", 1228],
+      ["8d11a696cbf8", 1232],
+      ["892246b03e79", 1236],
+      ["5238708147b3", 1240],
+      ["7b188f7e6a79", 1244],
+      ["8cc2a5795b58", 1248],
+      ["eb515a898ac2", 1252],
+      ["1fa3a0900a64", 1256],
+      ["2110e29aba10", 1275],
+      ["263d383b45ae", 1279],
+      ["d1cd285da94b", 1283],
+      ["c12c1b03d1eb", 1287],
+      ["ca2b9400e554", 1291],
+      ["241c29092124", 1295],
+      ["df4e899bb231", 1301],
+      ["e0b508d99109", 1305],
+      ["f1b786366047", 1326],
+      ["62a1e2badf10", 1352],
+      ["165074b2dcaf", 1360],
+      ["a06a97752192", 1368],
+      ["3331c6c632ca", 1372],
+      ["32112fc74f3b", 1386],
+      ["dd4a1f28d9c8", 1432],
+      ["1b18b17b7de0", 1459],
+      ["a9c82fbc73d8", 1500],
+      ["da302801fe67", 1504],
+      ["dc5a287f86ab", 1508],
+      ["9005ac959bda", 1512],
+      ["e996358fa881", 1516],
+      ["951f791a4bc2", 1520],
+      ["974d17ba61c9", 1524],
+      ["f2933da2f16b", 1528],
+      ["0c3db8e8788b", 1555],
+      ["eb9e54433d2a", 1838],
+      ["e452e90ca218", 1874],
+      ["5801f970036e", 2558]
+    ],
+    "6be3d8dde7b4c4b9029b7c871b64eedba9baf1fb088ba2a3bfc0533fa0b796c1": [
+      ["a1ed768de02b", 13],
+      ["2110e29aba10", 1170],
+      ["263d383b45ae", 1174],
+      ["d1cd285da94b", 1178],
+      ["c12c1b03d1eb", 1182],
+      ["ca2b9400e554", 1186],
+      ["241c29092124", 1190],
+      ["df4e899bb231", 1196],
+      ["e0b508d99109", 1200],
+      ["64fecd329377", 1217],
+      ["8d11a696cbf8", 1221],
+      ["892246b03e79", 1225],
+      ["5238708147b3", 1229],
+      ["7b188f7e6a79", 1233],
+      ["8cc2a5795b58", 1237],
+      ["eb515a898ac2", 1241],
+      ["1fa3a0900a64", 1245],
+      ["f870caca1701", 1262],
+      ["7e1fa856bc5f", 1266],
+      ["13ba900d72e0", 1272],
+      ["eefe898dbc7d", 1276],
+      ["1991df21f4be", 1280],
+      ["7ce5410e6b9b", 1284],
+      ["9ad1495848b6", 1288],
+      ["53bd2864a5a8", 1292],
+      ["11a266636eff", 1309],
+      ["f4f354424b7c", 1434],
+      ["b7e470aa4499", 1606],
+      ["978c3451ca8d", 1632],
+      ["a06a97752192", 1718],
+      ["3331c6c632ca", 1722],
+      ["a9c82fbc73d8", 1736],
+      ["da302801fe67", 1740],
+      ["dc5a287f86ab", 1744],
+      ["9005ac959bda", 1748],
+      ["e996358fa881", 1752],
+      ["951f791a4bc2", 1756],
+      ["974d17ba61c9", 1760],
+      ["f2933da2f16b", 1764],
+      ["0c3db8e8788b", 1791],
+      ["a3b6f777c5ad", 2058],
+      ["eb9e54433d2a", 2340],
+      ["e452e90ca218", 2376],
+      ["d79e5038d2f3", 3055],
+      ["efc06fb4d1f1", 3132],
+      ["f1b786366047", 3183],
+      ["96e217d9b9c0", 3229],
+      ["e730ab060eed", 3273],
+      ["bf1e6b11fc8d", 3350],
+      ["bfa0b41d1854", 3418],
+      ["ed7f1e682c82", 3489],
+      ["d935d55ad8d5", 3493],
+      ["68779d2b7dce", 3512],
+      ["99c720498edf", 3564],
+      ["8c93ac3dc245", 3626],
+      ["e02e162c77e9", 3657],
+      ["77c91093cc8b", 3740],
+      ["a71c051041d9", 3744],
+      ["ca9ed2069da5", 3756],
+      ["e6c4061572a5", 3843],
+      ["009e77a9cf32", 3886],
+      ["4c76a9ff8e4c", 3915],
+      ["6c520d43cfa7", 3984],
+      ["684cb89721da", 4315],
+      ["ba18d750e681", 4334],
+      ["f555a7706b9d", 4415],
+      ["2596672c34cf", 4610],
+      ["b51d1eddb3e3", 4685],
+      ["f8f04fd651e0", 4691],
+      ["32112fc74f3b", 4923],
+      ["dd4a1f28d9c8", 4952],
+      ["a6d7568d470d", 5013],
+      ["15bb2ebdffb9", 5356],
+      ["e15fae7e3a24", 5998],
+      ["243ba84ebc5a", 6184],
+      ["17b2fa77c49d", 6351],
+      ["7b8f1bb1765a", 6405],
+      ["eb89808c392d", 6466],
+      ["cdcfb0473aee", 6565],
+      ["023c99ea7c6b", 6757],
+      ["a2ad74296a0d", 6891],
+      ["6d944e2ce127", 6947],
+      ["151d207ad744", 6997],
+      ["bd8af08caf35", 7079],
+      ["f02ca608c7c9", 7149],
+      ["d78b3ed7ec73", 7162],
+      ["77ea4f2839c5", 7198],
+      ["bb24b365b687", 7235],
+      ["31e42eba5b0a", 7261],
+      ["6ea232651c72", 7343],
+      ["b4a0691d8abe", 7365],
+      ["171d5461997b", 7638],
+      ["2d98fe65ac00", 7689],
+      ["534921f91550", 7933],
+      ["647dde5b3f58", 8240],
+      ["5adeaf508ac8", 8779],
+      ["e43243b77c2b", 9045],
+      ["598e0407bba6", 9056],
+      ["5e6ccb107f0c", 9060],
+      ["9a482ed87104", 9109],
+      ["436f5cdc2d52", 9123],
+      ["4f1674fb5377", 9128],
+      ["ed25952f120e", 9183],
+      ["4bcc576af38c", 9322],
+      ["ecccefa39d54", 9409],
+      ["136bafeaf3ca", 9471],
+      ["30dfd0bf4e73", 9867],
+      ["84e56c4762be", 9962],
+      ["165074b2dcaf", 10097],
+      ["3d3f3d908f1e", 10181],
+      ["e7524af4fcb0", 10394],
+      ["c6cdf6f948c8", 10400],
+      ["644b84d03028", 10452],
+      ["db88cb191641", 10559],
+      ["a5ada04a2ce7", 10651],
+      ["80a31804f0df", 11293],
+      ["940020c39208", 11461],
+      ["598fd7a47f3d", 12102],
+      ["2584d9fd6f30", 12148],
+      ["b3ad43537d50", 12208],
+      ["4fba165b9676", 12410],
+      ["4abfcc206cd4", 12536],
+      ["a6dcbe54d9bc", 12992],
+      ["17e415aa156e", 13035],
+      ["13198b23ab88", 13072],
+      ["667143727f68", 13193],
+      ["85eb0004d833", 13613],
+      ["fa9cc4c257a0", 13919]
+    ],
+    "e7c392f509e1a9467e34b5a40dfe7a90e9f0a462f2542bdbe19ee142da03a2cd": [
+      ["eb89808c392d", 1],
+      ["ddf0e3817b55", 28],
+      ["ed45c021b6bb", 59],
+      ["eaafae4a5d71", 147],
+      ["5e6ccb107f0c", 432],
+      ["86d8d3b84fb4", 490]
+    ],
+    "f1eb77971a03fe9bbb2df7368f23a16af9bf35f53aaddcfdcb04c20b621c7850": [
+      ["f870caca1701", 1],
+      ["7e1fa856bc5f", 5],
+      ["13ba900d72e0", 11],
+      ["eefe898dbc7d", 15],
+      ["1991df21f4be", 19],
+      ["7ce5410e6b9b", 23],
+      ["9ad1495848b6", 27],
+      ["53bd2864a5a8", 31],
+      ["bf1e6b11fc8d", 53],
+      ["e02e162c77e9", 126],
+      ["598fd7a47f3d", 215],
+      ["2596672c34cf", 269],
+      ["ed7f1e682c82", 328],
+      ["d935d55ad8d5", 332],
+      ["2110e29aba10", 345],
+      ["263d383b45ae", 349],
+      ["d1cd285da94b", 353],
+      ["c12c1b03d1eb", 357],
+      ["ca2b9400e554", 361],
+      ["241c29092124", 365],
+      ["df4e899bb231", 371],
+      ["e0b508d99109", 375],
+      ["64fecd329377", 392],
+      ["8d11a696cbf8", 396],
+      ["892246b03e79", 400],
+      ["5238708147b3", 404],
+      ["7b188f7e6a79", 408],
+      ["8cc2a5795b58", 412],
+      ["eb515a898ac2", 416],
+      ["1fa3a0900a64", 420],
+      ["68779d2b7dce", 494],
+      ["99c720498edf", 546],
+      ["e730ab060eed", 624],
+      ["bfa0b41d1854", 701],
+      ["e6c4061572a5", 762],
+      ["8c93ac3dc245", 781],
+      ["77c91093cc8b", 802],
+      ["a71c051041d9", 806],
+      ["ca9ed2069da5", 818],
+      ["009e77a9cf32", 910],
+      ["a06a97752192", 949],
+      ["3331c6c632ca", 953],
+      ["a9c82fbc73d8", 967],
+      ["da302801fe67", 971],
+      ["dc5a287f86ab", 975],
+      ["9005ac959bda", 979],
+      ["e996358fa881", 983],
+      ["951f791a4bc2", 987],
+      ["974d17ba61c9", 991],
+      ["f2933da2f16b", 995],
+      ["0c3db8e8788b", 1022],
+      ["6c2039de365e", 1290],
+      ["216630140d41", 1367]
+    ],
+    "21c34ab1a3b9ec65df4b70a52639fe387521e2cea7fb9cf4a15528bf7456706c": [
+      ["bf1e6b11fc8d", 6],
+      ["bfa0b41d1854", 74],
+      ["e730ab060eed", 138],
+      ["f870caca1701", 220],
+      ["7e1fa856bc5f", 224],
+      ["13ba900d72e0", 230],
+      ["eefe898dbc7d", 234],
+      ["1991df21f4be", 238],
+      ["7ce5410e6b9b", 242],
+      ["9ad1495848b6", 246],
+      ["53bd2864a5a8", 250],
+      ["ed7f1e682c82", 267],
+      ["d935d55ad8d5", 271],
+      ["2110e29aba10", 284],
+      ["263d383b45ae", 288],
+      ["d1cd285da94b", 292],
+      ["c12c1b03d1eb", 296],
+      ["ca2b9400e554", 300],
+      ["241c29092124", 304],
+      ["df4e899bb231", 310],
+      ["e0b508d99109", 314],
+      ["64fecd329377", 331],
+      ["8d11a696cbf8", 335],
+      ["892246b03e79", 339],
+      ["5238708147b3", 343],
+      ["7b188f7e6a79", 347],
+      ["8cc2a5795b58", 351],
+      ["eb515a898ac2", 355],
+      ["1fa3a0900a64", 359],
+      ["68779d2b7dce", 433],
+      ["99c720498edf", 485],
+      ["8c93ac3dc245", 560],
+      ["e02e162c77e9", 591],
+      ["77c91093cc8b", 674],
+      ["a71c051041d9", 678],
+      ["ca9ed2069da5", 690],
+      ["e6c4061572a5", 777],
+      ["684cb89721da", 805],
+      ["ba18d750e681", 824],
+      ["f555a7706b9d", 905],
+      ["009e77a9cf32", 1092],
+      ["598fd7a47f3d", 1120],
+      ["a06a97752192", 1178],
+      ["3331c6c632ca", 1182],
+      ["a9c82fbc73d8", 1196],
+      ["da302801fe67", 1200],
+      ["dc5a287f86ab", 1204],
+      ["9005ac959bda", 1208],
+      ["e996358fa881", 1212],
+      ["951f791a4bc2", 1216],
+      ["974d17ba61c9", 1220],
+      ["f2933da2f16b", 1224],
+      ["0c3db8e8788b", 1251],
+      ["5afadb22e226", 1514],
+      ["31b74aff65b6", 1584],
+      ["a1ed768de02b", 1677],
+      ["9186d354b480", 2827]
+    ],
+    "acec4087e52b8a9bdacaca1b39e4e8d9530478d486a4bf0c8af669cac24ca67e": [
+      ["4f1674fb5377", 1],
+      ["ed25952f120e", 56],
+      ["4bcc576af38c", 195],
+      ["a1ed768de02b", 291],
+      ["eb9e54433d2a", 1456],
+      ["e452e90ca218", 1492],
+      ["ecccefa39d54", 2174],
+      ["136bafeaf3ca", 2236],
+      ["30dfd0bf4e73", 2632],
+      ["84e56c4762be", 2727],
+      ["eb89808c392d", 2855],
+      ["ddf0e3817b55", 2882],
+      ["ed45c021b6bb", 2913],
+      ["eaafae4a5d71", 3001],
+      ["5e6ccb107f0c", 3286],
+      ["86d8d3b84fb4", 3344],
+      ["f4f354424b7c", 3438],
+      ["b7e470aa4499", 3610],
+      ["64fecd329377", 3629],
+      ["8d11a696cbf8", 3633],
+      ["892246b03e79", 3637],
+      ["5238708147b3", 3641],
+      ["7b188f7e6a79", 3645],
+      ["8cc2a5795b58", 3649],
+      ["eb515a898ac2", 3653],
+      ["1fa3a0900a64", 3657],
+      ["2110e29aba10", 3676],
+      ["263d383b45ae", 3680],
+      ["d1cd285da94b", 3684],
+      ["c12c1b03d1eb", 3688],
+      ["ca2b9400e554", 3692],
+      ["241c29092124", 3696],
+      ["df4e899bb231", 3702],
+      ["e0b508d99109", 3706],
+      ["f870caca1701", 3725],
+      ["7e1fa856bc5f", 3729],
+      ["13ba900d72e0", 3735],
+      ["eefe898dbc7d", 3739],
+      ["1991df21f4be", 3743],
+      ["7ce5410e6b9b", 3747],
+      ["9ad1495848b6", 3751],
+      ["53bd2864a5a8", 3755],
+      ["f1b786366047", 3774],
+      ["a9c82fbc73d8", 3800],
+      ["da302801fe67", 3804],
+      ["dc5a287f86ab", 3808],
+      ["9005ac959bda", 3812],
+      ["e996358fa881", 3816],
+      ["951f791a4bc2", 3820],
+      ["974d17ba61c9", 3824],
+      ["f2933da2f16b", 3828],
+      ["abbd7aac31d7", 3847],
+      ["a06a97752192", 3874],
+      ["3331c6c632ca", 3878],
+      ["f8cb77d09c59", 3902],
+      ["773ab2e838bf", 4172],
+      ["e43243b77c2b", 4230],
+      ["62a1e2badf10", 4240],
+      ["165074b2dcaf", 4248],
+      ["32112fc74f3b", 4256],
+      ["dd4a1f28d9c8", 4285],
+      ["1b18b17b7de0", 4312],
+      ["479186b328cd", 4413]
+    ],
+    "d968bc5813af53e23efbde862c73652c2b2302facf7b7cb3822e678ff8b38d1d": [
+      ["5e6ccb107f0c", 42],
+      ["64fecd329377", 99],
+      ["8d11a696cbf8", 103],
+      ["892246b03e79", 107],
+      ["5238708147b3", 111],
+      ["7b188f7e6a79", 115],
+      ["8cc2a5795b58", 119],
+      ["eb515a898ac2", 123],
+      ["1fa3a0900a64", 127],
+      ["e730ab060eed", 180],
+      ["eb89808c392d", 268],
+      ["6d944e2ce127", 333],
+      ["684cb89721da", 385],
+      ["ba18d750e681", 404],
+      ["f555a7706b9d", 485],
+      ["a1ed768de02b", 681],
+      ["2110e29aba10", 1826],
+      ["263d383b45ae", 1830],
+      ["d1cd285da94b", 1834],
+      ["c12c1b03d1eb", 1838],
+      ["ca2b9400e554", 1842],
+      ["241c29092124", 1846],
+      ["df4e899bb231", 1852],
+      ["e0b508d99109", 1856],
+      ["f870caca1701", 1875],
+      ["7e1fa856bc5f", 1879],
+      ["13ba900d72e0", 1885],
+      ["eefe898dbc7d", 1889],
+      ["1991df21f4be", 1893],
+      ["7ce5410e6b9b", 1897],
+      ["9ad1495848b6", 1901],
+      ["53bd2864a5a8", 1905],
+      ["f1b786366047", 1924],
+      ["7b8f1bb1765a", 1952],
+      ["cdcfb0473aee", 2059],
+      ["eb9e54433d2a", 2209],
+      ["e452e90ca218", 2245],
+      ["023c99ea7c6b", 2986],
+      ["15bb2ebdffb9", 3096],
+      ["620ceb6953e3", 3719],
+      ["db1a97ec3267", 3801],
+      ["f02ca608c7c9", 3871],
+      ["d78b3ed7ec73", 3884],
+      ["77ea4f2839c5", 3912],
+      ["bb24b365b687", 3949],
+      ["31e42eba5b0a", 3975],
+      ["6ea232651c72", 4057],
+      ["b4a0691d8abe", 4079],
+      ["171d5461997b", 4352],
+      ["2d98fe65ac00", 4403],
+      ["93049fc2b900", 4647],
+      ["1c8b0bed2165", 4954],
+      ["a6a375dd83bb", 5493],
+      ["e7d982b63910", 5736],
+      ["62a1e2badf10", 5760],
+      ["165074b2dcaf", 5768],
+      ["a06a97752192", 5776],
+      ["3331c6c632ca", 5780],
+      ["32112fc74f3b", 5794],
+      ["dd4a1f28d9c8", 5840],
+      ["1b18b17b7de0", 5867],
+      ["ed7f1e682c82", 5913],
+      ["d935d55ad8d5", 5917],
+      ["68779d2b7dce", 5987],
+      ["99c720498edf", 6039],
+      ["bf1e6b11fc8d", 6119],
+      ["bfa0b41d1854", 6187],
+      ["e6c4061572a5", 6248],
+      ["8c93ac3dc245", 6267],
+      ["e02e162c77e9", 6298],
+      ["77c91093cc8b", 6381],
+      ["a71c051041d9", 6385],
+      ["ca9ed2069da5", 6397],
+      ["4f1674fb5377", 6484],
+      ["ed25952f120e", 6539],
+      ["4bcc576af38c", 6678],
+      ["ecccefa39d54", 6765],
+      ["136bafeaf3ca", 6827],
+      ["30dfd0bf4e73", 7223],
+      ["84e56c4762be", 7318],
+      ["009e77a9cf32", 7451],
+      ["598fd7a47f3d", 7479],
+      ["a9c82fbc73d8", 7520],
+      ["da302801fe67", 7524],
+      ["dc5a287f86ab", 7528],
+      ["9005ac959bda", 7532],
+      ["e996358fa881", 7536],
+      ["951f791a4bc2", 7540],
+      ["974d17ba61c9", 7544],
+      ["f2933da2f16b", 7548],
+      ["64afbceec720", 7575],
+      ["728ceae930e4", 7838],
+      ["31b74aff65b6", 7908],
+      ["b7a055a249a5", 7994],
+      ["2596672c34cf", 8168],
+      ["f5953f41b0a8", 8222],
+      ["2baf645d3da6", 8299],
+      ["11a266636eff", 8475],
+      ["13198b23ab88", 8596],
+      ["efc06fb4d1f1", 8635],
+      ["7f21f51746eb", 8735],
+      ["a2ad74296a0d", 8784],
+      ["e43243b77c2b", 8839],
+      ["1efac07af271", 8849],
+      ["9a482ed87104", 8917],
+      ["436f5cdc2d52", 8931],
+      ["f4f354424b7c", 8942],
+      ["b7e470aa4499", 9114],
+      ["c7eabe65ba33", 9216],
+      ["e7524af4fcb0", 9429],
+      ["c6cdf6f948c8", 9435],
+      ["41efa614f0df", 9487],
+      ["db88cb191641", 9594],
+      ["a303a5122915", 9667],
+      ["a6d7568d470d", 10338],
+      ["e15fae7e3a24", 10700],
+      ["243ba84ebc5a", 10886],
+      ["978c3451ca8d", 11002],
+      ["41b904128f29", 11075],
+      ["d79e5038d2f3", 11334],
+      ["96e217d9b9c0", 11414],
+      ["ce6895a99054", 11456],
+      ["f9591884bf51", 11525],
+      ["1fba7fd40ecc", 11852],
+      ["79117ac7fb1d", 12020],
+      ["506d4fb5cfa3", 12691],
+      ["7f703a857e17", 12920],
+      ["a6dcbe54d9bc", 13103],
+      ["17e415aa156e", 13146],
+      ["51022833b47b", 13252],
+      ["4fba165b9676", 13454],
+      ["d37bd018027f", 13575],
+      ["42fb3a072cf5", 13951],
+      ["0f4c3d62e2fe", 13966],
+      ["b51d1eddb3e3", 14096],
+      ["c1288a3781f3", 14102],
+      ["2584d9fd6f30", 14355],
+      ["dde6d1f7f4de", 14452],
+      ["8ee162f515fd", 14744],
+      ["25b9ec08493f", 14885],
+      ["9d6217743ef1", 15320],
+      ["0a55a1c7b621", 15395],
+      ["5fd2958faea4", 15426],
+      ["aaca6a24d299", 15514],
+      ["86d8d3b84fb4", 15767],
+      ["abbd7aac31d7", 15850],
+      ["773ab2e838bf", 15867],
+      ["479186b328cd", 15990],
+      ["d326bf3960a4", 17118],
+      ["7fa3b7df4b78", 17282],
+      ["61e623168ab5", 17744]
+    ],
+    "95b2ed0a127bf8beec8f28bbcdb33324f2770b7c9791268eb9459abe832d517d": [
+      ["e730ab060eed", 4],
+      ["bf1e6b11fc8d", 81],
+      ["bfa0b41d1854", 149],
+      ["f870caca1701", 220],
+      ["7e1fa856bc5f", 224],
+      ["13ba900d72e0", 230],
+      ["eefe898dbc7d", 234],
+      ["1991df21f4be", 238],
+      ["7ce5410e6b9b", 242],
+      ["9ad1495848b6", 246],
+      ["53bd2864a5a8", 250],
+      ["ed7f1e682c82", 267],
+      ["d935d55ad8d5", 271],
+      ["2110e29aba10", 284],
+      ["263d383b45ae", 288],
+      ["d1cd285da94b", 292],
+      ["c12c1b03d1eb", 296],
+      ["ca2b9400e554", 300],
+      ["241c29092124", 304],
+      ["df4e899bb231", 310],
+      ["e0b508d99109", 314],
+      ["64fecd329377", 331],
+      ["8d11a696cbf8", 335],
+      ["892246b03e79", 339],
+      ["5238708147b3", 343],
+      ["7b188f7e6a79", 347],
+      ["8cc2a5795b58", 351],
+      ["eb515a898ac2", 355],
+      ["1fa3a0900a64", 359],
+      ["68779d2b7dce", 433],
+      ["99c720498edf", 485],
+      ["8c93ac3dc245", 560],
+      ["e02e162c77e9", 591],
+      ["77c91093cc8b", 674],
+      ["a71c051041d9", 678],
+      ["ca9ed2069da5", 690],
+      ["e6c4061572a5", 777],
+      ["684cb89721da", 805],
+      ["ba18d750e681", 824],
+      ["f555a7706b9d", 905],
+      ["009e77a9cf32", 1092],
+      ["598fd7a47f3d", 1120],
+      ["a06a97752192", 1178],
+      ["3331c6c632ca", 1182],
+      ["a9c82fbc73d8", 1196],
+      ["da302801fe67", 1200],
+      ["dc5a287f86ab", 1204],
+      ["9005ac959bda", 1208],
+      ["e996358fa881", 1212],
+      ["951f791a4bc2", 1216],
+      ["974d17ba61c9", 1220],
+      ["f2933da2f16b", 1224],
+      ["0c3db8e8788b", 1251],
+      ["5afadb22e226", 1514]
+    ],
+    "93550939fe013b481c755f29b398fb0eaee7ad549e66dee1678896dbbd261a26": [
+      ["eb89808c392d", 1],
+      ["e43243b77c2b", 20],
+      ["1efac07af271", 30]
+    ],
+    "1c22a9d8094e5baa10d9ad8fc7776493aa072d71b5d58f5ae66b55f15cf0c889": [
+      ["a71c051041d9", 1],
+      ["f870caca1701", 14],
+      ["7e1fa856bc5f", 18],
+      ["13ba900d72e0", 24],
+      ["eefe898dbc7d", 28],
+      ["1991df21f4be", 32],
+      ["7ce5410e6b9b", 36],
+      ["9ad1495848b6", 40],
+      ["53bd2864a5a8", 44],
+      ["42fb3a072cf5", 66],
+      ["a1ed768de02b", 83],
+      ["64fecd329377", 1228],
+      ["8d11a696cbf8", 1232],
+      ["892246b03e79", 1236],
+      ["5238708147b3", 1240],
+      ["7b188f7e6a79", 1244],
+      ["8cc2a5795b58", 1248],
+      ["eb515a898ac2", 1252],
+      ["1fa3a0900a64", 1256],
+      ["2110e29aba10", 1275],
+      ["263d383b45ae", 1279],
+      ["d1cd285da94b", 1283],
+      ["c12c1b03d1eb", 1287],
+      ["ca2b9400e554", 1291],
+      ["241c29092124", 1295],
+      ["df4e899bb231", 1301],
+      ["e0b508d99109", 1305],
+      ["f1b786366047", 1326],
+      ["62a1e2badf10", 1352],
+      ["165074b2dcaf", 1360],
+      ["a06a97752192", 1368],
+      ["3331c6c632ca", 1372],
+      ["32112fc74f3b", 1386],
+      ["dd4a1f28d9c8", 1432],
+      ["1b18b17b7de0", 1459],
+      ["a9c82fbc73d8", 1500],
+      ["da302801fe67", 1504],
+      ["dc5a287f86ab", 1508],
+      ["9005ac959bda", 1512],
+      ["e996358fa881", 1516],
+      ["951f791a4bc2", 1520],
+      ["974d17ba61c9", 1524],
+      ["f2933da2f16b", 1528],
+      ["0c3db8e8788b", 1555],
+      ["eb9e54433d2a", 1838],
+      ["e452e90ca218", 1874],
+      ["5801f970036e", 2558],
+      ["8c93ac3dc245", 2657],
+      ["e730ab060eed", 2690],
+      ["684cb89721da", 2771],
+      ["ba18d750e681", 2790],
+      ["f555a7706b9d", 2871],
+      ["2596672c34cf", 3066],
+      ["11a266636eff", 3122],
+      ["d79e5038d2f3", 3254],
+      ["bf1e6b11fc8d", 3367],
+      ["bfa0b41d1854", 3435],
+      ["ed7f1e682c82", 3496],
+      ["d935d55ad8d5", 3500],
+      ["68779d2b7dce", 3570],
+      ["99c720498edf", 3622],
+      ["e02e162c77e9", 3699],
+      ["77c91093cc8b", 3782],
+      ["ca9ed2069da5", 3786],
+      ["e6c4061572a5", 3873],
+      ["efc06fb4d1f1", 3911],
+      ["96e217d9b9c0", 3966],
+      ["009e77a9cf32", 4012],
+      ["4c76a9ff8e4c", 4041],
+      ["6c520d43cfa7", 4110],
+      ["b51d1eddb3e3", 4445],
+      ["f8f04fd651e0", 4451],
+      ["ecccefa39d54", 4702],
+      ["a6dcbe54d9bc", 4765],
+      ["17e415aa156e", 4808],
+      ["13198b23ab88", 4845],
+      ["598fd7a47f3d", 4939],
+      ["b3ad43537d50", 5007],
+      ["4fba165b9676", 5209],
+      ["667143727f68", 5330],
+      ["2584d9fd6f30", 5706],
+      ["a6d7568d470d", 5773],
+      ["f4f354424b7c", 6115],
+      ["b7e470aa4499", 6287],
+      ["15bb2ebdffb9", 6313],
+      ["e15fae7e3a24", 6955],
+      ["243ba84ebc5a", 7141],
+      ["978c3451ca8d", 7257],
+      ["a3b6f777c5ad", 7330],
+      ["17b2fa77c49d", 7586],
+      ["7b8f1bb1765a", 7640],
+      ["eb89808c392d", 7701],
+      ["cdcfb0473aee", 7800],
+      ["023c99ea7c6b", 7992],
+      ["a2ad74296a0d", 8126],
+      ["6d944e2ce127", 8182],
+      ["151d207ad744", 8232],
+      ["bd8af08caf35", 8314],
+      ["f02ca608c7c9", 8384],
+      ["d78b3ed7ec73", 8397],
+      ["77ea4f2839c5", 8433],
+      ["bb24b365b687", 8470],
+      ["31e42eba5b0a", 8496],
+      ["6ea232651c72", 8578],
+      ["b4a0691d8abe", 8600],
+      ["171d5461997b", 8873],
+      ["2d98fe65ac00", 8924],
+      ["534921f91550", 9168],
+      ["647dde5b3f58", 9475],
+      ["5adeaf508ac8", 10014],
+      ["e43243b77c2b", 10280],
+      ["598e0407bba6", 10291],
+      ["5e6ccb107f0c", 10295],
+      ["9a482ed87104", 10344],
+      ["436f5cdc2d52", 10358],
+      ["4f1674fb5377", 10363],
+      ["ed25952f120e", 10418],
+      ["4bcc576af38c", 10557],
+      ["136bafeaf3ca", 10644],
+      ["30dfd0bf4e73", 11040],
+      ["84e56c4762be", 11135],
+      ["3d3f3d908f1e", 11346],
+      ["e7524af4fcb0", 11559],
+      ["c6cdf6f948c8", 11565],
+      ["644b84d03028", 11617],
+      ["db88cb191641", 11724],
+      ["a5ada04a2ce7", 11816],
+      ["80a31804f0df", 12458],
+      ["940020c39208", 12626],
+      ["85eb0004d833", 13325],
+      ["8ee162f515fd", 13617]
+    ],
+    "d2fb5ddd79051b125e6c9947ea0365feffa3d7ed15988848475e28984d6ac804": [
+      ["a1ed768de02b", 13],
+      ["eb9e54433d2a", 1178],
+      ["e452e90ca218", 1214],
+      ["67aa18e10ea9", 1895],
+      ["77c7ed94c5d9", 1913],
+      ["01bf0cca6c4e", 1982],
+      ["bb24b365b687", 2022],
+      ["31e42eba5b0a", 2048],
+      ["e15fae7e3a24", 2156],
+      ["f1a8d5f28349", 2315],
+      ["f870caca1701", 2373],
+      ["7e1fa856bc5f", 2377],
+      ["13ba900d72e0", 2383],
+      ["eefe898dbc7d", 2387],
+      ["1991df21f4be", 2391],
+      ["7ce5410e6b9b", 2395],
+      ["9ad1495848b6", 2399],
+      ["53bd2864a5a8", 2403],
+      ["ed7f1e682c82", 2420],
+      ["d935d55ad8d5", 2424],
+      ["2110e29aba10", 2437],
+      ["263d383b45ae", 2441],
+      ["d1cd285da94b", 2445],
+      ["c12c1b03d1eb", 2449],
+      ["ca2b9400e554", 2453],
+      ["241c29092124", 2457],
+      ["df4e899bb231", 2463],
+      ["e0b508d99109", 2467],
+      ["64fecd329377", 2484],
+      ["8d11a696cbf8", 2488],
+      ["892246b03e79", 2492],
+      ["5238708147b3", 2496],
+      ["7b188f7e6a79", 2500],
+      ["8cc2a5795b58", 2504],
+      ["eb515a898ac2", 2508],
+      ["1fa3a0900a64", 2512],
+      ["68779d2b7dce", 2586],
+      ["99c720498edf", 2638],
+      ["e730ab060eed", 2716],
+      ["bf1e6b11fc8d", 2793],
+      ["bfa0b41d1854", 2861],
+      ["e6c4061572a5", 2922],
+      ["8c93ac3dc245", 2941],
+      ["e02e162c77e9", 2972],
+      ["77c91093cc8b", 3055],
+      ["a71c051041d9", 3059],
+      ["ca9ed2069da5", 3071],
+      ["598fd7a47f3d", 3164],
+      ["a06a97752192", 3222],
+      ["3331c6c632ca", 3226],
+      ["a9c82fbc73d8", 3240],
+      ["da302801fe67", 3244],
+      ["dc5a287f86ab", 3248],
+      ["9005ac959bda", 3252],
+      ["e996358fa881", 3256],
+      ["951f791a4bc2", 3260],
+      ["974d17ba61c9", 3264],
+      ["f2933da2f16b", 3268],
+      ["f8cb77d09c59", 3295],
+      ["f5953f41b0a8", 3563],
+      ["009e77a9cf32", 3613],
+      ["19baa7e01ff0", 3635],
+      ["77253d45b75e", 3760],
+      ["89458595fdd3", 3766],
+      ["684cb89721da", 3900],
+      ["ba18d750e681", 3919],
+      ["f555a7706b9d", 4000],
+      ["c6cdf6f948c8", 4182],
+      ["dd81e0c03a74", 4208],
+      ["fe4101bce7a3", 4224],
+      ["774dca79c899", 4269],
+      ["36fa7b3d28e0", 4292],
+      ["284e6de4631d", 4509],
+      ["f4f354424b7c", 4530],
+      ["dfefe93afc3e", 4700]
+    ],
+    "fb8fc3c2de331ea0c1334cbd0dd17841e6afcbf120cbec6d8a1a04358bf64f44": [
+      ["a1ed768de02b", 13],
+      ["eb9e54433d2a", 1178],
+      ["e452e90ca218", 1214],
+      ["f7e7cba2d0c1", 1895],
+      ["77c7ed94c5d9", 1912],
+      ["01bf0cca6c4e", 1981],
+      ["bb24b365b687", 2021],
+      ["31e42eba5b0a", 2047],
+      ["e15fae7e3a24", 2155],
+      ["f1a8d5f28349", 2314],
+      ["f870caca1701", 2372],
+      ["7e1fa856bc5f", 2376],
+      ["13ba900d72e0", 2382],
+      ["eefe898dbc7d", 2386],
+      ["1991df21f4be", 2390],
+      ["7ce5410e6b9b", 2394],
+      ["9ad1495848b6", 2398],
+      ["53bd2864a5a8", 2402],
+      ["ed7f1e682c82", 2419],
+      ["d935d55ad8d5", 2423],
+      ["2110e29aba10", 2436],
+      ["263d383b45ae", 2440],
+      ["d1cd285da94b", 2444],
+      ["c12c1b03d1eb", 2448],
+      ["ca2b9400e554", 2452],
+      ["241c29092124", 2456],
+      ["df4e899bb231", 2462],
+      ["e0b508d99109", 2466],
+      ["64fecd329377", 2483],
+      ["8d11a696cbf8", 2487],
+      ["892246b03e79", 2491],
+      ["5238708147b3", 2495],
+      ["7b188f7e6a79", 2499],
+      ["8cc2a5795b58", 2503],
+      ["eb515a898ac2", 2507],
+      ["1fa3a0900a64", 2511],
+      ["68779d2b7dce", 2585],
+      ["99c720498edf", 2637],
+      ["e730ab060eed", 2715],
+      ["bf1e6b11fc8d", 2792],
+      ["bfa0b41d1854", 2860],
+      ["e6c4061572a5", 2921],
+      ["8c93ac3dc245", 2940],
+      ["e02e162c77e9", 2971],
+      ["77c91093cc8b", 3054],
+      ["a71c051041d9", 3058],
+      ["ca9ed2069da5", 3070],
+      ["598fd7a47f3d", 3163],
+      ["a06a97752192", 3221],
+      ["3331c6c632ca", 3225],
+      ["a9c82fbc73d8", 3239],
+      ["da302801fe67", 3243],
+      ["dc5a287f86ab", 3247],
+      ["9005ac959bda", 3251],
+      ["e996358fa881", 3255],
+      ["951f791a4bc2", 3259],
+      ["974d17ba61c9", 3263],
+      ["f2933da2f16b", 3267],
+      ["f8cb77d09c59", 3294],
+      ["f5953f41b0a8", 3562],
+      ["009e77a9cf32", 3612],
+      ["19baa7e01ff0", 3634],
+      ["77253d45b75e", 3759],
+      ["89458595fdd3", 3765],
+      ["684cb89721da", 3899],
+      ["ba18d750e681", 3918],
+      ["f555a7706b9d", 3999],
+      ["c6cdf6f948c8", 4181],
+      ["dd81e0c03a74", 4207],
+      ["fe4101bce7a3", 4223],
+      ["774dca79c899", 4268],
+      ["36fa7b3d28e0", 4291],
+      ["284e6de4631d", 4508],
+      ["f4f354424b7c", 4529],
+      ["dfefe93afc3e", 4699]
+    ],
+    "4685a3772efafd59610fde102f3930f3fd7fe24dacc275cd62241e501701f1b9": [
+      ["a1ed768de02b", 13],
+      ["2110e29aba10", 1170],
+      ["263d383b45ae", 1174],
+      ["d1cd285da94b", 1178],
+      ["c12c1b03d1eb", 1182],
+      ["ca2b9400e554", 1186],
+      ["241c29092124", 1190],
+      ["df4e899bb231", 1196],
+      ["e0b508d99109", 1200],
+      ["64fecd329377", 1217],
+      ["8d11a696cbf8", 1221],
+      ["892246b03e79", 1225],
+      ["5238708147b3", 1229],
+      ["7b188f7e6a79", 1233],
+      ["8cc2a5795b58", 1237],
+      ["eb515a898ac2", 1241],
+      ["1fa3a0900a64", 1245],
+      ["f870caca1701", 1262],
+      ["7e1fa856bc5f", 1266],
+      ["13ba900d72e0", 1272],
+      ["eefe898dbc7d", 1276],
+      ["1991df21f4be", 1280],
+      ["7ce5410e6b9b", 1284],
+      ["9ad1495848b6", 1288],
+      ["53bd2864a5a8", 1292],
+      ["11a266636eff", 1309],
+      ["e730ab060eed", 1424],
+      ["684cb89721da", 1505],
+      ["ba18d750e681", 1524],
+      ["f555a7706b9d", 1605],
+      ["a06a97752192", 1842],
+      ["3331c6c632ca", 1846],
+      ["a9c82fbc73d8", 1860],
+      ["da302801fe67", 1864],
+      ["dc5a287f86ab", 1868],
+      ["9005ac959bda", 1872],
+      ["e996358fa881", 1876],
+      ["951f791a4bc2", 1880],
+      ["974d17ba61c9", 1884],
+      ["f2933da2f16b", 1888],
+      ["0c3db8e8788b", 1915],
+      ["17b2fa77c49d", 2178],
+      ["f1b786366047", 2231],
+      ["7b8f1bb1765a", 2264],
+      ["eb89808c392d", 2325],
+      ["cdcfb0473aee", 2424],
+      ["eb9e54433d2a", 2574],
+      ["e452e90ca218", 2610],
+      ["023c99ea7c6b", 3351],
+      ["a2ad74296a0d", 3485],
+      ["6d944e2ce127", 3541],
+      ["15bb2ebdffb9", 3591],
+      ["151d207ad744", 4214],
+      ["bd8af08caf35", 4296],
+      ["f02ca608c7c9", 4366],
+      ["d78b3ed7ec73", 4379],
+      ["77ea4f2839c5", 4415],
+      ["bb24b365b687", 4452],
+      ["31e42eba5b0a", 4478],
+      ["6ea232651c72", 4560],
+      ["b4a0691d8abe", 4582],
+      ["171d5461997b", 4855],
+      ["2d98fe65ac00", 4906],
+      ["534921f91550", 5150],
+      ["647dde5b3f58", 5457],
+      ["5adeaf508ac8", 5996],
+      ["e43243b77c2b", 6262],
+      ["598e0407bba6", 6273],
+      ["5e6ccb107f0c", 6277],
+      ["9a482ed87104", 6333],
+      ["436f5cdc2d52", 6347],
+      ["4f1674fb5377", 6352],
+      ["ed25952f120e", 6407],
+      ["4bcc576af38c", 6546],
+      ["ecccefa39d54", 6633],
+      ["136bafeaf3ca", 6695],
+      ["30dfd0bf4e73", 7091],
+      ["84e56c4762be", 7186],
+      ["f4f354424b7c", 7320],
+      ["b7e470aa4499", 7492],
+      ["165074b2dcaf", 7518],
+      ["3d3f3d908f1e", 7602],
+      ["e7524af4fcb0", 7815],
+      ["99c720498edf", 7821],
+      ["8c93ac3dc245", 7825],
+      ["c6cdf6f948c8", 7846],
+      ["644b84d03028", 7898],
+      ["db88cb191641", 8005],
+      ["a5ada04a2ce7", 8097],
+      ["a6d7568d470d", 8768],
+      ["e15fae7e3a24", 9130],
+      ["243ba84ebc5a", 9316],
+      ["978c3451ca8d", 9439],
+      ["a3b6f777c5ad", 9512],
+      ["32112fc74f3b", 9730],
+      ["dd4a1f28d9c8", 9759],
+      ["bf1e6b11fc8d", 9815],
+      ["bfa0b41d1854", 9883],
+      ["ed7f1e682c82", 9954],
+      ["d935d55ad8d5", 9958],
+      ["68779d2b7dce", 10014],
+      ["e02e162c77e9", 10147],
+      ["77c91093cc8b", 10230],
+      ["a71c051041d9", 10234],
+      ["ca9ed2069da5", 10246],
+      ["e6c4061572a5", 10333],
+      ["efc06fb4d1f1", 10371],
+      ["d79e5038d2f3", 10416],
+      ["96e217d9b9c0", 10496],
+      ["009e77a9cf32", 10542],
+      ["4c76a9ff8e4c", 10571],
+      ["6c520d43cfa7", 10640],
+      ["80a31804f0df", 10967],
+      ["940020c39208", 11135],
+      ["9d4d8dc12026", 11806],
+      ["c5c188fa9c2b", 12035]
+    ],
+    "84d9e32d163dda0ad324b548d064bece0b01770c5149dfc98f88da9f3d8ed778": [
+      ["a06a97752192", 1],
+      ["3331c6c632ca", 5],
+      ["32112fc74f3b", 19],
+      ["f870caca1701", 35],
+      ["7e1fa856bc5f", 39],
+      ["13ba900d72e0", 45],
+      ["eefe898dbc7d", 49],
+      ["1991df21f4be", 53],
+      ["7ce5410e6b9b", 57],
+      ["9ad1495848b6", 61],
+      ["53bd2864a5a8", 65],
+      ["dd4a1f28d9c8", 112],
+      ["a1ed768de02b", 151],
+      ["eb9e54433d2a", 1316],
+      ["e452e90ca218", 1352],
+      ["15bb2ebdffb9", 2038],
+      ["2d98fe65ac00", 2691],
+      ["e730ab060eed", 2908],
+      ["684cb89721da", 2989],
+      ["ba18d750e681", 3008],
+      ["f555a7706b9d", 3089],
+      ["2596672c34cf", 3284],
+      ["5e6ccb107f0c", 3369],
+      ["64fecd329377", 3426],
+      ["8d11a696cbf8", 3430],
+      ["892246b03e79", 3434],
+      ["5238708147b3", 3438],
+      ["7b188f7e6a79", 3442],
+      ["8cc2a5795b58", 3446],
+      ["eb515a898ac2", 3450],
+      ["1fa3a0900a64", 3454],
+      ["eb89808c392d", 3520],
+      ["6d944e2ce127", 3585],
+      ["2110e29aba10", 3628],
+      ["263d383b45ae", 3632],
+      ["d1cd285da94b", 3636],
+      ["c12c1b03d1eb", 3640],
+      ["ca2b9400e554", 3644],
+      ["241c29092124", 3648],
+      ["df4e899bb231", 3654],
+      ["e0b508d99109", 3658],
+      ["620ceb6953e3", 3682],
+      ["db1a97ec3267", 3764],
+      ["2063238985a8", 3834],
+      ["d78b3ed7ec73", 3845],
+      ["77ea4f2839c5", 3873],
+      ["bb24b365b687", 3910],
+      ["31e42eba5b0a", 3936],
+      ["6ea232651c72", 4018],
+      ["b4a0691d8abe", 4040],
+      ["171d5461997b", 4313],
+      ["93049fc2b900", 4357],
+      ["1c8b0bed2165", 4664],
+      ["a6a375dd83bb", 5203],
+      ["ac9dbbf01ac8", 5446],
+      ["62a1e2badf10", 5470],
+      ["165074b2dcaf", 5478],
+      ["1b18b17b7de0", 5486],
+      ["ed7f1e682c82", 5532],
+      ["d935d55ad8d5", 5536],
+      ["68779d2b7dce", 5606],
+      ["99c720498edf", 5658],
+      ["bf1e6b11fc8d", 5738],
+      ["bfa0b41d1854", 5806],
+      ["e6c4061572a5", 5867],
+      ["8c93ac3dc245", 5886],
+      ["e02e162c77e9", 5917],
+      ["77c91093cc8b", 6000],
+      ["a71c051041d9", 6004],
+      ["ca9ed2069da5", 6016],
+      ["f76b8aaafe82", 6103],
+      ["a9c82fbc73d8", 6105],
+      ["da302801fe67", 6109],
+      ["dc5a287f86ab", 6113],
+      ["9005ac959bda", 6117],
+      ["e996358fa881", 6121],
+      ["951f791a4bc2", 6125],
+      ["974d17ba61c9", 6129],
+      ["f2933da2f16b", 6133],
+      ["f8cb77d09c59", 6160],
+      ["19e90eda3f82", 6440]
+    ]
+  },
+  "contracts": {
+    "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC": {
+      "name": "HonkVerifier",
+      "source": "3e0cbb7f3634d344c58d185ce5d6e537c20e6e4bdf441fbe28fe1e5759661673",
+      "verifier": true
+    },
+    "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551": {
+      "name": "RewardBooster",
+      "source": "15c8f1ce153723ae278cfa0e76f5551996bd27f027ff27ab3012e9607cd89e26"
+    },
+    "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC": {
+      "name": "RollupOperationsExtLib",
+      "source": "6be3d8dde7b4c4b9029b7c871b64eedba9baf1fb088ba2a3bfc0533fa0b796c1"
+    },
+    "eth:0x57576AbA1932df7Cc30F971ACC9d4Fc6E86B6e87": {
+      "name": "SlashPayloadCloneable",
+      "source": "e7c392f509e1a9467e34b5a40dfe7a90e9f0a462f2542bdbe19ee142da03a2cd"
+    },
+    "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7": {
+      "name": "Outbox",
+      "source": "f1eb77971a03fe9bbb2df7368f23a16af9bf35f53aaddcfdcb04c20b621c7850",
+      "critical": true
+    },
+    "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA": {
+      "name": "Inbox",
+      "source": "21c34ab1a3b9ec65df4b70a52639fe387521e2cea7fb9cf4a15528bf7456706c"
+    },
+    "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA": {
+      "name": "SlashingProposer",
+      "source": "acec4087e52b8a9bdacaca1b39e4e8d9530478d486a4bf0c8af669cac24ca67e",
+      "critical": true
+    },
+    "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": {
+      "name": "Rollup",
+      "source": "d968bc5813af53e23efbde862c73652c2b2302facf7b7cb3822e678ff8b38d1d"
+    },
+    "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c": {
+      "name": "FeeJuicePortal",
+      "source": "95b2ed0a127bf8beec8f28bbcdb33324f2770b7c9791268eb9459abe832d517d",
+      "critical": true
+    },
+    "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": {
+      "name": "Slasher",
+      "source": "93550939fe013b481c755f29b398fb0eaee7ad549e66dee1678896dbbd261a26",
+      "critical": true
+    },
+    "eth:0xD6E890c615d6f99681a00771C20ed04516288898": {
+      "name": "RewardExtLib",
+      "source": "1c22a9d8094e5baa10d9ad8fc7776493aa072d71b5d58f5ae66b55f15cf0c889",
+      "critical": true
+    },
+    "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f": {
+      "name": "ZkMoneyPortal_sUSDS",
+      "source": "d2fb5ddd79051b125e6c9947ea0365feffa3d7ed15988848475e28984d6ac804",
+      "critical": true
+    },
+    "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449": {
+      "name": "ZkMoneyPortal",
+      "source": "fb8fc3c2de331ea0c1334cbd0dd17841e6afcbf120cbec6d8a1a04358bf64f44",
+      "critical": true
+    },
+    "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411": {
+      "name": "ValidatorOperationsExtLib",
+      "source": "4685a3772efafd59610fde102f3930f3fd7fe24dacc275cd62241e501701f1b9",
+      "critical": true
+    },
+    "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A": {
+      "name": "EscapeHatch",
+      "source": "84d9e32d163dda0ad324b548d064bece0b01770c5149dfc98f88da9f3d8ed778",
+      "critical": true
+    }
+  },
+  "history": {
+    "launch": 1782803327,
+    "points": [
+      {
+        "timestamp": 1782803327,
+        "contracts": 7,
+        "withoutSource": 0,
+        "units": { "identical": 321, "differs": 45, "none": 6 },
+        "lines": { "total": 29316, "covered": 28092 },
+        "reports": [
+          "ackee-safe-1-4-0",
+          "ackee-safe-1-5-0",
+          "cantina-coinissuer-2025-11-12",
+          "cantina-escape-hatch-2026-02-24",
+          "cantina-governance-2025-11-12",
+          "cantina-payload-2026-03-05",
+          "cantina-rollup-contracts-2025-11-12",
+          "certora-safe-1-5-0",
+          "certora-safe-library-contracts-1-4-1",
+          "contracts__audits__2023-10-v5.0",
+          "contracts__audits__2024-10-v5.1",
+          "contracts__audits__2024-12-v5.2",
+          "contracts__audits__2025-04-v5.3",
+          "contracts__audits__2025-07-v5.4",
+          "contracts__audits__2025-11-RLP",
+          "contracts__audits__2026-02-v5.6",
+          "veridise-governance-2025-10-13"
+        ]
+      },
+      {
+        "timestamp": 1790298635,
+        "contracts": 8,
+        "withoutSource": 0,
+        "units": { "identical": 365, "differs": 48, "none": 14 },
+        "lines": { "total": 32728, "covered": 30199 },
+        "changes": [
+          {
+            "address": "eth:0xdf410ad448A0f7165181FBdB32f8896f4a0d9449",
+            "name": "ZkMoneyPortal",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1791316739,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 409, "differs": 51, "none": 22 },
+        "lines": { "total": 36141, "covered": 32306 },
+        "changes": [
+          {
+            "address": "eth:0xD7Ae00b91ba0B8e0240B22Cd75fE447d177C260f",
+            "name": "ZkMoneyPortal_sUSDS",
+            "kind": "added"
+          }
+        ]
+      },
+      {
+        "timestamp": 1794568254,
+        "contracts": 9,
+        "withoutSource": 0,
+        "units": { "identical": 409, "differs": 51, "none": 22 },
+        "lines": { "total": 36141, "covered": 32306 }
+      }
+    ],
+    "undatedReports": []
+  }
+}

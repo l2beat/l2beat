@@ -129,6 +129,12 @@ export const mainPages: MainPage[] = [
       'Detailed insights into the ZK technology utilized by blockchain projects.',
   },
   {
+    path: 'audits',
+    title: 'Audits',
+    description:
+      'How much of the smart contract code deployed by each project is covered by public audits.',
+  },
+  {
     path: 'stages',
     title: 'Stages',
     description:

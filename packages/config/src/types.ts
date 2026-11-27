@@ -288,6 +288,8 @@ export interface BaseProject {
    *  contract in their discovery config. */
   ossificationHistory?: OssificationHistory
   auditCoverage?: ProjectAuditCoverage
+  /** Only for projects with an `audit-scope.json`, see ProjectAuditScope. */
+  auditScope?: ProjectAuditScope
 
   /** For projects that ship each version as new contracts, with its own
    *  page. Built from `projects/versions.ts` when config builds. */
@@ -2801,7 +2803,7 @@ export const TvsTokenSchema = v.object({
 
 const LineSpan = v.tuple([v.number(), v.number()])
 
-const AuditCoverageUnit = v.object({
+const auditCoverageUnitFields = {
   name: v.string(),
   kind: v.enum(['contract', 'abstract', 'library', 'interface', 'function']),
   lines: v.number(),
@@ -2818,7 +2820,8 @@ const AuditCoverageUnit = v.object({
   added: v.array(LineSpan).optional(),
   removed: v.array(v.tuple([v.number(), v.number(), v.number()])).optional(),
   covered: v.number().optional(),
-})
+}
+const AuditCoverageUnit = v.object(auditCoverageUnitFields)
 
 const AuditCoverageContract = v.object({
   name: v.string(),
@@ -2833,6 +2836,34 @@ const AuditCoverageContract = v.object({
     .optional(),
   source: v.string(),
   implementations: v.record(v.string(), v.string()).optional(),
+  /** A zk verifier known to the zk catalog; left out of the dashboard. */
+  verifier: v.literal(true).optional(),
+})
+
+const AuditCoverageHistoryPoint = v.object({
+  timestamp: v.number(),
+  /** Members of the perimeter at this point. */
+  contracts: v.number(),
+  /** Members whose every code address lacks verified Solidity. */
+  withoutSource: v.number(),
+  /** Deployed unit instances per status, interfaces excluded. */
+  units: v.object({
+    identical: v.number(),
+    differs: v.number(),
+    none: v.number(),
+  }),
+  lines: v.object({ total: v.number(), covered: v.number() }),
+  /** Reports first counted here that a unit of this state references. */
+  reports: v.array(v.string()).optional(),
+  changes: v
+    .array(
+      v.object({
+        address: v.string(),
+        name: v.string(),
+        kind: v.enum(['added', 'removed', 'upgraded']),
+      }),
+    )
+    .optional(),
 })
 
 export const ProjectAuditCoverageSchema = v.object({
@@ -2866,8 +2897,116 @@ export const ProjectAuditCoverageSchema = v.object({
   units: v.record(v.string(), AuditCoverageUnit),
   flats: v.record(v.string(), v.array(v.tuple([v.string(), v.number()]))),
   contracts: v.record(v.string(), AuditCoverageContract),
+  /** Coverage of the perimeter over time, see the l2b README. */
+  history: v
+    .object({
+      launch: v.number(),
+      /** Ascending, first at launch, last at discoveredAt. */
+      points: v.array(AuditCoverageHistoryPoint),
+      /** Reports counted only at the present, having no date. */
+      undatedReports: v.array(v.string()),
+    })
+    .optional(),
 })
 export type ProjectAuditCoverage = v.infer<typeof ProjectAuditCoverageSchema>
+
+const AuditScopeShare = v.object({ named: v.number(), total: v.number() })
+
+const AuditScopeNode = v.object({
+  name: v.string(),
+  kind: v.enum(['contract', 'abstract', 'library', 'function']),
+  /** In the audited repository, submodules at their mount path. */
+  path: v.string(),
+  state: v.enum(['included', 'excluded', 'not-mentioned', 'unavailable']),
+  /** Reviewed as a diff or for selected functions only. */
+  partial: v.literal(true).optional(),
+  /** The state comes from a general statement about dependencies. */
+  generic: v.literal(true).optional(),
+  external: v
+    .object({ package: v.string(), version: v.string().optional() })
+    .optional(),
+})
+
+const AuditScopeSnapshot = v.object({
+  repository: v.string(),
+  commit: v.string(),
+  nodes: v.array(AuditScopeNode),
+  /**
+   * `[from, to, kind]` with node indexes: from depends on to, as its base
+   * contract (`inherits`) or as code it calls, links or refers to (`uses`).
+   */
+  edges: v.array(
+    v.tuple([v.number(), v.number(), v.enum(['inherits', 'uses'])]),
+  ),
+  /** Interfaces reached but not drawn. */
+  interfaces: v.number(),
+  explicitness: v.object({ own: AuditScopeShare, external: AuditScopeShare }),
+})
+
+/**
+ * What each audit report names and what it only implies, and the coverage
+ * under the strict and the relaxed reading. See
+ * docs/superpowers/specs/2026-11-17-audit-scope-explicitness-design.md.
+ */
+export const ProjectAuditScopeSchema = v.object({
+  schema_version: v.literal('0.1.0'),
+  project: v.string(),
+  dataset: v.object({ repository: v.string(), commit: v.string() }),
+  reports: v.record(
+    v.string(),
+    v.object({
+      status: v.enum([
+        'graph',
+        'partial',
+        'unpinned',
+        'unreviewed',
+        'no-solidity',
+      ]),
+      unlisted: v.enum(['not-mentioned', 'excluded']).optional(),
+      snapshots: v.array(AuditScopeSnapshot),
+    }),
+  ),
+  reportInfo: v.record(
+    v.string(),
+    v.object({
+      collections: v.array(v.string()),
+      title: v.string(),
+      auditor: v.string(),
+      date: v.string().optional(),
+      document: v.string(),
+    }),
+  ),
+  collections: v.record(
+    v.string(),
+    v.object({ name: v.string(), kind: v.enum(['project', 'library']) }),
+  ),
+  auditedFiles: v.record(
+    v.string(),
+    v.object({
+      repository: v.string(),
+      commit: v.string(),
+      path: v.string(),
+      blob: v.string(),
+      /** Not in the audit dataset: read from `repository` itself. */
+      upstream: v.literal(true).optional(),
+    }),
+  ),
+  units: v.record(
+    v.string(),
+    v.object({
+      strict: AuditCoverageUnit,
+      /** Only when it differs from strict. */
+      relaxed: v
+        .object({
+          ...auditCoverageUnitFields,
+          /** Reports that only imply the matched code. */
+          impliedBy: v.array(v.string()),
+        })
+        .optional(),
+    }),
+  ),
+})
+export type ProjectAuditScope = v.infer<typeof ProjectAuditScopeSchema>
 
 export const ProjectTvsConfigSchema = v.object({
   projectId: v.string(),

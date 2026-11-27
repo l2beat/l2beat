@@ -4,6 +4,12 @@ import type { SearchBarEntry } from './types'
 export const searchBarPages = withIndex([
   {
     category: 'other',
+    name: 'Audits',
+    href: '/audits/summary',
+    tags: ['pages', 'audits', 'security'],
+  },
+  {
+    category: 'other',
     name: 'Home',
     href: '/',
     tags: ['pages'],
