@@ -2467,6 +2467,56 @@ describeDatabase(TokenValueRepository.name, (db) => {
     },
   )
 
+  describe('summed totals', () => {
+    const metadataRepository = db.tvsTokenMetadata
+
+    afterEach(async () => {
+      await metadataRepository.deleteAll()
+    })
+
+    it('keeps a small token next to a large one', async () => {
+      await metadataRepository.insertMany([
+        {
+          projectId: 'arbitrum',
+          tokenId: 'a',
+          source: 'canonical',
+          category: 'stablecoin',
+          isAssociated: false,
+        },
+        {
+          projectId: 'arbitrum',
+          tokenId: 'b',
+          source: 'native',
+          category: 'other',
+          isAssociated: false,
+        },
+      ])
+      // Both fit a `real` exactly, but their float4 sum drops the 1000:
+      // at 2^36 the next float4 is 8192 away.
+      const large = 2 ** 36
+      await repository.upsertMany([
+        tokenValue('a', 'arbitrum', UnixTime(100), 1, large, large, large, 1),
+        tokenValue('b', 'arbitrum', UnixTime(100), 1, 1000, 1000, 1000, 1),
+      ])
+
+      const [result] = await repository.getSummedByTimestampByProjects(
+        ['arbitrum'],
+        null,
+        null,
+        {
+          forSummary: true,
+          excludeAssociatedTokens: false,
+          excludeRwaRestrictedTokens: false,
+        },
+      )
+
+      expect(result?.value).toEqual(large + 1000)
+      expect(result?.value).toEqual(
+        (result?.canonical ?? 0) + (result?.native ?? 0),
+      )
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
