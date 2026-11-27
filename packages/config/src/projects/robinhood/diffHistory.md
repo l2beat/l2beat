@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x83fbf8d4f685f7c8ad396598eb6c1161aba534f5
+
+# Diff at Thu, 26 Nov 2026 18:13:37 GMT:
+
+- id: 29b68715
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@19a3e421c28364d0b3fbae939e5b34aa5bea4896 block: 1795457402
+- current timestamp: 1795716090
+
+## Description
+
+ArbFilteredTransactionsManager: filter list 6234 → 6236. The two new entries are forced L1 transactions from the same L1 address, both calling `collect()` on a contract holding 29.8 ETH for a token named "Robinhood Wallet" (WALLET).
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6234
++        6236
+    }
+```
+
 Generated with discovered.json: 0x4846a395f7da279b9dcb102863db92ae3b75fec3
 
 # Diff at Tue, 24 Nov 2026 08:54:38 GMT:
