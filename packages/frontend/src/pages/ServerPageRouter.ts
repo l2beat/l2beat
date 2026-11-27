@@ -7,6 +7,7 @@ import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createApiMigrationRouter } from './api-migration/ApiMigrationRouter'
 import { createBlobsRouter } from './blobs/BlobsRouter'
 import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChainProjectRouter } from './chain/ChainProjectRouter'
@@ -82,6 +83,7 @@ export function createServerPageRouter(
     createDefiRouter,
     createOssificationRouter,
     createTermsOfServiceRouter,
+    createApiMigrationRouter,
     createStagesRouter,
     createPublicationsRouter,
     createDevRouter,

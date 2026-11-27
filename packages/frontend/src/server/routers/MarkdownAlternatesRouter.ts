@@ -29,7 +29,7 @@ import {
  * Markdown versions of the pages that list what ETHBEAT tracks, at the page
  * URL plus `.md` as the llms.txt spec recommends. llms.txt links here instead
  * of listing every project itself, so it stays small enough to fit in context
- * while an agent can still map a project name to its page and API slug.
+ * while an agent can still map a project name to its page.
  *
  * The page URL itself answers with the same markdown when Accept prefers it,
  * and falls through to the HTML page otherwise.
@@ -76,7 +76,7 @@ const LIST_PAGE_DOCUMENTS: Record<
   '/layer2s/summary': {
     title: `Scaling projects on ${SITE_NAME_WITH_FORMER}`,
     summary:
-      'Every layer 2 and layer 3 tracked by ETHBEAT, with category, stage, stack and host chain. Each link is the project page; its last path segment is the {slug} for the public API.',
+      'Every layer 2 and layer 3 tracked by ETHBEAT, with category, stage, stack and host chain. Each link is the project page.',
     getSections: getScalingListSections,
   },
   '/zk-catalog': {
