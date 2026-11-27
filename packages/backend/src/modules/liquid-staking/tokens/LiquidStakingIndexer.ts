@@ -18,16 +18,19 @@ import { getLiquidStakingReads } from './liquidStakingReads'
 /** Hours per update, so a long backfill saves its progress as it goes. */
 const MAX_HOURS_PER_UPDATE = 24
 
+// Liquid Collective's TUPProxy allows a zero-sender eth_call while paused.
+const CALL_WHEN_PAUSED = '0x2514f7d4' // CallWhenPaused()
+
 interface LiquidStakingIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<LiquidStakingProjectConfig>, 'name'> {
   db: Database
-  rpc: Pick<IRpcClient, 'multicall'>
+  rpc: Pick<IRpcClient, 'call' | 'multicall'>
   blockFinder: EthereumBlockFinder
 }
 
 /**
  * Reads a project's token state at the last Ethereum block at or before each
- * full hour, in one multicall per hour.
+ * full hour, using multicall.
  */
 export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProjectConfig> {
   constructor(
@@ -91,6 +94,21 @@ export class LiquidStakingIndexer extends ManagedMultiIndexer<LiquidStakingProje
       blockNumber,
     )
     const responses = await this.$.rpc.multicall(calls, blockNumber)
+    if (configuration.properties.contracts.type === 'rate') {
+      // Rate-only protocols put their single protocol read before any quotes.
+      const [rateCall] = calls
+      const [rateResponse] = responses
+      if (
+        rateCall &&
+        rateResponse?.success === false &&
+        rateResponse.data.toString() === CALL_WHEN_PAUSED
+      ) {
+        responses[0] = {
+          success: true,
+          data: await this.$.rpc.call(rateCall, blockNumber),
+        }
+      }
+    }
     return {
       configurationId: configuration.id,
       projectId: configuration.properties.projectId,
