@@ -42,11 +42,12 @@ describe('real columns', () => {
           offences.push(`${file}:${sum.line} sums the real column ${column}`)
         } else if (
           sum.viaKysely &&
-          !/^\s*'[\w.]+',?\s*$|`/.test(sum.argument)
+          !/^\s*'[\w.]+',?\s*$|^\s*sql`[^`$]*`\s*$/.test(sum.argument)
         ) {
-          // Anything but one column name or a `sql` template hides what is
-          // summed: a variable, as `valueField` did in TokenValueRepository,
-          // or an expression such as `eb.case()` around one.
+          // Anything but one column name or a plain `sql` template hides what
+          // is summed: a variable, as `valueField` did in TokenValueRepository,
+          // an expression such as `eb.case()` around one, or a `${}` in a
+          // template.
           offences.push(
             `${file}:${sum.line} sums ${sum.argument.trim().replace(/\s+/g, ' ')}`,
           )
@@ -136,7 +137,7 @@ function readRealColumns(): Map<string, string[]> {
 /** Every `sum(...)` call in the source, in SQL or kysely, with its argument. */
 function findSums(source: string) {
   const sums: { line: number; argument: string; viaKysely: boolean }[] = []
-  for (const match of source.matchAll(/\bsum(?:<[^>]*>)?\(/gi)) {
+  for (const match of source.matchAll(/\bsum(?:<[^>]*>)?\s*\(/gi)) {
     const start = match.index + match[0].length
     let depth = 1
     let end = start
