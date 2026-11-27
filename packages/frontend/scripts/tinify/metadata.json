@@ -1642,5 +1642,8 @@
   "static/icons/sfrxeth.png": "2bfa72ae5907fd3e6d72d5a460854115",
   "static/icons/ankr.png": "9ff1ff8cbf534594a494b100f4d9f971",
   "static/icons/sweth.png": "6c36dddd3a06600d53ff08db9418c038",
-  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30"
+  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30",
+  "static/images/architecture/sweth-deposits.png": "38bf5b5567f2bc4adb6e77a0233dc3f4",
+  "static/images/architecture/sweth-withdrawals.png": "28b07e59537cd34bc22befe077813736",
+  "static/meta-images/defi/projects/sweth/opengraph-image.png": "ffd91f90bcd2b57674dbb40d6949265f"
 }

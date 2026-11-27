@@ -89,6 +89,8 @@ function getProtocolRoutes(
         queued: true,
         notes: [],
       }
+    case 'sweth':
+      return { routes: [QUEUE], queued: true, notes: [] }
     case 'rate':
       return {
         routes: [],

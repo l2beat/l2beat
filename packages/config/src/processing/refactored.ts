@@ -157,6 +157,7 @@ export const refactored: BaseProject[] = [
   wbeth,
   stakewise,
   cbeth,
+  sweth,
   polymarket,
   rocketpool,
   safe,
@@ -168,7 +169,6 @@ export const refactored: BaseProject[] = [
   stader,
   sfrxeth,
   ankr,
-  sweth,
   rsweth,
   // privacy
   cloaked,

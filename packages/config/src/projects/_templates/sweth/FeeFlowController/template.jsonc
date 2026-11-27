@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeFlowController",
+  "category": "core",
+  "description": "Fee sink. Fee tokens collect here and are sold in repeated Dutch auctions: the buyer pays the current price in the payment token, which goes to {{paymentReceiver}}, and receives the whole balance. Each auction's price falls to zero over {{epochPeriod}} seconds.",
+  "ignoreInWatchMode": ["getPrice", "getSlot0"]
+}

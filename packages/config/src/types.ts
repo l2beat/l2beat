@@ -2156,6 +2156,12 @@ export type ProjectLiquidStakingContracts =
       previousRedeemer: ChainSpecificAddress
     }
   | {
+      type: 'sweth'
+      swETH: ChainSpecificAddress
+      /** swEXIT. Its request counters give the queue wait. */
+      exitQueue: ChainSpecificAddress
+    }
+  | {
       /**
        * Any protocol, without a reader of its own: the rate is its only read,
        * so selling is the only exit counted. The token must not rebase.
