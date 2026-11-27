@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
   formatSunsetDate,
@@ -6,6 +8,7 @@ import {
   PUBLIC_API_DOCS_URL,
   PUBLIC_API_URL,
 } from '~/consts/publicApi'
+import { getBrownoutWindows } from '~/server/routers/PublicApiRouter/brownouts'
 
 /**
  * The guide the old API's `Link` headers and 410 bodies point at: one set of
@@ -77,6 +80,7 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
         'Until the sunset, every old response carries three headers: `Deprecation` (when the API was deprecated), `Sunset` (when it stops) and `Link` (this page and the new API).',
       ],
     },
+    brownouts: getBrownouts(),
     ids: {
       title: 'Project ids replace slugs',
       text: [
@@ -125,6 +129,39 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
   }
 }
 
+/** Generated from the schedule the API itself follows, so the two cannot drift. */
+function getBrownouts(): ApiMigrationGuide['brownouts'] {
+  const days = groupBy(getBrownoutWindows(OLD_PUBLIC_API_SUNSET_AT), (window) =>
+    UnixTime.toStartOf(window.start, 'day'),
+  )
+  return {
+    title: 'Scheduled test outages',
+    text: [
+      'In the week before the sunset the old API is switched off for short windows, twice a day, so that nobody learns about the sunset only when it happens. During a window every old endpoint answers `410 Gone` with a JSON body that says when the window ends. Outside the windows it works as usual.',
+      'The windows are 15 minutes long on the first three days and an hour long on the last four. They move from day to day, so a job that runs at a fixed hour is not always spared.',
+    ],
+    days: Object.entries(days).map(([day, windows]) => ({
+      day: formatDay(Number(day)),
+      windows: windows.map(
+        ({ start, end }) => `${formatTime(start)}–${formatTime(end)}`,
+      ),
+    })),
+  }
+}
+
+function formatDay(day: UnixTime): string {
+  return UnixTime.toDate(day).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
+  })
+}
+
+function formatTime(timestamp: UnixTime): string {
+  return UnixTime.toDate(timestamp).toISOString().slice(11, 16)
+}
+
 export interface ApiMigrationGuide {
   title: string
   lede: string
@@ -134,6 +171,12 @@ export interface ApiMigrationGuide {
     title: string
     facts: { label: string; value: string; detail: string }[]
     intro: string[]
+  }
+  brownouts: {
+    title: string
+    text: string[]
+    /** Times are UTC. */
+    days: { day: string; windows: string[] }[]
   }
   ids: {
     title: string

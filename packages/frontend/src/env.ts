@@ -72,6 +72,9 @@ const SERVER_CONFIG = {
   // While the TVS backend is down, TVS charts end here instead of trailing
   // into an empty gap. Unset it once TVS has caught up.
   TVS_CHARTS_PINNED_TO: isoDate.optional(),
+  // The scheduled test outages of /api/scaling before its sunset. Set to
+  // false to call them off without a code change.
+  OLD_PUBLIC_API_BROWNOUTS: coerceBoolean.default(true),
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
 
@@ -150,6 +153,7 @@ function getRawEnv(): Record<
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     TVS_CHARTS_PINNED_TO: process.env.TVS_CHARTS_PINNED_TO,
+    OLD_PUBLIC_API_BROWNOUTS: process.env.OLD_PUBLIC_API_BROWNOUTS,
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
