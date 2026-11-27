@@ -1,6 +1,6 @@
 {
   "name": "phala",
-  "timestamp": 1794868588,
+  "timestamp": 1795716090,
   "configHash": "0xc2cd05824f9aa944c70aa1ec7c2714cfd82744bb3e36734ea890d5fbee33c1dc",
   "entries": [
     {
@@ -20,7 +20,7 @@
       "template": "opstack/SuperchainConfigFake_expiry",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+        "0x16be77d04285e6ef110e395e6664cfa03f06bc550200439779c0b90c43ac3de9"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.",
@@ -30,7 +30,7 @@
       "sinceBlock": 22781049,
       "values": {
         "$admin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
-        "$implementation": "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550",
+        "$implementation": "eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7",
         "$pastUpgrades": [
           [
             "2025-06-25T11:06:59.000Z",
@@ -81,9 +81,49 @@
             "2026-08-13T13:32:47.000Z",
             "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
             ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+          ],
+          [
+            "2026-11-25T13:40:35.000Z",
+            "0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",
+            ["eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 18,
         "guardian": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "initVersion": 2,
         "paused": false,
@@ -91,7 +131,7 @@
         "pauseExpiryFmt": "3mo 1d",
         "proxyAdmin": "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "version": "2.4.2"
+        "version": "2.5.0"
       },
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
@@ -99,7 +139,7 @@
       },
       "implementationNames": {
         "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": "Proxy",
-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
+        "eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7": "SuperchainConfig"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -180,7 +220,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620497",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620498",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -350,7 +390,7 @@
         "game9Args": "0x",
         "game9Vm": "UNRESOLVED",
         "game9Weth": "UNRESOLVED",
-        "gameCount": 880,
+        "gameCount": 900,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -361,7 +401,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfadef9b23dae7769004e80f579f9d3af0d7a29e4adfd7fcbdfcddf28994a068f5e6d9e34b95a8b8d8400000000000000000000000000000000000000000000000000000000000007f3f579a1cdfb89d0aaf240d489ef10ab01a2b7f8f24a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 512,
+        "permissionedGamesTotal": 532,
         "proposerFromDGF": "eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -447,7 +487,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 378,
+        "nonce": 387,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -631,7 +671,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 414371,
-          "prevBlockNum": 26427459
+          "prevBlockNum": 26477705
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -869,7 +909,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0xF49c3149a6dE6dAbf4F1Bf14A709E116861161e5",
+        "anchorGame": "eth:0xE8396cf701A6541528A347faf51382B0D37791fA",
         "blacklistedGames": [
           "eth:0x2Da7Ba45b30039EB8e95bc6dc2A969b4cAA0A2c5",
           "eth:0x30E06db5Ff89e81BD065E8013Aa5623A25874e8b",
@@ -880,8 +920,8 @@
         "disputeGameFactory": "eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x7388e8500bf8c2b870a4078727e3b5ff46884c3b12d8ee0f5a5eb35214d83c88",
-          5983417
+          "0xe3646b68fc4c094ee31af2f714880cf9e29e1bfddd5a14e1145ecb506633d12d",
+          6070563
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -1710,6 +1750,39 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7": [
+      "constructor()",
+      "error ProxyAdminOwnedBase_NotProxyAdmin()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
+      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
+      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
+      "error ReinitializableBase_ZeroInitVersion()",
+      "error SuperchainConfig_AlreadyPaused(address identifier)",
+      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
+      "error SuperchainConfig_OnlyGuardian()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(address identifier)",
+      "event Unpaused(address identifier)",
+      "function expiration(address _identifier) view returns (uint256)",
+      "function extend(address _identifier)",
+      "function guardian() view returns (address)",
+      "function initVersion() view returns (uint8)",
+      "function initialize(address _guardian)",
+      "function isLocalOrGlobalPaused(address _identifier) view returns (bool)",
+      "function pausable(address _identifier) view returns (bool)",
+      "function pause(address _identifier)",
+      "function pauseExpiry() pure returns (uint256)",
+      "function pauseTimestamps(address) view returns (uint256)",
+      "function paused(address _identifier) view returns (bool)",
+      "function paused() view returns (bool)",
+      "function proxyAdmin() view returns (address)",
+      "function proxyAdminOwner() view returns (address)",
+      "function unpause(address _identifier)",
+      "function version() view returns (string)"
+    ],
     "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -2013,38 +2086,6 @@
       "function withdraw(address _guy, uint256 _wad)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": [
-      "constructor()",
-      "error ProxyAdminOwnedBase_NotProxyAdmin()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_NotResolvedDelegateProxy()",
-      "error ProxyAdminOwnedBase_NotSharedProxyAdminOwner()",
-      "error ProxyAdminOwnedBase_ProxyAdminNotFound()",
-      "error ReinitializableBase_ZeroInitVersion()",
-      "error SuperchainConfig_AlreadyPaused(address identifier)",
-      "error SuperchainConfig_NotAlreadyPaused(address identifier)",
-      "error SuperchainConfig_OnlyGuardian()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(address identifier)",
-      "event Unpaused(address identifier)",
-      "function expiration(address _identifier) view returns (uint256)",
-      "function extend(address _identifier)",
-      "function guardian() view returns (address)",
-      "function initVersion() view returns (uint8)",
-      "function initialize(address _guardian)",
-      "function pausable(address _identifier) view returns (bool)",
-      "function pause(address _identifier)",
-      "function pauseExpiry() pure returns (uint256)",
-      "function pauseTimestamps(address) view returns (uint256)",
-      "function paused(address _identifier) view returns (bool)",
-      "function paused() view returns (bool)",
-      "function proxyAdmin() view returns (address)",
-      "function proxyAdminOwner() view returns (address)",
-      "function unpause(address _identifier)",
-      "function version() view returns (string)"
-    ],
     "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": [
       "constructor(uint256 _proofMaturityDelaySeconds)",
       "error ContentLengthMismatch()",
@@ -2170,7 +2211,7 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
-  "usedBlockNumbers": { "ethereum": 26430621 },
+  "usedBlockNumbers": { "ethereum": 26501028 },
   "permissionsConfigHash": "0xe0b4f8dd34c7ce738fae4d71f111acf9d687129dd14afc776e03fef02f8a2735",
   "permissions": {
     "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E": {

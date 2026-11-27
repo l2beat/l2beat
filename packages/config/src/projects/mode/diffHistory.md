@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x9238e3c4940cfd4e2776eed165af924f966f601a
+
+# Diff at Thu, 26 Nov 2026 18:07:27 GMT:
+
+- id: 465808b7
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@19a3e421c28364d0b3fbae939e5b34aa5bea4896 block: 1794868539
+- current timestamp: 1795716090
+
+## Description
+
+SuperchainConfig (Conduit's local fork): Conduit Multisig 1 upgraded it 2.4.2 → 2.5.0, the same code OP Mainnet's SuperchainConfig runs since Upgrade 21. It only adds an `isLocalOrGlobalPaused` view ([diff](https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7)).
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      sourceHashes.1:
+-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
++        "0x16be77d04285e6ef110e395e6664cfa03f06bc550200439779c0b90c43ac3de9"
+      values.$implementation:
+-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
++        "eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7"
+      values.$pastUpgrades.10:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.11:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$pastUpgrades.12:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.13:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x5570b1f2b97B1E35b5C6f9Ee76f6cf02c9917504"]]
+      values.$pastUpgrades.14:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.15:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7"]]
+      values.$pastUpgrades.16:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.17:
++        ["2026-11-25T13:40:35.000Z","0x6d8148efbf5f2d5ec205081d9be3aed63b654c94310d7c3d20e6c387d091f2f4",["eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7"]]
+      values.$upgradeCount:
+-        10
++        18
+      values.version:
+-        "2.4.2"
++        "2.5.0"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
+-        "SuperchainConfig"
+      implementationNames.eth:0xA303a644cfbC0c34f6a9dBEaFdebA4C967EA01e7:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 23 ++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0x5d25b40a4be11ca05f886d8f14735d0bd7e0c66d
 
 # Diff at Mon, 16 Nov 2026 22:37:29 GMT:
