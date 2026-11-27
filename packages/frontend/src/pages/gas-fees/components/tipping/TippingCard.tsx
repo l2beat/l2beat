@@ -72,7 +72,8 @@ export function TippingCard({
           </p>
         )}
         <LiveTiers live={live} walletIcons={walletIcons} />
-        <div className="grid gap-8 border-divider border-t pt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-8">
+        {/* One column takes its width from the card, not from what it holds */}
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-8 border-divider border-t pt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-8">
           <div className="lg:border-divider lg:border-r lg:pr-8">
             <PriceOfSpeedSection speed={tipping.speed} />
           </div>

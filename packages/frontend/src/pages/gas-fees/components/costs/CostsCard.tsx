@@ -45,46 +45,52 @@ export function CostsCard({
 
   return (
     <PrimaryCard className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
+      {/* Nothing here moves with the text: the controls stay put whichever option is picked */}
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
           <h2 className="font-bold text-xl md:text-2xl">
             What one transaction costs
           </h2>
-          <p className="text-secondary text-sm">
-            {METRIC_LABELS[metric].title}, {period}. Log scale. L2 costs add the
-            chain’s average L1 fee per transaction.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Select
-            value={metric}
-            onValueChange={(v) => setMetric(v as PeriodMetric)}
-          >
-            <SelectTrigger className="h-8">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {PERIOD_METRICS.map((m) => (
-                <SelectItem key={m} value={m}>
-                  {METRIC_LABELS[m].tab}
-                </SelectItem>
+          <div className="flex flex-wrap items-center gap-2">
+            <Select
+              value={metric}
+              onValueChange={(v) => setMetric(v as PeriodMetric)}
+            >
+              {/* As wide as its longest option, so the range beside it doesn't shift */}
+              <SelectTrigger className="h-8 w-[150px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {PERIOD_METRICS.map((m) => (
+                  <SelectItem key={m} value={m}>
+                    {METRIC_LABELS[m].tab}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <RadioGroup
+              name="gasFeesTableRange"
+              value={rangeOptionOf(range)}
+              onValueChange={(v) =>
+                setRange(optionToRange(v as GasFeesRangeOption))
+              }
+            >
+              {GAS_FEES_RANGES.map((r) => (
+                <RadioGroupItem key={r.value} value={r.value}>
+                  {r.label}
+                </RadioGroupItem>
               ))}
-            </SelectContent>
-          </Select>
-          <RadioGroup
-            name="gasFeesTableRange"
-            value={rangeOptionOf(range)}
-            onValueChange={(v) =>
-              setRange(optionToRange(v as GasFeesRangeOption))
-            }
-          >
-            {GAS_FEES_RANGES.map((r) => (
-              <RadioGroupItem key={r.value} value={r.value}>
-                {r.label}
-              </RadioGroupItem>
-            ))}
-          </RadioGroup>
+            </RadioGroup>
+          </div>
         </div>
+        <p className="text-secondary text-sm">
+          <span className="block">
+            {METRIC_LABELS[metric].title}, {period}.
+          </span>
+          <span className="block">
+            Log scale. L2 costs add the chain’s average L1 fee per transaction.
+          </span>
+        </p>
       </div>
       {isError ? (
         <p className="py-10 text-center text-secondary text-sm">
