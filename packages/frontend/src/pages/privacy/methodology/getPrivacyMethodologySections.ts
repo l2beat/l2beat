@@ -20,7 +20,7 @@ import {
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
-import { DELIVERY } from '../referenceAppUi'
+import { DELIVERY, VERIFIED_BUILD } from '../referenceAppUi'
 import {
   PRIVACY_ADVICE_ANCHOR,
   PRIVACY_ADVICE_TITLE,
@@ -52,7 +52,7 @@ export function getPrivacyMethodologySections() {
       bulletList([
         `**${VERDICT.good}** (green): the promised field stays hidden from this adversary.`,
         `**${VERDICT.warning}** (yellow): protection is limited, private use can be denied, or keeping the field hidden takes substantial effort beyond the app's options. A workaround must preserve ordinary use of the protocol.`,
-        `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable, verifiable app supports private use. A custodian who can require disclosure to release funds also earns red.`,
+        `**${VERDICT.bad}** (red): the field is exposed with no reasonable workaround, or no usable app supports private use. A custodian who can require disclosure to release funds also earns red.`,
       ]),
       'Substantial effort is what a non-developer cannot be expected to do, such as a second operating system, a source build or a system-file change. Installing an app or verifying a release by hash is not. Reviewing the release is our work. A local Ethereum node is the only chain node we expect a careful user to run, and needing it together with a route is substantial.',
       "A closed app's delivery risk falls to the privileged insider. When the review reads and pins the code a closed web app or extension serves, the other cells rate that code like open code. A native closed app caps the network observer at yellow.",
@@ -134,6 +134,7 @@ export function getPrivacyMethodologySections() {
           (source) => `**${source.label}**: ${source.description}`,
         ),
       ),
+      `A pinned, reproducible app is shown as a **${VERIFIED_BUILD.label}**.`,
       'Hosted public source makes the privileged insider yellow, hosted closed code red.',
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),

@@ -1,3 +1,4 @@
+import type { ProjectPrivacyReferenceApp } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import lowerFirst from 'lodash/lowerFirst'
 import type {
@@ -72,6 +73,25 @@ export const DELIVERY = {
   },
 } as const
 
+/**
+ * A pinned build that reproduces. It shows in place of both parts, in the
+ * summary table too, so its description is theirs.
+ */
+export const VERIFIED_BUILD = {
+  label: 'Verified build',
+  sentiment: 'good',
+  description: `${DELIVERY.kinds.pinned.description} ${DELIVERY.sources.reproducible.description}`,
+} as const
+
+/** For the summary table, where no reference app is in sight. */
+export const VERIFIED_BUILD_TOOLTIP = `The reference app is a ${lowerFirst(VERIFIED_BUILD.label)}. ${VERIFIED_BUILD.description}`
+
+export function isVerifiedBuild({
+  delivery,
+}: Pick<ProjectPrivacyReferenceApp, 'delivery'>) {
+  return delivery.type === 'pinned' && !!delivery.rebuild
+}
+
 /** The app's name with the release the review covers. */
 export function getReferenceAppLabel(app: PrivacyReferenceApp) {
   return app.version ? `${app.name} v${app.version}` : app.name
@@ -131,8 +151,9 @@ export function getReferenceAppSource(
 
 /**
  * The delivery: how the code arrives (`kind`) and how the app relates to
- * public source (`source`), a label of both like "Pinned, reproducible", and
- * the pin or store version to check the app against.
+ * public source (`source`), the `parts` to show, which are both or the
+ * verified build that merges them, their label like "Pinned, open", and the
+ * pin or store version to check the app against.
  */
 export function getReferenceAppDelivery(app: PrivacyReferenceApp) {
   const delivery = app.delivery
@@ -140,10 +161,16 @@ export function getReferenceAppDelivery(app: PrivacyReferenceApp) {
   const kind = { id: delivery.type, ...DELIVERY.kinds[delivery.type] }
   const sourceId = rebuild ? 'reproducible' : app.source ? 'open' : 'closed'
   const source = { id: sourceId, ...DELIVERY.sources[sourceId] } as const
+  const verified = { id: 'verified', ...VERIFIED_BUILD } as const
+  const parts: (typeof kind | typeof source | typeof verified)[] =
+    isVerifiedBuild(app) ? [verified] : [kind, source]
   return {
     kind,
     source,
-    label: `${kind.label}, ${lowerFirst(source.label)}`,
+    parts,
+    label: parts
+      .map((part, i) => (i === 0 ? part.label : lowerFirst(part.label)))
+      .join(', '),
     check: getDeliveryCheck(app),
     rebuild,
   }

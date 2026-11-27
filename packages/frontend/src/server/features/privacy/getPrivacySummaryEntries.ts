@@ -13,6 +13,7 @@ import {
 } from '~/components/table/utils/rowType'
 import { env } from '~/env'
 import { getPrivacyAdversariesTableValue } from '~/pages/privacy/adversaries/privacyAdversaryUi'
+import { isVerifiedBuild } from '~/pages/privacy/referenceAppUi'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
@@ -51,6 +52,8 @@ export interface PrivacySummaryEntry {
   reproducibility: PrivacySummaryValue
   adversaries: PrivacyAdversariesSummary
   quantumResistant?: boolean
+  /** The reference app is pinned and reproducible. */
+  verifiedBuild: boolean
 }
 
 type PrivacySummaryTrackingMetrics = Pick<
@@ -180,6 +183,9 @@ function getPrivacySummaryBaseEntry(
     reproducibility: project.privacyInfo.reproducibility,
     adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),
     quantumResistant: project.privacyInfo.quantumResistant,
+    verifiedBuild:
+      !!project.privacyInfo.referenceApp &&
+      isVerifiedBuild(project.privacyInfo.referenceApp),
   }
 }
 
