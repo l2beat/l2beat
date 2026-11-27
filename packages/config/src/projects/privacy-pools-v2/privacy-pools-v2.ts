@@ -35,6 +35,7 @@ import {
   privacyPoolsV2Adversaries,
   REFERENCE_APP,
 } from './adversaries'
+import { privacyPoolsV2Compliance } from './compliance'
 import { privacyPoolsV2RiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-pools-v2')
@@ -271,6 +272,7 @@ export const privacyPoolsV2: BaseProject = {
     ],
     adversaries: privacyPoolsV2Adversaries,
     riskSummary: privacyPoolsV2RiskSummary,
+    compliance: privacyPoolsV2Compliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'privacy-pools-v2',

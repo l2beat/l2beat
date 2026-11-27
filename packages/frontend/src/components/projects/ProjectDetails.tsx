@@ -32,6 +32,7 @@ import { PrivacyAdversariesSection } from './sections/privacy/PrivacyAdversaries
 import { PrivacyAdviceSection } from './sections/privacy/PrivacyAdviceSection'
 import { PrivacyAnonymitySetSection } from './sections/privacy/PrivacyAnonymitySetSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
+import { PrivacyComplianceSection } from './sections/privacy/PrivacyComplianceSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
@@ -466,6 +467,14 @@ function renderSection(
     case 'PrivacyAdviceSection':
       return (
         <PrivacyAdviceSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'PrivacyComplianceSection':
+      return (
+        <PrivacyComplianceSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}

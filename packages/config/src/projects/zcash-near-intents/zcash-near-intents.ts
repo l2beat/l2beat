@@ -8,6 +8,7 @@ import {
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zcashNearIntentsAdversaries } from './adversaries'
+import { zcashNearIntentsCompliance } from './compliance'
 import { zcashNearIntentsRiskSummary } from './riskSummary'
 
 // The route has no Ethereum contracts: the custodial bridge holds funds in plain
@@ -180,6 +181,7 @@ export const zcashNearIntents: BaseProject = {
     ],
     adversaries: zcashNearIntentsAdversaries,
     riskSummary: zcashNearIntentsRiskSummary,
+    compliance: zcashNearIntentsCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zcash-near-intents',

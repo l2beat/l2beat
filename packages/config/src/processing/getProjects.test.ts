@@ -742,6 +742,68 @@ describe('getProjects', () => {
       expect(problems).toEqual([])
     })
 
+    // A secret ballot moves no funds, so its compliance cannot be graded on the funds ladder.
+    const WITHOUT_COMPLIANCE = ['interfold']
+
+    it('every project but those without funds has a compliance reading', () => {
+      const missing = privacyProjects
+        .filter(
+          ({ project, privacyInfo }) =>
+            (privacyInfo.compliance === undefined) !==
+            WITHOUT_COMPLIANCE.includes(project.id),
+        )
+        .map(({ project }) => project.id)
+      expect(missing).toEqual([])
+    })
+
+    // The rung shows the text and links in one line, so each stays short and checkable.
+    it('every shown compliance power is one short sentence with checkable sources', () => {
+      const problems: string[] = []
+      for (const { project, privacyInfo } of privacyProjects) {
+        const compliance = privacyInfo.compliance
+        if (!compliance) continue
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
+        const shown = [
+          ...compliance.ladders.flatMap((ladder) =>
+            ladder.power ? [{ id: ladder.id, ...ladder.power }] : [],
+          ),
+          ...(compliance.disclosure
+            ? [{ id: 'disclosure', ...compliance.disclosure }]
+            : []),
+        ]
+        for (const { id, text, sources } of shown) {
+          if (!text.endsWith('.') || /[.!?]\s/.test(text)) {
+            problems.push(`${project.id} ${id}: not one sentence: ${text}`)
+          }
+          if (text.split(/\s+/).length > 25) {
+            problems.push(`${project.id} ${id}: too long: ${text}`)
+          }
+          if (sources.length === 0) {
+            problems.push(`${project.id} ${id}: no sources`)
+          }
+          for (const source of sources) {
+            if ('contract' in source && !contractNames.has(source.contract)) {
+              problems.push(
+                `${project.id} ${id}: unknown contract ${source.contract}`,
+              )
+            }
+            if (
+              'url' in source &&
+              source.checked !== undefined &&
+              !isDay(source.checked)
+            ) {
+              problems.push(`${project.id} ${id}: ${source.checked}`)
+            }
+          }
+        }
+      }
+      expect(problems).toEqual([])
+    })
+
     // Round-trip, since Date.parse rolls 2026-02-30 over to March.
     const isDay = (value: string) => {
       const time = Date.parse(value)

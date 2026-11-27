@@ -18,6 +18,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zamaCwAdversaries } from './adversaries'
+import { zamaCwCompliance } from './compliance'
 import { zamaCwRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zama-cw')
@@ -445,6 +446,7 @@ export const zamaCw: BaseProject = {
       coprocessorThreshold,
       coprocessorSignerCount,
     }),
+    compliance: zamaCwCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zama-cw', 'upgradesAndGovernance', {
         multisigAStats,

@@ -21,6 +21,7 @@ import {
   hinkalAdversaries,
   REFERENCE_APP,
 } from './adversaries'
+import { hinkalCompliance } from './compliance'
 import { hinkalRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('hinkal')
@@ -278,6 +279,7 @@ export const hinkal: BaseProject = {
       multisigStats,
       timelockDelay: formatSeconds(timelockDelay, { fullUnit: true }),
     }),
+    compliance: hinkalCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('hinkal', 'upgradesAndGovernance', {
         multisigStats,

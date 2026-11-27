@@ -9,6 +9,7 @@ import {
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { strk20Adversaries } from './adversaries'
+import { strk20Compliance } from './compliance'
 import { strk20RiskSummary } from './riskSummary'
 
 const STRK20_POOL = {
@@ -231,6 +232,7 @@ export const strk20: BaseProject = {
     ],
     adversaries: strk20Adversaries,
     riskSummary: strk20RiskSummary,
+    compliance: strk20Compliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('strk20', 'upgradesAndGovernance'),
     },

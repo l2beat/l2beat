@@ -29,6 +29,7 @@ import {
   TACIT_REPOSITORY,
   tacitPayAdversaries,
 } from './adversaries'
+import { tacitPayCompliance } from './compliance'
 import { tacitPayRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('tacit-pay')
@@ -262,6 +263,7 @@ export const tacitPay: BaseProject = {
     ],
     adversaries: tacitPayAdversaries,
     riskSummary: tacitPayRiskSummary,
+    compliance: tacitPayCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tacit-pay', 'upgradesAndGovernance'),
     },

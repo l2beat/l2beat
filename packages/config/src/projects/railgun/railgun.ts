@@ -27,6 +27,7 @@ import {
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { railgunAdversaries } from './adversaries'
+import { railgunCompliance } from './compliance'
 import { railgunRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('railgun')
@@ -361,6 +362,7 @@ export const railgun: BaseProject = {
     riskSummary: railgunRiskSummary({
       executionDelay: formatSeconds(executionStartOffset, { fullUnit: true }),
     }),
+    compliance: railgunCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
       governanceInfo: {

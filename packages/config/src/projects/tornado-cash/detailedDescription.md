@@ -15,10 +15,6 @@ Each deposit has its own note, which the app shows once for the user to save. Wh
 
 The app is pinned on tornadocash.eth. Each proposal that changes it names the [source commit](https://github.com/torndao777-eng/classic-ui/tree/8af0abd14d7eeb734f943b968ce687cb5946eac6) and a [build recipe](https://github.com/tornado-dao/tornado-ipfs-ui) that recomputes its IPFS hash, currently `{{appCid}}`. Gateways like eth.limo serve it, including the deposit caches it downloads. The user's own IPFS node takes the gateway out of the trust path. Tor Browser cannot reach it, and over Tor the node stalls before the app is complete. Over NymVPN it downloads the app in minutes. The app lists relayers from the registry and withdraws through one without a wallet. It accepts the user's own RPC endpoint, but relayer name lookups always go to Pocket Network and deposit stats to The Graph. In 2024 a pinned version [sent users' notes to an attacker](https://www.coindesk.com/business/2024/02/26/tornado-cash-reportedly-suffers-backend-exploit-user-deposits-at-risk) ([code analysis here](https://github.com/sekuba/tornadocash-pwned)).
 
-### Compliance
-
-Tornado Cash has no screening or approval list. The app's [compliance page](https://github.com/torndao777-eng/classic-ui/blob/8af0abd14d7eeb734f943b968ce687cb5946eac6/pages/compliance.vue) builds a report that links one of the user's withdrawals to its deposit, for the user to share.
-
 ### Fees
 
 The pools charge no fee. Relayers take their fee from the withdrawal. Registered relayers also burn part of their TORN stake on each withdrawal, at a rate governance sets.

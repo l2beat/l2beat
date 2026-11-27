@@ -23,6 +23,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { privacyPoolsAdversaries } from './adversaries'
+import { privacyPoolsCompliance } from './compliance'
 import { privacyPoolsRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-pools')
@@ -262,6 +263,7 @@ export const privacyPools: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: privacyPoolsAdversaries,
     riskSummary: privacyPoolsRiskSummary,
+    compliance: privacyPoolsCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-pools', 'upgradesAndGovernance', {
         multisigStats,

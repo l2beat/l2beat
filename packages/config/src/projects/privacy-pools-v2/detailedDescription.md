@@ -38,10 +38,6 @@ The yield shares keep a fixed share count while their value grows, so the share 
 
 **Relaying.** The contracts accept a proof from any address, and no relayer can change its recipient. A relayer other than 0xbow's needs the user's own build of the website or another client.
 
-### Compliance
-
-The ASP screens each depositor before approving the deposit, under 0xbow's own due diligence, and may reject it. A rejected deposit can leave only by ragequit.
-
 ### Fees
 
 Deposits pay no vetting fee, though the multisig can [set one](#upgrades-and-governance). The relayer quotes its fee per request and takes it from the sent or withdrawn asset. You accept the fee before sending, and the relayer cannot raise it. The yield shares keep {{yieldFee}} of the Aave yield for 0xbow.

@@ -1,6 +1,6 @@
 Umbra Cash is a stealth-address protocol that lets anyone pay the user at a fresh address, so the payment does not identify them as its recipient. The user registers once, and payers find their keys in a public registry. Payer, amount and token stay public, and so does where the funds go next.
 
-Users trust ScopeLift, which hosts the app, runs its indexer and relays token withdrawals. The contracts are immutable, and their owner can only set a fee on new payments. Leaving needs no one: ETH lands at the stealth address itself, and any account can relay a token withdrawal.
+Users trust ScopeLift, which hosts the app, runs its indexer and relays token withdrawals. The contracts are immutable, and their owner can only set a fee on new payments. Onchain, leaving needs no one: ETH lands at the stealth address itself, and any account can relay a token withdrawal.
 
 ### Flow
 
@@ -12,10 +12,6 @@ Users trust ScopeLift, which hosts the app, runs its indexer and relays token wi
 ### App
 
 The app is built from public source, while its indexer and relayer API are closed. It finds payments through the indexer, relays token withdrawals through the API and checks every address it handles with its mainnet RPC, Alchemy. The app warns before withdrawals to registered, named or otherwise known addresses. A local build can leave the indexer out and read the chain from the user's own node. It asks Cloudflare for the ENS name of the user's wallet, and building it needs a WalletConnect project id and L2 subgraph URLs. The [privacy policy](https://app.umbra.cash/privacy) keeps IP logs for up to 90 days.
-
-### Compliance
-
-Screening runs in the app only. It refuses wallets, recipients and withdrawal addresses on its blocklist or Chainalysis's sanctions oracle, and hides payments from or to listed addresses.
 
 ### Fees
 

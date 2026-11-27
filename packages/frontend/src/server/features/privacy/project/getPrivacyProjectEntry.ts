@@ -12,6 +12,8 @@ import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { PRIVACY_ADVERSARIES_SECTION_ID } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { ADVICE } from '~/pages/privacy/adviceUi'
+import { COMPLIANCE } from '~/pages/privacy/complianceUi'
+import { getReferenceAppLabel } from '~/pages/privacy/referenceAppUi'
 import { getGardenCropsSection } from '~/server/features/garden/getGardenCropsSection'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import { getUpdatesSection } from '~/server/features/projects/discovery-updates/getUpdatesSection'
@@ -45,7 +47,10 @@ import {
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 import { renderPrivacyRiskSummary } from '../utils/renderPrivacyRiskSummary'
-import { resolvePrivacySources } from '../utils/resolvePrivacySources'
+import {
+  resolveComplianceSources,
+  resolvePrivacySources,
+} from '../utils/resolvePrivacySources'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId
@@ -334,6 +339,20 @@ export async function getPrivacyProjectEntry(
         id: 'contracts',
         title: 'Smart contracts',
         discoUi,
+      },
+    })
+  }
+
+  // Spliced before advice and adversaries, which then push it after them.
+  const compliance = details.compliance
+  if (compliance) {
+    sections.splice(adversariesSectionIndex, 0, {
+      type: 'PrivacyComplianceSection',
+      props: {
+        id: COMPLIANCE.sectionId,
+        title: COMPLIANCE.title,
+        compliance: resolveComplianceSources(compliance, sections),
+        referenceAppLabel: referenceApp && getReferenceAppLabel(referenceApp),
       },
     })
   }

@@ -1248,6 +1248,11 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   /** Author with definePrivacyRisks. */
   riskSummary?: PrivacyRiskGroup[]
+  /**
+   * Who can see or block funds for compliance reasons. Author with
+   * definePrivacyCompliance. Every project has it unless no funds move.
+   */
+  compliance?: ProjectPrivacyCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
@@ -1642,6 +1647,107 @@ export type PrivacySource =
         | 'upgrades-and-governance'
       title?: string
     }
+
+export type PrivacyComplianceLadderId = 'privacy' | 'funds'
+
+/** 1 is the best rung, 5 the worst. */
+export type PrivacyComplianceRung = 1 | 2 | 3 | 4 | 5
+
+/**
+ * A deployed ability to view, block or freeze, whatever it is called: admin
+ * functions, services on the reference app's path, imported checks. Code
+ * upgrades and freezes by a centralized token's issuer are out of scope.
+ * Rung 1 states that the ladder has no power, with the evidence for that.
+ */
+export interface PrivacyCompliancePower {
+  ladder: PrivacyComplianceLadderId
+  rung: PrivacyComplianceRung
+  /** One short sentence naming the power and its holder, shown on the rung. */
+  text: string
+  /** A rung 4 lens that can read activity from before it was granted is red. */
+  reachesPastHistory?: true
+  sources: PrivacySource[]
+}
+
+/** 1 discloses the least, 5 the most. */
+export type PrivacyDisclosureLevel = 1 | 2 | 3 | 4 | 5
+
+/**
+ * The narrowest disclosure a user can make today, with the reference app or
+ * an open third-party tool. Planned tools and exiting publicly do not count.
+ */
+export interface PrivacyDisclosureTool {
+  level: PrivacyDisclosureLevel
+  /** One short sentence naming the tool. */
+  text: string
+  /** The verifier checks the proof itself, not an operator's word. */
+  verifiableWithoutOperator: boolean
+  /** Shown to one chosen verifier, not published. */
+  singleVerifier: boolean
+  sources: PrivacySource[]
+}
+
+/** What a project author writes. definePrivacyCompliance derives the rest. */
+export interface PrivacyComplianceConfig {
+  /** What compliance machinery exists and who runs it, in a few sentences. Markdown. */
+  description: string
+  /** Every power found; each ladder shows its worst one. */
+  powers: PrivacyCompliancePower[]
+  /** Omitted when no tool exists. */
+  disclosure?: PrivacyDisclosureTool
+  /** Someone on the reference app's path identifies users before they enter. */
+  identityAtEntry?: true
+  /** Screening follows a list a third party maintains. */
+  curatedList?: true
+}
+
+export type PrivacyComplianceRequirementId =
+  | 'entryScreening'
+  | 'exclusionAfterEntry'
+  | 'freeze'
+  | 'seizure'
+  | 'authorityView'
+  | 'userProof'
+  | 'identityAtEntry'
+  | 'curatedList'
+
+export interface PrivacyComplianceRungInfo {
+  rung: PrivacyComplianceRung
+  label: string
+  description: string
+}
+
+export interface PrivacyComplianceLadder {
+  id: PrivacyComplianceLadderId
+  label: string
+  rungs: PrivacyComplianceRungInfo[]
+  /** The worst rung among the ladder's powers, 1 without any. */
+  rung: PrivacyComplianceRung
+  sentiment: PrivacyAdversarySentiment
+  /** The power that sets the rung. */
+  power?: PrivacyCompliancePower
+}
+
+export interface PrivacyComplianceRequirement {
+  id: PrivacyComplianceRequirementId
+  label: string
+  met: boolean
+}
+
+export interface PrivacyDisclosureLevelInfo {
+  level: PrivacyDisclosureLevel
+  label: string
+  description: string
+  sentiment: PrivacyAdversarySentiment
+}
+
+export interface ProjectPrivacyCompliance {
+  description: string
+  ladders: PrivacyComplianceLadder[]
+  disclosureLevels: PrivacyDisclosureLevelInfo[]
+  disclosure?: PrivacyDisclosureTool
+  requirements: PrivacyComplianceRequirement[]
+}
 
 /** What a project author writes. definePrivacyAdversaries derives the rest. */
 export interface PrivacyPromise {

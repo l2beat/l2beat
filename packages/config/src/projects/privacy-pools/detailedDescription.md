@@ -20,10 +20,6 @@ All notes derive from one recovery phrase. The website creates a random one or d
 
 **Ragequit.** The depositing address can take out a note's funds at any time, approved or not, directly from the pool. It reveals which deposit the funds belong to, and for a change note, the withdrawal that left it.
 
-### Compliance
-
-The ASP screens each depositing address before approving its deposit, under 0xbow's own due diligence. It may ask for a Proof of Association, which 0xbow's [separate app](https://tornado.0xbow.io) creates for Tornado Cash withdrawals. Every withdrawal must prove against the ASP's latest list, so a later list can revoke an earlier approval. A deposit without approval can leave only by ragequit.
-
 ### Fees
 
 Deposits pay a vetting fee, which the Entrypoint owner can withdraw. Relayers set their own fee per withdrawal, within a cap per asset:

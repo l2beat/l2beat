@@ -11,6 +11,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { cloakedAdversaries } from './adversaries'
+import { cloakedCompliance } from './compliance'
 import { cloakedRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('cloaked')
@@ -120,6 +121,7 @@ export const cloaked: BaseProject = {
     ],
     adversaries: cloakedAdversaries,
     riskSummary: cloakedRiskSummary,
+    compliance: cloakedCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),
     },

@@ -22,6 +22,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { privacyBoostAdversaries } from './adversaries'
+import { privacyBoostCompliance } from './compliance'
 import { privacyBoostRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('privacy-boost')
@@ -55,6 +56,10 @@ const withdrawFeeBps = discovery.getContractValue<number>(
   'PrivacyBoost',
   'withdrawFeeBps',
 )
+const auditorCount = discovery.getContractValue<string[]>(
+  'AuditGateway',
+  'getAllAuditors',
+).length
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -184,10 +189,6 @@ export const privacyBoost: BaseProject = {
         withdrawFee: formatBasisPoints(withdrawFeeBps),
         portalSweepFee: formatBasisPoints(portalSweepFeeBps),
         maxForcedInputs: String(maxForcedInputs),
-        auditorCount: discovery.getContractValue<string[]>(
-          'AuditGateway',
-          'getAllAuditors',
-        ).length,
       },
     ),
     links: {
@@ -405,6 +406,7 @@ export const privacyBoost: BaseProject = {
     ],
     adversaries: privacyBoostAdversaries,
     riskSummary: privacyBoostRiskSummary,
+    compliance: privacyBoostCompliance(auditorCount),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {
         adminMultisigStats,
