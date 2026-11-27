@@ -3,6 +3,7 @@ import {
   formatNumber,
   formatNumberWithCommas,
 } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -52,6 +53,12 @@ export type LiquidStakingChartProject = Pick<
 >
 
 const NETWORK_KEY = 'network'
+/**
+ * The cost of exit chart draws no higher than this, so a thin pool or a yield
+ * near zero, at thousands of days, can't squash the other lines. The tooltip
+ * keeps the real value.
+ */
+const MAX_DRAWN_DAYS = 365
 const ETH_STAKED_KEY = 'ethStaked'
 
 export const LIQUID_STAKING_RANGE_OPTIONS: {
@@ -70,12 +77,20 @@ export function LiquidStakingCharts({
   tvlLatest,
   defaultRange,
 }: {
-  projects: LiquidStakingChartProject[]
+  projects: (LiquidStakingChartProject & Pick<LiquidStakingEntry, 'risks'>)[]
   tvlLatest: CompleteTvlBreakdown | undefined
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
+  // As in the table, the protocols research hasn't reviewed start hidden.
+  const unreviewedKeys = useMemo(
+    () =>
+      projects
+        .filter((project) => project.risks === undefined)
+        .map((project) => project.id),
+    [projects],
+  )
   const rangePreset = useMemo(
     () =>
       rangeToOption(
@@ -106,11 +121,13 @@ export function LiquidStakingCharts({
         />
         <YieldChart
           projectSeries={projectSeries}
+          hiddenKeys={unreviewedKeys}
           range={range}
           frame={ChartCard}
         />
         <CostOfExitChart
           projectSeries={projectSeries}
+          hiddenKeys={unreviewedKeys}
           range={range}
           description={ALL_ROUTES_COST_OF_EXIT.chart}
           frame={ChartCard}
@@ -143,6 +160,8 @@ export interface LiquidStakingChartFrameProps {
 
 interface ChartProps {
   projectSeries: LiquidStakingChartSeries[]
+  /** Lines that start hidden; the legend shows them. */
+  hiddenKeys?: string[]
   range: ChartRange
   /** Only this project's line, for its own page. */
   projectId?: string
@@ -152,6 +171,7 @@ interface ChartProps {
 
 export function YieldChart({
   projectSeries,
+  hiddenKeys,
   range,
   projectId,
   frame,
@@ -220,6 +240,7 @@ export function YieldChart({
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Rate-implied yield"
+        hiddenKeys={hiddenKeys}
         formatYAxisLabel={(value) => formatYield(value, 1)}
         formatTooltipValue={(value) => formatYield(value, 2)}
         formatTooltipDate={(timestamp) =>
@@ -233,6 +254,7 @@ export function YieldChart({
 
 export function CostOfExitChart({
   projectSeries,
+  hiddenKeys,
   range,
   projectId,
   description,
@@ -249,14 +271,14 @@ export function CostOfExitChart({
       withProjectValues(
         data?.map((point) => ({
           timestamp: point.timestamp,
-          ...point.projects,
+          ...capDays(point.projects),
         })),
         projectSeries,
       ),
     [data, projectSeries],
   )
-  const estimated = useMemo(
-    () => new Map(data?.map((point) => [point.timestamp, point.estimated])),
+  const pointsByTimestamp = useMemo(
+    () => new Map(data?.map((point) => [point.timestamp, point])),
     [data],
   )
 
@@ -273,19 +295,43 @@ export function CostOfExitChart({
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
+        hiddenKeys={hiddenKeys}
+        // Exits range from free to a year, which a linear axis flattens
+        // into the floor. The axis always spans that, so every tick shows.
+        yAxis={{
+          scale: scaleSymlog,
+          domain: [0, MAX_DRAWN_DAYS],
+          ticks: [0, 1, 10, 100, MAX_DRAWN_DAYS],
+        }}
         formatYAxisLabel={(value) =>
-          `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
+          value >= MAX_DRAWN_DAYS
+            ? `${MAX_DRAWN_DAYS}d+`
+            : `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
         }
         // ~ marks a value that counts requests still queued.
-        formatTooltipValue={(value, key, timestamp) =>
-          `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`
-        }
+        formatTooltipValue={(value, key, timestamp) => {
+          const point = pointsByTimestamp.get(timestamp)
+          const days = point?.projects[key] ?? value
+          return `${point?.estimated.includes(key) ? '~' : ''}${formatDays(days)}`
+        }}
         formatTooltipDate={(timestamp) =>
           formatMetricDate(COST_OF_EXIT_METRIC, timestamp)
         }
       />
     ),
   })
+}
+
+/** At most MAX_DRAWN_DAYS, where the axis reads 365d+. */
+function capDays(
+  values: Record<string, number | null>,
+): Record<string, number | null> {
+  return Object.fromEntries(
+    Object.entries(values).map(([key, days]) => [
+      key,
+      days === null ? null : Math.min(days, MAX_DRAWN_DAYS),
+    ]),
+  )
 }
 
 /**

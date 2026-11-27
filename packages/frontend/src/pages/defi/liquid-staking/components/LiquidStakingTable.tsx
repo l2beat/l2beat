@@ -4,7 +4,7 @@ import {
   getSortedRowModel,
   type SortingState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { BasicTable } from '~/components/table/BasicTable'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
@@ -13,7 +13,9 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
+import { cn } from '~/utils/cn'
 import { LIQUID_STAKING_METRICS } from '../liquidStakingMetrics'
 import { LIQUID_STAKING_RISKS } from '../liquidStakingRisks'
 import {
@@ -94,9 +96,15 @@ export function LiquidStakingTable({
   entries: LiquidStakingEntry[]
 }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
+  const [showUnreviewed, setShowUnreviewed] = useState(false)
+  const reviewed = useMemo(
+    () => entries.filter((entry) => entry.risks !== undefined),
+    [entries],
+  )
+  const unreviewedCount = entries.length - reviewed.length
 
   const table = useTable('LiquidStakingTable', {
-    data: entries,
+    data: showUnreviewed ? entries : reviewed,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -114,6 +122,24 @@ export function LiquidStakingTable({
     <div className="mt-4">
       <ColumnsControls columns={table.getAllColumns()} />
       <BasicTable table={table} dense />
+      {unreviewedCount > 0 && (
+        <button
+          type="button"
+          aria-expanded={showUnreviewed}
+          onClick={() => setShowUnreviewed((show) => !show)}
+          className="mx-auto mt-3 flex cursor-pointer items-center gap-2.5 rounded-md border border-divider px-3 py-1.5 font-medium text-label-value-13 text-primary leading-4 transition-colors hover:bg-surface-secondary"
+        >
+          {showUnreviewed
+            ? 'Show fewer'
+            : `Show ${unreviewedCount} more ${unreviewedCount === 1 ? 'protocol' : 'protocols'}`}
+          <ChevronIcon
+            className={cn(
+              'size-3 fill-current transition-transform duration-300',
+              showUnreviewed && 'rotate-180',
+            )}
+          />
+        </button>
+      )}
     </div>
   )
 }

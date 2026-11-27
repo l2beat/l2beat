@@ -129,6 +129,23 @@ export class LiquidStakingSnapshotRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /** The ones of `projectIds` with a snapshot at or after `since`. */
+  async getProjectIdsWithSnapshotsSince(
+    projectIds: string[],
+    since: UnixTime,
+  ): Promise<string[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('LiquidStakingSnapshot')
+      .select('projectId')
+      .distinct()
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', UnixTime.toDate(since))
+      .execute()
+    return rows.map((row) => row.projectId)
+  }
+
   async deleteByConfigIds(ids: string[]): Promise<number> {
     if (ids.length === 0) return 0
 

@@ -7,6 +7,7 @@ import { getAbstractTokenLookup } from '../project/getDefiTokens'
 import type { LiquidStakingCharts } from './getLiquidStakingCharts'
 import {
   getLiquidStakingProjects,
+  getSyncedProjectIds,
   type LiquidStakingProject,
 } from './getLiquidStakingProjects'
 import {
@@ -26,7 +27,10 @@ export interface LiquidStakingEntry extends LiquidStakingSummary {
   href?: string
   description?: string
   isUnderReview: boolean
-  /** Whether the yield and the cost of exit are tracked, so it has chart lines. */
+  /**
+   * Whether the yield and the cost of exit are tracked and synced, so it has
+   * chart lines.
+   */
   isTracked: boolean
   tokens: LiquidStakingToken[]
 }
@@ -51,15 +55,22 @@ export async function loadLiquidStakingEntries(
   loadCharts: () => Promise<LiquidStakingCharts>,
 ): Promise<{ entries: LiquidStakingEntry[]; charts: LiquidStakingCharts }> {
   const projects = await getLiquidStakingProjects()
-  const [tvlByProject, charts, findAbstractToken] = await Promise.all([
+  const [tvlByProject, charts, findAbstractToken, synced] = await Promise.all([
     getLiquidStakingTvl(projects),
     loadCharts(),
     getAbstractTokenLookup(
       projects.flatMap((project) => project.defiInfo.tokens ?? []),
     ),
+    getSyncedProjectIds(projects),
   ])
   return {
-    entries: getEntries(projects, tvlByProject, charts, findAbstractToken),
+    entries: getEntries(
+      projects,
+      tvlByProject,
+      charts,
+      findAbstractToken,
+      synced,
+    ),
     charts,
   }
 }
@@ -72,6 +83,7 @@ function getEntries(
   findAbstractToken: (
     token: ProjectDefiToken,
   ) => AbstractTokenRecord | undefined,
+  synced: Set<string>,
 ): LiquidStakingEntry[] {
   return projects
     .map(
@@ -86,7 +98,7 @@ function getEntries(
           : `/defi/projects/${project.slug}`,
         description: project.display?.description,
         isUnderReview: !!project.statuses?.reviewStatus,
-        isTracked: project.liquidStaking.tracking !== undefined,
+        isTracked: synced.has(project.id),
         tokens: (project.defiInfo.tokens ?? []).map((token) => {
           const abstractToken = findAbstractToken(token)
           return {
