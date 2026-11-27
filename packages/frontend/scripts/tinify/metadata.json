@@ -1642,5 +1642,6 @@
   "static/icons/sfrxeth.png": "2bfa72ae5907fd3e6d72d5a460854115",
   "static/icons/ankr.png": "9ff1ff8cbf534594a494b100f4d9f971",
   "static/icons/sweth.png": "6c36dddd3a06600d53ff08db9418c038",
-  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30"
+  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30",
+  "static/meta-images/publications/hash-based-is-not-an-assumption.png": "47f62fdbc05e5f68ba7d356a9860d08c"
 }

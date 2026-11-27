@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
