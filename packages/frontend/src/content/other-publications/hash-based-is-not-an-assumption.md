@@ -8,30 +8,24 @@ tag: Research
 
 ## The "minimal assumptions" argument
 
-In Ethereum's post-quantum debate, hash-based cryptography is increasingly framed as "post-AI" as well, i.e. safe even if AI finds mathematical attacks humans missed. In the [pqai27 proposal](https://ethereum-magicians.org/t/an-ethlabs-view-on-post-quantum-and-post-ai-timelines-pqai27/30351), Ethlabs defines post-AI cryptography as resting on *"as few assumptions as possible"*, calling Ethereum *"plausibly post-AI, not provably"*, and writes:
+In Ethereum's post-quantum debate, hash-based cryptography is increasingly framed as "post-AI" as well, safe even if AI finds mathematical attacks humans missed. In the [pqai27 proposal](https://ethereum-magicians.org/t/an-ethlabs-view-on-post-quantum-and-post-ai-timelines-pqai27/30351), Ethlabs defines post-AI cryptography as resting on *"as few assumptions as possible"*, calling Ethereum *"plausibly post-AI, not provably"*, and writes:
 
 > *"The planned cryptography is built around hash functions, to minimize the assumptions we need to rely on. This is also the approach for the rest of the cryptography, such as aggregation. Minimal assumptions address both quantum computers and AI alike, so the existing plan already covers the cryptography for both."*
 
-In [PQAI #0](https://blog.ethereum.org/2026/11/23/pqai-0), the Ethereum Foundation (EF) frames this pragmatically, arguing for *"the most conservative assumptions"* available. Read in context, "minimal" in this debate means **practically minimal**: unlike lattice schemes such as [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) or [Falcon](https://falcon-sign.info/), hash-based designs avoid introducing an algebraic assumption family like [Module-LWE](https://en.wikipedia.org/wiki/Learning_with_errors) or [NTRU](https://en.wikipedia.org/wiki/NTRU).
+Read charitably, "minimal" here means **practically minimal**: compared to lattice schemes such as [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) or [Falcon](https://falcon-sign.info/), hash-based designs avoid introducing a new algebraic assumption family like [Module-LWE](https://en.wikipedia.org/wiki/Learning_with_errors) or [NTRU](https://en.wikipedia.org/wiki/NTRU). Yet that framing easily slips into the stronger claim that switching to hash-based signatures adds **no new assumptions**. In [PQAI #0](https://blog.ethereum.org/2026/11/23/pqai-0), after arguing for *"the most conservative assumptions"*, the Ethereum Foundation (EF) writes: *"The Ethereum protocol already relies on hashes being secure, so importantly this does not add a new assumption."* The same shorthand shows up in core dev calls: in [ACDE #249](https://forkcast.org/calls/acde/249), SPHINCS was defended with *"SPHINCS does not add new crypto assumptions (we already have [Keccak]), while Lattices would."*
 
-Even so, that pragmatic framing easily slips into the stronger claim that replacing elliptic curves with hash-based signatures adds **no new assumptions**. In PQAI #0, the EF writes: *"The Ethereum protocol already relies on hashes being secure, so importantly this does not add a new assumption."* The same shorthand shows up in core dev discussions: in the [ACDE #249](https://forkcast.org/calls/acde/249) call chat, SPHINCS was defended with *"SPHINCS does not add new crypto assumptions (we already have [Keccak]), while Lattices would."*
+**"Hash-based" names a building block, not an assumption.** This distinction matters because while adding post-quantum signatures is not in question, dropping elliptic curves at the same time is not free. Whenever a hash-based scheme quietly introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks while elliptic curves are still standing, dropping them leaves you worse off.**
 
-**"Hash-based" names a building block, not an assumption.** Saying a hash function $f$ is secure can mean very different things, starting with three classic properties:
+Saying a hash function $f$ is "secure" can mean very different things, starting with three classic properties:
 
 1. **One-wayness (preimage resistance):** Given only the output $f(x)$ for a random input $x$, nobody can find *any* input that hashes to it.
 2. **Second-preimage resistance:** Given a random input $x$, nobody can find a *different* input $x' \neq x$ with $f(x') = f(x)$.
 3. **Collision resistance:** Nobody can find *any* pair of distinct inputs $x \neq x'$ with $f(x) = f(x')$.
 
-These are not equivalent, and even all three together do not cover everything hash-based schemes rely on.
-
-Elliptic curves will not survive large quantum computers, so adding post-quantum signatures is not in question. Dropping elliptic curves at the same time is not free. Whenever a hash-based scheme introduces new hash assumptions of its own, you are trading risk rather than purely removing it: **if one of those new assumptions breaks while elliptic curves are still standing, dropping them leaves you worse off.**
-
-We compare two one-time signature schemes on the same hash function $f$. **Lamport** is the minimal hash-based signature scheme. **Winternitz** is the standard efficiency optimization on top of it, and the core building block inside [XMSS](https://datatracker.ietf.org/doc/html/rfc8391), [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`. The result:
+Ethereum's core protocol uses of Keccak-256 rely primarily on collision and preimage resistance. To show why those properties do not automatically carry over to hash-based signatures, we compare two one-time schemes built on the same hash function $f$: **Lamport**, the minimal hash-based signature scheme, and **Winternitz**, the standard efficiency optimization inside [XMSS](https://datatracker.ietf.org/doc/html/rfc8391), [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`.
 
 - **One-wayness alone is enough for Lamport.**
 - **Even one-wayness and collision resistance together are provably *not* enough for textbook Winternitz.** We'll build an explicit hash function that is both one-way and collision-resistant whenever SHA-256 is, so Lamport over it stays secure, yet lets an attacker forge Winternitz signatures almost 100% of the time.
-
-Ethereum's core protocol uses of Keccak-256 rely primarily on collision and preimage resistance. This counterexample shows directly that neither property carries over automatically once you iterate a hash inside a Winternitz chain.
 
 ---
 
