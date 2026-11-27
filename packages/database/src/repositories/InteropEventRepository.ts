@@ -301,7 +301,7 @@ export class InteropEventRepository extends BaseRepository {
       lastTimestamp: Date
     }>`
       WITH prices AS (
-        SELECT chain, token, sum(usd) / nullif(sum(raw), 0) AS "perRaw"
+        SELECT chain, token, sum(usd::double precision) / nullif(sum(raw), 0) AS "perRaw"
         FROM (
           SELECT "srcChain" AS chain, right(lower("srcTokenAddress"), 40) AS token,
             "srcValueUsd" AS usd, "srcRawAmount"::numeric AS raw

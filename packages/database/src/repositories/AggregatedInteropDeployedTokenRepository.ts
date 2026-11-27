@@ -135,7 +135,7 @@ export class AggregatedInteropDeployedTokenRepository extends BaseRepository {
         'dstChain',
         'tokenChain',
         'tokenAddress',
-        sql<number>`sum(volume)::double precision`.as('volume'),
+        sql<number>`sum(volume::double precision)`.as('volume'),
         sql<number>`sum("transferCount")::integer`.as('transferCount'),
         eb.fn.max('timestamp').as('lastSeen'),
       ])

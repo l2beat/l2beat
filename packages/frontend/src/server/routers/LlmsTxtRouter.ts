@@ -2,6 +2,14 @@ import express from 'express'
 import { externalLinks } from '~/consts/externalLinks'
 import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
+  API_MIGRATION_GUIDE_PATH,
+  formatSunsetDate,
+  OLD_PUBLIC_API_PATH,
+  OLD_PUBLIC_API_SUNSET_AT,
+  PUBLIC_API_DOCS_URL,
+  PUBLIC_API_URL,
+} from '~/consts/publicApi'
+import {
   RENAME_ANNOUNCEMENT_PATH,
   SITE_NAME_WITH_FORMER,
 } from '~/consts/siteName'
@@ -61,14 +69,14 @@ const LLMS_TXT = {
     '- Links ending in .md are markdown: summary pages list every tracked project with its page URL, and the Markdown pages section covers single projects. The other links are HTML pages.',
     '- Prefer the .md URLs: page URLs also answer Accept: text/markdown, but an edge cache may serve them as HTML.',
     '- Slugs and interop token ids are case-sensitive: use them exactly as listed.',
-    `- {slug} in API paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
-    '- All API endpoints except the scaling summary wrap their result as { success, data }.',
+    `- {slug} in page paths is the last segment of a project page URL, e.g. arbitrum for ${PRODUCTION_ORIGIN}/layer2s/projects/arbitrum.`,
+    `- {projectId} in API paths is a project id, not a slug: ${PUBLIC_API_URL}/v1/projects lists both for every project. They can differ, e.g. slug op-mainnet, id optimism.`,
     '- "Stage" is the rollup maturity level (Stage 0, 1 or 2) defined by the stages framework linked below.',
     '',
     'When to use ETHBEAT:',
     '',
     '- To answer which layer 2s exist, how mature they are (stage), what their risks are and how they compare.',
-    '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API.',
+    '- To get current or historical total value secured, activity, liveness or cost figures for a layer 2, via the pages or the JSON API (see Public API).',
     '- To check where a layer 2 posts its data and how secure that data availability layer and its bridge are.',
     '- To look up which proving system, stack or ecosystem a project uses, or the definitions behind ETHBEAT terms.',
     '- To review or compare privacy protocols on Ethereum (privacy pools, shielded pools and ledgers, stealth addresses, confidential tokens): what each one hides and from which adversary, anonymity set sizes, trusted setups and exit windows. Start from /privacy/summary.md, then /privacy/projects/{slug}.md for one protocol.',
@@ -386,45 +394,57 @@ const MARKDOWN_PAGES_SECTION: LinkListSection = {
   ],
 }
 
-/** To list a new endpoint, add one entry here; a test compares this with the public API router. */
+/**
+ * The endpoints of `packages/public-api` that agents need most. Its OpenAPI
+ * schema, linked first, is the full and authoritative list.
+ */
 const API_SECTION: LinkListSection = {
   heading: 'Public API',
   links: [
     {
-      name: 'Scaling summary',
-      path: '/api/scaling/summary',
-      description:
-        'JSON of every active layer 2 and layer 3 (stage, risks, TVS breakdown, category, stack) plus a 30-day TVS chart.',
+      name: 'API docs',
+      url: PUBLIC_API_DOCS_URL,
+      description: `Every endpoint, with the OpenAPI schema at ${PUBLIC_API_URL}/openapi. No API key; rate limited.`,
     },
     {
-      name: 'Scaling TVS',
-      path: '/api/scaling/tvs',
+      name: 'Projects',
+      url: `${PUBLIC_API_URL}/v1/projects`,
       description:
-        'Current USD and ETH value plus a TVS chart (native, canonical, external, ETH price); query params: range, type, projectIds, excludeAssociatedTokens, excludeRwaRestrictedTokens (defaults to true).',
+        'Every tracked project with id, slug, stage, risks, latest TVS, type and stack; /v1/project/{projectId} returns one. Maps a slug to a project id.',
+    },
+    {
+      name: 'Project tokens',
+      url: `${PUBLIC_API_URL}/v1/project/{projectId}/tokens`,
+      description:
+        'The tokens making up one project TVS, with amounts and USD values.',
+    },
+    {
+      name: 'TVS',
+      url: `${PUBLIC_API_URL}/v1/tvs`,
+      description:
+        'TVS chart summed over every active project; query params: range, excludeAssociatedTokens, excludeRwaRestrictedTokens (defaults to false).',
     },
     {
       name: 'Project TVS',
-      path: '/api/scaling/tvs/{slug}',
-      description:
-        'Current USD and ETH value plus a TVS chart for one project; query params: range, excludeAssociatedTokens, excludeRwaRestrictedTokens (defaults to true).',
+      url: `${PUBLIC_API_URL}/v1/tvs/{projectId}`,
+      description: 'TVS chart for one project; same query params.',
     },
     {
-      name: 'Project TVS breakdown',
-      path: '/api/scaling/tvs/{slug}/breakdown',
+      name: 'Activity',
+      url: `${PUBLIC_API_URL}/v1/activity`,
       description:
-        'The tokens making up one project TVS, with amounts, USD values, category and bridging source.',
-    },
-    {
-      name: 'Scaling activity',
-      path: '/api/scaling/activity',
-      description:
-        'Chart of transaction and user operation counts for layer 2s; query params: range, type, projectIds.',
+        'Daily transaction and user operation counts of all active layer 2s and layer 3s; query param: range.',
     },
     {
       name: 'Project activity',
-      path: '/api/scaling/activity/{slug}',
+      url: `${PUBLIC_API_URL}/v1/activity/{projectId}`,
       description:
-        'Chart of transaction and user operation counts for one project, or for Ethereum with slug ethereum; query param: range.',
+        'The same for one project, or for Ethereum with the id ethereum.',
+    },
+    {
+      name: 'Migration guide',
+      path: `${API_MIGRATION_GUIDE_PATH}.md`,
+      description: `The old ${OLD_PUBLIC_API_PATH} endpoints stop working on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: how to move to the API above.`,
     },
   ],
 }

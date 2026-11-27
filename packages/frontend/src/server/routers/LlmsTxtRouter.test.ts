@@ -1,20 +1,18 @@
 import { expect } from 'earl'
-import type express from 'express'
 import { env } from '~/env'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
 import {
+  DOCUMENT_PAGES_WITH_MARKDOWN,
   LIST_PAGES_WITH_MARKDOWN,
   PROJECT_PAGES_WITH_MARKDOWN,
 } from '~/utils/getMarkdownAlternatePath'
 import { createLlmsTxtRouter } from './LlmsTxtRouter'
-import { createPublicApiRouter } from './PublicApiRouter'
 
 // Method: request /llms.txt over HTTP and check it against the llms.txt spec
 // (H1 title, blockquote summary, H2 sections of `- [name](url): notes` links,
-// small enough to fit in context). The API list is compared with the routes
-// the public API router registers and the .md links with the pages registered
-// as having a markdown version, so a new or removed one fails here until
-// llms.txt is updated.
+// small enough to fit in context). The .md links are compared with the pages
+// registered as having a markdown version, so a new or removed one fails here
+// until llms.txt is updated.
 describe(createLlmsTxtRouter.name, () => {
   it('serves markdown as plain text', async () => {
     const response = await fetchFromRouter(createLlmsTxtRouter(), '/llms.txt')
@@ -87,6 +85,7 @@ describe(createLlmsTxtRouter.name, () => {
     const registered = [
       ...LIST_PAGES_WITH_MARKDOWN,
       ...PROJECT_PAGES_WITH_MARKDOWN,
+      ...DOCUMENT_PAGES_WITH_MARKDOWN,
     ].map((page) => `https://ethbeat.org${toUrlTemplate(page)}.md`)
     expect(urls.toSorted()).toEqual(registered.toSorted())
   })
@@ -145,17 +144,18 @@ describe(createLlmsTxtRouter.name, () => {
     )
   })
 
-  it('lists exactly the /api endpoints the public API router registers', async () => {
-    // Non-/api entries (e.g. markdown page alternates) are not JSON API
-    // routes, so only /api links are held to the router.
-    const urls = getLinks(await getLlmsTxt(), 'Public API')
-      .map((l) => l.url)
-      .filter((url) => url.startsWith('https://ethbeat.org/api/'))
+  // Why: the old API under /api/scaling is being retired, so nothing here may
+  // send an agent to it. The guide is the one link allowed to name it.
+  it('points agents at the new API host and never at the old /api paths', async () => {
+    const links = getLinks(await getLlmsTxt(), 'Public API').map((l) => l.url)
 
-    const registered = getRegisteredPaths(createPublicApiRouter()).map(
-      (path) => `https://ethbeat.org${toUrlTemplate(path)}`,
+    expect(links).toInclude(
+      'https://api.ethbeat.org/docs',
+      'https://api.ethbeat.org/v1/projects',
+      'https://ethbeat.org/api-migration.md',
     )
-    expect(urls.toSorted()).toEqual(registered.toSorted())
+    const allUrls = getAllLinks(await getLlmsTxt()).map((l) => l.url)
+    expect(allUrls.filter((url) => url.includes('/api/'))).toEqual([])
   })
 
   it('describes every link in one line', async () => {
@@ -201,10 +201,4 @@ function parseLink(line: string) {
 /** llms.txt documents the shortest URL of a page, without its optional segments. */
 function toUrlTemplate(routePath: string) {
   return routePath.replaceAll(/\{[^}]*\}/g, '').replaceAll(/:(\w+)/g, '{$1}')
-}
-
-function getRegisteredPaths(router: express.Router) {
-  return router.stack.flatMap((layer) =>
-    layer.route ? [String(layer.route.path)] : [],
-  )
 }

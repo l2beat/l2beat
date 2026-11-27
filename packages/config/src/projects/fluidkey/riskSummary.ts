@@ -5,7 +5,7 @@ export const fluidkeyRiskSummary = definePrivacyRisks({
     "the closed-source app is malicious or hacked and steals the user's spending keys.",
     "Privy's code or key share is compromised, for accounts created with a Google, Apple, email or Farcaster login on the web.",
     "a Fluidkey signer returns an attacker's address when a payer looks up a Fluidkey name.",
-    "Fluidkey's server marks a transfer as approved, and the open app signs it without showing the user.",
+    "Fluidkey's server builds a transfer to another recipient, and the app signs it when the user confirms a send.",
   ],
   lost: [
     'a user loses the login, wallet, PIN or backup needed to recover the spending key.',
