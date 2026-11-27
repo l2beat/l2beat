@@ -11,7 +11,7 @@ describe(renderApiMigrationGuideMarkdown.name, () => {
   const markdown = renderApiMigrationGuideMarkdown(guide)
 
   it('opens with the title and maps every old endpoint to its new one', () => {
-    expect(markdown).toMatchRegex(/^# Moving to the new ETHBEAT API\n/)
+    expect(markdown).toMatchRegex(/^# Upgrade to the ETHBEAT API\n/)
     for (const endpoint of guide.endpoints) {
       expect(markdown).toInclude(
         `| \`${endpoint.oldPath}\` | \`${endpoint.newPath}\` |`,
@@ -31,6 +31,7 @@ describe(renderApiMigrationGuideMarkdown.name, () => {
 
   it('keeps every note and difference', () => {
     const notes = [
+      ...guide.benefits.notes,
       ...guide.general.notes,
       ...guide.endpoints.flatMap((endpoint) => endpoint.differences),
     ]

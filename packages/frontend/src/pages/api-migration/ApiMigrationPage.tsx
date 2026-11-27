@@ -26,6 +26,7 @@ export function ApiMigrationPage({ guide, ...props }: Props) {
         <MainPageHeader>{guide.title}</MainPageHeader>
         <main className="flex flex-col max-md:divide-y max-md:divide-divider md:gap-4">
           <Overview guide={guide} />
+          <Migration migration={guide.migration} />
           <EndpointMap endpoints={guide.endpoints} />
           <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 xl:grid-cols-2">
             <ProjectIds ids={guide.ids} />
@@ -43,24 +44,10 @@ export function ApiMigrationPage({ guide, ...props }: Props) {
 function Overview({ guide }: { guide: ApiMigrationGuide }) {
   return (
     <PrimaryCard>
-      <Eyebrow>Public API</Eyebrow>
+      <Eyebrow>API upgrade</Eyebrow>
       {/* MainPageHeader shows its title on desktop only */}
       <h1 className="mt-1 font-bold text-2xl lg:hidden">{guide.title}</h1>
       <Text className="mt-2 text-lg leading-7">{guide.lede}</Text>
-      <dl className="mt-5 grid gap-2 md:grid-cols-3">
-        {guide.facts.map((fact) => (
-          <div
-            key={fact.label}
-            className="rounded-lg bg-surface-secondary px-4 py-3"
-          >
-            <dt className={LABEL}>{fact.label}</dt>
-            <dd className="mt-1 font-bold text-xl">{fact.value}</dd>
-            <dd className="text-sm">
-              <Text>{fact.detail}</Text>
-            </dd>
-          </div>
-        ))}
-      </dl>
       <div className="mt-4 flex flex-wrap gap-2">
         {guide.links.map((link, i) => (
           <a
@@ -76,8 +63,47 @@ function Overview({ guide }: { guide: ApiMigrationGuide }) {
           </a>
         ))}
       </div>
-      <div className="mt-5 flex flex-col gap-3">
-        {guide.intro.map((paragraph) => (
+      <h2 className={cn(HEADING, 'mt-7')}>{guide.benefits.title}</h2>
+      <ul className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+        {guide.benefits.notes.map((note) => (
+          <li
+            key={note.title}
+            className="rounded-lg bg-surface-secondary px-4 py-3"
+          >
+            {note.title && <Text className="font-bold">{note.title}</Text>}
+            <Text className="mt-1 text-sm leading-5">{note.text}</Text>
+          </li>
+        ))}
+      </ul>
+    </PrimaryCard>
+  )
+}
+
+function Migration({
+  migration,
+}: {
+  migration: ApiMigrationGuide['migration']
+}) {
+  return (
+    <PrimaryCard>
+      <Eyebrow>Action needed</Eyebrow>
+      <h2 className={cn(HEADING, 'mt-1')}>{migration.title}</h2>
+      <dl className="grid gap-2 md:grid-cols-3">
+        {migration.facts.map((fact) => (
+          <div
+            key={fact.label}
+            className="rounded-lg bg-surface-secondary px-4 py-3"
+          >
+            <dt className={LABEL}>{fact.label}</dt>
+            <dd className="mt-1 font-bold text-xl">{fact.value}</dd>
+            <dd className="text-sm">
+              <Text>{fact.detail}</Text>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <div className="mt-4 flex flex-col gap-3">
+        {migration.intro.map((paragraph) => (
           <Text key={paragraph}>{paragraph}</Text>
         ))}
       </div>
