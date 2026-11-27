@@ -3,6 +3,7 @@ import {
   formatNumber,
   formatNumberWithCommas,
 } from '@l2beat/shared-pure'
+import { scaleSymlog } from 'd3-scale'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -70,12 +71,20 @@ export function LiquidStakingCharts({
   tvlLatest,
   defaultRange,
 }: {
-  projects: LiquidStakingChartProject[]
+  projects: (LiquidStakingChartProject & Pick<LiquidStakingEntry, 'risks'>)[]
   tvlLatest: CompleteTvlBreakdown | undefined
   defaultRange: ChartRange
 }) {
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectSeries = useMemo(() => getProjectSeries(projects), [projects])
+  // As in the table, the protocols research hasn't reviewed start hidden.
+  const unreviewedKeys = useMemo(
+    () =>
+      projects
+        .filter((project) => project.risks === undefined)
+        .map((project) => project.id),
+    [projects],
+  )
   const rangePreset = useMemo(
     () =>
       rangeToOption(
@@ -106,11 +115,13 @@ export function LiquidStakingCharts({
         />
         <YieldChart
           projectSeries={projectSeries}
+          hiddenKeys={unreviewedKeys}
           range={range}
           frame={ChartCard}
         />
         <CostOfExitChart
           projectSeries={projectSeries}
+          hiddenKeys={unreviewedKeys}
           range={range}
           description={ALL_ROUTES_COST_OF_EXIT.chart}
           frame={ChartCard}
@@ -143,6 +154,8 @@ export interface LiquidStakingChartFrameProps {
 
 interface ChartProps {
   projectSeries: LiquidStakingChartSeries[]
+  /** Lines that start hidden; the legend shows them. */
+  hiddenKeys?: string[]
   range: ChartRange
   /** Only this project's line, for its own page. */
   projectId?: string
@@ -152,6 +165,7 @@ interface ChartProps {
 
 export function YieldChart({
   projectSeries,
+  hiddenKeys,
   range,
   projectId,
   frame,
@@ -220,6 +234,7 @@ export function YieldChart({
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Rate-implied yield"
+        hiddenKeys={hiddenKeys}
         formatYAxisLabel={(value) => formatYield(value, 1)}
         formatTooltipValue={(value) => formatYield(value, 2)}
         formatTooltipDate={(timestamp) =>
@@ -233,6 +248,7 @@ export function YieldChart({
 
 export function CostOfExitChart({
   projectSeries,
+  hiddenKeys,
   range,
   projectId,
   description,
@@ -273,6 +289,10 @@ export function CostOfExitChart({
         isLoading={isLoading}
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
+        hiddenKeys={hiddenKeys}
+        // Exits range from free to thousands of days, which a linear axis
+        // flattens into the floor.
+        yAxisScale={scaleSymlog}
         formatYAxisLabel={(value) =>
           `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
         }

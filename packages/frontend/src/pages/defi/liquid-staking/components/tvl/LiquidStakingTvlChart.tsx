@@ -48,7 +48,7 @@ import {
 } from './liquidStakingTvlLayers'
 
 const DESCRIPTION = [
-  "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. In Staked view, the layers add up to the balance of all active Ethereum validators: Other stakers is the rest, staked solo, through exchanges or through protocols not listed here.",
+  "Each protocol's layer is the ETH its tokens stand for at its own exchange rate. In Staked view, the layers add up to the balance of all active Ethereum validators: Other stakers is the rest, staked solo, through exchanges or through protocols not shown here.",
   "USD values are that ETH at the day's ETH price, so they can differ slightly from the TVL in the table, which prices the tokens themselves.",
   'A protocol also holds ETH not yet staked, or exited but not yet withdrawn, so Other stakers can read slightly low. Days on which a protocol has no data show no Other stakers.',
   `In vs. Supply view, Not staked is the rest of ETH's supply: ${SUPPLY_SOURCE} Above a protocol without data for a day, the stack shows nothing that day.`,
@@ -234,9 +234,10 @@ export function LiquidStakingTvlChart({
             </div>
           </div>
 
-          {/* On large screens the rail sets the card's height and the chart
-              fills what is left; absolute so its measured size can't hold the
-              column taller. */}
+          {/* On large screens the chart's minimum height sets the card's,
+              and the rail's protocol list scrolls in what that leaves;
+              absolute so the chart's measured size can't hold the column
+              taller. */}
           <div className="mt-4 flex min-w-0 flex-1 flex-col lg:relative lg:min-h-[220px] lg:[&>div]:absolute lg:[&>div]:inset-0">
             <ChartContainer
               data={chartData}

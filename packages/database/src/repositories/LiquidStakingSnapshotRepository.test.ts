@@ -65,6 +65,22 @@ describeDatabase(LiquidStakingSnapshotRepository.name, (db) => {
     ).toEqual([record('a', 0), record('a', 24)])
   })
 
+  it('gets the projects with a snapshot since a time', async () => {
+    await repository.upsertMany([
+      record('a', 1),
+      record('a', 5),
+      record('b', 2),
+      record('c', 9),
+    ])
+
+    expect(
+      await repository.getProjectIdsWithSnapshotsSince(
+        ['project-a', 'project-b'],
+        UnixTime(3 * UnixTime.HOUR),
+      ),
+    ).toEqual(['project-a'])
+  })
+
   it('deletes by configuration and by time range', async () => {
     await repository.upsertMany([
       record('a', 1),

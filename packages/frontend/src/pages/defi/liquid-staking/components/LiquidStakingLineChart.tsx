@@ -11,6 +11,7 @@ import {
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import {
   type ChartSeries,
+  type ChartYAxis,
   TimeSeriesChart,
 } from '~/components/core/chart/TimeSeriesChart'
 
@@ -44,6 +45,10 @@ interface Props {
   isPlaceholderData: boolean
   ariaLabel: string
   formatYAxisLabel: (value: number) => string
+  /** Linear by default. */
+  yAxisScale?: ChartYAxis['scale']
+  /** Series that start hidden; the legend shows them. */
+  hiddenKeys?: string[]
   formatTooltipValue: (value: number, key: string, timestamp: number) => string
   formatTooltipDate: (timestamp: number) => string
   background?: LiquidStakingChartBackground
@@ -57,6 +62,8 @@ export function LiquidStakingLineChart({
   isPlaceholderData,
   ariaLabel,
   formatYAxisLabel,
+  yAxisScale,
+  hiddenKeys,
   formatTooltipValue,
   formatTooltipDate,
   background,
@@ -89,7 +96,7 @@ export function LiquidStakingLineChart({
   }, [series, background])
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
-    useChartDataKeys(chartMeta)
+    useChartDataKeys(chartMeta, hiddenKeys)
 
   const chartSeries: ChartSeries<string, LiquidStakingChartData[number]>[] = [
     ...(background
@@ -133,7 +140,7 @@ export function LiquidStakingLineChart({
         data={data}
         series={chartSeries}
         ariaLabel={ariaLabel}
-        yAxis={{ format: formatYAxisLabel, tickCount: 4 }}
+        yAxis={{ format: formatYAxisLabel, tickCount: 4, scale: yAxisScale }}
         rightAxis={
           background
             ? // The same count as the left axis puts both sets of labels

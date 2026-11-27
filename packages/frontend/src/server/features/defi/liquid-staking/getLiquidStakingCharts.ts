@@ -12,7 +12,10 @@ import {
   trimLeadingIncomplete,
   YIELD_WINDOW_DAYS,
 } from './computeLiquidStakingCharts'
-import { getLiquidStakingProjects } from './getLiquidStakingProjects'
+import {
+  getLiquidStakingProjects,
+  getSyncedProjectIds,
+} from './getLiquidStakingProjects'
 import { getTvlInEthAt, type TvlInEthProject } from './getTvlInEthAt'
 import { type TvlBreakdown, toBreakdown } from './liquidStakingTvlBreakdown'
 
@@ -202,14 +205,14 @@ export async function getLiquidStakingCostOfExitChart(
   return computeCostOfExitChart({ days, projectIds, snapshots })
 }
 
-/** The tracked ones, as only they have chart values. */
+/** The synced ones, as only they have chart values. */
 async function getProjects(params: LiquidStakingChartsParams) {
-  const projects = await getLiquidStakingProjects()
-  return projects.filter(
+  const projects = (await getLiquidStakingProjects()).filter(
     (project) =>
-      project.liquidStaking.tracking !== undefined &&
-      (params.projectId === undefined || project.id === params.projectId),
+      params.projectId === undefined || project.id === params.projectId,
   )
+  const synced = await getSyncedProjectIds(projects)
+  return projects.filter((project) => synced.has(project.id))
 }
 
 /**

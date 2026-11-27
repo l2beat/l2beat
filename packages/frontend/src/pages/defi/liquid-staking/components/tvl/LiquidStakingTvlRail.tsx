@@ -9,6 +9,13 @@ import { inUnit, type TvlLayer } from './liquidStakingTvlLayers'
 
 const OTHER_STAKED_COLOR =
   'color-mix(in oklab, var(--secondary) 50%, transparent)'
+/**
+ * Rows of the staked breakdown. Under the chart they join the list's grid;
+ * beside it they scroll, inset so the rows' hover fill isn't cut, with the
+ * scrollbar's room kept in every group so the values line up.
+ */
+const ROW_GROUP =
+  'flex flex-col gap-0.5 md:max-lg:contents lg:-mx-1.5 lg:overflow-y-auto lg:px-1.5 lg:scrollbar-gutter-stable'
 
 export function LiquidStakingTvlRail({
   layers,
@@ -32,6 +39,29 @@ export function LiquidStakingTvlRail({
   const inChosenUnit = latest && inUnit(latest, unit)
   const protocolLayers = layers.filter((layer) => layer.role === 'protocol')
   const liquidColors = protocolLayers.slice(0, 3).map((layer) => layer.fill)
+  const renderRow = (layer: TvlLayer) => (
+    <ShareRow
+      key={layer.key}
+      active={visibleKeys.includes(layer.key)}
+      onClick={() => onToggleLayer(layer)}
+      swatch={
+        <Swatch
+          className={cn(
+            layer.stroke && 'border',
+            layer.strokeDasharray && 'border-dashed',
+          )}
+          style={{
+            backgroundColor: layer.fill,
+            borderColor: layer.stroke,
+          }}
+        />
+      }
+      label={layer.label}
+      value={inChosenUnit && layer.value(inChosenUnit)}
+      unit={unit}
+      share={formatShare(latest && layer.value(latest), latest?.staked)}
+    />
+  )
   const liquidSwatch =
     liquidColors.length > 1
       ? `linear-gradient(135deg, ${liquidColors.join(', ')})`
@@ -76,7 +106,7 @@ export function LiquidStakingTvlRail({
         </div>
       )}
 
-      <div className="flex flex-col border-divider border-t pt-3 lg:flex-1">
+      <div className="flex flex-col border-divider border-t pt-3 lg:min-h-0 lg:flex-1">
         <div className="mb-2 flex items-center justify-between gap-2">
           <Heading className="mb-0">Staked ETH share</Heading>
           <button
@@ -96,30 +126,21 @@ export function LiquidStakingTvlRail({
             total={latest.staked}
           />
         )}
-        <div className="mt-2 flex flex-col gap-0.5 md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:gap-x-8">
-          {layers.map((layer) => (
-            <ShareRow
-              key={layer.key}
-              active={visibleKeys.includes(layer.key)}
-              onClick={() => onToggleLayer(layer)}
-              swatch={
-                <Swatch
-                  className={cn(
-                    layer.stroke && 'border',
-                    layer.strokeDasharray && 'border-dashed',
-                  )}
-                  style={{
-                    backgroundColor: layer.fill,
-                    borderColor: layer.stroke,
-                  }}
-                />
-              }
-              label={layer.label}
-              value={inChosenUnit && layer.value(inChosenUnit)}
-              unit={unit}
-              share={formatShare(latest && layer.value(latest), latest?.staked)}
-            />
-          ))}
+        <div className="mt-2 flex flex-col gap-0.5 md:max-lg:grid md:max-lg:grid-cols-2 md:max-lg:gap-x-8 lg:min-h-0 lg:flex-1">
+          {/* Beside the chart, the protocols fill the height the chart sets
+              and scroll in it, so adding one doesn't stretch the card. With
+              no height of their own (basis 0), they never set it. */}
+          <div className={cn(ROW_GROUP, 'lg:min-h-24 lg:flex-1 lg:basis-0')}>
+            {protocolLayers.map(renderRow)}
+          </div>
+          <div
+            className={cn(
+              ROW_GROUP,
+              'lg:mt-0.5 lg:border-divider lg:border-t lg:pt-1',
+            )}
+          >
+            {layers.filter((layer) => layer.role !== 'protocol').map(renderRow)}
+          </div>
         </div>
       </div>
     </div>
