@@ -12,7 +12,11 @@ export function LlmsLinkHeaderMiddleware() {
   return (req: Request, res: Response, next: NextFunction) => {
     if (isPageRequest(req) && !hasExtension(req.path)) {
       res.header('Link', getLinkHeader(req.path))
-      dropAlternateFromErrorResponses(res)
+      // Only where there is an alternate to drop: resetting the header on
+      // other paths would wipe links a later handler added to its error
+      if (getMarkdownAlternatePath(req.path)) {
+        dropAlternateFromErrorResponses(res)
+      }
     }
     next()
   }

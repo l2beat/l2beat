@@ -35,11 +35,26 @@ describe(LlmsLinkHeaderMiddleware.name, () => {
       expect(response.headers.get('link')).toEqual(LLMS_TXT_ONLY)
     }
   })
+
+  // Why: the old API's 410 points its callers at the migration guide through
+  // Link, on a path that has no markdown alternate to drop.
+  it('keeps the links a handler added to an error on a path without an alternate', async () => {
+    const response = await fetchFromRouter(createRouter(), '/api/gone')
+
+    expect(response.status).toEqual(410)
+    expect(response.headers.get('link')).toEqual(
+      `${LLMS_TXT_ONLY}, <https://ethbeat.org/guide>; rel="deprecation"`,
+    )
+  })
 })
 
 function createRouter() {
   const router = express.Router()
   router.use(LlmsLinkHeaderMiddleware())
+  router.get('/api/gone', (_req, res) => {
+    res.append('Link', '<https://ethbeat.org/guide>; rel="deprecation"')
+    res.status(410).send('body')
+  })
   router.get('/layer2s/projects/:status', (req, res) => {
     res.status(Number(req.params.status)).send('body')
   })

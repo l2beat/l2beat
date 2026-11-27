@@ -1,9 +1,11 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
+import { OLD_PUBLIC_API_PATH } from '~/consts/publicApi'
 import { ActivityProjectFilterType } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import { TvsProjectFilterType } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
+import { DeprecationHeadersMiddleware } from './deprecationHeaders'
 import { getL2ActivityApiData } from './getL2ActivityApiData'
 import { getL2ActivityProjectApiData } from './getL2ActivityProjectApiData'
 import { getL2SummaryApiData } from './getL2SummaryApiData'
@@ -16,6 +18,8 @@ const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
 
 export function createPublicApiRouter() {
   const router = express.Router()
+
+  router.use(OLD_PUBLIC_API_PATH, DeprecationHeadersMiddleware())
 
   router.get(
     '/api/scaling/activity',
