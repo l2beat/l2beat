@@ -1,5 +1,5 @@
 import { scaleLog } from 'd3-scale'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { ChartContainer } from '~/components/core/chart/ChartContainer'
 import type { ChartMeta } from '~/components/core/chart/ChartContext'
 import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
@@ -9,12 +9,9 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import {
   type ChartSeries,
   TimeSeriesChart,
-  type TimeSeriesChartHandle,
 } from '~/components/core/chart/TimeSeriesChart'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { useIsOnScreen } from '~/hooks/useIsOnScreen'
-import { useResizeObserver } from '~/hooks/useResizeObserver'
 import {
   GAS_FEES_CHART_KEYS,
   type GasFeesChartKey,
@@ -128,16 +125,24 @@ export function FeeChart({
       ? highlight.chain
       : undefined
 
-  const wrapperRef = useRef<HTMLDivElement>(null)
-  const { width } = useResizeObserver({ ref: wrapperRef })
-  const onScreen = useIsOnScreen(wrapperRef)
-  const handle = useRef<TimeSeriesChartHandle>(null)
   const first = rows?.[0]?.timestamp
   const last = rows?.at(-1)?.timestamp
-  const plot = usePlotRect(
-    handle,
-    `${onScreen}:${rows?.length}:${first}:${last}:${width}:${scale}:${shownMetric}:${visible.join()}`,
+  const [plot, setPlot] = useState<PlotRect>()
+  // The chart draws on every render; only a moved box is worth one here
+  const onPlotRect = useCallback(
+    (next: PlotRect) =>
+      setPlot((prev) =>
+        prev &&
+        prev.x === next.x &&
+        prev.y === next.y &&
+        prev.width === next.width &&
+        prev.height === next.height
+          ? prev
+          : next,
+      ),
+    [],
   )
+  const selected = selection.selected
   const earlier =
     first === undefined
       ? 0
@@ -207,7 +212,7 @@ export function FeeChart({
           />
         </div>
       </div>
-      <div ref={wrapperRef}>
+      <div>
         {isError ? (
           <p
             className={cn(
@@ -239,7 +244,20 @@ export function FeeChart({
               ariaLabel={METRIC_LABELS[shownMetric].title}
               margin={{ top: FLAGS_HEIGHT }}
               highlight={highlighted}
-              handleRef={handle}
+              onPlotRect={onPlotRect}
+              referenceAreas={
+                selected &&
+                first !== undefined &&
+                selected.timestamp <= (last ?? 0)
+                  ? [
+                      {
+                        x1: Math.max(selected.timestamp, first),
+                        fill: 'var(--brand)',
+                        fillOpacity: 0.08,
+                      },
+                    ]
+                  : undefined
+              }
               yAxis={
                 scale === 'log'
                   ? {
@@ -301,40 +319,6 @@ function getMeta(chains: GasFeesChain[], metric: GasFeesMetric): ChartMeta {
     }
   }
   return meta
-}
-
-/** The chart draws a few frames after its data, and not at all off screen or without data */
-const PLOT_READS = 30
-
-/** The plot's box, read once the chart has drawn */
-function usePlotRect(
-  handle: React.RefObject<TimeSeriesChartHandle | null>,
-  /** Changes whenever the chart redraws */
-  redraw: string,
-) {
-  const [rect, setRect] = useState<PlotRect>()
-  // biome-ignore lint/correctness/useExhaustiveDependencies: redraw is what makes the box worth reading again
-  useEffect(() => {
-    let reads = PLOT_READS
-    let frame = requestAnimationFrame(function read() {
-      const next = handle.current?.getPlotRect()
-      if (!next) {
-        if (--reads > 0) frame = requestAnimationFrame(read)
-        return
-      }
-      setRect((prev) =>
-        prev &&
-        prev.x === next.x &&
-        prev.y === next.y &&
-        prev.width === next.width &&
-        prev.height === next.height
-          ? prev
-          : next,
-      )
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [handle, redraw])
-  return rect
 }
 
 function Toggle<T extends string>({

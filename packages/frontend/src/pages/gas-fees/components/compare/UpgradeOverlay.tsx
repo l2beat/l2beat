@@ -13,8 +13,8 @@ const LANE_HEIGHT = 18
 const flagWidth = (title: string) => 16 + title.length * 6.5
 
 /**
- * Over the plot: a line at every upgrade in the range, a tint from the
- * selected one on, and a flag per upgrade above, in up to two lanes
+ * Over the plot: a line at every upgrade in the range and a flag per
+ * upgrade above, in up to two lanes
  */
 export function UpgradeOverlay({
   selection,
@@ -45,21 +45,9 @@ export function UpgradeOverlay({
     lanes[lane]?.push(span)
     return { upgrade, x, lane, named: true }
   })
-  const selectedX = selection.selected && xOf(selection.selected.timestamp)
 
   return (
     <div className="pointer-events-none absolute inset-0">
-      {selectedX !== undefined && selectedX <= plot.x + plot.width && (
-        <div
-          className="absolute bg-brand/8"
-          style={{
-            left: Math.max(plot.x, selectedX),
-            top: plot.y,
-            width: plot.x + plot.width - Math.max(plot.x, selectedX),
-            height: plot.height,
-          }}
-        />
-      )}
       {flags.map(({ upgrade, x, lane, named }) => {
         const active =
           selection.hoveredId === upgrade.id ||

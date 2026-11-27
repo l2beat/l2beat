@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { NextBlock } from '~/components/chain-clock/NextBlock'
 import { Skeleton } from '~/components/core/Skeleton'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { RollingNumber } from '~/components/RollingNumber'
@@ -20,7 +21,6 @@ import { LIVE_POSTERS_ID } from './LivePosters'
 import { anyLanding, useLandedTotal } from './landings'
 import { type Arrival, Pop } from './liveMotion'
 import { type BlockLimits, type PosterTotals, UNKNOWN_ID } from './model'
-import { NextBlock } from './NextBlock'
 import type { LiveStatus } from './useLiveBlobs'
 
 const STATUS_TEXT: Record<LiveStatus, string> = {
