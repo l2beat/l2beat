@@ -170,9 +170,13 @@ function Content({
               !data && 'invisible',
             )}
             totalVolume={data?.stats.totalVolume ?? 0}
-            dollarsPerParticle={dollarsPerParticle}
+            // The hidden copy needs both parts to wrap like the loaded one.
+            dollarsPerParticle={
+              data ? dollarsPerParticle : EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE
+            }
           />
-          <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
+          {/* Fits two lines of chain names, or the icon list's 44px touch target. */}
+          <div className="mt-4 flex min-h-7 not-can-hover:min-h-11 w-full items-center justify-center gap-1.5 max-lg:order-2">
             {isLoading ? (
               <Skeleton className="h-4 w-40 md:h-5" />
             ) : (
