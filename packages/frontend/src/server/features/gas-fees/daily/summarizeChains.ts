@@ -4,6 +4,7 @@ import { mean, sum } from '../math'
 import { type FeeSplit, splitFees, usdPerToken } from './feeRules'
 import type { GasFeesDay } from './getGasFeesDays'
 import {
+  avgFee,
   type DayValues,
   getDayValues,
   PERIOD_METRICS,
@@ -74,12 +75,7 @@ function periodCosts(days: ValuedDay[]): Record<PeriodMetric, number | null> {
 }
 
 function periodCost(days: ValuedDay[], metric: PeriodMetric): number | null {
-  if (metric === 'avgFee') {
-    const txCount = sum(days.map((d) => d.day.txCount))
-    return txCount > 0
-      ? sum(days.map((d) => d.day.totalFeeUsd)) / txCount
-      : null
-  }
+  if (metric === 'avgFee') return avgFee(days.map((d) => d.day))
   return mean(days.flatMap((d) => d.values[metric] ?? []))
 }
 

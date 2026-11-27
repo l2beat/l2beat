@@ -7,9 +7,11 @@ import type {
   GasFeesWallet,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
+import { tipToUsd } from '../chains'
 import { eachDay } from '../days'
 import type { GasFeesLiveTips } from '../tipping/getGasFeesLiveTips'
 import type { TippingInputs } from '../tipping/getGasFeesTipping'
+import { mockEthUsd } from './mockDays'
 import { jitter, seededNoise } from './seededNoise'
 
 const TIERS: Record<GasFeesTier, number> = {
@@ -30,10 +32,9 @@ export function getMockTippingInputs(
   to: UnixTime,
 ): TippingInputs {
   const days = eachDay(from, to)
-  const ethUsd = (ts: number) => 3000 + 800 * Math.sin(ts / (40 * UnixTime.DAY))
   return {
     payers: days.map((timestamp) =>
-      mockPayersDay(timestamp, ethUsd(timestamp)),
+      mockPayersDay(timestamp, mockEthUsd(timestamp)),
     ),
     mempoolDays: days.map((timestamp) => ({
       timestamp,
@@ -58,7 +59,7 @@ export function getMockTippingInputs(
           slowTipGwei: jitter(TIERS.slow, 0.5, 'slow', timestamp),
           mediumTipGwei: jitter(TIERS.medium, 0.5, 'medium', timestamp),
           fastTipGwei: jitter(HOURLY_FAST, 0.5, 'fast', timestamp),
-          ethUsd: ethUsd(timestamp),
+          ethUsd: mockEthUsd(timestamp),
         }
       }),
     ),
@@ -146,6 +147,7 @@ const WALLETS: Record<GasFeesWallet, Record<GasFeesTier, number>> = {
 export function getMockLiveTips(): GasFeesLiveTips {
   const now = UnixTime.now()
   return {
+    readAt: now,
     estimate: {
       blockNumber: 24_000_000 + Math.floor(now / 12),
       tips: {
@@ -153,7 +155,7 @@ export function getMockLiveTips(): GasFeesLiveTips {
         medium: jitter(TIERS.medium, 0.3, 'live', Math.floor(now / 12)),
         fast: jitter(TIERS.fast, 0.3, 'live-fast', Math.floor(now / 12)),
       },
-      ethUsd: 3100,
+      usdPerGwei: tipToUsd(1, 3100),
       updatedAt: now - 2,
     },
     wallets: Object.entries(WALLETS).flatMap(([wallet, tiers]) =>

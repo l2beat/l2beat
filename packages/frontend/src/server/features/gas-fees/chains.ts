@@ -1,5 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
-
 /** The page's chain ids, which are also their project ids. Ethereum first */
 export const GAS_FEES_CHAINS = [
   'ethereum',
@@ -32,11 +30,6 @@ export function gasTokenOf(chain: GasFeesChainId): GasToken {
 export function isGasFeesChain(chain: string): chain is GasFeesChainId {
   return (GAS_FEES_CHAINS as readonly string[]).includes(chain)
 }
-
-/** The first day stored: the fee rules were checked from it on */
-export const GAS_FEES_FIRST_DAY = UnixTime.fromDate(
-  new Date('2025-11-01T00:00:00Z'),
-)
 
 export const ACTION_GAS = {
   transfer: 21_000,

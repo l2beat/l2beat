@@ -1,11 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { pastYear } from '../days'
 import { getMockTippingInputs } from '../mock/mockTipping'
 import { type PriceOfSpeed, toPriceOfSpeed } from './toPriceOfSpeed'
 import { type TipPayers, toTipPayers } from './toTipPayers'
-
-const YEAR_DAYS = 365
 
 export interface GasFeesTipping {
   payers: TipPayers | undefined
@@ -16,8 +15,7 @@ export interface GasFeesTipping {
 export async function getGasFeesTipping(
   now = UnixTime.now(),
 ): Promise<GasFeesTipping> {
-  const to = UnixTime(UnixTime.toStartOf(now, 'day') - UnixTime.DAY)
-  const from = UnixTime(to - (YEAR_DAYS - 1) * UnixTime.DAY)
+  const [from, to] = pastYear(now)
   const inputs = env.MOCK
     ? getMockTippingInputs(from, to)
     : await readTippingInputs(from, to)

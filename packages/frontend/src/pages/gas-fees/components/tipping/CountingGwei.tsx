@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { writeText } from '~/components/RollingNumber'
+import { usePrefersReducedMotion } from '~/hooks/usePrefersReducedMotion'
 import { formatGwei, splitLeadingZeros } from '../../utils/format'
 
 const COUNT_MS = 600
@@ -9,6 +10,7 @@ export function CountingGwei({ value }: { value: number }) {
   const zerosRef = useRef<HTMLSpanElement>(null)
   const digitsRef = useRef<HTMLSpanElement>(null)
   const shown = useRef(value)
+  const reducedMotion = usePrefersReducedMotion()
   const [zeros, digits] = splitLeadingZeros(formatGwei(value))
 
   useEffect(() => {
@@ -18,6 +20,11 @@ export function CountingGwei({ value }: { value: number }) {
       const [z, d] = splitLeadingZeros(formatGwei(v))
       if (zerosRef.current) writeText(zerosRef.current, z)
       if (digitsRef.current) writeText(digitsRef.current, d)
+    }
+    if (reducedMotion) {
+      write(value)
+      shown.current = value
+      return
     }
     const start = performance.now()
     let frame = 0
@@ -35,7 +42,7 @@ export function CountingGwei({ value }: { value: number }) {
     }
     frame = requestAnimationFrame(step)
     return () => cancelAnimationFrame(frame)
-  }, [value])
+  }, [value, reducedMotion])
 
   return (
     <span className="font-bold text-2xl tabular-nums leading-none">

@@ -27,15 +27,16 @@ import { cn } from '~/utils/cn'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { formatGwei, formatUsd } from '../../utils/format'
 import { decadesOf, logScaleOf } from '../../utils/logScale'
+import {
+  DEFAULT_METRIC,
+  type FeeUnit,
+  METRIC_LABELS,
+  metricsOf,
+  unitOf,
+} from '../../utils/metricLabels'
+import { GAS_FEES_RANGES } from '../../utils/ranges'
 import { useChainHighlight } from '../ChainHighlight'
 import { FeeChartTooltip } from './FeeChartTooltip'
-import {
-  DEFAULT_CHART_METRIC,
-  FEE_CHART_TABS,
-  type FeeUnit,
-  titleOf,
-  unitOf,
-} from './feeChartMetrics'
 import { type PlotRect, UpgradeOverlay } from './UpgradeOverlay'
 import { UpgradeStrip } from './UpgradeStrip'
 import { useUpgradeSelection } from './useUpgradeSelection'
@@ -52,15 +53,15 @@ const SHOWN_AT_FIRST: GasFeesChartKey[] = [
   'unichain',
   'optimism',
 ]
-const RANGE_OPTIONS = [
-  { value: '7d', label: '7D' },
-  { value: '30d', label: '30D' },
-  { value: '90d', label: '90D' },
-  { value: '1y', label: '1Y' },
-  { value: 'max', label: 'MAX' },
-] as const
+const RANGE_OPTIONS = GAS_FEES_RANGES.map(({ value, label }) => ({
+  value,
+  label,
+}))
 /** Room above the plot for two lanes of upgrade flags */
 const FLAGS_HEIGHT = 52
+/** Taller than a regular chart: it is the card's main content */
+const CHART_HEIGHT =
+  'h-[260px] min-h-[260px] md:h-[400px] md:min-h-[400px] 2xl:h-[400px] 2xl:min-h-[400px]'
 
 export function FeeChart({
   chains,
@@ -73,15 +74,10 @@ export function FeeChart({
 }) {
   const trpc = useTRPC()
   const [range, setRange] = useState(initialRange)
-  const [metric, setMetric] = useState<GasFeesMetric>(DEFAULT_CHART_METRIC)
+  const [metric, setMetric] = useState<GasFeesMetric>(DEFAULT_METRIC)
   const [scale, setScale] = useState<'log' | 'lin'>('log')
-  const { data, isLoading, isPlaceholderData, shownInput } = useChartQuery(
-    trpc.gasFees.chart,
-    {
-      range,
-      metric,
-    },
-  )
+  const { data, isLoading, isError, isPlaceholderData, shownInput } =
+    useChartQuery(trpc.gasFees.chart, { range, metric })
   const shownMetric = shownInput.metric
   const unit = unitOf(metric)
   const selection = useUpgradeSelection(upgrades)
@@ -151,12 +147,12 @@ export function FeeChart({
     <section className="flex flex-col gap-3">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h3 className="font-bold text-lg">{titleOf(metric)}</h3>
+          <h3 className="font-bold text-lg">{METRIC_LABELS[metric].title}</h3>
           <ChartTimeRange
             timeRange={
               first !== undefined && last !== undefined
                 ? [first, last]
-                : rows
+                : rows || isError
                   ? null
                   : undefined
             }
@@ -167,21 +163,21 @@ export function FeeChart({
           name="gasFeesChart"
           value={range}
           setValue={setRange}
-          options={RANGE_OPTIONS.map((o) => ({ ...o }))}
+          options={RANGE_OPTIONS}
         />
       </div>
       <div className="flex flex-wrap items-end justify-between gap-2 border-divider border-b">
         <div className="flex gap-5 overflow-x-auto">
-          {FEE_CHART_TABS[unit].map((tab) => (
+          {metricsOf(unit).map((tab) => (
             <button
-              key={tab.metric}
+              key={tab}
               type="button"
-              aria-pressed={tab.metric === metric}
-              data-state={tab.metric === metric ? 'checked' : 'unchecked'}
-              onClick={() => setMetric(tab.metric)}
+              aria-pressed={tab === metric}
+              data-state={tab === metric ? 'checked' : 'unchecked'}
+              onClick={() => setMetric(tab)}
               className="whitespace-nowrap border-transparent border-b-2 pt-1 pb-2 font-semibold text-[13px] text-secondary transition-colors hover:text-primary data-[state=checked]:border-brand data-[state=checked]:text-primary md:text-sm"
             >
-              {tab.tab}
+              {METRIC_LABELS[tab].tab}
             </button>
           ))}
         </div>
@@ -195,7 +191,7 @@ export function FeeChart({
             ]}
             onChange={(next: FeeUnit) => {
               if (next !== unit)
-                setMetric(next === 'gas' ? 'gasPrice' : DEFAULT_CHART_METRIC)
+                setMetric(next === 'gas' ? 'gasPrice' : DEFAULT_METRIC)
             }}
           />
           <Toggle
@@ -210,57 +206,67 @@ export function FeeChart({
         </div>
       </div>
       <div ref={wrapperRef}>
-        <ChartContainer
-          data={rows}
-          meta={meta}
-          isLoading={isLoading}
-          isPlaceholderData={isPlaceholderData}
-          size="large"
-          className="md:h-[400px] md:min-h-[400px]"
-          interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
-          legend
-          legendLeading={
-            <ChartLegendToggleAll
-              showAllSelected={showAllSelected}
-              onToggleAll={toggleAllDataKeys}
-            />
-          }
-        >
-          <TimeSeriesChart
+        {isError ? (
+          <p
+            className={cn(
+              CHART_HEIGHT,
+              'flex items-center justify-center text-secondary text-sm',
+            )}
+          >
+            Couldn’t load the chart for this period.
+          </p>
+        ) : (
+          <ChartContainer
             data={rows}
-            series={series}
-            ariaLabel={titleOf(shownMetric)}
-            margin={{ top: FLAGS_HEIGHT }}
-            highlight={highlighted}
-            handleRef={handle}
-            yAxis={
-              scale === 'log'
-                ? {
-                    scale: scaleLog,
-                    domain: [10 ** log.min, 10 ** log.max],
-                    ticks: decadesOf(log),
-                    format,
-                    unit: unitSuffix,
-                  }
-                : { domain: 'zero', format, unit: unitSuffix }
+            meta={meta}
+            isLoading={isLoading}
+            isPlaceholderData={isPlaceholderData}
+            className={CHART_HEIGHT}
+            interactiveLegend={{ dataKeys, onItemClick: toggleDataKey }}
+            legend
+            legendLeading={
+              <ChartLegendToggleAll
+                showAllSelected={showAllSelected}
+                onToggleAll={toggleAllDataKeys}
+              />
             }
-            renderTooltip={(row, keys) => (
-              <FeeChartTooltip
-                row={row}
-                keys={keys}
-                weekly={data?.weekly ?? false}
-                format={(v) => `${format(v)}${unitSuffix}`}
+          >
+            <TimeSeriesChart
+              data={rows}
+              series={series}
+              ariaLabel={METRIC_LABELS[shownMetric].title}
+              margin={{ top: FLAGS_HEIGHT }}
+              highlight={highlighted}
+              handleRef={handle}
+              yAxis={
+                scale === 'log'
+                  ? {
+                      scale: scaleLog,
+                      domain: [10 ** log.min, 10 ** log.max],
+                      ticks: decadesOf(log),
+                      format,
+                      unit: unitSuffix,
+                    }
+                  : { domain: 'zero', format, unit: unitSuffix }
+              }
+              renderTooltip={(row, keys) => (
+                <FeeChartTooltip
+                  row={row}
+                  keys={keys}
+                  weekly={data?.weekly ?? false}
+                  format={(v) => `${format(v)}${unitSuffix}`}
+                />
+              )}
+            />
+            {plot && first !== undefined && last !== undefined && (
+              <UpgradeOverlay
+                selection={selection}
+                plot={plot}
+                domain={[first, last]}
               />
             )}
-          />
-          {plot && first !== undefined && last !== undefined && (
-            <UpgradeOverlay
-              selection={selection}
-              plot={plot}
-              domain={[first, last]}
-            />
-          )}
-        </ChartContainer>
+          </ChartContainer>
+        )}
       </div>
       <UpgradeStrip
         selection={selection}

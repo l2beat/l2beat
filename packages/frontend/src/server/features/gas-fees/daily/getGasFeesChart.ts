@@ -4,8 +4,10 @@ import { ChartRange } from '~/utils/range/range'
 import { GAS_FEES_CHAINS, gasTokenOf } from '../chains'
 import { eachDay, toDayRange } from '../days'
 import { sum } from '../math'
+import { hasPriorityFees } from './feeRules'
 import { type GasFeesDay, getGasFeesDays } from './getGasFeesDays'
 import {
+  avgFee,
   GAS_FEES_METRICS,
   type GasFeesMetric,
   getDayValues,
@@ -115,19 +117,17 @@ function combineL2s(
   values: Map<string, number | null>,
 ): number | null {
   if (metric === 'medianFee') return null
-  if (metric === 'avgFee') {
-    const txCount = sum(l2Days.map((d) => d.txCount))
-    return txCount > 0 ? sum(l2Days.map((d) => d.totalFeeUsd)) / txCount : null
-  }
+  if (metric === 'avgFee') return avgFee(l2Days)
   // Per gas: weighted by gas, over the ETH-priced chains only; per action: by transactions
-  const weightOf = (d: GasFeesDay) =>
-    isGasMetric(metric) ? d.gasUsed : d.txCount
+  const perGas = isGasMetric(metric)
+  const weightOf = (d: GasFeesDay) => (perGas ? d.gasUsed : d.txCount)
   let weighted = 0
   let weights = 0
   for (const d of l2Days) {
-    if (!values.has(d.chain)) continue
+    if (perGas && gasTokenOf(d.chain) !== 'ETH') continue
     // The gas of a chain without priority fees paid none
-    const value = values.get(d.chain) ?? (metric === 'priorityFee' ? 0 : null)
+    const paysNoTips = metric === 'priorityFee' && !hasPriorityFees(d.chain)
+    const value = paysNoTips ? 0 : (values.get(d.chain) ?? null)
     if (value === null) continue
     weighted += value * weightOf(d)
     weights += weightOf(d)

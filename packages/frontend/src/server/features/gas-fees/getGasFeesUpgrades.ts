@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_FIRST_DAY } from './chains'
+import { GAS_FEES_FIRST_DAY, utcDay } from './days'
 
 export interface NextUpgrade {
   title: string
@@ -27,8 +27,6 @@ const NEXT: NextUpgrade = {
   url: 'https://eips.ethereum.org/EIPS/eip-7773',
 }
 
-const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
-
 const OWN: PastUpgrade[] = [
   {
     id: 'fusaka',
@@ -36,7 +34,7 @@ const OWN: PastUpgrade[] = [
     title: 'Fusaka',
     summary: 'PeerDAS: much more blob space for L2s.',
     url: 'https://eips.ethereum.org/EIPS/eip-7607',
-    timestamp: day('2025-12-03'),
+    timestamp: utcDay('2025-12-03'),
   },
   {
     id: 'gas-limit-60m',
@@ -44,7 +42,7 @@ const OWN: PastUpgrade[] = [
     title: 'Gas limit 45M → 60M',
     summary: 'Validators signal a higher block gas limit.',
     url: 'https://pumpthegas.org',
-    timestamp: day('2025-11-25'),
+    timestamp: utcDay('2025-11-25'),
   },
 ]
 

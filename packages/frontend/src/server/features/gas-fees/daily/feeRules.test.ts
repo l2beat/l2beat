@@ -1,5 +1,6 @@
 import { expect } from 'earl'
-import { utcDay as day, mockDay } from '../test/mockDay'
+import { utcDay as day } from '../days'
+import { mockDay } from '../test/mockDay'
 import { getPerGasPrices, splitFees } from './feeRules'
 import { getDayValues } from './metrics'
 

@@ -9,34 +9,20 @@ import {
   SelectValue,
 } from '~/components/core/Select'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { PeriodMetric } from '~/server/features/gas-fees/daily/metrics'
+import {
+  PERIOD_METRICS,
+  type PeriodMetric,
+} from '~/server/features/gas-fees/daily/metrics'
 import type { GasFeesChain } from '~/server/features/gas-fees/getGasFeesChains'
 import { useTRPC } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { DEFAULT_METRIC, METRIC_LABELS } from '../../utils/metricLabels'
 import {
-  type ChartRange,
-  type ChartRangePredefinedOption,
-  optionToRange,
-} from '~/utils/range/range'
-import { titleOf } from '../compare/feeChartMetrics'
+  DEFAULT_TABLE_RANGE,
+  GAS_FEES_RANGES,
+  type GasFeesRangeOption,
+} from '../../utils/ranges'
 import { CostsTable } from './CostsTable'
-
-const METRICS: { value: PeriodMetric; label: string }[] = [
-  { value: 'avgFee', label: 'Avg fee' },
-  { value: 'transfer', label: 'ETH transfer' },
-  { value: 'erc20', label: 'ERC-20' },
-  { value: 'swap', label: 'Swap' },
-]
-const RANGES: {
-  value: ChartRangePredefinedOption
-  label: string
-  period: string
-}[] = [
-  { value: '7d', label: '7D', period: 'past 7 days' },
-  { value: '30d', label: '30D', period: 'past 30 days' },
-  { value: '90d', label: '90D', period: 'past 90 days' },
-  { value: '1y', label: '1Y', period: 'past year' },
-  { value: 'max', label: 'MAX', period: 'all days stored' },
-]
 
 export function CostsCard({
   chains,
@@ -46,15 +32,17 @@ export function CostsCard({
   initialRange: ChartRange
 }) {
   const trpc = useTRPC()
-  const [metric, setMetric] = useState<PeriodMetric>('erc20')
-  const [option, setOption] = useState<ChartRangePredefinedOption>('30d')
+  const [metric, setMetric] = useState<PeriodMetric>(DEFAULT_METRIC)
   // The first range is the server's, so the prefetched data is used
-  const [range, setRange] = useState(initialRange)
+  const [{ option, range }, setPeriod] = useState<{
+    option: GasFeesRangeOption
+    range: ChartRange
+  }>({ option: DEFAULT_TABLE_RANGE, range: initialRange })
   const { data, isPlaceholderData, isError } = useChartQuery(
     trpc.gasFees.summary,
     { range },
   )
-  const period = RANGES.find((r) => r.value === option)?.period
+  const period = GAS_FEES_RANGES.find((r) => r.value === option)?.period
 
   return (
     <PrimaryCard className="flex flex-col gap-4">
@@ -64,8 +52,8 @@ export function CostsCard({
             What one transaction costs
           </h2>
           <p className="text-secondary text-sm">
-            {titleOf(metric)}, {period}. Log scale. L2 costs add the chain’s
-            average L1 fee per transaction.
+            {METRIC_LABELS[metric].title}, {period}. Log scale. L2 costs add the
+            chain’s average L1 fee per transaction.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -77,9 +65,9 @@ export function CostsCard({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {METRICS.map((m) => (
-                <SelectItem key={m.value} value={m.value}>
-                  {m.label}
+              {PERIOD_METRICS.map((m) => (
+                <SelectItem key={m} value={m}>
+                  {METRIC_LABELS[m].tab}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -88,12 +76,11 @@ export function CostsCard({
             name="gasFeesTableRange"
             value={option}
             onValueChange={(v) => {
-              const next = v as ChartRangePredefinedOption
-              setOption(next)
-              setRange(optionToRange(next))
+              const next = v as GasFeesRangeOption
+              setPeriod({ option: next, range: optionToRange(next) })
             }}
           >
-            {RANGES.map((r) => (
+            {GAS_FEES_RANGES.map((r) => (
               <RadioGroupItem key={r.value} value={r.value}>
                 {r.label}
               </RadioGroupItem>

@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { mockDay, utcDay } from '../test/mockDay'
+import { utcDay } from '../days'
+import { mockDay } from '../test/mockDay'
 import { toGasFeesStats } from './getGasFeesStats'
 import { summarizeChains } from './summarizeChains'
 

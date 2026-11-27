@@ -17,9 +17,8 @@ import type {
 import type { GasFeesChain } from '~/server/features/gas-fees/getGasFeesChains'
 import { cn } from '~/utils/cn'
 import { compareCosts } from '../../utils/compare'
-import { formatUsd } from '../../utils/format'
+import { formatMissingDays, formatUsd } from '../../utils/format'
 import {
-  decadesOf,
   isOnScale,
   type LogScale,
   logPercent,
@@ -27,7 +26,7 @@ import {
   logScaleOf,
 } from '../../utils/logScale'
 import { useChainHighlight } from '../ChainHighlight'
-import { DecadeAxis, formatCentsDecade } from '../DecadeAxis'
+import { DecadeAxis, DecadeLines, formatCentsDecade } from '../DecadeAxis'
 import { KeySwatch } from '../ShareBar'
 import { FEE_PARTS, FeeSplitBar } from './FeeSplitBar'
 import { type CostSortKey, sortCostRows } from './sortCostRows'
@@ -129,7 +128,7 @@ export function CostsTable({
               <TableHead align="right">
                 {sortHead('totalFees', 'Total fees')}
               </TableHead>
-              <TableHead tooltip="Base fee: set by the protocol from demand, burned on Ethereum; on L2s, the L2’s own execution fee. Priority fee: a tip for being included sooner. L1 fee: what L2 users pay for posting their data to Ethereum.">
+              <TableHead tooltip="Base fee: set by the protocol from demand, burned on Ethereum; on L2s, the L2’s own execution fee. Priority fee: a tip for being included sooner. L1 data: what L2 users pay for posting their data to Ethereum.">
                 Fee split
               </TableHead>
               <TableHead>Paid in</TableHead>
@@ -226,10 +225,12 @@ export function CostsTable({
         </div>
         {missing.length > 0 && (
           <span>
-            Days without data:{' '}
-            {missing
-              .map((r) => `${r.chain.name} ${r.summary.missingDays}`)
-              .join(', ')}
+            {formatMissingDays(
+              missing.map((r) => ({
+                name: r.chain.name,
+                days: r.summary.missingDays,
+              })),
+            )}
           </span>
         )}
       </div>
@@ -295,13 +296,7 @@ function AxisCell({
       : undefined
   return (
     <div className="relative h-6 w-full">
-      {decadesOf(scale).map((decade) => (
-        <div
-          key={decade}
-          className="absolute inset-y-[-12px] border-divider border-l"
-          style={{ left: logPercent(scale, decade) }}
-        />
-      ))}
+      <DecadeLines scale={scale} className="inset-y-[-12px]" />
       {ethereumOnScale && (
         <div
           className="absolute inset-y-[-12px] border-secondary border-l border-dashed"

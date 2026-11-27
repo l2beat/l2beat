@@ -12,6 +12,8 @@ export interface TipPayers {
   ordinaryUsd: number
   /** The part of them up to our estimated fast tip */
   atFastTipUsd: number
+  /** The rest: what went above it */
+  aboveFastTipUsd: number
   bands: Record<TipBand, { txShare: number; tipShare: number }>
 }
 
@@ -28,10 +30,12 @@ export function toTipPayers(
   const ordinaryUsd = sum(TIP_BANDS.map(bandUsd))
   const ordinaryTxs = sum(TIP_BANDS.map(bandTxs))
   const share = (part: number, whole: number) => (whole > 0 ? part / whole : 0)
+  const atFastTipUsd = sum(days.map((d) => d.atFastTipEth * d.ethUsd))
   return {
     period,
     ordinaryUsd,
-    atFastTipUsd: sum(days.map((d) => d.atFastTipEth * d.ethUsd)),
+    atFastTipUsd,
+    aboveFastTipUsd: ordinaryUsd - atFastTipUsd,
     bands: Object.fromEntries(
       TIP_BANDS.map((band) => [
         band,

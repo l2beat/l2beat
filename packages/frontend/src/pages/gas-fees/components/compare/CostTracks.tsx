@@ -3,13 +3,12 @@ import { cn } from '~/utils/cn'
 import { compareCosts } from '../../utils/compare'
 import { formatDate, formatUsd } from '../../utils/format'
 import {
-  decadesOf,
   type LogScale,
   logPercent,
   logPosition,
   logScaleOf,
 } from '../../utils/logScale'
-import { DecadeAxis, formatUsdDecade } from '../DecadeAxis'
+import { DecadeAxis, DecadeLines, formatUsdDecade } from '../DecadeAxis'
 
 const L2_COLOR = 'var(--chart-stacked-blue)'
 const ETHEREUM_COLOR = 'var(--chart-ethereum)'
@@ -90,13 +89,7 @@ function CostTrack({ track, scale }: { track: Track; scale: LogScale }) {
         )}
       </div>
       <div className="relative h-16">
-        {decadesOf(scale).map((decade) => (
-          <div
-            key={decade}
-            className="absolute inset-y-0 border-divider border-l border-dashed"
-            style={{ left: logPercent(scale, decade) }}
-          />
-        ))}
+        <DecadeLines scale={scale} className="border-dashed" />
         <div className="-translate-y-1/2 absolute inset-x-0 top-1/2 h-0.5 bg-divider" />
         <div
           className="-translate-y-1/2 absolute top-1/2 h-1.5 bg-linear-to-r from-chart-stacked-blue/40 to-chart-ethereum"

@@ -7,7 +7,6 @@ import type {
 
 export interface UpgradeSelection {
   past: PastUpgrade[]
-  next: NextUpgrade
   hoveredId: string | undefined
   selected: PastUpgrade | undefined
   /** The hovered upgrade, else the selected one, else the next */
@@ -33,7 +32,6 @@ export function useUpgradeSelection({
   const hovered = past.find((u) => u.id === hoveredId)
   return {
     past,
-    next,
     hoveredId,
     selected,
     shown: hovered ?? selected ?? next,

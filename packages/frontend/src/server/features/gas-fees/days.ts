@@ -1,6 +1,19 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartRange } from '~/utils/range/range'
-import { GAS_FEES_FIRST_DAY } from './chains'
+
+/** The start of a UTC day, from "2026-04-22" */
+export function utcDay(date: string): UnixTime {
+  return UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
+}
+
+/** The first day stored: the fee rules were checked from it on */
+export const GAS_FEES_FIRST_DAY = utcDay('2025-11-01')
+
+/** The 365 days up to yesterday */
+export function pastYear(now = UnixTime.now()): [UnixTime, UnixTime] {
+  const to = UnixTime(UnixTime.toStartOf(now, 'day') - UnixTime.DAY)
+  return [UnixTime(to - 364 * UnixTime.DAY), to]
+}
 
 /** The whole days of a range, clamped to the days stored */
 export function toDayRange(range: ChartRange): [UnixTime, UnixTime] {

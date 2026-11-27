@@ -3,6 +3,7 @@ import type { PriceOfSpeed } from '~/server/features/gas-fees/tipping/toPriceOfS
 import { sortCostRows } from './costs/sortCostRows'
 import { placeChips } from './tipping/placeChips'
 import { getSpeedGain } from './tipping/speedGain'
+import { tipBandOf } from './tipping/tipBands'
 
 describe(placeChips.name, () => {
   it('puts a chip that would overlap one above it below the line', () => {
@@ -72,5 +73,16 @@ describe(sortCostRows.name, () => {
       sortCostRows(rows, 'cost', desc).map((r) => r.name)
     expect(names(false)).toEqual(['eth', 'b', 'a', 'none'])
     expect(names(true)).toEqual(['eth', 'a', 'b', 'none'])
+  })
+})
+
+describe(tipBandOf.name, () => {
+  it('puts a tip on a bound in the band that starts there', () => {
+    expect([0.1, 1, 2, 2.5].map(tipBandOf)).toEqual([
+      'middle',
+      'high',
+      'high',
+      undefined,
+    ])
   })
 })

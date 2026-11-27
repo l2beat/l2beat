@@ -38,6 +38,23 @@ export function DecadeAxis({
   )
 }
 
+/** A line at each decade, behind whatever sits on the scale */
+export function DecadeLines({
+  scale,
+  className,
+}: {
+  scale: LogScale
+  className?: string
+}) {
+  return decadesOf(scale).map((decade) => (
+    <div
+      key={decade}
+      className={cn('absolute inset-y-0 border-divider border-l', className)}
+      style={{ left: logPercent(scale, decade) }}
+    />
+  ))
+}
+
 /** "0.000001", "10" */
 export function formatDecade(decade: number) {
   return decade.toLocaleString('en-US', { maximumFractionDigits: 12 })

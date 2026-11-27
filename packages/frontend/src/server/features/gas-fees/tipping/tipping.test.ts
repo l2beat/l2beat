@@ -1,7 +1,7 @@
 import type { GasFeesTipPayersDailyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { utcDay } from '../test/mockDay'
+import { utcDay } from '../days'
 import {
   fitNonRising,
   secondsWithin,

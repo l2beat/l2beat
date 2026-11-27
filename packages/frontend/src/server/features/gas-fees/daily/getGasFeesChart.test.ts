@@ -1,7 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { GAS_FEES_CHART_KEYS, type GasFeesChartKey } from '../chains'
-import { mockDay, utcDay } from '../test/mockDay'
+import { utcDay } from '../days'
+import { mockDay } from '../test/mockDay'
 import { toChartData } from './getGasFeesChart'
 import type { GasFeesMetric } from './metrics'
 

@@ -1,10 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { GasFeesChainId } from '../chains'
 import type { GasFeesDay } from '../daily/getGasFeesDays'
-
-export function utcDay(date: string): UnixTime {
-  return UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
-}
+import { utcDay } from '../days'
 
 /** 10 transactions paying 10 ETH, $2,000 an ETH, 2 of it L1 fee and 5 base fee */
 export function mockDay(

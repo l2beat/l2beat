@@ -1,6 +1,6 @@
 import type { PriceOfSpeed } from '~/server/features/gas-fees/tipping/toPriceOfSpeed'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
-import { formatDays, formatUsd, pluralDays } from '../../utils/format'
+import { formatDays, formatPeriod, formatUsd } from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
 import { SpeedPlot } from './SpeedPlot'
 import { getSpeedGain } from './speedGain'
@@ -37,19 +37,17 @@ export function PriceOfSpeedSection({
             +{formatUsd(gain.extraUsd)}
           </span>
           <span>
-            a transfer tipping 2 gwei instead of our estimated fast tip gets you
-            in <strong className="font-bold text-primary">{gain.gain}</strong>:{' '}
+            an ERC-20 transfer tipping 2 gwei instead of our estimated fast tip
+            gets you in{' '}
+            <strong className="font-bold text-primary">{gain.gain}</strong>:{' '}
             {gain.waits}, 99% sure
           </span>
         </p>
       )}
       <SpeedPlot speed={speed} />
       <p className="text-2xs text-secondary">
-        {formatDays(period.from, period.to)}
-        {period.missingDays > 0 &&
-          `, without ${pluralDays(period.missingDays)} of incomplete data`}
-        . Each dot is the transactions in one narrow tip range. Each block you
-        miss adds 12 seconds.
+        {formatPeriod(period)}. Each dot is the transactions in one narrow tip
+        range. Each block you miss adds 12 seconds.
       </p>
     </section>
   )

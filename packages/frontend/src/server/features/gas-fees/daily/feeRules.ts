@@ -1,29 +1,32 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { GasFeesChainId } from '../chains'
+import { utcDay } from '../days'
 import type { GasFeesDay } from './getGasFeesDays'
 
-const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
 /** Until this day Mantle's gas held the cost of posting data to Ethereum */
-const MANTLE_L1_FEE_APART_FROM = day('2026-04-22')
+const MANTLE_L1_FEE_APART_FROM = utcDay('2026-04-22')
 // It began during 22 April; a day can't be split, so from the first whole day
-const MANTLE_OPERATOR_FEE_FROM = day('2026-04-23')
+const MANTLE_OPERATOR_FEE_FROM = utcDay('2026-04-23')
 /** 10 gwei a gas, in MNT */
 const MANTLE_OPERATOR_FEE_PER_GAS = 10e-9
 
 /** First come, first served: there is no tip to pay */
-function hasPriorityFees(chain: GasFeesChainId): boolean {
+export function hasPriorityFees(chain: GasFeesChainId): boolean {
   return chain !== 'zksync2' && chain !== 'abstract'
 }
 
 /** Whether the stored base fee and the gas price already hold the L1 fee */
-function l1FeeInGas(d: GasFeesDay): boolean {
+export function l1FeeInGas(
+  d: Pick<GasFeesDay, 'chain' | 'timestamp'>,
+): boolean {
   return (
     d.chain === 'arbitrum' ||
     (d.chain === 'mantle' && d.timestamp < MANTLE_L1_FEE_APART_FROM)
   )
 }
 
-function operatorFee(d: GasFeesDay): number {
+export function operatorFee(
+  d: Pick<GasFeesDay, 'chain' | 'timestamp' | 'gasUsed'>,
+): number {
   return d.chain === 'mantle' && d.timestamp >= MANTLE_OPERATOR_FEE_FROM
     ? d.gasUsed * MANTLE_OPERATOR_FEE_PER_GAS
     : 0

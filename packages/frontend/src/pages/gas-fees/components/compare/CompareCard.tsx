@@ -7,7 +7,7 @@ import type { GasFeesUpgrades } from '~/server/features/gas-fees/getGasFeesUpgra
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import type { ChartRange } from '~/utils/range/range'
 import { compareCosts } from '../../utils/compare'
-import { formatDate, formatShare } from '../../utils/format'
+import { formatDate, formatMissingDays, formatShare } from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
 import { CostTracks } from './CostTracks'
 import { FeeChart } from './FeeChart'
@@ -25,10 +25,8 @@ export function CompareCard({
   initialRange: ChartRange
 }) {
   const l2s = chains.filter((c) => c.id !== 'ethereum')
-  const totalTxs = stats.txCount.l2s + stats.txCount.ethereum
   // With one side missing, every figure here would read as 0% or 100%
   const hasBothSides = stats.txCount.l2s > 0 && stats.txCount.ethereum > 0
-  const totalFees = stats.feesUsd.l2s + stats.feesUsd.ethereum
   const transfer =
     stats.latestErc20 &&
     compareCosts(stats.latestErc20.l2Median, stats.latestErc20.ethereum)
@@ -59,16 +57,16 @@ export function CompareCard({
         <h2 className="font-bold text-2xl leading-tight md:text-3xl">
           L2s process{' '}
           <span className="text-brand-deep">
-            {formatShare(stats.txCount.l2s / totalTxs)}
+            {formatShare(stats.l2Share.txCount)}
           </span>{' '}
           of transactions and collect{' '}
           <span className="text-brand-deep">
-            {formatShare(totalFees > 0 ? stats.feesUsd.l2s / totalFees : 0)}
+            {formatShare(stats.l2Share.feesUsd)}
           </span>{' '}
           of the fees.{' '}
           {transfer && (
             <span className="lg:block">
-              A transfer there costs{' '}
+              An ERC-20 transfer there costs{' '}
               <span className="text-brand-deep">{transfer.ratio}</span>{' '}
               {transfer.cheaper ? 'less' : 'more'}.
             </span>
@@ -83,10 +81,12 @@ export function CompareCard({
         )}
         {stats.missingDays.length > 0 && (
           <p>
-            Days without data:{' '}
-            {stats.missingDays
-              .map((m) => `${nameOf(m.chain)} ${m.days}`)
-              .join(', ')}
+            {formatMissingDays(
+              stats.missingDays.map((m) => ({
+                name: nameOf(m.chain),
+                days: m.days,
+              })),
+            )}
           </p>
         )}
       </div>

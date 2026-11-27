@@ -14,11 +14,10 @@ import {
   formatSeconds,
   formatUsd,
 } from '../../utils/format'
-import { TIP_BAND_STYLE } from './tipBands'
+import { TIP_BAND_STYLE, tipBandOf } from './tipBands'
 
 const HEIGHT = 280
 const MARGIN = { top: 28, right: 16, bottom: 44, left: 36 }
-const ROUND_TIP_COLORS = TIP_BANDS.map((b) => TIP_BAND_STYLE[b].color)
 /** "Our estimated fast tip" in the mark's type, px */
 const FAST_LABEL_WIDTH = 140
 
@@ -178,13 +177,14 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
               i === 0 ? 'start' : i === roundTips.length - 1 ? 'end' : 'middle'
             const labelX =
               x(tip.usd) + (anchor === 'start' ? -8 : anchor === 'end' ? 8 : 0)
+            const band = tipBandOf(tip.gwei)
             return (
               <g key={tip.gwei}>
                 <circle
                   cx={x(tip.usd)}
                   cy={y(tip.seconds)}
                   r={7}
-                  fill={ROUND_TIP_COLORS[i]}
+                  fill={band ? TIP_BAND_STYLE[band].color : 'var(--primary)'}
                   className="stroke-2 stroke-surface-primary"
                 />
                 <text

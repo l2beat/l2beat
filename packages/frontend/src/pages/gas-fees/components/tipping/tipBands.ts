@@ -1,4 +1,7 @@
-import type { TipBand } from '~/server/features/gas-fees/tipping/toTipPayers'
+import {
+  TIP_BANDS,
+  type TipBand,
+} from '~/server/features/gas-fees/tipping/toTipPayers'
 
 /** Ordinary tips' bands, as the tip payers' table splits them */
 export const TIP_BAND_STYLE: Record<
@@ -23,4 +26,13 @@ export const TIP_BAND_STYLE: Record<
     fromGwei: 1,
     toGwei: 2.5,
   },
+}
+
+/** The band a tip falls in: each band starts at its lower bound */
+export function tipBandOf(gwei: number): TipBand | undefined {
+  return TIP_BANDS.find(
+    (band) =>
+      gwei >= TIP_BAND_STYLE[band].fromGwei &&
+      gwei < TIP_BAND_STYLE[band].toGwei,
+  )
 }

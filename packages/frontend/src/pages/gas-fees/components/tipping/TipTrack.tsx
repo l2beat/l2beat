@@ -7,16 +7,11 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
-import { tipToUsd } from '~/server/features/gas-fees/chains'
 import { TIP_BANDS } from '~/server/features/gas-fees/tipping/toTipPayers'
 import { cn } from '~/utils/cn'
 import { formatGwei, formatUsd } from '../../utils/format'
-import {
-  decadesOf,
-  type LogScale,
-  logPercent,
-  logPosition,
-} from '../../utils/logScale'
+import { type LogScale, logPosition } from '../../utils/logScale'
+import { DecadeLines } from '../DecadeAxis'
 import { placeChips } from './placeChips'
 import { TIP_BAND_STYLE } from './tipBands'
 
@@ -39,13 +34,13 @@ export function TipTrack({
   tierName,
   ours,
   wallets,
-  ethUsd,
+  usdPerGwei,
   scale,
 }: {
   tierName: string
   ours: number
   wallets: WalletMark[]
-  ethUsd: number
+  usdPerGwei: number
   scale: LogScale
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -71,13 +66,7 @@ export function TipTrack({
 
   return (
     <div ref={ref} className="relative h-[84px] w-full">
-      {decadesOf(scale).map((decade) => (
-        <div
-          key={decade}
-          className="absolute inset-y-0 border-divider border-l border-dashed"
-          style={{ left: logPercent(scale, decade) }}
-        />
-      ))}
+      <DecadeLines scale={scale} className="border-dashed" />
       <BandStrip scale={scale} />
       {highest > ours && (
         <div
@@ -103,7 +92,7 @@ export function TipTrack({
             className="bg-primary text-surface-primary"
             icon={<Logo small animated={false} className="h-3.5 w-4" />}
             text={ourText}
-            tooltip={`Our estimated ${tierName.toLowerCase()} tip: ${ourText} gwei, +${formatUsd(tipToUsd(ours, ethUsd))} per transfer`}
+            tooltip={`Our estimated ${tierName.toLowerCase()} tip: ${ourText} gwei, +${formatUsd(ours * usdPerGwei)} per ERC-20 transfer`}
           />
           {wallets.map((w) => (
             <Chip
@@ -112,7 +101,7 @@ export function TipTrack({
               className="border border-divider bg-surface-primary text-primary"
               icon={<img src={w.iconUrl} alt="" className="size-3.5" />}
               text={formatGwei(w.tipGwei)}
-              tooltip={`${w.wallet} suggests ${formatGwei(w.tipGwei)} gwei for ${tierName.toLowerCase()}, +${formatUsd(tipToUsd(w.tipGwei, ethUsd))} per transfer`}
+              tooltip={`${w.wallet} suggests ${formatGwei(w.tipGwei)} gwei for ${tierName.toLowerCase()}, +${formatUsd(w.tipGwei * usdPerGwei)} per ERC-20 transfer`}
             />
           ))}
         </>

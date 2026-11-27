@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { type GasFeesChainId, type GasToken, gasTokenOf } from '../chains'
+import { pastYear } from '../days'
 import { median, sum } from '../math'
 import { type GasFeesDay, getGasFeesDays } from './getGasFeesDays'
-import { getDayValues } from './metrics'
+import { avgFee, getDayValues } from './metrics'
 import { summarizeChains } from './summarizeChains'
 
-const YEAR_DAYS = 365
 /** The newest stored day may trail the last complete day by this much */
 const MAY_TRAIL_DAYS = 1
 
@@ -16,6 +16,8 @@ export interface GasFeesStats {
   l2Count: number
   txCount: { l2s: number; ethereum: number }
   feesUsd: { l2s: number; ethereum: number }
+  /** The L2s' part of both sides' transactions and fees; 0 without any */
+  l2Share: { txCount: number; feesUsd: number }
   l2FeesUsdByToken: Record<GasToken, number>
   /** Fees over transactions, over the days both Ethereum and an L2 have */
   avgFee: { l2s: number; ethereum: number } | undefined
@@ -37,8 +39,7 @@ interface LatestErc20 {
 export async function getGasFeesStats(
   now = UnixTime.now(),
 ): Promise<GasFeesStats> {
-  const to = UnixTime(UnixTime.toStartOf(now, 'day') - UnixTime.DAY)
-  const from = UnixTime(to - (YEAR_DAYS - 1) * UnixTime.DAY)
+  const [from, to] = pastYear(now)
   const days = await getGasFeesDays(from, to)
   return toGasFeesStats(days, from, to)
 }
@@ -54,18 +55,23 @@ export function toGasFeesStats(
   const l2FeesUsdByToken: Record<GasToken, number> = { ETH: 0, MNT: 0 }
   for (const c of l2s) l2FeesUsdByToken[gasTokenOf(c.chain)] += c.feesUsd
   const newest = days.at(-1)?.timestamp
+  const txCount = {
+    l2s: sum(l2s.map((c) => c.txCount)),
+    ethereum: ethereum?.txCount ?? 0,
+  }
+  const feesUsd = {
+    l2s: sum(l2s.map((c) => c.feesUsd)),
+    ethereum: ethereum?.feesUsd ?? 0,
+  }
+  const l2ShareOf = (side: { l2s: number; ethereum: number }) =>
+    side.l2s + side.ethereum > 0 ? side.l2s / (side.l2s + side.ethereum) : 0
   return {
     from,
     to,
     l2Count: l2s.length,
-    txCount: {
-      l2s: sum(l2s.map((c) => c.txCount)),
-      ethereum: ethereum?.txCount ?? 0,
-    },
-    feesUsd: {
-      l2s: sum(l2s.map((c) => c.feesUsd)),
-      ethereum: ethereum?.feesUsd ?? 0,
-    },
+    txCount,
+    feesUsd,
+    l2Share: { txCount: l2ShareOf(txCount), feesUsd: l2ShareOf(feesUsd) },
     l2FeesUsdByToken,
     avgFee: getAvgFees(days),
     latestErc20: getLatestErc20(days),
@@ -84,21 +90,13 @@ function getAvgFees(days: GasFeesDay[]): GasFeesStats['avgFee'] {
     days.filter((d) => d.txCount > 0),
     (d) => d.timestamp,
   )
-  const totals = { l2s: { fees: 0, txs: 0 }, ethereum: { fees: 0, txs: 0 } }
-  for (const dayRows of byDay.values()) {
-    const hasEthereum = dayRows.some((d) => d.chain === 'ethereum')
-    if (!hasEthereum || dayRows.length < 2) continue
-    for (const d of dayRows) {
-      const side = d.chain === 'ethereum' ? totals.ethereum : totals.l2s
-      side.fees += d.totalFeeUsd
-      side.txs += d.txCount
-    }
-  }
-  if (totals.l2s.txs === 0 || totals.ethereum.txs === 0) return undefined
-  return {
-    l2s: totals.l2s.fees / totals.l2s.txs,
-    ethereum: totals.ethereum.fees / totals.ethereum.txs,
-  }
+  const shared = [...byDay.values()].filter(
+    (dayRows) =>
+      dayRows.length >= 2 && dayRows.some((d) => d.chain === 'ethereum'),
+  )
+  const l2s = avgFee(shared.flat().filter((d) => d.chain !== 'ethereum'))
+  const ethereum = avgFee(shared.flat().filter((d) => d.chain === 'ethereum'))
+  return l2s === null || ethereum === null ? undefined : { l2s, ethereum }
 }
 
 function getLatestErc20(days: GasFeesDay[]): LatestErc20 | undefined {

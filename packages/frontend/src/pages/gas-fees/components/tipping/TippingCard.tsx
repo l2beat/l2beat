@@ -6,10 +6,9 @@ import type { GasFeesTipping } from '~/server/features/gas-fees/tipping/getGasFe
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import {
   formatDate,
-  formatDays,
+  formatPeriod,
   formatRatio,
   formatUsd,
-  pluralDays,
 } from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
 import { LiveStatus } from './LiveStatus'
@@ -28,7 +27,7 @@ export function TippingCard({
   const ref = useRef<HTMLDivElement>(null)
   const live = useLiveTips(ref)
   const { payers } = tipping
-  const overtipped = payers ? payers.ordinaryUsd - payers.atFastTipUsd : 0
+  const overtipped = payers?.aboveFastTipUsd ?? 0
   const fastSpread = live.status === 'live' ? getFastSpread(live) : undefined
 
   return (
@@ -69,8 +68,7 @@ export function TippingCard({
         {/* A total over fewer days than its period reads as more than it is */}
         {payers && payers.period.missingDays > 0 && (
           <p className="text-secondary text-sm">
-            Tips: {formatDays(payers.period.from, payers.period.to)}, without{' '}
-            {pluralDays(payers.period.missingDays)} of incomplete data.
+            Tips: {formatPeriod(payers.period)}.
           </p>
         )}
         <LiveTiers live={live} walletIcons={walletIcons} />
@@ -105,7 +103,7 @@ function LiveTiers({
     <TipTiers
       tips={live.estimate.tips}
       wallets={live.wallets}
-      ethUsd={live.estimate.ethUsd}
+      usdPerGwei={live.estimate.usdPerGwei}
       walletIcons={walletIcons}
     />
   )

@@ -1,5 +1,6 @@
 import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
+import { trimTrailingZeros } from '~/utils/trimTrailingZeros'
 
 /** "$20.3M" from a dollar up, two significant digits below: "$0.0027", "$0.10" */
 export function formatUsd(value: number): string {
@@ -11,9 +12,7 @@ export function formatUsd(value: number): string {
 export function formatGwei(value: number): string {
   if (value >= 100) return Math.round(value).toLocaleString('en-US')
   // Not through Number: a slow tip of 0.00000001 gwei would come back as "1e-8"
-  return formatSignificant(value, 2)
-    .replace(/(\.\d*?)0+$/, '$1')
-    .replace(/\.$/, '')
+  return trimTrailingZeros(formatSignificant(value, 2))
 }
 
 /** The leading zeros of a small tip, to be dimmed, and the digits after */
@@ -58,9 +57,24 @@ export function formatDays(from: number, to: number): string {
   return `${formatDate(from)} to ${formatDate(to)}`
 }
 
-/** "1 day", "8 days" */
-export function pluralDays(days: number): string {
-  return days === 1 ? '1 day' : `${days} days`
+/** The days some figures cover, and how many of them had no complete data */
+export function formatPeriod(period: {
+  from: number
+  to: number
+  missingDays: number
+}): string {
+  const days = formatDays(period.from, period.to)
+  if (period.missingDays === 0) return days
+  const missing =
+    period.missingDays === 1 ? '1 day' : `${period.missingDays} days`
+  return `${days}, without ${missing} of incomplete data`
+}
+
+/** "Days without data: Taiko 7, Ink 1" */
+export function formatMissingDays(
+  chains: { name: string; days: number }[],
+): string {
+  return `Days without data: ${chains.map((c) => `${c.name} ${c.days}`).join(', ')}`
 }
 
 function formatSignificant(value: number, digits: number): string {

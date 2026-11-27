@@ -1,7 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { GAS_FEES_CHAINS, type GasFeesChainId, gasTokenOf } from '../chains'
+import { l1FeeInGas, operatorFee } from '../daily/feeRules'
 import type { GasFeesDay } from '../daily/getGasFeesDays'
-import { eachDay } from '../days'
+import { eachDay, utcDay } from '../days'
 import { jitter, seededNoise } from './seededNoise'
 
 interface MockChain {
@@ -100,11 +101,12 @@ const CHAINS: Record<GasFeesChainId, MockChain> = {
   },
 }
 
-const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
-const TAIKO_HALT = [day('2026-06-23'), day('2026-06-29')] as const
-const MANTLE_L1_FEE_APART_FROM = day('2026-04-22')
-const MANTLE_OPERATOR_FEE_FROM = day('2026-04-23')
+const TAIKO_HALT = [utcDay('2026-06-23'), utcDay('2026-06-29')] as const
 const MNT_USD = 0.8
+
+export function mockEthUsd(timestamp: number): number {
+  return 3000 + 800 * Math.sin(timestamp / (40 * UnixTime.DAY))
+}
 
 export function getMockGasFeesDays(from: UnixTime, to: UnixTime): GasFeesDay[] {
   const yesterday = UnixTime(
@@ -140,7 +142,7 @@ function mockDay(chain: GasFeesChainId, timestamp: UnixTime): GasFeesDay {
     }
   }
   const c = CHAINS[chain]
-  const ethUsd = 3000 + 800 * Math.sin(timestamp / (40 * UnixTime.DAY))
+  const ethUsd = mockEthUsd(timestamp)
   const tokenUsd = gasTokenOf(chain) === 'MNT' ? MNT_USD : ethUsd
   const txCount = Math.round(jitter(c.txs, 0.2, 'tx', chain, timestamp))
   const gasUsed = txCount * c.gasPerTx
@@ -149,15 +151,10 @@ function mockDay(chain: GasFeesChainId, timestamp: UnixTime): GasFeesDay {
   const priority = execution * c.priorityShare
   const l1 =
     (txCount * jitter(c.l1UsdPerTx, 0.3, 'l1', chain, timestamp)) / tokenUsd
-  const l1InGas =
-    chain === 'arbitrum' ||
-    (chain === 'mantle' && timestamp < MANTLE_L1_FEE_APART_FROM)
-  const operatorFee =
-    chain === 'mantle' && timestamp >= MANTLE_OPERATOR_FEE_FROM
-      ? gasUsed * 10e-9
-      : 0
+  const l1InGas = l1FeeInGas({ chain, timestamp })
   const blob = chain === 'ethereum' ? execution * 0.01 : 0
-  const totalFeeNative = execution + blob + l1 + operatorFee
+  const totalFeeNative =
+    execution + blob + l1 + operatorFee({ chain, timestamp, gasUsed })
   const totalFeeUsd = totalFeeNative * tokenUsd
   return {
     timestamp,

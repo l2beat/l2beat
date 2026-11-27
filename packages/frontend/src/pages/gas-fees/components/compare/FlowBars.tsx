@@ -45,8 +45,8 @@ export function FlowBars({ stats }: { stats: GasFeesStats }) {
       amount: formatUsd(stats.feesUsd.ethereum),
     },
   }
-  const l2TxShare = shareOf(txs)
-  const l2FeeShare = shareOf(fees)
+  const l2TxShare = stats.l2Share.txCount
+  const l2FeeShare = stats.l2Share.feesUsd
   const tokens = stats.l2FeesUsdByToken
   const tokenTotal = tokens.ETH + tokens.MNT
 
@@ -91,11 +91,6 @@ export function FlowBars({ stats }: { stats: GasFeesStats }) {
       )}
     </div>
   )
-}
-
-function shareOf(side: Side) {
-  const total = side.l2.value + side.ethereum.value
-  return total > 0 ? side.l2.value / total : 0
 }
 
 function SideHeader({ side }: { side: Side }) {

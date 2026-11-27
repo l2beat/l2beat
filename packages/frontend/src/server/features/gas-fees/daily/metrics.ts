@@ -1,4 +1,5 @@
 import { ACTION_GAS } from '../chains'
+import { sum } from '../math'
 import { getPerGasPrices, usdPerToken } from './feeRules'
 import type { GasFeesDay } from './getGasFeesDays'
 
@@ -20,6 +21,14 @@ export function isGasMetric(metric: GasFeesMetric): boolean {
 
 export type DayValues = Record<GasFeesMetric, number | null>
 
+/** Fees over transactions, USD; null without a transaction */
+export function avgFee(
+  days: Pick<GasFeesDay, 'totalFeeUsd' | 'txCount'>[],
+): number | null {
+  const txCount = sum(days.map((d) => d.txCount))
+  return txCount > 0 ? sum(days.map((d) => d.totalFeeUsd)) / txCount : null
+}
+
 /** A day with no transactions has true zero totals and no prices */
 export function getDayValues(d: GasFeesDay): DayValues {
   const prices = getPerGasPrices(d)
@@ -32,7 +41,7 @@ export function getDayValues(d: GasFeesDay): DayValues {
   const gwei = (perGas: number | null | undefined) =>
     perGas === null || perGas === undefined ? null : perGas * 1e9
   return {
-    avgFee: d.txCount > 0 ? d.totalFeeUsd / d.txCount : null,
+    avgFee: avgFee([d]),
     medianFee: d.txCount > 0 ? d.medianFeeUsd : null,
     transfer: action(ACTION_GAS.transfer),
     erc20: action(ACTION_GAS.erc20),

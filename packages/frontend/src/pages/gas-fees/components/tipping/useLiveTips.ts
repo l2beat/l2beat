@@ -22,38 +22,43 @@ export type LiveTips =
 export function useLiveTips(ref: RefObject<Element | null>): LiveTips {
   const trpc = useTRPC()
   const onScreen = useIsOnScreen(ref)
-  const { data, isError } = useQuery({
+  const { data, isError, dataUpdatedAt } = useQuery({
     ...trpc.gasFees.liveTips.queryOptions(),
     enabled: onScreen,
     refetchInterval: onScreen ? POLL_MS : false,
     staleTime: POLL_MS,
   })
-  const now = useNowUntilStale(data?.estimate?.updatedAt)
+  // The estimate's age at the read is the server's to tell; the device's clock only counts on from there
+  const staleAtMs = data?.estimate
+    ? dataUpdatedAt +
+      (LIVE_FOR_SECONDS - (data.readAt - data.estimate.updatedAt)) * 1000
+    : undefined
+  const now = useNowUntil(staleAtMs)
   // A failed read is no estimate, not a load without end; the polls go on
   if (!data && isError) return { status: 'none' }
   if (!data || now === undefined) return { status: 'loading' }
   const { estimate, wallets } = data
-  if (!estimate) return { status: 'none' }
-  if (now - estimate.updatedAt > LIVE_FOR_SECONDS) {
+  if (!estimate || staleAtMs === undefined) return { status: 'none' }
+  if (now > staleAtMs) {
     return { status: 'stale', updatedAt: estimate.updatedAt }
   }
   return { status: 'live', estimate, wallets }
 }
 
 /**
- * Seconds, read after mount (the first render must match the server's) and
- * again once the estimate turns stale, so it does without a new poll
+ * The device's clock in ms, read after mount (the first render must match the
+ * server's) and again just after `untilMs`, so that passes without a new poll
  */
-function useNowUntilStale(updatedAt: number | undefined): number | undefined {
+function useNowUntil(untilMs: number | undefined): number | undefined {
   const [now, setNow] = useState<number>()
   useEffect(() => {
-    const read = () => setNow(Math.floor(Date.now() / 1000))
+    const read = () => setNow(Date.now())
     read()
-    if (updatedAt === undefined) return
-    const ms = (updatedAt + LIVE_FOR_SECONDS + 1) * 1000 - Date.now()
+    if (untilMs === undefined) return
+    const ms = untilMs + 1000 - Date.now()
     if (ms <= 0) return
     const id = setTimeout(read, ms)
     return () => clearTimeout(id)
-  }, [updatedAt])
+  }, [untilMs])
   return now
 }

@@ -10,7 +10,8 @@ import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
-import { DEFAULT_CHART_METRIC } from './components/compare/feeChartMetrics'
+import { DEFAULT_METRIC } from './utils/metricLabels'
+import { DEFAULT_CHART_RANGE, DEFAULT_TABLE_RANGE } from './utils/ranges'
 
 export async function getGasFeesData(
   manifest: Manifest,
@@ -18,8 +19,8 @@ export async function getGasFeesData(
 ): Promise<RenderData> {
   const helpers = getSsrHelpers()
   // Picked here, so the first render on the client starts from the same ranges
-  const chartRange = optionToRange('max')
-  const tableRange = optionToRange('30d')
+  const chartRange = optionToRange(DEFAULT_CHART_RANGE)
+  const tableRange = optionToRange(DEFAULT_TABLE_RANGE)
   const [appLayoutProps, chains, ethereum, tipping, stats] = await Promise.all([
     getAppLayoutProps(),
     getGasFeesChains(),
@@ -29,7 +30,7 @@ export async function getGasFeesData(
     helpers.queryClient.prefetchQuery(
       helpers.trpc.gasFees.chart.queryOptions({
         range: chartRange,
-        metric: DEFAULT_CHART_METRIC,
+        metric: DEFAULT_METRIC,
       }),
     ),
     helpers.queryClient.prefetchQuery(

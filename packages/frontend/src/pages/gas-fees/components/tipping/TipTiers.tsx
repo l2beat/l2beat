@@ -1,6 +1,5 @@
 import type { GasFeesTier, GasFeesWallet } from '@l2beat/database'
 import { Logo } from '~/components/Logo'
-import { tipToUsd } from '~/server/features/gas-fees/chains'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { formatRatio, formatUsd } from '../../utils/format'
 import { type LogScale, logScaleOf } from '../../utils/logScale'
@@ -24,12 +23,13 @@ const ROW_GRID = 'lg:grid lg:grid-cols-[180px_minmax(0,1fr)_120px] lg:gap-x-6'
 export function TipTiers({
   tips,
   wallets,
-  ethUsd,
+  usdPerGwei,
   walletIcons,
 }: {
   tips: Record<GasFeesTier, number>
   wallets: { wallet: GasFeesWallet; tier: GasFeesTier; tipGwei: number }[]
-  ethUsd: number
+  /** What a gwei of tip adds to an ERC-20 transfer */
+  usdPerGwei: number
   walletIcons: Record<GasFeesWallet, string>
 }) {
   const scale = logScaleOf(
@@ -84,7 +84,7 @@ export function TipTiers({
                 <CountingGwei value={ours} />
               </span>
               <span className="text-2xs text-secondary">
-                +{formatUsd(tipToUsd(ours, ethUsd))} per transfer
+                +{formatUsd(ours * usdPerGwei)} per ERC-20 transfer
               </span>
             </div>
             <div className="col-span-2 row-start-2 lg:col-span-1 lg:row-start-auto">
@@ -92,7 +92,7 @@ export function TipTiers({
                 tierName={name}
                 ours={ours}
                 wallets={marks}
-                ethUsd={ethUsd}
+                usdPerGwei={usdPerGwei}
                 scale={scale}
               />
             </div>
@@ -112,7 +112,8 @@ export function TipTiers({
                     </span>
                   </span>
                   <span className="text-2xs text-secondary">
-                    +{formatUsd(tipToUsd(highest - ours, ethUsd))} per transfer
+                    +{formatUsd((highest - ours) * usdPerGwei)} per ERC-20
+                    transfer
                   </span>
                 </>
               )}

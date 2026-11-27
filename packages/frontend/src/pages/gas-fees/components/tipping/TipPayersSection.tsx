@@ -1,10 +1,5 @@
 import type { TipPayers } from '~/server/features/gas-fees/tipping/toTipPayers'
-import {
-  formatDays,
-  formatShare,
-  formatUsd,
-  pluralDays,
-} from '../../utils/format'
+import { formatPeriod, formatShare, formatUsd } from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
 import { KeySwatch, ShareBar } from '../ShareBar'
 import { TIP_BAND_STYLE } from './tipBands'
@@ -29,12 +24,8 @@ export function TipPayersSection({
     )
   }
   const { period, bands } = payers
-  const days = `Ordinary transactions, ${formatDays(period.from, period.to)}${
-    period.missingDays > 0
-      ? `, without ${pluralDays(period.missingDays)} of incomplete data`
-      : ''
-  }.`
-  const aboveUsd = payers.ordinaryUsd - payers.atFastTipUsd
+  const days = `Ordinary transactions, ${formatPeriod(period)}.`
+  const aboveUsd = payers.aboveFastTipUsd
   const aboveShare = payers.ordinaryUsd > 0 ? aboveUsd / payers.ordinaryUsd : 0
   return (
     <div className="flex flex-col gap-6">
