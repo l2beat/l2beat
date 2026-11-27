@@ -40,10 +40,16 @@ describe('real columns', () => {
         const column = names.find((name) => columns.has(name))
         if (column !== undefined) {
           offences.push(`${file}:${sum.line} sums the real column ${column}`)
-        } else if (sum.viaKysely && !/['"`]/.test(sum.argument)) {
-          // A variable hides which column is summed, as `valueField` did in
-          // TokenValueRepository.
-          offences.push(`${file}:${sum.line} sums ${sum.argument.trim()}`)
+        } else if (
+          sum.viaKysely &&
+          !/^\s*'[\w.]+',?\s*$|`/.test(sum.argument)
+        ) {
+          // Anything but one column name or a `sql` template hides what is
+          // summed: a variable, as `valueField` did in TokenValueRepository,
+          // or an expression such as `eb.case()` around one.
+          offences.push(
+            `${file}:${sum.line} sums ${sum.argument.trim().replace(/\s+/g, ' ')}`,
+          )
         }
       }
     }
