@@ -31,7 +31,7 @@ import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { ALL_ROUTES_COST_OF_EXIT } from '../costOfExitDescription'
-import { formatDays, formatYield } from '../formatLiquidStaking'
+import { formatDays, formatYield, MAX_SHOWN_DAYS } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
   ETH_STAKED_TITLE,
@@ -265,7 +265,7 @@ export function CostOfExitChart({
       withProjectValues(
         data?.map((point) => ({
           timestamp: point.timestamp,
-          ...point.projects,
+          ...capDays(point.projects),
         })),
         projectSeries,
       ),
@@ -290,11 +290,13 @@ export function CostOfExitChart({
         isPlaceholderData={isPlaceholderData}
         ariaLabel="Cost of exit"
         hiddenKeys={hiddenKeys}
-        // Exits range from free to thousands of days, which a linear axis
-        // flattens into the floor.
-        yAxisScale={scaleSymlog}
+        // Exits range from free to a year, which a linear axis flattens
+        // into the floor.
+        yAxis={{ scale: scaleSymlog, ticks: [0, 1, 10, 100, MAX_SHOWN_DAYS] }}
         formatYAxisLabel={(value) =>
-          `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
+          value >= MAX_SHOWN_DAYS
+            ? `${MAX_SHOWN_DAYS}d+`
+            : `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
         }
         // ~ marks a value that counts requests still queued.
         formatTooltipValue={(value, key, timestamp) =>
@@ -306,6 +308,18 @@ export function CostOfExitChart({
       />
     ),
   })
+}
+
+/** Drawn at most a year high, where the axis and the tooltip read "365+". */
+function capDays(
+  values: Record<string, number | null>,
+): Record<string, number | null> {
+  return Object.fromEntries(
+    Object.entries(values).map(([key, days]) => [
+      key,
+      days === null ? null : Math.min(days, MAX_SHOWN_DAYS),
+    ]),
+  )
 }
 
 /**

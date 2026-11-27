@@ -45,8 +45,8 @@ interface Props {
   isPlaceholderData: boolean
   ariaLabel: string
   formatYAxisLabel: (value: number) => string
-  /** Linear by default. */
-  yAxisScale?: ChartYAxis['scale']
+  /** Linear, with computed ticks, by default. */
+  yAxis?: Pick<ChartYAxis, 'scale' | 'ticks'>
   /** Series that start hidden; the legend shows them. */
   hiddenKeys?: string[]
   formatTooltipValue: (value: number, key: string, timestamp: number) => string
@@ -62,7 +62,7 @@ export function LiquidStakingLineChart({
   isPlaceholderData,
   ariaLabel,
   formatYAxisLabel,
-  yAxisScale,
+  yAxis,
   hiddenKeys,
   formatTooltipValue,
   formatTooltipDate,
@@ -140,7 +140,7 @@ export function LiquidStakingLineChart({
         data={data}
         series={chartSeries}
         ariaLabel={ariaLabel}
-        yAxis={{ format: formatYAxisLabel, tickCount: 4, scale: yAxisScale }}
+        yAxis={{ format: formatYAxisLabel, tickCount: 4, ...yAxis }}
         rightAxis={
           background
             ? // The same count as the left axis puts both sets of labels
