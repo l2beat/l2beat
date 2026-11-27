@@ -44,13 +44,16 @@ function runtimeImports(entry: string): Map<string, string> {
   return reached
 }
 
+// The clause is one of `x`, `* as x`, `{ ... }`, or a default name followed by
+// one of those, so a match cannot run on into a neighbouring statement.
 const IMPORT =
-  /^(?:import|export)\s+(type\s+)?(?:([\s\S]*?)\s+from\s+)?['"](\.[^'"]*)['"]/gm
+  /^(?:import|export)\s+(type\s+)?(?:((?:[\w$]+\s*,\s*)?(?:\*(?:\s+as\s+[\w$]+)?|\{[^}]*\}|[\w$]+))\s+from\s+)?['"](\.[^'"]*)['"]/gm
 
 /** Relative specifiers of the imports and re-exports that run at runtime. */
 function valueImportSpecifiers(source: string): string[] {
   const specifiers: string[] = []
-  for (const [, typeOnly, clause, specifier] of source.matchAll(IMPORT)) {
+  const code = source.replace(/^\s*\/\/.*$/gm, '')
+  for (const [, typeOnly, clause, specifier] of code.matchAll(IMPORT)) {
     if (typeOnly || (clause && isTypeOnlyClause(clause))) continue
     specifiers.push(specifier as string)
   }
