@@ -23,16 +23,16 @@ export const reya: ScalingProject = orbitStackL2({
     description:
       'Reya is an Arbitrum Orbit stack L2 with AnyTrust data availability, optimizing for trading and liquidity provision.',
     links: {
-      websites: ['https://reya.network/'],
+      websites: ['https://reya.xyz/'],
       bridges: [
         'https://app.reya.network/bridge',
         'https://bridge.gelato.network/bridge/reya-network',
       ],
-      documentation: ['https://docs.reya.network/'],
+      documentation: ['https://docs.reya.xyz/'],
       explorers: ['https://explorer.reya.network/'],
       repositories: ['https://github.com/Reya-Labs'],
       socialMedia: [
-        'https://twitter.com/Reya_xyz',
+        'https://x.com/reya_xyz',
         'https://discord.gg/reyaxyz',
         'https://medium.com/@reyalabs123',
         'https://t.me/+gy0MV_67RKs1YTM5',
