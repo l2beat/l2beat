@@ -56,23 +56,15 @@ export const fluidkey: BaseProject = {
     // Unauthorized transfers 17:28 to 18:05 UTC on six chains (BNB Chain
     // included), processing offline at 18:05, back with v1.79.22 on
     // 2026-11-20 15:27 UTC. Tether froze 1,549,450 USDT of the traced funds on
-    // 2026-11-23, not yet returned (update of 2026-11-27).
+    // 2026-11-23, not yet returned (update of 2026-11-27). The logs also held
+    // personal data of 70 accounts (38 emails, 37 names, 17 IBANs, 24 postal
+    // addresses), more after the log review of 2026-11-25, no count.
     {
       title: 'Attacker drains $1.6M from 52 accounts',
       url: 'https://docs.fluidkey.com/security/incident-2026-11-19',
       date: '2026-11-19T00:00:00Z',
       description:
-        "Session tokens from Fluidkey's logs let an attacker queue transfers that open apps signed.",
-      type: 'incident',
-    },
-    {
-      // 70 accounts in the first report (38 emails, 37 names, 17 IBANs, 24
-      // postal addresses), more after the log review of 2026-11-25, no count.
-      title: "Attacker reads 54 accounts' viewing keys",
-      url: 'https://docs.fluidkey.com/security/incident-2026-11-19',
-      date: '2026-11-19T00:00:00Z',
-      description:
-        'The same logs expose names, bank account numbers or addresses of more than 70 accounts.',
+        "Fluidkey's logs leak session tokens, used to queue the transfers, and 54 accounts' viewing keys.",
       type: 'incident',
     },
     {
