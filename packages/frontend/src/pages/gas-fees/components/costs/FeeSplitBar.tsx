@@ -28,9 +28,16 @@ export function FeeSplitBar({
 }) {
   const total = split.base + (split.priority ?? 0) + split.l1Data
   if (!(total > 0)) return <span className="text-secondary">–</span>
+  const shareOf = (value: number | null) =>
+    value === null ? 'n/a' : formatShare(value / total)
   return (
     <Tooltip>
-      <TooltipTrigger className="block w-36">
+      <TooltipTrigger
+        className="block w-36"
+        aria-label={FEE_PARTS.map(
+          (part) => `${part.label} ${shareOf(split[part.key])}`,
+        ).join(', ')}
+      >
         <ShareBar
           className="h-4 rounded-sm"
           parts={FEE_PARTS.map((part) => ({
@@ -56,7 +63,7 @@ export function FeeSplitBar({
                 <span className="tabular-nums">
                   {value === null
                     ? 'n/a'
-                    : `${formatUsd(value)}${DOT_SEPARATOR}${formatShare(value / total)}`}
+                    : `${formatUsd(value)}${DOT_SEPARATOR}${shareOf(value)}`}
                 </span>
               </span>
               {note && <span className="text-secondary text-xs">{note}</span>}

@@ -5,6 +5,7 @@ import type { GasFeesDay } from './getGasFeesDays'
 const day = (date: string) => UnixTime.fromDate(new Date(`${date}T00:00:00Z`))
 /** Until this day Mantle's gas held the cost of posting data to Ethereum */
 const MANTLE_L1_FEE_APART_FROM = day('2026-04-22')
+// It began during 22 April; a day can't be split, so from the first whole day
 const MANTLE_OPERATOR_FEE_FROM = day('2026-04-23')
 /** 10 gwei a gas, in MNT */
 const MANTLE_OPERATOR_FEE_PER_GAS = 10e-9

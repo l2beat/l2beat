@@ -50,9 +50,10 @@ export function CostsCard({
   const [option, setOption] = useState<ChartRangePredefinedOption>('30d')
   // The first range is the server's, so the prefetched data is used
   const [range, setRange] = useState(initialRange)
-  const { data, isPlaceholderData } = useChartQuery(trpc.gasFees.summary, {
-    range,
-  })
+  const { data, isPlaceholderData, isError } = useChartQuery(
+    trpc.gasFees.summary,
+    { range },
+  )
   const period = RANGES.find((r) => r.value === option)?.period
 
   return (
@@ -100,12 +101,18 @@ export function CostsCard({
           </RadioGroup>
         </div>
       </div>
-      <CostsTable
-        chains={chains}
-        summaries={data}
-        metric={metric}
-        isPlaceholderData={isPlaceholderData}
-      />
+      {isError ? (
+        <p className="py-10 text-center text-secondary text-sm">
+          Couldn’t load the costs for this period.
+        </p>
+      ) : (
+        <CostsTable
+          chains={chains}
+          summaries={data}
+          metric={metric}
+          isPlaceholderData={isPlaceholderData}
+        />
+      )}
     </PrimaryCard>
   )
 }

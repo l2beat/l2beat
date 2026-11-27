@@ -201,7 +201,9 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
                   textAnchor={anchor}
                   className="fill-secondary text-2xs"
                 >
-                  {formatUsd(tip.usd)} · {formatSeconds(tip.seconds)}
+                  {formatUsd(tip.usd)}
+                  {DOT_SEPARATOR}
+                  {formatSeconds(tip.seconds)}
                 </text>
               </g>
             )
@@ -226,7 +228,9 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
                 y={fastLabelY + 14}
                 className="fill-secondary text-2xs"
               >
-                {formatUsd(fastTip.usd)} · {formatSeconds(fastTip.seconds)}
+                {formatUsd(fastTip.usd)}
+                {DOT_SEPARATOR}
+                {formatSeconds(fastTip.seconds)}
               </text>
             </g>
           )}

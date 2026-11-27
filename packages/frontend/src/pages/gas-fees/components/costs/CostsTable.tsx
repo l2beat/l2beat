@@ -196,7 +196,7 @@ export function CostsTable({
                     'rounded border px-1 font-semibold text-2xs',
                     row.chain.gasToken === 'ETH'
                       ? 'border-divider'
-                      : 'border-brand text-brand-deep',
+                      : 'border-brand',
                   )}
                 >
                   {row.chain.gasToken}

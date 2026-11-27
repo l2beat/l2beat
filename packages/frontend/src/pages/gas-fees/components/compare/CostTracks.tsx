@@ -1,16 +1,20 @@
 import type { GasFeesStats } from '~/server/features/gas-fees/daily/getGasFeesStats'
+import { cn } from '~/utils/cn'
 import { compareCosts } from '../../utils/compare'
 import { formatDate, formatUsd } from '../../utils/format'
 import {
   decadesOf,
   type LogScale,
   logPercent,
+  logPosition,
   logScaleOf,
 } from '../../utils/logScale'
 import { DecadeAxis, formatUsdDecade } from '../DecadeAxis'
 
 const L2_COLOR = 'var(--chart-stacked-blue)'
 const ETHEREUM_COLOR = 'var(--chart-ethereum)'
+/** A share of the track's width */
+const CLOSE_MARKERS = 0.25
 
 interface Track {
   title: string
@@ -65,6 +69,10 @@ function CostTrack({ track, scale }: { track: Track; scale: LogScale }) {
     number,
     number,
   ]
+  // Centred labels of markers this close would cover each other
+  const close =
+    logPosition(scale, high) - logPosition(scale, low) < CLOSE_MARKERS
+  const l2IsLow = track.l2 <= track.ethereum
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-start justify-between gap-2">
@@ -102,12 +110,14 @@ function CostTrack({ track, scale }: { track: Track; scale: LogScale }) {
           label={track.l2Label}
           color={L2_COLOR}
           scale={scale}
+          labels={close ? (l2IsLow ? 'before' : 'after') : 'centred'}
         />
         <Marker
           value={track.ethereum}
           label="Ethereum"
           color={ETHEREUM_COLOR}
           scale={scale}
+          labels={close ? (l2IsLow ? 'after' : 'before') : 'centred'}
         />
       </div>
     </div>
@@ -119,15 +129,23 @@ function Marker({
   label,
   color,
   scale,
+  labels,
 }: {
   value: number
   label: string
   color: string
   scale: LogScale
+  /** Which side of the dot the texts are on; the dot stays at its value */
+  labels: 'centred' | 'before' | 'after'
 }) {
   return (
     <div
-      className="-translate-x-1/2 absolute inset-y-0 flex flex-col items-center justify-between"
+      className={cn(
+        'absolute inset-y-0 flex flex-col justify-between',
+        labels === 'centred' && '-translate-x-1/2 items-center',
+        labels === 'before' && '-translate-x-[calc(100%-6px)] items-end',
+        labels === 'after' && '-translate-x-[6px] items-start',
+      )}
       style={{ left: logPercent(scale, value) }}
     >
       <span className="font-bold text-sm tabular-nums">{formatUsd(value)}</span>
@@ -135,7 +153,7 @@ function Marker({
         className="size-3 rounded-full border-2 border-surface-primary"
         style={{ backgroundColor: color }}
       />
-      <span className="whitespace-nowrap text-2xs text-secondary">{label}</span>
+      <span className="whitespace-nowrap text-2xs">{label}</span>
     </div>
   )
 }
