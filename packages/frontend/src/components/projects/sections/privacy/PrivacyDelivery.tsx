@@ -9,13 +9,14 @@ import { CodeOffIcon } from '~/icons/CodeOff'
 import { GlobeIcon } from '~/icons/Globe'
 import { PinIcon } from '~/icons/Pin'
 import { RefreshIcon } from '~/icons/Refresh'
+import { VerifiedIcon } from '~/icons/Verified'
 import { getReferenceAppDelivery } from '~/pages/privacy/referenceAppUi'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
 import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
 
-/** How the code arrives, or how the app relates to public source. */
-export type DeliveryPart = Delivery['kind'] | Delivery['source']
+/** How the code arrives, how the app relates to public source, or both merged. */
+export type DeliveryPart = Delivery['parts'][number]
 type Delivery = ReturnType<typeof getReferenceAppDelivery>
 
 /**
@@ -25,7 +26,7 @@ type Delivery = ReturnType<typeof getReferenceAppDelivery>
  */
 export function PrivacyDeliverySummary({ app }: { app: PrivacyReferenceApp }) {
   const delivery = getReferenceAppDelivery(app)
-  const parts = [delivery.kind, delivery.source]
+  const parts = delivery.parts
 
   return (
     <Tooltip>
@@ -70,6 +71,8 @@ export function DeliveryIcon({
   const Icon = ICONS[part.id]
   return (
     <Icon
+      // The word beside the symbol names it.
+      aria-label={undefined}
       className={cn(
         'shrink-0',
         sentimentToTextColor(part.sentiment, { vibrant: true }),
@@ -86,4 +89,5 @@ const ICONS = {
   reproducible: CodeCheckIcon,
   open: CodeIcon,
   closed: CodeOffIcon,
+  verified: VerifiedIcon,
 } as const

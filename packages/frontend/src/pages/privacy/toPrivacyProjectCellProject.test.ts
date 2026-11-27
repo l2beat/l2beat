@@ -25,6 +25,14 @@ describe(toPrivacyProjectCellProject.name, () => {
     expect(project.statuses.redWarning).toEqual(redWarning)
   })
 
+  it('marks a verified build with its name and tooltip', () => {
+    const verified = toPrivacyProjectCellProject(entry({ verifiedBuild: true }))
+    expect(verified.verifiedBuild?.label).toEqual('Verified build')
+
+    const other = toPrivacyProjectCellProject(entry({ verifiedBuild: false }))
+    expect(other.verifiedBuild).toEqual(undefined)
+  })
+
   it('points warning detail links at the privacy project page', () => {
     // Privacy-only projects have no /layer2s page, so the default L2 details
     // link would be a dead end.

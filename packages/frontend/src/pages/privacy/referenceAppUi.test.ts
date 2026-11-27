@@ -1,7 +1,11 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { PrivacyReferenceApp } from '~/server/features/privacy/utils/getPrivacyReferenceApp'
-import { getReferenceAppDelivery, getReferenceAppNotes } from './referenceAppUi'
+import {
+  getReferenceAppDelivery,
+  getReferenceAppNotes,
+  isVerifiedBuild,
+} from './referenceAppUi'
 
 const SOURCE = {
   repository: 'https://github.com/example/app',
@@ -23,7 +27,7 @@ function app(overrides: Partial<PrivacyReferenceApp>): PrivacyReferenceApp {
 
 describe('referenceAppUi', () => {
   describe(getReferenceAppDelivery.name, () => {
-    it('calls a pinned build reproducible only after a rebuild', () => {
+    it('merges a pinned build with a rebuild into a verified build', () => {
       const pin = { type: 'sha256', file: 'app.AppImage', hash: HASH } as const
       const rebuilt = getReferenceAppDelivery(
         app({
@@ -32,7 +36,16 @@ describe('referenceAppUi', () => {
           delivery: { type: 'pinned', pin, rebuild: 'https://recipe.example' },
         }),
       )
-      expect(rebuilt.label).toEqual('Pinned, reproducible')
+      expect(rebuilt.label).toEqual('Verified build')
+      expect(rebuilt.parts).toEqual([
+        {
+          id: 'verified',
+          label: 'Verified build',
+          sentiment: 'good',
+          description:
+            'Every user can get the build we reviewed and check its hash or contract address against ours. A rebuild of the public source gives the same app.',
+        },
+      ])
       expect(rebuilt.rebuild).toEqual('https://recipe.example')
       expect(rebuilt.check).toEqual({
         label: 'SHA-256 of app.AppImage',
@@ -43,7 +56,19 @@ describe('referenceAppUi', () => {
         app({ source: SOURCE, delivery: { type: 'pinned', pin } }),
       )
       expect(open.label).toEqual('Pinned, open')
+      expect(open.parts).toEqual([open.kind, open.source])
       expect(open.rebuild).toEqual(undefined)
+    })
+
+    it('keeps both parts of a rebuilt app that is not pinned', () => {
+      const delivery = {
+        type: 'latestOnly',
+        store: 'App Store',
+        rebuild: 'https://recipe.example',
+      } as const
+      const rebuilt = getReferenceAppDelivery(app({ source: SOURCE, delivery }))
+      expect(rebuilt.label).toEqual('Latest only, reproducible')
+      expect(isVerifiedBuild({ delivery })).toEqual(false)
     })
 
     it('shows a contract pin by its plain address', () => {

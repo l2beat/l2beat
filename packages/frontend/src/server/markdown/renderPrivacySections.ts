@@ -97,8 +97,7 @@ function renderReferenceApps(app: PrivacyReferenceApp) {
       ? `${delivery.check.label}: ${delivery.check.value}`
       : delivery.check.label)
   const deliveryMeta = [
-    `${delivery.kind.label}: ${delivery.kind.description}`,
-    `${delivery.source.label}: ${delivery.source.description}`,
+    ...delivery.parts.map((part) => `${part.label}: ${part.description}`),
     delivery.rebuild && link(REFERENCE_APP.rebuildLink, delivery.rebuild),
     check,
   ]

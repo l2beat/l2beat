@@ -20,7 +20,7 @@ import {
 import { TRUSTED_SETUP_FRAMEWORK_LINK } from '~/server/markdown/zkSectionBodies'
 import { PRIVACY_ADVERSARY_VERDICT as VERDICT } from '../adversaries/privacyAdversaryUi'
 import { PRIVACY_COLUMN_DESCRIPTIONS as COLUMNS } from '../privacySummaryColumns'
-import { DELIVERY } from '../referenceAppUi'
+import { DELIVERY, VERIFIED_BUILD } from '../referenceAppUi'
 import {
   PRIVACY_ADVICE_ANCHOR,
   PRIVACY_ADVICE_TITLE,
@@ -134,6 +134,7 @@ export function getPrivacyMethodologySections() {
           (source) => `**${source.label}**: ${source.description}`,
         ),
       ),
+      `A pinned, reproducible app is shown as a **${VERIFIED_BUILD.label}**.`,
       'Hosted public source makes the privileged insider yellow, hosted closed code red.',
       `App teams can propose their app in the ${link('Privacy adversaries framework', externalLinks.articles.privacyAdversariesFramework)} thread on the ETHBEAT forum.`,
     ]),

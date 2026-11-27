@@ -29,6 +29,7 @@ import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
+import { VerifiedIcon } from '~/icons/Verified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
@@ -40,6 +41,8 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   quantumResistance?: QuantumResistanceType
+  /** A privacy project whose reference app is a verified build: the mark's name and tooltip. */
+  verifiedBuild?: { label: string; tooltip: string }
   /** Project page that warning anchors resolve against; defaults to the L2 page. */
   detailsHref?: string
 }
@@ -98,6 +101,12 @@ function DesktopStatusIcons({
       {project.quantumResistance && (
         <QuantumResistanceIcon className="size-4" />
       )}
+      {project.verifiedBuild && (
+        <VerifiedIcon
+          className="size-4"
+          aria-label={project.verifiedBuild.label}
+        />
+      )}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -153,6 +162,14 @@ export function ProjectNameMobileStatusIcons({
           icon={<QuantumResistanceIcon className="size-4" />}
         >
           {QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance]}
+        </MobileProjectIconTooltip>
+      )}
+      {project.verifiedBuild && (
+        <MobileProjectIconTooltip
+          label={project.verifiedBuild.label}
+          icon={<VerifiedIcon className="size-4" aria-label={undefined} />}
+        >
+          {project.verifiedBuild.tooltip}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.verificationWarnings &&
@@ -385,6 +402,7 @@ export function ProjectNameInfoTooltip({
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistance ||
+    !!project.verifiedBuild ||
     badges.length > 0 ||
     sections.length > 0
 
@@ -421,6 +439,15 @@ function getTooltipSections(project: ProjectCellProject) {
       text: QUANTUM_RESISTANCE_TOOLTIPS[project.quantumResistance],
       variant: 'muted',
       icon: <QuantumResistanceIcon className="size-4" />,
+    })
+  }
+
+  if (project.verifiedBuild) {
+    sections.push({
+      id: 'verified-build',
+      text: project.verifiedBuild.tooltip,
+      variant: 'muted',
+      icon: <VerifiedIcon className="size-4" aria-label={undefined} />,
     })
   }
 

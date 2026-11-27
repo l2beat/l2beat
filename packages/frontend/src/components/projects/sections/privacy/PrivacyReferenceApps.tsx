@@ -73,23 +73,23 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
             ]}
           />
           <dl className="mt-2 grid grid-cols-1 gap-y-2 text-paragraph-13 sm:grid-cols-[auto_1fr] sm:gap-x-4 sm:gap-y-1.5 md:text-paragraph-14">
-            <DeliveryLine part={delivery.kind}>
-              {delivery.kind.description}
-            </DeliveryLine>
-            <DeliveryLine part={delivery.source}>
-              {delivery.source.description}
-              {delivery.rebuild && (
-                <>
-                  {' '}
-                  <CustomLink
-                    href={delivery.rebuild}
-                    className="whitespace-nowrap"
-                  >
-                    {REFERENCE_APP.rebuildLink}
-                  </CustomLink>
-                </>
-              )}
-            </DeliveryLine>
+            {delivery.parts.map((part) => (
+              <DeliveryLine key={part.id} part={part}>
+                {part.description}
+                {/* The last part is the one a rebuild earns. */}
+                {delivery.rebuild && part === delivery.parts.at(-1) && (
+                  <>
+                    {' '}
+                    <CustomLink
+                      href={delivery.rebuild}
+                      className="whitespace-nowrap"
+                    >
+                      {REFERENCE_APP.rebuildLink}
+                    </CustomLink>
+                  </>
+                )}
+              </DeliveryLine>
+            ))}
           </dl>
           {delivery.check && (
             <p className="mt-1 pl-5.5 text-paragraph-13 text-secondary md:text-paragraph-14">
