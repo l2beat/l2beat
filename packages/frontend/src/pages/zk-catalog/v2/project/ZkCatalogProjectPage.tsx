@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -81,12 +82,18 @@ export function ZkCatalogProjectPage({
                     />
                   </div>
                 </div>
-                <div className="row-start-2">
+                <CardBoard
+                  className="row-start-2"
+                  layoutClassName="flex flex-col"
+                >
                   <ProjectZkCatalogSummary project={projectEntry} />
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={projectEntry.sections} />
+                    <ProjectDetails
+                      className="contents"
+                      items={projectEntry.sections}
+                    />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
                 {!isNavigationEmpty && (
                   <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation

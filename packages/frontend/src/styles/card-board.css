@@ -15,27 +15,30 @@
   --board-gap-x: 3rem;
   --board-gap-y: 2.5rem;
   overflow: clip;
-  & .primary-card {
+  /* Only the outermost cards are blocks: a card nested in one (e.g. a
+     project page subsection) keeps its own look. */
+  & .primary-card:not(.primary-card *) {
     position: relative;
     overflow: visible;
+    margin: 0;
     padding: 0;
     border-radius: 0;
     background: transparent;
   }
-  & .primary-card::before,
-  & .primary-card::after {
+  & .primary-card:not(.primary-card *)::before,
+  & .primary-card:not(.primary-card *)::after {
     content: "";
     position: absolute;
     pointer-events: none;
     background: var(--divider);
   }
-  & .primary-card::before {
+  & .primary-card:not(.primary-card *)::before {
     top: calc(var(--board-gap-y) / -2);
     left: calc(var(--board-gap-x) / -2);
     right: calc(var(--board-gap-x) / -2);
     height: 1px;
   }
-  & .primary-card::after {
+  & .primary-card:not(.primary-card *)::after {
     left: calc(var(--board-gap-x) / -2);
     top: 0;
     bottom: 0;

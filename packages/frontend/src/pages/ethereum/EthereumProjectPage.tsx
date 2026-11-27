@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -52,12 +53,18 @@ export function EthereumProjectPage({ entry, queryState, ...props }: Props) {
                     <DesktopProjectLinks projectLinks={entry.header.links} />
                   </div>
                 </div>
-                <div className="row-start-2 w-full">
+                <CardBoard
+                  className="row-start-2 w-full"
+                  layoutClassName="flex flex-col"
+                >
                   <EthereumProjectSummary project={entry} />
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      className="contents"
+                      items={entry.sections}
+                    />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
 
                 {!isNavigationEmpty && (
                   <div className="row-start-2 mt-2 hidden shrink-0 lg:block">

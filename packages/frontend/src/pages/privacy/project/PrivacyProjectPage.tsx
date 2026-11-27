@@ -5,6 +5,7 @@ import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { ProjectIconList } from '~/components/ProjectIconList'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -119,7 +120,10 @@ export function PrivacyProjectPage({
                   </div>
                 </div>
 
-                <div className="row-start-2 w-full">
+                <CardBoard
+                  className="row-start-2 w-full"
+                  layoutClassName="flex flex-col"
+                >
                   <HighlightableLinkContextProvider>
                     <PrimaryCard
                       id="summary"
@@ -226,11 +230,12 @@ export function PrivacyProjectPage({
                     </PrimaryCard>
 
                     <ProjectDetails
+                      className="contents"
                       items={entry.sections}
                       selectedUpdateId={selectedUpdateId}
                     />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
 
                 {!isNavigationEmpty && (
                   <div className="row-start-2 mt-2 hidden shrink-0 lg:block">

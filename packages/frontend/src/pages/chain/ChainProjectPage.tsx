@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
@@ -47,18 +48,24 @@ export function ChainProjectPage({
                     sectionLinks={sectionLinks}
                   />
                 </div>
-                <div className="row-start-2 w-full">
+                <CardBoard
+                  className="row-start-2 w-full"
+                  layoutClassName="flex flex-col"
+                >
                   <section
                     id="summary"
                     data-role="nav-section"
-                    className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b max-md:pb-4 md:rounded-xl md:px-6 md:py-5"
+                    className="primary-card w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b max-md:pb-4 md:rounded-xl md:px-6 md:py-5"
                   >
                     <ProjectInteropMetrics interop={entry.interop} />
                   </section>
                   <HighlightableLinkContextProvider>
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      className="contents"
+                      items={entry.sections}
+                    />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
 
                 <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                   <DesktopProjectNavigation
