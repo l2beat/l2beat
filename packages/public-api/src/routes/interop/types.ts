@@ -1,7 +1,7 @@
 import { v } from '@l2beat/validate'
 
 const SNAPSHOT_TIMESTAMP_DESCRIPTION =
-  'UNIX timestamp (seconds) of the end of the 24 hours the numbers cover. The same on every item of a response. The snapshot is stale when this is more than a few hours old.'
+  'UNIX timestamp (seconds) of the snapshot: the end of the 24 hours it covers. The same on every item of a response. The snapshot is stale when this is more than a few hours old. It does not date every number: when we fall behind on a chain, its last numbers are carried into newer snapshots for up to a day.'
 
 const SplitAverageTransferTimeSchema = v.object({
   label: v.string().meta({
@@ -55,7 +55,7 @@ const interopProtocolAggregateFields = {
   }),
   totalVolume: v.number().meta({
     description:
-      'USD value of the transfers. A transfer counts once, at the larger of its value on the source and on the destination chain.',
+      'USD value of the transfers. Transfers are grouped by route. Within a group, the values on the source side and on the destination side are summed separately, and the larger sum counts.',
   }),
   totalTransferCount: v.number(),
   avgTransferTime: AverageTransferTimeSchema,

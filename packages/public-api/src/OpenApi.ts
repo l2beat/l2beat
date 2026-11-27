@@ -205,7 +205,7 @@ export class OpenApi {
         res.statusCode === 200
           ? options.result
           : options.errors?.[res.statusCode]
-      const result = schema?.safeParse(body)
+      const result = schema?.safeValidate(body)
       if (result && !result.success) {
         this.onInvalidResponse({
           path,
