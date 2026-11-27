@@ -98,7 +98,7 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
         },
         {
           title: 'Errors use HTTP status codes',
-          text: 'For an unknown project the old API answered `200` with `{ "success": false, "error": "..." }`. The new API answers `404` with `{ "message": "..." }`, also for a project that exists but has no data of the kind asked for; the message says which. A bad parameter is a `400` in both, but its text moved from `error` to `message`.',
+          text: 'For an unknown project the old API answered `200` with `{ "success": false, "error": "..." }`. The new API answers `404` with `{ "message": "..." }`. The chart endpoints also answer `404` for a project that exists but has no data of the kind asked for, and the message says which; `/v1/project/{projectId}/tokens` answers `[]` instead. A bad parameter is a `400` in both, but its text moved from `error` to `message`.',
         },
         {
           title: 'Chart points are objects',

@@ -205,7 +205,7 @@ function EndpointSection({ endpoint }: { endpoint: EndpointGuide }) {
       {endpoint.fields && (
         <>
           <h3 className={SUBHEADING}>{endpoint.fields.title}</h3>
-          <DataTable header={['Old', 'New', 'Notes']} lastColumnFromMd>
+          <DataTable header={['Old', 'New', 'Notes']}>
             {endpoint.fields.changes.map((change) => (
               <FieldRow
                 key={`${change.before}${change.after}`}
@@ -225,32 +225,19 @@ function EndpointSection({ endpoint }: { endpoint: EndpointGuide }) {
   )
 }
 
-/** On phones the note gets a row of its own, so it is read without scrolling sideways. */
 function FieldRow({ change }: { change: FieldChange }) {
-  const note = change.note && <Text>{change.note}</Text>
   return (
-    <>
-      <tr className={cn(ROW, note && 'max-md:border-b-0')}>
-        <td className={cn(CELL, 'w-1/2 md:w-1/4')}>
-          {change.before ? (
-            <Text>{change.before}</Text>
-          ) : (
-            <Tag>{NEW_FIELD}</Tag>
-          )}
-        </td>
-        <td className={cn(CELL, 'w-1/2 md:w-1/4')}>
-          {change.after ? <Text>{change.after}</Text> : <Tag>{GONE}</Tag>}
-        </td>
-        <td className={cn(CELL, 'max-md:hidden')}>{note}</td>
-      </tr>
-      {note && (
-        <tr className={cn(ROW, 'md:hidden')}>
-          <td colSpan={2} className={cn(CELL, 'pt-0')}>
-            {note}
-          </td>
-        </tr>
-      )}
-    </>
+    <tr className={ROW}>
+      <td className={cn(CELL, 'w-1/4 min-w-40')}>
+        {change.before ? <Text>{change.before}</Text> : <Tag>{NEW_FIELD}</Tag>}
+      </td>
+      <td className={cn(CELL, 'w-1/4 min-w-40')}>
+        {change.after ? <Text>{change.after}</Text> : <Tag>{GONE}</Tag>}
+      </td>
+      <td className={cn(CELL, 'min-w-64')}>
+        {change.note && <Text>{change.note}</Text>}
+      </td>
+    </tr>
   )
 }
 
@@ -271,8 +258,6 @@ function Notes({ notes }: { notes: GuideNote[] }) {
 
 function DataTable(props: {
   header: string[]
-  /** The last column is left out on phones, where its cells move below their row. */
-  lastColumnFromMd?: boolean
   className?: string
   children: ReactNode
 }) {
@@ -281,18 +266,8 @@ function DataTable(props: {
       <table className="w-full border-collapse text-left text-sm">
         <thead>
           <tr className="border-divider border-b">
-            {props.header.map((label, i) => (
-              <th
-                key={label}
-                className={cn(
-                  CELL,
-                  LABEL,
-                  'py-2',
-                  props.lastColumnFromMd &&
-                    i === props.header.length - 1 &&
-                    'max-md:hidden',
-                )}
-              >
+            {props.header.map((label) => (
+              <th key={label} className={cn(CELL, LABEL, 'py-2')}>
                 {label}
               </th>
             ))}
