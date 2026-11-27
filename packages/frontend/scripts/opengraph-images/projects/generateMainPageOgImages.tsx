@@ -175,6 +175,12 @@ export const mainPages: MainPage[] = [
     description:
       'See how much data projects post to Ethereum blobs, against the blob target, and the value they secure.',
   },
+  {
+    path: 'gas-fees',
+    title: 'Gas fees',
+    description:
+      'What it costs to get a transaction included on Ethereum and its Layer 2s, and what a tip buys on Ethereum.',
+  },
   { path: RENAME_ANNOUNCEMENT_PATH.slice(1), title: 'L2BEAT is now ETHBEAT' },
   // The CROPS guide's pages (the-crops-guide, submit-your-protocol,
   // integrate-crops) have hand-made images in the guide's own style, so they

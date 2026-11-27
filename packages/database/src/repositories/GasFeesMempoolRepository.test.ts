@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
   type GasFeesMempoolDayData,
+  type GasFeesMempoolDayStatus,
   GasFeesMempoolRepository,
 } from './GasFeesMempoolRepository'
 
@@ -33,6 +34,29 @@ describeDatabase(GasFeesMempoolRepository.name, (db) => {
     ])
   })
 
+  it('adds up the waits of complete days only', async () => {
+    await repository.replaceDay(dayData(1, 2, 'complete'))
+    await repository.replaceDay(dayData(2, 2, 'complete'))
+    await repository.replaceDay(dayData(3, 2, 'partial'))
+
+    const all = [UnixTime(0), UnixTime(10 * UnixTime.DAY)] as const
+    const level = { tipFromWei: 2_000_000_000, tipToWei: 2_050_000_000 }
+    expect(await repository.getCompleteTipLevelWaitTotals(...all)).toEqual([
+      { ...level, waitFromMs: 0, waitToMs: 500, txCount: 20, tipSumGwei: 41 },
+      {
+        ...level,
+        waitFromMs: 500,
+        waitToMs: null,
+        txCount: 20,
+        tipSumGwei: 41,
+      },
+    ])
+    expect(await repository.getCompleteTierWaitTotals(...all)).toEqual([
+      { tier: 'fast', waitFromMs: 0, waitToMs: 500, txCount: 6 },
+      { tier: 'fast', waitFromMs: 500, waitToMs: null, txCount: 6 },
+    ])
+  })
+
   it('deletes the days after a timestamp from every table', async () => {
     await repository.replaceDay(dayData(1, 1))
     await repository.replaceDay(dayData(2, 1))
@@ -47,7 +71,11 @@ describeDatabase(GasFeesMempoolRepository.name, (db) => {
   })
 })
 
-function dayData(day: number, buckets: number): GasFeesMempoolDayData {
+function dayData(
+  day: number,
+  buckets: number,
+  status: GasFeesMempoolDayStatus = 'partial',
+): GasFeesMempoolDayData {
   const timestamp = UnixTime(day * UnixTime.DAY)
   const waits = Array.from({ length: buckets }, (_, i) => ({
     waitFromMs: i * 500,
@@ -56,7 +84,7 @@ function dayData(day: number, buckets: number): GasFeesMempoolDayData {
   return {
     day: {
       timestamp,
-      status: 'partial',
+      status,
       duneLandedCount: 900 + buckets,
       flashbotsLandedCount: null,
       keptCount: 400,
