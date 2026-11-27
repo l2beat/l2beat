@@ -1,6 +1,6 @@
 ---
 title: "Hash-based is not an assumption"
-description: "Why we need to be careful when calling hash-based signatures \"minimal assumptions,\" shown through one small counterexample."
+description: "Why we need to be careful when calling hash-based signatures \"minimal assumptions\", shown through one small counterexample."
 publishedOn: "2026-11-25"
 authorId: l2beat_research
 tag: Research
@@ -80,7 +80,7 @@ Because $m^* \neq m$, they differ at some bit where the forger never saw the sec
 >
 > If breaking into a house forces you to break the door, then as long as the door holds, the house holds. Showing that breaking Lamport lets you invert $f$ proves that one-wayness of $f$ protects Lamport.
 >
-> The proof runs backwards, from "Lamport breaks" to "$f$ breaks", because $A \Rightarrow B$ is equivalent to its contrapositive $\neg B \Rightarrow \neg A$, and negating *"for all"* gives *"there exists."*
+> The proof runs backwards, from "Lamport breaks" to "$f$ breaks", because $A \Rightarrow B$ is equivalent to its contrapositive $\neg B \Rightarrow \neg A$, and negating *"for all"* gives *"there exists"*.
 >
 > $$\begin{aligned}
 > \text{Want:} \quad & (\forall\text{ inverters, fails}) \quad\Rightarrow\quad (\forall\text{ forgers, fails}) \\
@@ -241,4 +241,4 @@ Today, Ethereum's core uses of Keccak-256 (state, transactions, and 160-bit addr
 
 A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it drops elliptic-curve pairings, the KZG trusted setup, and SHA-256 random-oracle assumptions without adding lattice problems. Still, reusing Keccak does not make it a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge the new assumptions at the cost of bandwidth, verification, and liveness complexity.
 
-Ethereum's post-quantum and post-AI debate should move past treating "hash-based" as shorthand for "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
+Ethereum's post-quantum and post-AI debate should move past treating "hash-based" as shorthand for "no new assumptions". The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
