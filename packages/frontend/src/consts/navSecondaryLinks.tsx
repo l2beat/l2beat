@@ -3,10 +3,6 @@ import { externalLinks } from '~/consts/externalLinks'
 
 export const navSecondaryLinks: NavLink[] = [
   {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
     title: 'Changelog',
     href: '/changelog',
   },

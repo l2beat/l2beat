@@ -14,7 +14,6 @@ const FOOTER_LINKS = [
   { title: 'Forum', href: externalLinks.forum },
   { title: 'Glossary', href: '/glossary' },
   { title: 'Native rollups', href: '/native-rollups' },
-  { title: 'Publications', href: '/publications' },
   { title: 'Terms of service', href: '/terms-of-service' },
   { title: 'Tools', href: externalLinks.tools },
 ]

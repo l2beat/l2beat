@@ -217,4 +217,13 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <BlobsIcon className="transition-colors duration-300 group-data-[active=true]:fill-nav-active" />
     ),
   },
+  {
+    type: 'single',
+    section: 'more',
+    title: 'Publications',
+    match: 'publications',
+    href: '/publications',
+    // "And more" rows draw no icon.
+    icon: null,
+  },
 ])
