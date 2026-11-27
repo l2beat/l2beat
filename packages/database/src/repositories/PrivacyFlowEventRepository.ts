@@ -140,11 +140,11 @@ export class PrivacyFlowEventRepository extends BaseRepository {
           )
           .as('withdrawalAmount'),
         eb.fn
-          .sum('valueUsd')
+          .sum(eb.cast<number>('valueUsd', 'double precision'))
           .filterWhere('direction', '=', 'deposit')
           .as('depositValueUsd'),
         eb.fn
-          .sum('valueUsd')
+          .sum(eb.cast<number>('valueUsd', 'double precision'))
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalValueUsd'),
       ])
@@ -268,11 +268,11 @@ export class PrivacyFlowEventRepository extends BaseRepository {
           )
           .as('withdrawalAmount'),
         eb.fn
-          .sum('valueUsd')
+          .sum(eb.cast<number>('valueUsd', 'double precision'))
           .filterWhere('direction', '=', 'deposit')
           .as('depositValueUsd'),
         eb.fn
-          .sum('valueUsd')
+          .sum(eb.cast<number>('valueUsd', 'double precision'))
           .filterWhere('direction', '=', 'withdrawal')
           .as('withdrawalValueUsd'),
       ])

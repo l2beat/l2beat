@@ -321,6 +321,21 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         ])
       })
 
+      it('keeps a small value next to a large one', async () => {
+        // Both fit a `real` exactly, but their float4 sum drops the 1:
+        // at 2^24 the next float4 is 2 away.
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 1n, 2 ** 24),
+          flowEvent('proj-a', START, 101, 'deposit', 1, 1n, 1),
+        ])
+
+        const [result] = await repository.getBucketTotalsByProjectIds([
+          'proj-a',
+        ])
+
+        expect(result?.depositValueUsd).toEqual(2 ** 24 + 1)
+      })
+
       it('returns empty array when projectIds is empty', async () => {
         const result = await repository.getBucketTotalsByProjectIds([])
         expect(result).toEqual([])

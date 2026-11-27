@@ -425,8 +425,12 @@ export class InteropTransferRepository extends BaseRepository {
         sql<string>`COUNT(*) FILTER (WHERE "dstValueUsd" IS NULL)`.as(
           'missingDstValueCount',
         ),
-        eb.fn.sum('srcValueUsd').as('srcValueUsdSum'),
-        eb.fn.sum('dstValueUsd').as('dstValueUsdSum'),
+        eb.fn
+          .sum(eb.cast<number>('srcValueUsd', 'double precision'))
+          .as('srcValueUsdSum'),
+        eb.fn
+          .sum(eb.cast<number>('dstValueUsd', 'double precision'))
+          .as('dstValueUsdSum'),
       ])
       .where((eb) => this.financialsFilterExpression(eb, filter))
       .executeTakeFirst()
@@ -1063,8 +1067,12 @@ export class InteropTransferRepository extends BaseRepository {
         'type',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
-        eb.fn.sum('srcValueUsd').as('srcValueSum'),
-        eb.fn.sum('dstValueUsd').as('dstValueSum'),
+        eb.fn
+          .sum(eb.cast<number>('srcValueUsd', 'double precision'))
+          .as('srcValueSum'),
+        eb.fn
+          .sum(eb.cast<number>('dstValueUsd', 'double precision'))
+          .as('dstValueSum'),
       ])
 
     if (timeRange !== undefined) {
@@ -1097,7 +1105,9 @@ export class InteropTransferRepository extends BaseRepository {
       .select((eb) => [
         'plugin',
         eb.fn.countAll().as('count'),
-        sql<number | null>`SUM(GREATEST("srcValueUsd", "dstValueUsd"))`.as(
+        sql<
+          number | null
+        >`SUM(GREATEST("srcValueUsd", "dstValueUsd")::double precision)`.as(
           'volumeUsd',
         ),
       ])
@@ -1125,8 +1135,12 @@ export class InteropTransferRepository extends BaseRepository {
         'dstChain',
         eb.fn.countAll().as('count'),
         eb.fn.avg('duration').as('avgDuration'),
-        eb.fn.sum('srcValueUsd').as('srcValueSum'),
-        eb.fn.sum('dstValueUsd').as('dstValueSum'),
+        eb.fn
+          .sum(eb.cast<number>('srcValueUsd', 'double precision'))
+          .as('srcValueSum'),
+        eb.fn
+          .sum(eb.cast<number>('dstValueUsd', 'double precision'))
+          .as('dstValueSum'),
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
@@ -1197,7 +1211,7 @@ export class InteropTransferRepository extends BaseRepository {
         eb.fn.countAll().as('transferCount'),
         eb.fn.count('duration').as('transfersWithDurationCount'),
         eb.fn.sum('duration').as('totalDurationSum'),
-        sql<number>`COALESCE(SUM(GREATEST("srcValueUsd", "dstValueUsd")), 0)`.as(
+        sql<number>`COALESCE(SUM(GREATEST("srcValueUsd", "dstValueUsd")::double precision), 0)`.as(
           'volume',
         ),
       ])
@@ -1321,7 +1335,7 @@ export class InteropTransferRepository extends BaseRepository {
               COALESCE(t."srcTime", t."timestamp"),
               -t."srcRawAmount",
               t."srcWasBurned",
-              t."srcValueUsd"
+              t."srcValueUsd"::double precision
             ),
             (
               t."dstChain",
@@ -1329,7 +1343,7 @@ export class InteropTransferRepository extends BaseRepository {
               COALESCE(t."dstTime", t."timestamp"),
               t."dstRawAmount",
               t."dstWasMinted",
-              t."dstValueUsd"
+              t."dstValueUsd"::double precision
             )
         ) AS side("chain", "tokenAddress", "time", "change", "changed", "valueUsd")
         WHERE t."timestamp" >= ${from}

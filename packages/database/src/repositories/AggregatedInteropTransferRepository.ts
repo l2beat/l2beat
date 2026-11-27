@@ -224,10 +224,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<string>`"latest_per_day"."dstChain"`.as('dst_chain'),
         eb.fn.sum('transferCount').as('transfer_count'),
         eb.fn.sum('identifiedCount').as('identified_count'),
-        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0))`.as(
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0)::double precision)`.as(
           'total_src_value_usd',
         ),
-        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0))`.as(
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0)::double precision)`.as(
           'total_dst_value_usd',
         ),
       ])
@@ -323,10 +323,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         eb.fn.sum('identifiedCount').as('identified_count'),
         eb.fn.sum('transfersWithDurationCount').as('duration_count'),
         eb.fn.sum('totalDurationSum').as('total_duration_sum'),
-        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0))`.as(
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."srcValueUsd", 0)::double precision)`.as(
           'total_src_value_usd',
         ),
-        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0))`.as(
+        sql<number>`sum(coalesce("AggregatedInteropTransfer"."dstValueUsd", 0)::double precision)`.as(
           'total_dst_value_usd',
         ),
       ])
@@ -455,8 +455,12 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"a"."timestamp"`.as('timestamp'),
         eb.fn.sum('a.transferCount').as('transfer_count'),
         eb.fn.sum('a.identifiedCount').as('identified_count'),
-        sql<number>`sum(coalesce("a"."srcValueUsd", 0))`.as('src_volume_usd'),
-        sql<number>`sum(coalesce("a"."dstValueUsd", 0))`.as('dst_volume_usd'),
+        sql<number>`sum(coalesce("a"."srcValueUsd", 0)::double precision)`.as(
+          'src_volume_usd',
+        ),
+        sql<number>`sum(coalesce("a"."dstValueUsd", 0)::double precision)`.as(
+          'dst_volume_usd',
+        ),
       ])
       .where('a.id', '=', id)
       .where('a.bridgeType', '=', bridgeType)
@@ -538,8 +542,12 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"a"."timestamp"`.as('timestamp'),
         eb.fn.sum('a.transferCount').as('transfer_count'),
         eb.fn.sum('a.identifiedCount').as('identified_count'),
-        sql<number>`sum(coalesce("a"."srcValueUsd", 0))`.as('src_volume_usd'),
-        sql<number>`sum(coalesce("a"."dstValueUsd", 0))`.as('dst_volume_usd'),
+        sql<number>`sum(coalesce("a"."srcValueUsd", 0)::double precision)`.as(
+          'src_volume_usd',
+        ),
+        sql<number>`sum(coalesce("a"."dstValueUsd", 0)::double precision)`.as(
+          'dst_volume_usd',
+        ),
       ])
       .where('a.id', '=', id)
       .where('a.bridgeType', '=', bridgeType)

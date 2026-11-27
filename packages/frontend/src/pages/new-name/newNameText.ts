@@ -1,6 +1,12 @@
 // The rename announcement's wording, split into the parts the page lays out.
 // Edit the words here; NewNamePage decides how each part looks.
 
+import {
+  API_MIGRATION_GUIDE_PATH,
+  formatSunsetDate,
+  OLD_PUBLIC_API_SUNSET_AT,
+} from '~/consts/publicApi'
+
 /** One of the ways L2BEAT tested L2s' promises. */
 interface Practice {
   name: string
@@ -144,16 +150,12 @@ export const NEW_NAME = {
     links: {
       heading: 'Old links keep working',
       text: 'Only the domain changes. Everything after it stays the same, and the redirects stay indefinitely.',
-      examples: [
-        '/layer2s/summary',
-        '/layer2s/projects/arbitrum',
-        '/api/scaling/summary',
-        '/llms.txt',
-      ],
+      examples: ['/layer2s/summary', '/layer2s/projects/arbitrum', '/llms.txt'],
       notes: [
         {
           lead: 'The API',
-          text: 'Same endpoints, same responses. Point your clients at ethbeat.org when you can: most HTTP clients follow redirects, some do not.',
+          text: `The API is now at api.ethbeat.org, open to everyone without a key. The old /api/scaling endpoints stop working on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: see the migration guide.`,
+          link: { label: 'migration guide', href: API_MIGRATION_GUIDE_PATH },
         },
         {
           lead: 'Badges',
