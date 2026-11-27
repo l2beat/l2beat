@@ -70,15 +70,21 @@ describeDatabase(LiquidStakingSnapshotRepository.name, (db) => {
       record('a', 1),
       record('a', 5),
       record('b', 2),
-      record('c', 9),
+      record('b', 9),
     ])
 
     expect(
       await repository.getProjectIdsWithSnapshotsSince(
-        ['project-a', 'project-b'],
+        ['project-a'],
         UnixTime(3 * UnixTime.HOUR),
       ),
     ).toEqual(['project-a'])
+    expect(
+      await repository.getProjectIdsWithSnapshotsSince(
+        ['project-a', 'project-b'],
+        UnixTime(6 * UnixTime.HOUR),
+      ),
+    ).toEqual(['project-b'])
   })
 
   it('deletes by configuration and by time range', async () => {
