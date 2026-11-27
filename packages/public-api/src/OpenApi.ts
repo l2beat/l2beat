@@ -14,6 +14,8 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
   result: Validator<O> & { definition?: ImpDefinition }
   // Add possibility to have different type per error code
   errors?: Record<number, Validator<E> & { definition?: ImpDefinition }>
+  /** Overrides the generic text for an error status, e.g. to list the cases behind a 404 */
+  errorDescriptions?: Record<number, string>
 }
 
 type OpenApiPath = {
@@ -253,9 +255,11 @@ export class OpenApi {
       const code = Number.parseInt(statusCode, 10)
       base[code] = {
         description:
-          httpResponsesDescriptions[
+          route.options.errorDescriptions?.[code] ??
+          (httpResponsesDescriptions[
             code as keyof typeof httpResponsesDescriptions
-          ] || `Error ${code}`,
+          ] ||
+            `Error ${code}`),
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(errorValidator),

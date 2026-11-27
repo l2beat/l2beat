@@ -341,6 +341,28 @@ describe(OpenApi.name, () => {
       ])
     })
 
+    // Why: the generic "Not Found" hides that a 404 can mean two things, so a
+    // route has to be able to say which cases it covers.
+    it('uses the error description given by the route', () => {
+      const app = mockApp()
+      const openapi = new OpenApi(app, baseSchema)
+
+      openapi.get(
+        '/users/:id',
+        {
+          result: v.string(),
+          params: v.object({ id: v.string() }),
+          errors: { 404: v.object({ message: v.string() }) },
+          errorDescriptions: { 404: 'No user has this id' },
+        },
+        mockFn(),
+      )
+
+      const route = openapi.getOpenApiSchema().paths['/users/{id}']?.get
+
+      expect(route?.responses[404]?.description).toEqual('No user has this id')
+    })
+
     it('includes 400 response when params or query are present', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)

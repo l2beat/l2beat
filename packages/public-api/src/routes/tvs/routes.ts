@@ -1,10 +1,14 @@
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
+import {
+  findProject,
+  projectNotFoundDescription,
+} from '../../utils/findProject'
 import { getTokenTvsData } from './getTokenTvsData'
 import { getTvsData } from './getTvsData'
 import { TokenTvsResultSchema, TvsRangeSchema, TvsResultSchema } from './types'
@@ -61,19 +65,18 @@ export function addTvsRoutes(
       errors: {
         404: GenericErrorResponse,
       },
+      errorDescriptions: { 404: projectNotFoundDescription('TVS data') },
     },
     async (req, res) => {
       const { projectId } = req.params
       const { range = '30d' } = req.query
-      const project = await ps.getProject({
-        id: ProjectId(projectId),
+      const { project, notFoundMessage } = await findProject(ps, projectId, {
         select: ['tvsConfig'],
+        dataName: 'TVS data',
       })
 
       if (!project) {
-        res
-          .status(404)
-          .json({ message: `Project with id ${projectId} does not exist` })
+        res.status(404).json({ message: notFoundMessage })
         return
       }
 
