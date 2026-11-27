@@ -17,7 +17,7 @@ export async function getApiMigrationData(
       metadata: getMetadata(manifest, {
         name: guide.title,
         description:
-          'The /api/scaling endpoints are being retired. How to move each one to the ETHBEAT API at api.ethbeat.org: new paths, project ids, field names and differences in the numbers.',
+          'ETHBEAT data now comes from a documented API with an OpenAPI schema and Swagger docs. How to move each /api/scaling endpoint to api.ethbeat.org before the old API stops.',
         url,
         openGraph: { image: '/meta-images/home/opengraph-image.png' },
       }),

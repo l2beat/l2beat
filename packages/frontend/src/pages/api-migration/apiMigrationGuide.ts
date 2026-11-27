@@ -18,29 +18,65 @@ import {
  */
 export function getApiMigrationGuide(): ApiMigrationGuide {
   return {
-    title: 'Moving to the new ETHBEAT API',
-    lede: `The JSON endpoints under \`${OLD}/\` are deprecated. They stop working on **${SUNSET_DATE}** (00:00 UTC). After that they answer \`410 Gone\`.`,
-    facts: [
-      { label: 'Old API stops', value: SUNSET_DATE, detail: '00:00 UTC' },
-      {
-        label: 'New API',
-        value: NEW.replace('https://', ''),
-        detail: 'One host for every endpoint',
-      },
-      {
-        label: 'Access',
-        value: 'No API key',
-        detail: 'Rate limited: `429` over the limit',
-      },
-    ],
+    title: 'Upgrade to the ETHBEAT API',
+    lede: `ETHBEAT data now comes from a documented API. Every endpoint is described in an OpenAPI 3.1 schema, with Swagger docs where you can try each request in the browser. It replaces the undocumented JSON endpoints under \`${OLD}/\`.`,
     links: [
-      { label: 'API docs', url: PUBLIC_API_DOCS_URL },
+      { label: 'Open the API docs', url: PUBLIC_API_DOCS_URL },
       { label: 'OpenAPI schema', url: `${NEW}/openapi` },
     ],
-    intro: [
-      'The old paths do not redirect to the new ones. The new API names projects by id where the old one used slugs, and its responses have a different shape, so a client has to be changed by hand. This page lists what to change for each endpoint.',
-      'Until the sunset, every old response carries three headers: `Deprecation` (when the API was deprecated), `Sunset` (when it stops) and `Link` (this page and the new API).',
-    ],
+    benefits: {
+      title: 'What you get',
+      notes: [
+        {
+          title: 'Documented end to end',
+          text: 'Swagger docs list every endpoint, parameter and response field. Try a request without writing code.',
+        },
+        {
+          title: 'An OpenAPI 3.1 schema',
+          text: `Generate a typed client, or check your own against it, from \`${NEW}/openapi\`.`,
+        },
+        {
+          title: 'Named fields',
+          text: 'Chart points are objects with named fields, where the old API returned bare arrays of numbers.',
+        },
+        {
+          title: 'Real HTTP errors',
+          text: '`404` for an unknown project and `400` for a bad parameter, each with a message. The old API answered `200` for an unknown project, with the error inside the body.',
+        },
+        {
+          title: 'More data',
+          text: 'Every project ETHBEAT tracks, not only layer 2s and layer 3s. Also project contracts, the TVS history of a single token, TVS split by asset category, and interop protocols and chains.',
+        },
+        {
+          title: 'Open to everyone',
+          text: 'No API key and no sign-up. Requests are rate limited: over the limit the answer is `429`.',
+        },
+      ],
+    },
+    migration: {
+      title: 'You have to migrate',
+      facts: [
+        {
+          label: 'Old API stops',
+          value: SUNSET_DATE,
+          detail: '00:00 UTC. After that it answers `410 Gone`',
+        },
+        {
+          label: 'New API',
+          value: NEW.replace('https://', ''),
+          detail: 'One host for every endpoint',
+        },
+        {
+          label: 'Redirects',
+          value: 'None',
+          detail: 'Old paths do not forward to new ones',
+        },
+      ],
+      intro: [
+        'The upgrade is not a drop-in replacement. The new API names projects by id where the old one used slugs, and its responses have a different shape, so a client has to be changed by hand. This page lists what to change for each endpoint.',
+        'Until the sunset, every old response carries three headers: `Deprecation` (when the API was deprecated), `Sunset` (when it stops) and `Link` (this page and the new API).',
+      ],
+    },
     ids: {
       title: 'Project ids replace slugs',
       text: [
@@ -92,9 +128,13 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
 export interface ApiMigrationGuide {
   title: string
   lede: string
-  facts: { label: string; value: string; detail: string }[]
   links: { label: string; url: string }[]
-  intro: string[]
+  benefits: { title: string; notes: GuideNote[] }
+  migration: {
+    title: string
+    facts: { label: string; value: string; detail: string }[]
+    intro: string[]
+  }
   ids: {
     title: string
     text: string[]

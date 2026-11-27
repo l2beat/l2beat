@@ -14,11 +14,14 @@ export function renderApiMigrationGuideMarkdown(
   return [
     `# ${guide.title}`,
     guide.lede,
-    guide.facts
+    guide.links.map((link) => `- [${link.label}](${link.url})`).join('\n'),
+    `## ${guide.benefits.title}`,
+    notes(guide.benefits.notes),
+    `## ${guide.migration.title}`,
+    guide.migration.facts
       .map((fact) => `- ${fact.label}: ${fact.value}. ${fact.detail}.`)
       .join('\n'),
-    guide.links.map((link) => `- [${link.label}](${link.url})`).join('\n'),
-    ...guide.intro,
+    ...guide.migration.intro,
     '## Old and new endpoints',
     table(
       ['Old endpoint', 'New endpoint'],
