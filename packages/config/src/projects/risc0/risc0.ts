@@ -108,6 +108,7 @@ export const risc0: BaseProject = {
       {
         projectId: ProjectId('megaeth'),
         sinceTimestamp: UnixTime(1763954183),
+        untilTimestamp: UnixTime(1795583015), // 2026-11-25 its router's last route was removed
       },
       {
         projectId: ProjectId('soon'),

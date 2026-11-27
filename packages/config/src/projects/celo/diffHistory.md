@@ -1,3 +1,203 @@
+Generated with discovered.json: 0x793e4c49a0af86597ad549f3633cc5532a844431
+
+# Diff at Thu, 26 Nov 2026 12:32:45 GMT:
+
+- id: d25e09ba
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fcf64173a13adf4dcd3666a3f552a149525334aa block: 1794994625
+- current timestamp: 1795614996
+
+## Description
+
+Same proof system, new ZK programs. Celo's OP Succinct v2.2.0 release (SP1 6.10.0, updated Kona and Hokulea) rebuilt the aggregation and range programs, so game type 42 now uses a new OPSuccinctFaultDisputeGame (2.0.0 → 2.1.0) with the programs' new verification keys and a new rollup config hash. The game code only adds two getters ([diff](https://disco.l2beat.com/diff/eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF/eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7)); the SP1 verifier, durations and bond are unchanged. Its new AccessManager has the same owner, proposers and challengers; its 14-day fallback to permissionless proposing now counts from no earlier than its own deployment ([diff](https://disco.l2beat.com/diff/eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816/eth:0x2c4e8F333224139193790fB27Fc99b926061d889)). The permissionless Cannon game (type 0) was removed.
+
+## Watched changes
+
+```diff
+    EOA (eth:0x0B7de3F505AD7Fc9b38207CD8E2Adc7a604BFe62) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F) [opstack/FaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract CeloProxyAdminOwner (eth:0x4092A77bAF58fef0309452cEaCb09221e556E112) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.18:
+-        {"permission":"upgrade","from":"eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552","role":"admin","via":[{"address":"eth:0x783A434532Ee94667979213af1711505E8bFE374"}]}
+    }
+```
+
+```diff
+    EOA (eth:0x53E8EEAAE0731CCc888513695eC1Bd792ec975Ca) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+    EOA (eth:0x56966549e0953e8d6E17Fcd3278b003d81f58cA8) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+    EOA (eth:0x7247204E46B381149d99acF88b318713fE12c32f) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+    EOA (eth:0x77E831A0A6a680335BB54937E085fF625dfE3f6F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x783A434532Ee94667979213af1711505E8bFE374) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x79D14553D6B3484F5612272B43c219A882415d33) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2c4e8F333224139193790fB27Fc99b926061d889","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}
+    }
+```
+
+```diff
+    EOA (eth:0xc6E6836CaCB6fF0a843050DB7F64bb2ab864C463) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0xC700d16428cF5Bfa71D91E66fA54Fc11A73f2552) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    EOA (eth:0xe4ce4999b1C4C60C384AC96f370F00796ae9eC78) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816"
++        "eth:0x2c4e8F333224139193790fB27Fc99b926061d889"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager]
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+```
+
+```diff
+    contract DisputeGameFactory (eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF"
++        "eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7"
++++ severity: HIGH
+      values.gameImpls.0:
+-        "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (eth:0x2c4e8F333224139193790fB27Fc99b926061d889) [succinct/OPSuccinct/AccessManager]
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1794994625 => .flat}/AccessManager.sol  |  116 +-
+ .../DelayedWETH}/DelayedWETH.sol                   |    0
+ .../DelayedWETH}/Proxy.p.sol                       |    0
+ .../DelayedWETH.sol => /dev/null                   | 1080 ----
+ .../Proxy.p.sol => /dev/null                       | 1389 -----
+ .../FaultDisputeGame.sol => /dev/null              | 5715 --------------------
+ .../OPSuccinctFaultDisputeGame.sol                 |   17 +-
+ 7 files changed, 114 insertions(+), 8203 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1794994625 (main branch discovery), not current.
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) [succinct/OPSuccinct/AccessManager] {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      critical:
+-        true
++        {"untilTimestamp":1795536647}
+    }
+```
+
+```diff
+    contract OPSuccinctFaultDisputeGame (eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame] {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      critical:
+-        true
++        {"untilTimestamp":1795536647}
+    }
+```
+
 Generated with discovered.json: 0x03b1e14f393557a45a9459b0e7a17a60a4e55d93
 
 # Diff at Wed, 18 Nov 2026 12:36:35 GMT:

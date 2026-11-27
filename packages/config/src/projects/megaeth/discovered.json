@@ -1,7 +1,7 @@
 {
   "name": "megaeth",
-  "timestamp": 1795442230,
-  "configHash": "0x5e22b16c73fed0658400f935e269acdfe0d9534aa9d9dd352015d04d95c3bebe",
+  "timestamp": 1795615246,
+  "configHash": "0x18ebeafbd6eabd46881a670ee6346065fc7998c1a4893d7a3f8ce95bb1f7736b",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -57,7 +57,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 14842800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xe5E175c9B91920F63c6111cAdb887aC1c9ED01d6",
+        "lastResolved": "eth:0x2C1d3894CEA081DFF3799334A6488be3789Af0A8",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -503,37 +503,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0x5144A37e65fd032F628663Cb21E16490378a8630",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x285eacaac2ca4f68ef5e866028ae0bc88ebc6f583afc9035f289ad34efc034e3"
-      ],
-      "proxyType": "immutable",
-      "description": "A verifier wrapper for the eth:0x8c915b5071206C6E328BC18529586c513408aB3b that allows pausing (emergency stop) the verifier by its owner.",
-      "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-      "sinceTimestamp": 1793899091,
-      "sinceBlock": 26350077,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x8c915b5071206C6E328BC18529586c513408aB3b"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "MEDIUM" },
-        "paused": {
-          "severity": "MEDIUM",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0x5144A37e65fd032F628663Cb21E16490378a8630": "RiscZeroVerifierEmergencyStop"
-      }
-    },
-    {
       "address": "eth:0x55B212fE828b105a50B20Dc90e8Ee6cA431aa360",
       "type": "EOA",
       "proxyType": "EOA"
@@ -657,7 +626,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292672016",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292672034",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -722,7 +691,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 26477581
+          "prevBlockNum": 26488237
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -796,7 +765,7 @@
         "game1337": "eth:0x8c0Ed8Dd0CcF6d596e321d81eD895ad51fE30B84",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 9238,
+        "gameCount": 9286,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -948,32 +917,6 @@
       }
     },
     {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0x8c915b5071206C6E328BC18529586c513408aB3b",
-      "type": "Contract",
-      "template": "taiko/RiscZeroGroth16Verifier",
-      "sourceHashes": [
-        "0x38fa135926cc6618e3edc27094b6bc98b39f8b4df036a6fad9058e62426cdc11"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.1.0).",
-      "deployerAddress": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-      "sinceTimestamp": 1793899055,
-      "sinceBlock": 26350074,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x0ac2eaf9d5ae64ffb75c4747fde32456e9ee6db3b32350cb2a0614ba91d081de",
-        "CONTROL_ROOT_0": "0x5c1fde52087b1c734aed7adb13effee6",
-        "CONTROL_ROOT_1": "0x1d553a4d183353d025f673607237b189",
-        "SELECTOR": "0xe71e6620",
-        "VERSION": "3.1.0"
-      },
-      "implementationNames": {
-        "eth:0x8c915b5071206C6E328BC18529586c513408aB3b": "RiscZeroGroth16Verifier"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
       "name": "RiscZeroVerifierRouter",
       "address": "eth:0x910b159F79288DD706789ec7768E979d4D88C057",
       "type": "Contract",
@@ -990,14 +933,13 @@
         "$immutable": true,
         "owner": "eth:0x0A383fF8387CF07315f476D1686E95b1a97adc97",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x5144A37e65fd032F628663Cb21E16490378a8630",
         "verifier_242f9d5b": "eth:0x0000000000000000000000000000000000000000",
         "verifier_310fe598": "eth:0x0000000000000000000000000000000000000000",
         "verifier_73c457ba": "eth:0x0000000000000000000000000000000000000001",
         "verifier_8b38038c": "eth:0x0000000000000000000000000000000000000000",
         "verifier_9f39696c": "eth:0x0000000000000000000000000000000000000000",
         "verifier_bb001d44": "eth:0x0000000000000000000000000000000000000000",
-        "verifier_e71e6620": "eth:0x5144A37e65fd032F628663Cb21E16490378a8630",
+        "verifier_e71e6620": "eth:0x0000000000000000000000000000000000000001",
         "verifier_f536085a": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -1444,11 +1386,6 @@
       "implementationNames": {
         "eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1": "MIPS64"
       }
-    },
-    {
-      "address": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -1954,29 +1891,6 @@
       "function transferOwnership(address newOwner)",
       "function version() view returns (string)"
     ],
-    "eth:0x5144A37e65fd032F628663Cb21E16490378a8630": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
     "eth:0x5493f4677A186f64805fe7317D6993ba4863988F": [
       "constructor()",
       "event Initialized(uint8 version)",
@@ -2350,20 +2264,6 @@
       "function version() view returns (string)",
       "function wasRespectedGameTypeWhenCreated() view returns (bool)"
     ],
-    "eth:0x8c915b5071206C6E328BC18529586c513408aB3b": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
-    ],
     "eth:0x910b159F79288DD706789ec7768E979d4D88C057": [
       "constructor(address admin)",
       "error OwnableInvalidOwner(address owner)",
@@ -2602,14 +2502,12 @@
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
     "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
-    "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
-    "risc0/RiscZeroVerifierRouter": "0xa11b86378f3fef09bf67f9307006c3858772d15e0c7661160a2425428ac75c3b",
-    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
+    "risc0/RiscZeroVerifierRouter": "0xa11b86378f3fef09bf67f9307006c3858772d15e0c7661160a2425428ac75c3b"
   },
-  "usedBlockNumbers": { "ethereum": 26478275 },
-  "permissionsConfigHash": "0x6dfeeaf950d579ab7bd39d86f8da1101c2576af2422982d6e960a4bd9b591a01",
+  "usedBlockNumbers": { "ethereum": 26492655 },
+  "permissionsConfigHash": "0x25227143c182fc1df3b46f606bdbab899b558b963d11a916a170ed175546bd64",
   "modelledAgainst": {
-    "shared-eigenda": "0x1666d662d36428e6c9cc77823b016e58fd3728a21fdf0cf004e089ccb7c5f8f3",
+    "shared-eigenda": "0x5549fc4565cf71aeddaf0ffa181bb5730df4092f0d6dc0225edd288773215150",
     "shared-eigenlayer": "0x2bef01dc8e00c781ea461a20c1af280026502dd4ec39370a9d5cde2b4967a498"
   },
   "permissions": {
@@ -4411,16 +4309,6 @@
           "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
           "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
           "role": ".dispersers"
-        }
-      ]
-    },
-    "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5144A37e65fd032F628663Cb21E16490378a8630",
-          "description": "pause the verifier.",
-          "role": ".owner"
         }
       ]
     },
