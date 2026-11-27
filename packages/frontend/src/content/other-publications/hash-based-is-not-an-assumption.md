@@ -237,10 +237,10 @@ Today, Ethereum's core uses of Keccak-256 (state, transactions, and 160-bit addr
 
 ![Hash assumptions across Ethereum today, standard-model signatures, and the proposed PQ stack](/images/publications/hash-based-is-not-an-assumption/04-assumption-comparison.svg)
 
-### Implications for post-AI and hybrid designs
+---
 
-A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it removes elliptic-curve pairings, discrete-log assumptions, the KZG trusted setup, and the SHA-256 random-oracle assumptions inside BLS and KZG without introducing structured lattice problems like Module-LWE or NTRU.
+## Conclusion
 
-Still, reusing Keccak does not make the PQ stack a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge those new assumptions at the cost of bandwidth, verification, and liveness complexity. That hedge only holds if the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
+A hash-based stack still has a strong case as the most **practically minimal** post-quantum option: it drops elliptic-curve pairings, the KZG trusted setup, and SHA-256 random-oracle assumptions without adding lattice problems. Still, reusing Keccak does not make it a strict subset of what Ethereum already assumes. Hybrid designs, pairing BLS or ECDSA with a hash-based scheme so a forgery must break both, hedge the new assumptions at the cost of bandwidth, verification, and liveness complexity. That hedge only holds if the elliptic-curve signatures are still verified natively outside any recursive zkVM proof.
 
 Ethereum's post-quantum and post-AI debate should move past treating "hash-based" as shorthand for "no new assumptions." The productive conversation is over the **actual assumptions** each design takes on, how much confidence each one deserves, and which risks are worth hedging.
