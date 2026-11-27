@@ -44,6 +44,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
   CLIENT_SIDE_TOKENS_PAGE: featureFlag,
   CLIENT_SIDE_BLOBS_PAGE: featureFlag,
+  CLIENT_SIDE_ETH_ECONOMICS_ENABLED: featureFlag,
   CLIENT_SIDE_LIVE_ACTIVITY: featureFlag,
   CLIENT_SIDE_OSSIFICATION_ENABLED: featureFlag,
 }
@@ -72,6 +73,12 @@ const SERVER_CONFIG = {
   // While the TVS backend is down, TVS charts end here instead of trailing
   // into an empty gap. Unset it once TVS has caught up.
   TVS_CHARTS_PINNED_TO: isoDate.optional(),
+  // The chain head tile on the Ethereum page reads finality from it; unset,
+  // the tile is left out.
+  ETHEREUM_BEACON_API_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .optional(),
   COOLIFY_URL: z.string().optional(),
   COOLIFY_RESOURCE_UUID: z.string().optional(),
 
@@ -144,6 +151,7 @@ function getRawEnv(): Record<
     DISABLE_CACHE: process.env.DISABLE_CACHE,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
+    ETHEREUM_BEACON_API_URL: process.env.ETHEREUM_BEACON_API_URL,
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
@@ -168,6 +176,8 @@ function getRawEnv(): Record<
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
     CLIENT_SIDE_TOKENS_PAGE: process.env.CLIENT_SIDE_TOKENS_PAGE,
     CLIENT_SIDE_BLOBS_PAGE: process.env.CLIENT_SIDE_BLOBS_PAGE,
+    CLIENT_SIDE_ETH_ECONOMICS_ENABLED:
+      process.env.CLIENT_SIDE_ETH_ECONOMICS_ENABLED,
     CLIENT_SIDE_LIVE_ACTIVITY: process.env.CLIENT_SIDE_LIVE_ACTIVITY,
     CLIENT_SIDE_OSSIFICATION_ENABLED:
       process.env.CLIENT_SIDE_OSSIFICATION_ENABLED,

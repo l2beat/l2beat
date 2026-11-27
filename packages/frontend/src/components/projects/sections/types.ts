@@ -9,6 +9,7 @@ import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { LiquidStakingSectionProps } from './defi/LiquidStakingSection'
 import type { LiquidStakingYieldAndExitSectionProps } from './defi/LiquidStakingYieldAndExitSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
+import type { EconomicsSectionProps } from './economics/EconomicsSection'
 import type { GardenCropsSectionProps } from './GardenCropsSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
@@ -91,6 +92,7 @@ export type SectionId =
   | 'external-dependencies'
   | 'defi-tokens'
   | 'liquid-staking'
+  | 'economics'
   | 'yield-and-exit'
   | 'crops'
 
@@ -310,6 +312,11 @@ interface ProjectDetailsLiquidStakingSection {
   props: ProjectDetailsProps<LiquidStakingSectionProps>
 }
 
+interface ProjectDetailsEconomicsSection {
+  type: 'EconomicsSection'
+  props: ProjectDetailsProps<EconomicsSectionProps>
+}
+
 interface ProjectDetailsLiquidStakingYieldAndExitSection {
   type: 'LiquidStakingYieldAndExitSection'
   props: ProjectDetailsProps<LiquidStakingYieldAndExitSectionProps>
@@ -390,6 +397,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsDefiTvlSection
   | ProjectDetailsDefiTokensSection
   | ProjectDetailsLiquidStakingSection
+  | ProjectDetailsEconomicsSection
   | ProjectDetailsLiquidStakingYieldAndExitSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAnonymitySetSection

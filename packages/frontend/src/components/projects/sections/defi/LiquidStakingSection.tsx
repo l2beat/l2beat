@@ -88,7 +88,7 @@ const columns = [
   ...getLiquidStakingStatColumns(columnHelper),
 ]
 
-const COMPARE_HREF = '/defi/liquid-staking'
+export const LIQUID_STAKING_COMPARE_HREF = '/defi/liquid-staking'
 
 const initialSorting: SortingState = [{ id: TVL_COLUMN_ID, desc: true }]
 
@@ -98,29 +98,13 @@ export function LiquidStakingSection({
   ethStaked,
   ...sectionProps
 }: LiquidStakingSectionProps) {
-  const [sorting, setSorting] = useState<SortingState>(initialSorting)
-
-  const table = useTable('EthereumLiquidStakingTable', {
-    data: entries,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    state: {
-      sorting,
-      columnPinning: {
-        left: ['#', 'logo'],
-      },
-    },
-    onSortingChange: setSorting,
-  })
-
   return (
     <ProjectSection
       {...sectionProps}
       headerAccessory={
         <CompareProjectsLink
           variant="section"
-          href={COMPARE_HREF}
+          href={LIQUID_STAKING_COMPARE_HREF}
           className="max-md:hidden"
         >
           Compare risks
@@ -151,14 +135,37 @@ export function LiquidStakingSection({
           </span>
         </div>
       )}
-      <BasicTable table={table} compact />
+      <LiquidStakingTable entries={entries} />
       <CompareProjectsLink
         variant="section"
-        href={COMPARE_HREF}
+        href={LIQUID_STAKING_COMPARE_HREF}
         className="mt-4 md:hidden"
       >
         Compare risks
       </CompareProjectsLink>
     </ProjectSection>
   )
+}
+
+/** The protocols table alone, for pages that show it inside a larger section. */
+export function LiquidStakingTable({
+  entries,
+}: Pick<LiquidStakingSectionProps, 'entries'>) {
+  const [sorting, setSorting] = useState<SortingState>(initialSorting)
+
+  const table = useTable('EthereumLiquidStakingTable', {
+    data: entries,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
+    },
+    onSortingChange: setSorting,
+  })
+
+  return <BasicTable table={table} compact />
 }

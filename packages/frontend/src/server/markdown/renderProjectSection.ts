@@ -53,6 +53,7 @@ import {
   renderThroughputSection,
 } from './renderSectionCharts'
 import { renderGardenCropsSection } from './renderSectionCrops'
+import { renderEconomicsSection } from './renderSectionEconomics'
 import { renderUpgradesAndGovernance } from './renderSectionGovernance'
 import { renderLiquidStakingSection } from './renderSectionLiquidStaking'
 import {
@@ -306,6 +307,7 @@ const SECTION_BODIES: { [T in SectionType]: SectionBody<SectionProps<T>> } = {
   ),
   GardenCropsSection: renderGardenCropsSection,
   InteropFlowsSection: pointToHtmlPage('The interactive flows chart is shown'),
+  EconomicsSection: renderEconomicsSection,
   InteropTokenOnchainDeploymentsSection: renderOnchainDeployments,
   InteropTokenProtocolsSection: pointToHtmlPage(
     'The interactive protocols table is shown',

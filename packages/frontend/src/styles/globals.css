@@ -6,6 +6,7 @@
 @import "./sticky-table.css";
 @import "./section-navigation.css";
 @import "./home.css";
+@import "./economics.css";
 
 @plugin "tailwindcss-animate";
 

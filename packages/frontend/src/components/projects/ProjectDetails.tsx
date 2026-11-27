@@ -12,6 +12,7 @@ import { DefiTvlSection } from './sections/defi/DefiTvlSection'
 import { LiquidStakingSection } from './sections/defi/LiquidStakingSection'
 import type { LiquidStakingYieldAndExitSectionProps } from './sections/defi/LiquidStakingYieldAndExitSection'
 import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
+import { EconomicsSection } from './sections/economics/EconomicsSection'
 import { GardenCropsSection } from './sections/GardenCropsSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
@@ -411,6 +412,14 @@ function renderSection(
     case 'DefiTokensSection':
       return (
         <DefiTokensSection
+          key={item.props.id}
+          {...{ nested, sectionOrder }}
+          {...item.props}
+        />
+      )
+    case 'EconomicsSection':
+      return (
+        <EconomicsSection
           key={item.props.id}
           {...{ nested, sectionOrder }}
           {...item.props}
