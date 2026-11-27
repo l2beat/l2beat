@@ -7,6 +7,10 @@ import {
   useRef,
   useState,
 } from 'react'
+import {
+  ChainClockContext,
+  createChainClock,
+} from '~/components/chain-clock/chainClock'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -14,7 +18,6 @@ import { useIsOnScreen } from '~/hooks/useIsOnScreen'
 import type { BlobPoster } from '~/server/features/data-availability/live-blobs/getBlobPosters'
 import { cn } from '~/utils/cn'
 import { BELT_HEIGHT, BeltLegend, PulseSkeleton } from './blocks/BeltFrame'
-import { ChainClockContext, createChainClock } from './chainClock'
 import { LivePosters } from './LivePosters'
 import { type EthereumLink, LiveStats } from './LiveStats'
 import { createLandings, LandingsContext } from './landings'

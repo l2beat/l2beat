@@ -1,0 +1,109 @@
+import { useState } from 'react'
+import { useChartQuery } from '~/components/core/chart/useChartQuery'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/core/Select'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import {
+  PERIOD_METRICS,
+  type PeriodMetric,
+} from '~/server/features/gas-fees/daily/metrics'
+import type { GasFeesChain } from '~/server/features/gas-fees/getGasFeesChains'
+import { useTRPC } from '~/trpc/React'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { DEFAULT_METRIC, METRIC_LABELS } from '../../utils/metricLabels'
+import {
+  GAS_FEES_RANGES,
+  type GasFeesRangeOption,
+  rangeOptionOf,
+} from '../../utils/ranges'
+import { CostsTable } from './CostsTable'
+
+export function CostsCard({
+  chains,
+  initialRange,
+}: {
+  chains: GasFeesChain[]
+  initialRange: ChartRange
+}) {
+  const trpc = useTRPC()
+  const [metric, setMetric] = useState<PeriodMetric>(DEFAULT_METRIC)
+  // The first range is the server's, so the prefetched data is used
+  const [range, setRange] = useState(initialRange)
+  const { data, isPlaceholderData, isError, shownInput } = useChartQuery(
+    trpc.gasFees.summary,
+    { range },
+  )
+  // The period named is the one the costs on screen are for
+  const shownOption = rangeOptionOf(shownInput.range)
+  const period = GAS_FEES_RANGES.find((r) => r.value === shownOption)?.period
+
+  return (
+    <PrimaryCard className="flex flex-col gap-4">
+      {/* Nothing here moves with the text: the controls stay put whichever option is picked */}
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <h2 className="font-bold text-xl md:text-2xl">
+            What one transaction costs
+          </h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <Select
+              value={metric}
+              onValueChange={(v) => setMetric(v as PeriodMetric)}
+            >
+              {/* As wide as its longest option, so the range beside it doesn't shift */}
+              <SelectTrigger className="h-8 w-[150px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {PERIOD_METRICS.map((m) => (
+                  <SelectItem key={m} value={m}>
+                    {METRIC_LABELS[m].tab}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <RadioGroup
+              name="gasFeesTableRange"
+              value={rangeOptionOf(range)}
+              onValueChange={(v) =>
+                setRange(optionToRange(v as GasFeesRangeOption))
+              }
+            >
+              {GAS_FEES_RANGES.map((r) => (
+                <RadioGroupItem key={r.value} value={r.value}>
+                  {r.label}
+                </RadioGroupItem>
+              ))}
+            </RadioGroup>
+          </div>
+        </div>
+        <p className="text-secondary text-sm">
+          <span className="block">
+            {METRIC_LABELS[metric].title}, {period}.
+          </span>
+          <span className="block">
+            Log scale. L2 costs add the chain’s average L1 fee per transaction.
+          </span>
+        </p>
+      </div>
+      {isError ? (
+        <p className="py-10 text-center text-secondary text-sm">
+          Couldn’t load the costs for this period.
+        </p>
+      ) : (
+        <CostsTable
+          chains={chains}
+          summaries={data}
+          metric={metric}
+          isPlaceholderData={isPlaceholderData}
+        />
+      )}
+    </PrimaryCard>
+  )
+}

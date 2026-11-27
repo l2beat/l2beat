@@ -1642,5 +1642,9 @@
   "static/icons/sfrxeth.png": "2bfa72ae5907fd3e6d72d5a460854115",
   "static/icons/ankr.png": "9ff1ff8cbf534594a494b100f4d9f971",
   "static/icons/sweth.png": "6c36dddd3a06600d53ff08db9418c038",
-  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30"
+  "static/icons/rsweth.png": "00dbd6c26f30c9489400960da8e43e30",
+  "static/icons/ambire.png": "ae5f7e6807b4ad16cbc8d739707050f3",
+  "static/icons/metamask.png": "e0df92e93330c8adf083af450e025786",
+  "static/icons/rabby.png": "d65ca9aed37561f5923572a851ac028a",
+  "static/meta-images/gas-fees/opengraph-image.png": "3f2203988358090cf86bec583dd9ebcc"
 }

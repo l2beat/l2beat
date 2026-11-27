@@ -8,6 +8,7 @@ process.env.NO_PROXY = [process.env.NO_PROXY, 'localhost,127.0.0.1']
 
 process.env.CLIENT_SIDE_DEFI_ENABLED = 'true'
 process.env.CLIENT_SIDE_BLOBS_PAGE = 'true'
+process.env.CLIENT_SIDE_GAS_FEES_PAGE = 'true'
 
 /**
  * The ratchets count the work a page does, which other tests running beside
@@ -51,6 +52,7 @@ export default defineConfig({
       INTEROP_CHAINS: 'ethereum,arbitrum,base,optimism',
       CLIENT_SIDE_DEFI_ENABLED: 'true',
       CLIENT_SIDE_BLOBS_PAGE: 'true',
+      CLIENT_SIDE_GAS_FEES_PAGE: 'true',
     },
     command: 'pnpm start:mock',
     url: 'http://localhost:7357',

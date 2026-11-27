@@ -50,6 +50,20 @@ export interface GasFeesTierWaitRecord extends GasFeesWaitBucket {
   within5BlocksCount: number
 }
 
+/** A tip level's wait bucket, summed over days */
+export interface GasFeesTipLevelWaitTotal extends GasFeesWaitBucket {
+  tipFromWei: number
+  tipToWei: number
+  txCount: number
+  tipSumGwei: number
+}
+
+/** A tier's wait bucket, summed over days */
+export interface GasFeesTierWaitTotal extends GasFeesWaitBucket {
+  tier: GasFeesTier
+  txCount: number
+}
+
 export interface GasFeesMempoolDayData {
   day: GasFeesMempoolDayRecord
   tipLevelWaits: GasFeesTipLevelWaitRecord[]
@@ -145,6 +159,74 @@ export class GasFeesMempoolRepository extends BaseRepository {
       .orderBy('waitFromMs', 'asc')
       .execute()
     return rows.map(toTierWaitRecord)
+  }
+
+  /**
+   * The waits of the complete days, added up per tip level and wait bucket:
+   * a year of days is a million rows, so they are summed here.
+   */
+  async getCompleteTipLevelWaitTotals(
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<GasFeesTipLevelWaitTotal[]> {
+    const rows = await this.db
+      .selectFrom('GasFeesTipLevelWait as wait')
+      .innerJoin('GasFeesMempoolDay as day', 'day.timestamp', 'wait.timestamp')
+      .where('day.status', '=', 'complete' satisfies GasFeesMempoolDayStatus)
+      .where('wait.timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('wait.timestamp', '<=', UnixTime.toDate(toInclusive))
+      .groupBy([
+        'wait.tipFromWei',
+        'wait.tipToWei',
+        'wait.waitFromMs',
+        'wait.waitToMs',
+      ])
+      .select((eb) => [
+        'wait.tipFromWei',
+        'wait.tipToWei',
+        'wait.waitFromMs',
+        'wait.waitToMs',
+        eb.fn.sum('wait.txCount').as('txCount'),
+        eb.fn.sum('wait.tipSumGwei').as('tipSumGwei'),
+      ])
+      .orderBy('wait.tipFromWei', 'asc')
+      .orderBy('wait.waitFromMs', 'asc')
+      .execute()
+    return rows.map((row) => ({
+      ...row,
+      tipFromWei: Number(row.tipFromWei),
+      tipToWei: Number(row.tipToWei),
+      txCount: Number(row.txCount),
+      tipSumGwei: Number(row.tipSumGwei),
+    }))
+  }
+
+  /** The waits of the complete days, added up per tier and wait bucket. */
+  async getCompleteTierWaitTotals(
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<GasFeesTierWaitTotal[]> {
+    const rows = await this.db
+      .selectFrom('GasFeesTierWait as wait')
+      .innerJoin('GasFeesMempoolDay as day', 'day.timestamp', 'wait.timestamp')
+      .where('day.status', '=', 'complete' satisfies GasFeesMempoolDayStatus)
+      .where('wait.timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('wait.timestamp', '<=', UnixTime.toDate(toInclusive))
+      .groupBy(['wait.tier', 'wait.waitFromMs', 'wait.waitToMs'])
+      .select((eb) => [
+        'wait.tier',
+        'wait.waitFromMs',
+        'wait.waitToMs',
+        eb.fn.sum('wait.txCount').as('txCount'),
+      ])
+      .orderBy('wait.tier', 'asc')
+      .orderBy('wait.waitFromMs', 'asc')
+      .execute()
+    return rows.map((row) => ({
+      ...row,
+      tier: row.tier as GasFeesTier,
+      txCount: Number(row.txCount),
+    }))
   }
 
   /** Removes the days after `from`, for an indexer invalidating its height. */
