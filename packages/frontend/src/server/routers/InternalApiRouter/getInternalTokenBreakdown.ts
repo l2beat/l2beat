@@ -1,7 +1,7 @@
 import { ProjectService } from '@l2beat/config'
+import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
-import { extractAddressesFromTokenConfig } from '~/server/features/layer2s/tvs/breakdown/extractAddressesFromTokenConfig'
 import { processAddresses } from '~/server/features/layer2s/tvs/breakdown/tokenEntryHelpers'
 import { getLatestTvsTimestamp } from '~/server/features/layer2s/tvs/utils/getLatestTvsTimestamp'
 

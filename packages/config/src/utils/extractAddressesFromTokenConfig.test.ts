@@ -1,11 +1,11 @@
+import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 import type {
   AmountFormula,
   CalculationFormula,
   Formula,
   TvsToken,
-} from '@l2beat/config'
-import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+} from '../types'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 
 describe(extractAddressesFromTokenConfig.name, () => {
@@ -126,6 +126,28 @@ describe(extractAddressesFromTokenConfig.name, () => {
     )
 
     expect(result).toEqual([{ address: tokenAddress, chain: 'arbitrum' }])
+  })
+
+  // The same address can hold different contracts on different chains, and
+  // each one is a contract the amount is read from.
+  it('keeps one address read on two chains', () => {
+    const address = EthereumAddress.random()
+
+    const result = extractAddressesFromTokenConfig(
+      mockToken({
+        type: 'calculation',
+        operator: 'sum',
+        arguments: [
+          mockAmountFormula({ type: 'totalSupply', address, chain: '1' }),
+          mockAmountFormula({ type: 'totalSupply', address, chain: '2' }),
+        ],
+      }),
+    )
+
+    expect(result).toEqualUnsorted([
+      { address, chain: '1' },
+      { address, chain: '2' },
+    ])
   })
 
   it('should return empty array for types with no addresses', () => {
