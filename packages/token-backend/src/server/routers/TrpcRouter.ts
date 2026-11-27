@@ -54,8 +54,8 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
           tokenIngestionProcessor,
         }),
       onError: (opts) => {
-        const logFn = getLogFn(opts.error)
-        logFn(opts.error.message, {
+        const level = getLogLevel(opts.error.code, opts.type === 'unknown')
+        logger[level](opts.error.message, {
           path: opts.path,
           stack: opts.error.stack,
           code: opts.error.code,
@@ -69,12 +69,17 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
   return router
 }
 
-function getLogFn(error: TRPCError) {
-  switch (error.code) {
+export function getLogLevel(
+  code: TRPCError['code'],
+  isUnknownProcedure: boolean,
+): 'warn' | 'error' {
+  switch (code) {
     case 'UNAUTHORIZED':
     case 'BAD_REQUEST':
     case 'METHOD_NOT_SUPPORTED':
-      return logger.warn
+      return 'warn'
+    case 'NOT_FOUND':
+      return isUnknownProcedure ? 'warn' : 'error'
     case 'PARSE_ERROR':
     case 'INTERNAL_SERVER_ERROR':
     case 'NOT_IMPLEMENTED':
@@ -83,7 +88,6 @@ function getLogFn(error: TRPCError) {
     case 'GATEWAY_TIMEOUT':
     case 'PAYMENT_REQUIRED':
     case 'FORBIDDEN':
-    case 'NOT_FOUND':
     case 'TIMEOUT':
     case 'CONFLICT':
     case 'PRECONDITION_FAILED':
@@ -93,8 +97,8 @@ function getLogFn(error: TRPCError) {
     case 'PRECONDITION_REQUIRED':
     case 'TOO_MANY_REQUESTS':
     case 'CLIENT_CLOSED_REQUEST':
-      return logger.error
+      return 'error'
     default:
-      assertUnreachable(error.code)
+      assertUnreachable(code)
   }
 }
