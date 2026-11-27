@@ -199,6 +199,11 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  getLogsByBlockHash(blockHash: string): Promise<EVMLog[]> {
+    // interop asks for logs by block number, so no snapshot records these
+    throw new ReplayError(this.buildSnapshotKey(['logsByBlockHash', blockHash]))
+  }
+
   getFeeHistory(
     blockCount: number,
     newestBlock: number,

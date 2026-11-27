@@ -58,6 +58,29 @@ describe(getPrivacyConfig.name, () => {
     expect(new Set(configs.map((c) => c.id)).size).toEqual(3)
   })
 
+  it('stores flows at the head only on the chains asked for one by one', async () => {
+    const flows: BucketFlows = {
+      deposit: {
+        event: '0xdeposit',
+        extractor: 'fixedAmount',
+        params: { amount: '1' },
+      },
+      withdrawal: {
+        event: '0xclose',
+        extractor: 'fixedAmount',
+        params: { amount: '1' },
+      },
+    }
+
+    expect((await getConfig(flows)).liveChains).toEqual([])
+    expect(
+      (await getConfig(flows, 'privacy,live.privacy.base')).liveChains,
+    ).toEqual([])
+    expect(
+      (await getConfig(flows, 'privacy,live.privacy.ethereum')).liveChains,
+    ).toEqual(['ethereum'])
+  })
+
   it('returns false if enabled privacy projects have no tracked buckets', async () => {
     const project = await ps.getProject({
       slug: 'privacy-pools',
@@ -427,6 +450,10 @@ type BucketFlows = Pick<
 // Swaps the real buckets of an existing project for one synthetic bucket, so
 // the test controls exactly which flow sources reach getPrivacyConfig.
 async function getFlowConfigs(flows: BucketFlows) {
+  return (await getConfig(flows)).flowConfigs
+}
+
+async function getConfig(flows: BucketFlows, features = 'privacy') {
   const project = await ps.getProject({
     slug: 'privacy-pools',
     select: ['privacyInfo'],
@@ -469,9 +496,9 @@ async function getFlowConfigs(flows: BucketFlows) {
   const config = await getPrivacyConfig(
     projectService,
     env,
-    new FeatureFlags('privacy'),
+    new FeatureFlags(features),
     [],
   )
   if (!config) throw new Error('Privacy config not created')
-  return config.flowConfigs
+  return config
 }

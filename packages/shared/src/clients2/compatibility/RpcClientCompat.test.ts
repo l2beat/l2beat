@@ -271,6 +271,29 @@ describe(RpcClientCompat.name, () => {
     })
   })
 
+  describe(RpcClientCompat.prototype.getLogsByBlockHash.name, () => {
+    it('asks for the logs of the block with that hash', async () => {
+      const getLogs = mockFn<EthRpcClient['getLogs']>().resolvesTo([])
+      const client = new RpcClientCompat(
+        mockObject<EthRpcClient>({ getLogs }),
+        'ethereum',
+      )
+      const blockHash = `0x${'ab'.repeat(32)}`
+      const addresses = [
+        EthereumAddress('0x1111111111111111111111111111111111111111'),
+      ]
+      const topics = [`0x${'cc'.repeat(32)}`]
+
+      await client.getLogsByBlockHash(blockHash, addresses, topics)
+
+      expect(getLogs).toHaveBeenOnlyCalledWith({
+        blockHash,
+        address: addresses,
+        topics,
+      })
+    })
+  })
+
   describe(RpcClientCompat.prototype.getBlockTimestamps.name, () => {
     it('reads the headers in one batch', async () => {
       const getBlocksByNumber = mockFn<
