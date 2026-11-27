@@ -444,7 +444,7 @@ const API_SECTION: LinkListSection = {
     {
       name: 'Migration guide',
       path: `${API_MIGRATION_GUIDE_PATH}.md`,
-      description: `The old ${OLD_PUBLIC_API_PATH} endpoints stop working on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: how to move to the API above.`,
+      description: `The old ${OLD_PUBLIC_API_PATH} endpoints were shut down on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: how to move to the API above.`,
     },
   ],
 }

@@ -7,16 +7,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 export const PUBLIC_API_URL = 'https://api.ethbeat.org'
 export const PUBLIC_API_DOCS_URL = `${PUBLIC_API_URL}/docs`
 
-/** The old public API, served by this app and replaced by the one above. */
+/** The old public API, once served by this app and replaced by the one above. */
 export const OLD_PUBLIC_API_PATH = '/api/scaling'
 
-/** The day the old API began announcing its retirement. */
-export const OLD_PUBLIC_API_DEPRECATED_AT = utcDay('2026-11-27')
-
 /**
- * The moment the old API stops answering. The response headers, the migration
- * guide and the brownout schedule all derive from this one value, so moving
- * the sunset means changing only this line.
+ * The moment the old API stopped answering.
  */
 export const OLD_PUBLIC_API_SUNSET_AT = utcDay('2026-12-15')
 
