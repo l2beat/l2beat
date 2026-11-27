@@ -122,8 +122,8 @@ async function loadL2ProjectPage(manifest: Manifest, slug: string) {
         },
         structuredData: (page) => [
           getL2ProjectStructuredData(page, {
+            id: project.id,
             name: project.name,
-            slug: project.slug,
             archivedAt: project.archivedAt,
             hasTvsApi: project.tvsConfig !== undefined,
             hasActivityApi: project.activityConfig !== undefined,

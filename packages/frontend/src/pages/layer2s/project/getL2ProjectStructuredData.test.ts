@@ -25,7 +25,7 @@ describe(getL2ProjectStructuredData.name, () => {
   }
   const arbitrum = {
     name: 'Arbitrum One',
-    slug: 'arbitrum',
+    id: 'arbitrum',
     archivedAt: undefined,
     hasTvsApi: true,
     hasActivityApi: true,
@@ -46,13 +46,14 @@ describe(getL2ProjectStructuredData.name, () => {
           '@type': 'DataDownload',
           name: 'Arbitrum One Total Value Secured',
           encodingFormat: 'application/json',
-          contentUrl: 'https://ethbeat.org/api/scaling/tvs/arbitrum',
+          contentUrl:
+            'https://api.ethbeat.org/v1/tvs/arbitrum?excludeRwaRestrictedTokens=true',
         },
         {
           '@type': 'DataDownload',
           name: 'Arbitrum One Activity',
           encodingFormat: 'application/json',
-          contentUrl: 'https://ethbeat.org/api/scaling/activity/arbitrum',
+          contentUrl: 'https://api.ethbeat.org/v1/activity/arbitrum',
         },
       ],
     })
@@ -65,7 +66,7 @@ describe(getL2ProjectStructuredData.name, () => {
     })
 
     expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
-      'https://ethbeat.org/api/scaling/activity/arbitrum',
+      'https://api.ethbeat.org/v1/activity/arbitrum',
     ])
   })
 
@@ -76,8 +77,8 @@ describe(getL2ProjectStructuredData.name, () => {
     })
 
     expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
-      'https://ethbeat.org/api/scaling/tvs/arbitrum?range=max',
-      'https://ethbeat.org/api/scaling/activity/arbitrum?range=max',
+      'https://api.ethbeat.org/v1/tvs/arbitrum?range=max&excludeRwaRestrictedTokens=true',
+      'https://api.ethbeat.org/v1/activity/arbitrum?range=max',
     ])
   })
 
@@ -104,7 +105,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
           "See a detailed breakdown of Arbitrum One's TVS on ETHBEAT.",
         image: 'https://ethbeat.org/og.png',
       },
-      { name: 'Arbitrum One', slug: 'arbitrum', archivedAt: undefined },
+      { name: 'Arbitrum One', id: 'arbitrum', archivedAt: undefined },
     )
 
     expect(dataset).toEqual({
@@ -120,7 +121,7 @@ describe(getL2ProjectTvsBreakdownStructuredData.name, () => {
           '@type': 'DataDownload',
           name: 'Arbitrum One TVS breakdown',
           encodingFormat: 'application/json',
-          contentUrl: 'https://ethbeat.org/api/scaling/tvs/arbitrum/breakdown',
+          contentUrl: 'https://api.ethbeat.org/v1/project/arbitrum/tokens',
         },
       ],
     })

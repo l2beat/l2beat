@@ -386,7 +386,7 @@ export class TokenValueRepository extends BaseRepository {
       .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
       .select((eb) => [
         'TokenValue.timestamp',
-        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+        sumAsDouble(eb, valueField).as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
         sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
@@ -463,7 +463,7 @@ export class TokenValueRepository extends BaseRepository {
       .select((eb) => [
         'TokenValue.projectId',
         'TokenValue.timestamp',
-        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+        sumAsDouble(eb, valueField).as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
         sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
@@ -564,7 +564,7 @@ export class TokenValueRepository extends BaseRepository {
       .select((eb) => [
         'TokenValue.projectId',
         'TokenValue.timestamp',
-        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+        sumAsDouble(eb, valueField).as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
         sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
@@ -815,7 +815,7 @@ export class TokenValueRepository extends BaseRepository {
       .select((eb) => [
         'TokenValue.projectId',
         'TokenValue.timestamp',
-        eb.cast(eb.fn.sum('valueForProject'), 'double precision').as('value'),
+        sumAsDouble(eb, 'valueForProject').as('value'),
       ])
       .where('TokenValue.projectId', 'in', projectIds)
       .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
@@ -900,7 +900,7 @@ function selectBreakdownSums(
   return [
     'TokenValue.projectId' as const,
     'TokenValue.timestamp' as const,
-    eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+    sumAsDouble(eb, valueField).as('value'),
     sumBySource(eb, valueField, 'canonical'),
     sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
     sumBySource(eb, valueField, 'external'),
@@ -945,6 +945,18 @@ function toSummedByProjectRow(row: {
     other: Number(row.other),
     associated: Number(row.associated),
   }
+}
+
+/**
+ * The value columns are `real`, and Postgres sums `real` in `real`: a running
+ * total near $67bn moves in steps of $4,096 and ends up off by $100k. So
+ * each row is widened before it is added.
+ */
+function sumAsDouble(
+  eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
+  valueField: 'valueForProject' | 'valueForSummary',
+) {
+  return eb.fn.sum<number>(eb.cast(eb.ref(valueField), 'double precision'))
 }
 
 function sumByCategory(

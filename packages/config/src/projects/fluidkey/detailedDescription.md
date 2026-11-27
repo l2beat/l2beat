@@ -6,7 +6,7 @@ The user trusts Fluidkey, which holds a key that sees all their addresses, runs 
 
 1. **Request an address.** The app, the API or a lookup of your name asks Fluidkey for a new address. For name lookups, Fluidkey's server signs the answer, so a payer has to trust that the address is yours.
 2. **Receive.** Each address is a new Safe controlled by a one-time key that only you can derive. It receives funds before it is deployed.
-3. **Send.** Fluidkey picks Safes with enough balance, your app signs the transfers, and Fluidkey submits them. While open, the app also signs any transfer Fluidkey's server marks as approved, without asking. Spending from several Safes at once links them onchain.
+3. **Send.** Fluidkey picks Safes with enough balance and builds the transfers. When you confirm with your PIN, your app signs what Fluidkey built, and Fluidkey submits it. Spending from several Safes at once links them onchain.
 
 ### Keys
 

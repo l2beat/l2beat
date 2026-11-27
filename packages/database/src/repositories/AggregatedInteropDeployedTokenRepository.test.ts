@@ -46,6 +46,23 @@ describeDatabase(AggregatedInteropDeployedTokenRepository.name, (db) => {
         ])
       })
 
+      it('keeps a small volume next to a large one', async () => {
+        // Both fit a `real` exactly, but their float4 sum drops the 1:
+        // at 2^24 the next float4 is 2 away.
+        const day1 = UnixTime(10 * UnixTime.DAY)
+        const day2 = UnixTime(11 * UnixTime.DAY)
+        await repository.insertMany([
+          deployedToken({ timestamp: day1, volume: 2 ** 24 }),
+          deployedToken({ timestamp: day2, volume: 1 }),
+        ])
+
+        const result = await repository.getSummedByTimestamps([day1, day2])
+
+        expect(result).toEqual([
+          stats({ volume: 2 ** 24 + 1, transferCount: 2, lastSeen: day2 }),
+        ])
+      })
+
       it('returns nothing for no timestamps', async () => {
         await repository.insertMany([
           deployedToken({ timestamp: UnixTime(100), volume: 1 }),
