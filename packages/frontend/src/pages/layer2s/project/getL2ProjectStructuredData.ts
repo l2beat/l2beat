@@ -38,7 +38,7 @@ export function getL2ProjectTvsBreakdownStructuredData(
 }
 
 interface L2Project {
+  id: string
   name: string
-  slug: string
   archivedAt: UnixTime | undefined
 }

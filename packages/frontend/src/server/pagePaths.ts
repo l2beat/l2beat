@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { API_MIGRATION_GUIDE_PATH } from '~/consts/publicApi'
 import { RENAME_ANNOUNCEMENT_PATH } from '~/consts/siteName'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
@@ -58,6 +59,7 @@ export const STATIC_PAGE_PATHS = [
   '/glossary',
   '/multisig-report',
   '/terms-of-service',
+  API_MIGRATION_GUIDE_PATH,
   '/stages',
   '/publications',
 ] as const satisfies PagePath[]

@@ -40,7 +40,7 @@ describe(renderEthereumProjectMarkdown.name, () => {
     expect(
       getSection(renderEthereumProjectMarkdown(ENTRY), 'Activity'),
     ).toInclude(
-      '- [Activity chart (JSON)](https://ethbeat.org/api/scaling/activity/ethereum)',
+      '- [Activity chart (JSON)](https://api.ethbeat.org/v1/activity/ethereum)',
     )
   })
 })
