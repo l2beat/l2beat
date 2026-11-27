@@ -21,7 +21,6 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
-import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ExploreInteropButton } from './ExploreInteropButton'
@@ -162,19 +161,24 @@ function Content({
             />
           </div>
           {/* Both lines keep their space while loading or when empty, so
-              the section's height doesn't follow the selection. */}
-          <FlowsParticleLegend
-            layout="inline"
-            className={cn(
-              'mt-2 justify-center text-center text-label-value-13',
-              !data && 'invisible',
+              the section's height doesn't follow the selection. The hidden
+              legend has both parts, so it wraps like the fullest one. */}
+          <div className="mt-2 grid *:[grid-area:1/1]">
+            <FlowsParticleLegend
+              layout="inline"
+              className="invisible justify-center text-center text-label-value-13"
+              totalVolume={data?.stats.totalVolume ?? 0}
+              dollarsPerParticle={EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE}
+            />
+            {data && (
+              <FlowsParticleLegend
+                layout="inline"
+                className="justify-center text-center text-label-value-13"
+                totalVolume={data.stats.totalVolume}
+                dollarsPerParticle={dollarsPerParticle}
+              />
             )}
-            totalVolume={data?.stats.totalVolume ?? 0}
-            // The hidden copy needs both parts to wrap like the loaded one.
-            dollarsPerParticle={
-              data ? dollarsPerParticle : EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE
-            }
-          />
+          </div>
           {/* Fits two lines of chain names, or the icon list's 44px touch target. */}
           <div className="mt-4 flex min-h-7 not-can-hover:min-h-11 w-full items-center justify-center gap-1.5 max-lg:order-2">
             {isLoading ? (
