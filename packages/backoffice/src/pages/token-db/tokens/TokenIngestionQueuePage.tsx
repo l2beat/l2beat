@@ -93,8 +93,10 @@ export function TokenIngestionQueuePage() {
   const stagedEntries = rows
     .filter((row) => row.entry.state === 'staged')
     .map((row) => row.entry)
-  const conflictEntries = rows
-    .filter((row) => row.entry.state === 'conflict')
+  const retryableEntries = rows
+    .filter(
+      (row) => row.entry.state === 'conflict' || row.entry.state === 'error',
+    )
     .map((row) => row.entry)
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
@@ -177,27 +179,27 @@ export function TokenIngestionQueuePage() {
     )
   }
 
-  function retryAllConflictsOnPage() {
-    if (conflictEntries.length === 0) {
+  function retryAllOnPage() {
+    if (retryableEntries.length === 0) {
       return
     }
 
     const confirmed = window.confirm(
-      `Retry ${conflictEntries.length} conflict queue entries on this page? Entries whose conflict still holds will come back with a fresh message.`,
+      `Retry ${retryableEntries.length} conflict and error queue entries on this page? Entries whose conflict still holds will come back with a fresh message.`,
     )
     if (!confirmed) {
       return
     }
 
     retryMany.mutate(
-      conflictEntries.map(({ chain, address }) => ({ chain, address })),
+      retryableEntries.map(({ chain, address }) => ({ chain, address })),
     )
   }
 
   return (
     <AppLayout>
       <Card className="flex h-[calc(100vh-16px-var(--spacing-environment-banner))] flex-col">
-        <CardHeader>
+        <CardHeader className="has-data-[slot=card-action]:grid-cols-[auto_1fr]">
           <CardTitle>Token ingestion queue</CardTitle>
           {queuePage && (
             <CardDescription>
@@ -231,14 +233,14 @@ export function TokenIngestionQueuePage() {
                 variant="outline"
                 size="sm"
                 isLoading={retryMany.isPending}
-                disabled={conflictEntries.length === 0}
-                onClick={retryAllConflictsOnPage}
+                disabled={retryableEntries.length === 0}
+                onClick={retryAllOnPage}
               >
                 <RotateCwIcon />
-                Retry conflicts on this page
+                Retry conflicts and errors on this page
               </ButtonWithSpinner>
               {totalCount > PAGE_SIZE && (
-                <>
+                <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -262,7 +264,7 @@ export function TokenIngestionQueuePage() {
                     Next
                     <ChevronRightIcon />
                   </Button>
-                </>
+                </div>
               )}
             </div>
           </CardAction>

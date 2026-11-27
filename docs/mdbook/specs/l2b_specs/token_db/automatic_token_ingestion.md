@@ -529,8 +529,9 @@ abstract for that coin (the dialog previews on open, so a conflict that
 was already resolved shows as no-longer-resolvable instead of offering
 a second resolution); the spare is equally visible and deletable.
 
-The queue page also has a *Retry conflicts on this page* bulk action
-(`retryMany`): after the punctuation normalization above shipped, a large
+The queue page also has a *Retry conflicts and errors on this page* bulk
+action (`retryMany`), which re-queues the page's `conflict` and `error`
+entries: after the punctuation normalization above shipped, a large
 share of the accumulated conflict backlog resolves automatically on
 re-processing, and conflicts whose cause still holds simply come back
 with a refreshed message. It is also the natural way to clear sibling
