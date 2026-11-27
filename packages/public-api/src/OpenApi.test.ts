@@ -13,10 +13,7 @@ describe(OpenApi.name, () => {
       const handler = mockFn().returns(undefined)
       openapi.get(
         '/test',
-        {
-          summary: 'Test endpoint',
-          result: v.string(),
-        },
+        { operationId: 'test', summary: 'Test endpoint', result: v.string() },
         handler,
       )
 
@@ -36,10 +33,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/test',
-        {
-          result: v.string(),
-          query: querySchema,
-        },
+        { operationId: 'test', result: v.string(), query: querySchema },
         handler,
       )
 
@@ -63,10 +57,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/test',
-        {
-          result: v.string(),
-          query: querySchema,
-        },
+        { operationId: 'test', result: v.string(), query: querySchema },
         mockFn().returns(undefined),
       )
 
@@ -90,10 +81,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/test',
-        {
-          result: v.string(),
-          query: querySchema,
-        },
+        { operationId: 'test', result: v.string(), query: querySchema },
         handler,
       )
 
@@ -120,10 +108,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/test/:id',
-        {
-          result: v.string(),
-          params: paramsSchema,
-        },
+        { operationId: 'test', result: v.string(), params: paramsSchema },
         handler,
       )
 
@@ -148,10 +133,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/test/:id',
-        {
-          result: v.string(),
-          params: paramsSchema,
-        },
+        { operationId: 'test', result: v.string(), params: paramsSchema },
         mockFn(),
       )
 
@@ -172,6 +154,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test/:id',
         {
+          operationId: 'test',
           result: v.string(),
           params: v.object({ id: v.string() }),
           query: v.object({ page: v.string() }),
@@ -230,6 +213,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test',
         {
+          operationId: 'test',
           summary: 'Test endpoint',
           description: 'A test endpoint',
           tags: ['projects'],
@@ -242,13 +226,12 @@ describe(OpenApi.name, () => {
 
       expect(schema.paths['/test']).toEqual({
         get: {
+          operationId: 'test',
           summary: 'Test endpoint',
           description: 'A test endpoint',
           tags: ['projects'],
           parameters: [],
-          responses: {
-            200: expect.a(Object),
-          },
+          responses: expect.a(Object),
         },
       })
     })
@@ -260,6 +243,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/users/:userId/posts/:postId',
         {
+          operationId: 'test',
           result: v.string(),
           params: v.object({
             userId: v.string(),
@@ -283,6 +267,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test',
         {
+          operationId: 'test',
           result: v.string(),
           query: v.object({
             page: v.string(),
@@ -318,6 +303,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/users/:id',
         {
+          operationId: 'test',
           result: v.string(),
           params: v.object({
             id: v.string(),
@@ -348,6 +334,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/users/:id',
         {
+          operationId: 'test',
           result: v.string(),
           params: v.object({ id: v.string() }),
           errors: { 404: v.object({ message: v.string() }) },
@@ -370,6 +357,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/users',
         {
+          operationId: 'test',
           result: v.string(),
           query: v.object({ active: v.string().optional() }),
           queryDescriptions: { active: 'Only active users when `true`' },
@@ -384,33 +372,20 @@ describe(OpenApi.name, () => {
       )
     })
 
-    it('includes 400 response when params or query are present', () => {
+    it('documents the errors every route can answer', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
-        {
-          result: v.string(),
-          query: v.object({ page: v.string() }),
-        },
+        { operationId: 'test', result: v.string() },
         mockFn(),
       )
 
-      const schema = openapi.getOpenApiSchema()
-      const responses = schema.paths['/test']?.get?.responses
+      const responses =
+        openapi.getOpenApiSchema().paths['/test']?.get?.responses
 
-      expect(responses).toEqual({
-        200: expect.a(Object),
-        400: {
-          description: expect.a(String),
-          content: {
-            'application/json': {
-              schema: expect.a(Object),
-            },
-          },
-        },
-      })
+      expect(Object.keys(responses ?? {})).toEqual(['200', '400', '429', '500'])
     })
 
     it('includes custom error responses', () => {
@@ -426,6 +401,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test/:id',
         {
+          operationId: 'test',
           result: v.string(),
           errors: {
             404: NotFoundError,
@@ -437,7 +413,13 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test/{id}']?.get?.responses
 
-      expect(Object.keys(responses ?? {})).toEqual(['200', '404'])
+      expect(Object.keys(responses ?? {})).toEqual([
+        '200',
+        '400',
+        '404',
+        '429',
+        '500',
+      ])
       expect(responses?.[404]).toEqual({
         description: expect.a(String),
         content: {
@@ -461,15 +443,19 @@ describe(OpenApi.name, () => {
         })
         .describe('User')
 
-      openapi.get('/users', { result: UserSchema }, mockFn())
+      openapi.get(
+        '/users',
+        { operationId: 'test', result: UserSchema },
+        mockFn(),
+      )
 
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/users']?.get?.responses?.[200]
 
-      expect(schema.components.schemas).toEqual({
-        User: expect.a(Object),
-      })
-      expect(response?.content['application/json'].schema).toEqual({
+      expect(schema.components.schemas).toEqual(
+        expect.subset({ User: expect.a(Object) }),
+      )
+      expect(response?.content?.['application/json'].schema).toEqual({
         $ref: '#/components/schemas/User',
       })
     })
@@ -484,52 +470,39 @@ describe(OpenApi.name, () => {
         })
         .describe('Item')
 
-      openapi.get('/items', { result: v.array(ItemSchema) }, mockFn())
+      openapi.get(
+        '/items',
+        { operationId: 'test', result: v.array(ItemSchema) },
+        mockFn(),
+      )
 
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/items']?.get?.responses?.[200]
 
-      expect(response?.content['application/json'].schema).toEqual({
+      expect(response?.content?.['application/json'].schema).toEqual({
         type: 'array',
         items: {
           $ref: '#/components/schemas/Item',
         },
       })
-      expect(schema.components.schemas).toEqual({
-        Item: expect.a(Object),
-      })
+      expect(schema.components.schemas).toEqual(
+        expect.subset({ Item: expect.a(Object) }),
+      )
     })
 
-    it('includes BadRequestResponse when validation is present', () => {
+    it('includes the error schemas every route refers to', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
       openapi.get(
         '/test',
-        {
-          result: v.string(),
-          params: v.object({ id: v.string() }),
-        },
+        { operationId: 'test', result: v.string() },
         mockFn(),
       )
 
-      const schema = openapi.getOpenApiSchema()
-
-      expect(schema.components.schemas).toEqual({
+      expect(openapi.getOpenApiSchema().components.schemas).toEqual({
         BadRequestResponse: expect.a(Object),
-      })
-    })
-
-    it('does not include BadRequestResponse when no validation', () => {
-      const app = mockApp()
-      const openapi = new OpenApi(app, baseSchema)
-
-      openapi.get('/test', { result: v.string() }, mockFn())
-
-      const schema = openapi.getOpenApiSchema()
-
-      expect(schema.components.schemas).not.toEqual({
-        BadRequestResponse: expect.a(Object),
+        InternalErrorResponse: expect.a(Object),
       })
     })
 
@@ -547,6 +520,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test',
         {
+          operationId: 'test',
           result: v.string(),
           errors: {
             500: CustomError,
@@ -557,9 +531,9 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).toEqual({
-        CustomError: expect.a(Object),
-      })
+      expect(schema.components.schemas).toEqual(
+        expect.subset({ CustomError: expect.a(Object) }),
+      )
     })
 
     it('includes documented properties in component schemas', () => {
@@ -568,7 +542,7 @@ describe(OpenApi.name, () => {
 
       openapi.get(
         '/interop/protocols',
-        { result: InteropProtocolsResultSchema },
+        { operationId: 'test', result: InteropProtocolsResultSchema },
         mockFn(),
       )
 
@@ -589,18 +563,21 @@ describe(OpenApi.name, () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
 
-      openapi.get('/minimal', { result: v.string() }, mockFn())
+      openapi.get(
+        '/minimal',
+        { operationId: 'test', result: v.string() },
+        mockFn(),
+      )
 
       const schema = openapi.getOpenApiSchema()
 
       expect(schema.paths['/minimal']?.get).toEqual({
+        operationId: 'test',
         tags: undefined,
         summary: undefined,
         description: undefined,
         parameters: [],
-        responses: {
-          200: expect.a(Object),
-        },
+        responses: expect.a(Object),
       })
     })
 
@@ -611,6 +588,7 @@ describe(OpenApi.name, () => {
       openapi.get(
         '/test',
         {
+          operationId: 'test',
           result: v.object({
             value: v.string(),
           }),
@@ -624,12 +602,12 @@ describe(OpenApi.name, () => {
       // Should not have $ref, should be inline
       expect(
         !Object.keys(
-          response?.content['application/json'].schema ?? {},
+          response?.content?.['application/json'].schema ?? {},
         ).includes('$ref'),
       ).toEqual(true)
       expect(
         Object.keys(
-          response?.content['application/json'].schema ?? {},
+          response?.content?.['application/json'].schema ?? {},
         ).includes('type'),
       ).toEqual(true)
     })
@@ -640,6 +618,7 @@ describe(OpenApi.name, () => {
 function mockApp() {
   return mockObject<Application>({
     get: mockFn().returns(undefined),
+    all: mockFn().returns(undefined),
   })
 }
 
@@ -655,6 +634,8 @@ function mockRequest(overrides?: {
 
 function mockResponse() {
   const res = mockObject<Response>({
+    statusCode: 200,
+    setHeader: mockFn().returns(undefined),
     status: mockFn().returns(
       mockObject<Response>({ json: mockFn((json) => json) }),
     ),

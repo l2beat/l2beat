@@ -44,6 +44,7 @@ import {
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
 } from '../utils/discoveryDriven'
+import { getTvsTokenAddresses } from '../utils/extractAddressesFromTokenConfig'
 import { runConfigAdjustments } from './adjustments'
 import { ecosystems } from './ecosystems'
 import { getEoaUpgradeRedWarning } from './getEoaRedWarning'
@@ -73,7 +74,14 @@ function buildProjects(): BaseProject[] {
   runConfigAdjustments()
 
   return refactored
-    .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
+    .map((p): BaseProject => {
+      const tvsConfig = getTvsConfig(p)
+      return {
+        ...p,
+        tvsConfig,
+        tvsTokenAddresses: getTvsTokenAddresses(tvsConfig),
+      }
+    })
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
@@ -257,6 +265,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       warnings: [p.display.tvsWarning].filter((x) => x !== undefined),
     },
     tvsConfig,
+    tvsTokenAddresses: getTvsTokenAddresses(tvsConfig),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,

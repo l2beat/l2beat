@@ -1,10 +1,13 @@
 import type { ImpDefinition, Validator } from '@l2beat/validate'
-import { toJsonSchema as _toJsonSchema, v } from '@l2beat/validate'
-import type { Application, Request, RequestHandler } from 'express'
+import { toJsonSchema as _toJsonSchema } from '@l2beat/validate'
+import type { Application, Request, RequestHandler, Response } from 'express'
+import { BadRequestResponse, InternalErrorResponse } from './types'
 import { httpResponsesDescriptions } from './utils/errorDescriptions'
 
 // biome-ignore lint/suspicious/noExplicitAny: its fine
 interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
+  /** Names the operation in generated clients, so it must stay unique and stable */
+  operationId: string
   summary?: string
   description?: string
   tags?: Tags[]
@@ -19,6 +22,7 @@ interface OpenApiRouteOptions<P = any, O = any, Q = any, E = any> {
 }
 
 type OpenApiPath = {
+  operationId: string
   summary?: string
   description?: string
   tags?: Tags[]
@@ -36,7 +40,8 @@ type OpenApiParameter = {
 
 type OpenApiResponse = {
   description: string
-  content: {
+  /** Left out when the answer is not ours to shape, like the CDN's 429 */
+  content?: {
     'application/json': {
       schema: JsonSchema
     }
@@ -45,12 +50,25 @@ type OpenApiResponse = {
 
 type Tags = 'projects' | 'tvs' | 'activity' | 'interop'
 
-const BadRequestResponse = v
-  .object({
-    path: v.string(),
-    message: v.string(),
-  })
-  .describe('BadRequestResponse')
+/** Older integrations still send the key they were given. It is ignored. */
+const LEGACY_QUERY_PARAMS = ['apiKey']
+
+/**
+ * For a 200. The data changes hourly and the in-process cache holds it for
+ * five minutes, so a CDN may hold it as long and a client for a minute.
+ */
+const CACHE_CONTROL_SUCCESS =
+  'public, max-age=60, s-maxage=300, stale-while-revalidate=300'
+/** For everything else: an error must not outlive what caused it. */
+export const CACHE_CONTROL_ERROR = 'no-store'
+
+export interface InvalidResponse {
+  path: string
+  status: number
+  /** Where in the body the mismatch is, e.g. `[3].tvs.timestamp` */
+  bodyPath: string
+  message: string
+}
 
 type JsonSchema = ReturnType<typeof _toJsonSchema>
 
@@ -78,9 +96,18 @@ export interface BaseOpenApiSchema {
 export class OpenApi {
   private routes: Route[] = []
 
+  /**
+   * @param onInvalidResponse Called when a route answers with a body that
+   * does not match the schema it documents. Throws by default, which fails
+   * the request, so tests catch the drift. Production logs it and still
+   * answers.
+   */
   constructor(
     private readonly app: Application,
     private readonly baseSchema: BaseOpenApiSchema,
+    private readonly onInvalidResponse: (
+      invalid: InvalidResponse,
+    ) => void = throwInvalidResponse,
   ) {}
 
   get<TParams, TOutput, TQuery, TErrors>(
@@ -89,8 +116,11 @@ export class OpenApi {
     handler: RequestHandler<TParams, TOutput | TErrors, unknown, TQuery>,
   ) {
     this.routes.push({ path, method: 'get', options })
+    const knownQueryParams = getQueryParamNames(options.query)
 
     this.app.get(path, (req, res, next) => {
+      this.prepareResponse(res, path, options)
+
       if (options.params) {
         const result = options.params.safeParse(req.params)
         if (!result.success) {
@@ -103,13 +133,30 @@ export class OpenApi {
         Object.defineProperty(req, 'params', { value: result.data })
       }
 
+      // A misspelled parameter would otherwise be dropped, and the caller
+      // would read the default answer as the one they asked for
+      for (const key of Object.keys(req.query)) {
+        if (
+          !knownQueryParams.includes(key) &&
+          !LEGACY_QUERY_PARAMS.includes(key)
+        ) {
+          res.status(400).json({
+            path: `.query.${key}`,
+            message:
+              knownQueryParams.length > 0
+                ? `Unknown query parameter. This endpoint takes: ${knownQueryParams.join(', ')}.`
+                : 'Unknown query parameter. This endpoint takes none.',
+          })
+          return
+        }
+      }
+
       if (options.query) {
         // Remove '' from query
         const sanitizedQuery = Object.fromEntries(
-          Object.entries(req.query).map(([key, value]) => [
-            key,
-            value || undefined,
-          ]),
+          Object.entries(req.query)
+            .filter(([key]) => knownQueryParams.includes(key))
+            .map(([key, value]) => [key, value || undefined]),
         )
         const result = options.query.safeParse(sanitizedQuery)
         if (!result.success) {
@@ -128,6 +175,47 @@ export class OpenApi {
         next,
       )
     })
+
+    // GET also answers HEAD, and the CORS middleware answers OPTIONS
+    this.app.all(path, (req, res) => {
+      res.setHeader('Allow', 'GET, HEAD, OPTIONS')
+      res.setHeader('Cache-Control', CACHE_CONTROL_ERROR)
+      res.status(405).json({
+        message: `${req.method} is not supported here. The API is read-only: use GET.`,
+      })
+    })
+  }
+
+  /**
+   * Says how long each JSON body a route sends may be cached, and checks the
+   * body against the schema the route documents.
+   */
+  private prepareResponse(
+    res: Response,
+    path: string,
+    options: OpenApiRouteOptions,
+  ) {
+    const json = res.json.bind(res)
+    res.json = (body) => {
+      res.setHeader(
+        'Cache-Control',
+        res.statusCode === 200 ? CACHE_CONTROL_SUCCESS : CACHE_CONTROL_ERROR,
+      )
+      const schema =
+        res.statusCode === 200
+          ? options.result
+          : options.errors?.[res.statusCode]
+      const result = schema?.safeParse(body)
+      if (result && !result.success) {
+        this.onInvalidResponse({
+          path,
+          status: res.statusCode,
+          bodyPath: result.path,
+          message: result.message,
+        })
+      }
+      return json(body)
+    }
   }
 
   getOpenApiSchema() {
@@ -172,15 +260,8 @@ export class OpenApi {
       }
     }
 
-    if (
-      this.routes.some(
-        (route) => !!route.options.params || !!route.options.query,
-      )
-    ) {
-      // biome-ignore lint/style/noNonNullAssertion: it's there
-      schemas[BadRequestResponse.description!] =
-        this.toJsonSchema(BadRequestResponse)
-    }
+    schemas.BadRequestResponse = this.toJsonSchema(BadRequestResponse)
+    schemas.InternalErrorResponse = this.toJsonSchema(InternalErrorResponse)
 
     return {
       schemas,
@@ -192,6 +273,7 @@ export class OpenApi {
       (acc, route) => {
         acc[this.parsePath(route.path)] = {
           [route.method]: {
+            operationId: route.options.operationId,
             tags: route.options.tags,
             summary: route.options.summary,
             description: route.options.description,
@@ -226,17 +308,25 @@ export class OpenApi {
           },
         },
       },
-    }
-
-    if (!!route.options.params || !!route.options.query) {
-      base[400] = {
+      // Every route can answer these: 400 for a query parameter it does not
+      // take, 429 from the CDN, 500 from the error handler
+      400: {
         description: httpResponsesDescriptions[400],
         content: {
           'application/json': {
             schema: this.toJsonSchemaWithRefs(BadRequestResponse),
           },
         },
-      }
+      },
+      429: { description: httpResponsesDescriptions[429] },
+      500: {
+        description: httpResponsesDescriptions[500],
+        content: {
+          'application/json': {
+            schema: this.toJsonSchemaWithRefs(InternalErrorResponse),
+          },
+        },
+      },
     }
 
     // Add custom error responses if specified
@@ -314,6 +404,50 @@ export class OpenApi {
   private toJsonSchema<T>(validator: Validator<T>) {
     // @ts-expect-error - it's there
     const { $schema: _, ...rest } = _toJsonSchema(validator)
-    return rest
+    return withEnumTypes(rest)
   }
+}
+
+function getQueryParamNames(
+  query: OpenApiRouteOptions['query'] | undefined,
+): string[] {
+  if (!query) {
+    return []
+  }
+  if (query.definition?.type !== 'object') {
+    throw new Error('Query schema must be an object')
+  }
+  return Object.keys(query.definition.schema)
+}
+
+function throwInvalidResponse(invalid: InvalidResponse): never {
+  throw new Error(
+    `Response of ${invalid.path} (${invalid.status}) does not match its schema at ${invalid.bodyPath}: ${invalid.message}`,
+  )
+}
+
+/**
+ * Gives every `enum` the `type` its values share. The schema is valid
+ * without it, but client generators then type the field as `any`.
+ */
+function withEnumTypes<T>(schema: T): T {
+  if (Array.isArray(schema)) {
+    return schema.map(withEnumTypes) as T
+  }
+  if (typeof schema !== 'object' || schema === null) {
+    return schema
+  }
+  const result: Record<string, unknown> = {}
+  for (const [key, value] of Object.entries(schema)) {
+    result[key] = withEnumTypes(value)
+  }
+  const values = result.enum
+  if (Array.isArray(values) && result.type === undefined) {
+    const types = new Set(values.map((value) => typeof value))
+    const [type] = types
+    if (types.size === 1 && (type === 'string' || type === 'number')) {
+      result.type = type
+    }
+  }
+  return result as T
 }

@@ -21,6 +21,7 @@ export function addActivityRoutes(
   openapi.get(
     '/v1/activity',
     {
+      operationId: 'getActivityChart',
       summary: 'Activity data with ability to control the time range.',
       description: ACTIVITY_CHART_DESCRIPTION,
       tags: ['activity'],
@@ -51,6 +52,7 @@ export function addActivityRoutes(
   openapi.get(
     '/v1/activity/:projectId',
     {
+      operationId: 'getProjectActivityChart',
       summary:
         'Activity data for a specific project with ability to control the time range.',
       description: ACTIVITY_CHART_DESCRIPTION,

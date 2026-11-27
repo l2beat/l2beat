@@ -8,37 +8,47 @@ export async function getInteropProtocolsData(
   db: Database,
   ps: ProjectService,
 ): Promise<InteropProtocol[]> {
-  const [records, projects] = await Promise.all([
+  const [{ timestamp, records }, projects] = await Promise.all([
     getLatestAggregatedInteropTransfers(db),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
 
-  return getInteropProtocols(records, projects)
+  return getInteropProtocols(records, projects).map((protocol) => ({
+    ...protocol,
+    timestamp,
+  }))
 }
 
 export async function getInteropChainsData(
   db: Database,
   ps: ProjectService,
 ): Promise<InteropChain[]> {
-  const [records, projects] = await Promise.all([
+  const [{ timestamp, records }, projects] = await Promise.all([
     getLatestAggregatedInteropTransfers(db),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
 
-  return getInteropChains(records, projects)
+  return getInteropChains(records, projects).map((chain) => ({
+    ...chain,
+    timestamp,
+  }))
 }
 
+/**
+ * The newest snapshot, which covers the 24 hours before its timestamp. With
+ * no snapshot there are no records, so the timestamp is never read.
+ */
 async function getLatestAggregatedInteropTransfers(db: Database) {
-  const latestTimestamp =
-    await db.interopAggregateStatus.getLatestPromotedTimestamp()
-  if (!latestTimestamp) {
-    return []
+  const timestamp = await db.interopAggregateStatus.getLatestPromotedTimestamp()
+  if (!timestamp) {
+    return { timestamp: 0, records: [] }
   }
 
   const chainIds = INTEROP_CHAINS.map((chain) => chain.id)
-  return db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-    latestTimestamp,
+  const records = await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
+    timestamp,
     chainIds,
     chainIds,
   )
+  return { timestamp, records }
 }

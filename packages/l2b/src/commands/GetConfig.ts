@@ -31,6 +31,7 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'interopConfig',
   'tvsInfo',
   'tvsConfig',
+  'tvsTokenAddresses',
   'activityConfig',
   'livenessInfo',
   'livenessConfig',

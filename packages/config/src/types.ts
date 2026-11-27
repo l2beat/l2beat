@@ -269,6 +269,12 @@ export interface BaseProject {
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
+  /**
+   * Built from `tvsConfig` when config builds: the token contracts each
+   * token's amount is read from, by token id. A token that reads no contract
+   * (a native balance or a fixed amount) has no entry.
+   */
+  tvsTokenAddresses?: Record<string, TvsTokenAddress[]>
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
@@ -2761,6 +2767,12 @@ export function isOnchainAmountFormula(
 
 // token deployed to single chain
 export type TvsToken = v.infer<typeof TvsTokenSchema>
+
+export interface TvsTokenAddress {
+  address: string
+  /** Name of the chain the contract is on, e.g. "arbitrum". */
+  chain: string
+}
 export const TvsTokenSchema = v.object({
   mode: v.enum(['auto', 'custom']),
   id: v.string().transform(TokenId),

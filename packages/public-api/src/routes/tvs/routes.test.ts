@@ -15,7 +15,8 @@ import type { TvsResultItem } from './types'
 // Why: people decide where to put money from these charts, so a missing hour
 // must not read as "this project secured nothing", the ETH price must match
 // the website's, and the token filters must reach the database without
-// changing what existing callers get by default.
+// changing what the caller did not ask to change. A sum must add up the same
+// projects and tokens the website does, or the two disagree by billions.
 // How: the real routes run in a real Express app on a random port. The
 // database returns hand-made rows for two six-hour points with a gap between
 // them; the tests read the JSON response, and which options reach the query
@@ -85,7 +86,7 @@ describe('/v1/tvs', () => {
     ['/v1/tvs', ['tvs', '30d']],
     ['/v1/tvs/alpha', ['tvs', 'alpha', '30d']],
   ] as const) {
-    it(`counts every token by default, as before: ${path}`, async () => {
+    it(`counts tokens like the website by default: ${path}`, async () => {
       await get(path)
 
       expect(getSummed).toHaveBeenOnlyCalledWith(
@@ -94,14 +95,14 @@ describe('/v1/tvs', () => {
         expect.anything(),
         expect.subset({
           excludeAssociatedTokens: false,
-          excludeRwaRestrictedTokens: false,
+          excludeRwaRestrictedTokens: true,
         }),
       )
     })
 
     it(`passes each filter to the query and the cache key: ${path}`, async () => {
       await get(`${path}?excludeAssociatedTokens=true`)
-      await get(`${path}?excludeRwaRestrictedTokens=true`)
+      await get(`${path}?excludeRwaRestrictedTokens=false`)
 
       expect(getSummed).toHaveBeenNthCalledWith(
         1,
@@ -110,7 +111,7 @@ describe('/v1/tvs', () => {
         expect.anything(),
         expect.subset({
           excludeAssociatedTokens: true,
-          excludeRwaRestrictedTokens: false,
+          excludeRwaRestrictedTokens: true,
         }),
       )
       expect(getSummed).toHaveBeenNthCalledWith(
@@ -120,19 +121,19 @@ describe('/v1/tvs', () => {
         expect.anything(),
         expect.subset({
           excludeAssociatedTokens: false,
-          excludeRwaRestrictedTokens: true,
+          excludeRwaRestrictedTokens: false,
         }),
       )
       expect(cache.get.calls.map((call) => call.args[0].key)).toEqual([
         [
           ...keyPrefix,
           'excludeAssociatedTokens=true',
-          'excludeRwaRestrictedTokens=false',
+          'excludeRwaRestrictedTokens=true',
         ],
         [
           ...keyPrefix,
           'excludeAssociatedTokens=false',
-          'excludeRwaRestrictedTokens=true',
+          'excludeRwaRestrictedTokens=false',
         ],
       ])
     })
@@ -149,6 +150,29 @@ describe('/v1/tvs', () => {
       expect(getSummed).not.toHaveBeenCalled()
     })
   }
+
+  it('sums scaling projects only, leaving out DeFi and privacy ones', async () => {
+    await get('/v1/tvs')
+
+    expect(getSummed).toHaveBeenOnlyCalledWith(
+      [ProjectId('alpha')],
+      expect.anything(),
+      expect.anything(),
+      expect.anything(),
+    )
+  })
+
+  it('answers 400 for a query parameter the endpoint does not take', async () => {
+    const res = await get<{ path: string }>(
+      '/v1/tvs?exludeAssociatedTokens=true',
+    )
+
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual(
+      expect.subset({ path: '.query.exludeAssociatedTokens' }),
+    )
+    expect(getSummed).not.toHaveBeenCalled()
+  })
 
   // Why: the API is open, so a caller can send any string as a token id. Each
   // one must not cost a database query and a cache entry of its own.
@@ -225,18 +249,28 @@ function mockGetTokenValues() {
   >().resolvesTo([])
 }
 
+// "alpha" is a scaling project. "staking" has a TVS config and no scalingInfo,
+// like a liquid staking protocol. Mirrors ProjectDatabase: every `where` key
+// must be present.
 function fakeProjectService() {
   const alpha = {
     id: ProjectId('alpha'),
     slug: 'alpha',
     tvsConfig: [{ id: 'alpha-ETH' }],
+    scalingInfo: {},
+  }
+  const staking = {
+    id: ProjectId('staking'),
+    slug: 'staking',
+    tvsConfig: [{ id: 'staking-ETH' }],
   }
   return mockObject<ProjectService>({
     getProject: (async () =>
       alpha as unknown as Project) as ProjectService['getProject'],
-    getProjects: (async () => [
-      alpha as unknown as Project,
-    ]) as ProjectService['getProjects'],
+    getProjects: (async (query: { where?: string[] }) =>
+      [alpha, staking].filter((p) =>
+        (query.where ?? []).every((key) => key in p),
+      )) as unknown as ProjectService['getProjects'],
   })
 }
 

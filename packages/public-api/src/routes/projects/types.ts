@@ -73,7 +73,6 @@ export const ProjectSchema = v
         'Layer 2 and layer 3 projects only, e.g. "Optimistic Rollup".',
     }),
     isArchived: v.boolean(),
-    category: v.string().optional(),
     hostChain: v.string().optional(),
     stacks: v.array(v.string()),
     ecosystem: v.string().optional(),

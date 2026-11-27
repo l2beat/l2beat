@@ -32,6 +32,7 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/projects',
     {
+      operationId: 'listProjects',
       summary: 'List all projects',
       description: PROJECT_DESCRIPTION,
       tags: ['projects'],
@@ -58,6 +59,7 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/project/:projectId',
     {
+      operationId: 'getProject',
       summary: 'Get a project by ID',
       description: PROJECT_DESCRIPTION,
       tags: ['projects'],
@@ -89,7 +91,8 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/project/:projectId/contracts',
     {
-      summary: ' List of contracts associated with the project and the chains',
+      operationId: 'listProjectContracts',
+      summary: 'List of contracts associated with the project and the chains',
       tags: ['projects'],
       params: v.object({
         projectId: v.string(),
@@ -138,6 +141,7 @@ export function addProjectsRoutes(
   openapi.get(
     '/v1/project/:projectId/tokens',
     {
+      operationId: 'listProjectTokens',
       summary: 'List of tokens associated with the project',
       description: 'This endpoint may be affected by changes in the future.',
       tags: ['projects'],
@@ -154,7 +158,7 @@ export function addProjectsRoutes(
       const { projectId } = req.params
 
       const { project, notFoundMessage } = await findProject(ps, projectId, {
-        optional: ['tvsConfig', 'chainConfig'],
+        optional: ['tvsConfig', 'tvsTokenAddresses', 'chainConfig'],
       })
 
       if (!project) {
@@ -183,5 +187,5 @@ export function addProjectsRoutes(
 
 const PROJECT_DESCRIPTION = [
   '`stage`, `risks` and `isUnderReview` are the assessment the ETHBEAT website shows. Only layer 2 and layer 3 projects have a stage and risks.',
-  '`tvs` is `null` when we do not track TVS for the project or have not synced it yet. It leaves out restricted RWA tokens, like the website; `/v1/tvs/{projectId}` counts them unless you pass `excludeRwaRestrictedTokens=true`.',
+  '`tvs` is `null` when we do not track TVS for the project or have not synced it yet. It leaves out restricted RWA tokens, like the website and like `/v1/tvs/{projectId}` by default.',
 ].join('\n\n')

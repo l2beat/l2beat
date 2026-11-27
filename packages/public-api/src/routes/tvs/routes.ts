@@ -28,8 +28,9 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs',
     {
+      operationId: 'getTvsChart',
       summary: 'Total Value Secured with ability to control the time range',
-      description: TVS_CHART_DESCRIPTION,
+      description: [TVS_SUM_DESCRIPTION, TVS_CHART_DESCRIPTION].join('\n\n'),
       tags: ['tvs'],
       query: TvsQuerySchema,
       queryDescriptions: TVS_QUERY_DESCRIPTIONS,
@@ -59,6 +60,7 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs/:projectId',
     {
+      operationId: 'getProjectTvsChart',
       summary:
         'Total Value Secured for a specific project with ability to control the time range.',
       description: TVS_CHART_DESCRIPTION,
@@ -109,6 +111,7 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs/token/:tokenId',
     {
+      operationId: 'getTokenTvsChart',
       summary:
         'Total Value Secured for a specific token with ability to control the time range.',
       description: 'This endpoint may be affected by changes in the future.',
@@ -155,8 +158,12 @@ export function addTvsRoutes(
 }
 
 async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
+  // Scaling projects only, like the website's scaling TVS and like
+  // /v1/activity. DeFi and privacy projects have TVS configs too, and their
+  // value is not secured by a scaling project.
   const projects = await ps.getProjects({
     select: ['tvsConfig'],
+    where: ['scalingInfo'],
     whereNot: ['archivedAt'],
   })
 
@@ -175,14 +182,17 @@ const TVS_CHART_DESCRIPTION = [
   'A timestamp with no data has no point: it is missing, not zero. Read each point by its `timestamp`, since the spacing can have gaps.',
   'The timestamp of the last point is the time the data is synced until, the same value the website reports as `syncedUntil`. For a sum of many projects it is the latest time any of them has data for, so a project that lags behind is left out of the newest points.',
   '`ethPrice` is the USD price of ETH at that point, the one the website uses to show TVS in ETH: divide `totalTvs` by it. It is `null` when the price is unknown.',
-  'Unlike the website, this endpoint counts restricted RWA tokens by default. To count tokens the way the website does, pass `excludeRwaRestrictedTokens=true`. The sum of all projects also includes projects the website does not list under scaling.',
+  'Tokens are counted the way the website and `/v1/projects` count them by default: associated tokens are in, restricted RWA tokens are out. The two `exclude` parameters change that.',
 ].join('\n\n')
+
+const TVS_SUM_DESCRIPTION =
+  'The sum covers the layer 2 and layer 3 projects that are not archived, the same set as `/v1/activity`.'
 
 const TVS_QUERY_DESCRIPTIONS = {
   excludeAssociatedTokens:
     'When `true`, leaves out tokens associated with the project, such as its own governance token. Defaults to `false`, like the website.',
   excludeRwaRestrictedTokens:
-    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `false`, which counts them. The website defaults to `true`: pass `true` to filter tokens the way it does.',
+    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `true`, like the website. Pass `false` to count them.',
 }
 
 function parseTokenExclusions(
@@ -190,7 +200,7 @@ function parseTokenExclusions(
 ): TokenExclusions {
   return {
     excludeAssociatedTokens: query.excludeAssociatedTokens === 'true',
-    excludeRwaRestrictedTokens: query.excludeRwaRestrictedTokens === 'true',
+    excludeRwaRestrictedTokens: query.excludeRwaRestrictedTokens !== 'false',
   }
 }
 

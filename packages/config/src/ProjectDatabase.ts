@@ -61,6 +61,7 @@ const schema = {
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
+  tvsTokenAddresses: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
   livenessConfig: 'TEXT',
