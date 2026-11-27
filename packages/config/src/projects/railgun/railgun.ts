@@ -267,6 +267,8 @@ export const railgun: BaseProject = {
           file: 'RailOxide-v0.3.0-rc.2-x86_64.flatpak',
           hash: 'c174d43b0aca21e46ca505b48715fd9e58796acee89af0ac5dd6fd4e6a49a4bb',
         },
+        rebuild:
+          'https://github.com/triamazikamno/railoxide/blob/d9e244c059d01fb52c21b878cb596971f8c1208c/.github/workflows/flatpak-release.yml',
       },
       version: '0.3.0-rc.2',
       source: {
@@ -345,7 +347,7 @@ export const railgun: BaseProject = {
     reproducibility: {
       ...PRIVACY_REPRODUCIBILITY.full,
       description:
-        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+        "The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally. RailOxide's release rebuilds from its tag.",
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
