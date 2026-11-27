@@ -1,6 +1,6 @@
-import type { TvsToken } from '@l2beat/config'
-import { getAmountFormulas } from '@l2beat/config/build/utils/tvsFormulas'
 import uniqBy from 'lodash/uniqBy'
+import type { TvsToken } from '../types'
+import { getAmountFormulas } from './tvsFormulas'
 
 export type Address = {
   address: string
@@ -14,5 +14,5 @@ export function extractAddressesFromTokenConfig(token: TvsToken): Address[] {
       ? []
       : [{ address: amount.address, chain: amount.chain }],
   )
-  return uniqBy(addresses, 'address')
+  return uniqBy(addresses, (a) => `${a.chain}:${a.address}`)
 }

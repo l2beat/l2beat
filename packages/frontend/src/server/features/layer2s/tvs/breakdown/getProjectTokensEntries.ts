@@ -1,4 +1,5 @@
 import type { ChainConfig, Project, TvsToken } from '@l2beat/config'
+import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import type { TokenValueRecord } from '@l2beat/database'
 import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
@@ -14,7 +15,6 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getLatestTvsTimestamp } from '../utils/getLatestTvsTimestamp'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
-import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 import {
   type AddressData,
   type FormulaWithMeta,
@@ -110,7 +110,9 @@ function getEntries(
   const breakdown: ProjectTvsBreakdownTokenEntry[] = []
 
   const projectTokens = project.tvsConfig
-  const gasTokens = project.chainConfig?.gasTokens
+  const gasTokens = project.chainConfig?.gasTokens?.map((symbol) =>
+    symbol.toUpperCase(),
+  )
 
   for (const token of projectTokens) {
     const tokenValue = tokenValuesMap.get(token.id)
