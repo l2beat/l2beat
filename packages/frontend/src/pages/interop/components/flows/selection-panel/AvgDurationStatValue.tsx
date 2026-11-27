@@ -9,9 +9,9 @@ export function AvgDurationStatValue({
   return (
     <AvgDurationCell
       averageDuration={avgDuration}
-      className="font-semibold text-[13px] leading-[1.15]"
-      splitClassName="items-stretch font-semibold text-[13px] md:gap-0.5"
-      splitItemClassName="justify-between gap-3"
+      className="font-semibold text-label-value-13 leading-4"
+      splitClassName="items-stretch gap-1 font-semibold text-label-value-13 md:gap-1"
+      splitItemClassName="justify-between gap-3 [&>span:first-child]:font-normal [&>span]:leading-4"
     />
   )
 }

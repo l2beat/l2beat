@@ -15,6 +15,7 @@ import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import { getPairFlowStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { AvgDurationStatValue } from './AvgDurationStatValue'
+import { StatsCardHeader } from './StatsCardHeader'
 import { TopItemsList } from './TopItemsList'
 
 export function MultipleChainsStats({
@@ -128,8 +129,8 @@ function Stats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
-      <div className="space-y-1.5">
+      <StatsCardHeader />
+      <div className="space-y-1">
         <StatRow
           label="Total volume"
           value={formatCurrency(totalVolume, 'usd')}
@@ -154,7 +155,12 @@ function Stats({
         )}
         <StatRow
           label="Net flow"
-          value={`${formatCurrency(Math.abs(netFlowValue), 'usd')} to ${netFlowChain?.name}`}
+          value={
+            <>
+              {formatCurrency(Math.abs(netFlowValue), 'usd')}
+              <span className="font-normal"> to {netFlowChain?.name}</span>
+            </>
+          }
           isLoading={isLoading}
         />
         <StatRow
@@ -201,7 +207,7 @@ function Routes({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12">ROUTES</div>
+      <div className="mb-2 font-bold text-label-value-12 uppercase">Routes</div>
       <div className="space-y-1">
         {flows.map((flow) => {
           const srcChain = allChains.find((c) => c.id === flow.srcChain)
@@ -247,11 +253,14 @@ function Routes({
                 )}
               </div>
               {isLoading ? (
-                <Skeleton className="mt-0.5 h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
               ) : (
-                <div className="mt-0.5 flex items-center gap-2 font-semibold text-[13px] leading-none">
-                  <span>{formatCurrency(flow.volume, 'usd')}</span>
-                  <span className="text-secondary">
+                <div className="flex items-center gap-2 text-label-value-13 leading-4">
+                  <span className="font-semibold">
+                    {formatCurrency(flow.volume, 'usd')}
+                  </span>
+                  {/* Fixed width keeps the counts in one column across rows. */}
+                  <span className="min-w-[4.5rem] text-right text-secondary">
                     {formatCount(flow.transferCount, 'tx')}
                   </span>
                 </div>
@@ -274,14 +283,12 @@ function StatRow({
   isLoading: boolean
 }) {
   return (
-    <div className="flex items-start justify-between gap-2 text-[13px]">
-      <span className="whitespace-nowrap font-normal leading-none">
-        {label}
-      </span>
+    <div className="flex items-start justify-between gap-2 text-label-value-13">
+      <span className="whitespace-nowrap font-normal leading-4">{label}</span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <div className="text-right font-semibold leading-[1.15]">{value}</div>
+        <div className="text-right font-semibold leading-4">{value}</div>
       )}
     </div>
   )
