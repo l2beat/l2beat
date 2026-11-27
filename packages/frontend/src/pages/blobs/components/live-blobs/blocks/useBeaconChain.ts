@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useChainClock } from '~/components/chain-clock/chainClock'
 import type { LiveBlobs } from '~/server/features/data-availability/live-blobs/LiveBlobsFeed'
-import { useChainClock } from '../chainClock'
 import {
   arrivesNow,
   type ChainBlock,

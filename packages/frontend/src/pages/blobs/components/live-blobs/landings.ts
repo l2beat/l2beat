@@ -1,9 +1,9 @@
 import { SLOT_SECONDS } from '@l2beat/shared-pure'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { useChainClock } from '~/components/chain-clock/chainClock'
 import { arrivesNow } from './blocks/beaconChain'
 import { SLIDE_TIME } from './blocks/beltPosition'
 import { BATCH_STAGGER, LAND_AFTER } from './blocks/motion'
-import { useChainClock } from './chainClock'
 import type { Arrival } from './liveMotion'
 
 export interface Landing {
