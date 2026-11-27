@@ -76,7 +76,7 @@ export function PrivacyReferenceApps({ app }: { app: PrivacyReferenceApp }) {
             {delivery.parts.map((part) => (
               <DeliveryLine key={part.id} part={part}>
                 {part.description}
-                {/* The last part is the one a rebuild earns. */}
+                {/* The recipe goes with the last part: reproducible, or the verified build. */}
                 {delivery.rebuild && part === delivery.parts.at(-1) && (
                   <>
                     {' '}

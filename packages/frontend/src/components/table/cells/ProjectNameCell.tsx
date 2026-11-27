@@ -167,7 +167,7 @@ export function ProjectNameMobileStatusIcons({
       {project.verifiedBuild && (
         <MobileProjectIconTooltip
           label={project.verifiedBuild.label}
-          icon={<VerifiedIcon className="size-4" aria-label={undefined} />}
+          icon={<VerifiedIcon className="size-4" />}
         >
           {project.verifiedBuild.tooltip}
         </MobileProjectIconTooltip>
@@ -402,7 +402,6 @@ export function ProjectNameInfoTooltip({
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistance ||
-    !!project.verifiedBuild ||
     badges.length > 0 ||
     sections.length > 0
 
@@ -447,7 +446,7 @@ function getTooltipSections(project: ProjectCellProject) {
       id: 'verified-build',
       text: project.verifiedBuild.tooltip,
       variant: 'muted',
-      icon: <VerifiedIcon className="size-4" aria-label={undefined} />,
+      icon: <VerifiedIcon className="size-4" />,
       afterDescription: true,
     })
   }
