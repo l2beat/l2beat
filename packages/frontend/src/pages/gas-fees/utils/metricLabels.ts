@@ -13,7 +13,11 @@ export const METRIC_LABELS: Record<
 > = {
   avgFee: { tab: 'Avg fee', title: 'Average fee per transaction' },
   medianFee: { tab: 'Median fee', title: 'Median fee per transaction' },
-  transfer: { tab: 'ETH transfer', title: 'Cost of an ETH transfer' },
+  // The gas token, not ETH: Mantle's is MNT
+  transfer: {
+    tab: 'Native transfer',
+    title: 'Cost of a native token transfer',
+  },
   erc20: { tab: 'ERC-20', title: 'Cost of an ERC-20 transfer' },
   swap: { tab: 'Swap', title: 'Cost of a swap' },
   gasPrice: { tab: 'Gas price', title: 'Gas price' },
