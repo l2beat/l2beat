@@ -157,7 +157,7 @@ export function LiquidStakingTvlChart({
       : ''
 
   return (
-    <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
+    <PrimaryCard className="p-0 md:p-0 lg:col-span-2">
       <LiquidStakingTvlBanner
         projects={projects}
         latest={latest}
