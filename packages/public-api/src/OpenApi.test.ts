@@ -363,6 +363,29 @@ describe(OpenApi.name, () => {
       expect(route?.responses[404]?.description).toEqual('No user has this id')
     })
 
+    // Why: a validator's own description names a shared component, so a
+    // query parameter's text in the docs has to come from the route options.
+    it('uses the query parameter descriptions given by the route', () => {
+      const app = mockApp()
+      const openapi = new OpenApi(app, baseSchema)
+
+      openapi.get(
+        '/users',
+        {
+          result: v.string(),
+          query: v.object({ active: v.string().optional() }),
+          queryDescriptions: { active: 'Only active users when `true`' },
+        },
+        mockFn(),
+      )
+
+      const route = openapi.getOpenApiSchema().paths['/users']?.get
+
+      expect(route?.parameters[0]?.description).toEqual(
+        'Only active users when `true`',
+      )
+    })
+
     it('includes 400 response when params or query are present', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
