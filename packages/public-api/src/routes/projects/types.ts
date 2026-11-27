@@ -1,32 +1,107 @@
 import { v } from '@l2beat/validate'
 
+const RiskSentimentSchema = v.enum([
+  'bad',
+  'warning',
+  'good',
+  'neutral',
+  'UnderReview',
+])
+
+export type ScalingRisk = v.infer<typeof ScalingRiskSchema>
+export const ScalingRiskSchema = v
+  .object({
+    name: v.string(),
+    value: v.string(),
+    sentiment: RiskSentimentSchema.optional(),
+    description: v.string().optional(),
+    warning: v
+      .object({
+        value: v.string(),
+        sentiment: v.enum(['bad', 'warning', 'neutral']),
+      })
+      .optional(),
+    regular: v
+      .object({
+        value: v.string(),
+        sentiment: RiskSentimentSchema.optional(),
+        description: v.string(),
+      })
+      .optional()
+      .meta({
+        description:
+          'Exit Window only: the window for regular upgrades, when `value` is the one for emergency upgrades.',
+      }),
+  })
+  .describe('ScalingRisk')
+
+export type ProjectTvs = v.infer<typeof ProjectTvsSchema>
+export const ProjectTvsSchema = v
+  .object({
+    timestamp: v.number().meta({
+      description:
+        'UNIX timestamp (seconds) of the hour the values come from. The project is lagging when this is before the start of the hour that began 75 minutes ago.',
+    }),
+    breakdown: v
+      .object({
+        total: v.number(),
+        ether: v.number(),
+        stablecoin: v.number(),
+        associated: v.number(),
+      })
+      .meta({ description: 'USD values. `total` includes the other three.' }),
+    change7d: v.union([v.number(), v.null()]).meta({
+      description:
+        'Change of `breakdown.total` over seven days, as a fraction (0.05 is +5%). Null when there is no value from seven days before, or that value was 0.',
+    }),
+  })
+  .describe('ProjectTvs')
+
+export type ProjectData = v.infer<typeof ProjectSchema>
 export const ProjectSchema = v
   .object({
     id: v.string(),
     slug: v.string(),
     name: v.string(),
+    shortName: v.string().optional(),
     chainId: v.number().optional(),
-  })
-  .describe('Project')
-
-export const DetailedProjectSchema = v
-  .object({
-    id: v.string(),
-    slug: v.string(),
-    name: v.string(),
-    chainId: v.number().optional(),
-    type: v.string().optional(),
-    isArchived: v.boolean().optional(),
+    layer: v.enum(['layer2', 'layer3']).optional().meta({
+      description: 'Layer 2 and layer 3 projects only.',
+    }),
+    type: v.string().optional().meta({
+      description:
+        'Layer 2 and layer 3 projects only, e.g. "Optimistic Rollup".',
+    }),
+    isArchived: v.boolean(),
     category: v.string().optional(),
     hostChain: v.string().optional(),
     stacks: v.array(v.string()),
     ecosystem: v.string().optional(),
     gasTokens: v.array(v.string()),
-    stage: v.string().optional(),
+    stage: v.string().optional().meta({
+      description:
+        'Layer 2 and layer 3 projects only. Stages rate rollups, so a project of type "Other" has "Not applicable", as on the website.',
+    }),
     purposes: v.array(v.string()),
     badges: v.array(v.string()),
+    isUnderReview: v.boolean().meta({
+      description:
+        'True while we are reviewing the project, or while its contracts changed in a way nobody has assessed yet. Its stage and risks may be out of date.',
+    }),
+    risks: v.array(ScalingRiskSchema).optional().meta({
+      description:
+        "Layer 2 and layer 3 projects only: the five risks of the website's risk rosette. A project without the field has no such assessment, which is not the same as having no risks.",
+    }),
+    tvs: v.union([ProjectTvsSchema, v.null()]).meta({
+      description:
+        "Latest Total Value Secured. Null when we do not track TVS for the project or have not synced it yet: unknown, not zero. Counts associated tokens and leaves out restricted RWA tokens, like the website's scaling summary.",
+    }),
+    associatedTokens: v.array(v.string()).meta({
+      description:
+        'Symbols of the tokens associated with the project, e.g. its governance token.',
+    }),
   })
-  .describe('DetailedProject')
+  .describe('Project')
 
 export const ContractSchema = v
   .object({

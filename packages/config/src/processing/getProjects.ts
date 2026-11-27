@@ -174,6 +174,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
   }))
 
   const hostChain = layer2s.find((x) => x.id === p.hostChain)
+  const type = getType(p)
 
   return {
     id: p.id,
@@ -202,7 +203,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
-      type: getType(p),
+      type,
       capability: p.capability,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
@@ -213,7 +214,10 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
       daLayer: emptyArrayToUndefined(
         asArray(p.dataAvailability).map((d) => d.layer.value),
       ),
-      stage: getStage(p.stage),
+      // Stages rate rollups, so an "Other" project shows none even when its
+      // config still carries one from before it was recategorized.
+      // `scalingStage` keeps it for the project page's Stage section.
+      stage: type === 'Other' ? 'Not applicable' : getStage(p.stage),
       purposes: p.display.purposes,
       scopeOfAssessment: p.scopeOfAssessment,
       proofSystem: p.proofSystem,

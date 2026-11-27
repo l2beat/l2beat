@@ -1,7 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import type { Database, TokenValueRecord } from '@l2beat/database'
-import { assert, TokenId, UnixTime } from '@l2beat/shared-pure'
+import { assert, TokenId } from '@l2beat/shared-pure'
+import { getLatestTvsTimestamp } from '../../utils/getLatestTvsTimestamp'
 import type { Token } from './types'
 
 type TokensProject = Project<never, 'tvsConfig' | 'chainConfig'>
@@ -58,19 +59,4 @@ export function toTokens(
 
   tokens.sort((a, b) => b.valueUsd - a.valueUsd)
   return tokens
-}
-
-/**
- * The hour the backend is syncing TVS towards, the hour the website reads
- * too (frontend getLatestTvsTimestamp). Falls back to the previous full hour
- * plus a 15 minute sync allowance when the backend reports none.
- */
-async function getLatestTvsTimestamp(db: Database): Promise<UnixTime> {
-  return (
-    (await db.syncMetadata.getMaxTargetForFeature('tvs')) ??
-    UnixTime.toStartOf(
-      UnixTime.now() - UnixTime.HOUR - 15 * UnixTime.MINUTE,
-      'hour',
-    )
-  )
 }

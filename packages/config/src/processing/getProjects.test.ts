@@ -138,6 +138,20 @@ describe('getProjects', () => {
     expect(invalid).toEqual([])
   })
 
+  // Why: a stage is a positive claim. The website, the .md pages, the table
+  // filters and the public API all read scalingInfo.stage, and the website
+  // shows no stage for an "Other" project even when its config stores one.
+  it('scalingInfo.stage of an "Other" project is "Not applicable"', () => {
+    const withStage = projects
+      .filter(
+        (p) =>
+          p.scalingInfo?.type === 'Other' &&
+          p.scalingInfo.stage !== 'Not applicable',
+      )
+      .map((p) => p.id)
+    expect(withStage).toEqual([])
+  })
+
   describe('synchronization with scaling projects - layer2s and layer3s', () => {
     it('each scaling project should have a corresponding entry in the DA-BEAT', () => {
       const daLayers = projects.filter((x) => x.daLayer !== undefined)

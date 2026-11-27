@@ -1,10 +1,12 @@
-import type { UpdateDiffRecord } from '@l2beat/database'
 import {
-  ChainSpecificAddress,
+  buildProjectsChangeReport,
   EthereumAddress,
+  hasHighSeverityFieldChanged,
+  hasImpactfulChange,
+  hasImplementationChanged,
+  hasUltimateUpgraderChanged,
   ProjectId,
 } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -30,16 +32,6 @@ export interface ProjectChanges {
   becameVerifiedContracts: Record<string, EthereumAddress[]>
 }
 
-type ProjectChangeReport = Record<
-  string,
-  {
-    implementationChange: EthereumAddress[]
-    highSeverityFieldChange: EthereumAddress[]
-    ultimateUpgraderChange: EthereumAddress[]
-    becameVerified: EthereumAddress[]
-  }
->
-
 export async function getProjectsChangeReport() {
   if (env.MOCK) {
     return getProjectsChangeReportMock()
@@ -49,86 +41,36 @@ export async function getProjectsChangeReport() {
 }
 
 async function getProjectsChangeReportWithFns() {
-  const result: Record<string, ProjectChangeReport> = {}
-
   const db = getDb()
   const updateDiffs = await db.updateDiff.getAll()
 
-  const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
   const projects = await ps.getProjects({
-    ids: Object.keys(byProject).map(ProjectId),
+    ids: [...new Set(updateDiffs.map((diff) => diff.projectId))].map(ProjectId),
     select: ['discoveryInfo'],
     where: ['discoveryInfo'],
   })
-  const projectById = new Map(projects.map((p) => [p.id.toString(), p]))
-  for (const [projectId, diffs] of Object.entries(byProject)) {
-    const project = projectById.get(projectId)
-
-    // NOTE(radomski): We're optimistically saying that diffs are only active
-    // if all inputs used to create them are older than the block number we
-    // used to build the project information.
-    const activeDiffs = diffs.filter((diff) => {
-      const baseTimestamp = project?.discoveryInfo.baseTimestamp
-      if (baseTimestamp === undefined) return true
-      const isDiffActive = baseTimestamp <= diff.diffBaseTimestamp
-      return isDiffActive
-    })
-
-    const byChain = groupBy(activeDiffs, (diff) =>
-      ChainSpecificAddress.longChain(ChainSpecificAddress(diff.address)),
-    )
-    for (const [chain, changes] of Object.entries(byChain)) {
-      const changesByType = groupByType(changes)
-
-      result[projectId] ??= {}
-      result[projectId][chain] = {
-        implementationChange: changesByType.implementationChange.map((c) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
-        ),
-        highSeverityFieldChange: changesByType.highSeverityFieldChange.map(
-          (c) => ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
-        ),
-        ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
-        ),
-        becameVerified: changesByType.becameVerified.map((c) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(c.address)),
-        ),
-      }
-    }
-  }
+  const baseTimestamps = new Map(
+    projects.map((p) => [p.id.toString(), p.discoveryInfo.baseTimestamp]),
+  )
 
   return {
-    projects: result,
+    projects: buildProjectsChangeReport(updateDiffs, (projectId) =>
+      baseTimestamps.get(projectId),
+    ),
     getChanges: function (projectId: string): ProjectChanges {
       return {
-        impactfulChange:
-          this.hasImplementationChanged(projectId) ||
-          this.hasHighSeverityFieldChanged(projectId) ||
-          this.hasUltimateUpgraderChanged(projectId),
+        impactfulChange: hasImpactfulChange(this.projects, projectId),
         becameVerifiedContracts: this.getBecameVerifiedContracts(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
-      const chainChanges = this.projects[projectId]
-      if (!chainChanges) {
-        return false
-      }
-      return Object.values(chainChanges).some(
-        (c) => c.implementationChange.length > 0,
-      )
+      return hasImplementationChanged(this.projects, projectId)
     },
     hasHighSeverityFieldChanged: function (projectId: string) {
-      const ethereumChanges = this.projects[projectId]?.ethereum
-      return (
-        !!ethereumChanges && ethereumChanges.highSeverityFieldChange.length > 0
-      )
+      return hasHighSeverityFieldChanged(this.projects, projectId)
     },
     hasUltimateUpgraderChanged: function (projectId: string) {
-      const ethereumChanges = this.projects[projectId]?.ethereum
-      return (
-        !!ethereumChanges && ethereumChanges.ultimateUpgraderChange.length > 0
-      )
+      return hasUltimateUpgraderChanged(this.projects, projectId)
     },
     getBecameVerifiedContracts: function (projectId: string) {
       return Object.fromEntries(
@@ -138,19 +80,6 @@ async function getProjectsChangeReportWithFns() {
       )
     },
   }
-}
-
-function groupByType(changes: UpdateDiffRecord[]) {
-  const result: Record<UpdateDiffRecord['type'], UpdateDiffRecord[]> = {
-    implementationChange: [],
-    highSeverityFieldChange: [],
-    ultimateUpgraderChange: [],
-    becameVerified: [],
-  }
-  for (const change of changes) {
-    result[change.type].push(change)
-  }
-  return result
 }
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
