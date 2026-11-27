@@ -327,7 +327,7 @@ export async function getL2ProjectEntry(
     }),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig:
-      project.scalingInfo.type === 'Other'
+      project.scalingInfo.stage === 'Not applicable'
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     walkAway: getWalkAwayVerdict(project),

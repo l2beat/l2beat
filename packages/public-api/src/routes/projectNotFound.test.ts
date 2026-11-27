@@ -118,18 +118,21 @@ function project(opts: { id: string; activity: boolean }) {
   } satisfies FakeProject
 }
 
-// Mirrors ProjectDatabase.getProject: every `select` key must be present.
+// Mirrors ProjectDatabase: every `select` key must be present.
 function fakeProjectService(projects: FakeProject[]) {
+  const hasKeys = (project: FakeProject, keys: string[] = []) =>
+    keys.every((k) => project[k as keyof FakeProject] !== undefined)
+
   return mockObject<ProjectService>({
-    getProject: (async (query: {
-      id?: string
-      select?: (keyof FakeProject)[]
-    }) => {
+    getProjects: (async (query: { select?: string[] }) =>
+      projects.filter((p) =>
+        hasKeys(p, query.select),
+      )) as unknown as ProjectService['getProjects'],
+    getProject: (async (query: { id?: string; select?: string[] }) => {
       const found = projects.find((p) => p.id === query.id)
-      if (found && (query.select ?? []).every((k) => found[k] !== undefined)) {
-        return found as unknown as Project
-      }
-      return undefined
+      return found && hasKeys(found, query.select)
+        ? (found as unknown as Project)
+        : undefined
     }) as ProjectService['getProject'],
   })
 }
@@ -150,6 +153,13 @@ function mockDatabase(
     syncMetadata: mockObject<Database['syncMetadata']>({
       getMaxTargetForFeature: mockFn().resolvesTo(UnixTime.now()),
       getByFeatureAndIds: mockFn().resolvesTo([]),
+      getByFeature: mockFn().resolvesTo([]),
+    }),
+    tvsTokenValue: mockObject<Database['tvsTokenValue']>({
+      getSummedByProjectAtLatestAndSevenDaysBefore: mockFn().resolvesTo([]),
+    }),
+    updateDiff: mockObject<Database['updateDiff']>({
+      getAll: mockFn().resolvesTo([]),
     }),
   })
 }

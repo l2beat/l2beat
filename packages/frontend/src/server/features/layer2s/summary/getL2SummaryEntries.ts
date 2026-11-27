@@ -132,7 +132,7 @@ function getL2SummaryEntry(
       syncWarning: activitySyncWarning,
     }),
     stage:
-      project.scalingInfo.type === 'Other' || !project.scalingStage
+      project.scalingInfo.stage === 'Not applicable' || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     capability: project.scalingInfo.capability,
