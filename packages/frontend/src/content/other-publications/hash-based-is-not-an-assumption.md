@@ -22,7 +22,7 @@ Saying a hash function $f$ is "secure" can mean very different things, starting 
 2. **Second-preimage resistance:** Given a random input $x$, nobody can find a *different* input $x' \neq x$ with $f(x') = f(x)$.
 3. **Collision resistance:** Nobody can find *any* pair of distinct inputs $x \neq x'$ with $f(x) = f(x')$.
 
-Ethereum's core protocol uses of Keccak-256 rely primarily on collision and preimage resistance. To show why those properties do not automatically carry over to hash-based signatures, we compare two one-time schemes built on the same hash function $f$: **Lamport**, the minimal hash-based signature scheme, and **Winternitz**, the standard efficiency optimization inside [XMSS](https://datatracker.ietf.org/doc/html/rfc8391), [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`.
+Ethereum's core protocol uses of Keccak-256 rely primarily on collision and preimage resistance. To show why those properties do not automatically carry over to hash-based signatures, we compare two one-time schemes built on the same hash function $f$: **Lamport**, the minimal hash-based signature scheme, and **Winternitz**, the standard efficiency optimization inside [XMSS](https://datatracker.ietf.org/doc/html/rfc8391), [SPHINCS+](https://csrc.nist.gov/pubs/fips/205/final), `leanXMSS`, and `leanSPHINCS`. We show:
 
 - **One-wayness alone is enough for Lamport.**
 - **Even one-wayness and collision resistance together are provably *not* enough for textbook Winternitz.** We'll build an explicit hash function that is both one-way and collision-resistant whenever SHA-256 is, so Lamport over it stays secure, yet lets an attacker forge Winternitz signatures almost 100% of the time.
