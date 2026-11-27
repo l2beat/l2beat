@@ -18,6 +18,19 @@
     "eth:0xd9c4da492c60e92e2b53abb5bea7aa4b8aa5b181": "EigenDACertVerifier"
   },
   "overrides": {
+    // Active OPSuccinctFaultDisputeGame implementation (game type 42, the respected
+    // game type): verifies proposed state roots via SP1 proofs. Vkey rotations are
+    // performed by deploying a new game and registering it on the DisputeGameFactory.
+    "eth:0x1736C1014BdcA32aBE1Bd67762bA97673701EDe7": {
+      "critical": true,
+      // rootClaimByChainId(uint256) reads clone args and reverts on the implementation
+      "ignoreMethods": [
+        "getNumToResolve",
+        "resolutionCheckpoints",
+        "resolvedSubgames",
+        "rootClaimByChainId"
+      ]
+    },
     // L2 predeploys: critical from the L2 migration (chainStart). They were
     // written into state by the migration, but discovery dates them at the Celo L1
     // genesis (2020-04-22); harmless, they are older than every other row.
@@ -156,7 +169,7 @@
     },
     // OP Succinct AccessManager: gates who can propose and challenge OPSuccinct
     // dispute games. The owner can rewrite both allowlists with no delay.
-    "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816": {
+    "eth:0x2c4e8F333224139193790fB27Fc99b926061d889": {
       "critical": true,
       "fields": {
         // Identity churn inside an unchanged role: proposer/challenger rotations
@@ -166,11 +179,13 @@
         "proposers": { "severity": "MEDIUM" }
       }
     },
-    // Active OPSuccinctFaultDisputeGame implementation (game type 42, the respected
-    // game type): verifies proposed state roots via SP1 proofs. Vkey rotations are
-    // performed by deploying a new game and registering it on the DisputeGameFactory.
+    // OPSuccinctFaultDisputeGame and AccessManager before the 2026-11-24 v2.2.0
+    // upgrade. Kept as explicit historical roots after leaving discovery.
     "eth:0xfF1caC738a5263736AF258e4b3D6a4970C6351FF": {
-      "critical": true
+      "critical": { "untilTimestamp": 1795536647 }
+    },
+    "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816": {
+      "critical": { "untilTimestamp": 1795536647 }
     },
     "eth:0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755": {
       "fields": {

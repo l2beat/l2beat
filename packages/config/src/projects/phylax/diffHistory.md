@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xed976f8b989b440df229f0c7ffd4bfb371ad666e
+
+# Diff at Wed, 25 Nov 2026 14:02:31 GMT:
+
+- id: 76671451
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fcf64173a13adf4dcd3666a3f552a149525334aa block: 1795512257
+- current timestamp: 1795615246
+
+## Description
+
+AdminVerifierWhitelist: a demo token (Aave Demo Cash Receipt) added as an adopter, under the same manager EOA as the Compound Demo Cash Receipt demo.
+
+## Watched changes
+
+```diff
+    contract AdminVerifierWhitelist (eth:0x1Ab8D3CDb7eE245abD53859F8D967a4F9a91a130) [phylax/AdminVerifierWhitelist] {
+    +++ description: Admin verifier that approves a manager registration only from the account a whitelist admin assigned to that adopter. Whitelist admins can also exclude an adopter, which blocks assignments until the exclusion's releaser lifts it. Assignments are checked only at registration.
++++ description: Account assigned to each adopter.
++++ severity: MEDIUM
+      values.assignedManagers.11:
++        {"assertionAdopter":"eth:0x92777F92ee21BB4ca7901D96d6e942BfA1E5F511","admin":"eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"}
+    }
+```
+
 Generated with discovered.json: 0xc0bde1a1e6adb74764de71a025e77621b54c5d6c
 
 # Diff at Tue, 24 Nov 2026 09:25:45 GMT:

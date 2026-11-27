@@ -1,6 +1,6 @@
 {
   "name": "phylax",
-  "timestamp": 1795512257,
+  "timestamp": 1795615246,
   "configHash": "0x6c2830260bc1e2ab12e530316cf4d03ebe36a224b8eec750c39e94f1c824d53e",
   "entries": [
     {
@@ -232,6 +232,10 @@
           {
             "assertionAdopter": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
             "admin": "eth:0x71092efD4909Fb34e023ec10984F6cB64824E926"
+          },
+          {
+            "assertionAdopter": "eth:0x92777F92ee21BB4ca7901D96d6e942BfA1E5F511",
+            "admin": "eth:0x1C668430ecAe8Bd24a239684c3b5372B4e65b374"
           }
         ],
         "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
@@ -628,7 +632,7 @@
         "domainSeparator": "0xf439180bb5f0dee69efb6c8f3a85bad56e2f1f6716583a5896efa39c3553b2cf",
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.5.0"
       },
       "implementationNames": {
@@ -995,7 +999,7 @@
         "builders": ["eth:0x0a03D5B6bAb06F3dCeac6B313e23117EADc1d17f"],
         "defaultAdmin": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
         "guardians": ["eth:0xa4556B53286206A9B50e65700C4372c9Be62b934"],
-        "lastCredibleBlock": 26455758,
+        "lastCredibleBlock": 26492652,
         "MAX_TIMELOCK_DELAY": 31536000,
         "MIN_TIMELOCK_DELAY": 259200,
         "minTimelockDelayFormatted": "3d",
@@ -2200,7 +2204,7 @@
     "phylax/StateOracle": "0x12b0ad377e91a6c2840ddeef791229df2697206aca4555b42fb5a447b628bd3b",
     "phylax/StateOracle_singleDAVerifier": "0xc2880dacf692aac8cb84761ab851f88c15ae036fb9d4b0c79af0a93d3f42d969"
   },
-  "usedBlockNumbers": { "ethereum": 26484098 },
+  "usedBlockNumbers": { "ethereum": 26492655 },
   "permissionsConfigHash": "0xeec68eb30029a85444350c698daf36bb73c8ab50c0a50ebd711e365876d34c45",
   "permissions": {
     "eth:0x003C71246D92fae09ae3F3CAeFF234c8B8242F2E": {
