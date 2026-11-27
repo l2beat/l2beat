@@ -20,10 +20,6 @@ The app reads balances through Cloaked's servers, and a linked ENS name through 
 
 The Incognito balance moves funds through [Privacy Pools](/privacy/projects/privacy-pools). Cloaked submits both the deposit and the withdrawal, so it knows which belong together, and it keeps that record.
 
-### Compliance
-
-Cloaked uses the user's IP address for sanctions and geographic checks and can refuse quotes or relays, for example for tokenized stocks.
-
 ### Fees
 
 Gas for each send comes out of the sent token, so no native balance is needed. Incognito withdrawals pay Cloaked's relay 0.1% for USDC, per its relayer API.

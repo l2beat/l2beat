@@ -21,6 +21,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkApiAdversaries } from './adversaries'
+import { zkApiCompliance } from './compliance'
 import { zkApiRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkapi')
@@ -260,6 +261,7 @@ export const zkapi: BaseProject = {
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     adversaries: zkApiAdversaries,
     riskSummary: zkApiRiskSummary,
+    compliance: zkApiCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('zkapi', 'upgradesAndGovernance'),
     },

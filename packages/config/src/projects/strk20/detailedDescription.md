@@ -25,10 +25,6 @@ The user's Starknet account signs every action, and their viewing key decrypts t
 
 The app is an open-source Chromium extension that Starknet Holdings publishes. By default it talks to Starknet Holdings' gateway, which forwards note discovery to StarkWare's discovery service and relayed transactions to AVNU's paymaster. Starknet Holdings' Starkscan serves activity, NFTs and staking. The settings point the RPC, discovery service, prover and paymaster elsewhere. The gateway stays the fallback RPC, and every shield to the user's own balance asks it for sponsorship. A self-run discovery service and [prover](https://github.com/starkware-libs/sequencer/tree/f2d0c93a057675f6c9eab7292c2fcb13a6dea24d/crates/starknet_transaction_prover) (heavy hardware) keep the viewing key from the gateway for transfers and withdrawals. Deposits need a prover with screening credentials, which receives it.
 
-### Compliance
-
-Every deposit from a Starknet address needs a fresh signature from the pool's screener key. The wallet's prover requests it from a [screening service](https://github.com/starkware-libs/starknet-privacy/tree/fcc7c90f544ceb08621c32616bde29f1fdcbeb54/elliptic-proxy), which checks the address with Elliptic and serves only its credentialed partners. Governance sets a screening policy per helper contract. Five helpers are exempt, among them the CCTP bridge, so USDC bridged in from other chains skips screening. The auditor key is one public key in the pool's storage. Who holds the screener and auditor private keys is not visible onchain, and governance can replace either key at once.
-
 ### Fees
 
 Every pool transaction pays a fixed STRK fee, which governance can change at any time, plus gas. Paymasters take their cost from the user's notes.

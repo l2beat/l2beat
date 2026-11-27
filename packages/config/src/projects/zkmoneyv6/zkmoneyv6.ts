@@ -27,6 +27,7 @@ import type {
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyV6Adversaries } from './adversaries'
+import { zkMoneyV6Compliance } from './compliance'
 import { zkMoneyV6RiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkmoneyv6')
@@ -475,6 +476,7 @@ export const zkmoneyv6: BaseProject = {
     ],
     adversaries: zkMoneyV6Adversaries,
     riskSummary: zkMoneyV6RiskSummary,
+    compliance: zkMoneyV6Compliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoneyv6',

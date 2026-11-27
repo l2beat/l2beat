@@ -20,10 +20,6 @@ The app is closed source, so how it creates and backs up keys is unverified. Pay
 
 The Payy mobile app is closed source. The [repository](https://github.com/polybase/payy) publishes the contracts, circuits, node and backend interfaces. Its open TypeScript client knows only Payy's testnet.
 
-### Compliance
-
-KYC is required for the Payy card and fiat ramps, not for transfers. Payy's backend can block a wallet or an IP address from its services, and its validator can refuse any transaction. The protocol has no view key.
-
 ### Fees
 
 The RollupV1 contract charges no fee. Payy pays the gas of deposits and settlement.

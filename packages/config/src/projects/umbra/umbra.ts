@@ -14,6 +14,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { umbraAdversaries } from './adversaries'
+import { umbraCompliance } from './compliance'
 import { umbraRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('umbra')
@@ -167,6 +168,7 @@ export const umbra: BaseProject = {
       ),
     ),
     riskSummary: umbraRiskSummary,
+    compliance: umbraCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
     },
@@ -195,7 +197,7 @@ export const umbra: BaseProject = {
     privacy: {
       sentiment: 'warning',
       points: [
-        'Recipient privacy with no protocol-level compliance mechanism and no privileged view key.',
+        'Recipient privacy with no protocol-level compliance mechanism and no privileged view key. The hosted app screens addresses.',
       ],
       missing: [
         'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',

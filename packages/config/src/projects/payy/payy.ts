@@ -27,6 +27,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { payyAdversaries } from './adversaries'
+import { payyCompliance } from './compliance'
 import { payyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('payy')
@@ -299,6 +300,7 @@ export const payy: ScalingProject = {
     ],
     adversaries: payyAdversaries,
     riskSummary: payyRiskSummary,
+    compliance: payyCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('payy', 'upgradesAndGovernance', {
         multisigStats: discovery.getMultisigStats('PayyMultisig'),

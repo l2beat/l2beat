@@ -25,6 +25,7 @@ import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { RECIPE, tornadoCashAdversaries } from './adversaries'
+import { tornadoCashCompliance } from './compliance'
 import { tornadoCashRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('tornado-cash')
@@ -382,6 +383,7 @@ export const tornadoCash: BaseProject = {
     riskSummary: tornadoCashRiskSummary({
       upgradeDelay,
     }),
+    compliance: tornadoCashCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
       governanceInfo: {

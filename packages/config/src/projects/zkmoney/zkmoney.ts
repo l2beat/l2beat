@@ -27,6 +27,7 @@ import type {
 } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zkMoneyAdversaries } from './adversaries'
+import { zkMoneyCompliance } from './compliance'
 import { zkMoneyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('zkmoney')
@@ -426,6 +427,7 @@ export const zkmoney: BaseProject = {
     ],
     adversaries: zkMoneyAdversaries,
     riskSummary: zkMoneyRiskSummary,
+    compliance: zkMoneyCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'zkmoney',

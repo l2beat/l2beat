@@ -8,6 +8,7 @@ import {
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { moneroCakeWalletAdversaries } from './adversaries'
+import { moneroCakeWalletCompliance } from './compliance'
 import { moneroCakeWalletRiskSummary } from './riskSummary'
 
 export const moneroCakeWallet: BaseProject = {
@@ -149,6 +150,7 @@ export const moneroCakeWallet: BaseProject = {
     ],
     adversaries: moneroCakeWalletAdversaries,
     riskSummary: moneroCakeWalletRiskSummary,
+    compliance: moneroCakeWalletCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown(
         'monero-cake-wallet',

@@ -11,6 +11,7 @@ import isEqual from 'lodash/isEqual'
 import type { PrivacyAdversariesSectionProps } from '~/components/projects/sections/privacy/PrivacyAdversariesSection'
 import type { PrivacyAdviceSectionProps } from '~/components/projects/sections/privacy/PrivacyAdviceSection'
 import type { PrivacyAssetsBreakdownSectionProps } from '~/components/projects/sections/privacy/PrivacyAssetsBreakdownSection'
+import type { PrivacyComplianceSectionProps } from '~/components/projects/sections/privacy/PrivacyComplianceSection'
 import {
   getExposure,
   getExposureNote,
@@ -27,6 +28,7 @@ import {
   getUncoveredAdversaries,
   getWaitInstruction,
 } from '~/pages/privacy/adviceUi'
+import { COMPLIANCE, getComplianceIntro } from '~/pages/privacy/complianceUi'
 import {
   formatBucketLabel,
   getPrivacyAssetsTotals,
@@ -186,6 +188,56 @@ export function renderPrivacyAdvice({
     uncovered.length > 0
       ? `**${ADVICE.uncoveredLabel}:** ${uncovered.map((adversary) => adversary.label).join(', ')}.`
       : '',
+  ])
+}
+
+/**
+ * The ladders as the rung they reach, with every rung listed for context,
+ * then what a user can prove and the requirements met, like the HTML.
+ */
+export function renderPrivacyCompliance({
+  compliance,
+  referenceAppLabel,
+}: Pick<PrivacyComplianceSectionProps, 'compliance' | 'referenceAppLabel'>) {
+  const { disclosure, disclosureLevels, requirements } = compliance
+  const level =
+    disclosure &&
+    disclosureLevels.find((info) => info.level === disclosure.level)
+  const met = requirements.filter((requirement) => requirement.met)
+  const unmet = requirements.filter((requirement) => !requirement.met)
+  return joinBlocks([
+    getComplianceIntro(referenceAppLabel),
+    compliance.description,
+    ...compliance.ladders.map((ladder) => {
+      const rung = ladder.rungs.find((r) => r.rung === ladder.rung)
+      if (!rung) throw new Error(`No rung ${ladder.rung} on ${ladder.id}`)
+      return joinBlocks([
+        `**${ladder.label}:** ${withSentiment(`rung ${ladder.rung} of ${ladder.rungs.length}, ${rung.label}`, ladder.sentiment)}. ${rung.description}${ladder.power ? ` ${ladder.power.text}` : ''}`,
+        ladder.power ? renderSources(ladder.power.sources) : '',
+        `Rungs, best first: ${ladder.rungs.map((r) => r.label).join('; ')}.`,
+      ])
+    }),
+    level && disclosure
+      ? joinBlocks([
+          `**${COMPLIANCE.disclosureLabel}:** ${withSentiment(`${level.label}, ${disclosure.level} of ${disclosureLevels.length}`, level.sentiment)}. ${level.description} ${disclosure.text}`,
+          bulletList([
+            disclosure.verifiableWithoutOperator
+              ? COMPLIANCE.verifiableWithoutOperator
+              : COMPLIANCE.notVerifiableWithoutOperator,
+            disclosure.singleVerifier
+              ? COMPLIANCE.singleVerifier
+              : COMPLIANCE.notSingleVerifier,
+          ]),
+          renderSources(disclosure.sources),
+        ])
+      : `**${COMPLIANCE.disclosureLabel}:** ${COMPLIANCE.noDisclosure}`,
+    joinBlocks([
+      `**${COMPLIANCE.requirementsLabel}**`,
+      bulletList([
+        ...met.map((r) => `Yes: ${r.label}`),
+        ...unmet.map((r) => `No: ${r.label}`),
+      ]),
+    ]),
   ])
 }
 

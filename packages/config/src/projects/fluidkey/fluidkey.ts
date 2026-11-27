@@ -11,6 +11,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { fluidkeyAdversaries } from './adversaries'
+import { fluidkeyCompliance } from './compliance'
 import { fluidkeyRiskSummary } from './riskSummary'
 
 const discovery = new ProjectDiscovery('fluidkey')
@@ -135,6 +136,7 @@ export const fluidkey: BaseProject = {
       },
     ],
     riskSummary: fluidkeyRiskSummary,
+    compliance: fluidkeyCompliance,
     upgradesAndGovernance: {
       content: readProjectMarkdown('fluidkey', 'upgradesAndGovernance'),
     },

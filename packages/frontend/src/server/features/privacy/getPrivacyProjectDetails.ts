@@ -11,6 +11,7 @@ import type {
   ProjectGarden,
   ProjectPermissions,
   ProjectPrivacyAdversaries,
+  ProjectPrivacyCompliance,
   ProjectPrivacyReferenceApp,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
@@ -85,6 +86,7 @@ export interface PrivacyProjectDetails {
   hasTvl: boolean
   detailedDescription?: string
   riskSummary?: PrivacyRiskGroup[]
+  compliance?: ProjectPrivacyCompliance
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
   milestones: Milestone[]
@@ -315,6 +317,7 @@ export async function getPrivacyProjectDetails(
       project.privacyInfo.detailedDescription ??
       project.display.detailedDescription,
     riskSummary: project.privacyInfo.riskSummary,
+    compliance: project.privacyInfo.compliance,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
     milestones: [...(project.milestones ?? [])].sort(

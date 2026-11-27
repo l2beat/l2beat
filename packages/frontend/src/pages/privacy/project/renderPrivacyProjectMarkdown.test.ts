@@ -6,6 +6,7 @@ import type {
   PrivacyField,
   ProjectPrivacyAdversaries,
 } from '@l2beat/config'
+import { definePrivacyCompliance } from '@l2beat/config/build/common/privacyCompliance'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -190,6 +191,7 @@ describe(renderPrivacyProjectMarkdown.name, () => {
       '## Summary',
       '## Privacy',
       '## How to stay private',
+      '## Compliance',
       '## Value Locked',
       '## Anonymity sets',
       '## Flows',
@@ -320,6 +322,29 @@ describe(renderPrivacyProjectMarkdown.name, () => {
         '**Sources**\n\n- [1 ETH pool](https://ethbeat.org/privacy/projects/tornado-cash#Pool_1_ETH)\n- [Withdrawal circuit](https://github.com/tornadocash/tornado-core/blob/master/circuits/withdraw.circom)',
       )
     })
+  })
+
+  it('gives each compliance ladder its rung, the power behind it and its sources', () => {
+    const compliance = getSection(
+      renderPrivacyProjectMarkdown(ENTRY),
+      'Compliance',
+    )
+
+    expect(compliance).toInclude(
+      '**Privacy:** rung 1 of 5, Nobody can see or revoke (sentiment: good).',
+    )
+    expect(compliance).toInclude(
+      '**Funds:** rung 3 of 5, Exit depends on a party that can hold it (sentiment: warning).',
+    )
+    expect(compliance).toInclude(
+      'Relayers can refuse a withdrawal.\n\n**Sources**\n\n- [Relayer docs](https://example.com/relayers)',
+    )
+    expect(compliance).toInclude(
+      '**What you can prove:** One link, 2 of 5 (sentiment: good).',
+    )
+    expect(compliance).toInclude(
+      '**Compliance requirements it can meet**\n\n- Yes: Proofs made by the user\n- No: Screening at entry',
+    )
   })
 
   it('tabulates assets with every bucket expanded and a total row', () => {
@@ -614,6 +639,33 @@ const SECTIONS: ProjectDetailsSection[] = [
         privilegedInsider: 'good',
         futureAdversary: 'bad',
       },
+    },
+  },
+  {
+    type: 'PrivacyComplianceSection',
+    props: {
+      id: 'compliance',
+      title: 'Compliance',
+      compliance: definePrivacyCompliance({
+        description: 'Nothing screens deposits.',
+        powers: [
+          {
+            ladder: 'funds',
+            rung: 3,
+            text: 'Relayers can refuse a withdrawal.',
+            sources: [
+              { title: 'Relayer docs', url: 'https://example.com/relayers' },
+            ],
+          },
+        ],
+        disclosure: {
+          level: 2,
+          text: 'The app reports one withdrawal with its deposit.',
+          verifiableWithoutOperator: true,
+          singleVerifier: true,
+          sources: [],
+        },
+      }),
     },
   },
   chartSection('TvsValueSection', 'privacy-tvl', 'Value Locked'),
