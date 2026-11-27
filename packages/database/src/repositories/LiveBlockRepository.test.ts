@@ -138,5 +138,7 @@ function block(slot: number, blockNumber: number): LiveBlockRecord {
     hash: `0x${blockNumber.toString(16)}`,
     timestamp: UnixTime(1_700_000_000 + slot * 12),
     blobCount: slot % 7,
+    // one stored before fees were kept
+    blobBaseFee: slot === 104 ? null : BigInt(blockNumber) * 1_000n,
   }
 }

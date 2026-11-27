@@ -282,6 +282,7 @@ describe(buildLiveBlobs.name, () => {
       slot,
       blockNumber: slot + 1000,
       hash: `0x${slot}`,
+      blobBaseFee: null,
       timestamp: UnixTime(slotStart(slot)),
       blobCount: (HEAD - slot) % 4,
     }

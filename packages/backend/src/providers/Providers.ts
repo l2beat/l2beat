@@ -39,6 +39,8 @@ export class Providers {
   da: DaProvider
   /** Ethereum blocks with their blob batches, from the RPC that follows the head */
   liveBlobsDa: EthereumDaProvider | undefined
+  /** Ethereum's blobs and fees, when its beacon API is configured */
+  ethereumDa: EthereumDaProvider | undefined
   clients: Clients
   blockTimestamp: BlockTimestampProvider
   totalSupply: TotalSupplyProvider
@@ -91,9 +93,12 @@ export class Providers {
     const blobProviders: DaBlobProvider[] = []
     if (this.clients.beacon) {
       const ethereumRpc = this.clients.getRpcClient('ethereum')
-      blobProviders.push(
-        new EthereumDaProvider(this.clients.beacon, ethereumRpc, 'ethereum'),
+      this.ethereumDa = new EthereumDaProvider(
+        this.clients.beacon,
+        ethereumRpc,
+        'ethereum',
       )
+      blobProviders.push(this.ethereumDa)
     }
     if (this.clients.beacon && this.clients.liveBlobsRpc) {
       this.liveBlobsDa = new EthereumDaProvider(
