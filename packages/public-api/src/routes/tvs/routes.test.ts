@@ -162,6 +162,16 @@ describe('/v1/tvs', () => {
     )
   })
 
+  it('takes the category it sums by default, and refuses one it does not sum', async () => {
+    const named = await get('/v1/tvs?category=scaling')
+    const other = await get<{ path: string }>('/v1/tvs?category=defi')
+
+    expect(named.status).toEqual(200)
+    expect(other.status).toEqual(400)
+    expect(other.body).toEqual(expect.subset({ path: '.query.category' }))
+    expect(getSummed).toHaveBeenCalledTimes(1)
+  })
+
   it('answers 400 for a query parameter the endpoint does not take', async () => {
     const res = await get<{ path: string }>(
       '/v1/tvs?exludeAssociatedTokens=true',

@@ -17,6 +17,7 @@ import {
   TvsQuerySchema,
   TvsRangeSchema,
   TvsResultSchema,
+  TvsSumQuerySchema,
 } from './types'
 
 export function addTvsRoutes(
@@ -29,11 +30,16 @@ export function addTvsRoutes(
     '/v1/tvs',
     {
       operationId: 'getTvsChart',
-      summary: 'Total Value Secured with ability to control the time range',
+      summary:
+        'Total Value Secured by scaling projects (layer 2s and layer 3s) with ability to control the time range',
       description: [TVS_SUM_DESCRIPTION, TVS_CHART_DESCRIPTION].join('\n\n'),
       tags: ['tvs'],
-      query: TvsQuerySchema,
-      queryDescriptions: TVS_QUERY_DESCRIPTIONS,
+      query: TvsSumQuerySchema,
+      queryDescriptions: {
+        category:
+          'Which projects the sum covers. Only `scaling`, the default: layer 2 and layer 3 projects. DeFi and privacy projects are not in it; read theirs from `/v1/tvs/{projectId}`.',
+        ...TVS_QUERY_DESCRIPTIONS,
+      },
       result: TvsResultSchema,
     },
     async (req, res) => {
@@ -186,7 +192,7 @@ const TVS_CHART_DESCRIPTION = [
 ].join('\n\n')
 
 const TVS_SUM_DESCRIPTION =
-  'The sum covers the layer 2 and layer 3 projects that are not archived, the same set as `/v1/activity`.'
+  'The sum covers the layer 2 and layer 3 projects that are not archived, the same set as `/v1/activity`. It leaves out DeFi and privacy projects, which have TVS of their own: `/v1/tvs/{projectId}` returns it for one project, and sums across the three must not be added up, since a token can count in more than one.'
 
 const TVS_QUERY_DESCRIPTIONS = {
   excludeAssociatedTokens:

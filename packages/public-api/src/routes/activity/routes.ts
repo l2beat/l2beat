@@ -22,7 +22,8 @@ export function addActivityRoutes(
     '/v1/activity',
     {
       operationId: 'getActivityChart',
-      summary: 'Activity data with ability to control the time range.',
+      summary:
+        'Activity of scaling projects (layer 2s and layer 3s) with ability to control the time range.',
       description: ACTIVITY_CHART_DESCRIPTION,
       tags: ['activity'],
       query: v.object({
