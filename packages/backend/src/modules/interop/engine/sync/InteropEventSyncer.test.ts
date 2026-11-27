@@ -352,6 +352,25 @@ describe(InteropEventSyncer.name, () => {
       expect(setLastError).toHaveBeenCalledWith('clusterName', 'ethereum', null)
     })
 
+    it('tracks the first failure until a synced range is saved', async () => {
+      const syncer = createSyncer()
+      const { state: timeLoopState } = makeTimeLoopState()
+      const { state: blockProcessorState, processNewestBlock } =
+        makeBlockProcessorState(timeLoopState)
+      processNewestBlock.throwsOnce(new Error('boom'))
+      syncer.state = blockProcessorState
+
+      await syncer.processNewestBlock(makeBlock(1), [])
+      expect(syncer.failingSince).not.toEqual(undefined)
+
+      syncer.failingSince = UnixTime(100) // the run started earlier
+      await syncer.processNewestBlock(makeBlock(2), []) // switches to catching up
+      expect(syncer.failingSince).toEqual(UnixTime(100))
+
+      await syncer.saveProducedInteropEvents([], makeSyncedRange())
+      expect(syncer.failingSince as UnixTime | undefined).toEqual(undefined)
+    })
+
     it('keeps the stored error when a status check succeeds', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({

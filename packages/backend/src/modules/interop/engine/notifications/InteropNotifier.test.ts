@@ -178,6 +178,44 @@ describe(InteropNotifier.name, () => {
     ).toEqual(true)
   })
 
+  it('sends stalled and recovered syncers with a backoffice link', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT, {
+      backofficeEnvironment: 'production',
+    })
+    const syncers = [
+      {
+        cluster: 'wormhole',
+        chain: 'monad',
+        failingSince: UnixTime.fromDate(new Date('2026-11-24T10:00:00Z')),
+      },
+    ]
+
+    notifier.notifyStalledSyncers(syncers)
+    notifier.notifyRecoveredSyncers(syncers)
+    notifier.notifyStalledSyncers([])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(2)
+    expect(webhookClient.sendMessage.calls[0]?.args[0]).toEqual(
+      [
+        '🚨 Interop capture stalled on `1` syncers - each retries the same block until it stops failing',
+        '[Status in backoffice ↗](https://backoffice.l2beat.com/interop/indexing/plugin-statuses?env=production)',
+        '',
+        '- `wormhole` on `monad` failing since `2026-11-24T10:00:00Z`',
+      ].join('\n'),
+    )
+    expect(webhookClient.sendMessage.calls[1]?.args[0]).toEqual(
+      [
+        '✅ Interop capture resumed on `1` syncers',
+        '',
+        '- `wormhole` on `monad` after failing since `2026-11-24T10:00:00Z`',
+      ].join('\n'),
+    )
+  })
+
   it('queues and sends skipped valuation notifications', async () => {
     const webhookClient = mockObject<DiscordClient>({
       sendMessage: async () => '1',

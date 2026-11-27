@@ -251,8 +251,13 @@ export class WormholeConfigPlugin
     const previousNetworks = this.store.get(WormholeConfig) ?? []
 
     const networkPromises = this.chains.map(async (chain) => {
+      // The SDK entry alone has no core contract, so capture would throw.
+      // Any lookup that does not resolve one keeps the last resolved entry.
+      const previous = previousNetworks.find(
+        (n) => n.chain === chain.name && n.coreContract,
+      )
       const rpc = this.rpcs.get(chain.name)
-      if (!rpc) return undefined
+      if (!rpc) return previous
 
       try {
         const block = await rpc.getBlock('latest', false)
@@ -297,7 +302,7 @@ export class WormholeConfigPlugin
 
         // Pick the first contract with a valid (non-zero) wormhole chain ID
         const selected = validNonZero[0]
-        if (!selected) return undefined
+        if (!selected) return previous
 
         const tokenBridge = tokenBridgeByChain.get(chain.name)
         // A failed lookup keeps the WETH last resolved for the same bridge
@@ -322,10 +327,7 @@ export class WormholeConfigPlugin
           chain: chain.name,
           error,
         })
-        // The SDK entry alone has no core contract, so capture would throw
-        return previousNetworks.find(
-          (n) => n.chain === chain.name && n.coreContract,
-        )
+        return previous
       }
     })
 

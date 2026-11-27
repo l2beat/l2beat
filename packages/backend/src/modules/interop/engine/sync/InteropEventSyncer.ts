@@ -21,7 +21,7 @@ import {
   type EthereumAddress,
   type Log,
   type LongChainName,
-  type UnixTime,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
@@ -148,6 +148,8 @@ export class InteropEventSyncer extends TimeLoop {
   public latestBlockNumber?: bigint
   public waitingForWipe = false
   public hasError = false
+  // First failure since a synced range was last saved
+  public failingSince?: UnixTime
   // InteropPluginSyncState.lastError may hold a value from a previous run or a
   // failed attempt. It is cleared lazily on the next success, so steady-state
   // block processing never writes to that table.
@@ -198,6 +200,7 @@ export class InteropEventSyncer extends TimeLoop {
       )
     } catch (error) {
       this.hasError = true
+      this.failingSince ??= UnixTime.now()
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -352,6 +355,7 @@ export class InteropEventSyncer extends TimeLoop {
       // set so the next attempt writes it again.
       this.storedErrorMayExist = false
     }
+    this.failingSince = undefined
 
     this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
