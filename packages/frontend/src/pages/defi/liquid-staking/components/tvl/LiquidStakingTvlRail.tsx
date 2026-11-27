@@ -2,6 +2,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { ChartUnit } from '~/components/chart/types'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { CompleteTvlBreakdown } from '~/server/features/defi/liquid-staking/liquidStakingTvlBreakdown'
 import { cn } from '~/utils/cn'
 import { formatShare, shareOf } from './liquidStakingTvlFormat'
@@ -68,7 +69,7 @@ export function LiquidStakingTvlRail({
       : (liquidColors[0] ?? 'var(--brand)')
 
   return (
-    <div className="flex min-w-0 flex-col gap-4 border-divider p-4 max-lg:order-last max-lg:border-t md:px-6 md:py-5 lg:border-r">
+    <PrimaryCard className="flex min-w-0 flex-col gap-4 max-lg:order-last">
       {latest && latest.supply !== null && (
         <div>
           <Heading>ETH supply share</Heading>
@@ -143,7 +144,7 @@ export function LiquidStakingTvlRail({
           </div>
         </div>
       </div>
-    </div>
+    </PrimaryCard>
   )
 }
 

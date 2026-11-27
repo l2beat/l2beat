@@ -157,7 +157,7 @@ export function LiquidStakingTvlChart({
       : ''
 
   return (
-    <PrimaryCard className="overflow-hidden p-0 md:p-0 lg:col-span-2">
+    <>
       <LiquidStakingTvlBanner
         projects={projects}
         latest={latest}
@@ -165,7 +165,7 @@ export function LiquidStakingTvlChart({
         rangePreset={rangePreset}
       />
 
-      <div className="grid min-w-0 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="md:board-gap grid min-w-0 max-md:divide-y max-md:divide-divider lg:col-span-2 lg:grid-cols-[310px_minmax(0,1fr)] xl:grid-cols-[340px_minmax(0,1fr)]">
         <LiquidStakingTvlRail
           layers={stakedLayers}
           latest={latest}
@@ -176,7 +176,7 @@ export function LiquidStakingTvlChart({
           onToggleAll={toggleAllDataKeys}
         />
 
-        <div className="flex min-w-0 flex-col p-4 md:px-6 md:py-5">
+        <PrimaryCard className="flex min-w-0 flex-col">
           <div className="flex min-w-0 flex-wrap items-start justify-between gap-x-4 gap-y-2">
             <div className="flex flex-col gap-1">
               <div className="flex items-baseline gap-2">
@@ -270,9 +270,9 @@ export function LiquidStakingTvlChart({
               />
             </ChartContainer>
           </div>
-        </div>
+        </PrimaryCard>
       </div>
-    </PrimaryCard>
+    </>
   )
 }
 

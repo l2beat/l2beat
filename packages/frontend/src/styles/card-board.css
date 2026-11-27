@@ -1,0 +1,44 @@
+/* Cards that belong together share one card (`CardBoard`), split by lines
+   rather than set apart by grey gaps. Every layout inside it, nested grids
+   included, keeps the same gaps (`board-gap`, only inside a `board`): twice
+   the board's padding, so each line sits midway between two blocks. Each
+   block (a `PrimaryCard`) draws the line above it across the gaps on both
+   sides, and the line to its left down its own height, so vertical lines
+   stop short of the horizontal ones. The board's content box clips the
+   lines that would fall on its edge, so they stay inset by the padding.
+   `clip`, not `hidden`, so sticky table headers inside keep working. */
+@utility board-gap {
+  column-gap: var(--board-gap-x);
+  row-gap: var(--board-gap-y);
+}
+@utility board {
+  --board-gap-x: 3rem;
+  --board-gap-y: 2.5rem;
+  overflow: clip;
+  & .primary-card {
+    position: relative;
+    overflow: visible;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  & .primary-card::before,
+  & .primary-card::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    background: var(--divider);
+  }
+  & .primary-card::before {
+    top: calc(var(--board-gap-y) / -2);
+    left: calc(var(--board-gap-x) / -2);
+    right: calc(var(--board-gap-x) / -2);
+    height: 1px;
+  }
+  & .primary-card::after {
+    left: calc(var(--board-gap-x) / -2);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+}

@@ -36,8 +36,9 @@ export function PrivacySummaryPage({
           <PrivacySummaryChartsSection
             projects={chartProjects}
             defaultRange={defaultChartRange}
-          />
-          <PrivacySummaryTables groups={groups} />
+          >
+            <PrivacySummaryTables groups={groups} />
+          </PrivacySummaryChartsSection>
           <PrivacyAdviceBanner />
         </SideNavLayout>
       </HydrationBoundary>
