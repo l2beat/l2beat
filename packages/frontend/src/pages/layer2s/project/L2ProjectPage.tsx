@@ -4,6 +4,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -94,7 +95,10 @@ export function L2ProjectPage({
                     />
                   </div>
                 </div>
-                <div className="row-start-2">
+                <CardBoard
+                  className="row-start-2"
+                  layoutClassName="flex flex-col"
+                >
                   <ProjectL2Summary project={projectEntry} />
 
                   {projectEntry.header.category === 'Other' &&
@@ -117,9 +121,10 @@ export function L2ProjectPage({
                     <ProjectDetails
                       items={projectEntry.sections}
                       selectedUpdateId={selectedUpdateId}
+                      className="contents"
                     />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
                 {!isNavigationEmpty && (
                   <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation

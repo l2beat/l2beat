@@ -1,11 +1,12 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 import { ChartCardHeader } from '~/components/chart/ChartCardHeader'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartQuery } from '~/components/core/chart/useChartQuery'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { rangeToOption } from '~/components/core/chart/utils/rangeToOption'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
@@ -19,9 +20,15 @@ import { PrivacyTvlBreakdownChart } from './PrivacyTvlBreakdownChart'
 interface Props {
   projects: PrivacyTvlBreakdownProject[]
   defaultRange: ChartRange
+  /** The rest of the page's card, under the charts. */
+  children?: ReactNode
 }
 
-export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
+export function PrivacySummaryChartsSection({
+  projects,
+  defaultRange,
+  children,
+}: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectIds = useMemo(() => projects.map((p) => p.id).sort(), [projects])
@@ -138,11 +145,14 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
       <ChartControlsWrapper className="mb-4 justify-end max-md:mt-3 max-md:px-4">
         <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <div className="grid grid-cols-2 gap-4 max-lg:hidden">
-        <PrimaryCard>{tvlChart}</PrimaryCard>
-        <PrimaryCard>{countsChart}</PrimaryCard>
-      </div>
-      <ChartTabs className="lg:hidden" charts={[tvlChart, countsChart]} />
+      <CardBoard layoutClassName="flex flex-col max-md:divide-y max-md:divide-divider">
+        <div className="md:board-gap grid grid-cols-2 max-lg:hidden">
+          <PrimaryCard>{tvlChart}</PrimaryCard>
+          <PrimaryCard>{countsChart}</PrimaryCard>
+        </div>
+        <ChartTabs className="lg:hidden" charts={[tvlChart, countsChart]} />
+        {children}
+      </CardBoard>
     </>
   )
 }

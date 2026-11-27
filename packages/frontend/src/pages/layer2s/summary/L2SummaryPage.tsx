@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { L2SummaryActivityChart } from '~/components/chart/activity/L2SummaryActivityChart'
 import { L2SummaryTvsChart } from '~/components/chart/tvs/L2SummaryTvsChart'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   type BadgeLookup,
@@ -61,10 +62,13 @@ export function L2SummaryPage({
         <HydrationBoundary state={queryState}>
           <SideNavLayout>
             <MainPageHeader>Summary</MainPageHeader>
-            <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+            <CardBoard
+              className="max-lg:hidden"
+              layoutClassName="grid grid-cols-2"
+            >
               <PrimaryCard>{tvsChart}</PrimaryCard>
               <PrimaryCard>{activityChart}</PrimaryCard>
-            </div>
+            </CardBoard>
             <ChartTabs
               className="lg:hidden"
               charts={[tvsChart, activityChart]}

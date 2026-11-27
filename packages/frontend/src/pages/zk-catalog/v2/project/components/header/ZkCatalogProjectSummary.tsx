@@ -32,7 +32,7 @@ export function ProjectZkCatalogSummary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
+      className="primary-card w-full scroll-mt-[100vh] border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="md:hidden">
         <TvsStat {...project.header.tvs} />

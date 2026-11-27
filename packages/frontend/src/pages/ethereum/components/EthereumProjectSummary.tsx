@@ -35,7 +35,7 @@ export function EthereumProjectSummary({ project }: Props) {
     <section
       id="summary"
       data-role="nav-section"
-      className="w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
+      className="primary-card w-full scroll-mt-[100vh] border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
     >
       <DaProjectStats stats={stats} className="max-md:mb-6" />
 

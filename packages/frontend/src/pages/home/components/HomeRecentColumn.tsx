@@ -23,8 +23,8 @@ export function HomeRecentColumn({
 }) {
   return (
     <div className="@container/recent flex home-wide:contents min-w-0 flex-1 flex-col max-lg:order-last">
-      <div className="flex recent-cols:grid home-wide:contents min-w-0 flex-1 recent-cols:grid-cols-2 flex-col md:gap-4">
-        <div className="recent-cols:flex contents recent-cols:min-w-0 recent-cols:flex-col recent-cols:gap-4">
+      <div className="md:board-gap flex recent-cols:grid home-wide:contents min-w-0 flex-1 recent-cols:grid-cols-2 flex-col">
+        <div className="recent-cols:board-gap recent-cols:flex contents recent-cols:min-w-0 recent-cols:flex-col">
           <HomeLatestArticlesCard
             research={research}
             className="recent-cols:flex-1 home-wide:[grid-area:articles]"

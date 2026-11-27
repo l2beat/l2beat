@@ -23,6 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import type { LiquidStakingEntry } from '~/server/features/defi/liquid-staking/getLiquidStakingEntries'
@@ -111,7 +112,7 @@ export function LiquidStakingCharts({
           options={LIQUID_STAKING_RANGE_OPTIONS}
         />
       </ChartControlsWrapper>
-      <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 lg:grid-cols-2">
+      <CardBoard layoutClassName="grid max-md:divide-y max-md:divide-divider lg:grid-cols-2">
         <LiquidStakingTvlChart
           projects={projects}
           projectSeries={projectSeries}
@@ -132,7 +133,7 @@ export function LiquidStakingCharts({
           description={ALL_ROUTES_COST_OF_EXIT.chart}
           frame={ChartCard}
         />
-      </div>
+      </CardBoard>
     </div>
   )
 }

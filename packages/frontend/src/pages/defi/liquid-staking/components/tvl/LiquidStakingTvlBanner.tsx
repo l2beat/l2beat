@@ -7,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type {
   CompleteTvlBreakdown,
   EthChange,
@@ -36,7 +37,7 @@ export function LiquidStakingTvlBanner({
   rangePreset?: ChartRangeOptionValue | 'custom'
 }) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-divider border-b px-4 py-4 md:px-6 md:py-5">
+    <PrimaryCard className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 lg:col-span-2">
       {latest ? (
         <>
           <div className="min-w-0 flex-1">
@@ -77,7 +78,7 @@ export function LiquidStakingTvlBanner({
       ) : (
         <NoDataBadge size="regular" />
       )}
-    </div>
+    </PrimaryCard>
   )
 }
 

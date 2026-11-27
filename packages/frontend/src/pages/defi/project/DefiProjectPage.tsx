@@ -2,6 +2,7 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { CardBoard } from '~/components/primary-card/CardBoard'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -106,7 +107,10 @@ export function DefiProjectPage({
                   </div>
                 </div>
 
-                <div className="row-start-2 w-full">
+                <CardBoard
+                  className="row-start-2 w-full"
+                  layoutClassName="flex flex-col"
+                >
                   <HighlightableLinkContextProvider>
                     <PrimaryCard
                       id="summary"
@@ -148,12 +152,13 @@ export function DefiProjectPage({
                     </PrimaryCard>
 
                     <ProjectDetails
+                      className="contents"
                       items={entry.sections}
                       selectedUpdateId={selectedUpdateId}
                       pageSections={PAGE_SECTIONS}
                     />
                   </HighlightableLinkContextProvider>
-                </div>
+                </CardBoard>
 
                 {!isNavigationEmpty && (
                   <div className="row-start-2 mt-2 hidden shrink-0 lg:block">

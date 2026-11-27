@@ -52,6 +52,7 @@ import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSe
 import { VerifiersSection } from './sections/verifiers/VerifiersSection'
 
 interface ProjectDetailsProps {
+  className?: string
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
@@ -67,7 +68,7 @@ interface ProjectDetailsProps {
 
 export function ProjectDetails(props: ProjectDetailsProps) {
   return (
-    <div>
+    <div className={props.className}>
       {props.items.map((item, index) => (
         <LazyHydrate
           key={item.props.id}

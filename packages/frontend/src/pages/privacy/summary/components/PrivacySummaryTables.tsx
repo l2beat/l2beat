@@ -14,12 +14,12 @@ export function PrivacySummaryTables({
   groups: PrivacySummaryGroup[]
 }) {
   return (
-    <div className="mt-4 flex flex-col gap-4">
+    <>
       <PrivacyRosetteLegend />
       {groups.map((group) => (
         <PrivacySummaryGroupCard key={group.field} group={group} />
       ))}
-    </div>
+    </>
   )
 }
 
