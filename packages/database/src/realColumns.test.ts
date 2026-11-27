@@ -48,7 +48,7 @@ describe('real columns', () => {
         } else if (
           sum.argument.includes('${') ||
           (sum.viaKysely &&
-            !/^\s*'[\w.]+',?\s*$|^\s*sql`[^`$]*`\s*$/.test(sum.argument))
+            !/^\s*'[\w.]+',?\s*$|^\s*sql`[^`$]*`,?\s*$/.test(sum.argument))
         ) {
           // Anything but one column name or a plain `sql` template hides what
           // is summed: a variable, as `valueField` did in TokenValueRepository,
