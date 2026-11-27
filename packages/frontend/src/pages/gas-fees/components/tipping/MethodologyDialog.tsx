@@ -1,3 +1,4 @@
+import { GAS_FEES_TIER_RULES, GAS_FEES_TIERS } from '@l2beat/shared-pure'
 import {
   Dialog,
   DialogContent,
@@ -7,17 +8,22 @@ import {
 } from '~/components/core/Dialog'
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
+import { TIER_LABELS } from './tiers'
 
 const REPLAY = [
   ['Slow', 'Within 1 minute', '96.0%', '92.1%'],
   ['Medium', 'Within 2 blocks', '96.6%', '90.7%'],
   ['Fast', 'In the next block', '95.3%', '92.3%'],
 ]
-const RULES = [
-  ['Slow', '10th percentile tip', '45.2% of the last 300 blocks'],
-  ['Medium', '25th percentile tip', '85% of the last 300 blocks'],
-  ['Fast', '25th percentile tip', '99% of the last 1,800 blocks'],
-]
+/** The estimator's own rules, so this table can't describe older ones */
+const RULES = GAS_FEES_TIERS.map((tier) => {
+  const { blockPercentile, blocks, share } = GAS_FEES_TIER_RULES[tier]
+  return [
+    TIER_LABELS[tier].name,
+    `${blockPercentile}th percentile tip`,
+    `${Number((share * 100).toFixed(1))}% of the last ${blocks.toLocaleString('en-US')} blocks`,
+  ]
+})
 
 export function MethodologyDialog({ className }: { className?: string }) {
   return (

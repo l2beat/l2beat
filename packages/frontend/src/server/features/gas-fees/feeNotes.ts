@@ -1,4 +1,4 @@
-import type { GasFeesChainId } from './chains'
+import type { GasFeesChainId } from '@l2beat/shared-pure'
 
 /** What a part of a chain's fee split is, where it differs from the general key */
 export interface FeeNotes {

@@ -15,8 +15,8 @@ describe(joinFeesDays.name, () => {
   const chains: GasFeesChain[] = [
     zksync,
     {
-      id: 'new',
-      dune: 'new',
+      id: 'linea',
+      dune: 'linea',
       fees: FEE_RULES.gasTimesPrice,
       requiredFrom: UnixTime(day + UnixTime.DAY),
     },
@@ -280,12 +280,14 @@ describe('joinFeesDays on what Dune had', () => {
 
   it('Abstract, loaded a day late: its newest day waits while the other chains are stored', () => {
     // The shape Dune had at 03:00 on 17 Nov 2026: Abstract's blocks ended around noon on the 16th
-    const chains: GasFeesChain[] = ['ethereum', 'abstract'].map((id) => ({
-      id,
-      dune: id,
-      fees: FEE_RULES.gasTimesPrice,
-      requiredFrom: date('2025-01-27'),
-    }))
+    const chains: GasFeesChain[] = (['ethereum', 'abstract'] as const).map(
+      (id) => ({
+        id,
+        dune: id,
+        fees: FEE_RULES.gasTimesPrice,
+        requiredFrom: date('2025-01-27'),
+      }),
+    )
     const day = (chain: string, day: string, first: number, count: number) => ({
       fee: fees(chain, day),
       block: blocks(chain, day, {

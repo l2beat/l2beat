@@ -1,5 +1,5 @@
+import type { GasFeesChainId } from '@l2beat/shared-pure'
 import { createContext, useContext, useState } from 'react'
-import type { GasFeesChainId } from '~/server/features/gas-fees/chains'
 
 interface ChainHighlight {
   chain: GasFeesChainId | undefined

@@ -14,6 +14,8 @@ const SURE_SHARE = 0.99
 /** Fewer transactions than this make a level's wait noise */
 const MIN_LEVEL_TXS = 1_000
 const ROUND_TIPS_GWEI = [0.1, 1, 2] as const
+/** The round tip the fast tip is compared with */
+const COMPARISON_TIP_GWEI = 2
 
 /** One tip level: x is what its average tip adds to an ERC-20 transfer */
 export interface SpeedDot {
@@ -30,6 +32,8 @@ export interface SpeedPoint {
   seconds: number
 }
 
+type RoundTip = SpeedPoint & { gwei: number }
+
 export interface PriceOfSpeed {
   period: DayPeriod
   /** What a gwei of tip adds to an ERC-20 transfer at the period's average ETH price */
@@ -37,7 +41,13 @@ export interface PriceOfSpeed {
   dots: SpeedDot[]
   /** Through the dots, never rising */
   line: SpeedPoint[]
-  roundTips: (SpeedPoint & { gwei: number })[]
+  roundTips: RoundTip[]
+  /** The round tip our fast tip is set against; undefined without a wait for it */
+  comparisonTip: RoundTip | undefined
+  /** The share of a level's transactions that landed within its wait */
+  sureShare: number
+  /** Where the open-ended last wait starts: a wait past it is only known to be longer */
+  openWaitFromSeconds: number | undefined
   /** Our estimated fast tip's cost; its wait is undefined without one */
   fastTip: { usd: number; seconds: number | undefined } | undefined
 }
@@ -70,13 +80,17 @@ export function toPriceOfSpeed(
         : [{ usd: d.usd, seconds: d.seconds, weight: d.txCount }],
     ),
   )
+  const roundTips = toRoundTips(line, usdPerGwei)
   const fastTipUsd = mean(hours.map((h) => tipToUsd(h.fastTipGwei, h.ethUsd)))
   return {
     period,
     usdPerGwei,
     dots,
     line,
-    roundTips: toRoundTips(line, usdPerGwei),
+    roundTips,
+    comparisonTip: roundTips.find((t) => t.gwei === COMPARISON_TIP_GWEI),
+    sureShare: SURE_SHARE,
+    openWaitFromSeconds: openWaitFrom(input.levelWaits),
     fastTip:
       fastTipUsd === null
         ? undefined
@@ -89,7 +103,12 @@ export function toPriceOfSpeed(
   }
 }
 
-function toRoundTips(line: SpeedPoint[], usdPerGwei: number) {
+function openWaitFrom(waits: GasFeesWaitBucket[]): number | undefined {
+  const open = waits.find((w) => w.waitToMs === null)
+  return open && open.waitFromMs / 1000
+}
+
+function toRoundTips(line: SpeedPoint[], usdPerGwei: number): RoundTip[] {
   const lowest = line[0]
   if (!lowest) return []
   return ROUND_TIPS_GWEI.flatMap((gwei) => {

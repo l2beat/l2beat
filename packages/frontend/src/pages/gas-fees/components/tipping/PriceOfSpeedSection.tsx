@@ -1,6 +1,11 @@
 import type { PriceOfSpeed } from '~/server/features/gas-fees/tipping/toPriceOfSpeed'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
-import { formatDays, formatPeriod, formatUsd } from '../../utils/format'
+import {
+  formatDays,
+  formatGwei,
+  formatPeriod,
+  formatUsd,
+} from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
 import { SpeedPlot } from './SpeedPlot'
 import { getSpeedGain } from './speedGain'
@@ -22,11 +27,12 @@ export function PriceOfSpeedSection({
   }
   const { period } = speed
   const gain = getSpeedGain(speed)
+  const sure = `${Math.round(speed.sureShare * 100)}%`
   return (
     <section className="flex flex-col gap-3">
       <Eyebrow
         infoLabel="About the price of speed"
-        info="Seconds until you can be 99% sure you’re in, against what the tip adds to the cost of an ERC-20 transfer."
+        info={`Seconds until you can be ${sure} sure you’re in, against what the tip adds to the cost of an ERC-20 transfer.`}
       >
         Price of speed{DOT_SEPARATOR}
         {formatDays(period.from, period.to)}
@@ -37,10 +43,10 @@ export function PriceOfSpeedSection({
             +{formatUsd(gain.extraUsd)}
           </span>
           <span>
-            an ERC-20 transfer tipping 2 gwei instead of our estimated fast tip
-            gets you in{' '}
+            an ERC-20 transfer tipping {formatGwei(gain.gwei)} gwei instead of
+            our estimated fast tip gets you in{' '}
             <strong className="font-bold text-primary">{gain.gain}</strong>:{' '}
-            {gain.waits}, 99% sure
+            {gain.waits}, {sure} sure
           </span>
         </p>
       )}

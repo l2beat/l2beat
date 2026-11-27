@@ -1,5 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { type GasFeesChainId, type GasToken, gasTokenOf } from '../chains'
+import {
+  type GasFeesChainId,
+  type GasFeesToken,
+  gasFeesTokenOf,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { pastYear } from '../days'
 import { median, sum } from '../math'
 import { type GasFeesDay, getGasFeesDays } from './getGasFeesDays'
@@ -18,7 +22,7 @@ export interface GasFeesStats {
   feesUsd: { l2s: number; ethereum: number }
   /** The L2s' part of both sides' transactions and fees; 0 without any */
   l2Share: { txCount: number; feesUsd: number }
-  l2FeesUsdByToken: Record<GasToken, number>
+  l2FeesUsdByToken: Record<GasFeesToken, number>
   /** Fees over transactions, over the days both Ethereum and an L2 have */
   avgFee: { l2s: number; ethereum: number } | undefined
   latestErc20: LatestErc20 | undefined
@@ -52,8 +56,8 @@ export function toGasFeesStats(
   const chains = summarizeChains(days, from)
   const l2s = chains.filter((c) => c.chain !== 'ethereum' && c.hasData)
   const ethereum = chains.find((c) => c.chain === 'ethereum')
-  const l2FeesUsdByToken: Record<GasToken, number> = { ETH: 0, MNT: 0 }
-  for (const c of l2s) l2FeesUsdByToken[gasTokenOf(c.chain)] += c.feesUsd
+  const l2FeesUsdByToken: Record<GasFeesToken, number> = { ETH: 0, MNT: 0 }
+  for (const c of l2s) l2FeesUsdByToken[gasFeesTokenOf(c.chain)] += c.feesUsd
   const newest = days.at(-1)?.timestamp
   const txCount = {
     l2s: sum(l2s.map((c) => c.txCount)),

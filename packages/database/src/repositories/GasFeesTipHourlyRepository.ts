@@ -1,9 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type GasFeesTier, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { GasFeesTipHourly } from '../kysely/generated/types'
 
-export type GasFeesTier = 'slow' | 'medium' | 'fast'
+export type { GasFeesTier }
 
 /** Our estimator's tips, gwei, as of a moment, from the blocks before it. */
 export interface GasFeesTipsReading {

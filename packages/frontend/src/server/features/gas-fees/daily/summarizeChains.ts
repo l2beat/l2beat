@@ -1,5 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_CHAINS, type GasFeesChainId } from '../chains'
+import {
+  GAS_FEES_CHAIN_IDS,
+  type GasFeesChainId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { mean, sum } from '../math'
 import { type FeeSplit, splitFees, usdPerToken } from './feeRules'
 import type { GasFeesDay } from './getGasFeesDays'
@@ -52,7 +55,7 @@ export function summarizeChains(
   const ethereum = new Map(
     (byChain.get('ethereum') ?? []).map((d) => [d.day.timestamp, d]),
   )
-  return GAS_FEES_CHAINS.map((chain) => {
+  return GAS_FEES_CHAIN_IDS.map((chain) => {
     const own = byChain.get(chain) ?? []
     return {
       chain,

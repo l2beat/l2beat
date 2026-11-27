@@ -30,6 +30,7 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
   const { width = 0 } = useResizeObserver({ ref })
   const [hovered, setHovered] = useState<SpeedDot>()
   const { line, roundTips, fastTip, dots } = speed
+  const sure = `${Math.round(speed.sureShare * 100)}%`
 
   const plotWidth = Math.max(0, width - MARGIN.left - MARGIN.right)
   const plotHeight = HEIGHT - MARGIN.top - MARGIN.bottom
@@ -85,7 +86,9 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
   return (
     <div ref={ref} className="relative w-full" style={{ height: HEIGHT }}>
       <span className="absolute top-0 left-0 text-2xs text-secondary">
-        {hovered ? describeDot(hovered) : '99% sure you’re in within'}
+        {hovered
+          ? describeDot(hovered, speed.openWaitFromSeconds)
+          : `${sure} sure you’re in within`}
       </span>
       {width > 0 && maxUsd > 0 && (
         <svg
@@ -95,7 +98,7 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
           onPointerMove={onPointer}
           onPointerLeave={() => setHovered(undefined)}
           role="img"
-          aria-label="Seconds until 99% sure of inclusion, by what the tip adds to an ERC-20 transfer"
+          aria-label={`Seconds until ${sure} sure of inclusion, by what the tip adds to an ERC-20 transfer`}
         >
           {fastX !== undefined && (
             <g>
@@ -259,9 +262,13 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
   )
 }
 
-function describeDot(dot: SpeedDot) {
+function describeDot(dot: SpeedDot, openWaitFromSeconds: number | undefined) {
   const wait =
-    dot.seconds === undefined ? 'over 30 min' : formatSeconds(dot.seconds)
+    dot.seconds !== undefined
+      ? formatSeconds(dot.seconds)
+      : openWaitFromSeconds !== undefined
+        ? `over ${Math.round(openWaitFromSeconds / 60)} min`
+        : 'no wait known'
   return [
     `${formatGwei(dot.fromGwei)}–${formatGwei(dot.toGwei)} gwei`,
     `${formatCount(dot.txCount)} txs`,
