@@ -75,6 +75,7 @@ export const pageLoaders = {
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,
+  InsightPage: async () => (await import('./insight/InsightPage')).InsightPage,
   LiquidStakingPage: async () =>
     (await import('./defi/liquid-staking/LiquidStakingPage')).LiquidStakingPage,
   DefiProjectPage: async () =>

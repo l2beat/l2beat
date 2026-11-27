@@ -327,6 +327,44 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
+  describe(TokenRelationRepository.prototype.getRoutesForTokens.name, () => {
+    it('returns each route mentioning any token once, without transfer', async () => {
+      const betweenQueried = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'canonicalbridge',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+      })
+      const onSecondEndpoint = tokenRelation({
+        endpoints: [optimismToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const unrelated = tokenRelation({
+        endpoints: [ethereumToken, optimismToken],
+        plugin: 'thirdbridge',
+        bridgeType: 'lockAndMint',
+      })
+      await repository.insert(betweenQueried)
+      await repository.insert(onSecondEndpoint)
+      await repository.insert(unrelated)
+
+      const routes = await repository.getRoutesForTokens([
+        { chain: arbitrumToken.chain, address: arbitrumToken.address },
+        // Mixed case must match the lowercase rows.
+        { chain: 'ethereum', address: ethereumToken.address.toUpperCase() },
+      ])
+
+      expect(routes).toEqualUnsorted(
+        [betweenQueried, onSecondEndpoint, unrelated].map(withoutTransfer),
+      )
+    })
+
+    it('returns nothing for no tokens', async () => {
+      expect(await repository.getRoutesForTokens([])).toEqual([])
+    })
+  })
+
   describe(TokenRelationRepository.prototype.getMintingPluginsFor.name, () => {
     it('returns plugins of relations where the token is minted or the pair is symmetric', async () => {
       const mintedHere = tokenRelation({
@@ -543,4 +581,9 @@ function mockChain(props: Partial<ChainRecord>): ChainRecord {
     apis: null,
     ...props,
   }
+}
+
+function withoutTransfer(relation: TokenRelationRecord) {
+  const { transfer: _, ...route } = relation
+  return route
 }

@@ -377,6 +377,54 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
   })
 
   describe(
+    DeployedTokenRepository.prototype.getByChainWithAbstractTokens.name,
+    () => {
+      it('returns every deployment on the chain, ignored ones included, without the proof', async () => {
+        await chains.insert(mockChain({ name: 'ethereum', chainId: 1 }))
+        await chains.insert(mockChain({ name: 'arbitrum', chainId: 42161 }))
+        const abstractTokenRecord = abstractToken({ id: 'TK0001' })
+        await abstractTokens.insert(abstractTokenRecord)
+
+        const assigned = deployedToken({
+          chain: 'ethereum',
+          address: '0x1111111111111111111111111111111111111111',
+          abstractTokenId: 'TK0001',
+          abstractTokenAssignmentProof: { kind: 'manual' },
+        })
+        const unassigned = deployedToken({
+          chain: 'ethereum',
+          address: '0x2222222222222222222222222222222222222222',
+          ignored: true,
+        })
+        const otherChain = deployedToken({
+          chain: 'arbitrum',
+          address: '0x3333333333333333333333333333333333333333',
+          abstractTokenId: 'TK0001',
+        })
+        await repository.insert(assigned)
+        await repository.insert(unassigned)
+        await repository.insert(otherChain)
+
+        const result = await repository.getByChainWithAbstractTokens('ethereum')
+
+        expect(result).toEqualUnsorted([
+          {
+            deployedToken: { ...assigned, abstractTokenAssignmentProof: null },
+            abstractToken: abstractTokenRecord,
+          },
+          { deployedToken: unassigned, abstractToken: undefined },
+        ])
+      })
+
+      it('returns nothing for a chain without deployments', async () => {
+        expect(await repository.getByChainWithAbstractTokens('base')).toEqual(
+          [],
+        )
+      })
+    },
+  )
+
+  describe(
     DeployedTokenRepository.prototype.getByChainsAndAddresses.name,
     () => {
       it('returns empty array for empty input', async () => {

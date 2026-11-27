@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable, Updateable } from 'kysely'
 import isNil from 'lodash/isNil'
 import { BaseRepository } from '../BaseRepository'
-import type { DeployedToken } from '../kysely/generated/types'
+import type { AbstractToken, DeployedToken } from '../kysely/generated/types'
 import {
   type AbstractTokenRecord,
   toAbstractTokenRecord,
@@ -77,6 +77,57 @@ function toUpdateRow(
   }
 }
 
+export type DeployedTokenWithAbstractToken = {
+  deployedToken: DeployedTokenRecord
+  abstractToken: AbstractTokenRecord | undefined
+}
+
+type AbstractTokenColumns = {
+  [K in keyof Selectable<AbstractToken> as `AbstractToken_${K}`]:
+    | Selectable<AbstractToken>[K]
+    | null
+}
+
+function toRecordWithAbstractToken(
+  row: Selectable<DeployedToken> & AbstractTokenColumns,
+): DeployedTokenWithAbstractToken {
+  return {
+    deployedToken: toRecord({
+      symbol: row.symbol,
+      comment: row.comment,
+      chain: row.chain,
+      address: row.address,
+      abstractTokenId: row.abstractTokenId,
+      decimals: row.decimals,
+      deploymentTimestamp: row.deploymentTimestamp,
+      ignored: row.ignored,
+      metadata: row.metadata as DeployedTokenMetadata,
+      abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
+    }),
+    abstractToken:
+      row.AbstractToken_id === null ||
+      row.AbstractToken_symbol === null ||
+      row.AbstractToken_reviewed === null ||
+      row.AbstractToken_isPriceUnreliable === null
+        ? undefined
+        : toAbstractTokenRecord({
+            id: row.AbstractToken_id,
+            issuer: row.AbstractToken_issuer,
+            symbol: row.AbstractToken_symbol,
+            category: row.AbstractToken_category,
+            iconUrl: row.AbstractToken_iconUrl,
+            coingeckoId: row.AbstractToken_coingeckoId,
+            coingeckoListingTimestamp:
+              row.AbstractToken_coingeckoListingTimestamp,
+            additionalCoingeckoEntries:
+              row.AbstractToken_additionalCoingeckoEntries,
+            comment: row.AbstractToken_comment,
+            reviewed: row.AbstractToken_reviewed,
+            isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
+          }),
+  }
+}
+
 // Keeps each query's (chain, address) tuple list small enough to avoid
 // overflowing both the Kysely query compiler and the Postgres parser stack.
 const BATCH_SIZE = 1000
@@ -100,39 +151,14 @@ export class DeployedTokenRepository extends BaseRepository {
     return Number(result.numUpdatedRows)
   }
 
-  async getByChainAndAddress(pks: DeployedTokenPrimaryKey[]): Promise<
-    {
-      deployedToken: DeployedTokenRecord
-      abstractToken: AbstractTokenRecord | undefined
-    }[]
-  > {
-    const result: {
-      deployedToken: DeployedTokenRecord
-      abstractToken: AbstractTokenRecord | undefined
-    }[] = []
+  async getByChainAndAddress(
+    pks: DeployedTokenPrimaryKey[],
+  ): Promise<DeployedTokenWithAbstractToken[]> {
+    const result: DeployedTokenWithAbstractToken[] = []
 
     await this.batch(pks, BATCH_SIZE, async (batch) => {
-      const rows = await this.db
-        .selectFrom('DeployedToken')
-        .leftJoin(
-          'AbstractToken',
-          'AbstractToken.id',
-          'DeployedToken.abstractTokenId',
-        )
+      const rows = await this.selectWithAbstractToken()
         .selectAll('DeployedToken')
-        .select([
-          'AbstractToken.id as AbstractToken_id',
-          'AbstractToken.issuer as AbstractToken_issuer',
-          'AbstractToken.category as AbstractToken_category',
-          'AbstractToken.iconUrl as AbstractToken_iconUrl',
-          'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
-          'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
-          'AbstractToken.additionalCoingeckoEntries as AbstractToken_additionalCoingeckoEntries',
-          'AbstractToken.symbol as AbstractToken_symbol',
-          'AbstractToken.comment as AbstractToken_comment',
-          'AbstractToken.reviewed as AbstractToken_reviewed',
-          'AbstractToken.isPriceUnreliable as AbstractToken_isPriceUnreliable',
-        ])
         .where((eb) =>
           eb(
             eb.refTuple('chain', 'address'),
@@ -141,47 +167,60 @@ export class DeployedTokenRepository extends BaseRepository {
           ),
         )
         .execute()
-
-      for (const row of rows) {
-        result.push({
-          deployedToken: toRecord({
-            symbol: row.symbol,
-            comment: row.comment,
-            chain: row.chain,
-            address: row.address,
-            abstractTokenId: row.abstractTokenId,
-            decimals: row.decimals,
-            deploymentTimestamp: row.deploymentTimestamp,
-            ignored: row.ignored,
-            metadata: row.metadata as DeployedTokenMetadata,
-            abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
-          }),
-          abstractToken:
-            row.AbstractToken_id === null ||
-            row.AbstractToken_symbol === null ||
-            row.AbstractToken_reviewed === null ||
-            row.AbstractToken_isPriceUnreliable === null
-              ? undefined
-              : toAbstractTokenRecord({
-                  id: row.AbstractToken_id,
-                  issuer: row.AbstractToken_issuer,
-                  symbol: row.AbstractToken_symbol,
-                  category: row.AbstractToken_category,
-                  iconUrl: row.AbstractToken_iconUrl,
-                  coingeckoId: row.AbstractToken_coingeckoId,
-                  coingeckoListingTimestamp:
-                    row.AbstractToken_coingeckoListingTimestamp,
-                  additionalCoingeckoEntries:
-                    row.AbstractToken_additionalCoingeckoEntries,
-                  comment: row.AbstractToken_comment,
-                  reviewed: row.AbstractToken_reviewed,
-                  isPriceUnreliable: row.AbstractToken_isPriceUnreliable,
-                }),
-        })
-      }
+      result.push(...rows.map(toRecordWithAbstractToken))
     })
 
     return result
+  }
+
+  /**
+   * Every deployment on the chain, ignored ones included, in one indexed
+   * query: cheaper than looking up thousands of candidate addresses. Leaves
+   * out the assignment proof, which is a third of a row's size.
+   */
+  async getByChainWithAbstractTokens(
+    chain: string,
+  ): Promise<DeployedTokenWithAbstractToken[]> {
+    const rows = await this.selectWithAbstractToken()
+      .select([
+        'DeployedToken.chain',
+        'DeployedToken.address',
+        'DeployedToken.symbol',
+        'DeployedToken.comment',
+        'DeployedToken.abstractTokenId',
+        'DeployedToken.decimals',
+        'DeployedToken.deploymentTimestamp',
+        'DeployedToken.ignored',
+        'DeployedToken.metadata',
+      ])
+      .where('DeployedToken.chain', '=', chain)
+      .execute()
+    return rows.map((row) =>
+      toRecordWithAbstractToken({ ...row, abstractTokenAssignmentProof: null }),
+    )
+  }
+
+  private selectWithAbstractToken() {
+    return this.db
+      .selectFrom('DeployedToken')
+      .leftJoin(
+        'AbstractToken',
+        'AbstractToken.id',
+        'DeployedToken.abstractTokenId',
+      )
+      .select([
+        'AbstractToken.id as AbstractToken_id',
+        'AbstractToken.issuer as AbstractToken_issuer',
+        'AbstractToken.category as AbstractToken_category',
+        'AbstractToken.iconUrl as AbstractToken_iconUrl',
+        'AbstractToken.coingeckoId as AbstractToken_coingeckoId',
+        'AbstractToken.coingeckoListingTimestamp as AbstractToken_coingeckoListingTimestamp',
+        'AbstractToken.additionalCoingeckoEntries as AbstractToken_additionalCoingeckoEntries',
+        'AbstractToken.symbol as AbstractToken_symbol',
+        'AbstractToken.comment as AbstractToken_comment',
+        'AbstractToken.reviewed as AbstractToken_reviewed',
+        'AbstractToken.isPriceUnreliable as AbstractToken_isPriceUnreliable',
+      ])
   }
 
   async findByChainAndAddress(

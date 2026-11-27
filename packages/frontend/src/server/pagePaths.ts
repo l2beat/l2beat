@@ -70,6 +70,9 @@ export async function getPages(): Promise<Page[]> {
   if (env.CLIENT_SIDE_TOKENS_PAGE) {
     paths.push('/tokens')
   }
+  if (env.CLIENT_SIDE_INSIGHT_PAGE) {
+    paths.push('/insight')
+  }
   if (env.CLIENT_SIDE_BLOBS_PAGE) {
     paths.push('/blobs')
   }

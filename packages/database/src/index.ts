@@ -58,6 +58,7 @@ export type {
   DeployedTokenPrimaryKey,
   DeployedTokenRecord,
   DeployedTokenUpdateable,
+  DeployedTokenWithAbstractToken,
 } from './repositories/DeployedTokenRepository'
 export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheRepository'
 export type { EthereumStakingDailyRecord } from './repositories/EthereumStakingDailyRepository'

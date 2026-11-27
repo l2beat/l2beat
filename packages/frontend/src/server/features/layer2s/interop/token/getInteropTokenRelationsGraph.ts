@@ -180,7 +180,7 @@ function resolveMinters(
   return toInteropProjectIconListItems(projects)
 }
 
-function toInteropProjectIconListItems(
+export function toInteropProjectIconListItems(
   projects: Project<'interopConfig'>[],
 ): ProjectIconListItem[] {
   return unique(projects, (project) => project.id)
@@ -193,7 +193,7 @@ function toInteropProjectIconListItems(
     .sort((a, b) => a.name.localeCompare(b.name))
 }
 
-function getChainDisplayInfo(
+export function getChainDisplayInfo(
   chainId: string,
   projects: Project<'chainConfig'>[],
 ) {
