@@ -31,7 +31,7 @@ import { useTRPC } from '~/trpc/React'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import type { ChartRange } from '~/utils/range/range'
 import { ALL_ROUTES_COST_OF_EXIT } from '../costOfExitDescription'
-import { formatDays, formatYield, MAX_SHOWN_DAYS } from '../formatLiquidStaking'
+import { formatDays, formatYield } from '../formatLiquidStaking'
 import {
   COST_OF_EXIT_METRIC,
   ETH_STAKED_TITLE,
@@ -53,6 +53,12 @@ export type LiquidStakingChartProject = Pick<
 >
 
 const NETWORK_KEY = 'network'
+/**
+ * The cost of exit chart draws no higher than this, so a thin pool or a yield
+ * near zero, at thousands of days, can't squash the other lines. The tooltip
+ * keeps the real value.
+ */
+const MAX_DRAWN_DAYS = 365
 const ETH_STAKED_KEY = 'ethStaked'
 
 export const LIQUID_STAKING_RANGE_OPTIONS: {
@@ -271,8 +277,8 @@ export function CostOfExitChart({
       ),
     [data, projectSeries],
   )
-  const estimated = useMemo(
-    () => new Map(data?.map((point) => [point.timestamp, point.estimated])),
+  const pointsByTimestamp = useMemo(
+    () => new Map(data?.map((point) => [point.timestamp, point])),
     [data],
   )
 
@@ -294,18 +300,20 @@ export function CostOfExitChart({
         // into the floor. The axis always spans that, so every tick shows.
         yAxis={{
           scale: scaleSymlog,
-          domain: [0, MAX_SHOWN_DAYS],
-          ticks: [0, 1, 10, 100, MAX_SHOWN_DAYS],
+          domain: [0, MAX_DRAWN_DAYS],
+          ticks: [0, 1, 10, 100, MAX_DRAWN_DAYS],
         }}
         formatYAxisLabel={(value) =>
-          value >= MAX_SHOWN_DAYS
-            ? `${MAX_SHOWN_DAYS}d+`
+          value >= MAX_DRAWN_DAYS
+            ? `${MAX_DRAWN_DAYS}d+`
             : `${formatNumberWithCommas(value, { maximumFractionDigits: 0 })}d`
         }
         // ~ marks a value that counts requests still queued.
-        formatTooltipValue={(value, key, timestamp) =>
-          `${estimated.get(timestamp)?.includes(key) ? '~' : ''}${formatDays(value)}`
-        }
+        formatTooltipValue={(value, key, timestamp) => {
+          const point = pointsByTimestamp.get(timestamp)
+          const days = point?.projects[key] ?? value
+          return `${point?.estimated.includes(key) ? '~' : ''}${formatDays(days)}`
+        }}
         formatTooltipDate={(timestamp) =>
           formatMetricDate(COST_OF_EXIT_METRIC, timestamp)
         }
@@ -314,14 +322,14 @@ export function CostOfExitChart({
   })
 }
 
-/** Drawn at most a year high, where the axis and the tooltip read "365+". */
+/** At most MAX_DRAWN_DAYS, where the axis reads 365d+. */
 function capDays(
   values: Record<string, number | null>,
 ): Record<string, number | null> {
   return Object.fromEntries(
     Object.entries(values).map(([key, days]) => [
       key,
-      days === null ? null : Math.min(days, MAX_SHOWN_DAYS),
+      days === null ? null : Math.min(days, MAX_DRAWN_DAYS),
     ]),
   )
 }
