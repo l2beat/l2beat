@@ -36,6 +36,8 @@ export {
   AppStatePair,
   type AppStateRecord,
 } from './repositories/AppStateRepository'
+export type { BlobFeeHourlyRecord } from './repositories/BlobFeeHourlyRepository'
+export type { BlobFeeRecord } from './repositories/BlobFeeRepository'
 export type { BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,

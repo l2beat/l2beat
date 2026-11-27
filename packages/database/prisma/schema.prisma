@@ -524,6 +524,28 @@ model Blob {
   @@index([blockNumber])
 }
 
+/// Fees of an Ethereum block since Dencun, from eth_feeHistory
+model BlobFee {
+  blockNumber   Int      @id
+  /// Interpolated between the headers at the ends of a fetched chunk, on the
+  /// slot grid: off by a slot for every slot missed before it in the chunk
+  timestamp     DateTime @db.Timestamp(6)
+  /// Wei per blob gas
+  blobBaseFee   BigInt
+  /// Wei per gas. A sixteenth of it is the EIP-7918 reserve price of blob gas
+  baseFeePerGas BigInt
+
+  @@index([timestamp])
+}
+
+/// BlobFee by the hour, for charts
+model BlobFeeHourly {
+  timestamp      DateTime @id @db.Timestamp(6)
+  blocks         Int
+  avgBlobBaseFee BigInt
+  maxBlobBaseFee BigInt
+}
+
 /// The Ethereum blocks of the last day or so, one per slot that got one. A
 /// slot with no row between the oldest and the newest was missed
 model LiveBlock {
@@ -532,6 +554,8 @@ model LiveBlock {
   hash        String   @db.VarChar(66)
   timestamp   DateTime @db.Timestamp(6)
   blobCount   Int
+  /// Wei per blob gas. Null for a block stored before fees were kept
+  blobBaseFee BigInt?
 
   @@index([blockNumber])
 }
