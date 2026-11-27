@@ -21,6 +21,7 @@ import {
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 import { ExploreInteropButton } from './ExploreInteropButton'
@@ -128,8 +129,11 @@ function Content({
 
   return (
     <div className="@container flex flex-col gap-4">
-      <div className="flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
-        <div className="flex gap-2 max-md:w-full md:contents">
+      {/* One row only where all three filters fit with every icon shown, so
+          the row never wraps when the chosen chains or protocols change.
+          From lg to xl the protocols selector hides its icons, so they fit. */}
+      <div className="flex @min-[800px]:flex-row flex-col gap-3 md:items-start lg:max-xl:flex-row">
+        <div className="flex @min-[800px]:contents gap-2 max-md:w-full lg:max-xl:contents">
           <FlowsChainsSelector allChains={interopChains} />
           <FlowsProtocolsSelector
             allProtocols={protocols}
@@ -157,19 +161,22 @@ function Content({
               topChainId={defaultStatsChainId}
             />
           </div>
-          {!isLoading && data && (
-            <FlowsParticleLegend
-              layout="inline"
-              className="mt-2 justify-center text-center text-label-value-13"
-              totalVolume={data.stats.totalVolume}
-              dollarsPerParticle={dollarsPerParticle}
-            />
-          )}
-          {(isLoading || showInactiveChainsInfo) && (
-            <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
-              {isLoading ? (
-                <Skeleton className="h-4 w-40 md:h-5" />
-              ) : (
+          {/* Both lines keep their space while loading or when empty, so
+              the section's height doesn't follow the selection. */}
+          <FlowsParticleLegend
+            layout="inline"
+            className={cn(
+              'mt-2 justify-center text-center text-label-value-13',
+              !data && 'invisible',
+            )}
+            totalVolume={data?.stats.totalVolume ?? 0}
+            dollarsPerParticle={dollarsPerParticle}
+          />
+          <div className="mt-4 flex min-h-6 w-full items-center justify-center gap-1.5 max-lg:order-2">
+            {isLoading ? (
+              <Skeleton className="h-4 w-40 md:h-5" />
+            ) : (
+              showInactiveChainsInfo && (
                 <>
                   <span className="text-label-value-13 text-secondary">
                     No transfers in the last 24 hours for
@@ -183,9 +190,9 @@ function Content({
                     />
                   )}
                 </>
-              )}
-            </div>
-          )}
+              )
+            )}
+          </div>
         </div>
         <FlowsStatsPanel
           data={data}
@@ -194,6 +201,7 @@ function Content({
           statsChainA={statsChainA}
           statsChainB={statsChainB}
           hasRouteSelection={hasRouteSelection}
+          isLoading={isLoading}
         />
       </div>
       <InteropBridgeSubsections
