@@ -16,6 +16,8 @@ export function ApiMigrationPage({ title, markdown, ...props }: Props) {
         <MainPageHeader>{title}</MainPageHeader>
         <PrimaryCard>
           <main>
+            {/* MainPageHeader shows its title on desktop only */}
+            <h1 className="mb-4 font-bold text-2xl lg:hidden">{title}</h1>
             <Article className="break-words text-base leading-7 [&_h2]:text-[22px]">
               {markdown}
             </Article>
