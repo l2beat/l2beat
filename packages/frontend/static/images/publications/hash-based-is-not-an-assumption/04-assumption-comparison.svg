@@ -46,7 +46,7 @@
   <text x="35" y="102" class="sans sub">one-time signature · any hash</text>
   <text x="252" y="86" class="sans primary">One-wayness (OWF)</text>
   <text x="252" y="102" class="sans sub">theoretical floor (minimal)</text>
-  <text x="468" y="86" class="sans sub">Single hash per secret; no chains</text>
+  <text x="468" y="86" class="sans sub">Single hash per secret, no chains</text>
   <text x="468" y="102" class="sans sub">or extra assumptions needed</text>
 
   <!-- Row 2: WOTS+ / XMSS / SPHINCS+ -->
@@ -66,8 +66,8 @@
   <text x="35" y="215" class="sans sub"><tspan class="mono hash" fill="#92400e">Keccak-256</tspan> · 256-bit (160 addr)</text>
   <text x="252" y="198" class="sans primary">Collision &amp; preimage</text>
   <text x="252" y="215" class="sans sub">state, tx, addresses</text>
-  <text x="468" y="198" class="sans sub">Core protocol uses; does not rely</text>
-  <text x="468" y="215" class="sans sub">on idealized hash proofs</text>
+  <text x="468" y="198" class="sans sub">Core protocol uses, with no</text>
+  <text x="468" y="215" class="sans sub">idealized hash proofs</text>
 
   <!-- BOUNDARY DIVIDER -->
   <line x1="20" y1="248" x2="700" y2="248" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
