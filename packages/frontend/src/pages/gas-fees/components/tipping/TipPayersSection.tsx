@@ -1,3 +1,4 @@
+import { GAS_FEES_TIP_BANDS } from '@l2beat/shared-pure'
 import type { TipPayers } from '~/server/features/gas-fees/tipping/toTipPayers'
 import { formatPeriod, formatShare, formatUsd } from '../../utils/format'
 import { Eyebrow } from '../Eyebrow'
@@ -32,7 +33,7 @@ export function TipPayersSection({
       <section className="flex flex-col gap-3">
         <Eyebrow
           infoLabel="About overtipping"
-          info={`${days} Ordinary means a tip under 2.5 gwei. Higher tips buy a place near the front of the block, which our estimated fast tip doesn’t aim for.`}
+          info={`${days} Ordinary means a tip under ${GAS_FEES_TIP_BANDS.high[1]} gwei. Higher tips buy a place near the front of the block, which our estimated fast tip doesn’t aim for.`}
         >
           Overtipping
         </Eyebrow>
@@ -77,7 +78,7 @@ export function TipPayersSection({
         </Eyebrow>
         <Figure value={formatShare(bands.high.tipShare)}>
           of tips come from the {formatShare(bands.high.txShare)} of
-          transactions tipping 1 to 2.5 gwei
+          transactions tipping {TIP_BAND_STYLE.high.label}
         </Figure>
         <BandBar title="Transactions" share="txShare" payers={payers} />
         <BandBar title="Tips paid" share="tipShare" payers={payers} />

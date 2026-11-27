@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { GAS_FEES_TIP_BANDS, UnixTime } from '@l2beat/shared-pure'
 import { gweiToWei } from '../units'
 
 export interface TipPayersDayQueryInput {
@@ -11,9 +11,9 @@ export interface TipPayersDayQueryInput {
 }
 
 const FORWARDER = '0xfeeeeee44046c3f61a8cc081e0918ef0de0a7ffc'
-const ORDINARY_BELOW_WEI = 2_500_000_000
-const LOW_BELOW_WEI = 100_000_000
-const MIDDLE_BELOW_WEI = 1_000_000_000
+const LOW_BELOW_WEI = gweiToWei(GAS_FEES_TIP_BANDS.low[1])
+const MIDDLE_BELOW_WEI = gweiToWei(GAS_FEES_TIP_BANDS.middle[1])
+const ORDINARY_BELOW_WEI = gweiToWei(GAS_FEES_TIP_BANDS.high[1])
 /** 1.000 and 2.000 gwei to three decimals */
 const ROUND_TIPS_WEI = [
   [999_500_000, 1_000_500_000],

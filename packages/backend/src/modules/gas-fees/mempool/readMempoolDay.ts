@@ -3,9 +3,8 @@ import type {
   GasFeesTipLevelWaitRecord,
 } from '@l2beat/database'
 import type { DuneQueryService } from '@l2beat/shared'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { GAS_FEES_TIERS, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { GAS_FEES_TIERS } from '../tips/estimateTips'
 import { TIP_LEVELS, toWaitBucket } from './buckets'
 import {
   getMempoolDayQuery,

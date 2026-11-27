@@ -1,6 +1,5 @@
 import type { GasFeesTipHourlyRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_TIERS } from '../tips/estimateTips'
+import { GAS_FEES_TIERS, UnixTime } from '@l2beat/shared-pure'
 import { gweiToWei } from '../units'
 import { getWaitBucketCases, TIP_LEVELS } from './buckets'
 

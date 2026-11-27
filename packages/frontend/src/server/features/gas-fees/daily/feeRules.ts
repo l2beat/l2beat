@@ -1,4 +1,4 @@
-import type { GasFeesChainId } from '../chains'
+import type { GasFeesChainId } from '@l2beat/shared-pure'
 import { utcDay } from '../days'
 import type { GasFeesDay } from './getGasFeesDays'
 

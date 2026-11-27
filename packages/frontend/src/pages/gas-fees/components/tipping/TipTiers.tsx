@@ -1,4 +1,5 @@
 import type { GasFeesTier, GasFeesWallet } from '@l2beat/database'
+import { GAS_FEES_TIERS } from '@l2beat/shared-pure'
 import { Logo } from '~/components/Logo'
 import { DOT_SEPARATOR } from '~/utils/dotSeparator'
 import { formatRatio, formatUsd } from '../../utils/format'
@@ -8,12 +9,8 @@ import { Eyebrow } from '../Eyebrow'
 import { CountingGwei } from './CountingGwei'
 import { MethodologyDialog } from './MethodologyDialog'
 import { TipTrack, type WalletMark } from './TipTrack'
+import { TIER_LABELS } from './tiers'
 
-const TIERS: { tier: GasFeesTier; name: string; promise: string }[] = [
-  { tier: 'slow', name: 'Slow', promise: '95% within 1 minute' },
-  { tier: 'medium', name: 'Medium', promise: '95% within 2 blocks' },
-  { tier: 'fast', name: 'Fast', promise: '95% next block' },
-]
 /** The track spans 0.000001 to 10 gwei, and grows upward for a higher tip */
 const TRACK_FLOOR = -6
 const TRACK_TOP_GWEI = 10
@@ -66,7 +63,8 @@ export function TipTiers({
           Wallets suggest
         </Eyebrow>
       </div>
-      {TIERS.map(({ tier, name, promise }) => {
+      {GAS_FEES_TIERS.map((tier) => {
+        const { name, promise } = TIER_LABELS[tier]
         const ours = tips[tier]
         const marks: WalletMark[] = wallets
           .filter((w) => w.tier === tier)

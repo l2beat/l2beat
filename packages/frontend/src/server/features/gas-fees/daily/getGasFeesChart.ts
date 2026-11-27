@@ -1,7 +1,10 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  GAS_FEES_CHAIN_IDS,
+  gasFeesTokenOf,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ChartRange } from '~/utils/range/range'
-import { GAS_FEES_CHAINS, gasTokenOf } from '../chains'
 import { eachDay, toDayRange } from '../days'
 import { sum } from '../math'
 import { hasPriorityFees } from './feeRules'
@@ -20,7 +23,7 @@ export const GasFeesChartParams = v.object({
 })
 export type GasFeesChartParams = v.infer<typeof GasFeesChartParams>
 
-/** A timestamp, then a value per chain in GAS_FEES_CHAINS order, then the L2s combined */
+/** A timestamp, then a value per chain in GAS_FEES_CHAIN_IDS order, then the L2s combined */
 type GasFeesChartRow = [number, ...(number | null)[]]
 
 export interface GasFeesChartData {
@@ -62,7 +65,7 @@ export function toChartData(
       ]),
     }
   }
-  const columnCount = GAS_FEES_CHAINS.length + 1
+  const columnCount = GAS_FEES_CHAIN_IDS.length + 1
   const rows = dates.flatMap((ts, i): GasFeesChartRow[] => {
     const weekEnd = (dates.length - 1 - i) % WEEK === 0
     if (!weekEnd && !isFirstOfMonth(ts)) return []
@@ -95,7 +98,7 @@ function dayColumns(days: GasFeesDay[], metric: GasFeesMetric): DayColumn[] {
   const values = new Map(
     days
       // A price per gas in another token can't sit on an ETH axis
-      .filter((d) => !perGas || gasTokenOf(d.chain) === 'ETH')
+      .filter((d) => !perGas || gasFeesTokenOf(d.chain) === 'ETH')
       .map((d) => [d.chain, getDayValues(d)[metric]]),
   )
   const l2Days = days.filter((d) => d.chain !== 'ethereum')
@@ -103,7 +106,7 @@ function dayColumns(days: GasFeesDay[], metric: GasFeesMetric): DayColumn[] {
   const weightOf = (chainDays: GasFeesDay[]) =>
     metric === 'avgFee' ? sum(chainDays.map((d) => d.txCount)) : 1
   return [
-    ...GAS_FEES_CHAINS.map((chain) => ({
+    ...GAS_FEES_CHAIN_IDS.map((chain) => ({
       value: values.get(chain) ?? null,
       weight: weightOf(days.filter((d) => d.chain === chain)),
     })),
@@ -124,7 +127,7 @@ function combineL2s(
   let weighted = 0
   let weights = 0
   for (const d of l2Days) {
-    if (perGas && gasTokenOf(d.chain) !== 'ETH') continue
+    if (perGas && gasFeesTokenOf(d.chain) !== 'ETH') continue
     // The gas of a chain without priority fees paid none
     const paysNoTips = metric === 'priorityFee' && !hasPriorityFees(d.chain)
     const value = paysNoTips ? 0 : (values.get(d.chain) ?? null)

@@ -1,3 +1,4 @@
+import type { GasFeesToken } from '@l2beat/shared-pure'
 import {
   BLOB_UPDATE_FRACTIONS,
   ethereumBlobGasPrice,
@@ -16,8 +17,6 @@ export { BLOB_UPDATE_FRACTIONS }
  * November 2026. Days before FEE_RULES_CHECKED_FROM are not covered.
  */
 export interface FeeRules {
-  /** The token the fees are paid in */
-  token: GasToken
   /** A transaction's whole fee */
   fee: string
   /** The part of the fee paid for posting data to Ethereum. None when left out */
@@ -26,13 +25,11 @@ export interface FeeRules {
   blobFee?: string
 }
 
-export type GasToken = keyof typeof GAS_TOKENS
-
 /** The tokens' addresses on Ethereum, where Dune's prices.hour has both */
-export const GAS_TOKENS = {
+export const GAS_TOKENS: Record<GasFeesToken, string> = {
   ETH: '0x0000000000000000000000000000000000000000',
   MNT: '0x3c3a81e81dc49a522a592e7622a7e711c06bf354',
-} as const
+}
 
 export const FEE_RULES_CHECKED_FROM = '2025-11-01'
 
@@ -55,35 +52,30 @@ const MANTLE_FEE = `case
       else ${GAS} * ${PRICE} + ${L1_FEE} + ${GAS} * 1e10
     end`
 
-const eth = (rules: Omit<FeeRules, 'token'>): FeeRules => ({
-  token: 'ETH',
-  ...rules,
-})
-
 export const FEE_RULES = {
-  ethereum: eth({ fee: `${GAS} * ${PRICE} + ${BLOB_FEE}`, blobFee: BLOB_FEE }),
+  ethereum: { fee: `${GAS} * ${PRICE} + ${BLOB_FEE}`, blobFee: BLOB_FEE },
   // gas_price is the bid here; effective_gas_price is what was charged, tips included.
   // The gas already holds the gas charged for posting data to Ethereum
-  arbitrum: eth({
+  arbitrum: {
     fee: `${GAS} * cast(t.effective_gas_price as double)`,
     l1Fee:
       'cast(t.gas_used_for_l1 as double) * cast(t.effective_gas_price as double)',
-  }),
+  },
   /** OP Stack chains and Scroll: the receipt's L1 fee comes on top of the gas */
-  l1FeeOnTop: eth({
+  l1FeeOnTop: {
     fee: unlessDeposit(`${GAS} * ${PRICE} + ${L1_FEE}`),
     l1Fee: L1_FEE,
-  }),
-  mantle: { token: 'MNT', fee: MANTLE_FEE, l1Fee: L1_FEE },
+  },
+  mantle: { fee: MANTLE_FEE, l1Fee: L1_FEE },
   // gas_price is the bid here too: a transaction is charged the block's base fee,
   // except one sent from Ethereum (Priority), which pays its own price
-  zkStack: eth({
+  zkStack: {
     fee: `${GAS} * if(t.type = 'Priority', ${PRICE}, least(${PRICE}, cast(b.base_fee_per_gas as double)))`,
-  }),
-  gasTimesPrice: eth({ fee: `${GAS} * ${PRICE}` }),
+  },
+  gasTimesPrice: { fee: `${GAS} * ${PRICE}` },
   // The anchor transaction that starts every block carries a gas price, but
   // its sender's balance never changes
-  taiko: eth({
+  taiko: {
     fee: `if(t."from" = 0x0000777735367b36bC9B61C50022d9D0700dB4Ec, 0e0, ${GAS} * ${PRICE})`,
-  }),
+  },
 } satisfies Record<string, FeeRules>

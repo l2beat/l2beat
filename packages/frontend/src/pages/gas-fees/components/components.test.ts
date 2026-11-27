@@ -32,7 +32,7 @@ describe(getSpeedGain.name, () => {
     fastUsd = 0.03,
   ) =>
     ({
-      roundTips: [{ gwei: 2, usd: 0.21, seconds: twoGweiSeconds }],
+      comparisonTip: { gwei: 2, usd: 0.21, seconds: twoGweiSeconds },
       fastTip: { usd: fastUsd, seconds: fastSeconds },
     }) as PriceOfSpeed
 

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { gasFeesTokenOf, UnixTime } from '@l2beat/shared-pure'
 import type { GasFeesChain } from './chains'
 import { GAS_TOKENS } from './feeRules'
 
@@ -38,7 +38,7 @@ with prices as (
       (chain) => `
   select
     '${chain.dune}' as blockchain,
-    '${chain.fees.token}' as token,
+    '${gasFeesTokenOf(chain.id)}' as token,
     t.block_date as day,
     date_trunc('hour', t.block_time) as hour,
     ${chain.fees.fee} as fee,

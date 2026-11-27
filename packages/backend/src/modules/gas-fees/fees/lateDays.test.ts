@@ -11,14 +11,19 @@ import {
 
 const day = (n: number) => UnixTime(n * UnixTime.DAY)
 const fees = FEE_RULES.gasTimesPrice
-const a: GasFeesChain = { id: 'a', dune: 'a', fees, requiredFrom: day(0) }
-const b: GasFeesChain = { id: 'b', dune: 'b', fees, requiredFrom: day(2) }
+const a: GasFeesChain = {
+  id: 'arbitrum',
+  dune: 'arbitrum',
+  fees,
+  requiredFrom: day(0),
+}
+const b: GasFeesChain = { id: 'base', dune: 'base', fees, requiredFrom: day(2) }
 
 describe(getMissingChainDays.name, () => {
   it("lists the chain-days not stored, from each chain's first required day", () => {
     const stored = [
-      { chain: 'a', timestamp: day(1) },
-      { chain: 'b', timestamp: day(2) },
+      { chain: 'arbitrum', timestamp: day(1) },
+      { chain: 'base', timestamp: day(2) },
     ]
 
     expect(getMissingChainDays([a, b], day(1), day(3), stored)).toEqual([
@@ -39,13 +44,13 @@ describe(isAnyChainExpected.name, () => {
 describe(pickChainDays.name, () => {
   it('keeps the records of the given chain-days only', () => {
     const records = [
-      { chain: 'a', timestamp: day(1) },
-      { chain: 'a', timestamp: day(2) },
-      { chain: 'b', timestamp: day(2) },
+      { chain: 'arbitrum', timestamp: day(1) },
+      { chain: 'arbitrum', timestamp: day(2) },
+      { chain: 'base', timestamp: day(2) },
     ]
 
     expect(pickChainDays(records, [{ chain: a, day: day(2) }])).toEqual([
-      { chain: 'a', timestamp: day(2) },
+      { chain: 'arbitrum', timestamp: day(2) },
     ])
   })
 })

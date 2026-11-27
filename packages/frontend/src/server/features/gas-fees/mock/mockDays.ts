@@ -1,5 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { GAS_FEES_CHAINS, type GasFeesChainId, gasTokenOf } from '../chains'
+import {
+  GAS_FEES_CHAIN_IDS,
+  type GasFeesChainId,
+  gasFeesTokenOf,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { l1FeeInGas, operatorFee } from '../daily/feeRules'
 import type { GasFeesDay } from '../daily/getGasFeesDays'
 import { eachDay, utcDay } from '../days'
@@ -113,7 +117,7 @@ export function getMockGasFeesDays(from: UnixTime, to: UnixTime): GasFeesDay[] {
     UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.DAY,
   )
   return eachDay(from, UnixTime(Math.min(to, yesterday))).flatMap((ts) =>
-    GAS_FEES_CHAINS.flatMap((chain) =>
+    GAS_FEES_CHAIN_IDS.flatMap((chain) =>
       // A few chain-days Dune never had whole
       chain !== 'ethereum' && seededNoise('missing', chain, ts) < 0.004
         ? []
@@ -143,7 +147,7 @@ function mockDay(chain: GasFeesChainId, timestamp: UnixTime): GasFeesDay {
   }
   const c = CHAINS[chain]
   const ethUsd = mockEthUsd(timestamp)
-  const tokenUsd = gasTokenOf(chain) === 'MNT' ? MNT_USD : ethUsd
+  const tokenUsd = gasFeesTokenOf(chain) === 'MNT' ? MNT_USD : ethUsd
   const txCount = Math.round(jitter(c.txs, 0.2, 'tx', chain, timestamp))
   const gasUsed = txCount * c.gasPerTx
   const busy = 0.4 + 2 * seededNoise('busy', chain, timestamp) ** 3
