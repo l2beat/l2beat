@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "timestamp": 1752575723,
-  "configHash": "0x99ea084e06a36efba562b9e7d9508db54081ad18bb8638de80078c7da24bccc7",
+  "configHash": "0xbc66d98f634369599e7304a1c9ade7e70755b2062d4d8b88f14d02cd1e24734e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -367,6 +367,7 @@
         ],
         "$upgradeCount": 1,
         "batcherHash": "eth:0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12",
+        "enabledFeatures": [],
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
@@ -1987,12 +1988,12 @@
     "opstack/L1CrossDomainMessenger": "0xb744f567252900c5026a2b29403304c6744365159db35005ebd26e5236be1b27",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0xe12a1d11b528a86198802d42c94a6960c55724bcfaf859346be9755694a1c641",
-    "opstack/SystemConfig": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
+    "opstack/SystemConfig": "0x534cbad0c51bbafe28f1405cd3df299854b9abf992ee04254a7ba483646a50e7"
   },
   "usedBlockNumbers": { "ethereum": 22924020 },
   "permissionsConfigHash": "0x91d5e4896b04689cf49f29c18d808df194e00e8b8dada936b11f8f7f64b1c001",
   "modelledAgainst": {
-    "shared-sp1": "0xed561151aa2d9072281a3657904e99ebbe79527c86fd4a127d2cf0581e691b66"
+    "shared-sp1": "0x2dc205a7a9fab0f4b2920f2ca38bd4030cf05d763d8ff9e332b9e53214bccb6b"
   },
   "permissions": {
     "eth:0x16876e5c608cec36968517A9Eb345269D308D94a": {

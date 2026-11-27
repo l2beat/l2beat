@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x80b0074ab461fef5154bbae6ef12c1184cef0614
+
+# Diff at Fri, 27 Nov 2026 15:21:53 GMT:
+
+- id: 45c41db8
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d291347d0b7c704458e8b61c6b53e670fd9474de block: 1795621431
+- current timestamp: 1795621431
+
+## Description
+
+Manually verified the Poseidon hasher bytecode against its generator (circomlibjs v0.1.7, or Tornado's circomlib fork at 3b492f9 for Tornado Cash).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1795621431 (main branch discovery), not current.
+
+```diff
+    contract PoseidonHasher2 (eth:0x94C92F096437ab9958fC0A37F09348f30389Ae79) [N/A] {
+    +++ description: Anonymity Mining - Poseidon hasher with two inputs (Tornado's 35-partial-round variant) used by the legacy DepositTree and WithdrawalTree to hash tree nodes, manually verified against the pinned Tornado circomlib generator.
+      unverified:
+-        true
+      description:
+-        "Anonymity Mining - Unverified Poseidon hasher used by the legacy DepositTree and WithdrawalTree to hash tree nodes."
++        "Anonymity Mining - Poseidon hasher with two inputs (Tornado's 35-partial-round variant) used by the legacy DepositTree and WithdrawalTree to hash tree nodes, manually verified against the pinned Tornado circomlib generator."
+      sourceHashes:
++        ["0x274fe4b57b8e8505d2799877c79040421e7fb06ea3c5ccfada2d1e36868126af"]
+      references:
++        [{"text":"Tornado anonymity mining circomlib pin","href":"https://github.com/tornadocash/tornado-anonymity-mining/blob/95f6bbfe17498f3a77b157652274b27a5e31fed0/package.json"},{"text":"Source Code","href":"https://github.com/tornadocash/circomlib/blob/3b492f9801573eebcfe1b6c584afe8a3beecf2b4/src/poseidon_gencontract.js"}]
+    }
+```
+
+```diff
+    contract PoseidonHasher (eth:0xD82ed8786D7c69DC7e052F7A542AB047971E73d2) [N/A] {
+    +++ description: Anonymity Mining - Poseidon hasher with three inputs (Tornado's 35-partial-round variant) used by TornadoTreesV1 to hash deposit and withdrawal leaves, manually verified against the pinned Tornado circomlib generator.
+      unverified:
+-        true
+      description:
+-        "Anonymity Mining - Unverified Poseidon hasher used by TornadoTreesV1 to hash deposit and withdrawal leaves."
++        "Anonymity Mining - Poseidon hasher with three inputs (Tornado's 35-partial-round variant) used by TornadoTreesV1 to hash deposit and withdrawal leaves, manually verified against the pinned Tornado circomlib generator."
+      sourceHashes:
++        ["0x274fe4b57b8e8505d2799877c79040421e7fb06ea3c5ccfada2d1e36868126af"]
+      references:
++        [{"text":"Tornado anonymity mining circomlib pin","href":"https://github.com/tornadocash/tornado-anonymity-mining/blob/95f6bbfe17498f3a77b157652274b27a5e31fed0/package.json"},{"text":"Source Code","href":"https://github.com/tornadocash/circomlib/blob/3b492f9801573eebcfe1b6c584afe8a3beecf2b4/src/poseidon_gencontract.js"}]
+    }
+```
+
 Generated with discovered.json: 0x685a8cce2024d4875ab843d0f30a2473c28fdf78
 
 # Diff at Wed, 25 Nov 2026 15:48:08 GMT:

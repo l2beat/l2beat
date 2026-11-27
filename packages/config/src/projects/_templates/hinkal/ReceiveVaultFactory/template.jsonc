@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ReceiveVaultFactory",
-  "critical": true,
+  "category": "non-critical",
   "description": "Upgradeable factory of the deposit addresses (receive vaults) that take public transfers for a private account. A whitelisted relayer settles a deposit address: the factory deploys the vault, pays the relayer its fee and deposits the rest into Hinkal for the recipient fixed in the address. The key that owns a deposit address can instead sign a recovery of its funds to any address.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
