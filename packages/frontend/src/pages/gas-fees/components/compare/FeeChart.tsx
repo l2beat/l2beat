@@ -147,7 +147,9 @@ export function FeeChart({
     <section className="flex flex-col gap-3">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <h3 className="font-bold text-lg">{METRIC_LABELS[metric].title}</h3>
+          <h3 className="font-bold text-lg">
+            {METRIC_LABELS[shownMetric].title}
+          </h3>
           <ChartTimeRange
             timeRange={
               first !== undefined && last !== undefined

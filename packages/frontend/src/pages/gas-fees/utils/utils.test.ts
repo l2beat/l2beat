@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import { optionToRange } from '~/utils/range/range'
 import { compareCosts } from './compare'
 import {
   formatGwei,
@@ -8,6 +9,7 @@ import {
   splitLeadingZeros,
 } from './format'
 import { isOnScale, logPosition, logScaleOf } from './logScale'
+import { GAS_FEES_RANGES, rangeOptionOf } from './ranges'
 
 describe(logScaleOf.name, () => {
   it('spans whole decades, at least one', () => {
@@ -79,5 +81,13 @@ describe(compareCosts.name, () => {
   it('says nothing without two positive costs', () => {
     expect(compareCosts(0, 1)).toEqual(undefined)
     expect(compareCosts(1, 0)).toEqual(undefined)
+  })
+})
+
+describe(rangeOptionOf.name, () => {
+  it('finds the preset each range was made from', () => {
+    for (const { value } of GAS_FEES_RANGES) {
+      expect(rangeOptionOf(optionToRange(value))).toEqual(value)
+    }
   })
 })

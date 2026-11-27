@@ -1,4 +1,9 @@
-import type { ChartRangePredefinedOption } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartRangePredefinedOption,
+  optionToDays,
+} from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const GAS_FEES_RANGES = [
   { value: '7d', label: '7D', period: 'past 7 days' },
@@ -15,3 +20,11 @@ export type GasFeesRangeOption = (typeof GAS_FEES_RANGES)[number]['value']
 
 export const DEFAULT_CHART_RANGE: GasFeesRangeOption = 'max'
 export const DEFAULT_TABLE_RANGE: GasFeesRangeOption = '30d'
+
+/** The preset a range was made from */
+export function rangeOptionOf(
+  range: ChartRange,
+): GasFeesRangeOption | undefined {
+  const days = rangeToDays(range)
+  return GAS_FEES_RANGES.find((r) => optionToDays(r.value) === days)?.value
+}

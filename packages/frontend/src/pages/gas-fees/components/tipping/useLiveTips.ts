@@ -31,7 +31,8 @@ export function useLiveTips(ref: RefObject<Element | null>): LiveTips {
   // The estimate's age at the read is the server's to tell; the device's clock only counts on from there
   const staleAtMs = data?.estimate
     ? dataUpdatedAt +
-      (LIVE_FOR_SECONDS - (data.readAt - data.estimate.updatedAt)) * 1000
+      (LIVE_FOR_SECONDS - Math.max(0, data.readAt - data.estimate.updatedAt)) *
+        1000
     : undefined
   const now = useNowUntil(staleAtMs)
   // A failed read is no estimate, not a load without end; the polls go on

@@ -18,9 +18,9 @@ import { useTRPC } from '~/trpc/React'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { DEFAULT_METRIC, METRIC_LABELS } from '../../utils/metricLabels'
 import {
-  DEFAULT_TABLE_RANGE,
   GAS_FEES_RANGES,
   type GasFeesRangeOption,
+  rangeOptionOf,
 } from '../../utils/ranges'
 import { CostsTable } from './CostsTable'
 
@@ -34,15 +34,14 @@ export function CostsCard({
   const trpc = useTRPC()
   const [metric, setMetric] = useState<PeriodMetric>(DEFAULT_METRIC)
   // The first range is the server's, so the prefetched data is used
-  const [{ option, range }, setPeriod] = useState<{
-    option: GasFeesRangeOption
-    range: ChartRange
-  }>({ option: DEFAULT_TABLE_RANGE, range: initialRange })
-  const { data, isPlaceholderData, isError } = useChartQuery(
+  const [range, setRange] = useState(initialRange)
+  const { data, isPlaceholderData, isError, shownInput } = useChartQuery(
     trpc.gasFees.summary,
     { range },
   )
-  const period = GAS_FEES_RANGES.find((r) => r.value === option)?.period
+  // The period named is the one the costs on screen are for
+  const shownOption = rangeOptionOf(shownInput.range)
+  const period = GAS_FEES_RANGES.find((r) => r.value === shownOption)?.period
 
   return (
     <PrimaryCard className="flex flex-col gap-4">
@@ -74,11 +73,10 @@ export function CostsCard({
           </Select>
           <RadioGroup
             name="gasFeesTableRange"
-            value={option}
-            onValueChange={(v) => {
-              const next = v as GasFeesRangeOption
-              setPeriod({ option: next, range: optionToRange(next) })
-            }}
+            value={rangeOptionOf(range)}
+            onValueChange={(v) =>
+              setRange(optionToRange(v as GasFeesRangeOption))
+            }
           >
             {GAS_FEES_RANGES.map((r) => (
               <RadioGroupItem key={r.value} value={r.value}>
