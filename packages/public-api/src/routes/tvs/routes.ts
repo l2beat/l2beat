@@ -1,7 +1,12 @@
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { type ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  type ProjectId,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
@@ -14,9 +19,11 @@ import { getTvsData } from './getTvsData'
 import {
   type TokenExclusions,
   TokenTvsResultSchema,
+  type TvsCategory,
   TvsQuerySchema,
   TvsRangeSchema,
   TvsResultSchema,
+  TvsSumQuerySchema,
 } from './types'
 
 export function addTvsRoutes(
@@ -28,25 +35,38 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs',
     {
-      summary: 'Total Value Secured with ability to control the time range',
-      description: TVS_CHART_DESCRIPTION,
+      operationId: 'getTvsChart',
+      summary:
+        'Total Value Secured by scaling projects (layer 2s and layer 3s) with ability to control the time range',
+      description: [TVS_SUM_DESCRIPTION, TVS_CHART_DESCRIPTION].join('\n\n'),
       tags: ['tvs'],
-      query: TvsQuerySchema,
-      queryDescriptions: TVS_QUERY_DESCRIPTIONS,
+      query: TvsSumQuerySchema,
+      queryDescriptions: {
+        category:
+          'Which projects the sum covers. Only `scaling`, the default: layer 2 and layer 3 projects. DeFi and privacy projects are not in it; read theirs from `/v1/tvs/{projectId}`.',
+        ...TVS_QUERY_DESCRIPTIONS,
+      },
       result: TvsResultSchema,
     },
     async (req, res) => {
-      const { range = '30d' } = req.query
+      const { range = '30d', category = 'scaling' } = req.query
       const exclusions = parseTokenExclusions(req.query)
 
       const data = await cache.get(
         {
-          key: ['tvs', range, ...tokenExclusionsCacheKey(exclusions)],
+          key: [
+            'tvs',
+            // Keeps the sum apart from a project whose id is a category name
+            'sum',
+            category,
+            range,
+            ...tokenExclusionsCacheKey(exclusions),
+          ],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
         async () => {
-          const projectIds = await getTvsProjects(ps)
+          const projectIds = await getTvsProjects(ps, category)
 
           return getTvsData(db, range, projectIds, exclusions)
         },
@@ -59,6 +79,7 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs/:projectId',
     {
+      operationId: 'getProjectTvsChart',
       summary:
         'Total Value Secured for a specific project with ability to control the time range.',
       description: TVS_CHART_DESCRIPTION,
@@ -109,6 +130,7 @@ export function addTvsRoutes(
   openapi.get(
     '/v1/tvs/token/:tokenId',
     {
+      operationId: 'getTokenTvsChart',
       summary:
         'Total Value Secured for a specific token with ability to control the time range.',
       description: 'This endpoint may be affected by changes in the future.',
@@ -154,13 +176,25 @@ export function addTvsRoutes(
   )
 }
 
-async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
-  const projects = await ps.getProjects({
-    select: ['tvsConfig'],
-    whereNot: ['archivedAt'],
-  })
-
-  return projects.map((p) => p.id)
+async function getTvsProjects(
+  ps: ProjectService,
+  category: TvsCategory,
+): Promise<ProjectId[]> {
+  switch (category) {
+    // Like the website's scaling TVS and like /v1/activity. DeFi and privacy
+    // projects have TVS configs too, and their value is not secured by a
+    // scaling project.
+    case 'scaling': {
+      const projects = await ps.getProjects({
+        select: ['tvsConfig'],
+        where: ['scalingInfo'],
+        whereNot: ['archivedAt'],
+      })
+      return projects.map((p) => p.id)
+    }
+    default:
+      assertUnreachable(category)
+  }
 }
 
 /** The ids of the tokens in any project's TVS config, archived ones too. */
@@ -175,14 +209,17 @@ const TVS_CHART_DESCRIPTION = [
   'A timestamp with no data has no point: it is missing, not zero. Read each point by its `timestamp`, since the spacing can have gaps.',
   'The timestamp of the last point is the time the data is synced until, the same value the website reports as `syncedUntil`. For a sum of many projects it is the latest time any of them has data for, so a project that lags behind is left out of the newest points.',
   '`ethPrice` is the USD price of ETH at that point, the one the website uses to show TVS in ETH: divide `totalTvs` by it. It is `null` when the price is unknown.',
-  'Unlike the website, this endpoint counts restricted RWA tokens by default. To count tokens the way the website does, pass `excludeRwaRestrictedTokens=true`. The sum of all projects also includes projects the website does not list under scaling.',
+  'Tokens are counted the way the website and `/v1/projects` count them by default: associated tokens are in, restricted RWA tokens are out. The two `exclude` parameters change that.',
 ].join('\n\n')
+
+const TVS_SUM_DESCRIPTION =
+  'The sum covers the layer 2 and layer 3 projects that are not archived, the same set as `/v1/activity`. It leaves out DeFi and privacy projects, which have TVS of their own: `/v1/tvs/{projectId}` returns it for one project, and sums across the three must not be added up, since a token can count in more than one.'
 
 const TVS_QUERY_DESCRIPTIONS = {
   excludeAssociatedTokens:
     'When `true`, leaves out tokens associated with the project, such as its own governance token. Defaults to `false`, like the website.',
   excludeRwaRestrictedTokens:
-    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `false`, which counts them. The website defaults to `true`: pass `true` to filter tokens the way it does.',
+    'When `true`, leaves out restricted real-world-asset tokens, which only approved holders may own. Defaults to `true`, like the website. Pass `false` to count them.',
 }
 
 function parseTokenExclusions(
@@ -190,7 +227,7 @@ function parseTokenExclusions(
 ): TokenExclusions {
   return {
     excludeAssociatedTokens: query.excludeAssociatedTokens === 'true',
-    excludeRwaRestrictedTokens: query.excludeRwaRestrictedTokens === 'true',
+    excludeRwaRestrictedTokens: query.excludeRwaRestrictedTokens !== 'false',
   }
 }
 

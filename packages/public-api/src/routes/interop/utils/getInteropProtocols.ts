@@ -3,7 +3,7 @@ import {
   mergeTransferTypeStats,
 } from '@l2beat/database'
 import { getInteropTransferValue } from '@l2beat/shared-pure'
-import type { InteropProtocol } from '../types'
+import type { InteropProtocolAggregate } from '../types'
 import { chainMetadata } from './chainMetadata'
 import {
   getAverageTransferTimeSeconds,
@@ -38,7 +38,7 @@ type ProtocolAccumulator = {
 export function getInteropProtocols(
   records: AggregatedInteropTransferRecord[],
   projects: ProjectMetadata[],
-): InteropProtocol[] {
+): InteropProtocolAggregate[] {
   const projectsMap = new Map(
     projects.map((project) => [project.id.toString(), project]),
   )

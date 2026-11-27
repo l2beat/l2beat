@@ -6,7 +6,10 @@ import type {
   Formula,
   TvsToken,
 } from '../types'
-import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
+import {
+  extractAddressesFromTokenConfig,
+  getTvsTokenAddresses,
+} from './extractAddressesFromTokenConfig'
 
 describe(extractAddressesFromTokenConfig.name, () => {
   it('should handle calculation', () => {
@@ -164,6 +167,33 @@ describe(extractAddressesFromTokenConfig.name, () => {
     })
     const result = extractAddressesFromTokenConfig(token)
     expect(result).toEqual([])
+  })
+})
+
+// Why: the public API reads token addresses from this map and no longer from
+// the formulas, and it reports a token without an entry as reading no
+// contract. How: one token that reads a contract and one with a fixed amount.
+describe(getTvsTokenAddresses.name, () => {
+  it('maps each token id to its addresses and leaves out tokens without any', () => {
+    const address = EthereumAddress.random()
+    const withContract = {
+      ...mockToken(
+        mockAmountFormula({ type: 'totalSupply', address, chain: 'base' }),
+      ),
+      id: TokenId('with-contract'),
+    }
+    const fixed = {
+      ...mockToken(mockAmountFormula({ type: 'const' })),
+      id: TokenId('fixed'),
+    }
+
+    expect(getTvsTokenAddresses([withContract, fixed])).toEqual({
+      'with-contract': [{ address, chain: 'base' }],
+    })
+  })
+
+  it('is undefined for a project without a TVS config', () => {
+    expect(getTvsTokenAddresses(undefined)).toEqual(undefined)
   })
 })
 

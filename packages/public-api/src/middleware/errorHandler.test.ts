@@ -21,7 +21,8 @@ describe(errorHandler.name, () => {
       headersSent: false,
       statusCode: 500,
       status: mockFn().returns(undefined),
-      send: mockFn().returns(undefined),
+      setHeader: mockFn().returns(undefined),
+      json: mockFn().returns(undefined),
     })
 
     errorHandler(logger)(new Error('boom'), req, res, mockFn())

@@ -1,5 +1,4 @@
 import { ProjectService } from '@l2beat/config'
-import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { processAddresses } from '~/server/features/layer2s/tvs/breakdown/tokenEntryHelpers'
@@ -17,7 +16,7 @@ export async function getInternalTokenBreakdown() {
     await Promise.all([
       ps.getProjects({
         select: ['tvsConfig'],
-        optional: ['chainConfig', 'contracts'],
+        optional: ['chainConfig', 'contracts', 'tvsTokenAddresses'],
       }),
       ps.getProjects({
         select: ['chainConfig'],
@@ -70,12 +69,13 @@ export async function getInternalTokenBreakdown() {
 
   for (const project of projects) {
     const projectTokens = project.tvsConfig
+    const tokenAddresses = project.tvsTokenAddresses
 
     for (const token of projectTokens) {
       const tokenValue = tokenValuesMap.get(token.id)
       if (!tokenValue) continue
 
-      const addresses = extractAddressesFromTokenConfig(token)
+      const addresses = tokenAddresses?.[token.id] ?? []
       const address = processAddresses(addresses, chains, undefined)
       const project = projects.find((p) => p.id === tokenValue.projectId)
       assert(project, 'Project not found')

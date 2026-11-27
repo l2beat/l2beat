@@ -1,5 +1,9 @@
-import type { ChainConfig, Formula, ProjectContract } from '@l2beat/config'
-import type { Address } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
+import type {
+  ChainConfig,
+  Formula,
+  ProjectContract,
+  TvsTokenAddress,
+} from '@l2beat/config'
 import {
   assertUnreachable,
   ChainSpecificAddress,
@@ -117,7 +121,7 @@ export function withExplorerUrl(
 }
 
 export function processAddresses(
-  addresses: Address[],
+  addresses: TvsTokenAddress[],
   chains: ChainConfig[],
   projectContracts: Record<string, ProjectContract[]> | undefined,
 ): AddressData | 'multiple' | undefined {
@@ -132,7 +136,7 @@ export function processAddresses(
 }
 
 function processAddress(
-  address: Address,
+  address: TvsTokenAddress,
   chains: ChainConfig[],
   projectContracts: Record<string, ProjectContract[]> | undefined,
 ): AddressData {

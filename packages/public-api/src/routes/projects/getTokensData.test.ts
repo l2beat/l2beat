@@ -1,4 +1,9 @@
-import type { AmountFormula, Project, TvsToken } from '@l2beat/config'
+import type {
+  AmountFormula,
+  Project,
+  TvsToken,
+  TvsTokenAddress,
+} from '@l2beat/config'
 import type { Database, TokenValueRecord } from '@l2beat/database'
 import {
   EthereumAddress,
@@ -19,17 +24,9 @@ describe(toTokens.name, () => {
 
   it('maps a token read from one contract to one address with its chain', () => {
     const address = EthereumAddress.random()
-    const project = mockProject([
-      mockToken(
-        'ETH',
-        mockAmount({
-          type: 'balanceOfEscrow',
-          address,
-          escrowAddress: EthereumAddress.random(),
-          chain: 'ethereum',
-        }),
-      ),
-    ])
+    const project = mockProject([mockToken('ETH')], {
+      ETH: [{ address, chain: 'ethereum' }],
+    })
 
     const result = toTokens(project, [
       mockValue('ETH', { amount: 2, priceUsd: 3000, valueForProject: 6000 }),
@@ -59,16 +56,12 @@ describe(toTokens.name, () => {
   it('lists every contract of a token summed across several contracts', () => {
     const first = EthereumAddress.random()
     const second = EthereumAddress.random()
-    const project = mockProject([
-      mockToken('USDC', {
-        type: 'calculation',
-        operator: 'sum',
-        arguments: [
-          mockAmount({ type: 'totalSupply', address: first, chain: 'base' }),
-          mockAmount({ type: 'totalSupply', address: second, chain: 'base' }),
-        ],
-      }),
-    ])
+    const project = mockProject([mockToken('USDC')], {
+      USDC: [
+        { address: first, chain: 'base' },
+        { address: second, chain: 'base' },
+      ],
+    })
 
     const [token] = toTokens(project, [mockValue('USDC')])
 
@@ -82,10 +75,7 @@ describe(toTokens.name, () => {
   // A token with no synced value has no amount at all. Reporting 0 would
   // claim the project secures none of it, so it is left out, as on the website.
   it('leaves out a token with no synced value instead of reporting 0', () => {
-    const project = mockProject([
-      mockToken('ETH', mockAmount({ type: 'const' })),
-      mockToken('DAI', mockAmount({ type: 'const' })),
-    ])
+    const project = mockProject([mockToken('ETH'), mockToken('DAI')])
 
     const result = toTokens(project, [mockValue('ETH')])
 
@@ -96,9 +86,7 @@ describe(toTokens.name, () => {
   // Configs write gas tokens as the symbol is spelled (USDe, reETH), so an
   // exact comparison against an upper-cased symbol misses them.
   it('recognizes a gas token whose symbol has mixed case', () => {
-    const project = mockProject([
-      mockToken('USDe', mockAmount({ type: 'const' })),
-    ])
+    const project = mockProject([mockToken('USDe')])
 
     const [token] = toTokens(project, [mockValue('USDe')])
 
@@ -149,12 +137,21 @@ describe(getTokensData.name, () => {
   })
 })
 
+type TokensProject = Project<
+  never,
+  'tvsConfig' | 'tvsTokenAddresses' | 'chainConfig'
+>
+
+// `addresses` is what config builds from the tokens' amount formulas. A token
+// without an entry reads no contract.
 function mockProject(
   tokens: TvsToken[],
-): Project<never, 'tvsConfig' | 'chainConfig'> {
-  return mockObject<Project<never, 'tvsConfig' | 'chainConfig'>>({
+  addresses: Record<string, TvsTokenAddress[]> = {},
+): TokensProject {
+  return mockObject<TokensProject>({
     id: ProjectId('project'),
     tvsConfig: tokens,
+    tvsTokenAddresses: addresses,
     chainConfig: mockObject<NonNullable<Project<'chainConfig'>['chainConfig']>>(
       {
         gasTokens: ['ETH', 'USDe'],
@@ -163,24 +160,16 @@ function mockProject(
   })
 }
 
-function mockToken(symbol: string, amount: TvsToken['amount']): TvsToken {
+function mockToken(symbol: string): TvsToken {
   return {
     mode: 'auto',
     id: TokenId(symbol),
     priceId: symbol.toLowerCase(),
     symbol,
     name: `${symbol} name`,
-    amount,
+    amount: mockObject<AmountFormula>({ type: 'const' }),
     category: symbol === 'ETH' ? 'ether' : 'stablecoin',
     source: 'canonical',
     isAssociated: false,
   }
-}
-
-function mockAmount(amount: Partial<AmountFormula>): AmountFormula {
-  return mockObject<AmountFormula>({
-    decimals: 6,
-    sinceTimestamp: 0,
-    ...amount,
-  })
 }

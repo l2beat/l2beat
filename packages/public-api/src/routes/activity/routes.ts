@@ -21,7 +21,9 @@ export function addActivityRoutes(
   openapi.get(
     '/v1/activity',
     {
-      summary: 'Activity data with ability to control the time range.',
+      operationId: 'getActivityChart',
+      summary:
+        'Activity of scaling projects (layer 2s and layer 3s) with ability to control the time range.',
       description: ACTIVITY_CHART_DESCRIPTION,
       tags: ['activity'],
       query: v.object({
@@ -51,6 +53,7 @@ export function addActivityRoutes(
   openapi.get(
     '/v1/activity/:projectId',
     {
+      operationId: 'getProjectActivityChart',
       summary:
         'Activity data for a specific project with ability to control the time range.',
       description: ACTIVITY_CHART_DESCRIPTION,

@@ -3,7 +3,7 @@ import {
   mergeTransferTypeStats,
 } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import type { InteropChain } from '../types'
+import type { InteropChainAggregate } from '../types'
 import { chainMetadata } from './chainMetadata'
 import {
   type CommonInteropData,
@@ -32,7 +32,7 @@ type ChainAccumulator = {
 export function getInteropChains(
   records: AggregatedInteropTransferRecord[],
   projects: ProjectMetadata[],
-): InteropChain[] {
+): InteropChainAggregate[] {
   const projectsMap = new Map(
     projects.map((project) => [project.id.toString(), project]),
   )

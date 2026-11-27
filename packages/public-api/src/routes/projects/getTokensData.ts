@@ -1,11 +1,13 @@
 import type { Project } from '@l2beat/config'
-import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import type { Database, TokenValueRecord } from '@l2beat/database'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import { getLatestTvsTimestamp } from '../../utils/getLatestTvsTimestamp'
 import type { Token } from './types'
 
-type TokensProject = Project<never, 'tvsConfig' | 'chainConfig'>
+type TokensProject = Project<
+  never,
+  'tvsConfig' | 'tvsTokenAddresses' | 'chainConfig'
+>
 
 export async function getTokensData(
   db: Database,
@@ -49,7 +51,7 @@ export function toTokens(
       valueUsd: tokenValue.valueForProject,
       name: token.name,
       amount: tokenValue.amount,
-      addresses: extractAddressesFromTokenConfig(token),
+      addresses: project.tvsTokenAddresses?.[token.id] ?? [],
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()) ?? false,
       isAssociated: token.isAssociated,
       bridgedUsing: token.bridgedUsing ?? null,

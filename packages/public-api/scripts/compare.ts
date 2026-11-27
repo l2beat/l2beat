@@ -1,19 +1,16 @@
-import { getEnv } from '@l2beat/backend-tools'
 import { v } from '@l2beat/validate'
 import { writeFileSync } from 'fs'
 import path from 'path'
 import { ProjectSchema } from '../src/routes/projects/types'
 
-const prod = 'https://api.l2beat.com'
+const prod = 'https://api.ethbeat.org'
 const local = 'http://localhost:3000'
 
 const tvsRanges = ['7d', '30d', '90d', '180d', '1y', 'max']
 const activityRanges = ['30d', '90d', '180d', '1y', 'max']
 
 export async function main() {
-  const env = getEnv()
-  const apiKey = env.string('COMPARE_API_KEY')
-  const projects = await fetch(withApiKey(`${prod}/v1/projects`, apiKey))
+  const projects = await fetch(`${prod}/v1/projects`)
   const projectsData = await projects.json()
   const parsedProjects = v.array(ProjectSchema).parse(projectsData)
 
@@ -37,8 +34,8 @@ export async function main() {
   for (const endpoint of toCheck) {
     console.log(`Checking ${endpoint}...`)
     const [prodResponse, localResponse] = await Promise.all([
-      fetch(withApiKey(`${prod}/${endpoint}`, apiKey)),
-      fetch(withApiKey(`${local}/${endpoint}`, apiKey)),
+      fetch(`${prod}/${endpoint}`),
+      fetch(`${local}/${endpoint}`),
     ])
     const prodDataJson = await prodResponse.json()
     const localDataJson = await localResponse.json()
@@ -79,10 +76,3 @@ function roundNestedValues(data: unknown) {
 }
 
 main().catch(console.error)
-
-function withApiKey(url: string, apiKey: string) {
-  if (url.includes('?')) {
-    return `${url}&apiKey=${apiKey}`
-  }
-  return `${url}?apiKey=${apiKey}`
-}

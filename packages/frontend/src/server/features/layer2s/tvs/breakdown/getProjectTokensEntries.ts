@@ -1,5 +1,4 @@
 import type { ChainConfig, Project, TvsToken } from '@l2beat/config'
-import { extractAddressesFromTokenConfig } from '@l2beat/config/build/utils/extractAddressesFromTokenConfig'
 import type { TokenValueRecord } from '@l2beat/database'
 import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
@@ -56,7 +55,10 @@ export interface ProjectTvsBreakdownTokenEntry extends FilterableEntry {
 }
 
 export async function getProjectTokensEntries(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+  project: Project<
+    'tvsConfig',
+    'chainConfig' | 'contracts' | 'tvsTokenAddresses'
+  >,
 ): Promise<ProjectTvsBreakdownTokenEntry[]> {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData(project)
@@ -101,7 +103,10 @@ export async function getProjectTokensEntries(
 }
 
 function getEntries(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+  project: Project<
+    'tvsConfig',
+    'chainConfig' | 'contracts' | 'tvsTokenAddresses'
+  >,
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   sevenDaysAgoTokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
@@ -118,7 +123,7 @@ function getEntries(
     const tokenValue = tokenValuesMap.get(token.id)
     if (!tokenValue) continue
 
-    const addresses = extractAddressesFromTokenConfig(token)
+    const addresses = project.tvsTokenAddresses?.[token.id] ?? []
     const address = processAddresses(
       addresses,
       chains,
@@ -201,7 +206,10 @@ function getEntries(
 }
 
 async function getMockTvsBreakdownForProjectData(
-  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
+  project: Project<
+    'tvsConfig',
+    'chainConfig' | 'contracts' | 'tvsTokenAddresses'
+  >,
 ): Promise<ProjectTvsBreakdownTokenEntry[]> {
   const projects = await ps.getProjects({
     select: ['chainConfig'],

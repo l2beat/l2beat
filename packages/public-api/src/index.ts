@@ -6,7 +6,7 @@ import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import { getConfig } from './config'
 import { corsMiddleware } from './middleware/corsMiddleware'
-import { errorHandler } from './middleware/errorHandler'
+import { errorHandler, notFoundHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
 import { addActivityRoutes } from './routes/activity/routes'
@@ -24,38 +24,49 @@ function main() {
   const ps = new ProjectService()
 
   const app = express()
-  const openapi = new OpenApi(app, {
-    openapi: '3.1.0',
-    info: {
-      title: 'ETHBEAT API',
-      version: '1.0.0',
-      description: getApiDescription(),
+  app.disable('x-powered-by')
+  const openapi = new OpenApi(
+    app,
+    {
+      openapi: '3.1.0',
+      info: {
+        title: 'ETHBEAT API',
+        version: '1.0.0',
+        description: getApiDescription(),
+      },
+      servers: [{ url: config.openapi.url }],
+      tags: [
+        {
+          name: 'projects',
+          description:
+            'Endpoints for listing projects and retrieving detailed information about individual projects.',
+        },
+        {
+          name: 'tvs',
+          description:
+            'Endpoints for retrieving Total Value Secured (TVS) data',
+        },
+        {
+          name: 'activity',
+          description: 'Endpoints for retrieving activity data',
+        },
+        {
+          name: 'interop',
+          description: 'Endpoints for retrieving interoperability data',
+        },
+      ],
+      externalDocs: {
+        description: 'Changelog',
+        url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
+      },
     },
-    servers: [{ url: config.openapi.url }],
-    tags: [
-      {
-        name: 'projects',
-        description:
-          'Endpoints for listing projects and retrieving detailed information about individual projects.',
-      },
-      {
-        name: 'tvs',
-        description: 'Endpoints for retrieving Total Value Secured (TVS) data',
-      },
-      {
-        name: 'activity',
-        description: 'Endpoints for retrieving activity data',
-      },
-      {
-        name: 'interop',
-        description: 'Endpoints for retrieving interoperability data',
-      },
-    ],
-    externalDocs: {
-      description: 'Changelog',
-      url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
-    },
-  })
+    // A body that drifted from its schema is still the best answer we have,
+    // so it is sent, and the error is ours to notice
+    (invalid) =>
+      logger
+        .for('OpenApi')
+        .error('Response does not match its schema', invalid),
+  )
   const cache = new InMemoryCache({
     logger: logger.for('Cache'),
     enabled: config.cacheEnabled,
@@ -69,7 +80,8 @@ function main() {
     res.status(200).send('OK')
   })
 
-  app.get('/openapi', (_, res) => {
+  // Browser tools, such as client generators, read the spec from other origins
+  app.get('/openapi', corsMiddleware(), (_, res) => {
     res.json(openapi.getOpenApiSchema())
   })
 
@@ -106,7 +118,7 @@ function main() {
     } as swaggerUi.SwaggerUiOptions),
   )
 
-  // Registered after docs and health, so those are neither logged nor given CORS headers
+  // Registered after docs and health, so those are not logged
   app.use(corsMiddleware())
   app.use(loggerMiddleware(logger))
 
@@ -115,6 +127,7 @@ function main() {
   addActivityRoutes(openapi, ps, db, cache)
   addInteropRoutes(openapi, ps, db, cache)
 
+  app.use(notFoundHandler())
   app.use(errorHandler(logger))
 
   app.listen(config.api.port, () => {

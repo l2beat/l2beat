@@ -29,7 +29,13 @@ export async function getL2ProjectTvsBreakdown(
   const project = await ps.getProject({
     slug,
     select: ['tvsConfig', 'tvsInfo'],
-    optional: ['chainConfig', 'milestones', 'contracts', 'archivedAt'],
+    optional: [
+      'chainConfig',
+      'milestones',
+      'contracts',
+      'archivedAt',
+      'tvsTokenAddresses',
+    ],
     where: ['scalingInfo'],
   })
 

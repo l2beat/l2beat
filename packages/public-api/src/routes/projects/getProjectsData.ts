@@ -17,7 +17,6 @@ import type { ProjectData, ProjectTvs, ScalingRisk } from './types'
 const PROJECT_KEYS = [
   'archivedAt',
   'chainConfig',
-  'bridgeInfo',
   'ecosystemInfo',
   'display',
   'statuses',
@@ -91,7 +90,6 @@ export function toProjectsData({
       layer: project.scalingInfo?.layer,
       type: project.scalingInfo?.type,
       isArchived: project.archivedAt !== undefined,
-      category: project.bridgeInfo?.category,
       hostChain: project.scalingInfo?.hostChain.name,
       stacks: project.scalingInfo?.stacks ?? [],
       ecosystem: project.ecosystemInfo?.id,

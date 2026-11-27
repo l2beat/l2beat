@@ -17,7 +17,9 @@ export function addInteropRoutes(
   openapi.get(
     '/v1/interop/protocols',
     {
+      operationId: 'listInteropProtocols',
       summary: 'List interop data per protocol.',
+      description: INTEROP_DESCRIPTION,
       tags: ['interop'],
       result: InteropProtocolsResultSchema,
     },
@@ -38,7 +40,9 @@ export function addInteropRoutes(
   openapi.get(
     '/v1/interop/chains',
     {
+      operationId: 'listInteropChains',
       summary: 'List interop data per chain.',
+      description: INTEROP_DESCRIPTION,
       tags: ['interop'],
       result: InteropChainsResultSchema,
     },
@@ -56,3 +60,8 @@ export function addInteropRoutes(
     },
   )
 }
+
+const INTEROP_DESCRIPTION = [
+  'Transfers between chains over the last 24 hours, from a snapshot we refresh about once an hour. `timestamp` on each item is the end of those 24 hours: check it to see how fresh the snapshot is. When we fall behind on a chain, its last numbers are carried into newer snapshots for up to a day, so a fresh snapshot can hold older numbers for that chain.',
+  'Values are in USD and durations in seconds. The list is empty when there is no snapshot yet.',
+].join('\n\n')
