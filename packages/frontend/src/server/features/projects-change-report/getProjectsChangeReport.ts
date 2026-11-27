@@ -1,11 +1,12 @@
 import {
   buildProjectsChangeReport,
+  EthereumAddress,
   hasHighSeverityFieldChanged,
   hasImpactfulChange,
   hasImplementationChanged,
   hasUltimateUpgraderChanged,
-} from '@l2beat/config/build/utils/projectsChangeReport'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'

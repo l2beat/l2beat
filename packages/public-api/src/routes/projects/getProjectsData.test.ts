@@ -11,30 +11,6 @@ const NOW = UnixTime.fromDate(new Date('2026-11-25T12:30:00Z'))
 const SEVEN_DAYS_AGO = NOW - 7 * UnixTime.DAY
 
 describe(toProjectsData.name, () => {
-  // Why: the website shows "Not applicable" for an Other project even when
-  // its config still carries a stage, and the API must not disagree.
-  // How: an Other project configured as Stage 1 against a rollup that is.
-  it('shows no stage for Other projects, like the website', () => {
-    const stage1 = {
-      stage: 'Stage 1' as const,
-      downgradePending: undefined,
-      summary: [],
-    }
-    const projects = toProjectsData({
-      projects: [
-        scalingProject('other', { type: 'Other', scalingStage: stage1 }),
-        scalingProject('rollup', { scalingStage: stage1 }),
-      ],
-      tvs: new Map(),
-      changeReport: {},
-    })
-
-    expect(projects.map((p) => [p.id, p.stage])).toEqual([
-      ['other', 'Not applicable'],
-      ['rollup', 'Stage 1'],
-    ])
-  })
-
   // Why: isUnderReview has two sources, the config flag and an unassessed
   // impactful contract change, and either one must raise it.
   // How: one project per source and one with neither.
@@ -251,8 +227,6 @@ function riskView(value: string) {
 function scalingProject(
   id: string,
   options: {
-    type?: string
-    scalingStage?: unknown
     reviewStatus?: string
     self?: ReturnType<typeof riskView>
     stacked?: ReturnType<typeof riskView>
@@ -267,7 +241,8 @@ function scalingProject(
     statuses: { reviewStatus: options.reviewStatus },
     scalingInfo: {
       layer: 'layer2',
-      type: options.type ?? 'Optimistic Rollup',
+      type: 'Optimistic Rollup',
+      stage: 'Stage 1',
       hostChain: { name: 'Ethereum' },
       stacks: [],
       purposes: ['Universal'],
@@ -276,7 +251,6 @@ function scalingProject(
       self: options.self ?? riskView('self'),
       stacked: options.stacked,
     },
-    scalingStage: options.scalingStage,
     tvsInfo: { associatedTokens: [] },
   } as unknown as Parameters<typeof toProjectsData>[0]['projects'][number]
 }

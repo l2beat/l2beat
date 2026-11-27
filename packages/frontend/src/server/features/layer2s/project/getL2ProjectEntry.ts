@@ -8,10 +8,6 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import {
-  getDisplayedScalingStage,
-  getUnderReviewStatus,
-} from '@l2beat/config/build/utils/scalingAssessment'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
@@ -58,7 +54,10 @@ import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawals
 import { getStateValidationSection } from '~/utils/project/technology/state-validation/getStateValidationSection'
 import { toChartProject } from '~/utils/project/toChartProject'
 import { getL2TvsSection } from '~/utils/project/tvs/getL2TvsSection'
-import type { UnderReviewStatus } from '~/utils/project/underReview'
+import {
+  getUnderReviewStatus,
+  type UnderReviewStatus,
+} from '~/utils/project/underReview'
 import { getPrivacyProjectsRunningOn } from '../../privacy/utils/getPrivacyScalingLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from '../../utils/getIsProjectVerified'
@@ -327,10 +326,10 @@ export async function getL2ProjectEntry(
       hasOperatorsSection: !!operatorSection,
     }),
     hostChainName: project.scalingInfo.hostChain.name,
-    stageConfig: getDisplayedScalingStage(
-      project.scalingInfo.type,
-      project.scalingStage,
-    ),
+    stageConfig:
+      project.scalingInfo.stage === 'Not applicable'
+        ? { stage: 'NotApplicable' as const }
+        : project.scalingStage,
     walkAway: getWalkAwayVerdict(project),
     discoUiHref: project.discoveryInfo?.hasDiscoUi
       ? `https://disco.ethbeat.org/ui/p/${project.id}`

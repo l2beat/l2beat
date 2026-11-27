@@ -1,5 +1,5 @@
-import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import { ChainSpecificAddress } from '../types/ChainSpecificAddress.js'
+import type { EthereumAddress } from '../types/EthereumAddress.js'
 
 /**
  * Turns discovery's update diffs into per-project change flags. It lives here
@@ -30,8 +30,8 @@ export function buildProjectsChangeReport(
 ): ProjectsChangeReportData {
   const result: ProjectsChangeReportData = {}
 
-  const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
-  for (const [projectId, diffs] of Object.entries(byProject)) {
+  const byProject = Map.groupBy(updateDiffs, (diff) => diff.projectId)
+  for (const [projectId, diffs] of byProject) {
     // NOTE(radomski): We're optimistically saying that diffs are only active
     // if all inputs used to create them are older than the block number we
     // used to build the project information.
@@ -41,10 +41,10 @@ export function buildProjectsChangeReport(
         baseTimestamp === undefined || baseTimestamp <= diff.diffBaseTimestamp,
     )
 
-    const byChain = groupBy(activeDiffs, (diff) =>
+    const byChain = Map.groupBy(activeDiffs, (diff) =>
       ChainSpecificAddress.longChain(ChainSpecificAddress(diff.address)),
     )
-    for (const [chain, changes] of Object.entries(byChain)) {
+    for (const [chain, changes] of byChain) {
       const addressesOfType = (type: UpdateDiffLike['type']) =>
         changes
           .filter((c) => c.type === type)

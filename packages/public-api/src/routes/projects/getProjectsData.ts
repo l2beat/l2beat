@@ -1,17 +1,12 @@
-import type { Project, ProjectService } from '@l2beat/config'
+import type { Project, ProjectRiskView, ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   buildProjectsChangeReport,
   hasImpactfulChange,
   type ProjectsChangeReportData,
-} from '@l2beat/config/build/utils/projectsChangeReport'
-import {
-  getDisplayedScalingStageName,
-  getL2Risks,
-  getUnderReviewStatus,
-  type ScalingRiskValue,
-} from '@l2beat/config/build/utils/scalingAssessment'
-import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+  SCALING_RISKS,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import {
   getLatestTvsTimestamp,
@@ -28,7 +23,6 @@ const PROJECT_KEYS = [
   'statuses',
   'scalingInfo',
   'scalingRisks',
-  'scalingStage',
   'tvsInfo',
   'discoveryInfo',
 ] as const
@@ -102,23 +96,19 @@ export function toProjectsData({
       stacks: project.scalingInfo?.stacks ?? [],
       ecosystem: project.ecosystemInfo?.id,
       gasTokens: project.chainConfig?.gasTokens ?? [],
-      stage:
-        project.scalingInfo &&
-        getDisplayedScalingStageName(
-          project.scalingInfo.type,
-          project.scalingStage,
-        ),
+      stage: project.scalingInfo?.stage,
       purposes: project.scalingInfo?.purposes ?? [],
       badges: project.display?.badges.map((badge) => badge.name) ?? [],
-      isUnderReview: !!getUnderReviewStatus({
-        isUnderReview: !!project.statuses?.reviewStatus,
-        impactfulChange: hasImpactfulChange(changeReport, project.id),
-      }),
+      // Like the website's under-review notice: set in the config, or an
+      // impactful contract change nobody has assessed yet
+      isUnderReview:
+        !!project.statuses?.reviewStatus ||
+        hasImpactfulChange(changeReport, project.id),
       risks:
         project.scalingRisks &&
-        getL2Risks(
+        toScalingRisks(
           project.scalingRisks.stacked ?? project.scalingRisks.self,
-        ).map(toScalingRisk),
+        ),
       tvs: tvs.get(project.id.toString()) ?? null,
       associatedTokens:
         project.tvsInfo?.associatedTokens.map((token) => token.symbol) ?? [],
@@ -126,26 +116,27 @@ export function toProjectsData({
   )
 }
 
-function toScalingRisk({
-  name,
-  value,
-  sentiment,
-  description,
-  warning,
-  regular,
-}: ScalingRiskValue): ScalingRisk {
-  return {
-    name,
-    value,
-    sentiment,
-    description,
-    warning: warning && { value: warning.value, sentiment: warning.sentiment },
-    regular: regular && {
-      value: regular.value,
-      sentiment: regular.sentiment,
-      description: regular.description,
-    },
-  }
+function toScalingRisks(riskView: ProjectRiskView): ScalingRisk[] {
+  return SCALING_RISKS.map(({ key, name }) => {
+    const { value, sentiment, description, warning } = riskView[key]
+    const regular =
+      key === 'exitWindow' ? riskView.exitWindow.regular : undefined
+    return {
+      name,
+      value,
+      sentiment,
+      description,
+      warning: warning && {
+        value: warning.value,
+        sentiment: warning.sentiment,
+      },
+      regular: regular && {
+        value: regular.value,
+        sentiment: regular.sentiment,
+        description: regular.description,
+      },
+    }
+  })
 }
 
 type TvsRow = Awaited<

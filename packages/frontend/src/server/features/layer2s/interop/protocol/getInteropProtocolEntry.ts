@@ -1,5 +1,4 @@
 import type { Project, ProjectRedWarning } from '@l2beat/config'
-import { getUnderReviewStatus } from '@l2beat/config/build/utils/scalingAssessment'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -19,7 +18,10 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import type { UnderReviewStatus } from '~/utils/project/underReview'
+import {
+  getUnderReviewStatus,
+  type UnderReviewStatus,
+} from '~/utils/project/underReview'
 
 export interface InteropProtocolEntry {
   id: ProjectId

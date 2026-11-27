@@ -1,6 +1,20 @@
 import type { ProjectRiskView } from '@l2beat/config'
-import { getL2Risks } from '@l2beat/config/build/utils/scalingAssessment'
+import { SCALING_RISKS } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
+
+export function getL2Risks(riskView: ProjectRiskView): RosetteValue[] {
+  return SCALING_RISKS.map(({ key, name }) => {
+    const risk = riskView[key]
+    return {
+      name,
+      value: risk.value,
+      sentiment: risk.sentiment,
+      ...(key === 'exitWindow' && { regular: riskView.exitWindow.regular }),
+      warning: risk.warning,
+      description: risk.description,
+    }
+  })
+}
 
 /**
  * Table rosettes show each risk's value and sentiment but never its

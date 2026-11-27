@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getUnderReviewStatus } from '@l2beat/config/build/utils/scalingAssessment'
 import { measureOssification } from '@l2beat/shared/frontend'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
@@ -8,6 +7,7 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { ps } from '~/server/projects'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
+import { getUnderReviewStatus } from '~/utils/project/underReview'
 import {
   getOssificationStats,
   type OssificationStats,

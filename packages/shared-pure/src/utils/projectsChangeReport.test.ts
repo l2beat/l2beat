@@ -3,7 +3,7 @@ import {
   buildProjectsChangeReport,
   hasImpactfulChange,
   type UpdateDiffLike,
-} from './projectsChangeReport'
+} from './projectsChangeReport.js'
 
 const ADDRESS = '0x1111111111111111111111111111111111111111'
 
