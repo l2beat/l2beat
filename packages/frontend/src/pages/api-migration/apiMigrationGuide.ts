@@ -8,6 +8,7 @@ import {
   PUBLIC_API_DOCS_URL,
   PUBLIC_API_URL,
 } from '~/consts/publicApi'
+import { env } from '~/env'
 import { getBrownoutWindows } from '~/server/routers/PublicApiRouter/brownouts'
 
 /**
@@ -80,7 +81,9 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
         'Until the sunset, every old response carries three headers: `Deprecation` (when the API was deprecated), `Sunset` (when it stops) and `Link` (this page and the new API).',
       ],
     },
-    brownouts: getBrownouts(),
+    // Left out when the outages are called off, so the guide never lists
+    // windows that will not happen
+    brownouts: env.OLD_PUBLIC_API_BROWNOUTS ? getBrownouts() : undefined,
     ids: {
       title: 'Project ids replace slugs',
       text: [
@@ -130,7 +133,7 @@ export function getApiMigrationGuide(): ApiMigrationGuide {
 }
 
 /** Generated from the schedule the API itself follows, so the two cannot drift. */
-function getBrownouts(): ApiMigrationGuide['brownouts'] {
+function getBrownouts(): NonNullable<ApiMigrationGuide['brownouts']> {
   const days = groupBy(getBrownoutWindows(OLD_PUBLIC_API_SUNSET_AT), (window) =>
     UnixTime.toStartOf(window.start, 'day'),
   )
@@ -172,7 +175,7 @@ export interface ApiMigrationGuide {
     facts: { label: string; value: string; detail: string }[]
     intro: string[]
   }
-  brownouts: {
+  brownouts?: {
     title: string
     text: string[]
     /** Times are UTC. */

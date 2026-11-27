@@ -27,7 +27,7 @@ export function ApiMigrationPage({ guide, ...props }: Props) {
         <main className="flex flex-col max-md:divide-y max-md:divide-divider md:gap-4">
           <Overview guide={guide} />
           <Migration migration={guide.migration} />
-          <Brownouts brownouts={guide.brownouts} />
+          {guide.brownouts && <Brownouts brownouts={guide.brownouts} />}
           <EndpointMap endpoints={guide.endpoints} />
           <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 xl:grid-cols-2">
             <ProjectIds ids={guide.ids} />
@@ -115,7 +115,7 @@ function Migration({
 function Brownouts({
   brownouts,
 }: {
-  brownouts: ApiMigrationGuide['brownouts']
+  brownouts: NonNullable<ApiMigrationGuide['brownouts']>
 }) {
   return (
     <PrimaryCard>
