@@ -37,8 +37,8 @@ export function PriceOfSpeedSection({
             +{formatUsd(gain.extraUsd)}
           </span>
           <span>
-            a transfer for 2 gwei over our estimated fast tip gets you in{' '}
-            <strong className="font-bold text-primary">{gain.gain}</strong>:{' '}
+            a transfer tipping 2 gwei instead of our estimated fast tip gets you
+            in <strong className="font-bold text-primary">{gain.gain}</strong>:{' '}
             {gain.waits}, 99% sure
           </span>
         </p>

@@ -76,13 +76,7 @@ export function toPriceOfSpeed(
     usdPerGwei,
     dots,
     line,
-    roundTips:
-      line.length === 0
-        ? []
-        : ROUND_TIPS_GWEI.map((gwei) => {
-            const usd = gwei * usdPerGwei
-            return { gwei, usd, seconds: valueOnLine(line, usd) }
-          }),
+    roundTips: toRoundTips(line, usdPerGwei),
     fastTip:
       fastTipUsd === null
         ? undefined
@@ -93,6 +87,17 @@ export function toPriceOfSpeed(
             ),
           },
   }
+}
+
+function toRoundTips(line: SpeedPoint[], usdPerGwei: number) {
+  const lowest = line[0]
+  if (!lowest) return []
+  return ROUND_TIPS_GWEI.flatMap((gwei) => {
+    const usd = gwei * usdPerGwei
+    // A tip under every level with a wait may wait longer than any of them
+    if (usd < lowest.usd) return []
+    return [{ gwei, usd, seconds: valueOnLine(line, usd) }]
+  })
 }
 
 function toDots(

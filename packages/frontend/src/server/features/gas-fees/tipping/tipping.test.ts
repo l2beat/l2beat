@@ -66,15 +66,20 @@ describe(toPriceOfSpeed.name, () => {
     ethUsd: 1e9 / 46_109,
   })
 
+  const level = (
+    tipFromWei: number,
+    txCount: number,
+    waitToMs: number | null = 1_000,
+  ) => ({
+    tipFromWei,
+    tipToWei: tipFromWei + 1e7,
+    waitFromMs: 0,
+    waitToMs,
+    txCount,
+    tipSumGwei: txCount * (tipFromWei / 1e9),
+  })
+
   it('drops levels under 1,000 transactions and prices the rest at the average ETH price', () => {
-    const level = (tipFromWei: number, txCount: number) => ({
-      tipFromWei,
-      tipToWei: tipFromWei + 1e7,
-      waitFromMs: 0,
-      waitToMs: 1_000,
-      txCount,
-      tipSumGwei: txCount * (tipFromWei / 1e9),
-    })
     const speed = toPriceOfSpeed({
       completeDays: [FROM],
       levelWaits: [level(1e8, 999), level(2e9, 1_000)],
@@ -84,6 +89,17 @@ describe(toPriceOfSpeed.name, () => {
     expect(speed?.dots.map((d) => d.usd)).toEqual([2])
     // The hour of an incomplete day is left out
     expect(speed?.fastTip).toEqual({ usd: 1, seconds: undefined })
+  })
+
+  it('gives a round tip no wait under the lowest level that has one', () => {
+    const speed = toPriceOfSpeed({
+      completeDays: [FROM],
+      // At 0.1 gwei the 99th percentile is in the open-ended last wait
+      levelWaits: [level(1e8, 1_000, null), level(1e9, 1_000)],
+      tierWaits: [],
+      hourlyTips: [hour(0)],
+    })
+    expect(speed?.roundTips.map((t) => t.gwei)).toEqual([1, 2])
   })
 
   it('has nothing without a complete day', () => {

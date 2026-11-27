@@ -22,13 +22,15 @@ export type LiveTips =
 export function useLiveTips(ref: RefObject<Element | null>): LiveTips {
   const trpc = useTRPC()
   const onScreen = useIsOnScreen(ref)
-  const { data } = useQuery({
+  const { data, isError } = useQuery({
     ...trpc.gasFees.liveTips.queryOptions(),
     enabled: onScreen,
     refetchInterval: onScreen ? POLL_MS : false,
     staleTime: POLL_MS,
   })
   const now = useNowUntilStale(data?.estimate?.updatedAt)
+  // A failed read is no estimate, not a load without end; the polls go on
+  if (!data && isError) return { status: 'none' }
   if (!data || now === undefined) return { status: 'loading' }
   const { estimate, wallets } = data
   if (!estimate) return { status: 'none' }
