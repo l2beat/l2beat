@@ -54,10 +54,13 @@ const tvsQueryFields = {
 
 export const TvsQuerySchema = v.object(tvsQueryFields)
 
+const TvsCategorySchema = v.enum(['scaling'])
+export type TvsCategory = v.infer<typeof TvsCategorySchema>
+
 /** For the sum of many projects, which also says which projects it sums. */
 export const TvsSumQuerySchema = v.object({
   // One value for now. DeFi and privacy projects have TVS too, and a sum of
   // theirs would be a value of this parameter, never a wider default.
-  category: v.enum(['scaling']).optional(),
+  category: TvsCategorySchema.optional(),
   ...tvsQueryFields,
 })

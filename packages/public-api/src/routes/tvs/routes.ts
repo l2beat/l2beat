@@ -1,7 +1,12 @@
 import type { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { type ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  type ProjectId,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
@@ -14,6 +19,7 @@ import { getTvsData } from './getTvsData'
 import {
   type TokenExclusions,
   TokenTvsResultSchema,
+  type TvsCategory,
   TvsQuerySchema,
   TvsRangeSchema,
   TvsResultSchema,
@@ -43,17 +49,24 @@ export function addTvsRoutes(
       result: TvsResultSchema,
     },
     async (req, res) => {
-      const { range = '30d' } = req.query
+      const { range = '30d', category = 'scaling' } = req.query
       const exclusions = parseTokenExclusions(req.query)
 
       const data = await cache.get(
         {
-          key: ['tvs', range, ...tokenExclusionsCacheKey(exclusions)],
+          key: [
+            'tvs',
+            // Keeps the sum apart from a project whose id is a category name
+            'sum',
+            category,
+            range,
+            ...tokenExclusionsCacheKey(exclusions),
+          ],
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
         async () => {
-          const projectIds = await getTvsProjects(ps)
+          const projectIds = await getTvsProjects(ps, category)
 
           return getTvsData(db, range, projectIds, exclusions)
         },
@@ -163,17 +176,25 @@ export function addTvsRoutes(
   )
 }
 
-async function getTvsProjects(ps: ProjectService): Promise<ProjectId[]> {
-  // Scaling projects only, like the website's scaling TVS and like
-  // /v1/activity. DeFi and privacy projects have TVS configs too, and their
-  // value is not secured by a scaling project.
-  const projects = await ps.getProjects({
-    select: ['tvsConfig'],
-    where: ['scalingInfo'],
-    whereNot: ['archivedAt'],
-  })
-
-  return projects.map((p) => p.id)
+async function getTvsProjects(
+  ps: ProjectService,
+  category: TvsCategory,
+): Promise<ProjectId[]> {
+  switch (category) {
+    // Like the website's scaling TVS and like /v1/activity. DeFi and privacy
+    // projects have TVS configs too, and their value is not secured by a
+    // scaling project.
+    case 'scaling': {
+      const projects = await ps.getProjects({
+        select: ['tvsConfig'],
+        where: ['scalingInfo'],
+        whereNot: ['archivedAt'],
+      })
+      return projects.map((p) => p.id)
+    }
+    default:
+      assertUnreachable(category)
+  }
 }
 
 /** The ids of the tokens in any project's TVS config, archived ones too. */

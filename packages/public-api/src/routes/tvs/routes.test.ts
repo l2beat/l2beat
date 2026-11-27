@@ -83,7 +83,7 @@ describe('/v1/tvs', () => {
   })
 
   for (const [path, keyPrefix] of [
-    ['/v1/tvs', ['tvs', '30d']],
+    ['/v1/tvs', ['tvs', 'sum', 'scaling', '30d']],
     ['/v1/tvs/alpha', ['tvs', 'alpha', '30d']],
   ] as const) {
     it(`counts tokens like the website by default: ${path}`, async () => {

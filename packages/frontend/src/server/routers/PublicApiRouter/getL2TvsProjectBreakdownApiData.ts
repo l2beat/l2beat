@@ -5,7 +5,7 @@ export async function getL2TvsProjectBreakdownApiData(slug: string) {
   const project = await ps.getProject({
     slug,
     select: ['tvsConfig'],
-    optional: ['chainConfig', 'contracts'],
+    optional: ['chainConfig', 'contracts', 'tvsTokenAddresses'],
   })
 
   if (!project) {
