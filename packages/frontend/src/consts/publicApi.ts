@@ -18,7 +18,7 @@ export const OLD_PUBLIC_API_DEPRECATED_AT = utcDay('2026-11-27')
  * guide and the brownout schedule all derive from this one value, so moving
  * the sunset means changing only this line.
  */
-export const OLD_PUBLIC_API_SUNSET_AT = utcDay('2026-12-28')
+export const OLD_PUBLIC_API_SUNSET_AT = utcDay('2026-12-15')
 
 export const API_MIGRATION_GUIDE_PATH = '/api-migration' as const
 
@@ -26,7 +26,7 @@ function utcDay(day: `${number}-${number}-${number}`): UnixTime {
   return UnixTime.fromDate(new Date(`${day}T00:00:00Z`))
 }
 
-/** A UTC date like "28 December 2026", the form the guide and the 410 bodies share. */
+/** A UTC date like "15 December 2026", the form the guide and the 410 bodies share. */
 export function formatSunsetDate(timestamp: UnixTime): string {
   return UnixTime.toDate(timestamp).toLocaleDateString('en-GB', {
     day: 'numeric',
