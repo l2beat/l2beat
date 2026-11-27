@@ -37,6 +37,28 @@ describe(readDuneBurns.name, () => {
     expect(rpc.getFeeHistory).not.toHaveBeenCalled()
   })
 
+  it('reads whole wei from scaled decimals without losing precision', async () => {
+    const dune = mockDune([
+      row('2026-11-01', 1, 100, '9007199254740993.00', 50, '1.00'),
+    ])
+    const rpc = mockRpc(50, 1n)
+
+    expect(await readDuneBurns(dune, rpc, DAY, DAY)).toEqual(
+      new Map([[DAY, { burn: 9007199254740993n, blockCount: 100 }]]),
+    )
+    expect(rpc.getFeeHistory).toHaveBeenOnlyCalledWith(1, 50, [])
+  })
+
+  it('rejects fractional wei', async () => {
+    const dune = mockDune([row('2026-11-01', 1, 100, '5', 50, '1.01')])
+    const rpc = mockRpc(50, 1n)
+
+    await expect(readDuneBurns(dune, rpc, DAY, DAY)).toBeRejectedWith(
+      SyntaxError,
+    )
+    expect(rpc.getFeeHistory).not.toHaveBeenCalled()
+  })
+
   it('prefers the latest day whose blob gas price exceeds 1 wei', async () => {
     const dune = mockDune([
       row('2026-11-01', 1, 100, '5', 50, '42'),

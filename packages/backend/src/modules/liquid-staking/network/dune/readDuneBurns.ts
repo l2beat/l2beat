@@ -59,11 +59,11 @@ export async function readDuneBurns(
       })
     }
     previousLastBlock = row.last_block
-    burns.set(day, { burn: BigInt(row.burn), blockCount: row.blocks })
+    burns.set(day, { burn: parseWei(row.burn), blockCount: row.blocks })
     if (row.blob_check_block !== null && row.blob_check_price !== null) {
       const check = {
         block: row.blob_check_block,
-        price: BigInt(row.blob_check_price),
+        price: parseWei(row.blob_check_price),
       }
       fallbackBlobCheck = check
       if (check.price > 1n) {
@@ -87,6 +87,11 @@ export async function readDuneBurns(
     }
   }
   return burns
+}
+
+function parseWei(value: string): bigint {
+  // DuneSQL decimal strings can retain a zero fractional part.
+  return BigInt(value.replace(/^([+-]?\d+)\.0+$/, '$1'))
 }
 
 export function getBurnsQuery(fromDay: UnixTime, toDay: UnixTime): string {
