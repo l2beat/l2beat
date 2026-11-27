@@ -27,6 +27,7 @@ export function ApiMigrationPage({ guide, ...props }: Props) {
         <main className="flex flex-col max-md:divide-y max-md:divide-divider md:gap-4">
           <Overview guide={guide} />
           <Migration migration={guide.migration} />
+          <Brownouts brownouts={guide.brownouts} />
           <EndpointMap endpoints={guide.endpoints} />
           <div className="grid max-md:divide-y max-md:divide-divider md:gap-4 xl:grid-cols-2">
             <ProjectIds ids={guide.ids} />
@@ -106,6 +107,40 @@ function Migration({
         {migration.intro.map((paragraph) => (
           <Text key={paragraph}>{paragraph}</Text>
         ))}
+      </div>
+    </PrimaryCard>
+  )
+}
+
+function Brownouts({
+  brownouts,
+}: {
+  brownouts: ApiMigrationGuide['brownouts']
+}) {
+  return (
+    <PrimaryCard>
+      <h2 className={HEADING}>{brownouts.title}</h2>
+      <div className="grid gap-x-8 gap-y-4 xl:grid-cols-2">
+        <div className="flex flex-col gap-3">
+          {brownouts.text.map((paragraph) => (
+            <Text key={paragraph}>{paragraph}</Text>
+          ))}
+        </div>
+        <DataTable header={['Day (UTC)', 'First window', 'Second window']}>
+          {brownouts.days.map(({ day, windows }) => (
+            <tr key={day} className={ROW}>
+              <td className={cn(CELL, 'whitespace-nowrap')}>{day}</td>
+              {windows.map((window) => (
+                <td
+                  key={window}
+                  className={cn(CELL, 'whitespace-nowrap tabular-nums')}
+                >
+                  {window}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </DataTable>
       </div>
     </PrimaryCard>
   )
