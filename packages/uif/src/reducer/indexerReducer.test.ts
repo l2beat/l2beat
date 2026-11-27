@@ -548,6 +548,40 @@ describe(indexerReducer.name, () => {
       })
     })
 
+    describe('update returned a height below the current one', () => {
+      it('lowers the safe height and invalidates down to it', () => {
+        const initState = getInitialState(1)
+        const [state1, effects1] = reduceWithIndexerReducer(initState, [
+          { type: 'Initialized', safeHeight: 100, childCount: 0 },
+          { type: 'ParentUpdated', index: 0, safeHeight: 200 },
+          { type: 'InvalidateSucceeded', targetHeight: 100 },
+        ])
+        expect(effects1).toEqual([{ type: 'Update', targetHeight: 200 }])
+
+        const [state2, effects2] = reduceWithIndexerReducer(state1, [
+          { type: 'UpdateSucceeded', from: 101, newHeight: 80 },
+        ])
+
+        expect(state2).toEqual({
+          ...state1,
+          status: 'invalidating',
+          safeHeight: 80,
+          invalidateToHeight: 80,
+        })
+        expect(effects2).toEqual([
+          { type: 'SetSafeHeight', safeHeight: 80 },
+          { type: 'Invalidate', targetHeight: 80 },
+        ])
+
+        const [state3, effects3] = reduceWithIndexerReducer(state2, [
+          { type: 'InvalidateSucceeded', targetHeight: 80 },
+        ])
+
+        expect(state3).toEqual({ ...state2, status: 'updating', height: 80 })
+        expect(effects3).toEqual([{ type: 'Update', targetHeight: 200 }])
+      })
+    })
+
     describe('root indexer', () => {
       it('does not invalidate on startup', () => {
         const initState = getInitialState(0)
