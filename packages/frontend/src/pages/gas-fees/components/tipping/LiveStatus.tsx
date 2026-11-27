@@ -1,5 +1,5 @@
+import { NextBlock } from '~/components/chain-clock/NextBlock'
 import { LiveIndicator } from '~/components/LiveIndicator'
-import { NextBlock } from '~/pages/blobs/components/live-blobs/NextBlock'
 import { formatTimestamp } from '~/utils/dates'
 import type { LiveTips } from './useLiveTips'
 

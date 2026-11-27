@@ -169,6 +169,13 @@ interface Props<T, K extends string> {
   syncId?: string
   /** Fades the other series' lines. */
   highlight?: K
+  /** The plot's box in px within the chart's, each time the chart draws. */
+  onPlotRect?: (rect: {
+    x: number
+    y: number
+    width: number
+    height: number
+  }) => void
   /** Radius of the hover dots; 4 px by default. */
   activeDotRadius?: number
   /**
@@ -237,6 +244,7 @@ export function TimeSeriesChart<T, K extends string>({
   referenceDots,
   syncId,
   highlight,
+  onPlotRect,
   activeDotRadius,
   clip,
   hover,
@@ -711,6 +719,7 @@ export function TimeSeriesChart<T, K extends string>({
         onRender={({ scene, svg }) => {
           svgRef.current = svg
           sceneRef.set(scene)
+          onPlotRect?.(scene.chart)
         }}
       />
       <ChartHoverOverlay
