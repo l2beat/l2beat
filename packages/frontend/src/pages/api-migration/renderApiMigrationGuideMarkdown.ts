@@ -30,6 +30,19 @@ export function renderApiMigrationGuideMarkdown(
         `\`${endpoint.newPath}\``,
       ]),
     ),
+    ...(guide.brownouts
+      ? [
+          `## ${guide.brownouts.title}`,
+          ...guide.brownouts.text,
+          table(
+            ['Day', 'Windows (UTC)'],
+            guide.brownouts.days.map(({ day, windows }) => [
+              day,
+              windows.join(' and '),
+            ]),
+          ),
+        ]
+      : []),
     `## ${guide.ids.title}`,
     ...guide.ids.text,
     table(
