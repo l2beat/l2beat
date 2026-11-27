@@ -18,17 +18,6 @@ export const ActivityProjectFilter = v.union([
 ])
 export type ActivityProjectFilter = v.infer<typeof ActivityProjectFilter>
 
-export const ActivityProjectFilterType = v.enum([
-  'all',
-  'rollups',
-  'validiumsAndOptimiums',
-  'others',
-  'projects',
-])
-export type ActivityProjectFilterType = v.infer<
-  typeof ActivityProjectFilterType
->
-
 export function createActivityProjectsFilter(
   filter: ActivityProjectFilter,
 ): (project: Project<'scalingInfo' | 'statuses'>) => boolean {

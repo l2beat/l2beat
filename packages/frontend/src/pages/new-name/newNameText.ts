@@ -154,7 +154,7 @@ export const NEW_NAME = {
       notes: [
         {
           lead: 'The API',
-          text: `The API is now at api.ethbeat.org, open to everyone without a key. The old /api/scaling endpoints stop working on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: see the migration guide.`,
+          text: `The API is now at api.ethbeat.org, open to everyone without a key. The old /api/scaling endpoints were shut down on ${formatSunsetDate(OLD_PUBLIC_API_SUNSET_AT)}: see the migration guide.`,
           link: { label: 'migration guide', href: API_MIGRATION_GUIDE_PATH },
         },
         {

@@ -15,15 +15,6 @@ export const TvsProjectFilter = v.union([
 ])
 export type TvsProjectFilter = v.infer<typeof TvsProjectFilter>
 
-export const TvsProjectFilterType = v.enum([
-  'layer2',
-  'rollups',
-  'validiumsAndOptimiums',
-  'others',
-  'projects',
-])
-export type TvsProjectFilterType = v.infer<typeof TvsProjectFilterType>
-
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
 ): (project: Project<'statuses', 'scalingInfo'>) => boolean {
