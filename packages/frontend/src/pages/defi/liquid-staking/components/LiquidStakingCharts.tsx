@@ -291,8 +291,12 @@ export function CostOfExitChart({
         ariaLabel="Cost of exit"
         hiddenKeys={hiddenKeys}
         // Exits range from free to a year, which a linear axis flattens
-        // into the floor.
-        yAxis={{ scale: scaleSymlog, ticks: [0, 1, 10, 100, MAX_SHOWN_DAYS] }}
+        // into the floor. The axis always spans that, so every tick shows.
+        yAxis={{
+          scale: scaleSymlog,
+          domain: [0, MAX_SHOWN_DAYS],
+          ticks: [0, 1, 10, 100, MAX_SHOWN_DAYS],
+        }}
         formatYAxisLabel={(value) =>
           value >= MAX_SHOWN_DAYS
             ? `${MAX_SHOWN_DAYS}d+`

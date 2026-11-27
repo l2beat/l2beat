@@ -46,7 +46,7 @@ interface Props {
   ariaLabel: string
   formatYAxisLabel: (value: number) => string
   /** Linear, with computed ticks, by default. */
-  yAxis?: Pick<ChartYAxis, 'scale' | 'ticks'>
+  yAxis?: Pick<ChartYAxis, 'scale' | 'ticks' | 'domain'>
   /** Series that start hidden; the legend shows them. */
   hiddenKeys?: string[]
   formatTooltipValue: (value: number, key: string, timestamp: number) => string
