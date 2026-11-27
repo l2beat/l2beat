@@ -1,3 +1,4 @@
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import {
   formatSunsetDate,
   OLD_PUBLIC_API_PATH,
@@ -5,7 +6,6 @@ import {
   PUBLIC_API_DOCS_URL,
   PUBLIC_API_URL,
 } from '~/consts/publicApi'
-import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 
 export const API_MIGRATION_GUIDE_TITLE = 'Moving to the new ETHBEAT API'
 
@@ -56,8 +56,8 @@ function getGeneralSection() {
   return [
     '## What changes for every endpoint',
     [
-      '- **No wrapper.** The old API answered `{ "success": true, "data": ... }`. The new API returns the data itself: an array or an object.',
-      '- **Errors use HTTP status codes.** The old API answered `200` with `{ "success": false, "error": "..." }`. The new API answers `404` with `{ "message": "..." }` for an unknown project and `400` for a bad parameter.',
+      '- **No wrapper.** The old API answered `{ "success": true, "data": ... }`, except for `/summary`, which was never wrapped. The new API returns the data itself: an array or an object.',
+      '- **Errors use HTTP status codes.** For an unknown project the old API answered `200` with `{ "success": false, "error": "..." }`. The new API answers `404` with `{ "message": "..." }`, also for a project that exists but has no data of the kind asked for; the message says which. A bad parameter is a `400` in both, but its text moved from `error` to `message`.',
       '- **Chart points are objects.** The old charts were arrays of numbers, explained by a `types` array beside them. The new charts are arrays of objects with named fields.',
       '- **Missing data is left out.** The old charts held a row for every timestamp and filled the ones without data with `null`. The new charts have no point there. Read each point by its `timestamp` and do not assume even spacing.',
       '- **An empty chart is `[]`.** The old API answered `"Missing data."` in that case.',
@@ -92,15 +92,15 @@ const TVS_POINT_FIELDS = [
   '- Each point was `[timestamp, native, canonical, external, ethPrice]`. It is now `{ timestamp, totalTvs, bySource: { native, canonical, external }, byCategory: { ... }, ethPrice }`. `byCategory` is new: the same total split into `stablecoins`, `eth`, `btc`, `other`, `publicRwa` and `restrictedRwa`.',
   '- `usdValue` is gone. It was `native + canonical + external` of the last point that had data. Read `totalTvs` of the last point.',
   '- `ethValue` is gone. It was `usdValue` divided by the `ethPrice` of the same point. Divide `totalTvs` by `ethPrice` of the last point.',
-  '- `ethPrice` can be `null` in a point when the price is unknown.',
+  '- `ethPrice` can be `null` in a point when the price is unknown. The value in ETH is then unknown too: do not divide.',
 ].join('\n')
 
 const TVS_NUMBER_DIFFERENCES = [
-  '- **Restricted RWA tokens are counted by default.** In the old API `excludeRwaRestrictedTokens` defaulted to `true`. In the new one it defaults to `false`. Pass `excludeRwaRestrictedTokens=true` to get the numbers the old API gave by default.',
-  '- `excludeAssociatedTokens` works as before and still defaults to `false`. Both parameters now accept only `true` or `false`; anything else is a `400`.',
+  '- **Restricted RWA tokens are counted by default.** In the old API `excludeRwaRestrictedTokens` defaulted to `true`. In the new one it defaults to `false`. Pass `excludeRwaRestrictedTokens=true` to leave them out, as the old API did by default.',
+  '- `excludeAssociatedTokens` works as before and still defaults to `false`. Both parameters now take `true` or `false`; another word is a `400`.',
   '- `range` takes the same values (`7d`, `30d`, `90d`, `180d`, `1y`, `max`) and still defaults to `30d`. Points are spaced as before: hourly for `7d`, every six hours for `30d` and `90d`, daily for the rest.',
   '- **Timestamps with no data are skipped.** The old chart had a row of `null`s for them, and ran on to the present with `null` rows when the data was behind. The new chart ends at its last point with data.',
-  '- **The window starts later.** The old chart started at midnight UTC, the given number of days before the day of its last point. The new chart starts exactly that many days before its last hour. It can have up to a day of points fewer at the start.',
+  '- **The first and last points differ.** The old chart started at midnight UTC, the given number of days before the day it ended. The new chart counts the days back from its end hour and starts at the next point of its grid, so it can have up to a day of points fewer at the start. The old chart could also end with one extra point off the grid, which the new one does not have. Match points by `timestamp` before comparing values.',
 ].join('\n')
 
 function getTvsSection() {
@@ -127,7 +127,7 @@ function getProjectTvsSection() {
     [
       TVS_NUMBER_DIFFERENCES,
       '- The old endpoint knew only layer 2s and layer 3s. The new one answers for any project with TVS data.',
-      '- An archived project has no points in the default 30 days, so the answer is `[]`. Pass `range=max` to get its history.',
+      '- A project archived more than 30 days ago has no points in the default range, so the answer is `[]`. Pass `range=max` to get its history.',
     ].join('\n'),
   ].join('\n\n')
 }
@@ -157,7 +157,7 @@ const ACTIVITY_POINT_FIELDS =
   '- Each point was `[timestamp, count, uopsCount]`. It is now `{ timestamp, txCount, uopsCount }`: `count` is renamed to `txCount`.'
 
 const ACTIVITY_RANGE =
-  '- `range` takes the same values (`30d`, `90d`, `180d`, `1y`, `max`) and still defaults to `30d`. There is one point per day, as before. The window can start a day earlier than the old one.'
+  '- `range` takes the same values (`30d`, `90d`, `180d`, `1y`, `max`) and still defaults to `30d`. There is one point per day, as before. The first day can differ from the old one: the new chart starts at the first day in the range that has any transactions.'
 
 function getActivitySection() {
   return [
@@ -168,7 +168,7 @@ function getActivitySection() {
     [
       '- **Archived projects are left out.** The old default (`type=all`) summed every layer 2 and layer 3 with activity data, archived ones included. The new endpoint sums only active ones, so past days can be lower.',
       '- **`type` and `projectIds` are gone.** There is no chart for rollups only, or for a list of projects. Use `/v1/activity/{projectId}` for each project and add the counts up.',
-      '- **The chart ends at the last synced day.** The old chart ran to yesterday and gave `null` for days it had no records for. The new chart stops at the last day that is synced for at least one project, and a synced day without records is `0`. A project that lags behind adds nothing to the newest days.',
+      '- **The chart ends at the last synced day.** The old chart ran to the last full day our activity data as a whole had reached, and gave `null` for days it had no records for. The new chart stops at the last day that is synced for at least one project, and a synced day without records is `0`. A project that lags behind adds nothing to the newest days, or only part of its count for the day it is syncing.',
       ACTIVITY_RANGE,
     ].join('\n'),
   ].join('\n\n')
@@ -182,7 +182,7 @@ function getProjectActivitySection() {
     `- Ethereum is still available: the old slug \`ethereum\` is the id \`ethereum\`, so use [\`${NEW}/v1/activity/ethereum\`](${NEW}/v1/activity/ethereum).`,
     'Differences in the numbers:',
     [
-      '- **The chart ends at the last synced day.** The old chart ran to yesterday and gave `null` for the days after the project was last synced. The new chart leaves those days out. Do not read a missing day as zero.',
+      '- **The chart ends at the last synced day.** The old chart ran to the last full day our activity data as a whole had reached, and gave `null` for the days after the project was last synced. The new chart leaves those days out. Do not read a missing day as zero.',
       '- A project that was never synced answers `[]`. The old API answered `"Missing data."`.',
       ACTIVITY_RANGE,
     ].join('\n'),

@@ -46,7 +46,8 @@ describe(getL2ProjectStructuredData.name, () => {
           '@type': 'DataDownload',
           name: 'Arbitrum One Total Value Secured',
           encodingFormat: 'application/json',
-          contentUrl: 'https://api.ethbeat.org/v1/tvs/arbitrum',
+          contentUrl:
+            'https://api.ethbeat.org/v1/tvs/arbitrum?excludeRwaRestrictedTokens=true',
         },
         {
           '@type': 'DataDownload',
@@ -76,7 +77,7 @@ describe(getL2ProjectStructuredData.name, () => {
     })
 
     expect(dataset?.distribution.map((d) => d.contentUrl)).toEqual([
-      'https://api.ethbeat.org/v1/tvs/arbitrum?range=max',
+      'https://api.ethbeat.org/v1/tvs/arbitrum?range=max&excludeRwaRestrictedTokens=true',
       'https://api.ethbeat.org/v1/activity/arbitrum?range=max',
     ])
   })

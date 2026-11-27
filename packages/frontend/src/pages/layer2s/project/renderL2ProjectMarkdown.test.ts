@@ -459,7 +459,7 @@ describe(renderL2ProjectMarkdown.name, () => {
     const markdown = renderL2ProjectMarkdown(ENTRY)
 
     expect(getSection(markdown, 'Value Secured')).toInclude(
-      '- [TVS chart (JSON)](https://api.ethbeat.org/v1/tvs/arbitrum)',
+      '- [TVS chart (JSON)](https://api.ethbeat.org/v1/tvs/arbitrum?excludeRwaRestrictedTokens=true)',
       '- [TVS breakdown by token (JSON)](https://api.ethbeat.org/v1/project/arbitrum/tokens)',
     )
     expect(getSection(markdown, 'Activity')).toInclude(

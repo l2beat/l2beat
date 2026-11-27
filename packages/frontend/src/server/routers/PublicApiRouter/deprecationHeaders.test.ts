@@ -1,6 +1,8 @@
 import { expect } from 'earl'
 import express from 'express'
+import { LlmsLinkHeaderMiddleware } from '~/server/middlewares/LlmsLinkHeaderMiddleware'
 import { fetchFromRouter } from '~/test/fetchFromRouter'
+import { createPublicApiRouter } from '.'
 import { DeprecationHeadersMiddleware } from './deprecationHeaders'
 
 // Why: the callers of the old API are scripts we cannot contact, so the
@@ -42,6 +44,28 @@ describe(DeprecationHeadersMiddleware.name, () => {
     expect(response.headers.get('access-control-expose-headers')).toEqual(
       'Deprecation, Sunset, Link',
     )
+  })
+
+  // Why: an error is when a caller reads the response closely, and the
+  // llms.txt middleware used to reset Link on every error.
+  // Method: the real routers in the order the app mounts them, asked with
+  // a parameter the old API rejects before it reads any data.
+  it('keeps the links on a validation error of the old API', async () => {
+    const router = express.Router()
+    router.use(LlmsLinkHeaderMiddleware())
+    router.use(createPublicApiRouter())
+
+    const response = await fetchFromRouter(
+      router,
+      '/api/scaling/tvs?range=invalid',
+    )
+
+    expect(response.status).toEqual(400)
+    expect(response.headers.get('link') ?? '').toInclude(
+      'rel="deprecation"',
+      'rel="successor-version"',
+    )
+    expect(response.headers.get('sunset')).not.toEqual(null)
   })
 })
 
