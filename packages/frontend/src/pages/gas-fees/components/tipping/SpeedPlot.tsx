@@ -94,7 +94,7 @@ export function SpeedPlot({ speed }: { speed: PriceOfSpeed }) {
         <svg
           width={width}
           height={HEIGHT}
-          className="touch-pan-y touch-pinch-zoom select-none"
+          className="absolute top-0 left-0 touch-pan-y touch-pinch-zoom select-none"
           onPointerMove={onPointer}
           onPointerLeave={() => setHovered(undefined)}
           role="img"

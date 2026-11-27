@@ -173,7 +173,8 @@ export function FeeChart({
           options={RANGE_OPTIONS}
         />
       </div>
-      <div className="flex flex-wrap items-end justify-between gap-2 border-divider border-b">
+      {/* Stacked below md, whatever fits: the unit toggle must not move when it changes how many tabs there are */}
+      <div className="flex flex-col gap-2 border-divider border-b md:flex-row md:items-end md:justify-between">
         <div className="flex gap-5 overflow-x-auto">
           {metricsOf(unit).map((tab) => (
             <button
