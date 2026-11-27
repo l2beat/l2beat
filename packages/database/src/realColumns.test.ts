@@ -16,15 +16,20 @@ describe('real columns', () => {
     // A new column should be `@db.DoublePrecision`. A `real` saves 4 bytes
     // per row and rounds every stored value to about 7 digits.
     expect(
-      [...realColumns].flatMap(([model, columns]) =>
-        columns.map((column) => `${model}.${column}`),
-      ),
-    ).toEqual(KNOWN_REAL_COLUMNS)
+      [...realColumns]
+        .flatMap(([model, columns]) =>
+          columns.map((column) => `${model}.${column}`),
+        )
+        .sort(),
+    ).toEqual([...KNOWN_REAL_COLUMNS].sort())
   })
 
   it('are cast to double precision before they are summed', () => {
     const offences: string[] = []
-    for (const file of readdirSync(REPOSITORIES)) {
+    for (const file of readdirSync(REPOSITORIES, {
+      encoding: 'utf8',
+      recursive: true,
+    })) {
       if (!file.endsWith('.ts') || file.endsWith('.test.ts')) continue
       const source = readFileSync(join(REPOSITORIES, file), 'utf8')
       const columns = new Set(
@@ -41,8 +46,9 @@ describe('real columns', () => {
         if (column !== undefined) {
           offences.push(`${file}:${sum.line} sums the real column ${column}`)
         } else if (
-          sum.viaKysely &&
-          !/^\s*'[\w.]+',?\s*$|^\s*sql`[^`$]*`\s*$/.test(sum.argument)
+          sum.argument.includes('${') ||
+          (sum.viaKysely &&
+            !/^\s*'[\w.]+',?\s*$|^\s*sql`[^`$]*`,?\s*$/.test(sum.argument))
         ) {
           // Anything but one column name or a plain `sql` template hides what
           // is summed: a variable, as `valueField` did in TokenValueRepository,
