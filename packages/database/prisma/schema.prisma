@@ -62,6 +62,35 @@ model LiveActivityBlock {
   @@index([projectId, timestamp])
 }
 
+/// The newest blocks of each chain the backend follows at its head: one
+/// chain per `chain`, every block the child of the one before. Whatever is
+/// derived from blocks this fresh is checked against them
+model ChainBlock {
+  chain      String   @db.VarChar(64)
+  number     Int
+  hash       String   @db.VarChar(66)
+  parentHash String   @db.VarChar(66)
+  timestamp  DateTime @db.Timestamp(6)
+  /// The bloom filter of the block's logs, which tells without asking that a
+  /// block has no log of an address or topic. Null where the chain's bloom
+  /// is not of the block's own logs
+  logsBloom  String?
+
+  @@id([chain, number])
+  @@index([timestamp])
+}
+
+/// What each chain head last heard from its source. A chain can go minutes
+/// without a block, so how fresh its stored blocks are shows in
+/// `confirmedAt`, not in the age of the newest one
+model ChainHead {
+  chain       String   @id @db.VarChar(64)
+  /// The newest stored block
+  number      Int
+  /// When the source last had no block newer than the stored ones
+  confirmedAt DateTime @db.Timestamp(6)
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @db.Timestamp(6)
   projectId      String   @db.VarChar(255)
