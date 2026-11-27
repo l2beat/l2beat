@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x31065d6a89b26e1e0ce9712ff6f2d5abd010bd69
+
+# Diff at Fri, 27 Nov 2026 15:22:21 GMT:
+
+- id: 2f569f18
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d291347d0b7c704458e8b61c6b53e670fd9474de block: 1752575723
+- current timestamp: 1752575723
+
+## Description
+
+Manually verified the Poseidon hasher bytecode against its generator (circomlibjs v0.1.7, or Tornado's circomlib fork at 3b492f9 for Tornado Cash).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752575723 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Feature flags enabled with setFeature, as bytes32-encoded names (ETH_LOCKBOX, CUSTOM_GAS_TOKEN, INTEROP).
++++ severity: HIGH
+      values.enabledFeatures:
++        []
+    }
+```
+
 Generated with discovered.json: 0x866b134b8c55010bb75ba5e63072529f47c34c6d
 
 # Diff at Fri, 16 Oct 2026 05:36:50 GMT:
