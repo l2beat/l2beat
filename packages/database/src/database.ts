@@ -66,6 +66,7 @@ import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
+import { WatchMonitorRepository } from './repositories/WatchMonitorRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
@@ -117,6 +118,7 @@ export function createDatabase(
     updateNotifier: new UpdateNotifierRepository(db),
     updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
+    watchMonitor: new WatchMonitorRepository(db),
     // #endregion
 
     // #region CROPS
