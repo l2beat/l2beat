@@ -11,8 +11,6 @@ Rules that Biome does not ship, written as [GritQL plugins](https://biomejs.dev/
 
 The rules match syntax and know no types. `staticErrorMessage` checks `new Error` only, so `assert(condition, message)` and error subclasses are not covered. `utcDates` leaves `toLocaleString()` alone, because numbers have it too. `dotSeparator` skips a "·" that is alone in its element, since wrapping there is up to the layout, and a "·" between two expressions with no text of its own (`{a} · {b}`).
 
-A plugin sees one file at a time, so a rule about what a module imports transitively is a test instead: `packages/config/src/index.test.ts` fails when an export of `@l2beat/config` loads project code.
-
 ## Adding a rule
 
 1. Write `lint/<ruleName>.grit`. Make the message say what to write instead and why.
