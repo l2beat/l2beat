@@ -1,6 +1,14 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { Config } from './Config'
 
+/**
+ * Postgres cancels a query that runs longer. Queries take up to a second,
+ * and after 30 seconds InMemoryCache starts a running query again, so
+ * without a shorter timeout a slow database gets another copy of each
+ * query every 30 seconds.
+ */
+const STATEMENT_TIMEOUT_MS = 15_000
+
 interface MakeConfigOptions {
   name: string
   isLocal?: boolean
@@ -18,6 +26,7 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 2,
           max: 10,
+          statement_timeout: STATEMENT_TIMEOUT_MS,
         }
       : {
           connectionString: env.string('DATABASE_URL'),
@@ -26,22 +35,11 @@ export function makeConfig(env: Env, options: MakeConfigOptions): Config {
 
           min: 20,
           max: env.integer('DATABASE_MAX_POOL_SIZE', 20),
+          statement_timeout: STATEMENT_TIMEOUT_MS,
         },
     api: {
       port: env.integer('PORT', 3000),
     },
-    auth: options.isLocal
-      ? false
-      : {
-          apiKeys: {
-            l2beat: env.string('API_KEY_L2BEAT'),
-            optimism: env.string('API_KEY_OPTIMISM'),
-            arbitrum: env.string('API_KEY_ARBITRUM'),
-            agglayer: env.string('API_KEY_AGGLAYER'),
-            theElasticNetwork: env.string('API_KEY_THE_ELASTIC_NETWORK'),
-            pulseKit: env.string('API_KEY_PULSEKIT'),
-          },
-        },
     openapi: {
       url: env.string('BACKEND_URL', 'http://localhost:3000'),
     },

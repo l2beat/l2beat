@@ -216,7 +216,6 @@ describe(OpenApi.name, () => {
         ],
         paths: expect.a(Object),
         components: expect.a(Object),
-        security: [{ apiKeyAuth: [] }],
         externalDocs: {
           description: 'Changelog',
           url: 'external-docs-url',
@@ -249,7 +248,6 @@ describe(OpenApi.name, () => {
           parameters: [],
           responses: {
             200: expect.a(Object),
-            401: expect.a(Object),
           },
         },
       })
@@ -404,7 +402,6 @@ describe(OpenApi.name, () => {
 
       expect(responses).toEqual({
         200: expect.a(Object),
-        401: expect.a(Object),
         400: {
           description: expect.a(String),
           content: {
@@ -440,7 +437,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test/{id}']?.get?.responses
 
-      expect(Object.keys(responses ?? {})).toEqual(['200', '401', '404'])
+      expect(Object.keys(responses ?? {})).toEqual(['200', '404'])
       expect(responses?.[404]).toEqual({
         description: expect.a(String),
         content: {
@@ -603,7 +600,6 @@ describe(OpenApi.name, () => {
         parameters: [],
         responses: {
           200: expect.a(Object),
-          401: expect.a(Object),
         },
       })
     })
@@ -690,14 +686,4 @@ const baseSchema: BaseOpenApiSchema = {
     description: 'Changelog',
     url: 'external-docs-url',
   },
-  components: {
-    securitySchemes: {
-      apiKeyAuth: {
-        type: 'apiKey',
-        in: 'query',
-        name: 'apiKey',
-      },
-    },
-  },
-  security: [{ apiKeyAuth: [] }],
 }

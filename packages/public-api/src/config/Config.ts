@@ -1,7 +1,6 @@
 export interface Config {
   readonly database: DatabaseConfig
   readonly api: ApiConfig
-  readonly auth: AuthConfig | false
   readonly openapi: OpenApiConfig
   readonly analytics: AnalyticsConfig | false
   readonly cacheEnabled: boolean
@@ -19,10 +18,8 @@ export interface DatabaseConfig {
   }
   min: number
   max: number
-}
-
-export interface AuthConfig {
-  apiKeys: Record<string, string>
+  /** Milliseconds. Named as pg reads it. */
+  statement_timeout: number
 }
 
 export interface OpenApiConfig {

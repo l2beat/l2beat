@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
+import { getParamsWithoutApiKey } from './loggerMiddleware'
 
 export function errorHandler(logger: Logger) {
   logger = logger.for('ErrorHandler')
@@ -12,10 +13,12 @@ export function errorHandler(logger: Logger) {
     const errorId = randomUUID()
     res.status(500)
 
+    const { url, queryParams } = getParamsWithoutApiKey(req.originalUrl)
     const body = {
       error: err instanceof Error ? err : new Error(String(err)),
       method: req.method,
-      url: req.originalUrl,
+      url,
+      queryParams,
       errorId,
       status: res.statusCode,
       referer: req.headers.referer ?? 'unknown',

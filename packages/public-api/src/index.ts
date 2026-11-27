@@ -5,7 +5,7 @@ import { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import { getConfig } from './config'
-import { authMiddleware } from './middleware/authMiddleware'
+import { corsMiddleware } from './middleware/corsMiddleware'
 import { errorHandler } from './middleware/errorHandler'
 import { loggerMiddleware } from './middleware/loggerMiddleware'
 import { OpenApi } from './OpenApi'
@@ -29,6 +29,7 @@ function main() {
     info: {
       title: 'ETHBEAT API',
       version: '1.0.0',
+      description: getApiDescription(),
     },
     servers: [{ url: config.openapi.url }],
     tags: [
@@ -54,16 +55,6 @@ function main() {
       description: 'Changelog',
       url: 'https://l2beat.notion.site/L2BEAT-API-Changelog-2c4094a2aee7809786e6e6b6e7486e01',
     },
-    components: {
-      securitySchemes: {
-        apiKeyAuth: {
-          type: 'apiKey',
-          in: 'query',
-          name: 'apiKey',
-        },
-      },
-    },
-    security: [{ apiKeyAuth: [] }],
   })
   const cache = new InMemoryCache({
     logger: logger.for('Cache'),
@@ -115,9 +106,8 @@ function main() {
     } as swaggerUi.SwaggerUiOptions),
   )
 
-  if (config.auth) {
-    app.use(authMiddleware(config.auth, logger))
-  }
+  // Registered after docs and health, so those are neither logged nor given CORS headers
+  app.use(corsMiddleware())
   app.use(loggerMiddleware(logger))
 
   addProjectsRoutes(openapi, ps, db, cache)
@@ -130,6 +120,14 @@ function main() {
   app.listen(config.api.port, () => {
     logger.info('Started', { port: config.api.port })
   })
+}
+
+function getApiDescription() {
+  return [
+    'Open to everyone, no API key needed. A key sent by an older integration is ignored.',
+    '',
+    'Requests are rate limited. Over the limit, the answer is HTTP 429.',
+  ].join('\n')
 }
 
 main()
