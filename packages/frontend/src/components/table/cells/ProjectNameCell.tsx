@@ -448,6 +448,7 @@ function getTooltipSections(project: ProjectCellProject) {
       text: project.verifiedBuild.tooltip,
       variant: 'muted',
       icon: <VerifiedIcon className="size-4" aria-label={undefined} />,
+      afterDescription: true,
     })
   }
 

@@ -21,6 +21,8 @@ export interface ProjectTooltipSectionData {
   href?: string
   variant: 'negative' | 'warning' | 'muted'
   icon: React.ReactNode
+  /** A note, not a warning: it stays below the description when sections come first. */
+  afterDescription?: boolean
 }
 
 export function ProjectTooltipContent({
@@ -36,17 +38,18 @@ export function ProjectTooltipContent({
   badges?: BadgeWithParams[]
   sectionsFirst?: boolean
 }) {
-  const sectionList = sections.map((section) => (
-    <TooltipSection
-      key={section.id}
-      href={section.href}
-      textDetail={section.textDetail}
-      variant={section.variant}
-      icon={section.icon}
-    >
-      {section.text}
-    </TooltipSection>
-  ))
+  const renderSections = (list: ProjectTooltipSectionData[]) =>
+    list.map((section) => (
+      <TooltipSection
+        key={section.id}
+        href={section.href}
+        textDetail={section.textDetail}
+        variant={section.variant}
+        icon={section.icon}
+      >
+        {section.text}
+      </TooltipSection>
+    ))
 
   const badgeList =
     badges && badges.length > 0 ? (
@@ -66,8 +69,9 @@ export function ProjectTooltipContent({
     return (
       <>
         <span className="text-heading-16">What is {projectName}?</span>
-        {sectionList}
+        {renderSections(sections.filter((s) => !s.afterDescription))}
         {description && <p>{description}</p>}
+        {renderSections(sections.filter((s) => s.afterDescription))}
         {badgeList}
       </>
     )
@@ -77,7 +81,7 @@ export function ProjectTooltipContent({
     <>
       <span className="text-heading-16">What is {projectName}?</span>
       {description && <p>{description}</p>}
-      {sectionList}
+      {renderSections(sections)}
       {badgeList}
     </>
   )
