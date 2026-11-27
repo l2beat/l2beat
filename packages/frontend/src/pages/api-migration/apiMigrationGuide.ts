@@ -178,10 +178,10 @@ const SUMMARY: EndpointGuide = {
   id: 'summary',
   name: 'Scaling summary',
   oldPath: `${OLD_PUBLIC_API_PATH}/summary`,
-  newPath: '/v1/projects?isArchived=false',
-  exampleUrl: `${NEW}/v1/projects?isArchived=false`,
+  newPath: '/v1/projects',
+  exampleUrl: `${NEW}/v1/projects`,
   text: [
-    'The old `projects` was an object keyed by project id, holding active layer 2s and layer 3s only, sorted by TVS. The new response is an array of every project ETHBEAT tracks, bridges and other kinds included, in no guaranteed order. To get the old set, keep the entries that have a `layer` field.',
+    'The old `projects` was an object keyed by project id, holding active layer 2s and layer 3s only, sorted by TVS. The new response is an array of every project ETHBEAT tracks, archived ones, bridges and other kinds included, in no guaranteed order. To get the old set, keep the entries that have a `layer` field and `isArchived: false`. Passing `isArchived=false` leaves archived projects out for you.',
   ],
   fields: {
     title: 'Fields of one project',
